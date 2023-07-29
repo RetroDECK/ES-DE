@@ -60,7 +60,7 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
     // Row 3 is a spacer.
 
     // GuiScraperSearch.
-    mSearch = std::make_shared<GuiScraperSearch>(GuiScraperSearch::NEVER_AUTO_ACCEPT, 1);
+    mSearch = std::make_shared<GuiScraperSearch>(GuiScraperSearch::NEVER_AUTO_ACCEPT, 1, 8);
     mGrid.setEntry(mSearch, glm::ivec2 {0, 4}, true, true, glm::ivec2 {2, 1});
 
     mResultList = mSearch->getResultList();

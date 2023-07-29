@@ -34,10 +34,11 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 
-GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
+GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, int rowCount)
     : mRenderer {Renderer::getInstance()}
     , mGrid {glm::ivec2 {5, 3}}
     , mSearchType {type}
+    , mRowCount {rowCount}
     , mScrapeCount {scrapeCount}
     , mRefinedSearch {false}
     , mBlockAccept {false}
@@ -176,7 +177,7 @@ GuiScraperSearch::~GuiScraperSearch()
 
 void GuiScraperSearch::onSizeChanged()
 {
-    mGrid.setSize(mSize);
+    mGrid.setSize(glm::vec2 {mSize.x, (mResultList->getRowHeight() * mRowCount) + 0.0f});
 
     if (mSize.x == 0 || mSize.y == 0)
         return;
@@ -652,7 +653,10 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     renderChildren(trans);
-    mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mMenuColorPanelDimmed, mMenuColorPanelDimmed);
+    mRenderer->drawRect(0.0f, 0.0f, mSize.x,
+                        (mResultList->getRowHeight() * mRowCount) +
+                            mRenderer->getScreenHeightModifier(),
+                        mMenuColorPanelDimmed, mMenuColorPanelDimmed);
 
     // Slight adjustment upwards so the busy grid is not rendered precisely at the text edge.
     trans = glm::translate(

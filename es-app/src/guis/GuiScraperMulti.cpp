@@ -62,13 +62,13 @@ GuiScraperMulti::GuiScraperMulti(
 
     if (mApproveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
         mSearchComp =
-            std::make_shared<GuiScraperSearch>(GuiScraperSearch::NEVER_AUTO_ACCEPT, mTotalGames);
+            std::make_shared<GuiScraperSearch>(GuiScraperSearch::NEVER_AUTO_ACCEPT, mTotalGames, 7);
     else if (mApproveResults && Settings::getInstance()->getBool("ScraperSemiautomatic"))
         mSearchComp = std::make_shared<GuiScraperSearch>(GuiScraperSearch::ACCEPT_SINGLE_MATCHES,
-                                                         mTotalGames);
+                                                         mTotalGames, 7);
     else if (!mApproveResults)
         mSearchComp = std::make_shared<GuiScraperSearch>(
-            GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, mTotalGames);
+            GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, mTotalGames, 7);
     mSearchComp->setAcceptCallback(
         std::bind(&GuiScraperMulti::acceptResult, this, std::placeholders::_1));
     mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));
@@ -162,7 +162,7 @@ GuiScraperMulti::GuiScraperMulti(
 
     float height {(mTitle->getFont()->getLetterHeight() + titleHeight) +
                   mSystem->getFont()->getLetterHeight() +
-                  mSubtitle->getFont()->getHeight() * 1.75f + mButtonGrid->getSize().y +
+                  mSubtitle->getFont()->getHeight() * 1.75f + (mButtonGrid->getSize().y * 1.1f) +
                   Font::get(FONT_SIZE_MEDIUM)->getHeight() * 7.0f};
 
     // TODO: Temporary hack, see below.

@@ -131,11 +131,9 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
     const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-    const float width {glm::clamp(0.95f * aspectValue, 0.65f, 0.98f) * mRenderer->getScreenWidth()};
+    const float width {glm::clamp(0.95f * aspectValue, 0.45f, 0.98f) * mRenderer->getScreenWidth()};
     setSize(width,
-            mTitle->getSize().y +
-                (FONT_SIZE_MEDIUM * 1.5f * (mRenderer->getIsVerticalOrientation() ? 10.0f : 9.0f)) +
-                mButtons->getSize().y);
+            mTitle->getSize().y + (mList->getRowHeight() * 9.0f) + mButtons->getSize().y * 1.1f);
 
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
@@ -821,8 +819,7 @@ void GuiThemeDownloader::populateGUI()
     }
 
     mVariantsLabel->setText("VARIANTS:");
-    mColorSchemesLabel->setText(mRenderer->getIsVerticalOrientation() ? "COL. SCHEMES:" :
-                                                                        "COLOR SCHEMES:");
+    mColorSchemesLabel->setText("COLOR SCHEMES:");
     mAspectRatiosLabel->setText("ASPECT RATIOS:");
 
     updateInfoPane();
@@ -1069,22 +1066,20 @@ void GuiThemeDownloader::onSizeChanged()
                                   4.0f);
     mGrid.setRowHeightPerc(1, (mTitle->getFont()->getLetterHeight() + screenSize * 0.2f) / mSize.y /
                                   4.0f);
-    mGrid.setRowHeightPerc(3, mButtons->getSize().y / mSize.y);
+    mGrid.setRowHeightPerc(2, (mList->getRowHeight() * 9.0f) / mSize.y);
 
     mCenterGrid->setRowHeightPerc(
-        0, (mVariantsLabel->getFont()->getLetterHeight() + screenSize * 0.08f) / mSize.y / 2.0f);
+        0, (mVariantsLabel->getFont()->getLetterHeight() + screenSize * 0.115f) / mSize.y / 2.0f);
     mCenterGrid->setRowHeightPerc(
         1,
-        (mColorSchemesLabel->getFont()->getLetterHeight() + screenSize * 0.06f) / mSize.y / 2.0f);
+        (mColorSchemesLabel->getFont()->getLetterHeight() + screenSize * 0.09f) / mSize.y / 2.0f);
     mCenterGrid->setRowHeightPerc(
-        2, (mDownloadStatus->getFont()->getLetterHeight() + screenSize * 0.08f) / mSize.y / 2.0f);
-    mCenterGrid->setRowHeightPerc(3, 0.5f);
-    mCenterGrid->setRowHeightPerc(4, (mAuthor->getFont()->getLetterHeight() + screenSize * 0.06f) /
-                                         mSize.y / 2.0f);
+        2, (mDownloadStatus->getFont()->getLetterHeight() + screenSize * 0.115f) / mSize.y / 2.0f);
+    mCenterGrid->setRowHeightPerc(3, 0.7f);
 
     mGrid.setColWidthPerc(1, 0.04f);
     mCenterGrid->setColWidthPerc(0, 0.01f);
-    mCenterGrid->setColWidthPerc(1, 0.18f);
+    mCenterGrid->setColWidthPerc(1, (mRenderer->getScreenAspectRatio() < 1.6f ? 0.21f : 0.18f));
     mCenterGrid->setColWidthPerc(2, 0.05f);
     mCenterGrid->setColWidthPerc(3, 0.18f);
     mCenterGrid->setColWidthPerc(4, 0.04f);
@@ -1092,7 +1087,9 @@ void GuiThemeDownloader::onSizeChanged()
     mCenterGrid->setColWidthPerc(7, 0.04f);
 
     mGrid.setSize(mSize);
-    mCenterGrid->setSize(glm::vec2 {mSize.x, mSize.y});
+
+    mCenterGrid->setSize(glm::vec2 {std::round(mSize.x), (mList->getRowHeight() * 9.0f) +
+                                                             mRenderer->getScreenHeightModifier()});
     mCenterGrid->setPosition(glm::vec3 {0.0f, mGrid.getRowHeight(0) + mGrid.getRowHeight(1), 0.0f});
     mBackground.fitTo(mSize);
     mScreenshot->setMaxSize(mCenterGrid->getColWidth(1) + mCenterGrid->getColWidth(2) +
@@ -1103,9 +1100,7 @@ void GuiThemeDownloader::onSizeChanged()
     mGrayRectangleCoords.emplace_back(0.0f);
     mGrayRectangleCoords.emplace_back(mCenterGrid->getPosition().y);
     mGrayRectangleCoords.emplace_back(mSize.x);
-    mGrayRectangleCoords.emplace_back(mCenterGrid->getRowHeight(0) + mCenterGrid->getRowHeight(1) +
-                                      mCenterGrid->getRowHeight(2) + mCenterGrid->getRowHeight(3) +
-                                      mCenterGrid->getRowHeight(4));
+    mGrayRectangleCoords.emplace_back(mList->getRowHeight() * 9.0f);
 }
 
 bool GuiThemeDownloader::input(InputConfig* config, Input input)

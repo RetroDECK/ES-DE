@@ -42,7 +42,7 @@ public:
         NEVER_AUTO_ACCEPT // Manual mode.
     };
 
-    GuiScraperSearch(SearchType searchType, unsigned int scrapeCount = 1);
+    GuiScraperSearch(SearchType searchType, unsigned int scrapeCount, int rowCount);
     ~GuiScraperSearch();
 
     void search(ScraperSearchParams& params);
@@ -164,6 +164,7 @@ private:
     std::function<void()> mSkipCallback;
     std::function<void()> mCancelCallback;
     std::function<void()> mRefineCallback;
+    int mRowCount;
     unsigned int mScrapeCount;
     bool mRefinedSearch;
     bool mBlockAccept;
