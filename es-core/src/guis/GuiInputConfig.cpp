@@ -317,7 +317,7 @@ void GuiInputConfig::onSizeChanged()
     mGrid.setRowHeightPerc(1, mTitle->getFont()->getHeight() * 0.75f / mSize.y);
     mGrid.setRowHeightPerc(2, mSubtitle1->getFont()->getHeight() / mSize.y);
     mGrid.setRowHeightPerc(3, mSubtitle2->getFont()->getHeight() / mSize.y);
-    mGrid.setRowHeightPerc(5, (mList->getRowHeight(0) * 5.0f + 2.0f) / mSize.y);
+    mGrid.setRowHeightPerc(5, (mList->getRowHeight() * 5.0f + 2.0f) / mSize.y);
     mGrid.setRowHeightPerc(6, mButtonGrid->getSize().y / mSize.y);
 }
 

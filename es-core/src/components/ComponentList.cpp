@@ -19,6 +19,7 @@ ComponentList::ComponentList()
     , mSetupCompleted {false}
     , mBottomCameraOffset {false}
     , mSingleRowScroll {false}
+    , mRowHeight {std::round(Font::get(FONT_SIZE_MEDIUM)->getHeight())}
     , mSelectorBarOffset {0.0f}
     , mCameraOffset {0.0f}
     , mLoopRows {false}
@@ -137,12 +138,10 @@ void ComponentList::update(int deltaTime)
         mLoopTime = 0;
     }
 
-    const float totalHeight {getTotalRowHeight()};
-
     // Scroll indicator logic, used by ScrollIndicatorComponent.
     bool scrollIndicatorChanged {false};
 
-    if (totalHeight > mSize.y) {
+    if (getTotalRowHeight() > mSize.y) {
         if (mCameraOffset == 0) {
             if (mScrollIndicatorStatus != SCROLL_DOWN) {
                 mScrollIndicatorStatus = SCROLL_DOWN;
@@ -219,7 +218,7 @@ void ComponentList::onCursorChanged(const CursorState& state)
     // In the future this might be animated.
     mSelectorBarOffset = 0;
     for (int i {0}; i < mCursor; ++i)
-        mSelectorBarOffset += getRowHeight(mEntries.at(i).data);
+        mSelectorBarOffset += mRowHeight;
 
     updateCameraOffset();
 
@@ -239,19 +238,18 @@ void ComponentList::onCursorChanged(const CursorState& state)
 
 void ComponentList::updateCameraOffset()
 {
-    float oldCameraOffset {mCameraOffset};
+    const float oldCameraOffset {mCameraOffset};
 
     // Move the camera to scroll.
     const float totalHeight {getTotalRowHeight()};
     if (totalHeight > mSize.y) {
-        const float target {mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data) / 2.0f -
-                            (mSize.y / 2.0f)};
+        const float target {mSelectorBarOffset + mRowHeight / 2.0f - (mSize.y / 2.0f)};
 
         // Clamp the camera to prevent a fraction of a row from being displayed.
         mCameraOffset = 0.0f;
         unsigned int i {0};
         while (mCameraOffset < target && i < mEntries.size()) {
-            mCameraOffset += getRowHeight(mEntries.at(i).data);
+            mCameraOffset += mRowHeight;
             if (mCameraOffset > totalHeight - mSize.y) {
                 if (mSetupCompleted) {
                     if (mScrollIndicatorStatus == ComponentList::SCROLL_NONE &&
@@ -288,21 +286,15 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans {parentTrans * getTransform()};
 
-    // TODO: Fix the rounding error properly instead of working around it.
-    const float roundErrorComp {
-        static_cast<float>(static_cast<int>(mSize.y) %
-                           static_cast<int>(getRowHeight(mEntries.at(0).data))) -
-        2.0f};
-
     // Clip everything to be inside our bounds.
-    glm::vec3 dim {mSize.x, mSize.y - roundErrorComp, 0.0f};
+    glm::vec3 dim {mSize.x, mSize.y, 0.0f};
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
-    const int clipRectPosX {static_cast<int>(std::floor(trans[3].x))};
-    const int clipRectPosY {static_cast<int>(std::floor(trans[3].y))};
+    const int clipRectPosX {static_cast<int>(std::round(trans[3].x))};
+    const int clipRectPosY {static_cast<int>(std::round(trans[3].y))};
     const int clipRectSizeX {static_cast<int>(std::round(dim.x))};
-    const int clipRectSizeY {static_cast<int>(std::ceil(dim.y) + 1.0f)};
+    const int clipRectSizeY {static_cast<int>(std::round(dim.y) + 1.0f)};
 
     mRenderer->pushClipRect(glm::ivec2 {clipRectPosX, clipRectPosY},
                             glm::ivec2 {clipRectSizeX, clipRectSizeY});
@@ -315,10 +307,9 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     // Draw selector bar if we're using the dark color scheme.
     if (mFocused && mOpacity == 1.0f && darkColorScheme) {
-        const float selectedRowHeight {getRowHeight(mEntries.at(mCursor).data)};
         mRenderer->setMatrix(trans);
-        mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, selectedRowHeight,
-                            mMenuColorSelector, mMenuColorSelector, false, mOpacity, mDimming);
+        mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, mRowHeight, mMenuColorSelector,
+                            mMenuColorSelector, false, mOpacity, mDimming);
     }
 
     // Draw our entries.
@@ -397,15 +388,13 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     // Draw selector bar if we're using the light color scheme.
     if (mFocused && !darkColorScheme) {
-        const float selectedRowHeight {getRowHeight(mEntries.at(mCursor).data)};
-
         if (mOpacity == 1.0f) {
-            mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, selectedRowHeight,
-                                mMenuColorSelector, mMenuColorSelector, false, mOpacity, mDimming,
+            mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, mRowHeight, mMenuColorSelector,
+                                mMenuColorSelector, false, mOpacity, mDimming,
                                 Renderer::BlendFactor::ONE_MINUS_DST_COLOR,
                                 Renderer::BlendFactor::ZERO);
 
-            mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, selectedRowHeight, 0x777777FF,
+            mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, mRowHeight, 0x777777FF,
                                 0x777777FF, false, mOpacity, mDimming, Renderer::BlendFactor::ONE,
                                 Renderer::BlendFactor::ONE);
         }
@@ -423,7 +412,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     for (unsigned int i {0}; i < mEntries.size(); ++i) {
         mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
                             mMenuColorSeparators, mMenuColorSeparators, false, mOpacity, mDimming);
-        y += getRowHeight(mEntries.at(i).data);
+        y += mRowHeight;
     }
 
     mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
@@ -431,43 +420,20 @@ void ComponentList::render(const glm::mat4& parentTrans)
     mRenderer->popClipRect();
 }
 
-float ComponentList::getRowHeight(const ComponentListRow& row) const
-{
-    // Returns the highest component height found in the row.
-    float height {0.0f};
-    for (unsigned int i {0}; i < row.elements.size(); ++i) {
-        if (row.elements.at(i).component->getSize().y > height)
-            height = row.elements.at(i).component->getSize().y;
-    }
-
-    // We round down to avoid separator single-pixel alignment issues.
-    return std::floor(height);
-}
-
-float ComponentList::getTotalRowHeight() const
-{
-    float height {0.0f};
-    for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it)
-        height += getRowHeight(it->data);
-
-    return height;
-}
-
 void ComponentList::updateElementPosition(const ComponentListRow& row)
 {
     float yOffset {0.0f};
     for (auto it = mEntries.cbegin(); it != mEntries.cend() && &it->data != &row; ++it)
-        yOffset += getRowHeight(it->data);
+        yOffset += mRowHeight;
 
     // Assumes updateElementSize has already been called.
-    float rowHeight {getRowHeight(row)};
     float x {mHorizontalPadding / 2.0f};
 
     for (unsigned int i {0}; i < row.elements.size(); ++i) {
         const auto comp = row.elements.at(i).component;
 
         // Center vertically.
-        comp->setPosition(x, (rowHeight - std::floor(comp->getSize().y)) / 2.0f + yOffset);
+        comp->setPosition(x, (mRowHeight - comp->getSize().y) / 2.0f + yOffset);
         x += comp->getSize().x;
     }
 }

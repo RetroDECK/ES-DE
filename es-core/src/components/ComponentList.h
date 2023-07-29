@@ -83,8 +83,9 @@ public:
     bool moveCursor(int amt);
     int getCursorId() const { return mCursor; }
 
-    float getTotalRowHeight() const;
-    float getRowHeight(int row) const { return getRowHeight(mEntries.at(row).data); }
+    const float getRowHeight() const { return mRowHeight; }
+    void setRowHeight(float height) { mRowHeight = height; }
+    const float getTotalRowHeight() const { return mRowHeight * mEntries.size(); }
 
     // Horizontal looping for row content that doesn't fit on-screen.
     void setLoopRows(bool state)
@@ -134,8 +135,7 @@ private:
     void updateElementPosition(const ComponentListRow& row);
     void updateElementSize(const ComponentListRow& row);
 
-    float getRowHeight(const ComponentListRow& row) const;
-
+    float mRowHeight;
     float mHorizontalPadding;
     float mSelectorBarOffset;
     float mCameraOffset;

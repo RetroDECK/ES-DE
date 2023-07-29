@@ -104,7 +104,7 @@ void MenuComponent::updateSize()
         int i {0};
         while (i < mList->size()) {
             // Add the separator height to the row height so that it also gets properly rendered.
-            float rowHeight {mList->getRowHeight(i) + mRenderer->getScreenResolutionModifier()};
+            float rowHeight {mList->getRowHeight() + mRenderer->getScreenResolutionModifier()};
             if (height + rowHeight < maxHeight)
                 height += rowHeight;
             else

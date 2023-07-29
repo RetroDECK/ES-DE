@@ -98,6 +98,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     mGrid.setEntry(mSubtitle, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
     mList = std::make_shared<ComponentList>();
+    mList->setRowHeight(std::round(Font::get(FONT_SIZE_SMALL)->getHeight()));
     mGrid.setEntry(mList, glm::ivec2 {0, 4}, true, true, glm::ivec2 {2, 1});
 
     // Set up scroll indicators.
@@ -721,7 +722,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                               (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.90f))};
 
     // Set height explicitly to ten rows for the component list.
-    float height {mList->getRowHeight(0) * 10.0f + mTitle->getSize().y + mSubtitle->getSize().y +
+    float height {mList->getRowHeight() * 10.0f + mTitle->getSize().y + mSubtitle->getSize().y +
                   mButtons->getSize().y};
 
     setSize(width, height);
@@ -735,7 +736,7 @@ void GuiMetaDataEd::onSizeChanged()
     mGrid.setRowHeightPerc(1, TITLE_HEIGHT / mSize.y / 2.0f);
     mGrid.setRowHeightPerc(2, titleSubtitleSpacing / mSize.y);
     mGrid.setRowHeightPerc(3, (titleSubtitleSpacing * 1.2f) / mSize.y);
-    mGrid.setRowHeightPerc(4, ((mList->getRowHeight(0) * 10.0f) + 2.0f) / mSize.y);
+    mGrid.setRowHeightPerc(4, ((mList->getRowHeight() * 10.0f) + 2.0f) / mSize.y);
 
     mGrid.setColWidthPerc(1, 0.055f);
 
