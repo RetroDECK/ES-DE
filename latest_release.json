@@ -36,13 +36,6 @@
                 "message": ""
             },
             {
-                "name": "LinuxDEB",
-                "filename": "emulationstation-de-2.1.1-x64.deb",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557594/download",
-                "md5": "4a20e4f78c4f9be6ce93e74773f75e4e",
-                "message": ""
-            },
-            {
                 "name": "LinuxAppImage",
                 "filename": "EmulationStation-DE-x64.AppImage",
                 "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557605/download",
@@ -87,13 +80,6 @@
             },
             {
                 "name": "macOSIntel",
-                "filename": "",
-                "url": "",
-                "md5": "",
-                "message": ""
-            },
-            {
-                "name": "LinuxDEB",
                 "filename": "",
                 "url": "",
                 "md5": "",
