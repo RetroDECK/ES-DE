@@ -524,8 +524,8 @@ void applicationLoop()
             } while (SDL_PollEvent(&event));
         }
 
-        int curTime = SDL_GetTicks();
-        int deltaTime = curTime - lastTime;
+        int curTime {static_cast<int>(SDL_GetTicks())};
+        int deltaTime {curTime - lastTime};
         lastTime = curTime;
 
         // Cap deltaTime if it ever goes negative.
