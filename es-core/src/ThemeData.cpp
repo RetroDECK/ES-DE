@@ -1349,7 +1349,11 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
         capabilities.validTheme = false;
         LOG(LogWarning)
             << "No capabilities.xml file found, this does not appear to be a valid theme set: \""
+#if defined(_WIN64)
+            << Utils::String::replace(path, "/", "\\") << "\"";
+#else
             << path << "\"";
+#endif
     }
 
     // Add the aspect ratios in the order they are defined in sSupportedAspectRatios so they
