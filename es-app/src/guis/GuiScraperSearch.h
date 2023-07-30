@@ -102,7 +102,7 @@ public:
     std::shared_ptr<ComponentList> getResultList() { return mResultList; }
 
 private:
-    void updateViewStyle();
+    void updateView();
     void updateThumbnail();
     void updateInfoPane();
     void resizeMetadata();

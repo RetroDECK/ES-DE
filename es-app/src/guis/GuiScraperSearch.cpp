@@ -137,7 +137,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, in
             updateInfoPane();
     });
 
-    updateViewStyle();
+    updateView();
 }
 
 GuiScraperSearch::~GuiScraperSearch()
@@ -293,7 +293,7 @@ void GuiScraperSearch::resizeMetadata()
     }
 }
 
-void GuiScraperSearch::updateViewStyle()
+void GuiScraperSearch::updateView()
 {
     // Unlink description, result list and result name.
     mGrid.removeEntry(mResultName);
