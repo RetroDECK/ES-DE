@@ -1425,7 +1425,7 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
 std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig()
 {
     std::vector<std::string> systems;
-    std::vector<std::string> configPaths {SystemData::getConfigPath(false)};
+    std::vector<std::string> configPaths {SystemData::getConfigPath()};
 
     // Here we don't honor the <loadExclusive> tag which may be present in the custom es_systems.xml
     // file under ~/.emulationstation/custom_systems as we really want to include all the themes

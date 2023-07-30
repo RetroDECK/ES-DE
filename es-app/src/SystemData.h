@@ -109,7 +109,7 @@ public:
     static void deleteSystems();
     // Loads the systems configuration file(s) at getConfigPath() and creates the systems.
     static bool loadConfig();
-    static std::vector<std::string> getConfigPath(bool legacyWarning);
+    static std::vector<std::string> getConfigPath();
     // Parses an optional es_systems_sorting.xml file.
     static void loadSortingConfig();
 

@@ -467,7 +467,7 @@ bool SystemData::loadConfig()
         LOG(LogInfo) << "Only parsing the gamelist.xml files, not scanning system directories";
     }
 
-    const std::vector<std::string>& configPaths {getConfigPath(true)};
+    const std::vector<std::string>& configPaths {getConfigPath()};
     const std::string& rompath {FileData::getROMDirectory()};
     bool onlyProcessCustomFile {false};
 
@@ -897,27 +897,9 @@ void SystemData::deleteSystems()
     sSystemVector.clear();
 }
 
-std::vector<std::string> SystemData::getConfigPath(bool legacyWarning)
+std::vector<std::string> SystemData::getConfigPath()
 {
     std::vector<std::string> paths;
-
-    if (legacyWarning) {
-        const std::string& legacyConfigFile {Utils::FileSystem::getHomePath() +
-                                             "/.emulationstation/es_systems.cfg"};
-
-        if (Utils::FileSystem::exists(legacyConfigFile)) {
-#if defined(_WIN64)
-            LOG(LogInfo) << "Found legacy systems configuration file \""
-                         << Utils::String::replace(legacyConfigFile, "/", "\\")
-                         << "\", to retain your customizations move it to "
-                            "\"custom_systems\\es_systems.xml\" or otherwise delete the file";
-#else
-            LOG(LogInfo) << "Found legacy systems configuration file \"" << legacyConfigFile
-                         << "\", to retain your customizations move it to "
-                            "\"custom_systems/es_systems.xml\" or otherwise delete the file";
-#endif
-        }
-    }
 
     const std::string& customSystemsDirectory {Utils::FileSystem::getHomePath() +
                                                "/.emulationstation/custom_systems"};
@@ -951,7 +933,7 @@ std::vector<std::string> SystemData::getConfigPath(bool legacyWarning)
 
 bool SystemData::createSystemDirectories()
 {
-    std::vector<std::string> configPaths {getConfigPath(true)};
+    std::vector<std::string> configPaths {getConfigPath()};
     const std::string& rompath {FileData::getROMDirectory()};
 
     bool onlyProcessCustomFile {false};
