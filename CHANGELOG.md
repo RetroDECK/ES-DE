@@ -8,17 +8,22 @@
 
 ### Detailed list of changes
 
+* Completely removed support for legacy EmulationStation themes
+* Removed the "Legacy gamelist view style" and "Legacy theme transitions" settings
+* Removed the "Display pillarboxes for gamelist videos" and "Render scanlines for gamelist videos" settings
 * Added support for pasting text into the application (when a text input field is focused)
 * Added support for using most characters (including multi-byte Unicode characters) in custom collection names
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
 * Added a utility for removing orphaned data (game media, gamelist entries and custom collection entries)
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
+* Changed the "no games" dialog to no longer save the ROM directory to es_settings.xml if its value hasn't changed
 * When editing custom collections with really long names, the "Y" helpsystem text now gets abbreviated
 * Removed Linux DEB package support from ApplicationUpdater as these packages are no longer provided
 * Changed ComponentList to fixed row heights which fixed many alignment issues
 * Improved the layout for the scraper and theme downloader to look more consistent across different display aspect ratios
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
+* Removed the es_log.txt entry when an es_systems.cfg legacy systems configuration file was found on startup
 * Improved menu system font rendering on GPUs without proper texture filtering support
 * Added theme support for the "manual" metadata type for the text element
 * Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
@@ -28,6 +33,8 @@
 
 ### Bug fixes
 
+* Directories interpreted as files entries could not be removed from custom collections
+* (Windows) If the ROMDirectory setting had a value then all custom collection files contained absolute paths instead of relative paths
 * (Windows) Wide string conversions were not done correctly which caused issues when filenames contained 4-byte Unicode characters
 * (Windows) Attempting to capitalize multi-byte Unicode strings crashed the application if built using the MSVC compiler
 * The camera offset in ComponentList was not correctly calculated when reaching the bottom of a list

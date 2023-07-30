@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.1 (development version) - Themes
+# EmulationStation Desktop Edition (ES-DE) v2.2 (development version) - Themes
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
@@ -86,9 +86,9 @@ If a theme set with the same name exists in both locations, the one in the home 
 
 ## Differences to legacy RetroPie themes
 
-If you are not familiar with theming for RetroPie or similar forks of EmulationStation you can skip this section as it only describes the key differences between the updated ES-DE themes and these _legacy_ theme sets. The term _legacy_ is used throughout this document to refer to this older style of themes which ES-DE still fully supports for backward compatibility reasons. The old theme format is described in [THEMES-LEGACY.md](THEMES-LEGACY.md) although this document is basically a historical artifact by now.
+If you are not familiar with theming for RetroPie or similar forks of EmulationStation then you can skip this section as it only describes the key differences between the updated ES-DE themes and these legacy theme sets. The term _legacy_ is used throughout this document to refer to this older style of themes. ES-DE as of 2.2.0 can no longer load legacy themes, so if you need to view them when porting them to ES-DE, either use a legacy EmulationStation fork or ES-DE 2.1.1.
 
-With ES-DE v2.0 a new theme engine was introduced that fundamentally changed some aspects of how theming works. The previous design used specific view styles (basic, detailed, video and grid) and this was dropped completely and replaced with _variants_ that can accomplish the same thing while being much more powerful and flexible.
+With ES-DE 2.0.0 a new theme engine was introduced that fundamentally changed some aspects of how theming works. The previous design used specific view styles (basic, detailed, video and grid) and this was dropped completely and replaced with _variants_ that can accomplish the same thing while being much more powerful and flexible.
 
 In the past EmulationStation basically had hardcoded view styles with certain elements always being present and only a limited ability to manipulate these via positioning, resizing, coloring etc. As well so-called _extras_ were provided to expand theming support somehow but even this was quite limited.
 
@@ -681,12 +681,12 @@ Finally it's possible to apply theme-defined transition profiles on a per-varian
 
 ## capabilities.xml
 
-Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
+Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to be placed in the root of the theme directory, for example:
 ```
 ~/.emulationstation/themes/mythemeset-es-de/capabilities.xml
 ```
 
-This file type was introduced with the new ES-DE theme engine in v2.0 and is an indicator that the theme set is of the new generation instead of being of the legacy type (i.e. a theme set backward compatible with RetroPie EmulationStation). In other words, if the capabilities.xml file is absent, the theme will get loaded as a legacy set.
+The capabilities.xml file is mandatory and if it doesn't exist ES-DE will not attempt to load the theme.
 
 The structure of the file is simple, as can be seen in this example:
 
@@ -742,7 +742,7 @@ The structure of the file is simple, as can be seen in this example:
 ```
 The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes, one transition animation profile and three variants, one of which is a variant trigger override. The `<label>` tag for the variants and transitions is the text that will show up in the _UI Settings_ menu, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
-The optional `<themeName>` tag defines the name that will show up in the _Theme set_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEMESET-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu. Legacy theme sets are also clearly marked with a _[LEGACY]_ suffix.
+The optional `<themeName>` tag defines the name that will show up in the _Theme set_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEMESET-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu.
 
 The variant, color scheme and transitions names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants, color schemes and transition animations will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
 
