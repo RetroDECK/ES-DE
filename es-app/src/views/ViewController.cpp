@@ -51,7 +51,6 @@ ViewController::ViewController() noexcept
     , mNextSystem {false}
 {
     mState.viewing = NOTHING;
-    mState.viewstyle = AUTOMATIC;
 }
 
 ViewController* ViewController::getInstance()
@@ -699,19 +698,6 @@ void ViewController::goToGamelist(SystemData* system)
     mState.viewing = GAMELIST;
     mState.system = system;
 
-    if (system->getTheme()->isLegacyTheme()) {
-        auto it = mGamelistViews.find(system);
-        if (it != mGamelistViews.cend()) {
-            std::string viewStyle {it->second->getName()};
-            if (viewStyle == "basic")
-                mState.viewstyle = BASIC;
-            else if (viewStyle == "detailed")
-                mState.viewstyle = DETAILED;
-            else if (viewStyle == "video")
-                mState.viewstyle = VIDEO;
-        }
-    }
-
     if (mCurrentView)
         mCurrentView->onShow();
 
@@ -905,55 +891,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     // If there's no entry, then create it and return it.
     std::shared_ptr<GamelistView> view;
 
-    if (system->getTheme()->isLegacyTheme()) {
-        const bool themeHasVideoView {system->getTheme()->hasView("video")};
-
-        // Decide which view style to use.
-        GamelistViewStyle selectedViewStyle {AUTOMATIC};
-
-        const std::string& viewPreference {Settings::getInstance()->getString("GamelistViewStyle")};
-        if (viewPreference == "basic")
-            selectedViewStyle = BASIC;
-        else if (viewPreference == "detailed")
-            selectedViewStyle = DETAILED;
-        else if (viewPreference == "video")
-            selectedViewStyle = VIDEO;
-
-        if (selectedViewStyle == AUTOMATIC) {
-            const std::vector<FileData*> files {
-                system->getRootFolder()->getFilesRecursive(GAME | FOLDER)};
-
-            for (auto it = files.cbegin(); it != files.cend(); ++it) {
-                if (themeHasVideoView && !(*it)->getVideoPath().empty()) {
-                    selectedViewStyle = VIDEO;
-                    break;
-                }
-                else if (!(*it)->getImagePath().empty()) {
-                    selectedViewStyle = DETAILED;
-                    // Don't break out in case any subsequent files have videos.
-                }
-            }
-        }
-        // Create the view.
-        switch (selectedViewStyle) {
-            case VIDEO: {
-                mState.viewstyle = VIDEO;
-                break;
-            }
-            case DETAILED: {
-                mState.viewstyle = DETAILED;
-                break;
-            }
-            case BASIC: {
-            }
-            default: {
-                if (!system->isGroupedCustomCollection())
-                    mState.viewstyle = BASIC;
-                break;
-            }
-        }
-    }
-    else if (Settings::getInstance()->getBool("ThemeVariantTriggers")) {
+    if (Settings::getInstance()->getBool("ThemeVariantTriggers")) {
         const auto overrides = system->getTheme()->getCurrentThemeSetSelectedVariantOverrides();
 
         if (!overrides.empty()) {
@@ -1469,15 +1407,8 @@ HelpStyle ViewController::getHelpStyle()
 
 HelpStyle ViewController::getViewHelpStyle()
 {
-    if (mState.getSystem()->getTheme()->isLegacyTheme()) {
-        // For backward compatibility with legacy theme sets, read the helpsystem theme config
-        // from the system view entry.
+    if (mState.viewing == ViewMode::GAMELIST)
+        return getGamelistView(mState.getSystem())->getHelpStyle();
+    else
         return getSystemListView()->getHelpStyle();
-    }
-    else {
-        if (mState.viewing == ViewMode::GAMELIST)
-            return getGamelistView(mState.getSystem())->getHelpStyle();
-        else
-            return getSystemListView()->getHelpStyle();
-    }
 }

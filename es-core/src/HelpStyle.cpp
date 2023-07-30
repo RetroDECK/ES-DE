@@ -34,7 +34,6 @@ HelpStyle::HelpStyle()
     , iconTextSpacingDimmed {iconTextSpacing}
     , opacity {1.0f}
     , opacityDimmed {opacity}
-    , legacyTheme {false}
     , letterCase {"uppercase"}
 {
 }
@@ -44,8 +43,6 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
     auto elem = theme->getElement(view, "helpsystem_help", "helpsystem");
     if (!elem)
         return;
-
-    legacyTheme = theme->isLegacyTheme();
 
     if (elem->has("pos"))
         position = elem->get<glm::vec2>("pos") *
@@ -82,15 +79,13 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         iconColorDimmed = iconColor;
 
     if (elem->has("fontPath") || elem->has("fontSize")) {
-        font = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false, theme->isLegacyTheme());
+        font = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false);
         if (!elem->has("fontSizeDimmed"))
-            fontDimmed = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false,
-                                            theme->isLegacyTheme());
+            fontDimmed = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false);
     }
 
     if (elem->has("fontSizeDimmed")) {
-        fontDimmed = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false,
-                                        theme->isLegacyTheme(), 1.0f, true);
+        fontDimmed = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false, 1.0f, true);
     }
 
     if (elem->has("entrySpacing"))

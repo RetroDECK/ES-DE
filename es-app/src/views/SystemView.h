@@ -36,7 +36,6 @@ public:
     using PrimaryType = PrimaryComponent<SystemData*>::PrimaryType;
 
     SystemView();
-    ~SystemView();
 
     void onShow() override;
     void onTransition() override;
@@ -108,7 +107,6 @@ private:
     void populate();
     void updateGameCount(SystemData* system = nullptr);
     void updateGameSelectors();
-    void legacyApplyTheme(const std::shared_ptr<ThemeData>& theme);
     void renderElements(const glm::mat4& parentTrans, bool abovePrimary);
 
     struct SystemViewElements {
@@ -117,7 +115,6 @@ private:
         std::string name;
         std::string fullName;
         std::vector<std::unique_ptr<GameSelectorComponent>> gameSelectors;
-        std::vector<GuiComponent*> legacyExtras;
         std::vector<GuiComponent*> children;
 
         std::vector<std::unique_ptr<ImageComponent>> imageComponents;
@@ -136,7 +133,6 @@ private:
     std::unique_ptr<CarouselComponent<SystemData*>> mCarousel;
     std::unique_ptr<GridComponent<SystemData*>> mGrid;
     std::unique_ptr<TextListComponent<SystemData*>> mTextList;
-    std::unique_ptr<TextComponent> mLegacySystemInfo;
     std::vector<SystemViewElements> mSystemElements;
     PrimaryComponent<SystemData*>* mPrimary;
     PrimaryType mPrimaryType;
@@ -152,7 +148,6 @@ private:
 
     bool mUpdatedGameCount;
     bool mViewNeedsReload;
-    bool mLegacyMode;
     bool mNavigated;
     bool mMaxFade;
     bool mFadeTransitions;

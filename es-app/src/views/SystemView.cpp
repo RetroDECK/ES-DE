@@ -31,7 +31,6 @@ SystemView::SystemView()
     , mPreviousScrollVelocity {0}
     , mUpdatedGameCount {false}
     , mViewNeedsReload {true}
-    , mLegacyMode {false}
     , mNavigated {false}
     , mMaxFade {false}
     , mFadeTransitions {false}
@@ -39,18 +38,6 @@ SystemView::SystemView()
 {
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     populate();
-}
-
-SystemView::~SystemView()
-{
-    if (mLegacyMode) {
-        // Delete any existing extras.
-        for (auto& entry : mSystemElements) {
-            for (auto extra : entry.legacyExtras)
-                delete extra;
-            entry.legacyExtras.clear();
-        }
-    }
 }
 
 void SystemView::onShow()
@@ -465,12 +452,6 @@ void SystemView::populate()
         selectedSet {themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
 
     assert(selectedSet != themeSets.cend());
-    mLegacyMode = selectedSet->second.capabilities.legacyTheme;
-
-    if (mLegacyMode) {
-        mLegacySystemInfo = std::make_unique<TextComponent>(
-            "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER);
-    }
 
     for (auto it : SystemData::sSystemVector) {
         const std::shared_ptr<ThemeData>& theme {it->getTheme()};
@@ -478,293 +459,234 @@ void SystemView::populate()
         std::string defaultImagePath;
         std::string itemText;
 
-        if (mLegacyMode && mViewNeedsReload) {
-            if (mCarousel == nullptr) {
-                mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
-                mPrimary = mCarousel.get();
-                // For legacy themes the carousel has a zIndex value of 40 instead of 50.
-                mPrimary->setDefaultZIndex(40.0f);
-                mPrimary->setCursorChangedCallback(
-                    [&](const CursorState& state) { onCursorChanged(state); });
-                mPrimary->setCancelTransitionsCallback([&] {
-                    ViewController::getInstance()->cancelViewTransitions();
-                    mNavigated = true;
-                    if (mSystemElements.size() > 1) {
-                        for (auto& anim :
-                             mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
-                            anim->setPauseAnimation(true);
-                        for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
-                            anim->setPauseAnimation(true);
-                    }
-                });
-            }
-            legacyApplyTheme(theme);
-        }
-
-        if (mLegacyMode) {
-            SystemViewElements elements;
-            elements.system = it;
+        SystemViewElements elements;
+        elements.system = it;
+        if (theme->hasView("system")) {
             elements.name = it->getName();
-            elements.legacyExtras = ThemeData::makeExtras(theme, "system");
-
-            // Sort the extras by z-index.
-            std::stable_sort(
-                elements.legacyExtras.begin(), elements.legacyExtras.end(),
-                [](GuiComponent* a, GuiComponent* b) { return b->getZIndex() > a->getZIndex(); });
-
-            mSystemElements.emplace_back(std::move(elements));
-            mSystemElements.back().helpStyle.applyTheme(theme, "system");
-        }
-
-        if (!mLegacyMode) {
-            SystemViewElements elements;
-            elements.system = it;
-            if (theme->hasView("system")) {
-                elements.name = it->getName();
-                elements.fullName = it->getFullName();
-                for (auto& element : theme->getViewElements("system").elements) {
-                    if (element.second.type == "gameselector") {
-                        elements.gameSelectors.emplace_back(
-                            std::make_unique<GameSelectorComponent>(it));
-                        elements.gameSelectors.back()->applyTheme(theme, "system", element.first,
-                                                                  ThemeFlags::ALL);
-                        elements.gameSelectors.back()->setNeedsRefresh();
+            elements.fullName = it->getFullName();
+            for (auto& element : theme->getViewElements("system").elements) {
+                if (element.second.type == "gameselector") {
+                    elements.gameSelectors.emplace_back(
+                        std::make_unique<GameSelectorComponent>(it));
+                    elements.gameSelectors.back()->applyTheme(theme, "system", element.first,
+                                                              ThemeFlags::ALL);
+                    elements.gameSelectors.back()->setNeedsRefresh();
+                }
+                if (element.second.type == "carousel" || element.second.type == "grid" ||
+                    element.second.type == "textlist") {
+                    if (element.second.type == "carousel" &&
+                        (mGrid != nullptr || mTextList != nullptr)) {
+                        LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
+                                        << "defined, skipping carousel configuration entry";
+                        continue;
                     }
-                    if (element.second.type == "carousel" || element.second.type == "grid" ||
-                        element.second.type == "textlist") {
-                        if (element.second.type == "carousel" &&
-                            (mGrid != nullptr || mTextList != nullptr)) {
-                            LOG(LogWarning)
-                                << "SystemView::populate(): Multiple primary components "
-                                << "defined, skipping carousel configuration entry";
-                            continue;
-                        }
-                        if (element.second.type == "grid" &&
-                            (mCarousel != nullptr || mTextList != nullptr)) {
-                            LOG(LogWarning)
-                                << "SystemView::populate(): Multiple primary components "
-                                << "defined, skipping grid configuration entry";
-                            continue;
-                        }
-                        if (element.second.type == "textlist" &&
-                            (mCarousel != nullptr || mGrid != nullptr)) {
-                            LOG(LogWarning)
-                                << "SystemView::populate(): Multiple primary components "
-                                << "defined, skipping textlist configuration entry";
-                            continue;
-                        }
-                        if (element.second.type == "carousel" && mCarousel == nullptr) {
-                            mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
-                            mPrimary = mCarousel.get();
-                            mPrimaryType = PrimaryType::CAROUSEL;
-                        }
-                        else if (element.second.type == "grid" && mGrid == nullptr) {
-                            mGrid = std::make_unique<GridComponent<SystemData*>>();
-                            mPrimary = mGrid.get();
-                            mPrimaryType = PrimaryType::GRID;
-                        }
-                        else if (element.second.type == "textlist" && mTextList == nullptr) {
-                            mTextList = std::make_unique<TextListComponent<SystemData*>>();
-                            mPrimary = mTextList.get();
-                            mPrimaryType = PrimaryType::TEXTLIST;
-                        }
-                        mPrimary->setDefaultZIndex(50.0f);
-                        mPrimary->applyTheme(theme, "system", element.first, ThemeFlags::ALL);
-                        mPrimary->setCursorChangedCallback(
-                            [&](const CursorState& state) { onCursorChanged(state); });
-                        mPrimary->setCancelTransitionsCallback([&] {
-                            ViewController::getInstance()->cancelViewTransitions();
-                            mNavigated = true;
-                            if (mSystemElements.size() > 1) {
-                                for (auto& anim :
-                                     mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
-                                    anim->setPauseAnimation(true);
-                                for (auto& anim :
-                                     mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
-                                    anim->setPauseAnimation(true);
-                            }
-                        });
-                        if (mCarousel != nullptr || mGrid != nullptr) {
-                            if (element.second.has("staticImage"))
-                                imagePath = element.second.get<std::string>("staticImage");
-                            if (element.second.has("defaultImage"))
-                                defaultImagePath = element.second.get<std::string>("defaultImage");
-                            if (element.second.has("text"))
-                                itemText = element.second.get<std::string>("text");
-                        }
+                    if (element.second.type == "grid" &&
+                        (mCarousel != nullptr || mTextList != nullptr)) {
+                        LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
+                                        << "defined, skipping grid configuration entry";
+                        continue;
                     }
-                    else if (element.second.type == "image" &&
-                             !(element.second.has("visible") &&
-                               !element.second.get<bool>("visible"))) {
-                        // If this is the first system then forceload to avoid texture pop-in.
-                        if (it == SystemData::sSystemVector.front())
-                            elements.imageComponents.emplace_back(
-                                std::make_unique<ImageComponent>(true));
-                        else
-                            elements.imageComponents.emplace_back(
-                                std::make_unique<ImageComponent>());
-
-                        elements.imageComponents.back()->setDefaultZIndex(30.0f);
-                        elements.imageComponents.back()->applyTheme(theme, "system", element.first,
-                                                                    ThemeFlags::ALL);
-                        elements.children.emplace_back(elements.imageComponents.back().get());
+                    if (element.second.type == "textlist" &&
+                        (mCarousel != nullptr || mGrid != nullptr)) {
+                        LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
+                                        << "defined, skipping textlist configuration entry";
+                        continue;
                     }
-                    else if (element.second.type == "video" &&
-                             !(element.second.has("visible") &&
-                               !element.second.get<bool>("visible"))) {
-                        elements.videoComponents.emplace_back(
-                            std::make_unique<VideoFFmpegComponent>());
-                        elements.videoComponents.back()->setDefaultZIndex(30.0f);
-                        elements.videoComponents.back()->setStaticVideo();
-                        elements.videoComponents.back()->applyTheme(theme, "system", element.first,
-                                                                    ThemeFlags::ALL);
-                        elements.children.emplace_back(elements.videoComponents.back().get());
+                    if (element.second.type == "carousel" && mCarousel == nullptr) {
+                        mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
+                        mPrimary = mCarousel.get();
+                        mPrimaryType = PrimaryType::CAROUSEL;
                     }
-                    else if (element.second.type == "animation" && element.second.has("path") &&
-                             !(element.second.has("visible") &&
-                               !element.second.get<bool>("visible"))) {
-                        const std::string extension {Utils::FileSystem::getExtension(
-                            element.second.get<std::string>("path"))};
-                        if (extension == ".json") {
-                            elements.lottieAnimComponents.emplace_back(
-                                std::make_unique<LottieAnimComponent>());
-                            elements.lottieAnimComponents.back()->setDefaultZIndex(35.0f);
-                            elements.lottieAnimComponents.back()->applyTheme(
-                                theme, "system", element.first, ThemeFlags::ALL);
-                            elements.children.emplace_back(
-                                elements.lottieAnimComponents.back().get());
-                        }
-                        else if (extension == ".gif") {
-                            elements.GIFAnimComponents.emplace_back(
-                                std::make_unique<GIFAnimComponent>());
-                            elements.GIFAnimComponents.back()->setDefaultZIndex(35.0f);
-                            elements.GIFAnimComponents.back()->applyTheme(
-                                theme, "system", element.first, ThemeFlags::ALL);
-                            elements.children.emplace_back(elements.GIFAnimComponents.back().get());
-                        }
-                        else if (extension == ".") {
-                            LOG(LogWarning)
-                                << "SystemView::populate(): Invalid theme configuration, "
-                                   "animation file extension is missing";
-                        }
-                        else {
-                            LOG(LogWarning)
-                                << "SystemView::populate(): Invalid theme configuration, "
-                                   "animation file extension defined as \""
-                                << extension << "\"";
-                        }
+                    else if (element.second.type == "grid" && mGrid == nullptr) {
+                        mGrid = std::make_unique<GridComponent<SystemData*>>();
+                        mPrimary = mGrid.get();
+                        mPrimaryType = PrimaryType::GRID;
                     }
-                    else if (element.second.type == "text" &&
-                             !(element.second.has("visible") &&
-                               !element.second.get<bool>("visible"))) {
-                        // Set as container by default if metadata type is "description".
-                        bool container {false};
-                        if (element.second.has("container")) {
-                            container = element.second.get<bool>("container");
-                        }
-                        else if (element.second.has("metadata") &&
-                                 element.second.get<std::string>("metadata") == "description") {
-                            container = true;
-                        }
-                        if (element.second.has("systemdata") &&
-                            element.second.get<std::string>("systemdata").substr(0, 9) ==
-                                "gamecount") {
-                            // A container can't be used if systemdata is set to a gamecount value.
-                            if (element.second.has("systemdata")) {
-                                elements.gameCountComponents.emplace_back(
-                                    std::make_unique<TextComponent>());
-                                elements.gameCountComponents.back()->setDefaultZIndex(40.0f);
-                                elements.gameCountComponents.back()->applyTheme(
-                                    theme, "system", element.first, ThemeFlags::ALL);
-                                elements.children.emplace_back(
-                                    elements.gameCountComponents.back().get());
-                            }
-                        }
-                        else {
-                            if (container) {
-                                elements.containerComponents.push_back(
-                                    std::make_unique<ScrollableContainer>());
-                                elements.containerComponents.back()->setDefaultZIndex(40.0f);
-                                elements.containerTextComponents.push_back(
-                                    std::make_unique<TextComponent>());
-                                elements.containerTextComponents.back()->setDefaultZIndex(40.0f);
-                                elements.containerComponents.back()->addChild(
-                                    elements.containerTextComponents.back().get());
-                                elements.containerComponents.back()->applyTheme(
-                                    theme, "system", element.first,
-                                    ThemeFlags::POSITION | ThemeFlags::SIZE | ThemeFlags::Z_INDEX |
-                                        ThemeFlags::VISIBLE);
-                                elements.containerComponents.back()->setAutoScroll(true);
-                                elements.containerTextComponents.back()->setSize(
-                                    elements.containerComponents.back()->getSize().x, 0.0f);
-                                elements.containerTextComponents.back()->applyTheme(
-                                    theme, "system", element.first,
-                                    ThemeFlags::ALL ^ ThemeFlags::POSITION ^ ThemeFlags::ORIGIN ^
-                                        ThemeFlags::Z_INDEX ^ ThemeFlags::SIZE ^
-                                        ThemeFlags::VISIBLE ^ ThemeFlags::ROTATION);
-                                elements.children.emplace_back(
-                                    elements.containerComponents.back().get());
-                            }
-                            else {
-                                elements.textComponents.emplace_back(
-                                    std::make_unique<TextComponent>());
-                                elements.textComponents.back()->setDefaultZIndex(40.0f);
-                                elements.textComponents.back()->applyTheme(
-                                    theme, "system", element.first, ThemeFlags::ALL);
-                                elements.children.emplace_back(
-                                    elements.textComponents.back().get());
-                            }
-                        }
+                    else if (element.second.type == "textlist" && mTextList == nullptr) {
+                        mTextList = std::make_unique<TextListComponent<SystemData*>>();
+                        mPrimary = mTextList.get();
+                        mPrimaryType = PrimaryType::TEXTLIST;
                     }
-                    else if (element.second.type == "datetime" &&
-                             !(element.second.has("visible") &&
-                               !element.second.get<bool>("visible"))) {
-                        elements.dateTimeComponents.emplace_back(
-                            std::make_unique<DateTimeComponent>());
-                        elements.dateTimeComponents.back()->setDefaultZIndex(40.0f);
-                        elements.dateTimeComponents.back()->applyTheme(
-                            theme, "system", element.first, ThemeFlags::ALL);
-                        elements.dateTimeComponents.back()->setVisible(false);
-                        elements.children.emplace_back(elements.dateTimeComponents.back().get());
-                    }
-                    else if (element.second.type == "rating" &&
-                             !(element.second.has("visible") &&
-                               !element.second.get<bool>("visible"))) {
-                        elements.ratingComponents.emplace_back(std::make_unique<RatingComponent>());
-                        elements.ratingComponents.back()->setDefaultZIndex(45.0f);
-                        elements.ratingComponents.back()->applyTheme(theme, "system", element.first,
-                                                                     ThemeFlags::ALL);
-                        elements.ratingComponents.back()->setVisible(false);
-                        elements.ratingComponents.back()->setOpacity(
-                            elements.ratingComponents.back()->getOpacity());
-                        elements.children.emplace_back(elements.ratingComponents.back().get());
+                    mPrimary->setDefaultZIndex(50.0f);
+                    mPrimary->applyTheme(theme, "system", element.first, ThemeFlags::ALL);
+                    mPrimary->setCursorChangedCallback(
+                        [&](const CursorState& state) { onCursorChanged(state); });
+                    mPrimary->setCancelTransitionsCallback([&] {
+                        ViewController::getInstance()->cancelViewTransitions();
+                        mNavigated = true;
+                        if (mSystemElements.size() > 1) {
+                            for (auto& anim :
+                                 mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
+                                anim->setPauseAnimation(true);
+                            for (auto& anim :
+                                 mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
+                                anim->setPauseAnimation(true);
+                        }
+                    });
+                    if (mCarousel != nullptr || mGrid != nullptr) {
+                        if (element.second.has("staticImage"))
+                            imagePath = element.second.get<std::string>("staticImage");
+                        if (element.second.has("defaultImage"))
+                            defaultImagePath = element.second.get<std::string>("defaultImage");
+                        if (element.second.has("text"))
+                            itemText = element.second.get<std::string>("text");
                     }
                 }
+                else if (element.second.type == "image" &&
+                         !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
+                    // If this is the first system then forceload to avoid texture pop-in.
+                    if (it == SystemData::sSystemVector.front())
+                        elements.imageComponents.emplace_back(
+                            std::make_unique<ImageComponent>(true));
+                    else
+                        elements.imageComponents.emplace_back(std::make_unique<ImageComponent>());
+
+                    elements.imageComponents.back()->setDefaultZIndex(30.0f);
+                    elements.imageComponents.back()->applyTheme(theme, "system", element.first,
+                                                                ThemeFlags::ALL);
+                    elements.children.emplace_back(elements.imageComponents.back().get());
+                }
+                else if (element.second.type == "video" &&
+                         !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
+                    elements.videoComponents.emplace_back(std::make_unique<VideoFFmpegComponent>());
+                    elements.videoComponents.back()->setDefaultZIndex(30.0f);
+                    elements.videoComponents.back()->setStaticVideo();
+                    elements.videoComponents.back()->applyTheme(theme, "system", element.first,
+                                                                ThemeFlags::ALL);
+                    elements.children.emplace_back(elements.videoComponents.back().get());
+                }
+                else if (element.second.type == "animation" && element.second.has("path") &&
+                         !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
+                    const std::string extension {
+                        Utils::FileSystem::getExtension(element.second.get<std::string>("path"))};
+                    if (extension == ".json") {
+                        elements.lottieAnimComponents.emplace_back(
+                            std::make_unique<LottieAnimComponent>());
+                        elements.lottieAnimComponents.back()->setDefaultZIndex(35.0f);
+                        elements.lottieAnimComponents.back()->applyTheme(
+                            theme, "system", element.first, ThemeFlags::ALL);
+                        elements.children.emplace_back(elements.lottieAnimComponents.back().get());
+                    }
+                    else if (extension == ".gif") {
+                        elements.GIFAnimComponents.emplace_back(
+                            std::make_unique<GIFAnimComponent>());
+                        elements.GIFAnimComponents.back()->setDefaultZIndex(35.0f);
+                        elements.GIFAnimComponents.back()->applyTheme(
+                            theme, "system", element.first, ThemeFlags::ALL);
+                        elements.children.emplace_back(elements.GIFAnimComponents.back().get());
+                    }
+                    else if (extension == ".") {
+                        LOG(LogWarning) << "SystemView::populate(): Invalid theme configuration, "
+                                           "animation file extension is missing";
+                    }
+                    else {
+                        LOG(LogWarning) << "SystemView::populate(): Invalid theme configuration, "
+                                           "animation file extension defined as \""
+                                        << extension << "\"";
+                    }
+                }
+                else if (element.second.type == "text" &&
+                         !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
+                    // Set as container by default if metadata type is "description".
+                    bool container {false};
+                    if (element.second.has("container")) {
+                        container = element.second.get<bool>("container");
+                    }
+                    else if (element.second.has("metadata") &&
+                             element.second.get<std::string>("metadata") == "description") {
+                        container = true;
+                    }
+                    if (element.second.has("systemdata") &&
+                        element.second.get<std::string>("systemdata").substr(0, 9) == "gamecount") {
+                        // A container can't be used if systemdata is set to a gamecount value.
+                        if (element.second.has("systemdata")) {
+                            elements.gameCountComponents.emplace_back(
+                                std::make_unique<TextComponent>());
+                            elements.gameCountComponents.back()->setDefaultZIndex(40.0f);
+                            elements.gameCountComponents.back()->applyTheme(
+                                theme, "system", element.first, ThemeFlags::ALL);
+                            elements.children.emplace_back(
+                                elements.gameCountComponents.back().get());
+                        }
+                    }
+                    else {
+                        if (container) {
+                            elements.containerComponents.push_back(
+                                std::make_unique<ScrollableContainer>());
+                            elements.containerComponents.back()->setDefaultZIndex(40.0f);
+                            elements.containerTextComponents.push_back(
+                                std::make_unique<TextComponent>());
+                            elements.containerTextComponents.back()->setDefaultZIndex(40.0f);
+                            elements.containerComponents.back()->addChild(
+                                elements.containerTextComponents.back().get());
+                            elements.containerComponents.back()->applyTheme(
+                                theme, "system", element.first,
+                                ThemeFlags::POSITION | ThemeFlags::SIZE | ThemeFlags::Z_INDEX |
+                                    ThemeFlags::VISIBLE);
+                            elements.containerComponents.back()->setAutoScroll(true);
+                            elements.containerTextComponents.back()->setSize(
+                                elements.containerComponents.back()->getSize().x, 0.0f);
+                            elements.containerTextComponents.back()->applyTheme(
+                                theme, "system", element.first,
+                                ThemeFlags::ALL ^ ThemeFlags::POSITION ^ ThemeFlags::ORIGIN ^
+                                    ThemeFlags::Z_INDEX ^ ThemeFlags::SIZE ^ ThemeFlags::VISIBLE ^
+                                    ThemeFlags::ROTATION);
+                            elements.children.emplace_back(
+                                elements.containerComponents.back().get());
+                        }
+                        else {
+                            elements.textComponents.emplace_back(std::make_unique<TextComponent>());
+                            elements.textComponents.back()->setDefaultZIndex(40.0f);
+                            elements.textComponents.back()->applyTheme(
+                                theme, "system", element.first, ThemeFlags::ALL);
+                            elements.children.emplace_back(elements.textComponents.back().get());
+                        }
+                    }
+                }
+                else if (element.second.type == "datetime" &&
+                         !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
+                    elements.dateTimeComponents.emplace_back(std::make_unique<DateTimeComponent>());
+                    elements.dateTimeComponents.back()->setDefaultZIndex(40.0f);
+                    elements.dateTimeComponents.back()->applyTheme(theme, "system", element.first,
+                                                                   ThemeFlags::ALL);
+                    elements.dateTimeComponents.back()->setVisible(false);
+                    elements.children.emplace_back(elements.dateTimeComponents.back().get());
+                }
+                else if (element.second.type == "rating" &&
+                         !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
+                    elements.ratingComponents.emplace_back(std::make_unique<RatingComponent>());
+                    elements.ratingComponents.back()->setDefaultZIndex(45.0f);
+                    elements.ratingComponents.back()->applyTheme(theme, "system", element.first,
+                                                                 ThemeFlags::ALL);
+                    elements.ratingComponents.back()->setVisible(false);
+                    elements.ratingComponents.back()->setOpacity(
+                        elements.ratingComponents.back()->getOpacity());
+                    elements.children.emplace_back(elements.ratingComponents.back().get());
+                }
             }
-
-            std::stable_sort(
-                elements.children.begin(), elements.children.end(),
-                [](GuiComponent* a, GuiComponent* b) { return b->getZIndex() > a->getZIndex(); });
-
-            std::stable_sort(elements.imageComponents.begin(), elements.imageComponents.end(),
-                             [](const std::unique_ptr<ImageComponent>& a,
-                                const std::unique_ptr<ImageComponent>& b) {
-                                 return b->getZIndex() > a->getZIndex();
-                             });
-            std::stable_sort(elements.textComponents.begin(), elements.textComponents.end(),
-                             [](const std::unique_ptr<TextComponent>& a,
-                                const std::unique_ptr<TextComponent>& b) {
-                                 return b->getZIndex() > a->getZIndex();
-                             });
-            std::stable_sort(elements.containerTextComponents.begin(),
-                             elements.containerTextComponents.end(),
-                             [](const std::unique_ptr<TextComponent>& a,
-                                const std::unique_ptr<TextComponent>& b) {
-                                 return b->getZIndex() > a->getZIndex();
-                             });
-            mSystemElements.emplace_back(std::move(elements));
-            mSystemElements.back().helpStyle.applyTheme(theme, "system");
         }
+
+        std::stable_sort(
+            elements.children.begin(), elements.children.end(),
+            [](GuiComponent* a, GuiComponent* b) { return b->getZIndex() > a->getZIndex(); });
+
+        std::stable_sort(
+            elements.imageComponents.begin(), elements.imageComponents.end(),
+            [](const std::unique_ptr<ImageComponent>& a, const std::unique_ptr<ImageComponent>& b) {
+                return b->getZIndex() > a->getZIndex();
+            });
+        std::stable_sort(
+            elements.textComponents.begin(), elements.textComponents.end(),
+            [](const std::unique_ptr<TextComponent>& a, const std::unique_ptr<TextComponent>& b) {
+                return b->getZIndex() > a->getZIndex();
+            });
+        std::stable_sort(
+            elements.containerTextComponents.begin(), elements.containerTextComponents.end(),
+            [](const std::unique_ptr<TextComponent>& a, const std::unique_ptr<TextComponent>& b) {
+                return b->getZIndex() > a->getZIndex();
+            });
+        mSystemElements.emplace_back(std::move(elements));
+        mSystemElements.back().helpStyle.applyTheme(theme, "system");
 
         if (mPrimary == nullptr) {
             mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
@@ -812,17 +734,10 @@ void SystemView::populate()
 
         if (mCarousel != nullptr) {
             CarouselComponent<SystemData*>::Entry entry;
-            if (mLegacyMode) {
-                // Keep showing only the short name for legacy themes to maintain maximum
-                // backward compatibility. This also applies to unreadable theme sets.
-                entry.name = it->getName();
-            }
-            else {
-                if (itemText == "")
-                    entry.name = it->getFullName();
-                else
-                    entry.name = itemText;
-            }
+            if (itemText == "")
+                entry.name = it->getFullName();
+            else
+                entry.name = itemText;
             letterCaseFunc(entry.name);
             entry.object = it;
             entry.data.imagePath = imagePath;
@@ -924,47 +839,39 @@ void SystemView::updateGameCount(SystemData* system)
         games = true;
     }
 
-    if (mLegacyMode) {
-        mLegacySystemInfo->setText(ss.str());
-    }
-    else {
-        auto elementsIt = std::find_if(mSystemElements.cbegin(), mSystemElements.cend(),
-                                       [sourceSystem](const SystemViewElements& systemElements) {
-                                           return systemElements.system == sourceSystem;
-                                       });
-        for (auto& gameCountComp : (*elementsIt).gameCountComponents) {
-            if (gameCountComp->getThemeSystemdata() == "gamecount") {
+    auto elementsIt = std::find_if(mSystemElements.cbegin(), mSystemElements.cend(),
+                                   [sourceSystem](const SystemViewElements& systemElements) {
+                                       return systemElements.system == sourceSystem;
+                                   });
+    for (auto& gameCountComp : (*elementsIt).gameCountComponents) {
+        if (gameCountComp->getThemeSystemdata() == "gamecount") {
+            gameCountComp->setValue(ss.str());
+        }
+        else if (gameCountComp->getThemeSystemdata() == "gamecountGames") {
+            if (games)
+                gameCountComp->setValue(ssGames.str());
+            else
                 gameCountComp->setValue(ss.str());
+        }
+        else if (gameCountComp->getThemeSystemdata() == "gamecountGamesNoText") {
+            gameCountComp->setValue(std::to_string(gameCount.first));
+        }
+        else if (gameCountComp->getThemeSystemdata() == "gamecountFavorites") {
+            gameCountComp->setValue(ssFavorites.str());
+        }
+        else if (gameCountComp->getThemeSystemdata() == "gamecountFavoritesNoText") {
+            if (!favoriteSystem && !recentSystem) {
+                gameCountComp->setValue(std::to_string(gameCount.second));
             }
-            else if (gameCountComp->getThemeSystemdata() == "gamecountGames") {
-                if (games)
-                    gameCountComp->setValue(ssGames.str());
-                else
-                    gameCountComp->setValue(ss.str());
-            }
-            else if (gameCountComp->getThemeSystemdata() == "gamecountGamesNoText") {
-                gameCountComp->setValue(std::to_string(gameCount.first));
-            }
-            else if (gameCountComp->getThemeSystemdata() == "gamecountFavorites") {
-                gameCountComp->setValue(ssFavorites.str());
-            }
-            else if (gameCountComp->getThemeSystemdata() == "gamecountFavoritesNoText") {
-                if (!favoriteSystem && !recentSystem) {
-                    gameCountComp->setValue(std::to_string(gameCount.second));
-                }
-            }
-            else {
-                gameCountComp->setValue(gameCountComp->getThemeSystemdata());
-            }
+        }
+        else {
+            gameCountComp->setValue(gameCountComp->getThemeSystemdata());
         }
     }
 }
 
 void SystemView::updateGameSelectors()
 {
-    if (mLegacyMode)
-        return;
-
     const int cursor {mPrimary->getCursor()};
 
     if (mSystemElements[cursor].gameSelectors.size() == 0)
@@ -1479,36 +1386,6 @@ void SystemView::updateGameSelectors()
     }
 }
 
-void SystemView::legacyApplyTheme(const std::shared_ptr<ThemeData>& theme)
-{
-    if (theme->hasView("system"))
-        mViewNeedsReload = false;
-    else
-        mViewNeedsReload = true;
-
-    if (mCarousel != nullptr)
-        mPrimary->applyTheme(theme, "system", "carousel_systemcarousel", ThemeFlags::ALL);
-    else if (mTextList != nullptr)
-        mPrimary->applyTheme(theme, "system", "textlist_gamelist", ThemeFlags::ALL);
-
-    mLegacySystemInfo->setSize(mSize.x, mLegacySystemInfo->getFont()->getLetterHeight() * 2.2f);
-    mLegacySystemInfo->setPosition(0.0f,
-                                   std::floor(mPrimary->getPosition().y) + mPrimary->getSize().y);
-    mLegacySystemInfo->setBackgroundColor(0xDDDDDDD8);
-    mLegacySystemInfo->setRenderBackground(true);
-    mLegacySystemInfo->setFont(Font::get(0.035f * mSize.y, Font::getDefaultPath()));
-    mLegacySystemInfo->setColor(0x000000FF);
-    mLegacySystemInfo->setUppercase(true);
-    mLegacySystemInfo->setZIndex(50.0f);
-    mLegacySystemInfo->setDefaultZIndex(50.0f);
-
-    const ThemeData::ThemeElement* sysInfoElem {
-        theme->getElement("system", "text_systemInfo", "text")};
-
-    if (sysInfoElem)
-        mLegacySystemInfo->applyTheme(theme, "system", "text_systemInfo", ThemeFlags::ALL);
-}
-
 void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
 {
     glm::mat4 trans {getTransform() * parentTrans};
@@ -1524,7 +1401,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
         renderAfter += 1;
     }
 
-    for (int i = renderBefore; i <= renderAfter; ++i) {
+    for (int i {renderBefore}; i <= renderAfter; ++i) {
         int index {i};
         while (index < 0)
             index += static_cast<int>(mPrimary->getNumEntries());
@@ -1560,24 +1437,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                             static_cast<int>(glm::round(elementTrans[3].y))},
                 glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
 
-            if (mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
-                for (auto element : mSystemElements[index].legacyExtras) {
-                    if (abovePrimary && element->getZIndex() < primaryZIndex)
-                        continue;
-                    if ((mFadeTransitions || element->getDimming() != 1.0f) &&
-                        element->getZIndex() < primaryZIndex)
-                        element->setDimming(1.0f - mFadeOpacity);
-                    if (mFadeTransitions && mPrimary->getFadeAbovePrimary()) {
-                        if (mFadeTransitions && isAnimationPlaying(0))
-                            element->setOpacity(1.0f - mFadeOpacity);
-                        else
-                            element->setOpacity(1.0f);
-                    }
-
-                    element->render(elementTrans);
-                }
-            }
-            else if (!mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
+            if (mSystemElements.size() > static_cast<size_t>(index)) {
                 for (auto child : mSystemElements[index].children) {
                     if (abovePrimary && (child->getZIndex() > primaryZIndex)) {
                         if (mFadeTransitions && mPrimary->getFadeAbovePrimary()) {
@@ -1596,18 +1456,6 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         child->render(elementTrans);
                     }
                 }
-            }
-
-            if (mLegacyMode) {
-                if (mFadeTransitions && !abovePrimary) {
-                    if (mFadeTransitions && isAnimationPlaying(0))
-                        mLegacySystemInfo->setOpacity(1.0f - mFadeOpacity);
-                    else
-                        mLegacySystemInfo->setOpacity(1.0f);
-                }
-                if ((abovePrimary && mLegacySystemInfo->getZIndex() > 40.0f) ||
-                    (!abovePrimary && mLegacySystemInfo->getZIndex() <= 40.0f))
-                    mLegacySystemInfo->render(elementTrans);
             }
 
             mRenderer->popClipRect();

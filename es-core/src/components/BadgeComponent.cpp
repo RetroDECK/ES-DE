@@ -228,18 +228,6 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mFlexboxComponent.setAlignment(horizontalAlignment);
         }
     }
-    // Legacy themes only.
-    else if (elem->has("alignment")) {
-        const std::string alignment {elem->get<std::string>("alignment")};
-        if (alignment != "left" && alignment != "right") {
-            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, property \"alignment\""
-                               " for element \""
-                            << element.substr(7) << "\" defined as \"" << alignment << "\"";
-        }
-        else {
-            mFlexboxComponent.setAlignment(alignment);
-        }
-    }
 
     if (elem->has("direction")) {
         const std::string direction {elem->get<std::string>("direction")};

@@ -256,10 +256,8 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         // in those modules as a post-processing step.
         if (!mScreensaverMode && !mMediaViewerMode) {
             vertices[0].opacity = mFadeIn * mOpacity * mThemeOpacity;
-            if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoScanlines")) ||
-                (!mLegacyTheme && mRenderScanlines)) {
+            if (mRenderScanlines)
                 vertices[0].shaders = Renderer::Shader::SCANLINES;
-            }
         }
 
         mRenderer->drawTriangleStrips(&vertices[0], 4, Renderer::BlendFactor::SRC_ALPHA,
@@ -995,8 +993,7 @@ void VideoFFmpegComponent::calculateBlackRectangle()
         mVideoRectangleCoords.clear();
         mRectangleOffset = {0.0f, 0.0f};
 
-        if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoPillarbox")) ||
-            (!mLegacyTheme && mDrawPillarboxes)) {
+        if (mDrawPillarboxes) {
             float rectHeight {0.0f};
             float rectWidth {0.0f};
             // Video is in landscape orientation.

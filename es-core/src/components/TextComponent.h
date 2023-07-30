@@ -131,7 +131,6 @@ private:
     bool mNoTopMargin;
     bool mSelectable;
     bool mVerticalAutoSizing;
-    bool mLegacyTheme;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_COMPONENT_H

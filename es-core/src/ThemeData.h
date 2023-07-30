@@ -24,18 +24,6 @@
 #include <sstream>
 #include <vector>
 
-namespace pugi
-{
-    class xml_node;
-}
-
-class GuiComponent;
-class ImageComponent;
-class NinePatchComponent;
-class Sound;
-class TextComponent;
-class Window;
-
 namespace ThemeFlags
 {
     // clang-format off
@@ -53,15 +41,14 @@ namespace ThemeFlags
         TEXT            = 0x00000100,
         METADATA        = 0x00000200,
         LETTER_CASE     = 0x00000400,
-        FORCE_UPPERCASE = 0x00000800, // For backward compatibility with legacy themes.
-        LINE_SPACING    = 0x00001000,
-        DELAY           = 0x00002000,
-        Z_INDEX         = 0x00004000,
-        ROTATION        = 0x00008000,
-        BRIGHTNESS      = 0x00010000,
-        OPACITY         = 0x00020000,
-        SATURATION      = 0x00040000,
-        VISIBLE         = 0x00080000,
+        LINE_SPACING    = 0x00000800,
+        DELAY           = 0x00001000,
+        Z_INDEX         = 0x00002000,
+        ROTATION        = 0x00004000,
+        BRIGHTNESS      = 0x00008000,
+        OPACITY         = 0x00010000,
+        SATURATION      = 0x00020000,
+        VISIBLE         = 0x00040000,
         ALL             = 0xFFFFFFFF
     };
     // clang-format on
@@ -107,7 +94,6 @@ public:
     class ThemeElement
     {
     public:
-        bool extra;
         std::string type;
 
         struct Property {
@@ -162,7 +148,6 @@ public:
     {
     public:
         std::map<std::string, ThemeElement> elements;
-        std::vector<std::string> legacyOrderedKeys;
     };
 
     struct ThemeVariant {
@@ -202,7 +187,7 @@ public:
         std::vector<std::string> aspectRatios;
         std::vector<ThemeTransitions> transitions;
         std::vector<std::string> suppressedTransitionProfiles;
-        bool legacyTheme;
+        bool validTheme;
     };
 
     struct ThemeSet {
@@ -230,9 +215,6 @@ public:
     bool hasView(const std::string& view);
     ThemeView& getViewElements(std::string view) { return mViews[view]; }
 
-    static std::vector<GuiComponent*> makeExtras(const std::shared_ptr<ThemeData>& theme,
-                                                 const std::string& view);
-
     const ThemeElement* getElement(const std::string& view,
                                    const std::string& element,
                                    const std::string& expectedType) const;
@@ -247,7 +229,6 @@ public:
     const static std::string getCurrentThemeSetName() { return sCurrentThemeSet->first; }
     static void setThemeTransitions();
 
-    const bool isLegacyTheme() { return mLegacyTheme; }
     const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
     getCurrentThemeSetSelectedVariantOverrides();
     const static void themeLoadedLogOutput();
@@ -266,20 +247,12 @@ public:
     std::map<std::string, std::string> mVariables;
 
 private:
-    enum class LegacyWorkaround {
-        NONE = 0x00000000,
-        TEXT = 0x00000001,
-        DATETIME = 0x00000002,
-        RATING = 0x00000004
-    };
-
     unsigned int getHexColor(const std::string& str);
     std::string resolvePlaceholders(const std::string& in);
 
     static ThemeCapability parseThemeCapabilities(const std::string& path);
 
     void parseIncludes(const pugi::xml_node& root);
-    void parseFeatures(const pugi::xml_node& root);
     void parseVariants(const pugi::xml_node& root);
     void parseColorSchemes(const pugi::xml_node& root);
     void parseAspectRatios(const pugi::xml_node& root);
@@ -289,16 +262,12 @@ private:
     void parseView(const pugi::xml_node& root, ThemeView& view);
     void parseElement(const pugi::xml_node& root,
                       const std::map<std::string, ElementPropertyType>& typeMap,
-                      ThemeElement& element,
-                      const LegacyWorkaround legacyWorkaround);
+                      ThemeElement& element);
 
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sSupportedMediaTypes;
     static std::vector<std::string> sSupportedTransitions;
     static std::vector<std::string> sSupportedTransitionAnimations;
-    static std::vector<std::string> sLegacySupportedViews;
-    static std::vector<std::string> sLegacySupportedFeatures;
-    static std::vector<std::string> sLegacyProperties;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
     static std::map<std::string, float> sAspectRatioMap;
 
@@ -318,7 +287,6 @@ private:
     std::string mSelectedColorScheme;
     static inline std::string sSelectedAspectRatio;
     static inline bool sAspectRatioMatch {false};
-    bool mLegacyTheme;
     bool mCustomCollection;
 };
 

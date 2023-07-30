@@ -34,7 +34,6 @@ struct HelpStyle {
     float iconTextSpacingDimmed;
     float opacity;
     float opacityDimmed;
-    bool legacyTheme;
     std::string letterCase;
 
     struct CustomButtonIcons {

@@ -56,13 +56,7 @@ public:
 
     bool hasStaticVideo() { return !mConfig.staticVideoPath.empty(); }
     bool hasStaticImage() { return mStaticImage.getTextureSize() != glm::ivec2 {0, 0}; }
-    bool hasStartDelay()
-    {
-        if (mLegacyTheme)
-            return mConfig.showSnapshotDelay && mConfig.startDelay > 0;
-        else
-            return mConfig.startDelay > 0;
-    }
+    bool hasStartDelay() { return mConfig.startDelay > 0; }
 
     // These functions update the embedded static image.
     void onOriginChanged() override { mStaticImage.setOrigin(mOrigin); }
@@ -134,7 +128,6 @@ protected:
     bool mPlayAudio;
     bool mDrawPillarboxes;
     bool mRenderScanlines;
-    bool mLegacyTheme;
     bool mHasVideo;
     bool mGeneralFade;
     float mFadeIn;

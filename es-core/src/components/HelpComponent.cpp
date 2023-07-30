@@ -306,13 +306,7 @@ void HelpComponent::updateGrid()
         mGrid->setEntry(labels.at(i), glm::ivec2 {col + 2, 0}, false, false);
     }
 
-    // There is a bug for legacy themes where the entrySpacing width is added to the right of
-    // the grid when aligning to the right using an X origin value of 1. This issue is retained
-    // for legacy themes for backward compatibility reasons.
-    if (mStyle.legacyTheme) {
-        mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
-    }
-    else if (isDimmed) {
+    if (isDimmed) {
         mGrid->setPosition(
             {mStyle.positionDimmed.x + ((mStyle.entrySpacingDimmed * mRenderer->getScreenWidth()) *
                                         mStyle.originDimmed.x),

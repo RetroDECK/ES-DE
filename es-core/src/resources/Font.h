@@ -89,9 +89,6 @@ public:
     // guaranteed and can be exceeded by a few pixels for some glyphs.
     int loadGlyphs(const std::string& text);
 
-    // This is needed to maintain maximum compatibility with legacy theme sets.
-    void useLegacyMaxGlyphHeight() { mMaxGlyphHeight = mLegacyMaxGlyphHeight; }
-
     TextCache* buildTextCache(const std::string& text,
                               float offsetX,
                               float offsetY,
@@ -137,7 +134,6 @@ public:
                                               const std::shared_ptr<Font>& orig,
                                               const float maxHeight = 0.0f,
                                               const bool linearMagnify = false,
-                                              const bool legacyTheme = false,
                                               const float sizeMultiplier = 1.0f,
                                               const bool fontSizeDimmed = false);
 
@@ -208,7 +204,6 @@ private:
 
     static inline FT_Library sLibrary {nullptr};
     static inline std::map<std::tuple<float, std::string, bool>, std::weak_ptr<Font>> sFontMap;
-    static inline bool mLegacyTheme {false};
 
     Renderer* mRenderer;
     std::vector<std::unique_ptr<FontTexture>> mTextures;
@@ -220,7 +215,6 @@ private:
     const bool mLinearMagnify;
     float mLetterHeight;
     int mMaxGlyphHeight;
-    int mLegacyMaxGlyphHeight;
 };
 
 // Used to store a sort of "pre-rendered" string.

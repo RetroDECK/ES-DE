@@ -131,7 +131,6 @@ private:
     int mLoopTime;
     bool mLoopScroll;
     bool mGamelistView;
-    bool mLegacyMode;
 
     std::shared_ptr<Font> mFont;
     float mSelectorHeight;
@@ -172,7 +171,6 @@ TextListComponent<T>::TextListComponent()
     , mLoopTime {0}
     , mLoopScroll {false}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
-    , mLegacyMode {false}
     , mFont {Font::get(FONT_SIZE_MEDIUM_FIXED)}
     , mSelectorHeight {mFont->getSize() * 1.5f}
     , mSelectorHorizontalOffset {0.0f}
@@ -336,33 +334,11 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     float entrySize {0.0f};
     float lineSpacingHeight {0.0f};
 
-    // The vertical spacing between rows for legacy themes is very inaccurate and will look
-    // different depending on the resolution, but it's done for maximum backward compatibility.
-    if (mLegacyMode) {
-        font->useLegacyMaxGlyphHeight();
-        entrySize = std::max(font->getHeight(mLineSpacing), font->getSize() * mLineSpacing);
-        lineSpacingHeight = std::floor(font->getSize() * mLineSpacing - font->getSize());
-    }
-    else {
-        entrySize = font->getSize() * mLineSpacing;
-        lineSpacingHeight = font->getSize() * mLineSpacing - font->getSize() * 1.0f;
-    }
+    entrySize = font->getSize() * mLineSpacing;
+    lineSpacingHeight = font->getSize() * mLineSpacing - font->getSize() * 1.0f;
 
-    if (mLegacyMode) {
-        // This extra vertical margin is technically incorrect, but it adds a little extra leeway
-        // to avoid removing the last row on some older theme sets. There was a sizing bug in the
-        // RetroPie fork of EmulationStation and some theme authors set sizes that are just slightly
-        // too small for the last row to show up when the sizing calculation is done correctly.
-        const float extraMargin {(Renderer::getScreenHeightModifier() >= 1.0f ? 3.0f : 0.0f)};
-        // Number of entries that can fit on the screen simultaneously.
-        screenCount = static_cast<int>(
-            floorf((mSize.y + lineSpacingHeight / 2.0f + extraMargin) / entrySize));
-    }
-    else {
-        // Number of entries that can fit on the screen simultaneously.
-        screenCount =
-            static_cast<int>(std::floor((mSize.y + lineSpacingHeight / 2.0f) / entrySize));
-    }
+    // Number of entries that can fit on the screen simultaneously.
+    screenCount = static_cast<int>(std::floor((mSize.y + lineSpacingHeight / 2.0f) / entrySize));
 
     if (size() >= screenCount) {
         startEntry = mCursor - screenCount / 2;
@@ -532,8 +508,6 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    mLegacyMode = theme->isLegacyTheme();
-
     if (properties & COLOR) {
         if (elem->has("selectorColor")) {
             mSelectorColor = elem->get<unsigned int>("selectorColor");
@@ -577,9 +551,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mSelectedSecondaryBackgroundColor = mSelectedBackgroundColor;
     }
 
-    setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, false, mLegacyMode));
-    if (mLegacyMode)
-        mFont->useLegacyMaxGlyphHeight();
+    setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, false));
     const float selectorHeight {mFont->getHeight(mLineSpacing)};
     mSelectorHeight = selectorHeight;
 
@@ -600,24 +572,6 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                    "\"horizontalAlignment\" for element \""
                                 << element.substr(9) << "\" defined as \"" << horizontalAlignment
                                 << "\"";
-            }
-        }
-        else if (elem->has("alignment")) {
-            // Legacy themes only.
-            const std::string& alignment {elem->get<std::string>("alignment")};
-            if (alignment == "left") {
-                setAlignment(PrimaryAlignment::ALIGN_LEFT);
-            }
-            else if (alignment == "center") {
-                setAlignment(PrimaryAlignment::ALIGN_CENTER);
-            }
-            else if (alignment == "right") {
-                setAlignment(PrimaryAlignment::ALIGN_RIGHT);
-            }
-            else {
-                LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                                   "\"alignment\" for element \""
-                                << element.substr(9) << "\" defined as \"" << alignment << "\"";
             }
         }
         if (elem->has("horizontalMargin")) {
@@ -685,12 +639,6 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                "\"letterCaseCustomCollections\" for element \""
                             << element.substr(9) << "\" defined as \"" << letterCase << "\"";
         }
-    }
-
-    // Legacy themes only.
-    if (properties & FORCE_UPPERCASE && elem->has("forceUppercase")) {
-        if (elem->get<bool>("forceUppercase"))
-            mLetterCase = LetterCase::UPPERCASE;
     }
 
     mSelectorHorizontalOffset = 0.0f;

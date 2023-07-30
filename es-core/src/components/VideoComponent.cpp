@@ -42,7 +42,6 @@ VideoComponent::VideoComponent()
     , mPlayAudio {true}
     , mDrawPillarboxes {true}
     , mRenderScanlines {false}
-    , mLegacyTheme {false}
     , mHasVideo {false}
     , mGeneralFade {false}
     , mFadeIn {1.0f}
@@ -124,8 +123,6 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                  ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
 
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "video")};
-
-    mLegacyTheme = theme->isLegacyTheme();
 
     if (!elem)
         return;
@@ -226,15 +223,10 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mConfig.startDelay =
             static_cast<unsigned int>(glm::clamp(elem->get<float>("delay"), 0.0f, 15.0f) * 1000.0f);
 
-    if (!theme->isLegacyTheme())
-        mConfig.showSnapshotNoVideo = true;
-    else if (elem->has("showSnapshotNoVideo"))
-        mConfig.showSnapshotNoVideo = elem->get<bool>("showSnapshotNoVideo");
+    mConfig.showSnapshotNoVideo = true;
 
-    if (!theme->isLegacyTheme() && mConfig.startDelay != 0)
+    if (mConfig.startDelay != 0)
         mConfig.showSnapshotDelay = true;
-    else if (elem->has("showSnapshotDelay"))
-        mConfig.showSnapshotDelay = elem->get<bool>("showSnapshotDelay");
 
     if (properties && elem->has("fadeInTime"))
         mFadeInTime = glm::clamp(elem->get<float>("fadeInTime"), 0.0f, 8.0f) * 1000.0f;
@@ -277,7 +269,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (!mLegacyTheme && mThemeImageTypes.empty())
+    if (mThemeImageTypes.empty())
         mConfig.startDelay = 0;
 
     if (elem->has("color")) {
@@ -404,9 +396,6 @@ void VideoComponent::startVideoPlayer()
 
 void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
 {
-    if (mLegacyTheme && !mHasVideo && !mConfig.showSnapshotNoVideo)
-        return;
-
     if (mHasVideo && (!mConfig.showSnapshotDelay || mConfig.startDelay == 0))
         return;
 

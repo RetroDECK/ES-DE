@@ -7,7 +7,6 @@
 //
 
 #include "views/GamelistView.h"
-#include "views/GamelistLegacy.h"
 
 #include "CollectionSystemsManager.h"
 #include "UIModeController.h"
@@ -19,11 +18,8 @@
 GamelistView::GamelistView(FileData* root)
     : GamelistBase {root}
     , mRenderer {Renderer::getInstance()}
-    , mViewStyle {ViewController::BASIC}
-    , mLegacyMode {false}
     , mStaticVideoAudio {false}
 {
-    mViewStyle = ViewController::getInstance()->getState().viewstyle;
 }
 
 GamelistView::~GamelistView()
@@ -38,9 +34,6 @@ GamelistView::~GamelistView()
 
 const std::pair<bool, LetterCase> GamelistView::getDescriptionSystemNameSuffix() const
 {
-    if (mLegacyMode)
-        return std::make_pair(true, LetterCase::UPPERCASE);
-
     bool suffix {false};
     LetterCase letterCase {LetterCase::UPPERCASE};
 
@@ -97,11 +90,7 @@ void GamelistView::onShow()
     mLastUpdated = nullptr;
     GuiComponent::onShow();
 
-    if (mLegacyMode)
-        legacyUpdateView(CursorState::CURSOR_STOPPED);
-    else
-        updateView(CursorState::CURSOR_STOPPED);
-
+    updateView(CursorState::CURSOR_STOPPED);
     mPrimary->finishAnimation(0);
 }
 
@@ -123,12 +112,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
         selectedSet {themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
 
     assert(selectedSet != themeSets.cend());
-    mLegacyMode = selectedSet->second.capabilities.legacyTheme;
-
-    if (mLegacyMode) {
-        legacyOnThemeChanged(theme);
-        return;
-    }
 
     mStaticVideoAudio = false;
     const bool isStartupSystem {Settings::getInstance()->getString("StartupSystem") ==
@@ -391,11 +374,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 void GamelistView::update(int deltaTime)
 {
-    if (mLegacyMode) {
-        legacyUpdate(deltaTime);
-        return;
-    }
-
     if (ViewController::getInstance()->getGameLaunchTriggered()) {
         for (auto& image : mImageComponents) {
             if (image->isAnimationPlaying(0))
@@ -463,9 +441,7 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
         !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::GAMELIST) {
-        if (!(mLegacyMode &&
-              ViewController::getInstance()->getState().viewstyle == ViewController::BASIC))
-            prompts.push_back(HelpPrompt("y", "jump to game"));
+        prompts.push_back(HelpPrompt("y", "jump to game"));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
              (mRoot->getSystem()->getThemeFolder() != "custom-collections" ||
@@ -492,11 +468,6 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 
 void GamelistView::updateView(const CursorState& state)
 {
-    if (mLegacyMode) {
-        legacyUpdateView(state);
-        return;
-    }
-
     bool loadedTexture {false};
 
     if (mPrimary->isScrolling()) {

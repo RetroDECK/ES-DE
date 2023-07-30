@@ -65,7 +65,7 @@ namespace
                 continue;
             }
 
-            pugi::xml_node node = doc.append_child(type.c_str());
+            pugi::xml_node node {doc.append_child(type.c_str())};
             node.append_attribute("name").set_value(it->first.c_str());
             node.append_attribute("value").set_value(it->second.second);
         }
@@ -160,8 +160,6 @@ void Settings::setDefaults()
     mStringMap["ThemeColorScheme"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
     mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
-    mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};
-    mStringMap["LegacyThemeTransitions"] = {"builtin-instant", "builtin-instant"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
     mStringMap["DefaultSortOrder"] = {"filename, ascending", "filename, ascending"};
@@ -214,8 +212,6 @@ void Settings::setDefaults()
 
     mBoolMap["ThemeVariantTriggers"] = {true, true};
     mBoolMap["MenuBlurBackground"] = {true, true};
-    mBoolMap["GamelistVideoPillarbox"] = {true, true};
-    mBoolMap["GamelistVideoScanlines"] = {false, false};
     mBoolMap["FoldersOnTop"] = {true, true};
     mBoolMap["FavoritesFirst"] = {true, true};
     mBoolMap["FavoritesStar"] = {true, true};

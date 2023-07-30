@@ -104,16 +104,8 @@ public:
         GAMELIST
     };
 
-    enum GamelistViewStyle {
-        AUTOMATIC,
-        BASIC,
-        DETAILED,
-        VIDEO
-    };
-
     struct State {
         ViewMode viewing;
-        GamelistViewStyle viewstyle;
 
         SystemData* getSystem() const
         {

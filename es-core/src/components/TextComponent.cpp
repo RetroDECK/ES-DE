@@ -32,7 +32,6 @@ TextComponent::TextComponent()
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
-    , mLegacyTheme {false}
 {
 }
 
@@ -63,7 +62,6 @@ TextComponent::TextComponent(const std::string& text,
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
-    , mLegacyTheme {false}
 {
     setFont(font);
     setColor(color);
@@ -298,9 +296,6 @@ void TextComponent::onTextChanged()
     // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
     lineHeight = mFont->loadGlyphs(text + "\n") * mLineSpacing;
 
-    if (mLegacyTheme)
-        font->useLegacyMaxGlyphHeight();
-
     const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
 
     if (isMultiline && !isScrollable) {
@@ -367,8 +362,6 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     using namespace ThemeFlags;
     GuiComponent::applyTheme(theme, view, element, properties);
 
-    mLegacyTheme = theme->isLegacyTheme();
-
     std::string elementType {"text"};
     std::string componentName {"TextComponent"};
 
@@ -422,22 +415,6 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << ": Invalid theme configuration, property "
                                "\"verticalAlignment\" for element \""
                             << element.substr(5) << "\" defined as \"" << verticalAlignment << "\"";
-    }
-
-    // Legacy themes only.
-    if (properties & ALIGNMENT && elem->has("alignment")) {
-        const std::string& alignment {elem->get<std::string>("alignment")};
-        if (alignment == "left")
-            setHorizontalAlignment(ALIGN_LEFT);
-        else if (alignment == "center")
-            setHorizontalAlignment(ALIGN_CENTER);
-        else if (alignment == "right")
-            setHorizontalAlignment(ALIGN_RIGHT);
-        else
-            LOG(LogWarning) << componentName
-                            << ": Invalid theme configuration, property "
-                               "\"alignment\" for element \""
-                            << element.substr(5) << "\" defined as \"" << alignment << "\"";
     }
 
     if (properties & TEXT && elem->has("text"))
@@ -540,18 +517,14 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     float maxHeight {0.0f};
 
-    if (!theme->isLegacyTheme() && elem->has("size")) {
+    if (elem->has("size")) {
         const glm::vec2 size {elem->get<glm::vec2>("size")};
         if (size.x != 0.0f && size.y != 0.0f)
             maxHeight = mSize.y * 2.0f;
     }
 
-    // Legacy themes only.
-    if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
-        setUppercase(elem->get<bool>("forceUppercase"));
-
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
-    setFont(Font::getFromTheme(elem, properties, mFont, maxHeight, false, theme->isLegacyTheme()));
+    setFont(Font::getFromTheme(elem, properties, mFont, maxHeight, false));
 }

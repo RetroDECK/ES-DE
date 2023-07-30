@@ -22,7 +22,6 @@ Font::Font(float size, const std::string& path, const bool linearMagnify)
     , mLinearMagnify {linearMagnify}
     , mLetterHeight {0.0f}
     , mMaxGlyphHeight {static_cast<int>(std::round(size))}
-    , mLegacyMaxGlyphHeight {0}
 {
     if (mFontSize < 3.0f) {
         mFontSize = 3.0f;
@@ -430,12 +429,9 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          const std::shared_ptr<Font>& orig,
                                          const float maxHeight,
                                          const bool linearMagnify,
-                                         const bool legacyTheme,
                                          const float sizeMultiplier,
                                          const bool fontSizeDimmed)
 {
-    mLegacyTheme = legacyTheme;
-
     using namespace ThemeFlags;
     if (!(properties & FONT_PATH) && !(properties & FONT_SIZE))
         return orig;
@@ -472,10 +468,7 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
         path = getDefaultPath();
     }
 
-    if (mLegacyTheme)
-        return get(std::floor(size), path, false);
-    else
-        return get(size, path, linearMagnify);
+    return get(size, path, linearMagnify);
 }
 
 size_t Font::getMemUsage() const
@@ -783,9 +776,6 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     // Upload glyph bitmap to texture.
     mRenderer->updateTexture(tex->textureId, Renderer::TextureType::RED, cursor.x, cursor.y,
                              glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
-
-    if (glyphSize.y > mLegacyMaxGlyphHeight)
-        mLegacyMaxGlyphHeight = glyphSize.y;
 
     return &glyph;
 }

@@ -152,8 +152,6 @@ void GuiMenu::openUIOptions()
             // If required, abbreviate the theme set name so it doesn't overlap the setting name.
             const float maxNameLength {mSize.x * 0.62f};
             std::string themeName {(*it).first};
-            if ((*it).second.second.capabilities.legacyTheme)
-                themeName.append(" [LEGACY]");
             themeSet->add(themeName, it->second.first, (*it).second.first == selectedSet->first,
                           maxNameLength);
         }
@@ -217,10 +215,7 @@ void GuiMenu::openUIOptions()
                 themeVariant->selectEntry(0);
         }
         else {
-            if (currentSet->second.capabilities.legacyTheme)
-                themeVariant->add("Legacy theme set", "none", true);
-            else
-                themeVariant->add("None defined", "none", true);
+            themeVariant->add("None defined", "none", true);
             themeVariant->setEnabled(false);
             themeVariant->setOpacity(DISABLED_OPACITY);
             themeVariant->getParent()
@@ -266,10 +261,7 @@ void GuiMenu::openUIOptions()
                 themeColorScheme->selectEntry(0);
         }
         else {
-            if (currentSet->second.capabilities.legacyTheme)
-                themeColorScheme->add("Legacy theme set", "none", true);
-            else
-                themeColorScheme->add("None defined", "none", true);
+            themeColorScheme->add("None defined", "none", true);
             themeColorScheme->setEnabled(false);
             themeColorScheme->setOpacity(DISABLED_OPACITY);
             themeColorScheme->getParent()
@@ -311,10 +303,7 @@ void GuiMenu::openUIOptions()
                 themeAspectRatio->selectEntry(0);
         }
         else {
-            if (currentSet->second.capabilities.legacyTheme)
-                themeAspectRatio->add("Legacy theme set", "none", true);
-            else
-                themeAspectRatio->add("None defined", "none", true);
+            themeAspectRatio->add("None defined", "none", true);
             themeAspectRatio->setEnabled(false);
             themeAspectRatio->setOpacity(DISABLED_OPACITY);
             themeAspectRatio->getParent()
@@ -353,8 +342,56 @@ void GuiMenu::openUIOptions()
             return;
         // We need to recreate the OptionListComponent entries.
         themeTransitions->clearEntries();
-        if (currentSet->second.capabilities.legacyTheme) {
-            themeTransitions->add("Legacy theme set", "automatic", true);
+        themeTransitions->add("AUTOMATIC", "automatic", "automatic" == selectedThemeTransitions);
+        if (currentSet->second.capabilities.transitions.size() == 1 &&
+            currentSet->second.capabilities.transitions.front().selectable) {
+            std::string label;
+            if (currentSet->second.capabilities.transitions.front().label == "")
+                label = "THEME PROFILE";
+            else
+                label = currentSet->second.capabilities.transitions.front().label;
+            const std::string transitions {
+                currentSet->second.capabilities.transitions.front().name};
+            themeTransitions->add(label, transitions, transitions == selectedThemeTransitions);
+        }
+        else {
+            for (size_t i {0}; i < currentSet->second.capabilities.transitions.size(); ++i) {
+                if (!currentSet->second.capabilities.transitions[i].selectable)
+                    continue;
+                std::string label;
+                if (currentSet->second.capabilities.transitions[i].label == "")
+                    label = "THEME PROFILE " + std::to_string(i + 1);
+                else
+                    label = currentSet->second.capabilities.transitions[i].label;
+                const std::string transitions {currentSet->second.capabilities.transitions[i].name};
+                themeTransitions->add(label, transitions, transitions == selectedThemeTransitions);
+            }
+        }
+        if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
+                      currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
+                      "builtin-instant") ==
+            currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
+            themeTransitions->add("INSTANT (BUILT-IN)", "builtin-instant",
+                                  "builtin-instant" == selectedThemeTransitions);
+        }
+        if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
+                      currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
+                      "builtin-slide") ==
+            currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
+            themeTransitions->add("SLIDE (BUILT-IN)", "builtin-slide",
+                                  "builtin-slide" == selectedThemeTransitions);
+        }
+        if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
+                      currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
+                      "builtin-fade") ==
+            currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
+            themeTransitions->add("FADE (BUILT-IN)", "builtin-fade",
+                                  "builtin-fade" == selectedThemeTransitions);
+        }
+        if (themeTransitions->getSelectedObjects().size() == 0)
+            themeTransitions->selectEntry(0);
+
+        if (themeTransitions->getNumEntries() == 1) {
             themeTransitions->setEnabled(false);
             themeTransitions->setOpacity(DISABLED_OPACITY);
             themeTransitions->getParent()
@@ -362,127 +399,16 @@ void GuiMenu::openUIOptions()
                 ->setOpacity(DISABLED_OPACITY);
         }
         else {
-            themeTransitions->add("AUTOMATIC", "automatic",
-                                  "automatic" == selectedThemeTransitions);
-            if (currentSet->second.capabilities.transitions.size() == 1 &&
-                currentSet->second.capabilities.transitions.front().selectable) {
-                std::string label;
-                if (currentSet->second.capabilities.transitions.front().label == "")
-                    label = "THEME PROFILE";
-                else
-                    label = currentSet->second.capabilities.transitions.front().label;
-                const std::string transitions {
-                    currentSet->second.capabilities.transitions.front().name};
-                themeTransitions->add(label, transitions, transitions == selectedThemeTransitions);
-            }
-            else {
-                for (size_t i {0}; i < currentSet->second.capabilities.transitions.size(); ++i) {
-                    if (!currentSet->second.capabilities.transitions[i].selectable)
-                        continue;
-                    std::string label;
-                    if (currentSet->second.capabilities.transitions[i].label == "")
-                        label = "THEME PROFILE " + std::to_string(i + 1);
-                    else
-                        label = currentSet->second.capabilities.transitions[i].label;
-                    const std::string transitions {
-                        currentSet->second.capabilities.transitions[i].name};
-                    themeTransitions->add(label, transitions,
-                                          transitions == selectedThemeTransitions);
-                }
-            }
-            if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
-                          currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
-                          "builtin-instant") ==
-                currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
-                themeTransitions->add("INSTANT (BUILT-IN)", "builtin-instant",
-                                      "builtin-instant" == selectedThemeTransitions);
-            }
-            if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
-                          currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
-                          "builtin-slide") ==
-                currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
-                themeTransitions->add("SLIDE (BUILT-IN)", "builtin-slide",
-                                      "builtin-slide" == selectedThemeTransitions);
-            }
-            if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
-                          currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
-                          "builtin-fade") ==
-                currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
-                themeTransitions->add("FADE (BUILT-IN)", "builtin-fade",
-                                      "builtin-fade" == selectedThemeTransitions);
-            }
-            if (themeTransitions->getSelectedObjects().size() == 0)
-                themeTransitions->selectEntry(0);
-
-            if (themeTransitions->getNumEntries() == 1) {
-                themeTransitions->setEnabled(false);
-                themeTransitions->setOpacity(DISABLED_OPACITY);
-                themeTransitions->getParent()
-                    ->getChild(themeTransitions->getChildIndex() - 1)
-                    ->setOpacity(DISABLED_OPACITY);
-            }
-            else {
-                themeTransitions->setEnabled(true);
-                themeTransitions->setOpacity(1.0f);
-                themeTransitions->getParent()
-                    ->getChild(themeTransitions->getChildIndex() - 1)
-                    ->setOpacity(1.0f);
-            }
+            themeTransitions->setEnabled(true);
+            themeTransitions->setOpacity(1.0f);
+            themeTransitions->getParent()
+                ->getChild(themeTransitions->getChildIndex() - 1)
+                ->setOpacity(1.0f);
         }
     };
 
     themeTransitionsFunc(Settings::getInstance()->getString("ThemeSet"),
                          Settings::getInstance()->getString("ThemeTransitions"));
-
-    // Legacy gamelist view style.
-    auto gamelistViewStyle = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "LEGACY GAMELIST VIEW STYLE", false);
-    std::string selectedViewStyle {Settings::getInstance()->getString("GamelistViewStyle")};
-    gamelistViewStyle->add("AUTOMATIC", "automatic", selectedViewStyle == "automatic");
-    gamelistViewStyle->add("BASIC", "basic", selectedViewStyle == "basic");
-    gamelistViewStyle->add("DETAILED", "detailed", selectedViewStyle == "detailed");
-    gamelistViewStyle->add("VIDEO", "video", selectedViewStyle == "video");
-    // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set the view style to "automatic" in this case.
-    if (gamelistViewStyle->getSelectedObjects().size() == 0)
-        gamelistViewStyle->selectEntry(0);
-    s->addWithLabel("LEGACY GAMELIST VIEW STYLE", gamelistViewStyle);
-    s->addSaveFunc([gamelistViewStyle, s] {
-        if (gamelistViewStyle->getSelected() !=
-            Settings::getInstance()->getString("GamelistViewStyle")) {
-            Settings::getInstance()->setString("GamelistViewStyle",
-                                               gamelistViewStyle->getSelected());
-            s->setNeedsSaving();
-            s->setNeedsReloading();
-            s->setInvalidateCachedBackground();
-        }
-    });
-
-    // Legacy theme transitions.
-    auto legacyThemeTransitions = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "LEGACY THEME TRANSITIONS", false);
-    const std::string& selectedLegacyThemeTransitions {
-        Settings::getInstance()->getString("LegacyThemeTransitions")};
-    legacyThemeTransitions->add("INSTANT", "builtin-instant",
-                                selectedLegacyThemeTransitions == "builtin-instant");
-    legacyThemeTransitions->add("SLIDE", "builtin-slide",
-                                selectedLegacyThemeTransitions == "builtin-slide");
-    legacyThemeTransitions->add("FADE", "builtin-fade",
-                                selectedLegacyThemeTransitions == "builtin-fade");
-    // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set legacy theme transitions to "builtin-instant" in this case.
-    if (legacyThemeTransitions->getSelectedObjects().size() == 0)
-        legacyThemeTransitions->selectEntry(0);
-    s->addWithLabel("LEGACY THEME TRANSITIONS", legacyThemeTransitions);
-    s->addSaveFunc([legacyThemeTransitions, s] {
-        if (legacyThemeTransitions->getSelected() !=
-            Settings::getInstance()->getString("LegacyThemeTransitions")) {
-            Settings::getInstance()->setString("LegacyThemeTransitions",
-                                               legacyThemeTransitions->getSelected());
-            ThemeData::setThemeTransitions();
-            s->setNeedsSaving();
-        }
-    });
 
     // Quick system select (navigate between systems in the gamelist view).
     auto quickSystemSelect = std::make_shared<OptionListComponent<std::string>>(
@@ -807,32 +733,6 @@ void GuiMenu::openUIOptions()
         });
     }
 
-    // Display pillarboxes (and letterboxes) for videos in the gamelists.
-    auto gamelistVideoPillarbox = std::make_shared<SwitchComponent>();
-    gamelistVideoPillarbox->setState(Settings::getInstance()->getBool("GamelistVideoPillarbox"));
-    s->addWithLabel("DISPLAY PILLARBOXES FOR GAMELIST VIDEOS", gamelistVideoPillarbox);
-    s->addSaveFunc([gamelistVideoPillarbox, s] {
-        if (gamelistVideoPillarbox->getState() !=
-            Settings::getInstance()->getBool("GamelistVideoPillarbox")) {
-            Settings::getInstance()->setBool("GamelistVideoPillarbox",
-                                             gamelistVideoPillarbox->getState());
-            s->setNeedsSaving();
-        }
-    });
-
-    // Render scanlines for videos in the gamelists.
-    auto gamelistVideoScanlines = std::make_shared<SwitchComponent>();
-    gamelistVideoScanlines->setState(Settings::getInstance()->getBool("GamelistVideoScanlines"));
-    s->addWithLabel("RENDER SCANLINES FOR GAMELIST VIDEOS", gamelistVideoScanlines);
-    s->addSaveFunc([gamelistVideoScanlines, s] {
-        if (gamelistVideoScanlines->getState() !=
-            Settings::getInstance()->getBool("GamelistVideoScanlines")) {
-            Settings::getInstance()->setBool("GamelistVideoScanlines",
-                                             gamelistVideoScanlines->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     // Sort folders on top of the gamelists.
     auto foldersOnTop = std::make_shared<SwitchComponent>();
     foldersOnTop->setState(Settings::getInstance()->getBool("FoldersOnTop"));
@@ -948,7 +848,7 @@ void GuiMenu::openUIOptions()
             if (variant.selectable)
                 ++selectableVariants;
         }
-        if (!selectedSet->second.capabilities.legacyTheme && selectableVariants > 0) {
+        if (selectableVariants > 0) {
             themeVariant->setEnabled(true);
             themeVariant->setOpacity(1.0f);
             themeVariant->getParent()
@@ -962,8 +862,7 @@ void GuiMenu::openUIOptions()
                 ->getChild(themeVariant->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
-        if (!selectedSet->second.capabilities.legacyTheme &&
-            selectedSet->second.capabilities.colorSchemes.size() > 0) {
+        if (selectedSet->second.capabilities.colorSchemes.size() > 0) {
             themeColorScheme->setEnabled(true);
             themeColorScheme->setOpacity(1.0f);
             themeColorScheme->getParent()
@@ -977,8 +876,7 @@ void GuiMenu::openUIOptions()
                 ->getChild(themeColorScheme->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
-        if (!selectedSet->second.capabilities.legacyTheme &&
-            selectedSet->second.capabilities.aspectRatios.size() > 0) {
+        if (selectedSet->second.capabilities.aspectRatios.size() > 0) {
             themeAspectRatio->setEnabled(true);
             themeAspectRatio->setOpacity(1.0f);
             themeAspectRatio->getParent()
@@ -991,64 +889,6 @@ void GuiMenu::openUIOptions()
             themeAspectRatio->getParent()
                 ->getChild(themeAspectRatio->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
-        }
-        if (!selectedSet->second.capabilities.legacyTheme) {
-            gamelistViewStyle->setEnabled(false);
-            gamelistViewStyle->setOpacity(DISABLED_OPACITY);
-            gamelistViewStyle->getParent()
-                ->getChild(gamelistViewStyle->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-
-            legacyThemeTransitions->setEnabled(false);
-            legacyThemeTransitions->setOpacity(DISABLED_OPACITY);
-            legacyThemeTransitions->getParent()
-                ->getChild(legacyThemeTransitions->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-
-            // Pillarboxes are theme-controlled for newer themes.
-            gamelistVideoPillarbox->setEnabled(false);
-            gamelistVideoPillarbox->setOpacity(DISABLED_OPACITY);
-            gamelistVideoPillarbox->getParent()
-                ->getChild(gamelistVideoPillarbox->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-
-            // Scanlines are theme-controlled for newer themes.
-            gamelistVideoScanlines->setEnabled(false);
-            gamelistVideoScanlines->setOpacity(DISABLED_OPACITY);
-            gamelistVideoScanlines->getParent()
-                ->getChild(gamelistVideoScanlines->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-        }
-        else {
-            gamelistViewStyle->setEnabled(true);
-            gamelistViewStyle->setOpacity(1.0f);
-            gamelistViewStyle->getParent()
-                ->getChild(gamelistViewStyle->getChildIndex() - 1)
-                ->setOpacity(1.0f);
-
-            themeTransitions->setEnabled(false);
-            themeTransitions->setOpacity(DISABLED_OPACITY);
-            themeTransitions->getParent()
-                ->getChild(themeTransitions->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-
-            legacyThemeTransitions->setEnabled(true);
-            legacyThemeTransitions->setOpacity(1.0f);
-            legacyThemeTransitions->getParent()
-                ->getChild(legacyThemeTransitions->getChildIndex() - 1)
-                ->setOpacity(1.0f);
-
-            gamelistVideoPillarbox->setEnabled(true);
-            gamelistVideoPillarbox->setOpacity(1.0f);
-            gamelistVideoPillarbox->getParent()
-                ->getChild(gamelistVideoPillarbox->getChildIndex() - 1)
-                ->setOpacity(1.0f);
-
-            gamelistVideoScanlines->setEnabled(true);
-            gamelistVideoScanlines->setOpacity(1.0f);
-            gamelistVideoScanlines->getParent()
-                ->getChild(gamelistVideoScanlines->getChildIndex() - 1)
-                ->setOpacity(1.0f);
         }
     };
 
