@@ -23,8 +23,7 @@ class VideoComponent : public GuiComponent
     // Structure that groups together the configuration of the video component.
     struct Configuration {
         unsigned startDelay;
-        bool showSnapshotNoVideo;
-        bool showSnapshotDelay;
+        bool showStaticImageDelay;
         std::string defaultVideoPath;
         std::string staticVideoPath;
     };
@@ -93,7 +92,7 @@ public:
 
 protected:
     virtual void startVideoStream() {}
-    void renderSnapshot(const glm::mat4& parentTrans);
+    void renderStaticImage(const glm::mat4& parentTrans);
 
     ImageComponent mStaticImage;
 

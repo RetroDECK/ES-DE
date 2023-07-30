@@ -48,8 +48,7 @@ VideoComponent::VideoComponent()
     , mFadeInTime {1000.0f}
 {
     // Setup default configuration.
-    mConfig.showSnapshotDelay = false;
-    mConfig.showSnapshotNoVideo = false;
+    mConfig.showStaticImageDelay = false;
     mConfig.startDelay = 1500;
 }
 
@@ -223,10 +222,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mConfig.startDelay =
             static_cast<unsigned int>(glm::clamp(elem->get<float>("delay"), 0.0f, 15.0f) * 1000.0f);
 
-    mConfig.showSnapshotNoVideo = true;
-
     if (mConfig.startDelay != 0)
-        mConfig.showSnapshotDelay = true;
+        mConfig.showStaticImageDelay = true;
 
     if (properties && elem->has("fadeInTime"))
         mFadeInTime = glm::clamp(elem->get<float>("fadeInTime"), 0.0f, 8.0f) * 1000.0f;
@@ -344,7 +341,7 @@ void VideoComponent::update(int deltaTime)
         return;
 
     // Hack to prevent the video from starting to play if the static image was shown when paused.
-    if (mConfig.showSnapshotDelay && mPaused)
+    if (mConfig.showStaticImageDelay && mPaused)
         mStartTime = SDL_GetTicks() + mConfig.startDelay;
 
     if (mWindow->getGameLaunchedState())
@@ -386,7 +383,7 @@ void VideoComponent::startVideoPlayer()
     if (mIsPlaying)
         stopVideoPlayer();
 
-    if (mConfig.showSnapshotDelay && mConfig.startDelay != 0 && mStaticImagePath != "") {
+    if (mConfig.showStaticImageDelay && mConfig.startDelay != 0 && mStaticImagePath != "") {
         mStartTime = SDL_GetTicks() + mConfig.startDelay;
         setImage(mStaticImagePath);
     }
@@ -394,9 +391,9 @@ void VideoComponent::startVideoPlayer()
     mPaused = false;
 }
 
-void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
+void VideoComponent::renderStaticImage(const glm::mat4& parentTrans)
 {
-    if (mHasVideo && (!mConfig.showSnapshotDelay || mConfig.startDelay == 0))
+    if (mHasVideo && (!mConfig.showStaticImageDelay || mConfig.startDelay == 0))
         return;
 
     if (mStaticImagePath != "") {

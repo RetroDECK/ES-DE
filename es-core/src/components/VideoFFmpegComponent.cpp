@@ -265,7 +265,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
     }
     else {
         if (mVisible)
-            VideoComponent::renderSnapshot(parentTrans);
+            VideoComponent::renderStaticImage(parentTrans);
     }
 }
 
