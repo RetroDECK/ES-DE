@@ -208,6 +208,31 @@ namespace Utils
             return homePath;
         }
 
+        std::string getSystemHomeDirectory()
+        {
+#if defined(_WIN64)
+            // On Windows we need to check HOMEDRIVE and HOMEPATH.
+            std::wstring envHomeDrive;
+            std::wstring envHomePath;
+#if defined(_MSC_VER) // MSVC compiler.
+            wchar_t* buffer;
+            if (!_wdupenv_s(&buffer, nullptr, L"HOMEDRIVE"))
+                envHomeDrive = buffer;
+            if (!_wdupenv_s(&buffer, nullptr, L"HOMEPATH"))
+                envHomePath = buffer;
+#else
+            envHomeDrive = _wgetenv(L"HOMEDRIVE");
+            envHomePath = _wgetenv(L"HOMEPATH");
+#endif
+            if (envHomeDrive.length() && envHomePath.length())
+                return getGenericPath(Utils::String::wideStringToString(envHomeDrive) + "/" +
+                                      Utils::String::wideStringToString(envHomePath));
+#else
+            return getenv("HOME");
+#endif
+            return "";
+        }
+
         std::string getCWDPath()
         {
             // Return current working directory.

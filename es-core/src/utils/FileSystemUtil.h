@@ -25,6 +25,7 @@ namespace Utils
         StringList getPathList(const std::string& path);
         void setHomePath(const std::string& path);
         std::string getHomePath();
+        std::string getSystemHomeDirectory();
         std::string getCWDPath();
         std::string getPathToBinary(const std::string& executable);
         void setExePath(const std::string& path);
