@@ -4,19 +4,32 @@ EmulationStation Desktop Edition (ES-DE) - Portable installation on Windows
 ES-DE release:
 2.2.0-alpha
 
+The latest version can be downloaded from https://es-de.org
+Please also consider donating to the project, links for that can be found on the ES-DE website just mentioned.
+
 Instructions:
 
-If upgrading from a previous release, then don't unpack this ZIP archive on top of your old installation.
-Instead first rename your old ES-DE directory, for example to EmulationStation-DE_OLD and follow the instructions below.
+If upgrading from a previous release, then don't unpack this ZIP archive on top of your old installation, instead follow the upgrade instructions below.
 
-1) The ROMs_ALL directory contains all the systems that ES-DE supports, but to decrease application startup time, only copy the systems you need to the ROMs directory.
-2) Copy your games into the respective folders in the ROMs directory.
-3) Place your emulators inside the Emulators directory.
-4) Optionally move your existing settings, gamelists, scraped/downloaded media, custom collections, custom systems, scripts and themes to the .emulationstation directory.
-5) Start ES-DE using EmulationStation.exe and enjoy some retrogaming!
+New installation:
+1) The ROMs_ALL directory contains all the systems that ES-DE supports, but to decrease application startup time only copy the folders you need to the ROMs directory
+2) Place your games into their respective folders in the ROMs directory tree
+3) Place your emulators inside the Emulators directory
+4) Start ES-DE using EmulationStation.exe and enjoy some retrogaming!
+
+Upgrading from an older release:
+1) Rename your old EmulationStation-DE directory, for example to EmulationStation-DE_OLD
+2) Move your games from EmulationStation-DE_OLD\ROMs\ to EmulationStation-DE\ROMs\
+3) Move your emulators from EmulationStation-DE_OLD\Emulators\ to EmulationStation-DE\Emulators\
+4) Move the contents of EmulationStation-DE_OLD\.emulationstation\ to EmulationStation-DE\.emulationstation\
+   This last step includes your settings, custom collections, custom systems, scraped/downloaded media, gamelist.xml files, scripts and themes
 
 In case of issues, check .emulationstation\es_log.txt for clues as to what went wrong.
-Starting EmulationStation.exe with the --debug flag will provide even more details.
+Starting EmulationStation.exe with the --debug flag will provide additional details.
+
+Refer to the FAQ and user guide for more detailed instructions and documentation:
+https://gitlab.com/es-de/emulationstation-de/-/blob/master/FAQ.md
+https://gitlab.com/es-de/emulationstation-de/-/blob/master/USERGUIDE.md
 
 This portable release contains a specific es_find_rules.xml file that will only look for emulators inside the portable directory tree.
 If you would like to use the installer release configuration file instead which will also look for emulators elsewhere on your system then go to
