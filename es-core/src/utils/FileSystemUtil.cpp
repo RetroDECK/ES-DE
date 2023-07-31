@@ -733,6 +733,40 @@ namespace Utils
 #endif
         }
 
+        bool createEmptyFile(const std::string& path)
+        {
+            if (exists(path)) {
+#if defined(_WIN64)
+                LOG(LogError) << "Couldn't create target file \""
+                              << Utils::String::replace(path, "/", "\\")
+                              << "\" as it already exists";
+                return false;
+            }
+
+            std::ofstream targetFile {Utils::String::stringToWideString(path).c_str(),
+                                      std::ios::binary};
+            if (targetFile.fail()) {
+                LOG(LogError) << "Couldn't create target file \""
+                              << Utils::String::replace(path, "/", "\\")
+#else
+                LOG(LogError) << "Couldn't create target file \"" << path
+                              << "\" as it already exists";
+                return false;
+            }
+
+            std::ofstream targetFile {path, std::ios::binary};
+            if (targetFile.fail()) {
+                LOG(LogError) << "Couldn't create target file \"" << path
+#endif
+                              << "\", permission problems?";
+                targetFile.close();
+                return false;
+            }
+
+            targetFile.close();
+            return true;
+        }
+
         bool removeFile(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
