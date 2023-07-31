@@ -113,8 +113,13 @@ GuiApplicationUpdater::GuiApplicationUpdater()
             "CHANGE DIRECTORY", "change download directory", [this]() {
                 if (mDownloading || mHasDownloaded)
                     return;
+#if defined(_WIN64)
+                std::string currentDownloadDirectory {Utils::String::replace(
+                    Utils::FileSystem::getParent(mDownloadPackageFilename), "/", "\\")};
+#else
                 std::string currentDownloadDirectory {
                     Utils::FileSystem::getParent(mDownloadPackageFilename)};
+#endif
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
                     getHelpStyle(), 0.0f, "ENTER DOWNLOAD DIRECTORY", currentDownloadDirectory,
                     [this, currentDownloadDirectory](std::string newDownloadDirectory) {
@@ -137,8 +142,13 @@ GuiApplicationUpdater::GuiApplicationUpdater()
                                 Utils::String::trim(newDownloadDirectory));
                             Settings::getInstance()->saveFile();
                             setDownloadPath();
+#if defined(_WIN64)
+                            mProcessStep2->setValue(Utils::String::replace(
+                                Utils::FileSystem::getParent(mDownloadPackageFilename), "/", "\\"));
+#else
                             mProcessStep2->setValue(
                                 Utils::FileSystem::getParent(mDownloadPackageFilename));
+#endif
                         }
                     },
                     false));
