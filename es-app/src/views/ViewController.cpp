@@ -139,12 +139,13 @@ void ViewController::setMenuColors()
 
 void ViewController::unsafeUpgradeDialog()
 {
-    std::string upgradeMessage {"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY "
-                                "UNPACKING THE NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE "
-                                "VARIOUS PROBLEMS, SOME OF WHICH MAY NOT BE APPARENT IMMEDIATELY. "
-                                "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
-                                "README.TXT FILE THAT CAN BE FOUND IN THE EMULATIONSTATION-DE "
-                                "DIRECTORY."};
+    const std::string upgradeMessage {
+        "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY "
+        "UNPACKING THE NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE "
+        "VARIOUS PROBLEMS, SOME OF WHICH MAY NOT BE APPARENT IMMEDIATELY. "
+        "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
+        "README.TXT FILE THAT CAN BE FOUND IN THE EMULATIONSTATION-DE "
+        "DIRECTORY."};
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, true, true,
         (mRenderer->getIsVerticalOrientation() ?
@@ -321,13 +322,46 @@ void ViewController::updateAvailableDialog()
                       << "\"";
         LOG(LogDebug) << "ViewController::updateAvailableDialog(): Package md5 \"" << package.md5
                       << "\"";
-    }
 
-    if (package.name == "LinuxAppImage" || package.name == "LinuxSteamDeckAppImage") {
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(), results, "UPDATE",
-            [this] { mWindow->pushGui(new GuiApplicationUpdater()); }, "CANCEL", [] { return; }, "",
-            nullptr, true, true,
+            [this, package] {
+                mWindow->pushGui(new GuiApplicationUpdater());
+
+                if (package.name != "LinuxAppImage" && package.name != "LinuxSteamDeckAppImage") {
+                    std::string upgradeMessage;
+                    if (package.name == "WindowsPortable") {
+                        upgradeMessage =
+                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS "
+                            "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. "
+                            "SEE THE README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR "
+                            "INSTRUCTIONS ON HOW THIS IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN "
+                            "THAT DOCUMENT, NEVER UNPACK A NEW RELEASE ON TOP OF AN OLD "
+                            "INSTALLATION AS THAT MAY COMPLETELY BREAK THE APPLICATION.";
+                    }
+                    else if (package.name == "WindowsInstaller") {
+                        upgradeMessage =
+                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER "
+                            "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM "
+                            "THE UPGRADE. WHEN DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE "
+                            "QUESTION OF WHETHER TO UNINSTALL THE OLD VERSION, OR YOU MAY "
+                            "END UP WITH A BROKEN SETUP.";
+                    }
+                    else if (package.name == "macOSApple" || package.name == "macOSIntel") {
+                        upgradeMessage =
+                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR "
+                            "YOU, BUT YOU WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM "
+                            "THE UPGRADE.";
+                    }
+                    mWindow->pushGui(new GuiMsgBox(
+                        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr,
+                        true, true,
+                        (mRenderer->getIsVerticalOrientation() ?
+                             0.85f :
+                             0.53f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                }
+            },
+            "CANCEL", [] { return; }, "", nullptr, true, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.70f :
                  0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));

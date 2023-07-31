@@ -262,6 +262,7 @@ void Settings::setDefaults()
 #endif
     mStringMap["SaveGamelistsMode"] = {"always", "always"};
     mStringMap["ApplicationUpdaterFrequency"] = {"always", "always"};
+    mStringMap["ApplicationUpdaterDownloadDirectory"] = {"", ""};
     mBoolMap["ApplicationUpdaterPrereleases"] = {false, false};
 #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = {false, false};

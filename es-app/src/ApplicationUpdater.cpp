@@ -403,7 +403,7 @@ void ApplicationUpdater::compareVersions()
                 mResults.append("release available: ").append(releaseType->version);
             }
 
-            if (mPackage.name != "LinuxAppImage" && mPackage.name != "LinuxSteamDeckAppImage")
+            if (mPackageType == PackageType::UNKNOWN)
                 mResults.append("\nFor more information visit\n").append("https://es-de.org");
 
             if (mPackage.message != "")

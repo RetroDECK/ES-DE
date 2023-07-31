@@ -28,6 +28,7 @@ public:
     GuiApplicationUpdater();
     ~GuiApplicationUpdater();
 
+    void setDownloadPath();
     bool downloadPackage();
     bool installAppImage();
 
@@ -53,6 +54,7 @@ private:
     std::shared_ptr<ComponentGrid> mButtons;
     std::shared_ptr<ButtonComponent> mButton1;
     std::shared_ptr<ButtonComponent> mButton2;
+    std::shared_ptr<ButtonComponent> mButton3;
 
     std::shared_ptr<TextComponent> mTitle;
     std::shared_ptr<TextComponent> mStatusHeader;
@@ -70,6 +72,8 @@ private:
     std::string mMessage;
 
     ApplicationUpdater::Package mPackage;
+    std::string mDownloadPackageFilename;
+    std::atomic<bool> mLinuxAppImage;
     std::atomic<bool> mAbortDownload;
     std::atomic<bool> mDownloading;
     std::atomic<bool> mReadyToInstall;

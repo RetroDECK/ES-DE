@@ -10,16 +10,16 @@
 #include "guis/GuiApplicationUpdater.h"
 
 #include "EmulationStation.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "utils/PlatformUtil.h"
 
-#if !defined(__NETBSD__)
 #include <filesystem>
-#endif
 
 GuiApplicationUpdater::GuiApplicationUpdater()
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {4, 11}}
+    , mLinuxAppImage {false}
     , mAbortDownload {false}
     , mDownloading {false}
     , mReadyToInstall {false}
@@ -30,9 +30,12 @@ GuiApplicationUpdater::GuiApplicationUpdater()
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mPackage = ApplicationUpdater::getInstance().getPackageInfo();
-
     LOG(LogInfo) << "Starting Application Updater";
+
+    mPackage = ApplicationUpdater::getInstance().getPackageInfo();
+    mLinuxAppImage =
+        (mPackage.name == "LinuxAppImage" || mPackage.name == "LinuxSteamDeckAppImage");
+    setDownloadPath();
 
     // Set up grid.
     mTitle = std::make_shared<TextComponent>("APPLICATION UPDATER", Font::get(FONT_SIZE_LARGE),
@@ -44,17 +47,28 @@ GuiApplicationUpdater::GuiApplicationUpdater()
         "INSTALLATION STEPS:", Font::get(FONT_SIZE_MINI), mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mStatusHeader, glm::ivec2 {1, 1}, false, true, glm::ivec2 {2, 1});
 
-    mProcessStep1 = std::make_shared<TextComponent>(
-        "DOWNLOAD NEW RELEASE", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_LEFT);
+    const std::string step1Text {mLinuxAppImage ? "DOWNLOAD NEW RELEASE" :
+                                                  "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"};
+    mProcessStep1 = std::make_shared<TextComponent>(step1Text, Font::get(FONT_SIZE_MEDIUM),
+                                                    mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mProcessStep1, glm::ivec2 {1, 2}, false, true, glm::ivec2 {2, 1});
 
-    mProcessStep2 = std::make_shared<TextComponent>("INSTALL PACKAGE", Font::get(FONT_SIZE_MEDIUM),
+#if defined(_WIN64)
+    const std::string step2Text {Utils::String::replace(
+        Utils::FileSystem::getParent(mDownloadPackageFilename), , "/", "\\")};
+#else
+    const std::string step2Text {mLinuxAppImage ?
+                                     "INSTALL PACKAGE" :
+                                     Utils::FileSystem::getParent(mDownloadPackageFilename)};
+#endif
+    mProcessStep2 = std::make_shared<TextComponent>(step2Text, Font::get(FONT_SIZE_MEDIUM),
                                                     mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mProcessStep2, glm::ivec2 {1, 3}, false, true, glm::ivec2 {2, 1});
 
-    mProcessStep3 =
-        std::make_shared<TextComponent>("QUIT AND MANUALLY RESTART ES-DE",
-                                        Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_LEFT);
+    const std::string step3Text {mLinuxAppImage ? "QUIT AND MANUALLY RESTART ES-DE" :
+                                                  "QUIT AND MANUALLY UPGRADE ES-DE"};
+    mProcessStep3 = std::make_shared<TextComponent>(step3Text, Font::get(FONT_SIZE_MEDIUM),
+                                                    mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mProcessStep3, glm::ivec2 {1, 4}, false, true, glm::ivec2 {2, 1});
 
     mStatusMessageHeader = std::make_shared<TextComponent>(
@@ -74,6 +88,13 @@ GuiApplicationUpdater::GuiApplicationUpdater()
 
     mButton1 = std::make_shared<ButtonComponent>("DOWNLOAD", "download new release", [this]() {
         if (!mDownloading) {
+            if (!mLinuxAppImage) {
+                if (!Utils::FileSystem::exists(
+                        Utils::FileSystem::getParent(mDownloadPackageFilename))) {
+                    mMessage = "Download directory does not exist";
+                    return;
+                }
+            }
             mMessage = "";
             mStatusMessage->setText(mMessage);
             mDownloading = true;
@@ -87,7 +108,45 @@ GuiApplicationUpdater::GuiApplicationUpdater()
 
     buttons.push_back(mButton1);
 
-    mButton2 = std::make_shared<ButtonComponent>("CANCEL", "cancel", [this]() {
+    if (!mLinuxAppImage) {
+        mButton2 = std::make_shared<ButtonComponent>(
+            "CHANGE DIRECTORY", "change download directory", [this]() {
+                if (mDownloading || mHasDownloaded)
+                    return;
+                std::string currentDownloadDirectory {
+                    Utils::FileSystem::getParent(mDownloadPackageFilename)};
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    getHelpStyle(), 0.0f, "ENTER DOWNLOAD DIRECTORY", currentDownloadDirectory,
+                    [this, currentDownloadDirectory](std::string newDownloadDirectory) {
+                        if (currentDownloadDirectory != newDownloadDirectory) {
+                            newDownloadDirectory.erase(
+                                // Remove trailing / and \ characters.
+                                std::find_if(newDownloadDirectory.rbegin(),
+                                             newDownloadDirectory.rend(),
+                                             [](char c) { return c != '/' && c != '\\'; })
+                                    .base(),
+                                newDownloadDirectory.end());
+#if defined(_WIN64)
+                            newDownloadDirectory =
+                                Utils::String::replace(newDownloadDirectory, "/", "\\");
+#else
+                    newDownloadDirectory = Utils::String::replace(newDownloadDirectory, "\\", "/");
+#endif
+                            Settings::getInstance()->setString(
+                                "ApplicationUpdaterDownloadDirectory",
+                                Utils::String::trim(newDownloadDirectory));
+                            Settings::getInstance()->saveFile();
+                            setDownloadPath();
+                            mProcessStep2->setValue(
+                                Utils::FileSystem::getParent(mDownloadPackageFilename));
+                        }
+                    },
+                    false));
+            });
+        buttons.push_back(mButton2);
+    }
+
+    mButton3 = std::make_shared<ButtonComponent>("CANCEL", "cancel", [this]() {
         mAbortDownload = true;
         if (mDownloading) {
             mWindow->pushGui(
@@ -108,7 +167,7 @@ GuiApplicationUpdater::GuiApplicationUpdater()
         delete this;
     });
 
-    buttons.push_back(mButton2);
+    buttons.push_back(mButton3);
 
     mButtons = MenuComponent::makeButtonGrid(buttons);
     mGrid.setEntry(mButtons, glm::ivec2 {0, 10}, true, false, glm::ivec2 {4, 1},
@@ -142,6 +201,30 @@ GuiApplicationUpdater::~GuiApplicationUpdater()
 
     if (mThread)
         mThread->join();
+}
+
+void GuiApplicationUpdater::setDownloadPath()
+{
+    if (mLinuxAppImage) {
+        mDownloadPackageFilename = Utils::FileSystem::getParent(Utils::FileSystem::getEsBinary()) +
+                                   "/" + mPackage.filename + "_" + mPackage.version;
+    }
+    else {
+#if defined(_WIN64)
+        const std::string downloadDirectory {Utils::String::replace(
+            Settings::getInstance()->getString("ApplicationUpdaterDownloadDirectory"), "\\", "/")};
+#else
+        const std::string downloadDirectory {
+            Settings::getInstance()->getString("ApplicationUpdaterDownloadDirectory")};
+#endif
+        if (downloadDirectory == "")
+            mDownloadPackageFilename = Utils::FileSystem::getSystemHomeDirectory() + "/Downloads/";
+        else
+            mDownloadPackageFilename = Utils::FileSystem::expandHomePath(downloadDirectory) + "/";
+
+        mDownloadPackageFilename = Utils::String::replace(mDownloadPackageFilename, "//", "/");
+        mDownloadPackageFilename.append(mPackage.filename);
+    }
 }
 
 bool GuiApplicationUpdater::downloadPackage()
@@ -188,32 +271,30 @@ bool GuiApplicationUpdater::downloadPackage()
         return true;
     }
 
-    const std::string packageTempFile {
-        Utils::FileSystem::getParent(Utils::FileSystem::getEsBinary()) + "/" + mPackage.filename +
-        "_" + mPackage.version};
-    LOG(LogDebug)
-        << "GuiApplicationUpdater::downloadPackage(): Package downloaded, writing it to \""
-        << packageTempFile << "\"";
+    if (mLinuxAppImage) {
+        LOG(LogDebug)
+            << "GuiApplicationUpdater::downloadPackage(): Package downloaded, writing it to \""
+            << mDownloadPackageFilename << "\"";
 
-    if (Utils::FileSystem::isRegularFile(packageTempFile)) {
-        LOG(LogInfo) << "Temporary package file already exists, deleting it";
-        Utils::FileSystem::removeFile(packageTempFile);
-        if (Utils::FileSystem::exists(packageTempFile)) {
-            const std::string errorMessage {
-                "Couldn't delete temporary package file, permission problems?"};
-            LOG(LogError) << errorMessage;
-            std::unique_lock<std::mutex> lock {mMutex};
-            mMessage = "Error: " + errorMessage;
-            return true;
+        if (Utils::FileSystem::isRegularFile(mDownloadPackageFilename)) {
+            LOG(LogInfo) << "Temporary package file already exists, deleting it";
+            Utils::FileSystem::removeFile(mDownloadPackageFilename);
+            if (Utils::FileSystem::exists(mDownloadPackageFilename)) {
+                const std::string errorMessage {
+                    "Couldn't delete temporary package file, permission problems?"};
+                LOG(LogError) << errorMessage;
+                std::unique_lock<std::mutex> lock {mMutex};
+                mMessage = "Error: " + errorMessage;
+                return true;
+            }
         }
     }
 
     std::ofstream writeFile;
-    writeFile.open(packageTempFile.c_str(), std::ofstream::binary);
+    writeFile.open(mDownloadPackageFilename.c_str(), std::ofstream::binary);
 
     if (writeFile.fail()) {
-        const std::string errorMessage {
-            "Couldn't open package file for writing, permission problems?"};
+        const std::string errorMessage {"Couldn't write package file, permission problems?"};
         LOG(LogError) << errorMessage;
         std::unique_lock<std::mutex> lock {mMutex};
         mMessage = "Error: " + errorMessage;
@@ -225,28 +306,28 @@ bool GuiApplicationUpdater::downloadPackage()
 
     fileContents.clear();
 
-#if !defined(__APPLE__) && !defined(__NETBSD__)
-    std::filesystem::permissions(packageTempFile, std::filesystem::perms::owner_all |
-                                                      std::filesystem::perms::group_all |
-                                                      std::filesystem::perms::others_read |
-                                                      std::filesystem::perms::others_exec);
+    if (mLinuxAppImage) {
+        std::filesystem::permissions(
+            mDownloadPackageFilename,
+            std::filesystem::perms::owner_all | std::filesystem::perms::group_all |
+                std::filesystem::perms::others_read | std::filesystem::perms::others_exec);
 
-    if (std::filesystem::status(packageTempFile).permissions() !=
-        (std::filesystem::perms::owner_all | std::filesystem::perms::group_all |
-         std::filesystem::perms::others_read | std::filesystem::perms::others_exec)) {
-        Utils::FileSystem::removeFile(packageTempFile);
-        const std::string errorMessage {"Couldn't set permissions on AppImage file"};
-        LOG(LogError) << errorMessage;
-        std::unique_lock<std::mutex> lock {mMutex};
-        mMessage = "Error: " + errorMessage;
-        return true;
+        if (std::filesystem::status(mDownloadPackageFilename).permissions() !=
+            (std::filesystem::perms::owner_all | std::filesystem::perms::group_all |
+             std::filesystem::perms::others_read | std::filesystem::perms::others_exec)) {
+            Utils::FileSystem::removeFile(mDownloadPackageFilename);
+            const std::string errorMessage {"Couldn't set permissions on AppImage file"};
+            LOG(LogError) << errorMessage;
+            std::unique_lock<std::mutex> lock {mMutex};
+            mMessage = "Error: " + errorMessage;
+            return true;
+        }
     }
-#endif
 
-    LOG(LogInfo) << "Successfully downloaded package file \"" << packageTempFile << "\"";
+    LOG(LogInfo) << "Successfully downloaded package file \"" << mDownloadPackageFilename << "\"";
 
     std::unique_lock<std::mutex> lock {mMutex};
-    mMessage = "Downloaded " + mPackage.filename + "_" + mPackage.version;
+    mMessage = "Downloaded " + Utils::FileSystem::getFileName(mDownloadPackageFilename);
 
     mDownloading = false;
     mReadyToInstall = true;
@@ -261,9 +342,6 @@ bool GuiApplicationUpdater::installAppImage()
     mReadyToInstall = false;
     mInstalling = true;
 
-    const std::string packageTempFile {
-        Utils::FileSystem::getParent(Utils::FileSystem::getEsBinary()) + "/" + mPackage.filename +
-        "_" + mPackage.version};
     const std::string packageTargetFile {Utils::FileSystem::getEsBinary()};
 
     if (packageTargetFile !=
@@ -280,7 +358,7 @@ bool GuiApplicationUpdater::installAppImage()
 
     // Extra precaution, make sure that the file was actually correctly written to disk.
     std::ifstream readFile;
-    readFile.open(packageTempFile.c_str(), std::ofstream::binary);
+    readFile.open(mDownloadPackageFilename.c_str(), std::ofstream::binary);
 
     if (readFile.fail()) {
         const std::string errorMessage {"Couldn't open AppImage update file for reading"};
@@ -321,7 +399,7 @@ bool GuiApplicationUpdater::installAppImage()
 
     LOG(LogInfo) << "Renamed running AppImage to \"" << packageOldFile << "\"";
 
-    if (Utils::FileSystem::renameFile(packageTempFile, packageTargetFile, true)) {
+    if (Utils::FileSystem::renameFile(mDownloadPackageFilename, packageTargetFile, true)) {
         const std::string errorMessage {
             "Couldn't replace running AppImage file, permission problems?"};
         LOG(LogError) << errorMessage;
@@ -354,7 +432,7 @@ void GuiApplicationUpdater::update(int deltaTime)
 
     if (mDownloading)
         mBusyAnim.update(deltaTime);
-    else if (mReadyToInstall) {
+    else if (mLinuxAppImage && mReadyToInstall) {
         mProcessStep1->setText(ViewController::TICKMARK_CHAR + " " + mProcessStep1->getValue());
         mProcessStep1->setColor(mMenuColorGreen);
         mButton1->setText("INSTALL", "install package");
@@ -368,21 +446,28 @@ void GuiApplicationUpdater::update(int deltaTime)
         mReadyToInstall = false;
         mHasDownloaded = true;
     }
-    else if (mHasInstalled) {
-        mProcessStep2->setText(ViewController::TICKMARK_CHAR + " " + mProcessStep2->getValue());
-        mProcessStep2->setColor(mMenuColorGreen);
+    else if ((mLinuxAppImage && mHasInstalled) || (!mLinuxAppImage && mReadyToInstall)) {
+        if (mLinuxAppImage) {
+            mProcessStep2->setText(ViewController::TICKMARK_CHAR + " " + mProcessStep2->getValue());
+            mProcessStep2->setColor(mMenuColorGreen);
+        }
+        else {
+            mProcessStep1->setText(ViewController::TICKMARK_CHAR + " " + mProcessStep1->getValue());
+            mProcessStep1->setColor(mMenuColorGreen);
+        }
         mChangelogMessage->setText("Find the detailed changelog at https://es-de.org");
-        mButton1->setText("DONE", "quit application");
-        mButton1->setPressedFunc([this] {
-            delete this;
-            Utils::Platform::quitES();
-        });
-        mButton2->setText("QUIT", "quit application");
-        mButton2->setPressedFunc([this] {
-            delete this;
-            Utils::Platform::quitES();
-        });
+        mGrid.removeEntry(mButtons);
+        mGrid.setEntry(MenuComponent::makeButtonGrid(std::vector<std::shared_ptr<ButtonComponent>> {
+                           std::make_shared<ButtonComponent>("QUIT", "quit application",
+                                                             [this]() {
+                                                                 delete this;
+                                                                 Utils::Platform::quitES();
+                                                             })}),
+                       glm::ivec2 {0, 10}, true, false, glm::ivec2 {4, 1}, GridFlags::BORDER_TOP);
+        mGrid.moveCursorTo(0, 10);
+        mReadyToInstall = false;
         mHasInstalled = false;
+        mHasDownloaded = true;
     }
 }
 
