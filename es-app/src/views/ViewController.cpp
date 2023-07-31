@@ -354,8 +354,8 @@ void ViewController::updateAvailableDialog()
                             "THE UPGRADE.";
                     }
                     mWindow->pushGui(new GuiMsgBox(
-                        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr,
-                        true, true,
+                        getHelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "",
+                        nullptr, true, true,
                         (mRenderer->getIsVerticalOrientation() ?
                              0.85f :
                              0.53f * (1.778f / mRenderer->getScreenAspectRatio()))));
