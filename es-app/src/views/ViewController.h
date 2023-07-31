@@ -34,6 +34,7 @@ public:
 
     // These functions are called from main().
     void setMenuColors();
+    void unsafeUpgradeDialog();
     void invalidSystemsFileDialog();
     void noGamesDialog();
     void invalidAlternativeEmulatorDialog();

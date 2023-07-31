@@ -33,7 +33,6 @@
 #include "SystemData.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiLaunchScreen.h"
-#include "guis/GuiMsgBox.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
@@ -823,6 +822,31 @@ int main(int argc, char* argv[])
 #if defined(APPLICATION_UPDATER)
         if (ApplicationUpdater::getInstance().getResults())
             ViewController::getInstance()->updateAvailableDialog();
+#endif
+
+#if defined(_WIN64)
+        if (Settings::getInstance()->getBool("PortableMode")) {
+            // If it's the portable Windows release then create a release file, and check if there
+            // are any release files from different versions than the one currently running.
+            // If this is the case an unsafe upgrade has taken place, probably by simply unpacking
+            // the new release on top of the old one.
+            bool releaseFileExists {true};
+            const std::string releaseFile {"r" + std::to_string(PROGRAM_RELEASE_NUMBER) + ".rel"};
+            if (!Utils::FileSystem::exists(Utils::FileSystem::getExePath() + "/" + releaseFile)) {
+                releaseFileExists = Utils::FileSystem::createEmptyFile(
+                    Utils::FileSystem::getExePath() + "/" + releaseFile);
+            }
+            if (releaseFileExists) {
+                for (auto& file : Utils::FileSystem::getMatchingFiles(
+                         Utils::FileSystem::getExePath() + "/*.rel")) {
+                    if (Utils::FileSystem::getFileName(file) != releaseFile) {
+                        LOG(LogWarning) << "It seems as if an unsafe upgrade has been made";
+                        ViewController::getInstance()->unsafeUpgradeDialog();
+                        break;
+                    }
+                }
+            }
+        }
 #endif
 
         LOG(LogInfo) << "Application startup time: "

@@ -137,14 +137,29 @@ void ViewController::setMenuColors()
     }
 }
 
+void ViewController::unsafeUpgradeDialog()
+{
+    std::string upgradeMessage {"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY "
+                                "UNPACKING THE NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE "
+                                "VARIOUS PROBLEMS, SOME OF WHICH MAY NOT BE APPARENT IMMEDIATELY. "
+                                "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
+                                "README.TXT FILE THAT CAN BE FOUND IN THE EMULATIONSTATION-DE "
+                                "DIRECTORY."};
+    mWindow->pushGui(new GuiMsgBox(
+        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, true, true,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.85f :
+             0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
+}
+
 void ViewController::invalidSystemsFileDialog()
 {
-    std::string errorMessage = "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. "
-                               "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN "
-                               "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
-                               "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
-                               "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE "
-                               "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO";
+    const std::string errorMessage {"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. "
+                                    "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN "
+                                    "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
+                                    "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
+                                    "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE "
+                                    "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"};
 
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), errorMessage.c_str(), "QUIT",
