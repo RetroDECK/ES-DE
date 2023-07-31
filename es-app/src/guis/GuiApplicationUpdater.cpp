@@ -54,8 +54,8 @@ GuiApplicationUpdater::GuiApplicationUpdater()
     mGrid.setEntry(mProcessStep1, glm::ivec2 {1, 2}, false, true, glm::ivec2 {2, 1});
 
 #if defined(_WIN64)
-    const std::string step2Text {Utils::String::replace(
-        Utils::FileSystem::getParent(mDownloadPackageFilename), , "/", "\\")};
+    const std::string step2Text {
+        Utils::String::replace(Utils::FileSystem::getParent(mDownloadPackageFilename), "/", "\\")};
 #else
     const std::string step2Text {mLinuxAppImage ?
                                      "INSTALL PACKAGE" :
