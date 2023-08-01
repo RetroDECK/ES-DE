@@ -272,9 +272,9 @@ int HttpReq::transferProgress(
 {
     // Note that it's not guaranteed that the server will actually provide the total size.
     if (dltotal > 0)
-        static_cast<HttpReq*>(clientp)->mTotalBytes = dltotal;
+        static_cast<HttpReq*>(clientp)->mTotalBytes = static_cast<long>(dltotal);
     if (dlnow > 0)
-        static_cast<HttpReq*>(clientp)->mDownloadedBytes = dlnow;
+        static_cast<HttpReq*>(clientp)->mDownloadedBytes = static_cast<long>(dlnow);
 
     return CURLE_OK;
 }
