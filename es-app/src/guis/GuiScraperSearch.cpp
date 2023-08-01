@@ -573,7 +573,7 @@ void GuiScraperSearch::updateInfoPane()
                     // through the result list.
                     mThumbnailReqMap.insert(std::pair<std::string, std::unique_ptr<HttpReq>>(
                         mScraperResults[i].thumbnailImageUrl,
-                        std::unique_ptr<HttpReq>(new HttpReq(thumb))));
+                        std::unique_ptr<HttpReq>(new HttpReq(thumb, true))));
                 }
             }
         }

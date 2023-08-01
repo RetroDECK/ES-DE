@@ -73,6 +73,7 @@ private:
 
     ApplicationUpdater::Package mPackage;
     std::string mDownloadPackageFilename;
+    std::atomic<int> mDownloadPercentage;
     std::atomic<bool> mLinuxAppImage;
     std::atomic<bool> mAbortDownload;
     std::atomic<bool> mDownloading;

@@ -125,10 +125,11 @@ bool ApplicationUpdater::downloadFile()
     mMaxTime = mTimer + (MAX_DOWNLOAD_TIME * 1000);
 
     mStatus = ASYNC_IN_PROGRESS;
-    mRequest = std::unique_ptr<HttpReq>(std::make_unique<HttpReq>(mUrl));
+    mRequest = std::unique_ptr<HttpReq>(std::make_unique<HttpReq>(mUrl, false));
 
     while (mTimer < mMaxTime || !mAbortDownload) {
-        SDL_Delay(10);
+        // Add a small delay so we don't eat all CPU cycles checking for status updates.
+        SDL_Delay(5);
         try {
             update();
         }

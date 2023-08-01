@@ -13,12 +13,15 @@
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "utils/PlatformUtil.h"
 
+#include <SDL2/SDL_timer.h>
+
 #include <filesystem>
 
 GuiApplicationUpdater::GuiApplicationUpdater()
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {4, 11}}
+    , mDownloadPercentage {0}
     , mLinuxAppImage {false}
     , mAbortDownload {false}
     , mDownloading {false}
@@ -97,6 +100,7 @@ GuiApplicationUpdater::GuiApplicationUpdater()
             }
             mMessage = "";
             mStatusMessage->setText(mMessage);
+            mDownloadPercentage = 0;
             mDownloading = true;
             if (mThread) {
                 mThread->join();
@@ -158,6 +162,10 @@ GuiApplicationUpdater::GuiApplicationUpdater()
 
     mButton3 = std::make_shared<ButtonComponent>("CANCEL", "cancel", [this]() {
         mAbortDownload = true;
+        if (mThread) {
+            mThread->join();
+            mThread.reset();
+        }
         if (mDownloading) {
             mWindow->pushGui(
                 new GuiMsgBox(getHelpStyle(), "DOWNLOAD ABORTED\nNO PACKAGE SAVED TO DISK", "OK",
@@ -166,7 +174,7 @@ GuiApplicationUpdater::GuiApplicationUpdater()
                                    0.70f :
                                    0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
         }
-        else if (mHasDownloaded && !mHasInstalled) {
+        else if (mHasDownloaded || mReadyToInstall) {
             mWindow->pushGui(new GuiMsgBox(
                 getHelpStyle(), "PACKAGE WAS DOWNLOADED AND\nCAN BE MANUALLY INSTALLED", "OK",
                 nullptr, "", nullptr, "", nullptr, true, true,
@@ -201,7 +209,7 @@ GuiApplicationUpdater::GuiApplicationUpdater()
                 std::round(mRenderer->getScreenHeight() * 0.13f));
 
     mBusyAnim.setSize(mSize);
-    mBusyAnim.setText("DOWNLOADING");
+    mBusyAnim.setText("DOWNLOADING 100%");
     mBusyAnim.onSizeChanged();
 }
 
@@ -240,11 +248,12 @@ void GuiApplicationUpdater::setDownloadPath()
 bool GuiApplicationUpdater::downloadPackage()
 {
     mStatus = ASYNC_IN_PROGRESS;
-    mRequest = std::unique_ptr<HttpReq>(std::make_unique<HttpReq>(mPackage.url));
-    LOG(LogDebug) << "GuiApplicationUpdater::downloadPackage(): Starting download of \""
-                  << mPackage.filename << "\"";
+    mRequest = std::unique_ptr<HttpReq>(std::make_unique<HttpReq>(mPackage.url, false));
+    LOG(LogInfo) << "Downloading \"" << mPackage.filename << "\"...";
 
     while (!mAbortDownload) {
+        // Add a small delay so we don't eat all CPU cycles checking for status updates.
+        SDL_Delay(5);
         HttpReq::Status reqStatus {mRequest->status()};
         if (reqStatus == HttpReq::REQ_SUCCESS) {
             mStatus = ASYNC_DONE;
@@ -259,6 +268,14 @@ bool GuiApplicationUpdater::downloadPackage()
             std::unique_lock<std::mutex> lock {mMutex};
             mMessage = errorMessage;
             return true;
+        }
+        else {
+            // Download progress as reported by curl.
+            const float downloadedBytes {static_cast<float>(mRequest->getDownloadedBytes())};
+            const float totalBytes {static_cast<float>(mRequest->getTotalBytes())};
+            if (downloadedBytes != 0.0f && totalBytes != 0.0f)
+                mDownloadPercentage =
+                    static_cast<int>(std::round((downloadedBytes / totalBytes) * 100.0f));
         }
     }
 
@@ -304,10 +321,10 @@ bool GuiApplicationUpdater::downloadPackage()
     writeFile.open(mDownloadPackageFilename.c_str(), std::ofstream::binary);
 
     if (writeFile.fail()) {
-        const std::string errorMessage {"Couldn't write package file, permission problems?"};
-        LOG(LogError) << errorMessage;
+        LOG(LogError) << "Couldn't write package file \"" << mDownloadPackageFilename
+                      << "\", permission problems?";
         std::unique_lock<std::mutex> lock {mMutex};
-        mMessage = "Error: " + errorMessage;
+        mMessage = "Error: Couldn't write package file, permission problems?";
         return true;
     }
 
@@ -440,8 +457,10 @@ void GuiApplicationUpdater::update(int deltaTime)
         }
     }
 
-    if (mDownloading)
+    if (mDownloading) {
+        mBusyAnim.setText("DOWNLOADING " + std::to_string(mDownloadPercentage) + "%");
         mBusyAnim.update(deltaTime);
+    }
     else if (mLinuxAppImage && mReadyToInstall) {
         mProcessStep1->setText(ViewController::TICKMARK_CHAR + " " + mProcessStep1->getValue());
         mProcessStep1->setColor(mMenuColorGreen);

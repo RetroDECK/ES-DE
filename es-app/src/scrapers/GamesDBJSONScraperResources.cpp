@@ -158,7 +158,7 @@ std::unique_ptr<HttpReq> TheGamesDBJSONRequestResources::fetchResource(const std
     std::string path {"https://api.thegamesdb.net/v1"};
     path.append(endpoint).append("?apikey=").append(getApiKey());
 
-    return std::unique_ptr<HttpReq>(new HttpReq(path));
+    return std::unique_ptr<HttpReq>(new HttpReq(path, true));
 }
 
 int TheGamesDBJSONRequestResources::loadResource(std::unordered_map<int, std::string>& resource,

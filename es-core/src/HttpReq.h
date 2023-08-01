@@ -3,44 +3,23 @@
 //  EmulationStation Desktop Edition
 //  HttpReq.h
 //
-//  HTTP request functions.
-//  Used by Scraper, GamesDBJSONScraper, GamesDBJSONScraperResources and
-//  ScreenScraper to download game information and media files.
-//  Also used by ApplicationUpdater to check for application updates.
+//  HTTP requests using libcurl.
+//  Used by the scraper and application updater.
 //
 
 #ifndef ES_CORE_HTTP_REQ_H
 #define ES_CORE_HTTP_REQ_H
 
 #include <curl/curl.h>
+
+#include <atomic>
 #include <map>
 #include <sstream>
-
-// Usage:
-// HttpReq myRequest("www.duckduckgo.com", "/index.html");
-//
-// For blocking behavior:
-// while (myRequest.status() == HttpReq::REQ_IN_PROGRESS);
-//
-// For non-blocking behavior:
-// Check 'if (myRequest.status() != HttpReq::REQ_IN_PROGRESS)' in some sort of update method.
-//
-// Once one of those calls complete, the request is ready.
-//
-// Do something like this to capture errors:
-// if (myRequest.status() != REQ_SUCCESS) {
-//    // An error occured.
-//    LOG(LogError) << "HTTP request error - " << myRequest.getErrorMessage();
-//    return;
-// }
-//
-// This is how to read the returned content:
-// std::string content = myRequest.getContent();
 
 class HttpReq
 {
 public:
-    HttpReq(const std::string& url);
+    HttpReq(const std::string& url, bool scraperRequest);
     ~HttpReq();
 
     enum Status {
@@ -55,13 +34,15 @@ public:
         // clang-format on
     };
 
-    Status status(); // Process any received data and return the status afterwards.
+    // Process any received data and return the status afterwards.
+    Status status();
+
     std::string getErrorMsg() { return mErrorMsg; }
-    std::string getContent() const; // mStatus must be REQ_SUCCESS.
+    std::string getContent() const;
+    long getTotalBytes() { return mTotalBytes; }
+    long getDownloadedBytes() { return mDownloadedBytes; }
 
     static std::string urlEncode(const std::string& s);
-    static bool isUrl(const std::string& s);
-
     static void cleanupCurlMulti()
     {
         if (sMultiHandle != nullptr) {
@@ -71,7 +52,11 @@ public:
     }
 
 private:
+    // Callbacks.
+    static int transferProgress(
+        void* clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow);
     static size_t writeContent(void* buff, size_t size, size_t nmemb, void* req_ptr);
+
     void onError(const std::string& msg) { mErrorMsg = msg; }
 
     static inline std::map<CURL*, HttpReq*> sRequests;
@@ -82,6 +67,8 @@ private:
 
     std::stringstream mContent;
     std::string mErrorMsg;
+    std::atomic<long> mTotalBytes;
+    std::atomic<long> mDownloadedBytes;
 };
 
 #endif // ES_CORE_HTTP_REQ_H

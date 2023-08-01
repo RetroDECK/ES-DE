@@ -3,10 +3,8 @@
 //  EmulationStation Desktop Edition
 //  HttpReq.cpp
 //
-//  HTTP request functions.
-//  Used by Scraper, GamesDBJSONScraper, GamesDBJSONScraperResources and
-//  ScreenScraper to download game information and media files.
-//  Also used by ApplicationUpdater to check for application updates.
+//  HTTP requests using libcurl.
+//  Used by the scraper and application updater.
 //
 
 #include "HttpReq.h"
@@ -38,17 +36,11 @@ std::string HttpReq::urlEncode(const std::string& s)
     return escaped;
 }
 
-bool HttpReq::isUrl(const std::string& str)
-{
-    // The worst guess.
-    return (!str.empty() && !Utils::FileSystem::exists(str) &&
-            (str.find("http://") != std::string::npos ||
-             str.find("https://") != std::string::npos || str.find("www.") != std::string::npos));
-}
-
-HttpReq::HttpReq(const std::string& url)
+HttpReq::HttpReq(const std::string& url, bool scraperRequest)
     : mStatus(REQ_IN_PROGRESS)
     , mHandle(nullptr)
+    , mTotalBytes {0}
+    , mDownloadedBytes {0}
 {
     // The multi-handle is cleaned up via a call from GuiScraperSearch after the scraping
     // has been completed for a game, meaning the handle is valid for all curl requests
@@ -87,12 +79,19 @@ HttpReq::HttpReq(const std::string& url)
         return;
     }
 
-    long connectionTimeout {
-        static_cast<long>(Settings::getInstance()->getInt("ScraperConnectionTimeout"))};
+    long connectionTimeout;
 
-    if (connectionTimeout < 0 || connectionTimeout > 300)
+    if (scraperRequest) {
         connectionTimeout =
-            static_cast<long>(Settings::getInstance()->getDefaultInt("ScraperConnectionTimeout"));
+            static_cast<long>(Settings::getInstance()->getInt("ScraperConnectionTimeout"));
+
+        if (connectionTimeout < 0 || connectionTimeout > 300)
+            connectionTimeout = static_cast<long>(
+                Settings::getInstance()->getDefaultInt("ScraperConnectionTimeout"));
+    }
+    else {
+        connectionTimeout = 30;
+    }
 
     // Set connection timeout (default is 30 seconds).
     err = curl_easy_setopt(mHandle, CURLOPT_CONNECTTIMEOUT, connectionTimeout);
@@ -102,14 +101,21 @@ HttpReq::HttpReq(const std::string& url)
         return;
     }
 
-    long transferTimeout {
-        static_cast<long>(Settings::getInstance()->getInt("ScraperTransferTimeout"))};
+    long transferTimeout;
 
-    if (transferTimeout < 0 || transferTimeout > 300)
+    if (scraperRequest) {
         transferTimeout =
-            static_cast<long>(Settings::getInstance()->getDefaultInt("ScraperTransferTimeout"));
+            static_cast<long>(Settings::getInstance()->getInt("ScraperTransferTimeout"));
 
-    // Set transfer timeout (default is 120 seconds).
+        if (transferTimeout < 0 || transferTimeout > 300)
+            transferTimeout =
+                static_cast<long>(Settings::getInstance()->getDefaultInt("ScraperTransferTimeout"));
+    }
+    else {
+        transferTimeout = 0;
+    }
+
+    // Set transfer timeout (default is 120 seconds for the scraper and infinite otherwise).
     err = curl_easy_setopt(mHandle, CURLOPT_TIMEOUT, transferTimeout);
     if (err != CURLE_OK) {
         mStatus = REQ_IO_ERROR;
@@ -134,7 +140,6 @@ HttpReq::HttpReq(const std::string& url)
     }
 
     // Set curl restrict redirect protocols.
-
 #if defined(__APPLE__) || LIBCURL_VERSION_MAJOR < 7 ||                                             \
     (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 85)
     err = curl_easy_setopt(mHandle, CURLOPT_REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
@@ -156,7 +161,7 @@ HttpReq::HttpReq(const std::string& url)
         return;
     }
 
-    // Give curl a pointer to this HttpReq so we know where to write the data to in our
+    // Pass curl a pointer to this HttpReq so we know where to write the data to in our
     // write function.
     err = curl_easy_setopt(mHandle, CURLOPT_WRITEDATA, this);
     if (err != CURLE_OK) {
@@ -165,8 +170,32 @@ HttpReq::HttpReq(const std::string& url)
         return;
     }
 
+    // Enable the curl progress meter.
+    err = curl_easy_setopt(mHandle, CURLOPT_NOPROGRESS, 0);
+    if (err != CURLE_OK) {
+        mStatus = REQ_IO_ERROR;
+        onError(curl_easy_strerror(err));
+        return;
+    }
+
+    // Pass curl a pointer to HttpReq to provide access to the counter variables.
+    err = curl_easy_setopt(mHandle, CURLOPT_XFERINFODATA, this);
+    if (err != CURLE_OK) {
+        mStatus = REQ_IO_ERROR;
+        onError(curl_easy_strerror(err));
+        return;
+    }
+
+    // Progress meter callback.
+    err = curl_easy_setopt(mHandle, CURLOPT_XFERINFOFUNCTION, HttpReq::transferProgress);
+    if (err != CURLE_OK) {
+        mStatus = REQ_IO_ERROR;
+        onError(curl_easy_strerror(err));
+        return;
+    }
+
     // Add the handle to our multi.
-    CURLMcode merr = curl_multi_add_handle(sMultiHandle, mHandle);
+    CURLMcode merr {curl_multi_add_handle(sMultiHandle, mHandle)};
     if (merr != CURLM_OK) {
         mStatus = REQ_IO_ERROR;
         onError(curl_multi_strerror(merr));
@@ -238,13 +267,24 @@ std::string HttpReq::getContent() const
     return mContent.str();
 }
 
-// Used as a curl callback.
-// size = size of an element, nmemb = number of elements.
-// Return value is number of elements successfully read.
+int HttpReq::transferProgress(
+    void* clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
+{
+    // Note that it's not guaranteed that the server will actually provide the total size.
+    if (dltotal > 0)
+        static_cast<HttpReq*>(clientp)->mTotalBytes = dltotal;
+    if (dlnow > 0)
+        static_cast<HttpReq*>(clientp)->mDownloadedBytes = dlnow;
+
+    return CURLE_OK;
+}
+
 size_t HttpReq::writeContent(void* buff, size_t size, size_t nmemb, void* req_ptr)
 {
+    // size = size of an element, nmemb = number of elements.
     std::stringstream& ss {static_cast<HttpReq*>(req_ptr)->mContent};
     ss.write(static_cast<char*>(buff), size * nmemb);
 
+    // Return value is number of elements successfully read.
     return nmemb;
 }

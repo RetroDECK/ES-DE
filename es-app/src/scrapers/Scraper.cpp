@@ -142,7 +142,7 @@ ScraperHttpRequest::ScraperHttpRequest(std::vector<ScraperSearchResult>& results
     : ScraperRequest(resultsWrite)
 {
     setStatus(ASYNC_IN_PROGRESS);
-    mReq = std::unique_ptr<HttpReq>(new HttpReq(url));
+    mReq = std::unique_ptr<HttpReq>(new HttpReq(url, true));
 }
 
 void ScraperHttpRequest::update()
@@ -426,7 +426,7 @@ MediaDownloadHandle::MediaDownloadHandle(const std::string& url,
                                          const std::string& mediaType,
                                          const bool resizeFile,
                                          bool& savedNewMedia)
-    : mReq(new HttpReq(url))
+    : mReq(new HttpReq(url, true))
     , mSavePath(path)
     , mExistingMediaFile(existingMediaPath)
     , mMediaType(mediaType)
