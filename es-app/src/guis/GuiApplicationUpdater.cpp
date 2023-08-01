@@ -11,6 +11,7 @@
 
 #include "EmulationStation.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
+#include "guis/GuiTextEditPopup.h"
 #include "utils/PlatformUtil.h"
 
 #include <SDL2/SDL_timer.h>
@@ -124,38 +125,45 @@ GuiApplicationUpdater::GuiApplicationUpdater()
                 std::string currentDownloadDirectory {
                     Utils::FileSystem::getParent(mDownloadPackageFilename)};
 #endif
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    getHelpStyle(), 0.0f, "ENTER DOWNLOAD DIRECTORY", currentDownloadDirectory,
-                    [this, currentDownloadDirectory](std::string newDownloadDirectory) {
-                        if (currentDownloadDirectory != newDownloadDirectory) {
-                            newDownloadDirectory.erase(
-                                // Remove trailing / and \ characters.
-                                std::find_if(newDownloadDirectory.rbegin(),
-                                             newDownloadDirectory.rend(),
-                                             [](char c) { return c != '/' && c != '\\'; })
-                                    .base(),
-                                newDownloadDirectory.end());
+                auto directoryFunc = [this,
+                                      currentDownloadDirectory](std::string newDownloadDirectory) {
+                    if (currentDownloadDirectory != newDownloadDirectory) {
+                        newDownloadDirectory.erase(
+                            // Remove trailing / and \ characters.
+                            std::find_if(newDownloadDirectory.rbegin(), newDownloadDirectory.rend(),
+                                         [](char c) { return c != '/' && c != '\\'; })
+                                .base(),
+                            newDownloadDirectory.end());
 #if defined(_WIN64)
-                            newDownloadDirectory =
-                                Utils::String::replace(newDownloadDirectory, "/", "\\");
+                        newDownloadDirectory =
+                            Utils::String::replace(newDownloadDirectory, "/", "\\");
 #else
                     newDownloadDirectory = Utils::String::replace(newDownloadDirectory, "\\", "/");
 #endif
-                            Settings::getInstance()->setString(
-                                "ApplicationUpdaterDownloadDirectory",
-                                Utils::String::trim(newDownloadDirectory));
-                            Settings::getInstance()->saveFile();
-                            setDownloadPath();
+                        Settings::getInstance()->setString(
+                            "ApplicationUpdaterDownloadDirectory",
+                            Utils::String::trim(newDownloadDirectory));
+                        Settings::getInstance()->saveFile();
+                        setDownloadPath();
 #if defined(_WIN64)
-                            mProcessStep2->setValue(Utils::String::replace(
-                                Utils::FileSystem::getParent(mDownloadPackageFilename), "/", "\\"));
+                        mProcessStep2->setValue(Utils::String::replace(
+                            Utils::FileSystem::getParent(mDownloadPackageFilename), "/", "\\"));
 #else
                             mProcessStep2->setValue(
                                 Utils::FileSystem::getParent(mDownloadPackageFilename));
 #endif
-                        }
-                    },
-                    false));
+                    }
+                };
+                if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+                    mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                        getHelpStyle(), 0.0f, "ENTER DOWNLOAD DIRECTORY", currentDownloadDirectory,
+                        directoryFunc, false));
+                }
+                else {
+                    mWindow->pushGui(
+                        new GuiTextEditPopup(getHelpStyle(), "ENTER DOWNLOAD DIRECTORY",
+                                             currentDownloadDirectory, directoryFunc, false));
+                }
             });
         buttons.push_back(mButton2);
     }
