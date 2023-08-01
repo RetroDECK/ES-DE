@@ -11,22 +11,27 @@
 * Completely removed support for legacy EmulationStation themes
 * Removed the "Legacy gamelist view style" and "Legacy theme transitions" settings
 * Removed the "Display pillarboxes for gamelist videos" and "Render scanlines for gamelist videos" settings
+* Added a utility for removing orphaned data (game media, gamelist entries and custom collection entries)
+* Added support for downloading the Windows and macOS packages via the application updater (manual installation still required)
 * Added support for pasting text into the application (when a text input field is focused)
 * Added support for using most characters (including multi-byte Unicode characters) in custom collection names
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
-* Added a utility for removing orphaned data (game media, gamelist entries and custom collection entries)
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
 * Changed the "no games" dialog to no longer save the ROM directory to es_settings.xml if its value hasn't changed
 * When editing custom collections with really long names, the "Y" helpsystem text now gets abbreviated
 * Removed Linux DEB package support from ApplicationUpdater as these packages are no longer provided
 * Changed ComponentList to fixed row heights which fixed many alignment issues
 * Improved the layout for the scraper and theme downloader to look more consistent across different display aspect ratios
+* Added a download percentage indicator to the application updater
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Removed the es_log.txt entry when an es_systems.cfg legacy systems configuration file was found on startup
 * Improved menu system font rendering on GPUs without proper texture filtering support
 * Added theme support for the "manual" metadata type for the text element
+* Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
+* (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
+* (Windows) Improved the README.txt file for the portable release
 * (macOS) Changed the minimum required OS version from 10.14 "Mojave" to 10.15 "Catalina"
 * (macOS) Completely removed support for the legacy OS build
 * Updated LunaSVG to 2.3.6

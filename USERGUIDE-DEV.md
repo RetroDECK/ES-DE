@@ -120,26 +120,22 @@ _This is the dialog shown if no game files were found. It lets you configure the
 
 **Note:** Before upgrading ES-DE, make sure that you have not made any system customizations anywhere in the installation directory structure as these files will be overwritten during the upgrade process. All customizations should go into ~/.emulationstation/custom_systems/ as described elsewhere in this guide. None of the upgrade methods mentioned below will ever touch any files inside your .emulationstation directory tree.
 
-As of ES-DE 2.1.0 there is a built-in application updater that can update the Linux AppImage releases. Later on this will hopefully be expanded to cover more package formats and operating systems. Its use is straightforward, just follow the on-screen instructions. The old AppImage file is retained by renaming it, adding its version to the filename followed by the .OLD extension, for example `EmulationStation-DE-x64_SteamDeck.AppImage_2.1.0.OLD`
+There is a built-in application updater that can automatically update the Linux AppImage releases, and as of ES-DE 2.2.0 there is also support for downloading the Windows and macOS packages. Just be aware that these will still need to be manually installed. Using the application updater is straightforward, just follow the on-screen instructions. For the AppImage releases the old file is retained by renaming it, adding its version to the filename followed by the .OLD extension, for example `EmulationStation-DE-x64_SteamDeck.AppImage_2.1.0.OLD`
 
 Note that the updater will keep whatever filename you had for your running AppImage file, which could potentially be confusing if you for example added version information to the filename. It's always recommend to keep the default AppImage filenames, i.e. `EmulationStation-DE-x64.AppImage` and `EmulationStation-DE-x64_SteamDeck.AppImage`
 
 Regardless of package format and operating system it's a good idea to update the ROMs directory tree after upgrading to a new version. It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed. The easiest way to do this is to start ES-DE once with the _--create-system-dirs_ command line option which will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
 
 ![alt text](images/es-de_application_updater.png "ES-DE Application Updater")
-_This is what the application updater looks like when the update process has been completed._
-
-**Linux .deb package**
-
-Upgrading ES-DE using this package type is very straightforward, just run it through the package manager of your operating system and the process should be entirely automatic.
-
-**Linux AUR**
-
-AUR upgrades should be automatically handled via your package manager and it should be a completely automatic process. When a new release is available you should be notified of this.
+_This is what the application updater looks like when the update process has been completed for the Linux AppImage release._
 
 **Linux AppImage**
 
 Use the built-in application updater as described above.
+
+**Linux AUR**
+
+AUR upgrades should be automatically handled via your package manager and it should be a completely automatic process. When a new release is available you should be notified of this.
 
 **macOS**
 

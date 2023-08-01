@@ -127,17 +127,13 @@ Regardless of package format and operating system it's a good idea to update the
 ![alt text](images/es-de_application_updater.png "ES-DE Application Updater")
 _This is what the application updater looks like when the update process has been completed._
 
-**Linux .deb package**
+**Linux AppImage**
 
-Upgrading ES-DE using this package type is very straightforward, just run it through the package manager of your operating system and the process should be entirely automatic.
+Use the built-in application updater as described above.
 
 **Linux AUR**
 
 AUR upgrades should be automatically handled via your package manager and it should be a completely automatic process. When a new release is available you should be notified of this.
-
-**Linux AppImage**
-
-Use the built-in application updater as described above.
 
 **macOS**
 
