@@ -464,7 +464,7 @@ void GuiApplicationUpdater::update(int deltaTime)
     else if (mLinuxAppImage && mReadyToInstall) {
         mProcessStep1->setText(ViewController::TICKMARK_CHAR + " " + mProcessStep1->getValue());
         mProcessStep1->setColor(mMenuColorGreen);
-        mButton1->setText("INSTALL", "install package");
+        mButton1->setText("INSTALL", "install package", true, false);
         mButton1->setPressedFunc([this] {
             if (!mInstalling) {
                 mMessage = "";
