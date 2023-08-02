@@ -693,6 +693,10 @@
             <entry>snes9x-gtk</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/Snes9x*.AppImage</entry>
+            <entry>~/.local/share/applications/Snes9x*.AppImage</entry>
+            <entry>~/.local/bin/Snes9x*.AppImage</entry>
+            <entry>~/bin/Snes9x*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/com.snes9x.Snes9x</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.snes9x.Snes9x</entry>
         </rule>
