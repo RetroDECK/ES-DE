@@ -35,8 +35,8 @@ namespace Utils
                      const float scrollLength);
 
         // The MD5 functions are derived from the RSA Data Security, Inc. MD5 Message-Digest
-        // Algorithm.
-        std::string md5Hash(const std::string& data);
+        // Algorithm. See RFC 1321 for more information.
+        std::string md5Hash(const std::string& hashArg, bool isFilePath);
         void md5Update(const unsigned char* buf,
                        unsigned int length,
                        unsigned int (&state)[4],

@@ -7,14 +7,20 @@
 //  The GLM library headers are also included from here.
 //
 
+#define MD5_MAX_FILE_CHUNK_SIZE 32768
+
 #if defined(_MSC_VER) // MSVC compiler.
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
 #include "utils/MathUtil.h"
 
+#include "utils/StringUtil.h"
+
 #include <cstring>
+#include <fstream>
 #include <sstream>
+#include <vector>
 
 namespace Utils
 {
@@ -79,8 +85,14 @@ namespace Utils
             return 0.0f;
         }
 
-        std::string md5Hash(const std::string& data)
+        std::string md5Hash(const std::string& hashArg, bool isFilePath)
         {
+            // This function deviates from the md5sum command in that it will return a blank
+            // hash rather than d41d8cd98f00b204e9800998ecf8427e if the input is null. This is
+            // done so it can be easily detected in the calling function if no data was hashed.
+            if (hashArg == "")
+                return "";
+
             // Data that didn't fit in last 64 byte chunk.
             unsigned char buffer[64] {};
             // 64 bit counter for the number of bits (low, high).
@@ -89,14 +101,51 @@ namespace Utils
             // Digest so far.
             unsigned int state[4];
 
-            // Magic initialization constants.
+            // RFC 1321, 3.3: Step 3.
             state[0] = 0x67452301;
             state[1] = 0xefcdab89;
             state[2] = 0x98badcfe;
             state[3] = 0x10325476;
 
-            md5Update(reinterpret_cast<const unsigned char*>(data.c_str()),
-                      static_cast<unsigned int>(data.length()), state, count, buffer);
+            if (isFilePath) {
+#if defined(_WIN64)
+                std::ifstream inputFile {Utils::String::stringToWideString(hashArg).c_str(),
+                                         std::ios::binary};
+#else
+                std::ifstream inputFile {hashArg, std::ios::binary};
+#endif
+                if (inputFile.fail()) {
+                    inputFile.close();
+                    return "";
+                }
+
+                inputFile.seekg(0, std::ios::end);
+                long fileLength {static_cast<long>(inputFile.tellg())};
+                inputFile.seekg(0, std::ios::beg);
+
+                std::vector<char> chunk(MD5_MAX_FILE_CHUNK_SIZE);
+                long bytesRead {0};
+
+                // Process in chunks so we don't need to load the whole file into memory at once.
+                while (bytesRead < fileLength) {
+                    const int chunkSize {static_cast<int>(
+                        fileLength - bytesRead > MD5_MAX_FILE_CHUNK_SIZE ? MD5_MAX_FILE_CHUNK_SIZE :
+                                                                           fileLength - bytesRead)};
+                    inputFile.read(&chunk[0], chunkSize);
+                    md5Update(reinterpret_cast<const unsigned char*>(&chunk[0]), chunkSize, state,
+                              count, buffer);
+                    bytesRead += chunkSize;
+                }
+
+                inputFile.close();
+
+                if (bytesRead == 0)
+                    return "";
+            }
+            else {
+                md5Update(reinterpret_cast<const unsigned char*>(hashArg.c_str()),
+                          static_cast<unsigned int>(hashArg.length()), state, count, buffer);
+            }
 
             static unsigned char padding[64] {0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                               0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -106,7 +155,7 @@ namespace Utils
             // Encodes unsigned int input into unsigned char output. Assumes len is a multiple of 4.
             auto encodeFunc = [](unsigned char output[], const unsigned int input[],
                                  unsigned int len) {
-                for (unsigned int i = 0, j = 0; j < len; ++i, j += 4) {
+                for (unsigned int i {0}, j {0}; j < len; ++i, j += 4) {
                     output[j] = input[i] & 0xff;
                     output[j + 1] = (input[i] >> 8) & 0xff;
                     output[j + 2] = (input[i] >> 16) & 0xff;
@@ -119,8 +168,8 @@ namespace Utils
             encodeFunc(bits, count, 8);
 
             // Pad out to 56 mod 64.
-            unsigned int index = count[0] / 8 % 64;
-            unsigned int padLen = (index < 56) ? (56 - index) : (120 - index);
+            unsigned int index {count[0] / 8 % 64};
+            unsigned int padLen {(index < 56) ? (56 - index) : (120 - index)};
             md5Update(padding, padLen, state, count, buffer);
 
             // Append length (before padding).
@@ -134,7 +183,7 @@ namespace Utils
 
             // Convert to hex string.
             char buf[33];
-            for (int i = 0; i < 16; ++i)
+            for (int i {0}; i < 16; ++i)
                 snprintf(buf + i * 2, 16, "%02x", digest[i]);
             buf[32] = 0;
 
@@ -148,7 +197,7 @@ namespace Utils
                        unsigned char (&buffer)[64])
         {
             // Compute number of bytes (mod 64).
-            unsigned int index = count[0] / 8 % 64;
+            unsigned int index {count[0] / 8 % 64};
 
             // Update number of bits.
             if ((count[0] += (length << 3)) < (length << 3))
@@ -156,9 +205,9 @@ namespace Utils
             count[1] += (length >> 29);
 
             // Number of bytes we need to fill in buffer.
-            unsigned int firstpart = 64 - index;
+            unsigned int firstpart {64 - index};
 
-            unsigned int i;
+            unsigned int i {0};
             // Encodes unsigned int input into unsigned char output. Assumes len is a multiple of 4.
             // Transform as many times as possible.
             if (length >= firstpart) {
@@ -188,7 +237,7 @@ namespace Utils
             unsigned int x[16] {};
 
             // Encodes unsigned int input into unsigned char output. Assumes len is a multiple of 4.
-            for (unsigned int i = 0, j = 0; j < 64; ++i, j += 4)
+            for (unsigned int i {0}, j {0}; j < 64; ++i, j += 4)
                 x[i] = (static_cast<unsigned int>(block[j])) |
                        ((static_cast<unsigned int>(block[j + 1])) << 8) |
                        ((static_cast<unsigned int>(block[j + 2])) << 16) |

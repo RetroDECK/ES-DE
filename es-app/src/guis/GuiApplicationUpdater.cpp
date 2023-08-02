@@ -298,7 +298,7 @@ bool GuiApplicationUpdater::downloadPackage()
     std::string fileContents {mRequest->getContent()};
     mRequest.reset();
 
-    if (Utils::Math::md5Hash(fileContents) != mPackage.md5) {
+    if (Utils::Math::md5Hash(fileContents, false) != mPackage.md5) {
         const std::string errorMessage {"Downloaded file does not match expected MD5 checksum"};
         LOG(LogError) << errorMessage;
         std::unique_lock<std::mutex> lock {mMutex};
@@ -410,7 +410,7 @@ bool GuiApplicationUpdater::installAppImage()
     readFile.read(&fileData[0], fileLength);
     readFile.close();
 
-    if (Utils::Math::md5Hash(fileData) != mPackage.md5) {
+    if (Utils::Math::md5Hash(fileData, false) != mPackage.md5) {
         const std::string errorMessage {"Downloaded file does not match expected MD5 checksum"};
         LOG(LogError) << errorMessage;
         mMessage = "Error: " + errorMessage;
