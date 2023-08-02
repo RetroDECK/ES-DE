@@ -358,7 +358,7 @@ void ViewController::updateAvailableDialog()
                         nullptr, true, true,
                         (mRenderer->getIsVerticalOrientation() ?
                              0.85f :
-                             0.53f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                             0.535f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
             "CANCEL", [] { return; }, "", nullptr, true, true,
