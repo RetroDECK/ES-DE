@@ -70,30 +70,25 @@ namespace Utils
             if (!isDirectory(genericPath))
                 return contentList;
 
-            try {
-                if (recursive) {
-                    for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
+            if (recursive) {
+                for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
 #if defined(_WIN64)
-                        contentList.emplace_back(
-                            Utils::String::wideStringToString(entry.path().generic_wstring()));
+                    contentList.emplace_back(
+                        Utils::String::wideStringToString(entry.path().generic_wstring()));
 #else
-                        contentList.emplace_back(entry.path().generic_string());
+                    contentList.emplace_back(entry.path().generic_string());
 #endif
-                    }
-                }
-                else {
-                    for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
-#if defined(_WIN64)
-                        contentList.emplace_back(
-                            Utils::String::wideStringToString(entry.path().generic_wstring()));
-#else
-                        contentList.emplace_back(entry.path().generic_string());
-#endif
-                    }
                 }
             }
-            catch (...) {
-                return contentList;
+            else {
+                for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
+#if defined(_WIN64)
+                    contentList.emplace_back(
+                        Utils::String::wideStringToString(entry.path().generic_wstring()));
+#else
+                    contentList.emplace_back(entry.path().generic_string());
+#endif
+                }
             }
 
             contentList.sort();
@@ -583,7 +578,8 @@ namespace Utils
                 return static_cast<long>(std::filesystem::file_size(path));
 #endif
             }
-            catch (...) {
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::getFileSize(): " << error.what();
                 return -1;
             }
         }
@@ -897,7 +893,8 @@ namespace Utils
                 return std::filesystem::exists(genericPath);
 #endif
             }
-            catch (...) {
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::exists(): " << error.what();
                 return false;
             }
         }
@@ -945,7 +942,8 @@ namespace Utils
                 return std::filesystem::is_regular_file(genericPath);
 #endif
             }
-            catch (...) {
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::isRegularFile(): " << error.what();
                 return false;
             }
         }
@@ -961,7 +959,8 @@ namespace Utils
                 return std::filesystem::is_directory(genericPath);
 #endif
             }
-            catch (...) {
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::isDirectory(): " << error.what();
                 return false;
             }
         }
@@ -976,7 +975,8 @@ namespace Utils
                 return std::filesystem::is_symlink(genericPath);
 #endif
             }
-            catch (...) {
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::isSymlink(): " << error.what();
                 return false;
             }
         }
