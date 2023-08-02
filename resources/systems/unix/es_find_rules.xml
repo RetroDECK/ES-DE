@@ -24,12 +24,17 @@
     </emulator>
     <core name="RETROARCH">
         <rule type="corepath">
-            <!-- Snap package -->
-            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
+            <!-- Non-portable AppImage and compiled from source -->
+            <entry>~/.config/retroarch/cores</entry>
+            <!-- Portable AppImage -->
+            <entry>~/Applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
+            <entry>~/.local/share/applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
+            <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
+            <entry>~/bin/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
             <!-- Flatpak package -->
             <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
-            <!-- AppImage and compiled from source -->
-            <entry>~/.config/retroarch/cores</entry>
+            <!-- Snap package -->
+            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
             <!-- Ubuntu and Linux Mint repository -->
             <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
             <!-- Fedora repository -->
