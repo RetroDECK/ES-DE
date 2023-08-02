@@ -70,25 +70,30 @@ namespace Utils
             if (!isDirectory(genericPath))
                 return contentList;
 
-            if (recursive) {
-                for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
+            try {
+                if (recursive) {
+                    for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
 #if defined(_WIN64)
-                    contentList.emplace_back(
-                        Utils::String::wideStringToString(entry.path().generic_wstring()));
+                        contentList.emplace_back(
+                            Utils::String::wideStringToString(entry.path().generic_wstring()));
 #else
-                    contentList.emplace_back(entry.path().generic_string());
+                        contentList.emplace_back(entry.path().generic_string());
 #endif
+                    }
+                }
+                else {
+                    for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
+#if defined(_WIN64)
+                        contentList.emplace_back(
+                            Utils::String::wideStringToString(entry.path().generic_wstring()));
+#else
+                        contentList.emplace_back(entry.path().generic_string());
+#endif
+                    }
                 }
             }
-            else {
-                for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
-#if defined(_WIN64)
-                    contentList.emplace_back(
-                        Utils::String::wideStringToString(entry.path().generic_wstring()));
-#else
-                    contentList.emplace_back(entry.path().generic_string());
-#endif
-                }
+            catch (...) {
+                return contentList;
             }
 
             contentList.sort();
@@ -884,12 +889,17 @@ namespace Utils
 
         bool exists(const std::string& path)
         {
-            const std::string& genericPath {getGenericPath(path)};
+            try {
+                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
-            return std::filesystem::exists(Utils::String::stringToWideString(genericPath));
+                return std::filesystem::exists(Utils::String::stringToWideString(genericPath));
 #else
-            return std::filesystem::exists(genericPath);
+                return std::filesystem::exists(genericPath);
 #endif
+            }
+            catch (...) {
+                return false;
+            }
         }
 
         bool driveExists(const std::string& path)
@@ -911,42 +921,64 @@ namespace Utils
 
         bool isAbsolute(const std::string& path)
         {
-            const std::string& genericPath {getGenericPath(path)};
+            try {
+                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
-            return ((genericPath.size() > 1) && (genericPath[1] == ':'));
+                return ((genericPath.size() > 1) && (genericPath[1] == ':'));
 #else
-            return ((genericPath.size() > 0) && (genericPath[0] == '/'));
+                return ((genericPath.size() > 0) && (genericPath[0] == '/'));
 #endif
+            }
+            catch (...) {
+                return false;
+            }
         }
 
         bool isRegularFile(const std::string& path)
         {
-            const std::string& genericPath {getGenericPath(path)};
+            try {
+                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
-            return std::filesystem::is_regular_file(Utils::String::stringToWideString(genericPath));
+                return std::filesystem::is_regular_file(
+                    Utils::String::stringToWideString(genericPath));
 #else
-            return std::filesystem::is_regular_file(genericPath);
+                return std::filesystem::is_regular_file(genericPath);
 #endif
+            }
+            catch (...) {
+                return false;
+            }
         }
 
         bool isDirectory(const std::string& path)
         {
-            const std::string& genericPath {getGenericPath(path)};
+            try {
+                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
-            return std::filesystem::is_directory(Utils::String::stringToWideString(genericPath));
+                return std::filesystem::is_directory(
+                    Utils::String::stringToWideString(genericPath));
 #else
-            return std::filesystem::is_directory(genericPath);
+                return std::filesystem::is_directory(genericPath);
 #endif
+            }
+            catch (...) {
+                return false;
+            }
         }
 
         bool isSymlink(const std::string& path)
         {
-            const std::string& genericPath {getGenericPath(path)};
+            try {
+                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
-            return std::filesystem::is_symlink(Utils::String::stringToWideString(genericPath));
+                return std::filesystem::is_symlink(Utils::String::stringToWideString(genericPath));
 #else
-            return std::filesystem::is_symlink(genericPath);
+                return std::filesystem::is_symlink(genericPath);
 #endif
+            }
+            catch (...) {
+                return false;
+            }
         }
 
         bool isHidden(const std::string& path)
