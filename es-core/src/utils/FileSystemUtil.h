@@ -11,6 +11,7 @@
 #ifndef ES_CORE_UTILS_FILE_SYSTEM_UTIL_H
 #define ES_CORE_UTILS_FILE_SYSTEM_UTIL_H
 
+#include <filesystem>
 #include <list>
 #include <string>
 
@@ -42,6 +43,7 @@ namespace Utils
         std::string getFileName(const std::string& path);
         std::string getStem(const std::string& path);
         std::string getExtension(const std::string& path);
+        long getFileSize(const std::filesystem::path& path);
         std::string expandHomePath(const std::string& path);
         std::string resolveRelativePath(const std::string& path,
                                         const std::string& relativeTo,
@@ -59,7 +61,7 @@ namespace Utils
         bool renameFile(const std::string& sourcePath,
                         const std::string& destinationPath,
                         bool overwrite);
-        bool createEmptyFile(const std::string& path);
+        bool createEmptyFile(const std::filesystem::path& path);
         bool removeFile(const std::string& path);
         bool removeDirectory(const std::string& path);
         bool createDirectory(const std::string& path);

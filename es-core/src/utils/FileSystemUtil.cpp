@@ -23,7 +23,6 @@
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
-#include <filesystem>
 #include <fstream>
 #include <regex>
 #include <string>
@@ -569,6 +568,21 @@ namespace Utils
             return ".";
         }
 
+        long getFileSize(const std::filesystem::path& path)
+        {
+            try {
+#if defined(_WIN64)
+                return static_cast<long>(std::filesystem::file_size(
+                    Utils::String::stringToWideString(path.generic_string())));
+#else
+                return static_cast<long>(std::filesystem::file_size(path));
+#endif
+            }
+            catch (...) {
+                return -1;
+            }
+        }
+
         std::string expandHomePath(const std::string& path)
         {
             // Expand home path if ~ is used.
@@ -758,31 +772,22 @@ namespace Utils
 #endif
         }
 
-        bool createEmptyFile(const std::string& path)
+        bool createEmptyFile(const std::filesystem::path& path)
         {
+            const std::filesystem::path cleanPath {path.lexically_normal().make_preferred()};
             if (exists(path)) {
+                LOG(LogError) << "Couldn't create target file \"" << cleanPath.string()
+                              << "\" as it already exists";
+                return false;
+            }
 #if defined(_WIN64)
-                LOG(LogError) << "Couldn't create target file \""
-                              << Utils::String::replace(path, "/", "\\")
-                              << "\" as it already exists";
-                return false;
-            }
-
-            std::ofstream targetFile {Utils::String::stringToWideString(path).c_str(),
+            std::ofstream targetFile {Utils::String::stringToWideString(cleanPath.string()).c_str(),
                                       std::ios::binary};
-            if (targetFile.fail()) {
-                LOG(LogError) << "Couldn't create target file \""
-                              << Utils::String::replace(path, "/", "\\")
 #else
-                LOG(LogError) << "Couldn't create target file \"" << path
-                              << "\" as it already exists";
-                return false;
-            }
-
-            std::ofstream targetFile {path, std::ios::binary};
-            if (targetFile.fail()) {
-                LOG(LogError) << "Couldn't create target file \"" << path
+            std::ofstream targetFile {cleanPath, std::ios::binary};
 #endif
+            if (targetFile.fail()) {
+                LOG(LogError) << "Couldn't create target file \"" << cleanPath.string()
                               << "\", permission problems?";
                 targetFile.close();
                 return false;
