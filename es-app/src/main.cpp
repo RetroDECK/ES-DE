@@ -831,15 +831,15 @@ int main(int argc, char* argv[])
             // If this is the case an unsafe upgrade has taken place, probably by simply unpacking
             // the new release on top of the old one.
             bool releaseFileExists {true};
-            const std::string releaseFile {"r" + std::to_string(PROGRAM_RELEASE_NUMBER) + ".rel"};
-            if (!Utils::FileSystem::exists(Utils::FileSystem::getExePath() + "/" + releaseFile)) {
-                releaseFileExists = Utils::FileSystem::createEmptyFile(
-                    Utils::FileSystem::getExePath() + "/" + releaseFile);
-            }
+            const std::filesystem::path releaseFile {Utils::FileSystem::getExePath() + "/r" +
+                                                     std::to_string(PROGRAM_RELEASE_NUMBER) +
+                                                     ".rel"};
+            if (!Utils::FileSystem::exists(releaseFile.string()))
+                releaseFileExists = Utils::FileSystem::createEmptyFile(releaseFile);
             if (releaseFileExists) {
                 for (auto& file : Utils::FileSystem::getMatchingFiles(
                          Utils::FileSystem::getExePath() + "/*.rel")) {
-                    if (Utils::FileSystem::getFileName(file) != releaseFile) {
+                    if (Utils::FileSystem::getFileName(file) != releaseFile.filename()) {
                         LOG(LogWarning) << "It seems as if an unsafe upgrade has been made";
                         ViewController::getInstance()->unsafeUpgradeDialog();
                         break;
