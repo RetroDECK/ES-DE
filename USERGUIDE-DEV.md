@@ -124,6 +124,8 @@ There is a built-in application updater that can automatically update the Linux 
 
 Note that the updater will keep whatever filename you had for your running AppImage file, which could potentially be confusing if you for example added version information to the filename. It's always recommend to keep the default AppImage filenames, i.e. `EmulationStation-DE-x64.AppImage` and `EmulationStation-DE-x64_SteamDeck.AppImage`
 
+On Windows and macOS you can specify to which directory you want to save the downloaded file. The default is `C:\Users\myusername\Downloads` on Windows and `/Users/myusername/Downloads` on macOS.
+
 Regardless of package format and operating system it's a good idea to update the ROMs directory tree after upgrading to a new version. It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed. The easiest way to do this is to start ES-DE once with the _--create-system-dirs_ command line option which will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
 
 ![alt text](images/es-de_application_updater.png "ES-DE Application Updater")
@@ -667,6 +669,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | ps3          | RPCS3       | rpcs3*.AppImage                 |
 | psx          | DuckStation | duckstation-nogui*.AppImage     |
 | psx          | DuckStation | duckstation-qt*.AppImage        |
+| snes         | Snes9x      | Snes9x*.AppImage                |
 | switch       | Yuzu        | yuzu*.AppImage                  |
 | xbox         | xemu        | xemu*.AppImage                  |
 | wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
@@ -2016,9 +2019,9 @@ The multi-scraper is accessed from the main menu by entering the **Scraper** men
 
 ### Scraping process
 
-The default mode for the scraper is _Non-interactive_ mode, also referred to as _Automatic_ mode. When using this mode the selected systems are scraped without requiring any user input. This is quite convenient, but has the drawback of not asking for input if multiple matching games are returned by the scraper service. This could lead to the wrong game metadata and media being downloaded, but in practice this is quite rare so it's generally recommended to keep the automatic mode enabled. If no result is found for a game, the scraper will skip to the next one in queue.
+The default mode for the scraper is _Non-interactive_ mode, also referred to as _Automatic_ mode. When using this mode the selected systems are scraped without requiring any user input. This is quite convenient, but has the drawback of not asking for input if there are multiple matching games. In this case the game that the scraper service thinks is the most accurate match will be returned. However, if the _Search using file hashes_ scraper option is enabled and you're using ScreenScraper, then a hash value will be calculated from the actual game file and searches will performed based on this. Assuming there is a match for your file in the ScreenScraper database, this will lead to 100% accurate results. But if no matching file is found it's possible that the fallback name search will return the wrong game, and therefore leading to the wrong game metadata and media being downloaded. In practice this issue is quite rare so it's generally recommended to keep the automatic mode enabled. If no result is found for a game, the scraper will skip to the next one in queue.
 
-If _interactive mode_ is instead enabled, the process of scraping games is basically identical between the single-game scraper and the multi-scraper. You're presented with the returned scraper results, and you're able to refine the search if the scraper could not find your game. Sometimes small changes like adding or removing a colon or a minus sign can yield better results. Note that searches are handled entirely by the scraper service, ES-DE just presents the results returned from the service.
+If _interactive mode_ is instead enabled, the process of scraping games is basically identical between the single-game scraper and the multi-scraper. You're presented with the returned scraper results, and you're able to refine the search if the scraper could not find your game. Sometimes small changes like adding or removing a colon or a minus sign can yield better results. Note that searches are handled entirely by the scraper service, ES-DE just presents the results returned from the service. File hash searching is not supported by ScreenScraper if using this search method.
 
 When scraping in interactive mode it's recommended to keep the _Auto-accept single game matches_ option enabled as it will run the scraper in semi-automatic mode, only stopping to ask for user input if there are multiple results returned or if no game was found. If this option is disabled, the scraper will stop and ask for confirmation for every game.
 
@@ -2315,6 +2318,10 @@ How many times to automatically retry scraping if an error is encountered, from 
 
 How long to wait between each scraper retry, from 1 to 30 seconds.
 
+**Hash searches max file size** _(ScreenScraper only)_
+
+If file hash searching is enabled, then this specifies the maximum allowed file size, from 32 to 800 MiB. If a game file being scraped is larger than the defined value for this setting, then a fallback will be made to the regular name search functionality. Note that increasing this too high while keeping your games on slow storage may increase scraping times significantly as the entire game file will need to be read and processed to calculate its hash value.
+
 **Overwrite files and data**
 
 Affects both overwriting of metadata as well as actual game media files on the filesystem. Even with this option disabled, metadata entries which are set to their default values will be populated by the scraper. In other words, this option only affects overwriting of previously scraped data, or data manually entered via the metadata editor. Game names are considered as set to their default values if either corresponding to the physical game file on disk minus the extension (e.g. the entry _Commando_ if the file is named _Commando.zip_), or for arcade games if corresponding to the MAME names as defined in the bundled mamenames.xml. Note that this setting does not affect generated miximages, that is instead controlled by the setting _Overwrite miximages (scraper/offline generator)_ found in the miximage settings menu.
@@ -2322,6 +2329,10 @@ Affects both overwriting of metadata as well as actual game media files on the f
 **Halt on invalid media files**
 
 With this setting enabled, if any media files returned by the scraper seem to be invalid, the scraping is halted and an error message is presented where it's possible to retry or cancel the scraping of the specific game. In the case of multi-scraping it's also possible to skip the game and proceed to the next one in the queue. With this setting disabled, all media files will always be accepted and saved to disk. As of ES-DE v1.2 the file verification is quite basic and future versions will improve on this by using file checksums and other file integrity checks. There is an exception in place for box back covers when using ScreenScraper. As many of these specific images are broken, there is an automatic filter built in that is always active and which removes blank images and those containing only a few lines of pixels.
+
+**Search using file hashes (non-interactive mode)** _(ScreenScraper only)_
+
+When running the non-interactive scraper it's possible to search using a hash value calculated from the actual game file. Assuming ScreenScraper has a match for your file in their database, this will lead to 100% accuracy as the game name will be completely ignored. If there is no match for the hash value, then a fallback will be made to the game name and the normal search logic applies. The maximum allowed file size to apply this type of search to can be set using the _Hash searches max file size_ slider. Note that file hash searching can increase scraping times significantly if applied to large game files as the entire file needs to be read and processed to calculate its hash value. And obviously file hash searching will not work for directories, or for scripts, shortcuts, .m3u files and similar which will have no matching entries in the ScreenScraper database.
 
 **Search using metadata names**
 
