@@ -145,6 +145,12 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
     setSize(mMenu.getSize());
 
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
+
+    // Make sure that the hash searching max file size is within the allowed range.
+    if (Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize") < 32)
+        Settings::getInstance()->setInt("ScraperSearchFileHashMaxSize", 32);
+    else if (Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize") > 800)
+        Settings::getInstance()->setInt("ScraperSearchFileHashMaxSize", 800);
 }
 
 GuiScraperMenu::~GuiScraperMenu()
@@ -902,6 +908,33 @@ void GuiScraperMenu::openOtherOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
+    // Maximum file size for non-interactive mode file hash searching.
+    auto scraperSearchFileHashMaxSize =
+        std::make_shared<SliderComponent>(32.0f, 800.0f, 32.0f, "MiB");
+    scraperSearchFileHashMaxSize->setValue(
+        static_cast<float>(Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize")));
+    s->addWithLabel("HASH SEARCHES MAX FILE SIZE", scraperSearchFileHashMaxSize);
+    s->addSaveFunc([scraperSearchFileHashMaxSize, s] {
+        if (scraperSearchFileHashMaxSize->getValue() !=
+            static_cast<float>(Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize"))) {
+            Settings::getInstance()->setInt(
+                "ScraperSearchFileHashMaxSize",
+                static_cast<int>(scraperSearchFileHashMaxSize->getValue()));
+            s->setNeedsSaving();
+        }
+    });
+
+    // File hash searching is not supported by TheGamesDB, so gray out the option if this scraper
+    // is selected. Also gray it out for ScreenScraper if file hash searching has been disabled.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb" ||
+        !Settings::getInstance()->getBool("ScraperSearchFileHash")) {
+        scraperSearchFileHashMaxSize->setEnabled(false);
+        scraperSearchFileHashMaxSize->setOpacity(DISABLED_OPACITY);
+        scraperSearchFileHashMaxSize->getParent()
+            ->getChild(scraperSearchFileHashMaxSize->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     // Overwrite files and data.
     auto scraperOverwriteData = std::make_shared<SwitchComponent>();
     scraperOverwriteData->setState(Settings::getInstance()->getBool("ScraperOverwriteData"));
@@ -928,6 +961,29 @@ void GuiScraperMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
+
+    // Search using file hashes for non-interactive mode.
+    auto scraperSearchFileHash = std::make_shared<SwitchComponent>();
+    scraperSearchFileHash->setState(Settings::getInstance()->getBool("ScraperSearchFileHash"));
+    s->addWithLabel("SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)", scraperSearchFileHash);
+    s->addSaveFunc([scraperSearchFileHash, s] {
+        if (scraperSearchFileHash->getState() !=
+            Settings::getInstance()->getBool("ScraperSearchFileHash")) {
+            Settings::getInstance()->setBool("ScraperSearchFileHash",
+                                             scraperSearchFileHash->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // File hash searching is not supported by TheGamesDB, so gray out the option if this scraper
+    // is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scraperSearchFileHash->setEnabled(false);
+        scraperSearchFileHash->setOpacity(DISABLED_OPACITY);
+        scraperSearchFileHash->getParent()
+            ->getChild(scraperSearchFileHash->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
 
     // Search using metadata names.
     auto scraperSearchMetadataName = std::make_shared<SwitchComponent>();
@@ -1105,6 +1161,23 @@ void GuiScraperMenu::openOtherOptions()
     };
 
     // Switch callbacks.
+    auto hashSearchToggleFunc = [scraperSearchFileHashMaxSize]() {
+        if (scraperSearchFileHashMaxSize->getEnabled()) {
+            scraperSearchFileHashMaxSize->setEnabled(false);
+            scraperSearchFileHashMaxSize->setOpacity(DISABLED_OPACITY);
+            scraperSearchFileHashMaxSize->getParent()
+                ->getChild(scraperSearchFileHashMaxSize->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            scraperSearchFileHashMaxSize->setEnabled(true);
+            scraperSearchFileHashMaxSize->setOpacity(1.0f);
+            scraperSearchFileHashMaxSize->getParent()
+                ->getChild(scraperSearchFileHashMaxSize->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+    };
+
     auto interactiveToggleFunc = [scraperSemiautomatic]() {
         if (scraperSemiautomatic->getEnabled()) {
             scraperSemiautomatic->setEnabled(false);
@@ -1140,6 +1213,7 @@ void GuiScraperMenu::openOtherOptions()
     };
 
     mScraperRetryOnErrorCount->setCallback(scraperRetryCountFunc);
+    scraperSearchFileHash->setCallback(hashSearchToggleFunc);
     scraperInteractive->setCallback(interactiveToggleFunc);
     scraperRespectExclusions->setCallback(excludeRecursivelyToggleFunc);
 

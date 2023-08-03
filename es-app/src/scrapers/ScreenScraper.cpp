@@ -194,7 +194,8 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
     if (params.nameOverride == "") {
         if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
             path = ssConfig.getGameSearchUrl(
-                Utils::String::removeParenthesis(params.game->metadata.get("name")));
+                Utils::String::removeParenthesis(params.game->metadata.get("name")), params.md5Hash,
+                params.fileSize);
         }
         else {
             std::string cleanName;
@@ -208,11 +209,11 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
                 cleanName = params.game->getCleanName();
             }
 
-            path = ssConfig.getGameSearchUrl(cleanName);
+            path = ssConfig.getGameSearchUrl(cleanName, params.md5Hash, params.fileSize);
         }
     }
     else {
-        path = ssConfig.getGameSearchUrl(params.nameOverride);
+        path = ssConfig.getGameSearchUrl(params.nameOverride, params.md5Hash, params.fileSize);
     }
 
     auto& platforms = params.system->getPlatformIds();
@@ -697,44 +698,16 @@ bool ScreenScraperRequest::processMedia(ScraperSearchResult& result,
     return regionFallback;
 }
 
-// Currently not used in this module.
-void ScreenScraperRequest::processList(const pugi::xml_document& xmldoc,
-                                       std::vector<ScraperSearchResult>& results)
+std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(const std::string& gameName,
+                                                                        const std::string& md5Hash,
+                                                                        const long fileSize) const
 {
-    assert(mRequestQueue != nullptr);
-
-    LOG(LogDebug) << "ScreenScraperRequest::processList(): Processing a list of results";
-
-    pugi::xml_node data {xmldoc.child("Data")};
-    pugi::xml_node game {data.child("jeu")};
-
-    if (!game) {
-        LOG(LogDebug) << "ScreenScraperRequest::processList(): Found nothing";
+    if (md5Hash != "") {
+        LOG(LogDebug)
+            << "ScreenScraper::getGameSearchUrl(): Performing MD5 file hash search using digest \""
+            << md5Hash << "\"";
     }
 
-    ScreenScraperRequest::ScreenScraperConfig ssConfig;
-
-    // Limit the number of results per platform, not in total.
-    // Otherwise if the first platform returns >= 7 games
-    // but the second platform contains the relevant game,
-    // the relevant result would not be shown.
-    for (int i {0}; game && i < MAX_SCRAPER_RESULTS; ++i) {
-        std::string id {game.child("id").text().get()};
-        std::string name {game.child("nom").text().get()};
-        std::string platformId {game.child("systemeid").text().get()};
-        std::string path {ssConfig.getGameSearchUrl(name) + "&systemeid=" + platformId +
-                          "&gameid=" + id};
-
-        mRequestQueue->push(
-            std::unique_ptr<ScraperRequest>(new ScreenScraperRequest(results, path)));
-
-        game = game.next_sibling("jeu");
-    }
-}
-
-std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
-    const std::string gameName) const
-{
     std::string searchName {gameName};
     bool singleSearch {false};
 
@@ -811,6 +784,12 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
             .append("&output=xml")
             .append("&romnom=")
             .append(HttpReq::urlEncode(searchName));
+        if (md5Hash != "") {
+            screenScraperURL.append("&md5=")
+                .append(md5Hash)
+                .append("&romtaille=")
+                .append(std::to_string(fileSize));
+        }
     }
     else {
         screenScraperURL.append(API_URL_BASE)

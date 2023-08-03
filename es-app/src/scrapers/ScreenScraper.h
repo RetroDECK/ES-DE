@@ -41,7 +41,9 @@ public:
 
     // Settings for the scraper.
     static const struct ScreenScraperConfig {
-        std::string getGameSearchUrl(const std::string gameName) const;
+        std::string getGameSearchUrl(const std::string& gameName,
+                                     const std::string& md5Hash,
+                                     const long fileSize) const;
 
         // Access to the API.
         const std::string API_DEV_U = {15, 21, 39, 22, 42, 40};
@@ -119,7 +121,6 @@ protected:
     void process(const std::unique_ptr<HttpReq>& req,
                  std::vector<ScraperSearchResult>& results) override;
 
-    void processList(const pugi::xml_document& xmldoc, std::vector<ScraperSearchResult>& results);
     void processGame(const pugi::xml_document& xmldoc, std::vector<ScraperSearchResult>& results);
     bool processMedia(ScraperSearchResult& result,
                       const pugi::xml_node& media_list,

@@ -40,6 +40,8 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, in
     , mSearchType {type}
     , mRowCount {rowCount}
     , mScrapeCount {scrapeCount}
+    , mNextSearch {false}
+    , mHashSearch {false}
     , mRefinedSearch {false}
     , mBlockAccept {false}
     , mAcceptedResult {false}
@@ -164,13 +166,16 @@ GuiScraperSearch::~GuiScraperSearch()
     // scraping when the miximage was getting generated.
     if (Settings::getInstance()->getBool("MiximageGenerate") &&
         mMiximageGeneratorThread.joinable()) {
-        mScrapeResult.savedNewMedia = true;
         // We always let the miximage generator thread complete.
         mMiximageGeneratorThread.join();
         mMiximageGenerator.reset();
+        mScrapeResult.savedNewMedia = true;
         TextureResource::manualUnload(mLastSearch.game->getMiximagePath(), false);
         ViewController::getInstance()->onFileChanged(mLastSearch.game, true);
     }
+
+    if (mCalculateMD5HashThread.joinable())
+        mCalculateMD5HashThread.join();
 
     mWindow->setAllowTextScrolling(false);
 }
@@ -335,6 +340,7 @@ void GuiScraperSearch::updateView()
 
 void GuiScraperSearch::search(ScraperSearchParams& params)
 {
+    mHashSearch = false;
     mBlockAccept = true;
     mAcceptedResult = false;
     mMiximageResult = false;
@@ -358,8 +364,30 @@ void GuiScraperSearch::search(ScraperSearchParams& params)
     else
         params.automaticMode = false;
 
+    params.md5Hash = "";
+    if (!Utils::FileSystem::isDirectory(params.game->getPath()))
+        params.fileSize = Utils::FileSystem::getFileSize(params.game->getPath());
+
+    // Only use MD5 file hash searching when in non-interactive mode.
+    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT &&
+        Settings::getInstance()->getBool("ScraperSearchFileHash") &&
+        Settings::getInstance()->getString("Scraper") == "screenscraper" && params.fileSize != 0 &&
+        params.fileSize <=
+            Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize") * 1024 * 1024) {
+
+        // Run the MD5 hash calculation in a separate thread as it may take a long time to
+        // complete and we don't want to freeze the UI in the meanwhile.
+        std::promise<bool>().swap(mMD5HashPromise);
+        mMD5HashFuture = mMD5HashPromise.get_future();
+
+        mHashSearch = true;
+        mCalculateMD5HashThread =
+            std::thread(&GuiScraperSearch::calculateMD5Hash, this, params.game->getPath());
+    }
+
     mLastSearch = params;
-    mSearchHandle = startScraperSearch(params);
+    mSearchHandle = nullptr;
+    mNextSearch = true;
 }
 
 void GuiScraperSearch::stop()
@@ -691,6 +719,27 @@ void GuiScraperSearch::returnResult(ScraperSearchResult result)
 
 void GuiScraperSearch::update(int deltaTime)
 {
+    // The only purpose of calling startScraperSearch() here instead of in search() is because
+    // the optional MD5 hash calculation needs to run in a separate thread to not lock the UI.
+    if (mNextSearch && mHashSearch) {
+        if (mMD5HashFuture.valid()) {
+            // Only wait one millisecond as this update() function runs very frequently.
+            if (mMD5HashFuture.wait_for(std::chrono::milliseconds(1)) ==
+                std::future_status::ready) {
+                if (mCalculateMD5HashThread.joinable())
+                    mCalculateMD5HashThread.join();
+                mLastSearch.md5Hash = mMD5Hash;
+                mSearchHandle = startScraperSearch(mLastSearch);
+                mMD5Hash = "";
+                mNextSearch = false;
+            }
+        }
+    }
+    else if (mNextSearch) {
+        mSearchHandle = startScraperSearch(mLastSearch);
+        mNextSearch = false;
+    }
+
     GuiComponent::update(deltaTime);
 
     if (mBlockAccept)
@@ -789,7 +838,8 @@ void GuiScraperSearch::update(int deltaTime)
         if (mGeneratorFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
             mMDResolveHandle.reset();
             // We always let the miximage generator thread complete.
-            mMiximageGeneratorThread.join();
+            if (mMiximageGeneratorThread.joinable())
+                mMiximageGeneratorThread.join();
             if (!mGeneratorFuture.get())
                 mScrapeResult.savedNewMedia = true;
             returnResult(mScrapeResult);

@@ -114,6 +114,12 @@ private:
 
     int getSelectedIndex();
 
+    void calculateMD5Hash(std::string path)
+    {
+        mMD5Hash = Utils::Math::md5Hash(path, true);
+        mMD5HashPromise.set_value(true);
+    }
+
     // For TheGamesDB, retrieve URLs for the additional metadata assets
     // that need to be downloaded.
     void retrieveMediaURLs(ScraperSearchResult result);
@@ -166,6 +172,8 @@ private:
     std::function<void()> mRefineCallback;
     int mRowCount;
     unsigned int mScrapeCount;
+    bool mNextSearch;
+    bool mHashSearch;
     bool mRefinedSearch;
     bool mBlockAccept;
     bool mAcceptedResult;
@@ -182,6 +190,11 @@ private:
     std::unique_ptr<MDResolveHandle> mMDResolveHandle;
     std::vector<ScraperSearchResult> mScraperResults;
     std::map<std::string, std::unique_ptr<HttpReq>> mThumbnailReqMap;
+
+    std::string mMD5Hash;
+    std::thread mCalculateMD5HashThread;
+    std::promise<bool> mMD5HashPromise;
+    std::future<bool> mMD5HashFuture;
 
     std::unique_ptr<MiximageGenerator> mMiximageGenerator;
     std::thread mMiximageGeneratorThread;

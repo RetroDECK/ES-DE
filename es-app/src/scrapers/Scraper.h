@@ -36,12 +36,15 @@ enum downloadStatus {
 struct ScraperSearchParams {
     SystemData* system;
     FileData* game;
+    std::string md5Hash;
+    long fileSize;
 
     std::string nameOverride;
     bool automaticMode;
 
     ScraperSearchParams()
-        : automaticMode {false}
+        : fileSize {0}
+        , automaticMode {false}
     {
     }
 };
