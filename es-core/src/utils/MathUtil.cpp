@@ -15,6 +15,7 @@
 
 #include "utils/MathUtil.h"
 
+#include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 
 #include <cstring>
@@ -108,6 +109,8 @@ namespace Utils
             state[3] = 0x10325476;
 
             if (isFilePath) {
+                if (Utils::FileSystem::isDirectory(hashArg))
+                    return "";
 #if defined(_WIN64)
                 std::ifstream inputFile {Utils::String::stringToWideString(hashArg).c_str(),
                                          std::ios::binary};
