@@ -373,6 +373,8 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         result.mdl.set("name", Utils::String::replace(gameName, "\n", ""));
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " << result.mdl.get("name");
 
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Game ID: " << result.gameID;
+
         // Validate rating.
         // Process the rating even if the setting to scrape ratings has been disabled.
         // This is required so that the rating can still be shown in the scraper GUI.
@@ -566,6 +568,9 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         //                       << controllerDescription;
         //     }
         // }
+
+        const pugi::xml_node rom {game.child("rom")};
+        result.md5Hash = Utils::String::toLower(rom.child("rommd5").text().as_string());
 
         // Media super-node.
         pugi::xml_node media_list {game.child("medias")};

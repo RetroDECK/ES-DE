@@ -364,6 +364,7 @@ void GuiScraperSearch::search(ScraperSearchParams& params)
     else
         params.automaticMode = false;
 
+    mMD5Hash = "";
     params.md5Hash = "";
     if (!Utils::FileSystem::isDirectory(params.game->getPath()))
         params.fileSize = Utils::FileSystem::getFileSize(params.game->getPath());
@@ -422,6 +423,9 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
                 "FINISH", mSkipCallback));
         }
         else {
+            LOG(LogDebug)
+                << "GuiScraperSearch::onSearchDone(): Scraper service did not return any results";
+
             mFoundGame = false;
             ComponentListRow row;
             row.addElement(std::make_shared<TextComponent>("NO GAMES FOUND", font, color), true);
@@ -442,6 +446,21 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
             // name (within square brackets).
             std::string gameName {results.at(i).mdl.get("name")};
             std::string otherPlatforms;
+
+            if (mMD5Hash != "" && results.size() == 1 && results[0].md5Hash != "") {
+                if (results[0].md5Hash == mMD5Hash) {
+                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): Perfect match, MD5 digest "
+                                     "in server response identical to file hash";
+                }
+                else if (results[0].md5Hash != "") {
+                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): Not a perfect match, MD5 "
+                                     "digest in server response not identical to file hash";
+                }
+                else {
+                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): Server did not return an "
+                                     "MD5 digest, can't tell whether this is a perfect match";
+                }
+            }
 
             // As the platform names are found via reverse lookup there could be multiple entries.
             // So if any of the entries match the platforms of the last search, then just keep
@@ -730,7 +749,6 @@ void GuiScraperSearch::update(int deltaTime)
                     mCalculateMD5HashThread.join();
                 mLastSearch.md5Hash = mMD5Hash;
                 mSearchHandle = startScraperSearch(mLastSearch);
-                mMD5Hash = "";
                 mNextSearch = false;
             }
         }

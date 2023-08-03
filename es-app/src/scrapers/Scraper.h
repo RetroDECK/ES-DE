@@ -62,6 +62,7 @@ struct ScraperSearchResult {
 
     MetaDataList mdl;
     std::string gameID;
+    std::string md5Hash;
     std::vector<PlatformIds::PlatformId> platformIDs;
 
     // How many more objects the scraper service allows to be downloaded
