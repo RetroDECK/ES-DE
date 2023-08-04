@@ -53,7 +53,16 @@ std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParam
         LOG(LogDebug) << "Scraper::startScraperSearch(): Scraping system \""
                       << params.system->getName()
                       << (params.game->getType() == FOLDER ? "\", folder \"" : "\", game file \"")
-                      << params.game->getFileName() << "\"";
+#if defined(_WIN64)
+                      << Utils::String::replace(
+                             params.game->getPath().substr(
+                                 params.game->getSystemEnvData()->mStartPath.length() + 1),
+                             "/", "\\")
+#else
+                      << params.game->getPath().substr(
+                             params.game->getSystemEnvData()->mStartPath.length() + 1)
+#endif
+                      << "\"";
         scraper_request_funcs.at(name)(params, handle->mRequestQueue, handle->mResults);
     }
 
@@ -103,7 +112,7 @@ void ScraperSearchHandle::update()
         // A request can add more requests to the queue while running,
         // so be careful with references into the queue.
         auto& req = *(mRequestQueue.front());
-        AsyncHandleStatus status = req.status();
+        AsyncHandleStatus status {req.status()};
 
         if (status == ASYNC_ERROR) {
             // Propagate error.

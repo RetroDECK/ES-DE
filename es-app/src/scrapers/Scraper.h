@@ -108,8 +108,6 @@ class ScraperRequest : public AsyncHandle
 {
 public:
     ScraperRequest(std::vector<ScraperSearchResult>& resultsWrite);
-
-    // Returns "true" once we're done.
     virtual void update() = 0;
 
 protected:
