@@ -465,8 +465,8 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
                 }
                 else {
                     LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): " << entryText
-                                  << "Server did not return an MD5 digest, can't tell whether "
-                                     "this is a perfect match";
+                                  << "Server did not return an MD5 digest, assuming this is not "
+                                     "a perfect match";
                 }
             }
 
