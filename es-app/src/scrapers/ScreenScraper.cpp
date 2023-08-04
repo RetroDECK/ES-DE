@@ -248,9 +248,9 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
     p_ids.erase(last, p_ids.end());
 
     for (auto platform = p_ids.cbegin(); platform != p_ids.cend(); ++platform) {
-        path.append("&systemeid=").append(HttpReq::urlEncode(std::to_string(*platform)));
-        requests.push(
-            std::unique_ptr<ScraperRequest>(new ScreenScraperRequest(requests, results, path)));
+        requests.push(std::unique_ptr<ScraperRequest>(new ScreenScraperRequest(
+            requests, results,
+            path + "&systemeid=" + HttpReq::urlEncode(std::to_string(*platform)))));
     }
 }
 
