@@ -514,7 +514,9 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
 
         // Find how many more requests we can make before the scraper
         // request allowance counter is reset.
-        if (doc.HasMember("remaining_monthly_allowance") && doc.HasMember("extra_allowance")) {
+        if (doc.HasMember("remaining_monthly_allowance") &&
+            doc["remaining_monthly_allowance"].IsInt() && doc.HasMember("extra_allowance") &&
+            doc["extra_allowance"].IsInt()) {
             for (size_t i {0}; i < results.size(); ++i) {
                 results[i].scraperRequestAllowance =
                     doc["remaining_monthly_allowance"].GetInt() + doc["extra_allowance"].GetInt();
@@ -522,6 +524,11 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             LOG(LogDebug) << "TheGamesDBJSONRequest::process(): "
                              "Remaining monthly scraping allowance: "
                           << results.back().scraperRequestAllowance;
+            if (doc.HasMember("allowance_refresh_timer") &&
+                doc["allowance_refresh_timer"].IsInt()) {
+                LOG(LogDebug) << "TheGamesDBJSONRequest::process(): Allowance resets in "
+                              << doc["allowance_refresh_timer"].GetInt() / 3600 / 24 << " days";
+            }
         }
         return;
     }
