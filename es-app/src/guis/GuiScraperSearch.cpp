@@ -52,6 +52,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, in
     , mRetryTimer {glm::clamp(
           Settings::getInstance()->getInt("ScraperRetryOnErrorTimer") * 1000, 1000, 30000)}
     , mRetryAccumulator {0}
+    , mAutomaticModeGameEntry {0}
 {
     addChild(&mGrid);
 
@@ -73,7 +74,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, in
     mDescContainer = std::make_shared<ScrollableContainer>();
 
     // Adjust the game description text scrolling parameters depending on the search type.
-    if (mSearchType == NEVER_AUTO_ACCEPT || mSearchType == ACCEPT_SINGLE_MATCHES)
+    if (mSearchType == MANUAL_MODE || mSearchType == SEMIAUTOMATIC_MODE)
         mDescContainer->setScrollParameters(3000.0f, 3000.0f, 0.8f);
     else
         mDescContainer->setScrollParameters(6000.0f, 3000.0f, 0.8f);
@@ -189,26 +190,26 @@ void GuiScraperSearch::onSizeChanged()
         return;
 
     // Column widths.
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT)
+    if (mSearchType == AUTOMATIC_MODE)
         mGrid.setColWidthPerc(0, 0.02f); // Looks better when this is higher in auto mode.
     else
         mGrid.setColWidthPerc(0, 0.01f);
 
     mGrid.setColWidthPerc(1, 0.25f);
 
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT)
+    if (mSearchType == AUTOMATIC_MODE)
         mGrid.setColWidthPerc(2, 0.33f);
     else
         mGrid.setColWidthPerc(2, (mRenderer->getIsVerticalOrientation() ? 0.34f : 0.30f));
 
     // Row heights.
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) // Show name.
+    if (mSearchType == AUTOMATIC_MODE) // Show name.
         mGrid.setRowHeightPerc(0, (mResultName->getFont()->getHeight() * 1.6f) /
                                       mGrid.getSize().y); // Result name.
     else
         mGrid.setRowHeightPerc(0, 0.0725f); // Hide name but do padding.
 
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT)
+    if (mSearchType == AUTOMATIC_MODE)
         mGrid.setRowHeightPerc(2, 0.2f);
     else
         mGrid.setRowHeightPerc(1, 0.505f);
@@ -225,7 +226,7 @@ void GuiScraperSearch::onSizeChanged()
     // Small vertical spacer between the metadata fields and the result list.
     mGrid.setColWidthPerc(3, 0.004f);
 
-    if (mSearchType != ALWAYS_ACCEPT_FIRST_RESULT)
+    if (mSearchType != AUTOMATIC_MODE)
         mDescContainer->setSize(mGrid.getColWidth(1) * thumbnailCellScale + mGrid.getColWidth(2),
                                 mResultDesc->getFont()->getHeight() * 3.2f);
     else
@@ -306,7 +307,7 @@ void GuiScraperSearch::updateView()
     mGrid.removeEntry(mResultList);
 
     // Add them back depending on search type.
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
+    if (mSearchType == AUTOMATIC_MODE) {
         // Show name.
         mGrid.setEntry(mResultName, glm::ivec2 {1, 0}, false, false, glm::ivec2 {3, 1},
                        GridFlags::BORDER_TOP);
@@ -346,6 +347,7 @@ void GuiScraperSearch::search(ScraperSearchParams& params)
     mMiximageResult = false;
     mFoundGame = false;
     mScrapeResult = {};
+    mAutomaticModeGameEntry = 0;
 
     mResultList->clear();
     mResultList->setLoopRows(false);
@@ -359,7 +361,7 @@ void GuiScraperSearch::search(ScraperSearchParams& params)
     // automatic mode as this scraper service is not sorting the multi-search results based
     // on most relevant result (as TheGamesDB does). Using jeuInfos is also much faster than
     // using the jeuRecherche API call (multi-game search).
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT)
+    if (mSearchType == AUTOMATIC_MODE)
         params.automaticMode = true;
     else
         params.automaticMode = false;
@@ -369,8 +371,8 @@ void GuiScraperSearch::search(ScraperSearchParams& params)
     if (!Utils::FileSystem::isDirectory(params.game->getPath()))
         params.fileSize = Utils::FileSystem::getFileSize(params.game->getPath());
 
-    // Only use MD5 file hash searching when in non-interactive mode.
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT &&
+    // Only use MD5 file hash searching when in automatic mode.
+    if (mSearchType == AUTOMATIC_MODE &&
         Settings::getInstance()->getBool("ScraperSearchFileHash") &&
         Settings::getInstance()->getString("Scraper") == "screenscraper" && params.fileSize != 0 &&
         params.fileSize <=
@@ -447,18 +449,24 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
             std::string gameName {results.at(i).mdl.get("name")};
             std::string otherPlatforms;
 
-            if (mMD5Hash != "" && results.size() == 1 && results[0].md5Hash != "") {
-                if (results[0].md5Hash == mMD5Hash) {
-                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): Perfect match, MD5 digest "
-                                     "in server response identical to file hash";
+            if (mMD5Hash != "") {
+                const std::string entryText {
+                    results.size() > 1 ? "Result entry " + std::to_string(i) + ": " : ""};
+                if (results[i].md5Hash == mMD5Hash) {
+                    mAutomaticModeGameEntry = i;
+                    LOG(LogDebug)
+                        << "GuiScraperSearch::onSearchDone(): " << entryText
+                        << "Perfect match, MD5 digest in server response identical to file hash";
                 }
-                else if (results[0].md5Hash != "") {
-                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): Not a perfect match, MD5 "
-                                     "digest in server response not identical to file hash";
+                else if (results[i].md5Hash != "") {
+                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): " << entryText
+                                  << "Not a perfect match, MD5 digest in server response not "
+                                     "identical to file hash";
                 }
                 else {
-                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): Server did not return an "
-                                     "MD5 digest, can't tell whether this is a perfect match";
+                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): " << entryText
+                                  << "Server did not return an MD5 digest, can't tell whether "
+                                     "this is a perfect match";
                 }
             }
 
@@ -520,26 +528,25 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
     // fully automatic mode, then block the ability to manually accept the entry as it will
     // be selected as soon as the thumbnail has finished downloading. This also makes sure
     // the busy animation will play during this time window.
-    if (!mRefinedSearch &&
-        ((mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1) ||
-         (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT && mScraperResults.size() > 0)))
+    if (!mRefinedSearch && ((mSearchType == SEMIAUTOMATIC_MODE && results.size() == 1) ||
+                            (mSearchType == AUTOMATIC_MODE && mScraperResults.size() > 0)))
         mBlockAccept = true;
 
     // If there is no thumbnail to download and we're in semi-automatic mode, proceed to return
     // the results or we'll get stuck forever waiting for a thumbnail to be downloaded.
-    if (mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1 &&
+    if (mSearchType == SEMIAUTOMATIC_MODE && results.size() == 1 &&
         mScraperResults.front().thumbnailImageUrl == "")
         returnResult(mScraperResults.front());
 
     // For automatic mode, if there's no thumbnail to download or no matching games found,
     // proceed directly or we'll get stuck forever.
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
+    if (mSearchType == AUTOMATIC_MODE) {
         if (mScraperResults.size() == 0 ||
             (mScraperResults.size() > 0 && mScraperResults.front().thumbnailImageUrl == "")) {
             if (mScraperResults.size() == 0)
                 mSkipCallback();
             else
-                returnResult(mScraperResults.front());
+                returnResult(mScraperResults[mAutomaticModeGameEntry]);
         }
     }
 }
@@ -550,7 +557,7 @@ void GuiScraperSearch::onSearchError(const std::string& error,
 {
     const int retries {
         glm::clamp(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"), 0, 10)};
-    if (retry && mSearchType != NEVER_AUTO_ACCEPT && retries > 0 && mRetryCount < retries) {
+    if (retry && mSearchType != MANUAL_MODE && retries > 0 && mRetryCount < retries) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mRetrySearch = true;
         ++mRetryCount;
@@ -587,7 +594,7 @@ int GuiScraperSearch::getSelectedIndex()
 void GuiScraperSearch::updateInfoPane()
 {
     int i {getSelectedIndex()};
-    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT && mScraperResults.size())
+    if (mSearchType == AUTOMATIC_MODE && mScraperResults.size())
         i = 0;
 
     if (i != -1 && static_cast<int>(mScraperResults.size()) > i) {
@@ -673,13 +680,13 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
         if (mRefinedSearch)
             allowRefine = true;
         // Interactive mode and "Auto-accept single game matches" not enabled.
-        else if (mSearchType != ACCEPT_SINGLE_MATCHES)
+        else if (mSearchType != SEMIAUTOMATIC_MODE)
             allowRefine = true;
         // Interactive mode with "Auto-accept single game matches" enabled and more than one result.
-        else if (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)
+        else if (mSearchType == SEMIAUTOMATIC_MODE && mScraperResults.size() > 1)
             allowRefine = true;
         // Dito but there were no games found, or the search has not been completed.
-        else if (mSearchType == ACCEPT_SINGLE_MATCHES && !mFoundGame)
+        else if (mSearchType == SEMIAUTOMATIC_MODE && !mFoundGame)
             allowRefine = true;
 
         if (allowRefine) {
@@ -724,8 +731,8 @@ void GuiScraperSearch::returnResult(ScraperSearchResult result)
     // Resolve metadata image before returning.
     if (result.mediaFilesDownloadStatus != COMPLETED) {
         result.mediaFilesDownloadStatus = IN_PROGRESS;
-        LOG(LogDebug) << "GuiScraperSearch::returnResult(): Selected game \""
-                      << result.mdl.get("name") << "\"";
+        LOG(LogDebug) << "GuiScraperSearch::returnResult(): Resolving metadata for game \""
+                      << result.mdl.get("name") << "\", game ID \"" << result.gameID << "\"";
         mMDResolveHandle = resolveMetaDataAssets(result, mLastSearch);
         return;
     }
@@ -938,15 +945,20 @@ void GuiScraperSearch::updateThumbnail()
     // When the thumbnail has been downloaded and we are in automatic mode, or if
     // we are in semi-automatic mode with a single matching game result, we proceed
     // to immediately download the rest of the media files.
-    if ((mSearchType == ALWAYS_ACCEPT_FIRST_RESULT ||
-         (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() == 1 &&
+    if ((mSearchType == AUTOMATIC_MODE ||
+         (mSearchType == SEMIAUTOMATIC_MODE && mScraperResults.size() == 1 &&
           mRefinedSearch == false)) &&
         mScraperResults.front().thumbnailDownloadStatus == COMPLETED) {
         mRefinedSearch = false;
-        if (mScraperResults.size() == 0)
+        if (mScraperResults.size() == 0) {
             mSkipCallback();
-        else
-            returnResult(mScraperResults.front());
+        }
+        else {
+            if (mSearchType == AUTOMATIC_MODE)
+                returnResult(mScraperResults[mAutomaticModeGameEntry]);
+            else
+                returnResult(mScraperResults.front());
+        }
     }
 }
 
@@ -1111,8 +1123,8 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
     if (mSkipCallback != nullptr)
         prompts.push_back(HelpPrompt("x", "skip"));
 
-    if (mFoundGame && (mRefinedSearch || mSearchType != ACCEPT_SINGLE_MATCHES ||
-                       (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)))
+    if (mFoundGame && (mRefinedSearch || mSearchType != SEMIAUTOMATIC_MODE ||
+                       (mSearchType == SEMIAUTOMATIC_MODE && mScraperResults.size() > 1)))
         prompts.push_back(HelpPrompt("a", "accept result"));
 
     return prompts;

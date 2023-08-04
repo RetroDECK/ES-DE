@@ -62,13 +62,13 @@ GuiScraperMulti::GuiScraperMulti(
 
     if (mApproveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
         mSearchComp =
-            std::make_shared<GuiScraperSearch>(GuiScraperSearch::NEVER_AUTO_ACCEPT, mTotalGames, 7);
+            std::make_shared<GuiScraperSearch>(GuiScraperSearch::MANUAL_MODE, mTotalGames, 7);
     else if (mApproveResults && Settings::getInstance()->getBool("ScraperSemiautomatic"))
-        mSearchComp = std::make_shared<GuiScraperSearch>(GuiScraperSearch::ACCEPT_SINGLE_MATCHES,
+        mSearchComp = std::make_shared<GuiScraperSearch>(GuiScraperSearch::SEMIAUTOMATIC_MODE,
                                                          mTotalGames, 7);
     else if (!mApproveResults)
-        mSearchComp = std::make_shared<GuiScraperSearch>(
-            GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, mTotalGames, 7);
+        mSearchComp =
+            std::make_shared<GuiScraperSearch>(GuiScraperSearch::AUTOMATIC_MODE, mTotalGames, 7);
     mSearchComp->setAcceptCallback(
         std::bind(&GuiScraperMulti::acceptResult, this, std::placeholders::_1));
     mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));
@@ -80,8 +80,8 @@ GuiScraperMulti::GuiScraperMulti(
     });
 
     mGrid.setEntry(mSearchComp, glm::ivec2 {0, 4},
-                   mSearchComp->getSearchType() != GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT,
-                   true, glm::ivec2 {2, 1});
+                   mSearchComp->getSearchType() != GuiScraperSearch::AUTOMATIC_MODE, true,
+                   glm::ivec2 {2, 1});
 
     mResultList = mSearchComp->getResultList();
 
@@ -114,15 +114,15 @@ GuiScraperMulti::GuiScraperMulti(
                 if (mSearchComp->getRefinedSearch())
                     allowRefine = true;
                 // Interactive mode and "Auto-accept single game matches" not enabled.
-                else if (mSearchComp->getSearchType() != GuiScraperSearch::ACCEPT_SINGLE_MATCHES)
+                else if (mSearchComp->getSearchType() != GuiScraperSearch::SEMIAUTOMATIC_MODE)
                     allowRefine = true;
                 // Interactive mode with "Auto-accept single game matches" enabled and more
                 // than one result.
-                else if (mSearchComp->getSearchType() == GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                else if (mSearchComp->getSearchType() == GuiScraperSearch::SEMIAUTOMATIC_MODE &&
                          mSearchComp->getScraperResultsSize() > 1)
                     allowRefine = true;
                 // Dito but there were no games found, or the search has not been completed.
-                else if (mSearchComp->getSearchType() == GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                else if (mSearchComp->getSearchType() == GuiScraperSearch::SEMIAUTOMATIC_MODE &&
                          !mSearchComp->getFoundGame())
                     allowRefine = true;
 

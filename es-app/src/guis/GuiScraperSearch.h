@@ -37,9 +37,9 @@ class GuiScraperSearch : public GuiComponent
 {
 public:
     enum SearchType {
-        ALWAYS_ACCEPT_FIRST_RESULT, // Automatic mode.
-        ACCEPT_SINGLE_MATCHES, // Semi-automatic mode.
-        NEVER_AUTO_ACCEPT // Manual mode.
+        AUTOMATIC_MODE,
+        SEMIAUTOMATIC_MODE,
+        MANUAL_MODE
     };
 
     GuiScraperSearch(SearchType searchType, unsigned int scrapeCount, int rowCount);
@@ -184,6 +184,7 @@ private:
     int mRetryCount;
     int mRetryTimer;
     int mRetryAccumulator;
+    int mAutomaticModeGameEntry;
 
     std::unique_ptr<ScraperSearchHandle> mSearchHandle;
     std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;
