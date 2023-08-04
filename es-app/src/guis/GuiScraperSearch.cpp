@@ -453,7 +453,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
                 const std::string entryText {
                     results.size() > 1 ? "Result entry " + std::to_string(i) + ": " : ""};
                 if (results[i].md5Hash == mMD5Hash) {
-                    mAutomaticModeGameEntry = i;
+                    mAutomaticModeGameEntry = static_cast<int>(i);
                     LOG(LogDebug)
                         << "GuiScraperSearch::onSearchDone(): " << entryText
                         << "Perfect match, MD5 digest in server response identical to file hash";
