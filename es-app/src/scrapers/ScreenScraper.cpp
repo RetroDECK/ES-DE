@@ -301,6 +301,21 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
             ++it;
         }
     }
+
+    // If there are multiple platforms defined for the system, then it's possible that the scraper
+    // service will return the same results for each platform, so we need to remove such duplicates.
+    if (results.size() > 1) {
+        const std::string gameID {results.front().gameID};
+        for (auto it = results.cbegin() + 1; it != results.cend();) {
+            if ((*it).gameID == gameID) {
+                it = results.erase(it);
+                LOG(LogDebug) << "ScreenScraperRequest::process(): Removed duplicate entry";
+            }
+            else {
+                ++it;
+            }
+        }
+    }
 }
 
 void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
