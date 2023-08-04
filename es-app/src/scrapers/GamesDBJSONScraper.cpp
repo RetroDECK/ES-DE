@@ -356,11 +356,13 @@ namespace
     void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
     {
         ScraperSearchResult result;
+        std::string platformID;
 
         // Platform IDs.
         if (game.HasMember("platform") && game["platform"].IsInt()) {
+            platformID = std::to_string(game["platform"].GetInt());
             for (auto& platform : gamesdb_new_platformid_map) {
-                if (platform.second == std::to_string(game["platform"].GetInt()))
+                if (platform.second == platformID)
                     result.platformIDs.push_back(platform.first);
             }
         }
@@ -373,6 +375,9 @@ namespace
 
         result.mdl.set("name", getStringOrThrow(game, "game_title"));
         LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Name: " << result.mdl.get("name");
+
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Game ID: " << result.gameID;
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Platform ID: " << platformID;
 
         if (game.HasMember("overview") && game["overview"].IsString())
             result.mdl.set("desc", Utils::String::replace(game["overview"].GetString(), "\r", ""));

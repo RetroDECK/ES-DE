@@ -293,7 +293,7 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
     for (auto it = results.cbegin(); it != results.cend();) {
         const std::string gameName {Utils::String::toUpper((*it).mdl.get("name"))};
         if (gameName.substr(0, 12) == "ZZZ(NOTGAME)") {
-            LOG(LogWarning) << "ScreenScraperRequest - Received \"ZZZ(notgame)\" as game name, "
+            LOG(LogWarning) << "ScreenScraperRequest: Received \"ZZZ(notgame)\" as game name, "
                                "ignoring response";
             it = results.erase(it);
         }
@@ -374,6 +374,23 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " << result.mdl.get("name");
 
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Game ID: " << result.gameID;
+
+        pugi::xml_node system {game.child("systeme")};
+        int platformID {system.attribute("id").as_int()};
+        int parentPlatformID {system.attribute("parentid").as_int()};
+
+        // Platform IDs.
+        for (auto& platform : screenscraper_platformid_map) {
+            if (platform.second == platformID || platform.second == parentPlatformID)
+                result.platformIDs.emplace_back(platform.first);
+        }
+
+        if (result.platformIDs.empty())
+            result.platformIDs.emplace_back(PlatformId::PLATFORM_UNKNOWN);
+
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Platform ID: " << platformID;
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Parent platform ID: "
+                      << parentPlatformID;
 
         // Validate rating.
         // Process the rating even if the setting to scrape ratings has been disabled.
@@ -463,19 +480,6 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             LOG(LogDebug) << "ScreenScraperRequest::processGame(): Players: "
                           << result.mdl.get("players");
         }
-
-        pugi::xml_node system {game.child("systeme")};
-        int platformID {system.attribute("id").as_int()};
-        int parentPlatformID {system.attribute("parentid").as_int()};
-
-        // Platform IDs.
-        for (auto& platform : screenscraper_platformid_map) {
-            if (platform.second == platformID || platform.second == parentPlatformID)
-                result.platformIDs.emplace_back(platform.first);
-        }
-
-        if (result.platformIDs.empty())
-            result.platformIDs.emplace_back(PlatformId::PLATFORM_UNKNOWN);
 
         // ScreenScraper controller scraping is currently broken, it's unclear if they will fix it.
         // // Controller (only for the Arcade and SNK Neo Geo systems).
@@ -709,8 +713,17 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(const st
 {
     if (md5Hash != "") {
         LOG(LogDebug)
-            << "ScreenScraper::getGameSearchUrl(): Performing MD5 file hash search using digest \""
+            << "ScreenScraperRequest::getGameSearchUrl(): Performing MD5 file hash search "
+               "using digest \""
             << md5Hash << "\"";
+    }
+    else if (md5Hash == "" && Settings::getInstance()->getBool("ScraperSearchFileHash") &&
+             fileSize >
+                 Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize") * 1024 * 1024) {
+        LOG(LogDebug)
+            << "ScreenScraperRequest::getGameSearchUrl(): Skipping MD5 file hash search as game "
+               "file is larger than size limit of "
+            << Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize") << " MiB";
     }
 
     std::string searchName {gameName};
