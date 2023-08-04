@@ -624,9 +624,10 @@ void GuiScraperSearch::updateInfoPane()
                     mScraperResults[i].thumbnailDownloadStatus = IN_PROGRESS;
                     // Add an entry into the thumbnail map, this way we can track and download
                     // each thumbnail separately even as they're downloading while scrolling
-                    // through the result list.
+                    // through the result list. Add the row number as an index in case the same
+                    // thumbnail is used by more than one game.
                     mThumbnailReqMap.insert(std::pair<std::string, std::unique_ptr<HttpReq>>(
-                        mScraperResults[i].thumbnailImageUrl,
+                        mScraperResults[i].thumbnailImageUrl + "." + std::to_string(i),
                         std::unique_ptr<HttpReq>(new HttpReq(thumb, true))));
                 }
             }
@@ -785,7 +786,8 @@ void GuiScraperSearch::update(int deltaTime)
     // Check if the thumbnail for the currently selected game has finished downloading.
     if (mScraperResults.size() > 0) {
         auto it =
-            mThumbnailReqMap.find(mScraperResults[mResultList->getCursorId()].thumbnailImageUrl);
+            mThumbnailReqMap.find(mScraperResults[mResultList->getCursorId()].thumbnailImageUrl +
+                                  "." + std::to_string(mResultList->getCursorId()));
         if (it != mThumbnailReqMap.end() && it->second->status() != HttpReq::REQ_IN_PROGRESS)
             updateThumbnail();
     }
@@ -917,7 +919,8 @@ void GuiScraperSearch::update(int deltaTime)
 
 void GuiScraperSearch::updateThumbnail()
 {
-    auto it = mThumbnailReqMap.find(mScraperResults[mResultList->getCursorId()].thumbnailImageUrl);
+    auto it = mThumbnailReqMap.find(mScraperResults[mResultList->getCursorId()].thumbnailImageUrl +
+                                    "." + std::to_string(mResultList->getCursorId()));
 
     if (it != mThumbnailReqMap.end() && it->second->status() == HttpReq::REQ_SUCCESS) {
         // Save thumbnail to mScraperResults cache and set the flag that the
