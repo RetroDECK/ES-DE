@@ -203,7 +203,7 @@
         <command label="Virtual Jaguar">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\virtualjaguar_libretro.dll %ROM%</command>
         <command label="BigPEmu (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_BIGPEMU% %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\atarijaguar jaguar -cart %ROM%</command>
-        <platform>atarijaguar, atarijaguarcd</platform>
+        <platform>atarijaguar</platform>
         <theme>atarijaguar</theme>
     </system>
     <system>
