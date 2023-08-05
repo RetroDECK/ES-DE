@@ -836,7 +836,7 @@ renderer::ShapeLayer::ShapeLayer(model::Layer *layerData,
 
 void renderer::ShapeLayer::updateContent()
 {
-    mRoot->update(frameNo(), combinedMatrix(), combinedAlpha(), flag());
+    mRoot->update(frameNo(), combinedMatrix(), 1.0f , flag());
 
     if (mLayerData->hasPathOperator()) {
         mRoot->applyTrim();
@@ -861,6 +861,27 @@ renderer::DrawableList renderer::ShapeLayer::renderList()
     if (mDrawableList.empty()) return {};
 
     return {mDrawableList.data(), mDrawableList.size()};
+}
+
+void renderer::ShapeLayer::render(VPainter *painter, const VRle &inheritMask,
+                                 const VRle &matteRle, SurfaceCache &cache)
+{
+    if (vIsZero(combinedAlpha())) return;
+
+    if (vCompare(combinedAlpha(), 1.0)) {
+        Layer::render(painter, inheritMask, matteRle, cache);
+    } else {
+        //do offscreen rendering
+        VSize    size = painter->clipBoundingRect().size();
+        VPainter srcPainter;
+        VBitmap srcBitmap = cache.make_surface(size.width(), size.height());
+        srcPainter.begin(&srcBitmap);
+        Layer::render(&srcPainter, inheritMask, matteRle, cache);
+        srcPainter.end();
+        painter->drawBitmap(VPoint(), srcBitmap,
+                            uint8_t(combinedAlpha() * 255.0f));
+        cache.release_surface(srcBitmap);
+    }
 }
 
 bool renderer::Group::resolveKeyPath(LOTKeyPath &keyPath, uint32_t depth,
@@ -1284,9 +1305,9 @@ renderer::Stroke::Stroke(model::Stroke *data)
 static vthread_local std::vector<float> Dash_Vector;
 
 bool renderer::Stroke::updateContent(int frameNo, const VMatrix &matrix,
-                                     float alpha)
+                                     float)
 {
-    auto combinedAlpha = alpha * mModel.opacity(frameNo);
+    auto combinedAlpha = mModel.opacity(frameNo);
     auto color = mModel.color(frameNo).toColor(combinedAlpha);
 
     VBrush brush(color);

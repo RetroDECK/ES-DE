@@ -319,6 +319,8 @@ public:
     void         buildLayerNode() final;
     bool         resolveKeyPath(LOTKeyPath &keyPath, uint32_t depth,
                                 LOTVariant &value) override;
+    void         render(VPainter *painter, const VRle &mask, const VRle &matteRle,
+                        SurfaceCache &cache) final;
 
 protected:
     void                     preprocessStage(const VRect &clip) final;
