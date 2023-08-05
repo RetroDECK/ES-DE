@@ -559,6 +559,11 @@ std::string CollectionSystemsManager::getValidNewCollectionName(const std::strin
 {
     std::string name {inName};
 
+    if (name.length() > 160) {
+        LOG(LogWarning) << "Requested custom collection name is too long, shortening it";
+        name = name.substr(0, 160);
+    }
+
     if (index == 0) {
         size_t remove {std::string::npos};
         // Remove invalid characters.
