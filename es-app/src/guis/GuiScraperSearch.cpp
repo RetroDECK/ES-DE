@@ -732,7 +732,7 @@ void GuiScraperSearch::returnResult(ScraperSearchResult result)
     // Resolve metadata image before returning.
     if (result.mediaFilesDownloadStatus != COMPLETED) {
         result.mediaFilesDownloadStatus = IN_PROGRESS;
-        LOG(LogDebug) << "GuiScraperSearch::returnResult(): Resolving metadata for game \""
+        LOG(LogDebug) << "GuiScraperSearch::returnResult(): Resolving metadata for \""
                       << result.mdl.get("name") << "\", game ID \"" << result.gameID << "\"";
         mMDResolveHandle = resolveMetaDataAssets(result, mLastSearch);
         return;
