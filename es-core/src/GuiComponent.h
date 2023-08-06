@@ -57,6 +57,13 @@ enum class LetterCase {
     UNDEFINED
 };
 
+enum class Stationary {
+    NEVER,
+    ALWAYS,
+    WITHIN_VIEW,
+    BETWEEN_VIEWS
+};
+
 class GuiComponent
 {
 public:
@@ -108,6 +115,8 @@ public:
         mRotationOrigin = glm::vec2 {originX, originY};
     }
     void setRotationOrigin(glm::vec2 origin) { setRotationOrigin(origin.x, origin.y); }
+
+    const Stationary getStationary() const { return mStationary; }
 
     virtual glm::vec2 getSize() const { return mSize; }
     void setSize(const glm::vec2& size) { setSize(size.x, size.y); }
@@ -388,6 +397,7 @@ protected:
     glm::vec2 mOrigin;
     glm::vec2 mRotationOrigin;
     glm::vec2 mSize;
+    Stationary mStationary;
 
     float mBrightness;
     float mOpacity;

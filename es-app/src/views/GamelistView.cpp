@@ -400,12 +400,77 @@ void GamelistView::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     // Make sure nothing renders outside our designated area.
-    mRenderer->pushClipRect(
-        glm::ivec2 {static_cast<int>(std::round(trans[3].x)),
-                    static_cast<int>(std::round(trans[3].y))},
-        glm::ivec2 {static_cast<int>(std::round(mSize.x)), static_cast<int>(std::round(mSize.y))});
+    auto clipRectFunc = [this, trans]() {
+        mRenderer->pushClipRect(glm::ivec2 {static_cast<int>(std::round(trans[3].x)),
+                                            static_cast<int>(std::round(trans[3].y))},
+                                glm::ivec2 {static_cast<int>(std::round(mSize.x)),
+                                            static_cast<int>(std::round(mSize.y))});
+    };
 
-    renderChildren(trans);
+    clipRectFunc();
+
+    const ViewController::State viewState {ViewController::getInstance()->getState()};
+    bool stationaryApplicable {false};
+
+    // If it's the startup animation, then don't apply stationary properties.
+    if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
+        stationaryApplicable = false;
+
+    // If it's a gamelist to gamelist transition and these animations are set to slide.
+    if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+            "TransitionsGamelistToGamelist")) == ViewTransitionAnimation::SLIDE &&
+        viewState.viewing == ViewController::ViewMode::GAMELIST &&
+        viewState.previouslyViewed == ViewController::ViewMode::GAMELIST)
+        stationaryApplicable = true;
+
+    // If it's a gamelist to system transition and these animations are set to slide.
+    if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+            "TransitionsGamelistToSystem")) == ViewTransitionAnimation::SLIDE &&
+        viewState.viewing == ViewController::ViewMode::SYSTEM_SELECT)
+        stationaryApplicable = true;
+
+    // If it's a system to gamelist transition and these animations are set to slide.
+    if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+            "TransitionsSystemToGamelist")) == ViewTransitionAnimation::SLIDE &&
+        viewState.previouslyViewed == ViewController::ViewMode::SYSTEM_SELECT)
+        stationaryApplicable = true;
+
+    for (unsigned int i {0}; i < getChildCount(); ++i) {
+        bool childStationary {false};
+        if (stationaryApplicable) {
+            if (getChild(i)->getStationary() == Stationary::NEVER) {
+                childStationary = false;
+            }
+            else if (viewState.viewing == ViewController::ViewMode::GAMELIST &&
+                     viewState.previouslyViewed == ViewController::ViewMode::GAMELIST &&
+                     (getChild(i)->getStationary() == Stationary::WITHIN_VIEW ||
+                      getChild(i)->getStationary() == Stationary::ALWAYS)) {
+                childStationary = true;
+            }
+            else if (viewState.viewing == ViewController::ViewMode::SYSTEM_SELECT &&
+                     (getChild(i)->getStationary() == Stationary::BETWEEN_VIEWS ||
+                      getChild(i)->getStationary() == Stationary::ALWAYS)) {
+                childStationary = true;
+            }
+            else if (viewState.previouslyViewed == ViewController::ViewMode::SYSTEM_SELECT &&
+                     (getChild(i)->getStationary() == Stationary::BETWEEN_VIEWS ||
+                      getChild(i)->getStationary() == Stationary::ALWAYS)) {
+                childStationary = true;
+            }
+        }
+
+        if (childStationary) {
+            if (viewState.getSystem() != mRoot->getSystem())
+                continue;
+            mRenderer->popClipRect();
+            getChild(i)->render(mRenderer->getIdentity());
+            clipRectFunc();
+        }
+        else {
+            getChild(i)->render(trans);
+        }
+    }
+
     mRenderer->popClipRect();
 }
 
@@ -423,7 +488,7 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
     }
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
-        ViewController::getInstance()->getState().viewing == ViewController::GAMELIST)
+        ViewController::getInstance()->getState().viewing == ViewController::ViewMode::GAMELIST)
         prompts.push_back(HelpPrompt("a", "select"));
     else
         prompts.push_back(HelpPrompt("a", "select"));
@@ -440,7 +505,7 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
         !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
-        ViewController::getInstance()->getState().viewing == ViewController::GAMELIST) {
+        ViewController::getInstance()->getState().viewing == ViewController::ViewMode::GAMELIST) {
         prompts.push_back(HelpPrompt("y", "jump to game"));
     }
     else if (mRoot->getSystem()->isGameSystem() &&

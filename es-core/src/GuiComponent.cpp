@@ -30,6 +30,7 @@ GuiComponent::GuiComponent()
     , mOrigin {0.0f, 0.0f}
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
+    , mStationary {Stationary::NEVER}
     , mBrightness {0.0f}
     , mOpacity {1.0f}
     , mSaturation {1.0f}
@@ -45,7 +46,7 @@ GuiComponent::GuiComponent()
     , mEnabled {true}
     , mTransform {Renderer::getIdentity()}
 {
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
+    for (unsigned char i {0}; i < MAX_ANIMATIONS; ++i)
         mAnimationMap[i] = nullptr;
 }
 
@@ -58,7 +59,7 @@ GuiComponent::~GuiComponent()
     if (mParent)
         mParent->removeChild(this);
 
-    for (unsigned int i = 0; i < getChildCount(); ++i)
+    for (unsigned int i {0}; i < getChildCount(); ++i)
         getChild(i)->setParent(nullptr);
 }
 
@@ -70,7 +71,7 @@ void GuiComponent::textInput(const std::string& text, const bool pasting)
 
 bool GuiComponent::input(InputConfig* config, Input input)
 {
-    for (unsigned int i = 0; i < getChildCount(); ++i) {
+    for (unsigned int i {0}; i < getChildCount(); ++i) {
         if (getChild(i)->input(config, input))
             return true;
     }
@@ -147,7 +148,7 @@ void GuiComponent::removeChild(GuiComponent* cmp)
 
     cmp->setParent(nullptr);
 
-    for (auto i = mChildren.cbegin(); i != mChildren.cend(); ++i) {
+    for (auto i {mChildren.cbegin()}; i != mChildren.cend(); ++i) {
         if (*i == cmp) {
             mChildren.erase(i);
             return;
@@ -252,13 +253,13 @@ const bool GuiComponent::advanceAnimation(unsigned char slot, unsigned int time)
 
 void GuiComponent::stopAllAnimations()
 {
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
+    for (unsigned char i {0}; i < MAX_ANIMATIONS; ++i)
         stopAnimation(i);
 }
 
 void GuiComponent::cancelAllAnimations()
 {
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
+    for (unsigned char i {0}; i < MAX_ANIMATIONS; ++i)
         cancelAnimation(i);
 }
 
@@ -327,13 +328,13 @@ const glm::mat4& GuiComponent::getTransform()
 
 void GuiComponent::onShow()
 {
-    for (unsigned int i = 0; i < getChildCount(); ++i)
+    for (unsigned int i {0}; i < getChildCount(); ++i)
         getChild(i)->onShow();
 }
 
 void GuiComponent::onHide()
 {
-    for (unsigned int i = 0; i < getChildCount(); ++i)
+    for (unsigned int i {0}; i < getChildCount(); ++i)
         getChild(i)->onHide();
 }
 
@@ -413,18 +414,18 @@ void GuiComponent::updateHelpPrompts()
 
 void GuiComponent::updateSelf(int deltaTime)
 {
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
+    for (unsigned char i {0}; i < MAX_ANIMATIONS; ++i)
         advanceAnimation(i, deltaTime);
 }
 
 void GuiComponent::updateChildren(int deltaTime)
 {
-    for (unsigned int i = 0; i < getChildCount(); ++i)
+    for (unsigned int i {0}; i < getChildCount(); ++i)
         getChild(i)->update(deltaTime);
 }
 
 void GuiComponent::renderChildren(const glm::mat4& transform) const
 {
-    for (unsigned int i = 0; i < getChildCount(); ++i)
+    for (unsigned int i {0}; i < getChildCount(); ++i)
         getChild(i)->render(transform);
 }

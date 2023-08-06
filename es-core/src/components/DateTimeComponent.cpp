@@ -125,6 +125,22 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
+    if (properties & ThemeFlags::POSITION && elem->has("stationary")) {
+        const std::string& stationary {elem->get<std::string>("stationary")};
+        if (stationary == "never")
+            mStationary = Stationary::NEVER;
+        else if (stationary == "always")
+            mStationary = Stationary::ALWAYS;
+        else if (stationary == "withinView")
+            mStationary = Stationary::WITHIN_VIEW;
+        else if (stationary == "betweenViews")
+            mStationary = Stationary::BETWEEN_VIEWS;
+        else
+            LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
+                               "\"stationary\" for element \""
+                            << element.substr(9) << "\" defined as \"" << stationary << "\"";
+    }
+
     if (elem->has("format"))
         setFormat(elem->get<std::string>("format"));
 
@@ -147,8 +163,9 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setHorizontalAlignment(ALIGN_RIGHT);
         else
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
-                               "<horizontalAlignment> defined as \""
-                            << horizontalAlignment << "\"";
+                               "\"horizontalAlignment\" for element \""
+                            << element.substr(9) << "\" defined as \"" << horizontalAlignment
+                            << "\"";
     }
 
     if (properties & ALIGNMENT && elem->has("verticalAlignment")) {
@@ -161,8 +178,8 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setVerticalAlignment(ALIGN_BOTTOM);
         else
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
-                               "<verticalAlignment> defined as \""
-                            << verticalAlignment << "\"";
+                               "\"verticalAlignment\" for element \""
+                            << element.substr(9) << "\" defined as \"" << verticalAlignment << "\"";
     }
 
     if (properties & METADATA && elem->has("metadata")) {
@@ -179,9 +196,9 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mThemeMetadata = metadata;
         }
         else {
-            LOG(LogError) << "DateTimeComponent: Invalid theme configuration, property "
-                             "<metadata> defined as \""
-                          << metadata << "\"";
+            LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
+                               "\"metadata\" for element \""
+                            << element.substr(9) << "\" defined as \"" << metadata << "\"";
         }
     }
 
@@ -204,8 +221,8 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else if (letterCase != "none") {
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
-                               "<letterCase> defined as \""
-                            << letterCase << "\"";
+                               "\"letterCase\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
         }
     }
 

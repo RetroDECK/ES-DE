@@ -50,7 +50,8 @@ ViewController::ViewController() noexcept
     , mLockInput {false}
     , mNextSystem {false}
 {
-    mState.viewing = NOTHING;
+    mState.viewing = ViewMode::NOTHING;
+    mState.previouslyViewed = ViewMode::NOTHING;
 }
 
 ViewController* ViewController::getInstance()
@@ -410,7 +411,7 @@ void ViewController::ReloadAndGoToStart()
 {
     mWindow->renderSplashScreen(Window::SplashScreenState::RELOADING, 0.0f);
     reloadAll();
-    if (mState.viewing == GAMELIST) {
+    if (mState.viewing == ViewMode::GAMELIST) {
         goToSystemView(SystemData::sSystemVector.front(), false);
         goToSystem(SystemData::sSystemVector.front(), false);
     }
@@ -488,7 +489,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 {
     bool applicationStartup {false};
 
-    if (mState.viewing == NOTHING)
+    if (mState.viewing == ViewMode::NOTHING)
         applicationStartup = true;
 
     // Restore the X position for the view, if it was previously moved.
@@ -508,7 +509,8 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     if (system->isGroupedCustomCollection())
         system = system->getRootFolder()->getParent()->getSystem();
 
-    mState.viewing = SYSTEM_SELECT;
+    mState.previouslyViewed = mState.viewing;
+    mState.viewing = ViewMode::SYSTEM_SELECT;
     mState.system = system;
     mSystemViewTransition = true;
 
@@ -577,7 +579,7 @@ void ViewController::goToSystem(SystemData* system, bool animate)
 
 void ViewController::goToNextGamelist()
 {
-    assert(mState.viewing == GAMELIST);
+    assert(mState.viewing == ViewMode::GAMELIST);
     SystemData* system {getState().getSystem()};
     assert(system);
     NavigationSounds::getInstance().playThemeNavigationSound(QUICKSYSSELECTSOUND);
@@ -587,7 +589,7 @@ void ViewController::goToNextGamelist()
 
 void ViewController::goToPrevGamelist()
 {
-    assert(mState.viewing == GAMELIST);
+    assert(mState.viewing == ViewMode::GAMELIST);
     SystemData* system {getState().getSystem()};
     assert(system);
     NavigationSounds::getInstance().playThemeNavigationSound(QUICKSYSSELECTSOUND);
@@ -608,12 +610,12 @@ void ViewController::goToGamelist(SystemData* system)
     ViewTransition transitionType;
     ViewTransitionAnimation transitionAnim;
 
-    if (mState.viewing == SYSTEM_SELECT) {
+    if (mState.viewing == ViewMode::SYSTEM_SELECT) {
         transitionType = ViewTransition::SYSTEM_TO_GAMELIST;
         transitionAnim = static_cast<ViewTransitionAnimation>(
             Settings::getInstance()->getInt("TransitionsSystemToGamelist"));
     }
-    else if (mState.viewing == NOTHING) {
+    else if (mState.viewing == ViewMode::NOTHING) {
         transitionType = ViewTransition::STARTUP_TO_GAMELIST;
         transitionAnim = static_cast<ViewTransitionAnimation>(
             Settings::getInstance()->getInt("TransitionsStartupToGamelist"));
@@ -642,13 +644,13 @@ void ViewController::goToGamelist(SystemData* system)
         mPreviousView.reset();
         mPreviousView = nullptr;
     }
-    else if (!mPreviousView && mState.viewing == GAMELIST) {
+    else if (!mPreviousView && mState.viewing == ViewMode::GAMELIST) {
         // This is needed as otherwise the static image would not get rendered during the
         // first Slide transition when coming from the System view.
         mSkipView = getGamelistView(system);
     }
 
-    if (mState.viewing != SYSTEM_SELECT) {
+    if (mState.viewing != ViewMode::SYSTEM_SELECT) {
         mPreviousView = mCurrentView;
         mSystemViewTransition = false;
     }
@@ -659,7 +661,8 @@ void ViewController::goToGamelist(SystemData* system)
     // Find if we're wrapping around the first and last systems, which requires the gamelist
     // to be moved in order to avoid weird camera movements. This is only needed for the
     // slide transition style.
-    if (mState.viewing == GAMELIST && SystemData::sSystemVector.size() > 1 && slideTransitions) {
+    if (mState.viewing == ViewMode::GAMELIST && SystemData::sSystemVector.size() > 1 &&
+        slideTransitions) {
         if (SystemData::sSystemVector.front() == mState.getSystem()) {
             if (SystemData::sSystemVector.back() == system)
                 wrapFirstToLast = true;
@@ -671,7 +674,7 @@ void ViewController::goToGamelist(SystemData* system)
     }
 
     // Stop any scrolling, animations and camera movements.
-    if (mState.viewing == SYSTEM_SELECT) {
+    if (mState.viewing == ViewMode::SYSTEM_SELECT) {
         mSystemListView->stopScrolling();
         if (mSystemListView->isSystemAnimationPlaying(0))
             mSystemListView->finishSystemAnimation(0);
@@ -681,7 +684,7 @@ void ViewController::goToGamelist(SystemData* system)
         (!fadeTransitions && mLastTransitionAnim == ViewTransitionAnimation::FADE))
         cancelViewTransitions();
 
-    if (mState.viewing == SYSTEM_SELECT) {
+    if (mState.viewing == ViewMode::SYSTEM_SELECT) {
         // Move the system list.
         auto sysList = getSystemListView();
         float offsetX {sysList->getPosition().x};
@@ -728,7 +731,7 @@ void ViewController::goToGamelist(SystemData* system)
     mCurrentView->finishAnimation(0);
 
     // Application startup animation, if starting in a gamelist rather than in the system view.
-    if (mState.viewing == NOTHING) {
+    if (mState.viewing == ViewMode::NOTHING) {
         if (mLastTransitionAnim == ViewTransitionAnimation::FADE)
             cancelViewTransitions();
         mCamera = glm::translate(mCamera, glm::round(-mCurrentView->getPosition()));
@@ -744,7 +747,8 @@ void ViewController::goToGamelist(SystemData* system)
         }
     }
 
-    mState.viewing = GAMELIST;
+    mState.previouslyViewed = mState.viewing;
+    mState.viewing = ViewMode::GAMELIST;
     mState.system = system;
 
     if (mCurrentView)
@@ -1157,9 +1161,9 @@ void ViewController::render(const glm::mat4& parentTrans)
     glm::mat4 transInverse {glm::inverse(trans)};
 
     // Camera position, position + size.
-    glm::vec3 viewStart {transInverse[3]};
-    glm::vec3 viewEnd {std::fabs(trans[3].x) + Renderer::getScreenWidth(),
-                       std::fabs(trans[3].y) + Renderer::getScreenHeight(), 0.0f};
+    const glm::vec3 viewStart {transInverse[3]};
+    const glm::vec3 viewEnd {std::fabs(trans[3].x) + Renderer::getScreenWidth(),
+                             std::fabs(trans[3].y) + Renderer::getScreenHeight(), 0.0f};
 
     // Keep track of UI mode changes.
     UIModeController::getInstance()->monitorUIMode();
@@ -1169,19 +1173,27 @@ void ViewController::render(const glm::mat4& parentTrans)
     if (mSystemListView == mCurrentView || (mSystemViewTransition && isCameraMoving()))
         getSystemListView()->render(trans);
 
-    // Draw the gamelists.
-    for (auto it = mGamelistViews.cbegin(); it != mGamelistViews.cend(); ++it) {
-        // Same thing as for the system view, limit the rendering only to what needs to be drawn.
-        if (it->second == mCurrentView || (it->second == mPreviousView && isCameraMoving())) {
-            // Clipping.
-            glm::vec3 guiStart {it->second->getPosition()};
-            glm::vec3 guiEnd {it->second->getPosition() +
-                              glm::vec3 {it->second->getSize().x, it->second->getSize().y, 0.0f}};
+    auto gamelistRenderFunc = [this, trans, viewStart, viewEnd](auto it) {
+        const glm::vec3 guiStart {it->second->getPosition()};
+        const glm::vec3 guiEnd {it->second->getPosition() +
+                                glm::vec3 {it->second->getSize().x, it->second->getSize().y, 0.0f}};
+        if (guiEnd.x >= viewStart.x && guiEnd.y >= viewStart.y && guiStart.x <= viewEnd.x &&
+            guiStart.y <= viewEnd.y)
+            it->second->render(trans);
+    };
 
-            if (guiEnd.x >= viewStart.x && guiEnd.y >= viewStart.y && guiStart.x <= viewEnd.x &&
-                guiStart.y <= viewEnd.y)
-                it->second->render(trans);
-        }
+    // Draw the gamelists. In the same manner as for the system view, limit the rendering only
+    // to what needs to be drawn.
+    for (auto it = mGamelistViews.cbegin(); it != mGamelistViews.cend(); ++it) {
+        if (it->second == mPreviousView && isCameraMoving())
+            gamelistRenderFunc(it);
+    }
+
+    // Always render the currently selected system last so that any stationary elements will get
+    // correctly rendered on top.
+    for (auto it = mGamelistViews.cbegin(); it != mGamelistViews.cend(); ++it) {
+        if (it->second == mCurrentView)
+            gamelistRenderFunc(it);
     }
 
     if (mWindow->peekGui() == this)
@@ -1364,10 +1376,10 @@ void ViewController::reloadAll()
     }
 
     // Update mCurrentView since the pointers changed.
-    if (mState.viewing == GAMELIST) {
+    if (mState.viewing == ViewMode::GAMELIST) {
         mCurrentView = getGamelistView(mState.getSystem());
     }
-    else if (mState.viewing == SYSTEM_SELECT) {
+    else if (mState.viewing == ViewMode::SYSTEM_SELECT) {
         SystemData* system {mState.getSystem()};
         mSystemListView->goToSystem(system, false);
         mCurrentView = mSystemListView;

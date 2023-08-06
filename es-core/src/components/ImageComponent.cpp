@@ -503,6 +503,22 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (properties & ThemeFlags::POSITION && elem->has("stationary")) {
+        const std::string& stationary {elem->get<std::string>("stationary")};
+        if (stationary == "never")
+            mStationary = Stationary::NEVER;
+        else if (stationary == "always")
+            mStationary = Stationary::ALWAYS;
+        else if (stationary == "withinView")
+            mStationary = Stationary::WITHIN_VIEW;
+        else if (stationary == "betweenViews")
+            mStationary = Stationary::BETWEEN_VIEWS;
+        else
+            LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
+                               "\"stationary\" for element \""
+                            << element.substr(6) << "\" defined as \"" << stationary << "\"";
+    }
+
     if (elem->has("interpolation")) {
         const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {

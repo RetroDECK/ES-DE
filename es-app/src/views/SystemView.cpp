@@ -1395,11 +1395,37 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
     int renderBefore {static_cast<int>(mCamOffset)};
     int renderAfter {static_cast<int>(mCamOffset)};
 
-    // If we're transitioning then also render the previous and next systems.
-    if (isAnimationPlaying(0)) {
+    const ViewController::State viewState {ViewController::getInstance()->getState()};
+
+    // If we're transitioning between systems, then also render the previous and next systems.
+    if (isAnimationPlaying(0) && viewState.viewing == ViewController::ViewMode::SYSTEM_SELECT) {
         renderBefore -= 1;
         renderAfter += 1;
     }
+
+    bool stationaryApplicable {false};
+
+    // If it's the startup animation, then don't apply stationary properties.
+    if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
+        stationaryApplicable = false;
+
+    // If it's a system to system transition and these animations are set to slide.
+    if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+            "TransitionsSystemToSystem")) == ViewTransitionAnimation::SLIDE &&
+        isAnimationPlaying(0))
+        stationaryApplicable = true;
+
+    // If it's a system to gamelist transition and these animations are set to slide.
+    if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+            "TransitionsSystemToGamelist")) == ViewTransitionAnimation::SLIDE &&
+        viewState.viewing == ViewController::ViewMode::GAMELIST)
+        stationaryApplicable = true;
+
+    // If it's a gamelist to system transition and these animations are set to slide.
+    if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+            "TransitionsGamelistToSystem")) == ViewTransitionAnimation::SLIDE &&
+        viewState.previouslyViewed == ViewController::ViewMode::GAMELIST)
+        stationaryApplicable = true;
 
     for (int i {renderBefore}; i <= renderAfter; ++i) {
         int index {i};
@@ -1432,13 +1458,46 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     elementTrans, glm::round(glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f}));
             }
 
-            mRenderer->pushClipRect(
-                glm::ivec2 {static_cast<int>(glm::round(elementTrans[3].x)),
-                            static_cast<int>(glm::round(elementTrans[3].y))},
-                glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
+            auto clipRectFunc = [this, elementTrans]() {
+                mRenderer->pushClipRect(
+                    glm::ivec2 {static_cast<int>(glm::round(elementTrans[3].x)),
+                                static_cast<int>(glm::round(elementTrans[3].y))},
+                    glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
+            };
+
+            clipRectFunc();
 
             if (mSystemElements.size() > static_cast<size_t>(index)) {
                 for (auto child : mSystemElements[index].children) {
+                    bool renderChild {true};
+                    bool childStationary {false};
+                    if (stationaryApplicable) {
+                        if (child->getStationary() == Stationary::NEVER) {
+                            childStationary = false;
+                        }
+                        else if ((child->getStationary() == Stationary::WITHIN_VIEW ||
+                                  child->getStationary() == Stationary::ALWAYS) &&
+                                 isAnimationPlaying(0)) {
+                            childStationary = true;
+                            if (index != static_cast<int>(std::round(mCamOffset))) {
+                                if (mCamOffset <= mSystemElements.size() - 1)
+                                    renderChild = false;
+                                if (mCamOffset > static_cast<float>(mSystemElements.size() - 1) &&
+                                    index != 0)
+                                    renderChild = false;
+                                if (mCamOffset <
+                                        static_cast<float>(mSystemElements.size()) - 0.5f &&
+                                    index == 0)
+                                    renderChild = false;
+                            }
+                        }
+                        else if ((child->getStationary() == Stationary::BETWEEN_VIEWS ||
+                                  child->getStationary() == Stationary::ALWAYS) &&
+                                 !isAnimationPlaying(0)) {
+                            childStationary = true;
+                        }
+                    }
+
                     if (abovePrimary && (child->getZIndex() > primaryZIndex)) {
                         if (mFadeTransitions && mPrimary->getFadeAbovePrimary()) {
                             if (mFadeTransitions || child->getOpacity() != 1.0f)
@@ -1447,13 +1506,30 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         else {
                             child->setOpacity(1.0f);
                         }
-                        child->render(elementTrans);
+                        if (renderChild) {
+                            if (childStationary) {
+                                mRenderer->popClipRect();
+                                child->render(mRenderer->getIdentity());
+                                clipRectFunc();
+                            }
+                            else {
+                                child->render(elementTrans);
+                            }
+                        }
                     }
-
                     else if (!abovePrimary && child->getZIndex() <= primaryZIndex) {
                         if (mFadeTransitions || child->getDimming() != 1.0f)
                             child->setDimming(1.0f - mFadeOpacity);
-                        child->render(elementTrans);
+                        if (renderChild) {
+                            if (childStationary) {
+                                mRenderer->popClipRect();
+                                child->render(mRenderer->getIdentity());
+                                clipRectFunc();
+                            }
+                            else {
+                                child->render(elementTrans);
+                            }
+                        }
                     }
                 }
             }

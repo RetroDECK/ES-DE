@@ -177,7 +177,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                      mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
                      mCursorStack.empty() &&
                      ViewController::getInstance()->getState().viewing ==
-                         ViewController::GAMELIST) {
+                         ViewController::ViewMode::GAMELIST) {
                 NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 // Jump to the randomly selected game.
                 if (mRandomGame) {
@@ -233,7 +233,8 @@ bool GamelistBase::input(InputConfig* config, Input input)
         else if (config->isMappedTo("y", input) &&
                  mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
                  !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
-                 ViewController::getInstance()->getState().viewing == ViewController::GAMELIST) {
+                 ViewController::getInstance()->getState().viewing ==
+                     ViewController::ViewMode::GAMELIST) {
             // Jump to the randomly selected game.
             if (mRandomGame) {
                 NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);

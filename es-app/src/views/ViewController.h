@@ -98,19 +98,19 @@ public:
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
 
-    enum ViewMode {
+    enum class ViewMode {
         NOTHING,
-        START_SCREEN,
         SYSTEM_SELECT,
         GAMELIST
     };
 
     struct State {
         ViewMode viewing;
+        ViewMode previouslyViewed;
 
         SystemData* getSystem() const
         {
-            assert(viewing == GAMELIST || viewing == SYSTEM_SELECT);
+            assert(viewing == ViewMode::GAMELIST || viewing == ViewMode::SYSTEM_SELECT);
             return system;
         }
 
