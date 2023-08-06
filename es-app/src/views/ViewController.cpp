@@ -1173,7 +1173,7 @@ void ViewController::render(const glm::mat4& parentTrans)
     if (mSystemListView == mCurrentView || (mSystemViewTransition && isCameraMoving()))
         getSystemListView()->render(trans);
 
-    auto gamelistRenderFunc = [this, trans, viewStart, viewEnd](auto it) {
+    auto gamelistRenderFunc = [trans, viewStart, viewEnd](auto it) {
         const glm::vec3 guiStart {it->second->getPosition()};
         const glm::vec3 guiEnd {it->second->getPosition() +
                                 glm::vec3 {it->second->getSize().x, it->second->getSize().y, 0.0f}};
