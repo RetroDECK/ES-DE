@@ -1859,6 +1859,13 @@ Properties:
     - Point around which the image will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `flipHorizontal` - type: BOOLEAN
     - Flips the image texture horizontally.
     - Default is `false`
@@ -1970,6 +1977,13 @@ Properties:
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `path` - type: PATH
     - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored.
 * `default` - type: PATH
@@ -2087,6 +2101,13 @@ Properties:
     - Point around which the animation will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define animation elements that should be treated as if they were game media files. This is for example useful for hiding and fading out animations that are used as indicators for the various metadata types like genre, publisher, players etc.
     - Default is `false`
@@ -2166,6 +2187,13 @@ Properties:
     - Point around which the image will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`.
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `horizontalAlignment` - type: STRING.
     - Valid values are `left`, `center` or `right`
 * `direction` - type: STRING
@@ -2325,6 +2353,13 @@ Properties:
     - Point around which the text will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `text` - type: STRING
     - A string literal to display.
 * `systemdata` - type: STRING
@@ -2466,6 +2501,13 @@ Properties:
     - Point around which the text will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`.
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `metadata` - type: STRING
     - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" or "never" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per datetime element.
     - Valid values:
@@ -2553,6 +2595,13 @@ Properties:
     - Point around which the element will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
@@ -2610,6 +2659,13 @@ Properties:
     - Point around which the rating will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
 * `gameselectorEntry` - type: UNSIGNED_INTEGER

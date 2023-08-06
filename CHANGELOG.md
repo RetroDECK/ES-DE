@@ -17,6 +17,7 @@
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
+* Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
 * (Linux) Added support for using the RetroArch AppImage release in portable mode (added corepath find rules)
 * (Linux) Added support for the AppImage release of Snes9x
 * Changed the "no games" dialog to no longer save the ROM directory to es_settings.xml if its value hasn't changed
@@ -30,19 +31,27 @@
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Removed the es_log.txt entry when an es_systems.cfg legacy systems configuration file was found on startup
 * Improved menu system font rendering on GPUs without proper texture filtering support
+* Added a "stationary" property to all secondary elements to set them as stationary during slide transitions
 * Added theme support for the "manual" metadata type for the text element
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Added support to MathUtil::md5Hash() for streaming files in chunks
 * Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
+* Added a lot more debug log output to the scraper
 * (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
 * (Windows) Improved the README.txt file for the portable release
 * (macOS) Changed the minimum required OS version from 10.14 "Mojave" to 10.15 "Catalina"
 * (macOS) Completely removed support for the legacy OS build
+* Updated RapidJSON to commit a95e013b97ca6523f32da23f5095fcc9dd6067e5
+* Updated rlottie to commit f969abf62c8df773e3951a1176000e70fcde637f
 * Updated LunaSVG to 2.3.6
+* Updated CImg to 3.2.6
 
 ### Bug fixes
 
 * Directories interpreted as files entries could not be removed from custom collections
+* Duplicate ScreenScraper game entries could show up in the interactive scraper if multiple platforms were defined for the system
+* ScreenScraper API calls were slightly malformed for systems where multiple platforms were defined
+* If multiple games had the same thumbnail in the interactive scraper, then this image would not get downloaded for all entries
 * (Windows) If the ROMDirectory setting had a value then all custom collection files contained absolute paths instead of relative paths
 * (Windows) Wide string conversions were not done correctly which caused issues when filenames contained 4-byte Unicode characters
 * (Windows) Attempting to capitalize multi-byte Unicode strings crashed the application if built using the MSVC compiler
