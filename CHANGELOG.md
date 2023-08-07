@@ -27,11 +27,13 @@
 * Removed Linux DEB package support from ApplicationUpdater as these packages are no longer provided
 * Changed ComponentList to fixed row heights which fixed many alignment issues
 * Improved the layout for the scraper and theme downloader to look more consistent across different display aspect ratios
+* When an invalid media file is detected by the scraper, the media type is now included in the error message
 * Added a download percentage indicator to the application updater
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Removed the es_log.txt entry when an es_systems.cfg legacy systems configuration file was found on startup
 * Improved menu system font rendering on GPUs without proper texture filtering support
 * Added a "stationary" property to all secondary elements to set them as stationary during slide transitions
+* Added a "containerType" property to the text element to select between vertical and horizontal containers
 * Added theme support for the "manual" metadata type for the text element
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Added support to MathUtil::md5Hash() for streaming files in chunks
@@ -58,6 +60,7 @@
 * The camera offset in ComponentList was not correctly calculated when reaching the bottom of a list
 * The textlist properties selectedBackgroundColor and selectedSecondaryBackgroundColor were not offset by selectorVerticalOffset
 * SDL_StartTextInput() was sometimes set when not actually inputting any text
+* Some theme loading warning messages for the gamelistinfo element were not formatted correctly
 
 ## Version 2.1.1
 

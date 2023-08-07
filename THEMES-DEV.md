@@ -2420,9 +2420,15 @@ Properties:
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container.
     - Default is `true` if `metadata` is set to `description`, otherwise `false`
+* `containerType` - type: STRING
+    - If `container` has been set, then it's possible to select between a vertically or horizontally scrolling type using this property. If choosing the horizontal container then all line breaks in the text will be automatically converted to spaces.
+    - Valid values are `vertical` or `horizontal`
+    - Default is `vertical`
+    - This property can only be used when `container` is `true`
 * `containerVerticalSnap` - type: BOOLEAN
     - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
     - Default is `true`
+    - This property can only be used when `containerType` is `vertical`
 * `containerScrollSpeed` - type: FLOAT
     - A base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value.
     - Minimum value is `0.1` and maximum value is `10`
@@ -2430,11 +2436,12 @@ Properties:
 * `containerStartDelay` - type: FLOAT
     - Delay in seconds before scrolling starts. Note that the text fade-in animation that plays when resetting from the end position will cause a slight delay even if this property is set to zero.
     - Minimum value is `0` and maximum value is `10`
-    - Default is `4.5`
+    - Default is `4.5` for vertical containers and `1.5` for horizontal containers
 * `containerResetDelay` - type: FLOAT
     - Delay in seconds before resetting to the start position after reaching the scrolling end position.
     - Minimum value is `0` and maximum value is `20`
     - Default is `7`
+    - This property can only be used when `containerType` is `vertical`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
