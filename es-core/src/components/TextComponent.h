@@ -86,6 +86,18 @@ public:
         return (mTextCache == nullptr ? 0 : mTextCache->metrics.maxGlyphHeight);
     }
 
+    // Horizontal looping for single-line content that is too long to fit.
+    void setHorizontalLooping(bool state);
+
+    void resetLooping()
+    {
+        mLoopOffset1 = 0;
+        mLoopOffset2 = 0;
+        mLoopTime = 0;
+    }
+
+    void update(int deltaTime) override;
+
 protected:
     virtual void onTextChanged();
 
@@ -131,6 +143,15 @@ private:
     bool mNoTopMargin;
     bool mSelectable;
     bool mVerticalAutoSizing;
+
+    bool mLoopHorizontal;
+    bool mLoopScroll;
+    float mLoopSpeed;
+    float mLoopSpeedMultiplier;
+    float mLoopDelay;
+    int mLoopOffset1;
+    int mLoopOffset2;
+    int mLoopTime;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_COMPONENT_H

@@ -379,6 +379,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"gameselector", STRING},
        {"gameselectorEntry", UNSIGNED_INTEGER},
        {"container", BOOLEAN},
+       {"containerType", STRING},
        {"containerVerticalSnap", BOOLEAN},
        {"containerScrollSpeed", FLOAT},
        {"containerStartDelay", FLOAT},

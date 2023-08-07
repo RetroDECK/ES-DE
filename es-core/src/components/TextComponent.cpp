@@ -10,6 +10,7 @@
 
 #include "Log.h"
 #include "Settings.h"
+#include "Window.h"
 #include "utils/StringUtil.h"
 
 TextComponent::TextComponent()
@@ -32,6 +33,14 @@ TextComponent::TextComponent()
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
+    , mLoopHorizontal {false}
+    , mLoopScroll {false}
+    , mLoopSpeed {0.0f}
+    , mLoopSpeedMultiplier {1.0f}
+    , mLoopDelay {1500.0f}
+    , mLoopOffset1 {0}
+    , mLoopOffset2 {0}
+    , mLoopTime {0}
 {
 }
 
@@ -62,6 +71,14 @@ TextComponent::TextComponent(const std::string& text,
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
+    , mLoopHorizontal {false}
+    , mLoopScroll {false}
+    , mLoopSpeed {0.0f}
+    , mLoopSpeedMultiplier {1.0f}
+    , mLoopDelay {1500.0f}
+    , mLoopOffset1 {0}
+    , mLoopOffset2 {0}
+    , mLoopTime {0}
 {
     setFont(font);
     setColor(color);
@@ -176,75 +193,124 @@ void TextComponent::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
     mRenderer->setMatrix(trans);
 
-    if (mRenderBackground)
-        mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
-                            mOpacity * mThemeOpacity, mDimming);
-
-    if (mTextCache) {
-        const glm::vec2& textSize {mTextCache->metrics.size};
-        float yOff {0.0f};
-
-        if (mSize.y > textSize.y) {
-            switch (mVerticalAlignment) {
-                case ALIGN_TOP: {
-                    yOff = 0.0f;
-                    break;
-                }
-                case ALIGN_BOTTOM: {
-                    yOff = mSize.y - textSize.y;
-                    break;
-                }
-                case ALIGN_CENTER: {
-                    yOff = (mSize.y - textSize.y) / 2.0f;
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
-        else {
-            // If height is smaller than the font height, then always center vertically.
-            yOff = (mSize.y - textSize.y) / 2.0f;
-        }
-
-        // Draw the overall textbox area. If we're inside a scrollable container then this
-        // area is rendered inside that component instead of here.
-        if (Settings::getInstance()->getBool("DebugText")) {
-            if (!mParent || !mParent->isScrollable())
-                mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
-        }
-
-        trans = glm::translate(trans, glm::vec3 {0.0f, yOff, 0.0f});
-        mRenderer->setMatrix(trans);
-
-        // Draw the text area, where the text actually is located.
-        if (Settings::getInstance()->getBool("DebugText")) {
-            switch (mHorizontalAlignment) {
-                case ALIGN_LEFT: {
-                    mRenderer->drawRect(0.0f, 0.0f, mTextCache->metrics.size.x,
-                                        mTextCache->metrics.size.y, 0x00000033, 0x00000033);
-                    break;
-                }
-                case ALIGN_CENTER: {
-                    mRenderer->drawRect((mSize.x - mTextCache->metrics.size.x) / 2.0f, 0.0f,
-                                        mTextCache->metrics.size.x, mTextCache->metrics.size.y,
-                                        0x00000033, 0x00000033);
-                    break;
-                }
-                case ALIGN_RIGHT: {
-                    mRenderer->drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f,
-                                        mTextCache->metrics.size.x, mTextCache->metrics.size.y,
-                                        0x00000033, 0x00000033);
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
-        mFont->renderTextCache(mTextCache.get());
+    // Draw the overall textbox area. If we're inside a vertical scrollable container then
+    // this area is rendered inside that component instead of here.
+    if (Settings::getInstance()->getBool("DebugText")) {
+        if (!mParent || !mParent->isScrollable())
+            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
     }
+
+    if (mLoopHorizontal && mTextCache != nullptr) {
+        // Clip everything to be inside our bounds.
+        glm::vec3 dim {mSize.x, mSize.y, 0.0f};
+        dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
+        dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
+
+        const int clipRectPosX {static_cast<int>(std::round(trans[3].x))};
+        const int clipRectPosY {static_cast<int>(std::round(trans[3].y))};
+        const int clipRectSizeX {static_cast<int>(std::round(dim.x))};
+        const int clipRectSizeY {static_cast<int>(std::round(dim.y) + 1.0f)};
+
+        mRenderer->pushClipRect(glm::ivec2 {clipRectPosX, clipRectPosY},
+                                glm::ivec2 {clipRectSizeX, clipRectSizeY});
+
+        float offsetX {0.0f};
+
+        if (mTextCache->metrics.size.x < mSize.x) {
+            if (mHorizontalAlignment == Alignment::ALIGN_CENTER)
+                offsetX = static_cast<float>((mSize.x - mTextCache->metrics.size.x) / 2.0f);
+            else if (mHorizontalAlignment == Alignment::ALIGN_RIGHT)
+                offsetX = mSize.x - mTextCache->metrics.size.x;
+        }
+
+        trans = glm::translate(trans,
+                               glm::vec3 {offsetX - static_cast<float>(mLoopOffset1), 0.0f, 0.0f});
+    }
+
+    auto renderFunc = [this](glm::mat4 trans) {
+        if (mRenderBackground)
+            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
+                                mOpacity * mThemeOpacity, mDimming);
+        if (mTextCache) {
+            const glm::vec2& textSize {mTextCache->metrics.size};
+            float yOff {0.0f};
+
+            if (mSize.y > textSize.y) {
+                switch (mVerticalAlignment) {
+                    case ALIGN_TOP: {
+                        yOff = 0.0f;
+                        break;
+                    }
+                    case ALIGN_BOTTOM: {
+                        yOff = mSize.y - textSize.y;
+                        break;
+                    }
+                    case ALIGN_CENTER: {
+                        yOff = (mSize.y - textSize.y) / 2.0f;
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+            }
+            else {
+                // If height is smaller than the font height, then always center vertically.
+                yOff = (mSize.y - textSize.y) / 2.0f;
+            }
+
+            trans = glm::translate(trans, glm::vec3 {0.0f, yOff, 0.0f});
+            mRenderer->setMatrix(trans);
+
+            // Draw the text area, where the text is actually located.
+            if (Settings::getInstance()->getBool("DebugText")) {
+                switch (mHorizontalAlignment) {
+                    case ALIGN_LEFT: {
+                        mRenderer->drawRect(0.0f, 0.0f, mTextCache->metrics.size.x,
+                                            mTextCache->metrics.size.y, 0x00000033, 0x00000033);
+                        break;
+                    }
+                    case ALIGN_CENTER: {
+                        mRenderer->drawRect(
+                            mLoopHorizontal ? 0.0f : (mSize.x - mTextCache->metrics.size.x) / 2.0f,
+                            0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
+                            0x00000033, 0x00000033);
+                        break;
+                    }
+                    case ALIGN_RIGHT: {
+                        mRenderer->drawRect(mLoopHorizontal ? 0.0f :
+                                                              mSize.x - mTextCache->metrics.size.x,
+                                            0.0f, mTextCache->metrics.size.x,
+                                            mTextCache->metrics.size.y, 0x00000033, 0x00000033);
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+            }
+            mFont->renderTextCache(mTextCache.get());
+        }
+    };
+
+    renderFunc(trans);
+
+    if (mLoopHorizontal && mTextCache != nullptr && mTextCache->metrics.size.x > mSize.x) {
+        // Needed to avoid flickering when returning to the start position.
+        if (mLoopOffset1 == 0 && mLoopOffset2 == 0)
+            mLoopScroll = false;
+        // Render again if text has moved far enough for it to repeat.
+        if (mLoopOffset2 < 0 || (mLoopDelay != 0.0f && mLoopScroll)) {
+            mLoopScroll = true;
+            trans = glm::translate(parentTrans * getTransform(),
+                                   glm::vec3 {static_cast<float>(-mLoopOffset2), 0.0f, 0.0f});
+            mRenderer->setMatrix(trans);
+            renderFunc(trans);
+        }
+    }
+
+    if (mLoopHorizontal && mTextCache != nullptr)
+        mRenderer->popClipRect();
 }
 
 void TextComponent::setValue(const std::string& value)
@@ -254,8 +320,62 @@ void TextComponent::setValue(const std::string& value)
          mThemeMetadata == "genre" || mThemeMetadata == "players")) {
         setText(mDefaultValue);
     }
+    else if (mLoopHorizontal) {
+        setText(Utils::String::replace(value, "\n", ""));
+    }
     else {
         setText(value);
+    }
+}
+
+void TextComponent::setHorizontalLooping(bool state)
+{
+    resetLooping();
+    mLoopHorizontal = state;
+
+    if (mLoopHorizontal)
+        mLoopSpeed =
+            mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f * mLoopSpeedMultiplier;
+}
+
+void TextComponent::update(int deltaTime)
+{
+    if (mLoopHorizontal && mTextCache != nullptr) {
+        // Don't scroll if the media viewer or screensaver is active or if text scrolling
+        // is disabled;
+        if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
+            !mWindow->getAllowTextScrolling()) {
+            if (mLoopTime != 0 && !mWindow->isLaunchScreenDisplayed())
+                resetLooping();
+            return;
+        }
+
+        assert(mLoopSpeed != 0.0f);
+
+        mLoopOffset1 = 0;
+        mLoopOffset2 = 0;
+
+        if (mTextCache->metrics.size.x > mSize.x) {
+            // Loop the text.
+            const float scrollLength {mTextCache->metrics.size.x};
+            const float returnLength {mLoopSpeed * 1.5f / mLoopSpeedMultiplier};
+            const float scrollTime {(scrollLength * 1000.0f) / mLoopSpeed};
+            const float returnTime {(returnLength * 1000.0f) / mLoopSpeed};
+            const int maxTime {static_cast<int>(mLoopDelay + scrollTime + returnTime)};
+
+            mLoopTime += deltaTime;
+            while (mLoopTime > maxTime)
+                mLoopTime -= maxTime;
+
+            mLoopOffset1 = static_cast<int>(Utils::Math::loop(mLoopDelay, scrollTime + returnTime,
+                                                              static_cast<float>(mLoopTime),
+                                                              scrollLength + returnLength));
+
+            if (mLoopOffset1 > (scrollLength - (mSize.x - returnLength)))
+                mLoopOffset2 = static_cast<int>(mLoopOffset1 - (scrollLength + returnLength));
+            else if (mLoopOffset2 < 0)
+                mLoopOffset2 = 0;
+        }
     }
 }
 
@@ -298,7 +418,10 @@ void TextComponent::onTextChanged()
 
     const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
 
-    if (isMultiline && !isScrollable) {
+    if (mLoopHorizontal) {
+        mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(text, 0.0f, 0.0f, mColor));
+    }
+    else if (isMultiline && !isScrollable) {
         const std::string wrappedText {
             font->wrapText(text, mSize.x, (mVerticalAutoSizing ? 0.0f : mSize.y - lineHeight),
                            mLineSpacing, isMultiline)};
@@ -436,6 +559,28 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << "\" defined as \"" << verticalAlignment << "\"";
     }
 
+    if (elem->has("container") && elem->get<bool>("container")) {
+        if (elem->has("containerType")) {
+            const std::string& containerType {elem->get<std::string>("containerType")};
+            if (containerType == "horizontal") {
+                if (elem->has("containerScrollSpeed")) {
+                    mLoopSpeedMultiplier =
+                        glm::clamp(elem->get<float>("containerScrollSpeed"), 0.1f, 10.0f);
+                }
+                if (elem->has("containerStartDelay")) {
+                    mLoopDelay =
+                        glm::clamp(elem->get<float>("containerStartDelay"), 0.0f, 10.0f) * 1000.0f;
+                }
+                mLoopHorizontal = true;
+            }
+            else if (containerType != "vertical") {
+                LOG(LogError) << "TextComponent: Invalid theme configuration, property "
+                                 "\"containerType\" for element \""
+                              << element.substr(5) << "\" defined as \"" << containerType << "\"";
+            }
+        }
+    }
+
     if (properties & TEXT && elem->has("text"))
         setText(elem->get<std::string>("text"));
 
@@ -546,4 +691,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
     setFont(Font::getFromTheme(elem, properties, mFont, maxHeight, false));
+
+    // We need to do this after setting the font as the loop speed is calculated from its size.
+    if (mLoopHorizontal)
+        setHorizontalLooping(true);
 }

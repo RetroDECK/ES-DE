@@ -36,7 +36,7 @@ Font::Font(float size, const std::string& path, const bool linearMagnify)
         initLibrary();
 
     // Always initialize ASCII characters.
-    for (unsigned int i = 32; i < 127; ++i)
+    for (unsigned int i {32}; i < 127; ++i)
         getGlyph(i);
 
     clearFaceCache();
@@ -110,7 +110,7 @@ int Font::loadGlyphs(const std::string& text)
 {
     mMaxGlyphHeight = static_cast<int>(std::round(mFontSize));
 
-    for (size_t i = 0; i < text.length();) {
+    for (size_t i {0}; i < text.length();) {
         unsigned int character {Utils::String::chars2Unicode(text, i)}; // Advances i.
         Glyph* glyph {getGlyph(character)};
 
@@ -207,7 +207,7 @@ TextCache* Font::buildTextCache(const std::string& text,
                        color};
 
         // Round vertices.
-        for (int i = 1; i < 5; ++i)
+        for (int i {1}; i < 5; ++i)
             vertices[i].position = glm::round(vertices[i].position);
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
@@ -692,7 +692,7 @@ FT_Face Font::getFaceForChar(unsigned int id)
     static const std::vector<std::string> fallbackFonts {getFallbackFontPaths()};
 
     // Look for the glyph in our current font and then in the fallback fonts if needed.
-    for (unsigned int i = 0; i < fallbackFonts.size() + 1; ++i) {
+    for (unsigned int i {0}; i < fallbackFonts.size() + 1; ++i) {
         auto fit = mFaceCache.find(i);
 
         if (fit == mFaceCache.cend()) {

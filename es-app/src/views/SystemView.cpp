@@ -69,6 +69,9 @@ void SystemView::goToSystem(SystemData* system, bool animate)
             selector->setNeedsRefresh();
     }
 
+    for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
+        text->resetLooping();
+
     for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
         video->setStaticVideo();
 
@@ -135,6 +138,9 @@ bool SystemView::input(InputConfig* config, Input input)
 void SystemView::update(int deltaTime)
 {
     mPrimary->update(deltaTime);
+
+    for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
+        text->update(deltaTime);
 
     for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents) {
         if (!isScrolling())
@@ -217,6 +223,9 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 
 void SystemView::onCursorChanged(const CursorState& state)
 {
+    for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
+        text->resetLooping();
+
     const int cursor {mPrimary->getCursor()};
     const int scrollVelocity {mPrimary->getScrollingVelocity()};
     const ViewTransitionAnimation transitionAnim {static_cast<ViewTransitionAnimation>(
@@ -591,6 +600,9 @@ void SystemView::populate()
                     bool container {false};
                     if (element.second.has("container")) {
                         container = element.second.get<bool>("container");
+                        if (element.second.has("containerType") &&
+                            element.second.get<std::string>("containerType") == "horizontal")
+                            container = false;
                     }
                     else if (element.second.has("metadata") &&
                              element.second.get<std::string>("metadata") == "description") {

@@ -270,6 +270,9 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 bool container {false};
                 if (element.second.has("container")) {
                     container = element.second.get<bool>("container");
+                    if (element.second.has("containerType") &&
+                        element.second.get<std::string>("containerType") == "horizontal")
+                        container = false;
                 }
                 else if (element.second.has("metadata") &&
                          element.second.get<std::string>("metadata") == "description") {
@@ -793,6 +796,9 @@ void GamelistView::updateView(const CursorState& state)
 
         for (auto& container : mContainerComponents)
             container->reset();
+
+        for (auto& scrollableText : mTextComponents)
+            scrollableText->resetLooping();
 
         for (auto& rating : mRatingComponents)
             rating->setValue(file->metadata.get("rating"));
