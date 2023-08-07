@@ -388,7 +388,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
                                "\"stationary\" for element \""
-                            << element.substr(5) << "\" defined as \"" << stationary << "\"";
+                            << element.substr(elementType == "gamelistinfo" ? 13 : 5)
+                            << "\" defined as \"" << stationary << "\"";
     }
 
     if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))
@@ -415,8 +416,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
                                "\"horizontalAlignment\" for element \""
-                            << element.substr(5) << "\" defined as \"" << horizontalAlignment
-                            << "\"";
+                            << element.substr(elementType == "gamelistinfo" ? 13 : 5)
+                            << "\" defined as \"" << horizontalAlignment << "\"";
     }
 
     if (properties & ALIGNMENT && elem->has("verticalAlignment")) {
@@ -431,7 +432,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
                                "\"verticalAlignment\" for element \""
-                            << element.substr(5) << "\" defined as \"" << verticalAlignment << "\"";
+                            << element.substr(elementType == "gamelistinfo" ? 13 : 5)
+                            << "\" defined as \"" << verticalAlignment << "\"";
     }
 
     if (properties & TEXT && elem->has("text"))
