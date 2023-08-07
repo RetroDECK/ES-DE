@@ -321,7 +321,7 @@ void TextComponent::setValue(const std::string& value)
         setText(mDefaultValue);
     }
     else if (mLoopHorizontal) {
-        setText(Utils::String::replace(value, "\n", ""));
+        setText(Utils::String::replace(value, "\n", " "));
     }
     else {
         setText(value);
