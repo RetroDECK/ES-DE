@@ -308,7 +308,6 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         // If the image is cached already as the thumbnail, then we don't need
         // to download it again, in this case just save it to disk and resize it.
         if (mResult.thumbnailImageUrl == it->fileURL && mResult.thumbnailImageData.size() > 0) {
-
             // This is just a temporary workaround to avoid saving media files to disk that
             // are actually just containing error messages from the scraper service. The
             // proper solution is to implement file checksum checks to determine if the
@@ -557,7 +556,7 @@ void MediaDownloadHandle::update()
         }
 
         if (imageFormat == FIF_UNKNOWN) {
-            setError("The file \"" + Utils::FileSystem::getFileName(mSavePath) +
+            setError("The " + mMediaType + " file \"" + Utils::FileSystem::getFileName(mSavePath) +
                          "\" returned by the scraper seems to be invalid as it's less than " +
                          "350 bytes in size",
                      true);
