@@ -99,7 +99,7 @@ public:
         }
     }
 
-    void setHorizontalScrolling(bool state)
+    void setHorizontalScrolling(bool state) override
     {
         for (auto& entry : mEntries) {
             for (auto& element : entry.data.elements)

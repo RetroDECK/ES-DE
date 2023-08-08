@@ -92,7 +92,7 @@ public:
     void setHorizontalScrollingSpeedMultiplier(float speed) { mScrollSpeedMultiplier = speed; }
     void setHorizontalScrollingDelay(float delay) { mScrollDelay = delay; }
 
-    void resetComponent()
+    void resetComponent() override
     {
         mScrollOffset1 = 0;
         mScrollOffset2 = 0;
