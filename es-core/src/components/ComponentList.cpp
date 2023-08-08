@@ -36,12 +36,11 @@ ComponentList::ComponentList()
 
 void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
 {
-    IList<ComponentListRow, void*>::Entry e;
-    e.name = "";
-    e.object = nullptr;
-    e.data = row;
+    IList<ComponentListRow, void*>::Entry entry;
+    entry.object = nullptr;
+    entry.data = row;
 
-    this->add(e);
+    this->add(entry);
 
     for (auto it = mEntries.back().data.elements.cbegin();
          it != mEntries.back().data.elements.cend(); ++it)
@@ -170,7 +169,6 @@ void ComponentList::onCursorChanged(const CursorState& state)
     mSetupCompleted = true;
 
     // Update the selector bar position.
-    // In the future this might be animated.
     mSelectorBarOffset = 0;
     for (int i {0}; i < mCursor; ++i)
         mSelectorBarOffset += mRowHeight;
@@ -359,7 +357,7 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
     for (auto it = mEntries.cbegin(); it != mEntries.cend() && &it->data != &row; ++it)
         yOffset += mRowHeight;
 
-    // Assumes updateElementSize has already been called.
+    // Assume updateElementSize has already been called.
     float offsetX {mHorizontalPadding / 2.0f};
 
     for (unsigned int i {0}; i < row.elements.size(); ++i) {
