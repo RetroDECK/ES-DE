@@ -12,41 +12,41 @@
 #include "IList.h"
 
 struct ComponentListElement {
-    ComponentListElement(const std::shared_ptr<GuiComponent>& cmp = nullptr,
-                         bool resize_w = true,
-                         bool inv = true)
-        : component(cmp)
-        , resize_width(resize_w)
-        , invert_when_selected(inv)
+    ComponentListElement(const std::shared_ptr<GuiComponent>& componentArg = nullptr,
+                         bool resizeWidthArg = true,
+                         bool invertWhenSelectedArg = true)
+        : component {componentArg}
+        , resizeWidth {resizeWidthArg}
+        , invertWhenSelected {invertWhenSelectedArg}
     {
     }
 
     std::shared_ptr<GuiComponent> component;
-    bool resize_width;
-    bool invert_when_selected;
+    bool resizeWidth;
+    bool invertWhenSelected;
 };
 
 struct ComponentListRow {
     std::vector<ComponentListElement> elements;
 
     // The input handler is called when the user enters any input while this row is
-    // highlighted (including up/down).
+    // highlighted (including up/down navigation).
     // Return false to let the list try to use it or true if the input has been consumed.
-    // If no input handler is supplied (input_handler == nullptr), the default behavior is
-    // to forward the input to the rightmost element in the currently selected row.
-    std::function<bool(InputConfig*, Input)> input_handler;
+    // If no input handler is supplied (inputHandler == nullptr), then the default behavior
+    // is to forward the input to the rightmost element in the currently selected row.
+    std::function<bool(InputConfig*, Input)> inputHandler;
 
     void addElement(const std::shared_ptr<GuiComponent>& component,
-                    bool resize_width,
-                    bool invert_when_selected = true)
+                    bool resizeWidth,
+                    bool invertWhenSelected = true)
     {
-        elements.push_back(ComponentListElement(component, resize_width, invert_when_selected));
+        elements.push_back(ComponentListElement(component, resizeWidth, invertWhenSelected));
     }
 
-    // Utility function for making an input handler for "when the users presses A on this, do func".
+    // Utility function for making an input handler for an input event.
     void makeAcceptInputHandler(const std::function<void()>& func)
     {
-        input_handler = [func](InputConfig* config, Input input) -> bool {
+        inputHandler = [func](InputConfig* config, Input input) -> bool {
             if (config->isMappedTo("a", input) && input.value != 0) {
                 func();
                 return true;
@@ -78,26 +78,33 @@ public:
 
     void onSizeChanged() override;
     void onFocusGained() override { mFocused = true; }
-    void onFocusLost() override { mFocused = false; }
+    void onFocusLost() override
+    {
+        mFocused = false;
+        resetSelectedRow();
+    }
 
-    bool moveCursor(int amt);
+    bool moveCursor(int amount);
     int getCursorId() const { return mCursor; }
 
     const float getRowHeight() const { return mRowHeight; }
     void setRowHeight(float height) { mRowHeight = height; }
     const float getTotalRowHeight() const { return mRowHeight * mEntries.size(); }
 
-    // Horizontal looping for row content that doesn't fit on-screen.
-    void setLoopRows(bool state)
+    void resetSelectedRow()
     {
-        stopLooping();
-        mLoopRows = state;
+        if (mEntries.size() > static_cast<size_t>(mCursor)) {
+            for (auto& comp : mEntries.at(mCursor).data.elements)
+                comp.component->resetComponent();
+        }
     }
-    void stopLooping()
+
+    void setHorizontalScrolling(bool state)
     {
-        mLoopOffset = 0;
-        mLoopOffset2 = 0;
-        mLoopTime = 0;
+        for (auto& entry : mEntries) {
+            for (auto& element : entry.data.elements)
+                element.component->setHorizontalScrolling(state);
+        }
     }
 
     void resetScrollIndicatorStatus()
@@ -139,12 +146,6 @@ private:
     float mHorizontalPadding;
     float mSelectorBarOffset;
     float mCameraOffset;
-
-    bool mLoopRows;
-    bool mLoopScroll;
-    int mLoopOffset;
-    int mLoopOffset2;
-    int mLoopTime;
 
     std::function<void(CursorState state)> mCursorChangedCallback;
     std::function<void(ScrollIndicator state, bool singleRowScroll)>

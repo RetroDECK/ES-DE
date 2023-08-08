@@ -34,7 +34,7 @@ public:
     void setScrollParameters(float autoScrollDelayConstant,
                              float autoScrollResetDelayConstant,
                              float autoScrollSpeedConstant) override;
-    void reset();
+    void resetComponent() override;
 
     void applyTheme(const std::shared_ptr<ThemeData>& theme,
                     const std::string& view,

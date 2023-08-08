@@ -350,7 +350,6 @@ void GuiScraperSearch::search(ScraperSearchParams& params)
     mAutomaticModeGameEntry = 0;
 
     mResultList->clear();
-    mResultList->setLoopRows(false);
     mScraperResults.clear();
     mMDRetrieveURLsHandle.reset();
     mThumbnailReqMap.clear();
@@ -409,9 +408,7 @@ void GuiScraperSearch::stop()
 void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
 {
     mResultList->clear();
-
     mScraperResults = results;
-    mResultList->setLoopRows(true);
 
     auto font = Font::get(FONT_SIZE_MEDIUM);
     unsigned int color {mMenuColorPrimary};
@@ -512,9 +509,10 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
                 gameName.append(" [").append(otherPlatforms).append("]");
 
             row.elements.clear();
-            row.addElement(
-                std::make_shared<TextComponent>(Utils::String::toUpper(gameName), font, color),
-                false);
+            auto gameEntry =
+                std::make_shared<TextComponent>(Utils::String::toUpper(gameName), font, color);
+            gameEntry->setHorizontalScrolling(true);
+            row.addElement(gameEntry, true);
             row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
             mResultList->addRow(row);
         }
@@ -602,7 +600,7 @@ void GuiScraperSearch::updateInfoPane()
 
         mResultName->setText(Utils::String::toUpper(res.mdl.get("name")));
         mResultDesc->setText(Utils::String::toUpper(res.mdl.get("desc")));
-        mDescContainer->reset();
+        mDescContainer->resetComponent();
 
         mResultThumbnail->setImage("");
         const std::string& thumb {res.screenshotUrl.empty() ? res.coverUrl : res.screenshotUrl};
@@ -670,7 +668,7 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
     if (config->isMappedTo("a", input) && input.value != 0) {
         if (mBlockAccept || mScraperResults.empty())
             return true;
-        mResultList->setLoopRows(false);
+        mResultList->setHorizontalScrolling(false);
     }
 
     // Check whether we should allow a refine of the game name.
@@ -691,7 +689,7 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
             allowRefine = true;
 
         if (allowRefine) {
-            mResultList->stopLooping();
+            mResultList->resetSelectedRow();
             openInputScreen(mLastSearch);
         }
     }

@@ -172,8 +172,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(ed, false, true);
 
                 // Pass input to the actual RatingComponent instead of the spacer.
-                row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
-                                              std::placeholders::_2);
+                row.inputHandler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
+                                             std::placeholders::_2);
                 break;
             }
             case MD_DATE: {
@@ -187,8 +187,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(ed, false);
 
                 // Pass input to the actual DateTimeEditComponent instead of the spacer.
-                row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
-                                              std::placeholders::_2);
+                row.inputHandler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
+                                             std::placeholders::_2);
                 break;
             }
             case MD_CONTROLLER: {

@@ -33,14 +33,13 @@ TextComponent::TextComponent()
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
-    , mLoopHorizontal {false}
-    , mLoopScroll {false}
-    , mLoopSpeed {0.0f}
-    , mLoopSpeedMultiplier {1.0f}
-    , mLoopDelay {1500.0f}
-    , mLoopOffset1 {0}
-    , mLoopOffset2 {0}
-    , mLoopTime {0}
+    , mHorizontalScrolling {false}
+    , mScrollSpeed {0.0f}
+    , mScrollSpeedMultiplier {1.0f}
+    , mScrollDelay {1500.0f}
+    , mScrollOffset1 {0.0f}
+    , mScrollOffset2 {0.0f}
+    , mScrollTime {0.0f}
 {
 }
 
@@ -71,14 +70,13 @@ TextComponent::TextComponent(const std::string& text,
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
-    , mLoopHorizontal {false}
-    , mLoopScroll {false}
-    , mLoopSpeed {0.0f}
-    , mLoopSpeedMultiplier {1.0f}
-    , mLoopDelay {1500.0f}
-    , mLoopOffset1 {0}
-    , mLoopOffset2 {0}
-    , mLoopTime {0}
+    , mHorizontalScrolling {false}
+    , mScrollSpeed {0.0f}
+    , mScrollSpeedMultiplier {1.0f}
+    , mScrollDelay {1500.0f}
+    , mScrollOffset1 {0.0f}
+    , mScrollOffset2 {0.0f}
+    , mScrollTime {0.0f}
 {
     setFont(font);
     setColor(color);
@@ -200,7 +198,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
             mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
     }
 
-    if (mLoopHorizontal && mTextCache != nullptr) {
+    if (mHorizontalScrolling && mTextCache != nullptr) {
         // Clip everything to be inside our bounds.
         glm::vec3 dim {mSize.x, mSize.y, 0.0f};
         dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
@@ -218,13 +216,12 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
         if (mTextCache->metrics.size.x < mSize.x) {
             if (mHorizontalAlignment == Alignment::ALIGN_CENTER)
-                offsetX = static_cast<float>((mSize.x - mTextCache->metrics.size.x) / 2.0f);
+                offsetX = (mSize.x - mTextCache->metrics.size.x) / 2.0f;
             else if (mHorizontalAlignment == Alignment::ALIGN_RIGHT)
                 offsetX = mSize.x - mTextCache->metrics.size.x;
         }
 
-        trans = glm::translate(trans,
-                               glm::vec3 {offsetX - static_cast<float>(mLoopOffset1), 0.0f, 0.0f});
+        trans = glm::translate(trans, glm::vec3 {offsetX - mScrollOffset1, 0.0f, 0.0f});
     }
 
     auto renderFunc = [this](glm::mat4 trans) {
@@ -271,17 +268,18 @@ void TextComponent::render(const glm::mat4& parentTrans)
                         break;
                     }
                     case ALIGN_CENTER: {
-                        mRenderer->drawRect(
-                            mLoopHorizontal ? 0.0f : (mSize.x - mTextCache->metrics.size.x) / 2.0f,
-                            0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
-                            0x00000033, 0x00000033);
+                        mRenderer->drawRect(mHorizontalScrolling ?
+                                                0.0f :
+                                                (mSize.x - mTextCache->metrics.size.x) / 2.0f,
+                                            0.0f, mTextCache->metrics.size.x,
+                                            mTextCache->metrics.size.y, 0x00000033, 0x00000033);
                         break;
                     }
                     case ALIGN_RIGHT: {
-                        mRenderer->drawRect(mLoopHorizontal ? 0.0f :
-                                                              mSize.x - mTextCache->metrics.size.x,
-                                            0.0f, mTextCache->metrics.size.x,
-                                            mTextCache->metrics.size.y, 0x00000033, 0x00000033);
+                        mRenderer->drawRect(
+                            mHorizontalScrolling ? 0.0f : mSize.x - mTextCache->metrics.size.x,
+                            0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
+                            0x00000033, 0x00000033);
                         break;
                     }
                     default: {
@@ -295,21 +293,15 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
     renderFunc(trans);
 
-    if (mLoopHorizontal && mTextCache != nullptr && mTextCache->metrics.size.x > mSize.x) {
-        // Needed to avoid flickering when returning to the start position.
-        if (mLoopOffset1 == 0 && mLoopOffset2 == 0)
-            mLoopScroll = false;
-        // Render again if text has moved far enough for it to repeat.
-        if (mLoopOffset2 < 0 || (mLoopDelay != 0.0f && mLoopScroll)) {
-            mLoopScroll = true;
+    if (mHorizontalScrolling && mTextCache != nullptr && mTextCache->metrics.size.x > mSize.x) {
+        if (mScrollOffset2 < 0.0f) {
             trans = glm::translate(parentTrans * getTransform(),
-                                   glm::vec3 {static_cast<float>(-mLoopOffset2), 0.0f, 0.0f});
-            mRenderer->setMatrix(trans);
+                                   glm::vec3 {-mScrollOffset2, 0.0f, 0.0f});
             renderFunc(trans);
         }
     }
 
-    if (mLoopHorizontal && mTextCache != nullptr)
+    if (mHorizontalScrolling && mTextCache != nullptr)
         mRenderer->popClipRect();
 }
 
@@ -320,7 +312,7 @@ void TextComponent::setValue(const std::string& value)
          mThemeMetadata == "genre" || mThemeMetadata == "players")) {
         setText(mDefaultValue);
     }
-    else if (mLoopHorizontal) {
+    else if (mHorizontalScrolling) {
         setText(Utils::String::replace(value, "\n", " "));
     }
     else {
@@ -328,53 +320,52 @@ void TextComponent::setValue(const std::string& value)
     }
 }
 
-void TextComponent::setHorizontalLooping(bool state)
+void TextComponent::setHorizontalScrolling(bool state)
 {
-    resetLooping();
-    mLoopHorizontal = state;
+    resetComponent();
+    mHorizontalScrolling = state;
 
-    if (mLoopHorizontal)
-        mLoopSpeed =
-            mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f * mLoopSpeedMultiplier;
+    if (mHorizontalScrolling)
+        mScrollSpeed =
+            mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f * mScrollSpeedMultiplier;
 }
 
 void TextComponent::update(int deltaTime)
 {
-    if (mLoopHorizontal && mTextCache != nullptr) {
+    if (mHorizontalScrolling && mTextCache != nullptr) {
         // Don't scroll if the media viewer or screensaver is active or if text scrolling
         // is disabled;
         if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
             !mWindow->getAllowTextScrolling()) {
-            if (mLoopTime != 0 && !mWindow->isLaunchScreenDisplayed())
-                resetLooping();
+            if (mScrollTime != 0 && !mWindow->isLaunchScreenDisplayed())
+                resetComponent();
             return;
         }
 
-        assert(mLoopSpeed != 0.0f);
+        assert(mScrollSpeed != 0.0f);
 
-        mLoopOffset1 = 0;
-        mLoopOffset2 = 0;
+        mScrollOffset1 = 0.0f;
+        mScrollOffset2 = 0.0f;
 
         if (mTextCache->metrics.size.x > mSize.x) {
-            // Loop the text.
             const float scrollLength {mTextCache->metrics.size.x};
-            const float returnLength {mLoopSpeed * 1.5f / mLoopSpeedMultiplier};
-            const float scrollTime {(scrollLength * 1000.0f) / mLoopSpeed};
-            const float returnTime {(returnLength * 1000.0f) / mLoopSpeed};
-            const int maxTime {static_cast<int>(mLoopDelay + scrollTime + returnTime)};
+            const float returnLength {mScrollSpeed * 1.5f / mScrollSpeedMultiplier};
+            const float scrollTime {(scrollLength * 1000.0f) / mScrollSpeed};
+            const float returnTime {(returnLength * 1000.0f) / mScrollSpeed};
+            const float maxTime {mScrollDelay + scrollTime + returnTime};
 
-            mLoopTime += deltaTime;
-            while (mLoopTime > maxTime)
-                mLoopTime -= maxTime;
+            mScrollTime += deltaTime;
 
-            mLoopOffset1 = static_cast<int>(Utils::Math::loop(mLoopDelay, scrollTime + returnTime,
-                                                              static_cast<float>(mLoopTime),
-                                                              scrollLength + returnLength));
+            while (mScrollTime > maxTime)
+                mScrollTime -= maxTime;
 
-            if (mLoopOffset1 > (scrollLength - (mSize.x - returnLength)))
-                mLoopOffset2 = static_cast<int>(mLoopOffset1 - (scrollLength + returnLength));
-            else if (mLoopOffset2 < 0)
-                mLoopOffset2 = 0;
+            mScrollOffset1 = Utils::Math::loop(mScrollDelay, scrollTime + returnTime, mScrollTime,
+                                               scrollLength + returnLength);
+
+            if (mScrollOffset1 > (scrollLength - (mSize.x - returnLength)))
+                mScrollOffset2 = mScrollOffset1 - (scrollLength + returnLength);
+            else if (mScrollOffset2 < 0)
+                mScrollOffset2 = 0;
         }
     }
 }
@@ -418,7 +409,7 @@ void TextComponent::onTextChanged()
 
     const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
 
-    if (mLoopHorizontal) {
+    if (mHorizontalScrolling) {
         mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(text, 0.0f, 0.0f, mColor));
     }
     else if (isMultiline && !isScrollable) {
@@ -564,14 +555,14 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             const std::string& containerType {elem->get<std::string>("containerType")};
             if (containerType == "horizontal") {
                 if (elem->has("containerScrollSpeed")) {
-                    mLoopSpeedMultiplier =
+                    mScrollSpeedMultiplier =
                         glm::clamp(elem->get<float>("containerScrollSpeed"), 0.1f, 10.0f);
                 }
                 if (elem->has("containerStartDelay")) {
-                    mLoopDelay =
+                    mScrollDelay =
                         glm::clamp(elem->get<float>("containerStartDelay"), 0.0f, 10.0f) * 1000.0f;
                 }
-                mLoopHorizontal = true;
+                mHorizontalScrolling = true;
             }
             else if (containerType != "vertical") {
                 LOG(LogError) << "TextComponent: Invalid theme configuration, property "
@@ -692,7 +683,7 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     setFont(Font::getFromTheme(elem, properties, mFont, maxHeight, false));
 
-    // We need to do this after setting the font as the loop speed is calculated from its size.
-    if (mLoopHorizontal)
-        setHorizontalLooping(true);
+    // We need to do this after setting the font as the scroll speed is calculated from its size.
+    if (mHorizontalScrolling)
+        setHorizontalScrolling(true);
 }

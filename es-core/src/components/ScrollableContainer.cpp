@@ -41,7 +41,7 @@ void ScrollableContainer::setAutoScroll(bool autoScroll)
     if (autoScroll) {
         mScrollDir = glm::vec2 {0.0f, 1.0f};
         mAutoScrollDelay = static_cast<int>(mAutoScrollDelayConstant);
-        reset();
+        resetComponent();
     }
     else {
         mScrollDir = glm::vec2 {};
@@ -60,7 +60,7 @@ void ScrollableContainer::setScrollParameters(float autoScrollDelayConstant,
     mAutoScrollSpeedConstant = AUTO_SCROLL_SPEED / glm::clamp(autoScrollSpeedConstant, 0.1f, 10.0f);
 }
 
-void ScrollableContainer::reset()
+void ScrollableContainer::resetComponent()
 {
     mScrollPos = glm::vec2 {0.0f, 0.0f};
     mAutoScrollResetAccumulator = 0;
@@ -161,7 +161,7 @@ void ScrollableContainer::update(int deltaTime)
     if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
         !mWindow->getAllowTextScrolling()) {
         if (mScrollPos != glm::vec2 {0.0f, 0.0f} && !mWindow->isLaunchScreenDisplayed())
-            reset();
+            resetComponent();
         return;
     }
 

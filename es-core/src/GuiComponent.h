@@ -310,8 +310,10 @@ public:
     virtual void pauseViewVideos() {}
     virtual void muteViewVideos() {}
 
-    // For Lottie animations.
-    virtual void resetFileAnimation() {};
+    // Used to reset various components like text scrolling, animations etc.
+    virtual void resetComponent() {}
+    // Used by TextComponent.
+    virtual void setHorizontalScrolling(bool state) {}
 
     // Default implementation just handles <pos> and <size> tags as normalized float pairs.
     // You probably want to keep this behavior for any derived classes as well as add your own.

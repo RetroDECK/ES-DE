@@ -107,7 +107,7 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
         row.addElement(mapping, true);
         mMappings.push_back(mapping);
 
-        row.input_handler = [this, i, mapping](InputConfig* config, Input input) -> bool {
+        row.inputHandler = [this, i, mapping](InputConfig* config, Input input) -> bool {
             // Ignore input not from our target device.
             if (config != mTargetConfig)
                 return false;

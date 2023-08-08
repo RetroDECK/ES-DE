@@ -79,10 +79,10 @@ void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
 void GamelistView::onShow()
 {
     for (auto& animation : mLottieAnimComponents)
-        animation->resetFileAnimation();
+        animation->resetComponent();
 
     for (auto& animation : mGIFAnimComponents)
-        animation->resetFileAnimation();
+        animation->resetComponent();
 
     for (auto& video : mStaticVideoComponents)
         video->stopVideoPlayer();
@@ -795,10 +795,11 @@ void GamelistView::updateView(const CursorState& state)
         }
 
         for (auto& container : mContainerComponents)
-            container->reset();
+            container->resetComponent();
 
-        for (auto& scrollableText : mTextComponents)
-            scrollableText->resetLooping();
+        // Reset horizontally scrolling text.
+        for (auto& text : mTextComponents)
+            text->resetComponent();
 
         for (auto& rating : mRatingComponents)
             rating->setValue(file->metadata.get("rating"));

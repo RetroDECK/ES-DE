@@ -263,7 +263,7 @@ void GIFAnimComponent::setAnimation(const std::string& path)
     mAnimationStartTime = std::chrono::system_clock::now();
 }
 
-void GIFAnimComponent::resetFileAnimation()
+void GIFAnimComponent::resetComponent()
 {
     mExternalPause = false;
     mPlayCount = 0;

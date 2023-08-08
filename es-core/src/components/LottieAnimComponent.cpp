@@ -229,7 +229,7 @@ void LottieAnimComponent::setAnimation(const std::string& path)
     mAnimationStartTime = std::chrono::system_clock::now();
 }
 
-void LottieAnimComponent::resetFileAnimation()
+void LottieAnimComponent::resetComponent()
 {
     mExternalPause = false;
     mPlayCount = 0;

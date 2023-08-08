@@ -48,6 +48,7 @@ public:
     void setRenderBackground(bool render) { mRenderBackground = render; }
 
     void render(const glm::mat4& parentTrans) override;
+    void onFocusLost() override { resetComponent(); }
 
     std::string getValue() const override { return mText; }
     void setValue(const std::string& value) override;
@@ -86,14 +87,16 @@ public:
         return (mTextCache == nullptr ? 0 : mTextCache->metrics.maxGlyphHeight);
     }
 
-    // Horizontal looping for single-line content that is too long to fit.
-    void setHorizontalLooping(bool state);
+    // Horizontal scrolling for single-line content that is too long to fit.
+    void setHorizontalScrolling(bool state) override;
+    void setHorizontalScrollingSpeedMultiplier(float speed) { mScrollSpeedMultiplier = speed; }
+    void setHorizontalScrollingDelay(float delay) { mScrollDelay = delay; }
 
-    void resetLooping()
+    void resetComponent()
     {
-        mLoopOffset1 = 0;
-        mLoopOffset2 = 0;
-        mLoopTime = 0;
+        mScrollOffset1 = 0;
+        mScrollOffset2 = 0;
+        mScrollTime = 0;
     }
 
     void update(int deltaTime) override;
@@ -144,14 +147,13 @@ private:
     bool mSelectable;
     bool mVerticalAutoSizing;
 
-    bool mLoopHorizontal;
-    bool mLoopScroll;
-    float mLoopSpeed;
-    float mLoopSpeedMultiplier;
-    float mLoopDelay;
-    int mLoopOffset1;
-    int mLoopOffset2;
-    int mLoopTime;
+    bool mHorizontalScrolling;
+    float mScrollSpeed;
+    float mScrollSpeedMultiplier;
+    float mScrollDelay;
+    float mScrollOffset1;
+    float mScrollOffset2;
+    float mScrollTime;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_COMPONENT_H

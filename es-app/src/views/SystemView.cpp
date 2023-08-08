@@ -69,17 +69,18 @@ void SystemView::goToSystem(SystemData* system, bool animate)
             selector->setNeedsRefresh();
     }
 
+    // Reset horizontally scrolling text.
     for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
-        text->resetLooping();
+        text->resetComponent();
 
     for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
         video->setStaticVideo();
 
     for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
-        anim->resetFileAnimation();
+        anim->resetComponent();
 
     for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
-        anim->resetFileAnimation();
+        anim->resetComponent();
 
     updateGameSelectors();
     updateGameCount();
@@ -223,8 +224,9 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 
 void SystemView::onCursorChanged(const CursorState& state)
 {
+    // Reset horizontally scrolling text.
     for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
-        text->resetLooping();
+        text->resetComponent();
 
     const int cursor {mPrimary->getCursor()};
     const int scrollVelocity {mPrimary->getScrollingVelocity()};
@@ -279,7 +281,7 @@ void SystemView::onCursorChanged(const CursorState& state)
     }
 
     for (auto& container : mSystemElements[mPrimary->getCursor()].containerComponents)
-        container->reset();
+        container->resetComponent();
 
     // This is needed to avoid erratic camera movements during extreme navigation input when using
     // slide transitions. This should very rarely occur during normal application usage.
@@ -312,10 +314,10 @@ void SystemView::onCursorChanged(const CursorState& state)
         video->setStaticVideo();
 
     for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
-        anim->resetFileAnimation();
+        anim->resetComponent();
 
     for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
-        anim->resetFileAnimation();
+        anim->resetComponent();
 
     updateGameSelectors();
     startViewVideos();

@@ -39,7 +39,7 @@ public:
     }
     void setPauseAnimation(bool state) { mExternalPause = state; }
 
-    void resetFileAnimation() override;
+    void resetComponent() override;
     void onSizeChanged() override;
 
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,

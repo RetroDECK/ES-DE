@@ -22,11 +22,6 @@ ComponentList::ComponentList()
     , mRowHeight {std::round(Font::get(FONT_SIZE_MEDIUM)->getHeight())}
     , mSelectorBarOffset {0.0f}
     , mCameraOffset {0.0f}
-    , mLoopRows {false}
-    , mLoopScroll {false}
-    , mLoopOffset {0}
-    , mLoopOffset2 {0}
-    , mLoopTime {0}
     , mScrollIndicatorStatus {SCROLL_NONE}
 {
     // Adjust the padding relative to the aspect ratio and screen resolution to make it look
@@ -85,8 +80,8 @@ bool ComponentList::input(InputConfig* config, Input input)
     }
 
     // Give it to the current row's input handler.
-    if (mEntries.at(mCursor).data.input_handler) {
-        if (mEntries.at(mCursor).data.input_handler(config, input))
+    if (mEntries.at(mCursor).data.inputHandler) {
+        if (mEntries.at(mCursor).data.inputHandler(config, input))
             return true;
     }
     else {
@@ -132,12 +127,6 @@ bool ComponentList::input(InputConfig* config, Input input)
 
 void ComponentList::update(int deltaTime)
 {
-    if (!mFocused && mLoopRows) {
-        mLoopOffset = 0;
-        mLoopOffset2 = 0;
-        mLoopTime = 0;
-    }
-
     // Scroll indicator logic, used by ScrollIndicatorComponent.
     bool scrollIndicatorChanged {false};
 
@@ -167,39 +156,11 @@ void ComponentList::update(int deltaTime)
 
     listUpdate(deltaTime);
 
-    if (size()) {
-        float rowWidth {0.0f};
-
+    if (mFocused && size()) {
         // Update our currently selected row.
         for (auto it = mEntries.at(mCursor).data.elements.cbegin();
              it != mEntries.at(mCursor).data.elements.cend(); ++it) {
             it->component->update(deltaTime);
-            rowWidth += it->component->getSize().x;
-        }
-
-        if (mLoopRows && rowWidth + mHorizontalPadding / 2.0f > mSize.x) {
-            // Loop the text.
-            const float speed {
-                Font::get(FONT_SIZE_MEDIUM)->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
-            const float delay {1500.0f};
-            const float scrollLength {rowWidth};
-            const float returnLength {speed * 1.5f};
-            const float scrollTime {(scrollLength * 1000.0f) / speed};
-            const float returnTime {(returnLength * 1000.0f) / speed};
-            const int maxTime {static_cast<int>(delay + scrollTime + returnTime)};
-
-            mLoopTime += deltaTime;
-            while (mLoopTime > maxTime)
-                mLoopTime -= maxTime;
-
-            mLoopOffset = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
-                                                             static_cast<float>(mLoopTime),
-                                                             scrollLength + returnLength));
-
-            if (mLoopOffset > (scrollLength - (mSize.x - returnLength)))
-                mLoopOffset2 = static_cast<int>(mLoopOffset - (scrollLength + returnLength));
-            else if (mLoopOffset2 < 0)
-                mLoopOffset2 = 0;
         }
     }
 }
@@ -207,12 +168,6 @@ void ComponentList::update(int deltaTime)
 void ComponentList::onCursorChanged(const CursorState& state)
 {
     mSetupCompleted = true;
-
-    if (mLoopRows) {
-        mLoopOffset = 0;
-        mLoopOffset2 = 0;
-        mLoopTime = 0;
-    }
 
     // Update the selector bar position.
     // In the future this might be animated.
@@ -299,10 +254,9 @@ void ComponentList::render(const glm::mat4& parentTrans)
     mRenderer->pushClipRect(glm::ivec2 {clipRectPosX, clipRectPosY},
                             glm::ivec2 {clipRectSizeX, clipRectSizeY});
 
-    // Scroll the camera.
+    // Move camera the scroll distance.
     trans = glm::translate(trans, glm::vec3 {0.0f, -mCameraOffset, 0.0f});
 
-    glm::mat4 loopTrans {trans};
     const bool darkColorScheme {Settings::getInstance()->getString("MenuColorScheme") != "light"};
 
     // Draw selector bar if we're using the dark color scheme.
@@ -316,30 +270,10 @@ void ComponentList::render(const glm::mat4& parentTrans)
     std::vector<GuiComponent*> drawAfterCursor;
     bool drawAll {false};
     for (size_t i {0}; i < mEntries.size(); ++i) {
-
-        if (mLoopRows && mFocused && mLoopOffset > 0) {
-            loopTrans =
-                glm::translate(trans, glm::vec3 {static_cast<float>(-mLoopOffset), 0.0f, 0.0f});
-        }
-
         auto& entry = mEntries.at(i);
         drawAll = !mFocused || i != static_cast<unsigned int>(mCursor);
         for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); ++it) {
-            if (drawAll || it->invert_when_selected) {
-                auto renderLoopFunc = [&]() {
-                    // Needed to avoid flickering when returning to the start position.
-                    if (mLoopOffset == 0 && mLoopOffset2 == 0)
-                        mLoopScroll = false;
-                    it->component->render(loopTrans);
-                    // Render row again if text is moved far enough for it to repeat.
-                    if (mLoopOffset2 < 0 || mLoopScroll) {
-                        mLoopScroll = true;
-                        loopTrans = glm::translate(
-                            trans, glm::vec3 {static_cast<float>(-mLoopOffset2), 0.0f, 0.0f});
-                        it->component->render(loopTrans);
-                    }
-                };
-
+            if (drawAll || it->invertWhenSelected) {
                 // For the row where the cursor is at, we want to remove any hue from the
                 // font or image before inverting, as it would otherwise lead to an ugly
                 // inverted color (e.g. red inverting to a green hue).
@@ -358,14 +292,14 @@ void ComponentList::render(const glm::mat4& parentTrans)
                     unsigned char byteBlue {static_cast<unsigned char>(origColor >> 8 & 0xFF)};
                     // If it's neutral, just proceed with normal rendering.
                     if (byteRed == byteGreen && byteGreen == byteBlue) {
-                        renderLoopFunc();
+                        it->component->render(trans);
                     }
                     else {
                         if (isTextComponent)
                             it->component->setColor(mMenuColorPrimary);
                         else
                             it->component->setColorShift(mMenuColorPrimary);
-                        renderLoopFunc();
+                        it->component->render(trans);
                         // Revert to the original color after rendering.
                         if (isTextComponent)
                             it->component->setColor(origColor);
@@ -383,7 +317,6 @@ void ComponentList::render(const glm::mat4& parentTrans)
         }
     }
 
-    // Custom rendering.
     mRenderer->setMatrix(trans);
 
     // Draw selector bar if we're using the light color scheme.
@@ -408,14 +341,14 @@ void ComponentList::render(const glm::mat4& parentTrans)
     }
 
     // Draw separators.
-    float y {0.0f};
+    float offsetY {0.0f};
     for (unsigned int i {0}; i < mEntries.size(); ++i) {
-        mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
+        mRenderer->drawRect(0.0f, offsetY, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
                             mMenuColorSeparators, mMenuColorSeparators, false, mOpacity, mDimming);
-        y += mRowHeight;
+        offsetY += mRowHeight;
     }
 
-    mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
+    mRenderer->drawRect(0.0f, offsetY, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
                         mMenuColorSeparators, mMenuColorSeparators, false, mOpacity, mDimming);
     mRenderer->popClipRect();
 }
@@ -427,14 +360,14 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
         yOffset += mRowHeight;
 
     // Assumes updateElementSize has already been called.
-    float x {mHorizontalPadding / 2.0f};
+    float offsetX {mHorizontalPadding / 2.0f};
 
     for (unsigned int i {0}; i < row.elements.size(); ++i) {
         const auto comp = row.elements.at(i).component;
 
         // Center vertically.
-        comp->setPosition(x, (mRowHeight - std::floor(comp->getSize().y)) / 2.0f + yOffset);
-        x += comp->getSize().x;
+        comp->setPosition(offsetX, (mRowHeight - std::floor(comp->getSize().y)) / 2.0f + yOffset);
+        offsetX += comp->getSize().x;
     }
 }
 
@@ -444,13 +377,13 @@ void ComponentList::updateElementSize(const ComponentListRow& row)
     std::vector<std::shared_ptr<GuiComponent>> resizeVec;
 
     for (auto it = row.elements.cbegin(); it != row.elements.cend(); ++it) {
-        if (it->resize_width)
+        if (it->resizeWidth)
             resizeVec.push_back(it->component);
         else
             width -= it->component->getSize().x;
     }
 
-    // Redistribute the "unused" width equally among the components with resize_width set to true.
+    // Redistribute the "unused" width equally among the components if resizeWidth is set to true.
     width = width / resizeVec.size();
     for (auto it = resizeVec.cbegin(); it != resizeVec.cend(); ++it)
         (*it)->setSize(width, (*it)->getSize().y);
@@ -487,9 +420,9 @@ std::vector<HelpPrompt> ComponentList::getHelpPrompts()
     return prompts;
 }
 
-bool ComponentList::moveCursor(int amt)
+bool ComponentList::moveCursor(int amount)
 {
-    bool ret {listInput(amt)};
+    const bool returnValue {listInput(amount)};
     listInput(0);
-    return ret;
+    return returnValue;
 }
