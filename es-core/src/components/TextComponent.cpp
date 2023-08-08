@@ -563,6 +563,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                         glm::clamp(elem->get<float>("containerStartDelay"), 0.0f, 10.0f) * 1000.0f;
                 }
                 mHorizontalScrolling = true;
+                // Rotation can't be combined with a scrolling horizontal container.
+                mRotation = 0.0f;
             }
             else if (containerType != "vertical") {
                 LOG(LogError) << "TextComponent: Invalid theme configuration, property "
