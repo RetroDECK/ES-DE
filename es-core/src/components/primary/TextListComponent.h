@@ -12,8 +12,8 @@
 #include "Log.h"
 #include "Sound.h"
 #include "components/IList.h"
+#include "components/TextComponent.h"
 #include "components/primary/PrimaryComponent.h"
-#include "resources/Font.h"
 
 enum class TextListEntryType {
     PRIMARY,
@@ -22,7 +22,7 @@ enum class TextListEntryType {
 
 struct TextListData {
     TextListEntryType entryType;
-    std::shared_ptr<TextCache> textCache;
+    std::shared_ptr<TextComponent> entryName;
 };
 
 template <typename T>
@@ -33,6 +33,7 @@ class TextListComponent : public PrimaryComponent<T>, private IList<TextListData
 protected:
     using List::mCursor;
     using List::mEntries;
+    using List::mLastCursor;
     using List::mScrollVelocity;
     using List::mSize;
     using List::mWindow;
@@ -66,13 +67,6 @@ public:
         mCursorChangedCallback = func;
     }
 
-    void setFont(const std::shared_ptr<Font>& font)
-    {
-        mFont = font;
-        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
-            it->data.textCache.reset();
-    }
-
     const std::string& getIndicators() const { return mIndicators; }
     const std::string& getCollectionIndicators() const { return mCollectionIndicators; }
     const LetterCase getLetterCase() const override { return mLetterCase; }
@@ -91,7 +85,7 @@ public:
     }
 
 private:
-    void onShow() override { mLoopTime = 0; }
+    void onShow() override { mEntries.at(mCursor).data.entryName->resetComponent(); }
     void onScroll() override
     {
         if (mGamelistView &&
@@ -126,10 +120,6 @@ private:
     std::function<void(CursorState state)> mCursorChangedCallback;
     float mCamOffset;
     int mPreviousScrollVelocity;
-    int mLoopOffset1;
-    int mLoopOffset2;
-    int mLoopTime;
-    bool mLoopScroll;
     bool mGamelistView;
 
     std::shared_ptr<Font> mFont;
@@ -146,6 +136,9 @@ private:
     unsigned int mSelectedSecondaryColor;
     unsigned int mSelectedBackgroundColor;
     unsigned int mSelectedSecondaryBackgroundColor;
+    bool mHorizontalScrolling;
+    float mHorizontalScrollSpeed;
+    float mHorizontalScrollDelay;
     PrimaryAlignment mAlignment;
     float mHorizontalMargin;
     LetterCase mLetterCase;
@@ -166,10 +159,6 @@ TextListComponent<T>::TextListComponent()
     , mRenderer {Renderer::getInstance()}
     , mCamOffset {0.0f}
     , mPreviousScrollVelocity {0}
-    , mLoopOffset1 {0}
-    , mLoopOffset2 {0}
-    , mLoopTime {0}
-    , mLoopScroll {false}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mFont {Font::get(FONT_SIZE_MEDIUM_FIXED)}
     , mSelectorHeight {mFont->getSize() * 1.5f}
@@ -184,6 +173,9 @@ TextListComponent<T>::TextListComponent()
     , mSelectedSecondaryColor {0x00FF00FF}
     , mSelectedBackgroundColor {0x00000000}
     , mSelectedSecondaryBackgroundColor {0x00000000}
+    , mHorizontalScrolling {true}
+    , mHorizontalScrollSpeed {1.0f}
+    , mHorizontalScrollDelay {3000.0f}
     , mAlignment {PrimaryAlignment::ALIGN_CENTER}
     , mHorizontalMargin {0.0f}
     , mLetterCase {LetterCase::NONE}
@@ -201,6 +193,23 @@ TextListComponent<T>::TextListComponent()
 template <typename T>
 void TextListComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
 {
+    entry.data.entryName = std::make_shared<TextComponent>(
+        mHorizontalScrolling ? entry.name :
+                               mFont->wrapText(entry.name, mSize.x - mHorizontalMargin * 2.0f),
+        mFont, 0x000000FF);
+
+    if (mHorizontalScrolling) {
+        glm::vec2 textSize {entry.data.entryName->getSize()};
+        if (textSize.x > mSize.x - (mHorizontalMargin * 2.0f)) {
+            // Set the text width to the width of the textlist to trigger horizontal scrolling.
+            entry.data.entryName->setHorizontalScrollingSpeedMultiplier(mHorizontalScrollSpeed);
+            entry.data.entryName->setHorizontalScrollingDelay(mHorizontalScrollDelay);
+            entry.data.entryName->setHorizontalScrolling(true);
+            textSize.x = mSize.x - (mHorizontalMargin * 2.0f);
+            entry.data.entryName->setSize(textSize);
+        }
+    }
+
     List::add(entry);
 }
 
@@ -270,72 +279,25 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
 template <typename T> void TextListComponent<T>::update(int deltaTime)
 {
     List::listUpdate(deltaTime);
-
-    if ((mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
-         !mWindow->getAllowTextScrolling())) {
-        mLoopTime = 0;
-    }
-    else {
-        // Always reset the loop offsets.
-        mLoopOffset1 = 0;
-        mLoopOffset2 = 0;
-
-        // If we're not scrolling and this object's text exceeds our size, then loop it.
-        const float limit {mSize.x - mHorizontalMargin * 2.0f};
-        float length {0.0f};
-
-        if (mEntries.at(static_cast<unsigned int>(mCursor)).data.textCache != nullptr)
-            length = mEntries.at(static_cast<unsigned int>(mCursor)).data.textCache->getSize().x;
-
-        if (length != 0.0f && length > limit) {
-            // Loop the text.
-            const float speed {mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
-            const float delay {3000.0f};
-            const float scrollLength {length};
-            const float returnLength {speed * 1.5f};
-            const float scrollTime {(scrollLength * 1000.0f) / speed};
-            const float returnTime {(returnLength * 1000.0f) / speed};
-            const int maxTime {static_cast<int>(delay + scrollTime + returnTime)};
-
-            mLoopTime += deltaTime;
-            while (mLoopTime > maxTime)
-                mLoopTime -= maxTime;
-
-            mLoopOffset1 = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
-                                                              static_cast<float>(mLoopTime),
-                                                              scrollLength + returnLength));
-
-            if (mLoopOffset1 > (scrollLength - (limit - returnLength)))
-                mLoopOffset2 = static_cast<int>(mLoopOffset1 - (scrollLength + returnLength));
-        }
-    }
-
+    mEntries.at(static_cast<unsigned int>(mCursor)).data.entryName->update(deltaTime);
     GuiComponent::update(deltaTime);
 }
 
 template <typename T> void TextListComponent<T>::render(const glm::mat4& parentTrans)
 {
-    if ((mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
-         !mWindow->getAllowTextScrolling())) {
-        mLoopOffset1 = 0;
-        mLoopOffset2 = 0;
-    }
-
     if (size() == 0)
         return;
 
     glm::mat4 trans {parentTrans * List::getTransform()};
-    std::shared_ptr<Font>& font {mFont};
 
     int startEntry {0};
     int screenCount {0};
-    float y {0.0f};
-
+    float offsetY {0.0f};
     float entrySize {0.0f};
     float lineSpacingHeight {0.0f};
 
-    entrySize = font->getSize() * mLineSpacing;
-    lineSpacingHeight = font->getSize() * mLineSpacing - font->getSize() * 1.0f;
+    entrySize = mFont->getSize() * mLineSpacing;
+    lineSpacingHeight = (mFont->getSize() * mLineSpacing) - mFont->getSize();
 
     // Number of entries that can fit on the screen simultaneously.
     screenCount = static_cast<int>(std::floor((mSize.y + lineSpacingHeight / 2.0f) / entrySize));
@@ -387,7 +349,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         glm::ivec2 {static_cast<int>(std::round(dim.x - mHorizontalMargin * 2.0f)),
                     static_cast<int>(std::round(dim.y))});
 
-    for (int i = startEntry; i < listCutoff; ++i) {
+    for (int i {startEntry}; i < listCutoff; ++i) {
         Entry& entry {mEntries.at(i)};
         unsigned int color {0x00000000};
         unsigned int backgroundColor {0x00000000};
@@ -401,39 +363,33 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             backgroundColor = (mCursor == i ? mSelectedSecondaryBackgroundColor : 0x00000000);
         }
 
-        if (!entry.data.textCache) {
-            entry.data.textCache =
-                std::unique_ptr<TextCache>(font->buildTextCache(entry.name, 0, 0, 0x000000FF));
-        }
-
         if constexpr (std::is_same_v<T, FileData*>) {
             // If a game is marked as hidden, lower the text opacity a lot.
             // If a game is marked to not be counted, lower the opacity a moderate amount.
             if (entry.object->getHidden())
-                entry.data.textCache->setColor(color & 0xFFFFFF44);
+                entry.data.entryName->setColor(color & 0xFFFFFF44);
             else if (!entry.object->getCountAsGame())
-                entry.data.textCache->setColor(color & 0xFFFFFF77);
+                entry.data.entryName->setColor(color & 0xFFFFFF77);
             else
-                entry.data.textCache->setColor(color);
+                entry.data.entryName->setColor(color);
         }
         else {
-            entry.data.textCache->setColor(color);
+            entry.data.entryName->setColor(color);
         }
 
-        glm::vec3 offset {0.0f, y, 0.0f};
+        glm::vec3 offset {0.0f, offsetY, 0.0f};
 
         switch (mAlignment) {
             case PrimaryAlignment::ALIGN_LEFT:
                 offset.x = mHorizontalMargin;
                 break;
             case PrimaryAlignment::ALIGN_CENTER:
-                offset.x =
-                    static_cast<float>((mSize.x - entry.data.textCache->metrics.size.x) / 2.0f);
+                offset.x = static_cast<float>((mSize.x - entry.data.entryName->getSize().x) / 2.0f);
                 if (offset.x < mHorizontalMargin)
                     offset.x = mHorizontalMargin;
                 break;
             case PrimaryAlignment::ALIGN_RIGHT:
-                offset.x = (mSize.x - entry.data.textCache->metrics.size.x);
+                offset.x = (mSize.x - entry.data.entryName->getSize().x);
                 offset.x -= mHorizontalMargin;
                 if (offset.x < mHorizontalMargin)
                     offset.x = mHorizontalMargin;
@@ -443,44 +399,18 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         // Render text.
         glm::mat4 drawTrans {trans};
 
-        // Currently selected item text might be looping.
-        if (mCursor == i && mLoopOffset1 > 0) {
-            drawTrans = glm::translate(
-                drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset1), 0.0f, 0.0f});
-        }
-        else {
-            drawTrans = glm::translate(drawTrans, offset);
-        }
-
-        // Needed to avoid flickering when returning to the start position.
-        if (mLoopOffset1 == 0 && mLoopOffset2 == 0)
-            mLoopScroll = false;
-
+        drawTrans = glm::translate(drawTrans, offset);
         mRenderer->setMatrix(drawTrans);
 
         if (i == mCursor && backgroundColor != 0x00000000) {
             mRenderer->drawRect(mSelectorHorizontalOffset, mSelectorVerticalOffset,
-                                entry.data.textCache->metrics.size.x, mSelectorHeight,
-                                backgroundColor, backgroundColor);
+                                entry.data.entryName->getSize().x, mSelectorHeight, backgroundColor,
+                                backgroundColor);
         }
 
-        font->renderTextCache(entry.data.textCache.get());
+        entry.data.entryName->render(drawTrans);
 
-        // Render currently selected row again if text is moved far enough for it to repeat.
-        if ((mCursor == i && mLoopOffset2 < 0) || (mCursor == i && mLoopScroll)) {
-            mLoopScroll = true;
-            drawTrans = trans;
-            drawTrans = glm::translate(
-                drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset2), 0.0f, 0.0f});
-            mRenderer->setMatrix(drawTrans);
-            if (i == mCursor && backgroundColor != 0x00000000) {
-                mRenderer->drawRect(mSelectorHorizontalOffset, mSelectorVerticalOffset,
-                                    entry.data.textCache->metrics.size.x, mSelectorHeight,
-                                    backgroundColor, backgroundColor);
-            }
-            font->renderTextCache(entry.data.textCache.get());
-        }
-        y += entrySize;
+        offsetY += entrySize;
     }
     mRenderer->popClipRect();
     if constexpr (std::is_same_v<T, FileData*>)
@@ -551,7 +481,21 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mSelectedSecondaryBackgroundColor = mSelectedBackgroundColor;
     }
 
-    setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, false));
+    if (elem->has("textHorizontalScrolling"))
+        mHorizontalScrolling = elem->get<bool>("textHorizontalScrolling");
+
+    if (elem->has("textHorizontalScrollSpeed")) {
+        mHorizontalScrollSpeed =
+            glm::clamp(elem->get<float>("textHorizontalScrollSpeed"), 0.1f, 10.0f);
+    }
+
+    if (elem->has("textHorizontalScrollDelay")) {
+        mHorizontalScrollDelay =
+            glm::clamp(elem->get<float>("textHorizontalScrollDelay"), 0.0f, 10.0f) * 1000.0f;
+    }
+
+    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, false);
+
     const float selectorHeight {mFont->getHeight(mLineSpacing)};
     mSelectorHeight = selectorHeight;
 
@@ -742,7 +686,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 template <typename T> void TextListComponent<T>::onCursorChanged(const CursorState& state)
 {
-    mLoopTime = 0;
+    if (mEntries.size() > static_cast<size_t>(mLastCursor))
+        mEntries.at(mLastCursor).data.entryName->resetComponent();
 
     if constexpr (std::is_same_v<T, SystemData*>) {
         float startPos {mCamOffset};
@@ -752,8 +697,8 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
         float animTime {400.0f};
         float timeDiff {1.0f};
 
-        // If startPos is inbetween two positions then reduce the time slightly as the distance will
-        // be shorter meaning the animation would play for too long if not compensated for.
+        // If startPos is inbetween two positions then reduce the time slightly as the distance
+        // will be shorter meaning the animation would play for too long if not compensated for.
         if (mScrollVelocity == 1)
             timeDiff = endPos - startPos;
         else if (mScrollVelocity == -1)
