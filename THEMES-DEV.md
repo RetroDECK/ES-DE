@@ -1769,6 +1769,19 @@ Properties:
 * `selectedSecondaryBackgroundColor` - type: COLOR
     - Background color of the highlighted entry for the secondary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
     - Default is the same value as `selectedBackgroundColor`
+* `textHorizontalScrolling` - type: BOOLEAN
+    - If this property is enabled then text that does not fit within the element width (minus margins) will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...) if it exceeds the width.
+    - Default is `true`
+* `textHorizontalScrollSpeed` - type: FLOAT
+    - A relative speed for how fast to scroll the text.
+    - Minimum value is `0.1` and maximum value is `10`
+    - Default is `1`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollDelay` - type: FLOAT
+    - Delay in seconds before scrolling starts.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `3`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
@@ -2341,7 +2354,7 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an ellipsis (...)
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2424,17 +2437,17 @@ Properties:
     - If `container` has been set, then it's possible to select between a vertically or horizontally scrolling type using this property. If choosing the horizontal container then all line breaks in the text will be automatically converted to spaces.
     - Valid values are `vertical` or `horizontal`
     - Default is `vertical`
-    - This property can only be used when `container` is `true`
+    - This property can only be used when `container` has been explicitly set to `true`
 * `containerVerticalSnap` - type: BOOLEAN
     - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
     - Default is `true`
     - This property can only be used when `containerType` is `vertical`
 * `containerScrollSpeed` - type: FLOAT
-    - A base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value.
+    - For vertical containers a base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value for that type.
     - Minimum value is `0.1` and maximum value is `10`
     - Default is `1`
 * `containerStartDelay` - type: FLOAT
-    - Delay in seconds before scrolling starts. Note that the text fade-in animation that plays when resetting from the end position will cause a slight delay even if this property is set to zero.
+    - Delay in seconds before scrolling starts. Note that for vertical containers the text fade-in animation that plays when resetting from the end position will cause a slight delay even if this property is set to zero.
     - Minimum value is `0` and maximum value is `10`
     - Default is `4.5` for vertical containers and `1.5` for horizontal containers
 * `containerResetDelay` - type: FLOAT
@@ -2496,7 +2509,7 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an ellipsis (...)
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2590,7 +2603,7 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an ellipsis (...)
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`

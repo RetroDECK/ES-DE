@@ -34,10 +34,14 @@
 * Improved menu system font rendering on GPUs without proper texture filtering support
 * Added a "stationary" property to all secondary elements to set them as stationary during slide transitions
 * Added a "containerType" property to the text element to select between vertical and horizontal containers
+* Added new "textHorizontalScrolling", "textHorizontalScrollSpeed" and "textHorizontalScrollDelay" textlist properties
 * Added theme support for the "manual" metadata type for the text element
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Added support to MathUtil::md5Hash() for streaming files in chunks
 * Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
+* Added horizontal text scrolling functionality to TextComponent
+* Removed all horizontal text scrolling code from ComponentList and TextListComponent
+* Refactored TextListComponent to work more like the other primary components
 * Added a lot more debug log output to the scraper
 * (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
 * (Windows) Improved the README.txt file for the portable release
