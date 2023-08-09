@@ -85,7 +85,7 @@ public:
     }
 
 private:
-    void onShow() override { mEntries.at(mCursor).data.entryName->resetComponent(); }
+    void onShowPrimary() override { mEntries.at(mCursor).data.entryName->resetComponent(); }
     void onScroll() override
     {
         if (mGamelistView &&
@@ -278,8 +278,8 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
 
 template <typename T> void TextListComponent<T>::update(int deltaTime)
 {
+    mEntries.at(mCursor).data.entryName->update(deltaTime);
     List::listUpdate(deltaTime);
-    mEntries.at(static_cast<unsigned int>(mCursor)).data.entryName->update(deltaTime);
     GuiComponent::update(deltaTime);
 }
 

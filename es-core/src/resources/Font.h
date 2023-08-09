@@ -239,6 +239,7 @@ public:
     void setOpacity(float opacity);
     void setSaturation(float saturation);
     void setDimming(float dimming);
+    void setClipRegion(const glm::vec4& clip) { clipRegion = clip; }
     const glm::vec2& getSize() { return metrics.size; }
 
     friend Font;
@@ -250,6 +251,7 @@ protected:
     };
 
     std::vector<VertexList> vertexLists;
+    glm::vec4 clipRegion;
 };
 
 #endif // ES_CORE_RESOURCES_FONT_H

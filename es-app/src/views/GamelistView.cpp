@@ -92,6 +92,7 @@ void GamelistView::onShow()
 
     updateView(CursorState::CURSOR_STOPPED);
     mPrimary->finishAnimation(0);
+    mPrimary->onShowPrimary();
 }
 
 void GamelistView::onTransition()

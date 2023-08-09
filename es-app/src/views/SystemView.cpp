@@ -46,6 +46,7 @@ void SystemView::onShow()
     stopViewVideos();
     mFadeOpacity = 0.0f;
     mTransitionAnim = false;
+    mPrimary->onShowPrimary();
 }
 
 void SystemView::onTransition()

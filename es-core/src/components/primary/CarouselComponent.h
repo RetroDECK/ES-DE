@@ -28,6 +28,7 @@ protected:
     using List = IList<CarouselEntry, T>;
     using List::mCursor;
     using List::mEntries;
+    using List::mLastCursor;
     using List::mScrollVelocity;
     using List::mSize;
     using List::mWindow;
@@ -99,6 +100,7 @@ public:
                     unsigned int properties) override;
 
 private:
+    void onShowPrimary() override { mEntries.at(mCursor).data.item->resetComponent(); }
     void onCursorChanged(const CursorState& state) override;
     void onScroll() override
     {
@@ -192,11 +194,15 @@ private:
     unsigned int mCarouselColor;
     unsigned int mCarouselColorEnd;
     bool mColorGradientHorizontal;
+    float mTextRelativeScale;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
     unsigned int mTextSelectedColor;
     unsigned int mTextSelectedBackgroundColor;
     bool mHasTextSelectedColor;
+    bool mTextHorizontalScrolling;
+    float mTextHorizontalScrollSpeed;
+    float mTextHorizontalScrollDelay;
     std::shared_ptr<Font> mFont;
     LetterCase mLetterCase;
     LetterCase mLetterCaseAutoCollections;
@@ -262,11 +268,15 @@ CarouselComponent<T>::CarouselComponent()
     , mCarouselColor {0}
     , mCarouselColorEnd {0}
     , mColorGradientHorizontal {true}
+    , mTextRelativeScale {1.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
     , mTextSelectedColor {0x000000FF}
     , mTextSelectedBackgroundColor {0xFFFFFF00}
     , mHasTextSelectedColor {false}
+    , mTextHorizontalScrolling {false}
+    , mTextHorizontalScrollSpeed {1.0f}
+    , mTextHorizontalScrollDelay {3000.0f}
     , mFont {Font::get(FONT_SIZE_LARGE_FIXED)}
     , mLetterCase {LetterCase::NONE}
     , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
@@ -354,8 +364,9 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         auto text = std::make_shared<TextComponent>(
             entry.name, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
             glm::vec3 {0.0f, 0.0f, 0.0f},
-            glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)), 0x00000000);
-        text->setLineSpacing(mLineSpacing);
+            glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)), 0x00000000,
+            mLineSpacing, mTextRelativeScale, mTextHorizontalScrolling, mTextHorizontalScrollSpeed,
+            mTextHorizontalScrollDelay, 1.0f);
         if (!mGamelistView)
             text->setValue(entry.name);
         text->setColor(mTextColor);
@@ -654,6 +665,7 @@ template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Inpu
 
 template <typename T> void CarouselComponent<T>::update(int deltaTime)
 {
+    mEntries.at(mCursor).data.item->update(deltaTime);
     List::listUpdate(deltaTime);
     GuiComponent::update(deltaTime);
 }
@@ -1646,6 +1658,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, false,
                                (mItemScale >= 1.0f ? mItemScale : 1.0f));
 
+    if (elem->has("textRelativeScale"))
+        mTextRelativeScale = glm::clamp(elem->get<float>("textRelativeScale"), 0.2f, 1.0f);
+
     if (elem->has("textColor"))
         mTextColor = elem->get<unsigned int>("textColor");
     if (elem->has("textBackgroundColor"))
@@ -1661,6 +1676,19 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("textSelectedBackgroundColor")) {
         mTextSelectedBackgroundColor = elem->get<unsigned int>("textSelectedBackgroundColor");
         mHasTextSelectedColor = true;
+    }
+
+    if (elem->has("textHorizontalScrolling"))
+        mTextHorizontalScrolling = elem->get<bool>("textHorizontalScrolling");
+
+    if (elem->has("textHorizontalScrollSpeed")) {
+        mTextHorizontalScrollSpeed =
+            glm::clamp(elem->get<float>("textHorizontalScrollSpeed"), 0.1f, 10.0f);
+    }
+
+    if (elem->has("textHorizontalScrollDelay")) {
+        mTextHorizontalScrollDelay =
+            glm::clamp(elem->get<float>("textHorizontalScrollDelay"), 0.0f, 10.0f) * 1000.0f;
     }
 
     if (elem->has("lineSpacing"))
@@ -1763,6 +1791,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorState& state)
 {
+    if (mEntries.size() > static_cast<size_t>(mLastCursor))
+        mEntries.at(mLastCursor).data.item->resetComponent();
+
     float startPos {mEntryCamOffset};
     float posMax {static_cast<float>(mEntries.size())};
     float target {static_cast<float>(mCursor)};

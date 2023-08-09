@@ -222,6 +222,7 @@ TextCache* Font::buildTextCache(const std::string& text,
     cache->vertexLists.resize(vertMap.size());
     cache->metrics.size = {sizeText(text, lineSpacing)};
     cache->metrics.maxGlyphHeight = mMaxGlyphHeight;
+    cache->clipRegion = {0.0f, 0.0f, 0.0f, 0.0f};
 
     size_t i {0};
     for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
@@ -242,11 +243,17 @@ void Font::renderTextCache(TextCache* cache)
         return;
     }
 
+    const bool clipRegion {cache->clipRegion != glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f}};
+
     for (auto it = cache->vertexLists.begin(); it != cache->vertexLists.end(); ++it) {
         assert(*it->textureIdPtr != 0);
 
-        auto vertexList = *it;
         it->verts[0].shaderFlags = Renderer::ShaderFlags::FONT_TEXTURE;
+
+        if (clipRegion) {
+            it->verts[0].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
+            it->verts[0].clipregion = cache->clipRegion;
+        }
 
         mRenderer->bindTexture(*it->textureIdPtr);
         mRenderer->drawTriangleStrips(

@@ -29,7 +29,13 @@ public:
                   Alignment verticalAlignment = ALIGN_CENTER,
                   glm::vec3 pos = {0.0f, 0.0f, 0.0f},
                   glm::vec2 size = {0.0f, 0.0f},
-                  unsigned int bgcolor = 0x00000000);
+                  unsigned int bgcolor = 0x00000000,
+                  float lineSpacing = 1.5f,
+                  float relativeScale = 1.0f,
+                  bool horizontalScrolling = false,
+                  float scrollSpeedMultiplier = 1.0f,
+                  float scrollDelay = 1500.0f,
+                  float scrollGap = 1.5f);
 
     void setFont(const std::shared_ptr<Font>& font);
     void setUppercase(bool uppercase);
@@ -91,6 +97,7 @@ public:
     void setHorizontalScrolling(bool state) override;
     void setHorizontalScrollingSpeedMultiplier(float speed) { mScrollSpeedMultiplier = speed; }
     void setHorizontalScrollingDelay(float delay) { mScrollDelay = delay; }
+    void setHorizontalScrollingGap(float gap) { mScrollGap = gap; }
 
     void resetComponent() override
     {
@@ -143,6 +150,7 @@ private:
     Alignment mHorizontalAlignment;
     Alignment mVerticalAlignment;
     float mLineSpacing;
+    float mRelativeScale;
     bool mNoTopMargin;
     bool mSelectable;
     bool mVerticalAutoSizing;
@@ -151,6 +159,7 @@ private:
     float mScrollSpeed;
     float mScrollSpeedMultiplier;
     float mScrollDelay;
+    float mScrollGap;
     float mScrollOffset1;
     float mScrollOffset2;
     float mScrollTime;

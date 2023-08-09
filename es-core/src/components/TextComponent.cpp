@@ -30,6 +30,7 @@ TextComponent::TextComponent()
     , mHorizontalAlignment {ALIGN_LEFT}
     , mVerticalAlignment {ALIGN_CENTER}
     , mLineSpacing {1.5f}
+    , mRelativeScale {1.0f}
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
@@ -37,6 +38,7 @@ TextComponent::TextComponent()
     , mScrollSpeed {0.0f}
     , mScrollSpeedMultiplier {1.0f}
     , mScrollDelay {1500.0f}
+    , mScrollGap {1.5f}
     , mScrollOffset1 {0.0f}
     , mScrollOffset2 {0.0f}
     , mScrollTime {0.0f}
@@ -50,7 +52,13 @@ TextComponent::TextComponent(const std::string& text,
                              Alignment verticalAlignment,
                              glm::vec3 pos,
                              glm::vec2 size,
-                             unsigned int bgcolor)
+                             unsigned int bgcolor,
+                             float lineSpacing,
+                             float relativeScale,
+                             bool horizontalScrolling,
+                             float scrollSpeedMultiplier,
+                             float scrollDelay,
+                             float scrollGap)
     : mFont {nullptr}
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
@@ -66,14 +74,16 @@ TextComponent::TextComponent(const std::string& text,
     , mAutoCalcExtent {1, 1}
     , mHorizontalAlignment {horizontalAlignment}
     , mVerticalAlignment {verticalAlignment}
-    , mLineSpacing {1.5f}
+    , mLineSpacing {lineSpacing}
+    , mRelativeScale {relativeScale}
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
-    , mHorizontalScrolling {false}
+    , mHorizontalScrolling {horizontalScrolling}
     , mScrollSpeed {0.0f}
-    , mScrollSpeedMultiplier {1.0f}
-    , mScrollDelay {1500.0f}
+    , mScrollSpeedMultiplier {scrollSpeedMultiplier}
+    , mScrollDelay {scrollDelay}
+    , mScrollGap {scrollGap}
     , mScrollOffset1 {0.0f}
     , mScrollOffset2 {0.0f}
     , mScrollTime {0.0f}
@@ -81,6 +91,7 @@ TextComponent::TextComponent(const std::string& text,
     setFont(font);
     setColor(color);
     setBackgroundColor(bgcolor);
+    setHorizontalScrolling(mHorizontalScrolling);
     setText(text, false);
     setPosition(pos);
     setSize(size);
@@ -185,7 +196,8 @@ void TextComponent::setCapitalize(bool capitalize)
 
 void TextComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mThemeOpacity == 0.0f || mSize.x == 0.0f || mSize.y == 0.0f)
+    if (!isVisible() || mTextCache == nullptr || mThemeOpacity == 0.0f || mSize.x == 0.0f ||
+        mSize.y == 0.0f)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
@@ -198,34 +210,31 @@ void TextComponent::render(const glm::mat4& parentTrans)
             mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
     }
 
-    if (mHorizontalScrolling && mTextCache != nullptr) {
-        // Clip everything to be inside our bounds.
-        glm::vec3 dim {mSize.x, mSize.y, 0.0f};
-        dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
-        dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
+    float offsetX {0.0f};
 
-        const int clipRectPosX {static_cast<int>(std::round(trans[3].x))};
-        const int clipRectPosY {static_cast<int>(std::round(trans[3].y))};
-        const int clipRectSizeX {static_cast<int>(std::round(dim.x))};
-        const int clipRectSizeY {static_cast<int>(std::round(dim.y) + 1.0f)};
-
-        mRenderer->pushClipRect(glm::ivec2 {clipRectPosX, clipRectPosY},
-                                glm::ivec2 {clipRectSizeX, clipRectSizeY});
-
-        float offsetX {0.0f};
-
+    if (mHorizontalScrolling) {
         if (mTextCache->metrics.size.x < mSize.x) {
+            // This is needed for text that does not fill the entire width and thus gets aligned.
             if (mHorizontalAlignment == Alignment::ALIGN_CENTER)
-                offsetX = (mSize.x - mTextCache->metrics.size.x) / 2.0f;
+                offsetX = ((mSize.x * mRelativeScale) - mTextCache->metrics.size.x) / 2.0f;
             else if (mHorizontalAlignment == Alignment::ALIGN_RIGHT)
-                offsetX = mSize.x - mTextCache->metrics.size.x;
+                offsetX = (mSize.x * mRelativeScale) - mTextCache->metrics.size.x;
         }
+
+        if (offsetX < 0.0f)
+            offsetX = 0.0f;
+
+        // Clip the texture using a fragment shader which allows for rotation and other benefits
+        // as compared to using the pushClipRect() function.
+        mTextCache->setClipRegion(glm::vec4 {mScrollOffset1, 0.0f,
+                                             (mSize.x * mRelativeScale) + mScrollOffset1,
+                                             mTextCache->metrics.size.y});
 
         trans = glm::translate(trans, glm::vec3 {offsetX - mScrollOffset1, 0.0f, 0.0f});
     }
 
-    auto renderFunc = [this](glm::mat4 trans) {
-        if (mRenderBackground)
+    auto renderFunc = [this](glm::mat4 trans, bool secondPass) {
+        if (mRenderBackground && !secondPass)
             mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
                                 mOpacity * mThemeOpacity, mDimming);
         if (mTextCache) {
@@ -259,50 +268,73 @@ void TextComponent::render(const glm::mat4& parentTrans)
             trans = glm::translate(trans, glm::vec3 {0.0f, yOff, 0.0f});
             mRenderer->setMatrix(trans);
 
-            // Draw the text area, where the text is actually located.
             if (Settings::getInstance()->getBool("DebugText")) {
-                switch (mHorizontalAlignment) {
-                    case ALIGN_LEFT: {
-                        mRenderer->drawRect(0.0f, 0.0f, mTextCache->metrics.size.x,
-                                            mTextCache->metrics.size.y, 0x00000033, 0x00000033);
-                        break;
-                    }
-                    case ALIGN_CENTER: {
-                        mRenderer->drawRect(mHorizontalScrolling ?
-                                                0.0f :
-                                                (mSize.x - mTextCache->metrics.size.x) / 2.0f,
-                                            0.0f, mTextCache->metrics.size.x,
-                                            mTextCache->metrics.size.y, 0x00000033, 0x00000033);
-                        break;
-                    }
-                    case ALIGN_RIGHT: {
+                const float relativeScaleOffset {(mSize.x - (mSize.x * mRelativeScale)) / 2.0f};
+                if (mHorizontalScrolling && !secondPass) {
+                    if (mScrollOffset1 <= mTextCache->metrics.size.x) {
+                        const float width {mTextCache->metrics.size.x - mScrollOffset1};
                         mRenderer->drawRect(
-                            mHorizontalScrolling ? 0.0f : mSize.x - mTextCache->metrics.size.x,
-                            0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
-                            0x00000033, 0x00000033);
-                        break;
+                            mScrollOffset1 + relativeScaleOffset, 0.0f,
+                            width > mSize.x * mRelativeScale ? mSize.x * mRelativeScale : width,
+                            mTextCache->metrics.size.y, 0x00000033, 0x00000033);
                     }
-                    default: {
-                        break;
+                }
+                else if (mHorizontalScrolling && secondPass) {
+                    if ((mSize.x * mRelativeScale) - -mScrollOffset2 > 0.0f) {
+                        mRenderer->drawRect(relativeScaleOffset, 0.0f,
+                                            (mSize.x * mRelativeScale) - -mScrollOffset2,
+                                            mTextCache->metrics.size.y, 0x00000033, 0x00000033);
+                    }
+                }
+                else {
+                    switch (mHorizontalAlignment) {
+                        case ALIGN_LEFT: {
+                            mRenderer->drawRect(0.0f, 0.0f, mTextCache->metrics.size.x,
+                                                mTextCache->metrics.size.y, 0x00000033, 0x00000033);
+                            break;
+                        }
+                        case ALIGN_CENTER: {
+                            mRenderer->drawRect((mSize.x - mTextCache->metrics.size.x) / 2.0f, 0.0f,
+                                                mTextCache->metrics.size.x,
+                                                mTextCache->metrics.size.y, 0x00000033, 0x00000033);
+                            break;
+                        }
+                        case ALIGN_RIGHT: {
+                            mRenderer->drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f,
+                                                mTextCache->metrics.size.x,
+                                                mTextCache->metrics.size.y, 0x00000033, 0x00000033);
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
                     }
                 }
             }
+            // We need to adjust positioning if the relative scale multiplier is in use.
+            if (mRelativeScale < 1.0f) {
+                trans = glm::translate(
+                    trans, glm::vec3 {(mSize.x - (mSize.x * mRelativeScale)) / 2.0f, 0.0f, 0.0f});
+                mRenderer->setMatrix(trans);
+            }
+
             mFont->renderTextCache(mTextCache.get());
         }
     };
 
-    renderFunc(trans);
+    renderFunc(trans, false);
 
-    if (mHorizontalScrolling && mTextCache != nullptr && mTextCache->metrics.size.x > mSize.x) {
+    // Render again if the text has moved far enough to repeat.
+    if (mHorizontalScrolling && mTextCache->metrics.size.x > mSize.x * mRelativeScale) {
         if (mScrollOffset2 < 0.0f) {
+            mTextCache->setClipRegion(glm::vec4 {mScrollOffset2, 0.0f,
+                                                 (mSize.x * mRelativeScale) + mScrollOffset2,
+                                                 mTextCache->metrics.size.y});
             trans = glm::translate(parentTrans * getTransform(),
-                                   glm::vec3 {-mScrollOffset2, 0.0f, 0.0f});
-            renderFunc(trans);
+                                   glm::vec3 {offsetX - mScrollOffset2, 0.0f, 0.0f});
+            renderFunc(trans, true);
         }
     }
-
-    if (mHorizontalScrolling && mTextCache != nullptr)
-        mRenderer->popClipRect();
 }
 
 void TextComponent::setValue(const std::string& value)
@@ -347,9 +379,9 @@ void TextComponent::update(int deltaTime)
         mScrollOffset1 = 0.0f;
         mScrollOffset2 = 0.0f;
 
-        if (mTextCache->metrics.size.x > mSize.x) {
+        if (mTextCache->metrics.size.x > mSize.x * mRelativeScale) {
             const float scrollLength {mTextCache->metrics.size.x};
-            const float returnLength {mScrollSpeed * 1.5f / mScrollSpeedMultiplier};
+            const float returnLength {mScrollSpeed * mScrollGap / mScrollSpeedMultiplier};
             const float scrollTime {(scrollLength * 1000.0f) / mScrollSpeed};
             const float returnTime {(returnLength * 1000.0f) / mScrollSpeed};
             const float maxTime {mScrollDelay + scrollTime + returnTime};
@@ -362,7 +394,7 @@ void TextComponent::update(int deltaTime)
             mScrollOffset1 = Utils::Math::loop(mScrollDelay, scrollTime + returnTime, mScrollTime,
                                                scrollLength + returnLength);
 
-            if (mScrollOffset1 > (scrollLength - (mSize.x - returnLength)))
+            if (mScrollOffset1 > (scrollLength - (mSize.x * mRelativeScale - returnLength)))
                 mScrollOffset2 = mScrollOffset1 - (scrollLength + returnLength);
             else if (mScrollOffset2 < 0)
                 mScrollOffset2 = 0;
@@ -392,7 +424,6 @@ void TextComponent::onTextChanged()
 
     if (mFont && mAutoCalcExtent.x) {
         mSize = mFont->sizeText(text, mLineSpacing);
-        // This can happen under special circumstances like when a blank/dummy font is used.
         if (mSize.x == 0.0f)
             return;
     }
@@ -407,18 +438,20 @@ void TextComponent::onTextChanged()
     // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
     lineHeight = mFont->loadGlyphs(text + "\n") * mLineSpacing;
 
-    const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
+    const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y * mRelativeScale > lineHeight};
 
     if (mHorizontalScrolling) {
-        mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(text, 0.0f, 0.0f, mColor));
+        mTextCache = std::shared_ptr<TextCache>(
+            font->buildTextCache(text, 0.0f, 0.0f, mColor, mLineSpacing));
     }
     else if (isMultiline && !isScrollable) {
         const std::string wrappedText {
-            font->wrapText(text, mSize.x, (mVerticalAutoSizing ? 0.0f : mSize.y - lineHeight),
+            font->wrapText(text, mSize.x * mRelativeScale,
+                           (mVerticalAutoSizing ? 0.0f : (mSize.y * mRelativeScale) - lineHeight),
                            mLineSpacing, isMultiline)};
-        mTextCache = std::shared_ptr<TextCache>(
-            font->buildTextCache(wrappedText, glm::vec2 {0.0f, 0.0f}, mColor, mSize.x,
-                                 mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(
+            wrappedText, glm::vec2 {0.0f, 0.0f}, mColor, mSize.x * mRelativeScale,
+            mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else {
         mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(
@@ -563,8 +596,6 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                         glm::clamp(elem->get<float>("containerStartDelay"), 0.0f, 10.0f) * 1000.0f;
                 }
                 mHorizontalScrolling = true;
-                // Rotation can't be combined with a scrolling horizontal container.
-                mRotation = 0.0f;
             }
             else if (containerType != "vertical") {
                 LOG(LogError) << "TextComponent: Invalid theme configuration, property "

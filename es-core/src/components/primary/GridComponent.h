@@ -84,6 +84,7 @@ public:
                     unsigned int properties) override;
 
 private:
+    void onShowPrimary() override { mEntries.at(mCursor).data.item->resetComponent(); }
     void onScroll() override
     {
         if (mGamelistView)

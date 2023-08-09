@@ -39,6 +39,7 @@ public:
     virtual int size() const = 0;
 
     // Functions used by all primary components.
+    virtual void onShowPrimary() = 0;
     virtual void setCancelTransitionsCallback(const std::function<void()>& func) = 0;
     virtual void setCursorChangedCallback(const std::function<void(CursorState state)>& func) = 0;
     virtual int getCursor() = 0;
