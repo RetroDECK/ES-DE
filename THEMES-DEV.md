@@ -1443,6 +1443,10 @@ Properties:
     - A string literal to display if there is no `staticImage` or `defaultImage` property defined and if no image is found.
     - Default is the full system name.
     - This property can only be used in the `system` view as for the gamelist view the game name is always used as fallback.
+* `textRelativeScale` - type: FLOAT.
+    - This property makes it possible to size the text relative to the overall item size. If using this and also defining a text background color using `textBackgroundColor` or `textSelectedBackgroundColor` then this color will still fill the entire item size.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
@@ -1453,6 +1457,24 @@ Properties:
 * `textSelectedBackgroundColor` - type: COLOR
     - Sets the text background color for the currently selected item.
     - Default is the same value as `textBackgroundColor`
+* `textHorizontalScrolling` - type: BOOLEAN
+    - If this property is enabled then text that does not fit within the item width will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...). Using this property will automatically convert all line breaks to spaces so that a single line of text is always displayed.
+    - Default is `false`
+* `textHorizontalScrollSpeed` - type: FLOAT
+    - A relative speed for how fast to scroll the text.
+    - Minimum value is `0.1` and maximum value is `10`
+    - Default is `1`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollDelay` - type: FLOAT
+    - Delay in seconds before scrolling starts.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `3`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollGap` - type: FLOAT
+    - As the scrolling text is looped, a second copy is rendered after the first one. This property defines a relative gap value to control the distance between these two text instances.
+    - Minimum value is `0.1` and maximum value is `5`
+    - Default is `1.5`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
@@ -1770,7 +1792,8 @@ Properties:
     - Background color of the highlighted entry for the secondary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
     - Default is the same value as `selectedBackgroundColor`
 * `textHorizontalScrolling` - type: BOOLEAN
-    - If this property is enabled then text that does not fit within the element width (minus margins) will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...) if it exceeds the width.
+    - If this property is enabled then text that does not fit within the element width (minus margins) will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...). Using this property will automatically convert all line breaks to spaces so that a single line of text is always displayed.
+    - Valid values are `vertical` or `horizontal`
     - Default is `true`
 * `textHorizontalScrollSpeed` - type: FLOAT
     - A relative speed for how fast to scroll the text.
@@ -1781,6 +1804,11 @@ Properties:
     - Delay in seconds before scrolling starts.
     - Minimum value is `0` and maximum value is `10`
     - Default is `3`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollGap` - type: FLOAT
+    - As the scrolling text is looped, a second copy is rendered after the first one. This property defines a relative gap value to control the distance between these two text instances.
+    - Minimum value is `0.1` and maximum value is `5`
+    - Default is `1.5`
     - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
@@ -2434,7 +2462,7 @@ Properties:
     - Whether the text should be placed inside a scrollable container.
     - Default is `true` if `metadata` is set to `description`, otherwise `false`
 * `containerType` - type: STRING
-    - If `container` has been set, then it's possible to select between a vertically or horizontally scrolling type using this property. If choosing the horizontal container then all line breaks in the text will be automatically converted to spaces.
+    - If `container` has been set, then it's possible to select between a vertically or horizontally scrolling type using this property. If selecting the horizontal container then all line breaks in the text will be automatically converted to spaces. If selecting the vertical container then any value defined for `rotation` will be ignored as this container type can't be rotated.
     - Valid values are `vertical` or `horizontal`
     - Default is `vertical`
     - This property can only be used when `container` has been explicitly set to `true`

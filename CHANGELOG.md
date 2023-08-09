@@ -34,11 +34,13 @@
 * Improved menu system font rendering on GPUs without proper texture filtering support
 * Added a "stationary" property to all secondary elements to set them as stationary during slide transitions
 * Added a "containerType" property to the text element to select between vertical and horizontal containers
-* Added new "textHorizontalScrolling", "textHorizontalScrollSpeed" and "textHorizontalScrollDelay" textlist properties
+* Added a number of carousel and textlist properties to control horizontally scrolling text
+* Added a "textRelativeScale" property to the carousel to size text smaller than the overall item size
 * Added theme support for the "manual" metadata type for the text element
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Added support to MathUtil::md5Hash() for streaming files in chunks
 * Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
+* Added support for fragment shader clipping to Font and TextComponent instead of using glScissor
 * Added horizontal text scrolling functionality to TextComponent
 * Removed all horizontal text scrolling code from ComponentList and TextListComponent
 * Refactored TextListComponent to work more like the other primary components
