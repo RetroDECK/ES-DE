@@ -139,6 +139,7 @@ private:
     bool mHorizontalScrolling;
     float mHorizontalScrollSpeed;
     float mHorizontalScrollDelay;
+    float mTextHorizontalScrollGap;
     PrimaryAlignment mAlignment;
     float mHorizontalMargin;
     LetterCase mLetterCase;
@@ -176,6 +177,7 @@ TextListComponent<T>::TextListComponent()
     , mHorizontalScrolling {true}
     , mHorizontalScrollSpeed {1.0f}
     , mHorizontalScrollDelay {3000.0f}
+    , mTextHorizontalScrollGap {1.5f}
     , mAlignment {PrimaryAlignment::ALIGN_CENTER}
     , mHorizontalMargin {0.0f}
     , mLetterCase {LetterCase::NONE}
@@ -204,6 +206,7 @@ void TextListComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             // Set the text width to the width of the textlist to trigger horizontal scrolling.
             entry.data.entryName->setHorizontalScrollingSpeedMultiplier(mHorizontalScrollSpeed);
             entry.data.entryName->setHorizontalScrollingDelay(mHorizontalScrollDelay);
+            entry.data.entryName->setHorizontalScrollingGap(mTextHorizontalScrollGap);
             entry.data.entryName->setHorizontalScrolling(true);
             textSize.x = mSize.x - (mHorizontalMargin * 2.0f);
             entry.data.entryName->setSize(textSize);
@@ -492,6 +495,11 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("textHorizontalScrollDelay")) {
         mHorizontalScrollDelay =
             glm::clamp(elem->get<float>("textHorizontalScrollDelay"), 0.0f, 10.0f) * 1000.0f;
+    }
+
+    if (elem->has("textHorizontalScrollGap")) {
+        mTextHorizontalScrollGap =
+            glm::clamp(elem->get<float>("textHorizontalScrollGap"), 0.1f, 5.0f);
     }
 
     mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, false);

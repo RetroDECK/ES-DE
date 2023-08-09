@@ -203,6 +203,7 @@ private:
     bool mTextHorizontalScrolling;
     float mTextHorizontalScrollSpeed;
     float mTextHorizontalScrollDelay;
+    float mTextHorizontalScrollGap;
     std::shared_ptr<Font> mFont;
     LetterCase mLetterCase;
     LetterCase mLetterCaseAutoCollections;
@@ -277,6 +278,7 @@ CarouselComponent<T>::CarouselComponent()
     , mTextHorizontalScrolling {false}
     , mTextHorizontalScrollSpeed {1.0f}
     , mTextHorizontalScrollDelay {3000.0f}
+    , mTextHorizontalScrollGap {1.5f}
     , mFont {Font::get(FONT_SIZE_LARGE_FIXED)}
     , mLetterCase {LetterCase::NONE}
     , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
@@ -366,7 +368,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             glm::vec3 {0.0f, 0.0f, 0.0f},
             glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)), 0x00000000,
             mLineSpacing, mTextRelativeScale, mTextHorizontalScrolling, mTextHorizontalScrollSpeed,
-            mTextHorizontalScrollDelay, 1.0f);
+            mTextHorizontalScrollDelay, mTextHorizontalScrollGap);
         if (!mGamelistView)
             text->setValue(entry.name);
         text->setColor(mTextColor);
@@ -1689,6 +1691,11 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("textHorizontalScrollDelay")) {
         mTextHorizontalScrollDelay =
             glm::clamp(elem->get<float>("textHorizontalScrollDelay"), 0.0f, 10.0f) * 1000.0f;
+    }
+
+    if (elem->has("textHorizontalScrollGap")) {
+        mTextHorizontalScrollGap =
+            glm::clamp(elem->get<float>("textHorizontalScrollGap"), 0.1f, 5.0f);
     }
 
     if (elem->has("lineSpacing"))
