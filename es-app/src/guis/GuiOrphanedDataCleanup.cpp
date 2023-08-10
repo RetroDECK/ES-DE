@@ -726,9 +726,10 @@ void GuiOrphanedDataCleanup::cleanupCollections()
         std::ifstream configFileSource;
 
 #if defined(_WIN64)
-        configFileSource.open(Utils::String::stringToWideString(collectionFile).c_str());
+        configFileSource.open(Utils::String::stringToWideString(collectionFile).c_str(),
+                              std::ios::binary);
 #else
-        configFileSource.open(collectionFile);
+        configFileSource.open(collectionFile, std::ios::binary);
 #endif
         if (!configFileSource.good()) {
             LOG(LogError) << "Couldn't open custom collection configuration file \""

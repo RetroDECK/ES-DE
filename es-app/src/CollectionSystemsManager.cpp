@@ -155,9 +155,10 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
 
 #if defined(_WIN64)
         configFileIn.open(
-            Utils::String::stringToWideString(getCustomCollectionConfigPath(name)).c_str());
+            Utils::String::stringToWideString(getCustomCollectionConfigPath(name)).c_str(),
+            std::ios::binary);
 #else
-        configFileIn.open(getCustomCollectionConfigPath(name));
+        configFileIn.open(getCustomCollectionConfigPath(name), std::ios::binary);
 #endif
         for (std::string gameEntry; getline(configFileIn, gameEntry);) {
             std::string gamePath {Utils::String::replace(gameEntry, "%ROMPATH%", rompath)};
@@ -187,9 +188,10 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
 
 #if defined(_WIN64)
         configFileOut.open(
-            Utils::String::stringToWideString(getCustomCollectionConfigPath(name)).c_str());
+            Utils::String::stringToWideString(getCustomCollectionConfigPath(name)).c_str(),
+            std::ios::binary);
 #else
-        configFileOut.open(getCustomCollectionConfigPath(name));
+        configFileOut.open(getCustomCollectionConfigPath(name), std::ios::binary);
 #endif
 
         for (auto it = fileGameEntries.cbegin(); it != fileGameEntries.cend(); ++it)
@@ -1035,9 +1037,9 @@ void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
         std::string path {getCustomCollectionConfigPath(it->first)};
         if (Utils::FileSystem::exists(path)) {
 #if defined(_WIN64)
-            std::ifstream input(Utils::String::stringToWideString(path).c_str());
+            std::ifstream input {Utils::String::stringToWideString(path).c_str(), std::ios::binary};
 #else
-            std::ifstream input(path);
+            std::ifstream input {path, std::ios::binary};
 #endif
             for (std::string gameKey; getline(input, gameKey);) {
                 if (gameKey == gamePath) {
@@ -1283,9 +1285,9 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
     // Get configuration for this custom collection.
 
 #if defined(_WIN64)
-    std::ifstream input(Utils::String::stringToWideString(path).c_str());
+    std::ifstream input {Utils::String::stringToWideString(path).c_str(), std::ios::binary};
 #else
-    std::ifstream input(path);
+    std::ifstream input {path, std::ios::binary};
 #endif
 
     // Get all files map.
