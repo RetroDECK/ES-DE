@@ -397,6 +397,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"containerScrollSpeed", FLOAT},
        {"containerStartDelay", FLOAT},
        {"containerResetDelay", FLOAT},
+       {"containerScrollGap", FLOAT},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"horizontalAlignment", STRING},

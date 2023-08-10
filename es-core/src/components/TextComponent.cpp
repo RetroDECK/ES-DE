@@ -595,6 +595,9 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                     mScrollDelay =
                         glm::clamp(elem->get<float>("containerStartDelay"), 0.0f, 10.0f) * 1000.0f;
                 }
+                if (elem->has("containerScrollGap")) {
+                    mScrollGap = glm::clamp(elem->get<float>("containerScrollGap"), 0.1f, 5.0f);
+                }
                 mHorizontalScrolling = true;
             }
             else if (containerType != "vertical") {
