@@ -362,7 +362,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     }
 
     if (!entry.data.item) {
-        // If no item image is present, add item text as fallback.
+        // Always add the item text as fallback in case there is no image. This is also displayed
+        // when quick-jumping as textures are not loaded in this case.
         auto text = std::make_shared<TextComponent>(
             entry.name, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
             glm::vec3 {0.0f, 0.0f, 0.0f},

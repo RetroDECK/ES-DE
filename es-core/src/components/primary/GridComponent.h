@@ -192,6 +192,10 @@ private:
     unsigned int mTextSelectedColor;
     unsigned int mTextSelectedBackgroundColor;
     bool mHasTextSelectedColor;
+    bool mTextHorizontalScrolling;
+    float mTextHorizontalScrollSpeed;
+    float mTextHorizontalScrollDelay;
+    float mTextHorizontalScrollGap;
     std::shared_ptr<Font> mFont;
     LetterCase mLetterCase;
     LetterCase mLetterCaseAutoCollections;
@@ -260,6 +264,10 @@ GridComponent<T>::GridComponent()
     , mTextSelectedColor {0x000000FF}
     , mTextSelectedBackgroundColor {0xFFFFFF00}
     , mHasTextSelectedColor {false}
+    , mTextHorizontalScrolling {false}
+    , mTextHorizontalScrollSpeed {1.0f}
+    , mTextHorizontalScrollDelay {3000.0f}
+    , mTextHorizontalScrollGap {1.5f}
     , mLetterCase {LetterCase::NONE}
     , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
     , mLetterCaseCustomCollections {LetterCase::UNDEFINED}
@@ -355,14 +363,14 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
     }
 
     if (!entry.data.item) {
-        // If no item image is present, add item text as fallback.
+        // Always add the item text as fallback in case there is no image. This is also displayed
+        // when quick-jumping as textures are not loaded in this case.
         auto text = std::make_shared<TextComponent>(
             entry.name, mFont, 0x000000FF, Alignment::ALIGN_CENTER, Alignment::ALIGN_CENTER,
-            glm::vec3 {0.0f, 0.0f, 0.0f}, mItemSize * mTextRelativeScale, 0x00000000);
+            glm::vec3 {0.0f, 0.0f, 0.0f}, mItemSize * mTextRelativeScale, 0x00000000, mLineSpacing,
+            mTextRelativeScale, mTextHorizontalScrolling, mTextHorizontalScrollSpeed,
+            mTextHorizontalScrollDelay, mTextHorizontalScrollGap);
         text->setOrigin(0.5f, 0.5f);
-        text->setLineSpacing(mLineSpacing);
-        if (!mGamelistView)
-            text->setValue(entry.name);
         text->setColor(mTextColor);
         text->setBackgroundColor(mTextBackgroundColor);
         text->setRenderBackground(true);
@@ -621,6 +629,7 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
 
 template <typename T> void GridComponent<T>::update(int deltaTime)
 {
+    mEntries.at(mCursor).data.item->update(deltaTime);
     List::listUpdate(deltaTime);
     GuiComponent::update(deltaTime);
 }
@@ -1318,6 +1327,24 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mHasTextSelectedColor = true;
     }
 
+    if (elem->has("textHorizontalScrolling"))
+        mTextHorizontalScrolling = elem->get<bool>("textHorizontalScrolling");
+
+    if (elem->has("textHorizontalScrollSpeed")) {
+        mTextHorizontalScrollSpeed =
+            glm::clamp(elem->get<float>("textHorizontalScrollSpeed"), 0.1f, 10.0f);
+    }
+
+    if (elem->has("textHorizontalScrollDelay")) {
+        mTextHorizontalScrollDelay =
+            glm::clamp(elem->get<float>("textHorizontalScrollDelay"), 0.0f, 10.0f) * 1000.0f;
+    }
+
+    if (elem->has("textHorizontalScrollGap")) {
+        mTextHorizontalScrollGap =
+            glm::clamp(elem->get<float>("textHorizontalScrollGap"), 0.1f, 5.0f);
+    }
+
     if (elem->has("lineSpacing"))
         mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
 
@@ -1416,6 +1443,9 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& state)
 {
+    if (mEntries.size() > static_cast<size_t>(mLastCursor))
+        mEntries.at(mLastCursor).data.item->resetComponent();
+
     if (mColumns == 0)
         return;
 
