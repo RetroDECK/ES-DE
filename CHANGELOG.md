@@ -34,7 +34,7 @@
 * Improved menu system font rendering on GPUs without proper texture filtering support
 * Added a "stationary" property to all secondary elements to set them as stationary during slide transitions
 * Added a "containerType" property to the text element to select between vertical and horizontal containers
-* Added a number of carousel and textlist properties to control horizontally scrolling text
+* Added a number of carousel, grid, textlist and text properties to control horizontally scrolling text
 * Added a "textRelativeScale" property to the carousel to size text smaller than the overall item size
 * Added theme support for the "manual" metadata type for the text element
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
@@ -47,6 +47,8 @@
 * Added a lot more debug log output to the scraper
 * (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
 * (Windows) Improved the README.txt file for the portable release
+* (Windows) Defined UNICODE and _UNICODE in the CMake configuration to force Unicode support for the Win32 API
+* (Windows) Added proper Unicode support to the Windows Registry find rules "winregistrypath" and "winregistryvalue"
 * (macOS) Changed the minimum required OS version from 10.14 "Mojave" to 10.15 "Catalina"
 * (macOS) Completely removed support for the legacy OS build
 * Updated RapidJSON to commit a95e013b97ca6523f32da23f5095fcc9dd6067e5

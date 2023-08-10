@@ -1685,6 +1685,24 @@ Properties:
 * `textSelectedBackgroundColor` - type: COLOR
     - Sets the text background color for the currently selected item.
     - Default is the same value as `textBackgroundColor`
+* `textHorizontalScrolling` - type: BOOLEAN
+    - If this property is enabled then text that does not fit within the item width will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...). Using this property will automatically convert all line breaks to spaces so that a single line of text is always displayed.
+    - Default is `false`
+* `textHorizontalScrollSpeed` - type: FLOAT
+    - A relative speed for how fast to scroll the text.
+    - Minimum value is `0.1` and maximum value is `10`
+    - Default is `1`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollDelay` - type: FLOAT
+    - Delay in seconds before scrolling starts.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `3`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollGap` - type: FLOAT
+    - As the scrolling text is looped, a second copy is rendered after the first one. This property defines a relative gap value to control the distance between these two text instances.
+    - Minimum value is `0.1` and maximum value is `5`
+    - Default is `1.5`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
@@ -2483,6 +2501,11 @@ Properties:
     - Minimum value is `0` and maximum value is `20`
     - Default is `7`
     - This property can only be used when `containerType` is `vertical`
+* `containerScrollGap` - type: FLOAT
+    - As horizontally scrolling text is looped, a second copy is rendered after the first one. This property defines a relative gap value to control the distance between these two text instances.
+    - Minimum value is `0.1` and maximum value is `5`
+    - Default is `1.5`
+    - This property can only be used when `containerType` is `horizontal`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
