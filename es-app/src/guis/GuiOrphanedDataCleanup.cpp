@@ -726,10 +726,9 @@ void GuiOrphanedDataCleanup::cleanupCollections()
         std::ifstream configFileSource;
 
 #if defined(_WIN64)
-        configFileSource.open(Utils::String::stringToWideString(collectionFile).c_str(),
-                              std::ios::binary);
+        configFileSource.open(Utils::String::stringToWideString(collectionFile).c_str());
 #else
-        configFileSource.open(collectionFile, std::ios::binary);
+        configFileSource.open(collectionFile);
 #endif
         if (!configFileSource.good()) {
             LOG(LogError) << "Couldn't open custom collection configuration file \""
@@ -807,9 +806,10 @@ void GuiOrphanedDataCleanup::cleanupCollections()
             else {
                 std::ofstream configFileTarget;
 #if defined(_WIN64)
-                configFileTarget.open(Utils::String::stringToWideString(tempFile).c_str());
+                configFileTarget.open(Utils::String::stringToWideString(tempFile).c_str(),
+                                      std::ios::binary);
 #else
-                configFileTarget.open(tempFile);
+                configFileTarget.open(tempFile, std::ios::binary);
 #endif
                 if (!configFileTarget.good()) {
                     LOG(LogError) << "Couldn't write to temporary collection configuration file \""

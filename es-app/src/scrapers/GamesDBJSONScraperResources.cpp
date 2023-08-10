@@ -165,7 +165,7 @@ int TheGamesDBJSONRequestResources::loadResource(std::unordered_map<int, std::st
                                                  const std::string& resource_name,
                                                  const std::string& file_name)
 {
-    std::ifstream fin {file_name, std::ios::binary};
+    std::ifstream fin {file_name};
     if (!fin.good())
         return 1;
 
