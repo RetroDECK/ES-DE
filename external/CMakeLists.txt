@@ -24,14 +24,9 @@ endif()
 unset(CMAKE_CXX_FLAGS)
 unset(CMAKE_EXE_LINKER_FLAGS)
 
-if(WIN32)
-    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-        # Disable DLL interface warnings.
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251")
-    else()
-        # Strip the DLL files when building with MinGW.
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
-    endif()
+# Strip the DLL files when building with MinGW.
+if(WIN32 AND NOT CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
 endif()
 
 if (WIN32)
@@ -41,6 +36,11 @@ else()
 endif()
 
 add_subdirectory(lunasvg EXCLUDE_FROM_ALL)
+
+# Disable LunaSVG DLL interface warnings and narrowing conversion warnings.
+if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+    target_compile_options(lunasvg PRIVATE "/wd4251" "/wd4267")
+endif()
 
 # Disable threading support for rlottie as this functionality actually leads to far worse
 # performance. As well there is a bug on Windows that makes rlottie hang forever on application
@@ -53,14 +53,14 @@ if(EMSCRIPTEN)
     set(CMAKE_CXX_FLAGS -pthread)
 endif()
 
+add_subdirectory(rlottie EXCLUDE_FROM_ALL)
+
 # rlottie generates a lot of annoying compiler warnings that we don't need to show.
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4244 /wd4267 /wd4530 /wd4996")
+    target_compile_options(rlottie PRIVATE "/wd4244" "/wd4251" "/wd4263" "/wd4334" "/wd4267" "/wd4530" "/wd4996")
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w")
+    target_compile_options(rlottie PRIVATE "-w")
 endif()
-
-add_subdirectory(rlottie EXCLUDE_FROM_ALL)
 
 # Build LunaSVG before rlottie.
 add_dependencies(rlottie lunasvg)
