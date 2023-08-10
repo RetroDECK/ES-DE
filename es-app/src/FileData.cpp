@@ -1731,15 +1731,15 @@ const std::string FileData::findEmulatorPath(std::string& command)
         DWORD pathSize {1024};
 
         // First look in HKEY_CURRENT_USER.
-        keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER,
-                                 Utils::String::stringToWideString(registryKeyPath).c_str(), 0,
-                                 KEY_QUERY_VALUE, &registryKey);
+        keyStatus = RegOpenKeyExW(HKEY_CURRENT_USER,
+                                  Utils::String::stringToWideString(registryKeyPath).c_str(), 0,
+                                  KEY_QUERY_VALUE, &registryKey);
 
         // If not found, then try in HKEY_LOCAL_MACHINE.
         if (keyStatus != ERROR_SUCCESS) {
-            keyStatus = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
-                                     Utils::String::stringToWideString(registryKeyPath).c_str(), 0,
-                                     KEY_QUERY_VALUE, &registryKey);
+            keyStatus = RegOpenKeyExW(HKEY_LOCAL_MACHINE,
+                                      Utils::String::stringToWideString(registryKeyPath).c_str(), 0,
+                                      KEY_QUERY_VALUE, &registryKey);
         }
 
         // If the key exists, then try to retrieve its default value.
@@ -1792,22 +1792,22 @@ const std::string FileData::findEmulatorPath(std::string& command)
         DWORD pathSize {1024};
 
         // First look in HKEY_CURRENT_USER.
-        keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER,
-                                 Utils::String::stringToWideString(registryValueKey).c_str(), 0,
-                                 KEY_QUERY_VALUE, &registryKey);
+        keyStatus = RegOpenKeyExW(HKEY_CURRENT_USER,
+                                  Utils::String::stringToWideString(registryValueKey).c_str(), 0,
+                                  KEY_QUERY_VALUE, &registryKey);
 
         // If not found, then try in HKEY_LOCAL_MACHINE.
         if (keyStatus != ERROR_SUCCESS) {
-            keyStatus = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
-                                     Utils::String::stringToWideString(registryValueKey).c_str(), 0,
-                                     KEY_QUERY_VALUE, &registryKey);
+            keyStatus = RegOpenKeyExW(HKEY_LOCAL_MACHINE,
+                                      Utils::String::stringToWideString(registryValueKey).c_str(),
+                                      0, KEY_QUERY_VALUE, &registryKey);
         }
 
         // If the key exists, then try to retrieve the defined value.
         if (keyStatus == ERROR_SUCCESS) {
-            pathStatus = RegGetValue(registryKey, nullptr,
-                                     Utils::String::stringToWideString(registryValue).c_str(),
-                                     RRF_RT_REG_SZ, nullptr, &path[0], &pathSize);
+            pathStatus = RegGetValueW(registryKey, nullptr,
+                                      Utils::String::stringToWideString(registryValue).c_str(),
+                                      RRF_RT_REG_SZ, nullptr, &path[0], &pathSize);
             path.erase(std::find(path.begin(), path.end(), '\0'), path.end());
         }
         else {
