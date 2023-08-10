@@ -1727,23 +1727,27 @@ const std::string FileData::findEmulatorPath(std::string& command)
         HKEY registryKey;
         LSTATUS keyStatus {-1};
         LSTATUS pathStatus {-1};
-        char registryPath[1024] {0};
+        std::wstring registryPath(1024, 0);
         DWORD pathSize {1024};
 
         // First look in HKEY_CURRENT_USER.
-        keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER, registryKeyPath.c_str(), 0, KEY_QUERY_VALUE,
-                                 &registryKey);
+        keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER,
+                                 Utils::String::stringToWideString(registryKeyPath).c_str(), 0,
+                                 KEY_QUERY_VALUE, &registryKey);
 
         // If not found, then try in HKEY_LOCAL_MACHINE.
         if (keyStatus != ERROR_SUCCESS) {
-            keyStatus = RegOpenKeyEx(HKEY_LOCAL_MACHINE, registryKeyPath.c_str(), 0,
+            keyStatus = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+                                     Utils::String::stringToWideString(registryKeyPath).c_str(), 0,
                                      KEY_QUERY_VALUE, &registryKey);
         }
 
         // If the key exists, then try to retrieve its default value.
         if (keyStatus == ERROR_SUCCESS) {
             pathStatus = RegGetValue(registryKey, nullptr, nullptr, RRF_RT_REG_SZ, nullptr,
-                                     &registryPath, &pathSize);
+                                     &registryPath[0], &pathSize);
+            registryPath.erase(std::find(registryPath.begin(), registryPath.end(), '\0'),
+                               registryPath.end());
         }
         else {
             RegCloseKey(registryKey);
@@ -1753,9 +1757,10 @@ const std::string FileData::findEmulatorPath(std::string& command)
         // That a value was found does not guarantee that the emulator binary actually exists,
         // so check for that as well.
         if (pathStatus == ERROR_SUCCESS) {
-            if (Utils::FileSystem::isRegularFile(registryPath) ||
-                Utils::FileSystem::isSymlink(registryPath)) {
-                exePath = Utils::FileSystem::getEscapedPath(registryPath);
+            if (Utils::FileSystem::isRegularFile(Utils::String::wideStringToString(registryPath)) ||
+                Utils::FileSystem::isSymlink(Utils::String::wideStringToString(registryPath))) {
+                exePath = Utils::FileSystem::getEscapedPath(
+                    Utils::String::wideStringToString(registryPath));
                 command.replace(startPos, endPos - startPos + 1, exePath);
                 RegCloseKey(registryKey);
                 return exePath;
@@ -1783,43 +1788,48 @@ const std::string FileData::findEmulatorPath(std::string& command)
         HKEY registryKey;
         LSTATUS keyStatus {-1};
         LSTATUS pathStatus {-1};
-        char path[1024] {0};
+        std::wstring path(1024, 0);
         DWORD pathSize {1024};
 
         // First look in HKEY_CURRENT_USER.
-        keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER, registryValueKey.c_str(), 0, KEY_QUERY_VALUE,
-                                 &registryKey);
+        keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER,
+                                 Utils::String::stringToWideString(registryValueKey).c_str(), 0,
+                                 KEY_QUERY_VALUE, &registryKey);
 
         // If not found, then try in HKEY_LOCAL_MACHINE.
         if (keyStatus != ERROR_SUCCESS) {
-            keyStatus = RegOpenKeyEx(HKEY_LOCAL_MACHINE, registryValueKey.c_str(), 0,
+            keyStatus = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+                                     Utils::String::stringToWideString(registryValueKey).c_str(), 0,
                                      KEY_QUERY_VALUE, &registryKey);
         }
 
         // If the key exists, then try to retrieve the defined value.
         if (keyStatus == ERROR_SUCCESS) {
-            pathStatus =
-                RegGetValue(registryKey, nullptr, reinterpret_cast<LPCSTR>(registryValue.c_str()),
-                            RRF_RT_REG_SZ, nullptr, &path, &pathSize);
+            pathStatus = RegGetValue(registryKey, nullptr,
+                                     Utils::String::stringToWideString(registryValue).c_str(),
+                                     RRF_RT_REG_SZ, nullptr, &path[0], &pathSize);
+            path.erase(std::find(path.begin(), path.end(), '\0'), path.end());
         }
         else {
             RegCloseKey(registryKey);
             continue;
         }
 
-        if (strlen(path) == 0) {
+        if (path.empty()) {
             RegCloseKey(registryKey);
             continue;
         }
 
         if (!appendString.empty())
-            strncat_s(path, 1024, appendString.c_str(), appendString.length());
+            path.append(Utils::String::stringToWideString(appendString));
 
         // That a value was found does not guarantee that the emulator binary actually exists,
         // so check for that as well.
         if (pathStatus == ERROR_SUCCESS) {
-            if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
-                exePath = Utils::FileSystem::getEscapedPath(path);
+            if (Utils::FileSystem::isRegularFile(Utils::String::wideStringToString(path)) ||
+                Utils::FileSystem::isSymlink(Utils::String::wideStringToString(path))) {
+                exePath =
+                    Utils::FileSystem::getEscapedPath(Utils::String::wideStringToString(path));
                 command.replace(startPos, endPos - startPos + 1, exePath);
                 RegCloseKey(registryKey);
                 return exePath;
