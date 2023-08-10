@@ -12,6 +12,8 @@ if(WIN32)
     set(POPPLER_CPP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../external/poppler/Library/include/poppler/cpp)
     if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         set(POPPLER_CPP_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/poppler-cpp.lib)
+        # Disable DLL interface warnings.
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251")
     else()
         set(POPPLER_CPP_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/libpoppler-cpp-0.dll)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -municode")
