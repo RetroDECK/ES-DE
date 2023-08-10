@@ -276,6 +276,8 @@ endif()
 
 if(WIN32)
     set(BUNDLED_CERTS ON)
+    add_compile_definitions(UNICODE)
+    add_compile_definitions(_UNICODE)
 endif()
 
 #---------------------------------------------------------------------------------------------------
