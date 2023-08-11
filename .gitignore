@@ -69,9 +69,6 @@ emulationstation-de*.rpm
 EmulationStation-DE*.dmg
 EmulationStation-DE*.exe
 
-# TODO
-TODO.md
-
 # macOS
 .DS_Store
 
@@ -86,6 +83,12 @@ lunasvg.pdb
 rlottie.exp
 rlottie.ilk
 rlottie.pdb
+
+# Jom
+*.vcxproj
+*.vcxproj.filters
+*.sln
+*.manifest
 
 # Eclipse
 .cproject
