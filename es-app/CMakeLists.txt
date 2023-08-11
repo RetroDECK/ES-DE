@@ -119,9 +119,14 @@ endif()
 # OS-specific installation and package generation setup.
 
 # Define target.
-if(APPLE OR WIN32)
+if(APPLE)
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_executable(EmulationStation ${ES_SOURCES} ${ES_HEADERS})
+    target_link_libraries(EmulationStation ${COMMON_LIBRARIES} es-core)
+    set_target_properties(EmulationStation PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
+elseif(WIN32)
+    include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    add_executable(EmulationStation WIN32 ${ES_SOURCES} ${ES_HEADERS})
     target_link_libraries(EmulationStation ${COMMON_LIBRARIES} es-core)
     set_target_properties(EmulationStation PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
 else()

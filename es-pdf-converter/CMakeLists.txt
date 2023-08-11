@@ -26,7 +26,7 @@ else()
 endif()
 
 include_directories(${POPPLER_CPP_INCLUDE_DIR})
-add_executable(es-pdf-convert ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+add_executable(es-pdf-convert WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 target_link_libraries(es-pdf-convert ${POPPLER_CPP_LIBRARY})
 
 if(WIN32)
