@@ -894,7 +894,6 @@ void Window::renderScreensaver()
 void Window::startMediaViewer(FileData* game)
 {
     if (mMediaViewer) {
-        stopInfoPopup();
         if (mMediaViewer->startMediaViewer(game)) {
             setAllowTextScrolling(false);
             setAllowFileAnimation(false);

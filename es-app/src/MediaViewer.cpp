@@ -52,6 +52,8 @@ bool MediaViewer::startMediaViewer(FileData* game)
     if (!mHasVideo && !mHasImages)
         return false;
 
+    Window::getInstance()->stopInfoPopup();
+
     HelpStyle style;
     style.font = Font::get(FONT_SIZE_MINI);
     style.origin = {0.5f, 0.5f};
