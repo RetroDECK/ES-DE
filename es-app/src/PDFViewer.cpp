@@ -244,9 +244,6 @@ bool PDFViewer::getDocumentInfo()
         return false;
     }
 
-    // Close process and thread handles.
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
     CloseHandle(childStdoutWrite);
 
     std::array<char, 512> buffer {};
@@ -268,6 +265,18 @@ bool PDFViewer::getDocumentInfo()
     CloseHandle(childStdoutRead);
     WaitForSingleObject(pi.hThread, INFINITE);
     WaitForSingleObject(pi.hProcess, INFINITE);
+
+    DWORD exitCode {0};
+    if (GetExitCodeProcess(pi.hProcess, &exitCode) && exitCode != 0) {
+        LOG(LogError) << "Couldn't read PDF document information";
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+        return false;
+    }
+
+    // Close process and thread handles.
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
 #else
     FILE* commandPipe;
     std::array<char, 512> buffer {};
