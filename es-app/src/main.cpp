@@ -88,76 +88,55 @@ namespace
 } // namespace
 
 #if defined(_WIN64)
-// Console output for Windows. The handling of consoles is a mess on this operating system,
-// and this is the best solution I could find. EmulationStation is built using the WINDOWS
-// subsystem (using the -mwindows compiler flag). The idea is to attach to or allocate a new
-// console as needed. However some console types such as the 'Git Bash' shell simply doesn't
-// work properly. Windows thinks it's attaching to a console but is unable to redirect the
-// standard input and output. Output also can't be redirected or piped by the user for any
-// console type and PowerShell behaves quite strange. Still, it works well enough to be
-// somewhat usable, at least for the moment. If the allocConsole argument is set to true
-// and there is no console available, a new console window will be spawned.
-win64ConsoleType outputToConsole(bool allocConsole)
+// As we link using the WINDOWS subsystem there is no console allocated on application startup.
+// As such we'll attempt to attach to a parent console, and if this fails it probably means we've
+// not been started from the command line. In this case there is no need to redirect anything.
+// Note that some console types such as the "Git Bash" shell simply don't work properly. Windows
+// thinks it's attaching to a console but is unable to redirect the standard input and output.
+// Output also can't be redirected or piped by the user for any console type, and PowerShell
+// behaves quite strange. Still it works well enough to be somewhat usable.
+void outputToConsole()
 {
     HANDLE outputHandle {nullptr};
     HWND consoleWindow {nullptr};
-    win64ConsoleType consoleType {NO_CONSOLE};
 
     // Try to attach to a parent console process.
     if (AttachConsole(ATTACH_PARENT_PROCESS))
         outputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
     // If there is a parent console process, then attempt to retrieve its handle.
-    if (outputHandle != INVALID_HANDLE_VALUE && outputHandle != nullptr) {
+    if (outputHandle != INVALID_HANDLE_VALUE && outputHandle != nullptr)
         consoleWindow = GetConsoleWindow();
-        consoleType = PARENT_CONSOLE;
-    }
 
-    // If we couldn't retrieve the handle, it means we need to allocate a new console window.
-    if (!consoleWindow && allocConsole) {
-        AllocConsole();
-        consoleType = ALLOCATED_CONSOLE;
-    }
+    // If we couldn't retrieve the handle, then we're probably not running from a console.
+    if (!consoleWindow)
+        return;
 
-    // If we are attached to the parent console or we have opened a new console window,
-    // then redirect stdin, stdout and stderr accordingly.
-    if (consoleType == PARENT_CONSOLE || consoleType == ALLOCATED_CONSOLE) {
-        FILE* fp {nullptr};
-        freopen_s(&fp, "CONIN$", "rb", stdin);
-        freopen_s(&fp, "CONOUT$", "wb", stdout);
-        setvbuf(stdout, 0, _IONBF, 0);
-        freopen_s(&fp, "CONOUT$", "wb", stderr);
-        setvbuf(stderr, 0, _IONBF, 0);
+    // Redirect stdin, stdout and stderr to the console window.
+    FILE* fp {nullptr};
+    freopen_s(&fp, "CONIN$", "r", stdin);
+    freopen_s(&fp, "CONOUT$", "w", stdout);
+    setvbuf(stdout, 0, _IONBF, 0);
+    freopen_s(&fp, "CONOUT$", "w", stderr);
+    setvbuf(stderr, 0, _IONBF, 0);
 
-        // Point the standard streams to the console.
-        std::ios::sync_with_stdio(true);
+    // Point the standard streams to the console.
+    std::ios::sync_with_stdio(true);
 
-        // Clear the error state for each standard stream.
-        std::wcout.clear();
-        std::cout.clear();
-        std::wcerr.clear();
-        std::cerr.clear();
-        std::wcin.clear();
-        std::cin.clear();
-
-        std::cout << "\n";
-    }
-
-    return consoleType;
+    // Clear the error state for each standard stream.
+    std::wcout.clear();
+    std::cout.clear();
+    std::wcerr.clear();
+    std::cerr.clear();
+    std::wcin.clear();
+    std::cin.clear();
 }
 #endif
 
-bool parseArgs(int argc, char* argv[])
+bool parseArguments(const std::vector<std::string>& arguments)
 {
-    Utils::FileSystem::setExePath(argv[0]);
-
-#if defined(_WIN64)
-    // Print any command line output to the console.
-    if (argc > 1)
-        outputToConsole(false);
-#endif
-
-    std::string portableFilePath {Utils::FileSystem::getExePath() + "/portable.txt"};
+    Utils::FileSystem::setExePath(arguments[0]);
+    const std::string portableFilePath {Utils::FileSystem::getExePath() + "/portable.txt"};
 
     // This is primarily intended for portable ES-DE installations on Windows (for example
     // placed on a USB memory stick) but it may be usable for other operating systems too.
@@ -190,7 +169,6 @@ bool parseArgs(int argc, char* argv[])
             else if (homePath.size() == 2 && Utils::FileSystem::driveExists(homePath))
                 homeExists = true;
 #endif
-
             if (!homeExists) {
                 std::cerr << "Error: Defined home path \"" << homePath << "\" does not exist\n";
             }
@@ -206,64 +184,65 @@ bool parseArgs(int argc, char* argv[])
         portableFile.close();
     }
 
-    // We need to process --home before any call to Settings::getInstance(),
-    // because settings are loaded from the home path.
-    for (int i {1}; i < argc; ++i) {
-        if (strcmp(argv[i], "--home") == 0) {
-            if (i >= argc - 1) {
+    // We need to process --home before any call to Settings::getInstance(), because
+    // settings are loaded from the home path.
+    for (size_t i {1}; i < arguments.size(); ++i) {
+        if (arguments[i] == "--home") {
+            if (i >= arguments.size() - 1) {
                 std::cerr << "Error: No home path supplied with \'--home'\n";
                 return false;
             }
 #if defined(_WIN64)
-            if (!Utils::FileSystem::exists(argv[i + 1]) &&
-                (!Utils::FileSystem::driveExists(argv[i + 1]))) {
+            if (!Utils::FileSystem::exists(arguments[i + 1]) &&
+                (!Utils::FileSystem::driveExists(arguments[i + 1]))) {
 #else
-            if (!Utils::FileSystem::exists(argv[i + 1])) {
+            if (!Utils::FileSystem::exists(arguments[i + 1])) {
 #endif
-                std::cerr << "Error: Home path \'" << argv[i + 1] << "\' does not exist\n";
+                std::cerr << "Error: Home path \'" << arguments[i + 1] << "\' does not exist\n";
                 return false;
             }
-            if (Utils::FileSystem::isRegularFile(argv[i + 1])) {
-                std::cerr << "Error: Home path \'" << argv[i + 1]
+            if (Utils::FileSystem::isRegularFile(arguments[i + 1])) {
+                std::cerr << "Error: Home path \'" << arguments[i + 1]
                           << "\' is a file and not a directory\n";
                 return false;
             }
-            Utils::FileSystem::setHomePath(argv[i + 1]);
+            Utils::FileSystem::setHomePath(arguments[i + 1]);
             portableMode = false;
             break;
         }
     }
 
-    for (int i {1}; i < argc; ++i) {
+    for (size_t i {1}; i < arguments.size(); ++i) {
         // Skip past --home flag as we already processed it.
-        if (strcmp(argv[i], "--home") == 0) {
+        if (arguments[i] == "--home") {
             ++i; // Skip the argument value.
             continue;
         }
-        if (strcmp(argv[i], "--display") == 0) {
-            if (i >= argc - 1 || atoi(argv[i + 1]) < 1 || atoi(argv[i + 1]) > 4) {
+        if (arguments[i] == "--display") {
+            if (i >= arguments.size() - 1 || stoi(arguments[i + 1]) < 1 ||
+                stoi(arguments[i + 1]) > 4) {
                 std::cerr << "Error: Invalid display index supplied\n";
                 return false;
             }
-            int DisplayIndex {atoi(argv[i + 1])};
-            Settings::getInstance()->setInt("DisplayIndex", DisplayIndex);
+            const int displayIndex {stoi(arguments[i + 1])};
+            Settings::getInstance()->setInt("DisplayIndex", displayIndex);
             settingsNeedSaving = true;
             ++i;
         }
-        else if (strcmp(argv[i], "--resolution") == 0) {
-            if (i >= argc - 2) {
+        else if (arguments[i] == "--resolution") {
+            if (i >= arguments.size() - 2) {
                 std::cerr << "Error: Invalid resolution values supplied\n";
                 return false;
             }
-            std::string widthArg {argv[i + 1]};
-            std::string heightArg {argv[i + 2]};
+            const std::string widthArg {arguments[i + 1]};
+            const std::string heightArg {arguments[i + 2]};
             if (widthArg.find_first_not_of("0123456789") != std::string::npos ||
                 heightArg.find_first_not_of("0123456789") != std::string::npos) {
                 std::cerr << "Error: Invalid resolution values supplied\n";
                 return false;
             }
-            int width {atoi(argv[i + 1])};
-            int height {atoi(argv[i + 2])};
+            const int width {stoi(arguments[i + 1])};
+            const int height {stoi(arguments[i + 2])};
             if (width < 224 || height < 224 || width > 7680 || height > 7680 ||
                 height < width / 4 || width < height / 2) {
                 std::cerr << "Error: Unsupported resolution " << width << "x" << height
@@ -274,38 +253,38 @@ bool parseArgs(int argc, char* argv[])
             Settings::getInstance()->setInt("ScreenHeight", height);
             i += 2;
         }
-        else if (strcmp(argv[i], "--screenoffset") == 0) {
-            if (i >= argc - 2) {
+        else if (arguments[i] == "--screenoffset") {
+            if (i >= arguments.size() - 2) {
                 std::cerr << "Error: Invalid screenoffset values supplied\n";
                 return false;
             }
-            int x {atoi(argv[i + 1])};
-            int y {atoi(argv[i + 2])};
+            const int x {stoi(arguments[i + 1])};
+            const int y {stoi(arguments[i + 2])};
             Settings::getInstance()->setInt("ScreenOffsetX", x);
             Settings::getInstance()->setInt("ScreenOffsetY", y);
             i += 2;
         }
-        else if (strcmp(argv[i], "--screenrotate") == 0) {
-            if (i >= argc - 1) {
+        else if (arguments[i] == "--screenrotate") {
+            if (i >= arguments.size() - 1) {
                 std::cerr << "Error: No screenrotate value supplied\n";
                 return false;
             }
-            const std::string rotateValue {argv[i + 1]};
+            const std::string rotateValue {arguments[i + 1]};
             if (rotateValue != "0" && rotateValue != "90" && rotateValue != "180" &&
                 rotateValue != "270") {
                 std::cerr << "Error: Invalid screenrotate value supplied\n";
                 return false;
             }
-            Settings::getInstance()->setInt("ScreenRotate", atoi(argv[i + 1]));
+            Settings::getInstance()->setInt("ScreenRotate", stoi(arguments[i + 1]));
             settingsNeedSaving = true;
             ++i;
         }
-        else if (strcmp(argv[i], "--fullscreen-padding") == 0) {
-            if (i >= argc - 1) {
+        else if (arguments[i] == "--fullscreen-padding") {
+            if (i >= arguments.size() - 1) {
                 std::cerr << "Error: No fullscreen-padding value supplied\n";
                 return false;
             }
-            std::string fullscreenPaddingValue {argv[i + 1]};
+            std::string fullscreenPaddingValue {arguments[i + 1]};
             if (fullscreenPaddingValue != "on" && fullscreenPaddingValue != "off" &&
                 fullscreenPaddingValue != "1" && fullscreenPaddingValue != "0") {
                 std::cerr << "Error: Invalid fullscreen-padding value supplied\n";
@@ -316,12 +295,12 @@ bool parseArgs(int argc, char* argv[])
             Settings::getInstance()->setBool("FullscreenPadding", fullscreenPadding);
             ++i;
         }
-        else if (strcmp(argv[i], "--vsync") == 0) {
-            if (i >= argc - 1) {
+        else if (arguments[i] == "--vsync") {
+            if (i >= arguments.size() - 1) {
                 std::cerr << "Error: No VSync value supplied\n";
                 return false;
             }
-            std::string vSyncValue {argv[i + 1]};
+            std::string vSyncValue {arguments[i + 1]};
             if (vSyncValue != "on" && vSyncValue != "off" && vSyncValue != "1" &&
                 vSyncValue != "0") {
                 std::cerr << "Error: Invalid VSync value supplied\n";
@@ -331,25 +310,25 @@ bool parseArgs(int argc, char* argv[])
             Settings::getInstance()->setBool("VSync", vSync);
             ++i;
         }
-        else if (strcmp(argv[i], "--max-vram") == 0) {
-            if (i >= argc - 1) {
+        else if (arguments[i] == "--max-vram") {
+            if (i >= arguments.size() - 1) {
                 std::cerr << "Error: Invalid VRAM value supplied\n";
                 return false;
             }
-            const int maxVRAM {atoi(argv[i + 1])};
+            const int maxVRAM {stoi(arguments[i + 1])};
             Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
             settingsNeedSaving = true;
             ++i;
         }
 #if !defined(USE_OPENGLES)
-        else if (strcmp(argv[i], "--anti-aliasing") == 0) {
+        else if (arguments[i] == "--anti-aliasing") {
             bool invalidValue {false};
             int antiAlias {0};
-            if (i >= argc - 1) {
+            if (i >= arguments.size() - 1) {
                 invalidValue = true;
             }
             else {
-                antiAlias = atoi(argv[i + 1]);
+                antiAlias = stoi(arguments[i + 1]);
                 if (antiAlias != 0 && antiAlias != 2 && antiAlias != 4)
                     invalidValue = true;
             }
@@ -362,55 +341,55 @@ bool parseArgs(int argc, char* argv[])
             ++i;
         }
 #endif
-        else if (strcmp(argv[i], "--no-splash") == 0) {
+        else if (arguments[i] == "--no-splash") {
             Settings::getInstance()->setBool("SplashScreen", false);
         }
 #if defined(APPLICATION_UPDATER)
-        else if (strcmp(argv[i], "--no-update-check") == 0) {
+        else if (arguments[i] == "--no-update-check") {
             noUpdateCheck = true;
         }
 #endif
-        else if (strcmp(argv[i], "--gamelist-only") == 0) {
+        else if (arguments[i] == "--gamelist-only") {
             Settings::getInstance()->setBool("ParseGamelistOnly", true);
             settingsNeedSaving = true;
         }
-        else if (strcmp(argv[i], "--ignore-gamelist") == 0) {
+        else if (arguments[i] == "--ignore-gamelist") {
             Settings::getInstance()->setBool("IgnoreGamelist", true);
         }
-        else if (strcmp(argv[i], "--show-hidden-files") == 0) {
+        else if (arguments[i] == "--show-hidden-files") {
             Settings::getInstance()->setBool("ShowHiddenFiles", true);
             settingsNeedSaving = true;
         }
-        else if (strcmp(argv[i], "--show-hidden-games") == 0) {
+        else if (arguments[i] == "--show-hidden-games") {
             Settings::getInstance()->setBool("ShowHiddenGames", true);
             settingsNeedSaving = true;
         }
-        else if (strcmp(argv[i], "--force-full") == 0) {
+        else if (arguments[i] == "--force-full") {
             Settings::getInstance()->setString("UIMode", "full");
             Settings::getInstance()->setBool("ForceFull", true);
         }
-        else if (strcmp(argv[i], "--force-kiosk") == 0) {
+        else if (arguments[i] == "--force-kiosk") {
             Settings::getInstance()->setBool("ForceKiosk", true);
         }
-        else if (strcmp(argv[i], "--force-kid") == 0) {
+        else if (arguments[i] == "--force-kid") {
             Settings::getInstance()->setBool("ForceKid", true);
         }
-        else if (strcmp(argv[i], "--force-input-config") == 0) {
+        else if (arguments[i] == "--force-input-config") {
             forceInputConfig = true;
         }
-        else if (strcmp(argv[i], "--create-system-dirs") == 0) {
+        else if (arguments[i] == "--create-system-dirs") {
             createSystemDirectories = true;
         }
-        else if (strcmp(argv[i], "--debug") == 0) {
+        else if (arguments[i] == "--debug") {
             Settings::getInstance()->setBool("Debug", true);
             Log::setReportingLevel(LogDebug);
         }
-        else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0) {
+        else if (arguments[i] == "--version" || arguments[i] == "-v") {
             std::cout << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << " (r"
                       << PROGRAM_RELEASE_NUMBER << ")\n";
             return false;
         }
-        else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
+        else if (arguments[i] == "--help" || arguments[i] == "-h") {
             std::cout <<
                 // clang-format off
 "Usage: emulationstation [options]\n"
@@ -444,13 +423,13 @@ bool parseArgs(int argc, char* argv[])
 "  --version, -v                         Display version information\n"
 "  --help, -h                            Summon a sentient, angry tuba\n";
             // clang-format on
-            return false; // Exit after printing help.
+            return false;
         }
         else {
-            std::string argv_unknown = argv[i];
-            std::cout << "Unknown option '" << argv_unknown << "'.\n";
+            const std::string argUnknown {arguments[i]};
+            std::cout << "Unknown option '" << argUnknown << "'.\n";
             std::cout << "Try 'emulationstation --help' for more information.\n";
-            return false; // Exit after printing message.
+            return false;
         }
     }
 
@@ -477,7 +456,7 @@ bool checkApplicationHomeDirectory()
 #endif
         Utils::FileSystem::createDirectory(applicationHome);
         if (!Utils::FileSystem::exists(applicationHome)) {
-            std::cerr << "Fatal error: Couldn't create directory, permission problems?\n";
+            std::cerr << "Error: Couldn't create directory, permission problems?\n";
             return false;
         }
     }
@@ -570,18 +549,26 @@ int main(int argc, char* argv[])
     system(chmodCommand.c_str());
 #endif
 
-    if (!parseArgs(argc, argv)) {
 #if defined(_WIN64)
-        FreeConsole();
+    // If we've been started from a console then redirect the standard streams there.
+    outputToConsole();
 #endif
-        return 0;
-    }
 
+    {
+        std::vector<std::string> arguments;
+        for (int i {0}; i < argc; ++i)
+            arguments.emplace_back(argv[i]);
 #if defined(_WIN64)
-    // Send debug output to the console..
-    if (Settings::getInstance()->getBool("Debug"))
-        outputToConsole(true);
+        if (!parseArguments(arguments)) {
+            FreeConsole();
+            return 0;
+        }
+#else
+        if (!parseArguments(arguments)) {
+            return 0;
+        }
 #endif
+    }
 
 #if defined(FREEIMAGE_LIB)
     // Call this ONLY when linking with FreeImage as a static library.
