@@ -9,6 +9,9 @@
 # This makes it possible to set options in subprojects.
 set (CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 
+# Suppress warnings about cmake_minimum_required() defining deprecated versions.
+set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
+
 if (WIN32)
     # On Windows the build type needs to match the main binary.
     if (CMAKE_BUILD_TYPE MATCHES Profiling)
