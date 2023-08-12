@@ -151,7 +151,6 @@ void InputManager::writeDeviceConfig(InputConfig* config)
 
     if (Utils::FileSystem::exists(path)) {
         // Merge files.
-
 #if defined(_WIN64)
         pugi::xml_parse_result result {
             doc.load_file(Utils::String::stringToWideString(path).c_str())};
@@ -317,9 +316,10 @@ std::string InputManager::getDeviceGUIDString(int deviceId)
         return "Something went horribly wrong";
     }
 
-    char guid[65];
-    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(it->second), guid, 65);
-    return std::string(guid);
+    std::string guid(65, '\0');
+    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(it->second), &guid[0], 64);
+    guid.erase(guid.find('\0'));
+    return guid;
 }
 
 InputConfig* InputManager::getInputConfigByDevice(int device)
@@ -536,14 +536,6 @@ bool InputManager::loadInputConfig(InputConfig* config)
     pugi::xml_node configNode {root.find_child_by_attribute("inputConfig", "deviceGUID",
                                                             config->getDeviceGUIDString().c_str())};
 
-    // Enabling this will match an entry in es_input.xml based on the device name if there
-    // was no GUID match. This is probably not a good idea as many controllers share the same
-    // name even though the GUID differ and potentially the button configuration could be
-    // different between them. Keeping the code for now though.
-    //    if (!configNode)
-    //        configNode = root.find_child_by_attribute("inputConfig",
-    //                "deviceName", config->getDeviceName().c_str());
-
     // With the move to the SDL GameController API the button layout changed quite a lot, so
     // es_input.xml files generated using the old API will end up with a completely unusable
     // controller configuration. These older files had the configuration entry type set to
@@ -652,17 +644,22 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
     mInputConfigs[joyID] =
         std::make_unique<InputConfig>(joyID, SDL_GameControllerName(mControllers[joyID]), guid);
 
-    bool customConfig = loadInputConfig(mInputConfigs[joyID].get());
+    bool customConfig {loadInputConfig(mInputConfigs[joyID].get())};
+    const std::string serialNumber {SDL_GameControllerGetSerial(controller) == nullptr ?
+                                        "" :
+                                        SDL_GameControllerGetSerial(controller)};
 
     if (customConfig) {
         LOG(LogInfo) << "Added controller with custom configuration: \""
                      << SDL_GameControllerName(mControllers[joyID]) << "\" (GUID: " << guid
+                     << ", serial number: " << (serialNumber == "" ? "n/a" : serialNumber)
                      << ", instance ID: " << joyID << ", device index: " << deviceIndex << ")";
     }
     else {
         loadDefaultControllerConfig(joyID);
         LOG(LogInfo) << "Added controller with default configuration: \""
                      << SDL_GameControllerName(mControllers[joyID]) << "\" (GUID: " << guid
+                     << ", serial number: " << (serialNumber == "" ? "n/a" : serialNumber)
                      << ", instance ID: " << joyID << ", device index: " << deviceIndex << ")";
     }
 
@@ -700,8 +697,14 @@ void InputManager::removeControllerByJoystickID(Window* window, SDL_JoystickID j
         return;
     }
 
+    const std::string serialNumber {SDL_GameControllerGetSerial(mControllers[joyID]) == nullptr ?
+                                        "" :
+                                        SDL_GameControllerGetSerial(mControllers[joyID])};
+
     LOG(LogInfo) << "Removed controller \"" << SDL_GameControllerName(mControllers[joyID])
-                 << "\" (GUID: " << guid << ", instance ID: " << joyID << ")";
+                 << "\" (GUID: " << guid
+                 << ", serial number: " << (serialNumber == "" ? "n/a" : serialNumber)
+                 << ", instance ID: " << joyID << ")";
 
     if (window != nullptr) {
         window->queueInfoPopup(
