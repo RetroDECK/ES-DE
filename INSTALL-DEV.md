@@ -8,13 +8,13 @@ Table of contents:
 
 ## Development environment
 
-ES-DE is developed and compiled using Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and MSVC and GCC (MinGW) on Windows.
+ES-DE is developed and compiled using GCC and Clang/LLVM Unix, Clang/LLVM on macOS and MSVC on Windows.
 
-CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `nmake` and `make` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during the development. The only exception is notarization of codesigned macOS packages which require the `altool` and `stapler` binaries that come bundled with Xcode.
+CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `jom` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during development.
 
 For automatic code formatting [clang-format](https://clang.llvm.org/docs/ClangFormat.html) is used.
 
-Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
+Any code editor can be used of course, but [VSCode](https://code.visualstudio.com) is recommended.
 
 ## Building on Unix
 
@@ -51,7 +51,7 @@ Use pacman to install all the required packages:
 sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml poppler
 ```
 
-**Raspberry Pi OS (Raspian)**
+**Raspberry Pi OS**
 
 All of the required packages can be installed with apt-get:
 ```
@@ -96,7 +96,7 @@ pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage libgit2 poppler
 
 In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.
 
-Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
+The pugixml library does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
 
 ```
 git clone https://github.com/zeux/pugixml.git
@@ -120,8 +120,10 @@ Then generate the Makefile and build the software:
 ```
 cd emulationstation-de
 cmake .
-make
+make -j8
 ```
+
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
 
 By default the application updater will be built which checks for new releases on startup, to disable this functionality run the following:
 ```
@@ -135,28 +137,28 @@ By default the master branch will be used, which is where development takes plac
 
 ```
 cd emulationstation-de
-git checkout stable-1.2
+git checkout stable-2.1
 cmake .
-make
+make -j8
 ```
 
 To create a debug build, run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
-make
+make -j8
 ```
 Keep in mind that a debug version will be much slower due to all compiler optimizations being disabled.
 
-To create a profiling build (optimized with debug symbols), run this:
+To create a profiling build (optimized but with debug symbols), run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Profiling .
-make
+make -j8
 ```
 
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
-make
+make -j8
 ```
 Due to buggy AMD GPU drivers it could be a good idea to use the `LSAN_suppressions` file included in the repository to avoid reports of a lot of irrelevant issue, for example:
 ```
@@ -168,7 +170,7 @@ This applies to LeakSanitizer specifically, which is integrated into AddressSani
 To enable ThreadSanitizer which helps with identifying data races and other thread-related issues, build with the TSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DTSAN=on .
-make
+make -j8
 ```
 
 It could also be a good idea to use the `TSAN_suppressions` file included in the repository to suppress issues reported by some third party libraries, for example:
@@ -179,7 +181,7 @@ TSAN_OPTIONS="suppressions=tools/TSAN_suppressions" ./emulationstation --debug -
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
-make
+make -j8
 ```
 
 To get stack traces printed as well, set this environment variable:
@@ -222,7 +224,7 @@ Another useful tool is `scan-build`, assuming you use Clang/LLVM. This is a stat
 
 ```
 scan-build cmake -DCMAKE_BUILD_TYPE=Debug .
-scan-build make -j6
+scan-build make -j8
 ```
 
 You open the report with the `scan-view` command which lets you read it using your web browser. Note that the compilation time is much longer when using the static analyzer compared to a normal build. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
@@ -238,30 +240,24 @@ To build ES-DE with experimental FFmpeg video hardware decoding support, enable 
 
 ```
 cmake -DVIDEO_HW_DECODING=on .
-make
+make -j8
 ```
 
 To build ES-DE with CEC support, enable the corresponding option, for example:
 
 ```
 cmake -DCEC=on .
-make
+make -j8
 ```
 You will most likely need to install additional packages to get this to build. On Debian-based systems these are _libcec-dev_ and _libp8-platform-dev_. Note that the CEC support is currently untested.
 
 To build with the GLES 3.0 renderer, run the following:
 ```
 cmake -DGLES=on .
-make
+make -j8
 ```
 
 This renderer is generally only needed on the Raspberry Pi and the desktop OpenGL renderer should otherwise be used.
-
-Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
-
-```
-make -j6
-```
 
 By default ES-DE will install under /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD although this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.
 
@@ -308,13 +304,16 @@ Assuming the default installation prefix /usr has been used, this is the directo
 
 ```
 /usr/bin/emulationstation
-/usr/share/man/man6/emulationstation.6.gz
-/usr/share/applications/emulationstation.desktop
-/usr/share/emulationstation/LICENSE
+/usr/bin/es-pdf-convert
+/usr/share/applications/org.es_de.emulationstation-de.desktop
 /usr/share/emulationstation/licenses/*
 /usr/share/emulationstation/resources/*
 /usr/share/emulationstation/themes/*
-/usr/share/pixmaps/emulationstation.svg
+/usr/share/emulationstation/LICENSE
+/usr/share/icons/hicolor/scalable/apps/org.es_de.emulationstation-de.svg
+/usr/share/man/man6/emulationstation.6.gz
+/usr/share/metainfo/org.es_de.emulationstation-de.appdata.xml
+/usr/share/pixmaps/org.es_de.emulationstation-de.svg
 ```
 
 However, when installing manually instead of building a package, it's recommended to change the install prefix to /usr/local instead of /usr.
@@ -489,7 +488,7 @@ cd external/pugixml
 rm CMakeCache.txt
 cmake .
 make clean
-make -j4
+make -j8
 cp libpugixml.a ../..
 ```
 
@@ -497,41 +496,43 @@ After all dependencies have been built, generate the Makefile and build ES-DE:
 
 ```
 cmake .
-make
+make -j8
 ```
+
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
 
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
 ```
 cd emulationstation-de
-git checkout stable-1.2
+git checkout stable-2.1
 cmake .
-make
+make -j8
 ```
 
 To generate a debug build, run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
-make
+make -j8
 ```
 Keep in mind that the debug version will be much slower due to all compiler optimizations being disabled.
 
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
-make
+make -j8
 ```
 
 To enable ThreadSanitizer which helps with identifying data races for multi-threaded code, build with the TSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DTSAN=on .
-make
+make -j8
 ```
 
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
-make
+make -j8
 ```
 
 To get stack traces printed as well, set this environment variable:
@@ -545,8 +546,6 @@ Specifically on macOS it seems as if AddressSanitizer generates a lot of false p
 ```
 export ASAN_OPTIONS=detect_container_overflow=0
 ```
-
-Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
@@ -639,11 +638,11 @@ CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-2.1.
 
 ## Building on Windows
 
-Both MSVC and MinGW (GCC) work fine for building ES-DE on Windows.
+Although both Microsoft Visual C++ (MSVC) and GCC (MinGW) have historically been supported for building ES-DE on Windows, as of the 2.2.0 release MinGW is no longer recommended and support for it will likely be dropped in future releases.
 
-Although I would prefer to exclude support for MSVC, this compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. But for release builds MinGW is very fast and ES-DE starts around 18% faster when built with MinGW, meaning this compiler probably generates more efficient code overall. As well MSVC requires a lot more DLL files to be distributed with the application and the console window is always displayed on startup for some reason.
+Although MinGW produces much higher quality code than MSVC with ES-DE running around 10% to 25% faster it's unfortunately not sustainable to keep using it. There are multiple technical issues with third party libraries like severe threading issues with FFmpeg and some libraries like Poppler not being readily available. Debugging with MinGW is also a very slow and tedious process compared to MSVC. MinGW up to 9.2.0 works more or less fine but anything more modern than this introduces issues like FFmpeg's avfilter_graph_free() call taking up to 7000 times longer to complete which makes video playback unusable. Setting filter graphs to use single threads solves some but not all issues. As well libgit2 has (probably) a race condition that causes random repository corruption that is likely only present when using MinGW.
 
-For these reasons I think MSVC makes sense for development and MinGW for the releases.
+Clang/LLVM has also been evaluated but it suffers from at least the same threading issues as MinGW, likely because it uses libraries from the latter. It also fails to build some of the third party libraries needed by ES-DE.
 
 **MSVC setup**
 
@@ -652,8 +651,6 @@ Install Git for Windows: \
 
 Download the Visual Studio Build Tools (choose Visual Studio Community edition): \
 [https://visualstudio.microsoft.com/downloads](https://visualstudio.microsoft.com/downloads)
-
-It seems as if Microsoft has dropped support for installing the Build Tools without the Visual Studio IDE, at least I've been unable to find a way to exclude it. But I just pretend it's not installed and use VSCode instead which works perfectly fine.
 
 During installation, choose the Desktop development with C++ workload with the following options (version details may differ):
 
@@ -670,6 +667,9 @@ C++ CMake tools for Windows
 ```
 
 If not installing the CMake version supplied by Microsoft, you need to make sure that you have a recent version on your machine or CMake will not be able to detect MSVC correctly.
+
+It's strongly recommended to also install Jom, which is a drop-in replacement for nmake that offers support for building in parallel using multiple CPU cores:\
+https://wiki.qt.io/Jom
 
 As well you may need to install the latest version of Microsoft Visual C++ Redistributable which can be downloaded here:\
 https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redis
@@ -690,26 +690,26 @@ Download the following packages and install them:
 Download the _MinGW-w64 based_ version of GCC: \
 [https://jmeubank.github.io/tdm-gcc](https://jmeubank.github.io/tdm-gcc)
 
-After installation, make a copy of `TDM-GCC-64\bin\mingw32-make` to `make` just for convenience.
+After installation, make a copy of `TDM-GCC-64\bin\mingw32-make` to `make` for your convenience.
 
-Version 9.2.0 of MinGW has been confirmed to work fine, but 10.3.0 appears broken as it causes huge performance problems for the FFmpeg function avfilter_graph_free() with execution times going from milliseconds to hundreds of milliseconds or even seconds.
-
-Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The recommended MinGW distribution should work fine though.
+Only version 9.2.0 of MinGW has been confirmed to work correctly, anything newer introduces severe problems and MSVC should instead be used if a more modern compiler is required.
 
 **Other preparations**
 
-In order to get clang-format onto the system you need to download and install Clang: \
+In order to get clang-format onto the system you need to download and install Clang/LLVM: \
 [https://releases.llvm.org](https://releases.llvm.org)
 
 Just run the installer and make sure to select the option _Add LLVM to the system PATH for current user_.
 
-Install your editor of choice, I use [VSCode](https://code.visualstudio.com).
+Alternatively you can temporarily install LLVM, copy clang-format.exe to any directory added to your PATH environment variable and then uninstall LLVM to save a few gigabytes of disk space.
 
-Configure Git. I won't get into the details on how this is done, but there are many resources available online to support with this. The `Git Bash` shell shipped with Git for Windows is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS2.
+Install your editor of choice, such as [VSCode](https://code.visualstudio.com).
 
-It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the editor. But if not done, lines breaks will anyway be converted when running clang-format on the code, as explained [here](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting).
+Configure Git. Details about its setup is beyond the scope of this document, but there are many good resources available online. The `Git Bash` shell shipped with Git for Windows is very useful though as it somewhat reproduces a Unix environment using MSYS2.
 
-In the descriptions below it's assumed that all build steps for MinGW/GCC will be done in the Git Bash shell, and all the build steps for MSVC will be done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
+It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the code editor. But if not done, lines breaks will anyway be converted when running clang-format on the code, as explained [here](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting).
+
+The instructions below assume all build steps for MSVC are done in the MSVC developer console (x64 Native Tools Command Prompt for VS) and all MinGW build steps are done using the Git Bash shell.
 
 **Cloning and setting up dependencies**
 
@@ -723,7 +723,7 @@ By default the master branch will be used, which is where development takes plac
 
 ```
 cd emulationstation-de
-git checkout stable-1.2
+git checkout stable-2.1
 ```
 
 On Windows all dependencies are kept in-tree in the `external` directory tree. Most of the libraries can be downloaded in binary form, but a few need to be built from source code. There are four scripts in the tools directory that automate this entirely. Two of them are used for the MSVC compiler and the other two for MinGW.
@@ -742,7 +742,7 @@ tools/Windows_dependencies_setup_MinGW.sh
 tools/Windows_dependencies_build_MinGW.sh
 ```
 
-Re-running the setup script will delete and download all dependencies again, and re-running the build script will clean and rebuild from scratch. You can of course also manually recompile an individual library if needed.
+Re-running the setup script will delete and download all dependencies again, and re-running the build script will clean and rebuild from scratch.
 
 The setup scripts for both MSVC and MinGW will download and launch an installer for OpenSSL for Windows if this has not already been installed on the build machine. Just run through the installer using the default settings and everything should work fine.
 
@@ -750,32 +750,34 @@ Following these preparations, ES-DE should be ready to be compiled.
 
 **Building ES-DE using MSVC**
 
+It's assumed that [Jom](https://wiki.qt.io/Jom) is used, but if instead using nmake then just remove _JOM_ from the -G flag argument and remove the -j flag as nmake does not support building in parallel.
+
 For a release build:
 
 ```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release .
-nmake
+cmake -G "NMake Makefiles JOM" -DCMAKE_BUILD_TYPE=Release .
+jom -j8
 ```
 
 Or for a debug build:
 ```
-cmake -G "NMake Makefiles" .
-nmake
+cmake –G "NMake Makefiles JOM” .
+jom -j8
 ```
 
-For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
+
+For some reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
 
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
-cmake -G "NMake Makefiles" -DASAN=on .
+cmake -G "NMake Makefiles JOM" -DASAN=on .
 nmake
 ```
 
 ThreadSanitizer and UndefinedBehaviorSanitizer aren't available for the MSVC compiler.
 
 There are a number of compiler warnings for the bundled rlottie library when building with MSVC. Unfortunately these need to be resolved upstream, but everything should still work fine so the warnings can be ignored for now.
-
-Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this in depth.
 
 Be aware that MSVC links against different VC++ libraries for debug and release builds (e.g. MSVCP140.dll or MSVCP140d.dll), so any NSIS package made from a debug build will not work on computers without the MSVC development environment installed.
 
@@ -785,21 +787,23 @@ For a release build:
 
 ```
 cmake -G "MinGW Makefiles" .
-make
+make -j8
 ```
 
 Or for a debug build:
 
 ```
 cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug .
-make
+make -j8
 ```
+
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
 
 Unfortunately AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer do not seem to be supported with MinGW.
 
 You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
 
-Note that compilation time is much longer than on Unix or macOS, and linking is incredibly slow for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
+Note that compilation time is much longer than on Unix/Linux or macOS, and linking is incredibly slow for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
 
 **TLS/SSL certificates**
 

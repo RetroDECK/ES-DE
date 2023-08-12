@@ -37,6 +37,7 @@
 * Added a number of carousel, grid, textlist and text properties to control horizontally scrolling text
 * Added a "textRelativeScale" property to the carousel to size text smaller than the overall item size
 * Added theme support for the "manual" metadata type for the text element
+* Added the device serial number to the es_log.txt entries when adding or removing controllers
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Added support to MathUtil::md5Hash() for streaming files in chunks
 * Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
@@ -45,10 +46,13 @@
 * Removed all horizontal text scrolling code from ComponentList and TextListComponent
 * Refactored TextListComponent to work more like the other primary components
 * Added a lot more debug log output to the scraper
+* Changed a number of stream operations to open files for writing in binary mode (to always create proper Unix line breaks)
 * (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
 * (Windows) Improved the README.txt file for the portable release
 * (Windows) Defined UNICODE and _UNICODE in the CMake configuration to force Unicode support for the Win32 API
 * (Windows) Added proper Unicode support to the Windows Registry find rules "winregistrypath" and "winregistryvalue"
+* (Windows) Set the subsystem to WINDOWS when building with MSVC to avoid displaying a console window on application startup
+* (Windows) Now only redirect the standard input/output streams to the console if there actually is a console
 * (macOS) Changed the minimum required OS version from 10.14 "Mojave" to 10.15 "Catalina"
 * (macOS) Completely removed support for the legacy OS build
 * Updated RapidJSON to commit a95e013b97ca6523f32da23f5095fcc9dd6067e5
@@ -63,6 +67,7 @@
 * ScreenScraper API calls were slightly malformed for systems where multiple platforms were defined
 * If multiple games had the same thumbnail in the interactive scraper, then this image would not get downloaded for all entries
 * (Windows) If the ROMDirectory setting had a value then all custom collection files contained absolute paths instead of relative paths
+* (Windows) The media viewer could crash if attempting to display corrupt or invalid PDF game manuals
 * (Windows) Wide string conversions were not done correctly which caused issues when filenames contained 4-byte Unicode characters
 * (Windows) Attempting to capitalize multi-byte Unicode strings crashed the application if built using the MSVC compiler
 * The camera offset in ComponentList was not correctly calculated when reaching the bottom of a list
