@@ -36,7 +36,6 @@ GuiSettings::GuiSettings(std::string title)
     , mNeedsGoToStart {false}
     , mNeedsGoToSystem {false}
     , mNeedsGoToGroupedCollections {false}
-    , mNeedsCloseAllWindows {false}
     , mInvalidateCachedBackground {false}
 {
     addChild(&mMenu);
@@ -72,13 +71,10 @@ void GuiSettings::save()
             for (auto system : SystemData::sSystemVector)
                 system->writeMetaData();
         }
+        // If a close menu function was passed to us, then run it.
+        if (mCloseMenuFunction)
+            mCloseMenuFunction();
         ViewController::getInstance()->rescanROMDirectory();
-        // Close all open windows.
-        while (mWindow->getGuiStackSize() > 1) {
-            GuiComponent* window {mWindow->peekGui()};
-            if (window != nullptr)
-                mWindow->removeGui(window);
-        }
         return;
     }
 
@@ -176,13 +172,9 @@ void GuiSettings::save()
         ViewController::getInstance()->resetCamera();
     }
 
-    if (mNeedsCloseAllWindows) {
-        while (mWindow->getGuiStackSize() > 1) {
-            GuiComponent* window {mWindow->peekGui()};
-            if (window != nullptr)
-                mWindow->removeGui(window);
-        }
-    }
+    // If a close menu function was passed to us, then run it.
+    if (mCloseMenuFunction)
+        mCloseMenuFunction();
 
     if (mInvalidateCachedBackground) {
         // This delay reduces the likelyhood that the SVG rasterizer which is running in a

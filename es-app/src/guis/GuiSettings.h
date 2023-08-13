@@ -58,7 +58,10 @@ public:
         mGoToSystem = goToSystem;
     };
     void setNeedsGoToGroupedCollections() { mNeedsGoToGroupedCollections = true; }
-    void setNeedsCloseAllWindows() { mNeedsCloseAllWindows = true; }
+    void setNeedsCloseMenu(std::function<void()> closeFunction)
+    {
+        mCloseMenuFunction = closeFunction;
+    }
     void setInvalidateCachedBackground() { mInvalidateCachedBackground = true; }
 
     bool input(InputConfig* config, Input input) override;
@@ -69,6 +72,7 @@ private:
     Renderer* mRenderer;
     MenuComponent mMenu;
     std::vector<std::function<void()>> mSaveFuncs;
+    std::function<void()> mCloseMenuFunction;
     SystemData* mGoToSystem;
 
     bool mNeedsSaving;
@@ -81,7 +85,6 @@ private:
     bool mNeedsGoToStart;
     bool mNeedsGoToSystem;
     bool mNeedsGoToGroupedCollections;
-    bool mNeedsCloseAllWindows;
     bool mInvalidateCachedBackground;
 };
 

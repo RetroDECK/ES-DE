@@ -50,6 +50,7 @@ private:
     Renderer* mRenderer;
     MenuComponent mMenu;
     TextComponent mVersion;
+    int mThemeDownloaderReloadCounter;
 };
 
 #endif // ES_APP_GUIS_GUI_MENU_H

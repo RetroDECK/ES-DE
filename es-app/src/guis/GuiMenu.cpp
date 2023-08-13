@@ -44,6 +44,7 @@
 GuiMenu::GuiMenu()
     : mRenderer {Renderer::getInstance()}
     , mMenu {"MAIN MENU"}
+    , mThemeDownloaderReloadCounter {0}
 {
     const bool isFullUI {UIModeController::getInstance()->isUIModeFull()};
 
@@ -477,10 +478,14 @@ void GuiMenu::openUIOptions()
     if (systemsSorting->getSelectedObjects().size() == 0)
         systemsSorting->selectEntry(0);
     s->addWithLabel("SYSTEMS SORTING", systemsSorting);
-    s->addSaveFunc([systemsSorting, s] {
+    s->addSaveFunc([this, systemsSorting, s] {
         if (systemsSorting->getSelected() != Settings::getInstance()->getString("SystemsSorting")) {
             Settings::getInstance()->setString("SystemsSorting", systemsSorting->getSelected());
             s->setNeedsSaving();
+            if (mThemeDownloaderReloadCounter == 0)
+                s->setNeedsCloseMenu([this] { delete this; });
+            else
+                ++mThemeDownloaderReloadCounter;
             s->setNeedsRescanROMDirectory();
         }
     });
@@ -535,13 +540,16 @@ void GuiMenu::openUIOptions()
     if (menuColorScheme->getSelectedObjects().size() == 0)
         menuColorScheme->selectEntry(0);
     s->addWithLabel("MENU COLOR SCHEME", menuColorScheme);
-    s->addSaveFunc([menuColorScheme, s] {
+    s->addSaveFunc([this, menuColorScheme, s] {
         if (menuColorScheme->getSelected() !=
             Settings::getInstance()->getString("MenuColorScheme")) {
             Settings::getInstance()->setString("MenuColorScheme", menuColorScheme->getSelected());
             ViewController::getInstance()->setMenuColors();
             s->setNeedsSaving();
-            s->setNeedsCloseAllWindows();
+            if (mThemeDownloaderReloadCounter == 0)
+                s->setNeedsCloseMenu([this] { delete this; });
+            else
+                ++mThemeDownloaderReloadCounter;
         }
     });
 
@@ -1567,7 +1575,7 @@ void GuiMenu::openOtherOptions()
         if (showQuitMenu->getState() != Settings::getInstance()->getBool("ShowQuitMenu")) {
             Settings::getInstance()->setBool("ShowQuitMenu", showQuitMenu->getState());
             s->setNeedsSaving();
-            s->setNeedsCloseAllWindows();
+            s->setNeedsCloseMenu([this] { delete this; });
         }
     });
 #endif
@@ -1746,9 +1754,15 @@ void GuiMenu::openThemeDownloader(GuiSettings* settings)
 {
     auto updateFunc = [&, settings]() {
         LOG(LogDebug) << "GuiMenu::openThemeDownloader(): Theme sets were updated, reloading menu";
+        mThemeDownloaderReloadCounter = 1;
         delete settings;
-        openUIOptions();
-        mWindow->invalidateCachedBackground();
+        if (mThemeDownloaderReloadCounter != 1) {
+            delete this;
+        }
+        else {
+            openUIOptions();
+            mWindow->invalidateCachedBackground();
+        }
     };
 
     mWindow->pushGui(new GuiThemeDownloader(updateFunc));
