@@ -460,6 +460,31 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Systems sorting.
+    auto systemsSorting = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "SYSTEMS SORTING", false);
+    std::string selectedSystemsSorting {Settings::getInstance()->getString("SystemsSorting")};
+    systemsSorting->add("FULL NAMES OR CUSTOM", "default", selectedSystemsSorting == "default");
+    systemsSorting->add("RELEASE YEAR", "year", selectedSystemsSorting == "year");
+    systemsSorting->add("MANUFACTURER, RELEASE YEAR", "manufacturer_year",
+                        selectedSystemsSorting == "manufacturer_year");
+    systemsSorting->add("HW TYPE, RELEASE YEAR", "hwtype_year",
+                        selectedSystemsSorting == "hwtype_year");
+    systemsSorting->add("MANUFACTURER, HW TYPE, REL. YEAR", "manufacturer_hwtype_year",
+                        selectedSystemsSorting == "manufacturer_hwtype_year");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the systems sorting to "default" in this case.
+    if (systemsSorting->getSelectedObjects().size() == 0)
+        systemsSorting->selectEntry(0);
+    s->addWithLabel("SYSTEMS SORTING", systemsSorting);
+    s->addSaveFunc([this, systemsSorting, s] {
+        if (systemsSorting->getSelected() != Settings::getInstance()->getString("SystemsSorting")) {
+            Settings::getInstance()->setString("SystemsSorting", systemsSorting->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsRescanROMDirectory();
+        }
+    });
+
     // Default gamelist sort order.
     std::string sortOrder;
     auto defaultSortOrder = std::make_shared<OptionListComponent<const FileData::SortType*>>(
@@ -487,7 +512,7 @@ void GuiMenu::openUIOptions()
         else
             defaultSortOrder->add(sort.description, &sort, false);
     }
-    s->addWithLabel("DEFAULT SORT ORDER", defaultSortOrder);
+    s->addWithLabel("GAMES DEFAULT SORT ORDER", defaultSortOrder);
     s->addSaveFunc([defaultSortOrder, sortOrder, s] {
         std::string selectedSortOrder {defaultSortOrder.get()->getSelected()->description};
         if (selectedSortOrder != sortOrder) {
@@ -514,9 +539,9 @@ void GuiMenu::openUIOptions()
         if (menuColorScheme->getSelected() !=
             Settings::getInstance()->getString("MenuColorScheme")) {
             Settings::getInstance()->setString("MenuColorScheme", menuColorScheme->getSelected());
-            s->setNeedsSaving();
             ViewController::getInstance()->setMenuColors();
-            GuiMenu::close(false);
+            s->setNeedsSaving();
+            s->setNeedsCloseAllWindows();
         }
     });
 
@@ -1542,7 +1567,7 @@ void GuiMenu::openOtherOptions()
         if (showQuitMenu->getState() != Settings::getInstance()->getBool("ShowQuitMenu")) {
             Settings::getInstance()->setBool("ShowQuitMenu", showQuitMenu->getState());
             s->setNeedsSaving();
-            GuiMenu::close(false);
+            s->setNeedsCloseAllWindows();
         }
     });
 #endif

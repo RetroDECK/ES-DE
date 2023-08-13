@@ -164,6 +164,7 @@ void Settings::setDefaults()
     mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
+    mStringMap["SystemsSorting"] = {"default", "default"};
     mStringMap["DefaultSortOrder"] = {"name, ascending", "name, ascending"};
     mStringMap["MenuColorScheme"] = {"dark", "dark"};
     mStringMap["MenuOpeningEffect"] = {"scale-up", "scale-up"};

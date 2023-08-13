@@ -814,66 +814,89 @@ bool SystemData::loadConfig()
 
 void SystemData::loadSortingConfig()
 {
-    std::vector<std::string> paths;
-    std::string filePath {ResourceManager::getInstance().getResourcePath(
-        ":/systems/sorting/es_systems_sorting.xml", false)};
+    const std::string sortSetting {Settings::getInstance()->getString("SystemsSorting")};
+    const std::string customFilePath {Utils::FileSystem::getHomePath() +
+                                      "/.emulationstation/custom_systems" +
+                                      "/es_systems_sorting.xml"};
+    const bool customFileExists {Utils::FileSystem::exists(customFilePath)};
 
-    if (Utils::FileSystem::exists(filePath))
-        paths.emplace_back(filePath);
+    std::string path;
+    bool bundledFile {false};
 
-    filePath = Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems" +
-               "/es_systems_sorting.xml";
+    if (sortSetting == "hwtype_year") {
+        path = ResourceManager::getInstance().getResourcePath(
+            ":/sorting/hwtype_year/es_systems_sorting.xml", true);
+        bundledFile = true;
+    }
+    else if (sortSetting == "manufacturer_hwtype_year") {
+        path = ResourceManager::getInstance().getResourcePath(
+            ":/sorting/manufacturer_hwtype_year/es_systems_sorting.xml", true);
+        bundledFile = true;
+    }
+    else if (sortSetting == "manufacturer_year") {
+        path = ResourceManager::getInstance().getResourcePath(
+            ":/sorting/manufacturer_year/es_systems_sorting.xml", true);
+        bundledFile = true;
+    }
+    else if (sortSetting == "year") {
+        path = ResourceManager::getInstance().getResourcePath(
+            ":/sorting/year/es_systems_sorting.xml", true);
+        bundledFile = true;
+    }
 
-    if (Utils::FileSystem::exists(filePath))
-        paths.emplace_back(filePath);
+    if (bundledFile && customFileExists) {
+        LOG(LogInfo) << "A custom systems sorting file was found but it will not get loaded as a "
+                        "bundled file has been selected";
+    }
+    else if (!bundledFile && customFileExists) {
+        path = customFilePath;
+    }
 
-    if (paths.empty()) {
-        LOG(LogDebug) << "No systems sorting file found";
+    if (path == "") {
+        LOG(LogDebug) << "No systems sorting file loaded";
         return;
     }
 
-    for (auto& path : paths) {
 #if defined(_WIN64)
-        LOG(LogInfo) << "Parsing systems sorting file \"" << Utils::String::replace(path, "/", "\\")
-                     << "\"...";
-        pugi::xml_document doc;
-        const pugi::xml_parse_result& res {
-            doc.load_file(Utils::String::stringToWideString(path).c_str())};
+    LOG(LogInfo) << "Parsing systems sorting file \"" << Utils::String::replace(path, "/", "\\")
+                 << "\"...";
+    pugi::xml_document doc;
+    const pugi::xml_parse_result& res {
+        doc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
-        LOG(LogInfo) << "Parsing systems sorting file \"" << path << "\"...";
-        pugi::xml_document doc;
-        const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
+    LOG(LogInfo) << "Parsing systems sorting file \"" << path << "\"...";
+    pugi::xml_document doc;
+    const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
 #endif
-        if (!res) {
-            LOG(LogError) << "Couldn't parse es_systems_sorting.xml: " << res.description();
+    if (!res) {
+        LOG(LogError) << "Couldn't parse es_systems_sorting.xml: " << res.description();
+        return;
+    }
+
+    const pugi::xml_node& systemList {doc.child("systemList")};
+    if (!systemList) {
+        LOG(LogError) << "es_systems_sorting.xml is missing the <systemList> tag";
+        return;
+    }
+
+    std::string systemName;
+    std::string sortName;
+
+    for (pugi::xml_node system {systemList.child("system")}; system;
+         system = system.next_sibling("system")) {
+        sortName = system.child("systemsortname").text().get();
+
+        if (sortName == "")
             continue;
-        }
 
-        const pugi::xml_node& systemList {doc.child("systemList")};
-        if (!systemList) {
-            LOG(LogError) << "es_systems_sorting.xml is missing the <systemList> tag";
-            continue;
-        }
+        systemName = Utils::String::replace(system.child("name").text().get(), "\n", "");
 
-        std::string systemName;
-        std::string sortName;
+        auto systemEntry = std::find_if(
+            sSystemVector.begin(), sSystemVector.end(),
+            [systemName](SystemData* system) { return system->getName() == systemName; });
 
-        for (pugi::xml_node system {systemList.child("system")}; system;
-             system = system.next_sibling("system")) {
-            sortName = system.child("systemsortname").text().get();
-
-            if (sortName == "")
-                continue;
-
-            systemName = Utils::String::replace(system.child("name").text().get(), "\n", "");
-
-            auto systemEntry = std::find_if(
-                sSystemVector.begin(), sSystemVector.end(),
-                [systemName](SystemData* system) { return system->getName() == systemName; });
-
-            if (systemEntry != SystemData::sSystemVector.end())
-                (*systemEntry)->mSortName = sortName;
-        }
+        if (systemEntry != SystemData::sSystemVector.end())
+            (*systemEntry)->mSortName = sortName;
     }
 }
 
