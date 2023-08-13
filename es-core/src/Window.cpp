@@ -591,7 +591,11 @@ void Window::render()
                 }
                 else {
                     // Dim the background slightly.
-                    backgroundParameters.dimming = 0.60f;
+                    if (Settings::getInstance()->getString("MenuColorScheme") == "light")
+                        backgroundParameters.dimming = 0.60f;
+                    else
+                        backgroundParameters.dimming = 0.80f;
+
                     mRenderer->shaderPostprocessing(Renderer::Shader::CORE, backgroundParameters,
                                                     &processedTexture[0]);
                 }
