@@ -2044,7 +2044,7 @@ Properties:
     - `never` - Don't set element as stationary during any transitions.
     - Default is `never`
 * `path` - type: PATH
-    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored.
+    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored. This is true even if the property does not point to an existing video file. As well, when defining this for the gamelist view the video will not immediately restart when navigating between games.
 * `default` - type: PATH
     - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system. Takes precedence over `defaultImage`.
 * `defaultImage` - type: PATH
@@ -2071,6 +2071,16 @@ Properties:
     - This optional property which is only available in the `system` view makes it possible to select which `gameselector` entry to use to populate the `imageType` property and to use for playing the video stream. This assumes that a `gameCount` property for the gameselector element has been defined with a value higher than `1`. By defining multiple `video` elements with different values for the `gameselectorEntry` property it's possible to display multiple game entries at the same time, for example listing a couple of games that were last played, or a selection of random games. If the requested entry does not exist (for instance if `gameCount` has been set to 5 and `gameselectorEntry` has been set to `4` but the system only contains 3 games), then the overall element will not get rendered. Note that the first entry is defined as `0`, the second entry as `1` etc.
     - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
     - Default is `0`
+* `iterationCount` - type: UNSIGNED_INTEGER
+    - Number of times to play the video until next time it's reset. Video resets are triggered by various events like navigation between systems and gamelists, reloading of gamelists, opening of menus etc.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `0` (infinite amount of times)
+* `onIterationsDone` - type: STRING
+    - What to do after playing the video the number of times defined by `iterationCount`
+    - `nothing` - Render nothing.
+    - `image` - Render the image defined by `imageType` or `defaultImage` which means this value can't be used if `path` has been set
+    - Default is `nothing`
+    - This property can only be used when `iterationCount` has a non-zero value.
 * `audio` - type: BOOLEAN
     - Whether to enable or disable audio playback for the video. For static videos in the gamelist view it's strongly recommended to set this to `false` if there is also a separate video element playing game videos.
     - Default is `true`
@@ -2181,7 +2191,7 @@ Properties:
     - Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards).
     - Default is `normal`
 * `iterationCount` - type: UNSIGNED_INTEGER
-    - Number of times to play the animation until next time it's reset. Animation resets are triggered by various events like navigating between systems and gamelists, reloading a gamelist etc.
+    - Number of times to play the animation until next time it's reset. Animation resets are triggered by various events like navigation between systems and gamelists, reloading of gamelists, opening of menus etc.
     - Minimum value is `0` and maximum value is `10`
     - Default is `0` (infinite amount of times)
 * `interpolation` - type: STRING

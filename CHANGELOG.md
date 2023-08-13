@@ -36,6 +36,8 @@
 * Added a "containerType" property to the text element to select between vertical and horizontal containers
 * Added a number of carousel, grid, textlist and text properties to control horizontally scrolling text
 * Added a "textRelativeScale" property to the carousel to size text smaller than the overall item size
+* Added "iterationCount" and "onIterationsDone" properties to the video element
+* Changed the "path" property for the video element to consider the set value even if it points to a non-existing file
 * Added theme support for the "manual" metadata type for the text element
 * Added the device serial number to the es_log.txt entries when adding or removing controllers
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
@@ -62,6 +64,8 @@
 
 ### Bug fixes
 
+* The video player would not play the last couple of frames for any videos
+* Starting the media viewer did not pause fallback game videos (defined using the "default" video property)
 * Directories interpreted as files entries could not be removed from custom collections
 * Duplicate ScreenScraper game entries could show up in the interactive scraper if multiple platforms were defined for the system
 * ScreenScraper API calls were slightly malformed for systems where multiple platforms were defined
