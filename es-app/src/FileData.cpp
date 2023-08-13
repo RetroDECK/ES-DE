@@ -532,14 +532,14 @@ void FileData::sort(ComparisonFunction& comparator,
             }
         }
 
-        // If the requested sorting is not by filename, then sort in ascending filename order
-        // as a first step, in order to get a correct secondary sorting.
-        if (getSortTypeFromString("filename, ascending").comparisonFunction != comparator &&
-            getSortTypeFromString("filename, descending").comparisonFunction != comparator) {
+        // If the requested sorting is not by name, then sort in ascending name order as a first
+        // step, in order to get a correct secondary sorting.
+        if (getSortTypeFromString("name, ascending").comparisonFunction != comparator &&
+            getSortTypeFromString("name, descending").comparisonFunction != comparator) {
             std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(),
-                             getSortTypeFromString("filename, ascending").comparisonFunction);
+                             getSortTypeFromString("name, ascending").comparisonFunction);
             std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
-                             getSortTypeFromString("filename, ascending").comparisonFunction);
+                             getSortTypeFromString("name, ascending").comparisonFunction);
         }
 
         if (foldersOnTop)
@@ -553,12 +553,12 @@ void FileData::sort(ComparisonFunction& comparator,
         mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());
     }
     else {
-        // If the requested sorting is not by filename, then sort in ascending filename order
-        // as a first step, in order to get a correct secondary sorting.
-        if (getSortTypeFromString("filename, ascending").comparisonFunction != comparator &&
-            getSortTypeFromString("filename, descending").comparisonFunction != comparator)
+        // If the requested sorting is not by name, then sort in ascending name order as a first
+        // step, in order to get a correct secondary sorting.
+        if (getSortTypeFromString("name, ascending").comparisonFunction != comparator &&
+            getSortTypeFromString("name, descending").comparisonFunction != comparator)
             std::stable_sort(mChildren.begin(), mChildren.end(),
-                             getSortTypeFromString("filename, ascending").comparisonFunction);
+                             getSortTypeFromString("name, ascending").comparisonFunction);
 
         std::stable_sort(mChildren.begin(), mChildren.end(), comparator);
     }
@@ -671,21 +671,21 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
         mChildrenFavoritesFolders.erase(mChildrenFavoritesFolders.begin(),
                                         mChildrenFavoritesFolders.end());
         std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(),
-                         getSortTypeFromString("filename, ascending").comparisonFunction);
+                         getSortTypeFromString("name, ascending").comparisonFunction);
     }
 
-    // If the requested sorting is not by filename, then sort in ascending filename order
-    // as a first step, in order to get a correct secondary sorting.
-    if (getSortTypeFromString("filename, ascending").comparisonFunction != comparator &&
-        getSortTypeFromString("filename, descending").comparisonFunction != comparator) {
+    // If the requested sorting is not by name, then sort in ascending name order as a first
+    // step, in order to get a correct secondary sorting.
+    if (getSortTypeFromString("name, ascending").comparisonFunction != comparator &&
+        getSortTypeFromString("name, descending").comparisonFunction != comparator) {
         std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(),
-                         getSortTypeFromString("filename, ascending").comparisonFunction);
+                         getSortTypeFromString("name, ascending").comparisonFunction);
         std::stable_sort(mChildrenFavoritesFolders.begin(), mChildrenFavoritesFolders.end(),
-                         getSortTypeFromString("filename, ascending").comparisonFunction);
+                         getSortTypeFromString("name, ascending").comparisonFunction);
         std::stable_sort(mChildrenFavorites.begin(), mChildrenFavorites.end(),
-                         getSortTypeFromString("filename, ascending").comparisonFunction);
+                         getSortTypeFromString("name, ascending").comparisonFunction);
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
-                         getSortTypeFromString("filename, ascending").comparisonFunction);
+                         getSortTypeFromString("name, ascending").comparisonFunction);
     }
 
     // Sort favorite games and the other games separately.
@@ -809,7 +809,7 @@ const FileData::SortType& FileData::getSortTypeFromString(const std::string& des
         if (sort.description == desc)
             return sort;
     }
-    // If no type was found then default to "filename, ascending".
+    // If no type was found then default to "name, ascending".
     return FileSorts::SortTypes.at(0);
 }
 

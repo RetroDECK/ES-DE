@@ -777,7 +777,7 @@ void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
     for (auto sys = systems.cbegin(); sys != systems.cend(); ++sys) {
         std::vector<FileData*> games {(*sys)->getRootFolder()->getChildrenRecursive()};
 
-        // Sort the games by "filename, ascending".
+        // Sort the games by "name, ascending".
         std::stable_sort(games.begin(), games.end(), FileSorts::SortTypes.at(0).comparisonFunction);
 
         for (FileData* game : games)

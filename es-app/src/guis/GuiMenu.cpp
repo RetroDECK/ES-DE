@@ -466,7 +466,7 @@ void GuiMenu::openUIOptions()
         getHelpStyle(), "DEFAULT SORT ORDER", false);
     // Exclude the System sort options.
     unsigned int numSortTypes {static_cast<unsigned int>(FileSorts::SortTypes.size() - 2)};
-    for (unsigned int i = 0; i < numSortTypes; ++i) {
+    for (unsigned int i {0}; i < numSortTypes; ++i) {
         if (FileSorts::SortTypes[i].description ==
             Settings::getInstance()->getString("DefaultSortOrder")) {
             sortOrder = FileSorts::SortTypes[i].description;
@@ -474,10 +474,13 @@ void GuiMenu::openUIOptions()
         }
     }
     // If an invalid sort order was defined in es_settings.xml, then apply the default
-    // sort order 'filename, ascending'.
-    if (sortOrder == "")
+    // sort order "name, ascending".
+    if (sortOrder == "") {
         sortOrder = Settings::getInstance()->getDefaultString("DefaultSortOrder");
-    for (unsigned int i = 0; i < numSortTypes; ++i) {
+        Settings::getInstance()->setString("DefaultSortOrder", sortOrder);
+        s->setNeedsSaving();
+    }
+    for (unsigned int i {0}; i < numSortTypes; ++i) {
         const FileData::SortType& sort {FileSorts::SortTypes[i]};
         if (sort.description == sortOrder)
             defaultSortOrder->add(sort.description, &sort, true);

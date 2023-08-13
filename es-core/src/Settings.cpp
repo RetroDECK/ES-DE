@@ -164,7 +164,7 @@ void Settings::setDefaults()
     mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
-    mStringMap["DefaultSortOrder"] = {"filename, ascending", "filename, ascending"};
+    mStringMap["DefaultSortOrder"] = {"name, ascending", "name, ascending"};
     mStringMap["MenuColorScheme"] = {"dark", "dark"};
     mStringMap["MenuOpeningEffect"] = {"scale-up", "scale-up"};
     mStringMap["LaunchScreenDuration"] = {"normal", "normal"};
