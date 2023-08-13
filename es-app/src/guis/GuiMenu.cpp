@@ -477,7 +477,7 @@ void GuiMenu::openUIOptions()
     if (systemsSorting->getSelectedObjects().size() == 0)
         systemsSorting->selectEntry(0);
     s->addWithLabel("SYSTEMS SORTING", systemsSorting);
-    s->addSaveFunc([this, systemsSorting, s] {
+    s->addSaveFunc([systemsSorting, s] {
         if (systemsSorting->getSelected() != Settings::getInstance()->getString("SystemsSorting")) {
             Settings::getInstance()->setString("SystemsSorting", systemsSorting->getSelected());
             s->setNeedsSaving();
@@ -535,7 +535,7 @@ void GuiMenu::openUIOptions()
     if (menuColorScheme->getSelectedObjects().size() == 0)
         menuColorScheme->selectEntry(0);
     s->addWithLabel("MENU COLOR SCHEME", menuColorScheme);
-    s->addSaveFunc([this, menuColorScheme, s] {
+    s->addSaveFunc([menuColorScheme, s] {
         if (menuColorScheme->getSelected() !=
             Settings::getInstance()->getString("MenuColorScheme")) {
             Settings::getInstance()->setString("MenuColorScheme", menuColorScheme->getSelected());
