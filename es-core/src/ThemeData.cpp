@@ -305,6 +305,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"metadataElement", BOOLEAN},
        {"gameselector", STRING},
        {"gameselectorEntry", UNSIGNED_INTEGER},
+       {"iterationCount", UNSIGNED_INTEGER},
+       {"onIterationsDone", STRING},
        {"audio", BOOLEAN},
        {"interpolation", STRING},
        {"color", COLOR},

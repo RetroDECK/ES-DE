@@ -88,7 +88,7 @@ bool MediaViewer::startMediaViewer(FileData* game)
 void MediaViewer::stopMediaViewer()
 {
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-    ViewController::getInstance()->stopViewVideos();
+    ViewController::getInstance()->startViewVideos();
 
     mVideoFile = "";
     mVideo.reset();

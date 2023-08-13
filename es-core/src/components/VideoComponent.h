@@ -92,7 +92,12 @@ public:
 
 protected:
     virtual void startVideoStream() {}
-    void renderStaticImage(const glm::mat4& parentTrans);
+    void renderStaticImage(const glm::mat4& parentTrans, bool forceRender);
+
+    enum class OnIterationsDone {
+        NOTHING,
+        IMAGE
+    };
 
     ImageComponent mStaticImage;
 
@@ -116,6 +121,7 @@ protected:
         "cover", "backcover", "3dbox",   "physicalmedia", "fanart"};
 
     std::string mVideoPath;
+    OnIterationsDone mOnIterationsDone;
     unsigned mStartTime;
     std::atomic<bool> mIsPlaying;
     std::atomic<bool> mIsActuallyPlaying;
@@ -131,6 +137,8 @@ protected:
     bool mGeneralFade;
     float mFadeIn;
     float mFadeInTime;
+    int mIterationCount;
+    int mPlayCount;
 
     Configuration mConfig;
 };

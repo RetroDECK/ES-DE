@@ -165,6 +165,12 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
     if (!mHasVideo && mStaticImagePath == "")
         return;
 
+    if (mIterationCount != 0 && mPlayCount == mIterationCount) {
+        if (mOnIterationsDone == OnIterationsDone::IMAGE)
+            VideoComponent::renderStaticImage(parentTrans, true);
+        return;
+    }
+
     glm::mat4 trans {parentTrans * getTransform()};
     GuiComponent::renderChildren(trans);
 
@@ -203,7 +209,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         vertices[3].color = mColorShiftEnd;
 
         // Round vertices.
-        for (int i = 0; i < 4; ++i)
+        for (int i {0}; i < 4; ++i)
             vertices[i].position = glm::round(vertices[i].position);
 
         if (mFadeIn < 1.0f || mThemeOpacity < 1.0f)
@@ -265,8 +271,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
                                       Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA);
     }
     else {
-        if (mVisible)
-            VideoComponent::renderStaticImage(parentTrans);
+        VideoComponent::renderStaticImage(parentTrans, false);
     }
 }
 
@@ -647,7 +652,7 @@ void VideoFFmpegComponent::readFrames()
     }
 
     if (mVideoCodecContext && mFormatContext) {
-        for (int i = 0; i < readLoops; ++i) {
+        for (int i {0}; i < readLoops; ++i) {
             if (static_cast<int>(mVideoFrameQueue.size()) < mVideoTargetQueueSize ||
                 (mAudioStreamIndex >= 0 &&
                  static_cast<int>(mAudioFrameQueue.size()) < mAudioTargetQueueSize)) {
@@ -1152,7 +1157,7 @@ bool VideoFFmpegComponent::decoderInitHW()
     }
 
     // 50 is just an arbitrary number so we don't potentially get stuck in an endless loop.
-    for (int i = 0; i < 50; ++i) {
+    for (int i {0}; i < 50; ++i) {
         const AVCodecHWConfig* config {avcodec_get_hw_config(mHardwareCodec, i)};
         if (!config) {
             LOG(LogDebug) << "VideoFFmpegComponent::decoderInitHW(): Hardware decoder \""
@@ -1245,7 +1250,7 @@ bool VideoFFmpegComponent::decoderInitHW()
                     // For some videos we need to process at least one extra frame to verify
                     // that the hardware encoder can actually be used, otherwise the fallback
                     // to software decoding would take place when it's not necessary.
-                    for (int i = 0; i < 3; ++i) {
+                    for (int i {0}; i < 3; ++i) {
                         if (avcodec_receive_frame(checkCodecContext, checkFrame) < 0) {
                             av_packet_unref(checkPacket);
                             while (av_read_frame(mFormatContext, checkPacket) == 0) {
@@ -1611,13 +1616,14 @@ void VideoFFmpegComponent::pauseVideoPlayer()
 void VideoFFmpegComponent::handleLooping()
 {
     if (mIsPlaying && mEndOfVideo) {
+        ++mPlayCount;
         // If the screensaver video swap time is set to 0, it means we should
         // skip to the next game when the video has finished playing.
         if (mScreensaverMode &&
             Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout") == 0) {
             mWindow->screensaverTriggerNextGame();
         }
-        else {
+        else if (mIterationCount == 0 || mPlayCount < mIterationCount) {
             stopVideoPlayer();
             startVideoStream();
         }

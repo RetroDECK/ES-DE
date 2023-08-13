@@ -48,7 +48,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
         LOG(LogError) << "Couldn't find PDF conversion binary es-pdf-convert";
 #endif
         NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-        ViewController::getInstance()->stopViewVideos();
+        ViewController::getInstance()->startViewVideos();
         return false;
     }
 
@@ -58,7 +58,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
     if (!Utils::FileSystem::exists(mManualPath)) {
         LOG(LogError) << "No PDF manual found for game \"" << mGame->getName() << "\"";
         NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-        ViewController::getInstance()->stopViewVideos();
+        ViewController::getInstance()->startViewVideos();
         return false;
     }
 
@@ -89,7 +89,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
 
     if (!getDocumentInfo()) {
         LOG(LogError) << "PDFViewer: Couldn't load file \"" << mManualPath << "\"";
-        ViewController::getInstance()->stopViewVideos();
+        ViewController::getInstance()->startViewVideos();
         return false;
     }
 
@@ -98,7 +98,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
     for (int i {1}; i <= mPageCount; ++i) {
         if (mPages.find(i) == mPages.end()) {
             LOG(LogError) << "Couldn't read information for page " << i << ", invalid PDF file?";
-            ViewController::getInstance()->stopViewVideos();
+            ViewController::getInstance()->startViewVideos();
             return false;
         }
 
@@ -183,7 +183,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
 void PDFViewer::stopPDFViewer()
 {
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-    ViewController::getInstance()->stopViewVideos();
+    ViewController::getInstance()->startViewVideos();
 
     mPages.clear();
     mPageImage.reset();

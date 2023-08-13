@@ -31,6 +31,7 @@ VideoComponent::VideoComponent()
     , mTopLeftCrop {0.0f, 0.0f}
     , mBottomRightCrop {1.0f, 1.0f}
     , mPillarboxThreshold {0.85f, 0.90f}
+    , mOnIterationsDone {OnIterationsDone::NOTHING}
     , mStartTime {0}
     , mIsPlaying {false}
     , mIsActuallyPlaying {false}
@@ -46,6 +47,8 @@ VideoComponent::VideoComponent()
     , mGeneralFade {false}
     , mFadeIn {1.0f}
     , mFadeInTime {1000.0f}
+    , mIterationCount {0}
+    , mPlayCount {0}
 {
     // Setup default configuration.
     mConfig.showStaticImageDelay = false;
@@ -185,6 +188,23 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))
         mComponentThemeFlags |= ComponentThemeFlags::METADATA_ELEMENT;
+
+    if (elem->has("iterationCount")) {
+        mIterationCount = glm::clamp(elem->get<unsigned int>("iterationCount"), 0u, 10u);
+
+        if (properties && elem->has("onIterationsDone")) {
+            const std::string& onIterationsDone {elem->get<std::string>("onIterationsDone")};
+            if (onIterationsDone == "nothing")
+                mOnIterationsDone = OnIterationsDone::NOTHING;
+            else if (onIterationsDone == "image")
+                mOnIterationsDone = OnIterationsDone::IMAGE;
+            else
+                LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property "
+                                   "\"onIterationsDone\" for element \""
+                                << element.substr(6) << "\" defined as \"" << onIterationsDone
+                                << "\"";
+        }
+    }
 
     if (elem->has("audio"))
         mPlayAudio = elem->get<bool>("audio");
@@ -343,6 +363,9 @@ std::vector<HelpPrompt> VideoComponent::getHelpPrompts()
 
 void VideoComponent::update(int deltaTime)
 {
+    if (mIterationCount != 0 && mPlayCount == mIterationCount)
+        return;
+
     // A deltaTime value of 0 would lead to mFadeIn being an invalid number which would prevent
     // the video from being rendered. This can happen on application startup in some instances.
     if (deltaTime == 0)
@@ -397,6 +420,8 @@ void VideoComponent::update(int deltaTime)
 
 void VideoComponent::startVideoPlayer()
 {
+    mPlayCount = 0;
+
     if (mIsPlaying)
         stopVideoPlayer();
 
@@ -408,9 +433,9 @@ void VideoComponent::startVideoPlayer()
     mPaused = false;
 }
 
-void VideoComponent::renderStaticImage(const glm::mat4& parentTrans)
+void VideoComponent::renderStaticImage(const glm::mat4& parentTrans, bool forceRender)
 {
-    if (mHasVideo && (!mConfig.showStaticImageDelay || mConfig.startDelay == 0))
+    if (mHasVideo && (!forceRender && (!mConfig.showStaticImageDelay || mConfig.startDelay == 0)))
         return;
 
     if (mStaticImagePath != "") {
