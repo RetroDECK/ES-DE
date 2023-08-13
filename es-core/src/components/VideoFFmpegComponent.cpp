@@ -58,6 +58,7 @@ VideoFFmpegComponent::VideoFFmpegComponent()
     , mAccumulatedTime {0.0l}
     , mStartTimeAccumulation {false}
     , mDecodedFrame {false}
+    , mReadAllFrames {false}
     , mEndOfVideo {false}
 {
 }
@@ -761,7 +762,7 @@ void VideoFFmpegComponent::readFrames()
     }
 
     if (readFrameReturn < 0)
-        mEndOfVideo = true;
+        mReadAllFrames = true;
 }
 
 void VideoFFmpegComponent::getProcessedFrames()
@@ -974,6 +975,9 @@ void VideoFFmpegComponent::outputFrames()
             break;
         }
     }
+
+    if (mReadAllFrames && mVideoFrameQueue.empty())
+        mEndOfVideo = true;
 }
 
 void VideoFFmpegComponent::calculateBlackRectangle()
@@ -1341,6 +1345,7 @@ void VideoFFmpegComponent::startVideoStream()
         mStartTimeAccumulation = false;
         mSWDecoder = true;
         mDecodedFrame = false;
+        mReadAllFrames = false;
         mEndOfVideo = false;
         mVideoFrameCount = 0;
         mAudioFrameCount = 0;
@@ -1558,6 +1563,7 @@ void VideoFFmpegComponent::stopVideoPlayer(bool muteAudio)
     mIsPlaying = false;
     mIsActuallyPlaying = false;
     mPaused = false;
+    mReadAllFrames = false;
     mEndOfVideo = false;
     mTexture.reset();
 

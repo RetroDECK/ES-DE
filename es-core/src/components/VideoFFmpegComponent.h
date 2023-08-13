@@ -176,6 +176,7 @@ private:
     std::atomic<double> mAccumulatedTime;
     std::atomic<bool> mStartTimeAccumulation;
     std::atomic<bool> mDecodedFrame;
+    std::atomic<bool> mReadAllFrames;
     std::atomic<bool> mEndOfVideo;
     bool mSWDecoder;
 };
