@@ -468,6 +468,8 @@
             <entry>~/.local/share/applications/pcsx2*.AppImage</entry>
             <entry>~/.local/bin/pcsx2*.AppImage</entry>
             <entry>~/bin/pcsx2*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2-LEGACY">
