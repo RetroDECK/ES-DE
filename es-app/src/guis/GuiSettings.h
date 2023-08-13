@@ -49,6 +49,7 @@ public:
     void setNeedsSorting() { mNeedsSorting = true; }
     void setNeedsSortingCollections() { mNeedsSortingCollections = true; }
     void setNeedsResetFilters() { mNeedsResetFilters = true; }
+    void setNeedsRescanROMDirectory() { mNeedsRescanROMDirectory = true; }
     void setNeedsReloading() { mNeedsReloading = true; }
     void setNeedsGoToStart() { mNeedsGoToStart = true; }
     void setNeedsGoToSystem(SystemData* goToSystem)
@@ -57,6 +58,7 @@ public:
         mGoToSystem = goToSystem;
     };
     void setNeedsGoToGroupedCollections() { mNeedsGoToGroupedCollections = true; }
+    void setNeedsCloseAllWindows() { mNeedsCloseAllWindows = true; }
     void setInvalidateCachedBackground() { mInvalidateCachedBackground = true; }
 
     bool input(InputConfig* config, Input input) override;
@@ -74,10 +76,12 @@ private:
     bool mNeedsSorting;
     bool mNeedsSortingCollections;
     bool mNeedsResetFilters;
+    bool mNeedsRescanROMDirectory;
     bool mNeedsReloading;
     bool mNeedsGoToStart;
     bool mNeedsGoToSystem;
     bool mNeedsGoToGroupedCollections;
+    bool mNeedsCloseAllWindows;
     bool mInvalidateCachedBackground;
 };
 

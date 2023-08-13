@@ -31,10 +31,12 @@ GuiSettings::GuiSettings(std::string title)
     , mNeedsSorting {false}
     , mNeedsSortingCollections {false}
     , mNeedsResetFilters {false}
+    , mNeedsRescanROMDirectory {false}
     , mNeedsReloading {false}
     , mNeedsGoToStart {false}
     , mNeedsGoToSystem {false}
     , mNeedsGoToGroupedCollections {false}
+    , mNeedsCloseAllWindows {false}
     , mInvalidateCachedBackground {false}
 {
     addChild(&mMenu);
@@ -60,6 +62,25 @@ void GuiSettings::save()
 
     if (mNeedsSaving)
         Settings::getInstance()->saveFile();
+
+    if (mNeedsRescanROMDirectory) {
+        if (CollectionSystemsManager::getInstance()->isEditing())
+            CollectionSystemsManager::getInstance()->exitEditMode();
+        mWindow->stopInfoPopup();
+        //  Write any gamelist.xml changes before proceeding with the rescan.
+        if (Settings::getInstance()->getString("SaveGamelistsMode") == "on exit") {
+            for (auto system : SystemData::sSystemVector)
+                system->writeMetaData();
+        }
+        ViewController::getInstance()->rescanROMDirectory();
+        // Close all open windows.
+        while (mWindow->getGuiStackSize() > 1) {
+            GuiComponent* window {mWindow->peekGui()};
+            if (window != nullptr)
+                mWindow->removeGui(window);
+        }
+        return;
+    }
 
     if (mNeedsCollectionsUpdate) {
         CollectionSystemsManager::getInstance()->loadEnabledListFromSettings();
@@ -153,6 +174,14 @@ void GuiSettings::save()
             return;
         }
         ViewController::getInstance()->resetCamera();
+    }
+
+    if (mNeedsCloseAllWindows) {
+        while (mWindow->getGuiStackSize() > 1) {
+            GuiComponent* window {mWindow->peekGui()};
+            if (window != nullptr)
+                mWindow->removeGui(window);
+        }
     }
 
     if (mInvalidateCachedBackground) {
