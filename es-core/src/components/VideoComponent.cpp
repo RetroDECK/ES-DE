@@ -229,6 +229,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mConfig.staticVideoPath = staticPath;
         }
         else {
+            mThemeGameSelector = ":none:";
             LOG(LogWarning) << "VideoComponent: File defined for property \"path\" for element \""
                             << element.substr(6) << "\" does not exist: \"" << staticPath << "\"";
         }

@@ -1014,7 +1014,7 @@ void SystemView::updateGameSelectors()
 
     for (auto& video : mSystemElements[cursor].videoComponents) {
         // If a static video has been set, then don't attempt to find a gameselector entry.
-        if (video->hasStaticVideo())
+        if (video->hasStaticVideo() || video->getThemeGameSelector() == ":none:")
             continue;
         GameSelectorComponent* gameSelector {nullptr};
         if (multipleSelectors) {
@@ -1055,7 +1055,7 @@ void SystemView::updateGameSelectors()
     }
 
     for (auto& video : mSystemElements[cursor].videoComponents) {
-        if (video->hasStaticVideo() ||
+        if (video->hasStaticVideo() || video->getThemeGameSelector() == ":none:" ||
             (video->getThemeImageTypes().size() == 0 && video->getDefaultImage() == ""))
             continue;
         GameSelectorComponent* gameSelector {nullptr};
