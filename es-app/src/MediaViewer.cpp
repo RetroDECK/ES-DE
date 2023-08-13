@@ -30,6 +30,8 @@ bool MediaViewer::startMediaViewer(FileData* game)
     mScreenshotIndex = -1;
     mTitleScreenIndex = -1;
 
+    ViewController::getInstance()->pauseViewVideos();
+
     mShowMediaTypes = Settings::getInstance()->getBool("MediaViewerShowTypes");
 
     if (Settings::getInstance()->getString("MediaViewerHelpPrompts") == "disabled")
@@ -280,7 +282,6 @@ void MediaViewer::playVideo()
         return;
 
     mDisplayingImage = false;
-    ViewController::getInstance()->pauseViewVideos();
 
     mVideo = std::make_unique<VideoFFmpegComponent>();
     mVideo->setOrigin(0.5f, 0.5f);
