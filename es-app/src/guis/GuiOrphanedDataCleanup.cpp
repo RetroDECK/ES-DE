@@ -394,9 +394,37 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
             }
         }
 
+        int directoryDeleteCounter {0};
+        const Utils::FileSystem::StringList& emptyDirCheck {
+            Utils::FileSystem::getDirContent(systemMediaDir, true)};
+
+        for (auto& entry : emptyDirCheck) {
+            if (!Utils::FileSystem::isDirectory(entry))
+                continue;
+            std::string path {entry};
+            while (path != systemMediaDir) {
+                if (Utils::FileSystem::getDirContent(path).size() == 0) {
+
+#if defined(_WIN64)
+                    LOG(LogInfo) << "Deleting empty directory \""
+                                 << Utils::String::replace(path, "/", "\\") << "\"";
+#else
+                    LOG(LogInfo) << "Deleting empty directory \"" << path << "\"";
+#endif
+                    if (Utils::FileSystem::removeDirectory(path, false))
+                        ++directoryDeleteCounter;
+                    path = Utils::FileSystem::getParent(path);
+                }
+                else {
+                    break;
+                }
+            }
+        }
+
         LOG(LogInfo) << "Removed " << systemProcessedCount << " file"
-                     << (systemProcessedCount == 1 ? " " : "s ") << "from system \""
-                     << currentSystem << "\"";
+                     << (systemProcessedCount == 1 ? " " : "s ") << "and " << directoryDeleteCounter
+                     << (directoryDeleteCounter == 1 ? " directory " : " directories ")
+                     << "for system \"" << currentSystem << "\"";
 
         SDL_Delay(500);
     }
