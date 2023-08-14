@@ -120,7 +120,7 @@ https://www.mamedev.org
 CA certificates (for TLS/SSL support on Windows) \
 https://wiki.mozilla.org/CA
 
-# Slate theme set
+# Slate theme
 
 Recalbox Multi (Slate is based on this theme, using assets from before their change to a more restrictive license in 2018) \
 https://gitlab.com/recalbox/recalbox-themes
@@ -130,7 +130,7 @@ https://github.com/RetroPie/es-theme-carbon
 
 Some logotype graphics by Dan Patrick
 
-# Modern theme set
+# Modern theme
 
 Nintendo Switch Theme for RetroPie (Modern is based on this theme): \
 https://github.com/lilbud/es-theme-switch

@@ -14,7 +14,7 @@ It comes preconfigured for use with [RetroArch](https://www.retroarch.com) and a
 
 You can find the complete list of supported systems and emulators [here](USERGUIDE.md#supported-game-systems).
 
-Two theme sets (Slate and Modern) are bundled with the application, and additional themes can be found on the [official themes list](https://gitlab.com/es-de/themes/themes-list).
+Two themes (Slate and Modern) are bundled with the application, and additional themes can be found on the [official themes list](https://gitlab.com/es-de/themes/themes-list) or be installed using the built-in theme downloader.
 
 ## Download
 
@@ -42,7 +42,7 @@ If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you
 
 ## Some feature highlights
 
-Here are some highlights, displayed using the default Slate theme set.
+Here are some highlights, displayed using the default Slate theme.
 
 ![alt text](images/es-de_system_view.png "ES-DE System View")
 _The **System view**, which is the default starting point for the application, it's here that you browse through your game systems._

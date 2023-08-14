@@ -11,15 +11,23 @@
 * Completely removed support for legacy EmulationStation themes
 * Added support for MD5 file hash searching when scraping using ScreenScraper
 * Added a utility for removing orphaned data (game media, gamelist entries and custom collection entries)
+* Added a "Systems sorting" option to the Other settings menu to select between the bundled systems sorting configuration files
 * Added support for downloading the Windows and macOS packages via the application updater (manual installation still required)
 * Added support for pasting text into the application (when a text input field is focused)
 * Added support for using most characters (including multi-byte Unicode characters) in custom collection names
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
+* Added an entry to the Utilities menu for creating/updating the game system directories
+* Enabled the setting "Show hidden files and folders" to be changed without requiring an application restart
+* Enabled the setting "Show hidden games" to be changed without requiring an application restart
+* Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
+* Added support for deleting installed themes from the theme downloader interface
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
 * Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
 * (Linux) Added support for using the RetroArch AppImage release in portable mode (added corepath find rules)
 * (Linux) Added support for the AppImage release of Snes9x
+* (Linux) Added the PCSX2 Flatpak release to the non-legacy PCSX2 find rule configuration
+* Changed the sort types "filename, ascending" and "filename, descending" to "name, ascending" and "name, descending"
 * Changed the "no games" dialog to no longer save the ROM directory to es_settings.xml if its value hasn't changed
 * When editing custom collections with really long names, the "Y" helpsystem text now gets abbreviated
 * Removed the "Legacy gamelist view style" and "Legacy theme transitions" settings
@@ -49,6 +57,7 @@
 * Refactored TextListComponent to work more like the other primary components
 * Added a lot more debug log output to the scraper
 * Changed a number of stream operations to open files for writing in binary mode (to always create proper Unix line breaks)
+* Changed the concept of "theme set" to simply "theme" everywhere in the code and documentation
 * (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
 * (Windows) Improved the README.txt file for the portable release
 * (Windows) Defined UNICODE and _UNICODE in the CMake configuration to force Unicode support for the Win32 API
@@ -70,6 +79,7 @@
 * Duplicate ScreenScraper game entries could show up in the interactive scraper if multiple platforms were defined for the system
 * ScreenScraper API calls were slightly malformed for systems where multiple platforms were defined
 * If multiple games had the same thumbnail in the interactive scraper, then this image would not get downloaded for all entries
+* The background was too dark when opening a menu with the dark menu color scheme and the option to blur the background was disabled
 * (Windows) If the ROMDirectory setting had a value then all custom collection files contained absolute paths instead of relative paths
 * (Windows) The media viewer could crash if attempting to display corrupt or invalid PDF game manuals
 * (Windows) Wide string conversions were not done correctly which caused issues when filenames contained 4-byte Unicode characters

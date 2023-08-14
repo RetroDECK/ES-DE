@@ -1502,10 +1502,10 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-    // Only show ROMs included in the gamelist.xml files.
+    // Only show games included in the gamelist.xml files.
     auto parseGamelistOnly = std::make_shared<SwitchComponent>();
     parseGamelistOnly->setState(Settings::getInstance()->getBool("ParseGamelistOnly"));
-    s->addWithLabel("ONLY SHOW ROMS FROM GAMELIST.XML FILES", parseGamelistOnly);
+    s->addWithLabel("ONLY SHOW GAMES FROM GAMELIST.XML FILES", parseGamelistOnly);
     s->addSaveFunc([this, parseGamelistOnly, s] {
         if (parseGamelistOnly->getState() !=
             Settings::getInstance()->getBool("ParseGamelistOnly")) {

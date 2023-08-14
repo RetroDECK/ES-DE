@@ -409,7 +409,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
 #if defined(APPLICATION_UPDATER)
 "  --no-update-check                     Don't check for application updates during startup\n"
 #endif
-"  --gamelist-only                       Skip automatic game ROM search, only read from gamelist.xml\n"
+"  --gamelist-only                       Skip automatic game search, only read from gamelist.xml\n"
 "  --ignore-gamelist                     Ignore the gamelist.xml files\n"
 "  --show-hidden-files                   Show hidden files and folders\n"
 "  --show-hidden-games                   Show hidden games\n"
