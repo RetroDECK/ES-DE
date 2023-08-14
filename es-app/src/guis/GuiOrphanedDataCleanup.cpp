@@ -493,7 +493,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
 
         if (Utils::FileSystem::exists(tempFile)) {
             LOG(LogWarning) << "Found existing temporary file \"" << tempFile << "\"";
-            if (Utils::FileSystem::removeFile(tempFile)) {
+            if (!Utils::FileSystem::removeFile(tempFile)) {
                 LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
@@ -639,12 +639,12 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
         }
 
         LOG(LogInfo) << "Removed " << removeCount << (removeCount == 1 ? " entry " : " entries ")
-                     << "from system \"" << currentSystem << "\"";
+                     << "for system \"" << currentSystem << "\"";
 
         if (!mFailed)
             mProcessedCount += removeCount;
 
-        if (Utils::FileSystem::exists(tempFile) && Utils::FileSystem::removeFile(tempFile)) {
+        if (Utils::FileSystem::exists(tempFile) && !Utils::FileSystem::removeFile(tempFile)) {
             LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
@@ -767,7 +767,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
 
         if (Utils::FileSystem::exists(tempFile)) {
             LOG(LogWarning) << "Found existing temporary file \"" << tempFile << "\"";
-            if (Utils::FileSystem::removeFile(tempFile)) {
+            if (!Utils::FileSystem::removeFile(tempFile)) {
                 LOG(LogError) << "Couldn't remove temporary file";
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
@@ -877,7 +877,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
         if (!mFailed)
             mProcessedCount += removeCount;
 
-        if (Utils::FileSystem::exists(tempFile) && Utils::FileSystem::removeFile(tempFile)) {
+        if (Utils::FileSystem::exists(tempFile) && !Utils::FileSystem::removeFile(tempFile)) {
             LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};

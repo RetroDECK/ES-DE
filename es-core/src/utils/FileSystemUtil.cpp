@@ -801,56 +801,41 @@ namespace Utils
         bool removeFile(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
-
-            // Don't remove if it doesn't exists.
-            if (!exists(genericPath))
-                return true;
-
+            try {
 #if defined(_WIN64)
-            if (_wunlink(Utils::String::stringToWideString(genericPath).c_str()) != 0) {
-                LOG(LogError) << "Couldn't delete file, permission problems?";
-                LOG(LogError) << genericPath;
-                return true;
-            }
-            else {
-                return false;
-            }
+                return std::filesystem::remove(Utils::String::stringToWideString(genericPath));
 #else
-            if (unlink(genericPath.c_str()) != 0) {
-                LOG(LogError) << "Couldn't delete file, permission problems?";
-                LOG(LogError) << genericPath;
-                return true;
+                return std::filesystem::remove(genericPath);
+#endif
             }
-            else {
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::removeFile(): " << error.what();
                 return false;
             }
-            return (unlink(genericPath.c_str()) == 0);
-#endif
         }
 
-        bool removeDirectory(const std::string& path)
+        bool removeDirectory(const std::string& path, bool recursive)
         {
-            if (getDirContent(path).size() != 0) {
-                LOG(LogError) << "Couldn't delete directory as it's not empty";
-                LOG(LogError) << path;
-                return false;
-            }
-            if (isSymlink(path)) {
-                LOG(LogError) << "Couldn't delete directory as it's actually a symlink";
-                LOG(LogError) << path;
-                return false;
-            }
+            const std::string& genericPath {getGenericPath(path)};
+            try {
 #if defined(_WIN64)
-            if (_wrmdir(Utils::String::stringToWideString(path).c_str()) != 0) {
+                if (recursive)
+                    return std::filesystem::remove_all(
+                        Utils::String::stringToWideString(genericPath));
+                else
+                    return std::filesystem::remove(Utils::String::stringToWideString(genericPath));
 #else
-            if (rmdir(path.c_str()) != 0) {
+                if (recursive)
+                    return std::filesystem::remove_all(genericPath);
+                else
+                    return std::filesystem::remove(genericPath);
 #endif
-                LOG(LogError) << "Couldn't delete directory, permission problems?";
-                LOG(LogError) << path;
+            }
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::removeDirectory(): " << error.what();
                 return false;
             }
-            return true;
-        } // namespace FileSystem
+        }
 
         bool createDirectory(const std::string& path)
         {
@@ -885,8 +870,8 @@ namespace Utils
 
         bool exists(const std::string& path)
         {
+            const std::string& genericPath {getGenericPath(path)};
             try {
-                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
                 return std::filesystem::exists(Utils::String::stringToWideString(genericPath));
 #else
@@ -918,8 +903,8 @@ namespace Utils
 
         bool isAbsolute(const std::string& path)
         {
+            const std::string& genericPath {getGenericPath(path)};
             try {
-                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
                 return ((genericPath.size() > 1) && (genericPath[1] == ':'));
 #else
@@ -933,8 +918,8 @@ namespace Utils
 
         bool isRegularFile(const std::string& path)
         {
+            const std::string& genericPath {getGenericPath(path)};
             try {
-                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
                 return std::filesystem::is_regular_file(
                     Utils::String::stringToWideString(genericPath));
@@ -950,8 +935,8 @@ namespace Utils
 
         bool isDirectory(const std::string& path)
         {
+            const std::string& genericPath {getGenericPath(path)};
             try {
-                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
                 return std::filesystem::is_directory(
                     Utils::String::stringToWideString(genericPath));
@@ -967,8 +952,8 @@ namespace Utils
 
         bool isSymlink(const std::string& path)
         {
+            const std::string& genericPath {getGenericPath(path)};
             try {
-                const std::string& genericPath {getGenericPath(path)};
 #if defined(_WIN64)
                 return std::filesystem::is_symlink(Utils::String::stringToWideString(genericPath));
 #else

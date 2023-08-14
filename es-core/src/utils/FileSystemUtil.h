@@ -63,7 +63,7 @@ namespace Utils
                         bool overwrite);
         bool createEmptyFile(const std::filesystem::path& path);
         bool removeFile(const std::string& path);
-        bool removeDirectory(const std::string& path);
+        bool removeDirectory(const std::string& path, bool recursive);
         bool createDirectory(const std::string& path);
         bool exists(const std::string& path);
         bool driveExists(const std::string& path);

@@ -1123,7 +1123,7 @@ bool SystemData::createSystemDirectories()
                 replaceInfoFile = false;
 
             if (replaceInfoFile) {
-                if (Utils::FileSystem::removeFile(rompath + systemDir + systemInfoFileName))
+                if (!Utils::FileSystem::removeFile(rompath + systemDir + systemInfoFileName))
                     return true;
             }
 
@@ -1203,7 +1203,7 @@ bool SystemData::createSystemDirectories()
         bool systemsFileSuccess {true};
 
         if (Utils::FileSystem::exists(rompath + systemsFileName)) {
-            if (Utils::FileSystem::removeFile(rompath + systemsFileName))
+            if (!Utils::FileSystem::removeFile(rompath + systemsFileName))
                 systemsFileSuccess = false;
         }
 
@@ -1308,8 +1308,8 @@ std::string SystemData::getGamelistPath(bool forWrite) const
 
 std::string SystemData::getThemePath() const
 {
-    // Check for the precence of [CURRENT_THEME_PATH]/[SYSTEM]/theme.xml and if this does not
-    // exist, then try the default for the theme set, i.e. [CURRENT_THEME_PATH]/theme.xml
+    // Check for the presence of [CURRENT_THEME_PATH]/[SYSTEM]/theme.xml and if this does not
+    // exist, then try the default file for the theme, i.e. [CURRENT_THEME_PATH]/theme.xml
     std::string themePath {ThemeData::getThemeFromCurrentSet(mThemeFolder)};
 
     if (Utils::FileSystem::exists(themePath))
@@ -1500,7 +1500,7 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
         // No theme available for this platform.
         if (!mIsCustomCollectionSystem) {
             LOG(LogWarning) << "There is no \"" << mThemeFolder
-                            << "\" configuration available for the selected theme set \""
+                            << "\" configuration available for the selected theme \""
                             << Settings::getInstance()->getString("ThemeSet")
                             << "\", system will be unthemed";
         }
