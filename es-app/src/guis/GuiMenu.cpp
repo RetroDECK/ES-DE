@@ -1469,22 +1469,26 @@ void GuiMenu::openOtherOptions()
     // Show hidden files.
     auto showHiddenFiles = std::make_shared<SwitchComponent>();
     showHiddenFiles->setState(Settings::getInstance()->getBool("ShowHiddenFiles"));
-    s->addWithLabel("SHOW HIDDEN FILES AND FOLDERS (REQUIRES RESTART)", showHiddenFiles);
-    s->addSaveFunc([showHiddenFiles, s] {
+    s->addWithLabel("SHOW HIDDEN FILES AND FOLDERS", showHiddenFiles);
+    s->addSaveFunc([this, showHiddenFiles, s] {
         if (showHiddenFiles->getState() != Settings::getInstance()->getBool("ShowHiddenFiles")) {
             Settings::getInstance()->setBool("ShowHiddenFiles", showHiddenFiles->getState());
             s->setNeedsSaving();
+            s->setNeedsCloseMenu([this] { delete this; });
+            s->setNeedsRescanROMDirectory();
         }
     });
 
     // Show hidden games.
     auto showHiddenGames = std::make_shared<SwitchComponent>();
     showHiddenGames->setState(Settings::getInstance()->getBool("ShowHiddenGames"));
-    s->addWithLabel("SHOW HIDDEN GAMES (REQUIRES RESTART)", showHiddenGames);
-    s->addSaveFunc([showHiddenGames, s] {
+    s->addWithLabel("SHOW HIDDEN GAMES", showHiddenGames);
+    s->addSaveFunc([this, showHiddenGames, s] {
         if (showHiddenGames->getState() != Settings::getInstance()->getBool("ShowHiddenGames")) {
             Settings::getInstance()->setBool("ShowHiddenGames", showHiddenGames->getState());
             s->setNeedsSaving();
+            s->setNeedsCloseMenu([this] { delete this; });
+            s->setNeedsRescanROMDirectory();
         }
     });
 
@@ -1504,11 +1508,13 @@ void GuiMenu::openOtherOptions()
     auto parseGamelistOnly = std::make_shared<SwitchComponent>();
     parseGamelistOnly->setState(Settings::getInstance()->getBool("ParseGamelistOnly"));
     s->addWithLabel("ONLY SHOW ROMS FROM GAMELIST.XML FILES", parseGamelistOnly);
-    s->addSaveFunc([parseGamelistOnly, s] {
+    s->addSaveFunc([this, parseGamelistOnly, s] {
         if (parseGamelistOnly->getState() !=
             Settings::getInstance()->getBool("ParseGamelistOnly")) {
             Settings::getInstance()->setBool("ParseGamelistOnly", parseGamelistOnly->getState());
             s->setNeedsSaving();
+            s->setNeedsCloseMenu([this] { delete this; });
+            s->setNeedsRescanROMDirectory();
         }
     });
 
@@ -1611,7 +1617,6 @@ void GuiMenu::openUtilities()
 {
     auto s = new GuiSettings("UTILITIES");
 
-    Window* window {mWindow};
     HelpStyle style {getHelpStyle()};
 
     ComponentListRow row;
@@ -1625,7 +1630,7 @@ void GuiMenu::openUtilities()
     s->addRow(row);
 
     row.elements.clear();
-    row.addElement(std::make_shared<TextComponent>("RESCAN ROM DIRECTORY",
+    row.addElement(std::make_shared<TextComponent>("CREATE/UPDATE SYSTEM DIRECTORIES",
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
 
@@ -1634,17 +1639,71 @@ void GuiMenu::openUtilities()
     dummyArrow->setOpacity(0.0f);
     row.addElement(dummyArrow, false);
 
-    row.makeAcceptInputHandler([this, window] {
-        window->pushGui(new GuiMsgBox(
-            this->getHelpStyle(),
+    row.makeAcceptInputHandler([this] {
+        mWindow->pushGui(new GuiMsgBox(
+            getHelpStyle(),
+            "THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT WILL ALSO "
+            "UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT WILL NOT DELETE OR "
+            "MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP TIMES IT'S RECOMMENDED TO "
+            "DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER RUNNING THIS UTILITY. PROCEED?",
+            "YES",
+            [this] {
+                if (!SystemData::createSystemDirectories()) {
+                    mWindow->pushGui(new GuiMsgBox(
+                        getHelpStyle(), "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED", "OK",
+                        [this] {
+                            if (CollectionSystemsManager::getInstance()->isEditing())
+                                CollectionSystemsManager::getInstance()->exitEditMode();
+                            mWindow->stopInfoPopup();
+                            GuiMenu::close(true);
+                            // Write any gamelist.xml changes before proceeding with the rescan.
+                            if (Settings::getInstance()->getString("SaveGamelistsMode") ==
+                                "on exit") {
+                                for (auto system : SystemData::sSystemVector)
+                                    system->writeMetaData();
+                            }
+                            ViewController::getInstance()->rescanROMDirectory();
+                        },
+                        "", nullptr, "", nullptr, true));
+                }
+                else {
+                    mWindow->pushGui(
+                        new GuiMsgBox(getHelpStyle(),
+                                      "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
+                                      "DISK FULL?\nSEE THE LOG FILE FOR MORE DETAILS",
+                                      "OK", nullptr, "", nullptr, "", nullptr, true, true,
+                                      (mRenderer->getIsVerticalOrientation() ?
+                                           0.70f :
+                                           0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                }
+            },
+            "NO", nullptr, "", nullptr, false, true,
+            (mRenderer->getIsVerticalOrientation() ?
+                 0.80f :
+                 0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
+    });
+
+    s->addRow(row);
+
+    row.elements.clear();
+    row.addElement(std::make_shared<TextComponent>("RESCAN ROM DIRECTORY",
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                   true);
+
+    // This transparent dummy arrow is only here to enable the "select" help prompt.
+    row.addElement(dummyArrow, false);
+
+    row.makeAcceptInputHandler([this] {
+        mWindow->pushGui(new GuiMsgBox(
+            getHelpStyle(),
             "THIS WILL RESCAN YOUR ROM DIRECTORY\n"
             "FOR CHANGES SUCH AS ADDED OR REMOVED\n"
             "GAMES AND SYSTEMS, PROCEED?",
             "YES",
-            [this, window] {
+            [this] {
                 if (CollectionSystemsManager::getInstance()->isEditing())
                     CollectionSystemsManager::getInstance()->exitEditMode();
-                window->stopInfoPopup();
+                mWindow->stopInfoPopup();
                 GuiMenu::close(true);
                 // Write any gamelist.xml changes before proceeding with the rescan.
                 if (Settings::getInstance()->getString("SaveGamelistsMode") == "on exit") {
@@ -1753,7 +1812,7 @@ void GuiMenu::addVersionInfo()
 void GuiMenu::openThemeDownloader(GuiSettings* settings)
 {
     auto updateFunc = [&, settings]() {
-        LOG(LogDebug) << "GuiMenu::openThemeDownloader(): Theme sets were updated, reloading menu";
+        LOG(LogDebug) << "GuiMenu::openThemeDownloader(): Themes were updated, reloading menu";
         mThemeDownloaderReloadCounter = 1;
         delete settings;
         if (mThemeDownloaderReloadCounter != 1) {
