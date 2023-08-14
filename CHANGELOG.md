@@ -21,6 +21,7 @@
 * Enabled the setting "Show hidden files and folders" to be changed without requiring an application restart
 * Enabled the setting "Show hidden games" to be changed without requiring an application restart
 * Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
+* Renamed the setting "Only show ROMs from gamelist.xml files" to "Only show games from gamelist.xml files
 * Added support for deleting installed themes from the theme downloader interface
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
 * Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse

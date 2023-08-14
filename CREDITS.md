@@ -2,16 +2,16 @@
 
 # Programming
 
-**Original version**\
-Alec Lofquist
-
-**RetroPie fork**\
-RetroPie community
-
 **Desktop Edition**\
 Leon Styhre \
 Sophia Hadash \
 Joseph Geumlek
+
+**RetroPie fork**\
+RetroPie community
+
+**Original version**\
+Alec Lofquist
 
 # UI Art & Design
 

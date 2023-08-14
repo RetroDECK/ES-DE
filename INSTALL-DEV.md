@@ -1076,7 +1076,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --anti-aliasing [0, 2 or 4]           Set MSAA anti-aliasing to disabled, 2x or 4x
 --no-splash                           Don't show the splash screen during startup
 --no-update-check                     Don't check for application updates during startup
---gamelist-only                       Skip automatic game ROM search, only read from gamelist.xml
+--gamelist-only                       Skip automatic game search, only read from gamelist.xml
 --ignore-gamelist                     Ignore the gamelist.xml files
 --show-hidden-files                   Show hidden files and folders
 --show-hidden-games                   Show hidden games
@@ -1114,7 +1114,7 @@ For the following options, the es_settings.xml file is immediately updated/saved
 
 As well, passing the option --ignore-gamelist will disable the ParseGamelistOnly setting controlled by --gamelist-only and immediately save the es_settings.xml file. If passing both the --ignore-gamelist and --gamelist-only parameters then --ignore-gamelist will take precedence and --gamelist-only will be ignored.
 
-The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show ROMs from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
+The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show games from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
 
 ## Settings not configurable via the GUI
 
@@ -1126,11 +1126,11 @@ Enabling this will skip all input event logging (button and key presses). Defaul
 
 **DebugSkipMissingThemeFiles**
 
-Enabling this will skip all debug messages about missing files when loading a theme set. Default value is false.
+Enabling this will skip all debug messages about missing files when loading a theme. Default value is false.
 
 **DebugSkipMissingThemeFilesCustomCollections**
 
-Enabling this will skip all debug messages about missing files specifically for custom collections when loading a theme set. Note that DebugSkipMissingThemeFiles takes precedence, so if that setting is set to true then the DebugSkipMissingThemeFilesCustomCollections setting will be ignored. Default value is true.
+Enabling this will skip all debug messages about missing files specifically for custom collections when loading a theme. Note that DebugSkipMissingThemeFiles takes precedence, so if that setting is set to true then the DebugSkipMissingThemeFilesCustomCollections setting will be ignored. Default value is true.
 
 **LegacyGamelistFileLocation**
 
@@ -1299,10 +1299,9 @@ Below is an overview of the file layout with various examples. For the command t
         You can use multiple platforms too, delimited with any of the whitespace characters (", \r\n\t"), e.g. "megadrive, genesis". -->
         <platform>snes</platform>
 
-        <!-- The theme to load from the current theme set. See THEMES.md for more information.
-        This tag is optional and if it doesn't exist, ES-DE will attempt to find a theme with the same name as the system name.
-        If no such match is made, the system will be unthemed.
-        It's recommended to include this tag even if it's just to clarify that the theme should correspond to the system name. -->
+        <!-- The theme system name, see THEMES.md for more information. This tag is optional and if it doesn't exist, ES-DE will
+        use the system name instead. It's still recommended to include this tag even if it's just to clarify that it should
+        correspond to the system name. -->
         <theme>snes</theme>
     </system>
 </systemList>
@@ -1463,6 +1462,8 @@ Here is yet another example with the addition of the `snes` system where some fi
 
 This file makes it possible to apply a custom systems sorting without having to modify the es_systems.xml file directly. It should be placed in the custom_systems directory, e.g.  `~/.emulationstation/custom_systems/es_systems_sorting.xml`
 
+Note that in order for ES-DE to load this file you'll need to set the _Systems sorting_ option in the _Other settings_ menu to _Full names or custom_.
+
 The structure of this file is essentially a simplified version of the es_systems.xml file, but with only the `<name>` and `<systemsortname>` tags present per system.
 
 Here's an example where three systems have been sorted by release year instead of the default full system name:
@@ -1493,10 +1494,12 @@ There are also four complete sorting files bundled with ES-DE, you can find them
 
 These files include all systems supported by ES-DE and provide the following sorting options:
 
+* Release year
+* Manufacturer, release year
 * Hardware type, release year
 * Manufacturer, hardware type, release year
-* Manufacturer, release year
-* Release year
+
+You can apply any of these sorting files via the _Systems sorting_ option in the _Other settings_ menu. Note that in order to load a es_systems_sorting.xml file placed in the custom_systems directory you'll need to set this option to _Full names or custom_.
 
 ## es_find_rules.xml
 
@@ -1999,7 +2002,7 @@ There are up to four parameters that will be passed to these scripts, as detaile
 | config-changed           |                                                    | On saving application settings or controller configuration                  |
 | settings-changed         |                                                    | On saving application settings (config-changed event triggered as well)     |
 | controls-changed         |                                                    | On saving controller configuration (config-changed event triggered as well) |
-| theme-changed            | New theme name, old theme name                     | When manually changing theme sets in the UI Settings menu                   |
+| theme-changed            | New theme name, old theme name                     | When manually changing themes in the UI Settings menu                       |
 | game-start               | ROM path, game name, system name, system full name | On game launch                                                              |
 | game-end                 | ROM path, game name, system name, system full name | On game end (or on application wakeup if running in the background)         |
 | screensaver-start        | _timer_ or _manual_                                | Screensaver started via timer or manually                                   |

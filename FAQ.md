@@ -10,7 +10,7 @@ The correct name is EmulationStation Desktop Edition, which is for practical rea
 
 ## Is this software available for free, and is it open source?
 
-ES-DE is available for free, and will continue to be available for free. It's released under the MIT open source license with the source code being publicly and freely available. Voluntary donations to support the project are however very welcome.
+ES-DE is available for free, and will continue to be available for free, if someone is asking you to pay money to use ES-DE in any form then you are being scammed. The software is released under the MIT open source license with the source code being publicly and freely available. Voluntary donations to support the project are however very welcome.
 
 ## Which operating systems are supported?
 

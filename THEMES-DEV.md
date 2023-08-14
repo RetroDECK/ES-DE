@@ -2,9 +2,9 @@
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
-If creating theme sets specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Because ES-DE theme engine functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. At least the -es-de extension is an indicator that it's an ES-DE specific theme set. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting theme sets from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
+If creating themes specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Themes made for ES-DE are not compatible with any other EmulationStation forks (and vice versa) and the -es-de extension makes it clear that it's an ES-DE theme. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting themes from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
 
-Before your start, make sure to download the _Theme engine examples_ theme set that contains a number of example variants for things like vertical and horizontal carousels, wheel carousels, system view textlists, grids etc:
+Before your start, make sure to download the _Theme engine examples_ theme that contains a number of example variants for things like vertical and horizontal carousels, wheel carousels, system view text lists, grids etc:
 
 https://gitlab.com/es-de/themes/theme-engine-examples-es-de
 
@@ -16,7 +16,7 @@ There is also some documentation written by lilbud covering general tips and tri
 
 https://github.com/lilbud/es-de-theme-stuff
 
-To test whether your theme set includes support for all ES-DE systems, download one of the following archives which contain ROMs directory structures fully populated with dummy files:
+To test whether your theme includes support for all ES-DE systems, download one of the following archives which contain ROM directory trees fully populated with dummy files:
 
 [ROMs_ALL_Unix.zip](tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
 [ROMs_ALL_macOS.zip](tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
@@ -36,22 +36,22 @@ Table of contents:
 
 ## Introduction
 
-ES-DE allows the grouping of themes for multiple game systems into a **theme set**. A theme is a collection of **elements**, each with their own **properties** that define the way they look and behave. These elements include things like text lists, carousels, images and animations.
+An ES-DE theme is a collection of assets like images, videos and fonts as well as XML configuration files which contain various **elements**, each with their own **properties** that define the way the theme looks and behaves. These elements include things like text, images, videos, animations, carousels, grids etc.
 
 Internally ES-DE uses the concept of **components** to actually implement the necessary building blocks to parse and render the elements, and although this is normally beyond the scope of what a theme author needs to consider, it's still good to be aware of the term as it's sometimes used in the documentation.
 
-Every game system has its own subdirectory within the theme set directory structure, and these are defined in the systems configuration file `es_systems.xml` either via the optional `<theme>` tag, or otherwise via the mandatory `<name>` tag. When ES-DE populates a system on startup it will look for a file named `theme.xml` in each such directory.
+Every game system may have its own subdirectory within the theme directory tree, and these directory names are defined in the systems configuration file `es_systems.xml` either via the optional `<theme>` tag, or otherwise via the mandatory `<name>` tag. When ES-DE populates a system on startup it will look for a file named `theme.xml` in each such directory.
 
-By placing a theme.xml file directly in the root of the theme set directory, that file will be processed as a default if there is no system-specific theme.xml file available.
+By placing a theme.xml file directly in the root of the theme directory, that file will be processed as a default if there is no system-specific theme.xml file available. This means that the structure of having a separate directory per supported game system is entirely optional.
 
-In the example below, we have a theme set named `mythemeset-es-de` which includes the `snes` and `nes` systems. Assuming you have some games installed for these systems, the files `mythemeset-es-de/nes/theme.xml` and `mythemeset-es-de/snes/theme.xml` will be processed on startup. If there are no games available for a system, its theme.xml file will be skipped.
+In the example below, we have a theme named `mytheme-es-de` which includes the `snes` and `nes` systems. Assuming you have some games installed for these systems, the files `mytheme-es-de/nes/theme.xml` and `mytheme-es-de/snes/theme.xml` will be processed on startup. If there are no games available for a system, its theme.xml file will be skipped.
 
-The directory structure of our example theme set could look something like the following:
+The directory structure for our example theme could look something like the following:
 
 ```
 ...
    themes/
-      mythemeset-es-de/
+      mytheme-es-de/
          core/
             font.ttf
             bold_font.ttf
@@ -73,20 +73,24 @@ The directory structure of our example theme set could look something like the f
          theme.xml
 ```
 
-The theme set approach makes it easy for users to install different themes and choose between them from the _UI Settings_ menu.
+The ES-DE theme functionality makes it easy for users to install different themes and to choose between them from the _UI Settings_ menu.
 
-There are two places that ES-DE can load theme sets from:
-* `[HOME]/.emulationstation/themes/[THEME_SET]/`
-* `[INSTALLATION PATH]/themes/[THEME_SET]/`
+There are two places that ES-DE can load themes from:
+* `[HOME]/.emulationstation/themes/`
+* `[INSTALLATION PATH]/themes/`
 
-An example installation path would be: \
-`/usr/share/emulationstation/themes/slate-es-de/`
+An installation path could be something like this:
+```
+/usr/share/emulationstation/themes/slate-es-de/
+/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/
+C:\Program Files\EmulationStation-DE\themes\
+```
 
-If a theme set with the same name exists in both locations, the one in the home directory will be loaded and the other one will be skipped.
+If a theme with the same name exists in both locations, the one in the home directory will be loaded and the other one will be skipped.
 
 ## Differences to legacy RetroPie themes
 
-If you are not familiar with theming for RetroPie or similar forks of EmulationStation then you can skip this section as it only describes the key differences between the updated ES-DE themes and these legacy theme sets. The term _legacy_ is used throughout this document to refer to this older style of themes. ES-DE as of 2.2.0 can no longer load legacy themes, so if you need to view them when porting them to ES-DE, either use a legacy EmulationStation fork or ES-DE 2.1.1.
+If you are not familiar with theming for RetroPie or similar forks of EmulationStation then you can skip this section as it only describes the key differences between the updated ES-DE themes and these legacy themes. The term _legacy_ is used throughout this document to refer to this older style of themes. ES-DE as of 2.2.0 can no longer load legacy themes, so if you need to view them when porting them to ES-DE, either use a legacy EmulationStation fork or ES-DE 2.1.1.
 
 With ES-DE 2.0.0 a new theme engine was introduced that fundamentally changed some aspects of how theming works. The previous design used specific view styles (basic, detailed, video and grid) and this was dropped completely and replaced with _variants_ that can accomplish the same thing while being much more powerful and flexible.
 
@@ -113,7 +117,7 @@ As for more specific changes, the following are the most important ones compared
 * Many property names for the carousel have been renamed, with _logo_ being replaced by _item_ as this element can now be used in both the gamelist and system views. As well, setting the alignment will not automatically add any margins as is the case for legacy themes. These can still be set manually using the `horizontalOffset` and `verticalOffset` properties if needed. The way that alignment works in general for both carousel items and the overall carousel has also changed
 * The rating elements were previously not sized and overlaid consistently, this has now been fixed and rating images should now be centered on the image canvas in order for this element to render correctly rather than being left-adjusted as has previously been done by some theme authors (likely as a workaround for the previous buggy implementation). Images of any aspect ratios are now also supported where previously only square images could be used
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
-* The carousel property `maxItemCount` (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine. As well carousels of the wheel type now have the amount of entries controlled by the two new properties `itemsBeforeCenter` and `itemsAfterCenter`. This provides more exact control, including the ability to setup asymmetric wheels.
+* The carousel property `maxItemCount` (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting themes to the new theme engine. As well carousels of the wheel type now have the amount of entries controlled by the two new properties `itemsBeforeCenter` and `itemsAfterCenter`. This provides more exact control, including the ability to setup asymmetric wheels.
 * The full names of unthemed systems (or systems where the defined staticImage file is missing) will now be displayed in the system carousel instead of the short names shown for legacy themes. So for instance, instead of "cps" the full name "Capcom Play System" (as defined in es_systems.xml) will be displayed.
 * The carousel now has a zIndex value of 50 instead of 40. This means it's aligned with the textlist element which already had a zIndex value of 50.
 * The textlist property `selectorOffsetY` has been renamed to `selectorVerticalOffset` and a `selectorHorizontalOffset` property has been added as well.
@@ -209,7 +213,7 @@ Here is a very simple theme that changes the color of the game name text:
 
 ## How it works
 
-All configuration must be contained within a `<theme>` tag pair. That is true for each separate .xml file used to build the completely theme set.
+All configuration must be contained within a `<theme>` tag pair. That is true for each separate .xml file used to build the completely theme.
 
 The `<view>` tag pair refers to the available views within ES-DE, which is either _system_ or _gamelist_. There is a special _all_ view available as well, but that is only used for defining the navigation sounds as these are always applied globally to both view types.
 
@@ -317,10 +321,10 @@ emulationstation --debug --resolution 1280 720
 
 Enforcement of a correct theme configuration is quite strict, and most errors will abort the theme loading, leading to an unthemed system. In each such situation the log output will be very clear of what happened, for instance:
 ```
-Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
+Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
 ```
 
-Note that an unthemed system means precisely that, the specific system where the error occured will be unthemed but not necessarily the entire theme set. The latter can still happen if the error is global such as a missing variable used by all XML files or an error in a file included by all XML files. The approach is to only untheme relevant sections of the theme set to be able to pinpoint precisely where the problem lies.
+Note that an unthemed system means precisely that, the specific system where the error occured will be unthemed but not necessarily the entire theme. The latter can still happen if the error is global such as a missing variable used by all XML files or an error in a file included by all XML files. The approach is to only untheme relevant sections of the theme to be able to pinpoint precisely where the problem lies.
 
 Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in many instances is that a warning log entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its horizontalAlignment property set to _leftr_ instead of _left_:
 ```
@@ -338,12 +342,12 @@ Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property "i
 Error handling for missing files is handled a bit differently depending on whether the paths have been defined explicitly or via a variable. For explicitly defined paths a warning will be logged for element properties and an error will be triggered for include files. Here's an example of the latter case:
 
 ```
-Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/.emulationstation/themes/mythemeset-es-de/colors_dark.xml")
+Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/.emulationstation/themes/mytheme-es-de/colors_dark.xml")
 ```
 
 However, if a variable has been used to define the include file, only a debug message will be generated if the file is not found:
 ```
-Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/.emulationstation/themes/mythemeset-es-de/amiga/colors.xml"
+Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/.emulationstation/themes/mytheme-es-de/amiga/colors.xml"
 ```
 
 It works essentially the same way for element path properties as for include files. This distinction between explicit values and variables makes it possible to create a theme configuration where both include files and files for fonts, images, videos etc. will be used if found, and if not found a fallback configuration can still be applied so the system will be themed.
@@ -352,19 +356,19 @@ By default all debug messages regarding missing files will be logged for regular
 
 ## Variants
 
-A core concept of ES-DE is the use of theme set _variants_ to provide different theme profiles. These are not fixed presets and a theme author can instead name and define whatever variants he wants for his theme (or possibly use no variants at all as they are optional).
+A core concept of ES-DE is the use of theme _variants_ to provide different theme profiles. These are not fixed presets and a theme author can instead name and define whatever variants he wants for his theme (or possibly use no variants at all as they are optional).
 
-The variants could be purely cosmetic, such as providing different designs for a theme set, or they could provide distinctive functionality by for instance using different primary elements like a carousel or a text list.
+The variants could be purely cosmetic, such as providing different designs for a theme, or they could provide distinctive functionality by for instance using different primary elements like a carousel or a text list.
 
-Before a variant can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detail later in this document.
+Before a variant can be used it needs to be declared, which is done in the `capabilities.xml` file that must be located in the root of the theme directory tree. How to setup this file is described in detail later in this document.
 
 The use of variants is straightforward, a section of the configuration that should be included for a certain variant is enclosed inside the `<variant>` tag pair. This has to be placed inside the `<theme>` tag pair, and it can only be used at this level of the hierarchy and not inside a `<view>` tag pair for example.
 
 The mandatory _name_ attribute is used to specificy which variants to use, and multiple variants can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks). It's also possible to use the special _all_ variant that will apply the configuration to all defined variants (although this is only a convenient shortcut and you can explicitly define every variant individually if you prefer that). Note that _all_ is a reserved name and attempting to use it in the capabilities.xml file will trigger a warning on application startup.
 
-It could sometimes be a good idea to separate the variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme set configuration.
+It could sometimes be a good idea to separate the variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme configuration.
 
-It's also possible to apply only portions of the theme configuration to the variants and keep a common set of elements that are shared between all variants. This is accomplished by simply adding the shared configuration without specifying a variant, as is shown in the first example below for the `infoText01` text element. Just be aware that the variant-specific configuration will always be loaded after the general configuration even if it's located above the general configuration in the XML file. As this is potentially confusing and error-prone it's instead generally recommended to use the special _all_ variant to define common configuration used by all variants in the theme set rather than mixing variants configuration with non-variants configuration.
+It's also possible to apply only portions of the theme configuration to the variants and keep a common set of elements that are shared between all variants. This is accomplished by simply adding the shared configuration without specifying a variant, as is shown in the first example below for the `infoText01` text element. Just be aware that the variant-specific configuration will always be loaded after the general configuration even if it's located above the general configuration in the XML file. As this is potentially confusing and error-prone it's instead generally recommended to use the special _all_ variant to define common configuration used by all variants in the theme rather than mixing variants configuration with non-variants configuration.
 
 Here are some example uses of the `<variant>` functionality:
 
@@ -475,13 +479,13 @@ Color schemes are essentially a collection of variables that can be selected bet
 
 To understand the basics on how to use variables, make sure to read the _Theme variables_ section elsewhere in this document.
 
-Before a color scheme can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detail later in this document.
+Before a color scheme can be used it needs to be declared, which is done in the `capabilities.xml` file that must be located in the root of the theme directory tree. How to setup this file is described in detail later in this document.
 
 The `<colorScheme>` tag pair can be placed directly inside the `<theme>` tags, inside the `<variants>` tags or inside the `<aspectRatio>` tags.
 
 The mandatory name attribute is used to specificy which color scheme to use, and multiple values can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks).
 
-Note that the use of color schemes for a theme set is entirely optional.
+Note that the use of color schemes for a theme is entirely optional.
 
 Here's an example configuration:
 
@@ -525,9 +529,9 @@ Here's an example configuration:
 
 ## Aspect ratios
 
-The aspect ratio support works almost identically to the variants and color schemes with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme set can still decide which of the aspect ratios to support (or none at all in which case the theme aspect ratio is left undefined) but it can't create entirely new aspect ratio entries.
+The aspect ratio support works almost identically to the variants and color schemes with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme can still decide which of the aspect ratios to support (or none at all in which case the theme aspect ratio is left undefined) but it can't create entirely new aspect ratio entries.
 
-In the same manner as for the variants and color schemes, the aspect ratios that the theme set provides need to be declared in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detailed later in this document.
+In the same manner as for the variants and color schemes, the aspect ratios that the theme provides need to be declared in the `capabilities.xml` file that must be located in the root of the theme directory tree. How to setup this file is described in detailed later in this document.
 
 The `<aspectRatio>` tag pair can be placed directly inside the `<theme>` tags or inside the `<variants>` tags.
 
@@ -681,9 +685,9 @@ Finally it's possible to apply theme-defined transition profiles on a per-varian
 
 ## capabilities.xml
 
-Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to be placed in the root of the theme directory, for example:
+Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme configuration files and that is done in the `capabilities.xml` file. This file needs to be located in the root of the theme directory, for example:
 ```
-~/.emulationstation/themes/mythemeset-es-de/capabilities.xml
+~/.emulationstation/themes/mytheme-es-de/capabilities.xml
 ```
 
 The capabilities.xml file is mandatory and if it doesn't exist ES-DE will not attempt to load the theme.
@@ -691,9 +695,9 @@ The capabilities.xml file is mandatory and if it doesn't exist ES-DE will not at
 The structure of the file is simple, as can be seen in this example:
 
 ```xml
-<!-- Theme capabilities for mythemeset-es-de -->
+<!-- Theme capabilities for mytheme-es-de -->
 <themeCapabilities>
-    <themeName>My theme set</themeName>
+    <themeName>My theme</themeName>
 
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
@@ -742,7 +746,7 @@ The structure of the file is simple, as can be seen in this example:
 ```
 The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes, one transition animation profile and three variants, one of which is a variant trigger override. The `<label>` tag for the variants and transitions is the text that will show up in the _UI Settings_ menu, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
-The optional `<themeName>` tag defines the name that will show up in the _Theme set_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEMESET-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu.
+The optional `<themeName>` tag defines the name that will show up in the _Theme_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEME-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu.
 
 The variant, color scheme and transitions names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants, color schemes and transition animations will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
 
@@ -760,11 +764,11 @@ Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary
 
 The 21:9 and 32:9 aspect ratios are approximate as monitors of slightly different ratios are collectively marketed using these numbers.
 
-It's normally not necessary to define all or even most of these for a theme set, instead only a few are likely to be needed. The element placement will always adapt to the screen resolution as relative positions are utilized, so in most cases similar aspect ratios like 4:3 and 5:4 could be used interchangeably. The same is true for instance for 16:9 and 16:10. But if precise element placement is required, a separate configuration can still be made for each aspect ratio.
+It's normally not necessary to define all or even most of these for a theme, instead only a few are likely to be needed. The element placement will always adapt to the screen resolution as relative positions are utilized, so in most cases similar aspect ratios like 4:3 and 5:4 could be used interchangeably. The same is true for instance for 16:9 and 16:10. But if precise element placement is required, a separate configuration can still be made for each aspect ratio.
 
 The declared aspect ratios will always get displayed in the _UI settings_ menu in the order listed in the table above, so they can be declared in any order in the capabilities.xml file. If an unsupported aspect ratio value is entered, a warning will be generated on startup and the entry will not get loaded.
 
-The use of variants, variant triggers, color schemes, aspect ratios and transition animation profiles is optional, i.e. a theme set does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
+The use of variants, variant triggers, color schemes, aspect ratios and transition animation profiles is optional, i.e. a theme does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
 
 Note that changes to the capabilities.xml file are not reloaded when using the Ctrl+r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
 
@@ -772,7 +776,7 @@ Note that changes to the capabilities.xml file are not reloaded when using the C
 
 You can include theme files within theme files, for example:
 
-`~/.emulationstation/themes/mythemeset-es-de/fonts.xml`:
+`~/.emulationstation/themes/mytheme-es-de/fonts.xml`:
 ```xml
 <theme>
     <view name="gamelist">
@@ -785,7 +789,7 @@ You can include theme files within theme files, for example:
 </theme>
 ```
 
-`~/.emulationstation/themes/mythemeset-es-de/snes/theme.xml`:
+`~/.emulationstation/themes/mytheme-es-de/snes/theme.xml`:
 ```xml
 <theme>
     <include>./../fonts.xml</include>
@@ -815,7 +819,7 @@ The above is equivalent to the following:
 
 As covered earlier in this document, as long as the name attributes are identical for the same element type, the properties are combined automatically. The potential issue with the current example is that the color tag is defined in both the fonts.xml and snes/theme.xml files. As parsing is done sequentially, the property value that is defined last will overwrite the earlier value. This may be used intentionally to override a general property value, so the configuration in the example above example is not necessarily a mistake.
 
-The paths defined for the `<include>` entry and `<fontPath>` and similar properties are set as relative to the theme file by adding "./" as a prefix. That is usually how paths would be defined as you commonly want to access files only within the theme set directory structure. This prefix works for all path properties. Windows-style backslashes are also supported as directory separators but their use is not recommended.
+The paths defined for the `<include>` entry and `<fontPath>` and similar properties are set as relative to the theme file by adding "./" as a prefix. That is usually how paths would be defined as you commonly want to access files only within the theme directory structure. This prefix works for all path properties. Windows-style backslashes are also supported as directory separators but their use is not recommended.
 
 Explicitly defining a path will lead to an error (and the system getting unthemed) if the file is missing, but if instead using a variable to populate the `<include>` tag then a missing file will only generate a debug log entry. This makes it possible to use system variables to build flexible theme configurations where it's not guaranteed that every file exists. Such an example would be to implement default/fallback configuration for custom systems that may get added by a user.
 
@@ -984,14 +988,14 @@ Just remember, _this only works if the elements have the same type._
 
 ## Navigation sounds
 
-Navigation sounds are configured globally per theme set, so it needs to be defined using the special `all` view.
-It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Starting ES-DE with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sounds are provided by the theme, ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
+Navigation sounds are configured globally per theme, so it needs to be defined using the special `all` view.
+It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Starting ES-DE with the --debug flag will provide feedback on whether the navigation sound elements were parsed correctly. If no navigation sounds are provided by the theme, then ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
 
 When fast-scrolling the textlist (by holding the up/down or shoulder buttons) the _scroll_ and _systembrowse_ sounds always play to completion before being played again, so it will sound weird if you have long samples such as those with reverb or silence added to the end. As such make sure to always use short samples for these sounds and test thoroughly with fast-scrolling. This is not an issue if using the carousel or grid elements.
 
 Example debug output:
 ```
-Jul 12 11:28:58 Debug:  NavigationSounds::loadThemeNavigationSounds(): Theme set includes navigation sound support, loading custom sounds
+Jul 12 11:28:58 Debug:  NavigationSounds::loadThemeNavigationSounds(): Theme includes navigation sound support, loading custom sounds
 Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for tag <sound name="systembrowse">
 Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag found, ready to load theme sound file
 Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for tag <sound name="quicksysselect">
@@ -1077,7 +1081,7 @@ System variables are system specific and are derived from values defined in es_s
 `system.fullName` expands to the full system name as defined by the `fullname` tag in es_systems.xml\
 `system.theme` expands to the theme directory as defined by the `theme` tag in es_systems.xml
 
-If using variables to load theme assets like images and videos, then use the `.name` versions of these variables as short system names should be stable and not change over time. The `.fullName` values could change in future ES-DE releases or they could be user-customized which would break your theme set.
+If using variables to load theme assets like images and videos, then use the `.name` versions of these variables as short system names should be stable and not change over time. The `.fullName` values could change in future ES-DE releases or they could be user-customized which would break your theme.
 
 The `.autoCollections`, `.customCollections` and `.noCollections` versions of the variables make it possible to differentiate between regular systems, automatic collections (_all games_, _favorites_ and _last played_) and custom collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems.
 

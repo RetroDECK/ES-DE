@@ -13,7 +13,7 @@ Table of contents:
 If you just want to get started as quickly as possible, simply follow these steps:
 
 1) Install ES-DE
-2) Start the application and press the _Create directories_ button to generate the ROMs directory structure
+2) Start the application and press the _Create directories_ button to generate the ROM directory structure
 3) Put your game ROMs in the directories created by the previous step, or see [here](USERGUIDE-DEV.md#supported-game-systems) for additional details
 4) Install [RetroArch](https://www.retroarch.com)
 5) Start RetroArch and install the required emulator cores
@@ -67,7 +67,7 @@ Also on first startup the configuration file `es_settings.xml` will be generated
 
 There's an application log file created in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
-After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROMs directory. You will also be given a choice to change that ROMs directory path if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information in es_systems.xml.
+After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROM directory. You will also be given a choice to change that ROM directory path if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information in es_systems.xml.
 
 When generating the directory structure, a file named systeminfo.txt will be created in each game system folder which will provide you with some information about the system. Here's an example for the _dos_ system as seen on Unix:
 ```
@@ -98,7 +98,7 @@ dos
 
 This file is not needed to run ES-DE, it's only a convenience to easily see which emulators and file extensions are supported per system.
 
-In addition to this, a file named systems.txt will be created in the root of the ROMs directory which shows the mapping between the directory names and the full system names.
+In addition to this, a file named systems.txt will be created in the root of the ROM directory which shows the mapping between the directory names and the full system names.
 
 For example:
 
@@ -126,7 +126,7 @@ Note that the updater will keep whatever filename you had for your running AppIm
 
 On Windows and macOS you can specify to which directory you want to save the downloaded file. The default is `C:\Users\myusername\Downloads` on Windows and `/Users/myusername/Downloads` on macOS.
 
-Regardless of package format and operating system it's a good idea to update the ROMs directory tree after upgrading to a new version. It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed. The easiest way to do this is to start ES-DE once with the _--create-system-dirs_ command line option which will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
+Regardless of package format and operating system it's a good idea to update the ROM directory tree after upgrading to a new version. It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed. The easiest way to do this is via the _Create/update system directories_ entry in the _Utilities_ menu. Alternatively the _--create-system-dirs_ command line option can be used. Both methods work identically and will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
 
 ![alt text](images/es-de_application_updater.png "ES-DE Application Updater")
 _This is what the application updater looks like when the update process has been completed for the Linux AppImage release._
@@ -183,7 +183,7 @@ For very specific situations such as when the ROM directory tree is shared with 
 ~/ROMs/nes/noload.txt
 ```
 
-Note that if the setting _Only show ROMs from gamelist.xml files_ has been enabled then the noload.txt logic is completely bypassed as this option will make ES-DE load anything present in the gamelist.xml files, regardless of whether the files and directories actually exist. But this option (or the equivalent --gamelist-only command line option) is only intended for troubleshooting and debugging purposes and should not be enabled during normal application usage.
+Note that if the setting _Only show games from gamelist.xml files_ has been enabled then the noload.txt logic is completely bypassed as this option will make ES-DE load anything present in the gamelist.xml files, regardless of whether the files and directories actually exist. But this option (or the equivalent --gamelist-only command line option) is only intended for troubleshooting and debugging purposes and should not be enabled during normal application usage.
 
 ## Placing games and other resources on network shares
 
@@ -365,6 +365,8 @@ This means that you will need to manually delete these backup directories to fre
 
 All files and entries that are removed are logged to `~/.emulationstation/es_log.txt` so it could be a good idea to make a backup copy of this file after running the cleanup, for future reference.
 
+Any media directories that are empty after the cleanup will also be removed by this utility.
+
 Note that only systems and collections that are currently enabled will be processed by the utility.
 
 ![alt text](images/es-de_orphaned_data_cleanup.png "ES-DE Orphaned Data Cleanup")
@@ -462,7 +464,7 @@ The application can also be forced into any of the three modes via the command l
 There is a help system available throughout the application that provides an overview of the possible actions and buttons that can be used. But some general actions are never shown, such as the ability to quick jump in gamelists, menus and text input fields using the shoulder and trigger buttons. It's also possible to disable the help system using a menu option for a somewhat cleaner look.
 
 ![alt text](images/es-de_folder_support.png "ES-DE Help System")
-_The help system is displayed at the bottom of the screen for this theme, although it can be positioned elsewhere for other theme sets._
+_The help system is displayed at the bottom of the screen for this theme, although it could be positioned elsewhere for other themes._
 
 ## General navigation
 
@@ -535,7 +537,7 @@ Quits the application. This key combination can be changed to Ctrl + Q, Alt + Q 
 
 ## Themes
 
-ES-DE ships with the Slate and Modern theme sets and additional themes can be installed using the built-in theme downloader. More themes made specifically for ES-DE can be found on the Internet, and you can customize or create your own ones too.
+ES-DE ships with the Slate and Modern themes and additional ones can be installed using the built-in theme downloader. More themes made specifically for ES-DE can be found on the Internet, and you can customize or create your own ones too.
 
 As of ES-DE 2.2.0 no legacy EmulationStation themes are supported, such as those from RetroPie ES. Only themes made specifically for ES-DE will work.
 
@@ -547,7 +549,7 @@ Although you should place additional themes in your ES-DE home directory, the de
 
 Note that if using the AppImage release on Linux, then there is no installation folder as all files are contained inside the AppImage file.
 
-If you would like to customize the Slate or Modern theme sets, simply make a copy of their directories to `~/.emulationstation/themes/` and then those copies will take precedence over the ones in the application installation directory.
+If you would like to customize the Slate or Modern themes, simply make a copy of their directories to `~/.emulationstation/themes/` and then those copies will take precedence over the ones in the application installation directory.
 
 Refer to the official themes list for a selection of high-quality themes (these are also available via the built-in theme downloader):
 
@@ -558,7 +560,7 @@ _This is a screenshot of the Modern theme that is bundled with ES-DE (in additio
 
 ## Theme downloader
 
-There is a built-in theme downloader that can be accessed from the _UI Settings_ menu. It let's you download new themes and apply updates to installed themes.
+There is a built-in theme downloader that can be accessed from the _UI Settings_ menu. It lets you download new themes and apply updates to installed themes. You can also delete installed themes directly from the user interface.
 
 The basic functionality is hopefully largely self-explanatory, check the helpsystem text at the bottom of the screen for information on available actions. There are also popup dialogs displayed for actions that require user input or if there are any errors or issues.
 
@@ -1430,7 +1432,7 @@ Simulation is done via the Handheld Electronic (GW) RetroArch core, in which cas
 
 #### Lutris
 
-Adding these games is most easily accomplished by using .desktop files that can be created from inside the Lutris application. Right click on each game you would like to add to ES-DE and select _Create desktop shortcut_, then simply move these shortcuts from your desktop to the `lutris` ROMs directory. You may also want to rename some of the files as their names may be a bit cryptic which could confuse the scraper. Remember that it's the physical filenames that will show up inside ES-DE.
+Adding these games is most easily accomplished by using .desktop files that can be created from inside the Lutris application. Right click on each game you would like to add to ES-DE and select _Create desktop shortcut_, then simply move these shortcuts from your desktop to the `lutris` system directory. You may also want to rename some of the files as their names may be a bit cryptic which could confuse the scraper. Remember that it's the physical filenames that will show up inside ES-DE.
 
 After doing this you should end up with something like the following:
 
@@ -1557,7 +1559,7 @@ The .wua archive format is the preferred method to use for Wii U games, but the 
 
 **Method 1, using .wua files**
 
-Start Cemu and install the game, any updates as well as optional DLCs to the Cemu NAND. After the installation is completed, open the _Title Manager_ from the _Tools_ menu, select your game, right click and select _Convert to compressed Wii U archive (.wua)_ and select your `wiiu` ROMs directory as the target. You can modify the file name if you want to, or keep it at its default value. Press the _Save_ button and the game will be automatically packaged as a .wua file.
+Start Cemu and install the game, any updates as well as optional DLCs to the Cemu NAND. After the installation is completed, open the _Title Manager_ from the _Tools_ menu, select your game, right click and select _Convert to compressed Wii U archive (.wua)_ and select your `wiiu` system directory as the target. You can modify the file name if you want to, or keep it at its default value. Press the _Save_ button and the game will be automatically packaged as a .wua file.
 
 Following this just start ES-DE and the game should be shown as a single entry that can be launched using Cemu.
 
@@ -1567,7 +1569,7 @@ Only the setup on Windows is covered here, but it's the same principle in Linux 
 
 Using this unpacked approach, the content of each game is divided into the three directories _code, content_ and _meta_.
 
-The first step is to prepare the target directory in the `wiiu` ROMs directory, for this example we'll go for the game _Super Mario 3D World_. So simply create a directory with this name inside the wiiu folder. It should look something like the following:
+The first step is to prepare the target directory in the `wiiu` system directory, for this example we'll go for the game _Super Mario 3D World_. So simply create a directory with this name inside the wiiu folder. It should look something like the following:
 ```
 C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\
 ```
@@ -1694,9 +1696,9 @@ For the _desktop_ system specifically, you can choose to suspend ES-DE while an 
 
 **Method 1, shortcuts**
 
-Shortcuts are very easy to setup, on Windows you can simply copy any .lnk file from the Start Menu into the `ports` or `desktop` ROMs folders and then you can launch them directly from inside ES-DE. You can also create shortcuts manually to any file by right clicking on it in Explorer and selecting _Create shortcut_.
+Shortcuts are very easy to setup, on Windows you can simply copy any .lnk file from the Start Menu into the `ports` or `desktop` system folders and then you can launch them directly from inside ES-DE. You can also create shortcuts manually to any file by right clicking on it in Explorer and selecting _Create shortcut_.
 
-Likewise on Unix you can copy any .desktop shortcut into the ROMs directories and they can then be launched by ES-DE.
+Likewise on Unix you can copy any .desktop shortcut into these system directories and they can then be launched by ES-DE.
 
 Here's an example on Windows:
 ```
@@ -1720,7 +1722,7 @@ Here's an example using alias files on macOS:
 
 **Method 2, scripts**
 
-For more advanced setups you may want to use scripts. While it's possible to add these files directly to the root of the ROMs directories it's instead generally recommended to setup a separate directory per game as there may be more than a single file required. For instance you may have multiple game variants or mods or you may want to keep game data files within the ROMs directory tree. Only examples for Unix are provided here, but it's the same process for Windows and macOS except that in Windows .bat batch files are used instead of shell scripts.
+For more advanced setups you may want to use scripts. While it's possible to add these files directly to the root of the system directories it's instead generally recommended to setup a separate directory per game as there may be more than a single file required. For instance you may have multiple game variants or mods or you may want to keep game data files within the ROM directory tree. Only examples for Unix are provided here, but it's the same process for Windows and macOS except that in Windows .bat batch files are used instead of shell scripts.
 
 Here's a setup of GZDoom and vkQuake:
 ```
@@ -2378,13 +2380,13 @@ Various settings that affect the user interface.
 
 Starts the theme downloader, which is documented in detail [elsewhere](USERGUIDE-DEV.md#theme-downloader) in this document.
 
-**Theme set**
+**Theme**
 
-The theme set to use. Defaults to Slate which is shipped with the application.
+The theme to use. Defaults to Slate which is bundled with the application.
 
 **Theme variant**
 
-Theme sets optionally support variants which are a type of theme profiles defined by the theme author. This could be things like different designs or whether videos are enabled or not.
+Themes optionally support variants which are a type of theme profiles defined by the theme author. This could be things like different designs or whether videos are enabled or not.
 
 **Theme color scheme**
 
@@ -2392,11 +2394,11 @@ If the theme author has included multiple color schemes, then these can be selec
 
 **Theme aspect ratio**
 
-Theme sets could optionally be optimized for different screen aspect ratios. ES-DE supports 16:9, 16:10, 3:2, 4:3, 5:4, 21:9 and 32:9 in both horizontal and vertical orientation, but it's completely up to the theme author which of these are actually supported by the theme set. It's normally best to leave this setting at _Automatic_ in which case ES-DE will automatically select the aspect ratio that most closely matches the screen resolution. The _Automatic_ option is however only available if the theme set supports at least two aspect ratios.
+Themes could optionally be optimized for different screen aspect ratios. ES-DE supports 16:9, 16:10, 3:2, 4:3, 5:4, 21:9 and 32:9 in both horizontal and vertical orientation, but it's completely up to the theme author which of these are actually supported by the theme. It's normally best to leave this setting at _Automatic_ in which case ES-DE will automatically select the aspect ratio that most closely matches the screen resolution. The _Automatic_ option is however only available if the theme supports at least two aspect ratios.
 
 **Theme transitions**
 
-Transition animations to play when navigating between gamelists, between systems in the System view and between the system and gamelist views. It's normally recommended to keep this setting at its default _Automatic_ value as that allows per-variant transitions, assuming the theme author has included support for that in their theme set. For example there could be multiple theme-defined transition entries to choose from, or there could be the possibility to make a selection between the built-in _Instant_, _Slide_ and _Fade_ transitions (although these options could have been disabled from the theme configuration). If there are no user-selectable transitions avaialable the setting will be grayed out.
+Transition animations to play when navigating between gamelists, between systems in the System view and between the system and gamelist views. It's normally recommended to keep this setting at its default _Automatic_ value as that allows per-variant transitions, assuming the theme author has included support for that in their theme. For example there could be multiple theme-defined transition entries to choose from, or there could be the possibility to make a selection between the built-in _Instant_, _Slide_ and _Fade_ transitions (although these options could have been suppressed via the theme configuration). If there are no user-selectable transitions avaialable the setting will be grayed out.
 
 **Quick system select**
 
@@ -2406,7 +2408,11 @@ The buttons to use to jump between systems in the gamelist view. The options are
 
 If set to _None_, the system view will be displayed. Any other value will jump to that game system automatically on startup.
 
-**Default sort order**
+**Systems sorting**
+
+The order in which to sort the game systems. The default option is _Full names or custom_ which will sort by full system names, unless there is a ~/.emulationstation/custom_systems/es_systems_sorting.xml file present which will then be used instead. The other options are using the bundled sorting configuration files for _Release year_ or _Manufacturer, release year_ or _HW type, release year_ or _Manufacturer, HW type, release year_. If using any of these bundled sorting files, then ~/.emulationstation/custom_systems/es_systems_sorting.xml will be ignored. When changing this setting ES-DE will automatically reload.
+
+**Game default sort order**
 
 The order in which to sort your gamelists. This can be overriden per game system using the gamelist options menu, but that override will only be persistent during the application session. The _System_ sorting can not be selected here as it's only applicable to collection systems.
 
@@ -2440,7 +2446,7 @@ Submenu containing all the settings for the screensaver. These are described in 
 
 **Enable theme variant triggers**
 
-Theme sets can optionally contain variant trigger configuration which changes the layout on a per-gamelist basis if there is no game media available, or if there is no game videos available. This option makes it possible to disable that functionality and always apply the default configuration for the selected variant.
+Themes can optionally contain variant trigger configuration which changes the layout on a per-gamelist basis if there is no game media available, or if there is no game videos available. This option makes it possible to disable that functionality and always apply the default configuration for the selected variant.
 
 **Blur background when menu is open** _Always applied if screen is rotated 90 or 270 degrees_
 
@@ -2456,7 +2462,7 @@ Whether to sort your favorite games above your other games in the gamelists.
 
 **Add star markings to favorite games**
 
-With this setting enabled, there is a star symbol added at the beginning of the game name in the gamelist views. If you're not using a theme set which support badges, it's strongly recommended to keep this setting enabled. Especially so if the option to sort favorite games above non-favorites has been enabled. Otherwise favorite games would be sorted on top of the gamelist with no clear visual indication that they are favorites which would be quite confusing.
+With this setting enabled and if a textlist is in use, there is a star symbol added at the beginning of the game name in the gamelist view. If you're not using a theme which support badges, it's strongly recommended to keep this setting enabled. Especially so if the option to sort favorite games above non-favorites has been enabled. Otherwise favorite games would be sorted on top of the gamelist with no clear visual indication that they are favorites which would be quite confusing.
 
 **Enable textlist quick scrolling overlay**
 
@@ -2560,7 +2566,7 @@ Whether to search the custom image directory recursively.
 
 **Custom image directory**
 
-The directory for the custom images. The tilde `~` symbol can be used which will expand to the user home directory. It's also possible to use the %ESPATH% and %ROMPATH% variables which will set the directory relative to the ES-DE binary directory or the ROMs directory.
+The directory for custom images. The tilde `~` symbol can be used which will expand to the user home directory. It's also possible to use the %ESPATH% and %ROMPATH% variables which will set the directory relative to the ES-DE binary directory or the ROM directory.
 
 #### Video screensaver settings
 
@@ -2658,9 +2664,9 @@ This lets you enable or disable the automatic game collections _All games, Favor
 
 This lets you enable or disable your own custom game collections. If there are no custom collections available, this menu entry will be grayed out.
 
-**Create new custom collection from theme** _(Entry only visible if the ability is provided by the theme set)_
+**Create new custom collection from theme** _(Entry only visible if this ability is provided by the theme)_
 
-If the theme set in use provides themes for custom collections, then this entry can be selected. For example, there could be themes for _Fighting_ or _Racing_ etc. The bundled Slate and Modern theme sets do not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [elsewhere](USERGUIDE-DEV.md#custom-collections) in this guide.
+If the theme in use provides support for discrete custom collection systems, then this entry can be selected. For example, there could be support for systems like _Fighting_ or _Racing_ etc. The bundled Slate and Modern themes do not provide such discrete custom collection systems and in general it's not recommended to use this approach, as is explained [elsewhere](USERGUIDE-DEV.md#custom-collections) in this guide.
 
 **Create new custom collection**
 
@@ -2672,7 +2678,7 @@ This permanently deletes a custom collection, including its configuration file o
 
 **Group custom collections**
 
-This setting controls where to place custom collections and the available options are _If unthemed_, _Always_ or _Never_. If the _If unthemed_ option is selected then only collections which don't have explicit support from the theme set will be moved to the grouped custom collections system. If _Always_ is selected then every collection will be placed in the grouped custom collections system regardless of whether the theme set has support for the collection or not. This is generally recommended as it leads to a less cluttered experience and it's also consistent as all custom collections will be located in one place regardless of how they've been named. The _Never_ option is mostly useful for testing purposes and for theme development as it will move all custom collections into discrete systems which will likely lead to some of them being unthemed.
+This setting controls where to place custom collections and the available options are _If unthemed_, _Always_ or _Never_. If the _If unthemed_ option is selected then only collections which don't have explicit support from the theme will be moved to the grouped custom collections system. If _Always_ is selected then every collection will be placed in the grouped custom collections system regardless of whether the theme has support for the collection or not. This is generally recommended as it leads to a less cluttered experience and it's also consistent as all custom collections will be located in one place regardless of how they've been named. The _Never_ option is mostly useful for testing purposes and for theme development as it will move all custom collections into discrete systems which will likely lead to some of them being unthemed.
 
 **Sort favorites on top for custom collections**
 
@@ -2699,7 +2705,7 @@ This setting defines the directory for the game media, i.e. game images and vide
 
 **VRAM limit**
 
-The amount of video RAM to use for the application. Defaults to 512 MiB (192 MiB on the Raspberry Pi) which works fine most of the time when using moderately demanding theme sets with medium-sized collections at up to 4K display resolution. For large collections (as in many different systems rather than many games per system) in combination with demanding themes which use lots of full-screen images and similar it's recommended to increase this number to 1024 MiB or possibly higher to avoid stuttering and texture pop-in. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used, which is helpful to determine a reasonable value for this setting. The allowed range for the settings is 128 to 2048 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.xml file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
+The amount of video RAM to use for the application. Defaults to 512 MiB (192 MiB on the Raspberry Pi) which works fine most of the time when using moderately demanding themes with medium-sized collections at up to 4K display resolution. For large collections (as in many different systems rather than many games per system) in combination with demanding themes which use lots of full-screen images and similar it's recommended to increase this number to 1024 MiB or possibly higher to avoid stuttering and texture pop-in. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used, which is helpful to determine a reasonable value for this setting. The allowed range for the settings is 128 to 2048 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.xml file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
 
 **Anti-aliasing (MSAA) (requires restart)**
 
@@ -2745,21 +2751,21 @@ With this option enabled, videos with lower frame rates than 60 FPS, such as 24 
 
 If enabled, you will be able to select alternative emulators per game using the metadata editor, which will be used when launching the game. If disabled, the corresponding entry in the metadata editor will be hidden, the alternative emulator badges will not be displayed and it will not be possible to filter the gamelist based on these values. As well, the game will be launched using the default emulator, or using the system-wide alternative emulator if this has been configured for the game system. It's only recommended to disable this option for testing purposes.
 
-**Show hidden files and folders (requires restart)**
+**Show hidden files and folders**
 
-If this option is disabled, hidden files and folders within the ROMs directory tree are excluded from ES-DE. On Unix and macOS this means those starting with a dot, and on Windows it's those set as hidden by using an NTFS attribute. This setting is only intended for special situations and is not to be confused with the next option which hides files based on metadata configuration within ES-DE.
+If this option is disabled, hidden files and folders within the ROM directory tree are excluded from ES-DE. On Unix and macOS this means those starting with a dot, and on Windows it's those set as hidden by using an NTFS attribute. This setting is only intended for special situations and is not to be confused with the next option below which hides files based on metadata configuration within ES-DE. When changing this setting ES-DE will automatically reload.
 
-**Show hidden games (requires restart)**
+**Show hidden games**
 
-You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE, or for multi-disc games where you may only want to show the .m3u playlists and not the individual game files. By disabling this option these files will not be processed at all when ES-DE starts up. If you enable the option you will see the files, but their name entries will be almost transparent in the gamelist view to visually indicate that they are hidden.
+You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE, or for multi-disc games where you may only want to show the .m3u playlists and not the individual game files. By disabling this option these files will not be processed at all when ES-DE starts up. If you enable the option you will see the files, but their name entries will be almost transparent in the gamelist view to visually indicate that they are hidden. When changing this setting ES-DE will automatically reload.
 
 **Enable custom event scripts**
 
 It's possible to trigger custom scripts for a number of actions in ES-DE, as is discussed [below](USERGUIDE-DEV.md#custom-event-scripts), and this setting decides whether this functionality is enabled.
 
-**Only show ROMs from gamelist.xml files**
+**Only show games from gamelist.xml files**
 
-If enabled, only ROMs that have metadata saved to the gamelist.xml files will be shown in ES-DE. This option is intended primarily for testing and debugging purposes so it should normally not be enabled.
+If enabled, only games that have metadata saved to the gamelist.xml files will be shown in ES-DE. This option is intended primarily for testing and debugging purposes so it should normally not be enabled. When changing this setting ES-DE will automatically reload.
 
 **Strip extra MAME name info (requires restart)**
 
@@ -2788,6 +2794,10 @@ This menu contains various utilities.
 **Orphaned data cleanup**
 
 This utility makes it possible to remove media files, gamelist.xml entries and custom collection entries that are orphaned, i.e. their corresponding game files no longer exist. How to use this utility is explained in more detail elsewhere in this document.
+
+**Create/update system directories**
+
+This utility will create all game system directories inside your ROM directory tree and it will also update all systeminfo.txt files. It works exactly as the _Create directories_ entry in the "no games" dialog shown on startup if no game files were found. It also works exactly as the --create-system-dirs command line option. To decrease application startup times it's recommended to delete the system directories you don't need after running this utility.
 
 **Rescan ROM directory**
 
@@ -2828,7 +2838,7 @@ This provides a quick selector for jumping to a certain letter. If the setting t
 
 ### Sort games by
 
-This is the sort order for the gamelist. The default sorting shown here is taken from the setting _Default sort order_ under _UI settings_ in the main menu. Any sorting that is applied via the gamelist options menu will be persistent throughout the program session, and it can be set individually per game system and per collection.
+This is the sort order for the gamelist. The default sorting shown here is taken from the setting _Games default sort order_ under _UI settings_ in the main menu. Any sorting that is applied via the gamelist options menu will be persistent throughout the program session, and it can be set individually per game system and per collection.
 
 Sorting can be applied using the following metadata, in either ascending or descending order:
 
@@ -2923,7 +2933,7 @@ This is the name that will be shown when browsing the gamelist. If no sortname h
 
 **Sortname** _(files only)_
 
-This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the gamelist options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist. The _sortname_ entry also affects custom collections, although for these it's possible to override the value as described below. This entry only applies if the sort order has been set to _Filename, Ascending_ or _Filename, Descending_.
+This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the gamelist options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist. The _sortname_ entry also affects custom collections, although for these it's possible to override the value as described below. This entry only applies if the sort order has been set to _Name, ascending_ or _Name, descending_.
 
 **Custom collections sortname** _(only visible when editing a game from within a custom collection)_
 
@@ -2995,7 +3005,7 @@ A statistics counter that tracks how many times you have played the game. You no
 
 **Controller**
 
-This entry provides a selection of controller icons that are built into ES-DE (although the theme set can override the actual graphics files). The selected icon will be displayed as a badge if the current theme set support badges. The gamelist can also be filtered based on the controllers, but apart from this the functionality is cosmetic and will not affect the actual emulators.
+This entry provides a selection of controller icons that are built into ES-DE (although the theme can override the actual graphic files). The selected icon will be displayed as a badge if the current theme supports badges. The gamelist can also be filtered based on the controllers, but apart from this the functionality is cosmetic and will not affect the actual emulators.
 
 **Alternative emulator** _(files only)_
 
@@ -3076,7 +3086,7 @@ These automatic collections can be individually enabled or disabled by going to 
 
 These are collections that you create yourself. Examples could be grouping in genres like _Shoot em up_, _Fighting games_ etc. or perhaps a time period like _1980s_, _1990s_ and so on.
 
-If the theme set supports it, you can create a custom collection directly from a theme. However, Slate and Modern do not provide such themes as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories all ES-DE users combined would like to use for their game collections.
+If the theme in use supports it, then you can create a custom collection directly from a system provided by the theme. However, Slate and Modern do not provide such systems as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme would need to ship with an almost endless amount of collection systems for whatever categories all ES-DE users combined would like to use for their game collections.
 
 So if you have set the option _Group custom collections_ to _If unthemed_ or _Always_, then any collections you add will show up in the special _Collections_ system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list. You can also quick jump to this random game by pressing the _Y_ button.
 
