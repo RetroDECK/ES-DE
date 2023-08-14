@@ -197,7 +197,7 @@ GuiThemeDownloader::~GuiThemeDownloader()
     git_libgit2_shutdown();
 
     if (mHasThemeUpdates) {
-        LOG(LogInfo) << "GuiThemeDownloader: There are updates, repopulating theme sets";
+        LOG(LogInfo) << "GuiThemeDownloader: There are updates, repopulating the themes";
         ThemeData::populateThemeSets();
         ViewController::getInstance()->reloadAll();
         if (mUpdateCallback)
@@ -666,7 +666,7 @@ void GuiThemeDownloader::parseThemesList()
     }
 
     LOG(LogDebug) << "GuiThemeDownloader::parseThemesList(): Parsed " << mThemeSets.size()
-                  << " theme sets";
+                  << " themes";
 }
 
 void GuiThemeDownloader::populateGUI()
@@ -1148,6 +1148,36 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
         return true;
     }
 
+    if (config->isMappedTo("y", input) && input.value &&
+        mGrid.getSelectedComponent() == mCenterGrid && mThemeSets[mList->getCursorId()].isCloned) {
+        mWindow->pushGui(new GuiMsgBox(
+            getHelpStyle(),
+            "THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY "
+            "LOCAL CUSTOMIZATIONS",
+            "PROCEED",
+            [this] {
+                const std::filesystem::path themeDirectory {
+                    mThemeDirectory + mThemeSets[mList->getCursorId()].reponame};
+                LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory.string() << "\"";
+                if (!Utils::FileSystem::removeDirectory(themeDirectory, true)) {
+                    mWindow->pushGui(new GuiMsgBox(
+                        getHelpStyle(), "COULDN'T DELETE THEME, PERMISSION PROBLEMS?", "OK",
+                        [] { return; }, "", nullptr, "", nullptr, true));
+                }
+                else {
+                    mMessage = "THEME WAS DELETED";
+                }
+                mHasThemeUpdates = true;
+                makeInventory();
+                updateGUI();
+            },
+            "ABORT", nullptr, "", nullptr, true, true,
+            (mRenderer->getIsVerticalOrientation() ?
+                 0.70f :
+                 0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
+        return true;
+    }
+
     return GuiComponent::input(config, input);
 }
 
@@ -1162,10 +1192,14 @@ std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
         if (mGrid.getSelectedComponent() == mCenterGrid)
             prompts.push_back(HelpPrompt("x", "view screenshots"));
 
-        if (mThemeSets[mList->getCursorId()].isCloned)
+        if (mThemeSets[mList->getCursorId()].isCloned) {
             prompts.push_back(HelpPrompt("a", "fetch updates"));
-        else
+            if (mGrid.getSelectedComponent() == mCenterGrid)
+                prompts.push_back(HelpPrompt("y", "delete"));
+        }
+        else {
             prompts.push_back(HelpPrompt("a", "download"));
+        }
     }
     else {
         prompts.push_back(HelpPrompt("b", "close"));
