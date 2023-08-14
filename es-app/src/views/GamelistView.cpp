@@ -108,11 +108,11 @@ void GamelistView::onTransition()
 
 void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 {
-    auto themeSets = ThemeData::getThemeSets();
-    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
-        selectedSet {themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
+    auto themes = ThemeData::getThemes();
+    std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+        selectedTheme {themes.find(Settings::getInstance()->getString("Theme"))};
 
-    assert(selectedSet != themeSets.cend());
+    assert(selectedTheme != themes.cend());
 
     mStaticVideoAudio = false;
     const bool isStartupSystem {Settings::getInstance()->getString("StartupSystem") ==

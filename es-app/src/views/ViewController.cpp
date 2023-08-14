@@ -945,7 +945,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     std::shared_ptr<GamelistView> view;
 
     if (Settings::getInstance()->getBool("ThemeVariantTriggers")) {
-        const auto overrides = system->getTheme()->getCurrentThemeSetSelectedVariantOverrides();
+        const auto overrides = system->getTheme()->getCurrentThemeSelectedVariantOverrides();
 
         if (!overrides.empty()) {
             ThemeTriggers::TriggerType noVideosTriggerType {ThemeTriggers::TriggerType::NONE};
@@ -1141,7 +1141,7 @@ bool ViewController::input(InputConfig* config, Input input)
 
 void ViewController::update(int deltaTime)
 {
-    if (mWindow->getChangedThemeSet())
+    if (mWindow->getChangedTheme())
         cancelViewTransitions();
 
     if (mCurrentView)

@@ -203,12 +203,11 @@ void NavigationSounds::loadThemeNavigationSounds(ThemeData* const theme)
 {
     if (theme) {
         LOG(LogDebug) << "NavigationSounds::loadThemeNavigationSounds(): "
-                         "Theme set includes navigation sound support, loading custom sounds";
+                         "Theme includes navigation sound support, loading custom sounds";
     }
     else {
-        LOG(LogDebug)
-            << "NavigationSounds::loadThemeNavigationSounds(): "
-               "Theme set does not include navigation sound support, using fallback sounds";
+        LOG(LogDebug) << "NavigationSounds::loadThemeNavigationSounds(): "
+                         "Theme does not include navigation sound support, using fallback sounds";
     }
 
     mNavigationSounds.push_back(Sound::getFromTheme(theme, "all", "sound_systembrowse"));

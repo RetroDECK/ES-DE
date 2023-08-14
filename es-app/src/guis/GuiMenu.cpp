@@ -111,13 +111,12 @@ void GuiMenu::openUIOptions()
 
     // Theme options section.
 
-    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator> themeSets {
-        ThemeData::getThemeSets()};
-    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
-        selectedSet;
+    std::map<std::string, ThemeData::Theme, ThemeData::StringComparator> themes {
+        ThemeData::getThemes()};
+    std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+        selectedTheme;
 
-    auto themeSet =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME SET", false);
+    auto theme = std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME", false);
 
     ComponentListRow themeDownloaderInputRow;
     themeDownloaderInputRow.elements.clear();
@@ -131,40 +130,39 @@ void GuiMenu::openUIOptions()
         std::bind(&GuiMenu::openThemeDownloader, this, s));
     s->addRow(themeDownloaderInputRow);
 
-    // Theme set.
-    if (!themeSets.empty()) {
-        selectedSet = themeSets.find(Settings::getInstance()->getString("ThemeSet"));
-        if (selectedSet == themeSets.cend())
-            selectedSet = themeSets.cbegin();
-        std::vector<std::pair<std::string, std::pair<std::string, ThemeData::ThemeSet>>>
-            themeSetsSorted;
+    // Theme.
+    if (!themes.empty()) {
+        selectedTheme = themes.find(Settings::getInstance()->getString("Theme"));
+        if (selectedTheme == themes.cend())
+            selectedTheme = themes.cbegin();
+        std::vector<std::pair<std::string, std::pair<std::string, ThemeData::Theme>>> themesSorted;
         std::string sortName;
-        for (auto& theme : themeSets) {
+        for (auto& theme : themes) {
             if (theme.second.capabilities.themeName != "")
                 sortName = theme.second.capabilities.themeName;
             else
                 sortName = theme.first;
-            themeSetsSorted.emplace_back(std::make_pair(Utils::String::toUpper(sortName),
-                                                        std::make_pair(theme.first, theme.second)));
+            themesSorted.emplace_back(std::make_pair(Utils::String::toUpper(sortName),
+                                                     std::make_pair(theme.first, theme.second)));
         }
-        std::sort(themeSetsSorted.begin(), themeSetsSorted.end(),
+        std::sort(themesSorted.begin(), themesSorted.end(),
                   [](const auto& a, const auto& b) { return a.first < b.first; });
-        for (auto it = themeSetsSorted.cbegin(); it != themeSetsSorted.cend(); ++it) {
-            // If required, abbreviate the theme set name so it doesn't overlap the setting name.
+        for (auto it = themesSorted.cbegin(); it != themesSorted.cend(); ++it) {
+            // If required, abbreviate the theme name so it doesn't overlap the setting name.
             const float maxNameLength {mSize.x * 0.62f};
             std::string themeName {(*it).first};
-            themeSet->add(themeName, it->second.first, (*it).second.first == selectedSet->first,
-                          maxNameLength);
+            theme->add(themeName, it->second.first, (*it).second.first == selectedTheme->first,
+                       maxNameLength);
         }
-        s->addWithLabel("THEME SET", themeSet);
-        s->addSaveFunc([this, themeSet, s] {
-            if (themeSet->getSelected() != Settings::getInstance()->getString("ThemeSet")) {
-                Scripting::fireEvent("theme-changed", themeSet->getSelected(),
-                                     Settings::getInstance()->getString("ThemeSet"));
-                Settings::getInstance()->setString("ThemeSet", themeSet->getSelected());
-                mWindow->setChangedThemeSet();
+        s->addWithLabel("THEME", theme);
+        s->addSaveFunc([this, theme, s] {
+            if (theme->getSelected() != Settings::getInstance()->getString("Theme")) {
+                Scripting::fireEvent("theme-changed", theme->getSelected(),
+                                     Settings::getInstance()->getString("Theme"));
+                Settings::getInstance()->setString("Theme", theme->getSelected());
+                mWindow->setChangedTheme();
                 // This is required so that the custom collection system does not disappear
-                // if the user is editing a custom collection when switching theme sets.
+                // if the user is editing a custom collection when switching themes.
                 if (CollectionSystemsManager::getInstance()->isEditing())
                     CollectionSystemsManager::getInstance()->exitEditMode();
                 s->setNeedsSaving();
@@ -191,9 +189,9 @@ void GuiMenu::openUIOptions()
 
     auto themeVariantsFunc = [=](const std::string& selectedTheme,
                                  const std::string& selectedVariant) {
-        std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
-            currentSet {themeSets.find(selectedTheme)};
-        if (currentSet == themeSets.cend())
+        std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+            currentSet {themes.find(selectedTheme)};
+        if (currentSet == themes.cend())
             return;
         // We need to recreate the OptionListComponent entries.
         themeVariant->clearEntries();
@@ -225,7 +223,7 @@ void GuiMenu::openUIOptions()
         }
     };
 
-    themeVariantsFunc(Settings::getInstance()->getString("ThemeSet"),
+    themeVariantsFunc(Settings::getInstance()->getString("Theme"),
                       Settings::getInstance()->getString("ThemeVariant"));
 
     // Theme color schemes.
@@ -244,9 +242,9 @@ void GuiMenu::openUIOptions()
 
     auto themeColorSchemesFunc = [=](const std::string& selectedTheme,
                                      const std::string& selectedColorScheme) {
-        std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
-            currentSet {themeSets.find(selectedTheme)};
-        if (currentSet == themeSets.cend())
+        std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+            currentSet {themes.find(selectedTheme)};
+        if (currentSet == themes.cend())
             return;
         // We need to recreate the OptionListComponent entries.
         themeColorScheme->clearEntries();
@@ -271,7 +269,7 @@ void GuiMenu::openUIOptions()
         }
     };
 
-    themeColorSchemesFunc(Settings::getInstance()->getString("ThemeSet"),
+    themeColorSchemesFunc(Settings::getInstance()->getString("Theme"),
                           Settings::getInstance()->getString("ThemeColorScheme"));
 
     // Theme aspect ratios.
@@ -290,9 +288,9 @@ void GuiMenu::openUIOptions()
 
     auto themeAspectRatiosFunc = [=](const std::string& selectedTheme,
                                      const std::string& selectedAspectRatio) {
-        std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
-            currentSet {themeSets.find(selectedTheme)};
-        if (currentSet == themeSets.cend())
+        std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+            currentSet {themes.find(selectedTheme)};
+        if (currentSet == themes.cend())
             return;
         // We need to recreate the OptionListComponent entries.
         themeAspectRatio->clearEntries();
@@ -313,7 +311,7 @@ void GuiMenu::openUIOptions()
         }
     };
 
-    themeAspectRatiosFunc(Settings::getInstance()->getString("ThemeSet"),
+    themeAspectRatiosFunc(Settings::getInstance()->getString("Theme"),
                           Settings::getInstance()->getString("ThemeAspectRatio"));
 
     // Theme transitions.
@@ -337,9 +335,9 @@ void GuiMenu::openUIOptions()
 
     auto themeTransitionsFunc = [=](const std::string& selectedTheme,
                                     const std::string& selectedThemeTransitions) {
-        std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
-            currentSet {themeSets.find(selectedTheme)};
-        if (currentSet == themeSets.cend())
+        std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+            currentSet {themes.find(selectedTheme)};
+        if (currentSet == themes.cend())
             return;
         // We need to recreate the OptionListComponent entries.
         themeTransitions->clearEntries();
@@ -408,7 +406,7 @@ void GuiMenu::openUIOptions()
         }
     };
 
-    themeTransitionsFunc(Settings::getInstance()->getString("ThemeSet"),
+    themeTransitionsFunc(Settings::getInstance()->getString("Theme"),
                          Settings::getInstance()->getString("ThemeTransitions"));
 
     // Quick system select (navigate between systems in the gamelist view).
@@ -868,10 +866,10 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    // When the theme set entries are scrolled or selected, update the relevant rows.
-    auto scrollThemeSetFunc = [=](const std::string& themeName, bool firstRun = false) {
-        auto selectedSet = themeSets.find(themeName);
-        if (selectedSet == themeSets.cend())
+    // When the theme entries are scrolled or selected, update the relevant rows.
+    auto scrollThemeFunc = [=](const std::string& themeName, bool firstRun = false) {
+        auto selectedTheme = themes.find(themeName);
+        if (selectedTheme == themes.cend())
             return;
         if (!firstRun) {
             themeVariantsFunc(themeName, themeVariant->getSelected());
@@ -880,7 +878,7 @@ void GuiMenu::openUIOptions()
             themeTransitionsFunc(themeName, themeTransitions->getSelected());
         }
         int selectableVariants {0};
-        for (auto& variant : selectedSet->second.capabilities.variants) {
+        for (auto& variant : selectedTheme->second.capabilities.variants) {
             if (variant.selectable)
                 ++selectableVariants;
         }
@@ -898,7 +896,7 @@ void GuiMenu::openUIOptions()
                 ->getChild(themeVariant->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
-        if (selectedSet->second.capabilities.colorSchemes.size() > 0) {
+        if (selectedTheme->second.capabilities.colorSchemes.size() > 0) {
             themeColorScheme->setEnabled(true);
             themeColorScheme->setOpacity(1.0f);
             themeColorScheme->getParent()
@@ -912,7 +910,7 @@ void GuiMenu::openUIOptions()
                 ->getChild(themeColorScheme->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
-        if (selectedSet->second.capabilities.aspectRatios.size() > 0) {
+        if (selectedTheme->second.capabilities.aspectRatios.size() > 0) {
             themeAspectRatio->setEnabled(true);
             themeAspectRatio->setOpacity(1.0f);
             themeAspectRatio->getParent()
@@ -928,8 +926,8 @@ void GuiMenu::openUIOptions()
         }
     };
 
-    scrollThemeSetFunc(selectedSet->first, true);
-    themeSet->setCallback(scrollThemeSetFunc);
+    scrollThemeFunc(selectedTheme->first, true);
+    theme->setCallback(scrollThemeFunc);
 
     s->setSize(mSize);
     mWindow->pushGui(s);

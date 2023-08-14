@@ -52,7 +52,7 @@ Window::Window() noexcept
     , mVideoPlayerCount {0}
     , mTopScale {0.5f}
     , mRenderedHelpPrompts {false}
-    , mChangedThemeSet {false}
+    , mChangedTheme {false}
 {
 }
 
@@ -465,13 +465,13 @@ void Window::update(int deltaTime)
     if (peekGui())
         peekGui()->update(deltaTime);
 
-    // If the theme set changed, we need to update the background once so that the camera
-    // will be moved. This is required as theme set changes always makes a transition to
+    // If the theme changed, we need to update the background once so that the camera
+    // will be moved. This is required as theme changes always make a transition to
     // the system view. If we wouldn't make this update, the camera movement would take
     // place once the menu has been closed.
-    if (mChangedThemeSet) {
+    if (mChangedTheme) {
         mGuiStack.front()->update(deltaTime);
-        mChangedThemeSet = false;
+        mChangedTheme = false;
     }
 
     if (mMediaViewer && mRenderMediaViewer)

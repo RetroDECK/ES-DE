@@ -540,10 +540,10 @@ const bool CollectionSystemsManager::isThemeCustomCollectionCompatible(
         return true;
 
     // Get theme path.
-    auto themeSets = ThemeData::getThemeSets();
-    auto set = themeSets.find(Settings::getInstance()->getString("ThemeSet"));
-    if (set != themeSets.cend()) {
-        std::string defaultThemeFilePath {set->second.path + "/theme.xml"};
+    auto themes = ThemeData::getThemes();
+    auto theme = themes.find(Settings::getInstance()->getString("Theme"));
+    if (theme != themes.cend()) {
+        std::string defaultThemeFilePath {theme->second.path + "/theme.xml"};
         if (Utils::FileSystem::exists(defaultThemeFilePath))
             return true;
     }
@@ -1475,19 +1475,19 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromTheme()
 {
     std::vector<std::string> systems;
 
-    auto themeSets = ThemeData::getThemeSets();
-    if (themeSets.empty())
-        return systems; // No theme sets available.
+    auto themes = ThemeData::getThemes();
+    if (themes.empty())
+        return systems; // No themes available.
 
-    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator set {
-        themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
-    if (set == themeSets.cend()) {
-        // Currently selected theme set is missing, so just pick the first available set.
-        set = themeSets.cbegin();
-        Settings::getInstance()->setString("ThemeSet", set->first);
+    std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator theme {
+        themes.find(Settings::getInstance()->getString("Theme"))};
+    if (theme == themes.cend()) {
+        // Currently selected theme is missing, so just pick the first available one.
+        theme = themes.cbegin();
+        Settings::getInstance()->setString("Theme", theme->first);
     }
 
-    std::string themePath {set->second.path};
+    std::string themePath {theme->second.path};
 
     if (Utils::FileSystem::exists(themePath)) {
         Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(themePath)};
@@ -1497,7 +1497,7 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromTheme()
             if (Utils::FileSystem::isDirectory(*it)) {
                 std::string folder {*it};
                 folder = folder.substr(themePath.size() + 1);
-                if (Utils::FileSystem::exists(set->second.getThemePath(folder)))
+                if (Utils::FileSystem::exists(theme->second.getThemePath(folder)))
                     systems.push_back(folder);
             }
         }

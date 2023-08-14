@@ -157,7 +157,7 @@ void Settings::setDefaults()
     mBoolMap["ScraperRegionFallback"] = {true, true};
 
     // UI settings.
-    mStringMap["ThemeSet"] = {"slate-es-de", "slate-es-de"};
+    mStringMap["Theme"] = {"slate-es-de", "slate-es-de"};
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeColorScheme"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};

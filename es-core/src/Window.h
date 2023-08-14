@@ -175,8 +175,8 @@ public:
     void setAllowFileAnimation(bool value) { mAllowFileAnimation = value; }
     bool getAllowFileAnimation() { return mAllowFileAnimation; }
 
-    void setChangedThemeSet() { mChangedThemeSet = true; }
-    bool getChangedThemeSet() { return mChangedThemeSet; }
+    void setChangedTheme() { mChangedTheme = true; }
+    bool getChangedTheme() { return mChangedTheme; }
 
 private:
     Window() noexcept;
@@ -244,7 +244,7 @@ private:
 
     float mTopScale;
     bool mRenderedHelpPrompts;
-    bool mChangedThemeSet;
+    bool mChangedTheme;
 };
 
 #endif // ES_CORE_WINDOW_H

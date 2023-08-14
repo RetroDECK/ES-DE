@@ -143,7 +143,7 @@ private:
     bool mHasThemeUpdates;
     static inline std::atomic<float> mReceivedObjectsProgress {0.0f};
     static inline std::atomic<float> mResolveDeltaProgress {0.0f};
-    std::vector<ThemeEntry> mThemeSets;
+    std::vector<ThemeEntry> mThemes;
     StatusType mStatusType;
     std::string mStatusText;
     bool mFullscreenViewing;

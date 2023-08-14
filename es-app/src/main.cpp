@@ -760,7 +760,7 @@ int main(int argc, char* argv[])
     }
 
     MameNames::getInstance();
-    ThemeData::populateThemeSets();
+    ThemeData::populateThemes();
     loadSystemsReturnCode loadSystemsStatus {loadSystemConfigFile()};
 
     if (!SystemData::sStartupExitSignal) {

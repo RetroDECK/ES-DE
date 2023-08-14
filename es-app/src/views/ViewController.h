@@ -51,8 +51,7 @@ public:
     {
         reloadGamelistView(getGamelistView(system).get(), reloadTheme);
     }
-    // Reload everything with a theme.
-    // Used when the "ThemeSet" setting changes.
+    // Reload everything with a theme, used when the "Theme" setting changes.
     void reloadAll();
 
     // Rescan the ROM directory for any changes to games and systems.

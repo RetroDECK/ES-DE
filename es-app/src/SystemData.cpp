@@ -1308,19 +1308,19 @@ std::string SystemData::getGamelistPath(bool forWrite) const
 
 std::string SystemData::getThemePath() const
 {
-    // Check for the presence of [CURRENT_THEME_PATH]/[SYSTEM]/theme.xml and if this does not
-    // exist, then try the default file for the theme, i.e. [CURRENT_THEME_PATH]/theme.xml
-    std::string themePath {ThemeData::getThemeFromCurrentSet(mThemeFolder)};
+    // Check for the presence of the system theme file ./systemname/theme.xml and if this does not
+    // exist, then try the default file for the theme, i.e. ./theme.xml
+    std::string systemThemeFile {ThemeData::getSystemThemeFile(mThemeFolder)};
 
-    if (Utils::FileSystem::exists(themePath))
-        return themePath;
+    if (Utils::FileSystem::exists(systemThemeFile))
+        return systemThemeFile;
 
-    themePath = Utils::FileSystem::getParent(Utils::FileSystem::getParent(themePath));
+    systemThemeFile = Utils::FileSystem::getParent(Utils::FileSystem::getParent(systemThemeFile));
 
-    if (themePath != "") {
-        themePath.append("/theme.xml");
-        if (Utils::FileSystem::exists(themePath))
-            return themePath;
+    if (systemThemeFile != "") {
+        systemThemeFile.append("/theme.xml");
+        if (Utils::FileSystem::exists(systemThemeFile))
+            return systemThemeFile;
     }
 
     return "";
@@ -1501,7 +1501,7 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
         if (!mIsCustomCollectionSystem) {
             LOG(LogWarning) << "There is no \"" << mThemeFolder
                             << "\" configuration available for the selected theme \""
-                            << Settings::getInstance()->getString("ThemeSet")
+                            << Settings::getInstance()->getString("Theme")
                             << "\", system will be unthemed";
         }
         return;

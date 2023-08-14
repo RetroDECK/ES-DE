@@ -190,7 +190,7 @@ public:
         bool validTheme;
     };
 
-    struct ThemeSet {
+    struct Theme {
         std::string path;
         ThemeCapability capabilities;
 
@@ -219,18 +219,14 @@ public:
                                    const std::string& element,
                                    const std::string& expectedType) const;
 
-    static void populateThemeSets();
-    const static std::map<std::string, ThemeSet, StringComparator>& getThemeSets()
-    {
-        return sThemeSets;
-    }
-    const static std::string getThemeFromCurrentSet(const std::string& system);
+    static void populateThemes();
+    const static std::map<std::string, Theme, StringComparator>& getThemes() { return sThemes; }
+    const static std::string getSystemThemeFile(const std::string& system);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
-    const static std::string getCurrentThemeSetName() { return sCurrentThemeSet->first; }
     static void setThemeTransitions();
 
     const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
-    getCurrentThemeSetSelectedVariantOverrides();
+    getCurrentThemeSelectedVariantOverrides();
     const static void themeLoadedLogOutput();
 
     enum ElementPropertyType {
@@ -274,8 +270,8 @@ private:
     static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
     static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
 
-    static inline std::map<std::string, ThemeSet, StringComparator> sThemeSets;
-    static inline std::map<std::string, ThemeSet, StringComparator>::iterator sCurrentThemeSet {};
+    static inline std::map<std::string, Theme, StringComparator> sThemes;
+    static inline std::map<std::string, Theme, StringComparator>::iterator sCurrentTheme {};
     static inline std::string sVariantDefinedTransitions;
 
     std::map<std::string, ThemeView> mViews;

@@ -459,11 +459,11 @@ void SystemView::populate()
 
     LOG(LogDebug) << "SystemView::populate(): Populating primary element...";
 
-    auto themeSets = ThemeData::getThemeSets();
-    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
-        selectedSet {themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
+    auto themes = ThemeData::getThemes();
+    std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+        selectedTheme {themes.find(Settings::getInstance()->getString("Theme"))};
 
-    assert(selectedSet != themeSets.cend());
+    assert(selectedTheme != themes.cend());
 
     for (auto it : SystemData::sSystemVector) {
         const std::shared_ptr<ThemeData>& theme {it->getTheme()};

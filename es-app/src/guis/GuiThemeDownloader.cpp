@@ -198,7 +198,7 @@ GuiThemeDownloader::~GuiThemeDownloader()
 
     if (mHasThemeUpdates) {
         LOG(LogInfo) << "GuiThemeDownloader: There are updates, repopulating the themes";
-        ThemeData::populateThemeSets();
+        ThemeData::populateThemes();
         ViewController::getInstance()->reloadAll();
         if (mUpdateCallback)
             mUpdateCallback();
@@ -465,7 +465,7 @@ void GuiThemeDownloader::resetRepository(git_repository* repository)
 
 void GuiThemeDownloader::makeInventory()
 {
-    for (auto& theme : mThemeSets) {
+    for (auto& theme : mThemes) {
         const std::string path {mThemeDirectory + theme.reponame};
         theme.invalidRepository = false;
         theme.corruptRepository = false;
@@ -601,11 +601,11 @@ void GuiThemeDownloader::parseThemesList()
         }
     }
 
-    if (doc.HasMember("themeSets") && doc["themeSets"].IsArray()) {
-        const rapidjson::Value& themeSets {doc["themeSets"]};
-        for (int i {0}; i < static_cast<int>(themeSets.Size()); ++i) {
+    if (doc.HasMember("themes") && doc["themes"].IsArray()) {
+        const rapidjson::Value& themes {doc["themes"]};
+        for (int i {0}; i < static_cast<int>(themes.Size()); ++i) {
             ThemeEntry themeEntry;
-            const rapidjson::Value& theme {themeSets[i]};
+            const rapidjson::Value& theme {themes[i]};
 
             if (theme.HasMember("name") && theme["name"].IsString())
                 themeEntry.name = theme["name"].GetString();
@@ -661,20 +661,20 @@ void GuiThemeDownloader::parseThemesList()
                 }
             }
 
-            mThemeSets.emplace_back(themeEntry);
+            mThemes.emplace_back(themeEntry);
         }
     }
 
-    LOG(LogDebug) << "GuiThemeDownloader::parseThemesList(): Parsed " << mThemeSets.size()
+    LOG(LogDebug) << "GuiThemeDownloader::parseThemesList(): Parsed " << mThemes.size()
                   << " themes";
 }
 
 void GuiThemeDownloader::populateGUI()
 {
-    if (mThemeSets.empty())
+    if (mThemes.empty())
         return;
 
-    for (auto& theme : mThemeSets) {
+    for (auto& theme : mThemes) {
         std::string themeName {Utils::String::toUpper(theme.name)};
         if (theme.newEntry && !theme.isCloned)
             themeName.append(" ").append(ViewController::BRANCH_CHAR);
@@ -831,16 +831,16 @@ void GuiThemeDownloader::updateGUI()
     updateInfoPane();
     updateHelpPrompts();
 
-    for (size_t i {0}; i < mThemeSets.size(); ++i) {
-        std::string themeName {Utils::String::toUpper(mThemeSets[i].name)};
-        if (mThemeSets[i].newEntry && !mThemeSets[i].isCloned)
+    for (size_t i {0}; i < mThemes.size(); ++i) {
+        std::string themeName {Utils::String::toUpper(mThemes[i].name)};
+        if (mThemes[i].newEntry && !mThemes[i].isCloned)
             themeName.append(" ").append(ViewController::BRANCH_CHAR);
-        if (mThemeSets[i].isCloned)
+        if (mThemes[i].isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
-        if (mThemeSets[i].manuallyDownloaded || mThemeSets[i].invalidRepository ||
-            mThemeSets[i].corruptRepository || mThemeSets[i].shallowRepository)
+        if (mThemes[i].manuallyDownloaded || mThemes[i].invalidRepository ||
+            mThemes[i].corruptRepository || mThemes[i].shallowRepository)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
-        if (mThemeSets[i].hasLocalChanges)
+        if (mThemes[i].hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
 
         mThemeGUIEntries[i].themeName->setText(themeName);
@@ -849,43 +849,43 @@ void GuiThemeDownloader::updateGUI()
 
 void GuiThemeDownloader::updateInfoPane()
 {
-    assert(static_cast<size_t>(mList->size()) == mThemeSets.size());
-    if (!mThemeSets[mList->getCursorId()].screenshots.empty())
+    assert(static_cast<size_t>(mList->size()) == mThemes.size());
+    if (!mThemes[mList->getCursorId()].screenshots.empty())
         mScreenshot->setImage(mThemeDirectory + "themes-list/" +
-                              mThemeSets[mList->getCursorId()].screenshots.front().image);
+                              mThemes[mList->getCursorId()].screenshots.front().image);
     else
         mScreenshot->setImage("");
 
-    if (mThemeSets[mList->getCursorId()].isCloned) {
+    if (mThemes[mList->getCursorId()].isCloned) {
         mDownloadStatus->setText(ViewController::TICKMARK_CHAR + " INSTALLED");
         mDownloadStatus->setColor(mMenuColorGreen);
         mDownloadStatus->setOpacity(1.0f);
     }
-    else if (mThemeSets[mList->getCursorId()].invalidRepository ||
-             mThemeSets[mList->getCursorId()].manuallyDownloaded) {
+    else if (mThemes[mList->getCursorId()].invalidRepository ||
+             mThemes[mList->getCursorId()].manuallyDownloaded) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " MANUAL DOWNLOAD");
         mDownloadStatus->setColor(mMenuColorRed);
         mDownloadStatus->setOpacity(1.0f);
     }
-    else if (mThemeSets[mList->getCursorId()].corruptRepository) {
+    else if (mThemes[mList->getCursorId()].corruptRepository) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " CORRUPT");
         mDownloadStatus->setColor(mMenuColorRed);
         mDownloadStatus->setOpacity(1.0f);
     }
-    else if (mThemeSets[mList->getCursorId()].shallowRepository) {
+    else if (mThemes[mList->getCursorId()].shallowRepository) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " SHALLOW");
         mDownloadStatus->setColor(mMenuColorRed);
         mDownloadStatus->setOpacity(1.0f);
     }
     else {
-        if (mThemeSets[mList->getCursorId()].newEntry)
+        if (mThemes[mList->getCursorId()].newEntry)
             mDownloadStatus->setText("NOT INSTALLED (NEW)");
         else
             mDownloadStatus->setText("NOT INSTALLED");
         mDownloadStatus->setColor(mMenuColorPrimary);
         mDownloadStatus->setOpacity(0.7f);
     }
-    if (mThemeSets[mList->getCursorId()].hasLocalChanges) {
+    if (mThemes[mList->getCursorId()].hasLocalChanges) {
         mLocalChanges->setText(ViewController::EXCLAMATION_CHAR + " LOCAL CHANGES");
         mLocalChanges->setColor(mMenuColorRed);
     }
@@ -893,18 +893,15 @@ void GuiThemeDownloader::updateInfoPane()
         mLocalChanges->setText("");
     }
 
-    mVariantCount->setText(std::to_string(mThemeSets[mList->getCursorId()].variants.size()));
-    mColorSchemesCount->setText(
-        std::to_string(mThemeSets[mList->getCursorId()].colorSchemes.size()));
-    mAspectRatiosCount->setText(
-        std::to_string(mThemeSets[mList->getCursorId()].aspectRatios.size()));
-    mAuthor->setText("CREATED BY " +
-                     Utils::String::toUpper(mThemeSets[mList->getCursorId()].author));
+    mVariantCount->setText(std::to_string(mThemes[mList->getCursorId()].variants.size()));
+    mColorSchemesCount->setText(std::to_string(mThemes[mList->getCursorId()].colorSchemes.size()));
+    mAspectRatiosCount->setText(std::to_string(mThemes[mList->getCursorId()].aspectRatios.size()));
+    mAuthor->setText("CREATED BY " + Utils::String::toUpper(mThemes[mList->getCursorId()].author));
 }
 
 void GuiThemeDownloader::setupFullscreenViewer()
 {
-    if (mThemeSets.empty())
+    if (mThemes.empty())
         return;
 
     mViewerScreenshots.clear();
@@ -912,7 +909,7 @@ void GuiThemeDownloader::setupFullscreenViewer()
     mFullscreenViewerIndex = 0;
     mFullscreenViewing = true;
 
-    for (auto& screenshot : mThemeSets[mList->getCursorId()].screenshots) {
+    for (auto& screenshot : mThemes[mList->getCursorId()].screenshots) {
         auto image = std::make_shared<ImageComponent>(false, false);
         image->setLinearInterpolation(true);
         image->setMaxSize(mRenderer->getScreenWidth() * 0.86f,
@@ -968,7 +965,7 @@ void GuiThemeDownloader::update(int deltaTime)
                 mFetching = false;
                 if (mRepositoryError != RepositoryError::NO_REPO_ERROR) {
                     std::string errorMessage {"ERROR: "};
-                    if (mThemeSets.empty()) {
+                    if (mThemes.empty()) {
                         errorMessage.append("COULDN'T DOWNLOAD THEMES LIST, ");
                         mGrid.removeEntry(mCenterGrid);
                         mGrid.setCursorTo(mButtons);
@@ -980,12 +977,12 @@ void GuiThemeDownloader::update(int deltaTime)
                     mMessage = "";
                     getHelpPrompts();
                 }
-                if (mThemeSets.empty() && mLatestThemesList) {
+                if (mThemes.empty() && mLatestThemesList) {
                     parseThemesList();
                     makeInventory();
                     populateGUI();
                 }
-                else if (!mThemeSets.empty()) {
+                else if (!mThemes.empty()) {
                     makeInventory();
                     updateGUI();
                 }
@@ -1149,15 +1146,15 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
     }
 
     if (config->isMappedTo("y", input) && input.value &&
-        mGrid.getSelectedComponent() == mCenterGrid && mThemeSets[mList->getCursorId()].isCloned) {
+        mGrid.getSelectedComponent() == mCenterGrid && mThemes[mList->getCursorId()].isCloned) {
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(),
             "THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY "
             "LOCAL CUSTOMIZATIONS",
             "PROCEED",
             [this] {
-                const std::filesystem::path themeDirectory {
-                    mThemeDirectory + mThemeSets[mList->getCursorId()].reponame};
+                const std::filesystem::path themeDirectory {mThemeDirectory +
+                                                            mThemes[mList->getCursorId()].reponame};
                 LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory.string() << "\"";
                 if (!Utils::FileSystem::removeDirectory(themeDirectory.string(), true)) {
                     mWindow->pushGui(new GuiMsgBox(
@@ -1192,7 +1189,7 @@ std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
         if (mGrid.getSelectedComponent() == mCenterGrid)
             prompts.push_back(HelpPrompt("x", "view screenshots"));
 
-        if (mThemeSets[mList->getCursorId()].isCloned) {
+        if (mThemes[mList->getCursorId()].isCloned) {
             prompts.push_back(HelpPrompt("a", "fetch updates"));
             if (mGrid.getSelectedComponent() == mCenterGrid)
                 prompts.push_back(HelpPrompt("y", "delete"));
