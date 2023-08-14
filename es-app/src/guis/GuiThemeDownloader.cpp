@@ -1159,7 +1159,7 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
                 const std::filesystem::path themeDirectory {
                     mThemeDirectory + mThemeSets[mList->getCursorId()].reponame};
                 LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory.string() << "\"";
-                if (!Utils::FileSystem::removeDirectory(themeDirectory, true)) {
+                if (!Utils::FileSystem::removeDirectory(themeDirectory.string(), true)) {
                     mWindow->pushGui(new GuiMsgBox(
                         getHelpStyle(), "COULDN'T DELETE THEME, PERMISSION PROBLEMS?", "OK",
                         [] { return; }, "", nullptr, "", nullptr, true));
