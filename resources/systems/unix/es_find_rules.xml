@@ -798,6 +798,18 @@
             <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
         </rule>
     </emulator>
+    <emulator name="VISUAL-PINBALL">
+        <!-- Pinball simulator Visual Pinball -->
+        <rule type="systempath">
+            <entry>VPinballX_GL</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/VPinballX/VPinballX_GL</entry>
+            <entry>~/.local/share/applications/VPinballX/VPinballX_GL</entry>
+            <entry>~/.local/bin/VPinballX/VPinballX_GL</entry>
+            <entry>~/bin/VPinballX/VPinballX_GL</entry>
+        </rule>
+    </emulator>
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="systempath">
