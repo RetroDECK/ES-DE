@@ -12,11 +12,23 @@
 #include "components/VideoFFmpegComponent.h"
 #include "views/ViewController.h"
 
+#define KEY_REPEAT_START_DELAY 600
+#define KEY_REPEAT_SPEED 250
+
 MediaViewer::MediaViewer()
     : mRenderer {Renderer::getInstance()}
     , mGame {nullptr}
+    , mHasVideo {false}
+    , mHasImages {false}
+    , mDisplayingImage {false}
+    , mHasManual {false}
     , mShowMediaTypes {false}
     , mFrameHeight {0.0f}
+    , mCurrentImageIndex {0}
+    , mScreenshotIndex {0}
+    , mTitleScreenIndex {0}
+    , mKeyRepeatDir {0}
+    , mKeyRepeatTimer {0}
     , mHelpInfoPosition {HelpInfoPosition::TOP}
 {
     Window::getInstance()->setMediaViewer(this);
@@ -29,6 +41,8 @@ bool MediaViewer::startMediaViewer(FileData* game)
     mCurrentImageIndex = 0;
     mScreenshotIndex = -1;
     mTitleScreenIndex = -1;
+    mKeyRepeatDir = 0;
+    mKeyRepeatTimer = 0;
 
     ViewController::getInstance()->pauseViewVideos();
 
@@ -106,8 +120,64 @@ void MediaViewer::launchPDFViewer()
     }
 }
 
+void MediaViewer::input(InputConfig* config, Input input)
+{
+    if (config->isMappedLike("down", input) && input.value != 0) {
+        mKeyRepeatDir = 0;
+        return;
+    }
+    else if (config->isMappedLike("up", input) && input.value != 0) {
+        mKeyRepeatDir = 0;
+        launchPDFViewer();
+        return;
+    }
+    else if (config->isMappedLike("left", input)) {
+        if (input.value) {
+            mKeyRepeatDir = -1;
+            mKeyRepeatTimer = -(KEY_REPEAT_START_DELAY - KEY_REPEAT_SPEED);
+            showPrevious();
+        }
+        else {
+            mKeyRepeatDir = 0;
+        }
+    }
+    else if (config->isMappedLike("right", input)) {
+        if (input.value) {
+            mKeyRepeatDir = 1;
+            mKeyRepeatTimer = -(KEY_REPEAT_START_DELAY - KEY_REPEAT_SPEED);
+            showNext();
+        }
+        else {
+            mKeyRepeatDir = 0;
+        }
+    }
+    else if (config->isMappedLike("lefttrigger", input) && input.value != 0) {
+        mKeyRepeatDir = 0;
+        showFirst();
+    }
+    else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
+        mKeyRepeatDir = 0;
+        showLast();
+    }
+    else if (input.value != 0) {
+        // Any other input stops the media viewer.
+        Window::getInstance()->stopMediaViewer();
+    }
+}
+
 void MediaViewer::update(int deltaTime)
 {
+    if (mKeyRepeatDir != 0) {
+        mKeyRepeatTimer += deltaTime;
+        while (mKeyRepeatTimer >= KEY_REPEAT_SPEED) {
+            mKeyRepeatTimer -= KEY_REPEAT_SPEED;
+            if (mKeyRepeatDir == 1)
+                showNext();
+            else
+                showPrevious();
+        }
+    }
+
     if (mVideo)
         mVideo->update(deltaTime);
 }

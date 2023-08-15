@@ -22,10 +22,25 @@
 
 #define DEBUG_PDF_CONVERSION false
 
+#define KEY_REPEAT_START_DELAY 600
+#define KEY_REPEAT_START_DELAY_ZOOMED 500
+#define KEY_REPEAT_SPEED 250
+#define KEY_REPEAT_SPEED_ZOOMED 150
+
 PDFViewer::PDFViewer()
     : mRenderer {Renderer::getInstance()}
     , mGame {nullptr}
     , mFrameHeight {0.0f}
+    , mScaleFactor {1.0f}
+    , mCurrentPage {0}
+    , mPageCount {0}
+    , mZoom {1.0f}
+    , mPanAmount {0.0f}
+    , mPanOffset {0.0f, 0.0f, 0.0f}
+    , mKeyRepeatLeftRight {0}
+    , mKeyRepeatUpDown {0}
+    , mKeyRepeatZoom {0}
+    , mKeyRepeatTimer {0}
     , mHelpInfoPosition {HelpInfoPosition::TOP}
 {
     Window::getInstance()->setPDFViewer(this);
@@ -76,6 +91,10 @@ bool PDFViewer::startPDFViewer(FileData* game)
     mZoom = 1.0f;
     mPanAmount = 0.0f;
     mPanOffset = {0.0f, 0.0f, 0.0f};
+    mKeyRepeatLeftRight = 0;
+    mKeyRepeatUpDown = 0;
+    mKeyRepeatZoom = 0;
+    mKeyRepeatTimer = 0;
 
     // Increase the rasterization resolution when running at lower screen resolutions to make
     // the texture look ok when zoomed in.
@@ -489,6 +508,146 @@ void PDFViewer::convertPage(int pageNum)
 #if (DEBUG_PDF_CONVERSION)
     LOG(LogDebug) << "ABGR32 data stream size: " << mPages[pageNum].imageData.size();
 #endif
+}
+
+void PDFViewer::input(InputConfig* config, Input input)
+{
+    if (config->isMappedLike("up", input)) {
+        if (input.value) {
+            mKeyRepeatUpDown = -1;
+            mKeyRepeatLeftRight = 0;
+            mKeyRepeatZoom = 0;
+            mKeyRepeatTimer =
+                -((mZoom > 1.0f ? KEY_REPEAT_START_DELAY_ZOOMED : KEY_REPEAT_START_DELAY) -
+                  KEY_REPEAT_SPEED);
+            navigateUp();
+        }
+        else {
+            mKeyRepeatUpDown = 0;
+        }
+    }
+    else if (config->isMappedLike("down", input)) {
+        if (input.value) {
+            mKeyRepeatUpDown = 1;
+            mKeyRepeatLeftRight = 0;
+            mKeyRepeatZoom = 0;
+            mKeyRepeatTimer =
+                -((mZoom > 1.0f ? KEY_REPEAT_START_DELAY_ZOOMED : KEY_REPEAT_START_DELAY) -
+                  KEY_REPEAT_SPEED);
+            navigateDown();
+        }
+        else {
+            mKeyRepeatUpDown = 0;
+        }
+        return;
+    }
+    else if (config->isMappedLike("left", input)) {
+        if (input.value) {
+            mKeyRepeatLeftRight = -1;
+            mKeyRepeatUpDown = 0;
+            mKeyRepeatZoom = 0;
+            mKeyRepeatTimer =
+                -((mZoom > 1.0f ? KEY_REPEAT_START_DELAY_ZOOMED : KEY_REPEAT_START_DELAY) -
+                  KEY_REPEAT_SPEED);
+            navigateLeft();
+        }
+        else {
+            mKeyRepeatLeftRight = 0;
+        }
+    }
+    else if (config->isMappedLike("right", input)) {
+        if (input.value) {
+            mKeyRepeatLeftRight = 1;
+            mKeyRepeatUpDown = 0;
+            mKeyRepeatZoom = 0;
+            mKeyRepeatTimer =
+                -((mZoom > 1.0f ? KEY_REPEAT_START_DELAY_ZOOMED : KEY_REPEAT_START_DELAY) -
+                  KEY_REPEAT_SPEED);
+            navigateRight();
+        }
+        else {
+            mKeyRepeatLeftRight = 0;
+        }
+    }
+    else if (config->isMappedLike("leftshoulder", input)) {
+        if (input.value) {
+            mKeyRepeatZoom = -1;
+            mKeyRepeatLeftRight = 0;
+            mKeyRepeatUpDown = 0;
+            mKeyRepeatTimer = -(KEY_REPEAT_START_DELAY_ZOOMED - KEY_REPEAT_SPEED_ZOOMED);
+            navigateLeftShoulder();
+        }
+        else {
+            mKeyRepeatZoom = 0;
+        }
+    }
+    else if (config->isMappedLike("rightshoulder", input)) {
+        if (input.value) {
+            mKeyRepeatZoom = 1;
+            mKeyRepeatLeftRight = 0;
+            mKeyRepeatUpDown = 0;
+            mKeyRepeatTimer = -(KEY_REPEAT_START_DELAY_ZOOMED - KEY_REPEAT_SPEED_ZOOMED);
+            navigateRightShoulder();
+        }
+        else {
+            mKeyRepeatZoom = 0;
+        }
+    }
+    else if (config->isMappedLike("lefttrigger", input) && input.value != 0) {
+        mKeyRepeatLeftRight = 0;
+        mKeyRepeatUpDown = 0;
+        mKeyRepeatZoom = 0;
+        navigateLeftTrigger();
+    }
+    else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
+        mKeyRepeatLeftRight = 0;
+        mKeyRepeatUpDown = 0;
+        mKeyRepeatZoom = 0;
+        navigateRightTrigger();
+    }
+    else if (input.value != 0) {
+        // Any other input stops the PDF viewer.
+        Window::getInstance()->stopPDFViewer();
+    }
+}
+
+void PDFViewer::update(int deltaTime)
+{
+    if (mKeyRepeatLeftRight != 0) {
+        mKeyRepeatTimer += deltaTime;
+        // Limit the accumulated backlog of keypresses if the computer can't keep up.
+        if (mKeyRepeatTimer > KEY_REPEAT_SPEED * 2)
+            mKeyRepeatTimer = KEY_REPEAT_SPEED * 2;
+        while (mKeyRepeatTimer >= (mZoom > 1.0f ? KEY_REPEAT_SPEED_ZOOMED : KEY_REPEAT_SPEED)) {
+            mKeyRepeatTimer -= (mZoom > 1.0f ? KEY_REPEAT_SPEED_ZOOMED : KEY_REPEAT_SPEED);
+            if (mKeyRepeatLeftRight == 1)
+                navigateRight();
+            else
+                navigateLeft();
+        }
+    }
+    if (mKeyRepeatUpDown != 0) {
+        mKeyRepeatTimer += deltaTime;
+        if (mKeyRepeatTimer > KEY_REPEAT_SPEED * 2)
+            mKeyRepeatTimer = KEY_REPEAT_SPEED * 2;
+        while (mKeyRepeatTimer >= (mZoom > 1.0f ? KEY_REPEAT_SPEED_ZOOMED : KEY_REPEAT_SPEED)) {
+            mKeyRepeatTimer -= (mZoom > 1.0f ? KEY_REPEAT_SPEED_ZOOMED : KEY_REPEAT_SPEED);
+            if (mKeyRepeatUpDown == 1)
+                navigateDown();
+            else
+                navigateUp();
+        }
+    }
+    if (mKeyRepeatZoom != 0) {
+        mKeyRepeatTimer += deltaTime;
+        while (mKeyRepeatTimer >= KEY_REPEAT_SPEED_ZOOMED) {
+            mKeyRepeatTimer -= KEY_REPEAT_SPEED_ZOOMED;
+            if (mKeyRepeatZoom == 1)
+                navigateRightShoulder();
+            else
+                navigateLeftShoulder();
+        }
+    }
 }
 
 void PDFViewer::render(const glm::mat4& /*parentTrans*/)

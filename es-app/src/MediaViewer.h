@@ -25,6 +25,7 @@ public:
     void stopMediaViewer() override;
     void launchPDFViewer() override;
 
+    void input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -42,10 +43,10 @@ private:
 
     void playVideo();
 
-    void showNext() override;
-    void showPrevious() override;
-    void showFirst() override;
-    void showLast() override;
+    void showNext();
+    void showPrevious();
+    void showFirst();
+    void showLast();
 
     Renderer* mRenderer;
     FileData* mGame;
@@ -60,6 +61,9 @@ private:
     int mCurrentImageIndex;
     int mScreenshotIndex;
     int mTitleScreenIndex;
+
+    int mKeyRepeatDir;
+    int mKeyRepeatTimer;
 
     struct ImageInfo {
         std::string mediaType;

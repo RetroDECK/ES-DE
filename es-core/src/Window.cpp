@@ -221,62 +221,12 @@ void Window::input(InputConfig* config, Input input)
     }
 
     if (mMediaViewer && mRenderMediaViewer) {
-        if (config->isMappedLike("down", input) && input.value != 0) {
-            return;
-        }
-        else if (config->isMappedLike("up", input) && input.value != 0) {
-            mMediaViewer->launchPDFViewer();
-            return;
-        }
-        else if (config->isMappedLike("left", input) && input.value != 0) {
-            mMediaViewer->showPrevious();
-        }
-        else if (config->isMappedLike("right", input) && input.value != 0) {
-            mMediaViewer->showNext();
-        }
-        else if (config->isMappedLike("lefttrigger", input) && input.value != 0) {
-            mMediaViewer->showFirst();
-        }
-        else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
-            mMediaViewer->showLast();
-        }
-        else if (input.value != 0) {
-            // Any other input stops the media viewer.
-            stopMediaViewer();
-        }
+        mMediaViewer->input(config, input);
         return;
     }
 
     if (mPDFViewer && mRenderPDFViewer) {
-        if (config->isMappedLike("up", input) && input.value != 0) {
-            mPDFViewer->navigateUp();
-        }
-        else if (config->isMappedLike("down", input) && input.value != 0) {
-            mPDFViewer->navigateDown();
-            return;
-        }
-        else if (config->isMappedLike("left", input) && input.value != 0) {
-            mPDFViewer->navigateLeft();
-        }
-        else if (config->isMappedLike("right", input) && input.value != 0) {
-            mPDFViewer->navigateRight();
-        }
-        else if (config->isMappedLike("leftshoulder", input) && input.value != 0) {
-            mPDFViewer->navigateLeftShoulder();
-        }
-        else if (config->isMappedLike("rightshoulder", input) && input.value != 0) {
-            mPDFViewer->navigateRightShoulder();
-        }
-        else if (config->isMappedLike("lefttrigger", input) && input.value != 0) {
-            mPDFViewer->navigateLeftTrigger();
-        }
-        else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
-            mPDFViewer->navigateRightTrigger();
-        }
-        else if (input.value != 0) {
-            // Any other input stops the PDF viewer.
-            stopPDFViewer();
-        }
+        mPDFViewer->input(config, input);
         return;
     }
 
@@ -476,6 +426,9 @@ void Window::update(int deltaTime)
 
     if (mMediaViewer && mRenderMediaViewer)
         mMediaViewer->update(deltaTime);
+
+    if (mPDFViewer && mRenderPDFViewer)
+        mPDFViewer->update(deltaTime);
 
     if (mLaunchScreen && mRenderLaunchScreen)
         mLaunchScreen->update(deltaTime);

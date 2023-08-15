@@ -58,11 +58,7 @@ public:
         virtual void stopMediaViewer() = 0;
         virtual void launchPDFViewer() = 0;
 
-        virtual void showNext() = 0;
-        virtual void showPrevious() = 0;
-        virtual void showFirst() = 0;
-        virtual void showLast() = 0;
-
+        virtual void input(InputConfig* config, Input input) = 0;
         virtual void update(int deltaTime) = 0;
         virtual void render(const glm::mat4& parentTrans) = 0;
         virtual std::vector<HelpPrompt> getHelpPrompts() = 0;
@@ -75,16 +71,8 @@ public:
         virtual void stopPDFViewer() = 0;
         virtual void launchMediaViewer() = 0;
 
-        virtual void navigateUp() = 0;
-        virtual void navigateDown() = 0;
-        virtual void navigateLeft() = 0;
-        virtual void navigateRight() = 0;
-
-        virtual void navigateLeftShoulder() = 0;
-        virtual void navigateRightShoulder() = 0;
-        virtual void navigateLeftTrigger() = 0;
-        virtual void navigateRightTrigger() = 0;
-
+        virtual void input(InputConfig* config, Input input) = 0;
+        virtual void update(int deltaTime) = 0;
         virtual void render(const glm::mat4& parentTrans) = 0;
         virtual std::vector<HelpPrompt> getHelpPrompts() = 0;
     };

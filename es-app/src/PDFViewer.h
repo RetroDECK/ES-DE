@@ -27,6 +27,8 @@ public:
     bool getDocumentInfo();
     void convertPage(int pageNum);
 
+    void input(InputConfig* config, Input input) override;
+    void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
 
@@ -40,16 +42,15 @@ private:
     void showNextPage();
     void showPreviousPage();
 
-    void navigateUp() override;
-    void navigateDown() override;
-    void navigateLeft() override;
-    void navigateRight() override;
+    void navigateUp();
+    void navigateDown();
+    void navigateLeft();
+    void navigateRight();
 
-    void navigateLeftShoulder() override;
-    void navigateRightShoulder() override;
-
-    void navigateLeftTrigger() override;
-    void navigateRightTrigger() override;
+    void navigateLeftShoulder();
+    void navigateRightShoulder();
+    void navigateLeftTrigger();
+    void navigateRightTrigger();
 
     struct PageEntry {
         float width;
@@ -68,6 +69,11 @@ private:
     float mZoom;
     float mPanAmount;
     glm::vec3 mPanOffset;
+
+    int mKeyRepeatLeftRight;
+    int mKeyRepeatUpDown;
+    int mKeyRepeatZoom;
+    int mKeyRepeatTimer;
 
     std::string mESConvertPath;
     std::string mManualPath;
