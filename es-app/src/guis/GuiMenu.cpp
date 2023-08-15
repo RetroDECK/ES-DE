@@ -159,7 +159,19 @@ void GuiMenu::openUIOptions()
             if (theme->getSelected() != Settings::getInstance()->getString("Theme")) {
                 Scripting::fireEvent("theme-changed", theme->getSelected(),
                                      Settings::getInstance()->getString("Theme"));
-                Settings::getInstance()->setString("Theme", theme->getSelected());
+                // Handle the situation where the previously selected theme has been deleted
+                // using the theme downloader. In this case attempt to fall back to slate-es-de
+                // and if this theme doesn't exist then select the first available one.
+                auto themes = ThemeData::getThemes();
+                if (themes.find(theme->getSelected()) == themes.end()) {
+                    if (themes.find("slate-es-de") != themes.end())
+                        Settings::getInstance()->setString("Theme", "slate-es-de");
+                    else
+                        Settings::getInstance()->setString("Theme", themes.begin()->first);
+                }
+                else {
+                    Settings::getInstance()->setString("Theme", theme->getSelected());
+                }
                 mWindow->setChangedTheme();
                 // This is required so that the custom collection system does not disappear
                 // if the user is editing a custom collection when switching themes.
