@@ -649,7 +649,7 @@ Again, the wildcard matching means this filename should be found by ES-DE when l
 If not using AppImageLauncher, then make sure to set the AppImages as executable or ES-DE will not be able to launch them. For example:
 ```
 cd ~/Applications
-chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
+chmod +x rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
 ```
 
 The following emulators are supported in AppImage format when using the bundled configuration:
@@ -657,6 +657,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | System name  | Emulator    | Filename configuration          |
 | :----------- | :---------- | :------------------------------ |
 | _Multiple_   | RetroArch   | RetroArch-Linux*.AppImage       |
+| _Multiple_   | Mesen       | Mesen*.AppImage                 |
 | dreamcast    | Flycast     | flycast*.AppImage               |
 | gba          | mGBA        | mGBA*.AppImage                  |
 | gc           | Dolphin     | Dolphin_Emulator*.AppImage      |
@@ -682,9 +683,8 @@ _RMG = Rosalie's Mupen GUI_
 
 ## AppImage vs Flatpak search order on Linux
 
-As of ES-DE 2.1.0 emulator AppImages are always searched before Flatpaks while in previous releases the opposite was true.
+Emulator AppImages are always searched before Flatpaks by the bundled configuration. Take the following es_find_rules.xml entry as an example:
 
-To clarify with an example, this is what the find rule entry for the Dolphin emulator looks like:
 ```xml
 <emulator name="DOLPHIN">
     <!-- Nintendo GameCube and Wii emulator Dolphin -->
@@ -739,45 +739,46 @@ So placing a manually downloaded emulator binary in either of these directories 
 
 The following manually downloaded emulators are supported when using the bundled configuration:
 
-| System name                      | Emulator      | Filename configuration            |
-| :------------------------------- | :------------ | :-------------------------------- |
-| amstradcpc                       | CPCemu        | cpcemu/cpcemu                     |
-| apple2                           | LinApple      | linapple/linapple                 |
-| atari2600                        | Gopher2600    | gopher2600/gopher2600_linux_amd64 |
-| coco/dragon32/tanodragon         | XRoar         | xroar/xroar                       |
-| daphne                           | Hypseus Singe | hypseus-singe/hypseus.bin         |
-| dreamcast                        | Redream       | redream/redream                   |
-| easyrpg                          | EasyRPG       | easyrpg/easyrpg-player            |
-| fbneo/neogeo/neogeocd/neogeocdjp | FinalBurn Neo | fbneo/fbneo                       |
-| flash                            | Lightspark    | lightspark/lightspark             |
-| flash                            | Ruffle        | ruffle/ruffle                     |
-| fmtowns                          | Tsugaru       | tsugaru/Tsugaru_CUI               |
-| gb/gbc                           | Gearboy       | gearboy/gearboy                   |
-| model3                           | Supermodel    | Supermodel/supermodel             |
-| famicom/nes                      | puNES         | punes/punes                       |
-| oric                             | Oricutron     | oricutron/Oricutron               |
-| pico8                            | PICO-8        | pico-8/pico8                      |
-| psvita                           | Vita3K        | Vita3K/Vita3K                     |
-| samcoupe                         | SimCoupé      | simcoupe/simcoupe                 |
-| switch                           | Ryujinx       | publish/Ryujinx                   |
-| switch                           | Ryujinx       | publish/Ryujinx.Ava               |
-| trs-80                           | sdl2trs       | sdl2trs/sdl2trs                   |
-| wiiu                             | Cemu          | Cemu/Cemu                         |
-| zxnext                           | #CSpect       | CSpect/CSpect.exe                 |
-| zxnext                           | ZEsarUX       | ZEsarUX/zesarux                   |
+| System name                      | Emulator         | Filename configuration            |
+| :------------------------------- | :--------------- | :-------------------------------- |
+| amstradcpc                       | CPCemu           | cpcemu/cpcemu                     |
+| apple2                           | LinApple         | linapple/linapple                 |
+| atari2600                        | Gopher2600       | gopher2600/gopher2600_linux_amd64 |
+| coco/dragon32/tanodragon         | XRoar            | xroar/xroar                       |
+| daphne                           | Hypseus Singe    | hypseus-singe/hypseus.bin         |
+| dreamcast                        | Redream          | redream/redream                   |
+| easyrpg                          | EasyRPG          | easyrpg/easyrpg-player            |
+| fbneo/neogeo/neogeocd/neogeocdjp | FinalBurn Neo    | fbneo/fbneo                       |
+| flash                            | Lightspark       | lightspark/lightspark             |
+| flash                            | Ruffle           | ruffle/ruffle                     |
+| fmtowns                          | Tsugaru          | tsugaru/Tsugaru_CUI               |
+| gb/gbc                           | Gearboy          | gearboy/gearboy                   |
+| model3                           | Supermodel       | Supermodel/supermodel             |
+| famicom/nes                      | puNES            | punes/punes                       |
+| oric                             | Oricutron        | oricutron/Oricutron               |
+| pico8                            | PICO-8           | pico-8/pico8                      |
+| psvita                           | Vita3K           | Vita3K/Vita3K                     |
+| samcoupe                         | SimCoupé         | simcoupe/simcoupe                 |
+| switch                           | Ryujinx          | publish/Ryujinx                   |
+| switch                           | Ryujinx          | publish/Ryujinx.Ava               |
+| trs-80                           | sdl2trs          | sdl2trs/sdl2trs                   |
+| vpinball                         | Visual Pinball X | VPinballX/VPinballX_GL            |
+| wiiu                             | Cemu             | Cemu/Cemu                         |
+| zxnext                           | #CSpect          | CSpect/CSpect.exe                 |
+| zxnext                           | ZEsarUX          | ZEsarUX/zesarux                   |
 
 #CSpect requires the Mono .NET framework to run, hence the .exe extension.
 
 Note that the Vita3K binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
 cd ~/Applications/Vita3K
-chmod +x ./Vita3K
+chmod +x Vita3K
 ```
 
 The same is true for Cemu:
 ```
 cd ~/Applications/Cemu
-chmod +x ./Cemu
+chmod +x Cemu
 ```
 
 ## Running emulators in fullscreen mode
@@ -965,11 +966,11 @@ Recca
 
 Note that _Kid Icarus_ will only show up once since there is a name collision present and in this case only the first file processed will be added and any other identically named files will be ignored. Also note that in this case it's random whether metadata from _EU/Kid Icarus_ or _USA/Kid Icarus_ will be used.
 
-### Special game installation considerations
+## Platform-specific setup
 
-Not all systems are as simple as described above, or there may be multiple ways to do the configuration. Specifics for such systems will be covered here. Consider this a work in progress as there are many platforms supported by ES-DE.
+Not all systems are as simple to setup as what is described in the previous section, and in some cases there may be multiple ways to perform the configuration. Specifics for such systems will be covered here. Consider this a work in progress as there are many platforms supported by ES-DE.
 
-#### Apple II
+### Apple II
 
 On Unix/Linux the default emulator for the apple2 system is [LinApple](http://linapple.sourceforge.net) and on Windows it's [AppleWin](https://github.com/AppleWin/AppleWin). Additionally the alternative emulators [Mednafen](https://mednafen.github.io) and [MAME](https://www.mamedev.org) standalone are supported. On macOS there is a port of AppleWin available named [Mariani](https://github.com/sh95014/AppleWin) but it appears broken at the moment as it does not accept any command line parameters. So instead only Mednafen and MAME are supported on macOS.
 
@@ -989,7 +990,7 @@ votrax.zip
 
 Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated Apple II computer.
 
-#### Apple IIGS
+### Apple IIGS
 
 The Apple IIGS computer is emulated using MAME. There is a dedicated emulator available for this system named [GSplus](https://apple2.gs/plus) but it appears to not be able to parse command line parameters correctly so disk images can't be supplied to it. As such it's currently unsupported.
 
@@ -1000,7 +1001,7 @@ apple2gs.zip
 
 Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated Apple IIGS computer.
 
-#### Apple Macintosh
+### Apple Macintosh
 
 There are two approaches to emulating these computers, the first is using games booted from diskettes and the second is to setup an entire OS installation as a hard disk image and run the games from there. The first approach is only applicable for older models like the Macintosh SE and Macintosh Plus (i.e. the era prior to hard drives becoming prevalent), and the second approach can be used for more modern models.
 
@@ -1059,7 +1060,7 @@ This is an example of what the game setup could look like:
 
 Note that scraper support is currently very poor for this system, so you may need to manually add images and information for your games. It's encouraged to support ScreenScraper and TheGamesDB by contributing game media and metadata so this situation improves over time.
 
-#### Arcade and Neo Geo
+### Arcade and Neo Geo
 
 **General**
 
@@ -1106,7 +1107,45 @@ ln -s /opt/homebrew/Cellar/mame/0.248/share/mame/hash ~/.mame/      # on ARM/App
 ln -s /usr/local/Cellar/mame/0.248/share/mame/hash ~/.mame/         # on x86/Intel
 ```
 
-#### Bally Astrocade
+### Atari Jaguar and Atari Jaguar CD
+
+These systems are generally straightforward to setup. For regular Atari Jaguar games you'll have a single ROM or zip archive per game that you place in the root of the `~/ROMs/atarijaguar` system directory. For Atari Jaguar CD games it's recommended to go for the .cdi format and you place these directly in the root of the `~/ROMs/atarijaguarcd` directory.
+
+The only emulator that can run Atari Jaguar CD games is [BigPEmu](https://www.richwhitehouse.com/jaguar/) and while it's officially only available for the Windows operating system it's still possible to run it on Linux.
+
+To accomplish this you need to run it via the Wine translation layer. More specifically you need the AppImage release of Wine which can be downloaded from here:\
+https://github.com/mmtrt/WINE_AppImage/releases
+
+Make sure to get the stable x86_64 release, for this example we assume that the file `wine-stable_8.0.2-x86_64.AppImage` has been downloaded.
+
+Create an `~/Applications/BigPEmu` directory and be mindful that the letter case is correct. Then move the AppImage into this new directory and set executable permissions for the file:
+```
+cd ~/Applications/BigPEmu
+chmod +x wine-stable_8.0.2-x86_64.AppImage
+```
+
+The find rule for BigPEmu looks like the following so the Wine filename needs to match this pattern:
+```xml
+<entry>~/Applications/BigPEmu/wine*.AppImage</entry>
+```
+
+Following this download BigPEmu and unzip it into `~/Applications/BigPEmu` \
+ You should now have something similar to this on your filesystem:
+```
+~/Applications/BigPEmu/Data/
+~/Applications/BigPEmu/Plugins/
+~/Applications/BigPEmu/Scripts/
+~/Applications/BigPEmu/Strings/
+~/Applications/BigPEmu/BigPEmu.exe
+~/Applications/BigPEmu/ReadMe.txt
+~/Applications/BigPEmu/wine-stable_8.0.2-x86_64.AppImage
+```
+
+That's basically it, for the atarijaguar system just make sure to select _BigPEmu (Wine)_ from the _Alternative emulators_ interface or set it on a per-game basis using the metadata editor. This is not required for the atarijaguarcd system as for this system there are no alternative emulators.
+
+There are many settings in Wine that may affect compatibility, performance etc. but covering all that is beyond the scope of this guide.
+
+### Bally Astrocade
 
 Place your ROMs in the `~/ROMs/astrocde` directory, the files must have the short MAME names such as _astrobat.zip_ and _conan.zip_. Also make sure that the BIOS archive astrocde.zip is included with the ROM set. If using MAME standalone then no further setup is required and the games should just launch.
 
@@ -1119,7 +1158,7 @@ mame/hash/astrocde.xml
 The hash file is available from the MAME GitHub repository: \
 https://raw.githubusercontent.com/mamedev/mame/master/hash/astrocde.xml
 
-#### Commodore Amiga
+### Commodore Amiga
 
 There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf`, `.hdz` or `.lha` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
@@ -1139,7 +1178,7 @@ Advanced topics such as the need for the Amiga Kickstart ROMs to run Amiga games
 
 [https://github.com/libretro/libretro-uae/blob/master/README.md](https://github.com/libretro/libretro-uae/blob/master/README.md)
 
-#### DOS / PC
+### DOS / PC
 
 For this platform there are two basic approaches for how the setup could be done; either to present each game as a single entry inside ES-DE, or to retain each game's directory structure. The first alternative is more user-friendly, tidy and requires less setup but basically restricts the emulator selection to the DOSBox-Pure RetroArch core. There is an alternative way to setup single entries to work with all DOSBox forks, but it has some drawbacks as discussed below.
 
@@ -1181,7 +1220,7 @@ When going for this approach the game folders can be scraped so that it looks ni
 
 Regardless of game setup method, per-game settings can be applied. If using the DOSBox RetroArch cores this is done via the RetroArch GUI and for DOSBox-X and DOSBox Staging it's accomplished by placing a custom dosbox.conf in the game directory.
 
-#### Dragon 32 and Tano Dragon
+### Dragon 32 and Tano Dragon
 
 These computers as well as the Dragon 64 are slight varations of the Tandy Color Computer and as these machines are largely compatible with each other they're all emulated using the [XRoar](http://www.6809.org.uk/xroar) emulator.
 
@@ -1193,7 +1232,7 @@ Following this setup there is not much to it, launching a cartridge or cassette 
 
 For the dragon32 system you can switch to emulating the Dragon 64 model by selecting the alternative emulator _XRoar Dragon 64 (Standalone)_.
 
-#### EasyRPG Game Engine
+### EasyRPG Game Engine
 
 Both the EasyRPG RetroArch core, which is named _RPG Maker 2000/2003 (EasyRPG)_ in the RetroArch GUI, and the standalone EasyRPG Player are supported.
 
@@ -1215,7 +1254,7 @@ Setup for the standalone EasyRPG Player is identical with the exception that run
 ~/ROMs/easyrpg/The Chimera Report.easyrpg/
 ```
 
-#### Fujitsu FM Towns
+### Fujitsu FM Towns
 
 The Tsugaru emulator is still somehow experimental and although there are builds available for Windows, macOS and Linux on the Tsugaru [GitHub](https://github.com/captainys/TOWNSEMU) page, only the Windows release seems to be functioning entirely correctly. The Linux build has controller/input issues as described later below. It's also made specifically for Ubuntu and there is no AppImage release available, so if you run some other Linux distribution then it may not run at all. Extracting the binary from the Debian package has however been reported to work on SteamOS at least. The macOS release does not seem to include the command line binary for the emulator which makes it unusable with ES-DE.
 
@@ -1263,7 +1302,7 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 -FREQ 33 -GAMEPORT0 KEY
 ```
 
-#### Hypseus Singe (Daphne)
+### Hypseus Singe (Daphne)
 
 Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is quite particular so make sure to read this section thoroughly to get it to work.
 
@@ -1399,7 +1438,7 @@ You have to put double backslash characters as shown above (including at the end
 
 The last step to get Singe games to work is to assign the alternative emulator _Hypseus [Singe] (Standalone)_ to these games. This is done via the _Alternative emulator_ entry in the metadata editor. Attempting to launch a Singe game using the default emulator will not work.
 
-#### LCD handheld games
+### LCD handheld games
 
 This section applies to both the _gameandwatch_ and _lcdgames_ systems as they are essentially identical, except a slightly different scraper configuration.
 
@@ -1430,7 +1469,7 @@ Simulation is done via the Handheld Electronic (GW) RetroArch core, in which cas
 ~/ROMs/gameandwatch/Donkey Kong (Nintendo, Multi Screen).mgw
 ```
 
-#### Lutris
+### Lutris
 
 Adding these games is most easily accomplished by using .desktop files that can be created from inside the Lutris application. Right click on each game you would like to add to ES-DE and select _Create desktop shortcut_, then simply move these shortcuts from your desktop to the `lutris` system directory. You may also want to rename some of the files as their names may be a bit cryptic which could confuse the scraper. Remember that it's the physical filenames that will show up inside ES-DE.
 
@@ -1442,7 +1481,60 @@ After doing this you should end up with something like the following:
 ```
 As an alternative you can add Lutris games to the Ports system using the procedure described above.
 
-#### M.U.G.E.N Game Engine
+### Microsoft Xbox 360
+
+_This section currently only covers the xenia setup on Linux._
+
+**Note that xenia does not seem to run on the Steam Deck using the approach described below.**
+
+The only Xbox 360 emulator that can run commercial games is [xenia](https://xenia.jp/) and while it's officially only available for the Windows operating system it's still possible to run it on Linux.
+
+To accomplish this you need to run it via the Wine translation layer. More specifically you need the AppImage release of Wine which can be downloaded from here:\
+https://github.com/mmtrt/WINE_AppImage/releases
+
+Make sure to get the stable x86_64 release, for this example we assume that the file `wine-stable_8.0.2-x86_64.AppImage` has been downloaded.
+
+Create an `~/Applications/xenia` directory and be mindful that the letter case is correct. Then move the AppImage into this new directory and set executable permissions for the file:
+```
+cd ~/Applications/xenia
+chmod +x wine-stable_8.0.2-x86_64.AppImage
+```
+
+The find rule for xenia looks like the following so the Wine filename needs to match this pattern:
+```xml
+<entry>~/Applications/xenia/wine*.AppImage</entry>
+```
+
+Following this download xenia and unzip it into `~/Applications/xenia`. Also create an empty file named `portable.txt` inside this directory. You should now have something similar to this on your filesystem:
+```
+~/Applications/xenia/LICENSE
+~/Applications/xenia/portable.txt
+~/Applications/xenia/wine-stable_8.0.2-x86_64.AppImage
+~/Applications/xenia/xenia.exe
+~/Applications/xenia/xenia.pdb
+```
+
+Make sure that you have placed a valid game file into `~/ROMs/xbox360` and then go ahead and start ES-DE and run the game. You should see xenia starting up and you may hear some sound from the loaded game, but the screen will be black. Quit xenia and check inside the `~/Applications/xenia` directory where there should now be a file named `xenia.config.toml`
+
+You'll need to modify the following lines in this file:
+```
+gpu = "any"                                         # Graphics system. Use: [any, d3d12, vulkan, null]
+fullscreen = false                                  # Whether to launch the emulator in fullscreen.
+```
+
+To this:
+```
+gpu = "vulkan"                                      # Graphics system. Use: [any, d3d12, vulkan, null]
+fullscreen = true                                   # Whether to launch the emulator in fullscreen.
+```
+
+There are of course many more settings for xenia and Wine that may be adjusted for optimal performance and compatibility but that's beyond the scope of this guide.
+
+The canary release of xenia can also be used but it's not explicitly supported. To use it simply rename `xenia_canary.exe` to `xenia.exe` and it should work. Also be aware that its configuration file is named `xenia-canary.config.toml` instead of `xenia.config.toml`
+
+For a more complex setup like requiring different Wine or xenia versions per game or similar the xbox360 system on Linux also supports the _Shortcut or script_ alternative emulator entry. Using this you can create shell scripts with specific configuration or you could alternatively install Xbox 360 games via Lutris or similar and export .desktop shortcuts from there and place these inside the `~/ROMs/xbox360` directory. Just make sure to select the appropriate alternative emulator entry if doing this, or it will not work.
+
+### M.U.G.E.N Game Engine
 
 M.U.G.E.N games can be played using the Ikemen GO game engine which is being actively developed and is available on Linux, macOS and Windows. The original M.U.G.E.N engine which only exists for Windows has not had any updates in years and is therefore considered obsolete and won't be covered here. But it's still possible to use it on Windows via the same approach described for Ikemen GO so if you really want to use it, then you can.
 
@@ -1513,7 +1605,7 @@ Copy the following directories from the Ikemen GO directory to the game director
 
 Do NOT overwrite any files when copying over the `data` and `font` directories, or the game will not work correctly.
 
-#### Nintendo 64DD
+### Nintendo 64DD
 
 The Japan-only 64DD floppy disk addon for the Nintendo 64 is of limited use since there were almost no games released for it, but ES-DE still supports it. The setup below is applicable to both the regular n64 system and the specific n64dd system, with the exception of ares which can't launch 64DD games if they are placed in the regular n64 system.
 
@@ -1551,7 +1643,7 @@ Following this setup you will be able to launch games with the .ndd, .d64, .7z a
 
 For ares you need the `64DD_IPL.bin` file added to the Firmware configuration screen inside the emulator. Following this you should be able to launch games with the .ndd file extension or such files compressed into .zip archives.
 
-#### Nintendo Wii U
+### Nintendo Wii U
 
 The .wua archive format is the preferred method to use for Wii U games, but the method of using unpacked games is also documented here for reference.
 
@@ -1589,7 +1681,7 @@ C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\meta
 
 Starting ES-DE should now show the _Super Mario 3D World_ entry for the Wii U system. The actual game file with the extension .rpx is stored inside the _code_ directory, and does not normally match the name of the game. For this example it's named `RedCarpet.rpx`. When scraping the .rpx file you therefore need to refine the search and manually enter the game name. ES-DE fully supports scraping of directories, so you can scrape the _Super Mario 3D World_ folder as well.
 
-#### OpenBOR
+### OpenBOR
 
 The Open Beats of Rage (OpenBOR) game engine is available on Windows and Linux. Unfortunately the macOS ports seems to have been abandoned.
 
@@ -1663,7 +1755,7 @@ Starting ES-DE and launching the game should now work fine, but a further improv
 
 Doing this will make the game show up as if it was a single file inside ES-DE and it can be included in automatic collections, custom collections and so on.
 
-#### PICO-8
+### PICO-8
 
 PICO-8 Fantasy Console is a game engine developed by [Lexaloffle Games](https://www.lexaloffle.com/pico-8.php) that you need to buy a license to use. Doing so will provide you with download links to releases for Linux, macOS and Windows. Make sure to use the 64-bit release as the 32-bit release reportedly has some technical issues. On macOS and Windows the installation is straightforward, but on Linux you need to place PICO-8 in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details.
 
@@ -1686,7 +1778,7 @@ This is what the complete setup could look like:
 ~/ROMs/pico8/xzero-3.p8.png
 ```
 
-#### Ports and desktop applications
+### Ports and desktop applications
 
 _The emulators system is essentially a clone of the desktop system so it's not discussed specifically in this section._
 
@@ -1760,7 +1852,7 @@ You don't need to set execution permissions for these scripts, ES-DE will run th
 
 On Linux it's also possible to launch AppImages directly without having to call them from a shell script. For emulators it's generally required to keep their AppImages in the `~/Applications/` directory and symlink them into the ROMs directory tree, but for other applications and games it may be fine to store them directly in the ROMs tree. In order for this to work you need to use one of the alternative emulator entries that enable AppImages to be launched. It will not work if attempting to use the emulator entries that run scripts and shortcuts. You can set the alternative emulator per game/file from the metadata editor.
 
-#### ScummVM
+### ScummVM
 
 ScummVM overlaps a bit with DOS when it comes to the logic of setting it up. It's recommended to keep games in separate folders, so if you have a game distributed as a ZIP file, uncompress it to its own directory.
 
@@ -1791,7 +1883,7 @@ A final alternative is to use _folder links_ to keep the directory structure int
 
 If you're using the Flatpak release of ScummVM on Linux then you need to manually grant the application the necessary permissions using Flatseal or similar, otherwise you won't be able to launch any games.
 
-#### Sony PlayStation 3
+### Sony PlayStation 3
 
 There are two ways to add PS3 games to ES-DE; by using shortcuts or by adding game directories directly to the ~/ROMs/ps3 folder and interpreting these as files. Shortcuts is generally the way to go as it's easier to setup and for HDD/pkg games it's the only way to make it work unless you manually create symlinks to the internal RPCS3 directory structure. So another benefit with shortcuts is consistency as both HDD/pkg games and disc-based games will be setup in the same manner. This also means that the same RPCS3 emulator entry can be used to launch every game. The drawback to using shortcuts is that they're not portable, if you change the location of RPCS3 or your games, you need to manually update the shortcuts as well.
 
@@ -1838,7 +1930,7 @@ It's possible to create a symlink instead, and in this case only the symlink nee
 
 When using this setup method you need to set the alternative emulator to _RPCS3 Directory (Standalone)_ or game launching will not work.
 
-#### Sony PlayStation Vita
+### Sony PlayStation Vita
 
 Support for the PS Vita is currently experimental due to the early stages of development for the Vita3K emulator. While there's a growing list of games that are playable, integration with ES-DE is a bit rough at the moment. Hopefully this will improve as Vita3K evolves.
 
@@ -1857,7 +1949,7 @@ Then add the game Title ID to this file. This ID can be found inside the Vita3K 
 
 Game launching and scraping should now work fine in ES-DE.
 
-#### Steam
+### Steam
 
 These games can easily be added to ES-DE using shortcuts, just be aware that this requires that the games have been installed locally.
 
@@ -1890,7 +1982,7 @@ On macOS the shortcuts come with the .app extension and are actually directories
 ~/ROMs/steam/Undertale.app/
 ```
 
-#### Tandy Color Computer
+### Tandy Color Computer
 
 This computer (which is confusingly also known as _TRS-80 Color Computer_ even though it's a completely different machine than the _TRS-80_) is emulated using the [XRoar](http://www.6809.org.uk/xroar) emulator.
 
@@ -1904,7 +1996,7 @@ There is also excellent emulator documentation available at the [XRoar website](
 
 Two emulator entries are available for this system, _XRoar CoCo 2 NTSC (Standalone)_ and _XRoar CoCo 2 PAL (Standalone)_ which should hopefully be self-explanatory.
 
-#### Tandy TRS-80
+### Tandy TRS-80
 
 Tandy Corporation made the somewhat dumb decision of naming several unrelated computers as TRS-80 which has caused decades of confusion. The _Tandy TRS-80_ system in ES-DE emulates the original black-and-white TRS-80 Model I. If you want to emulate the TRS-80 Color Computer then you'll want to use the _Tandy Color Computer_ system instead.
 
@@ -1939,7 +2031,7 @@ Here's what a complete setup could look like:
 ~/ROMs/trs-80/zork2.dsk
 ```
 
-#### Tangerine Computer Systems Oric
+### Tangerine Computer Systems Oric
 
 These games are executed using the Oricutron emulator which is readily available on Windows but quite problematic to get hold on for Unix and macOS.
 
@@ -1962,7 +2054,7 @@ cp Oricutron ..
 
 Once the emulator is up and running there is not really much else to consider, simply drop the games into the ~/ROMs/oric directory and launch them.
 
-#### Texas Instruments TI-99
+### Texas Instruments TI-99
 
 The TI-99 is emulated via MAME, and only the standalone release of this emulator is supported. Unfortunately it seems as if the Homebrew build on macOS is broken as no TI-99 games can be launched. As such this system is unsupported on macOS, but the configuration entries still exist in the bundled es_find_rules.xml and es_systems.xml files so if you manage to get the emulator to run, ES-DE should work with these games.
 
@@ -3180,7 +3272,7 @@ On Windows the following emulators provide a way to inform ES-DE where they have
 Default emulator/Alternative emulators columns: \
 **[U]**: Unix, **[M]**: macOS, **[W]**: Windows
 
-All emulators are RetroArch cores unless marked as **(Standalone)**
+All emulators are RetroArch cores unless marked as **(Standalone)** or **(Wine)**
 
 The **@** symbol indicates that the emulator is _deprecated_ and will be removed in a future ES-DE release.
 
@@ -3204,8 +3296,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)** | Yes          | Single archive or ROM file |
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         |                                   | Yes          | Single archive or ROM file |
 | atari800              | Atari 800                                      | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
-| atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | BigPEmu **(Standalone**) [W],<br>MAME **(Standalone)** | Yes for MAME | Single archive or ROM file |
-| atarijaguarcd         | Atari Jaguar CD                                | BigPEmu **(Standalone**) [W]      |                                   | No           | Single .cdi file                     |
+| atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | BigPEmu **(Standalone**) [W],<br>BigPEmu **(Wine)** [U],<br>MAME **(Standalone)** | Yes for MAME | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
+| atarijaguarcd         | Atari Jaguar CD                                | BigPEmu **(Standalone**) [W],<br>BigPEmu **(Wine)** [U] |                                   | No           | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Mednafen **(Standalone)** |              |                                      |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            | Hatari **(Standalone)**           | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
@@ -3233,19 +3325,19 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | emulators             | Emulators                                      | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | epic                  | Epic Games Store                               | Epic Games Store **(Standalone)** |                       | No           | Shortcut (.desktop/.app/.lnk) file |
-| famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)** | No           | Single archive or ROM file |
+| famicom               | Nintendo Family Computer                       | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)** | No           | Single archive or ROM file |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
-| fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
+| fds                   | Nintendo Famicom Disk System                   | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
 | flash                 | Adobe Flash                                    | Ruffle **(Standalone)**           | Lightspark **(Standalone)** [U],<br>ArcadeFlashWeb **(Standalone)** [W] | No        | Single .swf file       |
 | fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW]     |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | fpinball              | Future Pinball                                 | Future Pinball **(Standalone)** [W] |                                   | No           |                                      |
 | gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
 | gamecom               | Tiger Electronics Game.com                     | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
-| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>VBA Next,<br>gpSP,<br>ares **(Standalone)** | Yes for ares      | Single archive or ROM file |
-| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW],<br>Triforce **(Standalone)** [UW] | No           | Disc image file for single-disc games, .m3u playlist for multi-disc games |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | gmaster               | Hartung Game Master                            | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file |
@@ -3287,7 +3379,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW],<br>MAME **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
-| nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)** | No           | Single archive or ROM file |
+| nes                   | Nintendo Entertainment System                  | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)** | No           | Single archive or ROM file |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | odyssey2              | Magnavox Odyssey2                              | O2EM                              |                                   |              |                                      |
@@ -3297,8 +3389,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** | No           | See the specific _DOS / PC_ section elsewhere in this guide |
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   |              |                                      |
 | pc98                  | NEC PC-9800 Series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
-| pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
-| pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | Yes          |                                      |
+| pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      | Mednafen **(Standalone)**         | Yes          |                                      |
 | pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | PICO-8 Splore **(Standalone)**    | No           | See the specific _PICO-8_ section elsewhere in this guide |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
@@ -3312,7 +3404,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pv1000                | Casio PV-1000                                  | MAME **(Standalone)**             |                                   | No           | Single archive or ROM file |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero],<br>vitaQuake 3 [UW],<br>_Shortcut or script_ | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | SimCoupé **(Standalone)**         |                                   | No           | Single archive or ROM file |
-| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Mesen-S,<br>ares **(Standalone)** |              |                                      |
+| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | scummvm               | ScummVM Game Engine                            | ScummVM                           | ScummVM **(Standalone)**          | No           | See the specific _ScummVM_ section elsewhere in this guide |
@@ -3321,11 +3413,11 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         | ares **(Standalone)**             | No           | Single archive or ROM file |
 | sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         | ares **(Standalone)**             | No           | Single archive or ROM file |
 | segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>ares **(Standalone)** | Yes          |                                      |
-| sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>blueMSX,<br>ares **(Standalone)** | No           |                                      |
-| sgb                   | Nintendo Super Game Boy                        | Mesen-S                           | SameBoy,<br>mGBA,<br>mGBA **(Standalone)**    |              |  Single archive or ROM file |
-| snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
-| snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| sgb                   | Nintendo Super Game Boy                        | Mesen-S                           | Mesen **(Standalone)** [UW],<br>SameBoy,<br>mGBA,<br>mGBA **(Standalone)**    |              |  Single archive or ROM file |
+| snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | solarus               | Solarus Game Engine                            | Solarus **(Standalone)**          |                                   | No           | Single .solarus game file |
 | spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
 | steam                 | Valve Steam                                    | Steam **(Standalone)**            |                                   | No           | See the specific _Steam_ section elsewhere in this guide |
@@ -3336,8 +3428,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | switch                | Nintendo Switch                                | Yuzu **(Standalone)** [UW],<br>Ryujinx **(Standalone)** [M] | Ryujinx **(Standalone)** [UW]    | Yes          |                                      |
 | symbian               | Symbian                                        | _Placeholder_                     |                                   |              |                                      |
 | tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
-| tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
-| tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | Yes          |                                      |
+| tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | Yes          |                                      |
 | ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)**             |                                   | Yes          | See the specific _Texas Instruments TI-99_ section elsewhere in this guide |
 | tic80                 | TIC-80 Game Engine                             | TIC-80                            |                                   | No           | Single .tic file      |
 | to8                   | Thomson TO8                                    | Theodore                          |                                   |              |                                      |
@@ -3347,7 +3439,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vic20                 | Commodore VIC-20                               | VICE xvic                         | VICE xvic **(Standalone)**        | No           | Single archive or tape, cartridge or diskette image file |
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           |                                      |
-| vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)** [W] |                                   | No           |                                      |
+| vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)** [UW] |                                   | No           | In separate folder interpreted as a file |
 | vsmile                | VTech V.Smile                                  | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW] | No           |                                      |
@@ -3358,7 +3450,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file |
 | x68000                | Sharp X68000                                   | PX68k                             | MAME **(Standalone)**             | Yes          |                                      |
 | xbox                  | Microsoft Xbox                                 | xemu **(Standalone)**             | Cxbx-Reloaded **(Standalone)** [W] | Yes for xemu | Single .iso file for xemu or unpacked .iso directory for Cxbx-Reloaded |
-| xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W]        |                                   | No           |                                      |
+| xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W],<br>xenia **(Wine)** [U] | _Shortcut or script_ [U]          | No           | See the specific _Microsoft Xbox 360_ section elsewhere in this guide |
 | zmachine              | Infocom Z-machine                              | Gargoyle **(Standalone)**         |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
 | zxnext                | Sinclair ZX Spectrum Next                      | #CSpect **(Standalone)** [UW],<br>ZEsarUX **(Standalone)** [M] | ZEsarUX **(Standalone)** [UW] | No           | In separate folder interpreted as a file |

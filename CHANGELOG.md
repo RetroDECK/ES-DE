@@ -15,6 +15,7 @@
 * Added support for downloading the Windows and macOS packages via the application updater (manual installation still required)
 * Added support for pasting text into the application (when a text input field is focused)
 * Added support for using most characters (including multi-byte Unicode characters) in custom collection names
+* Added key repeat support to the media viewer
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
 * Added an entry to the Utilities menu for creating/updating the game system directories
@@ -23,11 +24,16 @@
 * Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
 * Renamed the setting "Only show ROMs from gamelist.xml files" to "Only show games from gamelist.xml files
 * Added support for deleting installed themes from the theme downloader interface
+* Added Mesen standalone as an alternative emulator for 14 systems on Linux and Windows
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
-* Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
+* (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine
+* (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine
+* (Linux) Added BigPEmu Wine as an alternative emulator for the atarijaguar system
+* (Linux) Added support for the Visual Pinball (vpinball) game system
 * (Linux) Added support for using the RetroArch AppImage release in portable mode (added corepath find rules)
 * (Linux) Added support for the AppImage release of Snes9x
 * (Linux) Added the PCSX2 Flatpak release to the non-legacy PCSX2 find rule configuration
+* Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
 * Changed the sort types "filename, ascending" and "filename, descending" to "name, ascending" and "name, descending"
 * Changed the "no games" dialog to no longer save the ROM directory to es_settings.xml if its value hasn't changed
 * When editing custom collections with really long names, the "Y" helpsystem text now gets abbreviated
@@ -76,6 +82,7 @@
 
 * The video player would not play the last couple of frames for any videos
 * Starting the media viewer did not pause fallback game videos (defined using the "default" video property)
+* The %STARTDIR% variable could not be combined with running ES-DE in the background while launching games on Linux and macOS
 * Directories interpreted as files entries could not be removed from custom collections
 * Duplicate ScreenScraper game entries could show up in the interactive scraper if multiple platforms were defined for the system
 * ScreenScraper API calls were slightly malformed for systems where multiple platforms were defined
@@ -85,6 +92,7 @@
 * (Windows) The media viewer could crash if attempting to display corrupt or invalid PDF game manuals
 * (Windows) Wide string conversions were not done correctly which caused issues when filenames contained 4-byte Unicode characters
 * (Windows) Attempting to capitalize multi-byte Unicode strings crashed the application if built using the MSVC compiler
+* (Linux) Flatpak systempath rules were missing for bsnes, Gargoyle, Hatari, Nestopia UE, openMSX, PCSX2, Play! and Snes9x
 * The camera offset in ComponentList was not correctly calculated when reaching the bottom of a list
 * The textlist properties selectedBackgroundColor and selectedSecondaryBackgroundColor were not offset by selectorVerticalOffset
 * SDL_StartTextInput() was sometimes set when not actually inputting any text
