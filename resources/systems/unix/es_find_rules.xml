@@ -80,6 +80,12 @@
             <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
         </rule>
     </emulator>
+    <emulator name="BIGPEMU">
+        <!-- Atari Jaguar emulator BigPEmu -->
+        <rule type="staticpath">
+            <entry>~/Applications/BigPEmu/wine*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="BLASTEM">
         <!-- Sega Mega Drive/Genesis emulator BlastEm -->
         <rule type="systempath">
