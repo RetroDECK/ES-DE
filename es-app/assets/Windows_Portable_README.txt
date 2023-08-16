@@ -75,6 +75,7 @@ Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
 Emulators\mednafen\mednafen.exe
 Emulators\melonDS\melonDS.exe
+Emulators\Mesen\Mesen.exe
 Emulators\mGBA\mGBA.exe
 Emulators\mupen64plus\mupen64plus-ui-console.exe
 Emulators\openMSX\openmsx.exe

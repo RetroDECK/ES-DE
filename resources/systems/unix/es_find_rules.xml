@@ -402,6 +402,18 @@
             <entry>~/.local/share/flatpak/exports/bin/net.kuribo64.melonDS</entry>
         </rule>
     </emulator>
+    <emulator name="MESEN">
+        <!-- Multi-system emulator Mesen -->
+        <rule type="systempath">
+            <entry>mesen2</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Mesen*.AppImage</entry>
+            <entry>~/.local/share/applications/Mesen*.AppImage</entry>
+            <entry>~/.local/bin/Mesen*.AppImage</entry>
+            <entry>~/bin/Mesen*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="MGBA">
         <!-- Nintendo Game Boy Advance emulator mGBA -->
         <rule type="systempath">

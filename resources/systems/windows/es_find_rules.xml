@@ -378,6 +378,16 @@
             <entry>%ESPATH%\..\Emulators\melonDS\melonDS.exe</entry>
         </rule>
     </emulator>
+    <emulator name="MESEN">
+        <!-- Multi-system emulator Mesen -->
+        <rule type="systempath">
+            <entry>Mesen.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Mesen\Mesen.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Mesen\Mesen.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="MGBA">
         <!-- Nintendo Game Boy Advance emulator mGBA -->
         <rule type="winregistryvalue">
