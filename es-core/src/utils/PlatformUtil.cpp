@@ -86,6 +86,8 @@ namespace Utils
             // instance no output from the command is captured and no real error handling is
             // implemented. It should therefore only be used when absolutely necessary.
             if (runInBackground) {
+                if (startDirectory != "")
+                    command = "cd " + startDirectory + " && " + command;
                 LOG(LogDebug)
                     << "Platform::launchGameUnix(): Launching game while keeping ES-DE running "
                        "in the background, no command output will be written to the log file";
