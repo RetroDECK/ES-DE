@@ -142,7 +142,7 @@ void Settings::setDefaults()
     mStringMap["ScraperLanguage"] = {"en", "en"};
     mIntMap["ScraperRetryOnErrorCount"] = {3, 3};
     mIntMap["ScraperRetryOnErrorTimer"] = {3, 3};
-    mIntMap["ScraperSearchFileHashMaxSize"] = {128, 128};
+    mIntMap["ScraperSearchFileHashMaxSize"] = {192, 192};
     mBoolMap["ScraperOverwriteData"] = {true, true};
     mBoolMap["ScraperHaltOnInvalidMedia"] = {true, true};
     mBoolMap["ScraperSearchFileHash"] = {true, true};
