@@ -1957,8 +1957,9 @@
         <name>xbox360</name>
         <fullname>Microsoft Xbox 360</fullname>
         <path>%ROMPATH%/xbox360</path>
-        <extension>. .iso .ISO .xex .XEX</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>. .desktop .iso .ISO .sh .xex .XEX</extension>
+        <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% xenia.exe %ROM%</command>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>xbox360</platform>
         <theme>xbox360</theme>
     </system>

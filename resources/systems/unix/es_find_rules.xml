@@ -866,6 +866,12 @@
             <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
         </rule>
     </emulator>
+    <emulator name="XENIA">
+        <!-- Microsoft Xbox 360 emulator xenia -->
+        <rule type="staticpath">
+            <entry>~/Applications/xenia/wine*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="XROAR">
         <!-- Dragon and Tandy 8-bit computer emulator XRoar -->
         <rule type="systempath">
