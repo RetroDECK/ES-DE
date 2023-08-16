@@ -37,6 +37,7 @@ PDFViewer::PDFViewer()
     , mZoom {1.0f}
     , mPanAmount {0.0f}
     , mPanOffset {0.0f, 0.0f, 0.0f}
+    , mConversionTime {0}
     , mKeyRepeatLeftRight {0}
     , mKeyRepeatUpDown {0}
     , mKeyRepeatZoom {0}
@@ -91,6 +92,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
     mZoom = 1.0f;
     mPanAmount = 0.0f;
     mPanOffset = {0.0f, 0.0f, 0.0f};
+    mConversionTime = 0;
     mKeyRepeatLeftRight = 0;
     mKeyRepeatUpDown = 0;
     mKeyRepeatZoom = 0;
@@ -340,6 +342,8 @@ bool PDFViewer::getDocumentInfo()
 void PDFViewer::convertPage(int pageNum)
 {
     assert(pageNum <= static_cast<int>(mPages.size()));
+    const auto conversionStartTime {std::chrono::system_clock::now()};
+    mConversionTime = 0;
 
     if (mPages[pageNum].imageData.empty()) {
 #if defined(_WIN64)
@@ -505,6 +509,9 @@ void PDFViewer::convertPage(int pageNum)
 
     mPanAmount = std::min(mRenderer->getScreenWidth(), mRenderer->getScreenHeight()) * 0.1f;
 
+    mConversionTime = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(
+                                           std::chrono::system_clock::now() - conversionStartTime)
+                                           .count());
 #if (DEBUG_PDF_CONVERSION)
     LOG(LogDebug) << "ABGR32 data stream size: " << mPages[pageNum].imageData.size();
 #endif
@@ -614,10 +621,8 @@ void PDFViewer::input(InputConfig* config, Input input)
 void PDFViewer::update(int deltaTime)
 {
     if (mKeyRepeatLeftRight != 0) {
-        mKeyRepeatTimer += deltaTime;
-        // Limit the accumulated backlog of keypresses if the computer can't keep up.
-        if (mKeyRepeatTimer > KEY_REPEAT_SPEED * 2)
-            mKeyRepeatTimer = KEY_REPEAT_SPEED * 2;
+        // Limit the accumulated time if the computer can't keep up.
+        mKeyRepeatTimer += (deltaTime < KEY_REPEAT_SPEED ? deltaTime : deltaTime - mConversionTime);
         while (mKeyRepeatTimer >= (mZoom > 1.0f ? KEY_REPEAT_SPEED_ZOOMED : KEY_REPEAT_SPEED)) {
             mKeyRepeatTimer -= (mZoom > 1.0f ? KEY_REPEAT_SPEED_ZOOMED : KEY_REPEAT_SPEED);
             if (mKeyRepeatLeftRight == 1)
@@ -628,8 +633,6 @@ void PDFViewer::update(int deltaTime)
     }
     if (mKeyRepeatUpDown != 0) {
         mKeyRepeatTimer += deltaTime;
-        if (mKeyRepeatTimer > KEY_REPEAT_SPEED * 2)
-            mKeyRepeatTimer = KEY_REPEAT_SPEED * 2;
         while (mKeyRepeatTimer >= (mZoom > 1.0f ? KEY_REPEAT_SPEED_ZOOMED : KEY_REPEAT_SPEED)) {
             mKeyRepeatTimer -= (mZoom > 1.0f ? KEY_REPEAT_SPEED_ZOOMED : KEY_REPEAT_SPEED);
             if (mKeyRepeatUpDown == 1)

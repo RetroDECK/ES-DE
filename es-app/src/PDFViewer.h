@@ -70,6 +70,7 @@ private:
     float mPanAmount;
     glm::vec3 mPanOffset;
 
+    int mConversionTime;
     int mKeyRepeatLeftRight;
     int mKeyRepeatUpDown;
     int mKeyRepeatZoom;
