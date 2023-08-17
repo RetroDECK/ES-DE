@@ -80,7 +80,7 @@
             <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
         </rule>
     </emulator>
-    <emulator name="BIGPEMU">
+    <emulator name="BIGPEMU-WINE">
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="staticpath">
             <entry>~/Applications/BigPEmu/wine*.AppImage</entry>
@@ -866,7 +866,7 @@
             <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
         </rule>
     </emulator>
-    <emulator name="XENIA">
+    <emulator name="XENIA-WINE">
         <!-- Microsoft Xbox 360 emulator xenia -->
         <rule type="staticpath">
             <entry>~/Applications/xenia/wine*.AppImage</entry>
