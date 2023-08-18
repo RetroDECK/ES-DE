@@ -74,6 +74,7 @@ public:
     void setSaturation(GLfloat saturation);
     void setDimming(GLfloat dimming);
     void setReflectionsFalloff(GLfloat falloff);
+    void setBlurStrength(GLfloat blurStrength);
     void setFlags(GLuint flags);
     // Sets the shader program to use the loaded shaders.
     void activateShaders();
@@ -101,6 +102,7 @@ private:
     GLint mShaderSaturation;
     GLint mShaderDimming;
     GLint mShaderReflectionsFalloff;
+    GLint mBlurStrength;
     GLint mShaderFlags;
 };
 

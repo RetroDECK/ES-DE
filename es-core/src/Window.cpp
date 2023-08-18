@@ -513,23 +513,10 @@ void Window::render()
                 // degrees.
                 if (Settings::getInstance()->getBool("MenuBlurBackground") ||
                     mRenderer->getScreenRotation() == 90 || mRenderer->getScreenRotation() == 270) {
-                    const float resolutionModifier {mRenderer->getScreenResolutionModifier()};
-                    // clang-format off
-                    if (resolutionModifier < 1)
-                        backgroundParameters.blurPasses = 2;        // Below 1080
-                    else if (resolutionModifier >= 4)
-                        backgroundParameters.blurPasses = 12;       // 8K
-                    else if (resolutionModifier >= 2.9)
-                        backgroundParameters.blurPasses = 10;       // 6K
-                    else if (resolutionModifier >= 2.6)
-                        backgroundParameters.blurPasses = 8;        // 5K
-                    else if (resolutionModifier >= 2)
-                        backgroundParameters.blurPasses = 5;        // 4K
-                    else if (resolutionModifier >= 1.3)
-                        backgroundParameters.blurPasses = 3;        // 1440
-                    else if (resolutionModifier >= 1)
-                        backgroundParameters.blurPasses = 2;        // 1080
-                    // clang-format on
+
+                    // We run two passes to make the blur smoother.
+                    backgroundParameters.blurPasses = 2;
+                    backgroundParameters.blurStrength = 1.35f;
 
                     // Also dim the background slightly.
                     if (Settings::getInstance()->getString("MenuColorScheme") == "light")

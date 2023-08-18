@@ -67,6 +67,7 @@ public:
         float saturation;
         float dimming;
         float reflectionsFalloff;
+        float blurStrength;
         unsigned int shaders;
         unsigned int shaderFlags;
 
@@ -76,6 +77,7 @@ public:
             , saturation {1.0f}
             , dimming {1.0f}
             , reflectionsFalloff {0.0f}
+            , blurStrength {0.0f}
             , shaders {0}
             , shaderFlags {0}
         {
@@ -94,6 +96,7 @@ public:
             , saturation {1.0f}
             , dimming {1.0f}
             , reflectionsFalloff {0.0f}
+            , blurStrength {0.0f}
             , shaders {0}
             , shaderFlags {0}
         {
@@ -104,6 +107,7 @@ public:
         float opacity;
         float saturation;
         float dimming;
+        float blurStrength;
         unsigned int blurPasses;
         unsigned int shaders;
 
@@ -111,6 +115,7 @@ public:
             : opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}
+            , blurStrength {0.0f}
             , blurPasses {1}
             , shaders {0}
         {

@@ -1,13 +1,10 @@
+//  SPDX-License-Identifier: MIT
 //
-//  Implementation based on the article "Efficient Gaussian blur with linear sampling"
-//  http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/
-//  A version for MasterEffect Reborn, a standalone version, and a custom shader version for SweetFX
-//  can be found at http://reshade.me/forum/shader-presentation/27-gaussian-blur-bloom-unsharpmask
+//  EmulationStation Desktop Edition
+//  blur_vertical.glsl
 //
-//  Taken from the RetroArch project and modified for ES-DE.
+//  Vertical gaussian blur.
 //
-
-#define VW 1.00
 
 // Vertex section of code:
 #if defined(VERTEX)
@@ -31,8 +28,8 @@ precision mediump float;
 #endif
 
 uniform uint shaderFlags;
-uniform vec2 textureSize;
 uniform sampler2D textureSampler;
+uniform float blurStrength;
 in vec2 texCoord;
 out vec4 FragColor;
 
@@ -45,32 +42,48 @@ out vec4 FragColor;
 
 void main()
 {
-    vec4 SourceSize;
-    vec2 PIXEL_SIZE;
+    vec4 color = vec4(0.0);
+    float hstep = 0.0f;
+    float vstep = 1.0f;
+    vec2 tc;
 
     if (0x0u != (shaderFlags & 0x10u)) {
-        SourceSize = vec4(textureSize.xy, 1.0 / textureSize.yx);
-        PIXEL_SIZE = vec2(SourceSize.w, SourceSize.z);
+        // Screen rotated 90 or 270 degrees.
+        tc = texCoord.yx;
     }
     else {
-        SourceSize = vec4(textureSize.xy, 1.0 / textureSize.xy);
-        PIXEL_SIZE = vec2(SourceSize.z, SourceSize.w);
+        tc = texCoord.xy;
     }
 
-    float sampleOffsets[5] = float[5](0.0, 1.4347826, 3.3478260, 5.2608695, 7.1739130);
-    float sampleWeights[5] =
-        float[5](0.16818994, 0.27276957, 0.11690125, 0.024067905, 0.0021112196);
+    // 9-tap filter.
+    color += texture(textureSampler,
+                     vec2(tc.x - 4.0 * blurStrength * hstep, tc.y - 4.0 * blurStrength * vstep)) *
+             0.0162162162;
+    color += texture(textureSampler,
+                     vec2(tc.x - 3.0 * blurStrength * hstep, tc.y - 3.0 * blurStrength * vstep)) *
+             0.0540540541;
+    color += texture(textureSampler,
+                     vec2(tc.x - 2.0 * blurStrength * hstep, tc.y - 2.0 * blurStrength * vstep)) *
+             0.1216216216;
+    color += texture(textureSampler,
+                     vec2(tc.x - 1.0 * blurStrength * hstep, tc.y - 1.0 * blurStrength * vstep)) *
+             0.1945945946;
 
-    vec4 color = texture(textureSampler, texCoord) * sampleWeights[0];
-    for (int i = 1; i < 5; i++) {
-        color +=
-            texture(textureSampler, texCoord + vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) *
-            sampleWeights[i];
-        color +=
-            texture(textureSampler, texCoord - vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) *
-            sampleWeights[i];
-    }
+    color += texture(textureSampler, vec2(tc.x, tc.y)) * 0.2270270270;
 
-    FragColor = vec4(color);
+    color += texture(textureSampler,
+                     vec2(tc.x + 1.0 * blurStrength * hstep, tc.y + 1.0 * blurStrength * vstep)) *
+             0.1945945946;
+    color += texture(textureSampler,
+                     vec2(tc.x + 2.0 * blurStrength * hstep, tc.y + 2.0 * blurStrength * vstep)) *
+             0.1216216216;
+    color += texture(textureSampler,
+                     vec2(tc.x + 3.0 * blurStrength * hstep, tc.y + 3.0 * blurStrength * vstep)) *
+             0.0540540541;
+    color += texture(textureSampler,
+                     vec2(tc.x + 4.0 * blurStrength * hstep, tc.y + 4.0 * blurStrength * vstep)) *
+             0.0162162162;
+
+    FragColor = vec4(color.rgb, 1.0);
 }
 #endif

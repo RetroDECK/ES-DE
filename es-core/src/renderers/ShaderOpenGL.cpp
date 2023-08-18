@@ -24,6 +24,7 @@ ShaderOpenGL::ShaderOpenGL()
     , mShaderSaturation {0}
     , mShaderDimming {0}
     , mShaderReflectionsFalloff {0}
+    , mBlurStrength {0}
     , mShaderFlags {0}
 {
 }
@@ -128,6 +129,7 @@ void ShaderOpenGL::getVariableLocations(GLuint programID)
     mShaderSaturation = glGetUniformLocation(mProgramID, "saturation");
     mShaderDimming = glGetUniformLocation(mProgramID, "dimming");
     mShaderReflectionsFalloff = glGetUniformLocation(mProgramID, "reflectionsFalloff");
+    mBlurStrength = glGetUniformLocation(mProgramID, "blurStrength");
     mShaderFlags = glGetUniformLocation(mProgramID, "shaderFlags");
 }
 
@@ -196,6 +198,12 @@ void ShaderOpenGL::setReflectionsFalloff(GLfloat falloff)
 {
     if (mShaderReflectionsFalloff != -1)
         GL_CHECK_ERROR(glUniform1f(mShaderReflectionsFalloff, falloff));
+}
+
+void ShaderOpenGL::setBlurStrength(GLfloat blurStrength)
+{
+    if (mBlurStrength != -1)
+        GL_CHECK_ERROR(glUniform1f(mBlurStrength, blurStrength));
 }
 
 void ShaderOpenGL::setFlags(GLuint flags)

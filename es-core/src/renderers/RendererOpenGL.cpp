@@ -294,9 +294,9 @@ bool RendererOpenGL::createContext()
         textureHeight = static_cast<unsigned int>(getScreenWidth());
     }
 
-    mPostProcTexture1 = createTexture(TextureType::BGRA, false, false, false, false, textureWidth,
+    mPostProcTexture1 = createTexture(TextureType::BGRA, false, true, false, false, textureWidth,
                                       textureHeight, nullptr);
-    mPostProcTexture2 = createTexture(TextureType::BGRA, false, false, false, false, textureWidth,
+    mPostProcTexture2 = createTexture(TextureType::BGRA, false, true, false, false, textureWidth,
                                       textureHeight, nullptr);
 
     // Attach textures to the shader framebuffers.
@@ -522,7 +522,8 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
                 mBlurHorizontalShader->setAttribPointers();
             GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
                                         GL_DYNAMIC_DRAW));
-            mBlurHorizontalShader->setTextureSize({width, height});
+            mBlurHorizontalShader->setBlurStrength((vertices->blurStrength / getScreenWidth()) *
+                                                   getScreenResolutionModifier());
             mBlurHorizontalShader->setFlags(vertices->shaderFlags);
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
             mLastShader = mBlurHorizontalShader;
@@ -540,7 +541,8 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
                 mBlurVerticalShader->setAttribPointers();
             GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
                                         GL_DYNAMIC_DRAW));
-            mBlurVerticalShader->setTextureSize({width, height});
+            mBlurVerticalShader->setBlurStrength((vertices->blurStrength / getScreenHeight()) *
+                                                 getScreenResolutionModifier());
             mBlurVerticalShader->setFlags(vertices->shaderFlags);
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
             mLastShader = mBlurVerticalShader;
@@ -621,6 +623,7 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     vertices->opacity = parameters.opacity;
     vertices->saturation = parameters.saturation;
     vertices->dimming = parameters.dimming;
+    vertices->blurStrength = parameters.blurStrength;
     vertices->shaderFlags = ShaderFlags::POST_PROCESSING | ShaderFlags::PREMULTIPLIED;
 
     if (screenRotation == 90 || screenRotation == 270)

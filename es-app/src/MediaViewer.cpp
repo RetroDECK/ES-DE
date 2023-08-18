@@ -199,25 +199,15 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
         if (Settings::getInstance()->getBool("MediaViewerVideoScanlines"))
             shaders = Renderer::Shader::SCANLINES;
         if (Settings::getInstance()->getBool("MediaViewerVideoBlur")) {
-            shaders |= Renderer::Shader::BLUR_HORIZONTAL;
-            const float resolutionModifier {mRenderer->getScreenResolutionModifier()};
-            // clang-format off
-            if (resolutionModifier < 1)
-                videoParameters.blurPasses = 2;        // Below 1080
-            else if (resolutionModifier >= 4)
-                videoParameters.blurPasses = 12;       // 8K
-            else if (resolutionModifier >= 2.9)
-                videoParameters.blurPasses = 10;       // 6K
-            else if (resolutionModifier >= 2.6)
-                videoParameters.blurPasses = 8;        // 5K
-            else if (resolutionModifier >= 2)
-                videoParameters.blurPasses = 5;        // 4K
-            else if (resolutionModifier >= 1.3)
-                videoParameters.blurPasses = 3;        // 1440
-            else if (resolutionModifier >= 1)
-                videoParameters.blurPasses = 2;        // 1080
-            // clang-format on
+            if (mRenderer->getScreenRotation() == 90 || mRenderer->getScreenRotation() == 270)
+                shaders |= Renderer::Shader::BLUR_VERTICAL;
+            else
+                shaders |= Renderer::Shader::BLUR_HORIZONTAL;
         }
+
+        // We run two passes to make the blur smoother.
+        videoParameters.blurPasses = 2;
+        videoParameters.blurStrength = 1.35f;
 
         if (shaders != 0)
             mRenderer->shaderPostprocessing(shaders, videoParameters);
