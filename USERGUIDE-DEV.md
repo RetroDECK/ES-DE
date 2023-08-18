@@ -968,7 +968,7 @@ Note that _Kid Icarus_ will only show up once since there is a name collision pr
 
 ## Platform-specific setup
 
-Not all systems are as simple to setup as what is described in the previous section, and in some cases there may be multiple ways to perform the configuration. Specifics for such systems will be covered here. Consider this a work in progress as there are many platforms supported by ES-DE.
+Not all systems are as simple to setup as what was described in the previous section, and in some cases there may be multiple ways to perform the configuration. Specifics for such platforms are covered below.
 
 ### Apple II
 
@@ -1483,13 +1483,41 @@ As an alternative you can add Lutris games to the Ports system using the procedu
 
 ### Microsoft Xbox 360
 
-_This section currently only covers the xenia setup on Linux._
+This system is emulated using [xenia](https://xenia.jp/), and although there are a lot of topics to consider for this emulator such as how to handle multi-disc games, DLCs etc. this section will only cover the basics on how to run single-disc ISO images and XBLA games. For the remaining details there are many resources available online.
 
-**Note that xenia does not seem to run on the Steam Deck using the approach described below.**
+**General**
 
-The only Xbox 360 emulator that can run commercial games is [xenia](https://xenia.jp/) and while it's officially only available for the Windows operating system it's still possible to run it on Linux.
+Single-disc ISO images can simply be placed in the root of the `~/ROMs/xbox360` system directory, like the following:
+```
+~/ROMs/xbox360/Gears of War.iso
+~/ROMs/xbox360/Gears of War 3.iso
+```
 
-To accomplish this you need to run it via the Wine translation layer. More specifically you need the AppImage release of Wine which can be downloaded from here:\
+Xbox Live Arcade (XBLA) games work quite differently, these are generally shipped in directory structures with quite cryptic filenames that are also extensionless. Here's an example:
+```
+Castle Crashers/
+Castle Crashers/584108B7/
+Castle Crashers/584108B7/000D0000/
+Castle Crashers/584108B7/000D0000/F9432A7FE407A3C196C95D0FFD4A540937FD4EEC58
+```
+
+For this example it's F9432A7FE407A3C196C95D0FFD4A540937FD4EEC58 that is the actual game. It's recommended to move this file to the root of the `~/ROMs/xbox360` system directory and to rename it to the game name followed by _(XBLA)_ to make it clear that it's an Xbox Live Arcade game. After doing this our example directory structure would look like the following:
+```
+~/ROMs/xbox360/Castle Crashers (XBLA)
+~/ROMs/xbox360/Gears of War.iso
+~/ROMs/xbox360/Gears of War 3.iso
+```
+
+Note again that the Castle Crashers game does not have a file extension, this is correct and the game can still be launched from inside ES-DE.
+
+There is also a handy tool available to automate the XBLA renaming process, you can find it here:\
+https://github.com/cmclark00/XBLA-Automation
+
+**Running xenia on Linux**
+
+_Note that xenia does not seem to run on the Steam Deck using the approach described below._
+
+Although xenia is officially only available for the Windows operating system it's still possible to run it on Linux. To accomplish this you need to run it via the Wine translation layer. More specifically you need the AppImage release of Wine which can be downloaded from here:\
 https://github.com/mmtrt/WINE_AppImage/releases
 
 Make sure to get the stable x86_64 release, for this example we assume that the file `wine-stable_8.0.2-x86_64.AppImage` has been downloaded.

@@ -85,8 +85,11 @@ https://batocera.org
 The MD5 hash functions were adapted from code by the BZFlag project \
 https://www.bzflag.org
 
-A couple of GLSL shaders were borrowed from the RetroArch project \
+The scanline GLSL shader was adapted from code by the RetroArch project \
 https://www.retroarch.com
+
+The blur GLSL shaders were based on code from the following repository  \
+https://github.com/Jam3/glsl-fast-gaussian-blur
 
 # Resources
 

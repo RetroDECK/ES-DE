@@ -47,6 +47,8 @@
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Removed the es_log.txt entry when an es_systems.cfg legacy systems configuration file was found on startup
 * Improved menu system font rendering on GPUs without proper texture filtering support
+* Improved the blur shaders to run faster at higher resolutions and to look identical regardless of display resolution
+* Improved the blur shaders rendering quality when rotating the screen 90 or 270 degrees
 * Added a "stationary" property to all secondary elements to set them as stationary during slide transitions
 * Added a "containerType" property to the text element to select between vertical and horizontal containers
 * Added a number of carousel, grid, textlist and text properties to control horizontally scrolling text
