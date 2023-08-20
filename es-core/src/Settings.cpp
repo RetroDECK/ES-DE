@@ -195,7 +195,7 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverSlideshowOnlyFavorites"] = {false, false};
     mBoolMap["ScreensaverStretchImages"] = {false, false};
     mBoolMap["ScreensaverSlideshowGameInfo"] = {true, true};
-    mBoolMap["ScreensaverSlideshowScanlines"] = {true, true};
+    mBoolMap["ScreensaverSlideshowScanlines"] = {false, false};
     mBoolMap["ScreensaverSlideshowCustomImages"] = {false, false};
     mBoolMap["ScreensaverSlideshowRecurse"] = {false, false};
     mStringMap["ScreensaverSlideshowImageDir"] = {"~/.emulationstation/slideshow/custom_images",
