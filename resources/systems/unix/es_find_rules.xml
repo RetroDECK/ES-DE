@@ -123,6 +123,8 @@
             <entry>~/.local/share/applications/Cemu/Cemu</entry>
             <entry>~/.local/bin/Cemu/Cemu</entry>
             <entry>~/bin/Cemu/Cemu</entry>
+            <entry>/var/lib/flatpak/exports/bin/info.cemu.Cemu</entry>
+            <entry>~/.local/share/flatpak/exports/bin/info.cemu.Cemu</entry>
         </rule>
     </emulator>
     <emulator name="CITRA">
