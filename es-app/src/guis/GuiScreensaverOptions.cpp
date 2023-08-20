@@ -50,16 +50,6 @@ GuiScreensaverOptions::GuiScreensaverOptions(const std::string& title)
     addSaveFunc([screensaverType, this] {
         if (screensaverType->getSelected() !=
             Settings::getInstance()->getString("ScreensaverType")) {
-            if (screensaverType->getSelected() == "video") {
-                // If before it wasn't risky but now there's a risk of problems, show warning.
-                mWindow->pushGui(new GuiMsgBox(
-                    getHelpStyle(),
-                    "THE 'VIDEO' SCREENSAVER SHOWS\n"
-                    "VIDEOS FROM YOUR GAMELISTS\n\n"
-                    "IF YOU DO NOT HAVE ANY VIDEOS, THE\n"
-                    "SCREENSAVER WILL DEFAULT TO 'DIM'",
-                    "OK", [] { return; }, "", nullptr, "", nullptr));
-            }
             Settings::getInstance()->setString("ScreensaverType", screensaverType->getSelected());
             setNeedsSaving();
         }
