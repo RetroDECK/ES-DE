@@ -195,7 +195,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("size")) {
         glm::vec2 ratingSize {elem->get<glm::vec2>("size")};
         if (ratingSize == glm::vec2 {0.0f, 0.0f}) {
-            LOG(LogWarning) << "RatingComponent: Invalid theme configuration, property <size> "
+            LOG(LogWarning) << "RatingComponent: Invalid theme configuration, property \"size\" "
                                "for element \""
                             << element.substr(7) << "\" is set to zero";
             ratingSize.y = 0.06f;
@@ -241,7 +241,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             linearInterpolation = false;
 
             LOG(LogWarning)
-                << "RatingComponent: Invalid theme configuration, property <interpolation> "
+                << "RatingComponent: Invalid theme configuration, property \"interpolation\" "
                    "for element \""
                 << element.substr(7) << "\" defined as \"" << interpolation << "\"";
         }
