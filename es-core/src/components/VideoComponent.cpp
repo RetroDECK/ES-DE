@@ -16,14 +16,16 @@
 
 #include <SDL2/SDL_timer.h>
 
-#define SCREENSAVER_FADE_IN_TIME 1100
+#define SCREENSAVER_FADE_IN_TIME 900
 #define MEDIA_VIEWER_FADE_IN_TIME 600
 
 VideoComponent::VideoComponent()
-    : mVideoWidth {0}
+    : mRenderer {Renderer::getInstance()}
+    , mVideoWidth {0}
     , mVideoHeight {0}
     , mColorShift {0xFFFFFFFF}
     , mColorShiftEnd {0xFFFFFFFF}
+    , mVideoCornerRadius {0.0f}
     , mColorGradientHorizontal {true}
     , mTargetSize {0.0f, 0.0f}
     , mVideoAreaPos {0.0f, 0.0f}
@@ -131,7 +133,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     glm::vec2 scale {getParent() ?
                          getParent()->getSize() :
-                         glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()}};
+                         glm::vec2 {mRenderer->getScreenWidth(), mRenderer->getScreenHeight()}};
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {
@@ -224,6 +226,14 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << element.substr(6) << "\" defined as \"" << interpolation << "\"";
         }
     }
+
+    if (elem->has("imageCornerRadius"))
+        mStaticImage.setCornerRadius(glm::clamp(elem->get<float>("imageCornerRadius"), 0.0f, 0.5f) *
+                                     mRenderer->getScreenWidth());
+
+    if (elem->has("videoCornerRadius"))
+        mVideoCornerRadius = glm::clamp(elem->get<float>("videoCornerRadius"), 0.0f, 0.5f) *
+                             mRenderer->getScreenWidth();
 
     if (elem->has("default")) {
         const std::string defaultVideo {elem->get<std::string>("default")};
@@ -331,6 +341,14 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("pillarboxes"))
         mDrawPillarboxes = elem->get<bool>("pillarboxes");
+
+    // The black frame is rendered behind all videos and may be expanded to render pillarboxes
+    // or letterboxes.
+    mBlackFrame.setZIndex(mZIndex);
+    mBlackFrame.setCornerRadius(mVideoCornerRadius);
+    mBlackFrame.setCornerAntiAliasing(false);
+    mBlackFrame.setColorShift(0x000000FF);
+    mBlackFrame.setImage(":/graphics/white.png");
 
     if (elem->has("pillarboxThreshold")) {
         const glm::vec2 pillarboxThreshold {elem->get<glm::vec2>("pillarboxThreshold")};

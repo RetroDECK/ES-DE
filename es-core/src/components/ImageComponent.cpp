@@ -29,7 +29,9 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mColorShiftEnd {0xFFFFFFFF}
     , mColorGradientHorizontal {true}
     , mFadeOpacity {0.0f}
+    , mCornerRadius {0.0f}
     , mReflectionsFalloff {0.0f}
+    , mCornerAntiAliasing {true}
     , mFading {false}
     , mForceLoad {forceLoad}
     , mDynamic {dynamic}
@@ -332,7 +334,6 @@ void ImageComponent::setSaturation(float saturation)
 
 void ImageComponent::setDimming(float dimming)
 {
-    // Set dimming value.
     mDimming = dimming;
 }
 
@@ -431,6 +432,18 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             mVertices->saturation = mSaturation * mThemeSaturation;
             mVertices->dimming = mDimming;
             mVertices->reflectionsFalloff = mReflectionsFalloff;
+
+            if (mCornerRadius > 0.0f) {
+                mVertices->cornerRadius = mCornerRadius;
+                if (mCornerAntiAliasing) {
+                    mVertices->shaderFlags =
+                        mVertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS;
+                }
+                else {
+                    mVertices->shaderFlags =
+                        mVertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS_NO_AA;
+                }
+            }
 
             mVertices->shaderFlags = mVertices->shaderFlags | Renderer::ShaderFlags::PREMULTIPLIED;
             mRenderer->drawTriangleStrips(&mVertices[0], 4);
@@ -534,6 +547,10 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << element.substr(6) << "\" defined as \"" << interpolation << "\"";
         }
     }
+
+    if (elem->has("cornerRadius"))
+        mCornerRadius =
+            glm::clamp(elem->get<float>("cornerRadius"), 0.0f, 0.5f) * mRenderer->getScreenWidth();
 
     if (properties && elem->has("imageType")) {
         std::string imageTypes {elem->get<std::string>("imageType")};

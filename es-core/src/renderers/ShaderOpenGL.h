@@ -73,6 +73,7 @@ public:
     void setOpacity(GLfloat opacity);
     void setSaturation(GLfloat saturation);
     void setDimming(GLfloat dimming);
+    void setCornerRadius(GLfloat cornerRadius);
     void setReflectionsFalloff(GLfloat falloff);
     void setBlurStrength(GLfloat blurStrength);
     void setFlags(GLuint flags);
@@ -101,6 +102,7 @@ private:
     GLint mShaderOpacity;
     GLint mShaderSaturation;
     GLint mShaderDimming;
+    GLint mCornerRadius;
     GLint mShaderReflectionsFalloff;
     GLint mBlurStrength;
     GLint mShaderFlags;

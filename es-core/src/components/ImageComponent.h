@@ -89,6 +89,8 @@ public:
     void setSaturation(float saturation) override;
     void setDimming(float dimming) override;
     void setClipRegion(const glm::vec4& clipRegion);
+    void setCornerRadius(float radius) { mCornerRadius = radius; }
+    void setCornerAntiAliasing(bool state) { mCornerAntiAliasing = state; }
 
     void setReflectionsFalloff(float falloff) override { mReflectionsFalloff = falloff; }
     void setFlipX(bool state) override; // Mirror on the X axis.
@@ -159,7 +161,9 @@ private:
 
     std::shared_ptr<TextureResource> mTexture;
     float mFadeOpacity;
+    float mCornerRadius;
     float mReflectionsFalloff;
+    bool mCornerAntiAliasing;
     bool mFading;
     bool mForceLoad;
     bool mDynamic;

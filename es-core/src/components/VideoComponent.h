@@ -99,12 +99,15 @@ protected:
         IMAGE
     };
 
+    Renderer* mRenderer;
     ImageComponent mStaticImage;
+    ImageComponent mBlackFrame;
 
     unsigned mVideoWidth;
     unsigned mVideoHeight;
     unsigned int mColorShift;
     unsigned int mColorShiftEnd;
+    float mVideoCornerRadius;
     bool mColorGradientHorizontal;
     glm::vec2 mTargetSize;
     glm::vec2 mVideoAreaPos;

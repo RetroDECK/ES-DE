@@ -30,8 +30,7 @@
 #endif
 
 VideoFFmpegComponent::VideoFFmpegComponent()
-    : mRenderer {Renderer::getInstance()}
-    , mRectangleOffset {0.0f, 0.0f}
+    : mBlackFrameOffset {0.0f, 0.0f}
     , mFrameProcessingThread {nullptr}
     , mFormatContext {nullptr}
     , mVideoStream {nullptr}
@@ -176,31 +175,23 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
     if (mIsPlaying && mFormatContext) {
         Renderer::Vertex vertices[4];
-        mRenderer->setMatrix(trans);
 
-        unsigned int rectColor {0x000000FF};
-
-        if (!mGeneralFade && mThemeOpacity != 1.0f)
-            rectColor = static_cast<int>(mThemeOpacity * 255.0f);
-        if (mGeneralFade && (mOpacity != 1.0f || mThemeOpacity != 1.0f))
-            rectColor = static_cast<int>(mFadeIn * mOpacity * mThemeOpacity * 255.0f);
-
-        // Render the black rectangle behind the video.
-        if (mVideoRectangleCoords.size() == 4) {
-            mRenderer->drawRect(mVideoRectangleCoords[0], mVideoRectangleCoords[1],
-                                mVideoRectangleCoords[2], mVideoRectangleCoords[3], // Line break.
-                                rectColor, rectColor);
+        if (!mScreensaverMode && !mMediaViewerMode) {
+            mBlackFrame.setOpacity(mOpacity * mThemeOpacity);
+            mBlackFrame.render(trans);
         }
+
+        mRenderer->setMatrix(trans);
 
         // This is needed to avoid a slight gap before the video starts playing.
         if (!mDecodedFrame)
             return;
 
         // clang-format off
-        vertices[0] = {{0.0f + mRectangleOffset.x,    0.0f + mRectangleOffset.y     }, {mTopLeftCrop.x,            1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
-        vertices[1] = {{0.0f + mRectangleOffset.x,    mSize.y + mRectangleOffset.y  }, {mTopLeftCrop.x,            1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
-        vertices[2] = {{mSize.x + mRectangleOffset.x, 0.0f + + mRectangleOffset.y   }, {mBottomRightCrop.x * 1.0f, 1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
-        vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {mBottomRightCrop.x * 1.0f, 1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
+        vertices[0] = {{0.0f + mBlackFrameOffset.x,    0.0f + mBlackFrameOffset.y     }, {mTopLeftCrop.x,            1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
+        vertices[1] = {{0.0f + mBlackFrameOffset.x,    mSize.y + mBlackFrameOffset.y  }, {mTopLeftCrop.x,            1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
+        vertices[2] = {{mSize.x + mBlackFrameOffset.x, 0.0f + + mBlackFrameOffset.y   }, {mBottomRightCrop.x * 1.0f, 1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
+        vertices[3] = {{mSize.x + mBlackFrameOffset.x, mSize.y + + mBlackFrameOffset.y}, {mBottomRightCrop.x * 1.0f, 1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
         // clang-format on
 
         vertices[0].color = mColorShift;
@@ -213,11 +204,21 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             vertices[i].position = glm::round(vertices[i].position);
 
         if (mFadeIn < 1.0f || mThemeOpacity < 1.0f)
-            vertices->opacity = mFadeIn * mThemeOpacity;
+            vertices->opacity = mOpacity * mThemeOpacity;
 
         vertices->brightness = mBrightness;
         vertices->saturation = mSaturation * mThemeSaturation;
+        vertices->saturation = 1.0f;
         vertices->dimming = mDimming;
+
+        if (mVideoCornerRadius > 0.0f) {
+            // We don't want to apply anti-aliasing to rounded corners as the black frame is
+            // rendered behind the video and that would generate ugly edge artifacts for any
+            // videos with lighter content.
+            vertices->cornerRadius = mVideoCornerRadius;
+            vertices->shaderFlags =
+                vertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS_NO_AA;
+        }
 
         std::unique_lock<std::mutex> pictureLock {mPictureMutex};
 
@@ -265,6 +266,9 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             vertices[0].opacity = mFadeIn * mOpacity * mThemeOpacity;
             if (mRenderScanlines)
                 vertices[0].shaders = Renderer::Shader::SCANLINES;
+        }
+        else {
+            vertices[0].opacity = mFadeIn;
         }
 
         mRenderer->drawTriangleStrips(&vertices[0], 4, Renderer::BlendFactor::SRC_ALPHA,
@@ -985,22 +989,24 @@ void VideoFFmpegComponent::outputFrames()
         mEndOfVideo = true;
 }
 
-void VideoFFmpegComponent::calculateBlackRectangle()
+void VideoFFmpegComponent::calculateBlackFrame()
 {
-    // Calculate the position and size for the black rectangle that will be rendered behind
+    // Calculate the position and size for the black frame image that will be rendered behind
     // videos. If the option to display pillarboxes (and letterboxes) is enabled, then this
-    // would extend to the entire video area (if above the threshold as defined below) or
-    // otherwise it will exactly match the video size. The reason to add a black rectangle
-    // behind videos in this second instance is that the scanline rendering will make the
-    // video partially transparent so this may avoid some unforseen issues with some themes.
+    // would extend to the entire video area (if above the threshold as explained below) or
+    // otherwise it will exactly match the video size. The reason to add a black frame behind
+    // videos in this second instance is that the scanline rendering will make the video
+    // partially transparent so this may avoid some unforseen issues with some themes.
+    // Another reason is that it always take a short while to initiate the video player which
+    // means no video texture is rendered for that brief moment, and it looks better to draw
+    // the black frame during this time period as most game videos also fade in from black.
     // In general, adding very narrow pillarboxes or letterboxes doesn't look good, so by
     // default this is not done unless the size of the video vs the overall video area is
     // above the threshold defined by mPillarboxThreshold. By default this is set to 0.85
     // for the X axis and 0.90 for the Y axis, but this is theme-controllable via the
     // pillarboxThreshold property.
     if (mVideoAreaPos != glm::vec2 {0.0f, 0.0f} && mVideoAreaSize != glm::vec2 {0.0f, 0.0f}) {
-        mVideoRectangleCoords.clear();
-        mRectangleOffset = {0.0f, 0.0f};
+        mBlackFrameOffset = {0.0f, 0.0f};
 
         if (mDrawPillarboxes) {
             float rectHeight {0.0f};
@@ -1037,26 +1043,23 @@ void VideoFFmpegComponent::calculateBlackRectangle()
             // the video correctly.
             if (mOrigin != glm::vec2 {0.5f, 0.5f}) {
                 if (rectWidth > mSize.x)
-                    mRectangleOffset.x -= (rectWidth - mSize.x) * (mOrigin.x - 0.5f);
+                    mBlackFrameOffset.x -= (rectWidth - mSize.x) * (mOrigin.x - 0.5f);
                 else if (rectHeight > mSize.y)
-                    mRectangleOffset.y -= (rectHeight - mSize.y) * (mOrigin.y - 0.5f);
+                    mBlackFrameOffset.y -= (rectHeight - mSize.y) * (mOrigin.y - 0.5f);
             }
 
-            // Populate the rectangle coordinates to be used in render().
+            // Set the black frame position and size.
             const float offsetX {rectWidth - mSize.x};
             const float offsetY {rectHeight - mSize.y};
-            mVideoRectangleCoords.emplace_back(std::round((-offsetX / 2.0f) + mRectangleOffset.x));
-            mVideoRectangleCoords.emplace_back(std::round((-offsetY / 2.0f) + mRectangleOffset.y));
-            mVideoRectangleCoords.emplace_back(std::round(rectWidth));
-            mVideoRectangleCoords.emplace_back(std::round(rectHeight));
+            mBlackFrame.setPosition((-offsetX / 2.0f) + mBlackFrameOffset.x,
+                                    (-offsetY / 2.0f) + mBlackFrameOffset.y);
+            mBlackFrame.setResize(rectWidth, rectHeight);
         }
-        // If the option to display pillarboxes is disabled, then make the rectangle equivalent
-        // to the size of the video.
         else {
-            mVideoRectangleCoords.emplace_back(0.0f);
-            mVideoRectangleCoords.emplace_back(0.0f);
-            mVideoRectangleCoords.emplace_back(std::round(mSize.x));
-            mVideoRectangleCoords.emplace_back(std::round(mSize.y));
+            // If the option to display pillarboxes is disabled, then set the black frame to the
+            // same position and size as the video.
+            mBlackFrame.setPosition(0.0f, 0.0f);
+            mBlackFrame.setResize(mSize.x, mSize.y);
         }
     }
 }
@@ -1553,8 +1556,7 @@ void VideoFFmpegComponent::startVideoStream()
         // the video screeensaver.
         resize();
 
-        // Calculate pillarbox/letterbox sizes.
-        calculateBlackRectangle();
+        calculateBlackFrame();
 
         mFadeIn = 0.0f;
     }

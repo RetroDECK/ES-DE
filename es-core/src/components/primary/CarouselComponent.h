@@ -166,6 +166,7 @@ private:
     bool mItemAxisHorizontal;
     float mItemAxisRotation;
     bool mLinearInterpolation;
+    float mImageCornerRadius;
     unsigned int mImageColorShift;
     unsigned int mImageColorShiftEnd;
     bool mImageColorGradientHorizontal;
@@ -241,6 +242,7 @@ CarouselComponent<T>::CarouselComponent()
     , mItemAxisHorizontal {false}
     , mItemAxisRotation {0.0f}
     , mLinearInterpolation {false}
+    , mImageCornerRadius {0.0f}
     , mImageColorShift {0xFFFFFFFF}
     , mImageColorShiftEnd {0xFFFFFFFF}
     , mImageColorGradientHorizontal {true}
@@ -309,6 +311,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             item->setResize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         else if (mImagefit == ImageFit::COVER)
             item->setCroppedSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+        item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
@@ -339,6 +342,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             else if (mImagefit == ImageFit::COVER)
                 mDefaultImage->setCroppedSize(
                     glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+            mDefaultImage->setCornerRadius(mImageCornerRadius);
             mDefaultImage->setImage(entry.data.defaultImagePath);
             mDefaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
             if (mImageBrightness != 0.0)
@@ -413,6 +417,7 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
             item->setResize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         else if (mImagefit == ImageFit::COVER)
             item->setCroppedSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+        item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
@@ -1428,6 +1433,10 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << element.substr(9) << "\" defined as \"" << imageFit << "\"";
         }
     }
+
+    if (elem->has("imageCornerRadius"))
+        mImageCornerRadius = glm::clamp(elem->get<float>("imageCornerRadius"), 0.0f, 0.5f) *
+                             (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
 
     mImageSelectedColor = mImageColorShift;
     mImageSelectedColorEnd = mImageColorShiftEnd;

@@ -82,14 +82,13 @@ private:
     // Output frames to AudioManager and to the video surface (via the main thread).
     void outputFrames();
 
-    // Calculate the black rectangle that is shown behind videos with non-standard aspect ratios.
-    void calculateBlackRectangle();
+    // Calculate the black frame that is rendered behind all videos and which may also be
+    // adding pillarboxes/letterboxes.
+    void calculateBlackFrame();
 
     // Detect and initialize the hardware decoder.
     static void detectHWDecoder();
     bool decoderInitHW();
-
-    Renderer* mRenderer;
 
     // clang-format off
     static inline enum AVHWDeviceType sDeviceType {AV_HWDEVICE_TYPE_NONE};
@@ -99,8 +98,7 @@ private:
     static inline std::vector<std::string> sHWDecodedVideos;
 
     std::shared_ptr<TextureResource> mTexture;
-    std::vector<float> mVideoRectangleCoords;
-    glm::vec2 mRectangleOffset;
+    glm::vec2 mBlackFrameOffset;
 
     std::unique_ptr<std::thread> mFrameProcessingThread;
     std::mutex mPictureMutex;

@@ -505,6 +505,11 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
             mCoreShader->setOpacity(vertices->opacity);
             mCoreShader->setSaturation(vertices->saturation);
             mCoreShader->setDimming(vertices->dimming);
+            if (vertices->shaderFlags & ShaderFlags::ROUNDED_CORNERS ||
+                vertices->shaderFlags & ShaderFlags::ROUNDED_CORNERS_NO_AA) {
+                mCoreShader->setTextureSize({width, height});
+                mCoreShader->setCornerRadius(vertices->cornerRadius);
+            }
             mCoreShader->setReflectionsFalloff(vertices->reflectionsFalloff);
             mCoreShader->setFlags(vertices->shaderFlags);
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));

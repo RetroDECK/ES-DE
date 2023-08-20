@@ -49,11 +49,13 @@ public:
     };
 
     enum ShaderFlags {
-        PREMULTIPLIED   = 0x00000001,
-        FONT_TEXTURE    = 0x00000002,
-        POST_PROCESSING = 0x00000004,
-        CLIPPING        = 0x00000008,
-        ROTATED         = 0x00000010  // Screen rotated 90 or 270 degrees.
+        PREMULTIPLIED         = 0x00000001,
+        FONT_TEXTURE          = 0x00000002,
+        POST_PROCESSING       = 0x00000004,
+        CLIPPING              = 0x00000008,
+        ROTATED               = 0x00000010, // Screen rotated 90 or 270 degrees.
+        ROUNDED_CORNERS       = 0x00000020,
+        ROUNDED_CORNERS_NO_AA = 0x00000040
     };
     // clang-format on
 
@@ -66,6 +68,7 @@ public:
         float opacity;
         float saturation;
         float dimming;
+        float cornerRadius;
         float reflectionsFalloff;
         float blurStrength;
         unsigned int shaders;
@@ -76,6 +79,7 @@ public:
             , opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}
+            , cornerRadius {0.0f}
             , reflectionsFalloff {0.0f}
             , blurStrength {0.0f}
             , shaders {0}
@@ -95,6 +99,7 @@ public:
             , opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}
+            , cornerRadius {0.0f}
             , reflectionsFalloff {0.0f}
             , blurStrength {0.0f}
             , shaders {0}

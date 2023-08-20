@@ -100,6 +100,8 @@ uniform float OutputGamma;
 // 0x00000004 - Post processing
 // 0x00000008 - Clipping
 // 0x00000010 - Screen rotated 90 or 270 degrees
+// 0x00000020 - Rounded corners
+// 0x00000040 - Rounded corners with no anti-aliasing
 
 void main()
 {

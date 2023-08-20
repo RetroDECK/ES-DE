@@ -162,6 +162,7 @@ private:
     float mUnfocusedItemDimming;
     ImageFit mImagefit;
     float mImageRelativeScale;
+    float mImageCornerRadius;
     unsigned int mImageColor;
     unsigned int mImageColorEnd;
     bool mImageColorGradientHorizontal;
@@ -238,6 +239,7 @@ GridComponent<T>::GridComponent()
     , mUnfocusedItemDimming {1.0f}
     , mImagefit {ImageFit::CONTAIN}
     , mImageRelativeScale {1.0f}
+    , mImageCornerRadius {0.0f}
     , mImageColor {0xFFFFFFFF}
     , mImageColorEnd {0xFFFFFFFF}
     , mImageColorGradientHorizontal {true}
@@ -306,6 +308,7 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             item->setResize(mItemSize * mImageRelativeScale);
         else if (mImagefit == ImageFit::COVER)
             item->setCroppedSize(mItemSize * mImageRelativeScale);
+        item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
@@ -338,6 +341,7 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
                 mDefaultImage->setResize(mItemSize * mImageRelativeScale);
             else if (mImagefit == ImageFit::COVER)
                 mDefaultImage->setCroppedSize(mItemSize * mImageRelativeScale);
+            mDefaultImage->setCornerRadius(mImageCornerRadius);
             mDefaultImage->setImage(entry.data.defaultImagePath);
             mDefaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
             if (mImageBrightness != 0.0)
@@ -395,6 +399,7 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
             item->setResize(mItemSize * mImageRelativeScale);
         else if (mImagefit == ImageFit::COVER)
             item->setCroppedSize(mItemSize * mImageRelativeScale);
+        item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
@@ -1121,6 +1126,12 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                         mBackgroundImage->setColorGradientHorizontal(false);
                 }
             }
+            float backgroundCornerRadius {0.0f};
+            if (elem->has("backgroundCornerRadius"))
+                backgroundCornerRadius =
+                    glm::clamp(elem->get<float>("backgroundCornerRadius"), 0.0f, 0.5f) *
+                    (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
+            mBackgroundImage->setCornerRadius(backgroundCornerRadius);
             mBackgroundImage->setImage(elem->get<std::string>("backgroundImage"));
             mBackgroundImagePath = path;
         }
@@ -1146,6 +1157,12 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                         mSelectorImage->setColorGradientHorizontal(false);
                 }
             }
+            float selectorCornerRadius {0.0f};
+            if (elem->has("selectorCornerRadius"))
+                selectorCornerRadius =
+                    glm::clamp(elem->get<float>("selectorCornerRadius"), 0.0f, 0.5f) *
+                    (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
+            mSelectorImage->setCornerRadius(selectorCornerRadius);
             mSelectorImage->setImage(elem->get<std::string>("selectorImage"));
             mSelectorImagePath = path;
         }
@@ -1235,6 +1252,10 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mItemSpacing.x = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
         mItemSpacing.y = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
     }
+
+    if (elem->has("imageCornerRadius"))
+        mImageCornerRadius = glm::clamp(elem->get<float>("imageCornerRadius"), 0.0f, 0.5f) *
+                             (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
 
     if (elem->has("imageColor")) {
         mImageColor = elem->get<unsigned int>("imageColor");

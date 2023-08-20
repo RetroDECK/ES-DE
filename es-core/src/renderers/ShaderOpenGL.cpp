@@ -23,6 +23,7 @@ ShaderOpenGL::ShaderOpenGL()
     , mShaderOpacity {0}
     , mShaderSaturation {0}
     , mShaderDimming {0}
+    , mCornerRadius {0}
     , mShaderReflectionsFalloff {0}
     , mBlurStrength {0}
     , mShaderFlags {0}
@@ -128,6 +129,7 @@ void ShaderOpenGL::getVariableLocations(GLuint programID)
     mShaderOpacity = glGetUniformLocation(mProgramID, "opacity");
     mShaderSaturation = glGetUniformLocation(mProgramID, "saturation");
     mShaderDimming = glGetUniformLocation(mProgramID, "dimming");
+    mCornerRadius = glGetUniformLocation(mProgramID, "cornerRadius");
     mShaderReflectionsFalloff = glGetUniformLocation(mProgramID, "reflectionsFalloff");
     mBlurStrength = glGetUniformLocation(mProgramID, "blurStrength");
     mShaderFlags = glGetUniformLocation(mProgramID, "shaderFlags");
@@ -192,6 +194,12 @@ void ShaderOpenGL::setDimming(GLfloat dimming)
 {
     if (mShaderDimming != -1)
         GL_CHECK_ERROR(glUniform1f(mShaderDimming, dimming));
+}
+
+void ShaderOpenGL::setCornerRadius(GLfloat cornerRadius)
+{
+    if (mCornerRadius != -1)
+        GL_CHECK_ERROR(glUniform1f(mCornerRadius, cornerRadius));
 }
 
 void ShaderOpenGL::setReflectionsFalloff(GLfloat falloff)

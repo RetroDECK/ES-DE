@@ -40,6 +40,7 @@ LottieAnimComponent::LottieAnimComponent()
     , mIterationCount {0}
     , mPlayCount {0}
     , mTargetIsMax {false}
+    , mCornerRadius {0.0f}
     , mColorShift {0xFFFFFFFF}
     , mColorShiftEnd {0xFFFFFFFF}
     , mColorGradientHorizontal {true}
@@ -342,6 +343,10 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mIterationCount *= 2;
     }
 
+    if (elem->has("cornerRadius"))
+        mCornerRadius =
+            glm::clamp(elem->get<float>("cornerRadius"), 0.0f, 0.5f) * mRenderer->getScreenWidth();
+
     if (properties & COLOR) {
         if (elem->has("color")) {
             mColorShift = elem->get<unsigned int>("color");
@@ -578,6 +583,11 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         vertices->opacity = mOpacity * mThemeOpacity;
         vertices->dimming = mDimming;
         vertices->shaderFlags = Renderer::ShaderFlags::PREMULTIPLIED;
+
+        if (mCornerRadius > 0.0f) {
+            vertices->cornerRadius = mCornerRadius;
+            vertices->shaderFlags = vertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS;
+        }
 
         // Render it.
         mRenderer->drawTriangleStrips(&vertices[0], 4);

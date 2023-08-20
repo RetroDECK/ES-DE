@@ -3,8 +3,7 @@
 //  EmulationStation Desktop Edition
 //  core.glsl
 //
-//  Core shader functionality:
-//  Clipping, brightness, saturation, opacity, dimming and reflections falloff.
+//  Core shader functionality.
 //
 
 // Vertex section of code:
@@ -38,11 +37,13 @@ in vec2 position;
 in vec2 texCoord;
 in vec4 color;
 
+uniform vec2 textureSize;
 uniform vec4 clipRegion;
 uniform float brightness;
 uniform float saturation;
 uniform float opacity;
 uniform float dimming;
+uniform float cornerRadius;
 uniform float reflectionsFalloff;
 uniform uint shaderFlags;
 
@@ -55,6 +56,8 @@ out vec4 FragColor;
 // 0x00000004 - Post processing
 // 0x00000008 - Clipping
 // 0x00000010 - Screen rotated 90 or 270 degrees
+// 0x00000020 - Rounded corners
+// 0x00000040 - Rounded corners with no anti-aliasing
 
 void main()
 {
@@ -71,6 +74,34 @@ void main()
     }
 
     vec4 sampledColor = texture(textureSampler, texCoord);
+
+    // Rounded corners.
+    if (0x0u != (shaderFlags & 0x20u) || 0x0u != (shaderFlags & 0x40u)) {
+        float radius = cornerRadius;
+        // Don't go beyond half the width and height.
+        if (radius > textureSize.x / 2.0)
+            radius = textureSize.x / 2.0;
+        if (radius > textureSize.y / 2.0)
+            radius = textureSize.y / 2.0;
+
+        vec2 q = abs(position - textureSize / 2.0) -
+                 (vec2(textureSize.x / 2.0, textureSize.y / 2.0) - radius);
+        float pixelDistance = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
+
+        if (pixelDistance > 0.0) {
+            discard;
+        }
+        else {
+            float pixelValue;
+            if (0x0u != (shaderFlags & 0x20u))
+                pixelValue = 1.0 - smoothstep(-0.75, 0.5, pixelDistance);
+            else
+                pixelValue = 1.0;
+
+            sampledColor.a *= pixelValue;
+            sampledColor.rgb *= pixelValue;
+        }
+    }
 
     // Brightness.
     if (brightness != 0.0) {
