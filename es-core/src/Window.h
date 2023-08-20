@@ -127,7 +127,6 @@ public:
 
     void startScreensaver(bool onTimer);
     bool stopScreensaver();
-    void renderScreensaver();
     void screensaverTriggerNextGame() { mScreensaver->triggerNextGame(); }
     void setScreensaver(Screensaver* screensaver) { mScreensaver = screensaver; }
     bool isScreensaverActive() { return mRenderScreensaver; }

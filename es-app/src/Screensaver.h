@@ -11,18 +11,16 @@
 #define ES_APP_SCREENSAVER_H
 
 #include "Window.h"
+#include "components/ImageComponent.h"
+#include "components/VideoComponent.h"
 #include "resources/Font.h"
 
-class ImageComponent;
-class VideoComponent;
-
-// Screensaver implementation.
 class Screensaver : public Window::Screensaver
 {
 public:
     Screensaver();
 
-    virtual bool isScreensaverActive() { return (mState != STATE_INACTIVE); }
+    virtual bool isScreensaverActive() { return mScreensaverActive; }
     virtual bool isFallbackScreensaver() { return mFallbackScreensaver; }
 
     virtual void startScreensaver(bool generateMediaList);
@@ -46,16 +44,8 @@ private:
     void pickRandomCustomImage(std::string& path);
     void generateOverlayInfo();
 
-    enum STATE {
-        STATE_INACTIVE,
-        STATE_FADE_OUT_WINDOW,
-        STATE_FADE_IN_VIDEO,
-        STATE_SCREENSAVER_ACTIVE
-    };
-
     Renderer* mRenderer;
     Window* mWindow;
-    STATE mState;
 
     std::vector<FileData*> mImageFiles;
     std::vector<FileData*> mVideoFiles;
@@ -72,6 +62,7 @@ private:
 
     int mTimer;
     int mMediaSwapTime;
+    bool mScreensaverActive;
     bool mTriggerNextGame;
     bool mHasMediaFiles;
     bool mFallbackScreensaver;

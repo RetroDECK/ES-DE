@@ -642,10 +642,6 @@ void Window::render()
     if (mInfoPopup)
         mInfoPopup->render(trans);
 
-    // Always call the screensaver render function regardless of whether the screensaver is active
-    // or not because it may perform a fade on transition.
-    renderScreensaver();
-
     if (mRenderMediaViewer)
         mMediaViewer->render(trans);
 
@@ -654,6 +650,9 @@ void Window::render()
 
     if (mRenderLaunchScreen)
         mLaunchScreen->render(trans);
+
+    if (mRenderScreensaver)
+        mScreensaver->renderScreensaver();
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
         mRenderer->setMatrix(mRenderer->getIdentity());
@@ -827,12 +826,6 @@ bool Window::stopScreensaver()
     }
 
     return false;
-}
-
-void Window::renderScreensaver()
-{
-    if (mScreensaver)
-        mScreensaver->renderScreensaver();
 }
 
 void Window::startMediaViewer(FileData* game)

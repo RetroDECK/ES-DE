@@ -22,24 +22,23 @@
 
 #include <random>
 #include <time.h>
-#include <unordered_map>
 
 #if defined(_WIN64)
 #include <cstring>
 #endif
 
-#define FADE_TIME 300.0f
+#define IMAGES_FADE_IN_TIME 450.0f
 
 Screensaver::Screensaver()
     : mRenderer {Renderer::getInstance()}
     , mWindow {Window::getInstance()}
-    , mState {STATE_INACTIVE}
     , mImageScreensaver {nullptr}
     , mVideoScreensaver {nullptr}
     , mCurrentGame {nullptr}
     , mPreviousGame {nullptr}
     , mTimer {0}
     , mMediaSwapTime {0}
+    , mScreensaverActive {false}
     , mTriggerNextGame {false}
     , mHasMediaFiles {false}
     , mFallbackScreensaver {false}
@@ -63,6 +62,7 @@ void Screensaver::startScreensaver(bool generateMediaList)
         mScreensaverType = "dim";
     }
     std::string path;
+    mScreensaverActive = true;
     mHasMediaFiles = false;
     mFallbackScreensaver = false;
     mOpacity = 0.0f;
@@ -84,9 +84,6 @@ void Screensaver::startScreensaver(bool generateMediaList)
             mImageFiles.clear();
             mImageCustomFiles.clear();
         }
-
-        // This creates a fade transition between the images.
-        mState = STATE_FADE_OUT_WINDOW;
 
         mMediaSwapTime = Settings::getInstance()->getInt("ScreensaverSwapImageTimeout");
 
@@ -141,9 +138,6 @@ void Screensaver::startScreensaver(bool generateMediaList)
         if (generateMediaList)
             mVideoFiles.clear();
 
-        // This creates a fade transition between the videos.
-        mState = STATE_FADE_OUT_WINDOW;
-
         mMediaSwapTime = Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout");
 
         // Load a random video.
@@ -178,7 +172,6 @@ void Screensaver::startScreensaver(bool generateMediaList)
         }
     }
     // No videos or images, just use a standard screensaver.
-    mState = STATE_SCREENSAVER_ACTIVE;
     mCurrentGame = nullptr;
 }
 
@@ -187,7 +180,7 @@ void Screensaver::stopScreensaver()
     mImageScreensaver.reset();
     mVideoScreensaver.reset();
 
-    mState = STATE_INACTIVE;
+    mScreensaverActive = false;
     mDimValue = 1.0f;
     mRectangleFadeIn = 50;
     mTextFadeIn = 0;
@@ -270,22 +263,16 @@ void Screensaver::renderScreensaver()
         // Render a black background below the video.
         mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                             0x000000FF, 0x000000FF);
-
-        // Only render the video if the state requires it.
-        if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO)
-            mVideoScreensaver->render(trans);
+        mVideoScreensaver->render(trans);
     }
     else if (mImageScreensaver && mScreensaverType == "slideshow") {
         // Render a black background below the image.
         mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                             0x000000FF, 0x000000FF);
-
-        // Only render the image if the state requires it.
-        if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
-            if (mImageScreensaver->hasImage()) {
-                mImageScreensaver->setOpacity(1.0f - mOpacity);
-                mImageScreensaver->render(trans);
-            }
+        // Leave a small gap without rendering during fade-in.
+        if (mOpacity > 0.5f) {
+            mImageScreensaver->setOpacity(mOpacity);
+            mImageScreensaver->render(trans);
         }
     }
 
@@ -382,44 +369,28 @@ void Screensaver::renderScreensaver()
 
 void Screensaver::update(int deltaTime)
 {
-    // Use this to update the fade value for the current fade stage.
-    if (mState == STATE_FADE_OUT_WINDOW) {
-        mOpacity += static_cast<float>(deltaTime) / FADE_TIME;
-        if (mOpacity >= 1.0f) {
-            mOpacity = 1.0f;
-
-            // Update to the next state.
-            mState = STATE_FADE_IN_VIDEO;
-        }
-    }
-    else if (mState == STATE_FADE_IN_VIDEO) {
-        mOpacity -= static_cast<float>(deltaTime) / FADE_TIME;
-        if (mOpacity <= 0.0f) {
-            mOpacity = 0.0f;
-            // Update to the next state.
-            mState = STATE_SCREENSAVER_ACTIVE;
-        }
-    }
-    else if (mState == STATE_SCREENSAVER_ACTIVE) {
-        // Update the timer that swaps the media, unless the swap time is set to 0 (only
-        // applicable for the video screensaver). This means that videos play to the end,
-        // at which point the video player will trigger a skip to the next game.
-        if (mMediaSwapTime != 0) {
-            mTimer += deltaTime;
-            if (mTimer > mMediaSwapTime)
-                nextGame();
-        }
-        if (mTriggerNextGame) {
-            mTriggerNextGame = false;
+    // Update the timer that swaps the media, unless the swap time is set to 0 (only
+    // applicable for the video screensaver). This means that videos play to the end,
+    // at which point the video player will trigger a skip to the next game.
+    if (mMediaSwapTime != 0) {
+        mTimer += deltaTime;
+        if (mTimer > mMediaSwapTime)
             nextGame();
-        }
+    }
+    if (mTriggerNextGame) {
+        mTriggerNextGame = false;
+        nextGame();
     }
 
-    // If we have a loaded a video or image, then update it.
+    // Fade-in for the video screensaver is handled in VideoComponent.
+    if (mImageScreensaver && mOpacity < 1.0f) {
+        mOpacity += static_cast<float>(deltaTime) / IMAGES_FADE_IN_TIME;
+        if (mOpacity > 1.0f)
+            mOpacity = 1.0f;
+    }
+
     if (mVideoScreensaver)
         mVideoScreensaver->update(deltaTime);
-    if (mImageScreensaver)
-        mImageScreensaver->update(deltaTime);
 }
 
 void Screensaver::generateImageList()

@@ -128,7 +128,6 @@ bool SystemView::input(InputConfig* config, Input input)
                 ViewController::getInstance()->stopScrolling();
                 ViewController::getInstance()->cancelViewTransitions();
                 mWindow->startScreensaver(false);
-                mWindow->renderScreensaver();
             }
             return true;
         }
