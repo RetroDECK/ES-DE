@@ -49,7 +49,9 @@ private:
 
     std::vector<FileData*> mImageFiles;
     std::vector<FileData*> mVideoFiles;
+    std::vector<FileData*> mFilesInventory;
     std::vector<std::string> mImageCustomFiles;
+    std::vector<std::string> mCustomFilesInventory;
     std::unique_ptr<ImageComponent> mImageScreensaver;
     std::unique_ptr<VideoComponent> mVideoScreensaver;
 

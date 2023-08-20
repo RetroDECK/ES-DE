@@ -82,7 +82,9 @@ void Screensaver::startScreensaver(bool generateMediaList)
     if (mScreensaverType == "slideshow") {
         if (generateMediaList) {
             mImageFiles.clear();
+            mFilesInventory.clear();
             mImageCustomFiles.clear();
+            mCustomFilesInventory.clear();
         }
 
         mMediaSwapTime = Settings::getInstance()->getInt("ScreensaverSwapImageTimeout");
@@ -92,6 +94,11 @@ void Screensaver::startScreensaver(bool generateMediaList)
             if (generateMediaList)
                 generateCustomImageList();
             pickRandomCustomImage(path);
+
+            // We've cycled through all games, so start from the beginning again.
+            if (mImageCustomFiles.size() == 0 && mCustomFilesInventory.size() > 0)
+                mImageCustomFiles.insert(mImageCustomFiles.begin(), mCustomFilesInventory.begin(),
+                                         mCustomFilesInventory.end());
 
             if (mImageCustomFiles.size() > 0)
                 mHasMediaFiles = true;
@@ -103,6 +110,10 @@ void Screensaver::startScreensaver(bool generateMediaList)
                 generateImageList();
             pickRandomImage(path);
         }
+
+        // We've cycled through all games, so start from the beginning again.
+        if (mImageFiles.size() == 0 && mFilesInventory.size() > 0)
+            mImageFiles.insert(mImageFiles.begin(), mFilesInventory.begin(), mFilesInventory.end());
 
         if (mImageFiles.size() > 0)
             mHasMediaFiles = true;
@@ -135,8 +146,10 @@ void Screensaver::startScreensaver(bool generateMediaList)
         return;
     }
     else if (!mVideoScreensaver && (mScreensaverType == "video")) {
-        if (generateMediaList)
+        if (generateMediaList) {
             mVideoFiles.clear();
+            mFilesInventory.clear();
+        }
 
         mMediaSwapTime = Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout");
 
@@ -144,6 +157,10 @@ void Screensaver::startScreensaver(bool generateMediaList)
         if (generateMediaList)
             generateVideoList();
         pickRandomVideo(path);
+
+        // We've cycled through all games, so start from the beginning again.
+        if (mVideoFiles.size() == 0 && mFilesInventory.size() > 0)
+            mVideoFiles.insert(mVideoFiles.begin(), mFilesInventory.begin(), mFilesInventory.end());
 
         if (mVideoFiles.size() > 0)
             mHasMediaFiles = true;
@@ -276,94 +293,91 @@ void Screensaver::renderScreensaver()
         }
     }
 
-    if (isScreensaverActive()) {
-        if (mScreensaverType == "slideshow") {
-            if (mHasMediaFiles) {
-                if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
-                    mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
-                if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
-                    mGameOverlay) {
-                    mRenderer->setMatrix(mRenderer->getIdentity());
-                    if (mGameOverlayRectangleCoords.size() == 4) {
-                        mRenderer->drawRect(
-                            mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
-                            mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
-                            0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
-                    }
-                    mRectangleFadeIn =
-                        glm::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
-
-                    mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
-                    if (mTextFadeIn > 50)
-                        mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
-                    if (mTextFadeIn < 255)
-                        mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
+    if (mScreensaverType == "slideshow") {
+        if (mHasMediaFiles) {
+            if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
+                mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
+            if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
+                !Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages") &&
+                mGameOverlay) {
+                mRenderer->setMatrix(mRenderer->getIdentity());
+                if (mGameOverlayRectangleCoords.size() == 4) {
+                    mRenderer->drawRect(
+                        mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
+                        mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
+                        0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
                 }
-            }
-            else {
-                mFallbackScreensaver = true;
+                mRectangleFadeIn = glm::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
+
+                mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
+                if (mTextFadeIn > 50)
+                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                if (mTextFadeIn < 255)
+                    mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
             }
         }
-        else if (mScreensaverType == "video") {
-            if (mHasMediaFiles) {
-                Renderer::postProcessingParams videoParameters;
-                unsigned int shaders {0};
-                if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
-                    shaders = Renderer::Shader::SCANLINES;
-                if (Settings::getInstance()->getBool("ScreensaverVideoBlur")) {
-                    if (mRenderer->getScreenRotation() == 90 ||
-                        mRenderer->getScreenRotation() == 270)
-                        shaders |= Renderer::Shader::BLUR_VERTICAL;
-                    else
-                        shaders |= Renderer::Shader::BLUR_HORIZONTAL;
+        else {
+            mFallbackScreensaver = true;
+        }
+    }
+    else if (mScreensaverType == "video") {
+        if (mHasMediaFiles) {
+            Renderer::postProcessingParams videoParameters;
+            unsigned int shaders {0};
+            if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
+                shaders = Renderer::Shader::SCANLINES;
+            if (Settings::getInstance()->getBool("ScreensaverVideoBlur")) {
+                if (mRenderer->getScreenRotation() == 90 || mRenderer->getScreenRotation() == 270)
+                    shaders |= Renderer::Shader::BLUR_VERTICAL;
+                else
+                    shaders |= Renderer::Shader::BLUR_HORIZONTAL;
+            }
+
+            // We run two passes to make the blur smoother.
+            videoParameters.blurPasses = 2;
+            videoParameters.blurStrength = 1.35f;
+
+            if (shaders != 0)
+                mRenderer->shaderPostprocessing(shaders, videoParameters);
+
+            if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
+                mRenderer->setMatrix(mRenderer->getIdentity());
+                if (mGameOverlayRectangleCoords.size() == 4) {
+                    mRenderer->drawRect(
+                        mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
+                        mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
+                        0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
                 }
+                mRectangleFadeIn = glm::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
 
-                // We run two passes to make the blur smoother.
-                videoParameters.blurPasses = 2;
-                videoParameters.blurStrength = 1.35f;
-
-                if (shaders != 0)
-                    mRenderer->shaderPostprocessing(shaders, videoParameters);
-
-                if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
-                    mRenderer->setMatrix(mRenderer->getIdentity());
-                    if (mGameOverlayRectangleCoords.size() == 4) {
-                        mRenderer->drawRect(
-                            mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
-                            mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
-                            0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
-                    }
-                    mRectangleFadeIn =
-                        glm::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
-
-                    mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
-                    if (mTextFadeIn > 50)
-                        mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
-                    if (mTextFadeIn < 255)
-                        mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
-                }
-            }
-            else {
-                mFallbackScreensaver = true;
+                mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
+                if (mTextFadeIn > 50)
+                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                if (mTextFadeIn < 255)
+                    mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
             }
         }
-        if (mFallbackScreensaver || mScreensaverType == "dim") {
-            Renderer::postProcessingParams dimParameters;
-            dimParameters.dimming = mDimValue;
-            dimParameters.saturation = mSaturationAmount;
-            mRenderer->shaderPostprocessing(Renderer::Shader::CORE, dimParameters);
-            if (mDimValue > 0.4)
-                mDimValue = glm::clamp(mDimValue - 0.021f, 0.4f, 1.0f);
-            if (mSaturationAmount > 0.0)
-                mSaturationAmount = glm::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
+        else {
+            mFallbackScreensaver = true;
         }
-        else if (mScreensaverType == "black") {
-            Renderer::postProcessingParams blackParameters;
-            blackParameters.dimming = mDimValue;
-            mRenderer->shaderPostprocessing(Renderer::Shader::CORE, blackParameters);
-            if (mDimValue > 0.0)
-                mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
-        }
+    }
+
+    if (mFallbackScreensaver || mScreensaverType == "dim") {
+        Renderer::postProcessingParams dimParameters;
+        dimParameters.dimming = mDimValue;
+        dimParameters.saturation = mSaturationAmount;
+        mRenderer->shaderPostprocessing(Renderer::Shader::CORE, dimParameters);
+        if (mDimValue > 0.4)
+            mDimValue = glm::clamp(mDimValue - 0.021f, 0.4f, 1.0f);
+        if (mSaturationAmount > 0.0)
+            mSaturationAmount = glm::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
+    }
+    else if (mScreensaverType == "black") {
+        Renderer::postProcessingParams blackParameters;
+        blackParameters.dimming = mDimValue;
+        mRenderer->shaderPostprocessing(Renderer::Shader::CORE, blackParameters);
+        if (mDimValue > 0.0)
+            mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
     }
 }
 
@@ -417,6 +431,8 @@ void Screensaver::generateImageList()
                 mImageFiles.push_back((*it2));
         }
     }
+
+    mFilesInventory.insert(mFilesInventory.begin(), mImageFiles.begin(), mImageFiles.end());
 }
 
 void Screensaver::generateVideoList()
@@ -442,6 +458,8 @@ void Screensaver::generateVideoList()
                 mVideoFiles.push_back((*it2));
         }
     }
+
+    mFilesInventory.insert(mFilesInventory.begin(), mVideoFiles.begin(), mVideoFiles.end());
 }
 
 void Screensaver::generateCustomImageList()
@@ -469,6 +487,9 @@ void Screensaver::generateCustomImageList()
     else {
         LOG(LogWarning) << "Custom screensaver image directory '" << imageDir << "' does not exist";
     }
+
+    mCustomFilesInventory.insert(mCustomFilesInventory.begin(), mImageCustomFiles.begin(),
+                                 mImageCustomFiles.end());
 }
 
 void Screensaver::pickRandomImage(std::string& path)
@@ -485,6 +506,7 @@ void Screensaver::pickRandomImage(std::string& path)
         mGameName = mImageFiles.front()->getName();
         mSystemName = mImageFiles.front()->getSystem()->getFullName();
         mCurrentGame = mImageFiles.front();
+        mImageFiles.clear();
         return;
     }
 
@@ -503,6 +525,10 @@ void Screensaver::pickRandomImage(std::string& path)
     mGameName = mImageFiles.at(index)->getName();
     mSystemName = mImageFiles.at(index)->getSystem()->getFullName();
     mCurrentGame = mImageFiles.at(index);
+
+    // Don't display the same image again until we've cycled through all entries.
+    auto it = mImageFiles.begin() + index;
+    mImageFiles.erase(it);
 }
 
 void Screensaver::pickRandomVideo(std::string& path)
@@ -519,6 +545,7 @@ void Screensaver::pickRandomVideo(std::string& path)
         mGameName = mVideoFiles.front()->getName();
         mSystemName = mVideoFiles.front()->getSystem()->getFullName();
         mCurrentGame = mVideoFiles.front();
+        mVideoFiles.clear();
         return;
     }
 
@@ -537,6 +564,10 @@ void Screensaver::pickRandomVideo(std::string& path)
     mGameName = mVideoFiles.at(index)->getName();
     mSystemName = mVideoFiles.at(index)->getSystem()->getFullName();
     mCurrentGame = mVideoFiles.at(index);
+
+    // Don't play the same video again until we've cycled through all entries.
+    auto it = mVideoFiles.begin() + index;
+    mVideoFiles.erase(it);
 }
 
 void Screensaver::pickRandomCustomImage(std::string& path)
@@ -547,6 +578,7 @@ void Screensaver::pickRandomCustomImage(std::string& path)
     if (mImageCustomFiles.size() == 1) {
         mPreviousCustomImage = mImageCustomFiles.front();
         path = mImageCustomFiles.front();
+        mImageCustomFiles.clear();
         return;
     }
 
@@ -565,6 +597,10 @@ void Screensaver::pickRandomCustomImage(std::string& path)
     mPreviousCustomImage = path;
     mGameName = "";
     mSystemName = "";
+
+    // Don't display the same image again until we've cycled through all entries.
+    auto it = mImageCustomFiles.begin() + index;
+    mImageCustomFiles.erase(it);
 }
 
 void Screensaver::generateOverlayInfo()

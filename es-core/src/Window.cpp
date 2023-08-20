@@ -810,6 +810,7 @@ void Window::startScreensaver(bool onTimer)
         setAllowTextScrolling(false);
         setAllowFileAnimation(false);
         mScreensaver->startScreensaver(true);
+        mScreensaver->renderScreensaver();
         mRenderScreensaver = true;
     }
 }
