@@ -115,6 +115,9 @@ void TextComponent::setFont(const std::shared_ptr<Font>& font)
 //  Set the color of the font/text.
 void TextComponent::setColor(unsigned int color)
 {
+    if (mColor == color)
+        return;
+
     mColor = color;
     mColorOpacity = static_cast<float>(mColor & 0x000000FF) / 255.0f;
     onColorChanged();
@@ -123,6 +126,9 @@ void TextComponent::setColor(unsigned int color)
 //  Set the color of the background box.
 void TextComponent::setBackgroundColor(unsigned int color)
 {
+    if (mBgColor == color)
+        return;
+
     mBgColor = color;
     mBgColorOpacity = static_cast<float>(mBgColor & 0x000000FF) / 255.0f;
 }
@@ -141,6 +147,9 @@ void TextComponent::setOpacity(float opacity)
 
 void TextComponent::setSaturation(float saturation)
 {
+    if (mSaturation == saturation)
+        return;
+
     mSaturation = saturation;
     if (mTextCache)
         mTextCache->setSaturation(saturation);
@@ -148,6 +157,9 @@ void TextComponent::setSaturation(float saturation)
 
 void TextComponent::setDimming(float dimming)
 {
+    if (mDimming == dimming)
+        return;
+
     mDimming = dimming;
     if (mTextCache)
         mTextCache->setDimming(dimming);
@@ -166,6 +178,9 @@ void TextComponent::setText(const std::string& text, bool update)
 
 void TextComponent::setUppercase(bool uppercase)
 {
+    if (mUppercase == uppercase)
+        return;
+
     mUppercase = uppercase;
     if (uppercase) {
         mLowercase = false;
@@ -176,6 +191,9 @@ void TextComponent::setUppercase(bool uppercase)
 
 void TextComponent::setLowercase(bool lowercase)
 {
+    if (mLowercase == lowercase)
+        return;
+
     mLowercase = lowercase;
     if (lowercase) {
         mUppercase = false;
@@ -186,6 +204,9 @@ void TextComponent::setLowercase(bool lowercase)
 
 void TextComponent::setCapitalize(bool capitalize)
 {
+    if (mCapitalize == capitalize)
+        return;
+
     mCapitalize = capitalize;
     if (capitalize) {
         mUppercase = false;
@@ -477,18 +498,27 @@ void TextComponent::onColorChanged()
 
 void TextComponent::setHorizontalAlignment(Alignment align)
 {
+    if (mHorizontalAlignment == align)
+        return;
+
     mHorizontalAlignment = align;
     onTextChanged();
 }
 
 void TextComponent::setLineSpacing(float spacing)
 {
+    if (mLineSpacing == spacing)
+        return;
+
     mLineSpacing = spacing;
     onTextChanged();
 }
 
 void TextComponent::setNoTopMargin(bool margin)
 {
+    if (mNoTopMargin == margin)
+        return;
+
     mNoTopMargin = margin;
     onTextChanged();
 }

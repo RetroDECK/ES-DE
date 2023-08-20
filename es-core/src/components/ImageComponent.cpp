@@ -303,6 +303,9 @@ void ImageComponent::cropTransparentPadding(const float maxSizeX, const float ma
 
 void ImageComponent::setColorShift(unsigned int color)
 {
+    if (mColorShift == color && mColorShiftEnd == color)
+        return;
+
     mColorShift = color;
     mColorShiftEnd = color;
     updateColors();
@@ -310,30 +313,45 @@ void ImageComponent::setColorShift(unsigned int color)
 
 void ImageComponent::setColorShiftEnd(unsigned int color)
 {
+    if (mColorShiftEnd == color)
+        return;
+
     mColorShiftEnd = color;
     updateColors();
 }
 
 void ImageComponent::setColorGradientHorizontal(bool horizontal)
 {
+    if (mColorGradientHorizontal == horizontal)
+        return;
+
     mColorGradientHorizontal = horizontal;
     updateColors();
 }
 
 void ImageComponent::setOpacity(float opacity)
 {
+    if (mOpacity == opacity)
+        return;
+
     mOpacity = opacity;
     updateColors();
 }
 
 void ImageComponent::setSaturation(float saturation)
 {
+    if (mSaturation == saturation)
+        return;
+
     mSaturation = saturation;
     updateColors();
 }
 
 void ImageComponent::setDimming(float dimming)
 {
+    if (mDimming == dimming)
+        return;
+
     mDimming = dimming;
 }
 
