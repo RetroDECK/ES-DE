@@ -13,13 +13,13 @@ RetroPie community
 **Original version**\
 Alec Lofquist
 
-# UI Art & Design
+# Original UI Art & Design
 
 Nils Bonenberger
 
 # Licenses
 
-Please find the individual license files inside the `licenses` directory. There is also additional license information in the headers of most source files.
+Please find the individual license files inside the [licenses](https://gitlab.com/es-de/emulationstation-de/-/tree/master/licenses) directory. There is also additional license information in the headers of most source files.
 
 # Libraries
 
@@ -27,7 +27,7 @@ CImg \
 https://www.cimg.eu
 
 curl \
-https://curl.haxx.se
+https://curl.se
 
 FFmpeg \
 https://ffmpeg.org
@@ -123,7 +123,7 @@ https://www.mamedev.org
 CA certificates (for TLS/SSL support on Windows) \
 https://wiki.mozilla.org/CA
 
-# Slate theme
+# Slate Theme
 
 Recalbox Multi (Slate is based on this theme, using assets from before their change to a more restrictive license in 2018) \
 https://gitlab.com/recalbox/recalbox-themes
@@ -133,7 +133,7 @@ https://github.com/RetroPie/es-theme-carbon
 
 Some logotype graphics by Dan Patrick
 
-# Modern theme
+# Modern Theme
 
 Nintendo Switch Theme for RetroPie (Modern is based on this theme): \
 https://github.com/lilbud/es-theme-switch
@@ -148,9 +148,9 @@ https://freesound.org/people/adcbicycle/sounds/14066
 
 https://freesound.org/people/farpro/sounds/264762
 
-https://freesound.org/people/farpro/sounds/264763/
+https://freesound.org/people/farpro/sounds/264763
 
 https://freesound.org/people/newlocknew/sounds/515827 \
 (Sample cut slightly)
 
-https://freesound.org/people/ertfelda/sounds/243701/
+https://freesound.org/people/ertfelda/sounds/243701

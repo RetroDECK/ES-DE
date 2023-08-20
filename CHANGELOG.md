@@ -34,6 +34,10 @@
 * (Linux) Added support for the AppImage release of Snes9x
 * (Linux) Added the PCSX2 Flatpak release to the non-legacy PCSX2 find rule configuration
 * Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
+* Changed the screensaver to never show the same game again until all games have been cycled through
+* Reduced the slideshow screensaver fade-in time
+* Removed the annoying warning message when selecting the video screensaver from the UI settings menu
+* Set scanline rendering as disabled by default for the slideshow screensaver
 * Changed the sort types "filename, ascending" and "filename, descending" to "name, ascending" and "name, descending"
 * Changed the "no games" dialog to no longer save the ROM directory to es_settings.xml if its value hasn't changed
 * When editing custom collections with really long names, the "Y" helpsystem text now gets abbreviated
@@ -49,6 +53,7 @@
 * Improved menu system font rendering on GPUs without proper texture filtering support
 * Improved the blur shaders to run faster at higher resolutions and to look identical regardless of display resolution
 * Improved the blur shaders rendering quality when rotating the screen 90 or 270 degrees
+* Added rounded corner support to the image, video, animation, carousel and grid elements
 * Added a "stationary" property to all secondary elements to set them as stationary during slide transitions
 * Added a "containerType" property to the text element to select between vertical and horizontal containers
 * Added a number of carousel, grid, textlist and text properties to control horizontally scrolling text

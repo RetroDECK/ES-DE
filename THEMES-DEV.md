@@ -1339,6 +1339,10 @@ Properties:
     - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
     - Valid values are `nearest` or `linear`
     - Default is `linear`
+* `imageCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the images defined by `staticImage`, `imageType` and `defaultImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `imageColor` - type: COLOR
     - Applies a color shift to the images defined by `staticImage`, `imageType` or `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -1609,6 +1613,10 @@ Properties:
     - This property makes it possible to size the image defined by `staticImage`, `imageType` or `defaultImage` relative to the overall item size. This is mostly useful when combined with the `backgroundImage` and `selectorImage` properties.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `imageCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the images defined by `staticImage`, `imageType` and `defaultImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `imageRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `imageColor` - type: COLOR
     - Applies a color shift to the images defined by `staticImage`, `imageType` or `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -1643,6 +1651,10 @@ Properties:
     - This property makes it possible to size the background relative to the overall item size. This is mostly useful when combined with the `selectorImage` property.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `backgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the image defined by `backgroundImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `backgroundRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `backgroundColor` - type: COLOR
     - Applies a color shift or draws a colored rectangle. If an image has been defined using the `backgroundImage` property then each pixel of that image is multiplied by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. If no background image has been defined, then a colored rectangle will be drawn instead.
 * `backgroundColorEnd` - type: COLOR
@@ -1662,6 +1674,10 @@ Properties:
     - Defines at what layer position to place the selector. It can either be placed at the bottom, in the middle between the background and image/text or on top.
     - Valid values are `bottom`, `middle` or `top`
     - Default is `top`
+* `selectorCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the image defined by `backgroundImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `selectorRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `selectorColor` - type: COLOR
     - Applies a color shift or draws a colored rectangle. If an image has been defined using the `selectorImage` property then each pixel of that image is multiplied by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. If no selector image has been defined, then a colored rectangle will be drawn instead.
 * `selectorColorEnd` - type: COLOR
@@ -1982,6 +1998,10 @@ Properties:
     - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
+* `cornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the image. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `color` - type: COLOR
     - Applies a color shift to the image by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -1993,7 +2013,7 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `scrollFadeIn` - type: BOOLEAN
-    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This usually looks best if used for the main game image.
+    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view.
     - Default is `false`
 * `brightness` - type: FLOAT
     - Controls the relative level of brightness. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image.
@@ -2092,6 +2112,14 @@ Properties:
     - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
+* `imageCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the static image. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+* `videoCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the video stream. The radius is a percentage of the screen width and not directly related to the video size. This makes it possible to apply identically sized corners regardless of video dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. You probably want to disable `pillarboxes` if using this property.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `color` - type: COLOR
     - Applies a color shift to both the static image and video by multiplying each pixel's color by this color value. For example, an all-white image or video with `FF0000` applied would become completely red. It's however not recommended to use this property to control opacity as this will not look right for actual videos, instead use the `opacity` property if you want to render this element as semi-transparent. The `color` property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -2121,7 +2149,7 @@ Properties:
     - Minimum value is `0` and maximum value is `8`
     - Default is `1`
 * `scrollFadeIn` - type: BOOLEAN
-    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
+    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view.
     - Default is `false`
 * `brightness` - type: FLOAT
     - Controls the relative level of brightness. This affects both the static image and the video stream. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image/video.
@@ -2203,6 +2231,10 @@ Properties:
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
     - This property can only be used for GIF animations.
+* `cornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the animation. The radius is a percentage of the screen width and not directly related to the animation size. This makes it possible to apply identically sized corners regardless of animation dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `color` - type: COLOR
     - Applies a color shift to the animation by multiplying each pixel's color by this color value. For example, an all-white animation with `FF0000` applied would become completely red. You can also control the transparency of the animation by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)

@@ -2710,11 +2710,11 @@ This will display an overlay in the upper left corner, showing the game name and
 
 **Render scanlines**
 
-Whether to use a shader to render scanlines for the videos. Be aware that this is quite demanding for the GPU.
+Whether to use a shader to render scanlines for the videos.
 
 **Render blur**
 
-Whether to use a shader to render a slight horizontal blur which somewhat simulates a well-used CRT monitor. Be aware that this is quite demanding for the GPU.
+Whether to use a shader to render a slight horizontal blur which somewhat simulates a well-used CRT monitor.
 
 ### Sound settings
 
