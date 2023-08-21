@@ -198,7 +198,8 @@ void TextListComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     entry.data.entryName = std::make_shared<TextComponent>(
         mHorizontalScrolling ? entry.name :
                                mFont->wrapText(entry.name, mSize.x - mHorizontalMargin * 2.0f),
-        mFont, 0x000000FF);
+        mFont, 0x000000FF, ALIGN_LEFT, ALIGN_CENTER, glm::vec3 {0.0f, 0.0f, 0.0f},
+        glm::vec2 {mFont->sizeText(entry.name).x, mFont->getSize() * 1.5f});
 
     if (mHorizontalScrolling) {
         glm::vec2 textSize {entry.data.entryName->getSize()};
@@ -504,9 +505,6 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, false);
 
-    const float selectorHeight {mFont->getHeight(mLineSpacing)};
-    mSelectorHeight = selectorHeight;
-
     if (properties & ALIGNMENT) {
         if (elem->has("horizontalAlignment")) {
             const std::string& horizontalAlignment {elem->get<std::string>("horizontalAlignment")};
@@ -602,6 +600,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("selectorHeight"))
             mSelectorHeight = glm::clamp(elem->get<float>("selectorHeight"), 0.0f, 1.0f) *
                               Renderer::getScreenHeight();
+        else
+            mSelectorHeight = mFont->getSize() * 1.5f;
         if (elem->has("selectorHorizontalOffset")) {
             const float scale {this->mParent ? this->mParent->getSize().x :
                                                Renderer::getScreenWidth()};
