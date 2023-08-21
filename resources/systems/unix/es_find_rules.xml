@@ -220,6 +220,10 @@
             <entry>org.duckstation.DuckStation</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/DuckStation*.AppImage</entry>
+            <entry>~/.local/share/applications/DuckStation*.AppImage</entry>
+            <entry>~/.local/bin/DuckStation*.AppImage</entry>
+            <entry>~/bin/DuckStation*.AppImage</entry>
             <entry>~/Applications/duckstation-nogui*.AppImage</entry>
             <entry>~/.local/share/applications/duckstation-nogui*.AppImage</entry>
             <entry>~/.local/bin/duckstation-nogui*.AppImage</entry>
