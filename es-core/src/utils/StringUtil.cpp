@@ -551,8 +551,8 @@ namespace Utils
             std::string line {stringArg};
             bool active {true};
 
-            for (unsigned char chr : line) {
-                if (std::isalnum(chr)) {
+            for (auto& chr : line) {
+                if (std::isalnum(static_cast<unsigned char>(chr))) {
                     if (active) {
                         chr = std::toupper(chr);
                         active = false;
