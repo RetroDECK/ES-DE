@@ -1416,6 +1416,7 @@ void ViewController::rescanROMDirectory()
     mCurrentView.reset();
     mPreviousView.reset();
     mSkipView.reset();
+    resetCamera();
 
     mWindow->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
     CollectionSystemsManager::getInstance()->deinit(false);
