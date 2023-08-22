@@ -35,6 +35,11 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     addChild(&mBackground);
     addChild(&mGrid);
 
+#if defined(_WIN64)
+    // Required due to the idiotic file locking that exists on this operating system.
+    ViewController::getInstance()->stopViewVideos();
+#endif
+
     const float fontSizeSmall {mRenderer->getIsVerticalOrientation() ? FONT_SIZE_MINI :
                                                                        FONT_SIZE_SMALL};
 
