@@ -123,7 +123,7 @@ void ShaderOpenGL::getVariableLocations(GLuint programID)
     mShaderPosition = glGetAttribLocation(mProgramID, "positionVertex");
     mShaderTextureCoord = glGetAttribLocation(mProgramID, "texCoordVertex");
     mShaderColor = glGetAttribLocation(mProgramID, "colorVertex");
-    mShaderTextureSize = glGetUniformLocation(mProgramID, "textureSize");
+    mShaderTextureSize = glGetUniformLocation(mProgramID, "texSize");
     mShaderClipRegion = glGetUniformLocation(mProgramID, "clipRegion");
     mShaderBrightness = glGetUniformLocation(mProgramID, "brightness");
     mShaderOpacity = glGetUniformLocation(mProgramID, "opacity");

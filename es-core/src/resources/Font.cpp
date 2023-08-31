@@ -252,7 +252,7 @@ void Font::renderTextCache(TextCache* cache)
 
         if (clipRegion) {
             it->verts[0].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
-            it->verts[0].clipregion = cache->clipRegion;
+            it->verts[0].clipRegion = cache->clipRegion;
         }
 
         mRenderer->bindTexture(*it->textureIdPtr);

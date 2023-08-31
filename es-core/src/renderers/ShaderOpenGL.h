@@ -96,8 +96,8 @@ private:
     GLint mShaderPosition;
     GLint mShaderTextureCoord;
     GLint mShaderColor;
-    GLint mShaderClipRegion;
     GLint mShaderTextureSize;
+    GLint mShaderClipRegion;
     GLint mShaderBrightness;
     GLint mShaderOpacity;
     GLint mShaderSaturation;

@@ -37,7 +37,7 @@ in vec2 position;
 in vec2 texCoord;
 in vec4 color;
 
-uniform vec2 textureSize;
+uniform vec2 texSize;
 uniform vec4 clipRegion;
 uniform float brightness;
 uniform float saturation;
@@ -79,13 +79,12 @@ void main()
     if (0x0u != (shaderFlags & 0x20u) || 0x0u != (shaderFlags & 0x40u)) {
         float radius = cornerRadius;
         // Don't go beyond half the width and height.
-        if (radius > textureSize.x / 2.0)
-            radius = textureSize.x / 2.0;
-        if (radius > textureSize.y / 2.0)
-            radius = textureSize.y / 2.0;
+        if (radius > texSize.x / 2.0)
+            radius = texSize.x / 2.0;
+        if (radius > texSize.y / 2.0)
+            radius = texSize.y / 2.0;
 
-        vec2 q = abs(position - textureSize / 2.0) -
-                 (vec2(textureSize.x / 2.0, textureSize.y / 2.0) - radius);
+        vec2 q = abs(position - texSize / 2.0) - (vec2(texSize.x / 2.0, texSize.y / 2.0) - radius);
         float pixelDistance = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
 
         if (pixelDistance > 0.0) {

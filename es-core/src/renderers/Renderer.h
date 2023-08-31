@@ -63,7 +63,7 @@ public:
         glm::vec2 position;
         glm::vec2 texcoord;
         unsigned int color;
-        glm::vec4 clipregion;
+        glm::vec4 clipRegion;
         float brightness;
         float opacity;
         float saturation;
@@ -75,7 +75,11 @@ public:
         unsigned int shaderFlags;
 
         Vertex()
-            : brightness {0.0f}
+            : position {0.0f, 0.0f}
+            , texcoord {0.0f, 0.0f}
+            , color {0x00000000}
+            , clipRegion {0.0f, 0.0f, 0.0f, 0.0f}
+            , brightness {0.0f}
             , opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}
@@ -87,14 +91,15 @@ public:
         {
         }
 
-        Vertex(const glm::vec2& position,
-               const glm::vec2& textureCoord,
-               const unsigned int color,
-               const glm::vec4& clipRegion = glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f})
-            : position(position)
-            , texcoord(textureCoord)
-            , color(color)
-            , clipregion(clipRegion)
+        Vertex(const glm::vec2& positionArg,
+               const glm::vec2& texcoordArg,
+               const unsigned int colorArg,
+               const glm::vec4& clipRegionArg = glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f},
+               const glm::vec2& shadowOffsetArg = glm::vec2 {0.0f, 0.0f})
+            : position {positionArg}
+            , texcoord {texcoordArg}
+            , color {colorArg}
+            , clipRegion {clipRegionArg}
             , brightness {0.0f}
             , opacity {1.0f}
             , saturation {1.0f}

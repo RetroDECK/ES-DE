@@ -88,7 +88,7 @@ public:
     void setOpacity(float opacity) override;
     void setSaturation(float saturation) override;
     void setDimming(float dimming) override;
-    void setClipRegion(const glm::vec4& clipRegion);
+    void setClipRegion(const glm::vec4& clipRegionArg);
     void setCornerRadius(float radius) { mCornerRadius = radius; }
     void setCornerAntiAliasing(bool state) { mCornerAntiAliasing = state; }
 

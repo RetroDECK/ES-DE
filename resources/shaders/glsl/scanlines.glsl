@@ -31,14 +31,14 @@ uniform mat4 MVPMatrix;
 in vec2 positionVertex;
 in vec2 texCoordVertex;
 in vec4 colorVertex;
-uniform vec2 textureSize;
+uniform vec2 texSize;
 
 out vec2 texCoord;
 out vec2 onex;
 out vec2 oney;
 out vec4 colorShift;
 
-#define SourceSize vec4(textureSize, 1.0 / textureSize)
+#define SourceSize vec4(texSize, 1.0 / texSize)
 
 void main()
 {
@@ -56,7 +56,7 @@ void main()
 precision mediump float;
 #endif
 
-uniform vec2 textureSize;
+uniform vec2 texSize;
 uniform float opacity;
 uniform float brightness;
 uniform float saturation;
@@ -111,9 +111,9 @@ void main()
 
     vec4 SourceSize;
     if (rotated)
-        SourceSize = vec4(textureSize.yx, 1.0 / textureSize.yx);
+        SourceSize = vec4(texSize.yx, 1.0 / texSize.yx);
     else
-        SourceSize = vec4(textureSize.xy, 1.0 / textureSize.xy);
+        SourceSize = vec4(texSize.xy, 1.0 / texSize.xy);
 
     vec2 coords = (texCoord * SourceSize.xy);
     vec2 pixel_center = floor(coords) + vec2(0.5, 0.5);

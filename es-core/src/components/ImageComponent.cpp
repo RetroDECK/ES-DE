@@ -355,12 +355,12 @@ void ImageComponent::setDimming(float dimming)
     mDimming = dimming;
 }
 
-void ImageComponent::setClipRegion(const glm::vec4& clipRegion)
+void ImageComponent::setClipRegion(const glm::vec4& clipRegionArg)
 {
-    if (mVertices[0].clipregion == clipRegion)
+    if (mVertices[0].clipRegion == clipRegionArg)
         return;
 
-    mClipRegion = clipRegion;
+    mClipRegion = clipRegionArg;
 
     if (mClipRegion == glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f}) {
         if (mVertices[0].shaderFlags & Renderer::ShaderFlags::CLIPPING) {
@@ -377,10 +377,10 @@ void ImageComponent::setClipRegion(const glm::vec4& clipRegion)
         mVertices[3].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
     }
 
-    mVertices[0].clipregion = clipRegion;
-    mVertices[1].clipregion = clipRegion;
-    mVertices[2].clipregion = clipRegion;
-    mVertices[3].clipregion = clipRegion;
+    mVertices[0].clipRegion = mClipRegion;
+    mVertices[1].clipRegion = mClipRegion;
+    mVertices[2].clipRegion = mClipRegion;
+    mVertices[3].clipRegion = mClipRegion;
 }
 
 void ImageComponent::setFlipX(bool state)
