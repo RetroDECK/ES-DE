@@ -1650,7 +1650,7 @@
         <name>steam</name>
         <fullname>Valve Steam</fullname>
         <path>%ROMPATH%\steam</path>
-        <extension>.bat .BAT .url .URL</extension>
+        <extension>.bat .BAT .lnk .LNK .url .URL</extension>
         <command label="Steam (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>steam</platform>
         <theme>steam</theme>
