@@ -135,10 +135,12 @@
             <entry>org.citra_emu.citra</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/citra*.AppImage</entry>
-            <entry>~/.local/share/applications/citra*.AppImage</entry>
-            <entry>~/.local/bin/citra*.AppImage</entry>
-            <entry>~/bin/citra*.AppImage</entry>
+            <entry>~/Applications/citra-qt*.AppImage</entry>
+            <entry>~/.local/share/applications/citra-qt*.AppImage</entry>
+            <entry>~/.local/bin/citra-qt*.AppImage</entry>
+            <entry>~/bin/citra-qt*.AppImage</entry>
+            <entry>~/.citra/canary/citra-qt.AppImage</entry>
+            <entry>~/.citra/nightly/citra-qt.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.citra_emu.citra</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.citra_emu.citra</entry>
         </rule>
