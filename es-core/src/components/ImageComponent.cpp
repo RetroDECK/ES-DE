@@ -874,11 +874,6 @@ void ImageComponent::updateVertices()
 
     updateColors();
 
-    // We round the vertices already here in this component as we may otherwise end up with edge
-    // cases at sizes near 0.5.
-    for (int i {0}; i < 4; ++i)
-        mVertices[i].position = glm::round(mVertices[i].position);
-
     if (mFlipX) {
         for (int i {0}; i < 4; ++i)
             mVertices[i].texcoord[0] = px - mVertices[i].texcoord[0];

@@ -199,10 +199,6 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         vertices[2].color = mColorGradientHorizontal ? mColorShiftEnd : mColorShift;
         vertices[3].color = mColorShiftEnd;
 
-        // Round vertices.
-        for (int i {0}; i < 4; ++i)
-            vertices[i].position = glm::round(vertices[i].position);
-
         if (mFadeIn < 1.0f || mThemeOpacity < 1.0f)
             vertices->opacity = mOpacity * mThemeOpacity;
 

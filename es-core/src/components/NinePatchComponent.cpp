@@ -129,10 +129,6 @@ void NinePatchComponent::buildVertices()
         (*mVertices)[v + 4] = {{imgPos.x + imgSize.x, imgPos.y + imgSize.y}, {texPos.x + texSizeSlice.x, texPos.y + texSizeSlice.y}, 0};
         // clang-format on
 
-        // Round vertices.
-        for (int i {1}; i < 5; ++i)
-            (*mVertices)[v + i].position = glm::round((*mVertices)[v + i].position);
-
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
         (*mVertices)[v + 0] = (*mVertices)[v + 1];
         (*mVertices)[v + 5] = (*mVertices)[v + 4];
