@@ -487,12 +487,12 @@ void Renderer::drawRect(const float x,
     // clang-format on
 
     // Round vertices.
-    for (int i = 0; i < 4; ++i)
+    for (int i {0}; i < 4; ++i)
         vertices[i].position = glm::round(vertices[i].position);
 
     vertices->opacity = opacity;
     vertices->dimming = dimming;
 
-    bindTexture(0);
+    bindTexture(0, 0);
     drawTriangleStrips(vertices, 4, srcBlendFactor, dstBlendFactor);
 }

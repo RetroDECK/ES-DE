@@ -18,7 +18,10 @@ ShaderOpenGL::ShaderOpenGL()
     , mShaderPosition {0}
     , mShaderTextureCoord {0}
     , mShaderColor {0}
+    , mTextureSampler0 {0}
+    , mTextureSampler1 {0}
     , mShaderTextureSize {0}
+    , mShaderClipRegion {0}
     , mShaderBrightness {0}
     , mShaderOpacity {0}
     , mShaderSaturation {0}
@@ -123,6 +126,8 @@ void ShaderOpenGL::getVariableLocations(GLuint programID)
     mShaderPosition = glGetAttribLocation(mProgramID, "positionVertex");
     mShaderTextureCoord = glGetAttribLocation(mProgramID, "texCoordVertex");
     mShaderColor = glGetAttribLocation(mProgramID, "colorVertex");
+    mTextureSampler0 = glGetUniformLocation(mProgramID, "textureSampler0");
+    mTextureSampler1 = glGetUniformLocation(mProgramID, "textureSampler1");
     mShaderTextureSize = glGetUniformLocation(mProgramID, "texSize");
     mShaderClipRegion = glGetUniformLocation(mProgramID, "clipRegion");
     mShaderBrightness = glGetUniformLocation(mProgramID, "brightness");
@@ -157,6 +162,14 @@ void ShaderOpenGL::setAttribPointers()
         GL_CHECK_ERROR(glVertexAttribPointer(
             mShaderColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Renderer::Vertex),
             reinterpret_cast<const void*>(offsetof(Renderer::Vertex, color))));
+}
+
+void ShaderOpenGL::setTextureSamplers()
+{
+    if (mTextureSampler0 != -1)
+        GL_CHECK_ERROR(glUniform1i(mTextureSampler0, 0));
+    if (mTextureSampler1 != -1)
+        GL_CHECK_ERROR(glUniform1i(mTextureSampler1, 1));
 }
 
 void ShaderOpenGL::setTextureSize(std::array<GLfloat, 2> shaderVec2)

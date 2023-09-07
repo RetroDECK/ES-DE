@@ -41,7 +41,7 @@ public:
 
     // Upload the texture to VRAM if necessary and bind.
     // Returns true if bound correctly.
-    bool uploadAndBind();
+    bool uploadAndBind(const unsigned int texUnit);
 
     // Release the texture from VRAM.
     void releaseVRAM();

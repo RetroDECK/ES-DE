@@ -93,13 +93,11 @@ public:
 
         Vertex(const glm::vec2& positionArg,
                const glm::vec2& texcoordArg,
-               const unsigned int colorArg,
-               const glm::vec4& clipRegionArg = glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f},
-               const glm::vec2& shadowOffsetArg = glm::vec2 {0.0f, 0.0f})
+               const unsigned int colorArg)
             : position {positionArg}
             , texcoord {texcoordArg}
             , color {colorArg}
-            , clipRegion {clipRegionArg}
+            , clipRegion {0.0f, 0.0f, 0.0f, 0.0f}
             , brightness {0.0f}
             , opacity {1.0f}
             , saturation {1.0f}
@@ -195,15 +193,11 @@ public:
     static constexpr glm::mat4 getIdentity() { return glm::mat4 {1.0f}; }
     glm::mat4 mTrans {getIdentity()};
 
-    virtual void shaderPostprocessing(
-        const unsigned int shaders,
-        const Renderer::postProcessingParams& parameters = postProcessingParams(),
-        unsigned char* textureRGBA = nullptr) = 0;
-
     virtual void setup() = 0;
     virtual bool createContext() = 0;
     virtual void destroyContext() = 0;
-    virtual unsigned int createTexture(const TextureType type,
+    virtual unsigned int createTexture(const unsigned int texUnit,
+                                       const TextureType type,
                                        const bool linearMinify,
                                        const bool linearMagnify,
                                        const bool mipmapping,
@@ -213,18 +207,23 @@ public:
                                        void* data) = 0;
     virtual void destroyTexture(const unsigned int texture) = 0;
     virtual void updateTexture(const unsigned int texture,
+                               const unsigned int texUnit,
                                const TextureType type,
                                const unsigned int x,
                                const unsigned int y,
                                const unsigned int width,
                                const unsigned int height,
                                void* data) = 0;
-    virtual void bindTexture(const unsigned int texture) = 0;
+    virtual void bindTexture(const unsigned int texture, const unsigned int texUnit) = 0;
     virtual void drawTriangleStrips(
         const Vertex* vertices,
         const unsigned int numVertices,
         const BlendFactor srcBlendFactor = BlendFactor::ONE,
         const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA) = 0;
+    virtual void shaderPostprocessing(
+        const unsigned int shaders,
+        const Renderer::postProcessingParams& parameters = postProcessingParams(),
+        unsigned char* textureRGBA = nullptr) = 0;
     virtual void setMatrix(const glm::mat4& matrix) = 0;
     virtual void setViewport(const Rect& viewport) = 0;
     virtual void setScissor(const Rect& scissor) = 0;

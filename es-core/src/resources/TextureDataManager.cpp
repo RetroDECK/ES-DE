@@ -66,14 +66,14 @@ std::shared_ptr<TextureData> TextureDataManager::get(const TextureResource* key)
     return tex;
 }
 
-bool TextureDataManager::bind(const TextureResource* key)
+bool TextureDataManager::bind(const TextureResource* key, const unsigned int texUnit)
 {
     std::shared_ptr<TextureData> tex {get(key)};
     bool bound {false};
     if (tex != nullptr)
-        bound = tex->uploadAndBind();
+        bound = tex->uploadAndBind(texUnit);
     if (!bound)
-        mBlank->uploadAndBind();
+        mBlank->uploadAndBind(texUnit);
     return bound;
 }
 

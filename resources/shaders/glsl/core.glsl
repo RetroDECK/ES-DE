@@ -47,7 +47,8 @@ uniform float cornerRadius;
 uniform float reflectionsFalloff;
 uniform uint shaderFlags;
 
-uniform sampler2D textureSampler;
+uniform sampler2D textureSampler0;
+uniform sampler2D textureSampler1;
 out vec4 FragColor;
 
 // shaderFlags:
@@ -73,19 +74,20 @@ void main()
             discard;
     }
 
-    vec4 sampledColor = texture(textureSampler, texCoord);
+    vec4 sampledColor = texture(textureSampler0, texCoord);
 
     // Rounded corners.
     if (0x0u != (shaderFlags & 0x20u) || 0x0u != (shaderFlags & 0x40u)) {
-        float radius = cornerRadius;
+        float cornerRadiusClamped = cornerRadius;
         // Don't go beyond half the width and height.
-        if (radius > texSize.x / 2.0)
-            radius = texSize.x / 2.0;
-        if (radius > texSize.y / 2.0)
-            radius = texSize.y / 2.0;
+        if (cornerRadiusClamped > texSize.x / 2.0)
+            cornerRadiusClamped = texSize.x / 2.0;
+        if (cornerRadiusClamped > texSize.y / 2.0)
+            cornerRadiusClamped = texSize.y / 2.0;
 
-        vec2 q = abs(position - texSize / 2.0) - (vec2(texSize.x / 2.0, texSize.y / 2.0) - radius);
-        float pixelDistance = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
+        vec2 center = position - texSize / 2.0;
+        vec2 q = abs(center) - (vec2(texSize.x / 2.0, texSize.y / 2.0) - cornerRadiusClamped);
+        float pixelDistance = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - cornerRadiusClamped;
 
         if (pixelDistance > 0.0) {
             discard;

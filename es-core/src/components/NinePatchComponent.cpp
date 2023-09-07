@@ -35,7 +35,7 @@ void NinePatchComponent::render(const glm::mat4& parentTrans)
         mRenderer->setMatrix(trans);
         (*mVertices)[0].opacity = mOpacity;
         (*mVertices)[0].shaderFlags = Renderer::ShaderFlags::PREMULTIPLIED;
-        mTexture->bind();
+        mTexture->bind(0);
         mRenderer->drawTriangleStrips(&mVertices->at(0), 6 * 9);
     }
 

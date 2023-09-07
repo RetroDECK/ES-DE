@@ -73,7 +73,7 @@ public:
     }
 
     const glm::ivec2 getSize() const { return mSize; }
-    bool bind();
+    bool bind(const unsigned int texUnit);
 
     // Returns an approximation of total VRAM used by textures (in bytes).
     static size_t getTotalMemUsage();

@@ -563,7 +563,7 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
     }
 
     if (mTexture->getSize().x != 0.0f) {
-        mTexture->bind();
+        mTexture->bind(0);
 
         Renderer::Vertex vertices[4];
 

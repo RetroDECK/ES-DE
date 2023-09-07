@@ -43,7 +43,8 @@ public:
     void setSwapInterval() override;
     void swapBuffers() override;
 
-    unsigned int createTexture(const TextureType type,
+    unsigned int createTexture(const unsigned int texUnit,
+                               const TextureType type,
                                const bool linearMinify,
                                const bool linearMagnify,
                                const bool mipmapping,
@@ -53,20 +54,19 @@ public:
                                void* data) override;
     void destroyTexture(const unsigned int texture) override;
     void updateTexture(const unsigned int texture,
+                       const unsigned int texUnit,
                        const TextureType type,
                        const unsigned int x,
                        const unsigned int y,
                        const unsigned int width,
                        const unsigned int height,
                        void* data) override;
-    void bindTexture(const unsigned int texture) override;
-
+    void bindTexture(const unsigned int texture, const unsigned int texUnit) override;
     void drawTriangleStrips(
         const Vertex* vertices,
         const unsigned int numVertices,
         const BlendFactor srcBlendFactor = BlendFactor::ONE,
         const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA) override;
-
     void shaderPostprocessing(
         const unsigned int shaders,
         const Renderer::postProcessingParams& parameters = postProcessingParams(),

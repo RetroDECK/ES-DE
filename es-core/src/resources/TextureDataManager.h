@@ -72,7 +72,7 @@ public:
     void remove(const TextureResource* key);
 
     std::shared_ptr<TextureData> get(const TextureResource* key);
-    bool bind(const TextureResource* key);
+    bool bind(const TextureResource* key, const unsigned int texUnit);
 
     // Get the total size of all textures managed by this object, loaded and unloaded in bytes.
     size_t getTotalSize();

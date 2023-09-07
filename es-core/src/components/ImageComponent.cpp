@@ -420,14 +420,12 @@ void ImageComponent::render(const glm::mat4& parentTrans)
     if (mTexture && mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
             if (mTargetIsMax) {
-                const glm::vec2 targetSizePos {
-                    glm::round((mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f})};
+                const glm::vec2 targetSizePos {(mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f}};
                 mRenderer->drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
                                     0xFF000033, 0xFF000033);
             }
             if (mClipRegion == glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f})
-                mRenderer->drawRect(0.0f, 0.0f, std::round(mSize.x), std::round(mSize.y),
-                                    0xFF000033, 0xFF000033);
+                mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
             else
                 mRenderer->drawRect(mClipRegion.x, mClipRegion.y, mClipRegion.z - mClipRegion.x,
                                     mClipRegion.w - mClipRegion.y, 0xFF000033, 0xFF000033);
@@ -441,9 +439,9 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             // getting invalidated, in which case we want to make sure to not get a partially
             // faded texture rendered onto the new background.
             if (mWindow->isInvalidatingCachedBackground())
-                mTexture->bind();
+                mTexture->bind(0);
             else
-                fadeIn(mTexture->bind());
+                fadeIn(mTexture->bind(0));
 
             mVertices->brightness = mBrightness;
             mVertices->opacity = mThemeOpacity;
@@ -878,16 +876,16 @@ void ImageComponent::updateVertices()
 
     // We round the vertices already here in this component as we may otherwise end up with edge
     // cases at sizes near 0.5.
-    for (int i = 0; i < 4; ++i)
+    for (int i {0}; i < 4; ++i)
         mVertices[i].position = glm::round(mVertices[i].position);
 
     if (mFlipX) {
-        for (int i = 0; i < 4; ++i)
+        for (int i {0}; i < 4; ++i)
             mVertices[i].texcoord[0] = px - mVertices[i].texcoord[0];
     }
 
     if (mFlipY) {
-        for (int i = 0; i < 4; ++i)
+        for (int i {0}; i < 4; ++i)
             mVertices[i].texcoord[1] = py - mVertices[i].texcoord[1];
     }
 

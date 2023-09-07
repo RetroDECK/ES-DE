@@ -146,14 +146,14 @@ bool TextureResource::isTiled() const
     return data->getTiled();
 }
 
-bool TextureResource::bind()
+bool TextureResource::bind(const unsigned int texUnit)
 {
     if (mTextureData != nullptr) {
-        mTextureData->uploadAndBind();
+        mTextureData->uploadAndBind(texUnit);
         return true;
     }
     else {
-        return sTextureDataManager.bind(this);
+        return sTextureDataManager.bind(this, texUnit);
     }
 }
 

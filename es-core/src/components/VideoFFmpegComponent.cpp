@@ -257,7 +257,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         }
 
         if (mTexture != nullptr)
-            mTexture->bind();
+            mTexture->bind(0);
 
         // Render scanlines if this option is enabled. However, if this is the media viewer
         // or the video screensaver, then skip this as the scanline rendering is then handled

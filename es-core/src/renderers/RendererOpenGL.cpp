@@ -280,7 +280,7 @@ bool RendererOpenGL::createContext()
     GL_CHECK_ERROR(glBindVertexArray(mVertexBuffer2));
 
     uint8_t data[4] {255, 255, 255, 255};
-    mWhiteTexture = createTexture(TextureType::BGRA, false, false, false, true, 1, 1, data);
+    mWhiteTexture = createTexture(0, TextureType::BGRA, false, false, false, true, 1, 1, data);
 
     unsigned int textureWidth {0};
     unsigned int textureHeight {0};
@@ -294,9 +294,9 @@ bool RendererOpenGL::createContext()
         textureHeight = static_cast<unsigned int>(getScreenWidth());
     }
 
-    mPostProcTexture1 = createTexture(TextureType::BGRA, false, true, false, false, textureWidth,
+    mPostProcTexture1 = createTexture(0, TextureType::BGRA, false, true, false, false, textureWidth,
                                       textureHeight, nullptr);
-    mPostProcTexture2 = createTexture(TextureType::BGRA, false, true, false, false, textureWidth,
+    mPostProcTexture2 = createTexture(0, TextureType::BGRA, false, true, false, false, textureWidth,
                                       textureHeight, nullptr);
 
     // Attach textures to the shader framebuffers.
@@ -400,7 +400,8 @@ void RendererOpenGL::swapBuffers()
     GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
-unsigned int RendererOpenGL::createTexture(const TextureType type,
+unsigned int RendererOpenGL::createTexture(const unsigned int texUnit,
+                                           const TextureType type,
                                            const bool linearMinify,
                                            const bool linearMagnify,
                                            const bool mipmapping,
@@ -409,9 +410,12 @@ unsigned int RendererOpenGL::createTexture(const TextureType type,
                                            const unsigned int height,
                                            void* data)
 {
+    assert(texUnit < 32);
+
     const GLenum textureType {convertTextureType(type)};
     unsigned int texture;
 
+    GL_CHECK_ERROR(glActiveTexture(GL_TEXTURE0 + texUnit));
     GL_CHECK_ERROR(glGenTextures(1, &texture));
     GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
 
@@ -454,6 +458,7 @@ void RendererOpenGL::destroyTexture(const unsigned int texture)
 }
 
 void RendererOpenGL::updateTexture(const unsigned int texture,
+                                   const unsigned int texUnit,
                                    const TextureType type,
                                    const unsigned int x,
                                    const unsigned int y,
@@ -461,8 +466,10 @@ void RendererOpenGL::updateTexture(const unsigned int texture,
                                    const unsigned int height,
                                    void* data)
 {
-    const GLenum textureType {convertTextureType(type)};
+    assert(texUnit < 32);
 
+    const GLenum textureType {convertTextureType(type)};
+    GL_CHECK_ERROR(glActiveTexture(GL_TEXTURE0 + texUnit));
     GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
     GL_CHECK_ERROR(glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, width, height, textureType,
                                    GL_UNSIGNED_BYTE, data));
@@ -470,8 +477,12 @@ void RendererOpenGL::updateTexture(const unsigned int texture,
     GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, mWhiteTexture));
 }
 
-void RendererOpenGL::bindTexture(const unsigned int texture)
+void RendererOpenGL::bindTexture(const unsigned int texture, const unsigned int texUnit)
 {
+    assert(texUnit < 32);
+
+    GL_CHECK_ERROR(glActiveTexture(GL_TEXTURE0 + texUnit));
+
     if (texture == 0)
         GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, mWhiteTexture));
     else
@@ -500,6 +511,8 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
                 mCoreShader->setAttribPointers();
             GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
                                         GL_DYNAMIC_DRAW));
+            mCoreShader->setTextureSamplers();
+            mCoreShader->setTextureSize({width, height});
             mCoreShader->setClipRegion(vertices->clipRegion);
             mCoreShader->setBrightness(vertices->brightness);
             mCoreShader->setOpacity(vertices->opacity);
@@ -644,7 +657,7 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
         shaderList.push_back(Shader::SCANLINES);
 
     setMatrix(getIdentity());
-    bindTexture(mPostProcTexture1);
+    bindTexture(mPostProcTexture1, 0);
 
     GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mShaderFBO1));
 
@@ -732,14 +745,14 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
                 break;
 
             if (firstFBO) {
-                bindTexture(mPostProcTexture2);
+                bindTexture(mPostProcTexture2, 0);
                 GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, mShaderFBO2));
                 GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mShaderFBO1));
                 GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT));
                 firstFBO = false;
             }
             else {
-                bindTexture(mPostProcTexture1);
+                bindTexture(mPostProcTexture1, 0);
                 GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, mShaderFBO1));
                 GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mShaderFBO2));
                 GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT));

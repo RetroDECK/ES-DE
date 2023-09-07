@@ -61,7 +61,7 @@ uniform float opacity;
 uniform float brightness;
 uniform float saturation;
 uniform uint shaderFlags;
-uniform sampler2D textureSampler;
+uniform sampler2D textureSampler0;
 in vec2 texCoord;
 in vec2 onex;
 in vec2 oney;
@@ -85,7 +85,7 @@ uniform float OutputGamma;
 #define GAMMA_IN(color) pow(color, vec4(InputGamma))
 #define GAMMA_OUT(color) pow(color, vec4(1.0 / OutputGamma))
 
-#define TEX2D(coords) GAMMA_IN(texture(textureSampler, coords))
+#define TEX2D(coords) GAMMA_IN(texture(textureSampler0, coords))
 
 // Macro for weights computing.
 #define WEIGHT(w)                                                                                  \

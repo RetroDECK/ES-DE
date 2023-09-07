@@ -255,7 +255,7 @@ void Font::renderTextCache(TextCache* cache)
             it->verts[0].clipRegion = cache->clipRegion;
         }
 
-        mRenderer->bindTexture(*it->textureIdPtr);
+        mRenderer->bindTexture(*it->textureIdPtr, 0);
         mRenderer->drawTriangleStrips(
             &it->verts[0], static_cast<const unsigned int>(it->verts.size()),
             Renderer::BlendFactor::SRC_ALPHA, Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA);
@@ -590,7 +590,7 @@ void Font::FontTexture::initTexture()
     // glyphs will not be visible. That would otherwise lead to edge artifacts as these pixels
     // would get sampled during scaling.
     std::vector<uint8_t> texture(textureSize.x * textureSize.y * 4, 0);
-    textureId = Renderer::getInstance()->createTexture(Renderer::TextureType::RED, true,
+    textureId = Renderer::getInstance()->createTexture(0, Renderer::TextureType::RED, true,
                                                        linearMagnify, false, false, textureSize.x,
                                                        textureSize.y, &texture[0]);
 }
@@ -657,7 +657,7 @@ void Font::rebuildTextures()
                               static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
 
         // Upload to texture.
-        mRenderer->updateTexture(tex->textureId, Renderer::TextureType::RED, cursor.x, cursor.y,
+        mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
                                  glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
     }
 }
@@ -781,7 +781,7 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     glyph.rows = glyphSlot->bitmap.rows;
 
     // Upload glyph bitmap to texture.
-    mRenderer->updateTexture(tex->textureId, Renderer::TextureType::RED, cursor.x, cursor.y,
+    mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
                              glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
 
     return &glyph;

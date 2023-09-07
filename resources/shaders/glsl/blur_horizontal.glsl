@@ -28,7 +28,7 @@ precision mediump float;
 #endif
 
 uniform uint shaderFlags;
-uniform sampler2D textureSampler;
+uniform sampler2D textureSampler0;
 uniform float blurStrength;
 in vec2 texCoord;
 out vec4 FragColor;
@@ -58,31 +58,31 @@ void main()
     }
 
     // 9-tap filter.
-    color += texture(textureSampler,
+    color += texture(textureSampler0,
                      vec2(tc.x - 4.0 * blurStrength * hstep, tc.y - 4.0 * blurStrength * vstep)) *
              0.0162162162;
-    color += texture(textureSampler,
+    color += texture(textureSampler0,
                      vec2(tc.x - 3.0 * blurStrength * hstep, tc.y - 3.0 * blurStrength * vstep)) *
              0.0540540541;
-    color += texture(textureSampler,
+    color += texture(textureSampler0,
                      vec2(tc.x - 2.0 * blurStrength * hstep, tc.y - 2.0 * blurStrength * vstep)) *
              0.1216216216;
-    color += texture(textureSampler,
+    color += texture(textureSampler0,
                      vec2(tc.x - 1.0 * blurStrength * hstep, tc.y - 1.0 * blurStrength * vstep)) *
              0.1945945946;
 
-    color += texture(textureSampler, vec2(tc.x, tc.y)) * 0.2270270270;
+    color += texture(textureSampler0, vec2(tc.x, tc.y)) * 0.2270270270;
 
-    color += texture(textureSampler,
+    color += texture(textureSampler0,
                      vec2(tc.x + 1.0 * blurStrength * hstep, tc.y + 1.0 * blurStrength * vstep)) *
              0.1945945946;
-    color += texture(textureSampler,
+    color += texture(textureSampler0,
                      vec2(tc.x + 2.0 * blurStrength * hstep, tc.y + 2.0 * blurStrength * vstep)) *
              0.1216216216;
-    color += texture(textureSampler,
+    color += texture(textureSampler0,
                      vec2(tc.x + 3.0 * blurStrength * hstep, tc.y + 3.0 * blurStrength * vstep)) *
              0.0540540541;
-    color += texture(textureSampler,
+    color += texture(textureSampler0,
                      vec2(tc.x + 4.0 * blurStrength * hstep, tc.y + 4.0 * blurStrength * vstep)) *
              0.0162162162;
 

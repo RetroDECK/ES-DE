@@ -67,6 +67,7 @@ public:
     void setModelViewProjectionMatrix(glm::mat4 mvpMatrix);
 
     void setAttribPointers();
+    void setTextureSamplers();
     void setTextureSize(std::array<GLfloat, 2> shaderVec2);
     void setClipRegion(glm::vec4 clipRegion);
     void setBrightness(GLfloat brightness);
@@ -96,6 +97,8 @@ private:
     GLint mShaderPosition;
     GLint mShaderTextureCoord;
     GLint mShaderColor;
+    GLint mTextureSampler0;
+    GLint mTextureSampler1;
     GLint mShaderTextureSize;
     GLint mShaderClipRegion;
     GLint mShaderBrightness;
