@@ -519,7 +519,7 @@
         <name>epic</name>
         <fullname>Epic Games Store</fullname>
         <path>%ROMPATH%\epic</path>
-        <extension>.bat .BAT .lnk .LNK</extension>
+        <extension>.bat .BAT .lnk .LNK .url .URL</extension>
         <command label="Epic Games Store (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>pcwindows</platform>
         <theme>epic</theme>
