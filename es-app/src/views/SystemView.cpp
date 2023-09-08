@@ -537,7 +537,9 @@ void SystemView::populate()
                     if (mCarousel != nullptr || mGrid != nullptr) {
                         if (element.second.has("staticImage"))
                             imagePath = element.second.get<std::string>("staticImage");
-                        if (element.second.has("defaultImage"))
+                        if (element.second.has("defaultImage") &&
+                            Utils::FileSystem::exists(
+                                element.second.get<std::string>("defaultImage")))
                             defaultImagePath = element.second.get<std::string>("defaultImage");
                         if (element.second.has("text"))
                             itemText = element.second.get<std::string>("text");
