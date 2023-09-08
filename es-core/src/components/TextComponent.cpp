@@ -421,6 +421,8 @@ void TextComponent::update(int deltaTime)
                 mScrollOffset2 = 0;
         }
     }
+
+    updateSelf(deltaTime);
 }
 
 void TextComponent::onTextChanged()
