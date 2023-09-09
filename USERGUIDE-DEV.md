@@ -664,7 +664,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | gc           | Triforce    | dolphin-emu-triforce*.AppImage  |
 | macintosh    | Basilisk II | BasiliskII*.AppImage            |
 | macintosh    | SheepShaver | SheepShaver*.AppImage           |
-| n3ds         | Citra       | citra*.AppImage                 |
+| n3ds         | Citra       | citra-qt*.AppImage              |
 | n64          | RMG         | RMG*.AppImage                   |
 | n64dd        | RMG         | RMG*.AppImage                   |
 | ps2          | PCSX2       | pcsx2*.AppImage                 |
@@ -739,7 +739,7 @@ So placing a manually downloaded emulator binary in either of these directories 
 
 The following manually downloaded emulators are supported when using the bundled configuration:
 
-| System name                      | Emulator         | Filename configuration            |
+| System name                      | Emulator         | Filename                          |
 | :------------------------------- | :--------------- | :-------------------------------- |
 | amstradcpc                       | CPCemu           | cpcemu/cpcemu                     |
 | apple2                           | LinApple         | linapple/linapple                 |
@@ -780,6 +780,14 @@ The same is true for Cemu:
 cd ~/Applications/Cemu
 chmod +x Cemu
 ```
+
+In addition to the above there are a couple of Windows emulators that need to run via Wine. Detailed setup instructions for these can be found elsewhere in this guide, but here's a table of the required installation paths:
+
+| System name                      | Emulator         | Filename                          |
+| :------------------------------- | :--------------- | :-------------------------------- |
+| atarijaguar/atarijaguarcd        | BigPEmu          | BigPEmu/BigPEmu.exe               |
+| famicom/nes                      | 3dSen            | 3dSen/3dSen.exe                   |
+| xbox360                          | xenia            | xenia/xenia.exe                   |
 
 ## Running emulators in fullscreen mode
 
@@ -1064,15 +1072,15 @@ Note that scraper support is currently very poor for this system, so you may nee
 
 **General**
 
-For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. But these should retain the MAME names as filenames since ES-DE ships with MAME lookup tables, meaning the MAME names are expanded to the full game names.
+For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. These files should retain the MAME filenames as ES-DE ships with MAME lookup tables, meaning the short names are expanded to full game names.
 
 For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
 This is required by the TheGamesDB scraper where the expanded filenames are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
-By default ES-DE will filter out BIOSes and devices that can't be launched directly, meaning these will never show up in the gamelist. But this only applies to files that are listed in the regular MAME driver file and BIOSes and devices for systems like MESS will not be filtered out. You'll instead need to manually hide these files using the _Hidden_ option in the metadata editor.
+BIOS and device files must be placed together with the ROM files in the game system directory and not in the MAME configuration/home directory. It's pointless to separate potentially hundreds of BIOS and device files from the game files, and ES-DE will also automatically filter out such files. This means they will never show up in the gamelist. But this only applies to files that are listed in the regular MAME driver file, so BIOSes and devices for systems like MESS will not be filtered out. You'll instead need to manually hide these files using the _Hidden_ option in the metadata editor.
 
-If using the standalone release of FinalBurn Neo you also need to define the ROM directory in the fbneo.ini file or via the user interface as this emulator does not support passing the full path to the game ROM on game launch (see the comments about Model 2 Emulator below for more details).
+If using the standalone release of FinalBurn Neo you need to define the ROM directory in the fbneo.ini file or via the user interface as this emulator does not support passing the full path to the game ROM on game launch (see the comments about Model 2 Emulator below for more details).
 
 **Sega Model 2**
 
@@ -1670,6 +1678,62 @@ Following this setup you will be able to launch games with the .ndd, .d64, .7z a
 **ares**
 
 For ares you need the `64DD_IPL.bin` file added to the Firmware configuration screen inside the emulator. Following this you should be able to launch games with the .ndd file extension or such files compressed into .zip archives.
+
+### Nintendo NES and Famicom in 3D
+
+There is a commercial and proprietary emulator named [3dSen](http://www.geodstudio.net) that can be used to run NES and Famicom games in 3D. Only a limited set of games are supported and the quality of the 3D effect varies, but it's an interesting effect if you don't mind supporting closed-source emulator projects.
+
+For this guide it's assumed that you have purchased the emulator via Steam. ES-DE will however not run it via the Steam frontend, you'll instead need to relocate the 3dSen installation directory as detailed below.
+
+**Linux-specific installation**
+
+As 3dSen is a Windows-only emulator you'll need Wine to run it. More specifically you need the AppImage release of Wine which can be downloaded from here:\
+https://github.com/mmtrt/WINE_AppImage/releases
+
+Make sure to get the stable x86_64 release, for this example we assume that the file `wine-stable_8.0.2-x86_64.AppImage` has been downloaded.
+
+If it doesn't already exist, then create an `~/Applications` directory and be mindful that the letter case is correct. Copy the 3dSen installation directory into this folder. Following this move the Wine AppImage into this directory as well and set executable permissions for the file:
+```
+cd ~/Applications/3dSen
+chmod +x wine-stable_8.0.2-x86_64.AppImage
+```
+
+The find rule for 3dSen looks like the following so the Wine filename needs to match this pattern:
+```xml
+<entry>~/Applications/3dSen/wine*.AppImage</entry>
+```
+
+To conserve disk space if using Wine for multiple emulators you can of course instead symlink the Wine AppImage from a common location.
+
+**Windows-specific installation**
+
+If using the installer release of ES-DE you need to add the location of the 3dSen directory to your Path environment variable and if using the portable release you need to copy the 3dSen directory to the `Emulators` folder.
+
+**Game setup**
+
+In order to launch games using 3dSen you first need to add each game to the emulator interface. This is required as 3dSen does not support passing a game file location from the command line. Refer to the 3dSen documentation on how to accomplish this.
+
+After adding the games inside 3dSen you need to create launch files for use with ES-DE. These are simply named the same as the game files, but with the .3dsen extension:
+
+```
+~/ROMs/nes/Contra.3dsen
+~/ROMs/nes/Contra.nes
+~/ROMs/nes/Ice Climber.3dsen
+~/ROMs/nes/Ice Climber.nes
+```
+
+You could of course separate the 3D files into their own directory if you prefer that:
+```
+~/ROMs/nes/3D/Contra.3dsen
+~/ROMs/nes/3D/Ice Climber.3dsen
+~/ROMs/nes/Contra.nes
+~/ROMs/nes/Ice Climber.nes
+```
+
+Finally you need to add the 3dSen game ID to each file. The RetroBat project maintains a list of supported game IDs for the 3dSen emulator that you can find here:\
+https://wiki.retrobat.org/systems-and-emulators/supported-game-systems/game-consoles/nintendo-game-consoles/nes-3d
+
+To launch the .3dsen files you'll need to use the alternative emulator entry _3dSen (Wine)_ or _3dSen (Standalone)_ depending on your operating system. As you're unlikely to use 3dSen as your primary NES or Famicom emulator it's recommended to set this on a per-game basis using the metadata editor.
 
 ### Nintendo Wii U
 
@@ -3353,7 +3417,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | emulators             | Emulators                                      | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | epic                  | Epic Games Store                               | Epic Games Store **(Standalone)** |                       | No           | Shortcut (.desktop/.app/.lnk) file |
-| famicom               | Nintendo Family Computer                       | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)** | No           | Single archive or ROM file |
+| famicom               | Nintendo Family Computer                       | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)**,<br>3dSen **(Wine)** [U],<br>3dSen **(Standalone)** [W] | No           | Single archive or ROM file. For Famicom games in 3D see the specific _Nintendo NES and Famicom in 3D_ section elsewhere in this guide |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
@@ -3407,7 +3471,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW],<br>MAME **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
-| nes                   | Nintendo Entertainment System                  | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)** | No           | Single archive or ROM file |
+| nes                   | Nintendo Entertainment System                  | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)**,<br>3dSen **(Wine)** [U],<br>3dSen **(Standalone)** [W] | No           | Single archive or ROM file. For NES games in 3D see the specific _Nintendo NES and Famicom in 3D_ section elsewhere in this guide |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | odyssey2              | Magnavox Odyssey2                              | O2EM                              |                                   |              |                                      |

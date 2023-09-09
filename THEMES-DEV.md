@@ -1983,6 +1983,7 @@ Properties:
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds. Do not combine with the `maxSize` or `cropSize` properties, instead always use `size` when tiling.
     - Default is `false`
+    - This property can only be used when `path` has been set.
 * `tileSize` - type: NORMALIZED_PAIR
     - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file.
     - Minimum value per axis is `0` and maximum value per axis is `1`.

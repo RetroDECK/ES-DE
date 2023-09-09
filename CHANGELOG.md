@@ -29,10 +29,17 @@
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine
 * (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine
 * (Linux) Added BigPEmu Wine as an alternative emulator for the atarijaguar system
+* (Linux) Added 3dSen Wine as an alternative emulator for the famicom and nes systems
 * (Linux) Added support for the Visual Pinball (vpinball) game system
 * (Linux) Added support for using the RetroArch AppImage release in portable mode (added corepath find rules)
 * (Linux) Added support for the AppImage release of Snes9x
+* (Linux) Added support for the Flatpak release of Cemu
 * (Linux) Added the PCSX2 Flatpak release to the non-legacy PCSX2 find rule configuration
+* (Linux) Updated the DuckStation find rules as the AppImage release filename has changed
+* (Linux) Updated the Citra find rules as the AppImage release filename has changed
+* (Windows) Added 3dSen standalone as an alternative emulator for the famicom and nes systems
+* (Windows) Added the .url file extension to the epic system
+* (Windows) Added the .lnk file extension to the steam system
 * Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
 * Changed the screensaver to never show the same game again until all games have been cycled through
 * Reduced the slideshow screensaver fade-in time
@@ -60,7 +67,9 @@
 * Added a "textRelativeScale" property to the carousel to size text smaller than the overall item size
 * Added "iterationCount" and "onIterationsDone" properties to the video element
 * Changed the "path" property for the video element to consider the set value even if it points to a non-existing file
+* Made it possible to set the defaultImage property for the carousel and grid elements using variables
 * Added theme support for the "manual" metadata type for the text element
+* Added support for binding multiple texture units for use in the shaders
 * Added the device serial number to the es_log.txt entries when adding or removing controllers
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Added support to MathUtil::md5Hash() for streaming files in chunks
@@ -69,6 +78,7 @@
 * Added horizontal text scrolling functionality to TextComponent
 * Removed all horizontal text scrolling code from ComponentList and TextListComponent
 * Refactored TextListComponent to work more like the other primary components
+* Added conversion of some additional HTML character codes when scraping using ScreenScraper
 * Added a lot more debug log output to the scraper
 * Changed a number of stream operations to open files for writing in binary mode (to always create proper Unix line breaks)
 * Changed the concept of "theme set" to simply "theme" everywhere in the code and documentation
@@ -80,10 +90,14 @@
 * (Windows) Now only redirect the standard input/output streams to the console if there actually is a console
 * (macOS) Changed the minimum required OS version from 10.14 "Mojave" to 10.15 "Catalina"
 * (macOS) Completely removed support for the legacy OS build
+* Updated the MAME index files to include ROMs up to MAME version 0.258
+* Bundled the August 2023 release of the Mozilla TLS/SSL certificates
+* Updated SDL to 2.28.3 on Windows, macOS and the Linux AppImage builds
 * Updated RapidJSON to commit a95e013b97ca6523f32da23f5095fcc9dd6067e5
 * Updated rlottie to commit f969abf62c8df773e3951a1176000e70fcde637f
 * Updated LunaSVG to 2.3.6
 * Updated CImg to 3.2.6
+* (Windows) Updated curl to 8.2.1
 
 ### Bug fixes
 
