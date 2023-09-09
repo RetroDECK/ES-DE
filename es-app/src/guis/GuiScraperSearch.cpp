@@ -1104,11 +1104,6 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
             metadata.set(key, result.mdl.get(key));
             metadataUpdated = true;
         }
-
-        // For the description, expand any escaped HTML quotation marks to literal
-        // quotation marks.
-        if (key == "desc" && metadataUpdated)
-            metadata.set(key, Utils::String::replace(metadata.get(key), "&quot;", "\""));
     }
 
     return metadataUpdated;

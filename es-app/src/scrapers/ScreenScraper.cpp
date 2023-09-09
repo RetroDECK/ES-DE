@@ -382,12 +382,15 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                                                            {region, "wor", "us", "ss", "eu", "jp"})
                                   .text()
                                   .get()};
-        // Game names sometimes contain ampersands encoded as hex codes.
+
+        // Translate some HTML character codes to UTF-8 characters for the game name.
+        gameName = Utils::String::replace(gameName, "&nbsp;", " ");
         gameName = Utils::String::replace(gameName, "&#x26;", "&");
+
         // In some very rare cases game names contain newline characters that we need to remove.
         result.mdl.set("name", Utils::String::replace(gameName, "\n", ""));
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " << result.mdl.get("name");
 
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " << result.mdl.get("name");
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Game ID: " << result.gameID;
 
         pugi::xml_node system {game.child("systeme")};
@@ -431,10 +434,15 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                                      .text()
                                      .get()};
 
-        // Translate some HTML character codes to UTF-8 characters.
+        // Translate some HTML character codes to UTF-8 characters for the description.
+        // This does not capture all such characters in the ScreenScraper database but these
+        // are the most common ones.
         if (!description.empty()) {
-            result.mdl.set("desc", Utils::String::replace(description, "&nbsp;", " "));
-            result.mdl.set("desc", Utils::String::replace(description, "&copy;", "©"));
+            description = Utils::String::replace(description, "&nbsp;", " ");
+            description = Utils::String::replace(description, "&quot;", "\"");
+            description = Utils::String::replace(description, "&copy;", "©");
+            description = Utils::String::replace(description, "&#039;", "'");
+            result.mdl.set("desc", description);
         }
 
         // Get the date proper. The API returns multiple 'date' children nodes to the 'dates'
