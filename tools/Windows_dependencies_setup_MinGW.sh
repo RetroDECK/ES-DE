@@ -22,10 +22,10 @@ cd external
 echo -e "\nSetting up curl"
 rm -rf curl*
 
-curl -O https://curl.se/windows/dl-8.1.2_3/curl-8.1.2_3-win64-mingw.zip
-unzip curl-8.1.2_3-win64-mingw.zip
+curl -O https://curl.se/windows/dl-8.2.1_11/curl-8.2.1_11-win64-mingw.zip
+unzip curl-8.2.1_11-win64-mingw.zip
 
-if [ ! -d curl-8.1.2_3-win64-mingw ]; then
+if [ ! -d curl-8.2.1_11-win64-mingw ]; then
   echo "curl directory is missing, aborting."
   exit
 fi
@@ -33,7 +33,7 @@ fi
 # Needed due to some kind of file system race condition that sometimes occurs on Windows.
 sleep 3
 
-mv curl-8.1.2_3-win64-mingw curl
+mv curl-8.2.1_11-win64-mingw curl
 
 cp -p curl/bin/libcurl-x64.dll ..
 
