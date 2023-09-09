@@ -84,6 +84,9 @@
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="staticpath">
             <entry>~/Applications/BigPEmu/wine*.AppImage</entry>
+            <entry>~/.local/share/applications/BigPEmu/wine*.AppImage</entry>
+            <entry>~/.local/bin/BigPEmu/wine*.AppImage</entry>
+            <entry>~/bin/BigPEmu/wine*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="BLASTEM">
@@ -878,6 +881,9 @@
         <!-- Microsoft Xbox 360 emulator xenia -->
         <rule type="staticpath">
             <entry>~/Applications/xenia/wine*.AppImage</entry>
+            <entry>~/.local/share/applications/xenia/wine*.AppImage</entry>
+            <entry>~/.local/bin/xenia/wine*.AppImage</entry>
+            <entry>~/bin/xenia/wine*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="XROAR">
