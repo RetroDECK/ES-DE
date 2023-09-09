@@ -41,6 +41,7 @@ Preconfigured emulator locations:
 
 Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
+Emulators\3dSen\3dSen.exe
 Emulators\AppleWin\AppleWin.exe
 Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
 Emulators\ares\ares.exe

@@ -47,6 +47,15 @@
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
+    <emulator name="3DSEN-WINE">
+        <!-- Nintendo NES and Famicom emulator 3dSen -->
+        <rule type="staticpath">
+            <entry>~/Applications/3dSen/wine*.AppImage</entry>
+            <entry>~/.local/share/applications/3dSen/wine*.AppImage</entry>
+            <entry>~/.local/bin/3dSen/wine*.AppImage</entry>
+            <entry>~/bin/3dSen/wine*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="ARES">
         <!-- Multi-system emulator ares -->
         <rule type="systempath">
