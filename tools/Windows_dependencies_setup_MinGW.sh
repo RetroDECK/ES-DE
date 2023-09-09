@@ -125,18 +125,18 @@ cd ..
 echo -e "\nSetting up SDL"
 rm -rf SDL2*
 
-curl -O https://libsdl.org/release/SDL2-devel-2.28.1-mingw.tar.gz
+curl -O https://libsdl.org/release/SDL2-devel-2.28.3-mingw.tar.gz
 
-tar xvzf SDL2-devel-2.28.1-mingw.tar.gz
+tar xvzf SDL2-devel-2.28.3-mingw.tar.gz
 
-if [ ! -d SDL2-2.28.1 ]; then
+if [ ! -d SDL2-2.28.3 ]; then
   echo "SDL directory is missing, aborting."
   exit
 fi
 
 sleep 3
 
-mv SDL2-2.28.1 SDL2
+mv SDL2-2.28.3 SDL2
 
 mv SDL2/x86_64-w64-mingw32/include/SDL2 SDL2/
 cp -p SDL2/x86_64-w64-mingw32/lib/libSDL2main.a ..

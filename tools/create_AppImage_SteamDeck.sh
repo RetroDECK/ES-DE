@@ -13,8 +13,8 @@
 # How many CPU threads to use for the compilation.
 JOBS=4
 
-SDL_RELEASE_TAG=release-2.28.1
-SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.2800.1
+SDL_RELEASE_TAG=release-2.28.3
+SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.2800.3
 
 echo "Building Steam Deck AppImage..."
 
