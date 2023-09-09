@@ -1,7 +1,8 @@
-<!-- Last updated with information from MAME driver file mame0256.xml -->
+<!-- Last updated with information from MAME driver file mame0258.xml -->
 <device>22vp931</device>
 <device>3c505</device>
 <device>3xtwin</device>
+<device>4dparprn</device>
 <device>a1000kbd_de</device>
 <device>a1000kbd_dk</device>
 <device>a1000kbd_fr</device>
@@ -386,6 +387,7 @@
 <device>cit101_kbd</device>
 <device>cit220p_kbd</device>
 <device>clgd542x</device>
+<device>clgd5465_laguna</device>
 <device>cmdhd</device>
 <device>cmdrc2</device>
 <device>cmi_ankbd</device>
@@ -438,7 +440,9 @@
 <device>crvfdc01</device>
 <device>crvfdc02</device>
 <device>csd1</device>
+<device>cuda302</device>
 <device>cuda</device>
+<device>cudalite</device>
 <device>cw7501</device>
 <device>d2fdc</device>
 <device>d9060</device>
@@ -562,6 +566,7 @@
 <device>hdc</device>
 <device>hdc_ec1841</device>
 <device>he191_3425</device>
+<device>heath_gp19_tlb</device>
 <device>heath_super19_tlb</device>
 <device>heath_tlb</device>
 <device>heath_ultra_tlb</device>
@@ -691,6 +696,7 @@
 <device>md_kbd</device>
 <device>md_rom_svp</device>
 <device>mg1_kbd_device</device>
+<device>mga2064w</device>
 <device>microdisc</device>
 <device>microtan_kbd_mt009</device>
 <device>microtouch</device>
@@ -743,6 +749,7 @@
 <device>mvme123</device>
 <device>mvme180</device>
 <device>mvme181</device>
+<device>mvme187</device>
 <device>mvme327a</device>
 <device>mvme350</device>
 <device>nabupc_keyboard</device>
@@ -846,6 +853,8 @@
 <device>psion_3link_ser</device>
 <device>psx_cd</device>
 <device>psxgboost</device>
+<device>pvga1a</device>
+<device>pvga1a_jk</device>
 <device>px320a</device>
 <device>ql_cumanafdi</device>
 <device>ql_gold</device>
@@ -881,6 +890,11 @@
 <device>rc2014_rom_ram_512k</device>
 <device>rc2014_switchable_rom</device>
 <device>riva128</device>
+<device>riva128zx</device>
+<device>rivatnt2</device>
+<device>rivatnt2_m64</device>
+<device>rivatnt2_ultra</device>
+<device>rivatnt</device>
 <device>rolm_pdc</device>
 <device>rolm_smioc</device>
 <device>rtpc_kbd</device>
@@ -1058,6 +1072,7 @@
 <device>v102_kbd</device>
 <device>v1050kb</device>
 <device>v550_kbd</device>
+<device>vanta</device>
 <device>vector4_kbd</device>
 <device>vic1515</device>
 <device>vic1520</device>
@@ -1087,6 +1102,14 @@
 <device>wangpc_wdc</device>
 <device>wd1002a_wx1</device>
 <device>wd1007a</device>
+<device>wd90c00_jk</device>
+<device>wd90c11_lr</device>
+<device>wd90c30_lr</device>
+<device>wd90c31a_lr</device>
+<device>wd90c31a_zs</device>
+<device>wd90c31_lr</device>
+<device>wd90c33_zz</device>
+<device>wd90c90_jk</device>
 <device>wdxt_gen</device>
 <device>wordpro</device>
 <device>wyse700</device>
