@@ -259,9 +259,8 @@ void ViewController::noGamesDialog()
                 "THIS WILL CREATE DIRECTORIES FOR ALL THE\n"
                 "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
                 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S\n"
-                "ADVICED TO REMOVE THE ONES YOU DON'T NEED\n\n"
-                "PROCEED?",
-                "YES",
+                "ADVICED TO REMOVE THE ONES YOU DON'T NEED",
+                "PROCEED",
                 [this] {
                     if (!SystemData::createSystemDirectories()) {
                         mWindow->pushGui(new GuiMsgBox(HelpStyle(),
@@ -280,7 +279,7 @@ void ViewController::noGamesDialog()
                                                        true));
                     }
                 },
-                "NO", nullptr, "", nullptr, true));
+                "CANCEL", nullptr, "", nullptr, true));
         },
         "QUIT",
         [] {

@@ -20,7 +20,8 @@
 #include "guis/GuiScraperMulti.h"
 
 GuiScraperMenu::GuiScraperMenu(std::string title)
-    : mMenu {title}
+    : mRenderer {Renderer::getInstance()}
+    , mMenu {title}
 {
     // Scraper service.
     mScraper =
@@ -144,7 +145,8 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
 
     setSize(mMenu.getSize());
 
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
+    setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                mRenderer->getScreenHeight() * 0.13f);
 
     // Make sure that the hash searching max file size is within the allowed range.
     if (Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize") < 32)
@@ -1232,19 +1234,20 @@ void GuiScraperMenu::pressedStart()
         if ((*it)->getPlatformIds().empty()) {
             std::string warningString;
             if (sys.size() == 1) {
-                warningString = "The selected system does not have a\n"
-                                "platform set, results may be inaccurate\n"
-                                "Continue anyway?";
+                warningString = "THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE "
+                                "INACCURATE";
             }
             else {
-                warningString = "At least one of your selected\n"
-                                "systems does not have a platform\n"
-                                "set, results may be inaccurate\n"
-                                "Continue anyway?";
+                warningString = "AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM "
+                                "SET, RESULTS MAY BE INACCURATE";
             }
-            mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(warningString),
-                                           "YES", std::bind(&GuiScraperMenu::start, this), "NO",
-                                           nullptr));
+            mWindow->pushGui(
+                new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(warningString), "PROCEED",
+                              std::bind(&GuiScraperMenu::start, this), "CANCEL", nullptr, "",
+                              nullptr, false, true,
+                              (mRenderer->getIsVerticalOrientation() ?
+                                   0.80f :
+                                   0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
             return;
         }
     }

@@ -643,10 +643,9 @@ void GuiMenu::openUIOptions()
                 msg.append("FLAGGED SUITABLE FOR CHILDREN\n");
             }
             msg.append("TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE: \n");
-            msg.append(UIModeController::getInstance()->getFormattedPassKeyStr() + "\n\n");
-            msg.append("DO YOU WANT TO PROCEED?");
+            msg.append(UIModeController::getInstance()->getFormattedPassKeyStr());
             mWindow->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), msg, "YES",
+                this->getHelpStyle(), msg, "PROCEED",
                 [this, selectedMode] {
                     LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '"
                                   << selectedMode << "'.";
@@ -673,7 +672,7 @@ void GuiMenu::openUIOptions()
                                                               false);
                     mWindow->invalidateCachedBackground();
                 },
-                "NO", nullptr));
+                "CANCEL", nullptr, "", nullptr, true));
         }
         else {
             LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '" << selectedMode
@@ -1136,27 +1135,19 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
     // the input device settings menu later on.
     settings->setNeedsSaving(false);
 
-    std::string message;
-    if (mRenderer->getIsVerticalOrientation()) {
-        message = "THE KEYBOARD AND CONTROLLERS ARE\n"
-                  "AUTOMATICALLY CONFIGURED, BUT USING\n"
-                  "THIS CONFIGURATION TOOL YOU CAN\n"
-                  "OVERRIDE THE DEFAULT BUTTON MAPPINGS\n"
-                  "(THIS WILL NOT AFFECT THE HELP PROMPTS)\n"
-                  "CONTINUE?";
-    }
-    else {
-        message = "THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY\n"
-                  "CONFIGURED, BUT USING THIS CONFIGURATION TOOL\n"
-                  "YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS\n"
-                  "(THIS WILL NOT AFFECT THE HELP PROMPTS)\n"
-                  "CONTINUE?";
-    }
+    std::string message {
+        "THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+        "CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT "
+        "AFFECT THE HELP PROMPTS)"};
 
     Window* window {mWindow};
     window->pushGui(new GuiMsgBox(
-        getHelpStyle(), message, "YES",
-        [window] { window->pushGui(new GuiDetectDevice(false, false, nullptr)); }, "NO", nullptr));
+        getHelpStyle(), message, "PROCEED",
+        [window] { window->pushGui(new GuiDetectDevice(false, false, nullptr)); }, "CANCEL",
+        nullptr, "", nullptr, false, true,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.84f :
+             0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
 }
 
 void GuiMenu::openOtherOptions()
@@ -1655,8 +1646,8 @@ void GuiMenu::openUtilities()
             "THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT WILL ALSO "
             "UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT WILL NOT DELETE OR "
             "MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP TIMES IT'S RECOMMENDED TO "
-            "DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER RUNNING THIS UTILITY. PROCEED?",
-            "YES",
+            "DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER RUNNING THIS UTILITY",
+            "PROCEED",
             [this] {
                 if (!SystemData::createSystemDirectories()) {
                     mWindow->pushGui(new GuiMsgBox(
@@ -1687,7 +1678,7 @@ void GuiMenu::openUtilities()
                                            0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
-            "NO", nullptr, "", nullptr, false, true,
+            "CANCEL", nullptr, "", nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.80f :
                  0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1706,10 +1697,9 @@ void GuiMenu::openUtilities()
     row.makeAcceptInputHandler([this] {
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(),
-            "THIS WILL RESCAN YOUR ROM DIRECTORY\n"
-            "FOR CHANGES SUCH AS ADDED OR REMOVED\n"
-            "GAMES AND SYSTEMS, PROCEED?",
-            "YES",
+            "THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED GAMES AND "
+            "SYSTEMS",
+            "PROCEED",
             [this] {
                 if (CollectionSystemsManager::getInstance()->isEditing())
                     CollectionSystemsManager::getInstance()->exitEditMode();
@@ -1722,7 +1712,10 @@ void GuiMenu::openUtilities()
                 }
                 ViewController::getInstance()->rescanROMDirectory();
             },
-            "NO", nullptr));
+            "CANCEL", nullptr, "", nullptr, false, true,
+            (mRenderer->getIsVerticalOrientation() ?
+                 0.80f :
+                 0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
     });
     s->addRow(row);
 

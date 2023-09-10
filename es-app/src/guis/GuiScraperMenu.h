@@ -57,6 +57,7 @@ private:
     std::shared_ptr<OptionListComponent<SystemData*>> mSystems;
     std::shared_ptr<SliderComponent> mScraperRetryOnErrorCount;
 
+    Renderer* mRenderer;
     MenuComponent mMenu;
 };
 

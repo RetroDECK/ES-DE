@@ -997,7 +997,7 @@ void GuiMetaDataEd::close()
                 save();
                 closeFunc();
             },
-            "NO", closeFunc));
+            "NO", closeFunc, "", nullptr, true));
     }
     else {
         // Always save if the media files have been changed (i.e. newly scraped images).

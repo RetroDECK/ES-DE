@@ -374,7 +374,8 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
                 [this] {
                     delete this;
                     return true;
-                }));
+                },
+                "", nullptr, true));
         }
         else {
             delete this;

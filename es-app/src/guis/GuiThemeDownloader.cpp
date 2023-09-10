@@ -724,7 +724,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = "DOWNLOADING THEME";
                     },
-                    "ABORT", [] { return; }, "", nullptr, true, true,
+                    "CANCEL", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -752,7 +752,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = "DOWNLOADING THEME";
                     },
-                    "ABORT", [] { return; }, "", nullptr, true, true,
+                    "CANCEL", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -779,7 +779,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = "DOWNLOADING THEME";
                     },
-                    "ABORT", [] { return; }, "", nullptr, true, true,
+                    "CANCEL", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -789,7 +789,7 @@ void GuiThemeDownloader::populateGUI()
                     getHelpStyle(),
                     "THEME REPOSITORY \"" + theme.reponame +
                         "\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR CHANGES "
-                        "OR ABORT TO SKIP ALL UPDATES FOR THIS THEME",
+                        "OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME",
                     "PROCEED",
                     [this, theme] {
                         std::promise<bool>().swap(mPromise);
@@ -799,7 +799,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_UPDATING;
                         mStatusText = "UPDATING THEME";
                     },
-                    "ABORT", [] { return; }, "", nullptr, true, true,
+                    "CANCEL", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1173,7 +1173,7 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
                 makeInventory();
                 updateGUI();
             },
-            "ABORT", nullptr, "", nullptr, true, true,
+            "CANCEL", nullptr, "", nullptr, true, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.70f :
                  0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1242,7 +1242,7 @@ bool GuiThemeDownloader::fetchThemesList()
                     mStatusText = "DOWNLOADING THEMES LIST";
                     return false;
                 },
-                "ABORT",
+                "CANCEL",
                 [&] {
                     delete this;
                     return false;
@@ -1280,7 +1280,7 @@ bool GuiThemeDownloader::fetchThemesList()
                 mStatusText = "DOWNLOADING THEMES LIST";
                 return false;
             },
-            "ABORT",
+            "CANCEL",
             [&] {
                 delete this;
                 return false;
