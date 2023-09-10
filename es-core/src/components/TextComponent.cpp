@@ -378,9 +378,14 @@ void TextComponent::setHorizontalScrolling(bool state)
     resetComponent();
     mHorizontalScrolling = state;
 
-    if (mHorizontalScrolling)
+    if (mHorizontalScrolling) {
         mScrollSpeed =
             mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f * mScrollSpeedMultiplier;
+    }
+    else if (mTextCache != nullptr) {
+        mTextCache->setClipRegion(
+            glm::vec4 {0.0f, 0.0f, mSize.x * mRelativeScale, mTextCache->metrics.size.y});
+    }
 }
 
 void TextComponent::update(int deltaTime)
