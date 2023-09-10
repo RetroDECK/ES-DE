@@ -811,17 +811,6 @@ void SystemView::populate()
         }
     }
 
-    if (mPrimary->getNumEntries() == 0) {
-        // Something is wrong, there is not a single system to show, check if UI mode is not full.
-        if (!UIModeController::getInstance()->isUIModeFull()) {
-            Settings::getInstance()->setString("UIMode", "full");
-            mWindow->pushGui(new GuiMsgBox(
-                getHelpStyle(),
-                "The selected UI mode has nothing to show,\n returning to UI mode \"Full\"", "OK",
-                nullptr));
-        }
-    }
-
     mFadeTransitions = (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
                             "TransitionsSystemToSystem")) == ViewTransitionAnimation::FADE);
 }
