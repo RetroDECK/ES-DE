@@ -740,6 +740,18 @@
             <entry>~/.local/share/flatpak/exports/bin/io.github.simple64.simple64</entry>
         </rule>
     </emulator>
+    <emulator name="SKYEMU">
+        <!-- Nintendo Game Boy, Game Boy Color, Game Boy Advance and DS emulator SkyEmu -->
+        <rule type="systempath">
+            <entry>SkyEmu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/SkyEmu/SkyEmu</entry>
+            <entry>~/.local/share/applications/SkyEmu/SkyEmu</entry>
+            <entry>~/.local/bin/SkyEmu/SkyEmu</entry>
+            <entry>~/bin/SkyEmu/SkyEmu</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="systempath">

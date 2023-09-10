@@ -670,6 +670,16 @@
             <entry>%ESPATH%\..\Emulators\simple64\simple64-gui.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SKYEMU">
+        <!-- Nintendo Game Boy, Game Boy Color, Game Boy Advance and DS emulator SkyEmu -->
+        <rule type="systempath">
+            <entry>SkyEmu.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\SkyEmu\SkyEmu.exe</entry>
+            <entry>%ESPATH%\..\Emulators\SkyEmu\SkyEmu.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="systempath">
