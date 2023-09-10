@@ -51,7 +51,6 @@ private:
     std::shared_ptr<TextComponent> mMsg;
     std::vector<std::shared_ptr<ButtonComponent>> mButtons;
     std::shared_ptr<ComponentGrid> mButtonGrid;
-    std::function<void()> mAcceleratorFunc;
     bool mDisableBackButton;
     bool mDeleteOnButtonPress;
     float mMaxWidthMultiplier;

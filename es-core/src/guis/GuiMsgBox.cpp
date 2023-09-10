@@ -60,20 +60,6 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
         mButtons.push_back(std::make_shared<ButtonComponent>(
             name3, name3, std::bind(&GuiMsgBox::deleteMeAndCall, this, func3)));
 
-    // Set accelerator automatically (button to press when "B" is pressed).
-    if (mButtons.size() == 1) {
-        mAcceleratorFunc = mButtons.front()->getPressedFunc();
-    }
-    else {
-        for (auto it = mButtons.cbegin(); it != mButtons.cend(); ++it) {
-            if (Utils::String::toUpper((*it)->getText()) == "OK" ||
-                Utils::String::toUpper((*it)->getText()) == "NO") {
-                mAcceleratorFunc = (*it)->getPressedFunc();
-                break;
-            }
-        }
-    }
-
     // Put the buttons into a ComponentGrid.
     mButtonGrid = MenuComponent::makeButtonGrid(mButtons);
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 1}, true, false, glm::ivec2 {1, 1},
@@ -146,19 +132,9 @@ void GuiMsgBox::changeText(const std::string& newText)
 
 bool GuiMsgBox::input(InputConfig* config, Input input)
 {
-    // Special case for when GuiMsgBox comes up to report errors before
-    // anything has been configured.
-    if (config->getDeviceId() == DEVICE_KEYBOARD && !config->isConfigured() && input.value &&
-        (input.id == SDLK_RETURN || input.id == SDLK_ESCAPE || input.id == SDLK_SPACE)) {
-        mAcceleratorFunc();
+    if (!mDisableBackButton && config->isMappedTo("b", input) && input.value != 0) {
+        delete this;
         return true;
-    }
-
-    if (!mDisableBackButton) {
-        if (mAcceleratorFunc && config->isMappedTo("b", input) && input.value != 0) {
-            mAcceleratorFunc();
-            return true;
-        }
     }
 
     return GuiComponent::input(config, input);
