@@ -596,6 +596,18 @@
             <entry>~/bin/punes/punes</entry>
         </rule>
     </emulator>
+    <emulator name="QUASI88">
+        <!-- NEC PC-8800 series emulator QUASI88 -->
+        <rule type="systempath">
+            <entry>quasi88</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/quasi88/quasi88</entry>
+            <entry>~/.local/share/applications/quasi88/quasi88</entry>
+            <entry>~/.local/bin/quasi88/quasi88</entry>
+            <entry>~/bin/quasi88/quasi88</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="systempath">

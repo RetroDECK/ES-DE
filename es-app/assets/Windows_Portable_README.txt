@@ -90,6 +90,7 @@ Emulators\prboom-plus\prboom-plus.exe
 Emulators\PrimeHack\Dolphin.exe
 Emulators\Project64\Project64.exe
 Emulators\punes\punes64.exe
+Emulators\quasi88\QUASI88.exe
 Emulators\redream\redream.exe
 Emulators\RMG\RMG.exe
 Emulators\RPCS3\rpcs3.exe

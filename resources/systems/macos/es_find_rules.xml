@@ -225,6 +225,13 @@
             <entry>/Applications/PrBoom-Plus.app/Contents/MacOS/PrBoom-Plus</entry>
         </rule>
     </emulator>
+    <emulator name="QUASI88">
+        <!-- NEC PC-8800 series emulator QUASI88 -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/quasi88</entry>
+            <entry>/usr/local/bin/quasi88</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="staticpath">

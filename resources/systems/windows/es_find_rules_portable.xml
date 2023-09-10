@@ -359,6 +359,13 @@
             <entry>%ESPATH%\..\Emulators\punes\punes64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="QUASI88">
+        <!-- NEC PC-8800 series emulator QUASI88 -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\quasi88\QUASI88.exe</entry>
+            <entry>%ESPATH%\..\Emulators\quasi88\QUASI88.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="staticpath">

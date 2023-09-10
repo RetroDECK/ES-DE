@@ -1269,8 +1269,9 @@
         <name>pc88</name>
         <fullname>NEC PC-8800 Series</fullname>
         <path>%ROMPATH%/pc88</path>
-        <extension>.d88 .D88 .u88 .U88 .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.88d .88D .cmt .CMT .d88 .D88 .m3u .M3U .t88 .T88 .u88 .U88</extension>
         <command label="QUASI88">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quasi88_libretro.so %ROM%</command>
+        <command label="QUASI88 (Standalone)">%EMULATOR_QUASI88% -romdir ~/.quasi88 %ROM%</command>
         <platform>pc88</platform>
         <theme>pc88</theme>
     </system>
