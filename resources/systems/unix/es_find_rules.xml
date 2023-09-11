@@ -56,6 +56,18 @@
             <entry>~/bin/3dSen/wine*.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="ADVANCEMAME">
+        <!-- Arcade emulator AdvanceMAME -->
+        <rule type="systempath">
+            <entry>advmame</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/advancemame/advmame</entry>
+            <entry>~/.local/share/applications/advancemame/advmame</entry>
+            <entry>~/.local/bin/advancemame/advmame</entry>
+            <entry>~/bin/advancemame/advmame</entry>
+        </rule>
+    </emulator>
     <emulator name="ARES">
         <!-- Multi-system emulator ares -->
         <rule type="systempath">

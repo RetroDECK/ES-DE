@@ -52,6 +52,16 @@
             <entry>%ESPATH%\..\Emulators\3dSen\3dSen.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ADVANCEMAME">
+        <!-- Arcade emulator AdvanceMAME -->
+        <rule type="systempath">
+            <entry>advmame.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\AdvanceMAME\advmame.exe</entry>
+            <entry>%ESPATH%\..\Emulators\AdvanceMAME\advmame.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="APPLEWIN">
         <!-- Apple II emulator AppleWin -->
         <rule type="systempath">
