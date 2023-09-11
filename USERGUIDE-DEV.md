@@ -570,7 +570,7 @@ Themes are downloaded from their respective GitHub or GitLab sites using _Git_ (
 
 If you have manually downloaded any of the themes from the [official themes list](https://gitlab.com/es-de/themes/themes-list) then these would need to be downloaded again as they will not contain the necessary information required by the theme downloader. A dialog will be presented to inform you about this and the theme directory will be renamed by adding the _DISABLED extension to its name. To conserve disk space it's a good idea to manually delete these _DISABLED directories outside of ES-DE.
 
-If you have customized a theme by for instance modifying any of its XML files, then this will be highlighted with an exclamation mark and the text _LOCAL CHANGES_ in the theme downloader interface. If you attempt to fetch updates for such a theme you will be asked a question of whether to overwrite your local changes, or whether to abort. If you have however added additional files to the theme that are not included in the theme repository, then these will not interfere and you can go ahead and fetch theme updates without any risk of having your local files being deleted. But there is a special (although unlikely) situation, if you add files that are not part of the theme repository but that are later added by the theme developer as well, then your local copies of any such files will be ovewritten when fetching theme updates.
+If you have customized a theme by for instance modifying any of its XML files, then this will be highlighted with an exclamation mark and the text _LOCAL CHANGES_ in the theme downloader interface. If you attempt to fetch updates for such a theme you will be asked a question of whether to overwrite your local changes, or whether to cancel. If you have however added additional files to the theme that are not included in the theme repository, then these will not interfere and you can go ahead and fetch theme updates without any risk of having your local files being deleted. But there is a special (although unlikely) situation, if you add files that are not part of the theme repository but that are later added by the theme developer as well, then your local copies of any such files will be ovewritten when fetching theme updates.
 
 In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. The latter is named _themes-list_ so by just deleting this directory (i.e. `~/.emulationstation/themes/themes-list`) you'll reset the theme downloader to its initial state.
 
@@ -752,10 +752,13 @@ The following manually downloaded emulators are supported when using the bundled
 | flash                            | Lightspark       | lightspark/lightspark             |
 | flash                            | Ruffle           | ruffle/ruffle                     |
 | fmtowns                          | Tsugaru          | tsugaru/Tsugaru_CUI               |
+| gb/gba/gbc/nds                   | SkyEmu           | SkyEmu/SkyEmu                     |
 | gb/gbc                           | Gearboy          | gearboy/gearboy                   |
 | model3                           | Supermodel       | Supermodel/supermodel             |
 | famicom/nes                      | puNES            | punes/punes                       |
+| mame-advmame                     | AdvanceMAME      | advancemame/advmame               |
 | oric                             | Oricutron        | oricutron/Oricutron               |
+| pc88                             | QUASI88          | quasi88/quasi88                   |
 | pico8                            | PICO-8           | pico-8/pico8                      |
 | psvita                           | Vita3K           | Vita3K/Vita3K                     |
 | samcoupe                         | SimCoupé         | simcoupe/simcoupe                 |
@@ -779,6 +782,12 @@ The same is true for Cemu:
 ```
 cd ~/Applications/Cemu
 chmod +x Cemu
+```
+
+And for SkyEmu:
+```
+cd ~/Applications/SkyEmu
+chmod +x SkyEmu
 ```
 
 In addition to the above there are a couple of Windows emulators that need to run via Wine. Detailed setup instructions for these can be found elsewhere in this guide, but here's a table of the required installation paths:
@@ -1081,6 +1090,8 @@ This is required by the TheGamesDB scraper where the expanded filenames are used
 BIOS and device files must be placed together with the ROM files in the game system directory and not in the MAME configuration/home directory. It's pointless to separate potentially hundreds of BIOS and device files from the game files, and ES-DE will also automatically filter out such files. This means they will never show up in the gamelist. But this only applies to files that are listed in the regular MAME driver file, so BIOSes and devices for systems like MESS will not be filtered out. You'll instead need to manually hide these files using the _Hidden_ option in the metadata editor.
 
 If using the standalone release of FinalBurn Neo you need to define the ROM directory in the fbneo.ini file or via the user interface as this emulator does not support passing the full path to the game ROM on game launch (see the comments about Model 2 Emulator below for more details).
+
+Likewise if using AdvanceMAME you need to define the ROM directory in the advmame.rc configuration file.
 
 **Sega Model 2**
 
@@ -3386,7 +3397,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)**             | Yes          | See the specific _Bally Astrocade_ section elsewhere in this guide |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>Stella **(Standalone)**,<br>Gopher2600 **(Standalone)** [UW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)** | Yes          | Single archive or ROM file |
-| atari7800             | Atari 7800 ProSystem                           | ProSystem                         |                                   | Yes          | Single archive or ROM file |
+| atari7800             | Atari 7800 ProSystem                           | ProSystem                         | MAME **(Standalone)**             | Yes          | Single archive or ROM file |
 | atari800              | Atari 800                                      | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
 | atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | BigPEmu **(Standalone**) [W],<br>BigPEmu **(Wine)** [U],<br>MAME **(Standalone)** | Yes for MAME | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
 | atarijaguarcd         | Atari Jaguar CD                                | BigPEmu **(Standalone**) [W],<br>BigPEmu **(Wine)** [U] |                                   | No           | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
@@ -3427,9 +3438,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
 | gamecom               | Tiger Electronics Game.com                     | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
-| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
-| gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>VBA Next,<br>gpSP,<br>ares **(Standalone)** | Yes for ares      | Single archive or ROM file |
-| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)**,<br>SkyEmu **(Standalone)** | No           | Single archive or ROM file |
+| gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>VBA Next,<br>gpSP,<br>ares **(Standalone)**,<br>SkyEmu **(Standalone)** | Yes for ares      | Single archive or ROM file |
+| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>Mesen **(Standalone)** [UW],<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)**,<br>SkyEmu **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW],<br>Triforce **(Standalone)** [UW] | No           | Disc image file for single-disc games, .m3u playlist for multi-disc games |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | gmaster               | Hartung Game Master                            | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file |
@@ -3443,8 +3454,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | MAME Mac SE Bootable **(Standalone)** | MAME Mac SE Boot Disk **(Standalone)**,<br>MAME Mac Plus Bootable **(Standalone)**,<br>MAME Mac Plus Boot Disk **(Standalone)**,<br>Basilisk II **(Standalone)**,<br>SheepShaver **(Standalone)** | Yes          | See the specific _Apple Macintosh_ section elsewhere in this guide |
 | mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW],<br>_Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
-| mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   | Depends      |                                      |
-| mame-mame4all         | MAME4ALL                                       | _Placeholder_                     |                                   | Depends      |                                      |
+| mame-advmame          | AdvanceMAME                                    | AdvanceMAME **(Standalone)** [UW] |                                   | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>ares **(Standalone)** | Yes          |                                      |
 | megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>ares **(Standalone)** | Yes          |                                      |
@@ -3467,7 +3477,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW] | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | Mupen64Plus **(Standalone)**,<br>ParaLLEl N64,<br>simple64 **(Standalone)** [UW],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>Project64 **(Standalone)** [W],<br>ares **(Standalone)**,<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64 [UW],<br>Mupen64Plus-Next [M] | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>ares **(Standalone)** | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
-| nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** | No           | Single archive or ROM file |
+| nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)**,<br>SkyEmu **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW],<br>MAME **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
@@ -3479,7 +3489,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | oric                  | Tangerine Computer Systems Oric                | Oricutron **(Standalone)** [UW]   |                                   |              | See the specific _Tangerine Computer Systems Oric_ section elsewhere in this guide |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
 | pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** | No           | See the specific _DOS / PC_ section elsewhere in this guide |
-| pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   |              |                                      |
+| pc88                  | NEC PC-8800 Series                             | QUASI88                           | QUASI88 **(Standalone)**          | Yes          |                                      |
 | pc98                  | NEC PC-9800 Series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | Yes          |                                      |
