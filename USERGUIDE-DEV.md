@@ -1500,6 +1500,87 @@ After doing this you should end up with something like the following:
 ```
 As an alternative you can add Lutris games to the Ports system using the procedure described above.
 
+### Microsoft Windows 3.x and 9x
+
+There are multiple ways to run Windows 3.x and Windows 9x games and ES-DE provides support for two main options. The first approach is to run these games inside a complete operating system emulated via DOSBox and the second approach is to use shortcuts, scripts or AppImages to run the games separately via applications like Wine or Lutris or by using source ports and similar.
+
+The second approach is very flexible but does not lead to the most authentic experience in many cases. It will also not be covered in detail here. As long as you have a script, shortcut or AppImage that can be launched outside ES-DE you should be able to place it into the `~/ROMs/windows3x` or `~/ROMs/windows9x` directories and launch it inside ES-DE as well (assuming you have selected the correct alternative emulator entry). If you've named the files appropriately it should also be possible to scrape them.
+
+As for the default approach which is to emulate an entire operating system and launch games from there, the DOSBox-X standalone emulator is required. Although it should be possible to use another DOSBox fork, this is something that would need a custom system configuration entry and possibly a slightly different configuration than what is described below.
+
+The setup example covered here is for Windows 3.x but the process is virtually identical for Windows 9x.
+
+Some preparation steps are not described here as they are way beyond the scope of this guide, the most important of these is to prepare a bootable harddisk image with the operating system and all necessary drivers. There are many good DOSBox resources available online on how to accomplish this.
+
+Assuming you have a bootable harddisk image, the following directory structure could be setup:
+```
+~/ROMs/windows3x/CD Images/
+~/ROMs/windows3x/Disk Images/
+~/ROMs/windows3x/Install/
+```
+
+The `CD Images` directory is optional and will only be needed if you intend to run CD-based games. The `Disk Images` directory is where you'll place your harddrive images. You may choose to have a single image or multiple images depending on your requirements. For instance it could be a good idea to prepare separate images for different emulated hardware or screen resolutions so you won't have to change settings back and forth when launching games that have different prerequisites.
+
+The `Install` directory is optional and could be used to access installation media that is not CD-based, such as unpacked floppy images or .exe installers. It's probably a good idea to only mount this directory when needed.
+
+For this example we assume you have setup Windows 3.11 at 640x480 and 1024x768 screen resolutions:
+```
+~/ROMs/windows3x/CD Images/
+~/ROMs/windows3x/Disk Images/Win311_640x480.img
+~/ROMs/windows3x/Disk Images/Win311_1024x768.img
+~/ROMs/windows3x/Install/
+```
+
+We now want to setup two games, the CD-based game MYST that should run at 640x480 resolution and the floppy-installed game SimTower which should run at 1024x768 resolution. It's assumed that both of these games have already been installed to the disk images.
+
+There are multiple ways to configure DOSBox to launch games and mount disk images, but the recommended approach covered here is to use a dummy .bat file and a different DOSBox configuration file per game that contains custom _autoexec_ entries.
+
+As a first step create an empty .bat file per game. As we need a separate directory per game it's recommened to use the _directories interpreted as files_ functionality so the games will be displayed as if they were single file entries:
+```
+~/ROMs/windows3x/MYST.bat/MYST.bat
+~/ROMs/windows3x/SimTower.bat/SimTower.bat
+```
+
+Following this add a `dosbox-x.conf` file to each of the game directories. This is a good thing as it makes it possible to tune setting like CPU speed and available memory on a per-game basis and it's also required to use specific autoexec entries per game.
+
+The multitude of settings in these configuration files are beyond the scope of this guide and are instead covered by the DOSBox-X documentation, but the autoexec section is relevant for our setup and is therefore covered briefly here.
+
+The entire file structure could now look something like the following:
+```
+~/ROMs/windows3x/CD Images/MYST/MYST.iso
+~/ROMs/windows3x/Disk Images/Win311_640x480.img
+~/ROMs/windows3x/Disk Images/Win311_1024x768.img
+~/ROMs/windows3x/Install/
+~/ROMs/windows3x/MYST.bat/MYST.bat
+~/ROMs/windows3x/MYST.bat/dosbox-x.conf
+~/ROMs/windows3x/SimTower.bat/SimTower.bat
+~/ROMs/windows3x/SimTower.bat/dosbox-x.conf
+```
+
+Here is the autoexec section of the dosbox-x.conf file for MYST:
+
+```
+[autoexec]
+@echo off
+rem mount e "..\Install"
+imgmount d "..\CD Images\MYST\MYST.iso" -t cdrom
+imgmount c "..\Disk Images\Win311_640x480.img" -size 512,63,32,520
+boot -l c
+```
+
+And for SimTower:
+```
+[autoexec]
+@echo off
+rem mount e "..\Install"
+imgmount c "..\Disk Images\Win311_1024x768.img" -size 512,63,32,520
+boot -l c
+```
+
+The -size flag will need to be adapted to the geometry of the virtual harddrive as explained by the DOSBox-X documentation. Mounting of the `Install` directory is probably best left commented out until you actually need to install more games, utilities or drivers to the harddisk image.
+
+If you perform the setup as described above you'll have a single entry per game in the gamelist view that can be scraped and handled as any normal game, and you'll be able to apply per-game DOSBox settings while still limiting the number of harddisk images by sharing them between your games.
+
 ### Microsoft Xbox 360
 
 This system is emulated using [xenia](https://xenia.jp/), and although there are a lot of topics to consider for this emulator such as how to handle multi-disc games, DLCs etc. this section will only cover the basics on how to run single-disc ISO images and XBLA games. For the remaining details there are many resources available online.
@@ -3547,6 +3628,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW] | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |
 | windows               | Microsoft Windows                              | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | Shortcut (.desktop/.app/.lnk) file, script or AppImage |
+| windows3x             | Microsoft Windows 3.x                          | DOSBox-X **(Standalone)**         | _Shortcut or script (Suspend ES-DE)_,<br>_Shortcut or script (Keep ES-DE running)_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Microsoft Windows 3.x and 9x_ section elsewhere in this guide |
+| windows9x             | Microsoft Windows 9x                           | DOSBox-X **(Standalone)**         | _Shortcut or script (Suspend ES-DE)_,<br>_Shortcut or script (Keep ES-DE running)_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Microsoft Windows 3.x and 9x_ section elsewhere in this guide |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares [Benesse Pocket Challenge V2] **(Standalone)** | No           | Single archive or ROM file    |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file    |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file |

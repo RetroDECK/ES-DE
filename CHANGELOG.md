@@ -24,6 +24,8 @@
 * Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
 * Renamed the setting "Only show ROMs from gamelist.xml files" to "Only show games from gamelist.xml files
 * Added support for deleting installed themes from the theme downloader interface
+* Added support for the Microsoft Windows 3.x (windows3x) game system
+* Added support for the Microsoft Windows 9x (windows9x) game system
 * Removed support for the MAME4ALL (mame-mame4all) system
 * Added support for the AdvanceMAME (mame-advmame) system on Unix and Windows
 * Added Mesen standalone as an alternative emulator for 14 systems on Linux and Windows
@@ -31,8 +33,8 @@
 * Added SkyEmu standalone as an alternative emulator for the gb, gba, gbc and nds systems
 * Added MAME standalone as an alternative emulator for the atari7800 system
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
-* Added the .88d, .cmt and .t88 file extensions for the pc88 system
-* Removed the .7z and .zip file extensions for the pc88 system
+* Added the .88d, .cmt and .t88 file extensions to the pc88 system
+* Removed the .7z and .zip file extensions from the pc88 system
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine
 * (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine
 * (Linux) Added BigPEmu Wine as an alternative emulator for the atarijaguar system
