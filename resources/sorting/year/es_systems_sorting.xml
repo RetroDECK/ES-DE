@@ -674,6 +674,14 @@
         <systemsortname>1985</systemsortname>
     </system>
     <system>
+        <name>windows3x</name>
+        <systemsortname>1990</systemsortname>
+    </system>
+    <system>
+        <name>windows9x</name>
+        <systemsortname>1995</systemsortname>
+    </system>
+    <system>
         <name>wonderswan</name>
         <systemsortname>1999</systemsortname>
     </system>

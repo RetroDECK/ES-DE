@@ -674,6 +674,14 @@
         <systemsortname>Microsoft - OS - 1985</systemsortname>
     </system>
     <system>
+        <name>windows3x</name>
+        <systemsortname>Microsoft - OS - 1990</systemsortname>
+    </system>
+    <system>
+        <name>windows9x</name>
+        <systemsortname>Microsoft - OS - 1995</systemsortname>
+    </system>
+    <system>
         <name>wonderswan</name>
         <systemsortname>Bandai - Portable - 1999</systemsortname>
     </system>
