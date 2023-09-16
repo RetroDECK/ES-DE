@@ -51,7 +51,6 @@
 * macintosh: Apple Macintosh - consolegame.svg, controller.svg
 * megaduck: Creatronic Mega Duck - consolegame.svg
 * mess: MESS (Multi Emulator Super System) - consolegame.svg, controller.svg
-* microsoft: Microsoft Windows - consolegame.svg, controller.svg
 * model2: Sega Model 2 - consolegame.svg, controller.svg
 * model3: Sega Model 3 - consolegame.svg, controller.svg
 * moto: Thomson MO/TO series - consolegame.svg, controller.svg
@@ -98,6 +97,9 @@
 * vpinball: Visual Pinball - consolegame.svg, controller.svg
 * vsmile: VTech V.Smile - consolegame.svg, controller.svg
 * wasm4: WASM-4 Fantasy Console - consolegame.svg, controller.svg
+* windows: Microsoft Windows - consolegame.svg, controller.svg
+* windows3x: Microsoft Windows 3.x - consolegame.svg, controller.svg
+* windows9x: Microsoft Windows 9x - consolegame.svg, controller.svg
 * x1:  Sharp X1 - consolegame.svg
 * x68000: Sharp X68000 - consolegame.svg (image of actual console)
 * zmachine: Infocom Z-machine - consolegame.svg
