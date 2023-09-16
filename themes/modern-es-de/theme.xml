@@ -71,6 +71,7 @@
                 <textBackgroundColor>${placeholderColor}</textBackgroundColor>
                 <!-- Placeholder text -->
                 <text>${system.fullName}</text>
+                <textRelativeScale>0.92</textRelativeScale>
                 <textColor>${secondaryColor}</textColor>
                 <fontPath>${mainFont}</fontPath>
                 <fontSize>0.035</fontSize>
