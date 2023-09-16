@@ -103,7 +103,7 @@ namespace PlatformIds
         "pcengine",             // NEC PC Engine / TurboGrafx-16
         "pcenginecd",           // NEC PC Engine CD / TurboGrafx-CD
         "pcfx",                 // NEC PC-FX
-        "pcwindows",            // PC (Windows)
+        "pcwindows",            // Microsoft Windows
         "pico8",                // PICO-8 Fantasy Console
         "pokemini",             // Nintendo Pokémon Mini
         "ps2",                  // Sony PlayStation 2
@@ -145,6 +145,7 @@ namespace PlatformIds
         "wasm4",                // WASM-4 Fantasy Console
         "wii",                  // Nintendo Wii
         "wiiu",                 // Nintendo Wii U
+        "windows3x",            // Microsoft Windows 3.x
         "wonderswan",           // Bandai WonderSwan
         "wonderswancolor",      // Bandai WonderSwan Color
         "x1",                   // Sharp X1

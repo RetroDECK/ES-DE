@@ -1896,6 +1896,17 @@
         <theme>windows</theme>
     </system>
     <system>
+        <name>windows3x</name>
+        <fullname>Microsoft Windows 3.x</fullname>
+        <path>%ROMPATH%\windows3x</path>
+        <extension>.bat .BAT .lnk .LNK</extension>
+        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
+        <command label="Shortcut or script (Suspend ES-DE)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="Shortcut or script (Keep ES-DE running)">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <platform>windows3x</platform>
+        <theme>windows3x</theme>
+    </system>
+    <system>
         <name>wonderswan</name>
         <fullname>Bandai WonderSwan</fullname>
         <path>%ROMPATH%\wonderswan</path>
