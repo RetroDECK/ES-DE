@@ -50,6 +50,10 @@
         <systemsortname>Emerson - 1982</systemsortname>
     </system>
     <system>
+        <name>archimedes</name>
+        <systemsortname>Acorn Computers - 1987</systemsortname>
+    </system>
+    <system>
         <name>arduboy</name>
         <systemsortname>Kevin Bates - 2015</systemsortname>
     </system>

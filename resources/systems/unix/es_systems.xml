@@ -132,6 +132,18 @@
         <theme>arcadia</theme>
     </system>
     <system>
+        <name>archimedes</name>
+        <fullname>Acorn Archimedes</fullname>
+        <path>%ROMPATH%/archimedes</path>
+        <extension>.1dd .1DD .360 .adf .ADF .adl .ADL .adm .ADM .ads .ADS .apd .APD .bbc .BBC .chd .CHD .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .dfi .DFI .dsd .DSD .dsk .DSK .hfe .HFE .ima .IMA .imd .IMD .img .IMG .ipf .IPF .jfd .JFD .mfi .MFI .mfm .MFM .msa .MSA .ssd .SSD .st .ST .td0 .TD0 .ufi .UFI .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone) [Model A440/1]">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/archimedes aa4401 -flop1 %ROM%</command>
+        <command label="MAME (Standalone) [Model A3000]">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/archimedes aa3000 -flop1 %ROM%</command>
+        <command label="MAME (Standalone) [Model A310]">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/archimedes aa310 -flop1 %ROM%</command>
+        <command label="MAME (Standalone) [Model A540]">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/archimedes aa540 -flop1 %ROM%</command>
+        <platform>archimedes</platform>
+        <theme>archimedes</theme>
+    </system>
+    <system>
         <name>arduboy</name>
         <fullname>Arduboy Miniature Game System</fullname>
         <path>%ROMPATH%/arduboy</path>

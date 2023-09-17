@@ -27,6 +27,7 @@ namespace PlatformIds
         "apple2gs",             // Apple IIGS
         "arcade",               // Arcade
         "arcadia",              // Emerson Arcadia 2001
+        "archimedes",           // Acorn Archimedes
         "arduboy",              // Arduboy Miniature Game System
         "astrocde",             // Bally Astrocade
         "atari2600",            // Atari 2600

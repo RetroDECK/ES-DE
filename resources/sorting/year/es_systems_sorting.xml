@@ -50,6 +50,10 @@
         <systemsortname>1982</systemsortname>
     </system>
     <system>
+        <name>archimedes</name>
+        <systemsortname>1987</systemsortname>
+    </system>
+    <system>
         <name>arduboy</name>
         <systemsortname>2015</systemsortname>
     </system>

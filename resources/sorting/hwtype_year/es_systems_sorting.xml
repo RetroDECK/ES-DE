@@ -50,6 +50,10 @@
         <systemsortname>Console - 1982</systemsortname>
     </system>
     <system>
+        <name>archimedes</name>
+        <systemsortname>Computer - 1987</systemsortname>
+    </system>
+    <system>
         <name>arduboy</name>
         <systemsortname>Portable - 2015</systemsortname>
     </system>

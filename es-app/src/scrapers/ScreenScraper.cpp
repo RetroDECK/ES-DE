@@ -37,6 +37,7 @@ namespace
         {APPLE_IIGS, 217},
         {ARCADE, 75},
         {ARCADIA_2001, 94},
+        {ACORN_ARCHIMEDES, 84},
         {ARDUBOY, 263},
         {BALLY_ASTROCADE, 44},
         {ATARI_800, 43},

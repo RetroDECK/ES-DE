@@ -47,6 +47,7 @@ namespace
         {ATOMISWAVE, "23"},
         {SEGA_NAOMI, "23"},
         {ARCADIA_2001, "4963"},
+        {ACORN_ARCHIMEDES, "4944"},
         {BALLY_ASTROCADE, "4968"},
         {ATARI_800, "4943"},
         {ATARI_2600, "22"},
