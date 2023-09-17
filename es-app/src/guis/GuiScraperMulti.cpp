@@ -319,10 +319,18 @@ void GuiScraperMulti::finish()
                << mTotalSkipped << " GAME" << ((mTotalSkipped > 1) ? "S" : "") << " SKIPPED";
     }
 
-    mWindow->pushGui(new GuiMsgBox(getHelpStyle(), ss.str()));
-
-    mIsProcessing = false;
-    delete this;
+    // Pressing either OK or using the back button should delete us.
+    mWindow->pushGui(new GuiMsgBox(
+        getHelpStyle(), ss.str(), "OK",
+        [&] {
+            mIsProcessing = false;
+            delete this;
+        },
+        "", nullptr, "", nullptr,
+        [&] {
+            mIsProcessing = false;
+            delete this;
+        }));
 }
 
 std::vector<HelpPrompt> GuiScraperMulti::getHelpPrompts()

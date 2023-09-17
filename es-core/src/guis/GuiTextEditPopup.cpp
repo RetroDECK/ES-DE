@@ -186,7 +186,7 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
                     delete this;
                     return true;
                 },
-                "", nullptr, true));
+                "", nullptr, nullptr, true));
         }
         else {
             delete this;

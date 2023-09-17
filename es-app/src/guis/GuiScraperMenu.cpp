@@ -1244,7 +1244,7 @@ void GuiScraperMenu::pressedStart()
             mWindow->pushGui(
                 new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(warningString), "PROCEED",
                               std::bind(&GuiScraperMenu::start, this), "CANCEL", nullptr, "",
-                              nullptr, false, true,
+                              nullptr, nullptr, false, true,
                               (mRenderer->getIsVerticalOrientation() ?
                                    0.80f :
                                    0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));

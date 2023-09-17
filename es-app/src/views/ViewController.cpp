@@ -148,7 +148,8 @@ void ViewController::unsafeUpgradeDialog()
         "README.TXT FILE THAT CAN BE FOUND IN THE EMULATIONSTATION-DE "
         "DIRECTORY."};
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, true, true,
+        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
+        true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -170,7 +171,7 @@ void ViewController::invalidSystemsFileDialog()
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-        "", nullptr, "", nullptr, true, true,
+        "", nullptr, "", nullptr, nullptr, true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -220,7 +221,7 @@ void ViewController::noGamesDialog()
                                                            "ROM DIRECTORY SETTING SAVED, RESTART\n"
                                                            "THE APPLICATION TO RESCAN THE SYSTEMS",
                                                            "OK", nullptr, "", nullptr, "", nullptr,
-                                                           true, true));
+                                                           nullptr, true, true));
                         }
                     },
                     false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
@@ -245,7 +246,7 @@ void ViewController::noGamesDialog()
                                                        "ROM DIRECTORY SETTING SAVED, RESTART\n"
                                                        "THE APPLICATION TO RESCAN THE SYSTEMS",
                                                        "OK", nullptr, "", nullptr, "", nullptr,
-                                                       true));
+                                                       nullptr, true));
                     },
                     false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
                     currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
@@ -268,7 +269,7 @@ void ViewController::noGamesDialog()
                                                        "GENERATED, EXIT THE APPLICATION AND PLACE\n"
                                                        "YOUR GAMES IN THE NEWLY CREATED FOLDERS",
                                                        "OK", nullptr, "", nullptr, "", nullptr,
-                                                       true));
+                                                       nullptr, true));
                     }
                     else {
                         mWindow->pushGui(new GuiMsgBox(HelpStyle(),
@@ -276,10 +277,10 @@ void ViewController::noGamesDialog()
                                                        "PERMISSION PROBLEMS OR DISK FULL?\n\n"
                                                        "SEE THE LOG FILE FOR MORE DETAILS",
                                                        "OK", nullptr, "", nullptr, "", nullptr,
-                                                       true));
+                                                       nullptr, true));
                     }
                 },
-                "CANCEL", nullptr, "", nullptr, true));
+                "CANCEL", nullptr, "", nullptr, nullptr, true));
         },
         "QUIT",
         [] {
@@ -287,7 +288,7 @@ void ViewController::noGamesDialog()
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-        true, false,
+        nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
              0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
@@ -305,7 +306,7 @@ void ViewController::invalidAlternativeEmulatorDialog()
                                    "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
                                    "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
                                    "INTERFACE IN THE 'OTHER SETTINGS' MENU",
-                                   "OK", nullptr, "", nullptr, "", nullptr, true, true));
+                                   "OK", nullptr, "", nullptr, "", nullptr, nullptr, true, true));
 }
 
 void ViewController::updateAvailableDialog()
@@ -355,20 +356,20 @@ void ViewController::updateAvailableDialog()
                     }
                     mWindow->pushGui(new GuiMsgBox(
                         getHelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "",
-                        nullptr, true, true,
+                        nullptr, nullptr, true, true,
                         (mRenderer->getIsVerticalOrientation() ?
                              0.85f :
                              0.535f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
-            "CANCEL", [] { return; }, "", nullptr, true, true,
+            "CANCEL", [] { return; }, "", nullptr, nullptr, true, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.70f :
                  0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
     }
     else {
         mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, "OK", nullptr, "", nullptr, "",
-                                       nullptr, true, true,
+                                       nullptr, nullptr, true, true,
                                        (mRenderer->getIsVerticalOrientation() ?
                                             0.70f :
                                             0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));

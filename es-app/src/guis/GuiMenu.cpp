@@ -672,7 +672,7 @@ void GuiMenu::openUIOptions()
                                                               false);
                     mWindow->invalidateCachedBackground();
                 },
-                "CANCEL", nullptr, "", nullptr, true));
+                "CANCEL", nullptr, "", nullptr, nullptr, true));
         }
         else {
             LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '" << selectedMode
@@ -1144,7 +1144,7 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
     window->pushGui(new GuiMsgBox(
         getHelpStyle(), message, "PROCEED",
         [window] { window->pushGui(new GuiDetectDevice(false, false, nullptr)); }, "CANCEL",
-        nullptr, "", nullptr, false, true,
+        nullptr, "", nullptr, nullptr, false, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.84f :
              0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1665,20 +1665,20 @@ void GuiMenu::openUtilities()
                             }
                             ViewController::getInstance()->rescanROMDirectory();
                         },
-                        "", nullptr, "", nullptr, true));
+                        "", nullptr, "", nullptr, nullptr, true));
                 }
                 else {
                     mWindow->pushGui(
                         new GuiMsgBox(getHelpStyle(),
                                       "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
                                       "DISK FULL?\nSEE THE LOG FILE FOR MORE DETAILS",
-                                      "OK", nullptr, "", nullptr, "", nullptr, true, true,
+                                      "OK", nullptr, "", nullptr, "", nullptr, nullptr, true, true,
                                       (mRenderer->getIsVerticalOrientation() ?
                                            0.70f :
                                            0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
-            "CANCEL", nullptr, "", nullptr, false, true,
+            "CANCEL", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.80f :
                  0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1712,7 +1712,7 @@ void GuiMenu::openUtilities()
                 }
                 ViewController::getInstance()->rescanROMDirectory();
             },
-            "CANCEL", nullptr, "", nullptr, false, true,
+            "CANCEL", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.80f :
                  0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));

@@ -28,6 +28,7 @@ public:
               const std::function<void()>& func2 = nullptr,
               const std::string& name3 = "",
               const std::function<void()>& func3 = nullptr,
+              const std::function<void()>& backFunc = nullptr,
               const bool disableBackButton = false,
               const bool deleteOnButtonPress = true,
               const float maxWidthMultiplier = 0.0f);
@@ -51,6 +52,7 @@ private:
     std::shared_ptr<TextComponent> mMsg;
     std::vector<std::shared_ptr<ButtonComponent>> mButtons;
     std::shared_ptr<ComponentGrid> mButtonGrid;
+    const std::function<void()> mBackFunc;
     bool mDisableBackButton;
     bool mDeleteOnButtonPress;
     float mMaxWidthMultiplier;

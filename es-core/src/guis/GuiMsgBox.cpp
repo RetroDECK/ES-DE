@@ -23,6 +23,7 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
                      const std::function<void()>& func2,
                      const std::string& name3,
                      const std::function<void()>& func3,
+                     const std::function<void()>& backFunc,
                      const bool disableBackButton,
                      const bool deleteOnButtonPress,
                      const float maxWidthMultiplier)
@@ -30,6 +31,7 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {1, 2}}
     , mHelpStyle {helpstyle}
+    , mBackFunc {backFunc}
     , mDisableBackButton {disableBackButton}
     , mDeleteOnButtonPress {deleteOnButtonPress}
     , mMaxWidthMultiplier {maxWidthMultiplier}
@@ -133,6 +135,8 @@ void GuiMsgBox::changeText(const std::string& newText)
 bool GuiMsgBox::input(InputConfig* config, Input input)
 {
     if (!mDisableBackButton && config->isMappedTo("b", input) && input.value != 0) {
+        if (mBackFunc)
+            mBackFunc();
         delete this;
         return true;
     }
