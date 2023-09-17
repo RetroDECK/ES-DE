@@ -71,9 +71,13 @@ void GuiSettings::save()
             for (auto system : SystemData::sSystemVector)
                 system->writeMetaData();
         }
+
         // If a close menu function was passed to us, then run it.
-        if (mCloseMenuFunction)
+        if (mCloseMenuFunction) {
             mCloseMenuFunction();
+            mCloseMenuFunction = nullptr;
+        }
+
         ViewController::getInstance()->rescanROMDirectory();
         return;
     }
