@@ -1735,6 +1735,15 @@
         <theme>supervision</theme>
     </system>
     <system>
+        <name>supracan</name>
+        <fullname>Funtech Super A'Can</fullname>
+        <path>%ROMPATH%/supracan</path>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/supracan supracan -cart %ROM%</command>
+        <platform>supracan</platform>
+        <theme>supracan</theme>
+    </system>
+    <system>
         <name>switch</name>
         <fullname>Nintendo Switch</fullname>
         <path>%ROMPATH%/switch</path>

@@ -602,6 +602,10 @@
         <systemsortname>1992</systemsortname>
     </system>
     <system>
+        <name>supracan</name>
+        <systemsortname>1995</systemsortname>
+    </system>
+    <system>
         <name>switch</name>
         <systemsortname>2017</systemsortname>
     </system>

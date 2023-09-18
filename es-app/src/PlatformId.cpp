@@ -134,6 +134,7 @@ namespace PlatformIds
         "sufami",               // Bandai SuFami Turbo
         "supergrafx",           // NEC SuperGrafx
         "supervision",          // Watara Supervision
+        "supracan",             // Funtech Super A'Can
         "switch",               // Nintendo Switch
         "ti99",                 // Texas Instruments TI-99
         "tic80",                // TIC-80 Game Engine

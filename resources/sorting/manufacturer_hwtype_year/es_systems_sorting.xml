@@ -602,6 +602,10 @@
         <systemsortname>Watara - Portable - 1992</systemsortname>
     </system>
     <system>
+        <name>supracan</name>
+        <systemsortname>Funtech - Console - 1995</systemsortname>
+    </system>
+    <system>
         <name>switch</name>
         <systemsortname>Nintendo - Console - 2017</systemsortname>
     </system>

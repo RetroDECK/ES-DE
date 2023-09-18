@@ -65,6 +65,7 @@ namespace
         {DAPHNE, 49},
         {EPOCH_SCV, 67},
         {FUJITSU_FM_TOWNS, 253},
+        {FUNTECH_SUPER_ACAN, 100},
         {INTELLIVISION, 115},
         {GAMEENGINE_LUTRO, 206},
         {GAMEENGINE_LOWRES_NX, 244},

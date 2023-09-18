@@ -602,6 +602,10 @@
         <systemsortname>Portable - 1992</systemsortname>
     </system>
     <system>
+        <name>supracan</name>
+        <systemsortname>Console - 1995</systemsortname>
+    </system>
+    <system>
         <name>switch</name>
         <systemsortname>Console - 2017</systemsortname>
     </system>
