@@ -24,6 +24,9 @@
 * Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
 * Renamed the setting "Only show ROMs from gamelist.xml files" to "Only show games from gamelist.xml files
 * Added support for deleting installed themes from the theme downloader interface
+* Added support for the Acorn Archimedes (archimedes) game system
+* Added support for the Bit Corporation Gamate (gamate) game system
+* Added support for the Commodore Plus/4 (plus4) game system
 * Added support for the Microsoft Windows 3.x (windows3x) game system
 * Added support for the Microsoft Windows 9x (windows9x) game system
 * Removed support for the MAME4ALL (mame-mame4all) system
@@ -50,6 +53,7 @@
 * (Windows) Added the .url file extension to the epic system
 * (Windows) Added the .lnk file extension to the steam system
 * Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
+* (modern-es-de) Replaced the carousel images for the c64 and dos systems
 * Changed the screensaver to never show the same game again until all games have been cycled through
 * Reduced the slideshow screensaver fade-in time
 * Removed the annoying warning message when selecting the video screensaver from the UI settings menu
@@ -85,6 +89,7 @@
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Added support to MathUtil::md5Hash() for streaming files in chunks
 * Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
+* Added support for defining an explicit back button function for GuiMsgBox
 * Added support for fragment shader clipping to Font and TextComponent instead of using glScissor
 * Added horizontal text scrolling functionality to TextComponent
 * Removed all horizontal text scrolling code from ComponentList and TextListComponent
