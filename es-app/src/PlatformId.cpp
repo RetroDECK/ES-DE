@@ -59,6 +59,7 @@ namespace PlatformIds
         "flash",                // Adobe Flash
         "fmtowns",              // Fujitsu FM Towns
         "fpinball",             // Future Pinball
+        "gamate",               // Bit Corporation Gamate
         "gameandwatch",         // Nintendo Game and Watch
         "gamecom",              // Tiger Electronics Game.com
         "gamegear",             // Sega Game Gear

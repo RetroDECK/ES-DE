@@ -222,6 +222,10 @@
         <systemsortname>2005</systemsortname>
     </system>
     <system>
+        <name>gamate</name>
+        <systemsortname>1990</systemsortname>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <systemsortname>1980</systemsortname>
     </system>

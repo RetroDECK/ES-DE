@@ -58,6 +58,7 @@ namespace PlatformIds
         ADOBE_FLASH,
         FUJITSU_FM_TOWNS,
         FUTURE_PINBALL,
+        BIT_CORPORATION_GAMATE,
         NINTENDO_GAME_AND_WATCH,
         TIGER_GAME_COM,
         SEGA_GAME_GEAR,

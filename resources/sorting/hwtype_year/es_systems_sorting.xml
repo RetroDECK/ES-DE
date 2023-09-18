@@ -222,6 +222,10 @@
         <systemsortname>Engine - 2005</systemsortname>
     </system>
     <system>
+        <name>gamate</name>
+        <systemsortname>Portable - 1990</systemsortname>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <systemsortname>Portable - 1980</systemsortname>
     </system>

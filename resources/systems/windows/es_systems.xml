@@ -621,6 +621,15 @@
         <theme>fpinball</theme>
     </system>
     <system>
+        <name>gamate</name>
+        <fullname>Bit Corporation Gamate</fullname>
+        <path>%ROMPATH%\gamate</path>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gamate gamate -cart %ROM%</command>
+        <platform>gamate</platform>
+        <theme>gamate</theme>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <fullname>Nintendo Game and Watch</fullname>
         <path>%ROMPATH%\gameandwatch</path>
