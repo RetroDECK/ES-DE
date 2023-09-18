@@ -87,6 +87,7 @@
 * stratagus: Stratagus game engine - consolegame.svg
 * sufami: Bandai SuFami Turbo - consolegame.svg
 * supervision: Watara Supervision - consolegame.svg
+* supracan: Funtech Super A'Can - consolegame.svg, controller.svg
 * symbian: Symbian - system info (needs improvement), consolegame.svg, controller.svg
 * tanodragon: Tano Dragon - consolegame.svg, controller.svg
 * ti99: Texas Instruments TI-99 - consolegame.svg
