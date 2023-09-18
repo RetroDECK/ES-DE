@@ -871,8 +871,19 @@
             <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE</entry>
         </rule>
     </emulator>
+    <emulator name="VICE-XPLUS4">
+        <!-- Commodore 8-bit computer emulator VICE (xplus4) -->
+        <rule type="systempath">
+            <entry>xplus4</entry>
+            <entry>vice-jz.xplus4</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4 net.sf.VICE</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4 net.sf.VICE</entry>
+        </rule>
+    </emulator>
     <emulator name="VICE-XVIC">
-        <!-- Commodore 8-bit computer emulator VICE (xvic VIC-20) -->
+        <!-- Commodore 8-bit computer emulator VICE (xvic) -->
         <rule type="systempath">
             <entry>xvic</entry>
             <entry>vice-jz.xvic</entry>

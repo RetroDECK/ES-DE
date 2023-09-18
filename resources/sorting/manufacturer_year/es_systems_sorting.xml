@@ -466,6 +466,10 @@
         <systemsortname>Lexaloffle - 2015</systemsortname>
     </system>
     <system>
+        <name>plus4</name>
+        <systemsortname>Commodore - 1984</systemsortname>
+    </system>
+    <system>
         <name>pokemini</name>
         <systemsortname>Nintendo - 2001</systemsortname>
     </system>

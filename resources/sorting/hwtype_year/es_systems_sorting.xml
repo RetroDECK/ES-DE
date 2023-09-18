@@ -466,6 +466,10 @@
         <systemsortname>Engine - 2015</systemsortname>
     </system>
     <system>
+        <name>plus4</name>
+        <systemsortname>Computer - 1984</systemsortname>
+    </system>
+    <system>
         <name>pokemini</name>
         <systemsortname>Portable - 2001</systemsortname>
     </system>

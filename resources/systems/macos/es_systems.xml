@@ -1283,6 +1283,16 @@
         <theme>pico8</theme>
     </system>
     <system>
+        <name>plus4</name>
+        <fullname>Commodore Plus/4</fullname>
+        <path>%ROMPATH%/plus4</path>
+        <extension>.bin .BIN .cmd .CMD .crt .CRT .d2m .D2M .d4m .D4M .d64 .D64 .d6z .D6Z .d71 .D71 .d7z .D7Z .d80 .D80 .d81 .D81 .d82 .D82 .d8z .D8Z .g41 .G41 .g4z .G4Z .g64 .G64 .g6z .G6Z .gz .GZ .lnx .LNX .m3u .M3U .nbz .NBZ .nib .NIB .p00 .P00 .prg .PRG .t64 .T64 .tap .TAP .vfl .VFL .vsf .VSF .x64 .X64 .x6z .X6Z .7z .7Z .zip .ZIP</extension>
+        <command label="VICE xplus4">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vice_xplus4_libretro.dylib %ROM%</command>
+        <command label="VICE xplus4 (Standalone)">%EMULATOR_VICE-XPLUS4% %ROM%</command>
+        <platform>plus4</platform>
+        <theme>plus4</theme>
+    </system>
+    <system>
         <name>pokemini</name>
         <fullname>Nintendo Pokémon Mini</fullname>
         <path>%ROMPATH%/pokemini</path>

@@ -106,6 +106,7 @@ namespace PlatformIds
         "pcfx",                 // NEC PC-FX
         "pcwindows",            // Microsoft Windows
         "pico8",                // PICO-8 Fantasy Console
+        "plus4",                // Commodore Plus/4
         "pokemini",             // Nintendo Pokémon Mini
         "ps2",                  // Sony PlayStation 2
         "ps3",                  // Sony PlayStation 3

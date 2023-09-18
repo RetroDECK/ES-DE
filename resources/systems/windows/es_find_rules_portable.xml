@@ -534,8 +534,17 @@
             <entry>%ESPATH%\..\Emulators\VICE\bin\x64sc.exe</entry>
         </rule>
     </emulator>
+    <emulator name="VICE-XPLUS4">
+        <!-- Commodore 8-bit computer emulator VICE (xplus4) -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\VICE\xplus4.exe</entry>
+            <entry>%ESPATH%\Emulators\VICE\bin\xplus4.exe</entry>
+            <entry>%ESPATH%\..\Emulators\VICE\xplus4.exe</entry>
+            <entry>%ESPATH%\..\Emulators\VICE\bin\xplus4.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VICE-XVIC">
-        <!-- Commodore 8-bit computer emulator VICE (xvic VIC-20) -->
+        <!-- Commodore 8-bit computer emulator VICE (xvic) -->
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\VICE\xvic.exe</entry>
             <entry>%ESPATH%\Emulators\VICE\bin\xvic.exe</entry>

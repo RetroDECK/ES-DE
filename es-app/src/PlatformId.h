@@ -105,6 +105,7 @@ namespace PlatformIds
         NEC_PCFX,
         MICROSOFT_WINDOWS,
         GAMEENGINE_PICO8,
+        COMMODORE_PLUS4,
         NINTENDO_POKEMON_MINI,
         SONY_PLAYSTATION_2,
         SONY_PLAYSTATION_3,

@@ -39,8 +39,6 @@ namespace
 
     const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
         {THREEDO, "25"},
-        {COMMODORE_AMIGA, "4911"},
-        {COMMODORE_AMIGA_CD32, "4947"},
         {AMSTRAD_CPC, "4914"},
         {APPLE_II, "4942"},
         {ARCADE, "23"},
@@ -63,6 +61,9 @@ namespace
         {CAVESTORY, "1"},
         {COLECOVISION, "31"},
         {COMMODORE_64, "40"},
+        {COMMODORE_AMIGA, "4911"},
+        {COMMODORE_AMIGA_CD32, "4947"},
+        {COMMODORE_PLUS4, "5007"},
         {COMMODORE_VIC20, "4945"},
         {CREATRONIC_MEGA_DUCK, "4948"},
         {DAPHNE, "23"},

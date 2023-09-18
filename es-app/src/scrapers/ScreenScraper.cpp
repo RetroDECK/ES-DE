@@ -29,8 +29,6 @@ namespace
     // https://www.screenscraper.fr/api/systemesListe.php?devid=xxx&devpassword=yyy&softname=zzz&output=XML
     const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
         {THREEDO, 29},
-        {COMMODORE_AMIGA, 64},
-        {COMMODORE_AMIGA_CD32, 130},
         {AMSTRAD_CPC, 65},
         {AMSTRAD_GX4000, 87},
         {APPLE_II, 86},
@@ -57,7 +55,10 @@ namespace
         {VTECH_CREATIVISION, 241},
         {VTECH_VSMILE, 120},
         {COMMODORE_64, 66},
+        {COMMODORE_AMIGA, 64},
+        {COMMODORE_AMIGA_CD32, 130},
         {COMMODORE_CDTV, 129},
+        {COMMODORE_PLUS4, 99},
         {COMMODORE_VIC20, 73},
         {CREATRONIC_MEGA_DUCK, 90},
         {DAPHNE, 49},

@@ -115,6 +115,8 @@ Emulators\tsugaru\Tsugaru_CUI.exe
 Emulators\VBA-M\visualboyadvance-m.exe
 Emulators\VICE\x64sc.exe
 Emulators\VICE\bin\x64sc.exe
+Emulators\VICE\xplus4.exe
+Emulators\VICE\bin\xplus4.exe
 Emulators\VICE\xvic.exe
 Emulators\VICE\bin\xvic.exe
 Emulators\Visual Pinball\VPinballX.exe
