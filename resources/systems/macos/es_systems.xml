@@ -1085,6 +1085,16 @@
         <theme>naomi</theme>
     </system>
     <system>
+        <name>naomi2</name>
+        <fullname>Sega NAOMI 2</fullname>
+        <path>%ROMPATH%/naomi2</path>
+        <extension>.cdi .CDI .iso .ISO .elf .ELF .bin .BIN .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.dylib %ROM%</command>
+        <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
+        <platform>arcade</platform>
+        <theme>naomi2</theme>
+    </system>
+    <system>
         <name>naomigd</name>
         <fullname>Sega NAOMI GD-ROM</fullname>
         <path>%ROMPATH%/naomigd</path>

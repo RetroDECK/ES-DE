@@ -394,6 +394,10 @@
         <systemsortname>Arcade - 1998</systemsortname>
     </system>
     <system>
+        <name>naomi2</name>
+        <systemsortname>Arcade - 2000</systemsortname>
+    </system>
+    <system>
         <name>naomigd</name>
         <systemsortname>Arcade - 1998</systemsortname>
     </system>

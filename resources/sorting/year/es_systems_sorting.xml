@@ -394,6 +394,10 @@
         <systemsortname>1998</systemsortname>
     </system>
     <system>
+        <name>naomi2</name>
+        <systemsortname>2000</systemsortname>
+    </system>
+    <system>
         <name>naomigd</name>
         <systemsortname>1998</systemsortname>
     </system>
