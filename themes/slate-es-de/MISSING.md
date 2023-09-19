@@ -61,6 +61,7 @@
 * multivision: Othello Multivision - consolegame.svg, controller.svg
 * n64dd : Nintendo 64DD - consolegame.svg
 * naomi: Sega NAOMI - consolegame.svg
+* naomi2: Sega NAOMI 2 - consolegame.svg
 * naomigd: Sega NAOMI GD-ROM - consolegame.svg
 * neogeocd: SNK Neo Geo CD - consolegame.svg, controller.svg
 * neogeocdjp: SNK Neo Geo CD - consolegame.svg, controller.svg
