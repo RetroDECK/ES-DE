@@ -1709,6 +1709,17 @@
         <theme>stratagus</theme>
     </system>
     <system>
+        <name>stv</name>
+        <fullname>Sega Titan Video Game System</fullname>
+        <path>%ROMPATH%/stv</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/kronos_libretro.so %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/stv %BASENAME%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
+        <platform>arcade</platform>
+        <theme>stv</theme>
+    </system>
+    <system>
         <name>sufami</name>
         <fullname>Bandai SuFami Turbo</fullname>
         <path>%ROMPATH%/sufami</path>

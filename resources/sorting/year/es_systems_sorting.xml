@@ -594,6 +594,10 @@
         <systemsortname>1998</systemsortname>
     </system>
     <system>
+        <name>stv</name>
+        <systemsortname>1995</systemsortname>
+    </system>
+    <system>
         <name>sufami</name>
         <systemsortname>1996</systemsortname>
     </system>
