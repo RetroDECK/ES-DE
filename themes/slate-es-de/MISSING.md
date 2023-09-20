@@ -86,6 +86,7 @@
 * spectravideo: Spectravideo - consolegame.svg, controller.svg
 * steam: Steam game distribution service - consolegame.svg, controller.svg
 * stratagus: Stratagus game engine - consolegame.svg
+* stv: Sega Titan Video Game System - consolegame.svg, controller.svg
 * sufami: Bandai SuFami Turbo - consolegame.svg
 * supervision: Watara Supervision - consolegame.svg
 * supracan: Funtech Super A'Can - consolegame.svg, controller.svg
@@ -94,6 +95,7 @@
 * ti99: Texas Instruments TI-99 - consolegame.svg
 * tic80: TIC-80 game engine - consolegame.svg, controller.svg
 * to8: Thomson TO8 - consolegame.svg, controller.svg
+* triforce: Namco-Sega-Nintendo Triforce - consolegame.svg, controller.svg
 * trs-80: Tandy TRS 80 - consolegame.svg, controller.svg
 * uzebox: Uzebox - consolegame.svg
 * vectrex: Smith Engineering Vectrex - consolegame.svg (needs simplification as it takes a long time to rasterize)
