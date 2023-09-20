@@ -103,6 +103,7 @@ public:
     void update(int deltaTime);
     void render();
 
+    void setBlockInput(const bool state) { mBlockInput = state; }
     void normalizeNextUpdate() { mNormalizeNextUpdate = true; }
 
     enum class SplashScreenState {
@@ -213,6 +214,7 @@ private:
     int mAverageDeltaTime;
     unsigned int mTimeSinceLastInput;
 
+    bool mBlockInput;
     bool mNormalizeNextUpdate;
 
     bool mRenderScreensaver;

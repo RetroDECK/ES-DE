@@ -88,9 +88,9 @@ public:
     void triggerGameLaunch(FileData* game)
     {
         mGameToLaunch = game;
-        mLockInput = true;
+        mWindow->setBlockInput(true);
     };
-    bool getGameLaunchTriggered() { return (mGameToLaunch != nullptr); }
+    const bool getGameLaunchTriggered() { return (mGameToLaunch != nullptr); }
     std::vector<std::string>& getGameEndEventParams() { return mGameEndEventParams; }
 
     bool input(InputConfig* config, Input input) override;
@@ -192,7 +192,6 @@ private:
     float mWrapPreviousPositionX;
     float mFadeOpacity;
     bool mCancelledTransition; // Needed only for the Fade transition style.
-    bool mLockInput;
     bool mNextSystem;
 };
 

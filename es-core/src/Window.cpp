@@ -37,6 +37,7 @@ Window::Window() noexcept
     , mFrameCountElapsed {0}
     , mAverageDeltaTime {10}
     , mTimeSinceLastInput {0}
+    , mBlockInput {false}
     , mNormalizeNextUpdate {false}
     , mRenderScreensaver {false}
     , mRenderMediaViewer {false}
@@ -211,6 +212,9 @@ void Window::deinit()
 
 void Window::input(InputConfig* config, Input input)
 {
+    if (mBlockInput)
+        return;
+
     mTimeSinceLastInput = 0;
 
     // The DebugSkipInputLogging option has to be set manually in es_settings.xml as

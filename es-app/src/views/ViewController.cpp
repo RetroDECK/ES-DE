@@ -47,7 +47,6 @@ ViewController::ViewController() noexcept
     , mWrappedViews {false}
     , mFadeOpacity {0}
     , mCancelledTransition {false}
-    , mLockInput {false}
     , mNextSystem {false}
 {
     mState.viewing = ViewMode::NOTHING;
@@ -920,7 +919,8 @@ void ViewController::launch(FileData* game)
         onFileChanged(game, true);
         // This is a workaround so that any keys or button presses used for exiting the emulator
         // are not captured upon returning.
-        setAnimation(new LambdaAnimation([](float t) {}, 1), 0, [this] { mLockInput = false; });
+        setAnimation(new LambdaAnimation([](float t) {}, 1), 0,
+                     [this] { mWindow->setBlockInput(false); });
     });
 }
 
@@ -1069,9 +1069,6 @@ std::shared_ptr<SystemView> ViewController::getSystemListView()
 
 bool ViewController::input(InputConfig* config, Input input)
 {
-    if (mLockInput)
-        return true;
-
     // If using the %RUNINBACKGROUND% variable in a launch command or if enabling the
     // RunInBackground setting, ES-DE will run in the background while a game is launched.
     // If we're in this state and then register some input, it means that the user is back in ES-DE.
@@ -1411,6 +1408,8 @@ void ViewController::reloadAll()
 
 void ViewController::rescanROMDirectory()
 {
+    mWindow->setBlockInput(true);
+
     mGamelistViews.clear();
     mSystemListView.reset();
     mCurrentView.reset();
@@ -1431,6 +1430,7 @@ void ViewController::rescanROMDirectory()
 
     if (SystemData::sSystemVector.empty()) {
         // It's possible that there are no longer any games.
+        mWindow->setBlockInput(false);
         mWindow->invalidateCachedBackground();
         noGamesDialog();
     }
@@ -1442,6 +1442,7 @@ void ViewController::rescanROMDirectory()
             SDL_PushEvent(&quit);
             return;
         }
+        mWindow->setBlockInput(false);
         goToStart(false);
     }
 }
