@@ -646,6 +646,10 @@
         <systemsortname>0000</systemsortname>
     </system>
     <system>
+        <name>triforce</name>
+        <systemsortname>2002</systemsortname>
+    </system>
+    <system>
         <name>trs-80</name>
         <systemsortname>1984</systemsortname>
     </system>

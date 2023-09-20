@@ -1831,6 +1831,15 @@
         <theme>to8</theme>
     </system>
     <system>
+        <name>triforce</name>
+        <fullname>Namco-Sega-Nintendo Triforce</fullname>
+        <path>%ROMPATH%\triforce</path>
+        <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
+        <command label="Triforce (Standalone)">%EMULATOR_TRIFORCE% -b -e %ROM%</command>
+        <platform>arcade</platform>
+        <theme>triforce</theme>
+    </system>
+    <system>
         <name>trs-80</name>
         <fullname>Tandy TRS-80</fullname>
         <path>%ROMPATH%\trs-80</path>

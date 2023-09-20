@@ -646,6 +646,10 @@
         <systemsortname>Various - Folder - 0000</systemsortname>
     </system>
     <system>
+        <name>triforce</name>
+        <systemsortname>Namco-Sega-Nintendo - Arcade - 2002</systemsortname>
+    </system>
+    <system>
         <name>trs-80</name>
         <systemsortname>Tandy - Computer - 1984</systemsortname>
     </system>

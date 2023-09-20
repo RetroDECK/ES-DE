@@ -646,6 +646,10 @@
         <systemsortname>Various - 0000</systemsortname>
     </system>
     <system>
+        <name>triforce</name>
+        <systemsortname>Namco-Sega-Nintendo - 2002</systemsortname>
+    </system>
+    <system>
         <name>trs-80</name>
         <systemsortname>Tandy - 1984</systemsortname>
     </system>

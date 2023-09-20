@@ -646,6 +646,10 @@
         <systemsortname>Folder - 0000</systemsortname>
     </system>
     <system>
+        <name>triforce</name>
+        <systemsortname>Arcade - 2002</systemsortname>
+    </system>
+    <system>
         <name>trs-80</name>
         <systemsortname>Computer - 1984</systemsortname>
     </system>
