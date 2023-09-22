@@ -47,13 +47,13 @@
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
-    <emulator name="3DSEN-WINE">
+    <emulator name="3DSEN-WINDOWS">
         <!-- Nintendo NES and Famicom emulator 3dSen -->
         <rule type="staticpath">
-            <entry>~/Applications/3dSen/wine*.AppImage</entry>
-            <entry>~/.local/share/applications/3dSen/wine*.AppImage</entry>
-            <entry>~/.local/bin/3dSen/wine*.AppImage</entry>
-            <entry>~/bin/3dSen/wine*.AppImage</entry>
+            <entry>~/Applications/3dSen/3dSen.exe</entry>
+            <entry>~/.local/share/applications/3dSen/3dSen.exe</entry>
+            <entry>~/.local/bin/3dSen/3dSen.exe</entry>
+            <entry>~/bin/3dSen/3dSen.exe</entry>
         </rule>
     </emulator>
     <emulator name="ADVANCEMAME">
@@ -101,13 +101,13 @@
             <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
         </rule>
     </emulator>
-    <emulator name="BIGPEMU-WINE">
+    <emulator name="BIGPEMU-WINDOWS">
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="staticpath">
-            <entry>~/Applications/BigPEmu/wine*.AppImage</entry>
-            <entry>~/.local/share/applications/BigPEmu/wine*.AppImage</entry>
-            <entry>~/.local/bin/BigPEmu/wine*.AppImage</entry>
-            <entry>~/bin/BigPEmu/wine*.AppImage</entry>
+            <entry>~/Applications/BigPEmu/BigPEmu.exe</entry>
+            <entry>~/.local/share/applications/BigPEmu/BigPEmu.exe</entry>
+            <entry>~/.local/bin/BigPEmu/BigPEmu.exe</entry>
+            <entry>~/bin/BigPEmu/BigPEmu.exe</entry>
         </rule>
     </emulator>
     <emulator name="BLASTEM">
@@ -596,6 +596,15 @@
             <entry>~/.local/share/flatpak/exports/bin/io.github.shiiion.primehack</entry>
         </rule>
     </emulator>
+    <emulator name="PROTON">
+        <!-- Microsoft Windows compatibility layer Proton -->
+        <rule type="staticpath">
+            <entry>~/Applications/Proton/wine*.AppImage</entry>
+            <entry>~/.local/share/applications/Proton/wine*.AppImage</entry>
+            <entry>~/.local/bin/Proton/wine*.AppImage</entry>
+            <entry>~/bin/Proton/wine*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="PUNES">
         <!-- Nintendo NES and Famicom emulator puNES -->
         <rule type="systempath">
@@ -933,13 +942,26 @@
             <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
         </rule>
     </emulator>
-    <emulator name="XENIA-WINE">
+    <emulator name="WINE">
+        <!-- Microsoft Windows compatibility layer Wine -->
+        <rule type="staticpath">
+            <entry>~/Applications/Wine/wine*.AppImage</entry>
+            <entry>~/.local/share/applications/Wine/wine*.AppImage</entry>
+            <entry>~/.local/bin/Wine/wine*.AppImage</entry>
+            <entry>~/bin/Wine/wine*.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="XENIA-WINDOWS">
         <!-- Microsoft Xbox 360 emulator xenia -->
         <rule type="staticpath">
-            <entry>~/Applications/xenia/wine*.AppImage</entry>
-            <entry>~/.local/share/applications/xenia/wine*.AppImage</entry>
-            <entry>~/.local/bin/xenia/wine*.AppImage</entry>
-            <entry>~/bin/xenia/wine*.AppImage</entry>
+            <entry>~/Applications/xenia/xenia.exe</entry>
+            <entry>~/.local/share/applications/xenia/xenia.exe</entry>
+            <entry>~/.local/bin/xenia/xenia.exe</entry>
+            <entry>~/bin/xenia/xenia.exe</entry>
+            <entry>~/Applications/xenia/xenia_canary.exe</entry>
+            <entry>~/.local/share/applications/xenia/xenia_canary.exe</entry>
+            <entry>~/.local/bin/xenia/xenia_canary.exe</entry>
+            <entry>~/bin/xenia/xenia_canary.exe</entry>
         </rule>
     </emulator>
     <emulator name="XROAR">
