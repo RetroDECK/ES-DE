@@ -986,10 +986,61 @@ void FileData::launchGame()
     // Expand home path if ~ is used.
     command = Utils::FileSystem::expandHomePath(command);
 
-    // Check that the emulator binary actually exists, and if so, get its path.
-    const std::string& binaryPath {findEmulatorPath(command)};
+    std::string preCommandPath;
 
-    // Hack to show an error message if there was no emulator entry in es_find_rules.xml.
+    // Check for any pre-command entry, and if it exists then expand it using the find rules.
+    if (command.find("%PRECOMMAND_") != std::string::npos) {
+        preCommandPath = findEmulatorPath(command, true);
+        // Show an error message if there was no matching emulator entry in es_find_rules.xml.
+        if (preCommandPath.substr(0, 18) == "NO EMULATOR RULE: ") {
+            const std::string& preCommandEntry {
+                preCommandPath.substr(18, preCommandPath.size() - 18)};
+            LOG(LogError)
+                << "Couldn't launch game, either there is no emulator entry for pre-command \""
+                << preCommandEntry << "\" in es_find_rules.xml or there are no rules defined";
+            LOG(LogError) << "Raw emulator launch command:";
+            LOG(LogError) << commandRaw;
+
+            window->queueInfoPopup("ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '" +
+                                       preCommandEntry + "'",
+                                   6000);
+            window->setAllowTextScrolling(true);
+            window->setAllowFileAnimation(true);
+            return;
+        }
+        else if (preCommandPath.empty()) {
+            LOG(LogError) << "Couldn't launch game, pre-command binary not found";
+            LOG(LogError) << "Raw emulator launch command:";
+            LOG(LogError) << commandRaw;
+
+            std::string emulatorName;
+            size_t startPos {0};
+            size_t endPos {0};
+
+            if ((startPos = command.find("%PRECOMMAND_")) != std::string::npos) {
+                endPos = command.find("%", startPos + 1);
+                if (endPos != std::string::npos)
+                    emulatorName = command.substr(startPos + 12, endPos - startPos - 12);
+            }
+
+            if (emulatorName == "")
+                window->queueInfoPopup(
+                    "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?", 6000);
+            else
+                window->queueInfoPopup("ERROR: COULDN'T FIND PRE-COMMAND '" + emulatorName +
+                                           "', HAS IT BEEN PROPERLY INSTALLED?",
+                                       6000);
+
+            window->setAllowTextScrolling(true);
+            window->setAllowFileAnimation(true);
+            return;
+        }
+    }
+
+    // Check that the emulator binary actually exists, and if so, get its path.
+    const std::string& binaryPath {findEmulatorPath(command, false)};
+
+    // Show an error message if there was no matching emulator entry in es_find_rules.xml.
     if (binaryPath.substr(0, 18) == "NO EMULATOR RULE: ") {
         const std::string& emulatorEntry {binaryPath.substr(18, binaryPath.size() - 18)};
         LOG(LogError) << "Couldn't launch game, either there is no emulator entry for \""
@@ -1667,7 +1718,7 @@ void FileData::launchGame()
     gameToUpdate->mSystem->onMetaDataSavePoint();
 }
 
-const std::string FileData::findEmulatorPath(std::string& command)
+const std::string FileData::findEmulatorPath(std::string& command, const bool preCommand)
 {
     // Extract the emulator executable from the launch command string. There are two ways
     // that the emulator can be defined in es_systems.xml, either using the find rules in
@@ -1691,10 +1742,19 @@ const std::string FileData::findEmulatorPath(std::string& command)
     size_t startPos {0};
     size_t endPos {0};
 
-    if ((startPos = command.find("%EMULATOR_")) != std::string::npos) {
-        endPos = command.find("%", startPos + 1);
-        if (endPos != std::string::npos)
-            emulatorEntry = command.substr(startPos + 10, endPos - startPos - 10);
+    if (preCommand) {
+        if ((startPos = command.find("%PRECOMMAND_")) != std::string::npos) {
+            endPos = command.find("%", startPos + 1);
+            if (endPos != std::string::npos)
+                emulatorEntry = command.substr(startPos + 12, endPos - startPos - 12);
+        }
+    }
+    else {
+        if ((startPos = command.find("%EMULATOR_")) != std::string::npos) {
+            endPos = command.find("%", startPos + 1);
+            if (endPos != std::string::npos)
+                emulatorEntry = command.substr(startPos + 10, endPos - startPos - 10);
+        }
     }
 
     if (emulatorEntry != "") {
@@ -1705,6 +1765,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
             SystemData::sFindRules.get()->mEmulators[emulatorEntry].winRegistryValues;
 #endif
         emulatorSystemPaths = SystemData::sFindRules.get()->mEmulators[emulatorEntry].systemPaths;
+
         emulatorStaticPaths = SystemData::sFindRules.get()->mEmulators[emulatorEntry].staticPaths;
     }
 

@@ -123,7 +123,7 @@ public:
     const std::string& getSystemName() const { return mSystemName; }
 
     void launchGame();
-    const std::string findEmulatorPath(std::string& command);
+    const std::string findEmulatorPath(std::string& command, const bool preCommand);
 
     using ComparisonFunction = bool(const FileData* a, const FileData* b);
     struct SortType {
