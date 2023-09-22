@@ -184,6 +184,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"unfocusedItemSaturation", FLOAT},
        {"unfocusedItemDimming", FLOAT},
        {"imageFit", STRING},
+       {"imageInterpolation", STRING},
        {"imageRelativeScale", FLOAT},
        {"imageCornerRadius", FLOAT},
        {"imageColor", COLOR},
