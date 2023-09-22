@@ -312,7 +312,6 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             item->setCroppedSize(mItemSize * mImageRelativeScale);
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
-        item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
             item->setBrightness(mImageBrightness);
         if (mImageSaturation != 1.0)
@@ -345,7 +344,6 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
                 mDefaultImage->setCroppedSize(mItemSize * mImageRelativeScale);
             mDefaultImage->setCornerRadius(mImageCornerRadius);
             mDefaultImage->setImage(entry.data.defaultImagePath);
-            mDefaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
             if (mImageBrightness != 0.0)
                 mDefaultImage->setBrightness(mImageBrightness);
             if (mImageSaturation != 1.0)
@@ -403,7 +401,6 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
             item->setCroppedSize(mItemSize * mImageRelativeScale);
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
-        item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
             item->setBrightness(mImageBrightness);
         if (mImageSaturation != 1.0)

@@ -313,7 +313,6 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             item->setCroppedSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
-        item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
             item->setBrightness(mImageBrightness);
         if (mImageSaturation != 1.0)
@@ -344,7 +343,6 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                     glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             mDefaultImage->setCornerRadius(mImageCornerRadius);
             mDefaultImage->setImage(entry.data.defaultImagePath);
-            mDefaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
             if (mImageBrightness != 0.0)
                 mDefaultImage->setBrightness(mImageBrightness);
             if (mImageSaturation != 1.0)
@@ -419,7 +417,6 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
             item->setCroppedSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
-        item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
             item->setBrightness(mImageBrightness);
         if (mImageSaturation != 1.0)
