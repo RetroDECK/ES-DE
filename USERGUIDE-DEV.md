@@ -790,13 +790,53 @@ cd ~/Applications/SkyEmu
 chmod +x SkyEmu
 ```
 
-In addition to the above there are a couple of Windows emulators that need to run via Wine. Detailed setup instructions for these can be found elsewhere in this guide, but here's a table of the required installation paths:
+## Running Windows emulators on Linux using Wine or Proton
+
+On Linux it's possible to run emulators developed specifically for Microsoft Windows via the Wine compatibility layer. Support is also included for the Proton fork of Wine.
+
+ES-DE will look for Wine, Proton and the Windows emulators in the same directories where it looks for emulator AppImages and manually downloaded emulators (as explained in the section above), meaning:
+```
+~/Applications/
+~/.local/share/applications/
+~/.local/bin/
+~/bin/
+```
+
+It's generally recommended to go for the ~/Applications/ directory, but depending on your Linux distribution this may or may not exist by default. If the directory doesn't exist, then just go ahead and create it. Keep in mind that Linux is case-sensitive so make sure to spell it with a capital A.
+
+The AppImage release of Wine or Proton is required, which can be downloaded from here:\
+https://github.com/mmtrt/WINE_AppImage/releases
+
+For regular Wine, make sure to get the stable x86_64 release, for this example we assume that the file `wine-stable_8.0.2-x86_64.AppImage` has been downloaded.
+
+For Proton we assume that the file `wine-staging_ge-proton_8-14-x86_64.AppImage` has been downloaded.
+
+For Wine, create an `~/Applications/Wine` directory and be mindful that the letter case is correct. Then move the Wine AppImage into this new directory and set executable permissions for the file:
+```
+cd ~/Applications/Wine
+chmod +x wine-stable_8.0.2-x86_64.AppImage
+```
+
+Likewise for Proton, create an `~/Applications/Proton` directory, move the AppImage there and run the chmod command:
+```
+cd ~/Applications/Proton
+chmod +x wine-staging_ge-proton_8-14-x86_64.AppImage
+```
+
+The find rules for Wine and Proton look like the following, so the AppImage filenames need to match this pattern:
+```xml
+<entry>~/Applications/Wine/wine*.AppImage</entry>
+<entry>~/Applications/Proton/wine*.AppImage</entry>
+```
+
+The following Windows emulators are supported, and their setup is covered in detail in specific sections of this document:
 
 | System name                      | Emulator         | Filename                          |
 | :------------------------------- | :--------------- | :-------------------------------- |
 | atarijaguar/atarijaguarcd        | BigPEmu          | BigPEmu/BigPEmu.exe               |
 | famicom/nes                      | 3dSen            | 3dSen/3dSen.exe                   |
 | xbox360                          | xenia            | xenia/xenia.exe                   |
+| xbox360                          | xenia            | xenia/xenia_canary.exe            |
 
 ## Running emulators in fullscreen mode
 
@@ -1130,25 +1170,11 @@ ln -s /usr/local/Cellar/mame/0.248/share/mame/hash ~/.mame/         # on x86/Int
 
 These systems are generally straightforward to setup. For regular Atari Jaguar games you'll have a single ROM or zip archive per game that you place in the root of the `~/ROMs/atarijaguar` system directory. For Atari Jaguar CD games it's recommended to go for the .cdi format and you place these directly in the root of the `~/ROMs/atarijaguarcd` directory.
 
-The only emulator that can run Atari Jaguar CD games is [BigPEmu](https://www.richwhitehouse.com/jaguar/) and while it's officially only available for the Windows operating system it's still possible to run it on Linux.
+The only emulator that can run Atari Jaguar CD games is [BigPEmu](https://www.richwhitehouse.com/jaguar/) and while it's officially only available for the Windows operating system it's still possible to run it on Linux. To accomplish this you need to run it via the Wine (or Proton) translation layer.
 
-To accomplish this you need to run it via the Wine translation layer. More specifically you need the AppImage release of Wine which can be downloaded from here:\
-https://github.com/mmtrt/WINE_AppImage/releases
+How to setup Wine is covered [here](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton).
 
-Make sure to get the stable x86_64 release, for this example we assume that the file `wine-stable_8.0.2-x86_64.AppImage` has been downloaded.
-
-Create an `~/Applications/BigPEmu` directory and be mindful that the letter case is correct. Then move the AppImage into this new directory and set executable permissions for the file:
-```
-cd ~/Applications/BigPEmu
-chmod +x wine-stable_8.0.2-x86_64.AppImage
-```
-
-The find rule for BigPEmu looks like the following so the Wine filename needs to match this pattern:
-```xml
-<entry>~/Applications/BigPEmu/wine*.AppImage</entry>
-```
-
-Following this download BigPEmu and unzip it into `~/Applications/BigPEmu` \
+Once Wine or Proton has been setup, download BigPEmu and unzip it into `~/Applications/BigPEmu` \
  You should now have something similar to this on your filesystem:
 ```
 ~/Applications/BigPEmu/Data/
@@ -1157,10 +1183,9 @@ Following this download BigPEmu and unzip it into `~/Applications/BigPEmu` \
 ~/Applications/BigPEmu/Strings/
 ~/Applications/BigPEmu/BigPEmu.exe
 ~/Applications/BigPEmu/ReadMe.txt
-~/Applications/BigPEmu/wine-stable_8.0.2-x86_64.AppImage
 ```
 
-That's basically it, for the atarijaguar system just make sure to select _BigPEmu (Wine)_ from the _Alternative emulators_ interface or set it on a per-game basis using the metadata editor. This is not required for the atarijaguarcd system as for this system there are no alternative emulators.
+That's basically it, for the atarijaguar system just make sure to select _BigPEmu (Wine)_ or _BigPEmu (Proton)_ from the _Alternative emulators_ interface or set it on a per-game basis using the metadata editor.
 
 There are many settings in Wine that may affect compatibility, performance etc. but covering all that is beyond the scope of this guide.
 
@@ -1601,7 +1626,7 @@ Castle Crashers/584108B7/000D0000/
 Castle Crashers/584108B7/000D0000/F9432A7FE407A3C196C95D0FFD4A540937FD4EEC58
 ```
 
-For this example it's F9432A7FE407A3C196C95D0FFD4A540937FD4EEC58 that is the actual game. It's recommended to move this file to the root of the `~/ROMs/xbox360` system directory and to rename it to the game name followed by _(XBLA)_ to make it clear that it's an Xbox Live Arcade game. After doing this our example directory structure would look like the following:
+For this example it's F9432A7FE407A3C196C95D0FFD4A540937FD4EEC58 that is the actual game file. It's recommended to move this file to the root of the `~/ROMs/xbox360` system directory and to rename it to the game name followed by _(XBLA)_ to make it clear that it's an Xbox Live Arcade game. After doing this our example directory structure would look like the following:
 ```
 ~/ROMs/xbox360/Castle Crashers (XBLA)
 ~/ROMs/xbox360/Gears of War.iso
@@ -1617,27 +1642,14 @@ https://github.com/cmclark00/XBLA-Automation
 
 _Note that xenia does not seem to run on the Steam Deck using the approach described below._
 
-Although xenia is officially only available for the Windows operating system it's still possible to run it on Linux. To accomplish this you need to run it via the Wine translation layer. More specifically you need the AppImage release of Wine which can be downloaded from here:\
-https://github.com/mmtrt/WINE_AppImage/releases
+Although xenia is officially only available for the Windows operating system it's still possible to run it on Linux. To accomplish this you need to run it via the Wine (or Proton) translation layer.
 
-Make sure to get the stable x86_64 release, for this example we assume that the file `wine-stable_8.0.2-x86_64.AppImage` has been downloaded.
+How to setup Wine is covered [here](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton).
 
-Create an `~/Applications/xenia` directory and be mindful that the letter case is correct. Then move the AppImage into this new directory and set executable permissions for the file:
-```
-cd ~/Applications/xenia
-chmod +x wine-stable_8.0.2-x86_64.AppImage
-```
-
-The find rule for xenia looks like the following so the Wine filename needs to match this pattern:
-```xml
-<entry>~/Applications/xenia/wine*.AppImage</entry>
-```
-
-Following this download xenia and unzip it into `~/Applications/xenia`. Also create an empty file named `portable.txt` inside this directory. You should now have something similar to this on your filesystem:
+Once Wine or Proton has been setup, download xenia and unzip it into `~/Applications/xenia`. Also create an empty file named `portable.txt` inside this directory. You should now have something similar to this on your filesystem:
 ```
 ~/Applications/xenia/LICENSE
 ~/Applications/xenia/portable.txt
-~/Applications/xenia/wine-stable_8.0.2-x86_64.AppImage
 ~/Applications/xenia/xenia.exe
 ~/Applications/xenia/xenia.pdb
 ```
@@ -1658,7 +1670,7 @@ fullscreen = true                                   # Whether to launch the emul
 
 There are of course many more settings for xenia and Wine that may be adjusted for optimal performance and compatibility but that's beyond the scope of this guide.
 
-The canary release of xenia can also be used but it's not explicitly supported. To use it simply rename `xenia_canary.exe` to `xenia.exe` and it should work. Also be aware that its configuration file is named `xenia-canary.config.toml` instead of `xenia.config.toml`
+The canary release of xenia can also be used but it's not possible to set the xenia release per game. Instead the find rules will first look for `xenia.exe` and if that can't be found it will look for `xenia_canary.exe`. Be aware that if using the canary release of xenia, the configuration file is named `xenia-canary.config.toml` instead of `xenia.config.toml`
 
 For a more complex setup like requiring different Wine or xenia versions per game or similar the xbox360 system on Linux also supports the _Shortcut or script_ alternative emulator entry. Using this you can create shell scripts with specific configuration or you could alternatively install Xbox 360 games via Lutris or similar and export .desktop shortcuts from there and place these inside the `~/ROMs/xbox360` directory. Just make sure to select the appropriate alternative emulator entry if doing this, or it will not work.
 
@@ -1779,23 +1791,11 @@ For this guide it's assumed that you have purchased the emulator via Steam. ES-D
 
 **Linux-specific installation**
 
-As 3dSen is a Windows-only emulator you'll need Wine to run it. More specifically you need the AppImage release of Wine which can be downloaded from here:\
-https://github.com/mmtrt/WINE_AppImage/releases
+As 3dSen is a Windows-only emulator you'll need Wine (or Proton) to run it.
 
-Make sure to get the stable x86_64 release, for this example we assume that the file `wine-stable_8.0.2-x86_64.AppImage` has been downloaded.
+How to setup Wine is covered [here](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton).
 
-If it doesn't already exist, then create an `~/Applications` directory and be mindful that the letter case is correct. Copy the 3dSen installation directory into this folder. Following this move the Wine AppImage into this directory as well and set executable permissions for the file:
-```
-cd ~/Applications/3dSen
-chmod +x wine-stable_8.0.2-x86_64.AppImage
-```
-
-The find rule for 3dSen looks like the following so the Wine filename needs to match this pattern:
-```xml
-<entry>~/Applications/3dSen/wine*.AppImage</entry>
-```
-
-To conserve disk space if using Wine for multiple emulators you can of course instead symlink the Wine AppImage from a common location.
+Once Wine or Proton has been setup, move or copy all 3dSen files to `~/Applications/3dSen`
 
 **Windows-specific installation**
 
@@ -1825,7 +1825,7 @@ You could of course separate the 3D files into their own directory if you prefer
 Finally you need to add the 3dSen game ID to each file. The RetroBat project maintains a list of supported game IDs for the 3dSen emulator that you can find here:\
 https://wiki.retrobat.org/systems-and-emulators/supported-game-systems/game-consoles/nintendo-game-consoles/nes-3d
 
-To launch the .3dsen files you'll need to use the alternative emulator entry _3dSen (Wine)_ or _3dSen (Standalone)_ depending on your operating system. As you're unlikely to use 3dSen as your primary NES or Famicom emulator it's recommended to set this on a per-game basis using the metadata editor.
+To launch the .3dsen files you'll need to use the alternative emulator entry _3dSen (Wine)_, _3dSen (Proton)_  or _3dSen (Standalone)_ depending on your operating system. As you're unlikely to use 3dSen as your primary NES or Famicom emulator it's recommended to set this on a per-game basis using the metadata editor.
 
 ### Nintendo Wii U
 
@@ -3456,7 +3456,7 @@ On Windows the following emulators provide a way to inform ES-DE where they have
 Default emulator/Alternative emulators columns: \
 **[U]**: Unix, **[M]**: macOS, **[W]**: Windows
 
-All emulators are RetroArch cores unless marked as **(Standalone)** or **(Wine)**
+All emulators are RetroArch cores unless marked as **(Standalone)**, **(Wine)** or **(Proton)**
 
 The **@** symbol indicates that the emulator is _deprecated_ and will be removed in a future ES-DE release.
 
@@ -3481,8 +3481,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)** | Yes          | Single archive or ROM file |
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         | MAME **(Standalone)**             | Yes          | Single archive or ROM file |
 | atari800              | Atari 800                                      | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
-| atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | BigPEmu **(Standalone**) [W],<br>BigPEmu **(Wine)** [U],<br>MAME **(Standalone)** | Yes for MAME | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
-| atarijaguarcd         | Atari Jaguar CD                                | BigPEmu **(Standalone**) [W],<br>BigPEmu **(Wine)** [U] |                                   | No           | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
+| atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | BigPEmu **(Standalone)** [W],<br>BigPEmu **(Wine)** [U],<br>BigPEmu **(Proton)** [U],<br>MAME **(Standalone)** | Yes for MAME | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
+| atarijaguarcd         | Atari Jaguar CD                                | BigPEmu **(Standalone)** [W],<br>BigPEmu **(Wine)** [U] | BigPEmu **(Proton)** [U]   | No           | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Mednafen **(Standalone)** |              |                                      |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            | Hatari **(Standalone)**           | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
@@ -3510,7 +3510,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | emulators             | Emulators                                      | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | epic                  | Epic Games Store                               | Epic Games Store **(Standalone)** |                       | No           | Shortcut (.desktop/.app/.lnk) file |
-| famicom               | Nintendo Family Computer                       | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)**,<br>3dSen **(Wine)** [U],<br>3dSen **(Standalone)** [W] | No           | Single archive or ROM file. For Famicom games in 3D see the specific _Nintendo NES and Famicom in 3D_ section elsewhere in this guide |
+| famicom               | Nintendo Family Computer                       | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)**,<br>3dSen **(Wine)** [U],<br>3dSen **(Proton)** [U],<br>3dSen **(Standalone)** [W] | No           | Single archive or ROM file. For Famicom games in 3D see the specific _Nintendo NES and Famicom in 3D_ section elsewhere in this guide |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
@@ -3565,7 +3565,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW],<br>MAME **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
-| nes                   | Nintendo Entertainment System                  | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)**,<br>3dSen **(Wine)** [U],<br>3dSen **(Standalone)** [W] | No           | Single archive or ROM file. For NES games in 3D see the specific _Nintendo NES and Famicom in 3D_ section elsewhere in this guide |
+| nes                   | Nintendo Entertainment System                  | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)**,<br>3dSen **(Wine)** [U],<br>3dSen **(Proton)** [U],<br>3dSen **(Standalone)** [W] | No           | Single archive or ROM file. For NES games in 3D see the specific _Nintendo NES and Famicom in 3D_ section elsewhere in this guide |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | odyssey2              | Magnavox Odyssey2                              | O2EM                              |                                   |              |                                      |
@@ -3642,7 +3642,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file |
 | x68000                | Sharp X68000                                   | PX68k                             | MAME **(Standalone)**             | Yes          |                                      |
 | xbox                  | Microsoft Xbox                                 | xemu **(Standalone)**             | Cxbx-Reloaded **(Standalone)** [W] | Yes for xemu | Single .iso file for xemu or unpacked .iso directory for Cxbx-Reloaded |
-| xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W],<br>xenia **(Wine)** [U] | _Shortcut or script_ [U]          | No           | See the specific _Microsoft Xbox 360_ section elsewhere in this guide |
+| xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W],<br>xenia **(Wine)** [U] | xenia **(Proton)** [U],<br>_Shortcut or script_ [U]          | No           | See the specific _Microsoft Xbox 360_ section elsewhere in this guide |
 | zmachine              | Infocom Z-machine                              | Gargoyle **(Standalone)**         |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
 | zxnext                | Sinclair ZX Spectrum Next                      | #CSpect **(Standalone)** [UW],<br>ZEsarUX **(Standalone)** [M] | ZEsarUX **(Standalone)** [UW] | No           | In separate folder interpreted as a file |

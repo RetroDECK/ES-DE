@@ -1336,7 +1336,7 @@ Properties:
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
 * `imageInterpolation` - type: STRING
-    - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
+    - Interpolation method to use when scaling up images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
     - Valid values are `nearest` or `linear`
     - Default is `linear`
 * `imageCornerRadius` - type: FLOAT
@@ -1609,6 +1609,10 @@ Properties:
     - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
+* `imageInterpolation` - type: STRING
+    - Interpolation method to use when scaling up images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
+    - Valid values are `nearest` or `linear`
+    - Default is `linear`
 * `imageRelativeScale` - type: FLOAT.
     - This property makes it possible to size the image defined by `staticImage`, `imageType` or `defaultImage` relative to the overall item size. This is mostly useful when combined with the `backgroundImage` and `selectorImage` properties.
     - Minimum value is `0.2` and maximum value is `1`
@@ -1996,7 +2000,7 @@ Properties:
     - Valid values are `top` or `bottom`
     - Default is `bottom`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
+    - Interpolation method to use when scaling up. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `cornerRadius` - type: FLOAT
@@ -2110,7 +2114,7 @@ Properties:
     - Whether to enable or disable audio playback for the video. For static videos in the gamelist view it's strongly recommended to set this to `false` if there is also a separate video element playing game videos.
     - Default is `true`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
+    - Interpolation method to use when scaling up images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `imageCornerRadius` - type: FLOAT
@@ -2228,7 +2232,7 @@ Properties:
     - Minimum value is `0` and maximum value is `10`
     - Default is `0` (infinite amount of times)
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
+    - Interpolation method to use when scaling up. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
     - This property can only be used for GIF animations.
@@ -2791,7 +2795,7 @@ Properties:
     - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
     - Default is `0`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling the images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images, and even more so if rotation is applied.
+    - Interpolation method to use when scaling up images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images, and even more so if rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR

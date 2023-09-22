@@ -1245,6 +1245,10 @@ Below is an overview of the file layout with various examples. For the command t
         <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supafaust_libretro.so %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
 
+        <!-- This example for Unix uses the %PRECOMMAND% variable to run an emulator made for Windows using the Wine compatibility layer.
+        This variable uses the regular find rules to locate the pre-command binary. -->
+        <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
+
         <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
         the snes9x_libretro core, If there are spaces in the path or filename, you must enclose them in quotation marks, such as
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
@@ -1336,6 +1340,8 @@ The following variables are expanded for the `command` tag:
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
 `%EMULATOR_` - This utilizes the emulator find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command. The find rules are explained in more detail below.
+
+`%PRECOMMAND_` - This utilizes the emulator find rules as defined in `es_find_rules.xml` to locate a pre-command binary. It's for instance useful for running Windows emulators on Linux using Wine or Proton. The %PRECOMMAND_ entry can be located anywhere in the launch command but it should be placed before the %EMULATOR_ variable in order to work as intended.
 
 `%CORE_` - This utilizes the core find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command.
 
@@ -1585,7 +1591,6 @@ It's pretty straightforward, there are currently four rules supported for findin
 Of these, `winregistrypath` and `winregistryvalue` are only available on Windows, and attempting to use the rule on any other operating system will generate a warning in the log file when processing the es_find_rules.xml file.
 
 The `name` attribute must correspond to the command tags in es_systems.xml, take for example this line:
-
 ```xml
 <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
 ```
@@ -1593,6 +1598,11 @@ The `name` attribute must correspond to the command tags in es_systems.xml, take
 Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so pretty).
 
 Of course this makes it possible to add any number of emulators to the configuration file.
+
+The find rules can also be used by the %PRECOMMAND_ variable, which is for instance useful for running Windows emulators on Linux using Wine or Proton. In the following example two separate find rules are used, one for the %PRECOMMAND_ variable and another one for the %EMULATOR_ variable:
+```xml
+<command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
+```
 
 The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, a search will be performed for the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe`. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the default value for the key actually exists. If not, it will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
 

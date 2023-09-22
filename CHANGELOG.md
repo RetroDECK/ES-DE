@@ -19,6 +19,7 @@
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
 * Added an entry to the Utilities menu for creating/updating the game system directories
+* Added support for a %PRECOMMAND% launch command variable (useful for launching emulators via Wine or Proton)
 * Enabled the setting "Show hidden files and folders" to be changed without requiring an application restart
 * Enabled the setting "Show hidden games" to be changed without requiring an application restart
 * Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
@@ -42,10 +43,10 @@
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
 * Added the .88d, .cmt and .t88 file extensions to the pc88 system
 * Removed the .7z and .zip file extensions from the pc88 system
-* (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine
-* (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine
-* (Linux) Added BigPEmu Wine as an alternative emulator for the atarijaguar system
-* (Linux) Added 3dSen Wine as an alternative emulator for the famicom and nes systems
+* (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine and Proton
+* (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine and Proton
+* (Linux) Added BigPEmu Wine and BigPEmu Proton as alternative emulators for the atarijaguar system
+* (Linux) Added 3dSen Wine and 3dSen Proton as alternative emulators for the famicom and nes systems
 * (Linux) Added support for the Visual Pinball (vpinball) game system
 * (Linux) Added support for using the RetroArch AppImage release in portable mode (added corepath find rules)
 * (Linux) Added support for the AppImage release of Snes9x
@@ -84,6 +85,7 @@
 * Added a "containerType" property to the text element to select between vertical and horizontal containers
 * Added a number of carousel, grid, textlist and text properties to control horizontally scrolling text
 * Added a "textRelativeScale" property to the carousel to size text smaller than the overall item size
+* Added an "imageInterpolation" property to the grid element
 * Added "iterationCount" and "onIterationsDone" properties to the video element
 * Changed the "path" property for the video element to consider the set value even if it points to a non-existing file
 * Made it possible to set the defaultImage property for the carousel and grid elements using variables
