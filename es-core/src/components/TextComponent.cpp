@@ -224,13 +224,6 @@ void TextComponent::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
     mRenderer->setMatrix(trans);
 
-    // Draw the overall textbox area. If we're inside a vertical scrollable container then
-    // this area is rendered inside that component instead of here.
-    if (Settings::getInstance()->getBool("DebugText")) {
-        if (!mParent || !mParent->isScrollable())
-            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
-    }
-
     float offsetX {0.0f};
 
     if (mHorizontalScrolling) {
@@ -284,6 +277,13 @@ void TextComponent::render(const glm::mat4& parentTrans)
             else {
                 // If height is smaller than the font height, then always center vertically.
                 yOff = (mSize.y - textSize.y) / 2.0f;
+            }
+
+            // Draw the overall textbox area. If we're inside a vertical scrollable container then
+            // this area is rendered inside that component instead of here.
+            if (!secondPass && Settings::getInstance()->getBool("DebugText")) {
+                if (!mParent || !mParent->isScrollable())
+                    mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
             }
 
             trans = glm::translate(trans, glm::vec3 {0.0f, yOff, 0.0f});
