@@ -161,6 +161,7 @@ private:
     bool mHasUnfocusedItemSaturation;
     float mUnfocusedItemDimming;
     ImageFit mImagefit;
+    bool mImageLinearInterpolation;
     float mImageRelativeScale;
     float mImageCornerRadius;
     unsigned int mImageColor;
@@ -238,6 +239,7 @@ GridComponent<T>::GridComponent()
     , mHasUnfocusedItemSaturation {false}
     , mUnfocusedItemDimming {1.0f}
     , mImagefit {ImageFit::CONTAIN}
+    , mImageLinearInterpolation {true}
     , mImageRelativeScale {1.0f}
     , mImageCornerRadius {0.0f}
     , mImageColor {0xFFFFFFFF}
@@ -300,7 +302,7 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
     if (entry.data.imagePath != "" &&
         ResourceManager::getInstance().fileExists(entry.data.imagePath)) {
         auto item = std::make_shared<ImageComponent>(false, dynamic);
-        item->setLinearInterpolation(true);
+        item->setLinearInterpolation(mImageLinearInterpolation);
         item->setMipmapping(true);
         if (mImagefit == ImageFit::CONTAIN)
             item->setMaxSize(mItemSize * mImageRelativeScale);
@@ -333,7 +335,7 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
 
         if (mDefaultImage.get() == nullptr || !mGamelistView) {
             mDefaultImage = std::make_shared<ImageComponent>(false, dynamic);
-            mDefaultImage->setLinearInterpolation(true);
+            mDefaultImage->setLinearInterpolation(mImageLinearInterpolation);
             mDefaultImage->setMipmapping(true);
             if (mImagefit == ImageFit::CONTAIN)
                 mDefaultImage->setMaxSize(mItemSize * mImageRelativeScale);
@@ -391,7 +393,7 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
     if (entry.data.imagePath != "") {
         const glm::vec3& calculatedItemPos {entry.data.item->getPosition()};
         auto item = std::make_shared<ImageComponent>(false, true);
-        item->setLinearInterpolation(true);
+        item->setLinearInterpolation(mImageLinearInterpolation);
         item->setMipmapping(true);
         if (mImagefit == ImageFit::CONTAIN)
             item->setMaxSize(mItemSize * mImageRelativeScale);
@@ -1052,6 +1054,23 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (elem->has("imageInterpolation")) {
+        const std::string& imageInterpolation {elem->get<std::string>("imageInterpolation")};
+        if (imageInterpolation == "linear") {
+            mImageLinearInterpolation = true;
+        }
+        else if (imageInterpolation == "nearest") {
+            mImageLinearInterpolation = false;
+        }
+        else {
+            mImageLinearInterpolation = true;
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"imageInterpolation\" for element \""
+                            << element.substr(5) << "\" defined as \"" << imageInterpolation
+                            << "\"";
+        }
+    }
+
     if (elem->has("backgroundRelativeScale"))
         mBackgroundRelativeScale =
             glm::clamp(elem->get<float>("backgroundRelativeScale"), 0.2f, 1.0f);
@@ -1116,6 +1135,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (Utils::FileSystem::exists(path) && !Utils::FileSystem::isDirectory(path)) {
             mBackgroundImage = std::make_unique<ImageComponent>(false, false);
             mBackgroundImage->setLinearInterpolation(true);
+            mBackgroundImage->setMipmapping(true);
             mBackgroundImage->setResize(mItemSize * mBackgroundRelativeScale);
             mBackgroundImage->setOrigin(0.5f, 0.5f);
             if (mHasBackgroundColor) {
@@ -1147,6 +1167,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (Utils::FileSystem::exists(path) && !Utils::FileSystem::isDirectory(path)) {
             mSelectorImage = std::make_unique<ImageComponent>(false, false);
             mSelectorImage->setLinearInterpolation(true);
+            mSelectorImage->setMipmapping(true);
             mSelectorImage->setResize(mItemSize * mSelectorRelativeScale);
             mSelectorImage->setOrigin(0.5f, 0.5f);
             if (mHasSelectorColor) {
