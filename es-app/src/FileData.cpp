@@ -1035,6 +1035,10 @@ void FileData::launchGame()
             window->setAllowFileAnimation(true);
             return;
         }
+        else {
+            LOG(LogDebug) << "FileData::launchGame(): Found pre-command binary \"" << preCommandPath
+                          << "\"";
+        }
     }
 
     // Check that the emulator binary actually exists, and if so, get its path.
