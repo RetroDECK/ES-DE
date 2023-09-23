@@ -306,6 +306,9 @@ void MediaViewer::findMedia()
     if ((mediaFile = mGame->getMiximagePath()) != "")
         mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("MIXIMAGE", true)));
 
+    if ((mediaFile = mGame->getCustomImagePath()) != "")
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("CUSTOM", true)));
+
     if (!mImageFiles.empty())
         mHasImages = true;
 }

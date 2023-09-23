@@ -95,6 +95,7 @@ public:
     const std::string getMiximagePath() const;
     const std::string getScreenshotPath() const;
     const std::string getTitleScreenPath() const;
+    const std::string getCustomImagePath() const;
     const std::string getVideoPath() const;
     const std::string getManualPath() const;
 

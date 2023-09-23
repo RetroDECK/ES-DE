@@ -299,6 +299,12 @@ const std::string FileData::getTitleScreenPath() const
     return getMediafilePath("titlescreens");
 }
 
+const std::string FileData::getCustomImagePath() const
+{
+    // Return path to the custom image.
+    return getMediafilePath("custom");
+}
+
 const std::string FileData::getVideoPath() const
 {
     const std::vector<std::string> extList {".avi", ".mkv", ".mov", ".mp4", ".wmv"};
