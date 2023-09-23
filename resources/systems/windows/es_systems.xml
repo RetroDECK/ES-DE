@@ -1304,6 +1304,15 @@
         <theme>pc98</theme>
     </system>
     <system>
+        <name>pcarcade</name>
+        <fullname>PC Arcade Systems</fullname>
+        <path>%ROMPATH%\pcarcade</path>
+        <extension>.bat .BAT .lnk .LNK</extension>
+        <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <platform>arcade</platform>
+        <theme>pcarcade</theme>
+    </system>
+    <system>
         <name>pcengine</name>
         <fullname>NEC PC Engine</fullname>
         <path>%ROMPATH%\pcengine</path>

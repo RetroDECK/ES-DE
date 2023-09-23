@@ -458,6 +458,10 @@
         <systemsortname>NEC - 1982</systemsortname>
     </system>
     <system>
+        <name>pcarcade</name>
+        <systemsortname>Arcade - 2003</systemsortname>
+    </system>
+    <system>
         <name>pcengine</name>
         <systemsortname>NEC - 1987</systemsortname>
     </system>

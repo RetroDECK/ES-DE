@@ -1313,6 +1313,18 @@
         <theme>pc98</theme>
     </system>
     <system>
+        <name>pcarcade</name>
+        <fullname>PC Arcade Systems</fullname>
+        <path>%ROMPATH%/pcarcade</path>
+        <extension>.AppImage .desktop .exe .EXE .sh</extension>
+        <command label="Wine (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_WINE% %ROM%</command>
+        <command label="Proton (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_PROTON% %ROM%</command>
+        <command label="AppImage">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>arcade</platform>
+        <theme>pcarcade</theme>
+    </system>
+    <system>
         <name>pcengine</name>
         <fullname>NEC PC Engine</fullname>
         <path>%ROMPATH%/pcengine</path>
