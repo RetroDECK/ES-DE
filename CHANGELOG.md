@@ -20,6 +20,7 @@
 * Added an entry to the Utilities menu for rescanning the ROM directory
 * Added an entry to the Utilities menu for creating/updating the game system directories
 * Added support for a %PRECOMMAND% launch command variable (useful for launching emulators via Wine or Proton)
+* Added support for placing images in a "custom" folder in the downloaded_media directory and view these using the media viewer
 * Enabled the setting "Show hidden files and folders" to be changed without requiring an application restart
 * Enabled the setting "Show hidden games" to be changed without requiring an application restart
 * Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
@@ -28,10 +29,12 @@
 * Added support for the Acorn Archimedes (archimedes) game system
 * Added support for the Bit Corporation Gamate (gamate) game system
 * Added support for the Sega NAOMI 2 (naomi2) game system
+* Added support for the PC Arcade Systems (pcarcade) game system
 * Added support for the Commodore Plus/4 (plus4) game system
 * Added support for the Sega Titan Video Game System (stv) game system
 * Added support for the Funtech Super A'Can (supracan) game system
 * Added support for the Namco-Sega-Nintendo Triforce (triforce) game system
+* Added support for the Taito Type X (type-x) game system
 * Added support for the Microsoft Windows 3.x (windows3x) game system
 * Added support for the Microsoft Windows 9x (windows9x) game system
 * Removed support for the MAME4ALL (mame-mame4all) system
@@ -43,6 +46,7 @@
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
 * Added the .88d, .cmt and .t88 file extensions to the pc88 system
 * Removed the .7z and .zip file extensions from the pc88 system
+* Removed the .cdi, .cue, .gdi, .m3u and .iso file extensions from the atomiswave, naomi and naomigd systems
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine and Proton
 * (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine and Proton
 * (Linux) Added BigPEmu Wine and BigPEmu Proton as alternative emulators for the atarijaguar system
@@ -89,7 +93,7 @@
 * Added "iterationCount" and "onIterationsDone" properties to the video element
 * Changed the "path" property for the video element to consider the set value even if it points to a non-existing file
 * Made it possible to set the defaultImage property for the carousel and grid elements using variables
-* Added theme support for the "manual" metadata type for the text element
+* Added theme support for the "manual", "physicalName" and "physicalNameExtension" metadata types for the text element
 * Added support for binding multiple texture units for use in the shaders
 * Added the device serial number to the es_log.txt entries when adding or removing controllers
 * Changed the application updater to not use the scraper's transfer and connection timeout settings

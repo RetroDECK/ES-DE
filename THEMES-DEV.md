@@ -2502,6 +2502,8 @@ Properties:
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
     - `emulator` - The emulator used to launch the game, could as such be a per-game alternative emulator entry, a system wide alternative emulator entry or the system's default emulator. This requires that the command tag in es_systems.xml has a label defined, otherwise this value will be blank. Folders will always have blank values as these can't be launched directly.
+    - `physicalName` - The physical name of the game file or folder, excluding its extension. Note that for folders with dots in their names any text after the last dot will get removed. Although this is not technically correct as folders can't have extensions, it makes the name appear consistent if the _directories interpreted as files_ functionality has been used.
+    - `physicalNameExtension` - The physical name of the game file or folder, including its extension.
     - `systemName` - The short system name of the game.
     - `systemFullname` - The full system name of the game.
     - `sourceSystemName` - The source short system name of the game. For regular systems this value will be identical to `systemName` but for collections it will show the actual system that the game is located in instead of the collection system name.
