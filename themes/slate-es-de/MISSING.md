@@ -47,7 +47,7 @@
 * intellivision: Intellivision - consolegame.svg, controller.svg
 * j2me: Java 2 Micro Edition (J2ME) - consolegame.svg, controller.svg
 * kodi: Kodi home theatre software - consolegame.svg, controller.svg
-* lcdgames : LCD Handheld Games - consolegame.svg
+* lcdgames: LCD Handheld Games - consolegame.svg
 * lowresnx: LowRes NX Fantasy Console - consolegame.svg
 * lutris: Lutris open gaming platform - consolegame.svg, controller.svg
 * macintosh: Apple Macintosh - consolegame.svg, controller.svg
@@ -59,7 +59,7 @@
 * msxturbor: MSX Turbo R - consolegame.svg, controller.svg
 * mugen: M.U.G.E.N Game Engine - consolegame.svg, controller.svg
 * multivision: Othello Multivision - consolegame.svg, controller.svg
-* n64dd : Nintendo 64DD - consolegame.svg
+* n64dd: Nintendo 64DD - consolegame.svg
 * naomi: Sega NAOMI - consolegame.svg
 * naomi2: Sega NAOMI 2 - consolegame.svg
 * naomigd: Sega NAOMI GD-ROM - consolegame.svg
@@ -68,11 +68,12 @@
 * openbor: Open Beats of Rage (OpenBOR) game engine - consolegame.svg, controller.svg
 * oric: Tangerine Computer Systems Oric - consolegame.svg, controller.svg
 * palm: Palm OS - consolegame.svg, controller.svg
-* pc88 : NEC PC-8800 series - consolegame.svg
-* pc98 : NEC PC-9800 series - consolegame.svg
+* pc88: NEC PC-8800 series - consolegame.svg
+* pc98: NEC PC-9800 series - consolegame.svg
+* pcarcade: PC Arcade Systems - consolegame.svg, controller.svg
 * pcfx: NEC PC-FX - consolegame.svg, controller.svg
 * pico8: PICO-8 Fantasy Console - consolegame.svg, controller.svg
-* plus4 : Commodore Plus/4 - consolegame.svg, controller.svg
+* plus4: Commodore Plus/4 - consolegame.svg, controller.svg
 * pokemini: Nintendo Pokémon Mini - consolegame.svg, controller.svg
 * ports: Source ports - consolegame.svg, controller.svg
 * ps4: Sony PlayStation 4 - consolegame.svg, controller.svg

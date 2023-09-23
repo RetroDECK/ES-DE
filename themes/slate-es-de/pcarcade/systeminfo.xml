@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>In the beginning of the 2000s arcade system</text>
+        </text>
+        <text name="info2">
+            <text>manufacturers started to move away from custom</text>
+        </text>
+        <text name="info3">
+            <text>board designs, and as part of this change many</text>
+        </text>
+        <text name="info4">
+            <text>instead adapted the standard PC architecture.</text>
+        </text>
+        <text name="info5">
+            <text>There were numerous such designs running</text>
+        </text>
+        <text name="info6">
+            <text>Linux or Windows, for instance Sega Lindbergh,</text>
+        </text>
+        <text name="info7">
+            <text>Namco System N2 and Taito Type X.</text>
+        </text>
+    </view>
+</theme>
