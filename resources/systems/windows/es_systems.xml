@@ -1871,6 +1871,15 @@
         <theme>trs-80</theme>
     </system>
     <system>
+        <name>type-x</name>
+        <fullname>Taito Type X</fullname>
+        <path>%ROMPATH%\type-x</path>
+        <extension>.bat .BAT .lnk .LNK</extension>
+        <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <platform>arcade</platform>
+        <theme>type-x</theme>
+    </system>
+    <system>
         <name>uzebox</name>
         <fullname>Uzebox Open Source Console</fullname>
         <path>%ROMPATH%\uzebox</path>

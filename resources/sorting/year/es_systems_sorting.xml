@@ -662,6 +662,10 @@
         <systemsortname>1984</systemsortname>
     </system>
     <system>
+        <name>type-x</name>
+        <systemsortname>2004</systemsortname>
+    </system>
+    <system>
         <name>uzebox</name>
         <systemsortname>2008</systemsortname>
     </system>

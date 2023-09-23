@@ -1796,6 +1796,15 @@
         <theme>trs-80</theme>
     </system>
     <system>
+        <name>type-x</name>
+        <fullname>Taito Type X</fullname>
+        <path>%ROMPATH%/type-x</path>
+        <extension>.app .sh</extension>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>arcade</platform>
+        <theme>type-x</theme>
+    </system>
+    <system>
         <name>uzebox</name>
         <fullname>Uzebox Open Source Console</fullname>
         <path>%ROMPATH%/uzebox</path>

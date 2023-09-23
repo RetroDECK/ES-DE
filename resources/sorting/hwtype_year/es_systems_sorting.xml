@@ -662,6 +662,10 @@
         <systemsortname>Computer - 1984</systemsortname>
     </system>
     <system>
+        <name>type-x</name>
+        <systemsortname>Arcade - 2004</systemsortname>
+    </system>
+    <system>
         <name>uzebox</name>
         <systemsortname>Console - 2008</systemsortname>
     </system>

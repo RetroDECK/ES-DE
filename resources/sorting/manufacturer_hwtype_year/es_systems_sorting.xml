@@ -662,6 +662,10 @@
         <systemsortname>Tandy - Computer - 1984</systemsortname>
     </system>
     <system>
+        <name>type-x</name>
+        <systemsortname>Arcade - Arcade - 2004</systemsortname>
+    </system>
+    <system>
         <name>uzebox</name>
         <systemsortname>Belogic Software - Console - 2008</systemsortname>
     </system>

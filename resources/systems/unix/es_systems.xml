@@ -1882,6 +1882,18 @@
         <theme>trs-80</theme>
     </system>
     <system>
+        <name>type-x</name>
+        <fullname>Taito Type X</fullname>
+        <path>%ROMPATH%/type-x</path>
+        <extension>.AppImage .desktop .exe .EXE .sh</extension>
+        <command label="Wine (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_WINE% %ROM%</command>
+        <command label="Proton (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_PROTON% %ROM%</command>
+        <command label="AppImage">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>arcade</platform>
+        <theme>type-x</theme>
+    </system>
+    <system>
         <name>uzebox</name>
         <fullname>Uzebox Open Source Console</fullname>
         <path>%ROMPATH%/uzebox</path>
