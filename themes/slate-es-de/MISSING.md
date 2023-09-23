@@ -98,6 +98,7 @@
 * to8: Thomson TO8 - consolegame.svg, controller.svg
 * triforce: Namco-Sega-Nintendo Triforce - consolegame.svg, controller.svg
 * trs-80: Tandy TRS 80 - consolegame.svg, controller.svg
+* type-x: Taito Type X - consolegame.svg, controller.svg
 * uzebox: Uzebox - consolegame.svg
 * vectrex: Smith Engineering Vectrex - consolegame.svg (needs simplification as it takes a long time to rasterize)
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version
