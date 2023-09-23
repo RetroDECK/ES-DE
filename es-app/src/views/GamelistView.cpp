@@ -914,6 +914,12 @@ void GamelistView::updateView(const CursorState& state)
                                          ->getSystemEnvData()
                                          ->mLaunchCommands.front()
                                          .second));
+            else if (metadata == "physicalName")
+                return file->getType() == PLACEHOLDER ?
+                           "" :
+                           Utils::FileSystem::getStem(file->getFileName());
+            else if (metadata == "physicalNameExtension")
+                return file->getType() == PLACEHOLDER ? "" : file->getFileName();
             else if (metadata == "systemName")
                 return file->getSystem()->getName();
             else if (metadata == "systemFullname")

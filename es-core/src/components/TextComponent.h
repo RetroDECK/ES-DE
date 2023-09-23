@@ -126,11 +126,28 @@ private:
                                                                      "gamecountFavorites",
                                                                      "gamecountFavoritesNoText"};
 
-    static inline std::vector<std::string> supportedMetadataTypes {
-        "name",   "description", "rating",         "developer",        "publisher",
-        "genre",  "players",     "favorite",       "completed",        "kidgame",
-        "broken", "playcount",   "controller",     "altemulator",      "emulator",
-        "manual", "systemName",  "systemFullname", "sourceSystemName", "sourceSystemFullname"};
+    static inline std::vector<std::string> supportedMetadataTypes {"name",
+                                                                   "description",
+                                                                   "rating",
+                                                                   "developer",
+                                                                   "publisher",
+                                                                   "genre",
+                                                                   "players",
+                                                                   "favorite",
+                                                                   "completed",
+                                                                   "kidgame",
+                                                                   "broken",
+                                                                   "playcount",
+                                                                   "controller",
+                                                                   "altemulator",
+                                                                   "emulator",
+                                                                   "manual",
+                                                                   "physicalName",
+                                                                   "physicalNameExtension",
+                                                                   "systemName",
+                                                                   "systemFullname",
+                                                                   "sourceSystemName",
+                                                                   "sourceSystemFullname"};
 
     Renderer* mRenderer;
     std::string mDefaultValue;

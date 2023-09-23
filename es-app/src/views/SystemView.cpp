@@ -1277,6 +1277,11 @@ void SystemView::updateGameSelectors()
                                  ->getSystemEnvData()
                                  ->mLaunchCommands.front()
                                  .second));
+            else if (metadata == "physicalName")
+                text->setValue(
+                    Utils::FileSystem::getStem(games.at(gameSelectorEntry)->getFileName()));
+            else if (metadata == "physicalNameExtension")
+                text->setValue(games.at(gameSelectorEntry)->getFileName());
             else if (metadata == "systemName")
                 text->setValue(games.at(gameSelectorEntry)->getSystem()->getName());
             else if (metadata == "systemFullname")
