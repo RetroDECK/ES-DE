@@ -874,6 +874,10 @@ void ImageComponent::updateVertices()
 
     updateColors();
 
+    // Round vertices.
+    for (int i {0}; i < 4; ++i)
+        mVertices[i].position = glm::round(mVertices[i].position);
+
     if (mFlipX) {
         for (int i {0}; i < 4; ++i)
             mVertices[i].texcoord[0] = px - mVertices[i].texcoord[0];

@@ -486,6 +486,10 @@ void Renderer::drawRect(const float x,
     vertices[3] = {{x + wL, y + hL}, {0.0f, 0.0f}, colorEnd};
     // clang-format on
 
+    // Round vertices.
+    for (int i {0}; i < 4; ++i)
+        vertices[i].position = glm::round(vertices[i].position);
+
     vertices->opacity = opacity;
     vertices->dimming = dimming;
 
