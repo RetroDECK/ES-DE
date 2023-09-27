@@ -157,7 +157,7 @@ void GuiScraperSingle::onSizeChanged()
     else
         mGrid.setColWidthPerc(1, 0.04f);
 
-    mGrid.setSize(glm::round(mSize));
+    mGrid.setSize(mSize);
     mBackground.fitTo(mSize);
 
     // Add some extra margins to the game name.

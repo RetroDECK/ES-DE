@@ -38,9 +38,7 @@ class Font : public IReloadable
 {
 public:
     virtual ~Font();
-    static std::shared_ptr<Font> get(float size,
-                                     const std::string& path = getDefaultPath(),
-                                     const bool linearMagnify = false);
+    static std::shared_ptr<Font> get(float size, const std::string& path = getDefaultPath());
     static float getMiniFont()
     {
         static float sMiniFont {0.030f *
@@ -133,7 +131,6 @@ public:
                                               unsigned int properties,
                                               const std::shared_ptr<Font>& orig,
                                               const float maxHeight = 0.0f,
-                                              const bool linearMagnify = false,
                                               const float sizeMultiplier = 1.0f,
                                               const bool fontSizeDimmed = false);
 
@@ -143,7 +140,7 @@ public:
     static size_t getTotalMemUsage();
 
 private:
-    Font(float size, const std::string& path, const bool linearMagnify);
+    Font(float size, const std::string& path);
     static void initLibrary();
 
     struct FontTexture {
@@ -151,11 +148,10 @@ private:
         glm::ivec2 textureSize;
         glm::ivec2 writePos;
         int rowHeight;
-        bool linearMagnify;
 
-        FontTexture(const int mFontSize, const bool linearMagnifyArg);
+        FontTexture(const int mFontSize);
         ~FontTexture();
-        bool findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out);
+        bool findEmpty(const glm::ivec2& size, glm::ivec2& cursorOut);
 
         // You must call initTexture() after creating a FontTexture to get a textureId.
         // Initializes the OpenGL texture according to this FontTexture's settings,
@@ -178,8 +174,8 @@ private:
         FontTexture* texture;
         glm::vec2 texPos;
         glm::vec2 texSize; // In texels.
-        glm::vec2 advance;
-        glm::vec2 bearing;
+        glm::ivec2 advance;
+        glm::ivec2 bearing;
         int rows;
     };
 
@@ -188,8 +184,8 @@ private:
     void unloadTextures();
 
     void getTextureForNewGlyph(const glm::ivec2& glyphSize,
-                               FontTexture*& tex_out,
-                               glm::ivec2& cursor_out);
+                               FontTexture*& texOut,
+                               glm::ivec2& cursorOut);
 
     std::vector<std::string> getFallbackFontPaths();
     FT_Face getFaceForChar(unsigned int id);
@@ -203,7 +199,7 @@ private:
     void clearFaceCache() { mFaceCache.clear(); }
 
     static inline FT_Library sLibrary {nullptr};
-    static inline std::map<std::tuple<float, std::string, bool>, std::weak_ptr<Font>> sFontMap;
+    static inline std::map<std::tuple<float, std::string>, std::weak_ptr<Font>> sFontMap;
 
     Renderer* mRenderer;
     std::vector<std::unique_ptr<FontTexture>> mTextures;
@@ -212,7 +208,6 @@ private:
 
     const std::string mPath;
     float mFontSize;
-    const bool mLinearMagnify;
     float mLetterHeight;
     int mMaxGlyphHeight;
 };

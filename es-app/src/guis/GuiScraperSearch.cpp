@@ -715,7 +715,8 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
 
     // Slight adjustment upwards so the busy grid is not rendered precisely at the text edge.
     trans = glm::translate(
-        trans, glm::vec3 {0.0f, -(mRenderer->getScreenResolutionModifier() * 10.0f), 0.0f});
+        trans,
+        glm::vec3 {0.0f, std::round(-(mRenderer->getScreenResolutionModifier() * 10.0f)), 0.0f});
 
     if (mBlockAccept) {
         mRenderer->setMatrix(trans);

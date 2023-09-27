@@ -403,7 +403,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         // Render text.
         glm::mat4 drawTrans {trans};
 
-        drawTrans = glm::translate(drawTrans, offset);
+        drawTrans = glm::translate(drawTrans, glm::round(offset));
         mRenderer->setMatrix(drawTrans);
 
         if (i == mCursor && backgroundColor != 0x00000000) {
@@ -503,7 +503,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             glm::clamp(elem->get<float>("textHorizontalScrollGap"), 0.1f, 5.0f);
     }
 
-    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, false);
+    mFont = Font::getFromTheme(elem, properties, mFont);
 
     if (properties & ALIGNMENT) {
         if (elem->has("horizontalAlignment")) {

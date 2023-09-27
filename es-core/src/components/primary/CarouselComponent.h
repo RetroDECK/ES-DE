@@ -1664,8 +1664,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         List::mTierList = IList<CarouselEntry, T>::LIST_SCROLL_STYLE_MEDIUM;
 
     // Ccale the font size with the itemScale property value.
-    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, false,
-                               (mItemScale >= 1.0f ? mItemScale : 1.0f));
+    mFont =
+        Font::getFromTheme(elem, properties, mFont, 0.0f, (mItemScale >= 1.0f ? mItemScale : 1.0f));
 
     if (elem->has("textRelativeScale"))
         mTextRelativeScale = glm::clamp(elem->get<float>("textRelativeScale"), 0.2f, 1.0f);

@@ -180,7 +180,7 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 
         if (mAlignRight)
             off.x += referenceSize - mTextCache->metrics.size.x;
-        trans = glm::translate(trans, off);
+        trans = glm::translate(trans, glm::round(off));
 
         mRenderer->setMatrix(trans);
 

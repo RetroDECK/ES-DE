@@ -1344,7 +1344,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("unfocusedItemDimming"))
         mUnfocusedItemDimming = glm::clamp(elem->get<float>("unfocusedItemDimming"), 0.0f, 1.0f);
 
-    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, (mItemScale > 1.0f));
+    mFont = Font::getFromTheme(elem, properties, mFont);
 
     if (elem->has("textRelativeScale"))
         mTextRelativeScale = glm::clamp(elem->get<float>("textRelativeScale"), 0.2f, 1.0f);

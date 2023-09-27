@@ -15,11 +15,10 @@
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
-Font::Font(float size, const std::string& path, const bool linearMagnify)
+Font::Font(float size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
     , mPath(path)
     , mFontSize {size}
-    , mLinearMagnify {linearMagnify}
     , mLetterHeight {0.0f}
     , mMaxGlyphHeight {static_cast<int>(std::round(size))}
 {
@@ -46,8 +45,7 @@ Font::~Font()
 {
     unload(ResourceManager::getInstance());
 
-    auto fontEntry =
-        sFontMap.find(std::tuple<float, std::string, bool>(mFontSize, mPath, mLinearMagnify));
+    auto fontEntry = sFontMap.find(std::tuple<float, std::string>(mFontSize, mPath));
 
     if (fontEntry != sFontMap.cend())
         sFontMap.erase(fontEntry);
@@ -58,11 +56,11 @@ Font::~Font()
     }
 }
 
-std::shared_ptr<Font> Font::get(float size, const std::string& path, const bool linearMagnify)
+std::shared_ptr<Font> Font::get(float size, const std::string& path)
 {
     const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(path)};
-    const std::tuple<float, std::string, bool> def {
-        size, canonicalPath.empty() ? getDefaultPath() : canonicalPath, linearMagnify};
+    const std::tuple<float, std::string> def {size, canonicalPath.empty() ? getDefaultPath() :
+                                                                            canonicalPath};
 
     auto foundFont = sFontMap.find(def);
     if (foundFont != sFontMap.cend()) {
@@ -70,7 +68,7 @@ std::shared_ptr<Font> Font::get(float size, const std::string& path, const bool 
             return foundFont->second.lock();
     }
 
-    std::shared_ptr<Font> font {new Font(std::get<0>(def), std::get<1>(def), std::get<2>(def))};
+    std::shared_ptr<Font> font {new Font(std::get<0>(def), std::get<1>(def))};
     sFontMap[def] = std::weak_ptr<Font>(font);
     ResourceManager::getInstance().addReloadable(font);
     return font;
@@ -139,8 +137,8 @@ TextCache* Font::buildTextCache(const std::string& text,
                                 float lineSpacing,
                                 bool noTopMargin)
 {
-    float x {offset[0] + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0)};
-    float yTop {0.0f};
+    float x {offset.x + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0)};
+    int yTop {0};
     float yBot {0.0f};
 
     if (noTopMargin) {
@@ -148,14 +146,11 @@ TextCache* Font::buildTextCache(const std::string& text,
         yBot = getHeight(1.5);
     }
     else {
-        // TODO: This is lacking some precision which is especially visible at higher resolutions
-        // like 4K where the text is not always placed entirely correctly vertically. Try to find
-        // a way to improve on this.
         yTop = getGlyph('S')->bearing.y;
         yBot = getHeight(lineSpacing);
     }
 
-    float y {offset[1] + (yBot + yTop) / 2.0f};
+    float y {offset.y + ((yBot + yTop) / 2.0f)};
 
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
@@ -312,7 +307,7 @@ std::string Font::wrapText(const std::string& text,
 
         Glyph* glyph {getGlyph(charID)};
         if (glyph != nullptr) {
-            charWidth = glyph->advance.x;
+            charWidth = static_cast<float>(glyph->advance.x);
             byteCount = cursor - i;
         }
         else {
@@ -435,7 +430,6 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          unsigned int properties,
                                          const std::shared_ptr<Font>& orig,
                                          const float maxHeight,
-                                         const bool linearMagnify,
                                          const float sizeMultiplier,
                                          const bool fontSizeDimmed)
 {
@@ -475,7 +469,7 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
         path = getDefaultPath();
     }
 
-    return get(size, path, linearMagnify);
+    return get(size, path);
 }
 
 size_t Font::getMemUsage() const
@@ -538,14 +532,13 @@ std::vector<std::string> Font::getFallbackFontPaths()
     return fontPaths;
 }
 
-Font::FontTexture::FontTexture(const int mFontSize, const bool linearMagnifyArg)
+Font::FontTexture::FontTexture(const int mFontSize)
 {
     textureId = 0;
     rowHeight = 0;
-    writePos = glm::ivec2 {0, 0};
-    linearMagnify = linearMagnifyArg;
+    writePos = glm::ivec2 {1, 1};
 
-    // Set the texture to a reasonable size, if we run out of space for adding glyphs then
+    // Set the texture atlas to a reasonable size, if we run out of space for adding glyphs then
     // more textures will be created dynamically.
     textureSize = glm::ivec2 {mFontSize * 6, mFontSize * 6};
 }
@@ -556,24 +549,24 @@ Font::FontTexture::~FontTexture()
     deinitTexture();
 }
 
-bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out)
+bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursorOut)
 {
-    if (size.x >= textureSize.x || size.y >= textureSize.y)
+    if (size.x > textureSize.x || size.y > textureSize.y)
         return false;
 
-    if (writePos.x + size.x >= textureSize.x &&
+    if (writePos.x + size.x + 1 > textureSize.x &&
         writePos.y + rowHeight + size.y + 1 < textureSize.y) {
         // Row is full, but the glyph should fit on the next row so move the cursor there.
-        // Leave 1 pixel of space between glyphs so that pixels from adjacent glyphs will
-        // not get sampled during scaling which would lead to edge artifacts.
-        writePos = glm::ivec2 {0, writePos.y + rowHeight + 1};
+        // Leave 1 pixel of space between glyphs so that pixels from adjacent glyphs will not
+        // get sampled during scaling and interpolation, which would lead to edge artifacts.
+        writePos = glm::ivec2 {1, writePos.y + rowHeight + 1};
         rowHeight = 0;
     }
 
-    if (writePos.x + size.x >= textureSize.x || writePos.y + size.y >= textureSize.y)
+    if (writePos.x + size.x + 1 > textureSize.x || writePos.y + size.y + 1 > textureSize.y)
         return false; // No it still won't fit.
 
-    cursor_out = writePos;
+    cursorOut = writePos;
     // Leave 1 pixel of space between glyphs.
     writePos.x += size.x + 1;
 
@@ -590,9 +583,9 @@ void Font::FontTexture::initTexture()
     // glyphs will not be visible. That would otherwise lead to edge artifacts as these pixels
     // would get sampled during scaling.
     std::vector<uint8_t> texture(textureSize.x * textureSize.y * 4, 0);
-    textureId = Renderer::getInstance()->createTexture(0, Renderer::TextureType::RED, true,
-                                                       linearMagnify, false, false, textureSize.x,
-                                                       textureSize.y, &texture[0]);
+    textureId =
+        Renderer::getInstance()->createTexture(0, Renderer::TextureType::RED, true, true, false,
+                                               false, textureSize.x, textureSize.y, &texture[0]);
 }
 
 void Font::FontTexture::deinitTexture()
@@ -669,28 +662,26 @@ void Font::unloadTextures()
 }
 
 void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
-                                 FontTexture*& tex_out,
-                                 glm::ivec2& cursor_out)
+                                 FontTexture*& texOut,
+                                 glm::ivec2& cursorOut)
 {
     if (mTextures.size()) {
         // Check if the most recent texture has space available for the glyph.
-        tex_out = mTextures.back().get();
+        texOut = mTextures.back().get();
 
         // Will this one work?
-        if (tex_out->findEmpty(glyphSize, cursor_out))
+        if (texOut->findEmpty(glyphSize, cursorOut))
             return; // Yes.
     }
 
-    mTextures.emplace_back(
-        std::make_unique<FontTexture>(static_cast<int>(std::round(mFontSize)), mLinearMagnify));
-    tex_out = mTextures.back().get();
-    tex_out->initTexture();
+    mTextures.emplace_back(std::make_unique<FontTexture>(static_cast<int>(std::round(mFontSize))));
+    texOut = mTextures.back().get();
+    texOut->initTexture();
 
-    bool ok {tex_out->findEmpty(glyphSize, cursor_out)};
-    if (!ok) {
+    if (!texOut->findEmpty(glyphSize, cursorOut)) {
         LOG(LogError) << "Glyph too big to fit on a new texture (glyph size > "
-                      << tex_out->textureSize.x << ", " << tex_out->textureSize.y << ")";
-        tex_out = nullptr;
+                      << texOut->textureSize.x << ", " << texOut->textureSize.y << ")";
+        texOut = nullptr;
     }
 }
 
@@ -770,15 +761,13 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     Glyph& glyph {mGlyphMap[id]};
 
     glyph.texture = tex;
-    glyph.texPos = glm::vec2 {cursor.x / static_cast<float>(tex->textureSize.x),
-                              cursor.y / static_cast<float>(tex->textureSize.y)};
-    glyph.texSize = glm::vec2 {glyphSize.x / static_cast<float>(tex->textureSize.x),
-                               glyphSize.y / static_cast<float>(tex->textureSize.y)};
-    glyph.advance = glm::vec2 {static_cast<float>(glyphSlot->metrics.horiAdvance) / 64.0f,
-                               static_cast<float>(glyphSlot->metrics.vertAdvance) / 64.0f};
-    glyph.bearing = glm::vec2 {static_cast<float>(glyphSlot->metrics.horiBearingX) / 64.0f,
-                               static_cast<float>(glyphSlot->metrics.horiBearingY) / 64.0f};
-    glyph.rows = glyphSlot->bitmap.rows;
+    glyph.texPos = {cursor.x / static_cast<float>(tex->textureSize.x),
+                    cursor.y / static_cast<float>(tex->textureSize.y)};
+    glyph.texSize = {glyphSize.x / static_cast<float>(tex->textureSize.x),
+                     glyphSize.y / static_cast<float>(tex->textureSize.y)};
+    glyph.advance = {glyphSlot->metrics.horiAdvance >> 6, glyphSlot->metrics.vertAdvance >> 6};
+    glyph.bearing = {glyphSlot->metrics.horiBearingX >> 6, glyphSlot->metrics.horiBearingY >> 6};
+    glyph.rows = glyphSize.y;
 
     // Upload glyph bitmap to texture.
     mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
