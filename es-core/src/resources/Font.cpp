@@ -726,9 +726,9 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
 
     const FT_GlyphSlot glyphSlot {face->glyph};
 
-    // TODO: Evaluate/test hinting when HarfBuzz has been added.
     // If the font does not contain hinting information then force the use of the automatic
-    // hinter that is built into FreeType.
+    // hinter that is built into FreeType. Note: Using font-supplied hints generally looks worse
+    // than using the auto-hinter so it's disabled for now.
     // const bool hasHinting {static_cast<bool>(glyphSlot->face->face_flags & FT_FACE_FLAG_HINTER)};
     const bool hasHinting {true};
 
