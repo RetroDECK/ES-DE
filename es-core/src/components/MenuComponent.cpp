@@ -193,6 +193,7 @@ std::shared_ptr<ComponentGrid> MenuComponent::makeButtonGrid(
 std::shared_ptr<ImageComponent> MenuComponent::makeArrow()
 {
     auto bracket = std::make_shared<ImageComponent>();
+    bracket->setLinearInterpolation(true);
     bracket->setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
     bracket->setImage(":/graphics/arrow.svg");
     bracket->setColorShift(mMenuColorPrimary);
