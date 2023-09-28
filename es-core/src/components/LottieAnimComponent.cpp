@@ -343,6 +343,22 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mIterationCount *= 2;
     }
 
+    if (elem->has("interpolation")) {
+        const std::string& interpolation {elem->get<std::string>("interpolation")};
+        if (interpolation == "linear") {
+            mTexture->setLinearMagnify(true);
+        }
+        else if (interpolation == "nearest") {
+            mTexture->setLinearMagnify(false);
+        }
+        else {
+            mTexture->setLinearMagnify(false);
+            LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, property "
+                               "\"interpolation\" for element \""
+                            << element.substr(10) << "\" defined as \"" << interpolation << "\"";
+        }
+    }
+
     if (elem->has("cornerRadius"))
         mCornerRadius =
             glm::clamp(elem->get<float>("cornerRadius"), 0.0f, 0.5f) * mRenderer->getScreenWidth();
