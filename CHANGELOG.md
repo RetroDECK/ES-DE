@@ -81,7 +81,7 @@
 * Added a download percentage indicator to the application updater
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Removed the es_log.txt entry when an es_systems.cfg legacy systems configuration file was found on startup
-* Improved menu system font rendering on GPUs without proper texture filtering support
+* Improved font rendering quality and always enabled linear texture interpolation for both minification and magnification
 * Improved the blur shaders to run faster at higher resolutions and to look identical regardless of display resolution
 * Improved the blur shaders rendering quality when rotating the screen 90 or 270 degrees
 * Added rounded corner support to the image, video, animation, carousel and grid elements
@@ -90,6 +90,12 @@
 * Added a number of carousel, grid, textlist and text properties to control horizontally scrolling text
 * Added a "textRelativeScale" property to the carousel to size text smaller than the overall item size
 * Added an "imageInterpolation" property to the grid element
+* Added "rotation" and "rotationOrigin" properties to the video element
+* Changed the "interpolation" property for the video element to also apply to the video texture
+* Added debug overlay rendering for the actual video stream in addition to the static image
+* Added an "interpolation" property to the badge element
+* Added support for the "interpolation" property to the animation element when using Lottie files
+* Changed default interpolation to linear on arbitrary rotation for the image, video, animation, badges and rating elements
 * Added "iterationCount" and "onIterationsDone" properties to the video element
 * Changed the "path" property for the video element to consider the set value even if it points to a non-existing file
 * Made it possible to set the defaultImage property for the carousel and grid elements using variables

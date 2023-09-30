@@ -1336,7 +1336,7 @@ Properties:
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
 * `imageInterpolation` - type: STRING
-    - Interpolation method to use when scaling up images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
+    - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `linear`
 * `imageCornerRadius` - type: FLOAT
@@ -1610,7 +1610,7 @@ Properties:
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
 * `imageInterpolation` - type: STRING
-    - Interpolation method to use when scaling up images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
+    - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`
     - Default is `linear`
 * `imageRelativeScale` - type: FLOAT.
@@ -2000,9 +2000,9 @@ Properties:
     - Valid values are `top` or `bottom`
     - Default is `bottom`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling up. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
+    - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
-    - Default is `nearest`
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `cornerRadius` - type: FLOAT
     - Setting this property higher than zero applies rounded corners to the image. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
     - Minimum value is `0` and maximum value is `0.5`
@@ -2065,6 +2065,13 @@ Properties:
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
+* `rotation` - type: FLOAT
+    - Angle in degrees that the static image and video should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Default is `0`
+* `rotationOrigin` - type: NORMALIZED_PAIR
+    - Point around which the static image and video will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5`
 * `stationary` - type: STRING
     - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
     - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
@@ -2114,9 +2121,9 @@ Properties:
     - Whether to enable or disable audio playback for the video. For static videos in the gamelist view it's strongly recommended to set this to `false` if there is also a separate video element playing game videos.
     - Default is `true`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling up images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
+    - Interpolation method to use when scaling and rotating static images and videos. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image and video smoother.
     - Valid values are `nearest` or `linear`
-    - Default is `nearest`
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `imageCornerRadius` - type: FLOAT
     - Setting this property higher than zero applies rounded corners to the static image. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
     - Minimum value is `0` and maximum value is `0.5`
@@ -2232,10 +2239,9 @@ Properties:
     - Minimum value is `0` and maximum value is `10`
     - Default is `0` (infinite amount of times)
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling up. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
+    - Interpolation method to use when scaling and rotating animations. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the animation smoother. This property has limited effect on Lottie animations unless rotation is applied.
     - Valid values are `nearest` or `linear`
-    - Default is `nearest`
-    - This property can only be used for GIF animations.
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `cornerRadius` - type: FLOAT
     - Setting this property higher than zero applies rounded corners to the animation. The radius is a percentage of the screen width and not directly related to the animation size. This makes it possible to apply identically sized corners regardless of animation dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height.
     - Minimum value is `0` and maximum value is `0.5`
@@ -2423,6 +2429,10 @@ Properties:
     - The direction to apply the color shift gradient if both `folderLinkIconColor` and `folderLinkIconColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
+* `interpolation` - type: STRING
+    - Interpolation method to use when scaling and rotating badge images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
+    - Valid values are `nearest` or `linear`
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -2797,9 +2807,9 @@ Properties:
     - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
     - Default is `0`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling up images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images, and even more so if rotation is applied.
+    - Interpolation method to use when scaling and rotating rating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
-    - Default is `nearest`
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
     - Default is `FFFFFFFF`
