@@ -136,6 +136,7 @@ protected:
     bool mPlayAudio;
     bool mDrawPillarboxes;
     bool mRenderScanlines;
+    bool mLinearInterpolation;
     bool mHasVideo;
     bool mGeneralFade;
     float mFadeIn;

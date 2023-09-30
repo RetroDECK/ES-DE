@@ -1363,6 +1363,7 @@ void VideoFFmpegComponent::startVideoStream()
 
         // Get an empty texture for rendering the video.
         mTexture = TextureResource::get("");
+        mTexture->setLinearMagnify(mLinearInterpolation);
 
         // This is used for the audio and video synchronization.
         mTimeReference = std::chrono::high_resolution_clock::now();

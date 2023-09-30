@@ -303,6 +303,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"cropSize", NORMALIZED_PAIR},
        {"maxSize", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
+       {"rotation", FLOAT},
+       {"rotationOrigin", NORMALIZED_PAIR},
        {"stationary", STRING},
        {"path", PATH},
        {"default", PATH},

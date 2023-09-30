@@ -45,6 +45,7 @@ VideoComponent::VideoComponent()
     , mPlayAudio {true}
     , mDrawPillarboxes {true}
     , mRenderScanlines {false}
+    , mLinearInterpolation {false}
     , mHasVideo {false}
     , mGeneralFade {false}
     , mFadeIn {1.0f}
@@ -211,12 +212,17 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("audio"))
         mPlayAudio = elem->get<bool>("audio");
 
+    mStaticImage.setRotation(mRotation);
+    mStaticImage.setRotationOrigin(mRotationOrigin);
+
     if (elem->has("interpolation")) {
         const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {
+            mLinearInterpolation = true;
             mStaticImage.setLinearInterpolation(true);
         }
         else if (interpolation == "nearest") {
+            mLinearInterpolation = false;
             mStaticImage.setLinearInterpolation(false);
         }
         else {
