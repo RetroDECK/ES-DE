@@ -176,6 +176,14 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
     if (mIsPlaying && mFormatContext) {
         Renderer::Vertex vertices[4];
 
+        if (Settings::getInstance()->getBool("DebugImage")) {
+            mRenderer->setMatrix(trans);
+            const glm::vec2 targetSizePos {(mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f}};
+            mRenderer->drawRect(targetSizePos.x, targetSizePos.y, std::round(mTargetSize.x),
+                                std::round(mTargetSize.y), 0xFF000033, 0xFF000033);
+            mRenderer->setMatrix(parentTrans);
+        }
+
         if (!mScreensaverMode && !mMediaViewerMode) {
             mBlackFrame.setOpacity(mOpacity * mThemeOpacity);
             mBlackFrame.render(trans);
