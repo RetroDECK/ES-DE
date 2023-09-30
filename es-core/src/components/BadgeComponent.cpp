@@ -301,6 +301,14 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    // Enable linear interpolation by default if element is arbitrarily rotated.
+    if (properties & ThemeFlags::ROTATION && elem->has("rotation")) {
+        const float rotation {std::abs(elem->get<float>("rotation"))};
+        if (rotation != 0.0f &&
+            (std::round(rotation) != rotation || static_cast<int>(rotation) % 90 != 0))
+            mLinearInterpolation = true;
+    }
+
     if (elem->has("interpolation")) {
         const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {

@@ -215,6 +215,16 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mStaticImage.setRotation(mRotation);
     mStaticImage.setRotationOrigin(mRotationOrigin);
 
+    // Enable linear interpolation by default if element is arbitrarily rotated.
+    if (properties & ThemeFlags::ROTATION && elem->has("rotation")) {
+        const float rotation {std::abs(elem->get<float>("rotation"))};
+        if (rotation != 0.0f &&
+            (std::round(rotation) != rotation || static_cast<int>(rotation) % 90 != 0)) {
+            mLinearInterpolation = true;
+            mStaticImage.setLinearInterpolation(true);
+        }
+    }
+
     if (elem->has("interpolation")) {
         const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {
@@ -226,7 +236,6 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mStaticImage.setLinearInterpolation(false);
         }
         else {
-            mStaticImage.setLinearInterpolation(false);
             LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property "
                                "\"interpolation\" for element \""
                             << element.substr(6) << "\" defined as \"" << interpolation << "\"";

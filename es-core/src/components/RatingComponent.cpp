@@ -229,6 +229,14 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     bool linearInterpolation {false};
 
+    // Enable linear interpolation by default if element is arbitrarily rotated.
+    if (properties & ThemeFlags::ROTATION && elem->has("rotation")) {
+        const float rotation {std::abs(elem->get<float>("rotation"))};
+        if (rotation != 0.0f &&
+            (std::round(rotation) != rotation || static_cast<int>(rotation) % 90 != 0))
+            linearInterpolation = true;
+    }
+
     if (elem->has("interpolation")) {
         const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {
@@ -238,8 +246,6 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             linearInterpolation = false;
         }
         else {
-            linearInterpolation = false;
-
             LOG(LogWarning)
                 << "RatingComponent: Invalid theme configuration, property \"interpolation\" "
                    "for element \""

@@ -343,6 +343,14 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mIterationCount *= 2;
     }
 
+    // Enable linear interpolation by default if element is arbitrarily rotated.
+    if (properties & ThemeFlags::ROTATION && elem->has("rotation")) {
+        const float rotation {std::abs(elem->get<float>("rotation"))};
+        if (rotation != 0.0f &&
+            (std::round(rotation) != rotation || static_cast<int>(rotation) % 90 != 0))
+            mTexture->setLinearMagnify(true);
+    }
+
     if (elem->has("interpolation")) {
         const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {
@@ -352,7 +360,6 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mTexture->setLinearMagnify(false);
         }
         else {
-            mTexture->setLinearMagnify(false);
             LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, property "
                                "\"interpolation\" for element \""
                             << element.substr(10) << "\" defined as \"" << interpolation << "\"";
