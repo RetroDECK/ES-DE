@@ -62,6 +62,8 @@ private:
 
     std::vector<std::string> mBadgeTypes;
     std::map<std::string, std::string> mBadgeIcons;
+
+    bool mLinearInterpolation;
 };
 
 #endif // ES_CORE_COMPONENTS_BADGE_COMPONENT_H

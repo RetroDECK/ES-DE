@@ -383,6 +383,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"folderLinkIconColor", COLOR},
        {"folderLinkIconColorEnd", COLOR},
        {"folderLinkIconGradientType", STRING},
+       {"interpolation", STRING},
        {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},

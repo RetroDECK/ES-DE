@@ -76,6 +76,7 @@ BadgeComponent::BadgeComponent()
     , mFlexboxComponent {mFlexboxItems}
     , mBadgeTypes {{SLOT_COLLECTION, SLOT_FOLDER, SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME,
                     SLOT_BROKEN, SLOT_CONTROLLER, SLOT_ALTEMULATOR, SLOT_MANUAL}}
+    , mLinearInterpolation {false}
 {
     mBadgeIcons[SLOT_COLLECTION] = ":/graphics/badge_collection.svg";
     mBadgeIcons[SLOT_FOLDER] = ":/graphics/badge_folder.svg";
@@ -300,6 +301,21 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (elem->has("interpolation")) {
+        const std::string& interpolation {elem->get<std::string>("interpolation")};
+        if (interpolation == "linear") {
+            mLinearInterpolation = true;
+        }
+        else if (interpolation == "nearest") {
+            mLinearInterpolation = false;
+        }
+        else {
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, property "
+                               "\"interpolation\" for element \""
+                            << element.substr(7) << "\" defined as \"" << interpolation << "\"";
+        }
+    }
+
     unsigned int badgeIconColorShift {0xFFFFFFFF};
     unsigned int badgeIconColorShiftEnd {0xFFFFFFFF};
     bool badgeIconColorGradientHorizontal {true};
@@ -417,9 +433,11 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 item.label = slot;
 
                 ImageComponent badgeImage {false, false};
+                badgeImage.setLinearInterpolation(mLinearInterpolation);
                 badgeImage.setImage(mBadgeIcons[slot]);
                 item.baseImage = badgeImage;
                 item.overlayImage = ImageComponent {false, false};
+                item.overlayImage.setLinearInterpolation(mLinearInterpolation);
 
                 item.baseImage.setColorShift(badgeIconColorShift);
                 item.baseImage.setColorShiftEnd(badgeIconColorShiftEnd);
