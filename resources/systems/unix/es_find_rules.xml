@@ -407,6 +407,15 @@
             <entry>~/bin/linapple/linapple</entry>
         </rule>
     </emulator>
+    <emulator name="M2EMULATOR-WINDOWS">
+        <!-- Sega Model 2 Emulator -->
+        <rule type="staticpath">
+            <entry>~/Applications/m2emulator/EMULATOR.EXE</entry>
+            <entry>~/.local/share/applications/m2emulator/EMULATOR.EXE</entry>
+            <entry>~/.local/bin/m2emulator/EMULATOR.EXE</entry>
+            <entry>~/bin/m2emulator/EMULATOR.EXE</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
