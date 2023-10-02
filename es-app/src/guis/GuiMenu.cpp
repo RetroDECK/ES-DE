@@ -1546,6 +1546,39 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
+    if (Settings::getInstance()->getBool("DebugFlag")) {
+        // If the --debug command line option was passed then create a dummy entry.
+        auto debugMode = std::make_shared<SwitchComponent>();
+        debugMode->setState(true);
+        s->addWithLabel("DEBUG MODE", debugMode);
+        debugMode->setEnabled(false);
+        debugMode->setOpacity(DISABLED_OPACITY);
+        debugMode->getParent()
+            ->getChild(debugMode->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+    else {
+        // Debug mode.
+        auto debugMode = std::make_shared<SwitchComponent>();
+        debugMode->setState(Settings::getInstance()->getBool("DebugMode"));
+        s->addWithLabel("DEBUG MODE", debugMode);
+        s->addSaveFunc([debugMode, s] {
+            if (debugMode->getState() != Settings::getInstance()->getBool("DebugMode")) {
+                if (!Settings::getInstance()->getBool("DebugMode")) {
+                    Settings::getInstance()->setBool("DebugMode", true);
+                    Settings::getInstance()->setBool("Debug", true);
+                    Log::setReportingLevel(LogDebug);
+                }
+                else {
+                    Settings::getInstance()->setBool("DebugMode", false);
+                    Settings::getInstance()->setBool("Debug", false);
+                    Log::setReportingLevel(LogInfo);
+                }
+                s->setNeedsSaving();
+            }
+        });
+    }
+
     // GPU statistics overlay.
     auto displayGpuStatistics = std::make_shared<SwitchComponent>();
     displayGpuStatistics->setState(Settings::getInstance()->getBool("DisplayGPUStatistics"));

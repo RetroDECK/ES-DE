@@ -382,6 +382,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
         }
         else if (arguments[i] == "--debug") {
             Settings::getInstance()->setBool("Debug", true);
+            Settings::getInstance()->setBool("DebugFlag", true);
             Log::setReportingLevel(LogDebug);
         }
         else if (arguments[i] == "--version" || arguments[i] == "-v") {
@@ -419,7 +420,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
 "  --force-input-config                  Force configuration of input devices\n"
 "  --create-system-dirs                  Create game system directories\n"
 "  --home [path]                         Directory to use as home path\n"
-"  --debug                               Print debug information\n"
+"  --debug                               Enable debug mode\n"
 "  --version, -v                         Display version information\n"
 "  --help, -h                            Summon a sentient, angry tuba\n";
             // clang-format on
@@ -568,6 +569,12 @@ int main(int argc, char* argv[])
             return 0;
         }
 #endif
+    }
+
+    if (!Settings::getInstance()->getBool("DebugFlag") &&
+        Settings::getInstance()->getBool("DebugMode")) {
+        Settings::getInstance()->setBool("Debug", true);
+        Log::setReportingLevel(LogDebug);
     }
 
 #if defined(FREEIMAGE_LIB)

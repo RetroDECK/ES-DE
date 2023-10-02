@@ -38,7 +38,8 @@ namespace
         "ForceFull",            // --force-full
         "ForceKiosk",           // --force-kiosk
         "ForceKid",             // --force-kid
-        "Debug",                // --debug
+        "Debug",                // Whether we're in debug mode.
+        "DebugFlag",            // Whether the --debug flag was passed.
 
         // These options are only used internally during the application session:
         "PortableMode",
@@ -288,6 +289,7 @@ void Settings::setDefaults()
 #if defined(__unix__)
     mBoolMap["DisableComposition"] = {false, false};
 #endif
+    mBoolMap["DebugMode"] = {false, false};
     mBoolMap["DisplayGPUStatistics"] = {false, false};
     mBoolMap["EnableMenuKidMode"] = {false, false};
 // macOS requires root privileges to reboot and power off so it doesn't make much
@@ -339,6 +341,7 @@ void Settings::setDefaults()
     mStringMap["ApplicationVersion"] = {"", ""};
     mStringMap["ApplicationUpdaterLastCheck"] = {"", ""};
     mBoolMap["PortableMode"] = {false, false};
+    mBoolMap["DebugFlag"] = {false, false};
     mBoolMap["DebugGrid"] = {false, false};
     mBoolMap["DebugText"] = {false, false};
     mBoolMap["DebugImage"] = {false, false};
