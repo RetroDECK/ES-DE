@@ -1374,95 +1374,103 @@ void FileData::launchGame()
     }
 
     std::string injectFile;
-    const size_t injectPos {command.find("%INJECT%")};
+    size_t injectPos {command.find("%INJECT%")};
 
-    if (injectPos != std::string::npos) {
-        bool invalidEntry {false};
+    while (injectPos != std::string::npos) {
+        if (injectPos != std::string::npos) {
+            bool invalidEntry {false};
 
-        if (injectPos + 10 >= command.size())
-            invalidEntry = true;
-        else if (command[injectPos + 8] != '=')
-            invalidEntry = true;
-
-        if (!invalidEntry && command[injectPos + 9] == '\"') {
-            size_t closingQuotation {command.find("\"", injectPos + 10)};
-
-            if (closingQuotation != std::string::npos) {
-                injectFile = command.substr(injectPos + 10, closingQuotation - injectPos - 10);
-                command = command.replace(injectPos, closingQuotation - injectPos + 2, "");
-            }
-            else {
+            if (injectPos + 10 >= command.size())
                 invalidEntry = true;
+            else if (command[injectPos + 8] != '=')
+                invalidEntry = true;
+
+            if (!invalidEntry && command[injectPos + 9] == '\"') {
+                size_t closingQuotation {command.find("\"", injectPos + 10)};
+
+                if (closingQuotation != std::string::npos) {
+                    injectFile = command.substr(injectPos + 10, closingQuotation - injectPos - 10);
+                    command = command.replace(injectPos, closingQuotation - injectPos + 2, "");
+                }
+                else {
+                    invalidEntry = true;
+                }
             }
-        }
-        else if (!invalidEntry) {
-            const size_t spacePos {command.find(" ", injectPos)};
-            if (spacePos != std::string::npos) {
-                injectFile = command.substr(injectPos + 9, spacePos - injectPos - 9);
-                command = command.replace(injectPos, spacePos - injectPos + 1, "");
+            else if (!invalidEntry) {
+                const size_t spacePos {command.find(" ", injectPos)};
+                if (spacePos != std::string::npos) {
+                    injectFile = command.substr(injectPos + 9, spacePos - injectPos - 9);
+                    command = command.replace(injectPos, spacePos - injectPos + 1, "");
+                }
+                else {
+                    injectFile = command.substr(injectPos + 9, command.size() - injectPos);
+                    command = command.replace(injectPos, command.size() - injectPos, "");
+                }
             }
-            else {
-                injectFile = command.substr(injectPos + 9, command.size() - injectPos);
-                command = command.replace(injectPos, command.size() - injectPos, "");
+
+            if (invalidEntry) {
+                LOG(LogError) << "Couldn't launch game, invalid %INJECT% entry";
+                LOG(LogError) << "Raw emulator launch command:";
+                LOG(LogError) << commandRaw;
+
+                window->queueInfoPopup("ERROR: INVALID %INJECT% VARIABLE ENTRY", 6000);
+                window->setAllowTextScrolling(true);
+                window->setAllowFileAnimation(true);
+                return;
             }
         }
 
-        if (invalidEntry) {
-            LOG(LogError) << "Couldn't launch game, invalid %INJECT% entry";
-            LOG(LogError) << "Raw emulator launch command:";
-            LOG(LogError) << commandRaw;
-
-            window->queueInfoPopup("ERROR: INVALID %INJECT% VARIABLE ENTRY", 6000);
-            window->setAllowTextScrolling(true);
-            window->setAllowFileAnimation(true);
-            return;
-        }
-    }
-
-    if (injectFile != "") {
+        if (injectFile != "") {
 #if defined(_WIN64)
-        injectFile = Utils::String::replace(injectFile, "\\", "/");
-        injectFile = Utils::String::replace(injectFile, "%BASENAME%",
-                                            Utils::String::replace(baseName, "\"", ""));
-        if (injectFile.size() < 3 || !(injectFile[1] == ':' && injectFile[2] == '/'))
-            injectFile = Utils::FileSystem::getParent(Utils::String::replace(romPath, "\"", "")) +
-                         "/" + injectFile;
-        injectFile = Utils::String::replace(injectFile, "/", "\\");
+            injectFile = Utils::String::replace(injectFile, "\\", "/");
+            injectFile = Utils::String::replace(injectFile, "%BASENAME%",
+                                                Utils::String::replace(baseName, "\"", ""));
+            if (injectFile.size() < 3 || !(injectFile[1] == ':' && injectFile[2] == '/'))
+                injectFile =
+                    Utils::FileSystem::getParent(Utils::String::replace(romPath, "\"", "")) + "/" +
+                    injectFile;
+            injectFile = Utils::String::replace(injectFile, "/", "\\");
 #else
-        injectFile = Utils::String::replace(injectFile, "%BASENAME%",
-                                            Utils::String::replace(baseName, "\\", ""));
-        if (injectFile.front() != '/')
-            injectFile = Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")) +
-                         "/" + injectFile;
+            injectFile = Utils::String::replace(injectFile, "%BASENAME%",
+                                                Utils::String::replace(baseName, "\\", ""));
+            if (injectFile.front() != '/')
+                injectFile =
+                    Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")) + "/" +
+                    injectFile;
 #endif
-        if (Utils::FileSystem::isRegularFile(injectFile) ||
-            Utils::FileSystem::isSymlink(injectFile)) {
-            LOG(LogDebug) << "FileData::launchGame(): Injecting from file \"" << injectFile << "\"";
-            std::string arguments;
-            std::ifstream injectFileStream;
-            injectFileStream.open(injectFile);
-            for (std::string line; getline(injectFileStream, line);)
-                arguments += line;
-            injectFileStream.close();
+            if (Utils::FileSystem::isRegularFile(injectFile) ||
+                Utils::FileSystem::isSymlink(injectFile)) {
+                LOG(LogDebug) << "FileData::launchGame(): Injecting from file \"" << injectFile
+                              << "\"";
+                std::string arguments;
+                std::ifstream injectFileStream;
+                injectFileStream.open(injectFile);
+                for (std::string line; getline(injectFileStream, line);)
+                    arguments += line;
+                injectFileStream.close();
 
-            if (arguments.empty()) {
-                LOG(LogDebug) << "FileData::launchGame(): File empty or insufficient permissions, "
-                                 "nothing to inject";
-            }
-            else if (arguments.size() > 4096) {
-                LOG(LogWarning)
-                    << "FileData::launchGame(): Injection file exceeding maximum allowed size of "
-                       "4096 bytes, skipping \""
-                    << injectFile << "\"";
+                if (arguments.empty()) {
+                    LOG(LogDebug)
+                        << "FileData::launchGame(): File empty or insufficient permissions, "
+                           "nothing to inject";
+                }
+                else if (arguments.size() > 4096) {
+                    LOG(LogWarning) << "FileData::launchGame(): Injection file exceeding maximum "
+                                       "allowed size of "
+                                       "4096 bytes, skipping \""
+                                    << injectFile << "\"";
+                }
+                else {
+                    command.insert(injectPos, arguments + " ");
+                }
             }
             else {
-                command.insert(injectPos, arguments + " ");
+                LOG(LogDebug) << "FileData::launchGame(): File \"" << injectFile
+                              << "\" does not exist, nothing to inject";
             }
         }
-        else {
-            LOG(LogDebug) << "FileData::launchGame(): File \"" << injectFile
-                          << "\" does not exist, nothing to inject";
-        }
+
+        injectPos = command.find("%INJECT%");
     }
 
 #if defined(_WIN64)
