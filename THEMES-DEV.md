@@ -314,7 +314,9 @@ In addition to this, if the name is used for the same element type but for diffe
 
 ## Debugging during theme development
 
-If you are writing a theme it's recommended to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so, you can read error messages directly in the terminal window without having to open the es_log.txt file. You can also reload the current gamelist or system view with `Ctrl+r` if the `--debug` flag has been set. There is also support for highlighting the size and position of each image and animation element by using the `Ctrl+i` key combination and likewise to highlight each text element by using the `Ctrl+t` keys. Again, both of these require that ES-DE has been launched with the `--debug` command line option, for example:
+If you are writing a theme it's recommended to enable the _Debug mode_ setting from the _Other settings_ menu or to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so you can read error messages directly in the terminal window without having to open the es_log.txt file. With debug mode enabled you can also reload the current gamelist or system view with `Ctrl + r` and you can highlight the size and position of each image and animation element by using the `Ctrl + i` key combination. Likewise you can highlight each text element via `Ctrl + t`.
+
+Here's an example of launching ES-DE in debug mode at a limited resolution, which will make it run in a window:
 ```
 emulationstation --debug --resolution 1280 720
 ```
@@ -770,7 +772,7 @@ The declared aspect ratios will always get displayed in the _UI settings_ menu i
 
 The use of variants, variant triggers, color schemes, aspect ratios and transition animation profiles is optional, i.e. a theme does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
 
-Note that changes to the capabilities.xml file are not reloaded when using the Ctrl+r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
+Note that changes to the capabilities.xml file are not reloaded when using the Ctrl + r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
 
 ## The \<include\> tag
 
@@ -989,7 +991,7 @@ Just remember, _this only works if the elements have the same type._
 ## Navigation sounds
 
 Navigation sounds are configured globally per theme, so it needs to be defined using the special `all` view.
-It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Starting ES-DE with the --debug flag will provide feedback on whether the navigation sound elements were parsed correctly. If no navigation sounds are provided by the theme, then ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
+It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Enabling the _Debug mode_ setting in the _Other settings_ menu or starting ES-DE with the --debug flag will provide feedback on whether the navigation sound elements were parsed correctly. If no navigation sounds are provided by the theme, then ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
 
 When fast-scrolling the textlist (by holding the up/down or shoulder buttons) the _scroll_ and _systembrowse_ sounds always play to completion before being played again, so it will sound weird if you have long samples such as those with reverb or silence added to the end. As such make sure to always use short samples for these sounds and test thoroughly with fast-scrolling. This is not an issue if using the carousel or grid elements.
 

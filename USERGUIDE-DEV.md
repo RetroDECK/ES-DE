@@ -65,7 +65,7 @@ On Unix this means `/home/<username>/.emulationstation`, on macOS `/Users/<usern
 
 Also on first startup the configuration file `es_settings.xml` will be generated in the ES-DE home directory, containing all the application settings at their default values. Following this, a file named `es_systems.xml` will be loaded from the resources directory (which is part of the ES-DE installation). This file contains the game system definitions including which emulator to use per platform. For many systems there are also alternative emulators defined which can be applied system-wide or per game. How that works is explained later in this guide. A customized systems configuration file can also be used, as described in the next section below.
 
-There's an application log file created in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
+There's an application log file created in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Enabling the _Debug mode_ setting in the _Other settings_ menu or starting ES-DE with the --debug flag outputs even more detailed information to this log file.
 
 After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROM directory. You will also be given a choice to change that ROM directory path if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information in es_systems.xml.
 
@@ -238,7 +238,7 @@ Some older games (and possibly emulators too) may not work correctly or even sta
 
 In a similar fashion, some older games may require the compatibility mode to be set to an older Windows release. This is done by right clicking on the .exe file or .lnk shortcut for the game or emulator, selecting _Properties_ and then the _Compatibility_ tab, then checking the box named _Run this program in compatibility mode for:_ and finally selecting an appropriate Windows release. Some experimentation with different Windows versions may be required. Don't attempt to change the compatibility mode for ES-DE itself though as that may cause any types of unforeseen issues.
 
-Installing DS4Windows will break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
+Installing DS4Windows may break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
 
 There are two ES-DE releases available for Windows; a regular installer and a portable/ZIP version. If going for the first option, an issue is that many emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with their installation path). Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These emulators are commonly shipped as a ZIP file that can be unpacked anywhere on the filesystem.
 
@@ -247,6 +247,8 @@ In order for ES-DE to find these emulators you need to add their directories to 
 The second alternative is to use the portable/ZIP release of ES-DE. This can be unzipped anywhere, including to removable devices such as hard drives or USB memory sticks. Together with games and emulators this makes for a fully portable retrogaming solution. There is a README.txt file distributed with this release that describes the setup, but essentially you just place your games in the ROMs directory and your emulators in the Emulators directory, both of which are included in the portable release.
 
 If you want to create your own portable intallation from scratch or customize the setup, [INSTALL-DEV.md](INSTALL-DEV.md#portable-installation-on-windows) provides additional details.
+
+A number of systems have alternative emulator entries named _Shortcut or script_ which allows the direct execution of .lnk shortcut files or .bat batch files. It's not possible by default to directly launch .ps1 PowerShell scripts. As running PowerShell scripts is not even enabled by default on Windows they are for sure not recommended. If you still want to use them the best approach is to execute them via either a .lnk shortcut file or a .bat wrapper script where you explicitly call powershell.exe with the -command flag. If you instead insist on running them directly from ES-DE, you'll need to add a custom system or find rule configuration where you execute powershell.exe instead of cmd.exe and you'll also need to add .ps1 as a file extension for each relevant system.
 
 ## Specific notes for macOS
 
@@ -829,12 +831,29 @@ The find rules for Wine and Proton look like the following, so the AppImage file
 <entry>~/Applications/Proton/wine*.AppImage</entry>
 ```
 
+As an optional final touch it's a good idea to add entries for the Wine configuration tool WineCfg so it can be easily launched from inside ES-DE. The _desktop_ system is most suitable for this. Simply create two .sh files for this purpose, for example:
+```
+~/ROMs/desktop/WineCfg (Wine).sh
+~/ROMs/desktop/WineCfg (Proton).sh
+```
+
+The contents of the `WineCfg (Wine).sh` file could look something like the following (modify based on your AppImage filename of course):
+```
+~/Applications/Wine/wine-stable_8.0.2-x86_64.AppImage WineCfg
+```
+
+Likewise the contents of the `WineCfg (Proton).sh` file could look something like the following:
+```
+~/Applications/Proton/wine-staging_ge-proton_8-14-x86_64.AppImage WineCfg
+```
+
 The following Windows emulators are supported, and their setup is covered in detail in specific sections of this document:
 
 | System name                      | Emulator         | Filename                          |
 | :------------------------------- | :--------------- | :-------------------------------- |
 | atarijaguar/atarijaguarcd        | BigPEmu          | BigPEmu/BigPEmu.exe               |
 | famicom/nes                      | 3dSen            | 3dSen/3dSen.exe                   |
+| model2                           | Model 2 Emulator | m2emulator/EMULATOR.EXE           |
 | xbox360                          | xenia            | xenia/xenia.exe                   |
 | xbox360                          | xenia            | xenia/xenia_canary.exe            |
 
@@ -1135,7 +1154,15 @@ Likewise if using AdvanceMAME you need to define the ROM directory in the advmam
 
 **Sega Model 2**
 
-If emulating Sega Model 2 games using _Model 2 Emulator_ on Windows, then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs. If you're using a portable ES-DE installation, then you can set the ROM directory path to be relative, for example:
+If emulating Sega Model 2 games using _Model 2 Emulator_ (natively on Windows or using Wine or Proton on Linux), then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs.
+
+On Linux it could look something like the following:
+```
+[RomDirs]
+Dir1=Z:\home\myusername\ROMs\model2
+```
+
+If you're using a portable ES-DE installation on Windows, then you can set the ROM directory path to be relative, for example:
 ```
 [RomDirs]
 Dir1=..\..\ROMs\arcade\Sega Model 2
@@ -1143,9 +1170,13 @@ Dir1=..\..\ROMs\arcade\Sega Model 2
 
 The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
-Also note that Model 2 Emulator is a bit broken and on most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
+Note that Model 2 Emulator is a bit broken and on Windows most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
 
-On Unix/Linux and macOS, the only available emulator for Sega Model 2 is MAME, either the RetroArch - Current core or MAME standalone. Compatibility is still quite poor with only a handful of games working correctly, but this is likely to improve going forward as almost all games for this platform can already start and run to a certain degree. Some games flagged as not working by MAME are still playable with only minor glitches to audio and graphics, just make sure to use a recent ROM set for maximum compatibility.
+To run Model 2 Emulator on Linux you need Wine or Proton, how to setup this is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
+
+After Wine or Proton has been installed, simply unpack the emulator files into `~/Applications/m2emulator/` and you should be good to go.
+
+On macOS, the only available emulator for Sega Model 2 is MAME, either the RetroArch - Current core or MAME standalone. Compatibility is still quite poor with only a handful of games working correctly, but this is likely to improve going forward as almost all games for this platform can already start and run to a certain degree. Some games flagged as not working by MAME are still playable with only minor glitches to audio and graphics, just make sure to use a recent ROM set for maximum compatibility.
 
 **Sega Model 3**
 
@@ -1174,7 +1205,7 @@ The only emulator that can run Atari Jaguar CD games is [BigPEmu](https://www.ri
 
 How to setup Wine is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
 
-Once Wine or Proton has been setup, download BigPEmu and unzip it into `~/Applications/BigPEmu` \
+Once Wine or Proton has been setup, download BigPEmu and unzip it into `~/Applications/BigPEmu/` \
  You should now have something similar to this on your filesystem:
 ```
 ~/Applications/BigPEmu/Data/
@@ -1640,13 +1671,13 @@ https://github.com/cmclark00/XBLA-Automation
 
 **Running xenia on Linux**
 
-_Note that xenia does not seem to run on the Steam Deck using the approach described below._
-
 Although xenia is officially only available for the Windows operating system it's still possible to run it on Linux. To accomplish this you need to run it via the Wine (or Proton) translation layer.
 
 How to setup Wine is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
 
-Once Wine or Proton has been setup, download xenia and unzip it into `~/Applications/xenia`. Also create an empty file named `portable.txt` inside this directory. You should now have something similar to this on your filesystem:
+Once Wine or Proton has been setup, download xenia and unzip it into `~/Applications/xenia/`
+
+Also create an empty file named `portable.txt` inside this directory. You should now have something similar to this on your filesystem:
 ```
 ~/Applications/xenia/LICENSE
 ~/Applications/xenia/portable.txt
@@ -1795,7 +1826,7 @@ As 3dSen is a Windows-only emulator you'll need Wine (or Proton) to run it.
 
 How to setup Wine is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
 
-Once Wine or Proton has been setup, move or copy all 3dSen files to `~/Applications/3dSen`
+Once Wine or Proton has been setup, move or copy all 3dSen files to `~/Applications/3dSen/`
 
 **Windows-specific installation**
 
@@ -2297,7 +2328,7 @@ The multi-scraper is accessed from the main menu by entering the **Scraper** men
 
 ### Scraping process
 
-The default mode for the scraper is _Non-interactive_ mode, also referred to as _Automatic_ mode. When using this mode the selected systems are scraped without requiring any user input. This is quite convenient, but has the drawback of not asking for input if there are multiple matching games. In this case the game that the scraper service thinks is the most accurate match will be returned. However, if the _Search using file hashes_ scraper option is enabled and you're using ScreenScraper, then a hash value will be calculated from the actual game file and searches will performed based on this. Assuming there is a match for your file in the ScreenScraper database, this will lead to 100% accurate results. But if no matching file is found it's possible that the fallback name search will return the wrong game, and therefore leading to the wrong game metadata and media being downloaded. In practice this issue is quite rare so it's generally recommended to keep the automatic mode enabled. If no result is found for a game, the scraper will skip to the next one in queue.
+The default mode for the scraper is _Non-interactive_ mode, also referred to as _Automatic_ mode. When using this mode the selected systems are scraped without requiring any user input. This is quite convenient, but has the drawback of not asking for input if there are multiple matching games. In this case the game that the scraper service thinks is the most accurate match will be returned. However, if the _Search using file hashes_ scraper option is enabled and you're using ScreenScraper, then a hash value will be calculated from the actual game file and searches will be performed based on this. It's often a good idea to uncompress zip archives for systems with single game files (for instance a .bin file inside a .zip archive) as it's more likely that there's a match for such files than for compressed archives. Assuming there is a match for your file in the ScreenScraper database, this will lead to 100% accurate results. But if no matching file is found then it's possible that the fallback name search will return the wrong game, and therefore leading to the wrong game metadata and media being downloaded. In practice this issue is quite rare so it's generally recommended to keep the automatic mode enabled. If no result is found for a game, the scraper will skip to the next one in queue.
 
 If _interactive mode_ is instead enabled, the process of scraping games is basically identical between the single-game scraper and the multi-scraper. You're presented with the returned scraper results, and you're able to refine the search if the scraper could not find your game. Sometimes small changes like adding or removing a colon or a minus sign can yield better results. Note that searches are handled entirely by the scraper service, ES-DE just presents the results returned from the service. File hash searching is not supported by ScreenScraper if using this search method.
 
@@ -2445,7 +2476,7 @@ The password as registered on screenscraper.fr. This is masked using asterisks o
 
 **Use this account for ScreenScraper**
 
-Whether to use the account that has been configured. If this is disabled, the username and password setup on this screen will be ignored during scraping. This can be useful if you have scraping issues and want to check whether it's related to your account or if it's a general problem. Note that screenscraper.fr does not seem to return a proper error message regarding incorrect username and password, but starting ES-DE with the --debug flag will indicate in the log file whether the username was included in the server response.
+Whether to use the account that has been configured. If this is disabled, the username and password setup on this screen will be ignored during scraping. This can be useful if you have scraping issues and want to check whether it's related to your account or if it's a general problem. Note that screenscraper.fr does not seem to return a proper error message regarding incorrect username and password, but enabling the _Debug mode_ setting in the _Other settings_ menu or starting ES-DE with the --debug flag will indicate in the es_log.txt file whether the username was included in the server response.
 
 #### Content settings
 
@@ -3054,6 +3085,10 @@ MAME short names for all arcade systems are automatically expanded to their full
 
 The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphics cards and when running at higher resolution. As such the desktop compositor can be disabled when running ES-DE, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that enabling this setting can cause problems with some graphics drivers so if you experience strange flickering and similar, then make sure to keep this setting disabled. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option). This setting has no effect if using Wayland, it only applies to X11/Xorg.
 
+**Debug mode**
+
+Enabling this option will output detailed debug messages to es_log.txt and it also makes it possible to use the debug overlays and shortcuts which are documented in more depth in [INSTALL-DEV.md](INSTALL-DEV.md#debug-mode). Enabling this setting is equivalent to passing the --debug command line option. Make sure to only enable this setting when you really need it as it will slow down the application and cause the es_log.txt file to grow substantially. When passing the --debug command line option this setting will be grayed out in the menu.
+
 **Display GPU statistics overlay**
 
 Displays the framerate and VRAM statistics as an overlay. You normally never need to use this unless you're debugging a performance problem or similar. **Note:** As of ES-DE v1.2 the VRAM usage statistics is not accurate. This will be addressed in a future release.
@@ -3550,7 +3585,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | megadrivejp           | Sega Mega Drive [Japan]                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | megaduck              | Creatronic Mega Duck                           | SameDuck                          |                                   | No           | Single archive or ROM file |
 | mess                  | Multi Emulator Super System                    | MESS 2015                         |                                   |              |                                      |
-| model2                | Sega Model 2                                   | Model 2 Emulator **(Standalone)** [W],<br>MAME - Current [UM] | Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>MAME - Current [W],<br>MAME **(Standalone)** | Yes for MAME | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| model2                | Sega Model 2                                   | Model 2 Emulator **(Standalone)** [W],<br>MAME - Current [UM] | Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>MAME - Current [W],<br>MAME **(Standalone)**,<br>Model 2 Emulator **(Wine)** [U],<br>Model 2 Emulator **(Proton)** [U] | Yes for MAME | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | model3                | Sega Model 3                                   | Supermodel **(Standalone)** [UW]  | Supermodel [Fullscreen] **(Standalone)** [UW] | No           | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | moonlight             | Moonlight Game Streaming                       | _Placeholder_                     |                                   |              |                                      |
 | moto                  | Thomson MO/TO Series                           | Theodore                          |                                   |              |                                      |
@@ -3615,7 +3650,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
 | steam                 | Valve Steam                                    | Steam **(Standalone)**            |                                   | No           | See the specific _Steam_ section elsewhere in this guide |
 | stratagus             | Stratagus Game Engine                          | _Placeholder_                     |                                   |              |                                      |
-| stv                   | Sega Titan Video Game System                   | Kronos [UW],<br>MAME **(Standalone)** [M] | MAME **(Standalone)** [UW],<br>Mednafen **(Standalone)** | Yes          | Single archive file       |
+| stv                   | Sega Titan Video Game System                   | Kronos [UW],<br>MAME - Current [M] | MAME - Current [UW],<br>MAME **(Standalone)**,<br>Mednafen **(Standalone)** | Yes          | Single archive file       |
 | sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>ares **(Standalone)** |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>ares **(Standalone)** |              |                                      |
 | supervision           | Watara Supervision                             | Potator                           |                                   | No           | Single archive or ROM file |

@@ -19,7 +19,9 @@
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
 * Added an entry to the Utilities menu for creating/updating the game system directories
+* Added a "Debug mode" option to the Other settings menu (which is equivalent to starting with the --debug flag)
 * Added support for a %PRECOMMAND% launch command variable (useful for launching emulators via Wine or Proton)
+* Added support for defining multiple %INJECT% launch command variables
 * Added support for placing images in a "custom" folder in the downloaded_media directory and view these using the media viewer
 * Enabled the setting "Show hidden files and folders" to be changed without requiring an application restart
 * Enabled the setting "Show hidden games" to be changed without requiring an application restart
@@ -50,6 +52,7 @@
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine and Proton
 * (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine and Proton
 * (Linux) Added BigPEmu Wine and BigPEmu Proton as alternative emulators for the atarijaguar system
+* (Linux) Added Model 2 Emulator Wine and Model 2 Emulator Proton as alternative emulators for the model2 system
 * (Linux) Added 3dSen Wine and 3dSen Proton as alternative emulators for the famicom and nes systems
 * (Linux) Added support for the Visual Pinball (vpinball) game system
 * (Linux) Added support for using the RetroArch AppImage release in portable mode (added corepath find rules)
