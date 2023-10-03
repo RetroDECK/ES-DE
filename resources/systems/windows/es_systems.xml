@@ -1794,11 +1794,15 @@
         <name>symbian</name>
         <fullname>Symbian</fullname>
         <path>%ROMPATH%\symbian</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
-        <platform>android</platform>
+        <extension>.sis .SIS .sisx .SISX .symbian</extension>
+        <command label="EKA2L1 [Nokia N-Gage] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_EKA2L1% --fullscreen --device RH-29 --run "%BASENAME%"</command>
+        <command label="EKA2L1 [Nokia N70] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_EKA2L1% --fullscreen --device RM-84 --run "%BASENAME%"</command>
+        <command label="EKA2L1 [Nokia N97] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_EKA2L1% --fullscreen --device RM-507 --run "%BASENAME%"</command>
+        <command label="EKA2L1 [Custom device] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_EKA2L1% --fullscreen --device %INJECT%=%BASENAME%.device --run "%BASENAME%"</command>
+        <platform>ngage</platform>
         <theme>symbian</theme>
     </system>
+
     <system>
         <name>tanodragon</name>
         <fullname>Tano Dragon</fullname>
