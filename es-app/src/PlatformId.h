@@ -92,6 +92,7 @@ namespace PlatformIds
         SNK_NEO_GEO,
         SNK_NEO_GEO_CD,
         NINTENDO_ENTERTAINMENT_SYSTEM,
+        NOKIA_NGAGE,
         SNK_NEO_GEO_POCKET,
         SNK_NEO_GEO_POCKET_COLOR,
         VIDEOPAC_ODYSSEY2,

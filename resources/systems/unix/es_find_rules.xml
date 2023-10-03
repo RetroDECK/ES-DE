@@ -274,6 +274,27 @@
             <entry>~/bin/easyrpg/easyrpg-player</entry>
         </rule>
     </emulator>
+    <emulator name="EKA2L1">
+        <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
+        <rule type="systempath">
+            <entry>eka2l1_qt</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/EKA2L1*.AppImage</entry>
+            <entry>~/.local/share/applications/EKA2L1*.AppImage</entry>
+            <entry>~/.local/bin/EKA2L1*.AppImage</entry>
+            <entry>~/bin/EKA2L1*.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="EKA2L1-WINDOWS">
+        <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
+        <rule type="staticpath">
+            <entry>~/Applications/EKA2L1/eka2l1_qt.exe</entry>
+            <entry>~/.local/share/applications/EKA2L1/eka2l1_qt.exe</entry>
+            <entry>~/.local/bin/EKA2L1/eka2l1_qt.exe</entry>
+            <entry>~/bin/EKA2L1/eka2l1_qt.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="FINALBURN-NEO">
         <!-- Arcade emulator FinalBurn Neo -->
         <rule type="systempath">

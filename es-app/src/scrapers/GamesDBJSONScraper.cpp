@@ -101,6 +101,7 @@ namespace
         {NINTENDO_POKEMON_MINI, "4957"},
         {NINTENDO_SATELLAVIEW, "6"},
         {NINTENDO_SWITCH, "4971"},
+        {NOKIA_NGAGE, "4938"},
         {BANDAI_SUFAMI_TURBO, "6"},
         {DRAGON32, "4952"},
         {DOS, "1"},

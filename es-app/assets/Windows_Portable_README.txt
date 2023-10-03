@@ -62,6 +62,7 @@ Emulators\DOSBox-X\dosbox-x.exe
 Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
 Emulators\EasyRPG\Player.exe
+Emulators\EKA2L1\eka2l1_qt.exe
 Emulators\fbneo\fbneo64.exe
 Emulators\fbneo\fbneo.exe
 Emulators\flycast\flycast.exe

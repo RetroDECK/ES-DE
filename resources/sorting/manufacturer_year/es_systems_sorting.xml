@@ -422,6 +422,10 @@
         <systemsortname>Nintendo - 1985</systemsortname>
     </system>
     <system>
+        <name>ngage</name>
+        <systemsortname>Nokia - 2003</systemsortname>
+    </system>
+    <system>
         <name>ngp</name>
         <systemsortname>SNK - 1998</systemsortname>
     </system>

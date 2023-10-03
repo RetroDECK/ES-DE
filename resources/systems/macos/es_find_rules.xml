@@ -103,6 +103,12 @@
             <entry>/usr/local/bin/easyrpg-player</entry>
         </rule>
     </emulator>
+    <emulator name="EKA2L1">
+        <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
+        <rule type="staticpath">
+            <entry>/Applications/EKA2L1.app/Contents/MacOS/EKA2L1</entry>
+        </rule>
+    </emulator>
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="staticpath">

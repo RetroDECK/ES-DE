@@ -422,6 +422,10 @@
         <systemsortname>Console - 1985</systemsortname>
     </system>
     <system>
+        <name>ngage</name>
+        <systemsortname>Portable - 2003</systemsortname>
+    </system>
+    <system>
         <name>ngp</name>
         <systemsortname>Portable - 1998</systemsortname>
     </system>

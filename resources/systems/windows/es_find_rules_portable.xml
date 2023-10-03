@@ -158,6 +158,13 @@
             <entry>%ESPATH%\..\Emulators\EasyRPG\Player.exe</entry>
         </rule>
     </emulator>
+    <emulator name="EKA2L1">
+        <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\EKA2L1\eka2l1_qt.exe</entry>
+            <entry>%ESPATH%\..\Emulators\EKA2L1\eka2l1_qt.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="FINALBURN-NEO">
         <!-- Arcade emulator FinalBurn Neo -->
         <rule type="staticpath">

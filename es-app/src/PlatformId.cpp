@@ -93,6 +93,7 @@ namespace PlatformIds
         "neogeo",               // SNK Neo Geo
         "neogeocd",             // SNK Neo Geo CD
         "nes",                  // Nintendo Entertainment System
+        "ngage",                // Nokia N-Gage
         "ngp",                  // SNK Neo Geo Pocket
         "ngpc",                 // SNK Neo Geo Pocket Color
         "odyssey2",             // Magnavox Odyssey2
