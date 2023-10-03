@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nokia</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2003</text>
+        </text>
+        <text name="info3">
+            <text>Operating system:  Symbian 6.1</text>
+        </text>
+        <text name="info4">
+            <text>Units sold:  3 million</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  ARM920T @ 104 MHz</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  176×208 pixels, 4096 colors</text>
+        </text>
+        <text name="info7">
+            <text>Storage:  3.4 MB MMC</text>
+        </text>
+    </view>
+</theme>

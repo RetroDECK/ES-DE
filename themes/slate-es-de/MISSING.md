@@ -65,6 +65,7 @@
 * naomigd: Sega NAOMI GD-ROM - consolegame.svg
 * neogeocd: SNK Neo Geo CD - consolegame.svg, controller.svg
 * neogeocdjp: SNK Neo Geo CD - consolegame.svg, controller.svg
+* ngage: Nokia N-Gage - consolegame.svg
 * openbor: Open Beats of Rage (OpenBOR) game engine - consolegame.svg, controller.svg
 * oric: Tangerine Computer Systems Oric - consolegame.svg, controller.svg
 * palm: Palm OS - consolegame.svg, controller.svg
@@ -91,7 +92,7 @@
 * sufami: Bandai SuFami Turbo - consolegame.svg
 * supervision: Watara Supervision - consolegame.svg
 * supracan: Funtech Super A'Can - consolegame.svg, controller.svg
-* symbian: Symbian - system info (needs improvement), consolegame.svg, controller.svg
+* symbian: Symbian - consolegame.svg, controller.svg
 * tanodragon: Tano Dragon - consolegame.svg, controller.svg
 * ti99: Texas Instruments TI-99 - consolegame.svg
 * tic80: TIC-80 game engine - consolegame.svg, controller.svg
