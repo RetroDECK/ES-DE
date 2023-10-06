@@ -656,32 +656,35 @@ chmod +x rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
 
 The following emulators are supported in AppImage format when using the bundled configuration:
 
-| System name  | Emulator    | Filename configuration          |
-| :----------- | :---------- | :------------------------------ |
-| _Multiple_   | RetroArch   | RetroArch-Linux*.AppImage       |
-| _Multiple_   | Mesen       | Mesen*.AppImage                 |
-| dreamcast    | Flycast     | flycast*.AppImage               |
-| gba          | mGBA        | mGBA*.AppImage                  |
-| gc           | Dolphin     | Dolphin_Emulator*.AppImage      |
-| gc           | Triforce    | dolphin-emu-triforce*.AppImage  |
-| macintosh    | Basilisk II | BasiliskII*.AppImage            |
-| macintosh    | SheepShaver | SheepShaver*.AppImage           |
-| n3ds         | Citra       | citra-qt*.AppImage              |
-| n64          | RMG         | RMG*.AppImage                   |
-| n64dd        | RMG         | RMG*.AppImage                   |
-| ps2          | PCSX2       | pcsx2*.AppImage                 |
-| ps2          | Play!       | Play!*.AppImage                 |
-| ps3          | RPCS3       | rpcs3*.AppImage                 |
-| psx          | DuckStation | duckstation-nogui*.AppImage     |
-| psx          | DuckStation | duckstation-qt*.AppImage        |
-| snes         | Snes9x      | Snes9x*.AppImage                |
-| switch       | Yuzu        | yuzu*.AppImage                  |
-| xbox         | xemu        | xemu*.AppImage                  |
-| wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
-| wiiu         | Cemu        | Cemu*.AppImage                  |
-| zmachine     | Gargoyle    | Gargoyle*.AppImage              |
+| System name   | Emulator    | Filename configuration          |
+| :------------ | :---------- | :------------------------------ |
+| _Multiple_    | RetroArch   | RetroArch-Linux*.AppImage       |
+| _Multiple_    | Mesen       | Mesen*.AppImage                 |
+| dreamcast     | Flycast     | flycast*.AppImage               |
+| gba           | mGBA        | mGBA*.AppImage                  |
+| gc            | Dolphin     | Dolphin_Emulator*.AppImage      |
+| gc            | Triforce    | dolphin-emu-triforce*.AppImage  |
+| macintosh     | Basilisk II | BasiliskII*.AppImage            |
+| macintosh     | SheepShaver | SheepShaver*.AppImage           |
+| n3ds          | Citra       | citra-qt*.AppImage              |
+| n64           | RMG         | RMG*.AppImage                   |
+| n64dd         | RMG         | RMG*.AppImage                   |
+| ngage/symbian | EKA2L1      | EKA2L1*.AppImage                |
+| ps2           | PCSX2       | pcsx2*.AppImage                 |
+| ps2           | Play!       | Play!*.AppImage                 |
+| ps3           | RPCS3       | rpcs3*.AppImage                 |
+| psx           | DuckStation | duckstation-nogui*.AppImage     |
+| psx           | DuckStation | duckstation-qt*.AppImage        |
+| snes          | Snes9x      | Snes9x*.AppImage                |
+| switch        | Yuzu        | yuzu*.AppImage                  |
+| xbox          | xemu        | xemu*.AppImage                  |
+| wii           | Dolphin     | Dolphin_Emulator*.AppImage      |
+| wiiu          | Cemu        | Cemu*.AppImage                  |
+| zmachine      | Gargoyle    | Gargoyle*.AppImage              |
 
 _RMG = Rosalie's Mupen GUI_
+
+The EKA2L1 AppImage has the very generic name `ubuntu-latest.AppImage` and as such needs to be renamed.
 
 ## AppImage vs Flatpak search order on Linux
 
@@ -2197,6 +2200,95 @@ On macOS the shortcuts come with the .app extension and are actually directories
 ~/ROMs/steam/Undertale.app/
 ```
 
+### Symbian and Nokia N-Gage
+
+**At the time of writing the Linux AppImage release of EKA2L1 is partially broken and can't be used to run N-Gage games, instead an alternative emulator entry to run the Windows version of EKA2L1 can be used. This should only be temporary until the bugs have been resolved by the EKA2L1 team, so detailed instructions on how to setup the Windows version on Linux will not be provided below. The documentation instead assumes that the AppImage works as intended.**
+
+As the Nokia N-Gage was running Symbian it may seem like the _ngage_ and _symbian_ systems would be identical. There is however a difference in that N-Gage games were shipped on MMC memory cards while regular Symbian games were packaged as _Software Installation Script_ files with the .sis or .sisx extension. Although the EKA2L1 emulator is used for both systems the setup is quite different, as detailed below.
+
+**General setup**
+
+The EKA2L1 installation should be fairly straightforward, for Linux there is an official AppImage, for macOS there is a DMG installer and for Windows a zip archive release. Just be aware that the AppImage has the very generic name `ubuntu-latest.AppImage` and needs to be renamed and moved to `~/Applications/EKA2L1.AppImage` in order for ES-DE to find it.
+
+
+After you have the emulator up and running you need to install ROMs for the devices you want to emulate. For the _ngage_ system you want to use the RH-29 ROM, and for the _symbian_ system ES-DE comes preconfigured with emulator entries for the RH-29 (Nokia N-Gage), RM-84 (Nokia N70) and RM-507 (Nokia N97) models. In addition to those there's a custom device entry that is explained in more depth later below. The details of ROM installation and how to setup the emulator is covered by this official YouTube video by the EKA2L1 team:
+
+https://www.youtube.com/watch?v=rFUlsSGkRjc&list=PLkrpMo4_xadtJ_Kqvc5BSTSi39ollsAbR
+
+The following URL also contains links to important information regarding ROMs and other topics:
+
+https://eka2l1.miraheze.org/wiki/Important_Links
+
+In summary EKA2L1 works quite differently than other emulators, when you install a game it will be available to the devices that support this type of game, it means that after adding a game it will likely not be visible for all the devices you have installed. Likewise you need to tell EKA2L1 which device to use when launching a game, which is precisely why there are multiple emulator entries for the symbian system. But more about that below in the specific ngage and symbian sections.
+
+**Nokia N-Gage**
+
+These games were shipped as MMC cards, and there are two ways to run them from ES-DE, either to install them in EKA2L1 first and call the game name when launching the game, or to mount a .zip file for the game and run it directly. The latter is the recommended approach and it's provided by the default emulator entry _EKA2L1 [Mounted] (Standalone)_. As long as you have the RH-29 ROM installed in EKA2L1 and games properly packaged in zip format you can just launch the files in ES-DE and everything should work fine.
+
+There is however two specific requirements when it comes to this approach. First the games need to be packaged properly, and this means that each zip archive needs to contain the `system` folder directly in the root of the archive. Take this example for the game Bomberman, the zip contents need to look like the following:
+```
+system/
+```
+
+An archive with the following layout will for example not work:
+```
+Bomberman/
+Bomberman/system/
+```
+
+The second requirement is correct naming of the zip files, they have to have the same name as what you see inside EKA2L1 when you've mounted or installed the game there. The following Wikipedia entry contains the list of all N-Gage games.
+
+https://en.wikipedia.org/wiki/List_of_N-Gage_games
+
+The table below shows the game name from this list and the required filenames. It's obviously not complete so you'll need to figure out the proper names on your own for the remaining games. Fortunately the N-Gage game library isn't that big so it's not an overwhelming task.
+
+| Game Name                         | Required filename   |
+| :-------------------------------- | :------------------ |
+| Ashen                             | Ashen.zip           |
+| Asphalt Urban GT                  | Asphalt.zip         |
+| Asphalt Urban GT 2                | Asphalt 2.zip       |
+| Atari Masterpieces Vol. I         | Atari MP Vol I.zip  |
+| Atari Masterpieces Vol. II        | Atari MP Vol II.zip |
+| Barakel: The Fallen Angel         | Barakel.zip         |
+| Bomberman                         | Bomberman.zip       |
+| Call of Duty                      | CallofDuty.zip      |
+
+Note that the case has to be right, naming Bomberman.zip as BomberMan.zip will for instance not work. The emulator is completely unforgiving and will hang forever if you attempt to launch a game with the wrong filename.
+
+The second approach of installing the games first in EKA2L1 is essentially identical to the zip archive approach. You'll use the alternative emulator entry _EKA2L1 [Installed] (Standalone)_ to lauch such games. Only difference is that you'll have the option between running the zip files as for the primary approach, or you can setup an empty dummy file in ES-DE and run that instead. Such dummy files must have the .ngage extension. But regardless of method the game files need to follow the naming described above.
+
+A minor drawback is that scraping can be a bit problematic for some games like _CallofDuty_ which may require you to refine the name to find a match. However most filenames will correspond closely enough to their real names that the scraper service should be able to identify them correctly.
+
+Here's an example of what an installation could look like:
+```
+~/ROMs/ngage/Asphalt 2.zip
+~/ROMs/ngage/Bomberman.zip
+~/ROMs/ngage/CallofDuty.ngage
+```
+
+**Symbian**
+
+Symbian games are shipped as _Software Installation Script_ files with the .sis or .sisx extension. You always need to install these games in EKA2L1 before they can be launched from ES-DE. In the same manner as for N-Gage games, you can then decide to run the actual game file from inside ES-DE or a dummy file. Dummy files must have the .symbian extension.
+
+As is the case for N-Gage games, whatever file you launch from ES-DE has to perfectly match the name that you see for the installed game inside EKA2L1. If even a single character is wrong the emulator will hang forever on game launch.
+
+```
+~/ROMs/symbian/Animal Farm.sis
+~/ROMs/symbian/AnotherWorld.symbian
+~/ROMs/symbian/Rodland.sis
+```
+
+The default emulator for the symbian system is _EKA2L1 [Nokia N-Gage] (Standalone)_ and as the name implies it's using the RH-29 device in EKA2L1. If you want to run a game using the Nokia N70 phone model (device RM-84) then you need to use the emulator entry _EKA2L1 [Nokia N70] (Standalone)_ and for Nokia N97 (device RM-507) it's _EKA2L1 [Nokia N97] (Standalone)_.
+
+Finally there's an emulator entry named _EKA2L1 [Custom device] (Standalone)_ which let's you use any custom device type you want. To use this, simply create a text file with the .device extension that is named the same way as the game file. In this file enter the device type you want to use and it will be injected into the launch command on game launch. Here's an example of such a setup:
+
+```
+~/ROMs/symbian/Animal Farm.sis
+~/ROMs/symbian/Animal Farm.device
+~/ROMs/symbian/AnotherWorld.symbian
+~/ROMs/symbian/AnotherWorld.device
+```
+
 ### Tandy Color Computer
 
 This computer (which is confusingly also known as _TRS-80 Color Computer_ even though it's a completely different machine than the _TRS-80_) is emulated using the [XRoar](http://www.6809.org.uk/xroar) emulator.
@@ -3606,6 +3698,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares FDS **(Standalone)**,<br>3dSen **(Wine)** [U],<br>3dSen **(Proton)** [U],<br>3dSen **(Standalone)** [W] | No           | Single archive or ROM file. For NES games in 3D see the specific _Nintendo NES and Famicom in 3D_ section elsewhere in this guide |
+| ngage                 | Nokia N-Gage                                   | EKA2L1 [Mounted] **(Standalone)** | EKA2L1 [Installed] **(Standalone)**,<br>EKA2L1 [Mounted] **(Wine)** [U],<br>EKA2L1 [Installed] **(Wine)** [U] | Yes          | See the specific _Symbian and Nokia N-Gage_ section elsewhere in this guide |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | odyssey2              | Magnavox Odyssey2                              | O2EM                              |                                   |              |                                      |
@@ -3656,7 +3749,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | supervision           | Watara Supervision                             | Potator                           |                                   | No           | Single archive or ROM file |
 | supracan              | Funtech Super A'Can                            | MAME **(Standalone)**             |                                   | Yes/No       | Single archive or ROM file. To make MAME start these games create an empty file named internal_68k.bin and zip it into supracan.zip |
 | switch                | Nintendo Switch                                | Yuzu **(Standalone)** [UW],<br>Ryujinx **(Standalone)** [M] | Ryujinx **(Standalone)** [UW]    | Yes          |                                      |
-| symbian               | Symbian                                        | _Placeholder_                     |                                   |              |                                      |
+| symbian               | Symbian                                        | EKA2L1 [Nokia N-Gage] **(Standalone)** | EKA2L1 [Nokia N70] **(Standalone)**,<br>EKA2L1 [Nokia N97] **(Standalone)**,<br>EKA2L1 [Custom device] **(Standalone)** | Yes          | See the specific _Symbian and Nokia N-Gage_ section elsewhere in this guide |
 | tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | Yes          |                                      |

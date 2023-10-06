@@ -31,10 +31,12 @@
 * Added support for the Acorn Archimedes (archimedes) game system
 * Added support for the Bit Corporation Gamate (gamate) game system
 * Added support for the Sega NAOMI 2 (naomi2) game system
+* Added support for the Nokia N-Gage (ngage) game system
 * Added support for the PC Arcade Systems (pcarcade) game system
 * Added support for the Commodore Plus/4 (plus4) game system
 * Added support for the Sega Titan Video Game System (stv) game system
 * Added support for the Funtech Super A'Can (supracan) game system
+* Added support for the Symbian (symbian) game system (was previously a placeholder system)
 * Added support for the Namco-Sega-Nintendo Triforce (triforce) game system
 * Added support for the Taito Type X (type-x) game system
 * Added support for the Microsoft Windows 3.x (windows3x) game system
