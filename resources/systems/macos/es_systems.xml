@@ -1514,6 +1514,7 @@
         <fullname>Epoch Super Cassette Vision</fullname>
         <path>%ROMPATH%/scv</path>
         <extension>.0 .bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib "scv -rompath %GAMEDIR%\;%ROMPATH%/scv -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/scv scv -cart %ROM%</command>
         <platform>scv</platform>
         <theme>scv</theme>
