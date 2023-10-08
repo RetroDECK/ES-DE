@@ -780,6 +780,7 @@
         <fullname>Hartung Game Master</fullname>
         <path>%ROMPATH%/gmaster</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so "gmaster -rompath %GAMEDIR%\;%ROMPATH%/gmaster -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/gmaster gmaster -cart %ROM%</command>
         <platform>gmaster</platform>
         <theme>gmaster</theme>
