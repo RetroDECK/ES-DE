@@ -205,6 +205,7 @@
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
             <entry>dolphin-emu</entry>
+            <entry>dolphin-emulator.dolphin-emu</entry>
             <entry>org.DolphinEmu.dolphin-emu</entry>
         </rule>
         <rule type="staticpath">
