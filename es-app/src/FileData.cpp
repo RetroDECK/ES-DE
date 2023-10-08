@@ -1600,12 +1600,6 @@ void FileData::launchGame()
     // Trim any leading and trailing whitespace characters as they could cause launch issues.
     command = Utils::String::trim(command);
 
-#if defined(_WIN64)
-    // Hack to be able to surround paths with quotation marks when using the %ROMPATH% and
-    // %EMUDIR% variables.
-    command = Utils::String::replace(command, "\"\"", "");
-#endif
-
     // swapBuffers() is called here to turn the screen black to eliminate some potential
     // flickering and to avoid showing the game launch message briefly when returning
     // from the game.
