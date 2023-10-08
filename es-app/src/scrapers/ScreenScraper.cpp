@@ -29,6 +29,7 @@ namespace
     // https://www.screenscraper.fr/api/systemesListe.php?devid=xxx&devpassword=yyy&softname=zzz&output=XML
     const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
         {THREEDO, 29},
+        {ACORN_ELECTRON, 85},
         {AMSTRAD_CPC, 65},
         {AMSTRAD_GX4000, 87},
         {APPLE_II, 86},

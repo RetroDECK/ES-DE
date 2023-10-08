@@ -54,6 +54,7 @@ namespace PlatformIds
         "dragon32",             // Dragon Data Dragon 32
         "dreamcast",            // Sega Dreamcast
         "easyrpg",              // EasyRPG eame engine
+        "electron",             // Acorn Electron
         "famicom",              // Nintendo Family Computer
         "fds",                  // Nintendo Famicom Disk System
         "flash",                // Adobe Flash

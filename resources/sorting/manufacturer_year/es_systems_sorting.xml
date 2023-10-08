@@ -186,6 +186,10 @@
         <systemsortname>EasyRPG Team - 2007</systemsortname>
     </system>
     <system>
+        <name>electron</name>
+        <systemsortname>Acorn Computers - 1983</systemsortname>
+    </system>
+    <system>
         <name>emulators</name>
         <systemsortname>Various - 0000</systemsortname>
     </system>

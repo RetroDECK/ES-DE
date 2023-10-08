@@ -53,6 +53,7 @@ namespace PlatformIds
         DRAGON32,
         SEGA_DREAMCAST,
         GAMEENGINE_EASYRPG,
+        ACORN_ELECTRON,
         NINTENDO_FAMICOM,
         NINTENDO_FAMICOM_DISK_SYSTEM,
         ADOBE_FLASH,

@@ -186,6 +186,10 @@
         <systemsortname>2007</systemsortname>
     </system>
     <system>
+        <name>electron</name>
+        <systemsortname>1983</systemsortname>
+    </system>
+    <system>
         <name>emulators</name>
         <systemsortname>0000</systemsortname>
     </system>

@@ -39,6 +39,7 @@ namespace
 
     const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
         {THREEDO, "25"},
+        {ACORN_ELECTRON, "4954"},
         {AMSTRAD_CPC, "4914"},
         {APPLE_II, "4942"},
         {ARCADE, "23"},
