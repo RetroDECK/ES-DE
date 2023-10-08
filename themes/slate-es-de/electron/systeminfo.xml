@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Acorn Computers</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1983</text>
+        </text>
+        <text name="info3">
+            <text>OS:  Acorn MOS v1.0</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  Synertek SY6502A @ 1 to 2 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  32 KB / ROM:  32 KB</text>
+        </text>
+        <text name="info6">
+            <text>Graphics:  Ferranti Semiconductor Custom ULA</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  Tone and noise generation</text>
+        </text>
+    </view>
+</theme>
