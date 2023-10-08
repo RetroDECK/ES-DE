@@ -1973,6 +1973,7 @@
         <fullname>VTech V.Smile</fullname>
         <path>%ROMPATH%\vsmile</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "vsmile -rompath %GAMEDIR%\;%ROMPATH%\vsmile -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\vsmile vsmile -cart %ROM%</command>
         <platform>vsmile</platform>
         <theme>vsmile</theme>
