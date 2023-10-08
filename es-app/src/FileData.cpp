@@ -1192,7 +1192,7 @@ void FileData::launchGame()
         coreFilePos = command.find("%", coreEntryPos + 6);
 
         size_t separatorPos;
-        size_t quotePos {command.find("\"", coreFilePos)};
+        size_t quotePos {hasCoreQuotation ? command.find("\"", coreFilePos) : std::string::npos};
         if (quotePos == std::string::npos)
             separatorPos = command.find(" ", coreFilePos);
         else
@@ -1237,11 +1237,6 @@ void FileData::launchGame()
                     coreFile = Utils::FileSystem::getEscapedPath(coreFile);
                 command.replace(coreEntryPos,
                                 separatorPos - coreEntryPos + (hasCoreQuotation ? 1 : 0), coreFile);
-#if !defined(_WIN64)
-                // Remove any quotation marks as it would make the launch function fail.
-                if (command.find("\"") != std::string::npos)
-                    command = Utils::String::replace(command, "\"", "");
-#endif
                 break;
             }
         }
