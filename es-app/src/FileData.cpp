@@ -823,7 +823,9 @@ void FileData::launchGame()
 {
     Window* window {Window::getInstance()};
 
-    LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\"...";
+    LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\" from system \""
+                 << getSourceFileData()->getSystem()->getFullName() << " ("
+                 << getSourceFileData()->getSystem()->getName() << ")\"...";
 
     SystemData* gameSystem {nullptr};
     std::string command;
@@ -855,9 +857,8 @@ void FileData::launchGame()
                           << "\" as configured for the specific game";
         }
     }
-
     // Check if there is a system-wide alternative emulator configured.
-    if (command == "" && alternativeEmulator != "") {
+    else if (command == "" && alternativeEmulator != "") {
         command = gameSystem->getLaunchCommandFromLabel(alternativeEmulator);
         if (command == "") {
             LOG(LogWarning) << "Invalid alternative emulator \""
@@ -869,6 +870,10 @@ void FileData::launchGame()
                           << gameSystem->getAlternativeEmulator() << "\""
                           << " as configured for system \"" << gameSystem->getName() << "\"";
         }
+    }
+    else {
+        LOG(LogDebug) << "FileData::launchGame(): Using default emulator \""
+                      << mEnvData->mLaunchCommands.front().second << "\"";
     }
 
     if (command.empty())
@@ -1042,8 +1047,8 @@ void FileData::launchGame()
             return;
         }
         else {
-            LOG(LogDebug) << "FileData::launchGame(): Found pre-command binary \"" << preCommandPath
-                          << "\"";
+            LOG(LogDebug) << "FileData::launchGame(): Pre-command binary set to \""
+                          << preCommandPath << "\"";
         }
     }
 
@@ -1097,10 +1102,10 @@ void FileData::launchGame()
             Utils::String::replace(binaryPath, "%ESPATH%", esPath), "/", "\\")};
         if (binaryLogPath.front() != '\"' && binaryLogPath.back() != '\"')
             binaryLogPath = "\"" + binaryLogPath + "\"";
-        LOG(LogDebug) << "FileData::launchGame(): Found emulator binary " << binaryLogPath;
+        LOG(LogDebug) << "FileData::launchGame(): Emulator binary set to " << binaryLogPath;
 #else
     else if (!isShortcut) {
-        LOG(LogDebug) << "FileData::launchGame(): Found emulator binary \""
+        LOG(LogDebug) << "FileData::launchGame(): Emulator binary set to \""
                       << Utils::String::replace(binaryPath, "%ESPATH%", esPath) << "\"";
 #endif
     }
@@ -1827,6 +1832,9 @@ const std::string FileData::findEmulatorPath(std::string& command, const bool pr
         if (pathStatus == ERROR_SUCCESS) {
             if (Utils::FileSystem::isRegularFile(Utils::String::wideStringToString(registryPath)) ||
                 Utils::FileSystem::isSymlink(Utils::String::wideStringToString(registryPath))) {
+                LOG(LogDebug) << "FileData::findEmulatorPath(): "
+                              << (preCommand ? "Pre-command binary" : "Emulator binary")
+                              << " found via winregistrypath rule";
                 exePath = Utils::FileSystem::getEscapedPath(
                     Utils::String::wideStringToString(registryPath));
                 command.replace(startPos, endPos - startPos + 1, exePath);
@@ -1896,6 +1904,9 @@ const std::string FileData::findEmulatorPath(std::string& command, const bool pr
         if (pathStatus == ERROR_SUCCESS) {
             if (Utils::FileSystem::isRegularFile(Utils::String::wideStringToString(path)) ||
                 Utils::FileSystem::isSymlink(Utils::String::wideStringToString(path))) {
+                LOG(LogDebug) << "FileData::findEmulatorPath(): "
+                              << (preCommand ? "Pre-command binary" : "Emulator binary")
+                              << " found via winregistryvalue rule";
                 exePath =
                     Utils::FileSystem::getEscapedPath(Utils::String::wideStringToString(path));
                 command.replace(startPos, endPos - startPos + 1, exePath);
@@ -1927,6 +1938,9 @@ const std::string FileData::findEmulatorPath(std::string& command, const bool pr
             }
         }
         if (exePath != "") {
+            LOG(LogDebug) << "FileData::findEmulatorPath(): "
+                          << (preCommand ? "Pre-command binary" : "Emulator binary")
+                          << " found via systempath rule";
             exePath += "\\" + path;
             exePath = Utils::FileSystem::getEscapedPath(exePath);
             command.replace(startPos, endPos - startPos + 1, exePath);
@@ -1935,6 +1949,9 @@ const std::string FileData::findEmulatorPath(std::string& command, const bool pr
 #else
         exePath = Utils::FileSystem::getPathToBinary(path);
         if (exePath != "") {
+            LOG(LogDebug) << "FileData::findEmulatorPath(): "
+                          << (preCommand ? "Pre-command binary" : "Emulator binary")
+                          << " found via systempath rule";
             exePath += "/" + path;
             command.replace(startPos, endPos - startPos + 1, exePath);
             return exePath;
@@ -1974,6 +1991,9 @@ const std::string FileData::findEmulatorPath(std::string& command, const bool pr
         }
 
         if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
+            LOG(LogDebug) << "FileData::findEmulatorPath(): "
+                          << (preCommand ? "Pre-command binary" : "Emulator binary")
+                          << " found via staticpath rule";
             if (replaceCommand == "") {
                 exePath = Utils::FileSystem::getEscapedPath(path);
             }
