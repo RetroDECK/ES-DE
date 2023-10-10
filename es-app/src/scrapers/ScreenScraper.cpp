@@ -416,7 +416,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Platform ID: " << platformID;
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Parent platform ID: "
-                      << parentPlatformID;
+                      << (parentPlatformID == 0 ? "n/a" : std::to_string(parentPlatformID));
 
         // Validate rating.
         // Process the rating even if the setting to scrape ratings has been disabled.
