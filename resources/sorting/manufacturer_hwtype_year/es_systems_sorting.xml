@@ -6,6 +6,10 @@
         <systemsortname>Panasonic - Console - 1993</systemsortname>
     </system>
     <system>
+        <name>adam</name>
+        <systemsortname>Coleco - Computer - 1983</systemsortname>
+    </system>
+    <system>
         <name>ags</name>
         <systemsortname>Chris Jones - Engine - 1997</systemsortname>
     </system>

@@ -17,6 +17,7 @@ namespace PlatformIds
         PLATFORM_UNKNOWN = 0,
 
         THREEDO, // Names can't start with a number.
+        COLECO_ADAM,
         GAMEENGINE_ADVENTUREGAMESTUDIO,
         COMMODORE_AMIGA,
         COMMODORE_AMIGA_CD32,

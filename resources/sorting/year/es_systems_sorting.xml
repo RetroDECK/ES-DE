@@ -6,6 +6,10 @@
         <systemsortname>1993</systemsortname>
     </system>
     <system>
+        <name>adam</name>
+        <systemsortname>1983</systemsortname>
+    </system>
+    <system>
         <name>ags</name>
         <systemsortname>1997</systemsortname>
     </system>

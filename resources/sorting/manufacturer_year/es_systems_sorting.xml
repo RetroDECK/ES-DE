@@ -6,6 +6,10 @@
         <systemsortname>Panasonic - 1993</systemsortname>
     </system>
     <system>
+        <name>adam</name>
+        <systemsortname>Coleco - 1983</systemsortname>
+    </system>
+    <system>
         <name>ags</name>
         <systemsortname>Chris Jones - 1997</systemsortname>
     </system>
