@@ -40,6 +40,7 @@
 * emulators: Emulators - consolegame.svg, controller.svg
 * epic: Epic Games Store - consolegame.svg, controller.svg
 * flash: Adobe Flash - consolegame.svg, controller.svg
+* fm7: Fujitsu FM-7 - consolegame.svg, controller.svg
 * fmtowns: Fujitsu FM Towns - consolegame.svg, controller.svg
 * fpinball: Future Pinball - consolegame.svg, controller.svg
 * gamate: Bit Corporation Gamate - consolegame.svg
