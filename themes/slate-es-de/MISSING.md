@@ -1,5 +1,6 @@
 # EmulationStation Desktop Edition (ES-DE) - Missing slate-es-de theme set data
 
+* adam: Coleco Adam - consolegame.svg, controller.svg
 * ags: Adventure Game Studio - consolegame.svg, controller.svg
 * amigacd32: Amiga CD32 - consolegame.svg, controller.svg
 * amstradcpc - Amstrad CPC - controller.svg

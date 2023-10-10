@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Coleco</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1983</text>
+        </text>
+        <text name="info3">
+            <text>OS:  EOS, OS-7, CP/M, TDOS</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit Zilog Z80A @ 3.58 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB / VRAM:  16 KB</text>
+        </text>
+        <text name="info6">
+            <text>Graphics:  Texas Instruments TMS9928A</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  256×192 pixels</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  Texas Instruments SN76489AN</text>
+        </text>
+    </view>
+</theme>
