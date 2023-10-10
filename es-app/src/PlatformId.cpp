@@ -59,6 +59,7 @@ namespace PlatformIds
         "famicom",              // Nintendo Family Computer
         "fds",                  // Nintendo Famicom Disk System
         "flash",                // Adobe Flash
+        "fm7",                  // Fujitsu FM-7
         "fmtowns",              // Fujitsu FM Towns
         "fpinball",             // Future Pinball
         "gamate",               // Bit Corporation Gamate

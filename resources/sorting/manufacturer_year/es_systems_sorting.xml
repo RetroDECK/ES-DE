@@ -222,6 +222,10 @@
         <systemsortname>Adobe - 1996</systemsortname>
     </system>
     <system>
+        <name>fm7</name>
+        <systemsortname>Fujitsu - 1982</systemsortname>
+    </system>
+    <system>
         <name>fmtowns</name>
         <systemsortname>Fujitsu - 1993</systemsortname>
     </system>

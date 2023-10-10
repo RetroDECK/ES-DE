@@ -66,6 +66,7 @@ namespace
         {CREATRONIC_MEGA_DUCK, 90},
         {DAPHNE, 49},
         {EPOCH_SCV, 67},
+        {FUJITSU_FM_7, 97},
         {FUJITSU_FM_TOWNS, 253},
         {FUNTECH_SUPER_ACAN, 100},
         {INTELLIVISION, 115},

@@ -69,6 +69,7 @@ namespace
         {COMMODORE_VIC20, "4945"},
         {CREATRONIC_MEGA_DUCK, "4948"},
         {DAPHNE, "23"},
+        {FUJITSU_FM_7, "4978"},
         {FUJITSU_FM_TOWNS, "4932"},
         {INTELLIVISION, "32"},
         {APPLE_MACINTOSH, "37"},

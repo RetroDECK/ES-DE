@@ -222,6 +222,10 @@
         <systemsortname>1996</systemsortname>
     </system>
     <system>
+        <name>fm7</name>
+        <systemsortname>1982</systemsortname>
+    </system>
+    <system>
         <name>fmtowns</name>
         <systemsortname>1993</systemsortname>
     </system>

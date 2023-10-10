@@ -58,6 +58,7 @@ namespace PlatformIds
         NINTENDO_FAMICOM,
         NINTENDO_FAMICOM_DISK_SYSTEM,
         ADOBE_FLASH,
+        FUJITSU_FM_7,
         FUJITSU_FM_TOWNS,
         FUTURE_PINBALL,
         BIT_CORPORATION_GAMATE,
