@@ -22,14 +22,18 @@
 * Added a "Debug mode" option to the Other settings menu (which is equivalent to starting with the --debug flag)
 * Added support for a %PRECOMMAND% launch command variable (useful for launching emulators via Wine or Proton)
 * Added support for defining multiple %INJECT% launch command variables
+* Added more debug log output when launching games
+* Duplicate es_systems.xml command label entries are now ignored on application startup
 * Added support for placing images in a "custom" folder in the downloaded_media directory and view these using the media viewer
 * Enabled the setting "Show hidden files and folders" to be changed without requiring an application restart
 * Enabled the setting "Show hidden games" to be changed without requiring an application restart
 * Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
 * Renamed the setting "Only show ROMs from gamelist.xml files" to "Only show games from gamelist.xml files
 * Added support for deleting installed themes from the theme downloader interface
+* Added support for the Coleco Adam (adam) game system
 * Added support for the Acorn Archimedes (archimedes) game system
 * Added support for the Acorn Electron (electron) game system
+* Added support for the Fujitsu FM-7 (fm7) game system
 * Added support for the Bit Corporation Gamate (gamate) game system
 * Added support for the Sega NAOMI 2 (naomi2) game system
 * Added support for the Nokia N-Gage (ngage) game system
@@ -48,11 +52,13 @@
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
 * Added SkyEmu standalone as an alternative emulator for the gb, gba, gbc and nds systems
 * Added MAME standalone as an alternative emulator for the atari7800 system
+* Added the MAME - Current RetroArch core as an alternative emulator for the apple2 system
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
 * Added the .88d, .cmt and .t88 file extensions to the pc88 system
 * Removed the .7z and .zip file extensions from the pc88 system
 * Removed the .cdi, .cue, .gdi, .m3u and .iso file extensions from the atomiswave, naomi and naomigd systems
-* Added the MAME - Current RetroArch core as the default emulator for the arcadia, crvision, gamecom and gmaster systems
+* Added the .7z and .zip file extensions to the apple2gs system
+* Added the MAME - Current RetroArch core as the default emulator for the apple2gs, arcadia, crvision, gamecom and gmaster systems
 * Added the MAME - Current RetroArch core as the default emulator for the pv1000, scv and vsmile systems
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine and Proton
 * (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine and Proton
