@@ -682,8 +682,21 @@ bool SystemData::loadConfig()
                         << name << "\"";
                     break;
                 }
-                commands.emplace_back(
-                    std::make_pair(entry.text().get(), entry.attribute("label").as_string()));
+                // Skip any duplicate entries (i.e. those with identical labels).
+                bool duplicateLabel {false};
+                for (auto& command : commands) {
+                    if (command.second == entry.attribute("label").as_string()) {
+                        LOG(LogError)
+                            << "Duplicate command label \"" << entry.attribute("label").as_string()
+                            << "\" defined for system \"" << name << "\", ignoring entry";
+                        duplicateLabel = true;
+                        break;
+                    }
+                }
+                if (!duplicateLabel) {
+                    commands.emplace_back(
+                        std::make_pair(entry.text().get(), entry.attribute("label").as_string()));
+                }
             }
 
             // Platform ID list
