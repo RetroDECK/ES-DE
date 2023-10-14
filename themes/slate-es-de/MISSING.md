@@ -26,6 +26,7 @@
 * chailove: Löve game engine - consolegame.svg, controller.svg
 * channelf: Fairchild Channel F - consolegame.svg, controller.svg
 * coco: Tandy Color Computer - consolegame.svg, controller.svg
+* consolearcade: Console Arcade Systems - consolegame.svg, controller.svg
 * cps: Capcom Play System - consolegame.svg, controller.svg
 * cps1: Capcom Play System I - consolegame.svg, controller.svg
 * cps2: Capcom Play System II - consolegame.svg, controller.svg
