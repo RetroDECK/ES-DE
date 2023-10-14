@@ -673,8 +673,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | ps2           | PCSX2       | pcsx2*.AppImage                 |
 | ps2           | Play!       | Play!*.AppImage                 |
 | ps3           | RPCS3       | rpcs3*.AppImage                 |
-| psx           | DuckStation | duckstation-nogui*.AppImage     |
-| psx           | DuckStation | duckstation-qt*.AppImage        |
+| psx           | DuckStation | DuckStation*.AppImage           |
 | snes          | Snes9x      | Snes9x*.AppImage                |
 | switch        | Yuzu        | yuzu*.AppImage                  |
 | xbox          | xemu        | xemu*.AppImage                  |
@@ -1255,6 +1254,49 @@ Here's an example of what the file structure could look like:
 Advanced topics such as the need for the Amiga Kickstart ROMs to run Amiga games is beyond the scope of this guide, but the following page is recommended for reading more about how this setup can be achieved:
 
 [https://github.com/libretro/libretro-uae/blob/master/README.md](https://github.com/libretro/libretro-uae/blob/master/README.md)
+
+### Console Arcade Systems
+
+The _consolearcade_ system is intended for the various arcade boards that were based on home console platforms. For many of the older systems MAME can be used for emulation, but some of the more modern systems require the use of other emulators, which is precisely what is provided by this system.
+
+The following arcade boards have been considered:
+
+| Arcade board                        | Console                     | Emulator                  |
+| :---------------------------------- | :-------------------------- | :------------------------ |
+| Atari CoJag                         | Atari Jaguar                | MAME                      |
+| Capcom Sony ZN-1/ZN-2               | Sony PlayStation            | MAME                      |
+| Konami M2                           | 3DO Interactive Multiplayer | MAME                      |
+| Konami System 573/GQ/GV/Twinkle     | Sony PlayStation            | MAME                      |
+| Namco System 10/11/12               | Sony PlayStation            | MAME                      |
+| Namco System 147/246/256            | Sony PlayStation 2          | Play!                     |
+| Namco System 357/359/369            | Sony Playstation 3          | RPCS3                     |
+| Namco-Sega-Nintendo Triforce        | Nintendo GameCube           | Triforce (Dolphin)        |
+| Nintendo VS. System/PlayChoice-10   | Nintendo Famicom/NES        | MAME                      |
+| Sammy Corporation Atomiswave        | Sega Dreamcast              | Flycast                   |
+| Sega Chihiro                        | Microsoft Xbox              | xemu, Cxbx-Reloaded, MAME |
+| Sega Naomi/Naomi 2/SP               | Sega Dreamcast              | Flycast                   |
+| Sega Mega Play/Mega-Tech/C-2        | Sega Mega Drive/Genesis     | MAME                      |
+| Sega Shooting Zone/System E         | Sega Master System          | MAME                      |
+| Sega Titan Video Game System (ST-V) | Sega Saturn                 | Kronos, Mednafen, MAME    |
+| SETA Aleck 64                       | Nintendo 64                 | MAME                      |
+| Taito FX-1A/FX-1B                   | Sony PlayStation            | MAME                      |
+
+Note that not all emulators are supported on all operating systems that ES-DE runs on, see the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) section for more details.
+
+You can also read more about the console arcade boards here:\
+http://system16.com/base.php
+
+When it comes to practically organizing these games it's recommended to use a folder structure, especially since it's necessary to assign per-game alternative emulators via the metadata editor. So a setup could look something like the following:
+```
+~/ROMs/consolearcade/Capcom Sony ZN-1/
+~/ROMs/consolearcade/Capcom Sony ZN-2/
+~/ROMs/consolearcade/Namco System 246/
+~/ROMs/consolearcade/Sega Chihiro/
+~/ROMs/consolearcade/Sega ST-V/
+~/ROMs/consolearcade/Taito FX-1B/
+```
+
+How to configure each emulator is far beyond the scope of this document, but there are many resources available on the Internet on how to accomplish this.
 
 ### DOS / PC
 
@@ -3629,6 +3671,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
 | coco                  | Tandy Color Computer                           | XRoar CoCo 2 NTSC **(Standalone)** | XRoar CoCo 2 PAL **(Standalone)** | Yes           | See the specific _Tandy Color Computer_ section elsewhere in this guide |
 | colecovision          | Coleco ColecoVision                            | blueMSX                           | Gearcoleco,<br>openMSX **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
+| consolearcade         | Console Arcade Systems                         | MAME - Current                    | MAME **(Standalone)**,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Mednafen [Sega Saturn] **(Standalone)**,<br>Play! **(Standalone)**,<br>RPCS3 Shortcut **(Standalone)**,<br>Triforce **(Standalone)** [UW],<br>xemu **(Standalone)**,<br>Cxbx-Reloaded **(Standalone)** [W],<br>_Shortcut or script_ | Depends      | See the specific _Console Arcade Systems_ section elsewhere in this guide |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps1                  | Capcom Play System I                           | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps2                  | Capcom Play System II                          | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-2 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |

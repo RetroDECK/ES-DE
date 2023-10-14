@@ -32,6 +32,7 @@
 * Added support for deleting installed themes from the theme downloader interface
 * Added support for the Coleco Adam (adam) game system
 * Added support for the Acorn Archimedes (archimedes) game system
+* Added support for the Console Arcade Systems (consolearcade) game system
 * Added support for the Acorn Electron (electron) game system
 * Added support for the Fujitsu FM-7 (fm7) game system
 * Added support for the Bit Corporation Gamate (gamate) game system
@@ -58,6 +59,7 @@
 * Removed the .7z and .zip file extensions from the pc88 system
 * Removed the .cdi, .cue, .gdi, .m3u and .iso file extensions from the atomiswave, naomi and naomigd systems
 * Added the .7z and .zip file extensions to the apple2gs system
+* Added the .arcadedef file extension to the ps2 system
 * Added the MAME - Current RetroArch core as the default emulator for the apple2gs, arcadia, crvision, gamecom and gmaster systems
 * Added the MAME - Current RetroArch core as the default emulator for the pv1000, scv and vsmile systems
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine and Proton
