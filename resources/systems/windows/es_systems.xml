@@ -378,6 +378,26 @@
         <theme>colecovision</theme>
     </system>
     <system>
+        <name>consolearcade</name>
+        <fullname>Console Arcade Systems</fullname>
+        <path>%ROMPATH%\consolearcade</path>
+        <extension>.arcadedef .bat .BAT .iso .ISO .lnk .LNK .xbe .XBE .7z .7Z .zip .ZIP</extension>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\consolearcade %BASENAME%</command>
+        <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
+        <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
+        <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\kronos_libretro.dll %ROM%</command>
+        <command label="Mednafen [Sega Saturn] (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
+        <command label="Play! (Standalone)">%EMULATOR_PLAY!% --disc %ROM%</command>
+        <command label="RPCS3 Shortcut (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="Triforce (Standalone)">%EMULATOR_TRIFORCE% -b -e %ROM%</command>
+        <command label="xemu (Standalone)">%EMULATOR_XEMU% -dvd_path %ROM%</command>
+        <command label="Cxbx-Reloaded (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_CXBX-RELOADED% %ROM%</command>
+        <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <platform>arcade</platform>
+        <theme>consolearcade</theme>
+    </system>
+    <system>
         <name>cps</name>
         <fullname>Capcom Play System</fullname>
         <path>%ROMPATH%\cps</path>

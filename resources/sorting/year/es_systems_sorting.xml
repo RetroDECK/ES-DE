@@ -142,6 +142,10 @@
         <systemsortname>1982</systemsortname>
     </system>
     <system>
+        <name>consolearcade</name>
+        <systemsortname>1984</systemsortname>
+    </system>
+    <system>
         <name>cps</name>
         <systemsortname>1988</systemsortname>
     </system>

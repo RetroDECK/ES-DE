@@ -142,6 +142,10 @@
         <systemsortname>Coleco - Console - 1982</systemsortname>
     </system>
     <system>
+        <name>consolearcade</name>
+        <systemsortname>Arcade - Arcade - 1984</systemsortname>
+    </system>
+    <system>
         <name>cps</name>
         <systemsortname>Capcom - Arcade - 1988</systemsortname>
     </system>
