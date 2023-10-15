@@ -294,6 +294,10 @@
         <systemsortname>XBMC Foundation - 2007</systemsortname>
     </system>
     <system>
+        <name>laserdisc</name>
+        <systemsortname>Arcade - 1983</systemsortname>
+    </system>
+    <system>
         <name>lcdgames</name>
         <systemsortname>Various - 0000</systemsortname>
     </system>

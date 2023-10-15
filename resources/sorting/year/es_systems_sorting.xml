@@ -294,6 +294,10 @@
         <systemsortname>2007</systemsortname>
     </system>
     <system>
+        <name>laserdisc</name>
+        <systemsortname>1983</systemsortname>
+    </system>
+    <system>
         <name>lcdgames</name>
         <systemsortname>0000</systemsortname>
     </system>

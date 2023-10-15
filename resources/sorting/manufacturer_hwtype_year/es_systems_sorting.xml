@@ -294,6 +294,10 @@
         <systemsortname>XBMC Foundation - Folder - 2007</systemsortname>
     </system>
     <system>
+        <name>laserdisc</name>
+        <systemsortname>Arcade - Arcade - 1983</systemsortname>
+    </system>
+    <system>
         <name>lcdgames</name>
         <systemsortname>Various - Portable - 0000</systemsortname>
     </system>
