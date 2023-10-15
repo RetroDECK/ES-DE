@@ -2092,7 +2092,7 @@
         <theme>windows3x</theme>
     </system>
     <system>
-        <name>windows3x</name>
+        <name>windows9x</name>
         <fullname>Microsoft Windows 9x</fullname>
         <path>%ROMPATH%\windows9x</path>
         <extension>.bat .BAT .dosz .DOSZ .lnk .LNK .7z .7Z .zip .ZIP</extension>
@@ -2101,7 +2101,7 @@
         <command label="Shortcut or script (Suspend ES-DE)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <command label="Shortcut or script (Keep ES-DE running)">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>pcwindows</platform>
-        <theme>windows3x</theme>
+        <theme>windows9x</theme>
     </system>
     <system>
         <name>wonderswan</name>
