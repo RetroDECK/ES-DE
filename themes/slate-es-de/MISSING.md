@@ -51,6 +51,7 @@
 * intellivision: Intellivision - consolegame.svg, controller.svg
 * j2me: Java 2 Micro Edition (J2ME) - consolegame.svg, controller.svg
 * kodi: Kodi home theatre software - consolegame.svg, controller.svg
+* laserdisc: LaserDisc Games - consolegame.svg, controller.svg
 * lcdgames: LCD Handheld Games - consolegame.svg
 * lowresnx: LowRes NX Fantasy Console - consolegame.svg
 * lutris: Lutris open gaming platform - consolegame.svg, controller.svg
