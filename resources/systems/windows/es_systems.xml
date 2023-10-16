@@ -15,10 +15,10 @@
         <fullname>Coleco Adam</fullname>
         <path>%ROMPATH%\adam</path>
         <extension>.1dd .1DD .bin .BIN .col .COL .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .ddp .DDP .dfi .DFI .dsk .DSK .hfe .HFE .imd .IMD .mfi .MFI .mfm .MFM .rom .ROM .td0 .TD0 .wav .WAV .7z .7Z .zip .ZIP</extension>
-        <command label="MAME [Diskette] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam -flop1 %ROM%</command>
-        <command label="MAME [Tape] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam -cass1 %ROM%</command>
-        <command label="MAME [Cartridge] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam -cart1 %ROM%</command>
-        <command label="MAME [Software list] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam %BASENAME%</command>
+        <command label="MAME [Diskette] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam -flop1 %ROM%</command>
+        <command label="MAME [Tape] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam -cass1 %ROM%</command>
+        <command label="MAME [Cartridge] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam -cart1 %ROM%</command>
+        <command label="MAME [Software list] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam %BASENAME%</command>
         <platform>adam</platform>
         <theme>adam</theme>
     </system>
@@ -79,7 +79,7 @@
         <command label="Caprice32">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\cap32_libretro.dll %ROM%</command>
         <command label="CrocoDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\crocods_libretro.dll %ROM%</command>
         <command label="CPCemu (Standalone)">%EMULATOR_CPCEMU% %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\amstradcpc cpc6128 -flop1 %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\amstradcpc cpc6128 -flop1 %ROM%</command>
         <platform>amstradcpc</platform>
         <theme>amstradcpc</theme>
     </system>
@@ -100,7 +100,7 @@
         <command label="AppleWin (Standalone)">%EMULATOR_APPLEWIN% -f -d1 %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module apple2 %ROM%</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "apple2e -rompath %GAMEDIR%\;%ROMPATH%\apple2 -flop1 \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\apple2 apple2e -flop1 %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\apple2 apple2e -flop1 %ROM%</command>
         <platform>apple2</platform>
         <theme>apple2</theme>
     </system>
@@ -110,7 +110,7 @@
         <path>%ROMPATH%\apple2gs</path>
         <extension>.2mg .2MG .7z .7z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "apple2gs -rompath %GAMEDIR%\;%ROMPATH%\apple2gs -flop3 \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\apple2gs apple2gs -flop3 %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\apple2gs apple2gs -flop3 %ROM%</command>
         <platform>apple2gs</platform>
         <theme>apple2gs</theme>
     </system>
@@ -123,7 +123,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\arcade %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\arcade %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
@@ -144,7 +144,7 @@
         <path>%ROMPATH%\arcadia</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "arcadia -rompath %GAMEDIR%\;%ROMPATH%\arcadia -cart \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\arcadia arcadia -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\arcadia arcadia -cart %ROM%</command>
         <platform>arcadia</platform>
         <theme>arcadia</theme>
     </system>
@@ -153,10 +153,10 @@
         <fullname>Acorn Archimedes</fullname>
         <path>%ROMPATH%\archimedes</path>
         <extension>.1dd .1DD .360 .adf .ADF .adl .ADL .adm .ADM .ads .ADS .apd .APD .bbc .BBC .chd .CHD .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .dfi .DFI .dsd .DSD .dsk .DSK .hfe .HFE .ima .IMA .imd .IMD .img .IMG .ipf .IPF .jfd .JFD .mfi .MFI .mfm .MFM .msa .MSA .ssd .SSD .st .ST .td0 .TD0 .ufi .UFI .7z .7Z .zip .ZIP</extension>
-        <command label="MAME [Model A440/1] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\archimedes aa4401 -flop1 %ROM%</command>
-        <command label="MAME [Model A3000] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\archimedes aa3000 -flop1 %ROM%</command>
-        <command label="MAME [Model A310] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\archimedes aa310 -flop1 %ROM%</command>
-        <command label="MAME [Model A540] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\archimedes aa540 -flop1 %ROM%</command>
+        <command label="MAME [Model A440/1] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\archimedes aa4401 -flop1 %ROM%</command>
+        <command label="MAME [Model A3000] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\archimedes aa3000 -flop1 %ROM%</command>
+        <command label="MAME [Model A310] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\archimedes aa310 -flop1 %ROM%</command>
+        <command label="MAME [Model A540] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\archimedes aa540 -flop1 %ROM%</command>
         <platform>archimedes</platform>
         <theme>archimedes</theme>
     </system>
@@ -175,7 +175,7 @@
         <path>%ROMPATH%\astrocde</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\astrocde astrocde -cart %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\astrocde astrocde -cart %BASENAME%</command>
         <platform>astrocde</platform>
         <theme>astrocade</theme>
     </system>
@@ -209,7 +209,7 @@
         <path>%ROMPATH%\atari7800</path>
         <extension>.a78 .A78 .bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="ProSystem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\prosystem_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\atari7800 atari7800 -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\atari7800 atari7800 -cart %ROM%</command>
         <platform>atari7800</platform>
         <theme>atari7800</theme>
     </system>
@@ -230,7 +230,7 @@
         <extension>.abs .ABS .bin .BIN .cdi .CDI .cof .COF .cue .CUE .j64 .J64 .jag .JAG .prg .PRG .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="Virtual Jaguar">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\virtualjaguar_libretro.dll %ROM%</command>
         <command label="BigPEmu (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_BIGPEMU% %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\atarijaguar jaguar -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\atarijaguar jaguar -cart %ROM%</command>
         <platform>atarijaguar</platform>
         <theme>atarijaguar</theme>
     </system>
@@ -289,7 +289,7 @@
         <fullname>Acorn Computers BBC Micro</fullname>
         <path>%ROMPATH%\bbcmicro</path>
         <extension>.dsd .DSD .img .IMG .ssd .SSD .7z .7Z .zip .ZIP</extension>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\bbcmicro bbcb -autoboot_delay "2" -autoboot_command "*cat\n\n*exec !boot\n" -flop1 %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\bbcmicro bbcb -autoboot_delay "2" -autoboot_command "*cat\n\n*exec !boot\n" -flop1 %ROM%</command>
         <platform>bbcmicro</platform>
         <theme>bbcmicro</theme>
     </system>
@@ -323,7 +323,7 @@
         <extension>.chd .CHD .cue .CUE .iso .ISO</extension>
         <command label="SAME CDi">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\same_cdi_libretro.dll %ROM%</command>
         <command label="CDi 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\cdi2015_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cdimono1 cdimono1 -cdrom %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cdimono1 cdimono1 -cdrom %ROM%</command>
         <platform>cdimono1</platform>
         <theme>cdimono1</theme>
     </system>
@@ -383,7 +383,7 @@
         <path>%ROMPATH%\consolearcade</path>
         <extension>.arcadedef .bat .BAT .iso .ISO .lnk .LNK .xbe .XBE .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\consolearcade %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\consolearcade %BASENAME%</command>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\kronos_libretro.dll %ROM%</command>
@@ -406,7 +406,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
@@ -425,7 +425,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps1 %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps1 %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
@@ -442,7 +442,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps2 %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps2 %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
@@ -459,7 +459,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps3 %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps3 %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
@@ -473,7 +473,7 @@
         <path>%ROMPATH%\crvision</path>
         <extension>.bin .BIN .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "crvision -rompath %GAMEDIR%\;%ROMPATH%\crvision -cart \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\crvision crvision -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\crvision crvision -cart %ROM%</command>
         <platform>crvision</platform>
         <theme>crvision</theme>
     </system>
@@ -485,7 +485,7 @@
         <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%\%BASENAME%.txt %INJECT%=%BASENAME%.commands</command>
         <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%\%BASENAME%.txt -script %GAMEDIR%\%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\daphne %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\daphne %BASENAME%</command>
         <platform>daphne, arcade</platform>
         <theme>daphne</theme>
     </system>
@@ -561,9 +561,9 @@
         <fullname>Acorn Electron</fullname>
         <path>%ROMPATH%\electron</path>
         <extension>.1dd .1DD .adf .ADF .adl .ADL .adm .ADM .ads .ADS .bbc .BBC .bin .BIN .cqi .CQI .cqm .CQM .csw .CSW .d77 .D77 .d88 .D88 .dfi .DFI .dsd .DSD .dsk .DSK .hfe .HFE .imd .IMD .img .IMG .mfi .MFI .mfm .MFM .rom .ROM .ssd .SSD .td0 .TD0 .uef .UEF .wav .WAV .7z .7Z .zip .ZIP</extension>
-        <command label="MAME [Tape] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\electron electron64 -autoboot_delay "2" -autoboot_command "*T.\nCH.\"\"\n" -cass1 %ROM%</command>
-        <command label="MAME [Diskette DFS] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\electron electron64 -exp plus1 -cart1 seds -autoboot_delay "2" -autoboot_command "*CAT\n\n\n\n\n\n*EXEC !BOOT\n" -flop1 %ROM%</command>
-        <command label="MAME [Diskette ADFS] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\electron electron64 -exp plus3 -exp:plus3:fdc:1 35dd -autoboot_delay "2" -autoboot_command "*CAT\n\n\n\n\n\n*RUN !BOOT\n" -flop1 %ROM%</command>
+        <command label="MAME [Tape] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\electron electron64 -autoboot_delay "2" -autoboot_command "*T.\nCH.\"\"\n" -cass1 %ROM%</command>
+        <command label="MAME [Diskette DFS] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\electron electron64 -exp plus1 -cart1 seds -autoboot_delay "2" -autoboot_command "*CAT\n\n\n\n\n\n*EXEC !BOOT\n" -flop1 %ROM%</command>
+        <command label="MAME [Diskette ADFS] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\electron electron64 -exp plus3 -exp:plus3:fdc:1 35dd -autoboot_delay "2" -autoboot_command "*CAT\n\n\n\n\n\n*RUN !BOOT\n" -flop1 %ROM%</command>
         <platform>electron</platform>
         <theme>electron</theme>
     </system>
@@ -656,12 +656,12 @@
         <fullname>Fujitsu FM-7</fullname>
         <path>%ROMPATH%\fm7</path>
         <extension>.1dd .1DD .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .dfi .DFI .dsk .DSK .hfe .HFE .imd .IMD .mfi .MFI .mfm .MFM .t77 .T77 .td0 .TD0 .wav .WAV .7z .7Z .zip .ZIP</extension>
-        <command label="MAME [FM-7 Diskette] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm7 -flop1 %ROM%</command>
-        <command label="MAME [FM-7 Tape] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm7 -autoboot_delay "5" -autoboot_command "load\n\n\nrun\n" -cass1 %ROM%</command>
-        <command label="MAME [FM-7 Software list] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm7 %BASENAME%</command>
-        <command label="MAME [FM77AV Diskette] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm77av -flop1 %ROM%</command>
-        <command label="MAME [FM77AV Tape] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm77av -autoboot_delay "5" -autoboot_command "load\n\n\nrun\n" -cass1 %ROM%</command>
-        <command label="MAME [FM77AV Software list] (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm77av %BASENAME%</command>
+        <command label="MAME [FM-7 Diskette] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm7 -flop1 %ROM%</command>
+        <command label="MAME [FM-7 Tape] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm7 -autoboot_delay "5" -autoboot_command "load\n\n\nrun\n" -cass1 %ROM%</command>
+        <command label="MAME [FM-7 Software list] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm7 %BASENAME%</command>
+        <command label="MAME [FM77AV Diskette] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm77av -flop1 %ROM%</command>
+        <command label="MAME [FM77AV Tape] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm77av -autoboot_delay "5" -autoboot_command "load\n\n\nrun\n" -cass1 %ROM%</command>
+        <command label="MAME [FM77AV Software list] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fm7 fm77av %BASENAME%</command>
         <platform>fm7</platform>
         <theme>fm7</theme>
     </system>
@@ -689,7 +689,7 @@
         <path>%ROMPATH%\gamate</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gamate -rompath %GAMEDIR%\;%ROMPATH%\gamate -cart \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gamate gamate -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gamate gamate -cart %ROM%</command>
         <platform>gamate</platform>
         <theme>gamate</theme>
     </system>
@@ -698,8 +698,8 @@
         <fullname>Nintendo Game and Watch</fullname>
         <path>%ROMPATH%\gameandwatch</path>
         <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
-        <command label="MAME Local Artwork (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -artpath %ROMPATH%\gameandwatch\artwork -rompath %GAMEDIR%\;%ROMPATH%\gameandwatch %BASENAME%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gameandwatch %BASENAME%</command>
+        <command label="MAME Local Artwork (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -artpath %ROMPATH%\gameandwatch\artwork -rompath %GAMEDIR%\;%ROMPATH%\gameandwatch %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gameandwatch %BASENAME%</command>
         <command label="Handheld Electronic (GW)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gw_libretro.dll %ROM%</command>
         <platform>gameandwatch</platform>
         <theme>gameandwatch</theme>
@@ -710,7 +710,7 @@
         <path>%ROMPATH%\gamecom</path>
         <extension>.tgc .TGC .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gamecom -rompath %GAMEDIR%\;%ROMPATH%\gamecom -cartridge1 \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gamecom gamecom -cartridge1 %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gamecom gamecom -cartridge1 %ROM%</command>
         <platform>gamecom</platform>
         <theme>gamecom</theme>
     </system>
@@ -823,7 +823,7 @@
         <path>%ROMPATH%\gmaster</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gmaster -rompath %GAMEDIR%\;%ROMPATH%\gmaster -cart \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gmaster gmaster -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gmaster gmaster -cart %ROM%</command>
         <platform>gmaster</platform>
         <theme>gmaster</theme>
     </system>
@@ -834,7 +834,7 @@
         <extension>.bin .BIN .cdt .CDT .cpr .CPR .dsk .DSK .kcr .KCR .m3u .M3U .sna .SNA .tap .TAR .voc .VOC .7z .7Z .zip .ZIP</extension>
         <command label="Caprice32">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\cap32_libretro.dll %ROM%</command>
         <command label="CrocoDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\crocods_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gx4000 gx4000 -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gx4000 gx4000 -cart %ROM%</command>
         <platform>gx4000</platform>
         <theme>gx4000</theme>
     </system>
@@ -874,7 +874,7 @@
         <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%\%BASENAME%.txt %INJECT%=%BASENAME%.commands</command>
         <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%\%BASENAME%.txt -script %GAMEDIR%\%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\laserdisc %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\laserdisc %BASENAME%</command>
         <platform>daphne, arcade</platform>
         <theme>laserdisc</theme>
     </system>
@@ -883,8 +883,8 @@
         <fullname>LCD Handheld Games</fullname>
         <path>%ROMPATH%\lcdgames</path>
         <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
-        <command label="MAME Local Artwork (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -artpath %ROMPATH%\lcdgames\artwork -rompath %GAMEDIR%\;%ROMPATH%\lcdgames %BASENAME%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\lcdgames %BASENAME%</command>
+        <command label="MAME Local Artwork (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -artpath %ROMPATH%\lcdgames\artwork -rompath %GAMEDIR%\;%ROMPATH%\lcdgames %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\lcdgames %BASENAME%</command>
         <command label="Handheld Electronic (GW)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gw_libretro.dll %ROM%</command>
         <platform>lcdgames, gameandwatch</platform>
         <theme>lcdgames</theme>
@@ -921,10 +921,10 @@
         <fullname>Apple Macintosh</fullname>
         <path>%ROMPATH%\macintosh</path>
         <extension>.dsk .DSK .game .GAME</extension>
-        <command label="MAME Mac SE Bootable (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macse -flop1 %ROM%</command>
-        <command label="MAME Mac SE Boot Disk (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macse -flop1 %GAMEDIR%\boot.dsk -flop2 %ROM%</command>
-        <command label="MAME Mac Plus Bootable (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macplus -flop1 %ROM%</command>
-        <command label="MAME Mac Plus Boot Disk (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macplus -flop1 %GAMEDIR%\boot.dsk -flop2 %ROM%</command>
+        <command label="MAME Mac SE Bootable (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macse -flop1 %ROM%</command>
+        <command label="MAME Mac SE Boot Disk (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macse -flop1 %GAMEDIR%\boot.dsk -flop2 %ROM%</command>
+        <command label="MAME Mac Plus Bootable (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macplus -flop1 %ROM%</command>
+        <command label="MAME Mac Plus Boot Disk (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macplus -flop1 %GAMEDIR%\boot.dsk -flop2 %ROM%</command>
         <command label="Basilisk II (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_BASILISKII% --nogui true</command>
         <command label="SheepShaver (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SHEEPSHAVER%</command>
         <platform>macintosh</platform>
@@ -939,7 +939,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\mame %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\mame %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
@@ -1056,7 +1056,7 @@
         <command label="Model 2 Emulator (Standalone)">%RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%</command>
         <command label="Model 2 Emulator [Suspend ES-DE] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\model2 %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\model2 %BASENAME%</command>
         <platform>arcade</platform>
         <theme>model2</theme>
     </system>
@@ -1244,7 +1244,7 @@
         <extension>.7z .7Z .zip .ZIP</extension>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeo %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeo %BASENAME%</command>
         <platform>neogeo</platform>
         <theme>neogeo</theme>
     </system>
@@ -1255,7 +1255,7 @@
         <extension>.chd .CHD .cue .CUE</extension>
         <command label="NeoCD">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\neocd_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% --subsystem neocd -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeocd neocdz -cdrm %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeocd neocdz -cdrm %ROM%</command>
         <platform>neogeocd</platform>
         <theme>neogeocd</theme>
     </system>
@@ -1266,7 +1266,7 @@
         <extension>.chd .CHD .cue .CUE</extension>
         <command label="NeoCD">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\neocd_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% --subsystem neocd -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeocdjp neocdz -cdrm %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeocdjp neocdz -cdrm %ROM%</command>
         <platform>neogeocd</platform>
         <theme>neogeocdjp</theme>
     </system>
@@ -1545,7 +1545,7 @@
         <path>%ROMPATH%\pv1000</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "pv1000 -rompath %GAMEDIR%\;%ROMPATH%\pv1000 -cart \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\pv1000 pv1000 -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\pv1000 pv1000 -cart %ROM%</command>
         <platform>pv1000</platform>
         <theme>pv1000</theme>
     </system>
@@ -1635,7 +1635,7 @@
         <path>%ROMPATH%\scv</path>
         <extension>.0 .bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "scv -rompath %GAMEDIR%\;%ROMPATH%\scv -cart \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\scv scv -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\scv scv -cart %ROM%</command>
         <platform>scv</platform>
         <theme>scv</theme>
     </system>
@@ -1810,7 +1810,7 @@
         <extension>.7z .7Z .zip .ZIP</extension>
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\kronos_libretro.dll %ROM%</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\stv %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\stv %BASENAME%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
         <platform>arcade</platform>
         <theme>stv</theme>
@@ -1857,7 +1857,7 @@
         <path>%ROMPATH%\supracan</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "supracan -rompath %GAMEDIR%\;%ROMPATH%\supracan -cart \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\supracan supracan -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\supracan supracan -cart %ROM%</command>
         <platform>supracan</platform>
         <theme>supracan</theme>
     </system>
@@ -1923,7 +1923,7 @@
         <fullname>Texas Instruments TI-99</fullname>
         <path>%ROMPATH%\ti99</path>
         <extension>.rpk .RPK .7z .7Z .zip .ZIP</extension>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\ti99 ti99_4a -ioport peb -ioport:peb:slot3 speech -cart %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\ti99 ti99_4a -ioport peb -ioport:peb:slot3 speech -cart %BASENAME%</command>
         <platform>ti99</platform>
         <theme>ti99</theme>
     </system>
@@ -2036,7 +2036,7 @@
         <path>%ROMPATH%\vsmile</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "vsmile -rompath %GAMEDIR%\;%ROMPATH%\vsmile -cart \"%ROMRAW%\""</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\vsmile vsmile -cart %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\vsmile vsmile -cart %ROM%</command>
         <platform>vsmile</platform>
         <theme>vsmile</theme>
     </system>
@@ -2141,7 +2141,7 @@
         <path>%ROMPATH%\x68000</path>
         <extension>.dim .DIM .img .IMG .d88 .D88 .88d .88D .hdm .HDM .dup .DUP .2hd .2HD .xdf .XDF .hdf .HDF .cmd .CMD .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="PX68k">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\px68k_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\x68000 x68000 -flop1 %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\x68000 x68000 -flop1 %ROM%</command>
         <platform>x68000</platform>
         <theme>x68000</theme>
     </system>
