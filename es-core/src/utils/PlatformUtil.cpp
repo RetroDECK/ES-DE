@@ -6,8 +6,13 @@
 //  Platform utility functions.
 //
 
+#if !defined(_WIN64)
+#define MAX_GAME_LOG_OUTPUT 5242880
+#endif
+
 #include "utils/PlatformUtil.h"
 
+#include "InputManager.h"
 #include "Log.h"
 #include "Scripting.h"
 #include "Window.h"
@@ -95,7 +100,7 @@ namespace Utils
             }
 
             FILE* commandPipe;
-            std::array<char, 128> buffer;
+            std::array<char, 128> buffer {};
             std::string commandOutput;
             int returnValue;
 
@@ -107,8 +112,39 @@ namespace Utils
                 return -1;
             }
 
-            while (fgets(buffer.data(), buffer.size(), commandPipe) != nullptr)
-                commandOutput += buffer.data();
+            int fd {fileno(commandPipe)};
+            fd_set readfds;
+            struct timeval timeout;
+
+            FD_ZERO(&readfds);
+            FD_SET(fd, &readfds);
+            timeout.tv_sec = 0;
+            timeout.tv_usec = 10000;
+
+            SDL_Event event {};
+
+            // We're not completely suspended when launching a game, instead we'll continue to
+            // poll events. As part of this we'll handle adding and removal of controllers, all
+            // other events are discarded.
+            while (true) {
+                // Check if pipe is available for reading.
+                if (select(fd + 1, &readfds, nullptr, nullptr, &timeout) != 0) {
+                    if (fgets(buffer.data(), buffer.size(), commandPipe) != nullptr)
+                        commandOutput.append(
+                            commandOutput.length() < MAX_GAME_LOG_OUTPUT ? buffer.data() : "");
+                    else
+                        break;
+                }
+                FD_SET(fd, &readfds);
+                timeout.tv_sec = 0;
+                timeout.tv_usec = 10000;
+                // Drop all events except those for adding and removing controllers.
+                while (SDL_PollEvent(&event)) {
+                    if (event.type == SDL_CONTROLLERDEVICEADDED ||
+                        event.type == SDL_CONTROLLERDEVICEREMOVED)
+                        InputManager::getInstance().parseEvent(event);
+                }
+            }
 
             returnValue = pclose(commandPipe);
 
@@ -121,6 +157,8 @@ namespace Utils
 
             // We need to shift the return value as it contains some flags (which we don't need).
             returnValue >>= 8;
+
+            const size_t commandOutputSize {commandOutput.size()};
 
             // Remove any trailing newline from the command output.
             if (commandOutput.size()) {
@@ -139,6 +177,9 @@ namespace Utils
             else if (commandOutput.size()) {
                 LOG(LogDebug) << "Platform::launchGameUnix():";
                 LOG(LogDebug) << "Output from launched game:\n" << commandOutput;
+                if (commandOutputSize >= MAX_GAME_LOG_OUTPUT) {
+                    LOG(LogWarning) << "Output was capped to " << commandOutputSize << " bytes";
+                }
             }
 
             return returnValue;
@@ -199,9 +240,21 @@ namespace Utils
                 SDL_Delay(100);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 Renderer::getInstance()->swapBuffers();
+                SDL_Event event {};
 
-                WaitForSingleObject(pi.hThread, INFINITE);
-                WaitForSingleObject(pi.hProcess, INFINITE);
+                // We're not completely suspended when launching a game, instead we'll continue to
+                // poll events. As part of this we'll handle adding and removal of controllers, all
+                // other events are discarded.
+                while (true) {
+                    if (WaitForSingleObject(pi.hProcess, 10) == 0)
+                        break;
+                    // Drop all events except those for adding and removing controllers.
+                    while (SDL_PollEvent(&event)) {
+                        if (event.type == SDL_CONTROLLERDEVICEADDED ||
+                            event.type == SDL_CONTROLLERDEVICEREMOVED)
+                            InputManager::getInstance().parseEvent(event);
+                    }
+                }
 
                 SDL_SetWindowSize(Renderer::getInstance()->getSDLWindow(), width, height);
             }
