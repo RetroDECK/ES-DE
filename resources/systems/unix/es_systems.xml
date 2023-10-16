@@ -675,8 +675,9 @@
         <name>fmtowns</name>
         <fullname>Fujitsu FM Towns</fullname>
         <path>%ROMPATH%/fmtowns</path>
-        <extension>.cue .CUE .iso .ISO</extension>
+        <extension>.cue .CUE .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="Tsugaru (Standalone)">%EMULATOR_TSUGARU% %EMUDIR%/roms -HOSTSHORTCUT ESC 0 0 FORCEQUIT -FULLSCREEN -CD %ROM% %INJECT%=%BASENAME%.cfg</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/fmtowns fmtowns %BASENAME%</command>
         <platform>fmtowns</platform>
         <theme>fmtowns</theme>
     </system>
