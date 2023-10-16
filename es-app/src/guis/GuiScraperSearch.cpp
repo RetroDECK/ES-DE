@@ -183,8 +183,9 @@ GuiScraperSearch::~GuiScraperSearch()
 
 void GuiScraperSearch::onSizeChanged()
 {
-    mGrid.setSize(glm::vec2 {mSize.x, (mResultList->getRowHeight() * mRowCount) +
-                                          std::round(mRenderer->getScreenHeightModifier())});
+    mGrid.setSize(
+        glm::vec2 {std::round(mSize.x), (mResultList->getRowHeight() * mRowCount) +
+                                            std::round(mRenderer->getScreenHeightModifier())});
 
     if (mSize.x == 0 || mSize.y == 0)
         return;
