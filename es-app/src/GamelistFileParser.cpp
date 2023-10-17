@@ -83,6 +83,9 @@ namespace GamelistFileParser
 #endif
                                     << "\" is present in gamelist.xml but the extension is not "
                                        "configured in es_systems.xml";
+                    // In the unlikely event that this was the only entry in the folder.
+                    if (treeNode->getChildren().empty())
+                        delete treeNode;
                     return nullptr;
                 }
 
