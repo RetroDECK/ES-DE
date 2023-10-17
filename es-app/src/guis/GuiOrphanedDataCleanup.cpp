@@ -520,7 +520,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                                     "/gamelist.xml_CLEANUP.tmp"};
 
         if (Utils::FileSystem::exists(tempFile)) {
-            LOG(LogWarning) << "Found existing temporary file \"" << tempFile << "\"";
+            LOG(LogWarning) << "Found existing temporary file \"" << tempFile << "\", deleting it";
             if (!Utils::FileSystem::removeFile(tempFile)) {
                 LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
                 {
@@ -567,6 +567,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
         }
 
         const std::vector<std::string> knownTags {"game", "folder"};
+        const std::vector<std::string>& extensions {system->getSystemEnvData()->mSearchExtensions};
 
         // Step through every game and folder element so that the order of entries will remain
         // in the target gamelist.xml file.
@@ -583,7 +584,35 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                     ++removeCount;
                 }
                 else if (Utils::FileSystem::exists(startPath + "/" + path)) {
-                    targetRoot.append_copy((*it));
+                    if (tag == "game") {
+                        // Remove entries with extensions not defined in es_systems.xml.
+                        if (std::find(extensions.cbegin(), extensions.cend(),
+                                      Utils::FileSystem::getExtension(path)) != extensions.cend()) {
+                            targetRoot.append_copy((*it));
+                        }
+                        else {
+                            LOG(LogInfo) << "Found orphaned " << tag << " entry \"" << path << "\"";
+                            ++removeCount;
+                        }
+                    }
+                    else {
+                        bool folderExists {false};
+                        for (auto child : system->getRootFolder()->getChildrenRecursive()) {
+                            if (child->getType() == FOLDER &&
+                                child->getPath() ==
+                                    system->getRootFolder()->getPath() + path.substr(1)) {
+                                folderExists = true;
+                                break;
+                            }
+                        }
+                        if (folderExists) {
+                            targetRoot.append_copy((*it));
+                        }
+                        else {
+                            LOG(LogInfo) << "Found orphaned " << tag << " entry \"" << path << "\"";
+                            ++removeCount;
+                        }
+                    }
                 }
                 else {
                     LOG(LogInfo) << "Found orphaned " << tag << " entry \"" << path << "\"";
@@ -794,7 +823,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
         const std::string tempFile {collectionFile + "_CLEANUP.tmp"};
 
         if (Utils::FileSystem::exists(tempFile)) {
-            LOG(LogWarning) << "Found existing temporary file \"" << tempFile << "\"";
+            LOG(LogWarning) << "Found existing temporary file \"" << tempFile << "\", deleting it";
             if (!Utils::FileSystem::removeFile(tempFile)) {
                 LOG(LogError) << "Couldn't remove temporary file";
                 {
