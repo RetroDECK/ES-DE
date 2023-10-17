@@ -71,21 +71,25 @@ namespace Utils
                 return contentList;
 
             if (recursive) {
-                for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
 #if defined(_WIN64)
+                for (auto& entry : std::filesystem::recursive_directory_iterator(
+                         Utils::String::stringToWideString(genericPath))) {
                     contentList.emplace_back(
                         Utils::String::wideStringToString(entry.path().generic_wstring()));
 #else
+                for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
                     contentList.emplace_back(entry.path().generic_string());
 #endif
                 }
             }
             else {
-                for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
 #if defined(_WIN64)
+                for (auto& entry : std::filesystem::directory_iterator(
+                         Utils::String::stringToWideString(genericPath))) {
                     contentList.emplace_back(
                         Utils::String::wideStringToString(entry.path().generic_wstring()));
 #else
+                for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
                     contentList.emplace_back(entry.path().generic_string());
 #endif
                 }
