@@ -188,7 +188,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                     [this, name] { createCustomCollection(name); }};
                 row.makeAcceptInputHandler(createCollectionCall);
                 auto themeFolder = std::make_shared<TextComponent>(
-                    Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), mMenuColorPrimary);
+                    Utils::String::toUpper(name), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
                 themeFolder->setSelectable(true);
                 row.addElement(themeFolder, true);
                 ss->addRow(row);
