@@ -6,6 +6,16 @@
 
 ### Release overview
 
+The 2.2 release adds many new features like cleanup tools for orphaned data, file hash searching for the scraper, clipboard paste support, ability to change systems sorting from the GUI and more complete Unicode support. It's now possible to rescan the ROM directory and to update/create the ROM directory tree from the new Utilities menu, both without restarting the application.
+
+New theme engine functionality has been implemented such as rounded corners for images, videos and animations, horizontally scrolling text containers and stationary elements. Rendering quality has been improved, especially font rendering which now has a higher quality across all types of devices and screen resolutions.
+
+Support has been added for many new systems and emulators, and on Linux there is now support for running Windows emulators using Wine or Proton.
+
+On the infrastructure level a significant portion of the homecooked filesystem code has been replaced with functionality from the C++ Standard Library and a large amount of refactoring has been made to clean up and simplify the codebase. As part of this cleanup legacy theme support has been completely removed.
+
+Finally many bugs have been fixed and the application has received a lot more polish and quality of life improvements.
+
 ### Detailed list of changes
 
 * Completely removed support for legacy EmulationStation themes
@@ -29,6 +39,8 @@
 * Enabled the setting "Show hidden games" to be changed without requiring an application restart
 * Enabled the setting "Only show ROMs from gamelist.xml files" to be changed without requiring an application restart
 * Renamed the setting "Only show ROMs from gamelist.xml files" to "Only show games from gamelist.xml files
+* Added event polling when suspending ES-DE on game launch to avoid various issues primarily on Windows
+* Adding and removing controllers when a game is launched is now always handled directly rather than on return to ES-DE
 * Added support for deleting installed themes from the theme downloader interface
 * Added support for the Coleco Adam (adam) game system
 * Added support for the Acorn Archimedes (archimedes) game system
@@ -36,6 +48,7 @@
 * Added support for the Acorn Electron (electron) game system
 * Added support for the Fujitsu FM-7 (fm7) game system
 * Added support for the Bit Corporation Gamate (gamate) game system
+* Added support for the LaserDisc Games (laserdisc) game system
 * Added support for the Sega NAOMI 2 (naomi2) game system
 * Added support for the Nokia N-Gage (ngage) game system
 * Added support for the PC Arcade Systems (pcarcade) game system
@@ -54,16 +67,20 @@
 * Added SkyEmu standalone as an alternative emulator for the gb, gba, gbc and nds systems
 * Added MAME standalone as an alternative emulator for the atari7800 system
 * Added the MAME - Current RetroArch core as an alternative emulator for the apple2 system
+* Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the daphne system
+* Added MAME standalone as an alternative emulator for the fmtowns system on Unix and Windows
+* (macOS) Added MAME standalone as the default emulator for the fmtowns system (was previously a placeholder system)
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
+* Added the Retro8 RetroArch core as an alternative emulator for the pico8 system
 * Added the .88d, .cmt and .t88 file extensions to the pc88 system
 * Removed the .7z and .zip file extensions from the pc88 system
 * Removed the .cdi, .cue, .gdi, .m3u and .iso file extensions from the atomiswave, naomi and naomigd systems
-* Added the .7z and .zip file extensions to the apple2gs system
+* Added the .7z and .zip file extensions to the apple2gs, daphne and fmtowns systems
 * Added the .arcadedef file extension to the ps2 system
 * Added the MAME - Current RetroArch core as the default emulator for the apple2gs, arcadia, crvision, gamecom and gmaster systems
 * Added the MAME - Current RetroArch core as the default emulator for the pv1000, scv and vsmile systems
-* (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine and Proton
-* (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine and Proton
+* (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine or Proton
+* (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine or Proton
 * (Linux) Added BigPEmu Wine and BigPEmu Proton as alternative emulators for the atarijaguar system
 * (Linux) Added Model 2 Emulator Wine and Model 2 Emulator Proton as alternative emulators for the model2 system
 * (Linux) Added 3dSen Wine and 3dSen Proton as alternative emulators for the famicom and nes systems
@@ -71,14 +88,17 @@
 * (Linux) Added support for using the RetroArch AppImage release in portable mode (added corepath find rules)
 * (Linux) Added support for the AppImage release of Snes9x
 * (Linux) Added support for the Flatpak release of Cemu
+* (Linux) Added support for the Snap release of Dolphin
 * (Linux) Added the PCSX2 Flatpak release to the non-legacy PCSX2 find rule configuration
-* (Linux) Added a find rule entry for the Snap package release of Dolphin
 * (Linux) Updated the DuckStation find rules as the AppImage release filename has changed
 * (Linux) Updated the Citra find rules as the AppImage release filename has changed
+* (Windows) Removed %RUNINBACKGROUND% from all MAME standalone entries as it no longer hangs on exit
+* (Windows) Added %STARTDIR%=%EMUDIR% for the Vita3K and xemu emulators
 * (Windows) Added 3dSen standalone as an alternative emulator for the famicom and nes systems
 * (Windows) Added the .url file extension to the epic system
 * (Windows) Added the .lnk file extension to the steam system
 * Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
+* Added arcade as an extra platform to the daphne system (to improve scraping)
 * (modern-es-de) Replaced the carousel images for the c64 and dos systems
 * Changed the screensaver to never show the same game again until all games have been cycled through
 * Reduced the slideshow screensaver fade-in time
@@ -98,7 +118,7 @@
 * Added a download percentage indicator to the application updater
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Removed the es_log.txt entry when an es_systems.cfg legacy systems configuration file was found on startup
-* Improved font rendering quality and always enabled linear texture interpolation for both minification and magnification
+* Improved font rendering quality and always enable linear texture interpolation for both minification and magnification
 * Improved the blur shaders to run faster at higher resolutions and to look identical regardless of display resolution
 * Improved the blur shaders rendering quality when rotating the screen 90 or 270 degrees
 * Added rounded corner support to the image, video, animation, carousel and grid elements
@@ -119,10 +139,10 @@
 * Added theme support for the "manual", "physicalName" and "physicalNameExtension" metadata types for the text element
 * Added support for binding multiple texture units for use in the shaders
 * Added the device serial number to the es_log.txt entries when adding or removing controllers
-* Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
+* Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant on macOS)
 * Changed the application updater to not use the scraper's transfer and connection timeout settings
 * Added support to MathUtil::md5Hash() for streaming files in chunks
-* Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
+* Replaced a number of homecooked functions in FileSystemUtil with those from the C++ Standard Library
 * Added support for defining an explicit back button function for GuiMsgBox
 * Added support for fragment shader clipping to Font and TextComponent instead of using glScissor
 * Added horizontal text scrolling functionality to TextComponent
@@ -132,13 +152,14 @@
 * Added a lot more debug log output to the scraper
 * Changed a number of stream operations to open files for writing in binary mode (to always create proper Unix line breaks)
 * Changed the concept of "theme set" to simply "theme" everywhere in the code and documentation
+* Added a ~5 MB log output size limitation for launched games on Unix and macOS
 * (Windows) Removed a launch command hack that deleted double quotation marks
 * (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
 * (Windows) Improved the README.txt file for the portable release
 * (Windows) Defined UNICODE and _UNICODE in the CMake configuration to force Unicode support for the Win32 API
 * (Windows) Added proper Unicode support to the Windows Registry find rules "winregistrypath" and "winregistryvalue"
 * (Windows) Set the subsystem to WINDOWS when building with MSVC to avoid displaying a console window on application startup
-* (Windows) Now only redirect the standard input/output streams to the console if there actually is a console
+* (Windows) Now only redirect the standard input/output streams to the console if there is actually a console available
 * (macOS) Changed the minimum required OS version from 10.14 "Mojave" to 10.15 "Catalina"
 * (macOS) Completely removed support for the legacy OS build
 * Updated the MAME index files to include ROMs up to MAME version 0.258
@@ -152,15 +173,17 @@
 
 ### Bug fixes
 
+* Repeatedly enabling and disabling auto collections could crash the application if the theme used the gameselector element
 * The video player would not play the last couple of frames for any videos
 * Starting the media viewer did not pause fallback game videos (defined using the "default" video property)
 * Quotation marks in the launch command were not always handled correctly when combined with the %CORE% variable
-* The %STARTDIR% variable could not be combined with running ES-DE in the background while launching games on Linux and macOS
+* The %STARTDIR% variable could not be combined with running ES-DE in the background when launching games on Linux and macOS
 * Directories interpreted as files entries could not be removed from custom collections
 * Duplicate ScreenScraper game entries could show up in the interactive scraper if multiple platforms were defined for the system
 * ScreenScraper API calls were slightly malformed for systems where multiple platforms were defined
-* If multiple games had the same thumbnail in the interactive scraper, then this image would not get downloaded for all entries
+* If multiple games had the same thumbnail in the interactive scraper, then this image would not get displayed for all entries
 * The background was too dark when opening a menu with the dark menu color scheme and the option to blur the background was disabled
+* (Windows) Lack of event polling when suspended led to various strange problems like OS audio mixer issues and emulators refusing to exit
 * (Windows) If the ROMDirectory setting had a value then all custom collection files contained absolute paths instead of relative paths
 * (Windows) The media viewer could crash if attempting to display corrupt or invalid PDF game manuals
 * (Windows) Wide string conversions were not done correctly which caused issues when filenames contained 4-byte Unicode characters
@@ -169,6 +192,7 @@
 * The camera offset in ComponentList was not correctly calculated when reaching the bottom of a list
 * The textlist properties selectedBackgroundColor and selectedSecondaryBackgroundColor were not offset by selectorVerticalOffset
 * SDL_StartTextInput() was sometimes set when not actually inputting any text
+* There were some minor memory leaks related to gamelist.xml entries when the file extension was no longer configured in es_systems.xml
 * Some theme loading warning messages for the gamelistinfo element were not formatted correctly
 
 ## Version 2.1.1

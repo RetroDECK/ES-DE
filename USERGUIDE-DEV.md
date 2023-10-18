@@ -351,6 +351,8 @@ Manually removing game files from the ROMs directory tree instead of deleting th
 
 In order to remove such unnecessary media files and configuration file entries, the _Orphaned data cleanup_ utility in the _Utilities_ menu can be used. This tool should be largely self-explanatory. Although it should generally be safe to use, unforeseen issues can occur so make sure to make backups of at least your `.emulationstation/gamelists` and `.emulationstation/collections` directories before attempting to use this tool.
 
+It's recommended to run this utility with the _Show hidden games_ setting enabled as orphaned gamelist.xml folder entries may otherwise not get purged.
+
 Note that there are no guarantees that any processed gamelist.xml files will be usable in any other applications than ES-DE. An attempt is made to retain the file structure but data unknown to ES-DE may get purged during cleanup.
 
 If the utility finds any data to be removed, a backup of the old files will be made. This will end up in a `CLEANUP` directory and will contain a date and time stamp. For example:
@@ -1066,7 +1068,8 @@ d2fdc.zip
 votrax.zip
 ```
 
-Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated Apple II computer.
+Note that you will need to enable UI controls in MAME to be able to exit the emulator via the normal exit key. The following page documents the default keys for exiting and toggling UI mode:\
+https://docs.mamedev.org/usingmame/defaultkeys.html
 
 ### Apple IIGS
 
@@ -1077,7 +1080,8 @@ In order to run Apple IIGS games in MAME, you need to place the following ROM fi
 apple2gs.zip
 ```
 
-Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated Apple IIGS computer.
+Note that you will need to enable UI controls in MAME to be able to exit the emulator via the normal exit key. The following page documents the default keys for exiting and toggling UI mode:\
+https://docs.mamedev.org/usingmame/defaultkeys.html
 
 ### Apple Macintosh
 
@@ -1142,7 +1146,7 @@ Note that scraper support is currently very poor for this system, so you may nee
 
 **General**
 
-For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. These files should retain the MAME filenames as ES-DE ships with MAME lookup tables, meaning the short names are expanded to full game names.
+For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. These files should retain the MAME software list filenames as ES-DE ships with MAME lookup tables, meaning the software list names are automatically expanded to full game names.
 
 For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
@@ -1376,7 +1380,13 @@ Setup for the standalone EasyRPG Player is identical with the exception that run
 
 ### Fujitsu FM Towns
 
-The Tsugaru emulator is still somehow experimental and although there are builds available for Windows, macOS and Linux on the Tsugaru [GitHub](https://github.com/captainys/TOWNSEMU) page, only the Windows release seems to be functioning entirely correctly. The Linux build has controller/input issues as described later below. It's also made specifically for Ubuntu and there is no AppImage release available, so if you run some other Linux distribution then it may not run at all. Extracting the binary from the Debian package has however been reported to work on SteamOS at least. The macOS release does not seem to include the command line binary for the emulator which makes it unusable with ES-DE.
+This system is emulated using Tsugaru or MAME standalone.
+
+**Tsugaru**
+
+The Tsugaru emulator is available for Linux and Windows and can be downloaded from https://github.com/captainys/TOWNSEMU
+
+While there's a macOS release available it's not packaged properly and it does not include a command line binary which makes it unusable with ES-DE. Also note that there is no AppImage release for Linux and the binary build is made specifically for Ubuntu. It may work on other distributions but you'll need to test it.
 
 For both the Windows and Linux release you need to create a `roms` subdirectory inside the emulator directory where the system BIOS/ROM files need to be located. These are the required files, and they have to be named in uppercase:
 
@@ -1422,7 +1432,37 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 -FREQ 33 -GAMEPORT0 KEY
 ```
 
-### Hypseus Singe (Daphne)
+**MAME standalone**
+
+As of the time of writing MAME only has preliminary FM Towns support, but this will hopefully improve over time. All games need to be packaged specifically for MAME with software list names as filenames. You also need the `fmtowns.zip` BIOS archive stored in ~/ROMs/fmtowns/ but apart from this it should be fairly straightforward to launch these games. Just be aware that you can't launch .iso or .cue files directly with MAME, only Tsugaru can launch such files.
+
+Note that you will need to enable UI controls in MAME to be able to exit the emulator via the normal exit key. The following page documents the default keys for exiting and toggling UI mode:\
+https://docs.mamedev.org/usingmame/defaultkeys.html
+
+Scraping can also be a bit challenging as neither ScreenScraper nor TheGamesDB support MAME software list names for this system. So it's recommended to run the scraper in interactive mode and refine the searches for all games that are not properly identified.
+
+### LaserDisc Games
+
+There are two ways to run LaserDisc games in ES-DE, via MAME or via Hypseus Singe. There are also two separate systems available, _daphne_ and _laserdisc_. The latter is recommended as the _daphne_ system is mostly existing for legacy reasons and may be removed in a future ES-DE release. The configuration for these two systems is identical as they are essentially clones.
+
+At the time of writing MAME and Hypseus Singe are mostly mutually exlusive as MAME tends to primarily support the games that Hypseus Singe doesn't support. In the future this is likely to change with MAME getting support for more LaserDisc games.
+
+The following page lists support for LaserDisc games for these two emulators:\
+https://emulation.gametechwiki.com/index.php/Arcade_LaserDisc_emulators
+
+**MAME**
+
+Running LaserDisc games via MAME is very straightforward. Essentially you need the game packaged for MAME with its software list name as filename, and you'll need to place the LaserDisc image file in .chd format in its separate subdirectory. Here's such an example setup:
+```
+~/ROMs/laserdisc/cubeqst/cubeqst.chd
+~/ROMs/laserdisc/firefox/firefox.chd
+~/ROMs/laserdisc/cubeqst.zip
+~/ROMs/laserdisc/firefox.zip
+```
+
+Following this setup you simply select either the _MAME - Current_ or _MAME (Standalone)_ alternative emulator and launch the .zip file to start the game.
+
+**Hypseus Singe**
 
 Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is quite particular so make sure to read this section thoroughly to get it to work.
 
@@ -1483,13 +1523,13 @@ https://www.youtube.com/watch?v=mO2UiI6byJo
 For Daphne games the structure will look something like the following, which is for the game _Dragon's Lair_:
 
 ```
-~/ROMs/daphne/lair.daphne/
-~/ROMs/daphne/lair.daphne/lair.dat
-~/ROMs/daphne/lair.daphne/lair.m2v
-~/ROMs/daphne/lair.daphne/lair.m2v.bf
-~/ROMs/daphne/lair.daphne/lair.ogg
-~/ROMs/daphne/lair.daphne/lair.ogg.bf
-~/ROMs/daphne/lair.daphne/lair.txt
+~/ROMs/laserdisc/lair.daphne/
+~/ROMs/laserdisc/lair.daphne/lair.dat
+~/ROMs/laserdisc/lair.daphne/lair.m2v
+~/ROMs/laserdisc/lair.daphne/lair.m2v.bf
+~/ROMs/laserdisc/lair.daphne/lair.ogg
+~/ROMs/laserdisc/lair.daphne/lair.ogg.bf
+~/ROMs/laserdisc/lair.daphne/lair.txt
 ```
 
 The directory name has to keep this naming convention with the name consisting of the Daphne game type (_lair_ for this example) followed by the .daphne extension. This name logic with a short name per game is similar to how it works in MAME and ScummVM. A list of available games can be found here: \
@@ -1509,49 +1549,49 @@ The -fastboot option is recommended in particular since it leads to a much short
 With these files in place, the game directory should look something like this:
 
 ```
-~/ROMs/daphne/lair.daphne/
-~/ROMs/daphne/lair.daphne/lair.commands
-~/ROMs/daphne/lair.daphne/lair.daphne
-~/ROMs/daphne/lair.daphne/lair.dat
-~/ROMs/daphne/lair.daphne/lair.m2v
-~/ROMs/daphne/lair.daphne/lair.m2v.bf
-~/ROMs/daphne/lair.daphne/lair.ogg
-~/ROMs/daphne/lair.daphne/lair.ogg.bf
-~/ROMs/daphne/lair.daphne/lair.txt
+~/ROMs/laserdisc/lair.daphne/
+~/ROMs/laserdisc/lair.daphne/lair.commands
+~/ROMs/laserdisc/lair.daphne/lair.daphne
+~/ROMs/laserdisc/lair.daphne/lair.dat
+~/ROMs/laserdisc/lair.daphne/lair.m2v
+~/ROMs/laserdisc/lair.daphne/lair.m2v.bf
+~/ROMs/laserdisc/lair.daphne/lair.ogg
+~/ROMs/laserdisc/lair.daphne/lair.ogg.bf
+~/ROMs/laserdisc/lair.daphne/lair.txt
 ```
 
 **Singe games**
 
 Singe games work a bit differently compared to Daphne games. They come packaged with a lot of files and the game directories normally just consist of the game names, such as:
 ```
-~/ROMs/daphne/fireandice/
-~/ROMs/daphne/mononoke/
+~/ROMs/laserdisc/fireandice/
+~/ROMs/laserdisc/mononoke/
 ```
 
 To make these games work, rename the directories by appending the .singe extension, such as:
 ```
-~/ROMs/daphne/fireandice.singe/
-~/ROMs/daphne/mononoke.singe/
+~/ROMs/laserdisc/fireandice.singe/
+~/ROMs/laserdisc/mononoke.singe/
 ```
 
 You could optionally create a .commands file as well to specify some additional command line parameters, as described above in the Daphne section.
 
 The next step is to modify the _\<game\>.singe_ file to point to the exact game directory.
 
-So for example on Unix, modify the file `~/ROMs/daphne/mononoke.singe/mononoke.singe` by changing the following line:
+So for example on Unix, modify the file `~/ROMs/laserdisc/mononoke.singe/mononoke.singe` by changing the following line:
 ```
 MYDIR = "singe/mononoke/"
 ```
 To this:
 ```
-MYDIR = "/home/myusername/ROMs/daphne/mononoke.singe/"
+MYDIR = "/home/myusername/ROMs/laserdisc/mononoke.singe/"
 ```
 
 Note that the tilde ~ character can not be used inside this file to point to your home directory, you have to set the absolute path. And you should of course replace _myusername_ with your own username. The forward slash at the end of the path is also required.
 
 If on Windows, it could look like the following instead:
 ```
-MYDIR = "C:\\Users\\myusername\\ROMs\\daphne\\mononoke.singe\\"
+MYDIR = "C:\\Users\\myusername\\ROMs\\laserdisc\\mononoke.singe\\"
 ```
 
 You have to put double backslash characters as shown above (including at the end of the path), otherwise the game won't start.
@@ -1566,7 +1606,7 @@ There are two ways to play these games, either via emulation or via simulation.
 
 **Method 1, emulation**
 
-Proper emulation is done via the MAME standalone emulator. The games need to be in the MAME format and follow the MAME naming conventions, i.e. it will not be possible to run .mgw games with this emulator. The example game _Donkey Kong_ would have the filename `gnw_dkong.zip` and you'll place this file in the `gameandwatch` or `lcdgames` directory.
+Proper emulation is done via the MAME standalone emulator. The games need to be in the MAME format and follow the MAME software list naming conventions, i.e. it will not be possible to run .mgw games with this emulator. The example game _Donkey Kong_ would have the filename `gnw_dkong.zip` and you'll place this file in the `gameandwatch` or `lcdgames` directory.
 
 However the game is only half of what's needed to properly emulate these games as you'll also need the artwork to see an image of the actual physical device when running the game. The artwork would also come in a .zip file with the same name as the game itself, e.g. `gnw_dkong.zip` and it must be located in the MAME artwork directory so it can be found by MAME.
 
@@ -1579,7 +1619,7 @@ For the artwork location there are two options available in the form of two sepa
 
 As the artwork files also come with the .zip file extension they will show up inside ES-DE as if they were game files. So it's recommended to hide the entire artwork directory using the _Hidden_ option in the metadata editor, or alternatively exclude them from the multi-scraper using the _Exclude from multi-scraper_ option.
 
-Be aware that neither ScreenScraper or TheGamesDB currently support these MAME short names natively so you'll need to refine the searches or the scraper services are unlikely to return any results at all (or very inaccurate results at best).
+Be aware that neither ScreenScraper nor TheGamesDB currently support the MAME software list names natively so you'll need to refine the searches or the scraper services are unlikely to return any results at all (or very inaccurate results at best).
 
 **Method 2, simulation**
 
@@ -2038,6 +2078,16 @@ This is what the complete setup could look like:
 ~/ROMs/pico8/xzero-3.p8.png
 ```
 
+**Using the Retro8 RetroArch core**
+
+ES-DE also includes support for the Retro8 RetroArch core but it's borderline unusable and does not seem to be actively developed any longer. If you still want to use it, then you first need to rename your game files by removing _.png_ from the end of the filenames, like this:
+```
+~/ROMs/pico8/c_e_l_e_s_t_e-0.p8
+~/ROMs/pico8/xzero-3.p8
+```
+
+Following this just select the _Retro8_ alternative emulator and the games will (somehow) work.
+
 ### Ports and desktop applications
 
 _The emulators system is essentially a clone of the desktop system so it's not discussed specifically in this section._
@@ -2407,13 +2457,14 @@ Once the emulator is up and running there is not really much else to consider, s
 
 The TI-99 is emulated via MAME, and only the standalone release of this emulator is supported. Unfortunately it seems as if the Homebrew build on macOS is broken as no TI-99 games can be launched. As such this system is unsupported on macOS, but the configuration entries still exist in the bundled es_find_rules.xml and es_systems.xml files so if you manage to get the emulator to run, ES-DE should work with these games.
 
-Emulating the TI-99 can be quite confusing as games are available in various incompatible formats, and most emulators are particular when it comes to what file types they support. In ES-DE only cartridge-based games are supported, so you can't for instance play games distributed as floppy disk images. And only games packaged for MAME using the MAME short name standard can be used. This includes .7z and .zip files as well as .rpk cartridge images. It's strongly recommended to go for the MAME TI-99 ROM set that consists only of .zip files as these have the highest chance of working correctly.
+Emulating the TI-99 can be quite confusing as games are available in various incompatible formats, and most emulators are particular when it comes to what file types they support. In ES-DE only cartridge-based games are supported, so you can't for instance play games distributed as floppy disk images. And only games packaged for MAME using the MAME software list name standard can be used. This includes .7z and .zip files as well as .rpk cartridge images. It's strongly recommended to go for the MAME TI-99 ROM set that consists only of .zip files as these have the highest chance of working correctly.
 
 In addition to the game files you need the `ti99_4a.zip` archive which contains the TI-99 system ROMs. This file has to be placed in the root of the `~/ROMs/ti99` directory.
 
-Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated TI-99 computer.
+Note that you will need to enable UI controls in MAME to be able to exit the emulator via the normal exit key. The following page documents the default keys for exiting and toggling UI mode:\
+https://docs.mamedev.org/usingmame/defaultkeys.html
 
-Scraping can also be a bit challenging as MAME short names are used and neither ScreenScraper nor TheGamesDB can parse these names. So it's recommended to run the scraper in interactive mode and refine the searches for all games that are not properly identified.
+Scraping can also be a bit challenging as MAME software list names are used and neither ScreenScraper nor TheGamesDB can parse these names. So it's recommended to run the scraper in interactive mode and refine the searches for all games that are not properly identified.
 
 ## Scraping
 
@@ -2782,7 +2833,7 @@ When running the non-interactive scraper it's possible to search using a hash va
 
 **Search using metadata names**
 
-By default ES-DE will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical filename regardless of such data being available, then disable this option. Note that when using TheGamesDB as scraper service for arcade games (MAME and Neo Geo), the short MAME name will always be expanded to the full game name as this scraper service does not support searches using short MAME names. In general it's recommended to disable this option if scraping arcade games using ScreenScraper as the MAME short names is much more reliable than using the metadata names.
+By default ES-DE will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical filename regardless of such data being available, then disable this option. Note that when using TheGamesDB as scraper service for arcade games, the MAME software list name will always be expanded to the full game name as this scraper service does not support searches using software list names. In general it's recommended to disable this option if scraping arcade games using ScreenScraper as the MAME software list names are much more reliable than using the metadata names.
 
 **Scrape actual folders** _(Multi-scraper only)_
 
@@ -3213,7 +3264,7 @@ If enabled, only games that have metadata saved to the gamelist.xml files will b
 
 **Strip extra MAME name info (requires restart)**
 
-MAME short names for all arcade systems are automatically expanded to their full game names using a bundled MAME driver file. By default any extra information from this file that is located inside brackets is removed, which includes information like region, version/revision, license, release date and more. By setting this option to disabled that information is retained. Note that this is only applicable for any game names which have not been scraped as the scaper will overwrite the expanded information with whatever value the scraper service returns. It is however possible to disable scraping of game names altogether as covered elsewhere in this guide.
+MAME software list names for all arcade systems are automatically expanded to their full game names using a bundled MAME name translation file. By default any extra information from this file that is located inside brackets is removed, which includes information like region, version/revision, license, release date and more. By setting this option to disabled that information is retained. Note that this is only applicable for any game names which have not been scraped as the scaper will overwrite the expanded information with whatever value the scraper service returns. It is however possible to disable scraping of game names altogether as covered elsewhere in this guide.
 
 **Disable desktop composition (requires restart)** _(Unix and X11/Xorg only)_
 
@@ -3677,7 +3728,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | cps2                  | Capcom Play System II                          | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-2 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps3                  | Capcom Play System III                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | crvision              | VTech CreatiVision                             | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
-| daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW] | Hypseus [Singe] **(Standalone)** [UW] | Yes for Daphne games | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
+| daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** | Hypseus [Singe] **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)** | Yes for Daphne games | See the specific _LaserDisc Games_ section elsewhere in this guide |
 | desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | doom                  | Doom                                           | PrBoom                            | PrBoom+ **(Standalone)**,<br>Boom 3 [UW],<br>Boom 3 xp [UW],<br>_Shortcut or script_ | No           |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** | No           | See the specific _DOS / PC_ section elsewhere in this guide |
@@ -3693,7 +3744,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
 | flash                 | Adobe Flash                                    | Ruffle **(Standalone)**           | Lightspark **(Standalone)** [U],<br>ArcadeFlashWeb **(Standalone)** [W] | No        | Single .swf file       |
 | fm7                   | Fujitsu FM-7                                   | MAME [FM-7 Diskette] **(Standalone)** | MAME [FM-7 Tape] **(Standalone)**,<br>MAME [FM-7 Software list] **(Standalone)**,<br>MAME [FM77AV Diskette] **(Standalone)**,<br>MAME [FM77AV Tape] **(Standalone)**,<br>MAME [FM77AV Software list] **(Standalone)** | Yes          | For tape files you need to manually start the cassette player from the MAME menu after the "load" command, as well as entering the "run" command after loading is complete |
-| fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW]     |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
+| fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW],<br>MAME **(Standalone)** [M] | MAME **(Standalone)** [UW] | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | fpinball              | Future Pinball                                 | Future Pinball **(Standalone)** [W] |                                   | No           |                                      |
 | gamate                | Bit Corporation Gamate                         | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
 | gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
@@ -3709,6 +3760,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
 | j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       | KEmulator **(Standalone)** [W]    | No           | Single .jar file       |
 | kodi                  | Kodi Home Theatre Software                     | Kodi **(Standalone)**             |                                   | No           | Shortcut (.desktop/.app/.lnk) file |
+| laserdisc             | LaserDisc Games                                | Hypseus [Daphne] **(Standalone)** | Hypseus [Singe] **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)** | Yes for Daphne games | See the specific _LaserDisc Games_ section elsewhere in this guide |
 | lcdgames              | LCD Handheld Games                             | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
 | lowresnx              | LowRes NX Fantasy Console                      | LowRes NX                         |                                   | No           | Single ROM file       |
 | lutris                | Lutris Open Gaming Platform                    | Lutris **(Standalone)** [U]       |                                   | No           | See the specific _Lutris_ section elsewhere in this guide |
@@ -3758,7 +3810,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [UW],<br>ares **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      | Mednafen **(Standalone)**         | Yes          |                                      |
-| pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | PICO-8 Splore **(Standalone)**    | No           | See the specific _PICO-8_ section elsewhere in this guide |
+| pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | PICO-8 Splore **(Standalone)**,<br>Retro8 | No           | See the specific _PICO-8_ section elsewhere in this guide |
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       | VICE xplus4 **(Standalone)**      | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | _Shortcut or script_              | _AppImage_ [U]                    | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
