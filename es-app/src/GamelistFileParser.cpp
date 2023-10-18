@@ -65,7 +65,9 @@ namespace GamelistFileParser
                     return treeNode;
 
                 if (type == FOLDER) {
-                    LOG(LogWarning) << "A folder defined in the gamelist file does not exist:";
+                    LOG(LogWarning) << "A folder defined in gamelist.xml does not exist or "
+                                       "contains no valid games: \""
+                                    << path << "\"";
                     return nullptr;
                 }
 
@@ -83,8 +85,8 @@ namespace GamelistFileParser
 #endif
                                     << "\" is present in gamelist.xml but the extension is not "
                                        "configured in es_systems.xml";
-                    // In the unlikely event that this was the only entry in the folder.
-                    if (treeNode->getChildren().empty())
+                    // In case there are no entries left in the folder.
+                    if (treeNode != system->getRootFolder() && treeNode->getChildren().empty())
                         delete treeNode;
                     return nullptr;
                 }
@@ -101,7 +103,9 @@ namespace GamelistFileParser
                 // Don't create folders unless they're including any games.
                 // If the type is FOLDER it's going to be empty, so don't bother.
                 if (type == FOLDER) {
-                    LOG(LogWarning) << "A folder defined in the gamelist file does not exist:";
+                    LOG(LogWarning) << "A folder defined in gamelist.xml does not exist or "
+                                       "contains no valid games: \""
+                                    << path << "\"";
                     return nullptr;
                 }
 
@@ -274,7 +278,11 @@ namespace GamelistFileParser
                                       << (type == GAME ? "file" : "folder") << " entry \""
                                       << file->getName() << "\""
                                       << " (\"" << file->getPath() << "\")";
+                        FileData* parent {file->getParent()};
                         delete file;
+                        // In case there are no entries left in the folder.
+                        if (parent != system->getRootFolder() && parent->getChildren().empty())
+                            delete parent;
                     }
                     // Also delete any folders which are empty, i.e. all their entries are hidden.
                     else if (file->getType() == FOLDER && file->getChildren().size() == 0) {
