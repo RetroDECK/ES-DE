@@ -1351,10 +1351,13 @@ void CollectionSystemsManager::removeCollectionsFromDisplayedSystems()
     // Remove all collection Systems.
     for (auto sysIt = SystemData::sSystemVector.cbegin();
          sysIt != SystemData::sSystemVector.cend();) {
-        if ((*sysIt)->isCollection())
+        if ((*sysIt)->isCollection()) {
+            (*sysIt)->getRootFolder()->setUpdateListCallback(nullptr);
             sysIt = SystemData::sSystemVector.erase(sysIt);
-        else
+        }
+        else {
             ++sysIt;
+        }
     }
 
     // Remove all custom collections in bundle.
