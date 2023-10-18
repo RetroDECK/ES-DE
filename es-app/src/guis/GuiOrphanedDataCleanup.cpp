@@ -440,6 +440,12 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
 {
     LOG(LogInfo) << "GuiOrphanedDataCleanup: Starting cleanup of gamelist.xml files";
 
+    if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
+        LOG(LogWarning)
+            << "The \"Show hidden games\" setting is disabled, this may lead to some orphaned "
+               "folder entries not getting purged";
+    }
+
     const std::time_t currentTime {
         std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())};
 
@@ -594,6 +600,10 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                             LOG(LogInfo) << "Found orphaned " << tag << " entry \"" << path << "\"";
                             ++removeCount;
                         }
+                    }
+                    else if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
+                        // Don't remove entries for existing folders if not displaying hidden games.
+                        targetRoot.append_copy((*it));
                     }
                     else {
                         bool folderExists {false};
