@@ -1409,13 +1409,14 @@ void ViewController::reloadAll()
 void ViewController::rescanROMDirectory()
 {
     mWindow->setBlockInput(true);
+    resetCamera();
 
+    mState.viewing = ViewMode::NOTHING;
     mGamelistViews.clear();
     mSystemListView.reset();
     mCurrentView.reset();
     mPreviousView.reset();
     mSkipView.reset();
-    resetCamera();
 
     mWindow->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
     CollectionSystemsManager::getInstance()->deinit(false);

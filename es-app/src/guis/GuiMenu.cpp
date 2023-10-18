@@ -91,12 +91,14 @@ GuiMenu::GuiMenu()
 
 GuiMenu::~GuiMenu()
 {
-    // This is required for the situation where scrolling started just before the menu
-    // was openened. Without this, the scrolling would run until manually stopped after
-    // the menu has been closed.
-    ViewController::getInstance()->stopScrolling();
+    if (ViewController::getInstance()->getState().viewing != ViewController::ViewMode::NOTHING) {
+        // This is required for the situation where scrolling started just before the menu
+        // was openened. Without this, the scrolling would run until manually stopped after
+        // the menu has been closed.
+        ViewController::getInstance()->stopScrolling();
 
-    ViewController::getInstance()->startViewVideos();
+        ViewController::getInstance()->startViewVideos();
+    }
 }
 
 void GuiMenu::openScraperOptions()
