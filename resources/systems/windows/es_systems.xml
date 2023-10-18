@@ -391,7 +391,7 @@
         <command label="Play! (Standalone)">%EMULATOR_PLAY!% --disc %ROM%</command>
         <command label="RPCS3 Shortcut (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <command label="Triforce (Standalone)">%EMULATOR_TRIFORCE% -b -e %ROM%</command>
-        <command label="xemu (Standalone)">%EMULATOR_XEMU% -dvd_path %ROM%</command>
+        <command label="xemu (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XEMU% -dvd_path %ROM%</command>
         <command label="Cxbx-Reloaded (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_CXBX-RELOADED% %ROM%</command>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>arcade</platform>
@@ -1523,7 +1523,7 @@
         <fullname>Sony PlayStation Vita</fullname>
         <path>%ROMPATH%\psvita</path>
         <extension>.psvita</extension>
-        <command label="Vita3K (Standalone)">%EMULATOR_VITA3K% -r %INJECT%=%BASENAME%.psvita</command>
+        <command label="Vita3K (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_VITA3K% -r %INJECT%=%BASENAME%.psvita</command>
         <platform>psvita</platform>
         <theme>psvita</theme>
     </system>
@@ -2152,7 +2152,7 @@
         <fullname>Microsoft Xbox</fullname>
         <path>%ROMPATH%\xbox</path>
         <extension>.iso .ISO .xbe .XBE</extension>
-        <command label="xemu (Standalone)">%EMULATOR_XEMU% -dvd_path %ROM%</command>
+        <command label="xemu (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XEMU% -dvd_path %ROM%</command>
         <command label="Cxbx-Reloaded (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_CXBX-RELOADED% %ROM%</command>
         <platform>xbox</platform>
         <theme>xbox</theme>
