@@ -25,7 +25,7 @@ Upgrading from an older release:
    This last step includes your settings, custom collections, custom systems, scraped/downloaded media, gamelist.xml files, scripts and themes
 
 In case of issues, check .emulationstation\es_log.txt for clues as to what went wrong.
-Starting EmulationStation.exe with the --debug flag will provide additional details.
+Enabling the "Debug mode" setting in the "Other settings" menu or starting EmulationStation.exe with the --debug flag will provide additional details.
 
 Refer to the FAQ and user guide for more detailed instructions and documentation:
 https://gitlab.com/es-de/emulationstation-de/-/blob/master/FAQ.md
