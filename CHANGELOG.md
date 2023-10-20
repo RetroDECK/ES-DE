@@ -14,7 +14,7 @@ Support has been added for many new systems and emulators, and on Linux there is
 
 On the infrastructure level a significant portion of the homecooked filesystem code has been replaced with functionality from the C++ Standard Library and a large amount of refactoring has been made to clean up and simplify the codebase. As part of this cleanup legacy theme support has been completely removed.
 
-Finally many bugs have been fixed and the application has received a lot more polish and quality of life improvements.
+In addition to the above many bugs have been fixed and the application has received a lot more polish as well as numerous quality of life improvements.
 
 ### Detailed list of changes
 
@@ -105,6 +105,7 @@ Finally many bugs have been fixed and the application has received a lot more po
 * Removed the annoying warning message when selecting the video screensaver from the UI settings menu
 * Removed the back button option from some confirmation dialogs
 * Changed the button text for some dialogs to display "Proceed/Cancel" instead of "Yes/No"
+* Increased the font size for the "Create new custom collection from theme" interface
 * Set scanline rendering as disabled by default for the slideshow screensaver
 * Changed the sort types "filename, ascending" and "filename, descending" to "name, ascending" and "name, descending"
 * Changed the "no games" dialog to no longer save the ROM directory to es_settings.xml if its value hasn't changed
@@ -182,6 +183,8 @@ Finally many bugs have been fixed and the application has received a lot more po
 * Duplicate ScreenScraper game entries could show up in the interactive scraper if multiple platforms were defined for the system
 * ScreenScraper API calls were slightly malformed for systems where multiple platforms were defined
 * If multiple games had the same thumbnail in the interactive scraper, then this image would not get displayed for all entries
+* Scrollable text containers were sometimes not updated correctly which led to text being cut off vertically
+* Slider knobs were sometimes not correctly positioned horizontally
 * The background was too dark when opening a menu with the dark menu color scheme and the option to blur the background was disabled
 * (Windows) Lack of event polling when suspended led to various strange problems like OS audio mixer issues and emulators refusing to exit
 * (Windows) If the ROMDirectory setting had a value then all custom collection files contained absolute paths instead of relative paths

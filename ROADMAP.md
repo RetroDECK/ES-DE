@@ -24,10 +24,8 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * Composite element support for enabling advanced and finely controlled layouts
 * Element animation support (storyboards)
 * Scrollbar component for the system and gamelist views
-* Removal of legacy theme support
 
 **Scraper**
-* Checksum support for the scraper for exact searches and for determining when to overwrite files
 * Support for additional scraper services
 
 **Infrastructure**
@@ -39,5 +37,5 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * Improved multi-threading
 * Reduced amount of gamelist reloading to retain cached textures and improve overall performance
 * Replace the built-in Unicode functions and lookup tables with those of the ICU library
-* Text kerning support using the HarfBuzz library
+* Text shaping support using the HarfBuzz library
 * Replacement for the abandoned FreeImage library
