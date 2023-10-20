@@ -66,6 +66,8 @@ void ScrollableContainer::resetComponent()
     mAutoScrollResetAccumulator = 0;
     mAutoScrollAccumulator = -mAutoScrollDelay + mAutoScrollSpeed;
     mAtEnd = false;
+    mUpdatedSize = false;
+
     // This is needed to resize to the designated area when the background image gets invalidated.
     if (!mChildren.empty()) {
         float combinedHeight {0.0f};
