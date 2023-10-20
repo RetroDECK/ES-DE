@@ -97,8 +97,12 @@ void TextEditComponent::textInput(const std::string& text, const bool pasting)
             }
         }
         else {
-            mText.insert(mCursor, text);
-            mCursor += static_cast<unsigned int>(text.size());
+            mText.insert(
+                mCursor,
+                (pasting && !isMultiline() ? Utils::String::replace(text, "\n", " ") : text));
+            mCursor += static_cast<unsigned int>(
+                (pasting && !isMultiline() ? Utils::String::replace(text, "\n", " ") : text)
+                    .size());
         }
     }
 
