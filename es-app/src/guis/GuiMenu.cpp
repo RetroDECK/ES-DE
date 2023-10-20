@@ -1657,7 +1657,7 @@ void GuiMenu::openUtilities()
 
     ComponentListRow row;
 
-    row.addElement(std::make_shared<TextComponent>("ORPHANED DATA CLEANUP (EXPERIMENTAL)",
+    row.addElement(std::make_shared<TextComponent>("ORPHANED DATA CLEANUP",
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
     row.addElement(mMenu.makeArrow(), false);
