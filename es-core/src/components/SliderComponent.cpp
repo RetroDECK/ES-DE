@@ -165,11 +165,6 @@ void SliderComponent::onValueChanged()
 
     mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
 
-    float barLength {
-        mSize.x - mKnob.getSize().x -
-        (mTextCache ? mTextCache->metrics.size.x + (4.0f * mRenderer->getScreenWidthModifier()) :
-                      0.0f)};
-
     if (mRenderer->getScreenWidth() > mRenderer->getScreenHeight())
         mBarHeight = std::round(2.0f * mRenderer->getScreenHeightModifier());
     else
@@ -184,6 +179,11 @@ void SliderComponent::onValueChanged()
         mKnob.setResize(mKnob.getSize().x - 1.0f, mKnob.getSize().y - 1.0f);
         setSize(getSize().x, getSize().y - 1.0f);
     }
+
+    float barLength {
+        mSize.x - mKnob.getSize().x -
+        (mTextCache ? mTextCache->metrics.size.x + (4.0f * mRenderer->getScreenWidthModifier()) :
+                      0.0f)};
 
     // Likewise for the bar.
     if (static_cast<int>(mSize.y) % 2 != static_cast<int>(mBarHeight) % 2) {
