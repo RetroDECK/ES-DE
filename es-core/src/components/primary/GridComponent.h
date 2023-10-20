@@ -372,8 +372,8 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
         auto text = std::make_shared<TextComponent>(
             entry.name, mFont, 0x000000FF, Alignment::ALIGN_CENTER, Alignment::ALIGN_CENTER,
             glm::vec3 {0.0f, 0.0f, 0.0f}, mItemSize * mTextRelativeScale, 0x00000000, mLineSpacing,
-            mTextRelativeScale, mTextHorizontalScrolling, mTextHorizontalScrollSpeed,
-            mTextHorizontalScrollDelay, mTextHorizontalScrollGap);
+            1.0f, mTextHorizontalScrolling, mTextHorizontalScrollSpeed, mTextHorizontalScrollDelay,
+            mTextHorizontalScrollGap);
         text->setOrigin(0.5f, 0.5f);
         text->setColor(mTextColor);
         text->setBackgroundColor(mTextBackgroundColor);
