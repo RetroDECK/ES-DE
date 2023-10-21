@@ -56,6 +56,7 @@ Emulators\Citra\nightly-mingw\citra-qt.exe
 Emulators\cpcemu\cpcemu.exe
 Emulators\CSpect\CSpect.exe
 Emulators\Cxbx-Reloaded\cxbx.exe
+Emulators\demul\demul.exe
 Emulators\Dolphin-x64\Dolphin.exe
 Emulators\dosbox-staging\dosbox.exe
 Emulators\DOSBox-X\dosbox-x.exe

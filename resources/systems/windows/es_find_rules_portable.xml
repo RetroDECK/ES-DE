@@ -121,6 +121,13 @@
             <entry>%ESPATH%\..\Emulators\Cxbx-Reloaded\cxbx.exe</entry>
         </rule>
     </emulator>
+    <emulator name="DEMUL">
+        <!-- Sega Dreamcast emulator Demul -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\demul\demul.exe</entry>
+            <entry>%ESPATH%\..\Emulators\demul\demul.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="staticpath">
