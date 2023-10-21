@@ -190,6 +190,15 @@
             <entry>~/bin/CSpect/CSpect.exe</entry>
         </rule>
     </emulator>
+    <emulator name="DEMUL-WINDOWS">
+        <!-- Sega Dreamcast emulator Demul -->
+        <rule type="staticpath">
+            <entry>~/Applications/demul/demul.exe</entry>
+            <entry>~/.local/share/applications/demul/demul.exe</entry>
+            <entry>~/.local/bin/demul/demul.exe</entry>
+            <entry>~/bin/demul/demul.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DESMUME">
         <!-- Nintendo DS emulator DeSmuME -->
         <rule type="systempath">
