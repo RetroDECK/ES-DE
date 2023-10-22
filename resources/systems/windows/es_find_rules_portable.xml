@@ -191,8 +191,8 @@
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
-            <entry>%ESPATH%\..\Emulators\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
+            <entry>%ESPATH%\Emulators\FS-UAE-Launcher\Windows\x86-64\fs-uae-launcher.exe</entry>
+            <entry>%ESPATH%\..\Emulators\FS-UAE-Launcher\Windows\x86-64\fs-uae-launcher.exe</entry>
         </rule>
     </emulator>
     <emulator name="FUSE">

@@ -118,9 +118,7 @@
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="staticpath">
-            <entry>/Applications/FS-UAE.app/Contents/MacOS/fs-uae</entry>
-            <entry>/opt/homebrew/bin/fs-uae</entry>
-            <entry>/usr/local/bin/fs-uae</entry>
+            <entry>/Applications/FS-UAE Launcher.app/Contents/MacOS/fs-uae-launcher</entry>
         </rule>
     </emulator>
     <emulator name="FUSE">

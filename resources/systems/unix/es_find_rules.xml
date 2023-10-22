@@ -335,13 +335,12 @@
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="systempath">
-            <entry>fs-uae</entry>
-            <entry>fsuae.fs-uae</entry>
-            <entry>net.fsuae.FS-UAE</entry>
+            <entry>fs-uae-launcher</entry>
+            <entry>fsuae.launcher</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE</entry>
+            <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
         </rule>
     </emulator>
     <emulator name="FUSE">

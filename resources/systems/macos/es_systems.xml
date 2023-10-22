@@ -38,6 +38,7 @@
         <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
         <platform>amiga</platform>
         <theme>amiga</theme>
     </system>
@@ -48,6 +49,7 @@
         <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
         <platform>amiga</platform>
         <theme>amiga1200</theme>
     </system>
@@ -58,6 +60,7 @@
         <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
         <platform>amiga</platform>
         <theme>amiga600</theme>
     </system>
@@ -68,6 +71,7 @@
         <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% --config:amiga-model=CD32 %ROM%</command>
         <platform>amigacd32</platform>
         <theme>amigacd32</theme>
     </system>
@@ -325,6 +329,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .iso .ISO .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% --config:amiga-model=CDTV %ROM%</command>
         <platform>cdtv</platform>
         <theme>cdtv</theme>
     </system>
