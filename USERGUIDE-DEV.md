@@ -314,6 +314,8 @@ For example you may want to replace the emulator launch command, modify the full
 
 The instructions for how to customize the es_systems.xml file can be found in [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml). There you can also find some examples of custom files that you can copy into ~/.emulationstation/custom_systems/ and modify as required.
 
+In addition to the above it's also possible to customize the find rules via the `es_find_rules.xml` file. The logic is essentially identical to what is described above, and details regarding this file can be found in [INSTALL-DEV.md](INSTALL-DEV.md#es_find_rulesxml) as well.
+
 ## Migrating from other EmulationStation forks
 
 **IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!**
@@ -745,36 +747,37 @@ So placing a manually downloaded emulator binary in either of these directories 
 
 The following manually downloaded emulators are supported when using the bundled configuration:
 
-| System name                      | Emulator         | Filename                          |
-| :------------------------------- | :--------------- | :-------------------------------- |
-| amstradcpc                       | CPCemu           | cpcemu/cpcemu                     |
-| apple2                           | LinApple         | linapple/linapple                 |
-| atari2600                        | Gopher2600       | gopher2600/gopher2600_linux_amd64 |
-| coco/dragon32/tanodragon         | XRoar            | xroar/xroar                       |
-| daphne                           | Hypseus Singe    | hypseus-singe/hypseus.bin         |
-| dreamcast                        | Redream          | redream/redream                   |
-| easyrpg                          | EasyRPG          | easyrpg/easyrpg-player            |
-| fbneo/neogeo/neogeocd/neogeocdjp | FinalBurn Neo    | fbneo/fbneo                       |
-| flash                            | Lightspark       | lightspark/lightspark             |
-| flash                            | Ruffle           | ruffle/ruffle                     |
-| fmtowns                          | Tsugaru          | tsugaru/Tsugaru_CUI               |
-| gb/gba/gbc/nds                   | SkyEmu           | SkyEmu/SkyEmu                     |
-| gb/gbc                           | Gearboy          | gearboy/gearboy                   |
-| model3                           | Supermodel       | Supermodel/supermodel             |
-| famicom/nes                      | puNES            | punes/punes                       |
-| mame-advmame                     | AdvanceMAME      | advancemame/advmame               |
-| oric                             | Oricutron        | oricutron/Oricutron               |
-| pc88                             | QUASI88          | quasi88/quasi88                   |
-| pico8                            | PICO-8           | pico-8/pico8                      |
-| psvita                           | Vita3K           | Vita3K/Vita3K                     |
-| samcoupe                         | SimCoupé         | simcoupe/simcoupe                 |
-| switch                           | Ryujinx          | publish/Ryujinx                   |
-| switch                           | Ryujinx          | publish/Ryujinx.Ava               |
-| trs-80                           | sdl2trs          | sdl2trs/sdl2trs                   |
-| vpinball                         | Visual Pinball X | VPinballX/VPinballX_GL            |
-| wiiu                             | Cemu             | Cemu/Cemu                         |
-| zxnext                           | #CSpect          | CSpect/CSpect.exe                 |
-| zxnext                           | ZEsarUX          | ZEsarUX/zesarux                   |
+| System name                             | Emulator         | Filename                          |
+| :-------------------------------------- | :--------------- | :-------------------------------- |
+| amiga/amiga1200/amiga600/amigacd32/cdtv | Amiberry         | amiberry/amiberry                 |
+| amstradcpc                              | CPCemu           | cpcemu/cpcemu                     |
+| apple2                                  | LinApple         | linapple/linapple                 |
+| atari2600                               | Gopher2600       | gopher2600/gopher2600_linux_amd64 |
+| coco/dragon32/tanodragon                | XRoar            | xroar/xroar                       |
+| daphne                                  | Hypseus Singe    | hypseus-singe/hypseus.bin         |
+| dreamcast                               | Redream          | redream/redream                   |
+| easyrpg                                 | EasyRPG          | easyrpg/easyrpg-player            |
+| fbneo/neogeo/neogeocd/neogeocdjp        | FinalBurn Neo    | fbneo/fbneo                       |
+| flash                                   | Lightspark       | lightspark/lightspark             |
+| flash                                   | Ruffle           | ruffle/ruffle                     |
+| fmtowns                                 | Tsugaru          | tsugaru/Tsugaru_CUI               |
+| gb/gba/gbc/nds                          | SkyEmu           | SkyEmu/SkyEmu                     |
+| gb/gbc                                  | Gearboy          | gearboy/gearboy                   |
+| model3                                  | Supermodel       | Supermodel/supermodel             |
+| famicom/nes                             | puNES            | punes/punes                       |
+| mame-advmame                            | AdvanceMAME      | advancemame/advmame               |
+| oric                                    | Oricutron        | oricutron/Oricutron               |
+| pc88                                    | QUASI88          | quasi88/quasi88                   |
+| pico8                                   | PICO-8           | pico-8/pico8                      |
+| psvita                                  | Vita3K           | Vita3K/Vita3K                     |
+| samcoupe                                | SimCoupé         | simcoupe/simcoupe                 |
+| switch                                  | Ryujinx          | publish/Ryujinx                   |
+| switch                                  | Ryujinx          | publish/Ryujinx.Ava               |
+| trs-80                                  | sdl2trs          | sdl2trs/sdl2trs                   |
+| vpinball                                | Visual Pinball X | VPinballX/VPinballX_GL            |
+| wiiu                                    | Cemu             | Cemu/Cemu                         |
+| zxnext                                  | #CSpect          | CSpect/CSpect.exe                 |
+| zxnext                                  | ZEsarUX          | ZEsarUX/zesarux                   |
 
 #CSpect requires the Mono .NET framework to run, hence the .exe extension.
 
@@ -851,15 +854,16 @@ Likewise the contents of the `WineCfg (Proton).sh` file could look something lik
 ~/Applications/Proton/wine-staging_ge-proton_8-14-x86_64.AppImage WineCfg
 ```
 
-The following Windows emulators are supported, and their setup is covered in detail in specific sections of this document:
+The following Windows emulators are supported, and the setup for most of these is covered in detail in specific sections of this document:
 
-| System name                      | Emulator         | Filename                          |
-| :------------------------------- | :--------------- | :-------------------------------- |
-| atarijaguar/atarijaguarcd        | BigPEmu          | BigPEmu/BigPEmu.exe               |
-| famicom/nes                      | 3dSen            | 3dSen/3dSen.exe                   |
-| model2                           | Model 2 Emulator | m2emulator/EMULATOR.EXE           |
-| xbox360                          | xenia            | xenia/xenia.exe                   |
-| xbox360                          | xenia            | xenia/xenia_canary.exe            |
+| System name                                     | Emulator         | Filename                |
+| :---------------------------------------------- | :--------------- | :-----------------------|
+| atarijaguar/atarijaguarcd                       | BigPEmu          | BigPEmu/BigPEmu.exe     |
+| atomiswave/consolearcade/dreamcast/naomi/naomi2 | Demul            | demul/demul.exe         |
+| famicom/nes                                     | 3dSen            | 3dSen/3dSen.exe         |
+| model2                                          | Model 2 Emulator | m2emulator/EMULATOR.EXE |
+| xbox360                                         | xenia            | xenia/xenia.exe         |
+| xbox360                                         | xenia            | xenia/xenia_canary.exe  |
 
 ## Running emulators in fullscreen mode
 
@@ -1239,25 +1243,93 @@ mame/hash/astrocde.xml
 The hash file is available from the MAME GitHub repository: \
 https://raw.githubusercontent.com/mamedev/mame/master/hash/astrocde.xml
 
-### Commodore Amiga
+### Commodore Amiga and CDTV
 
-There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf`, `.hdz` or `.lha` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
+There are multiple ways to run these games, for the computer models like the A500, A1200 etc. it's either via diskette images, hard disk images or using specially packaged WHDLoad games. For the CD32 and CDTV you normally run games via CD-ROM disc images. As for emulators all operating systems that ES-DE runs on support the PAUE RetroArch core and the FS-UAE standalone emulator. On Linux and macOS there is also support for the Amiberry standalone emulator.
 
-An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described [here](USERGUIDE-DEV.md#multiple-game-files-installation).
+**PUAE**
+
+This emulator is by far the most straightforward Amiga emulator to use, it's easy to configure and it runs all file types that ES-DE supports. It can run zipped files too for all supported formats.
+
+PUAE requires Amiga Kickstart ROMs to run, you can find more information about that topic here:\
+[https://github.com/libretro/libretro-uae/blob/master/README.md](https://github.com/libretro/libretro-uae/blob/master/README.md)
+
+For the Amiga computer models the recommended approach is to go for WHDLoad-packaged files in the `.lha` or `.zip` format. While it's also possible to use WHDLoad hard drive images in `.hdf` or `.hdz` format these will only work in PAUE so they are not really recommended as you may want to use another emulator in the future.
+
+An alternative would be to use `.adf` or `.ipf` diskette images as not all games may be available with WHDLoad support. For this you can either place single-diskette images in the root folder or in a dedicated diskette directory, or multi-diskette games in separate folders. It's recommended to create `.m3u` playlist files for multi-diskette games as described [here](USERGUIDE-DEV.md#multiple-game-files-installation) (although this feature is only supported by PUAE and not by FS-UAE and Amiberry).
 
 Here's an example of what the file structure could look like:
 
 ```
-~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken (Disk 1 of 2).adf
-~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken (Disk 2 of 2).adf
-~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken.m3u
-~/ROMs/amiga/Robbeary.adf
-~/ROMs/amiga/Dungeon Master.hdf
+~/ROMs/amiga/Multidisk/ZakMcKracken.m3u/ZakMcKracken (Disk 1 of 2).adf
+~/ROMs/amiga/Multidisk/ZakMcKracken.m3u/ZakMcKracken (Disk 2 of 2).adf
+~/ROMs/amiga/Multidisk/ZakMcKracken.m3u/ZakMcKracken.m3u
+~/ROMs/amiga/ChaosEngine.zip
+~/ROMs/amiga/Dungeon Master.lha
+~/ROMs/amiga/Robbeary.ipf
 ```
 
-Advanced topics such as the need for the Amiga Kickstart ROMs to run Amiga games is beyond the scope of this guide, but the following page is recommended for reading more about how this setup can be achieved:
+For the Amiga CD32 and Commodore CDTV you can run games in several disc image formats like .chd, .cue and .iso. The setup is straightforward, just add an image file per game or make a subdirectory for games with multiple files and use the _directories interpreted as files_ functionality to present these games as single entries inside ES-DE. Here's an example setup:
 
-[https://github.com/libretro/libretro-uae/blob/master/README.md](https://github.com/libretro/libretro-uae/blob/master/README.md)
+```
+~/ROMs/amigacd32/James Pond 2 - Robocod.cue/James Pond 2 - Robocod.cue
+~/ROMs/amigacd32/James Pond 2 - Robocod.cue/James Pond 2 - Robocod (Track 1).bin
+~/ROMs/amigacd32/James Pond 2 - Robocod.cue/James Pond 2 - Robocod (Track 2).bin
+~/ROMs/amigacd32/James Pond 2 - Robocod.cue/James Pond 2 - Robocod (Track 3).bin
+~/ROMs/amigacd32/James Pond 2 - Robocod.cue/James Pond 2 - Robocod (Track 4).bin
+~/ROMs/amigacd32/Prey - An Alien Encounter.iso
+```
+
+In some cases like for CDTV games, the Amiga model autodetection may not work correctly and you may therefore need to explicitly select it in the RetroArch menu system. The relevant documentation can be found here:\
+https://docs.libretro.com/library/puae/
+
+**FS-UAE**
+
+This emulator is a bit confusing in that both the core FS-UAE binary as well as the separate FS-UAE Launcher binary are needed in order for it to by usable be ES-DE. Adding to to the confusion is the fact that sometimes these two are packaged together and sometimes they aren't.
+
+If installing FS-UAE from the AUR then the Launcher is not included, but if you instead install the FS-UAE Launcher specifically then FS-UAE will be installed as it's a dependency. For the Flatpak release the Launcher is included together with the emulator even though the Flatpak doesn't mention this fact.
+
+On macOS and Windows you need to manually download and install both FS-UAE and FS-UAE Launcher:\
+https://github.com/FrodeSolheim/fs-uae/releases\
+https://github.com/FrodeSolheim/fs-uae-launcher/releases
+
+If you however install the fs-uae-launcher Cask via Homebrew in macOS then it will also install the emulator.
+
+On Windows you need to place FS-UAE and FS-UAE Launcher next to each other on the filesystem or it will not work. If using the portable release this is clearly indicated in the README.txt file bundled with ES-DE, like so:
+```
+Emulators\FS-UAE\Windows\x86-64\fs-uae.exe
+Emulators\FS-UAE-Launcher\Windows\x86-64\fs-uae-launcher.exe
+```
+
+FS-UAE needs Amiga Kickstart ROMs to run correctly, you can read about the specific files needed on the following page:\
+https://fs-uae.net/docs/kickstarts
+
+It's also recommended to place the first installation diskette for Workbench v3.0 into the `FS-UAE/Floppies/` directory.
+
+Following the addition of the Kickstart ROMs and the Workbench floppy disk, open FS-UAE Launcher and select _Update File Database_ from the menu. Then press the _Scan_ button and all Kickstart ROMs should be marked with a green checkmark.
+
+For additional details about the FS-UAE and FS-UAE Launcher setup and configuration refer to the official emulator documentation:\
+https://fs-uae.net/docs
+
+Once you have FS-UAE up and running it's pretty straightforward although the emulator comes with some limitations. For the Amiga computer models the recommended approach is to go for WHDLoad-packaged games in the `.lha` or `.zip` format. Note that the `.hdf` and `.hdz` formats are not supported by FS-UAE in this context.
+
+An alternative would be to use `.adf` or `.ipf` diskette images as not all games may be available with WHDLoad support. If you want to use .ipf files then you need to install the CAPSImg plugin which can be downloaded from here:\
+https://fs-uae.net/download#plugins
+
+Note that .m3u files are not supported by FS-UAE.
+
+For the Amiga CD32 and Commodore CDTV you can run games in several disc image formats like .chd, .cue and .iso but unlike PUAE you can't run zipped disc image files.
+
+For example game setups refer to the PUAE section above as it's virtually identical to what you'll want with FS-UAE.
+
+**Amiberry**
+
+The Amiberry emulator is only available on Linux and macOS and it's a bit limited at the time of writing. So for the time being ES-DE only supports WHDLoad games when using it for the Amiga computer models. Although the official emulator documentation states that it should work to launch WHDLoad-packaged games in .zip format this does not seem to be the case. Instead only the .lha format seems to work.
+
+For the Amiga CD32 and Commodore CDTV you can run games in the .cue and .iso formats.
+
+Amiberry needs Amiga Kickstart ROMs to run correctly, you can read about the specific files needed on the following page:\
+https://github.com/BlitterStudio/amiberry/wiki/Kickstart-ROMs-%28BIOS%29
 
 ### Console Arcade Systems
 
@@ -1278,7 +1350,7 @@ The following arcade boards have been considered:
 | Nintendo VS. System/PlayChoice-10   | Nintendo Famicom/NES        | MAME                      |
 | Sammy Corporation Atomiswave        | Sega Dreamcast              | Flycast                   |
 | Sega Chihiro                        | Microsoft Xbox              | xemu, Cxbx-Reloaded, MAME |
-| Sega Naomi/Naomi 2/SP               | Sega Dreamcast              | Flycast                   |
+| Sega Naomi/Naomi 2/SP               | Sega Dreamcast              | Flycast, Demul            |
 | Sega Mega Play/Mega-Tech/C-2        | Sega Mega Drive/Genesis     | MAME                      |
 | Sega Shooting Zone/System E         | Sega Master System          | MAME                      |
 | Sega Titan Video Game System (ST-V) | Sega Saturn                 | Kronos, Mednafen, MAME    |
@@ -3666,6 +3738,11 @@ As for file extensions, normally those configured in ES-DE should cover everythi
 
 In general .zip or .7z files are recommended for smaller-sized games like those from older systems (assuming the emulator supports it). But for disc-based systems it's not a good approach as decompression of these large files lead to delayed game launches. For such systems it's instead generally recommended to use CHD files as this format offers effective compression while providing decompression on the fly. The CHD format is also supported by most emulators.
 
+The following standalone emulators can't accept full paths to ROM files so you'll need to configure each ROM directory via the emulator GUI or configuration file, otherwise ES-DE will not be able to launch the games:
+* Demul _(not required for Dreamcast games)_
+* FinalBurn Neo
+* Model 2 Emulator
+
 On Windows the following emulators provide a way to inform ES-DE where they have been installed, meaning you don't need to add them to your Path environment variable as described elsewhere in this guide (this is only relevant for the installer release of ES-DE, not the portable release):
 * BlueStacks
 * CPCemu
@@ -3690,10 +3767,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | 3do                   | 3DO Interactive Multiplayer                    | Opera                             |                                   | Yes          |                                      |
 | adam                  | Coleco Adam                                    | MAME [Diskette] **(Standalone)**  | MAME [Tape] **(Standalone)**,<br>MAME [Cartridge] **(Standalone)**,<br>MAME [Software list] **(Standalone)** | Yes          |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Native game binaries_            |                                   | No           | Shortcut (.desktop/.app/.lnk) file |
-| amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
-| amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
-| amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
-| amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
+| amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [UM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
+| amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [UM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
+| amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [UM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
+| amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [UM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS,<br>CPCemu **(Standalone)**,<br>MAME **(Standalone)** | Yes for MAME | Single archive or disk file |
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file                |
 | apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>Mednafen **(Standalone)** [M],<br>AppleWin **(Standalone)** [W] | Mednafen **(Standalone)** [UW],<br>MAME - Current,<br>MAME **(Standalone)** | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
@@ -3712,17 +3789,17 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Mednafen **(Standalone)** |              |                                      |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            | Hatari **(Standalone)**           | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
-| atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           | Flycast **(Standalone)**          | Depends      | Single archive  file                 |
+| atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           | Flycast **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Depends      | Single archive  file                 |
 | bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64sc Accurate **(Standalone)**,<br>VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | cavestory             | Cave Story (NXEngine)                          | NXEngine                          |                                   |              |                                      |
 | cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015,<br>MAME **(Standalone)** | Yes          | Single .bin/.cue pair                |
-| cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021                         | Yes          |                                      |
+| cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [UM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
 | coco                  | Tandy Color Computer                           | XRoar CoCo 2 NTSC **(Standalone)** | XRoar CoCo 2 PAL **(Standalone)** | Yes           | See the specific _Tandy Color Computer_ section elsewhere in this guide |
 | colecovision          | Coleco ColecoVision                            | blueMSX                           | Gearcoleco,<br>openMSX **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
-| consolearcade         | Console Arcade Systems                         | MAME - Current                    | MAME **(Standalone)**,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Mednafen [Sega Saturn] **(Standalone)**,<br>Play! **(Standalone)**,<br>RPCS3 Shortcut **(Standalone)**,<br>Triforce **(Standalone)** [UW],<br>xemu **(Standalone)**,<br>Cxbx-Reloaded **(Standalone)** [W],<br>_Shortcut or script_ | Depends      | See the specific _Console Arcade Systems_ section elsewhere in this guide |
+| consolearcade         | Console Arcade Systems                         | MAME - Current                    | MAME **(Standalone)**,<br>Flycast,<br>Flycast **(Standalone)**,<br>Demul [Sega Naomi] **(Standalone)** [W],<br>Demul [Sega Naomi] **(Wine)** [U],<br>Demul [Sega Naomi] **(Proton)** [U],<br>Kronos [UW],<br>Mednafen [Sega Saturn] **(Standalone)**,<br>Play! **(Standalone)**,<br>RPCS3 Shortcut **(Standalone)**,<br>Triforce **(Standalone)** [UW],<br>xemu **(Standalone)**,<br>Cxbx-Reloaded **(Standalone)** [W],<br>_Shortcut or script_ | Depends      | See the specific _Console Arcade Systems_ section elsewhere in this guide |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps1                  | Capcom Play System I                           | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps2                  | Capcom Play System II                          | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-2 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
@@ -3733,7 +3810,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | doom                  | Doom                                           | PrBoom                            | PrBoom+ **(Standalone)**,<br>Boom 3 [UW],<br>Boom 3 xp [UW],<br>_Shortcut or script_ | No           |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** | No           | See the specific _DOS / PC_ section elsewhere in this guide |
 | dragon32              | Dragon Data Dragon 32                          | XRoar Dragon 32 **(Standalone)**  | XRoar Dragon 64 **(Standalone)**  | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
-| dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)**,<br>Redream **(Standalone)** | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
+| dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)**,<br>Redream **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | electron              | Acorn Electron                                 | MAME [Tape] **(Standalone)**      | MAME [Diskette DFS] **(Standalone)**,<br>MAME [Diskette ADFS] **(Standalone)** | Yes          | Single archive, or single tape or diskette image file |
 | emulators             | Emulators                                      | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
@@ -3785,8 +3862,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | msxturbor             | MSX Turbo R                                    | blueMSX                           | openMSX **(Standalone)**,<br>openMSX No Machine **(Standalone)** | Yes          |                                      |
 | mugen                 | M.U.G.E.N Game Engine                          | Ikemen GO **(Standalone)**        |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
-| naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
-| naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
+| naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
+| naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW] | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | Mupen64Plus **(Standalone)**,<br>ParaLLEl N64,<br>simple64 **(Standalone)** [UW],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>Project64 **(Standalone)** [W],<br>ares **(Standalone)**,<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file |

@@ -65,6 +65,8 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added Mesen standalone as an alternative emulator for 14 systems on Linux and Windows
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
 * Added SkyEmu standalone as an alternative emulator for the gb, gba, gbc and nds systems
+* Added FS-UAE standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
+* Added Amiberry standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems on Linux and macOS
 * Added MAME standalone as an alternative emulator for the atari7800 system
 * Added the MAME - Current RetroArch core as an alternative emulator for the apple2 system
 * Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the daphne system
@@ -82,6 +84,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine or Proton
 * (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine or Proton
 * (Linux) Added BigPEmu Wine and BigPEmu Proton as alternative emulators for the atarijaguar system
+* (Linux) Added Demul Wine and Demul Proton as alternative emulators for the atomiswave, dreamcast, naomi and naomi2 systems
 * (Linux) Added Model 2 Emulator Wine and Model 2 Emulator Proton as alternative emulators for the model2 system
 * (Linux) Added 3dSen Wine and 3dSen Proton as alternative emulators for the famicom and nes systems
 * (Linux) Added support for the Visual Pinball (vpinball) game system
@@ -94,6 +97,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * (Linux) Updated the Citra find rules as the AppImage release filename has changed
 * (Windows) Removed %RUNINBACKGROUND% from all MAME standalone entries as it no longer hangs on exit
 * (Windows) Added %STARTDIR%=%EMUDIR% for the Vita3K and xemu emulators
+* (Windows) Added Demul as an alternative emulator for the atomiswave, dreamcast, naomi and naomi2 systems
 * (Windows) Added 3dSen standalone as an alternative emulator for the famicom and nes systems
 * (Windows) Added the .url file extension to the epic system
 * (Windows) Added the .lnk file extension to the steam system
