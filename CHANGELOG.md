@@ -71,6 +71,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added Amiberry standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems on Linux and macOS
 * Added MAME standalone as an alternative emulator for the atari7800 and x1 systems
 * Set %STARTDIR%=%GAMEDIR% for the X Millennium RetroArch core as it created temporary files in the ES-DE directory
+* Added TIC-80 standalone as an alternative emulator for the tic80 system
 * Added the MAME - Current RetroArch core as an alternative emulator for the apple2 system
 * Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the daphne, odyssey2, vectrex and videopac systems
 * Added MAME standalone as an alternative emulator for the fmtowns system on Unix and Windows
@@ -88,7 +89,6 @@ In addition to the above many bugs have been fixed and the application has recei
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine or Proton
 * (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine or Proton
 * (Linux) Added BigPEmu Wine and BigPEmu Proton as alternative emulators for the atarijaguar system
-* (Linux) Added Demul Wine and Demul Proton as alternative emulators for the atomiswave, dreamcast, naomi and naomi2 systems
 * (Linux) Added Model 2 Emulator Wine and Model 2 Emulator Proton as alternative emulators for the model2 system
 * (Linux) Added 3dSen Wine and 3dSen Proton as alternative emulators for the famicom and nes systems
 * (Linux) Added support for the Visual Pinball (vpinball) game system
@@ -110,6 +110,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Removed the videopac platform ID entry as it's identical to odyssey2
 * Changed the platform for the videopac system to odyssey2 to improve scraping
 * Changed the full name for the vectrex system from "Smith Engineering Vectrex" to "GCE Vectrex"
+* Changed the fullname for the tic80 system from "TIC-80 Game Engine" to "TIC-80 Fantasy Computer"
 * (modern-es-de) Replaced the carousel images for the c64 and dos systems
 * Changed the screensaver to never show the same game again until all games have been cycled through
 * Reduced the slideshow screensaver fade-in time
