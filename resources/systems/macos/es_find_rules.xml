@@ -337,6 +337,12 @@
             <entry>/usr/local/bin/Stella</entry>
         </rule>
     </emulator>
+    <emulator name="TIC-80">
+        <!-- TIC-80 Fantasy Computer (game engine) -->
+        <rule type="staticpath">
+            <entry>/Applications/tic80.app/Contents/MacOS/tic80</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="staticpath">

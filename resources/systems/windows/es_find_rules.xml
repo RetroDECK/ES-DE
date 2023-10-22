@@ -794,6 +794,16 @@
             <entry>%ESPATH%\..\Emulators\Supermodel\Supermodel.exe</entry>
         </rule>
     </emulator>
+    <emulator name="TIC-80">
+        <!-- TIC-80 Fantasy Computer (game engine) -->
+        <rule type="systempath">
+            <entry>tic80.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\tic80\tic80.exe</entry>
+            <entry>%ESPATH%\..\Emulators\tic80\tic80.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="TRIFORCE">
         <!-- Triforce, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">

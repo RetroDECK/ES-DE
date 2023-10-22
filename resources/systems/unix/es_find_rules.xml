@@ -904,6 +904,17 @@
             <entry>~/bin/Supermodel/supermodel</entry>
         </rule>
     </emulator>
+    <emulator name="TIC-80">
+        <!-- TIC-80 Fantasy Computer (game engine) -->
+        <rule type="systempath">
+            <entry>tic80</entry>
+            <entry>com.tic80.TIC_80</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.tic80.TIC_80</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.tic80.TIC_80</entry>
+        </rule>
+    </emulator>
     <emulator name="TRIFORCE">
         <!-- Triforce, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">

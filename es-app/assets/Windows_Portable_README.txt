@@ -115,6 +115,7 @@ Emulators\solarus\solarus-run.exe
 Emulators\SSF\SSF.exe
 Emulators\Stella\64-bit\Stella.exe
 Emulators\Supermodel\Supermodel.exe
+Emulators\tic80\tic80.exe
 Emulators\Triforce\DolphinWX.exe
 Emulators\tsugaru\Tsugaru_CUI.exe
 Emulators\VBA-M\visualboyadvance-m.exe

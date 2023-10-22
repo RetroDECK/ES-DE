@@ -141,10 +141,10 @@ namespace PlatformIds
         "supracan",             // Funtech Super A'Can
         "switch",               // Nintendo Switch
         "ti99",                 // Texas Instruments TI-99
-        "tic80",                // TIC-80 Game Engine
+        "tic80",                // TIC-80 Fantasy Computer
         "trs-80",               // Tandy TRS-80
         "uzebox",               // Uzebox Open Source Console
-        "vectrex",              // Smith Engineering Vectrex
+        "vectrex",              // GCE Vectrex
         "vic20",                // Commodore VIC-20
         "virtualboy",           // Nintendo Virtual Boy
         "vpinball",             // Visual Pinball
