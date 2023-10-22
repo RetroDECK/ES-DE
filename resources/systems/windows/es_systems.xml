@@ -2151,7 +2151,9 @@
         <fullname>Sharp X1</fullname>
         <path>%ROMPATH%\x1</path>
         <extension>.2d .2D .2hd .2HD .88d .88D .cmd .CMD .d88 .D88 .dup .DUP .dx1 .DX1 .hdm .HDM .tap .TAP .tfd .TFD .xdf .XDF .7z .7Z .zip .ZIP</extension>
-        <command label="X Millennium">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\x1_libretro.dll %ROM%</command>
+        <command label="X Millennium">%STARTDIR%=%GAMEDIR% %EMULATOR_RETROARCH% -L %CORE_RETROARCH%\x1_libretro.dll %ROM%</command>
+        <command label="MAME [Diskette] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\x1 x1 -flop1 %ROM%</command>
+        <command label="MAME [Tape] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\x1 x1 -cass1 %ROM%</command>
         <platform>x1</platform>
         <theme>x1</theme>
     </system>
