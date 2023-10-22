@@ -27,6 +27,12 @@
             <entry>/Applications/AetherSX2.app/Contents/MacOS/AetherSX2</entry>
         </rule>
     </emulator>
+    <emulator name="AMIBERRY">
+        <!-- Commodore Amiga emulator Amiberry -->
+        <rule type="staticpath">
+            <entry>/Applications/Amiberry.app/Contents/MacOS/Amiberry</entry>
+        </rule>
+    </emulator>
     <emulator name="ARES">
         <!-- Multi-system emulator ares -->
         <rule type="staticpath">

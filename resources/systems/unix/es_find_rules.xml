@@ -68,6 +68,18 @@
             <entry>~/bin/advancemame/advmame</entry>
         </rule>
     </emulator>
+    <emulator name="AMIBERRY">
+        <!-- Commodore Amiga emulator Amiberry -->
+        <rule type="systempath">
+            <entry>amiberry</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/amiberry/amiberry</entry>
+            <entry>~/.local/share/applications/amiberry/amiberry</entry>
+            <entry>~/.local/bin/amiberry/amiberry</entry>
+            <entry>~/bin/amiberry/amiberry</entry>
+        </rule>
+    </emulator>
     <emulator name="ARES">
         <!-- Multi-system emulator ares -->
         <rule type="systempath">
