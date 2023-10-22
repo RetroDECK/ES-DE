@@ -291,8 +291,6 @@
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Flycast Dojo (Standalone)">%EMULATOR_FLYCAST-DOJO% %ROM%</command>
-        <command label="Demul (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_DEMUL-WINDOWS% -run=awave -rom=%BASENAME%</command>
-        <command label="Demul (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_DEMUL-WINDOWS% -run=awave -rom=%BASENAME%</command>
         <platform>arcade</platform>
         <theme>atomiswave</theme>
     </system>
@@ -401,8 +399,6 @@
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Flycast Dojo (Standalone)">%EMULATOR_FLYCAST-DOJO% %ROM%</command>
-        <command label="Demul [Sega Naomi] (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_DEMUL-WINDOWS% -run=naomi -rom=%BASENAME%</command>
-        <command label="Demul [Sega Naomi] (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_DEMUL-WINDOWS% -run=naomi -rom=%BASENAME%</command>
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/kronos_libretro.so %ROM%</command>
         <command label="Mednafen [Sega Saturn] (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
         <command label="Play! (Standalone)">%EMULATOR_PLAY!% --disc %ROM%</command>
@@ -562,8 +558,6 @@
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Flycast Dojo (Standalone)">%EMULATOR_FLYCAST-DOJO% %ROM%</command>
         <command label="Redream (Standalone)">%EMULATOR_REDREAM% %ROM%</command>
-        <command label="Demul (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_DEMUL-WINDOWS% -run=dc -image=%ROM%</command>
-        <command label="Demul (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_DEMUL-WINDOWS% -run=dc -image=%ROM%</command>
         <platform>dreamcast</platform>
         <theme>dreamcast</theme>
     </system>
@@ -1229,8 +1223,6 @@
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Flycast Dojo (Standalone)">%EMULATOR_FLYCAST-DOJO% %ROM%</command>
-        <command label="Demul (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_DEMUL-WINDOWS% -run=naomi -rom=%BASENAME%</command>
-        <command label="Demul (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_DEMUL-WINDOWS% -run=naomi -rom=%BASENAME%</command>
         <platform>arcade</platform>
         <theme>naomi</theme>
     </system>
@@ -1242,8 +1234,6 @@
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Flycast Dojo (Standalone)">%EMULATOR_FLYCAST-DOJO% %ROM%</command>
-        <command label="Demul (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_DEMUL-WINDOWS% -run=naomi -rom=%BASENAME%</command>
-        <command label="Demul (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_DEMUL-WINDOWS% -run=naomi -rom=%BASENAME%</command>
         <platform>arcade</platform>
         <theme>naomi2</theme>
     </system>
