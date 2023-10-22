@@ -660,30 +660,31 @@ chmod +x rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
 
 The following emulators are supported in AppImage format when using the bundled configuration:
 
-| System name   | Emulator    | Filename configuration          |
-| :------------ | :---------- | :------------------------------ |
-| _Multiple_    | RetroArch   | RetroArch-Linux*.AppImage       |
-| _Multiple_    | Mesen       | Mesen*.AppImage                 |
-| dreamcast     | Flycast     | flycast*.AppImage               |
-| gba           | mGBA        | mGBA*.AppImage                  |
-| gc            | Dolphin     | Dolphin_Emulator*.AppImage      |
-| gc            | Triforce    | dolphin-emu-triforce*.AppImage  |
-| macintosh     | Basilisk II | BasiliskII*.AppImage            |
-| macintosh     | SheepShaver | SheepShaver*.AppImage           |
-| n3ds          | Citra       | citra-qt*.AppImage              |
-| n64           | RMG         | RMG*.AppImage                   |
-| n64dd         | RMG         | RMG*.AppImage                   |
-| ngage/symbian | EKA2L1      | EKA2L1*.AppImage                |
-| ps2           | PCSX2       | pcsx2*.AppImage                 |
-| ps2           | Play!       | Play!*.AppImage                 |
-| ps3           | RPCS3       | rpcs3*.AppImage                 |
-| psx           | DuckStation | DuckStation*.AppImage           |
-| snes          | Snes9x      | Snes9x*.AppImage                |
-| switch        | Yuzu        | yuzu*.AppImage                  |
-| xbox          | xemu        | xemu*.AppImage                  |
-| wii           | Dolphin     | Dolphin_Emulator*.AppImage      |
-| wiiu          | Cemu        | Cemu*.AppImage                  |
-| zmachine      | Gargoyle    | Gargoyle*.AppImage              |
+| System name   | Emulator     | Filename configuration          |
+| :------------ | :----------- | :------------------------------ |
+| _Multiple_    | RetroArch    | RetroArch-Linux*.AppImage       |
+| _Multiple_    | Mesen        | Mesen*.AppImage                 |
+| dreamcast     | Flycast      | flycast-x86*.AppImage           |
+| dreamcast     | Flycast Dojo | flycast-dojo*.AppImage          |
+| gba           | mGBA         | mGBA*.AppImage                  |
+| gc            | Dolphin      | Dolphin_Emulator*.AppImage      |
+| gc            | Triforce     | dolphin-emu-triforce*.AppImage  |
+| macintosh     | Basilisk II  | BasiliskII*.AppImage            |
+| macintosh     | SheepShaver  | SheepShaver*.AppImage           |
+| n3ds          | Citra        | citra-qt*.AppImage              |
+| n64           | RMG          | RMG*.AppImage                   |
+| n64dd         | RMG          | RMG*.AppImage                   |
+| ngage/symbian | EKA2L1       | EKA2L1*.AppImage                |
+| ps2           | PCSX2        | pcsx2*.AppImage                 |
+| ps2           | Play!        | Play!*.AppImage                 |
+| ps3           | RPCS3        | rpcs3*.AppImage                 |
+| psx           | DuckStation  | DuckStation*.AppImage           |
+| snes          | Snes9x       | Snes9x*.AppImage                |
+| switch        | Yuzu         | yuzu*.AppImage                  |
+| xbox          | xemu         | xemu*.AppImage                  |
+| wii           | Dolphin      | Dolphin_Emulator*.AppImage      |
+| wiiu          | Cemu         | Cemu*.AppImage                  |
+| zmachine      | Gargoyle     | Gargoyle*.AppImage              |
 
 _RMG = Rosalie's Mupen GUI_
 
@@ -1348,7 +1349,7 @@ The following arcade boards have been considered:
 | Namco System 357/359/369            | Sony Playstation 3          | RPCS3                     |
 | Namco-Sega-Nintendo Triforce        | Nintendo GameCube           | Triforce (Dolphin)        |
 | Nintendo VS. System/PlayChoice-10   | Nintendo Famicom/NES        | MAME                      |
-| Sammy Corporation Atomiswave        | Sega Dreamcast              | Flycast                   |
+| Sammy Corporation Atomiswave        | Sega Dreamcast              | Flycast, Flycast Dojo     |
 | Sega Chihiro                        | Microsoft Xbox              | xemu, Cxbx-Reloaded, MAME |
 | Sega Naomi/Naomi 2/SP               | Sega Dreamcast              | Flycast, Demul            |
 | Sega Mega Play/Mega-Tech/C-2        | Sega Mega Drive/Genesis     | MAME                      |
@@ -3775,7 +3776,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file                |
 | apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>Mednafen **(Standalone)** [M],<br>AppleWin **(Standalone)** [W] | Mednafen **(Standalone)** [UW],<br>MAME - Current,<br>MAME **(Standalone)** | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME - Current                    | MAME **(Standalone)**             | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW],<br>_Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW],<br>_Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | arcadia               | Emerson Arcadia 2001                           | MAME - Current                    | MAME **(Standalone)**             | No           | Single archive or ROM file           |
 | archimedes            | Acorn Archimedes                               | MAME [Model A440/1] **(Standalone)** | MAME [Model A3000] **(Standalone)**,<br>MAME [Model A310] **(Standalone)**,<br>MAME [Model A540] **(Standalone)** | Yes          |                                      |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
@@ -3789,7 +3790,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Mednafen **(Standalone)** |              |                                      |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            | Hatari **(Standalone)**           | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
-| atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           | Flycast **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Depends      | Single archive  file                 |
+| atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Depends      | Single archive  file                 |
 | bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64sc Accurate **(Standalone)**,<br>VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | cavestory             | Cave Story (NXEngine)                          | NXEngine                          |                                   |              |                                      |
@@ -3799,7 +3800,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
 | coco                  | Tandy Color Computer                           | XRoar CoCo 2 NTSC **(Standalone)** | XRoar CoCo 2 PAL **(Standalone)** | Yes           | See the specific _Tandy Color Computer_ section elsewhere in this guide |
 | colecovision          | Coleco ColecoVision                            | blueMSX                           | Gearcoleco,<br>openMSX **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
-| consolearcade         | Console Arcade Systems                         | MAME - Current                    | MAME **(Standalone)**,<br>Flycast,<br>Flycast **(Standalone)**,<br>Demul [Sega Naomi] **(Standalone)** [W],<br>Demul [Sega Naomi] **(Wine)** [U],<br>Demul [Sega Naomi] **(Proton)** [U],<br>Kronos [UW],<br>Mednafen [Sega Saturn] **(Standalone)**,<br>Play! **(Standalone)**,<br>RPCS3 Shortcut **(Standalone)**,<br>Triforce **(Standalone)** [UW],<br>xemu **(Standalone)**,<br>Cxbx-Reloaded **(Standalone)** [W],<br>_Shortcut or script_ | Depends      | See the specific _Console Arcade Systems_ section elsewhere in this guide |
+| consolearcade         | Console Arcade Systems                         | MAME - Current                    | MAME **(Standalone)**,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul [Sega Naomi] **(Standalone)** [W],<br>Demul [Sega Naomi] **(Wine)** [U],<br>Demul [Sega Naomi] **(Proton)** [U],<br>Kronos [UW],<br>Mednafen [Sega Saturn] **(Standalone)**,<br>Play! **(Standalone)**,<br>RPCS3 Shortcut **(Standalone)**,<br>Triforce **(Standalone)** [UW],<br>xemu **(Standalone)**,<br>Cxbx-Reloaded **(Standalone)** [W],<br>_Shortcut or script_ | Depends      | See the specific _Console Arcade Systems_ section elsewhere in this guide |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps1                  | Capcom Play System I                           | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps2                  | Capcom Play System II                          | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-2 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
@@ -3810,7 +3811,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | doom                  | Doom                                           | PrBoom                            | PrBoom+ **(Standalone)**,<br>Boom 3 [UW],<br>Boom 3 xp [UW],<br>_Shortcut or script_ | No           |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** | No           | See the specific _DOS / PC_ section elsewhere in this guide |
 | dragon32              | Dragon Data Dragon 32                          | XRoar Dragon 32 **(Standalone)**  | XRoar Dragon 64 **(Standalone)**  | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
-| dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)**,<br>Redream **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
+| dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Redream **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | electron              | Acorn Electron                                 | MAME [Tape] **(Standalone)**      | MAME [Diskette DFS] **(Standalone)**,<br>MAME [Diskette ADFS] **(Standalone)** | Yes          | Single archive, or single tape or diskette image file |
 | emulators             | Emulators                                      | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
@@ -3843,7 +3844,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | Lutris **(Standalone)** [U]       |                                   | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | MAME Mac SE Bootable **(Standalone)** | MAME Mac SE Boot Disk **(Standalone)**,<br>MAME Mac Plus Bootable **(Standalone)**,<br>MAME Mac Plus Boot Disk **(Standalone)**,<br>Basilisk II **(Standalone)**,<br>SheepShaver **(Standalone)** | Yes          | See the specific _Apple Macintosh_ section elsewhere in this guide |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW],<br>_Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW],<br>_Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mame-advmame          | AdvanceMAME                                    | AdvanceMAME **(Standalone)** [UW] |                                   | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>ares **(Standalone)** | Yes          |                                      |
@@ -3862,9 +3863,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | msxturbor             | MSX Turbo R                                    | blueMSX                           | openMSX **(Standalone)**,<br>openMSX No Machine **(Standalone)** | Yes          |                                      |
 | mugen                 | M.U.G.E.N Game Engine                          | Ikemen GO **(Standalone)**        |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
-| naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
-| naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
-| naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
+| naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
+| naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul **(Standalone)** [W],<br>Demul **(Wine)** [U],<br>Demul **(Proton)** [U] | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
+| naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)** | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW] | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | Mupen64Plus **(Standalone)**,<br>ParaLLEl N64,<br>simple64 **(Standalone)** [UW],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>Project64 **(Standalone)** [W],<br>ares **(Standalone)**,<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64 [UW],<br>Mupen64Plus-Next [M] | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>ares **(Standalone)** | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
@@ -3876,7 +3877,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ngage                 | Nokia N-Gage                                   | EKA2L1 [Mounted] **(Standalone)** | EKA2L1 [Installed] **(Standalone)**,<br>EKA2L1 [Mounted] **(Wine)** [U],<br>EKA2L1 [Installed] **(Wine)** [U] | Yes          | See the specific _Symbian and Nokia N-Gage_ section elsewhere in this guide |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** |              |                                      |
-| odyssey2              | Magnavox Odyssey2                              | O2EM                              |                                   |              |                                      |
+| odyssey2              | Magnavox Odyssey 2                             | O2EM                              | MAME - Current,<br>MAME **(Standalone)** | Yes          | Single archive or ROM file |
 | openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)** [UW]     |                                   | No           | See the specific _OpenBOR_ section elsewhere in this guide |
 | oric                  | Tangerine Computer Systems Oric                | Oricutron **(Standalone)** [UW]   |                                   |              | See the specific _Tangerine Computer Systems Oric_ section elsewhere in this guide |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
@@ -3935,9 +3936,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | trs-80                | Tandy TRS-80                                   | sdl2trs DOS Diskette **(Standalone)** [UW] | sdl2trs Bootable Diskette **(Standalone)** [UW],<br>sdl2trs CMD File **(Standalone)** [UW] | Yes          | See the specific _Tandy TRS-80_ section elsewhere in this guide |
 | type-x                | Taito Type X                                   | Wine **(Standalone)** [U],<br>_Shortcut or script_ [MW] | Proton **(Standalone)** [U],<br>_AppImage_ [U],<br>_Shortcut or script_ [U] | No          |                                      |
 | uzebox                | Uzebox Open Source Console                     | Uzem                              |                                   |              |                                      |
-| vectrex               | Smith Engineering Vectrex                      | vecx                              |                                   | No           |                                      |
+| vectrex               | GCE Vectrex                                    | vecx                              | MAME - Current,<br>MAME **(Standalone)** | Yes for MAME | Single archive or ROM file |
 | vic20                 | Commodore VIC-20                               | VICE xvic                         | VICE xvic **(Standalone)**        | No           | Single archive or tape, cartridge or diskette image file |
-| videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
+| videopac              | Philips Videopac G7000                         | O2EM                              | MAME - Current,<br>MAME **(Standalone)** | Yes          | Single archive or ROM file |                                    |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           |                                      |
 | vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)** [UW] |                                   | No           | In separate folder interpreted as a file |
 | vsmile                | VTech V.Smile                                  | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
@@ -3949,7 +3950,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | windows9x             | Microsoft Windows 9x                           | DOSBox-X **(Standalone)**         | DOSBox-Pure,<br>_Shortcut or script (Suspend ES-DE)_,<br>_Shortcut or script (Keep ES-DE running)_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Microsoft Windows 3.x and 9x_ section elsewhere in this guide |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares [Benesse Pocket Challenge V2] **(Standalone)** | No           | Single archive or ROM file    |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file    |
-| x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file |
+| x1                    | Sharp X1                                       | X Millennium                      | MAME [Diskette] **(Standalone)**,<br>MAME [Tape] **(Standalone)** | Yes for MAME | Single archive or diskette/tape file |
 | x68000                | Sharp X68000                                   | PX68k                             | MAME **(Standalone)**             | Yes          |                                      |
 | xbox                  | Microsoft Xbox                                 | xemu **(Standalone)**             | Cxbx-Reloaded **(Standalone)** [W] | Yes for xemu | Single .iso file for xemu or unpacked .iso directory for Cxbx-Reloaded |
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W],<br>xenia **(Wine)** [U] | xenia **(Proton)** [U],<br>_Shortcut or script_ [U]          | No           | See the specific _Microsoft Xbox 360_ section elsewhere in this guide |

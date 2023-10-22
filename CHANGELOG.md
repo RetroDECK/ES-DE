@@ -63,13 +63,16 @@ In addition to the above many bugs have been fixed and the application has recei
 * Removed support for the MAME4ALL (mame-mame4all) system
 * Added support for the AdvanceMAME (mame-advmame) system on Unix and Windows
 * Added Mesen standalone as an alternative emulator for 14 systems on Linux and Windows
+* Added Flycast Dojo standalone as an alternative emulator for the arcade, atomiswave, dreamcast, mame, naomi and naomigd systems
+* (Linux) Changed the Flycast AppImage find rules so that they don't collide with the Flycast Dojo AppImage
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
 * Added SkyEmu standalone as an alternative emulator for the gb, gba, gbc and nds systems
 * Added FS-UAE standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
 * Added Amiberry standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems on Linux and macOS
-* Added MAME standalone as an alternative emulator for the atari7800 system
+* Added MAME standalone as an alternative emulator for the atari7800 and x1 systems
+* Set %STARTDIR%=%GAMEDIR% for the X Millennium RetroArch core as it created temporary files in the ES-DE directory
 * Added the MAME - Current RetroArch core as an alternative emulator for the apple2 system
-* Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the daphne system
+* Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the daphne, odyssey2, vectrex and videopac systems
 * Added MAME standalone as an alternative emulator for the fmtowns system on Unix and Windows
 * (macOS) Added MAME standalone as the default emulator for the fmtowns system (was previously a placeholder system)
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
@@ -79,6 +82,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Removed the .cdi, .cue, .gdi, .m3u and .iso file extensions from the atomiswave, naomi and naomigd systems
 * Added the .7z and .zip file extensions to the apple2gs, daphne and fmtowns systems
 * Added the .arcadedef file extension to the ps2 system
+* Added the .chd file extension to the psp system
 * Added the MAME - Current RetroArch core as the default emulator for the apple2gs, arcadia, crvision, gamecom and gmaster systems
 * Added the MAME - Current RetroArch core as the default emulator for the pv1000, scv and vsmile systems
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine or Proton
@@ -103,6 +107,9 @@ In addition to the above many bugs have been fixed and the application has recei
 * (Windows) Added the .lnk file extension to the steam system
 * Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
 * Added arcade as an extra platform to the daphne system (to improve scraping)
+* Removed the videopac platform ID entry as it's identical to odyssey2
+* Changed the platform for the videopac system to odyssey2 to improve scraping
+* Changed the full name for the vectrex system from "Smith Engineering Vectrex" to "GCE Vectrex"
 * (modern-es-de) Replaced the carousel images for the c64 and dos systems
 * Changed the screensaver to never show the same game again until all games have been cycled through
 * Reduced the slideshow screensaver fade-in time
@@ -190,6 +197,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Scrollable text containers were sometimes not updated correctly which led to text being cut off vertically
 * Slider knobs were sometimes not correctly positioned horizontally
 * The background was too dark when opening a menu with the dark menu color scheme and the option to blur the background was disabled
+* The lowercase .xdf file extension was not defined correctly for the pc98 system
 * (Windows) Lack of event polling when suspended led to various strange problems like OS audio mixer issues and emulators refusing to exit
 * (Windows) If the ROMDirectory setting had a value then all custom collection files contained absolute paths instead of relative paths
 * (Windows) The media viewer could crash if attempting to display corrupt or invalid PDF game manuals
