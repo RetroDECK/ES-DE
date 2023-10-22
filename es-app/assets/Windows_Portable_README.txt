@@ -67,6 +67,7 @@ Emulators\EKA2L1\eka2l1_qt.exe
 Emulators\fbneo\fbneo64.exe
 Emulators\fbneo\fbneo.exe
 Emulators\flycast\flycast.exe
+Emulators\flycast-dojo\flycast.exe
 Emulators\FS-UAE\Windows\x86-64\fs-uae.exe
 Emulators\FS-UAE-Launcher\Windows\x86-64\fs-uae-launcher.exe
 Emulators\Fuse\fuse.exe

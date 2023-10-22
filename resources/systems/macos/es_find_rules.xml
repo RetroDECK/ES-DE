@@ -121,6 +121,12 @@
             <entry>/Applications/Flycast.app/Contents/MacOS/Flycast</entry>
         </rule>
     </emulator>
+    <emulator name="FLYCAST-DOJO">
+        <!-- Sega Dreamcast emulator Flycast Dojo -->
+        <rule type="staticpath">
+            <entry>/Applications/Flycast Dojo.app/Contents/MacOS/Flycast Dojo</entry>
+        </rule>
+    </emulator>
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="staticpath">

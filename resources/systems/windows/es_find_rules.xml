@@ -288,6 +288,17 @@
             <entry>%ESPATH%\..\Emulators\flycast\flycast.exe</entry>
         </rule>
     </emulator>
+    <emulator name="FLYCAST-DOJO">
+        <!-- Sega Dreamcast emulator Flycast Dojo -->
+        <rule type="systempath">
+            <entry>flycast-dojo.exe</entry>
+            <entry>flycast.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\flycast-dojo\flycast.exe</entry>
+            <entry>%ESPATH%\..\Emulators\flycast-dojo\flycast.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="systempath">

@@ -336,12 +336,24 @@
             <entry>org.flycast.Flycast</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/flycast*.AppImage</entry>
-            <entry>~/.local/share/applications/flycast*.AppImage</entry>
-            <entry>~/.local/bin/flycast*.AppImage</entry>
-            <entry>~/bin/flycast*.AppImage</entry>
+            <entry>~/Applications/flycast-x86*.AppImage</entry>
+            <entry>~/.local/share/applications/flycast-x86*.AppImage</entry>
+            <entry>~/.local/bin/flycast-x86*.AppImage</entry>
+            <entry>~/bin/flycast-x86*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.flycast.Flycast</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.flycast.Flycast</entry>
+        </rule>
+    </emulator>
+    <emulator name="FLYCAST-DOJO">
+        <!-- Sega Dreamcast emulator Flycast Dojo -->
+        <rule type="systempath">
+            <entry>flycast-dojo</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/flycast-dojo*.AppImage</entry>
+            <entry>~/.local/share/applications/flycast-dojo*.AppImage</entry>
+            <entry>~/.local/bin/flycast-dojo*.AppImage</entry>
+            <entry>~/bin/flycast-dojo*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="FS-UAE">
