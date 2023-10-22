@@ -145,7 +145,6 @@ namespace PlatformIds
         UZEBOX,
         VECTREX,
         COMMODORE_VIC20,
-        PHILIPS_VIDEOPAC,
         NINTENDO_VIRTUAL_BOY,
         VISUAL_PINBALL,
         VTECH_VSMILE,

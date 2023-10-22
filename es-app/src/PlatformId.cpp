@@ -99,7 +99,7 @@ namespace PlatformIds
         "ngage",                // Nokia N-Gage
         "ngp",                  // SNK Neo Geo Pocket
         "ngpc",                 // SNK Neo Geo Pocket Color
-        "odyssey2",             // Magnavox Odyssey2
+        "odyssey2",             // Magnavox Odyssey2 / Philips Videopac G7000
         "openbor",              // OpenBOR Game Engine
         "oric",                 // Tangerine Computer Systems Oric
         "palm",                 // Palm OS
@@ -146,7 +146,6 @@ namespace PlatformIds
         "uzebox",               // Uzebox Open Source Console
         "vectrex",              // Smith Engineering Vectrex
         "vic20",                // Commodore VIC-20
-        "videopac",             // Philips Videopac G7000 (Magnavox Odyssey2)
         "virtualboy",           // Nintendo Virtual Boy
         "vpinball",             // Visual Pinball
         "vsmile",               // VTech V.Smile
