@@ -452,24 +452,85 @@ You'll probably rarely need to use the `noVideos` trigger as `video` can be defi
 
 The following example (from the `capabilities.xml` file) defines a `noGameMedia` variant which is used as the override for the `withVideos` variant if no miximages, screenshots, covers and videos are found for any game in a system. For this example the `noGameMedia` variant has been set as non-selectable from the _UI Settings_ menu by defining the `selectable` property as `false`.
 
-As can be seen here, the overall variant trigger configuration needs to be enclosed within an `override` tag pair. And you can only define a single `override` tag pair per trigger type.
+As can be seen here, the overall variant trigger configuration needs to be enclosed within an `override` tag pair. And you can only define a single trigger type inside an `override` tag pair.
 
 ```xml
-    <variant name="withVideos">
-        <label>Textlist with videos</label>
-        <selectable>true</selectable>
-        <override>
-            <trigger>noMedia</trigger>
-            <mediaType>miximage, screenshot, cover, video</mediaType>
-            <useVariant>noGameMedia</useVariant>
-        </override>
-    </variant>
+<variant name="withVideos">
+    <label>Textlist with videos</label>
+    <selectable>true</selectable>
+    <override>
+        <trigger>noMedia</trigger>
+        <mediaType>miximage, screenshot, cover, video</mediaType>
+        <useVariant>noGameMedia</useVariant>
+    </override>
+</variant>
 
-    <variant name="noGameMedia">
-        <label>No game media</label>
-        <selectable>false</selectable>
-    </variant>
+<variant name="noGameMedia">
+    <label>No game media</label>
+    <selectable>false</selectable>
+</variant>
 ```
+
+It's also possible to define both the `noVideos` and `noMedia` triggers for the same variant like the following example:
+
+```xml
+<variant name="withVideos">
+    <label>Textlist with videos</label>
+    <selectable>true</selectable>
+    <override>
+        <trigger>noVideos</trigger>
+        <useVariant>withoutVideos</useVariant>
+    </override>
+    <override>
+        <trigger>noMedia</trigger>
+        <mediaType>miximage, screenshot, cover</mediaType>
+        <useVariant>noGameMedia</useVariant>
+    </override>
+</variant>
+
+<variant name="withoutVideos">
+    <label>Textlist without videos</label>
+    <selectable>false</selectable>
+</variant>
+
+<variant name="noGameMedia">
+    <label>No game media</label>
+    <selectable>false</selectable>
+</variant>
+```
+
+In this case the `withoutVideos` variant will be selected if there are no videos but if there is other media available. If there is however no media matching the `mediaType` property then the `noGameMedia` variant will be selected instead. Note that `noMedia` always take precedence over `noVideos`.
+
+It's however not possible to define multi-step variant triggers like this:
+
+```xml
+<!-- This is NOT allowed, you can't have two-step triggers -->
+<variant name="withVideos">
+    <label>Textlist with videos</label>
+    <selectable>true</selectable>
+    <override>
+        <trigger>noVideos</trigger>
+        <useVariant>withoutVideos</useVariant>
+    </override>
+</variant>
+
+<variant name="withoutVideos">
+    <label>Textlist without videos</label>
+    <selectable>false</selectable>
+    <override>
+        <trigger>noMedia</trigger>
+        <mediaType>miximage, screenshot, cover</mediaType>
+        <useVariant>noGameMedia</useVariant>
+    </override>
+</variant>
+
+<variant name="noGameMedia">
+    <label>No game media</label>
+    <selectable>false</selectable>
+</variant>
+```
+
+If the above configuration is used, then the trigger will work correctly if there are no videos, i.e. the `withoutVideos` variant will be selected, but the `override` tag in the `withoutVideos` variant will be ignored so the `noGameMedia` variant will never be triggered even if there is no media whatsoever.
 
 Note that variant triggers will only apply to the gamelist view and not the system view. Also be aware that it will add a potentially noticeable application slowdown as game media files need to be scanned for at various points when using the application, as well as during startup. The impact of the performance penalty depends on multiple factors such as the game collection size, how many games have been scraped, as well as disk I/O and filesystem performance. So only use variant triggers if really necessary for your theme design. As well, specifying many values for the `mediaType` tag will lead to more files potentially being scanned which could introduce further lag and latency.
 
