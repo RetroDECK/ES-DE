@@ -35,7 +35,7 @@
         <name>amiga</name>
         <fullname>Commodore Amiga</fullname>
         <path>%ROMPATH%/amiga</path>
-        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
         <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
@@ -47,7 +47,7 @@
         <name>amiga1200</name>
         <fullname>Commodore Amiga 1200</fullname>
         <path>%ROMPATH%/amiga1200</path>
-        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
         <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
@@ -59,7 +59,7 @@
         <name>amiga600</name>
         <fullname>Commodore Amiga 600</fullname>
         <path>%ROMPATH%/amiga600</path>
-        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
         <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
@@ -71,7 +71,7 @@
         <name>amigacd32</name>
         <fullname>Commodore Amiga CD32</fullname>
         <path>%ROMPATH%/amigacd32</path>
-        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.dylib %ROM%</command>
         <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% --config:amiga-model=CD32 %ROM%</command>
@@ -534,7 +534,7 @@
         <name>dreamcast</name>
         <fullname>Sega Dreamcast</fullname>
         <path>%ROMPATH%/dreamcast</path>
-        <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.cdi .CDI .chd .CHD .cue .CUE .dat .DAT .elf .ELF .gdi .GDI .iso .ISO .lst .LST .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.dylib %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Flycast Dojo (Standalone)">%EMULATOR_FLYCAST-DOJO% %ROM%</command>
@@ -826,7 +826,7 @@
         <name>intellivision</name>
         <fullname>Mattel Electronics Intellivision</fullname>
         <path>%ROMPATH%/intellivision</path>
-        <extension>.int .INT .bin .BIN .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .int .INT .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="FreeIntv">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/freeintv_libretro.dylib %ROM%</command>
         <platform>intellivision</platform>
         <theme>intellivision</theme>
@@ -1058,7 +1058,7 @@
         <name>moto</name>
         <fullname>Thomson MO/TO Series</fullname>
         <path>%ROMPATH%/moto</path>
-        <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <extension>.fd .FD .k7 .K7 .m5 .M5 .m7 .M7 .rom .ROM .sap .SAP .7z .7Z .zip .ZIP</extension>
         <command label="Theodore">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/theodore_libretro.dylib %ROM%</command>
         <platform>moto</platform>
         <theme>moto</theme>
@@ -1271,7 +1271,7 @@
         <name>ngp</name>
         <fullname>SNK Neo Geo Pocket</fullname>
         <path>%ROMPATH%/ngp</path>
-        <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
+        <extension>.ngc .NGC .ngp .NGP .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle NeoPop">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.dylib %ROM%</command>
         <command label="RACE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/race_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ngp %ROM%</command>
@@ -1283,7 +1283,7 @@
         <name>ngpc</name>
         <fullname>SNK Neo Geo Pocket Color</fullname>
         <path>%ROMPATH%/ngpc</path>
-        <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
+        <extension>.ngc .NGC .ngp .NGP .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle NeoPop">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.dylib %ROM%</command>
         <command label="RACE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/race_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ngp %ROM%</command>
@@ -1322,7 +1322,7 @@
         <name>palm</name>
         <fullname>Palm OS</fullname>
         <path>%ROMPATH%/palm</path>
-        <extension>.prc .PRC .pqa .PQA .img .IMG .7z .7Z .zip .ZIP</extension>
+        <extension>.img .IMG .pqa .PQA .prc .PRC .7z .7Z .zip .ZIP</extension>
         <command label="Mu">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mu_libretro.dylib %ROM%</command>
         <platform>palm</platform>
         <theme>palm</theme>
@@ -1354,7 +1354,7 @@
         <name>pc98</name>
         <fullname>NEC PC-9800 Series</fullname>
         <path>%ROMPATH%/pc98</path>
-        <extension>.2hd .2HD .88d .88D .98d .98D .d88 .D88 .d98 .D98 .cmd .CMD .dup .DUP .fdd .FDD .fdi .FDI .hdd .HDD .hdi .HDI .hdm .HDM .hdn .HDN .m3u .M3U .nhd .NHD .tfd .TFD .thd .THD . xdf .XDF .7z .7Z .zip .ZIP</extension>
+        <extension>.2hd .2HD .88d .88D .98d .98D .d88 .D88 .d98 .D98 .cmd .CMD .dup .DUP .fdd .FDD .fdi .FDI .hdd .HDD .hdi .HDI .hdm .HDM .hdn .HDN .m3u .M3U .nhd .NHD .tfd .TFD .thd .THD .xdf .XDF .7z .7Z .zip .ZIP</extension>
         <command label="Neko Project II Kai">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/np2kai_libretro.dylib %ROM%</command>
         <command label="Neko Project II">%STARTDIR%=%GAMEDIR% %EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nekop2_libretro.dylib %ROM%</command>
         <platform>pc98</platform>
@@ -1477,7 +1477,7 @@
         <name>psp</name>
         <fullname>Sony PlayStation Portable</fullname>
         <path>%ROMPATH%/psp</path>
-        <extension>.elf .ELF .iso .ISO .cso .CSO .prx .PRX .pbp .PBP .7z .7Z .zip .ZIP</extension>
+        <extension>.cso .CSO .elf .ELF .iso .ISO .pbp .PBP .prx .PRX .7z .7Z .zip .ZIP</extension>
         <command label="PPSSPP">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/ppsspp_libretro.dylib %ROM%</command>
         <command label="PPSSPP (Standalone)">%EMULATOR_PPSSPP% %ROM%</command>
         <platform>psp</platform>
@@ -1534,7 +1534,7 @@
         <name>samcoupe</name>
         <fullname>MGT SAM Coupé</fullname>
         <path>%ROMPATH%/samcoupe</path>
-        <extension>.dsk .DSK .mgt .MGT .sbt .SBT .sad .SAD .7z .7Z .zip .ZIP</extension>
+        <extension>.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP</extension>
         <command label="SimCoupé (Standalone)">%EMULATOR_SIMCOUPE% %ROM%</command>
         <platform>samcoupe</platform>
         <theme>samcoupe</theme>
@@ -1559,7 +1559,7 @@
         <name>saturn</name>
         <fullname>Sega Saturn</fullname>
         <path>%ROMPATH%/saturn</path>
-        <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .mds .MDS .toc .TOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .m3u .M3U .mds .MDS .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_saturn_libretro.dylib %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabause_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
@@ -1570,7 +1570,7 @@
         <name>saturnjp</name>
         <fullname>Sega Saturn</fullname>
         <path>%ROMPATH%/saturnjp</path>
-        <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .mds .MDS .toc .TOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .m3u .M3U .mds .MDS .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_saturn_libretro.dylib %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabause_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
@@ -1601,7 +1601,7 @@
         <name>sega32x</name>
         <fullname>Sega Mega Drive 32X</fullname>
         <path>%ROMPATH%/sega32x</path>
-        <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega 32X" %ROM%</command>
         <platform>sega32x</platform>
@@ -1611,7 +1611,7 @@
         <name>sega32xjp</name>
         <fullname>Sega Super 32X</fullname>
         <path>%ROMPATH%/sega32xjp</path>
-        <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega 32X" %ROM%</command>
         <platform>sega32x</platform>
@@ -1621,7 +1621,7 @@
         <name>sega32xna</name>
         <fullname>Sega Genesis 32X</fullname>
         <path>%ROMPATH%/sega32xna</path>
-        <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega 32X" %ROM%</command>
         <platform>sega32x</platform>
@@ -1728,7 +1728,7 @@
         <name>spectravideo</name>
         <fullname>Spectravideo</fullname>
         <path>%ROMPATH%/spectravideo</path>
-        <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.cas .CAS .col .COL .dsk .DSK .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ri .RI .rom .ROM .sc .SC .sg .SG .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <platform>spectravideo</platform>
         <theme>spectravideo</theme>
@@ -1781,7 +1781,7 @@
         <name>supergrafx</name>
         <fullname>NEC SuperGrafx</fullname>
         <path>%ROMPATH%/supergrafx</path>
-        <extension>.pce .PCE .sgx .SGX .cue .CUE .ccd .CCD .chd .CHD .7z .7Z .zip .ZIP</extension>
+        <extension>.ccd .CCD .chd .CHD .cue .CUE .pce .PCE .sgx .SGX .7z .7Z .zip .ZIP</extension>
         <command label="Beetle SuperGrafx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supergrafx_libretro.dylib %ROM%</command>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.dylib %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "SuperGrafx" %ROM%</command>
@@ -1883,7 +1883,7 @@
         <name>to8</name>
         <fullname>Thomson TO8</fullname>
         <path>%ROMPATH%/to8</path>
-        <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <extension>.fd .FD .k7 .K7 .m5 .M5 .m7 .M7 .rom .ROM .sap .SAP .7z .7Z .zip .ZIP</extension>
         <command label="Theodore">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/theodore_libretro.dylib %ROM%</command>
         <platform>moto</platform>
         <theme>to8</theme>
@@ -1928,7 +1928,7 @@
         <name>vectrex</name>
         <fullname>Smith Engineering Vectrex</fullname>
         <path>%ROMPATH%/vectrex</path>
-        <extension>.bin .BIN .vec .VEC .gam .GAM .vc .VC .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .gam .GAM .vc .VC .vec .VEC .7z .7Z .zip .ZIP</extension>
         <command label="vecx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vecx_libretro.dylib %ROM%</command>
         <platform>vectrex</platform>
         <theme>vectrex</theme>
@@ -1956,7 +1956,7 @@
         <name>virtualboy</name>
         <fullname>Nintendo Virtual Boy</fullname>
         <path>%ROMPATH%/virtualboy</path>
-        <extension>.vb .VB .vboy .VBOY .bin .BIN .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .vb .VB .vboy .VBOY .7z .7Z .zip .ZIP</extension>
         <command label="Beetle VB">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_vb_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module vb %ROM%</command>
         <platform>virtualboy</platform>
@@ -2047,7 +2047,7 @@
         <name>wonderswan</name>
         <fullname>Bandai WonderSwan</fullname>
         <path>%ROMPATH%/wonderswan</path>
-        <extension>.ws .WS .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
+        <extension>.pc2 .PC2 .ws .WS .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "WonderSwan" %ROM%</command>
@@ -2059,7 +2059,7 @@
         <name>wonderswancolor</name>
         <fullname>Bandai WonderSwan Color</fullname>
         <path>%ROMPATH%/wonderswancolor</path>
-        <extension>.ws .WS .wsc .WSC .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
+        <extension>.pc2 .PC2 .ws .WS .wsc .WSC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "WonderSwan Color" %ROM%</command>
@@ -2070,8 +2070,8 @@
         <name>x1</name>
         <fullname>Sharp X1</fullname>
         <path>%ROMPATH%/x1</path>
-        <extension>.dx1 .DX1 .2d .2D .2hd .2HD .tfd .TFD .d88 .D88 .88d .88D .hdm .HDM .xdf .XDF .dup .DUP .tap .TAP .cmd .CMD .7z .7Z .zip .ZIP</extension>
-        <command label="x1">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/x1_libretro.dylib %ROM%</command>
+        <extension>.2d .2D .2hd .2HD .88d .88D .cmd .CMD .d88 .D88 .dup .DUP .dx1 .DX1 .hdm .HDM .tap .TAP .tfd .TFD .xdf .XDF .7z .7Z .zip .ZIP</extension>
+        <command label="X Millennium">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/x1_libretro.dylib %ROM%</command>
         <platform>x1</platform>
         <theme>x1</theme>
     </system>
@@ -2079,7 +2079,7 @@
         <name>x68000</name>
         <fullname>Sharp X68000</fullname>
         <path>%ROMPATH%/x68000</path>
-        <extension>.dim .DIM .img .IMG .d88 .D88 .88d .88D .hdm .HDM .dup .DUP .2hd .2HD .xdf .XDF .hdf .HDF .cmd .CMD .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.2hd .2HD .88d .88D .cmd .CMD .d88 .D88 .dim .DIM .dup .DUP .hdf .HDF .hdm .HDM .img .IMG .m3u .M3U .xdf .XDF .7z .7Z .zip .ZIP</extension>
         <command label="PX68k">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/px68k_libretro.dylib %ROM%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/x68000 x68000 -flop1 %ROM%</command>
         <platform>x68000</platform>
@@ -2116,7 +2116,7 @@
         <name>zx81</name>
         <fullname>Sinclair ZX81</fullname>
         <path>%ROMPATH%/zx81</path>
-        <extension>.tzx .TZX .p .P .7z .7Z .zip .ZIP</extension>
+        <extension>.p .P .tzx .TZX .7z .7Z .zip .ZIP</extension>
         <command label="EightyOne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/81_libretro.dylib %ROM%</command>
         <platform>zx81</platform>
         <theme>zx81</theme>
