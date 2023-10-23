@@ -355,6 +355,8 @@
         <path>%ROMPATH%/channelf</path>
         <extension>.bin .BIN .chf .CHF .7z .7Z .zip .ZIP</extension>
         <command label="FreeChaF">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/freechaf_libretro.dylib %ROM%</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib "channelf -rompath %GAMEDIR%\;%ROMPATH%/channelf -cart \"%ROMRAW%\""</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/channelf channelf -cart %ROM%</command>
         <platform>channelf</platform>
         <theme>channelf</theme>
     </system>
@@ -828,6 +830,8 @@
         <path>%ROMPATH%/intellivision</path>
         <extension>.bin .BIN .int .INT .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="FreeIntv">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/freeintv_libretro.dylib %ROM%</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib "intv -rompath %GAMEDIR%\;%ROMPATH%/intellivision -cart \"%ROMRAW%\""</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/intellivision intv -cart %ROM%</command>
         <platform>intellivision</platform>
         <theme>intellivision</theme>
     </system>
@@ -1014,6 +1018,8 @@
         <path>%ROMPATH%/megaduck</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="SameDuck">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/sameduck_libretro.dylib %ROM%</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib "megaduck -rompath %GAMEDIR%\;%ROMPATH%/megaduck -cart \"%ROMRAW%\""</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/megaduck megaduck -cart %ROM%</command>
         <platform>megaduck</platform>
         <theme>megaduck</theme>
     </system>
@@ -1796,6 +1802,8 @@
         <path>%ROMPATH%/supervision</path>
         <extension>.bin .BIN .sv .SV .7z .7Z .zip .ZIP</extension>
         <command label="Potator">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/potator_libretro.dylib %ROM%</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib "svision -rompath %GAMEDIR%\;%ROMPATH%/supervision -cart \"%ROMRAW%\""</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/supervision svision -cart %ROM%</command>
         <platform>supervision</platform>
         <theme>supervision</theme>
     </system>
