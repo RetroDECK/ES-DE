@@ -92,7 +92,6 @@
 * solarus: Solarus game engine - consolegame.svg
 * spectravideo: Spectravideo - consolegame.svg, controller.svg
 * steam: Steam game distribution service - consolegame.svg, controller.svg
-* stratagus: Stratagus game engine - consolegame.svg
 * stv: Sega Titan Video Game System - consolegame.svg, controller.svg
 * sufami: Bandai SuFami Turbo - consolegame.svg
 * supervision: Watara Supervision - consolegame.svg
