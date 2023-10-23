@@ -1751,15 +1751,6 @@
         <theme>steam</theme>
     </system>
     <system>
-        <name>stratagus</name>
-        <fullname>Stratagus Game Engine</fullname>
-        <path>%ROMPATH%/stratagus</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
-        <platform>stratagus</platform>
-        <theme>stratagus</theme>
-    </system>
-    <system>
         <name>stv</name>
         <fullname>Sega Titan Video Game System</fullname>
         <path>%ROMPATH%/stv</path>

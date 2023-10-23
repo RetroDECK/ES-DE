@@ -134,7 +134,6 @@ namespace PlatformIds
         GAMEENGINE_SOLARUS,
         SPECTRAVIDEO,
         VALVE_STEAM,
-        GAMEENGINE_STRATAGUS,
         BANDAI_SUFAMI_TURBO,
         NEC_SUPERGRAFX,
         WATARA_SUPERVISION,

@@ -135,7 +135,6 @@ namespace PlatformIds
         "solarus",              // Solarus Game Engine
         "spectravideo",         // Spectravideo
         "steam",                // Valve Steam
-        "stratagus",            // Stratagus Game Engine
         "sufami",               // Bandai SuFami Turbo
         "supergrafx",           // NEC SuperGrafx
         "supervision",          // Watara Supervision
