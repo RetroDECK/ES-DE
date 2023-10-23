@@ -1090,15 +1090,6 @@
         <theme>model3</theme>
     </system>
     <system>
-        <name>moonlight</name>
-        <fullname>Moonlight Game Streaming</fullname>
-        <path>%ROMPATH%\moonlight</path>
-        <extension>.moonlight .MOONLIGHT .7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
-        <platform>moonlight</platform>
-        <theme>moonlight</theme>
-    </system>
-    <system>
         <name>moto</name>
         <fullname>Thomson MO/TO Series</fullname>
         <path>%ROMPATH%\moto</path>

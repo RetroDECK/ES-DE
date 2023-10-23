@@ -77,7 +77,6 @@ namespace
         {LCD_GAMES, "4951"},
         {MICROSOFT_XBOX, "14"},
         {MICROSOFT_XBOX_360, "15"},
-        {MOONLIGHT, "1"},
         {MSX, "4929"},
         {MSX2, "4929"},
         {MSX_TURBO_R, "4929"},

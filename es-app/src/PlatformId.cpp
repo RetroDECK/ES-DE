@@ -83,7 +83,6 @@ namespace PlatformIds
         "megadrive",            // Sega Mega Drive
         "megaduck",             // Creatronic Mega Duck
         "mess",                 // Multi Emulator Super System
-        "moonlight",            // Moonlight game streaming
         "moto",                 // Thomson MO/TO series
         "msx",                  // MSX
         "msx2",                 // MSX2

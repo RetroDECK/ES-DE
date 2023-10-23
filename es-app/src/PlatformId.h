@@ -82,7 +82,6 @@ namespace PlatformIds
         SEGA_MEGA_DRIVE,
         CREATRONIC_MEGA_DUCK,
         MESS,
-        MOONLIGHT,
         THOMSON_MOTO,
         MSX,
         MSX2,
