@@ -52,7 +52,6 @@ namespace
         {BBC_MICRO, 37},
         {BIT_CORPORATION_GAMATE, 266},
         {CASIO_PV1000, 74},
-        {CAVESTORY, 135},
         {COLECO_ADAM, 89},
         {COLECOVISION, 48},
         {VTECH_CREATIVISION, 241},

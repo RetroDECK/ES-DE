@@ -41,7 +41,6 @@ namespace PlatformIds
         ATOMISWAVE,
         BBC_MICRO,
         COMMODORE_64,
-        CAVESTORY,
         PHILIPS_CDI,
         COMMODORE_CDTV,
         FAIRCHILD_CHANNELF,

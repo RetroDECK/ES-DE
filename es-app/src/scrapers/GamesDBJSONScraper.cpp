@@ -60,7 +60,6 @@ namespace
         {BBC_MICRO, "5013"},
         {BIT_CORPORATION_GAMATE, "5004"},
         {CASIO_PV1000, "4964"},
-        {CAVESTORY, "1"},
         {COLECOVISION, "31"},
         {COMMODORE_64, "40"},
         {COMMODORE_AMIGA, "4911"},

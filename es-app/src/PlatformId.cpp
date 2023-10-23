@@ -42,7 +42,6 @@ namespace PlatformIds
         "atomiswave",           // Sammy Corporation Atomiswave
         "bbcmicro",             // Acorn Computers BBC Micro
         "c64",                  // Commodore 64
-        "cavestory",            // Cave Story (NXEngine)
         "cdimono1",             // Philips CD-i
         "cdtv",                 // Commodore CDTV
         "channelf",             // Fairchild Channel F
