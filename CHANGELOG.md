@@ -60,6 +60,8 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added support for the Taito Type X (type-x) game system
 * Added support for the Microsoft Windows 3.x (windows3x) game system
 * Added support for the Microsoft Windows 9x (windows9x) game system
+* Removed support for the Adventure Game Studio Game Engine (ags) game system
+* Removed support for the Cave Story (NXEngine) (cavestory) game system
 * Removed support for the MAME4ALL (mame-mame4all) game system
 * Removed support for the Moonlight Game Streaming (moonlight) game system
 * Removed support for the Stratagus Game Engine (stratagus) game system
