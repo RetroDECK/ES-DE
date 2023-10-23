@@ -499,7 +499,7 @@ It's also possible to define both the `noVideos` and `noMedia` triggers for the 
 </variant>
 ```
 
-In this case the `withoutVideos` variant will be selected if there are no videos but if there is other media available. If there is however no media matching the `mediaType` property then the `noGameMedia` variant will be selected instead. Note that `noMedia` always take precedence over `noVideos`.
+In this case the `withoutVideos` variant will be selected if there are no videos but if there is other media available. If there is however no media matching the `mediaType` property then the `noGameMedia` variant will be selected instead. Note that `noMedia` always takes precedence over `noVideos`. If you would like to trigger the `withoutVideos` variant if there are videos but no other media, then you'll need to add _video_ to the `mediaType` property for the `noMedia` trigger.
 
 It's however not possible to define multi-step variant triggers like this:
 

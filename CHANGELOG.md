@@ -60,7 +60,9 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added support for the Taito Type X (type-x) game system
 * Added support for the Microsoft Windows 3.x (windows3x) game system
 * Added support for the Microsoft Windows 9x (windows9x) game system
-* Removed support for the MAME4ALL (mame-mame4all) system
+* Removed support for the MAME4ALL (mame-mame4all) game system
+* Removed support for the Moonlight Game Streaming (moonlight) game system
+* Removed support for the Stratagus Game Engine (stratagus) game system
 * Added support for the AdvanceMAME (mame-advmame) system on Unix and Windows
 * Added Mesen standalone as an alternative emulator for 14 systems on Linux and Windows
 * Added Flycast Dojo standalone as an alternative emulator for the arcade, atomiswave, dreamcast, mame, naomi and naomigd systems
@@ -73,7 +75,9 @@ In addition to the above many bugs have been fixed and the application has recei
 * Set %STARTDIR%=%GAMEDIR% for the X Millennium RetroArch core as it created temporary files in the ES-DE directory
 * Added TIC-80 standalone as an alternative emulator for the tic80 system
 * Added the MAME - Current RetroArch core as an alternative emulator for the apple2 system
-* Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the daphne, odyssey2, vectrex and videopac systems
+* Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the channelf, daphne and intellivision systems
+* Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the megaduck, odyssey2 and supervision
+* Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the vectrex and videopac systems
 * Added MAME standalone as an alternative emulator for the fmtowns system on Unix and Windows
 * (macOS) Added MAME standalone as the default emulator for the fmtowns system (was previously a placeholder system)
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
@@ -109,6 +113,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added arcade as an extra platform to the daphne system (to improve scraping)
 * Removed the videopac platform ID entry as it's identical to odyssey2
 * Changed the platform for the videopac system to odyssey2 to improve scraping
+* Added the snes-msu1 platform so that these games can be scraped using ScreenScraper (requires custom system config)
 * Changed the full name for the vectrex system from "Smith Engineering Vectrex" to "GCE Vectrex"
 * Changed the fullname for the tic80 system from "TIC-80 Game Engine" to "TIC-80 Fantasy Computer"
 * (modern-es-de) Replaced the carousel images for the c64 and dos systems
