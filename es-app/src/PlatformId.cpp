@@ -131,6 +131,7 @@ namespace PlatformIds
         "sg-1000",              // Sega SG-1000
         "sgb",                  // Nintendo Super Game Boy
         "snes",                 // Nintendo SNES (Super Nintendo)
+        "snes-msu1",            // Nintendo SNES MSU-1
         "solarus",              // Solarus Game Engine
         "spectravideo",         // Spectravideo
         "steam",                // Valve Steam

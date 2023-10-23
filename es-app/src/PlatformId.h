@@ -130,6 +130,7 @@ namespace PlatformIds
         SEGA_SG1000,
         NINTENDO_SUPER_GAME_BOY,
         SUPER_NINTENDO,
+        SUPER_NINTENDO_MSU1,
         GAMEENGINE_SOLARUS,
         SPECTRAVIDEO,
         VALVE_STEAM,

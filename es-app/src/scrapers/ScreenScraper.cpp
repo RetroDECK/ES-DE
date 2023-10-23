@@ -142,6 +142,7 @@ namespace
         {SONY_PLAYSTATION_PORTABLE, 61},
         {SAMCOUPE, 213},
         {SUPER_NINTENDO, 4},
+        {SUPER_NINTENDO_MSU1, 210},
         {NEC_SUPERGRAFX, 105},
         {GAMEENGINE_TIC80, 222},
         {NEC_PC_8800, 221},
