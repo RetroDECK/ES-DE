@@ -23,15 +23,6 @@
         <theme>adam</theme>
     </system>
     <system>
-        <name>ags</name>
-        <fullname>Adventure Game Studio Game Engine</fullname>
-        <path>%ROMPATH%/ags</path>
-        <extension>.app .sh</extension>
-        <command label="Native binary">%STARTDIR%=%GAMEDIR% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <platform>ags</platform>
-        <theme>ags</theme>
-    </system>
-    <system>
         <name>amiga</name>
         <fullname>Commodore Amiga</fullname>
         <path>%ROMPATH%/amiga</path>

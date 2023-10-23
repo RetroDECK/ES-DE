@@ -18,7 +18,6 @@ namespace PlatformIds
 
         THREEDO, // Names can't start with a number.
         COLECO_ADAM,
-        GAMEENGINE_ADVENTUREGAMESTUDIO,
         COMMODORE_AMIGA,
         COMMODORE_AMIGA_CD32,
         AMSTRAD_CPC,

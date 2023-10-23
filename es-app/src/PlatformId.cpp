@@ -19,7 +19,6 @@ namespace PlatformIds
 
         "3do",                  // 3DO Interactive Multiplayer
         "adam",                 // Coleco Adam
-        "ags",                  // Adventure Game Studio Game Engine
         "amiga",                // Commodore Amiga
         "amigacd32",            // Commodore Amiga CD32
         "amstradcpc",           // Amstrad CPC
