@@ -474,11 +474,12 @@
         <name>daphne</name>
         <fullname>Daphne Arcade LaserDisc Emulator</fullname>
         <path>%ROMPATH%\daphne</path>
-        <extension>.daphne .singe .7z .7Z .zip .ZIP</extension>
+        <extension>.daphne .ogv .OGV .singe .7z .7Z .zip .ZIP</extension>
         <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%\%BASENAME%.txt %INJECT%=%BASENAME%.commands</command>
         <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%\%BASENAME%.txt -script %GAMEDIR%\%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\daphne %BASENAME%</command>
+        <command label="DirkSimple">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dirksimple_libretro.dll %ROM%</command>
         <platform>daphne, arcade</platform>
         <theme>daphne</theme>
     </system>
@@ -868,11 +869,12 @@
         <name>laserdisc</name>
         <fullname>LaserDisc Games</fullname>
         <path>%ROMPATH%\laserdisc</path>
-        <extension>.daphne .singe .7z .7Z .zip .ZIP</extension>
+        <extension>.daphne .ogv .OGV .singe .7z .7Z .zip .ZIP</extension>
         <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%\%BASENAME%.txt %INJECT%=%BASENAME%.commands</command>
         <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%\%BASENAME%.txt -script %GAMEDIR%\%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\laserdisc %BASENAME%</command>
+        <command label="DirkSimple">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dirksimple_libretro.dll %ROM%</command>
         <platform>daphne, arcade</platform>
         <theme>laserdisc</theme>
     </system>
@@ -1469,7 +1471,7 @@
         <name>ports</name>
         <fullname>Ports</fullname>
         <path>%ROMPATH%\ports</path>
-        <extension>.bat .BAT .exe .EXE .game .lnk .LNK .phd .PHD .psx .PSX</extension>
+        <extension>.bat .BAT .exe .EXE .game .GAME .lnk .LNK .phd .PHD .psx .PSX</extension>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <command label="ECWolf (Wolfenstein 3D)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\ecwolf_libretro.dll %ROM%</command>
         <command label="NXEngine (Cave Story)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\nxengine_libretro.dll %ROM%</command>
