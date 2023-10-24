@@ -1515,7 +1515,7 @@ Scraping can also be a bit challenging as neither ScreenScraper nor TheGamesDB s
 
 ### LaserDisc Games
 
-There are two ways to run LaserDisc games in ES-DE, via MAME or via Hypseus Singe. There are also two separate systems available, _daphne_ and _laserdisc_. The latter is recommended as the _daphne_ system is mostly existing for legacy reasons and may be removed in a future ES-DE release. The configuration for these two systems is identical as they are essentially clones.
+There are three ways to run LaserDisc games in ES-DE, via MAME, via Hypseus Singe or via the DirkSimple RetroArch core. There are also two separate systems available, _daphne_ and _laserdisc_. The latter is recommended as the _daphne_ system is mostly existing for legacy reasons and may be removed in a future ES-DE release. The configuration for these two systems is identical as they are essentially clones.
 
 At the time of writing MAME and Hypseus Singe are mostly mutually exlusive as MAME tends to primarily support the games that Hypseus Singe doesn't support. In the future this is likely to change with MAME getting support for more LaserDisc games.
 
@@ -1533,6 +1533,22 @@ Running LaserDisc games via MAME is very straightforward. Essentially you need t
 ```
 
 Following this setup you simply select either the _MAME - Current_ or _MAME (Standalone)_ alternative emulator and launch the .zip file to start the game.
+
+**DirkSimple**
+
+At the time of writing this is a new emulator and it only supports two games: Dragon's Lair (lair) and Cliff Hanger (cliff). As time goes by support is hopefully added for more games. Note that this emulator is currently missing some functionality like the scoreboard, it really is a bare-bones approach to running these games.
+
+As the name implies setup is indeed simple, the only prerequisites is to have the game's video and audio tracks combined into a single Ogg Theora file with the .ogv file extension, and to place the game's data files in the RetroArch system directory. How this is accomplished is documented on the DirkSimple GitHub page:\
+https://github.com/icculus/DirkSimple
+
+The game files need to retain their Daphne short names or it will not work. Here's an example setup:
+
+```
+~/ROMs/laserdisc/lair.ogv
+~/ROMs/laserdisc/cliff.ogv
+```
+
+There's not much more to it, just make sure to select the _DirkSimple_ alternative emulator entry and then it should work fine to run the .ogv files.
 
 **Hypseus Singe**
 
@@ -2166,6 +2182,9 @@ _The emulators system is essentially a clone of the desktop system so it's not d
 
 As ports and desktop applications are handled in almost exactly the same way in ES-DE both of these are described in this section. For these systems it's generally native applications rather that emulated games that are executed. There are two main approaches to setting up such entries and these are _shortcuts_ and _scripts_. Note that these can be mixed in the same system, you can have some entries that are shortcuts and some that are scripts and they will still all work. On Linux there is also a third option to launch AppImages directly, which is covered below as well.
 
+For the _ports_ system specifically there are also some alternative emulator entries which run RetroArch cores for source ports/game engines. How to setup these is beyond the scope of this document, but it's described in detail in the RetroArch documentation:\
+https://docs.libretro.com/
+
 For the _desktop_ system specifically, you can choose to suspend ES-DE while an application or game is launched, or you can choose to keep ES-DE running in the background. This is controlled by the selection of either the default emulator _Suspend ES-DE_ or the alternative emulator _Keep ES-DE running_. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis.
 
 **Method 1, shortcuts**
@@ -2176,7 +2195,7 @@ Likewise on Unix you can copy any .desktop shortcut into these system directorie
 
 Here's an example on Windows:
 ```
-~\ROMs\ports\ecwolf.lnk
+~\ROMs\ports\cannonball.lnk
 ~\ROMs\ports\openxcom.lnk
 ```
 
@@ -3791,7 +3810,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul **(Standalone)** [W] | Depends      | Single archive  file                 |
 | bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64sc Accurate **(Standalone)**,<br>VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
-| cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015,<br>MAME **(Standalone)** | Yes          | Single .bin/.cue pair                |
+| cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015 @,<br>MAME **(Standalone)** | Yes          | Single .bin/.cue pair                |
 | cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [UM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          | MAME - Current,<br>MAME **(Standalone)** | Yes          | Single archive or ROM file           |
@@ -3803,7 +3822,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | cps2                  | Capcom Play System II                          | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-2 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps3                  | Capcom Play System III                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | crvision              | VTech CreatiVision                             | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
-| daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** | Hypseus [Singe] **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)** | Yes for Daphne games | See the specific _LaserDisc Games_ section elsewhere in this guide |
+| daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** | Hypseus [Singe] **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)**,<br>DirkSimple | Depends     | See the specific _LaserDisc Games_ section elsewhere in this guide |
 | desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | doom                  | Doom                                           | PrBoom                            | PrBoom+ **(Standalone)**,<br>Boom 3 [UW],<br>Boom 3 xp [UW],<br>_Shortcut or script_ | No           |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** | No           | See the specific _DOS / PC_ section elsewhere in this guide |
@@ -3835,7 +3854,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          | MAME - Current,<br>MAME **(Standalone)** | Yes          | Single archive or ROM file |
 | j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       | KEmulator **(Standalone)** [W]    | No           | Single .jar file       |
 | kodi                  | Kodi Home Theatre Software                     | Kodi **(Standalone)**             |                                   | No           | Shortcut (.desktop/.app/.lnk) file |
-| laserdisc             | LaserDisc Games                                | Hypseus [Daphne] **(Standalone)** | Hypseus [Singe] **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)** | Yes for Daphne games | See the specific _LaserDisc Games_ section elsewhere in this guide |
+| laserdisc             | LaserDisc Games                                | Hypseus [Daphne] **(Standalone)** | Hypseus [Singe] **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)**,<br>DirkSimple | Depends     | See the specific _LaserDisc Games_ section elsewhere in this guide |
 | lcdgames              | LCD Handheld Games                             | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
 | lowresnx              | LowRes NX Fantasy Console                      | LowRes NX                         |                                   | No           | Single ROM file       |
 | lutris                | Lutris Open Gaming Platform                    | Lutris **(Standalone)** [U]       |                                   | No           | See the specific _Lutris_ section elsewhere in this guide |
@@ -3887,7 +3906,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | PICO-8 Splore **(Standalone)**,<br>Retro8 | No           | See the specific _PICO-8_ section elsewhere in this guide |
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       | VICE xplus4 **(Standalone)**      | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
-| ports                 | Ports                                          | _Shortcut or script_              | _AppImage_ [U]                    | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
+| ports                 | Ports                                          | _Shortcut or script_              | _AppImage_ [U],<br>ECWolf (Wolfenstein 3D),<br>NXEngine (Cave Story),<br>OpenLara (Tomb Raider) [UW],<br>Super Bros War | Yes for ECWolf | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | ps2                   | Sony PlayStation 2                             | LRPS2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 [UW] @,<br>PCSX2 **(Standalone)** [UW],<br>PCSX2 Legacy **(Standalone)** @,<br>Play! **(Standalone)**,<br>AetherSX2 **(Standalone)** [M] | Yes except for Play! |                                      |
 | ps3                   | Sony PlayStation 3                             | RPCS3 Shortcut **(Standalone)**   | RPCS3 Directory **(Standalone)** | Yes    | See the specific _Sony PlayStation 3_ section elsewhere in this guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |

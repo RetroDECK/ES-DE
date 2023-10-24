@@ -75,11 +75,14 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added Amiberry standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems on Linux and macOS
 * Added MAME standalone as an alternative emulator for the atari7800 and x1 systems
 * Set %STARTDIR%=%GAMEDIR% for the X Millennium RetroArch core as it created temporary files in the ES-DE directory
+* Added the ECWolf, NXEngine, OpenLara and Super Bros War RetroArch cores as alternative emulators for the ports system on Unix and Windows
+* Added the ECWolf, NXEngine and Super Bros War RetroArch cores as alternative emulators for the ports system on macOS
 * Added TIC-80 standalone as an alternative emulator for the tic80 system
 * Added the MAME - Current RetroArch core as an alternative emulator for the apple2 system
 * Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the channelf, daphne and intellivision systems
 * Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the megaduck, odyssey2 and supervision
 * Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the vectrex and videopac systems
+* Added the DirkSimple RetroArch core as an alternative emulator for the daphne and laserdisc systems
 * Added MAME standalone as an alternative emulator for the fmtowns system on Unix and Windows
 * (macOS) Added MAME standalone as the default emulator for the fmtowns system (was previously a placeholder system)
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
