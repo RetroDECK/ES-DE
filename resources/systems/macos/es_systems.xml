@@ -1418,8 +1418,11 @@
         <name>ports</name>
         <fullname>Ports</fullname>
         <path>%ROMPATH%/ports</path>
-        <extension>.app .sh</extension>
+        <extension>.app .exe .EXE .game .sh</extension>
         <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="ECWolf (Wolfenstein 3D)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/ecwolf_libretro.dylib %ROM%</command>
+        <command label="NXEngine (Cave Story)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nxengine_libretro.dylib %ROM%</command>
+        <command label="Super Bros War">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/superbroswar_libretro.dylib %ROM%</command>
         <platform>pc, pcwindows</platform>
         <theme>ports</theme>
     </system>

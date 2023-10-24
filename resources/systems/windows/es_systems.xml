@@ -1469,8 +1469,12 @@
         <name>ports</name>
         <fullname>Ports</fullname>
         <path>%ROMPATH%\ports</path>
-        <extension>.bat .BAT .lnk .LNK</extension>
+        <extension>.bat .BAT .exe .EXE .game .lnk .LNK .phd .PHD .psx .PSX</extension>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="ECWolf (Wolfenstein 3D)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\ecwolf_libretro.dll %ROM%</command>
+        <command label="NXEngine (Cave Story)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\nxengine_libretro.dll %ROM%</command>
+        <command label="OpenLara (Tomb Raider)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\openlara_libretro.dll %ROM%</command>
+        <command label="Super Bros War">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\superbroswar_libretro.dll %ROM%</command>
         <platform>pc, pcwindows</platform>
         <theme>ports</theme>
     </system>
