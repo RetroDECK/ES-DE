@@ -10,6 +10,10 @@
         <systemsortname>Computer - 1983</systemsortname>
     </system>
     <system>
+        <name>ags</name>
+        <systemsortname>Engine - 1997</systemsortname>
+    </system>
+    <system>
         <name>amiga</name>
         <systemsortname>Computer - 1985</systemsortname>
     </system>

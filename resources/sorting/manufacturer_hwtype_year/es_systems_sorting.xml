@@ -10,6 +10,10 @@
         <systemsortname>Coleco - Computer - 1983</systemsortname>
     </system>
     <system>
+        <name>ags</name>
+        <systemsortname>Chris Jones - Engine - 1997</systemsortname>
+    </system>
+    <system>
         <name>amiga</name>
         <systemsortname>Commodore - Computer - 1985</systemsortname>
     </system>

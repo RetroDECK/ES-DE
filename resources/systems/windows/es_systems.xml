@@ -23,6 +23,15 @@
         <theme>adam</theme>
     </system>
     <system>
+        <name>ags</name>
+        <fullname>Adventure Game Studio Game Engine</fullname>
+        <path>%ROMPATH%\ags</path>
+        <extension>.bat .BAT .lnk .LNK</extension>
+        <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <platform>pcwindows</platform>
+        <theme>ags</theme>
+    </system>
+    <system>
         <name>amiga</name>
         <fullname>Commodore Amiga</fullname>
         <path>%ROMPATH%\amiga</path>
