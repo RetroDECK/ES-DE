@@ -1,0 +1,16 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Adventure Game Studio is an open source development</text>
+        </text>
+        <text name="info2">
+            <text>tool used to create graphic adventure games. It has been</text>
+        </text>
+        <text name="info3">
+            <text>used for thousands of games, some of which have been</text>
+        </text>
+        <text name="info4">
+            <text>commercial releases.</text>
+        </text>
+    </view>
+</theme>
