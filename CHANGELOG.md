@@ -60,7 +60,6 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added support for the Taito Type X (type-x) game system
 * Added support for the Microsoft Windows 3.x (windows3x) game system
 * Added support for the Microsoft Windows 9x (windows9x) game system
-* Removed support for the Adventure Game Studio Game Engine (ags) game system
 * Removed support for the Cave Story (NXEngine) (cavestory) game system
 * Removed support for the MAME4ALL (mame-mame4all) game system
 * Removed support for the Moonlight Game Streaming (moonlight) game system
@@ -112,11 +111,13 @@ In addition to the above many bugs have been fixed and the application has recei
 * (Windows) Added %STARTDIR%=%EMUDIR% for the Vita3K and xemu emulators
 * (Windows) Added Demul as an alternative emulator for the atomiswave, dreamcast, naomi and naomi2 systems
 * (Windows) Added 3dSen standalone as an alternative emulator for the famicom and nes systems
+* (Windows) Added Altirra standalone as an alternative emulator for the atari5200, atari800 and atarixe systems
 * (Windows) Added the .url file extension to the epic system
 * (Windows) Added the .lnk file extension to the steam system
 * Removed atarijaguarcd as an extra platform for the atarijaguar system as it actually made scraping worse
 * Added arcade as an extra platform to the daphne system (to improve scraping)
 * Removed the videopac platform ID entry as it's identical to odyssey2
+* Changed the platform for the ags system to pcwindows to improve scraping
 * Changed the platform for the videopac system to odyssey2 to improve scraping
 * Added the snes-msu1 platform so that these games can be scraped using ScreenScraper (requires custom system config)
 * Changed the full name for the vectrex system from "Smith Engineering Vectrex" to "GCE Vectrex"

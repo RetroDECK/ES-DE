@@ -50,27 +50,48 @@ The directory structure for our example theme could look something like the foll
 
 ```
 ...
-   themes/
-      mytheme-es-de/
-         core/
-            font.ttf
-            bold_font.ttf
-            frame.png
-
-         nes/
-            theme.xml
-            background.jpg
-            logo.svg
-            logo_video.svg
-
-         snes/
-            theme.xml
-            background.jpg
-            logo.svg
-            logo_video.svg
-
-         fonts.xml
+themes/
+   mytheme-es-de/
+      core/
+         font.ttf
+         font_bold.ttf
+         frame.png
+      nes/
+         background.jpg
+         logo.svg
          theme.xml
+      snes/
+         background.jpg
+         logo.svg
+         theme.xml
+
+      fonts.xml
+      theme.xml
+```
+
+An alternative approach would be to instead rely on variables for populating system-specific information and media files, and this way it's not necessary to setup separate directories per system:
+
+```
+...
+themes/
+   mytheme-es-de/
+      core/
+         font.ttf
+         font_bold.ttf
+         frame.png
+      systems/
+         backgrounds/
+            nes.jpg
+            snes.jpg
+         logos/
+            nes.svg
+            snes.svg
+         metadata/
+            nes.xml
+            snes.xml
+
+      fonts.xml
+      theme.xml
 ```
 
 The ES-DE theme functionality makes it easy for users to install different themes and to choose between them from the _UI Settings_ menu.
