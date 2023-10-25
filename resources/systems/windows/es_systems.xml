@@ -205,6 +205,7 @@
         <command label="a5200">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\a5200_libretro.dll %ROM%</command>
         <command label="Atari800">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
         <command label="Atari800 (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ATARI800% %ROM%</command>
+        <command label="Altirra (Standalone)">%EMULATOR_ALTIRRA% %INJECT%=%BASENAME%.commands %ROM%</command>
         <platform>atari5200</platform>
         <theme>atari5200</theme>
     </system>
@@ -225,6 +226,7 @@
         <extension>.a52 .A52 .atr .ATR .atx .ATX .bin .BIN .car .CAR .cas .CAS .cdm .CDM .rom .ROM .xex .XEX .xfd .XFD .7z .7Z .zip .ZIP</extension>
         <command label="Atari800">%STARTDIR%=%EMUDIR% %EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
         <command label="Atari800 (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ATARI800% %ROM%</command>
+        <command label="Altirra (Standalone)">%EMULATOR_ALTIRRA% %INJECT%=%BASENAME%.commands %ROM%</command>
         <platform>atari800</platform>
         <theme>atari800</theme>
     </system>
@@ -276,6 +278,7 @@
         <extension>.a52 .A52 .atr .ATR .atx .ATX .bin .BIN .cas .CAS .cdm .CDM .xex .XEX .xfd .XFD .7z .7Z .zip .ZIP</extension>
         <command label="Atari800">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
         <command label="Atari800 (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ATARI800% %ROM%</command>
+        <command label="Altirra (Standalone)">%EMULATOR_ALTIRRA% %INJECT%=%BASENAME%.commands %ROM%</command>
         <platform>atarixe</platform>
         <theme>atarixe</theme>
     </system>

@@ -43,6 +43,8 @@ Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
 Emulators\3dSen\3dSen.exe
 Emulators\AdvanceMAME\advmame.exe
+Emulators\Altirra\Altirra64.exe
+Emulators\Altirra\Altirra.exe
 Emulators\AppleWin\AppleWin.exe
 Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
 Emulators\ares\ares.exe

@@ -62,6 +62,19 @@
             <entry>%ESPATH%\..\Emulators\AdvanceMAME\advmame.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ALTIRRA">
+        <!-- Atari 8-bit computer emulator Altirra -->
+        <rule type="systempath">
+            <entry>Altirra64.exe</entry>
+            <entry>Altirra.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Altirra\Altirra64.exe</entry>
+            <entry>%ESPATH%\Emulators\Altirra\Altirra.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Altirra\Altirra64.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Altirra\Altirra.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="APPLEWIN">
         <!-- Apple II emulator AppleWin -->
         <rule type="systempath">
