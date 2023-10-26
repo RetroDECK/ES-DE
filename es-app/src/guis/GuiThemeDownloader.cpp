@@ -724,7 +724,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = "DOWNLOADING THEME";
                     },
-                    "CANCEL", [] { return; }, "", nullptr, nullptr, true, true,
+                    "CANCEL", [] { return; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -752,7 +752,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = "DOWNLOADING THEME";
                     },
-                    "CANCEL", [] { return; }, "", nullptr, nullptr, true, true,
+                    "CANCEL", [] { return; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -779,7 +779,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = "DOWNLOADING THEME";
                     },
-                    "CANCEL", [] { return; }, "", nullptr, nullptr, true, true,
+                    "CANCEL", [] { return; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -799,7 +799,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_UPDATING;
                         mStatusText = "UPDATING THEME";
                     },
-                    "CANCEL", [] { return; }, "", nullptr, nullptr, true, true,
+                    "CANCEL", [] { return; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1173,7 +1173,7 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
                 makeInventory();
                 updateGUI();
             },
-            "CANCEL", nullptr, "", nullptr, nullptr, true, true,
+            "CANCEL", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.70f :
                  0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));

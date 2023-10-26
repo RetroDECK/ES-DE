@@ -644,10 +644,12 @@ void GuiMenu::openUIOptions()
                 msg.append("THIS WILL LIMIT THE AVAILABLE GAMES TO THE ONES\n");
                 msg.append("FLAGGED SUITABLE FOR CHILDREN\n");
             }
-            msg.append("TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE: \n");
-            msg.append(UIModeController::getInstance()->getFormattedPassKeyStr());
+            msg.append("TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE: \n")
+                .append(UIModeController::getInstance()->getFormattedPassKeyStr())
+                .append("\n\n")
+                .append("DO YOU WANT TO PROCEED?");
             mWindow->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), msg, "PROCEED",
+                this->getHelpStyle(), msg, "YES",
                 [this, selectedMode] {
                     LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '"
                                   << selectedMode << "'.";
@@ -674,7 +676,7 @@ void GuiMenu::openUIOptions()
                                                               false);
                     mWindow->invalidateCachedBackground();
                 },
-                "CANCEL", nullptr, "", nullptr, nullptr, true));
+                "NO", nullptr, "", nullptr, nullptr, true));
         }
         else {
             LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '" << selectedMode
@@ -1749,7 +1751,7 @@ void GuiMenu::openUtilities()
             },
             "CANCEL", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
-                 0.80f :
+                 0.76f :
                  0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
     });
     s->addRow(row);

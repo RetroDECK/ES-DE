@@ -279,7 +279,7 @@ void ViewController::noGamesDialog()
                                                        nullptr, true));
                     }
                 },
-                "CANCEL", nullptr, "", nullptr, nullptr, true));
+                "CANCEL", nullptr, "", nullptr, nullptr, false));
         },
         "QUIT",
         [] {
