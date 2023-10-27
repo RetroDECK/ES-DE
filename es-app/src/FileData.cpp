@@ -1592,6 +1592,10 @@ void FileData::launchGame()
     command = Utils::String::replace(command, "%GAMEDIR%",
                                      Utils::FileSystem::getEscapedPath(Utils::FileSystem::getParent(
                                          Utils::String::replace(romPath, "\"", ""))));
+    command = Utils::String::replace(
+        command, "%GAMEDIRRAW%",
+        Utils::String::replace(
+            Utils::FileSystem::getParent(Utils::String::replace(romPath, "\"", "")), "/", "\\"));
 #else
     command = Utils::String::replace(command, "%ESPATH%", Utils::FileSystem::getExePath());
     command = Utils::String::replace(command, "%EMUDIR%",
@@ -1600,6 +1604,9 @@ void FileData::launchGame()
     command = Utils::String::replace(command, "%GAMEDIR%",
                                      Utils::FileSystem::getEscapedPath(Utils::FileSystem::getParent(
                                          Utils::String::replace(romPath, "\\", ""))));
+    command = Utils::String::replace(
+        command, "%GAMEDIRRAW%",
+        Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")));
 #endif
 
     // Trim any leading and trailing whitespace characters as they could cause launch issues.
