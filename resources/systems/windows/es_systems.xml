@@ -103,7 +103,7 @@
         <extension>.do .DO .dsk .DSK .nib .NIB .po .PO</extension>
         <command label="AppleWin (Standalone)">%EMULATOR_APPLEWIN% -f -d1 %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module apple2 %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "apple2e -rompath %GAMEDIR%\;%ROMPATH%\apple2 -flop1 \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "apple2e -rompath \"%GAMEDIRRAW%;%ROMPATH%\apple2\" -flop1 \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\apple2 apple2e -flop1 %ROM%</command>
         <platform>apple2</platform>
         <theme>apple2</theme>
@@ -113,7 +113,7 @@
         <fullname>Apple IIGS</fullname>
         <path>%ROMPATH%\apple2gs</path>
         <extension>.2mg .2MG .7z .7z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "apple2gs -rompath %GAMEDIR%\;%ROMPATH%\apple2gs -flop3 \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "apple2gs -rompath \"%GAMEDIRRAW%;%ROMPATH%\apple2gs\" -flop3 \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\apple2gs apple2gs -flop3 %ROM%</command>
         <platform>apple2gs</platform>
         <theme>apple2gs</theme>
@@ -148,7 +148,7 @@
         <fullname>Emerson Arcadia 2001</fullname>
         <path>%ROMPATH%\arcadia</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "arcadia -rompath %GAMEDIR%\;%ROMPATH%\arcadia -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "arcadia -rompath \"%GAMEDIRRAW%;%ROMPATH%\arcadia\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\arcadia arcadia -cart %ROM%</command>
         <platform>arcadia</platform>
         <theme>arcadia</theme>
@@ -354,7 +354,7 @@
         <path>%ROMPATH%\channelf</path>
         <extension>.bin .BIN .chf .CHF .7z .7Z .zip .ZIP</extension>
         <command label="FreeChaF">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\freechaf_libretro.dll %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "channelf -rompath %GAMEDIR%\;%ROMPATH%\channelf -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "channelf -rompath \"%GAMEDIRRAW%;%ROMPATH%\channelf\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\channelf channelf -cart %ROM%</command>
         <platform>channelf</platform>
         <theme>channelf</theme>
@@ -477,7 +477,7 @@
         <fullname>VTech CreatiVision</fullname>
         <path>%ROMPATH%\crvision</path>
         <extension>.bin .BIN .rom .ROM .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "crvision -rompath %GAMEDIR%\;%ROMPATH%\crvision -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "crvision -rompath \"%GAMEDIRRAW%;%ROMPATH%\crvision\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\crvision crvision -cart %ROM%</command>
         <platform>crvision</platform>
         <theme>crvision</theme>
@@ -678,7 +678,7 @@
         <fullname>Fujitsu FM Towns</fullname>
         <path>%ROMPATH%\fmtowns</path>
         <extension>.cdr .CDR .chd .CHD .cue .CUE .gdi .GDI .iso .ISO</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "fmtownshr -rompath \"%GAMEDIRRAW%\;%ROMPATH%\fmtowns\" -cdrom \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "fmtownshr -rompath \"%GAMEDIRRAW%;%ROMPATH%\fmtowns\" -cdrom \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\fmtowns fmtownshr -cdrom %ROM%</command>
         <command label="Tsugaru (Standalone)">%EMULATOR_TSUGARU% %EMUDIR%\roms -HOSTSHORTCUT ESC 0 0 FORCEQUIT -FULLSCREEN -CD %ROM% %INJECT%=%BASENAME%.cfg</command>
         <platform>fmtowns</platform>
@@ -698,7 +698,7 @@
         <fullname>Bit Corporation Gamate</fullname>
         <path>%ROMPATH%\gamate</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gamate -rompath %GAMEDIR%\;%ROMPATH%\gamate -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gamate -rompath \"%GAMEDIRRAW%;%ROMPATH%\gamate\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gamate gamate -cart %ROM%</command>
         <platform>gamate</platform>
         <theme>gamate</theme>
@@ -719,7 +719,7 @@
         <fullname>Tiger Electronics Game.com</fullname>
         <path>%ROMPATH%\gamecom</path>
         <extension>.tgc .TGC .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gamecom -rompath %GAMEDIR%\;%ROMPATH%\gamecom -cartridge1 \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gamecom -rompath \"%GAMEDIRRAW%;%ROMPATH%\gamecom\" -cartridge1 \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gamecom gamecom -cartridge1 %ROM%</command>
         <platform>gamecom</platform>
         <theme>gamecom</theme>
@@ -832,7 +832,7 @@
         <fullname>Hartung Game Master</fullname>
         <path>%ROMPATH%\gmaster</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gmaster -rompath %GAMEDIR%\;%ROMPATH%\gmaster -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gmaster -rompath \"%GAMEDIRRAW%;%ROMPATH%\gmaster\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gmaster gmaster -cart %ROM%</command>
         <platform>gmaster</platform>
         <theme>gmaster</theme>
@@ -854,7 +854,7 @@
         <path>%ROMPATH%\intellivision</path>
         <extension>.bin .BIN .int .INT .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="FreeIntv">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\freeintv_libretro.dll %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "intv -rompath %GAMEDIR%\;%ROMPATH%\intellivision -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "intv -rompath \"%GAMEDIRRAW%;%ROMPATH%\intellivision\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\intellivision intv -cart %ROM%</command>
         <platform>intellivision</platform>
         <theme>intellivision</theme>
@@ -1050,7 +1050,7 @@
         <path>%ROMPATH%\megaduck</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="SameDuck">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\sameduck_libretro.dll %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "megaduck -rompath %GAMEDIR%\;%ROMPATH%\megaduck -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "megaduck -rompath \"%GAMEDIRRAW%;%ROMPATH%\megaduck\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\megaduck megaduck -cart %ROM%</command>
         <platform>megaduck</platform>
         <theme>megaduck</theme>
@@ -1340,7 +1340,7 @@
         <path>%ROMPATH%\odyssey2</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="O2EM">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\o2em_libretro.dll %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "odyssey2 -rompath %GAMEDIR%\;%ROMPATH%\odyssey2 -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "odyssey2 -rompath \"%GAMEDIRRAW%;%ROMPATH%\odyssey2\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\odyssey2 odyssey2 -cart %ROM%</command>
         <platform>odyssey2</platform>
         <theme>odyssey2</theme>
@@ -1563,7 +1563,7 @@
         <fullname>Casio PV-1000</fullname>
         <path>%ROMPATH%\pv1000</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "pv1000 -rompath %GAMEDIR%\;%ROMPATH%\pv1000 -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "pv1000 -rompath \"%GAMEDIRRAW%;%ROMPATH%\pv1000\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\pv1000 pv1000 -cart %ROM%</command>
         <platform>pv1000</platform>
         <theme>pv1000</theme>
@@ -1653,7 +1653,7 @@
         <fullname>Epoch Super Cassette Vision</fullname>
         <path>%ROMPATH%\scv</path>
         <extension>.0 .bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "scv -rompath %GAMEDIR%\;%ROMPATH%\scv -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "scv -rompath \"%GAMEDIRRAW%;%ROMPATH%\scv\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\scv scv -cart %ROM%</command>
         <platform>scv</platform>
         <theme>scv</theme>
@@ -1858,7 +1858,7 @@
         <path>%ROMPATH%\supervision</path>
         <extension>.bin .BIN .sv .SV .7z .7Z .zip .ZIP</extension>
         <command label="Potator">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\potator_libretro.dll %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "svision -rompath %GAMEDIR%\;%ROMPATH%\supervision -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "svision -rompath \"%GAMEDIRRAW%;%ROMPATH%\supervision\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\supervision svision -cart %ROM%</command>
         <platform>supervision</platform>
         <theme>supervision</theme>
@@ -1868,7 +1868,7 @@
         <fullname>Funtech Super A'Can</fullname>
         <path>%ROMPATH%\supracan</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "supracan -rompath %GAMEDIR%\;%ROMPATH%\supracan -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "supracan -rompath \"%GAMEDIRRAW%;%ROMPATH%\supracan\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\supracan supracan -cart %ROM%</command>
         <platform>supracan</platform>
         <theme>supracan</theme>
@@ -2002,7 +2002,7 @@
         <path>%ROMPATH%\vectrex</path>
         <extension>.bin .BIN .gam .GAM .vc .VC .vec .VEC .7z .7Z .zip .ZIP</extension>
         <command label="vecx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vecx_libretro.dll %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "vectrex -rompath %GAMEDIR%\;%ROMPATH%\vectrex -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "vectrex -rompath \"%GAMEDIRRAW%;%ROMPATH%\vectrex\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\vectrex vectrex -cart %ROM%</command>
         <platform>vectrex</platform>
         <theme>vectrex</theme>
@@ -2023,7 +2023,7 @@
         <path>%ROMPATH%\videopac</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="O2EM">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\o2em_libretro.dll %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "videopac -rompath %GAMEDIR%\;%ROMPATH%\videopac -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "videopac -rompath \"%GAMEDIRRAW%;%ROMPATH%\videopac\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\videopac videopac -cart %ROM%</command>
         <platform>odyssey2</platform>
         <theme>videopac</theme>
@@ -2052,7 +2052,7 @@
         <fullname>VTech V.Smile</fullname>
         <path>%ROMPATH%\vsmile</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "vsmile -rompath %GAMEDIR%\;%ROMPATH%\vsmile -cart \"%ROMRAW%\""</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "vsmile -rompath \"%GAMEDIRRAW%;%ROMPATH%\vsmile\" -cart \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\vsmile vsmile -cart %ROM%</command>
         <platform>vsmile</platform>
         <theme>vsmile</theme>
