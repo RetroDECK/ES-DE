@@ -31,6 +31,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added an entry to the Utilities menu for creating/updating the game system directories
 * Added a "Debug mode" option to the Other settings menu (which is equivalent to starting with the --debug flag)
 * Added support for a %PRECOMMAND% launch command variable (useful for launching emulators via Wine or Proton)
+* Added support for a %GAMEDIRRAW% launch command variable (useful for launching MESS systems using the MAME RetroArch cores)
 * Added support for defining multiple %INJECT% launch command variables
 * Added more debug log output when launching games
 * Duplicate es_systems.xml command label entries are now ignored on application startup
@@ -65,14 +66,18 @@ In addition to the above many bugs have been fixed and the application has recei
 * Removed support for the Moonlight Game Streaming (moonlight) game system
 * Removed support for the Stratagus Game Engine (stratagus) game system
 * Added support for the AdvanceMAME (mame-advmame) system on Unix and Windows
-* Added Mesen standalone as an alternative emulator for 14 systems on Linux and Windows
+* Added Mesen standalone as an alternative emulator for the famicom, fds, gb, gbc and nes systems on Unix and Windows
+* Added Mesen standalone as an alternative emulator for the pcengine, pcenginecd, satellaview and sfc systems on Unix and Windows
+* Added Mesen standalone as an alternative emulator for the sgb, snes, snesna, tg16 and tg-cd systems on Unix and Windows
 * Added Flycast Dojo standalone as an alternative emulator for the arcade, atomiswave, dreamcast, mame, naomi and naomigd systems
 * (Linux) Changed the Flycast AppImage find rules so that they don't collide with the Flycast Dojo AppImage
+* Added the MAME - Current RetroArch core as the default emulator for the apple2gs, arcadia, crvision, fmtowns and gamecom systems
+* Added the MAME - Current RetroArch core as the default emulator for the gmaster, pv1000, scv and vsmile systems
+* Added MAME standalone as an alternative emulator for the atari7800, fmtowns and x1 systems
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
 * Added SkyEmu standalone as an alternative emulator for the gb, gba, gbc and nds systems
 * Added FS-UAE standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
 * Added Amiberry standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems on Linux and macOS
-* Added MAME standalone as an alternative emulator for the atari7800 and x1 systems
 * Set %STARTDIR%=%GAMEDIR% for the X Millennium RetroArch core as it created temporary files in the ES-DE directory
 * Added the ECWolf, NXEngine, OpenLara and Super Bros War RetroArch cores as alternative emulators for the ports system on Unix and Windows
 * Added the ECWolf, NXEngine and Super Bros War RetroArch cores as alternative emulators for the ports system on macOS
@@ -85,15 +90,15 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added MAME standalone as an alternative emulator for the fmtowns system on Unix and Windows
 * (macOS) Added MAME standalone as the default emulator for the fmtowns system (was previously a placeholder system)
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
+* Changed the configuration for the astrocde system to no longer require a manually installed MAME hash file
 * Added the Retro8 RetroArch core as an alternative emulator for the pico8 system
 * Added the .88d, .cmt and .t88 file extensions to the pc88 system
 * Removed the .7z and .zip file extensions from the pc88 system
 * Removed the .cdi, .cue, .gdi, .m3u and .iso file extensions from the atomiswave, naomi and naomigd systems
-* Added the .7z and .zip file extensions to the apple2gs, daphne and fmtowns systems
+* Added the .7z and .zip file extensions to the apple2gs and daphne systems
+* Added the .cdr, .chd and .gdi file extensions to the fmtowns system
 * Added the .arcadedef file extension to the ps2 system
 * Added the .chd file extension to the psp system
-* Added the MAME - Current RetroArch core as the default emulator for the apple2gs, arcadia, crvision, gamecom and gmaster systems
-* Added the MAME - Current RetroArch core as the default emulator for the pv1000, scv and vsmile systems
 * (Linux) Added support for the Microsoft Xbox 360 (xbox360) game system by running xenia via Wine or Proton
 * (Linux) Added support for the Atari Jaguar CD (atarijaguarcd) game system by running BigPEmu via Wine or Proton
 * (Linux) Added BigPEmu Wine and BigPEmu Proton as alternative emulators for the atarijaguar system

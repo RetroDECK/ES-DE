@@ -1230,19 +1230,6 @@ That's basically it, for the atarijaguar system just make sure to select _BigPEm
 
 There are many settings in Wine that may affect compatibility, performance etc. but covering all that is beyond the scope of this guide.
 
-### Bally Astrocade
-
-Place your ROMs in the `~/ROMs/astrocde` directory, the files must have the short MAME names such as _astrobat.zip_ and _conan.zip_. Also make sure that the BIOS archive astrocde.zip is included with the ROM set. If using MAME standalone then no further setup is required and the games should just launch.
-
-If instead using the _MAME - Current_ RetroArch core, then a hash file must be added inside the RetroArch system directory at this location:
-
-```
-mame/hash/astrocde.xml
-```
-
-The hash file is available from the MAME GitHub repository: \
-https://raw.githubusercontent.com/mamedev/mame/master/hash/astrocde.xml
-
 ### Commodore Amiga and CDTV
 
 There are multiple ways to run these games, for the computer models like the A500, A1200 etc. it's either via diskette images, hard disk images or using specially packaged WHDLoad games. For the CD32 and CDTV you normally run games via CD-ROM disc images. As for emulators all operating systems that ES-DE runs on support the PAUE RetroArch core and the FS-UAE standalone emulator. On Linux and macOS there is also support for the Amiberry standalone emulator.
@@ -1452,7 +1439,26 @@ Setup for the standalone EasyRPG Player is identical with the exception that run
 
 ### Fujitsu FM Towns
 
-This system is emulated using Tsugaru or MAME standalone.
+This system is emulated using MAME or Tsugaru.
+
+**MAME**
+
+As of the time of writing MAME has somehow preliminary FM Towns support, but it seems to work well enough for most games and support will likely improve over time.
+
+Only CD-ROM games are supported and the .chd format is recommended. It's not adviced to go for game files using MAME software list names as these can't be scraped by either ScreenScraper or TheGames DB. It's instead better to use files with full game names.
+
+You also need the `fmtowns.zip` BIOS archive placed in ~/ROMs/fmtowns/ for the games to run.
+
+Here's an example setup:
+```
+~/ROMs/fmtowns/Flying Shark (Jp-En).chd
+~/ROMs/fmtowns/Shadow of the Beast (1994)(Psygnosis)(Jp-En).bin
+~/ROMs/fmtowns/Shadow of the Beast (1994)(Psygnosis)(Jp-En).cue
+~/ROMs/fmtowns/fmtowns.zip
+```
+
+Note that if you're using MAME standalone you will need to enable UI controls to be able to exit the emulator via the normal exit key. The following page documents the default keys for exiting and toggling UI mode:\
+https://docs.mamedev.org/usingmame/defaultkeys.html
 
 **Tsugaru**
 
@@ -1503,15 +1509,6 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 ```
 -FREQ 33 -GAMEPORT0 KEY
 ```
-
-**MAME standalone**
-
-As of the time of writing MAME only has preliminary FM Towns support, but this will hopefully improve over time. All games need to be packaged specifically for MAME with software list names as filenames. You also need the `fmtowns.zip` BIOS archive stored in ~/ROMs/fmtowns/ but apart from this it should be fairly straightforward to launch these games. Just be aware that you can't launch .iso or .cue files directly with MAME, only Tsugaru can launch such files.
-
-Note that you will need to enable UI controls in MAME to be able to exit the emulator via the normal exit key. The following page documents the default keys for exiting and toggling UI mode:\
-https://docs.mamedev.org/usingmame/defaultkeys.html
-
-Scraping can also be a bit challenging as neither ScreenScraper nor TheGamesDB support MAME software list names for this system. So it's recommended to run the scraper in interactive mode and refine the searches for all games that are not properly identified.
 
 ### LaserDisc Games
 
@@ -3798,7 +3795,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | arcadia               | Emerson Arcadia 2001                           | MAME - Current                    | MAME **(Standalone)**             | No           | Single archive or ROM file           |
 | archimedes            | Acorn Archimedes                               | MAME [Model A440/1] **(Standalone)** | MAME [Model A3000] **(Standalone)**,<br>MAME [Model A310] **(Standalone)**,<br>MAME [Model A540] **(Standalone)** | Yes          |                                      |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
-| astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)**             | Yes          | See the specific _Bally Astrocade_ section elsewhere in this guide |
+| astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>Stella **(Standalone)**,<br>Gopher2600 **(Standalone)** [UW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)**,<br>Altirra **(Standalone)** [W] | Yes except for Altirra | Single archive or ROM file |
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         | MAME **(Standalone)**             | Yes          | Single archive or ROM file |
@@ -3839,7 +3836,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Mesen **(Standalone)** [UW],<br>Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | Yes          | Single archive or ROM file |
 | flash                 | Adobe Flash                                    | Ruffle **(Standalone)**           | Lightspark **(Standalone)** [U],<br>ArcadeFlashWeb **(Standalone)** [W] | No        | Single .swf file       |
 | fm7                   | Fujitsu FM-7                                   | MAME [FM-7 Diskette] **(Standalone)** | MAME [FM-7 Tape] **(Standalone)**,<br>MAME [FM-7 Software list] **(Standalone)**,<br>MAME [FM77AV Diskette] **(Standalone)**,<br>MAME [FM77AV Tape] **(Standalone)**,<br>MAME [FM77AV Software list] **(Standalone)** | Yes          | For tape files you need to manually start the cassette player from the MAME menu after the "load" command, as well as entering the "run" command after loading is complete |
-| fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW],<br>MAME **(Standalone)** [M] | MAME **(Standalone)** [UW] | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
+| fmtowns               | Fujitsu FM Towns                               | MAME - Current,<br>MAME **(Standalone)** | Tsugaru **(Standalone)** [UW] | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | fpinball              | Future Pinball                                 | Future Pinball **(Standalone)** [W] |                                   | No           |                                      |
 | gamate                | Bit Corporation Gamate                         | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
 | gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |

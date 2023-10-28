@@ -10,7 +10,7 @@ The correct name is EmulationStation Desktop Edition, which is for practical rea
 
 ## Is this software available for free, and is it open source?
 
-ES-DE is available for free, and will continue to be available for free, if someone is asking you to pay money to use ES-DE in any form then you are being scammed. The software is released under the MIT open source license with the source code being publicly and freely available. Voluntary donations to support the project are however very welcome.
+ES-DE is available for free. Voluntary donations to support the project are however very welcome. The application is released under the MIT open source license with the source code readily available to anyone via the project's [GitLab site](https://gitlab.com/es-de/emulationstation-de).
 
 ## Which operating systems are supported?
 
@@ -34,7 +34,11 @@ Menus in ES-DE are not lists but grids, sometimes there is only a list but somet
 
 ## Can I change the system sorting to not sort by full system names?
 
-Yes this is possible via an es_systems_sorting.xml file that you place in the ~/.emulationstation/custom_systems/ directory. There are four such files bundled with ES-DE which sort by  _"Hardware type, release year", "Manufacturer, hardware type, release year", "Manufacturer, release year"_ or simply _"Release year"_. You can create your own custom sorting files as well if needed. More details about this setup can be found in the _es_systems_sorting.xml_ section of the [Building and advanced configuration](INSTALL.md#es_systems_sortingxml) document.
+Yes the systems sorting configuration file can be selected via the _Systems sorting_ option in the _UI Settings_ menu. There are four such files bundled with ES-DE to sort by _"Release year", "Manufacturer, release year", "Hardware type, release year"_ and _"Manufacturer, hardware type, release year"_. If you don't want to use any of the bundled files then you can create your own custom sorting file and place it into the ~/.emulationstation/custom_systems/ directory. More details about this setup can be found in the _es_systems_sorting.xml_ section of the [Building and advanced configuration](INSTALL.md#es_systems_sortingxml) document.
+
+## I'm missing some systems like SNES MSU-1 and WiiWare, could those get added to ES-DE?
+
+To keep the system count within reason hack systems and e-shop systems are not included and there are no plans to add them in. This would include things like _PSP Minis, PlayStation Store, WiiWare, SNES MSU-1, Sega Mega Drive MSU-MD, ROM Hacks_ and so on. It's possible to add such games to the regular systems though, for example by placing them inside their own folders if you want to clearly separate them from the rest of the games. You could also create custom collections for these games.
 
 ## I don't like the default emulator for a certain system, how can I choose an alternative?
 
@@ -66,7 +70,7 @@ This is related to the two questions above, ES-DE does not perform any emulator 
 
 ## Why does it take a long time for ES-DE to resume after I've exited a game?
 
-With a few notable exceptions like the Valve Steam system on all platforms and the MAME standalone emulator on Windows, ES-DE will wait for emulators and games to fully exit before it resumes. Some emulators take quite some time to fully exit (sometimes even after their application windows have been destroyed). This may make it seem as if ES-DE is hanging although it's actually waiting for the launched child process to exit. Another reason for a delayed resume is if a custom event script is executed on game end which itself takes a long time to run. If you have such a custom setup then there is a way to work around this by executing scripts as background processes, which is documented [here](INSTALL.md#custom-event-scripts).
+With a few notable exceptions like the Valve Steam system, ES-DE will wait for emulators and games to fully exit before it resumes. Some emulators take quite some time to fully exit (sometimes even after their application windows have been destroyed). This may make it seem as if ES-DE is hanging although it's actually waiting for the launched child process to exit. Another reason for a delayed resume is if a custom event script is executed on game end which itself takes a long time to run. If you have such a custom setup then there is a way to work around this by executing scripts as background processes. How this is accomplished is documented in the _Custom event scripts_ section of the [Building and advanced configuration](INSTALL.md#custom-event-scripts) document.
 
 ## I have many games with multiple files, is there a way to show these as single entries?
 
@@ -78,11 +82,11 @@ See the question above for a possible solution. Another approach would be to hid
 
 ## When I hide a game using the metadata editor it's not really getting hidden, is this a bug?
 
-No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower opacity. You need to disable the setting _Show hidden games (requires restart)_ from the _Other Settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
+No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower opacity. You need to disable the setting _Show hidden games_ from the _Other Settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
 
 ## I'm using Linux or macOS and I can't find the .emulationstation directory, where is it located?
 
-The .emulationstation directory is normally located in your home directory, but on these Unix-based operating systems files and directories starting with a dot are hidden by default. So you need to enable hidden files and directories in your file manager. On macOS this is done in Finder using the Shift + Command + . (a dot) keyboard combination. On Linux it depends on which file manager you're using, but in Dolphin it's accomplished by using the Alt + . (a dot) keyboard combination or via the corresponding entry in the hamburger menu.
+The .emulationstation directory is normally located in your home directory, but on these Unix-based operating systems files and directories starting with a dot are hidden by default. So you need to enable hidden files and directories in your file manager. On macOS this is done in Finder using the Shift + Command + . (a dot) keyboard combination. On Linux it depends on which file manager you're using, but in KDE's Dolphin it's accomplished by using the Alt + . (a dot) keyboard combination or via the corresponding entry in the hamburger menu.
 
 ## I can't find a ROM directory setting in the user interface, so how do I relocate my games?
 
@@ -102,11 +106,11 @@ This release of RetroArch has multiple technical issues so it's not officially s
 
 ## How do I add more themes?
 
-You would normally use the built-in theme downloader to install additional themes. This utility can be found in the _UI Settings_ menu. There is also a [web version](https://gitlab.com/es-de/themes/themes-list) of the themes list which contains a number of additional themes not available via the theme downloader interface.
+You would normally use the built-in theme downloader to install additional themes. This utility can be found in the _UI Settings_ menu. There is also a [web version](https://gitlab.com/es-de/themes/themes-list) of the themes list which contains a number of additional themes not available via the downloader interface. Themes can also be updated via the downloader which is a recommended activity to perform every now and then, especially after upgrading to a newer ES-DE release as there may have been new systems added.
 
-## The themes I've added don't seem to work?
+## I added some EmulationStation themes manually but they don't seem to show up inside ES-DE?
 
-Most themes from Batocera, Recalbox and similar EmulationStation forks can't be used as ES-DE has a different theme engine than those applications. For the time being RetroPie themes can be used, but support for these legacy themes will be removed in a future version. It's generally a good idea to stick to the themes provided via the theme downloader and the official [themes list](https://gitlab.com/es-de/themes/themes-list).
+Only themes made specifically for ES-DE can be used. If you want to use a theme from Batocera, Recalbox, RetroBat, RetroPie etc. then it first needs to be ported to the ES-DE theme engine. If you place a non-supported theme in the ~/.emulationtation/themes/ directory then this will be ignored on startup, meaning it will not be selectable from the _UI Settings_ menu.
 
 ## I used to be a Batocera/Recalbox user and ES-DE can't seem to find some of my games?
 
@@ -114,15 +118,15 @@ ES-DE uses mostly the same system names as these other frontends, but there are 
 
 ## Can ES-DE update itself automatically when a new release becomes available?
 
-There is a built-in application updater that works with the Linux AppImage releases. And if using the AUR release then updates are handled via the operating system's package manager. Likewise if using RetroDECK, then ES-DE is updated as part of the overall RetroDECK Flatpak. For Windows and macOS only a version check and a notification window has been implemented, meaning the new release needs to be manually downloaded from the ES-DE website. The process to manually upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release). If you find the update notification messages annoying you can change the frequency of update checks between _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_ from the _Other Settings_ menu.
+There is a built-in application updater that works with the Linux AppImage releases. And if using the AUR release updates are handled via the operating system's package manager. Likewise if using RetroDECK, then ES-DE is updated as part of the overall RetroDECK Flatpak. For Windows and macOS the application updater will download the latest version (as of ES-DE 2.2.0) but you need to manually perform the upgrade. The process to upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release). If you find the update notification messages annoying you can change the frequency of update checks between _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_ from the _Other Settings_ menu.
 
 ## I can't find any game media links in the gamelist.xml files, where is this data stored?
 
-ES-DE works very differently compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are simply matched against the ROM/game file names which makes for a much simpler, faster and completely portable setup. Migrating game media from other EmulationStation forks (and potentially from other frontends as well) can be accomplished quite easily. See the next question below for more information. Make sure to also read the _Migrating from other EmulationStation forks_ section of the [User guide](USERGUIDE.md#migrating-from-other-emulationstation-forks) to avoid data loss if running ES-DE with existing data from another EmulationStation fork.
+ES-DE works differently compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are matched against the ROM/game file names which makes for a much simpler, faster and completely portable setup. Migrating game media from other EmulationStation forks (and potentially from other frontends as well) can be accomplished quite easily. See the next question below for more information. Make sure to also read the _Migrating from other EmulationStation forks_ section of the [User guide](USERGUIDE.md#migrating-from-other-emulationstation-forks) to avoid data loss if running ES-DE with existing data from another EmulationStation fork.
 
-## It seems like gamelist.xml files in the ROMs directory tree are no longer getting loaded as of ES-DE 2.0?
+## It seems like gamelist.xml files in the ROM directory tree are not getting loaded?
 
-Yes, to optionally read gamelist.xml files from the ROMs directory tree in previous releases was a mistake as it has caused a lot of confusion as well as invalid bug reports. As such the logic has now been changed to only read these files from .emulationstation/gamelists/ which is where they belong. If you insist on retaining the old logic you can do so by manually setting LegacyGamelistFileLocation to true in es_settings.xml as explained [here](INSTALL.md#settings-not-configurable-via-the-gui), but it's definitely not recommended.
+These files are not loaded by default as of ES-DE 2.0.0, only files placed in .emulationstation/gamelists/ are processed. If you insist on retaining the old logic of also looking for gamelist.xml files in the ROM directory tree then you can enable the LegacyGamelistFileLocation setting in es_settings.xml as explained in the _Settings not configurable via the GUI_ section of the [Building and advanced configuration](INSTALL.md#settings-not-configurable-via-the-gui) document.
 
 ## Why do I sometimes get error messages when scraping stating that files are less than 350 bytes in size?
 
@@ -138,14 +142,14 @@ If the controller works in other applications and games but not in ES-DE, then y
 
 ## Why is every controller button press registered twice in ES-DE?
 
-There are two reasons why double input is received in ES-DE, either because Steam is running and the _Desktop Configuration_ of the Steam Controller functionality is enabled, or due to buggy controller drivers where two devices are registered in parallel by the operating system. In the former case, enabling the Steam Controller functionality will by default also enable keyboard input to be sent whenever a button is pressed on the controller. As ES-DE reads both the keyboard and controller events this will be registered as double or conflicting input. To disable this functionality, go into the Steam settings interface, then select the _Controller_ entry followed by the _DESKTOP CONFIGURATION_ button. Make sure to remove all keyboard mappings and the problem should disappear. An alternative solution is to add ES-DE as a Non-Steam game and launch it via the Steam application in which case the keyboard events will be automatically disabled (that's how it's normally done on the Steam Deck for instance). Making sure Steam is shut down while ES-DE is running is another possible solution.
+There are two main reasons why double input is received in ES-DE, either because Steam is running and Steam Input with Desktop Layout mappings is enabled, or due to buggy controller drivers where two devices are registered in parallel by the operating system. In the former case, enabling the Steam Input functionality will by default also enable keyboard input to be sent whenever a button is pressed on the controller. As ES-DE by default reads both the keyboard and controller events this will be registered as double or conflicting input. To disable this functionality, go into the Steam _Settings_ interface, then select the _Controller_ tab followed by the _Edit_ button for the _Desktop Layout_ option. Make sure to remove all keyboard mappings and the problem should disappear. An alternative solution is to add ES-DE as a Non-Steam game and launch it via the Steam application in which case the keyboard events will be automatically disabled (that's how it's normally done on the Steam Deck for instance). Making sure Steam is shut down while ES-DE is running is another possible solution. Yet another solution is to enable the _Ignore keyboard input_ option in the _Input Device Settings_ menu, although this is generally not recommended.
 
 The second reason for double input is buggy controller drivers. This seems to only occur with wireless controllers but it's possible that it also happens with wired devices. As ES-DE auto-configures all devices, every button press will in practice be received twice. The easiest solution to this problem is to enable the option _Only accept input from first controller_ in the _Input device settings_ menu, but the drawback of this is that all other attached controllers will also be ignored. A more proper workaround is to blacklist the redundant controller device, see the previous question above as blacklisting is essentially a custom controller profile entry. Note that neither of these approaches will affect the emulators/games launched from ES-DE, it only applies to the ES-DE application itself.
 
 ## I'm missing a feature, how can I make a request to have it added?
 
-First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and search for the functionality you would like to see added. Chances are there is already a card on the board describing what you intended to request. You can also check the [Roadmap](ROADMAP.md) document which contains a list of planned major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server.
+First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and search for the functionality you would like to see added. Chances are there is already a card on the board describing what you intended to request. You can also check the [Roadmap](ROADMAP.md) document which contains a list of planned major features. If you can't find the feature you're looking for, then you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server.
 
-## I want to setup a gaming appliance based on the Raspberry Pi, can I use ES-DE for this?
+## I want to setup a gaming appliance based on a single-board computer, can I use ES-DE for this?
 
-This is not the goal of ES-DE, the application requires a desktop environment to run. If you want to run a frontend on a single-board computer or similar then there are better options out there. But many people run ES-DE on arcade cabinets and similar which is definitely possible, it just requires a desktop-class operating system.
+This is not the goal of ES-DE, the application requires a desktop environment to run. If you want to run a frontend on a single-board computer without using Xorg or Wayland then there are better options out there. But many people run ES-DE on arcade cabinets and similar which is definitely possible, it just requires a desktop-class operating system.

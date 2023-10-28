@@ -1337,6 +1337,8 @@ The following variables are expanded for the `command` tag:
 
 `%GAMEDIR%` - Replaced with the path to the game.
 
+`%GAMEDIRRAW%` - Replaced with the unescaped path to the game.
+
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
 `%EMULATOR_` - This utilizes the emulator find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command. The find rules are explained in more detail below.
