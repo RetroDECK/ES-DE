@@ -54,49 +54,49 @@
     "prerelease": {
         "comment": "The fields below will be blank if there is no prerelease available",
         "version": "2.2.0-beta",
-        "release": "37",
-        "date": "2023-10-19",
+        "release": "38",
+        "date": "2023-10-28",
         "packages": [
             {
                 "name": "WindowsPortable",
-                "filename": "EmulationStation-DE-2.2.0-beta-2023-10-19-x64_Portable.zip",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/98429718/download",
-                "md5": "eeefca23bc01c5534a9d4f3cb68f1480",
+                "filename": "EmulationStation-DE-2.2.0-beta-2023-10-28-x64_Portable.zip",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/99597609/download",
+                "md5": "68fd6e11500c68498af5f3bac2c87749",
                 "message": ""
             },
             {
                 "name": "WindowsInstaller",
-                "filename": "EmulationStation-DE-2.2.0-beta-2023-10-19-x64.exe",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/98429683/download",
-                "md5": "a736206a0fcf361f826fe9be45fa4e41",
+                "filename": "EmulationStation-DE-2.2.0-beta-2023-10-28-x64.exe",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/99597596/download",
+                "md5": "15c886108e746346ac04e000be92cdaa",
                 "message": ""
             },
             {
                 "name": "macOSApple",
-                "filename": "EmulationStation-DE-2.2.0-beta-2023-10-19-arm64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/98429527/download",
-                "md5": "f7f2601230f59a080c976369778a5d5d",
+                "filename": "EmulationStation-DE-2.2.0-beta-2023-10-28-arm64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/99597572/download",
+                "md5": "4ab4cafe749d7b01f80fc97334a84f45",
                 "message": ""
             },
             {
                 "name": "macOSIntel",
-                "filename": "EmulationStation-DE-2.2.0-beta-2023-10-19-x64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/98429651/download",
-                "md5": "9845a23d65b06e3d06d0d1927c7d9b27",
+                "filename": "EmulationStation-DE-2.2.0-beta-2023-10-28-x64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/99597587/download",
+                "md5": "2c698727e6de8a183bf5380a2f7afd97",
                 "message": ""
             },
             {
                 "name": "LinuxAppImage",
                 "filename": "EmulationStation-DE-x64.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/98429736/download",
-                "md5": "afd12ce9b7c430724c37c1455a80ee4c",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/99597613/download",
+                "md5": "36415782b9faf333be1930456d93c417",
                 "message": ""
             },
             {
                 "name": "LinuxSteamDeckAppImage",
                 "filename": "EmulationStation-DE-x64_SteamDeck.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/98429755/download",
-                "md5": "60c8da230687c740661471fbf9951f60",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/99597614/download",
+                "md5": "f12fc6d524ec58a6c1bf2a697af8517a",
                 "message": ""
             }
         ]
