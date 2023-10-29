@@ -137,8 +137,7 @@
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\kronos_libretro.dll %ROM%</command>
         <command label="Model 2 Emulator (Standalone)">%RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%</command>
         <command label="Model 2 Emulator [Suspend ES-DE] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%</command>
-        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% -force-feedback %INJECT%=%BASENAME%.commands %ROM%</command>
-        <command label="Supermodel [Fullscreen] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% -fullscreen -force-feedback %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>arcade</platform>
         <theme>arcade</theme>
@@ -963,8 +962,7 @@
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\kronos_libretro.dll %ROM%</command>
         <command label="Model 2 Emulator (Standalone)">%RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%</command>
         <command label="Model 2 Emulator [Suspend ES-DE] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%</command>
-        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% -force-feedback %INJECT%=%BASENAME%.commands %ROM%</command>
-        <command label="Supermodel [Fullscreen] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% -fullscreen -force-feedback %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>arcade</platform>
         <theme>mame</theme>
@@ -1082,8 +1080,7 @@
         <fullname>Sega Model 3</fullname>
         <path>%ROMPATH%\model3</path>
         <extension>.7z .7Z .zip .ZIP</extension>
-        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% -force-feedback %INJECT%=%BASENAME%.commands %ROM%</command>
-        <command label="Supermodel [Fullscreen] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% -fullscreen -force-feedback %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% %INJECT%=%BASENAME%.commands %ROM%</command>
         <platform>arcade</platform>
         <theme>model3</theme>
     </system>
