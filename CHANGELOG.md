@@ -82,13 +82,15 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added the ECWolf, NXEngine, OpenLara and Super Bros War RetroArch cores as alternative emulators for the ports system on Unix and Windows
 * Added the ECWolf, NXEngine and Super Bros War RetroArch cores as alternative emulators for the ports system on macOS
 * Added TIC-80 standalone as an alternative emulator for the tic80 system
-* Added the MAME - Current RetroArch core as an alternative emulator for the apple2 system
+* Added the MAME - Current RetroArch core as an alternative emulator for the apple2 and atari7800 systems
 * Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the channelf, daphne and intellivision systems
 * Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the megaduck, odyssey2 and supervision
 * Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the vectrex and videopac systems
 * Added the DirkSimple RetroArch core as an alternative emulator for the daphne and laserdisc systems
 * Added MAME standalone as an alternative emulator for the fmtowns system on Unix and Windows
-* (macOS) Added MAME standalone as the default emulator for the fmtowns system (was previously a placeholder system)
+* Removed the Supermodel [Fullscreen] standalone emulator entries from the arcade, mame and model3 systems on Unix and Windows
+* Removed the explicit -fullscreen and -force-feedback flags from the Supermodel emulator entries for the arcade, mame and model3 systems
+* (macOS) Added the MAME - Current RetroArch core as the default emulator for the fmtowns system (was previously a placeholder system)
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
 * Changed the configuration for the astrocde system to no longer require a manually installed MAME hash file
 * Added the Retro8 RetroArch core as an alternative emulator for the pico8 system
@@ -107,7 +109,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * (Linux) Added support for the Visual Pinball (vpinball) game system
 * (Linux) Added support for using the RetroArch AppImage release in portable mode (added corepath find rules)
 * (Linux) Added support for the AppImage release of Snes9x
-* (Linux) Added support for the Flatpak release of Cemu
+* (Linux) Added support for the Flatpak release of Cemu and Supermodel
 * (Linux) Added support for the Snap release of Dolphin
 * (Linux) Added the PCSX2 Flatpak release to the non-legacy PCSX2 find rule configuration
 * (Linux) Updated the DuckStation find rules as the AppImage release filename has changed
