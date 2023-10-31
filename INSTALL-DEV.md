@@ -8,7 +8,7 @@ Table of contents:
 
 ## Development environment
 
-ES-DE is developed and compiled using GCC and Clang/LLVM Unix, Clang/LLVM on macOS and MSVC on Windows.
+ES-DE is developed and compiled using GCC and Clang/LLVM on Unix/Linux, Clang/LLVM on macOS and MSVC on Windows.
 
 CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `jom` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during development.
 

@@ -89,7 +89,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Added the DirkSimple RetroArch core as an alternative emulator for the daphne and laserdisc systems
 * Added MAME standalone as an alternative emulator for the fmtowns system on Unix and Windows
 * Removed the Supermodel [Fullscreen] standalone emulator entries from the arcade, mame and model3 systems on Unix and Windows
-* Removed the explicit -fullscreen and -force-feedback flags from the Supermodel emulator entries for the arcade, mame and model3 systems
+* Removed the explicit -force-feedback flag from the Supermodel emulator entries for the arcade, mame and model3 systems
 * (macOS) Added the MAME - Current RetroArch core as the default emulator for the fmtowns system (was previously a placeholder system)
 * Added QUASI88 standalone as an alternative emulator for the pc88 system
 * Changed the configuration for the astrocde system to no longer require a manually installed MAME hash file
@@ -184,6 +184,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Changed a number of stream operations to open files for writing in binary mode (to always create proper Unix line breaks)
 * Changed the concept of "theme set" to simply "theme" everywhere in the code and documentation
 * Added a ~5 MB log output size limitation for launched games on Unix and macOS
+* (Linux) The regular AppImage release is no longer built using the bundled TLS/SSL certificates
 * (Windows) Removed a launch command hack that deleted double quotation marks
 * (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
 * (Windows) Improved the README.txt file for the portable release
@@ -205,6 +206,7 @@ In addition to the above many bugs have been fixed and the application has recei
 ### Bug fixes
 
 * Repeatedly enabling and disabling auto collections could crash the application if the theme used the gameselector element
+* Parsing of theme include files would stop if non-existing include files were defined using variables
 * The video player would not play the last couple of frames for any videos
 * Starting the media viewer did not pause fallback game videos (defined using the "default" video property)
 * Quotation marks in the launch command were not always handled correctly when combined with the %CORE% variable
