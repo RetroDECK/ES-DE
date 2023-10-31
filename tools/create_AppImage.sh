@@ -71,7 +71,7 @@ rm -rf ./AppDir
 mkdir AppDir
 
 rm -f CMakeCache.txt
-cmake -DAPPIMAGE_BUILD=on -DBUNDLED_CERTS=on .
+cmake -DAPPIMAGE_BUILD=on .
 make clean
 make -j${JOBS}
 make install DESTDIR=AppDir
