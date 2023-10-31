@@ -1467,7 +1467,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
 #endif
                                           "");
                 }
-                return;
+                continue;
             }
         }
 
