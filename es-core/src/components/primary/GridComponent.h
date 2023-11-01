@@ -305,11 +305,11 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
         item->setLinearInterpolation(mImageLinearInterpolation);
         item->setMipmapping(true);
         if (mImagefit == ImageFit::CONTAIN)
-            item->setMaxSize(mItemSize * mImageRelativeScale);
+            item->setMaxSize(glm::round(mItemSize * mImageRelativeScale));
         else if (mImagefit == ImageFit::FILL)
-            item->setResize(mItemSize * mImageRelativeScale);
+            item->setResize(glm::round(mItemSize * mImageRelativeScale));
         else if (mImagefit == ImageFit::COVER)
-            item->setCroppedSize(mItemSize * mImageRelativeScale);
+            item->setCroppedSize(glm::round(mItemSize * mImageRelativeScale));
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         if (mImageBrightness != 0.0)
@@ -337,11 +337,11 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             mDefaultImage->setLinearInterpolation(mImageLinearInterpolation);
             mDefaultImage->setMipmapping(true);
             if (mImagefit == ImageFit::CONTAIN)
-                mDefaultImage->setMaxSize(mItemSize * mImageRelativeScale);
+                mDefaultImage->setMaxSize(glm::round(mItemSize * mImageRelativeScale));
             else if (mImagefit == ImageFit::FILL)
-                mDefaultImage->setResize(mItemSize * mImageRelativeScale);
+                mDefaultImage->setResize(glm::round(mItemSize * mImageRelativeScale));
             else if (mImagefit == ImageFit::COVER)
-                mDefaultImage->setCroppedSize(mItemSize * mImageRelativeScale);
+                mDefaultImage->setCroppedSize(glm::round(mItemSize * mImageRelativeScale));
             mDefaultImage->setCornerRadius(mImageCornerRadius);
             mDefaultImage->setImage(entry.data.defaultImagePath);
             if (mImageBrightness != 0.0)
@@ -394,11 +394,11 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
         item->setLinearInterpolation(mImageLinearInterpolation);
         item->setMipmapping(true);
         if (mImagefit == ImageFit::CONTAIN)
-            item->setMaxSize(mItemSize * mImageRelativeScale);
+            item->setMaxSize(glm::round(mItemSize * mImageRelativeScale));
         else if (mImagefit == ImageFit::FILL)
-            item->setResize(mItemSize * mImageRelativeScale);
+            item->setResize(glm::round(mItemSize * mImageRelativeScale));
         else if (mImagefit == ImageFit::COVER)
-            item->setCroppedSize(mItemSize * mImageRelativeScale);
+            item->setCroppedSize(glm::round(mItemSize * mImageRelativeScale));
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         if (mImageBrightness != 0.0)
