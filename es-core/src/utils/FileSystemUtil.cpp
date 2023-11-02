@@ -198,7 +198,9 @@ namespace Utils
 #else
 
             if (!homePath.length()) {
-                const std::string& envHome {getenv("HOME")};
+                std::string envHome;
+                if (getenv("HOME") != nullptr)
+                    envHome = getenv("HOME");
                 if (envHome.length())
                     homePath = getGenericPath(envHome);
             }
@@ -231,7 +233,10 @@ namespace Utils
                 return getGenericPath(Utils::String::wideStringToString(envHomeDrive) + "/" +
                                       Utils::String::wideStringToString(envHomePath));
 #else
-            return getenv("HOME");
+            std::string envHome;
+            if (getenv("HOME") != nullptr)
+                envHome = getenv("HOME");
+            return envHome;
 #endif
             return "";
         }
@@ -294,10 +299,12 @@ namespace Utils
 
             return emulatorPath;
 #else
-            const std::string& pathVariable {std::string {getenv("PATH")}};
+            std::string envPath;
+            if (getenv("PATH") != nullptr)
+                envPath = getenv("PATH");
 
             const std::vector<std::string>& pathList {
-                Utils::String::delimitedStringToVector(pathVariable, ":")};
+                Utils::String::delimitedStringToVector(envPath, ":")};
 
             std::string pathTest;
 

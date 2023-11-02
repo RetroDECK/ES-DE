@@ -325,18 +325,18 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     scraperParams.system->getSystemEnvData()->mLaunchCommands.size() > 1) {
                     row.makeAcceptInputHandler([this, title, scraperParams, ed, updateVal,
                                                 originalValue] {
-                        GuiSettings* s {nullptr};
-
-                        bool singleEntry {
+                        const bool singleEntry {
                             scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1};
+
+                        if (!mInvalidEmulatorEntry && ed->getValue() == "" && singleEntry)
+                            return;
+
+                        GuiSettings* s {nullptr};
 
                         if (mInvalidEmulatorEntry && singleEntry)
                             s = new GuiSettings("CLEAR INVALID ENTRY");
                         else
                             s = new GuiSettings(title);
-
-                        if (!mInvalidEmulatorEntry && ed->getValue() == "" && singleEntry)
-                            return;
 
                         std::vector<std::pair<std::string, std::string>> launchCommands {
                             scraperParams.system->getSystemEnvData()->mLaunchCommands};

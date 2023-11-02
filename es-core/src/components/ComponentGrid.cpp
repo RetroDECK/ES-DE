@@ -477,6 +477,8 @@ std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
     const GridEntry* e {getCellAt(mCursor)};
     if (e)
         prompts = e->component->getHelpPrompts();
+    else
+        return prompts;
 
     bool canScrollVert {false};
 

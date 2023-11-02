@@ -236,12 +236,12 @@ void GIFAnimComponent::setAnimation(const std::string& path)
     mFrameRate = 1000.0 / static_cast<double>(mFrameTime);
     mFrameSize = mFileWidth * mFileHeight * 4;
     mTargetPacing = static_cast<int>((1000.0 / mFrameRate) / static_cast<double>(mSpeedModifier));
-    int duration {mTargetPacing * mTotalFrames};
 
     if (mDirection == "reverse")
         mFrameNum = mTotalFrames - 1;
 
     if (DEBUG_ANIMATION) {
+        const int duration {mTargetPacing * mTotalFrames};
         LOG(LogDebug) << "GIFAnimComponent::setAnimation(): Width: " << mFileWidth;
         LOG(LogDebug) << "GIFAnimComponent::setAnimation(): Height: " << mFileHeight;
         LOG(LogDebug) << "GIFAnimComponent::setAnimation(): Total number of frames: "

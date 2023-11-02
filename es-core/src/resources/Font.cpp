@@ -297,8 +297,6 @@ std::string Font::wrapText(const std::string& text,
             continue;
         }
 
-        charWidth = 0.0f;
-        byteCount = 0;
         cursor = i;
 
         // Needed to handle multi-byte Unicode characters.

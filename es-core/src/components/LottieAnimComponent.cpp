@@ -192,7 +192,6 @@ void LottieAnimComponent::setAnimation(const std::string& path)
     }
 
     // Some statistics for the file.
-    double duration {mAnimation->duration()};
     mTotalFrames = mAnimation->totalFrame();
     mFrameRate = mAnimation->frameRate();
     mFrameSize = width * height * 4;
@@ -204,6 +203,7 @@ void LottieAnimComponent::setAnimation(const std::string& path)
         mFrameNum = mTotalFrames - 1;
 
     if (DEBUG_ANIMATION) {
+        const double duration {mAnimation->duration()};
         LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Rasterized width: " << mSize.x;
         LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Rasterized height: " << mSize.y;
         LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Total number of frames: "
