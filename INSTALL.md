@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.1 - Building and advanced configuration
+# EmulationStation Desktop Edition (ES-DE) v2.2 - Building and advanced configuration
 
 Table of contents:
 
@@ -6,13 +6,13 @@ Table of contents:
 
 ## Development environment
 
-ES-DE is developed and compiled using Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and MSVC and GCC (MinGW) on Windows.
+ES-DE is developed and compiled using GCC and Clang/LLVM on Unix/Linux, Clang/LLVM on macOS and MSVC on Windows.
 
-CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `nmake` and `make` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during the development. The only exception is notarization of codesigned macOS packages which require the `altool` and `stapler` binaries that come bundled with Xcode.
+CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `jom` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during development.
 
 For automatic code formatting [clang-format](https://clang.llvm.org/docs/ClangFormat.html) is used.
 
-Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
+Any code editor can be used of course, but [VSCode](https://code.visualstudio.com) is recommended.
 
 ## Building on Unix
 
@@ -49,7 +49,7 @@ Use pacman to install all the required packages:
 sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml poppler
 ```
 
-**Raspberry Pi OS (Raspian)**
+**Raspberry Pi OS**
 
 All of the required packages can be installed with apt-get:
 ```
@@ -94,7 +94,7 @@ pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage libgit2 poppler
 
 In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.
 
-Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
+The pugixml library does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
 
 ```
 git clone https://github.com/zeux/pugixml.git
@@ -118,8 +118,10 @@ Then generate the Makefile and build the software:
 ```
 cd emulationstation-de
 cmake .
-make
+make -j8
 ```
+
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
 
 By default the application updater will be built which checks for new releases on startup, to disable this functionality run the following:
 ```
@@ -133,28 +135,28 @@ By default the master branch will be used, which is where development takes plac
 
 ```
 cd emulationstation-de
-git checkout stable-1.2
+git checkout stable-2.2
 cmake .
-make
+make -j8
 ```
 
 To create a debug build, run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
-make
+make -j8
 ```
 Keep in mind that a debug version will be much slower due to all compiler optimizations being disabled.
 
-To create a profiling build (optimized with debug symbols), run this:
+To create a profiling build (optimized but with debug symbols), run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Profiling .
-make
+make -j8
 ```
 
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
-make
+make -j8
 ```
 Due to buggy AMD GPU drivers it could be a good idea to use the `LSAN_suppressions` file included in the repository to avoid reports of a lot of irrelevant issue, for example:
 ```
@@ -166,7 +168,7 @@ This applies to LeakSanitizer specifically, which is integrated into AddressSani
 To enable ThreadSanitizer which helps with identifying data races and other thread-related issues, build with the TSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DTSAN=on .
-make
+make -j8
 ```
 
 It could also be a good idea to use the `TSAN_suppressions` file included in the repository to suppress issues reported by some third party libraries, for example:
@@ -177,7 +179,7 @@ TSAN_OPTIONS="suppressions=tools/TSAN_suppressions" ./emulationstation --debug -
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
-make
+make -j8
 ```
 
 To get stack traces printed as well, set this environment variable:
@@ -220,7 +222,7 @@ Another useful tool is `scan-build`, assuming you use Clang/LLVM. This is a stat
 
 ```
 scan-build cmake -DCMAKE_BUILD_TYPE=Debug .
-scan-build make -j6
+scan-build make -j8
 ```
 
 You open the report with the `scan-view` command which lets you read it using your web browser. Note that the compilation time is much longer when using the static analyzer compared to a normal build. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
@@ -236,30 +238,24 @@ To build ES-DE with experimental FFmpeg video hardware decoding support, enable 
 
 ```
 cmake -DVIDEO_HW_DECODING=on .
-make
+make -j8
 ```
 
 To build ES-DE with CEC support, enable the corresponding option, for example:
 
 ```
 cmake -DCEC=on .
-make
+make -j8
 ```
 You will most likely need to install additional packages to get this to build. On Debian-based systems these are _libcec-dev_ and _libp8-platform-dev_. Note that the CEC support is currently untested.
 
 To build with the GLES 3.0 renderer, run the following:
 ```
 cmake -DGLES=on .
-make
+make -j8
 ```
 
 This renderer is generally only needed on the Raspberry Pi and the desktop OpenGL renderer should otherwise be used.
-
-Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
-
-```
-make -j6
-```
 
 By default ES-DE will install under /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD although this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.
 
@@ -306,13 +302,16 @@ Assuming the default installation prefix /usr has been used, this is the directo
 
 ```
 /usr/bin/emulationstation
-/usr/share/man/man6/emulationstation.6.gz
-/usr/share/applications/emulationstation.desktop
-/usr/share/emulationstation/LICENSE
+/usr/bin/es-pdf-convert
+/usr/share/applications/org.es_de.emulationstation-de.desktop
 /usr/share/emulationstation/licenses/*
 /usr/share/emulationstation/resources/*
 /usr/share/emulationstation/themes/*
-/usr/share/pixmaps/emulationstation.svg
+/usr/share/emulationstation/LICENSE
+/usr/share/icons/hicolor/scalable/apps/org.es_de.emulationstation-de.svg
+/usr/share/man/man6/emulationstation.6.gz
+/usr/share/metainfo/org.es_de.emulationstation-de.appdata.xml
+/usr/share/pixmaps/org.es_de.emulationstation-de.svg
 ```
 
 However, when installing manually instead of building a package, it's recommended to change the install prefix to /usr/local instead of /usr.
@@ -349,19 +348,19 @@ CPack: - Run preinstall target for: emulationstation-de
 CPack: - Install project: emulationstation-de []
 CPack: Create package
 CPackDeb: - Generating dependency list
-CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-2.1.0-x64.deb generated.
+CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-2.2.0-x64.deb generated.
 ```
 
 You may want to check that the dependencies look fine, as they're (mostly) automatically generated by CMake:
 
 ```
-dpkg -I ./emulationstation-de-2.1.0-x64.deb
+dpkg -I ./emulationstation-de-2.2.0-x64.deb
 ```
 
 The package can now be installed using a package manager, for example apt:
 
 ```
-sudo apt install ./emulationstation-de-2.1.0-x64.deb
+sudo apt install ./emulationstation-de-2.2.0-x64.deb
 ```
 
 To build an RPM package instead, set the flag LINUX_CPACK_GENERATOR to RPM when running cmake, for example:
@@ -380,7 +379,7 @@ CPack: - Run preinstall target for: emulationstation-de
 CPack: - Install project: emulationstation-de []
 CPack: Create package
 CPackRPM: Will use GENERATED spec file: /home/myusername/emulationstation-de/_CPack_Packages/Linux/RPM/SPECS/emulationstation-de.spec
-CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-2.1.0-x64.rpm generated.
+CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-2.2.0-x64.rpm generated.
 ```
 
 On Fedora, you need to install rpmbuild before this command can be run:
@@ -390,17 +389,17 @@ sudo dnf install rpm-build
 
 After the package generation you can check that the metadata looks fine using the `rpm` command:
 ```
-rpm -qi ./emulationstation-de-2.1.0-x64.rpm
+rpm -qi ./emulationstation-de-2.2.0-x64.rpm
 ```
 
 To see the automatically generated dependencies, run this:
 ```
-rpm -q --requires ./emulationstation-de-2.1.0-x64.rpm
+rpm -q --requires ./emulationstation-de-2.2.0-x64.rpm
 ```
 
 And of course, you can also install the package:
 ```
-sudo dnf install ./emulationstation-de-2.1.0-x64.rpm
+sudo dnf install ./emulationstation-de-2.2.0-x64.rpm
 ```
 
 **Creating an AppImage**
@@ -478,7 +477,7 @@ This can take quite a while as multiple packages are downloaded and compiled. It
 
 Re-running macOS_dependencies_setup.sh will delete and download all dependencies again, and re-running macOS_dependencies_build.sh will clean and rebuild all packages. If you want to recompile a single package, make sure to first set the MACOSX_DEPLOYMENT_TARGET variable:
 ```
-export MACOSX_DEPLOYMENT_TARGET=10.14
+export MACOSX_DEPLOYMENT_TARGET=10.15
 ```
 
 Then manually recompile the package, for example:
@@ -487,7 +486,7 @@ cd external/pugixml
 rm CMakeCache.txt
 cmake .
 make clean
-make -j4
+make -j8
 cp libpugixml.a ../..
 ```
 
@@ -495,41 +494,43 @@ After all dependencies have been built, generate the Makefile and build ES-DE:
 
 ```
 cmake .
-make
+make -j8
 ```
+
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
 
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
 ```
 cd emulationstation-de
-git checkout stable-1.2
+git checkout stable-2.2
 cmake .
-make
+make -j8
 ```
 
 To generate a debug build, run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
-make
+make -j8
 ```
 Keep in mind that the debug version will be much slower due to all compiler optimizations being disabled.
 
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
-make
+make -j8
 ```
 
 To enable ThreadSanitizer which helps with identifying data races for multi-threaded code, build with the TSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DTSAN=on .
-make
+make -j8
 ```
 
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
-make
+make -j8
 ```
 
 To get stack traces printed as well, set this environment variable:
@@ -544,15 +545,11 @@ Specifically on macOS it seems as if AddressSanitizer generates a lot of false p
 export ASAN_OPTIONS=detect_container_overflow=0
 ```
 
-Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
-
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
 **Code signing**
 
-Due to the Apple notarization requirement implemented as of macOS 10.14.5 a build with simple code signing is needed for versions up to 10.13 and another build with both code signing and notarization is required for version 10.14 and higher.
-
-macOS code signing is beyond the scope of this document, but the CMake option MACOS_CODESIGN_IDENTITY is used to specify the code signing certificate identity, for example:
+A detailed explanation of macOS code signing is beyond the scope of this document, but the CMake option MACOS_CODESIGN_IDENTITY is used to specify the code signing certificate identity, for example:
 ```
 cmake -DMACOS_CODESIGN_IDENTITY="My Name" .
 ```
@@ -563,14 +560,6 @@ security unlock-keychain
 ```
 
 This is not required if cpack is run from a terminal window started via the desktop interface as the keychain is unlocked as part of the desktop login.
-
-**Legacy build**
-
-Normally ES-DE is meant to be built for macOS 10.14 and higher, but a legacy build for earlier operating system versions can be enabled. This has been tested with a minimum version of 10.11. It's unclear if it works with even older macOS releases.
-
-To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add "legacy" to the DMG installer filename when running CPack. It will also enable the bundled TLS/SSL certificates. As these older macOS releases are no longer receiving patches from Apple, certificates have likely expired meaning the scraper would not work if the bundled certificates were not used.
-
-You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the key SMinimumSystemVersion to the version you're building for. And finally CMAKE_OSX_DEPLOYMENT_TARGET needs to be updated in tools/macOS_dependencies_build.sh. This script then needs to be executed to rebuild all dependencies for the configured macOS version.
 
 **Installing**
 
@@ -642,16 +631,16 @@ CPack: Install projects
 CPack: - Run preinstall target for: emulationstation-de
 CPack: - Install project: emulationstation-de []
 CPack: Create package
-CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-2.1.0-x64.dmg generated.
+CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-2.2.0-x64.dmg generated.
 ```
 
 ## Building on Windows
 
-Both MSVC and MinGW (GCC) work fine for building ES-DE on Windows.
+Although both Microsoft Visual C++ (MSVC) and GCC (MinGW) have historically been supported for building ES-DE on Windows, as of the 2.2.0 release MinGW is no longer recommended and support for it will likely be dropped in future releases.
 
-Although I would prefer to exclude support for MSVC, this compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. But for release builds MinGW is very fast and ES-DE starts around 18% faster when built with MinGW, meaning this compiler probably generates more efficient code overall. As well MSVC requires a lot more DLL files to be distributed with the application and the console window is always displayed on startup for some reason.
+Although MinGW produces much higher quality code than MSVC with ES-DE running around 10% to 25% faster it's unfortunately not sustainable to keep using it. There are multiple technical issues with third party libraries like severe threading issues with FFmpeg and some libraries like Poppler not being readily available. Debugging with MinGW is also a very slow and tedious process compared to MSVC. MinGW up to 9.2.0 works more or less fine but anything more modern than this introduces issues like FFmpeg's avfilter_graph_free() call taking up to 7000 times longer to complete which makes video playback unusable. Setting filter graphs to use single threads solves some but not all issues. As well libgit2 has (probably) a race condition that causes random repository corruption that is likely only present when using MinGW.
 
-For these reasons I think MSVC makes sense for development and MinGW for the releases.
+Clang/LLVM has also been evaluated but it suffers from at least the same threading issues as MinGW, likely because it uses libraries from the latter. It also fails to build some of the third party libraries needed by ES-DE.
 
 **MSVC setup**
 
@@ -660,8 +649,6 @@ Install Git for Windows: \
 
 Download the Visual Studio Build Tools (choose Visual Studio Community edition): \
 [https://visualstudio.microsoft.com/downloads](https://visualstudio.microsoft.com/downloads)
-
-It seems as if Microsoft has dropped support for installing the Build Tools without the Visual Studio IDE, at least I've been unable to find a way to exclude it. But I just pretend it's not installed and use VSCode instead which works perfectly fine.
 
 During installation, choose the Desktop development with C++ workload with the following options (version details may differ):
 
@@ -678,6 +665,9 @@ C++ CMake tools for Windows
 ```
 
 If not installing the CMake version supplied by Microsoft, you need to make sure that you have a recent version on your machine or CMake will not be able to detect MSVC correctly.
+
+It's strongly recommended to also install Jom, which is a drop-in replacement for nmake that offers support for building in parallel using multiple CPU cores:\
+https://wiki.qt.io/Jom
 
 As well you may need to install the latest version of Microsoft Visual C++ Redistributable which can be downloaded here:\
 https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redis
@@ -698,26 +688,26 @@ Download the following packages and install them:
 Download the _MinGW-w64 based_ version of GCC: \
 [https://jmeubank.github.io/tdm-gcc](https://jmeubank.github.io/tdm-gcc)
 
-After installation, make a copy of `TDM-GCC-64\bin\mingw32-make` to `make` just for convenience.
+After installation, make a copy of `TDM-GCC-64\bin\mingw32-make` to `make` for your convenience.
 
-Version 9.2.0 of MinGW has been confirmed to work fine, but 10.3.0 appears broken as it causes huge performance problems for the FFmpeg function avfilter_graph_free() with execution times going from milliseconds to hundreds of milliseconds or even seconds.
-
-Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The recommended MinGW distribution should work fine though.
+Only version 9.2.0 of MinGW has been confirmed to work correctly, anything newer introduces severe problems and MSVC should instead be used if a more modern compiler is required.
 
 **Other preparations**
 
-In order to get clang-format onto the system you need to download and install Clang: \
+In order to get clang-format onto the system you need to download and install Clang/LLVM: \
 [https://releases.llvm.org](https://releases.llvm.org)
 
 Just run the installer and make sure to select the option _Add LLVM to the system PATH for current user_.
 
-Install your editor of choice, I use [VSCode](https://code.visualstudio.com).
+Alternatively you can temporarily install LLVM, copy clang-format.exe to any directory added to your PATH environment variable and then uninstall LLVM to save a few gigabytes of disk space.
 
-Configure Git. I won't get into the details on how this is done, but there are many resources available online to support with this. The `Git Bash` shell shipped with Git for Windows is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS2.
+Install your editor of choice, such as [VSCode](https://code.visualstudio.com).
 
-It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the editor. But if not done, lines breaks will anyway be converted when running clang-format on the code, as explained [here](INSTALL.md#using-clang-format-for-automatic-code-formatting).
+Configure Git. Details about its setup is beyond the scope of this document, but there are many good resources available online. The `Git Bash` shell shipped with Git for Windows is very useful though as it somewhat reproduces a Unix environment using MSYS2.
 
-In the descriptions below it's assumed that all build steps for MinGW/GCC will be done in the Git Bash shell, and all the build steps for MSVC will be done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
+It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the code editor. But if not done, lines breaks will anyway be converted when running clang-format on the code, as explained [here](INSTALL.md#using-clang-format-for-automatic-code-formatting).
+
+The instructions below assume all build steps for MSVC are done in the MSVC developer console (x64 Native Tools Command Prompt for VS) and all MinGW build steps are done using the Git Bash shell.
 
 **Cloning and setting up dependencies**
 
@@ -731,7 +721,7 @@ By default the master branch will be used, which is where development takes plac
 
 ```
 cd emulationstation-de
-git checkout stable-1.2
+git checkout stable-2.2
 ```
 
 On Windows all dependencies are kept in-tree in the `external` directory tree. Most of the libraries can be downloaded in binary form, but a few need to be built from source code. There are four scripts in the tools directory that automate this entirely. Two of them are used for the MSVC compiler and the other two for MinGW.
@@ -750,7 +740,7 @@ tools/Windows_dependencies_setup_MinGW.sh
 tools/Windows_dependencies_build_MinGW.sh
 ```
 
-Re-running the setup script will delete and download all dependencies again, and re-running the build script will clean and rebuild from scratch. You can of course also manually recompile an individual library if needed.
+Re-running the setup script will delete and download all dependencies again, and re-running the build script will clean and rebuild from scratch.
 
 The setup scripts for both MSVC and MinGW will download and launch an installer for OpenSSL for Windows if this has not already been installed on the build machine. Just run through the installer using the default settings and everything should work fine.
 
@@ -758,24 +748,28 @@ Following these preparations, ES-DE should be ready to be compiled.
 
 **Building ES-DE using MSVC**
 
+It's assumed that [Jom](https://wiki.qt.io/Jom) is used, but if instead using nmake then just remove _JOM_ from the -G flag argument and remove the -j flag as nmake does not support building in parallel.
+
 For a release build:
 
 ```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release .
-nmake
+cmake -G "NMake Makefiles JOM" -DCMAKE_BUILD_TYPE=Release .
+jom -j8
 ```
 
 Or for a debug build:
 ```
-cmake -G "NMake Makefiles" .
-nmake
+cmake –G "NMake Makefiles JOM” .
+jom -j8
 ```
 
-For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
+
+For some reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
 
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
-cmake -G "NMake Makefiles" -DASAN=on .
+cmake -G "NMake Makefiles JOM" -DASAN=on .
 nmake
 ```
 
@@ -783,31 +777,29 @@ ThreadSanitizer and UndefinedBehaviorSanitizer aren't available for the MSVC com
 
 There are a number of compiler warnings for the bundled rlottie library when building with MSVC. Unfortunately these need to be resolved upstream, but everything should still work fine so the warnings can be ignored for now.
 
-Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this in depth.
-
-Be aware that MSVC links against different VC++ libraries for debug and release builds (e.g. MSVCP140.dll or MSVCP140d.dll), so any NSIS package made from a debug build will not work on computers without the MSVC development environment installed.
-
 **Building ES-DE using MinGW**
 
 For a release build:
 
 ```
 cmake -G "MinGW Makefiles" .
-make
+make -j8
 ```
 
 Or for a debug build:
 
 ```
 cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug .
-make
+make -j8
 ```
+
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
 
 Unfortunately AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer do not seem to be supported with MinGW.
 
 You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
 
-Note that compilation time is much longer than on Unix or macOS, and linking is incredibly slow for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
+Note that compilation time is much longer than on Unix/Linux or macOS, and linking is incredibly slow for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
 
 **TLS/SSL certificates**
 
@@ -838,7 +830,7 @@ CPack: Install projects
 CPack: - Run preinstall target for: emulationstation-de
 CPack: - Install project: emulationstation-de []
 CPack: Create package
-CPack: - package: C:/Programming/emulationstation-de/EmulationStation-DE-2.1.0-x64.exe generated.
+CPack: - package: C:/Programming/emulationstation-de/EmulationStation-DE-2.2.0-x64.exe generated.
 ```
 
 The default installation directory suggested by the installer is `C:\Program Files\EmulationStation-DE` but this can of course be changed by the user.
@@ -1080,7 +1072,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --anti-aliasing [0, 2 or 4]           Set MSAA anti-aliasing to disabled, 2x or 4x
 --no-splash                           Don't show the splash screen during startup
 --no-update-check                     Don't check for application updates during startup
---gamelist-only                       Skip automatic game ROM search, only read from gamelist.xml
+--gamelist-only                       Skip automatic game search, only read from gamelist.xml
 --ignore-gamelist                     Ignore the gamelist.xml files
 --show-hidden-files                   Show hidden files and folders
 --show-hidden-games                   Show hidden games
@@ -1090,7 +1082,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --force-input-config                  Force configuration of input devices
 --create-system-dirs                  Create game system directories
 --home [path]                         Directory to use as home path
---debug                               Print debug information
+--debug                               Enable debug mode
 --version, -v                         Display version information
 --help, -h                            Summon a sentient, angry tuba
 ```
@@ -1118,7 +1110,7 @@ For the following options, the es_settings.xml file is immediately updated/saved
 
 As well, passing the option --ignore-gamelist will disable the ParseGamelistOnly setting controlled by --gamelist-only and immediately save the es_settings.xml file. If passing both the --ignore-gamelist and --gamelist-only parameters then --ignore-gamelist will take precedence and --gamelist-only will be ignored.
 
-The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show ROMs from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
+The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show games from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
 
 ## Settings not configurable via the GUI
 
@@ -1130,11 +1122,11 @@ Enabling this will skip all input event logging (button and key presses). Defaul
 
 **DebugSkipMissingThemeFiles**
 
-Enabling this will skip all debug messages about missing files when loading a theme set. Default value is false.
+Enabling this will skip all debug messages about missing files when loading a theme. Default value is false.
 
 **DebugSkipMissingThemeFilesCustomCollections**
 
-Enabling this will skip all debug messages about missing files specifically for custom collections when loading a theme set. Note that DebugSkipMissingThemeFiles takes precedence, so if that setting is set to true then the DebugSkipMissingThemeFilesCustomCollections setting will be ignored. Default value is true.
+Enabling this will skip all debug messages about missing files specifically for custom collections when loading a theme. Note that DebugSkipMissingThemeFiles takes precedence, so if that setting is set to true then the DebugSkipMissingThemeFilesCustomCollections setting will be ignored. Default value is true.
 
 **LegacyGamelistFileLocation**
 
@@ -1249,6 +1241,10 @@ Below is an overview of the file layout with various examples. For the command t
         <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supafaust_libretro.so %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
 
+        <!-- This example for Unix uses the %PRECOMMAND% variable to run an emulator made for Windows using the Wine compatibility layer.
+        This variable uses the regular find rules to locate the pre-command binary. -->
+        <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
+
         <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
         the snes9x_libretro core, If there are spaces in the path or filename, you must enclose them in quotation marks, such as
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
@@ -1303,10 +1299,9 @@ Below is an overview of the file layout with various examples. For the command t
         You can use multiple platforms too, delimited with any of the whitespace characters (", \r\n\t"), e.g. "megadrive, genesis". -->
         <platform>snes</platform>
 
-        <!-- The theme to load from the current theme set. See THEMES.md for more information.
-        This tag is optional and if it doesn't exist, ES-DE will attempt to find a theme with the same name as the system name.
-        If no such match is made, the system will be unthemed.
-        It's recommended to include this tag even if it's just to clarify that the theme should correspond to the system name. -->
+        <!-- The theme system name, see THEMES.md for more information. This tag is optional and if it doesn't exist, ES-DE will
+        use the system name instead. It's still recommended to include this tag even if it's just to clarify that it should
+        correspond to the system name. -->
         <theme>snes</theme>
     </system>
 </systemList>
@@ -1330,7 +1325,7 @@ The following variables are expanded for the `command` tag:
 
 `%STARTDIR%` - The directory to start in when launching the emulator. Must be defined as a pair separated by an equal sign. This is normally not required, but some emulators and game engines like standalone MAME and OpenBOR will not work properly unless you're in the correct directory when launching a game. Either an absolute path can be used, such as `%STARTDIR%=C:\Games\mame` or some variables are available that provide various functions. The `%EMUDIR%` variable can be used to start in the directory where the emulator binary is located, i.e. `%STARTDIR%=%EMUDIR%`, the `%GAMEDIR%` variable can be used to start in the directory where the game file is located, i.e. `%STARTDIR%=%GAMEDIR%` and the `%GAMEENTRYDIR%` variable can be used which works identically to `%GAMEDIR%` with the exception that it will interpret the actual game entry as the start directory. This is useful in very rare situations like for the EasyRPG Player where the game directories are interpreted as files but where the game engine must still be started from inside the game directory. If an absolute path is set that contains blankspaces, then it must be surrounded by quotation marks, for example `%STARTDIR%="C:\Retro games\mame"`. If the directory defined by this variable does not exist, it will be created on game launch. The variable can be placed anywhere in the launch command if the %EMULATOR_ variable is used, otherwise it has to be placed after the emulator binary.
 
-`%INJECT%` - This allows the injection of launch arguments or environment variables stored in a text file on the filesystem. The %INJECT% variable must be defined as a pair separated by an equal sign, for example `%INJECT%=game.commands`. The `%BASENAME%` variable can also be used in conjunction with this variable, such as `%INJECT%=%BASENAME%.commands`. By default a path relative to the game file will be assumed but it's also possible to use an absolute path or the ~ (tilde) symbol which will expand to the home directory. If a path contains spaces it needs to be surrounded by quotation marks, such as `%INJECT%="C:\My games\ROMs\daphne\%BASENAME%.daphne\%BASENAME%.commands"`. The variable can be placed anywhere in the launch command and the file contents will be injected at that position. The specified file is optional, if it does not exist, is empty, or if there are insufficient permissions to read the file, then it will simply be skipped. For safety reasons the injection file can only have a maximum size of 4096 bytes and if it's larger than this it will be skipped and a warning will be written to es_log.txt.
+`%INJECT%` - This allows the injection of launch arguments or environment variables stored in a text file on the filesystem. The %INJECT% variable must be defined as a pair separated by an equal sign, for example `%INJECT%=game.commands`. The `%BASENAME%` variable can also be used in conjunction with this variable, such as `%INJECT%=%BASENAME%.commands`. By default a path relative to the game file will be assumed but it's also possible to use an absolute path or the ~ (tilde) symbol which will expand to the home directory. If a path contains spaces it needs to be surrounded by quotation marks, such as `%INJECT%="C:\My games\ROMs\daphne\%BASENAME%.daphne\%BASENAME%.commands"`. The variable can be placed anywhere in the launch command and the file contents will be injected at that position. It's also possible to have multiple injections by defining the variable more than once at different locations in the launch command string. The specified file is optional, if it does not exist, is empty, or if there are insufficient permissions to read the file, then it will simply be skipped. For safety reasons the injection file can only have a maximum size of 4096 bytes and if it's larger than this it will be skipped and a warning will be written to es_log.txt.
 
 `%EMUPATH%` - Replaced with the path to the emulator binary. This variable is used for manually specifying emulator core locations, and a check for the existence of the core file will be done on game launch and an error displayed if it can't be found. Normally %EMUPATH% should not be used as the %CORE_ variable is the recommended method for defining core locations.
 
@@ -1338,9 +1333,13 @@ The following variables are expanded for the `command` tag:
 
 `%GAMEDIR%` - Replaced with the path to the game.
 
+`%GAMEDIRRAW%` - Replaced with the unescaped path to the game.
+
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
 `%EMULATOR_` - This utilizes the emulator find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command. The find rules are explained in more detail below.
+
+`%PRECOMMAND_` - This utilizes the emulator find rules as defined in `es_find_rules.xml` to locate a pre-command binary. It's for instance useful for running Windows emulators on Linux using Wine or Proton. The %PRECOMMAND_ entry can be located anywhere in the launch command but it should be placed before the %EMULATOR_ variable in order to work as intended.
 
 `%CORE_` - This utilizes the core find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command.
 
@@ -1467,6 +1466,8 @@ Here is yet another example with the addition of the `snes` system where some fi
 
 This file makes it possible to apply a custom systems sorting without having to modify the es_systems.xml file directly. It should be placed in the custom_systems directory, e.g.  `~/.emulationstation/custom_systems/es_systems_sorting.xml`
 
+Note that in order for ES-DE to load this file you'll need to set the _Systems sorting_ option in the _Other settings_ menu to _Full names or custom_.
+
 The structure of this file is essentially a simplified version of the es_systems.xml file, but with only the `<name>` and `<systemsortname>` tags present per system.
 
 Here's an example where three systems have been sorted by release year instead of the default full system name:
@@ -1497,10 +1498,12 @@ There are also four complete sorting files bundled with ES-DE, you can find them
 
 These files include all systems supported by ES-DE and provide the following sorting options:
 
+* Release year
+* Manufacturer, release year
 * Hardware type, release year
 * Manufacturer, hardware type, release year
-* Manufacturer, release year
-* Release year
+
+You can apply any of these sorting files via the _Systems sorting_ option in the _Other settings_ menu. Note that in order to load a es_systems_sorting.xml file placed in the custom_systems directory you'll need to set this option to _Full names or custom_.
 
 ## es_find_rules.xml
 
@@ -1586,7 +1589,6 @@ It's pretty straightforward, there are currently four rules supported for findin
 Of these, `winregistrypath` and `winregistryvalue` are only available on Windows, and attempting to use the rule on any other operating system will generate a warning in the log file when processing the es_find_rules.xml file.
 
 The `name` attribute must correspond to the command tags in es_systems.xml, take for example this line:
-
 ```xml
 <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
 ```
@@ -1594,6 +1596,11 @@ The `name` attribute must correspond to the command tags in es_systems.xml, take
 Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so pretty).
 
 Of course this makes it possible to add any number of emulators to the configuration file.
+
+The find rules can also be used by the %PRECOMMAND_ variable, which is for instance useful for running Windows emulators on Linux using Wine or Proton. In the following example two separate find rules are used, one for the %PRECOMMAND_ variable and another one for the %EMULATOR_ variable:
+```xml
+<command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
+```
 
 The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, a search will be performed for the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe`. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the default value for the key actually exists. If not, it will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
 
@@ -1886,7 +1893,7 @@ For folders, most of the fields are identical although some are removed. In the 
 
 ## Debug mode
 
-By passing the --debug command line option, ES-DE will increase the logging to include a lot of additional debug output which is useful both for development and in order to pinpoint issues as a user.
+By enabling the _Debug mode_ setting in the _Other settings_ menu or by passing the --debug command line option, ES-DE will increase the logging to include a lot of additional debug output which is useful both for development and in order to pinpoint issues as a user.
 In addition to this extra logging, a few key combinations are enabled when in debug mode. These are useful both for working on ES-DE itself as well as for theme developers.
 
 **Ctrl + i**
@@ -1905,7 +1912,7 @@ This option only applies to menus, where it will render a grid on the user inter
 
 This will reload either a single gamelist or all gamelists depending on where you're located when entering the key combination (go to the system view to make a complete reload). Very useful for theme development as any changes to the theme files will be activated without requiring an application restart. Note that the menu needs to be closed for this key combination to have any effect.
 
-By default all controller input (keyboard and controller button presses) will be logged when the --debug flag has been passed. To disable the input logging, the setting DebugSkipInputLogging kan be set to false in the es_settings.xml file. There is no menu entry to change this as it's intended for developers and not for end users.
+By default all controller input (keyboard and controller button presses) will be logged when in debug mode. To disable the input logging, the setting DebugSkipInputLogging kan be set to false in the es_settings.xml file. There is no menu entry to change this as it's intended for developers and not for end users.
 
 ## Adding custom controller profiles
 
@@ -1990,7 +1997,9 @@ Just make sure to not place the portable installation on a network share that us
 
 There are numerous locations throughout ES-DE where custom scripts can be executed if the option to do so has been enabled in the settings. You'll find the option _Enable custom event scripts_ on the Main menu under _Other settings_. By default this setting is deactivated so make sure to enable it to use this feature.
 
-The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files. If you want to have the scripts executed in a certain order you can name them accordingly as they will be sorted and executed in lexicographic order. The sorting is case-sensitive on Unix/Linux and case-insensitive on macOS and Windows. ES-DE will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
+The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then attempt to execute all these files (regardless of their file extensions). If you want to have the scripts executed in a certain order you can name them accordingly as they will be sorted and executed in lexicographic order. The sorting is case-sensitive on Unix/Linux and case-insensitive on macOS and Windows. ES-DE will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
+
+On Windows it's also possible to place .lnk shortcut files in the event directories to have these executed in the same manner as a script. Note that while PowerShell scripts can't be executed directly they can be run via either a .lnk shortcut file or a .bat wrapper script where you explicitly call powershell.exe with the -command flag. Just be aware that by default the execution of PowerShell scripts is disabled on Windows. Further details about PowerShell is beyond the scope of this document.
 
 There are up to four parameters that will be passed to these scripts, as detailed below:
 
@@ -2003,7 +2012,7 @@ There are up to four parameters that will be passed to these scripts, as detaile
 | config-changed           |                                                    | On saving application settings or controller configuration                  |
 | settings-changed         |                                                    | On saving application settings (config-changed event triggered as well)     |
 | controls-changed         |                                                    | On saving controller configuration (config-changed event triggered as well) |
-| theme-changed            | New theme name, old theme name                     | When manually changing theme sets in the UI Settings menu                   |
+| theme-changed            | New theme name, old theme name                     | When manually changing themes in the UI Settings menu                       |
 | game-start               | ROM path, game name, system name, system full name | On game launch                                                              |
 | game-end                 | ROM path, game name, system name, system full name | On game end (or on application wakeup if running in the background)         |
 | screensaver-start        | _timer_ or _manual_                                | Screensaver started via timer or manually                                   |

@@ -1,14 +1,14 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
-## Version 2.2.0 (in development)
+## Version 2.2.0
 
-**Release date:** TBD
+**Release date:** 2023-11-02
 
 ### Release overview
 
 The 2.2 release adds many new features like cleanup tools for orphaned data, file hash searching for the scraper, clipboard paste support, ability to change systems sorting from the GUI and more complete Unicode support. It's now possible to rescan the ROM directory and to update/create the ROM directory tree from the new Utilities menu, both without restarting the application.
 
-New theme engine functionality has been implemented such as rounded corners for images, videos and animations, horizontally scrolling text containers and stationary elements. Rendering quality has been improved, especially font rendering which now has a higher quality across all types of devices and screen resolutions.
+New theme engine functionality has been implemented such as rounded corners for images, videos and animations, horizontally scrolling text containers and stationary elements. Rendering accuracy has been improved, especially font rendering which now has a higher quality across all types of devices and screen resolutions.
 
 Support has been added for many new systems and emulators, and on Linux there is now support for running Windows emulators using Wine or Proton.
 
@@ -127,7 +127,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Changed the platform for the ags system to pcwindows to improve scraping
 * Changed the platform for the videopac system to odyssey2 to improve scraping
 * Added the snes-msu1 platform so that these games can be scraped using ScreenScraper (requires custom system config)
-* Changed the full name for the vectrex system from "Smith Engineering Vectrex" to "GCE Vectrex"
+* Changed the fullname for the vectrex system from "Smith Engineering Vectrex" to "GCE Vectrex"
 * Changed the fullname for the tic80 system from "TIC-80 Game Engine" to "TIC-80 Fantasy Computer"
 * (modern-es-de) Replaced the carousel images for the c64 and dos systems
 * Changed the screensaver to never show the same game again until all games have been cycled through
@@ -139,7 +139,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Set scanline rendering as disabled by default for the slideshow screensaver
 * Changed the sort types "filename, ascending" and "filename, descending" to "name, ascending" and "name, descending"
 * Changed the "no games" dialog to no longer save the ROM directory to es_settings.xml if its value hasn't changed
-* When editing custom collections with really long names, the "Y" helpsystem text now gets abbreviated
+* When editing custom collections with really long names, the "Y" button helpsystem text now gets abbreviated
 * Removed the "Legacy gamelist view style" and "Legacy theme transitions" settings
 * Removed the "Display pillarboxes for gamelist videos" and "Render scanlines for gamelist videos" settings
 * Removed Linux DEB package support from ApplicationUpdater as these packages are no longer provided
@@ -150,7 +150,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Removed the es_log.txt entry when an es_systems.cfg legacy systems configuration file was found on startup
 * Improved font rendering quality and always enable linear texture interpolation for both minification and magnification
-* Improved the blur shaders to run faster at higher resolutions and to look identical regardless of display resolution
+* Improved the blur shaders to run faster at higher resolutions and to look nearly identical regardless of display resolution
 * Improved the blur shaders rendering quality when rotating the screen 90 or 270 degrees
 * Added rounded corner support to the image, video, animation, carousel and grid elements
 * Added a "stationary" property to all secondary elements to set them as stationary during slide transitions
@@ -184,13 +184,14 @@ In addition to the above many bugs have been fixed and the application has recei
 * Changed a number of stream operations to open files for writing in binary mode (to always create proper Unix line breaks)
 * Changed the concept of "theme set" to simply "theme" everywhere in the code and documentation
 * Added a ~5 MB log output size limitation for launched games on Unix and macOS
-* (Linux) The regular AppImage release is no longer built using the bundled TLS/SSL certificates
+* (Linux) The regular AppImage release is no longer built to use the bundled TLS/SSL certificates
 * (Windows) Removed a launch command hack that deleted double quotation marks
 * (Windows) Added a warning dialog on startup if an unsafe upgrade of the portable release has been made
 * (Windows) Improved the README.txt file for the portable release
 * (Windows) Defined UNICODE and _UNICODE in the CMake configuration to force Unicode support for the Win32 API
 * (Windows) Added proper Unicode support to the Windows Registry find rules "winregistrypath" and "winregistryvalue"
 * (Windows) Set the subsystem to WINDOWS when building with MSVC to avoid displaying a console window on application startup
+* (Windows) Bundled the C++ dependency libraries when building with MSVC
 * (Windows) Now only redirect the standard input/output streams to the console if there is actually a console available
 * (macOS) Changed the minimum required OS version from 10.14 "Mojave" to 10.15 "Catalina"
 * (macOS) Completely removed support for the legacy OS build
@@ -217,7 +218,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * If multiple games had the same thumbnail in the interactive scraper, then this image would not get displayed for all entries
 * Scrollable text containers were sometimes not updated correctly which led to text being cut off vertically
 * Slider knobs were sometimes not correctly positioned horizontally
-* The background was too dark when opening a menu with the dark menu color scheme and the option to blur the background was disabled
+* The background was too dark when opening a menu with the dark menu color scheme selected and the option to blur the background disabled
 * The lowercase .xdf file extension was not defined correctly for the pc98 system
 * (Windows) Lack of event polling when suspended led to various strange problems like OS audio mixer issues and emulators refusing to exit
 * (Windows) If the ROMDirectory setting had a value then all custom collection files contained absolute paths instead of relative paths

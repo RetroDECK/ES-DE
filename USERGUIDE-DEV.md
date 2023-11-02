@@ -3720,7 +3720,7 @@ You can later add additional games to the collection by navigating to it, bringi
 _Example of custom collections, here configured as genres._
 
 ![alt text](images/es-de_custom_collections_editing.png "ES-DE Custom Collections")
-_When editing a custom collection and the theme uses a textlist, a tick symbol will be displayed for any game that is part of the collection._
+_When editing a custom collection and the theme uses a textlist, then a tick symbol will be displayed for any game that is part of the collection._
 
 
 The way that custom collections are implemented is very simple. There is a single configuration file per collection inside the folder `~/.emulationstation/collections`
