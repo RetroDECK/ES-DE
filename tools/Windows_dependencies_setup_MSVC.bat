@@ -326,10 +326,7 @@ if exist "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll" (
 echo:
 echo Copying DLL files from Windows\System32
 
-copy /Y C:\Windows\System32\MSVCP140.dll
-copy /Y C:\Windows\System32\VCOMP140.DLL
-copy /Y C:\Windows\System32\VCRUNTIME140.dll
-copy /Y C:\Windows\System32\VCRUNTIME140_1.dll
+copy /Y C:\Windows\System32\vcomp140.dll
 
 echo:
 echo Done setting up all dependencies.

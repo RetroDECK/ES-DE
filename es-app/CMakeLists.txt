@@ -144,6 +144,10 @@ if(WIN32)
     install(TARGETS EmulationStation RUNTIME DESTINATION .)
     install(TARGETS es-pdf-convert RUNTIME DESTINATION es-pdf-converter)
     if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+        set(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION .)
+        if(CMAKE_BUILD_TYPE MATCHES Debug)
+            set(CMAKE_INSTALL_DEBUG_LIBRARIES TRUE)
+        endif()
         install(FILES ../avcodec-60.dll
                       ../avfilter-9.dll
                       ../avformat-60.dll
@@ -159,13 +163,10 @@ if(WIN32)
                       ../libcurl-x64.dll
                       ../libssl-1_1-x64.dll
                       ../lunasvg.dll
-                      ../MSVCP140.dll
                       ../pugixml.dll
                       ../rlottie.dll
                       ../SDL2.dll
-                      ../VCOMP140.DLL
-                      ../VCRUNTIME140.dll
-                      ../VCRUNTIME140_1.dll
+                      ../vcomp140.dll
                       DESTINATION .)
         install(FILES ../es-pdf-converter/charset.dll
                       ../es-pdf-converter/deflate.dll
