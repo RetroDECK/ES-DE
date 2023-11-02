@@ -1,8 +1,8 @@
-# EmulationStation Desktop Edition (ES-DE) v2.1 - Themes
+# EmulationStation Desktop Edition (ES-DE) v2.2 - Themes
 
-If creating theme sets specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Because ES-DE theme engine functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. At least the -es-de extension is an indicator that it's an ES-DE specific theme set. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting theme sets from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
+If creating themes specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Themes made for ES-DE are not compatible with any other EmulationStation forks (and vice versa) and the -es-de extension makes it clear that it's an ES-DE theme. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting themes from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
 
-Before your start, make sure to download the _Theme engine examples_ theme set that contains a number of example variants for things like vertical and horizontal carousels, wheel carousels, system view textlists, grids etc:
+Before your start, make sure to download the _Theme engine examples_ theme that contains a number of example variants for things like vertical and horizontal carousels, wheel carousels, system view text lists, grids etc:
 
 https://gitlab.com/es-de/themes/theme-engine-examples-es-de
 
@@ -14,11 +14,11 @@ There is also some documentation written by lilbud covering general tips and tri
 
 https://github.com/lilbud/es-de-theme-stuff
 
-To test whether your theme set includes support for all ES-DE systems, download one of the following archives which contain ROMs directory structures fully populated with dummy files:
+To test whether your theme includes support for all ES-DE systems, download one of the following archives which contain ROM directory trees fully populated with dummy files:
 
-[ROMs_ALL_Unix.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.1/tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
-[ROMs_ALL_macOS.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.1/tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
-[ROMs_ALL_Windows.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.1/tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
+[ROMs_ALL_Unix.zip](tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
+[ROMs_ALL_macOS.zip](tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
+[ROMs_ALL_Windows.zip](tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
 
 If you unzip and temporarily replace your ROMs directory with one of these, every system will be enabled on startup.
 
@@ -34,59 +34,84 @@ Table of contents:
 
 ## Introduction
 
-ES-DE allows the grouping of themes for multiple game systems into a **theme set**. A theme is a collection of **elements**, each with their own **properties** that define the way they look and behave. These elements include things like text lists, carousels, images and animations.
+An ES-DE theme is a collection of assets like images, videos and fonts as well as XML configuration files which contain various **elements**, each with their own **properties** that define the way the theme looks and behaves. These elements include things like text, images, videos, animations, carousels, grids etc.
 
 Internally ES-DE uses the concept of **components** to actually implement the necessary building blocks to parse and render the elements, and although this is normally beyond the scope of what a theme author needs to consider, it's still good to be aware of the term as it's sometimes used in the documentation.
 
-Every game system has its own subdirectory within the theme set directory structure, and these are defined in the systems configuration file `es_systems.xml` either via the optional `<theme>` tag, or otherwise via the mandatory `<name>` tag. When ES-DE populates a system on startup it will look for a file named `theme.xml` in each such directory.
+Every game system may have its own subdirectory within the theme directory tree, and these directory names are defined in the systems configuration file `es_systems.xml` either via the optional `<theme>` tag, or otherwise via the mandatory `<name>` tag. When ES-DE populates a system on startup it will look for a file named `theme.xml` in each such directory.
 
-By placing a theme.xml file directly in the root of the theme set directory, that file will be processed as a default if there is no system-specific theme.xml file available.
+By placing a theme.xml file directly in the root of the theme directory, that file will be processed as a default if there is no system-specific theme.xml file available. This means that the structure of having a separate directory per supported game system is entirely optional.
 
-In the example below, we have a theme set named `mythemeset-es-de` which includes the `snes` and `nes` systems. Assuming you have some games installed for these systems, the files `mythemeset-es-de/nes/theme.xml` and `mythemeset-es-de/snes/theme.xml` will be processed on startup. If there are no games available for a system, its theme.xml file will be skipped.
+In the example below, we have a theme named `mytheme-es-de` which includes the `snes` and `nes` systems. Assuming you have some games installed for these systems, the files `mytheme-es-de/nes/theme.xml` and `mytheme-es-de/snes/theme.xml` will be processed on startup. If there are no games available for a system, its theme.xml file will be skipped.
 
-The directory structure of our example theme set could look something like the following:
+The directory structure for our example theme could look something like the following:
 
 ```
 ...
-   themes/
-      mythemeset-es-de/
-         core/
-            font.ttf
-            bold_font.ttf
-            frame.png
-
-         nes/
-            theme.xml
-            background.jpg
-            logo.svg
-            logo_video.svg
-
-         snes/
-            theme.xml
-            background.jpg
-            logo.svg
-            logo_video.svg
-
-         fonts.xml
+themes/
+   mytheme-es-de/
+      core/
+         font.ttf
+         font_bold.ttf
+         frame.png
+      nes/
+         background.jpg
+         logo.svg
          theme.xml
+      snes/
+         background.jpg
+         logo.svg
+         theme.xml
+
+      fonts.xml
+      theme.xml
 ```
 
-The theme set approach makes it easy for users to install different themes and choose between them from the _UI Settings_ menu.
+An alternative approach would be to instead rely on variables for populating system-specific information and media files, and this way it's not necessary to setup separate directories per system:
 
-There are two places that ES-DE can load theme sets from:
-* `[HOME]/.emulationstation/themes/[THEME_SET]/`
-* `[INSTALLATION PATH]/themes/[THEME_SET]/`
+```
+...
+themes/
+   mytheme-es-de/
+      core/
+         font.ttf
+         font_bold.ttf
+         frame.png
+      systems/
+         backgrounds/
+            nes.jpg
+            snes.jpg
+         logos/
+            nes.svg
+            snes.svg
+         metadata/
+            nes.xml
+            snes.xml
 
-An example installation path would be: \
-`/usr/share/emulationstation/themes/slate-es-de/`
+      fonts.xml
+      theme.xml
+```
 
-If a theme set with the same name exists in both locations, the one in the home directory will be loaded and the other one will be skipped.
+The ES-DE theme functionality makes it easy for users to install different themes and to choose between them from the _UI Settings_ menu.
+
+There are two places that ES-DE can load themes from:
+* `[HOME]/.emulationstation/themes/`
+* `[INSTALLATION PATH]/themes/`
+
+An installation path could be something like this:
+```
+/usr/share/emulationstation/themes/slate-es-de/
+/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/
+C:\Program Files\EmulationStation-DE\themes\
+```
+
+If a theme with the same name exists in both locations, the one in the home directory will be loaded and the other one will be skipped.
 
 ## Differences to legacy RetroPie themes
 
-If you are not familiar with theming for RetroPie or similar forks of EmulationStation you can skip this section as it only describes the key differences between the updated ES-DE themes and these _legacy_ theme sets. The term _legacy_ is used throughout this document to refer to this older style of themes which ES-DE still fully supports for backward compatibility reasons. The old theme format is described in [THEMES-LEGACY.md](THEMES-LEGACY.md) although this document is basically a historical artifact by now.
+If you are not familiar with theming for RetroPie or similar forks of EmulationStation then you can skip this section as it only describes the key differences between the updated ES-DE themes and these legacy themes. The term _legacy_ is used throughout this document to refer to this older style of themes. ES-DE as of 2.2.0 can no longer load legacy themes, so if you need to view them when porting them to ES-DE, either use a legacy EmulationStation fork or ES-DE 2.1.1.
 
-With ES-DE v2.0 a new theme engine was introduced that fundamentally changed some aspects of how theming works. The previous design used specific view styles (basic, detailed, video and grid) and this was dropped completely and replaced with _variants_ that can accomplish the same thing while being much more powerful and flexible.
+With ES-DE 2.0.0 a new theme engine was introduced that fundamentally changed some aspects of how theming works. The previous design used specific view styles (basic, detailed, video and grid) and this was dropped completely and replaced with _variants_ that can accomplish the same thing while being much more powerful and flexible.
 
 In the past EmulationStation basically had hardcoded view styles with certain elements always being present and only a limited ability to manipulate these via positioning, resizing, coloring etc. As well so-called _extras_ were provided to expand theming support somehow but even this was quite limited.
 
@@ -111,7 +136,7 @@ As for more specific changes, the following are the most important ones compared
 * Many property names for the carousel have been renamed, with _logo_ being replaced by _item_ as this element can now be used in both the gamelist and system views. As well, setting the alignment will not automatically add any margins as is the case for legacy themes. These can still be set manually using the `horizontalOffset` and `verticalOffset` properties if needed. The way that alignment works in general for both carousel items and the overall carousel has also changed
 * The rating elements were previously not sized and overlaid consistently, this has now been fixed and rating images should now be centered on the image canvas in order for this element to render correctly rather than being left-adjusted as has previously been done by some theme authors (likely as a workaround for the previous buggy implementation). Images of any aspect ratios are now also supported where previously only square images could be used
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
-* The carousel property `maxItemCount` (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine. As well carousels of the wheel type now have the amount of entries controlled by the two new properties `itemsBeforeCenter` and `itemsAfterCenter`. This provides more exact control, including the ability to setup asymmetric wheels.
+* The carousel property `maxItemCount` (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting themes to the new theme engine. As well carousels of the wheel type now have the amount of entries controlled by the two new properties `itemsBeforeCenter` and `itemsAfterCenter`. This provides more exact control, including the ability to setup asymmetric wheels.
 * The full names of unthemed systems (or systems where the defined staticImage file is missing) will now be displayed in the system carousel instead of the short names shown for legacy themes. So for instance, instead of "cps" the full name "Capcom Play System" (as defined in es_systems.xml) will be displayed.
 * The carousel now has a zIndex value of 50 instead of 40. This means it's aligned with the textlist element which already had a zIndex value of 50.
 * The textlist property `selectorOffsetY` has been renamed to `selectorVerticalOffset` and a `selectorHorizontalOffset` property has been added as well.
@@ -207,7 +232,7 @@ Here is a very simple theme that changes the color of the game name text:
 
 ## How it works
 
-All configuration must be contained within a `<theme>` tag pair. That is true for each separate .xml file used to build the completely theme set.
+All configuration must be contained within a `<theme>` tag pair. That is true for each separate .xml file used to build the completely theme.
 
 The `<view>` tag pair refers to the available views within ES-DE, which is either _system_ or _gamelist_. There is a special _all_ view available as well, but that is only used for defining the navigation sounds as these are always applied globally to both view types.
 
@@ -308,17 +333,19 @@ In addition to this, if the name is used for the same element type but for diffe
 
 ## Debugging during theme development
 
-If you are writing a theme it's recommended to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so, you can read error messages directly in the terminal window without having to open the es_log.txt file. You can also reload the current gamelist or system view with `Ctrl+r` if the `--debug` flag has been set. There is also support for highlighting the size and position of each image and animation element by using the `Ctrl+i` key combination and likewise to highlight each text element by using the `Ctrl+t` keys. Again, both of these require that ES-DE has been launched with the `--debug` command line option, for example:
+If you are writing a theme it's recommended to enable the _Debug mode_ setting from the _Other settings_ menu or to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so you can read error messages directly in the terminal window without having to open the es_log.txt file. With debug mode enabled you can also reload the current gamelist or system view with `Ctrl + r` and you can highlight the size and position of each image and animation element by using the `Ctrl + i` key combination. Likewise you can highlight each text element via `Ctrl + t`.
+
+Here's an example of launching ES-DE in debug mode at a limited resolution, which will make it run in a window:
 ```
 emulationstation --debug --resolution 1280 720
 ```
 
 Enforcement of a correct theme configuration is quite strict, and most errors will abort the theme loading, leading to an unthemed system. In each such situation the log output will be very clear of what happened, for instance:
 ```
-Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
+Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
 ```
 
-Note that an unthemed system means precisely that, the specific system where the error occured will be unthemed but not necessarily the entire theme set. The latter can still happen if the error is global such as a missing variable used by all XML files or an error in a file included by all XML files. The approach is to only untheme relevant sections of the theme set to be able to pinpoint precisely where the problem lies.
+Note that an unthemed system means precisely that, the specific system where the error occured will be unthemed but not necessarily the entire theme. The latter can still happen if the error is global such as a missing variable used by all XML files or an error in a file included by all XML files. The approach is to only untheme relevant sections of the theme to be able to pinpoint precisely where the problem lies.
 
 Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in many instances is that a warning log entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its horizontalAlignment property set to _leftr_ instead of _left_:
 ```
@@ -336,12 +363,12 @@ Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property "i
 Error handling for missing files is handled a bit differently depending on whether the paths have been defined explicitly or via a variable. For explicitly defined paths a warning will be logged for element properties and an error will be triggered for include files. Here's an example of the latter case:
 
 ```
-Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/.emulationstation/themes/mythemeset-es-de/colors_dark.xml")
+Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/.emulationstation/themes/mytheme-es-de/colors_dark.xml")
 ```
 
 However, if a variable has been used to define the include file, only a debug message will be generated if the file is not found:
 ```
-Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/.emulationstation/themes/mythemeset-es-de/amiga/colors.xml"
+Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/.emulationstation/themes/mytheme-es-de/amiga/colors.xml"
 ```
 
 It works essentially the same way for element path properties as for include files. This distinction between explicit values and variables makes it possible to create a theme configuration where both include files and files for fonts, images, videos etc. will be used if found, and if not found a fallback configuration can still be applied so the system will be themed.
@@ -350,19 +377,19 @@ By default all debug messages regarding missing files will be logged for regular
 
 ## Variants
 
-A core concept of ES-DE is the use of theme set _variants_ to provide different theme profiles. These are not fixed presets and a theme author can instead name and define whatever variants he wants for his theme (or possibly use no variants at all as they are optional).
+A core concept of ES-DE is the use of theme _variants_ to provide different theme profiles. These are not fixed presets and a theme author can instead name and define whatever variants he wants for his theme (or possibly use no variants at all as they are optional).
 
-The variants could be purely cosmetic, such as providing different designs for a theme set, or they could provide distinctive functionality by for instance using different primary elements like a carousel or a text list.
+The variants could be purely cosmetic, such as providing different designs for a theme, or they could provide distinctive functionality by for instance using different primary elements like a carousel or a text list.
 
-Before a variant can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detail later in this document.
+Before a variant can be used it needs to be declared, which is done in the `capabilities.xml` file that must be located in the root of the theme directory tree. How to setup this file is described in detail later in this document.
 
 The use of variants is straightforward, a section of the configuration that should be included for a certain variant is enclosed inside the `<variant>` tag pair. This has to be placed inside the `<theme>` tag pair, and it can only be used at this level of the hierarchy and not inside a `<view>` tag pair for example.
 
 The mandatory _name_ attribute is used to specificy which variants to use, and multiple variants can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks). It's also possible to use the special _all_ variant that will apply the configuration to all defined variants (although this is only a convenient shortcut and you can explicitly define every variant individually if you prefer that). Note that _all_ is a reserved name and attempting to use it in the capabilities.xml file will trigger a warning on application startup.
 
-It could sometimes be a good idea to separate the variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme set configuration.
+It could sometimes be a good idea to separate the variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme configuration.
 
-It's also possible to apply only portions of the theme configuration to the variants and keep a common set of elements that are shared between all variants. This is accomplished by simply adding the shared configuration without specifying a variant, as is shown in the first example below for the `infoText01` text element. Just be aware that the variant-specific configuration will always be loaded after the general configuration even if it's located above the general configuration in the XML file. As this is potentially confusing and error-prone it's instead generally recommended to use the special _all_ variant to define common configuration used by all variants in the theme set rather than mixing variants configuration with non-variants configuration.
+It's also possible to apply only portions of the theme configuration to the variants and keep a common set of elements that are shared between all variants. This is accomplished by simply adding the shared configuration without specifying a variant, as is shown in the first example below for the `infoText01` text element. Just be aware that the variant-specific configuration will always be loaded after the general configuration even if it's located above the general configuration in the XML file. As this is potentially confusing and error-prone it's instead generally recommended to use the special _all_ variant to define common configuration used by all variants in the theme rather than mixing variants configuration with non-variants configuration.
 
 Here are some example uses of the `<variant>` functionality:
 
@@ -444,24 +471,85 @@ You'll probably rarely need to use the `noVideos` trigger as `video` can be defi
 
 The following example (from the `capabilities.xml` file) defines a `noGameMedia` variant which is used as the override for the `withVideos` variant if no miximages, screenshots, covers and videos are found for any game in a system. For this example the `noGameMedia` variant has been set as non-selectable from the _UI Settings_ menu by defining the `selectable` property as `false`.
 
-As can be seen here, the overall variant trigger configuration needs to be enclosed within an `override` tag pair. And you can only define a single `override` tag pair per trigger type.
+As can be seen here, the overall variant trigger configuration needs to be enclosed within an `override` tag pair. And you can only define a single trigger type inside an `override` tag pair.
 
 ```xml
-    <variant name="withVideos">
-        <label>Textlist with videos</label>
-        <selectable>true</selectable>
-        <override>
-            <trigger>noMedia</trigger>
-            <mediaType>miximage, screenshot, cover, video</mediaType>
-            <useVariant>noGameMedia</useVariant>
-        </override>
-    </variant>
+<variant name="withVideos">
+    <label>Textlist with videos</label>
+    <selectable>true</selectable>
+    <override>
+        <trigger>noMedia</trigger>
+        <mediaType>miximage, screenshot, cover, video</mediaType>
+        <useVariant>noGameMedia</useVariant>
+    </override>
+</variant>
 
-    <variant name="noGameMedia">
-        <label>No game media</label>
-        <selectable>false</selectable>
-    </variant>
+<variant name="noGameMedia">
+    <label>No game media</label>
+    <selectable>false</selectable>
+</variant>
 ```
+
+It's also possible to define both the `noVideos` and `noMedia` triggers for the same variant like the following example:
+
+```xml
+<variant name="withVideos">
+    <label>Textlist with videos</label>
+    <selectable>true</selectable>
+    <override>
+        <trigger>noVideos</trigger>
+        <useVariant>withoutVideos</useVariant>
+    </override>
+    <override>
+        <trigger>noMedia</trigger>
+        <mediaType>miximage, screenshot, cover</mediaType>
+        <useVariant>noGameMedia</useVariant>
+    </override>
+</variant>
+
+<variant name="withoutVideos">
+    <label>Textlist without videos</label>
+    <selectable>false</selectable>
+</variant>
+
+<variant name="noGameMedia">
+    <label>No game media</label>
+    <selectable>false</selectable>
+</variant>
+```
+
+In this case the `withoutVideos` variant will be selected if there are no videos but if there is other media available. If there is however no media matching the `mediaType` property then the `noGameMedia` variant will be selected instead. Note that `noMedia` always takes precedence over `noVideos`. If you would like to trigger the `withoutVideos` variant if there are videos but no other media, then you'll need to add _video_ to the `mediaType` property for the `noMedia` trigger.
+
+It's however not possible to define multi-step variant triggers like this:
+
+```xml
+<!-- This is NOT allowed, you can't have two-step triggers -->
+<variant name="withVideos">
+    <label>Textlist with videos</label>
+    <selectable>true</selectable>
+    <override>
+        <trigger>noVideos</trigger>
+        <useVariant>withoutVideos</useVariant>
+    </override>
+</variant>
+
+<variant name="withoutVideos">
+    <label>Textlist without videos</label>
+    <selectable>false</selectable>
+    <override>
+        <trigger>noMedia</trigger>
+        <mediaType>miximage, screenshot, cover</mediaType>
+        <useVariant>noGameMedia</useVariant>
+    </override>
+</variant>
+
+<variant name="noGameMedia">
+    <label>No game media</label>
+    <selectable>false</selectable>
+</variant>
+```
+
+If the above configuration is used, then the trigger will work correctly if there are no videos, i.e. the `withoutVideos` variant will be selected, but the `override` tag in the `withoutVideos` variant will be ignored so the `noGameMedia` variant will never be triggered even if there is no media whatsoever.
 
 Note that variant triggers will only apply to the gamelist view and not the system view. Also be aware that it will add a potentially noticeable application slowdown as game media files need to be scanned for at various points when using the application, as well as during startup. The impact of the performance penalty depends on multiple factors such as the game collection size, how many games have been scraped, as well as disk I/O and filesystem performance. So only use variant triggers if really necessary for your theme design. As well, specifying many values for the `mediaType` tag will lead to more files potentially being scanned which could introduce further lag and latency.
 
@@ -473,13 +561,13 @@ Color schemes are essentially a collection of variables that can be selected bet
 
 To understand the basics on how to use variables, make sure to read the _Theme variables_ section elsewhere in this document.
 
-Before a color scheme can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detail later in this document.
+Before a color scheme can be used it needs to be declared, which is done in the `capabilities.xml` file that must be located in the root of the theme directory tree. How to setup this file is described in detail later in this document.
 
 The `<colorScheme>` tag pair can be placed directly inside the `<theme>` tags, inside the `<variants>` tags or inside the `<aspectRatio>` tags.
 
 The mandatory name attribute is used to specificy which color scheme to use, and multiple values can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks).
 
-Note that the use of color schemes for a theme set is entirely optional.
+Note that the use of color schemes for a theme is entirely optional.
 
 Here's an example configuration:
 
@@ -523,9 +611,9 @@ Here's an example configuration:
 
 ## Aspect ratios
 
-The aspect ratio support works almost identically to the variants and color schemes with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme set can still decide which of the aspect ratios to support (or none at all in which case the theme aspect ratio is left undefined) but it can't create entirely new aspect ratio entries.
+The aspect ratio support works almost identically to the variants and color schemes with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme can still decide which of the aspect ratios to support (or none at all in which case the theme aspect ratio is left undefined) but it can't create entirely new aspect ratio entries.
 
-In the same manner as for the variants and color schemes, the aspect ratios that the theme set provides need to be declared in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detailed later in this document.
+In the same manner as for the variants and color schemes, the aspect ratios that the theme provides need to be declared in the `capabilities.xml` file that must be located in the root of the theme directory tree. How to setup this file is described in detailed later in this document.
 
 The `<aspectRatio>` tag pair can be placed directly inside the `<theme>` tags or inside the `<variants>` tags.
 
@@ -679,19 +767,19 @@ Finally it's possible to apply theme-defined transition profiles on a per-varian
 
 ## capabilities.xml
 
-Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
+Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme configuration files and that is done in the `capabilities.xml` file. This file needs to be located in the root of the theme directory, for example:
 ```
-~/.emulationstation/themes/mythemeset-es-de/capabilities.xml
+~/.emulationstation/themes/mytheme-es-de/capabilities.xml
 ```
 
-This file type was introduced with the new ES-DE theme engine in v2.0 and is an indicator that the theme set is of the new generation instead of being of the legacy type (i.e. a theme set backward compatible with RetroPie EmulationStation). In other words, if the capabilities.xml file is absent, the theme will get loaded as a legacy set.
+The capabilities.xml file is mandatory and if it doesn't exist ES-DE will not attempt to load the theme.
 
 The structure of the file is simple, as can be seen in this example:
 
 ```xml
-<!-- Theme capabilities for mythemeset-es-de -->
+<!-- Theme capabilities for mytheme-es-de -->
 <themeCapabilities>
-    <themeName>My theme set</themeName>
+    <themeName>My theme</themeName>
 
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
@@ -740,7 +828,7 @@ The structure of the file is simple, as can be seen in this example:
 ```
 The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes, one transition animation profile and three variants, one of which is a variant trigger override. The `<label>` tag for the variants and transitions is the text that will show up in the _UI Settings_ menu, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
-The optional `<themeName>` tag defines the name that will show up in the _Theme set_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEMESET-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu. Legacy theme sets are also clearly marked with a _[LEGACY]_ suffix.
+The optional `<themeName>` tag defines the name that will show up in the _Theme_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEME-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu.
 
 The variant, color scheme and transitions names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants, color schemes and transition animations will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
 
@@ -758,19 +846,19 @@ Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary
 
 The 21:9 and 32:9 aspect ratios are approximate as monitors of slightly different ratios are collectively marketed using these numbers.
 
-It's normally not necessary to define all or even most of these for a theme set, instead only a few are likely to be needed. The element placement will always adapt to the screen resolution as relative positions are utilized, so in most cases similar aspect ratios like 4:3 and 5:4 could be used interchangeably. The same is true for instance for 16:9 and 16:10. But if precise element placement is required, a separate configuration can still be made for each aspect ratio.
+It's normally not necessary to define all or even most of these for a theme, instead only a few are likely to be needed. The element placement will always adapt to the screen resolution as relative positions are utilized, so in most cases similar aspect ratios like 4:3 and 5:4 could be used interchangeably. The same is true for instance for 16:9 and 16:10. But if precise element placement is required, a separate configuration can still be made for each aspect ratio.
 
 The declared aspect ratios will always get displayed in the _UI settings_ menu in the order listed in the table above, so they can be declared in any order in the capabilities.xml file. If an unsupported aspect ratio value is entered, a warning will be generated on startup and the entry will not get loaded.
 
-The use of variants, variant triggers, color schemes, aspect ratios and transition animation profiles is optional, i.e. a theme set does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
+The use of variants, variant triggers, color schemes, aspect ratios and transition animation profiles is optional, i.e. a theme does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
 
-Note that changes to the capabilities.xml file are not reloaded when using the Ctrl+r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
+Note that changes to the capabilities.xml file are not reloaded when using the Ctrl + r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
 
 ## The \<include\> tag
 
 You can include theme files within theme files, for example:
 
-`~/.emulationstation/themes/mythemeset-es-de/fonts.xml`:
+`~/.emulationstation/themes/mytheme-es-de/fonts.xml`:
 ```xml
 <theme>
     <view name="gamelist">
@@ -783,7 +871,7 @@ You can include theme files within theme files, for example:
 </theme>
 ```
 
-`~/.emulationstation/themes/mythemeset-es-de/snes/theme.xml`:
+`~/.emulationstation/themes/mytheme-es-de/snes/theme.xml`:
 ```xml
 <theme>
     <include>./../fonts.xml</include>
@@ -813,7 +901,7 @@ The above is equivalent to the following:
 
 As covered earlier in this document, as long as the name attributes are identical for the same element type, the properties are combined automatically. The potential issue with the current example is that the color tag is defined in both the fonts.xml and snes/theme.xml files. As parsing is done sequentially, the property value that is defined last will overwrite the earlier value. This may be used intentionally to override a general property value, so the configuration in the example above example is not necessarily a mistake.
 
-The paths defined for the `<include>` entry and `<fontPath>` and similar properties are set as relative to the theme file by adding "./" as a prefix. That is usually how paths would be defined as you commonly want to access files only within the theme set directory structure. This prefix works for all path properties. Windows-style backslashes are also supported as directory separators but their use is not recommended.
+The paths defined for the `<include>` entry and `<fontPath>` and similar properties are set as relative to the theme file by adding "./" as a prefix. That is usually how paths would be defined as you commonly want to access files only within the theme directory structure. This prefix works for all path properties. Windows-style backslashes are also supported as directory separators but their use is not recommended.
 
 Explicitly defining a path will lead to an error (and the system getting unthemed) if the file is missing, but if instead using a variable to populate the `<include>` tag then a missing file will only generate a debug log entry. This makes it possible to use system variables to build flexible theme configurations where it's not guaranteed that every file exists. Such an example would be to implement default/fallback configuration for custom systems that may get added by a user.
 
@@ -982,14 +1070,14 @@ Just remember, _this only works if the elements have the same type._
 
 ## Navigation sounds
 
-Navigation sounds are configured globally per theme set, so it needs to be defined using the special `all` view.
-It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Starting ES-DE with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sounds are provided by the theme, ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
+Navigation sounds are configured globally per theme, so it needs to be defined using the special `all` view.
+It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Enabling the _Debug mode_ setting in the _Other settings_ menu or starting ES-DE with the --debug flag will provide feedback on whether the navigation sound elements were parsed correctly. If no navigation sounds are provided by the theme, then ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
 
 When fast-scrolling the textlist (by holding the up/down or shoulder buttons) the _scroll_ and _systembrowse_ sounds always play to completion before being played again, so it will sound weird if you have long samples such as those with reverb or silence added to the end. As such make sure to always use short samples for these sounds and test thoroughly with fast-scrolling. This is not an issue if using the carousel or grid elements.
 
 Example debug output:
 ```
-Jul 12 11:28:58 Debug:  NavigationSounds::loadThemeNavigationSounds(): Theme set includes navigation sound support, loading custom sounds
+Jul 12 11:28:58 Debug:  NavigationSounds::loadThemeNavigationSounds(): Theme includes navigation sound support, loading custom sounds
 Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for tag <sound name="systembrowse">
 Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag found, ready to load theme sound file
 Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for tag <sound name="quicksysselect">
@@ -1075,7 +1163,7 @@ System variables are system specific and are derived from values defined in es_s
 `system.fullName` expands to the full system name as defined by the `fullname` tag in es_systems.xml\
 `system.theme` expands to the theme directory as defined by the `theme` tag in es_systems.xml
 
-If using variables to load theme assets like images and videos, then use the `.name` versions of these variables as short system names should be stable and not change over time. The `.fullName` values could change in future ES-DE releases or they could be user-customized which would break your theme set.
+If using variables to load theme assets like images and videos, then use the `.name` versions of these variables as short system names should be stable and not change over time. The `.fullName` values could change in future ES-DE releases or they could be user-customized which would break your theme.
 
 The `.autoCollections`, `.customCollections` and `.noCollections` versions of the variables make it possible to differentiate between regular systems, automatic collections (_all games_, _favorites_ and _last played_) and custom collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems.
 
@@ -1330,9 +1418,13 @@ Properties:
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
 * `imageInterpolation` - type: STRING
-    - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
+    - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `linear`
+* `imageCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the images defined by `staticImage`, `imageType` and `defaultImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `imageColor` - type: COLOR
     - Applies a color shift to the images defined by `staticImage`, `imageType` or `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -1441,6 +1533,10 @@ Properties:
     - A string literal to display if there is no `staticImage` or `defaultImage` property defined and if no image is found.
     - Default is the full system name.
     - This property can only be used in the `system` view as for the gamelist view the game name is always used as fallback.
+* `textRelativeScale` - type: FLOAT.
+    - This property makes it possible to size the text relative to the overall item size. If using this and also defining a text background color using `textBackgroundColor` or `textSelectedBackgroundColor` then this color will still fill the entire item size.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
@@ -1451,6 +1547,24 @@ Properties:
 * `textSelectedBackgroundColor` - type: COLOR
     - Sets the text background color for the currently selected item.
     - Default is the same value as `textBackgroundColor`
+* `textHorizontalScrolling` - type: BOOLEAN
+    - If this property is enabled then text that does not fit within the item width will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...). Using this property will automatically convert all line breaks to spaces so that a single line of text is always displayed.
+    - Default is `false`
+* `textHorizontalScrollSpeed` - type: FLOAT
+    - A relative speed for how fast to scroll the text.
+    - Minimum value is `0.1` and maximum value is `10`
+    - Default is `1`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollDelay` - type: FLOAT
+    - Delay in seconds before scrolling starts.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `3`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollGap` - type: FLOAT
+    - As the scrolling text is looped, a second copy is rendered after the first one. This property defines a relative gap value to control the distance between these two text instances.
+    - Minimum value is `0.1` and maximum value is `5`
+    - Default is `1.5`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
@@ -1577,10 +1691,18 @@ Properties:
     - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
+* `imageInterpolation` - type: STRING
+    - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images.
+    - Valid values are `nearest` or `linear`
+    - Default is `linear`
 * `imageRelativeScale` - type: FLOAT.
     - This property makes it possible to size the image defined by `staticImage`, `imageType` or `defaultImage` relative to the overall item size. This is mostly useful when combined with the `backgroundImage` and `selectorImage` properties.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `imageCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the images defined by `staticImage`, `imageType` and `defaultImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `imageRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `imageColor` - type: COLOR
     - Applies a color shift to the images defined by `staticImage`, `imageType` or `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -1615,6 +1737,10 @@ Properties:
     - This property makes it possible to size the background relative to the overall item size. This is mostly useful when combined with the `selectorImage` property.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `backgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the image defined by `backgroundImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `backgroundRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `backgroundColor` - type: COLOR
     - Applies a color shift or draws a colored rectangle. If an image has been defined using the `backgroundImage` property then each pixel of that image is multiplied by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. If no background image has been defined, then a colored rectangle will be drawn instead.
 * `backgroundColorEnd` - type: COLOR
@@ -1634,6 +1760,10 @@ Properties:
     - Defines at what layer position to place the selector. It can either be placed at the bottom, in the middle between the background and image/text or on top.
     - Valid values are `bottom`, `middle` or `top`
     - Default is `top`
+* `selectorCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the image defined by `backgroundImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `selectorRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `selectorColor` - type: COLOR
     - Applies a color shift or draws a colored rectangle. If an image has been defined using the `selectorImage` property then each pixel of that image is multiplied by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. If no selector image has been defined, then a colored rectangle will be drawn instead.
 * `selectorColorEnd` - type: COLOR
@@ -1661,6 +1791,24 @@ Properties:
 * `textSelectedBackgroundColor` - type: COLOR
     - Sets the text background color for the currently selected item.
     - Default is the same value as `textBackgroundColor`
+* `textHorizontalScrolling` - type: BOOLEAN
+    - If this property is enabled then text that does not fit within the item width will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...). Using this property will automatically convert all line breaks to spaces so that a single line of text is always displayed.
+    - Default is `false`
+* `textHorizontalScrollSpeed` - type: FLOAT
+    - A relative speed for how fast to scroll the text.
+    - Minimum value is `0.1` and maximum value is `10`
+    - Default is `1`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollDelay` - type: FLOAT
+    - Delay in seconds before scrolling starts.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `3`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollGap` - type: FLOAT
+    - As the scrolling text is looped, a second copy is rendered after the first one. This property defines a relative gap value to control the distance between these two text instances.
+    - Minimum value is `0.1` and maximum value is `5`
+    - Default is `1.5`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
@@ -1767,6 +1915,25 @@ Properties:
 * `selectedSecondaryBackgroundColor` - type: COLOR
     - Background color of the highlighted entry for the secondary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
     - Default is the same value as `selectedBackgroundColor`
+* `textHorizontalScrolling` - type: BOOLEAN
+    - If this property is enabled then text that does not fit within the element width (minus margins) will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...). Using this property will automatically convert all line breaks to spaces so that a single line of text is always displayed.
+    - Valid values are `vertical` or `horizontal`
+    - Default is `true`
+* `textHorizontalScrollSpeed` - type: FLOAT
+    - A relative speed for how fast to scroll the text.
+    - Minimum value is `0.1` and maximum value is `10`
+    - Default is `1`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollDelay` - type: FLOAT
+    - Delay in seconds before scrolling starts.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `3`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
+* `textHorizontalScrollGap` - type: FLOAT
+    - As the scrolling text is looped, a second copy is rendered after the first one. This property defines a relative gap value to control the distance between these two text instances.
+    - Minimum value is `0.1` and maximum value is `5`
+    - Default is `1.5`
+    - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
@@ -1857,6 +2024,13 @@ Properties:
     - Point around which the image will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `flipHorizontal` - type: BOOLEAN
     - Flips the image texture horizontally.
     - Default is `false`
@@ -1895,6 +2069,7 @@ Properties:
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds. Do not combine with the `maxSize` or `cropSize` properties, instead always use `size` when tiling.
     - Default is `false`
+    - This property can only be used when `path` has been set.
 * `tileSize` - type: NORMALIZED_PAIR
     - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file.
     - Minimum value per axis is `0` and maximum value per axis is `1`.
@@ -1907,9 +2082,13 @@ Properties:
     - Valid values are `top` or `bottom`
     - Default is `bottom`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
+    - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
-    - Default is `nearest`
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
+* `cornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the image. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `color` - type: COLOR
     - Applies a color shift to the image by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -1921,7 +2100,7 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `scrollFadeIn` - type: BOOLEAN
-    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This usually looks best if used for the main game image.
+    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view.
     - Default is `false`
 * `brightness` - type: FLOAT
     - Controls the relative level of brightness. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image.
@@ -1968,8 +2147,22 @@ Properties:
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
+* `rotation` - type: FLOAT
+    - Angle in degrees that the static image and video should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Default is `0`
+* `rotationOrigin` - type: NORMALIZED_PAIR
+    - Point around which the static image and video will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `path` - type: PATH
-    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored.
+    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored. This is true even if the property does not point to an existing video file. As well, when defining this for the gamelist view the video will not immediately restart when navigating between games.
 * `default` - type: PATH
     - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system. Takes precedence over `defaultImage`.
 * `defaultImage` - type: PATH
@@ -1996,13 +2189,31 @@ Properties:
     - This optional property which is only available in the `system` view makes it possible to select which `gameselector` entry to use to populate the `imageType` property and to use for playing the video stream. This assumes that a `gameCount` property for the gameselector element has been defined with a value higher than `1`. By defining multiple `video` elements with different values for the `gameselectorEntry` property it's possible to display multiple game entries at the same time, for example listing a couple of games that were last played, or a selection of random games. If the requested entry does not exist (for instance if `gameCount` has been set to 5 and `gameselectorEntry` has been set to `4` but the system only contains 3 games), then the overall element will not get rendered. Note that the first entry is defined as `0`, the second entry as `1` etc.
     - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
     - Default is `0`
+* `iterationCount` - type: UNSIGNED_INTEGER
+    - Number of times to play the video until next time it's reset. Video resets are triggered by various events like navigation between systems and gamelists, reloading of gamelists, opening of menus etc.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `0` (infinite amount of times)
+* `onIterationsDone` - type: STRING
+    - What to do after playing the video the number of times defined by `iterationCount`
+    - `nothing` - Render nothing.
+    - `image` - Render the image defined by `imageType` or `defaultImage` which means this value can't be used if `path` has been set
+    - Default is `nothing`
+    - This property can only be used when `iterationCount` has a non-zero value.
 * `audio` - type: BOOLEAN
     - Whether to enable or disable audio playback for the video. For static videos in the gamelist view it's strongly recommended to set this to `false` if there is also a separate video element playing game videos.
     - Default is `true`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
+    - Interpolation method to use when scaling and rotating static images and videos. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image and video smoother.
     - Valid values are `nearest` or `linear`
-    - Default is `nearest`
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
+* `imageCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the static image. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+* `videoCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the video stream. The radius is a percentage of the screen width and not directly related to the video size. This makes it possible to apply identically sized corners regardless of video dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. You probably want to disable `pillarboxes` if using this property.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `color` - type: COLOR
     - Applies a color shift to both the static image and video by multiplying each pixel's color by this color value. For example, an all-white image or video with `FF0000` applied would become completely red. It's however not recommended to use this property to control opacity as this will not look right for actual videos, instead use the `opacity` property if you want to render this element as semi-transparent. The `color` property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -2032,7 +2243,7 @@ Properties:
     - Minimum value is `0` and maximum value is `8`
     - Default is `1`
 * `scrollFadeIn` - type: BOOLEAN
-    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
+    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view.
     - Default is `false`
 * `brightness` - type: FLOAT
     - Controls the relative level of brightness. This affects both the static image and the video stream. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image/video.
@@ -2085,6 +2296,13 @@ Properties:
     - Point around which the animation will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define animation elements that should be treated as if they were game media files. This is for example useful for hiding and fading out animations that are used as indicators for the various metadata types like genre, publisher, players etc.
     - Default is `false`
@@ -2099,14 +2317,17 @@ Properties:
     - Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards).
     - Default is `normal`
 * `iterationCount` - type: UNSIGNED_INTEGER
-    - Number of times to play the animation until next time it's reset. Animation resets are triggered by various events like navigating between systems and gamelists, reloading a gamelist etc.
+    - Number of times to play the animation until next time it's reset. Animation resets are triggered by various events like navigation between systems and gamelists, reloading of gamelists, opening of menus etc.
     - Minimum value is `0` and maximum value is `10`
     - Default is `0` (infinite amount of times)
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
+    - Interpolation method to use when scaling and rotating animations. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the animation smoother. This property has limited effect on Lottie animations unless rotation is applied.
     - Valid values are `nearest` or `linear`
-    - Default is `nearest`
-    - This property can only be used for GIF animations.
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
+* `cornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the animation. The radius is a percentage of the screen width and not directly related to the animation size. This makes it possible to apply identically sized corners regardless of animation dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
 * `color` - type: COLOR
     - Applies a color shift to the animation by multiplying each pixel's color by this color value. For example, an all-white animation with `FF0000` applied would become completely red. You can also control the transparency of the animation by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
@@ -2164,6 +2385,13 @@ Properties:
     - Point around which the image will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`.
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `horizontalAlignment` - type: STRING.
     - Valid values are `left`, `center` or `right`
 * `direction` - type: STRING
@@ -2283,6 +2511,10 @@ Properties:
     - The direction to apply the color shift gradient if both `folderLinkIconColor` and `folderLinkIconColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
+* `interpolation` - type: STRING
+    - Interpolation method to use when scaling and rotating badge images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
+    - Valid values are `nearest` or `linear`
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -2311,7 +2543,7 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an ellipsis (...)
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2323,6 +2555,13 @@ Properties:
     - Point around which the text will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `text` - type: STRING
     - A string literal to display.
 * `systemdata` - type: STRING
@@ -2350,10 +2589,13 @@ Properties:
     - `completed` - Whether the game has been completed. Will be printed as either `yes` or `no`
     - `kidgame` - Whether the game is suitable for children. Will be printed as either `yes` or `no`
     - `broken` - Whether the game is broken/not working. Will be printed as either `yes` or `no`
+    - `manual` - Whether a PDF manual has been downloaded for the game. Will be printed as either `yes` or `no`
     - `playcount` - How many times the game has been played.
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
     - `emulator` - The emulator used to launch the game, could as such be a per-game alternative emulator entry, a system wide alternative emulator entry or the system's default emulator. This requires that the command tag in es_systems.xml has a label defined, otherwise this value will be blank. Folders will always have blank values as these can't be launched directly.
+    - `physicalName` - The physical name of the game file or folder, excluding its extension. Note that for folders with dots in their names any text after the last dot will get removed. Although this is not technically correct as folders can't have extensions, it makes the name appear consistent if the _directories interpreted as files_ functionality has been used.
+    - `physicalNameExtension` - The physical name of the game file or folder, including its extension.
     - `systemName` - The short system name of the game.
     - `systemFullname` - The full system name of the game.
     - `sourceSystemName` - The source short system name of the game. For regular systems this value will be identical to `systemName` but for collections it will show the actual system that the game is located in instead of the collection system name.
@@ -2382,21 +2624,33 @@ Properties:
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container.
     - Default is `true` if `metadata` is set to `description`, otherwise `false`
+* `containerType` - type: STRING
+    - If `container` has been set, then it's possible to select between a vertically or horizontally scrolling type using this property. If selecting the horizontal container then all line breaks in the text will be automatically converted to spaces. If selecting the vertical container then any value defined for `rotation` will be ignored as this container type can't be rotated.
+    - Valid values are `vertical` or `horizontal`
+    - Default is `vertical`
+    - This property can only be used when `container` has been explicitly set to `true`
 * `containerVerticalSnap` - type: BOOLEAN
     - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
     - Default is `true`
+    - This property can only be used when `containerType` is `vertical`
 * `containerScrollSpeed` - type: FLOAT
-    - A base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value.
+    - For vertical containers a base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value for that type.
     - Minimum value is `0.1` and maximum value is `10`
     - Default is `1`
 * `containerStartDelay` - type: FLOAT
-    - Delay in seconds before scrolling starts. Note that the text fade-in animation that plays when resetting from the end position will cause a slight delay even if this property is set to zero.
+    - Delay in seconds before scrolling starts. Note that for vertical containers the text fade-in animation that plays when resetting from the end position will cause a slight delay even if this property is set to zero.
     - Minimum value is `0` and maximum value is `10`
-    - Default is `4.5`
+    - Default is `4.5` for vertical containers and `1.5` for horizontal containers
 * `containerResetDelay` - type: FLOAT
     - Delay in seconds before resetting to the start position after reaching the scrolling end position.
     - Minimum value is `0` and maximum value is `20`
     - Default is `7`
+    - This property can only be used when `containerType` is `vertical`
+* `containerScrollGap` - type: FLOAT
+    - As horizontally scrolling text is looped, a second copy is rendered after the first one. This property defines a relative gap value to control the distance between these two text instances.
+    - Minimum value is `0.1` and maximum value is `5`
+    - Default is `1.5`
+    - This property can only be used when `containerType` is `horizontal`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
@@ -2451,7 +2705,7 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an ellipsis (...)
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2463,6 +2717,13 @@ Properties:
     - Point around which the text will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`.
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `metadata` - type: STRING
     - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" or "never" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per datetime element.
     - Valid values:
@@ -2538,7 +2799,7 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an ellipsis (...)
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2550,6 +2811,13 @@ Properties:
     - Point around which the element will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
@@ -2607,6 +2875,13 @@ Properties:
     - Point around which the rating will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `stationary` - type: STRING
+    - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
+    - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
+    - `betweenViews` - Set element as stationary when navigating between views, i.e. from system to gamelist or from gamelist to system.
+    - `always` - Set element as stationary during all transitions.
+    - `never` - Don't set element as stationary during any transitions.
+    - Default is `never`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
 * `gameselectorEntry` - type: UNSIGNED_INTEGER
@@ -2614,9 +2889,9 @@ Properties:
     - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
     - Default is `0`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling the images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images, and even more so if rotation is applied.
+    - Interpolation method to use when scaling and rotating rating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
-    - Default is `nearest`
+    - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
     - Default is `FFFFFFFF`
