@@ -21,9 +21,9 @@
     <key>CFBundleSignature</key>
     <string>ESDE</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.2.0-beta</string>
+    <string>2.2.0</string>
     <key>CFBundleVersion</key>
-    <string>2.2.0-beta</string>
+    <string>2.2.0</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>LSApplicationCategoryType</key>
