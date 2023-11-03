@@ -21,7 +21,7 @@ In addition to the above many bugs have been fixed and the application has recei
 * Completely removed support for legacy EmulationStation themes
 * Added support for MD5 file hash searching when scraping using ScreenScraper
 * Added a utility for removing orphaned data (game media, gamelist entries and custom collection entries)
-* Added a "Systems sorting" option to the Other settings menu to select between the bundled systems sorting configuration files
+* Added a "Systems sorting" option to the UI settings menu to select between the bundled systems sorting configuration files
 * Added support for downloading the Windows and macOS packages via the application updater (manual installation still required)
 * Added support for pasting text into the application (when a text input field is focused)
 * Added support for using most characters (including multi-byte Unicode characters) in custom collection names
