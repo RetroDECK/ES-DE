@@ -19,11 +19,11 @@
     </system>
     <system>
         <name>amiga1200</name>
-        <systemsortname>1985</systemsortname>
+        <systemsortname>1992</systemsortname>
     </system>
     <system>
         <name>amiga600</name>
-        <systemsortname>1985</systemsortname>
+        <systemsortname>1992</systemsortname>
     </system>
     <system>
         <name>amigacd32</name>
@@ -63,7 +63,7 @@
     </system>
     <system>
         <name>astrocde</name>
-        <systemsortname>1977</systemsortname>
+        <systemsortname>1978</systemsortname>
     </system>
     <system>
         <name>atari2600</name>
@@ -287,7 +287,7 @@
     </system>
     <system>
         <name>kodi</name>
-        <systemsortname>2007</systemsortname>
+        <systemsortname>2002</systemsortname>
     </system>
     <system>
         <name>laserdisc</name>
@@ -599,7 +599,7 @@
     </system>
     <system>
         <name>solarus</name>
-        <systemsortname>2021</systemsortname>
+        <systemsortname>2002</systemsortname>
     </system>
     <system>
         <name>spectravideo</name>
@@ -611,7 +611,7 @@
     </system>
     <system>
         <name>stv</name>
-        <systemsortname>1995</systemsortname>
+        <systemsortname>1994</systemsortname>
     </system>
     <system>
         <name>sufami</name>
