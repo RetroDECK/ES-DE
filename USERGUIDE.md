@@ -1168,7 +1168,7 @@ If emulating Sega Model 2 games using _Model 2 Emulator_ (natively on Windows or
 On Linux it could look something like the following:
 ```
 [RomDirs]
-Dir1=Z:\home\myusername\ROMs\model2
+Dir1=/home/myusername/ROMs/model2
 ```
 
 If you're using a portable ES-DE installation on Windows, then you can set the ROM directory path to be relative, for example:
@@ -1181,9 +1181,17 @@ The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
 Note that Model 2 Emulator is a bit broken and on Windows most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
 
-To run Model 2 Emulator on Linux you need Wine or Proton, how to setup this is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
+To run Model 2 Emulator on Linux you need Wine or Proton, how to setup this is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
 
-After Wine or Proton has been installed, simply unpack the emulator files into `~/Applications/m2emulator/` and you should be good to go.
+After Wine or Proton has been installed, unpack the emulator files into the `~/Applications/m2emulator/` directory.
+
+Depending on your setup you may also need to add the `d3dcompiler_47.dll` file to this directory or the emulator could crash on startup. You can download this file from here:
+
+https://github.com/mozilla/fxc2/blob/master/dll/d3dcompiler_47_32.dll
+
+Just make sure to rename it so it ends up as `~/Applications/m2emulator/d3dcompiler_47.dll` and you should be good to go.
+
+It seems as if Proton generally provides better performance for this emulator than plain Wine, so it's probably a good idea to use the former.
 
 On macOS, the only available emulator for Sega Model 2 is MAME, either the RetroArch - Current core or MAME standalone. Compatibility is still quite poor with only a handful of games working correctly, but this is likely to improve going forward as almost all games for this platform can already start and run to a certain degree. Some games flagged as not working by MAME are still playable with only minor glitches to audio and graphics, just make sure to use a recent ROM set for maximum compatibility.
 

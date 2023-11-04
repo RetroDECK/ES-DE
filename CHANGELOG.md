@@ -1,5 +1,23 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
+## Version 2.2.1 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+2.2 maintenance release.
+
+### Detailed list of changes
+
+* Changed the systems sorting platform from "Peripheral" to "Console" for the fds, megacd, megacdjp, n64dd, pcenginecd and satellaview systems
+* Changed the systems sorting platform from "Peripheral" to "Console" for the sega32x, sega32xjp, sega32xna, segacd, sgb, sufami and tg-cd systems
+
+### Bug fixes
+
+* The year was incorrect in the systems sorting files for the amiga1200, amiga600, astrocde, kodi, solarus and stv systems
+* The fmtowns system was incorrectly classified as a console and with the wrong release year in the systems sortings files
+
 ## Version 2.2.0
 
 **Release date:** 2023-11-02
