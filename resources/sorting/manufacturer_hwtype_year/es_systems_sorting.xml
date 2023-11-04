@@ -215,7 +215,7 @@
     </system>
     <system>
         <name>fds</name>
-        <systemsortname>Nintendo - Peripheral - 1986</systemsortname>
+        <systemsortname>Nintendo - Console - 1986</systemsortname>
     </system>
     <system>
         <name>flash</name>
@@ -227,7 +227,7 @@
     </system>
     <system>
         <name>fmtowns</name>
-        <systemsortname>Fujitsu - Console - 1993</systemsortname>
+        <systemsortname>Fujitsu - Computer - 1989</systemsortname>
     </system>
     <system>
         <name>fpinball</name>
@@ -322,20 +322,16 @@
         <systemsortname>AdvanceMAME - Emulator - 1998</systemsortname>
     </system>
     <system>
-        <name>mame-mame4all</name>
-        <systemsortname>MAME4ALL - Emulator - 2000</systemsortname>
-    </system>
-    <system>
         <name>mastersystem</name>
         <systemsortname>Sega - Console - 1986</systemsortname>
     </system>
     <system>
         <name>megacd</name>
-        <systemsortname>Sega - Peripheral - 1993</systemsortname>
+        <systemsortname>Sega - Console - 1993</systemsortname>
     </system>
     <system>
         <name>megacdjp</name>
-        <systemsortname>Sega - Peripheral - 1991</systemsortname>
+        <systemsortname>Sega - Console - 1991</systemsortname>
     </system>
     <system>
         <name>megadrive</name>
@@ -399,7 +395,7 @@
     </system>
     <system>
         <name>n64dd</name>
-        <systemsortname>Nintendo - Peripheral - 1999</systemsortname>
+        <systemsortname>Nintendo - Console - 1999</systemsortname>
     </system>
     <system>
         <name>naomi</name>
@@ -483,7 +479,7 @@
     </system>
     <system>
         <name>pcenginecd</name>
-        <systemsortname>NEC - Peripheral - 1988</systemsortname>
+        <systemsortname>NEC - Console - 1988</systemsortname>
     </system>
     <system>
         <name>pcfx</name>
@@ -543,7 +539,7 @@
     </system>
     <system>
         <name>satellaview</name>
-        <systemsortname>Nintendo - Peripheral - 1995</systemsortname>
+        <systemsortname>Nintendo - Console - 1995</systemsortname>
     </system>
     <system>
         <name>saturn</name>
@@ -563,19 +559,19 @@
     </system>
     <system>
         <name>sega32x</name>
-        <systemsortname>Sega - Peripheral - 1994</systemsortname>
+        <systemsortname>Sega - Console - 1994</systemsortname>
     </system>
     <system>
         <name>sega32xjp</name>
-        <systemsortname>Sega - Peripheral - 1994</systemsortname>
+        <systemsortname>Sega - Console - 1994</systemsortname>
     </system>
     <system>
         <name>sega32xna</name>
-        <systemsortname>Sega - Peripheral - 1994</systemsortname>
+        <systemsortname>Sega - Console - 1994</systemsortname>
     </system>
     <system>
         <name>segacd</name>
-        <systemsortname>Sega - Peripheral - 1992</systemsortname>
+        <systemsortname>Sega - Console - 1992</systemsortname>
     </system>
     <system>
         <name>sfc</name>
@@ -587,7 +583,7 @@
     </system>
     <system>
         <name>sgb</name>
-        <systemsortname>Nintendo - Peripheral - 1994</systemsortname>
+        <systemsortname>Nintendo - Console - 1994</systemsortname>
     </system>
     <system>
         <name>snes</name>
@@ -615,7 +611,7 @@
     </system>
     <system>
         <name>sufami</name>
-        <systemsortname>Bandai - Peripheral - 1996</systemsortname>
+        <systemsortname>Bandai - Console - 1996</systemsortname>
     </system>
     <system>
         <name>supergrafx</name>
@@ -643,7 +639,7 @@
     </system>
     <system>
         <name>tg-cd</name>
-        <systemsortname>NEC - Peripheral - 1989</systemsortname>
+        <systemsortname>NEC - Console - 1989</systemsortname>
     </system>
     <system>
         <name>tg16</name>

@@ -227,7 +227,7 @@
     </system>
     <system>
         <name>fmtowns</name>
-        <systemsortname>1993</systemsortname>
+        <systemsortname>1989</systemsortname>
     </system>
     <system>
         <name>fpinball</name>
@@ -320,10 +320,6 @@
     <system>
         <name>mame-advmame</name>
         <systemsortname>1998</systemsortname>
-    </system>
-    <system>
-        <name>mame-mame4all</name>
-        <systemsortname>2000</systemsortname>
     </system>
     <system>
         <name>mastersystem</name>
