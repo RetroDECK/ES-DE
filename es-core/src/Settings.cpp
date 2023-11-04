@@ -338,7 +338,7 @@ void Settings::setDefaults()
     // Hardcoded or program-internal settings.
     //
 
-    mStringMap["ApplicationVersion"] = {"", ""};
+    mIntMap["ApplicationRelease"] = {0, 0};
     mStringMap["ApplicationUpdaterLastCheck"] = {"", ""};
     mBoolMap["PortableMode"] = {false, false};
     mBoolMap["DebugFlag"] = {false, false};

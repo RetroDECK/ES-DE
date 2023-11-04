@@ -634,20 +634,20 @@ int main(int argc, char* argv[])
         Settings::getInstance()->saveFile();
     }
 
-    // Check if the application version has changed, which would normally mean that the
-    // user has upgraded to a newer release.
-    std::string applicationVersion;
-    if ((applicationVersion = Settings::getInstance()->getString("ApplicationVersion")) !=
-        PROGRAM_VERSION_STRING) {
-        if (applicationVersion != "") {
-            LOG(LogInfo) << "Application version changed from previous startup, from \""
-                         << applicationVersion << "\" to \"" << PROGRAM_VERSION_STRING << "\"";
+    // Check if the application release number has changed, which would normally mean that the
+    // user has upgraded to a new version.
+    int applicationRelease;
+    if ((applicationRelease = Settings::getInstance()->getInt("ApplicationRelease")) !=
+        PROGRAM_RELEASE_NUMBER) {
+        if (applicationRelease != 0) {
+            LOG(LogInfo) << "Application release number changed from previous startup, from \""
+                         << applicationRelease << "\" to \"" << PROGRAM_RELEASE_NUMBER << "\"";
         }
         else {
-            LOG(LogInfo) << "Application version setting is blank, changing it to \""
-                         << PROGRAM_VERSION_STRING << "\"";
+            LOG(LogInfo) << "Application release number setting is blank, changing it to \""
+                         << PROGRAM_RELEASE_NUMBER << "\"";
         }
-        Settings::getInstance()->setString("ApplicationVersion", PROGRAM_VERSION_STRING);
+        Settings::getInstance()->setInt("ApplicationRelease", PROGRAM_RELEASE_NUMBER);
         Settings::getInstance()->saveFile();
     }
 
