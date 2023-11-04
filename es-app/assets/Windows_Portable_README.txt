@@ -23,6 +23,7 @@ Upgrading from an older release:
 3) Move your emulators from EmulationStation-DE_OLD\Emulators\ to EmulationStation-DE\Emulators\
 4) Move the contents of EmulationStation-DE_OLD\.emulationstation\ to EmulationStation-DE\.emulationstation\
    This last step includes your settings, custom collections, custom systems, scraped/downloaded media, gamelist.xml files, scripts and themes
+5) Update your themes using the theme downloader to get support for all the latest systems and features
 
 In case of issues, check .emulationstation\es_log.txt for clues as to what went wrong.
 Enabling the "Debug mode" setting in the "Other settings" menu or starting EmulationStation.exe with the --debug flag will provide additional details.
