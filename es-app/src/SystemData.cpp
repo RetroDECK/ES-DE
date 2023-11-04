@@ -813,9 +813,19 @@ bool SystemData::loadConfig()
                  << " (collections not included)";
     LOG(LogInfo) << "Total game count: " << gameCount;
 
-    // Sort systems by sortName, which will normally be the same as the full name.
+    // Sort systems by sortName, and always perform secondary sorting by the full name.
     std::sort(std::begin(sSystemVector), std::end(sSystemVector), [](SystemData* a, SystemData* b) {
-        return Utils::String::toUpper(a->getSortName()) < Utils::String::toUpper(b->getSortName());
+        if (Utils::String::toUpper(a->getSortName()) < Utils::String::toUpper(b->getSortName()))
+            return true;
+        if (Utils::String::toUpper(a->getSortName()) > Utils::String::toUpper(b->getSortName()))
+            return false;
+
+        if (Utils::String::toUpper(a->getFullName()) < Utils::String::toUpper(b->getFullName()))
+            return true;
+        if (Utils::String::toUpper(a->getFullName()) > Utils::String::toUpper(b->getFullName()))
+            return false;
+
+        return false;
     });
 
     // Don't load any collections if there are no systems available.
