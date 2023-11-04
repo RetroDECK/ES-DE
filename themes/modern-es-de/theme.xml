@@ -67,6 +67,7 @@
                 <itemScale>1</itemScale>
                 <itemVerticalAlignment>center</itemVerticalAlignment>
                 <unfocusedItemOpacity>1</unfocusedItemOpacity>
+                <fastScrolling>true</fastScrolling>
                 <color>00000000</color>
                 <textBackgroundColor>${placeholderColor}</textBackgroundColor>
                 <!-- Placeholder text -->
