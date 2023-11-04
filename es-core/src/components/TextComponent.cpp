@@ -472,7 +472,7 @@ void TextComponent::onTextChanged()
     float offsetY {0.0f};
 
     if (mHorizontalScrolling) {
-        if (lineHeight > mSize.y)
+        if (lineHeight > mSize.y && mSize.y != 0.0f)
             offsetY = (mSize.y - lineHeight) / 2.0f;
         mTextCache = std::shared_ptr<TextCache>(
             font->buildTextCache(text, 0.0f, offsetY, mColor, mLineSpacing));
