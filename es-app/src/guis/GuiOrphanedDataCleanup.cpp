@@ -300,7 +300,7 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
             mCurrentSystem = currentSystem;
         }
 
-        if (Utils::FileSystem::exists(system->getSystemEnvData()->mStartPath + "/flatten.txt")) {
+        if (system->getFlattenFolders()) {
             LOG(LogError) << "A flatten.txt file was found, skipping system \"" << currentSystem
                           << "\"";
             {
@@ -478,7 +478,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             mCurrentSystem = currentSystem;
         }
 
-        if (Utils::FileSystem::exists(system->getSystemEnvData()->mStartPath + "/flatten.txt")) {
+        if (system->getFlattenFolders()) {
             LOG(LogError) << "A flatten.txt file was found, skipping system \"" << currentSystem
                           << "\"";
             {
