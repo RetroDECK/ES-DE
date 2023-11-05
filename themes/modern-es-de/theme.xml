@@ -29,6 +29,17 @@
         </aspectRatio>
     </variant>
 
+    <variant name="withVideos, withoutVideos">
+        <variables>
+            <artDirectory>art</artDirectory>
+        </variables>
+    </variant>
+    <variant name="withVideosLegacy, withoutVideosLegacy">
+        <variables>
+            <artDirectory>art_legacy</artDirectory>
+        </variables>
+    </variant>
+
     <variant name="all">
         <view name="system, gamelist">
             <image name="background">
@@ -63,7 +74,7 @@
                 <pos>0 0.3</pos>
                 <size>1 0.4</size>
                 <type>horizontal</type>
-                <staticImage>./art/${system.theme}.jpg</staticImage>
+                <staticImage>./${artDirectory}/${system.theme}.jpg</staticImage>
                 <itemScale>1</itemScale>
                 <itemVerticalAlignment>center</itemVerticalAlignment>
                 <unfocusedItemOpacity>1</unfocusedItemOpacity>
@@ -372,7 +383,7 @@
         </view>
     </variant>
 
-    <variant name="withVideos">
+    <variant name="withVideos, withVideosLegacy">
         <view name="gamelist">
             <video name="gameVideo">
                 <pos>0.4985 0.365</pos>
@@ -387,7 +398,7 @@
         </view>
     </variant>
 
-    <variant name="withoutVideos">
+    <variant name="withoutVideos, withoutVideosLegacy">
         <view name="gamelist">
             <image name="gameImage">
                 <pos>0.4985 0.365</pos>

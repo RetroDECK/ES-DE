@@ -77,6 +77,26 @@
         </override>
     </variant>
 
+    <variant name="withVideosLegacy">
+        <label>Textlist with videos (legacy)</label>
+        <selectable>true</selectable>
+        <override>
+            <trigger>noMedia</trigger>
+            <mediaType>miximage, screenshot, cover, video</mediaType>
+            <useVariant>noGameMedia</useVariant>
+        </override>
+    </variant>
+
+    <variant name="withoutVideosLegacy">
+        <label>Textlist without videos (legacy)</label>
+        <selectable>true</selectable>
+        <override>
+            <trigger>noMedia</trigger>
+            <mediaType>miximage, screenshot, cover</mediaType>
+            <useVariant>noGameMedia</useVariant>
+        </override>
+    </variant>
+
     <variant name="noGameMedia">
         <label>No game media</label>
         <selectable>false</selectable>

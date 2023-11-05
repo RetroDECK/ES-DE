@@ -2,15 +2,17 @@
 
 The following options are included:
 
-2 variants:
+4 variants:
 
 - Textlist with videos
 - Textlist without videos
+- Textlist with videos (legacy)
+- Textlist without videos (legacy)
 
 2 color schemes:
 
-- Dark mode
-- Light mode
+- Dark
+- Light
 
 4 aspect ratios:
 
@@ -25,6 +27,4 @@ The following options are included:
 - Instant and slide
 - Instant and fade
 
-# Credits
-
-The theme is based on [es-theme-switch](https://github.com/lilbud/es-theme-switch) by lilbud.
+Credits and license information can be found next to this file.
