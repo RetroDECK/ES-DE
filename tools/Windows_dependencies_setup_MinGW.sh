@@ -91,7 +91,7 @@ if [ ! -d libgit2 ]; then
 fi
 
 cd libgit2
-git checkout v1.6.4
+git checkout v1.7.1
 mkdir build
 cd ..
 

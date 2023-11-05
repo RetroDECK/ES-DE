@@ -158,7 +158,7 @@ if not exist libgit2\ (
 )
 
 cd libgit2
-git checkout v1.6.4
+git checkout v1.7.1
 mkdir build
 cd ..
 
