@@ -59,8 +59,11 @@ ApplicationUpdater::~ApplicationUpdater()
 {
     // This is needed if getResults() was never called.
     mApplicationShutdown = true;
+
     if (mThread)
         mThread->join();
+
+    HttpReq::cleanupCurlMulti();
 }
 
 ApplicationUpdater& ApplicationUpdater::getInstance()
@@ -187,6 +190,7 @@ void ApplicationUpdater::update()
     HttpReq::Status reqStatus {mRequest->status()};
     if (reqStatus == HttpReq::REQ_SUCCESS) {
         mStatus = ASYNC_DONE;
+        HttpReq::cleanupCurlMulti();
         return;
     }
 

@@ -227,6 +227,8 @@ GuiApplicationUpdater::~GuiApplicationUpdater()
 
     if (mThread)
         mThread->join();
+
+    HttpReq::cleanupCurlMulti();
 }
 
 void GuiApplicationUpdater::setDownloadPath()
