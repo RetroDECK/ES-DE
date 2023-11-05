@@ -190,7 +190,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         }
         if (!mHasCustomCollections) {
             mStatus->setValue("COLLECTIONS CLEANUP FAILED");
-            mError->setValue("THERE ARE NO ENABLED CUSTOM COLLECTIONS");
+            mError->setValue("There are no enabled custom collections");
             mEntryCount->setValue("0");
             mSystemProcessing->setValue("");
             return;
@@ -292,8 +292,6 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
             break;
         }
 
-        ++systemCounter;
-
         const std::string currentSystem {system->getFullName() + " (" + system->getName() + ")"};
         LOG(LogInfo) << "Processing system \"" << currentSystem << "\"";
 
@@ -301,6 +299,18 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
             std::unique_lock<std::mutex> lock {mMutex};
             mCurrentSystem = currentSystem;
         }
+
+        if (Utils::FileSystem::exists(system->getSystemEnvData()->mStartPath + "/flatten.txt")) {
+            LOG(LogError) << "A flatten.txt file was found, skipping system \"" << currentSystem
+                          << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage = "A flatten.txt file was found, skipping \"" + currentSystem + "\"";
+            }
+            continue;
+        }
+
+        ++systemCounter;
 
         std::vector<std::string> systemFilesRelative;
         for (auto& systemFile : system->getRootFolder()->getFilesRecursive(GAME | FOLDER)) {
@@ -373,7 +383,7 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                     LOG(LogError) << "Couldn't create target directory \"" << fileDirectory << "\"";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "COULDN'T CREATE TARGET DIRECTORY, PERMISSION PROBLEMS?";
+                        mErrorMessage = "Couldn't create target directory, permission problems?";
                     }
                     mFailed = true;
                     mIsProcessing = false;
@@ -383,7 +393,7 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                     LOG(LogError) << "Couldn't move file \"" << file << "\"";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "COULDN'T MOVE MEDIA FILE, PERMISSION PROBLEMS?";
+                        mErrorMessage = "Couldn't move media file, permission problems?";
                     }
                     mFailed = true;
                     mIsProcessing = false;
@@ -460,8 +470,6 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             break;
         }
 
-        ++systemCounter;
-
         const std::string currentSystem {system->getFullName() + " (" + system->getName() + ")"};
         LOG(LogInfo) << "Processing system \"" << currentSystem << "\"";
 
@@ -469,6 +477,18 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             std::unique_lock<std::mutex> lock {mMutex};
             mCurrentSystem = currentSystem;
         }
+
+        if (Utils::FileSystem::exists(system->getSystemEnvData()->mStartPath + "/flatten.txt")) {
+            LOG(LogError) << "A flatten.txt file was found, skipping system \"" << currentSystem
+                          << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage = "A flatten.txt file was found, skipping \"" + currentSystem + "\"";
+            }
+            continue;
+        }
+
+        ++systemCounter;
 
         const std::string gamelistFile {system->getGamelistPath(false)};
 
@@ -491,7 +511,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             {
                 std::unique_lock<std::mutex> lock {mMutex};
                 mErrorMessage =
-                    "COULDN'T PARSE GAMELIST.XML FILE FOR \"" + system->getName() + "\"";
+                    "Couldn't parse gamelist.xml file for \"" + system->getName() + "\"";
             }
             SDL_Delay(500);
             continue;
@@ -516,7 +536,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             {
                 std::unique_lock<std::mutex> lock {mMutex};
                 mErrorMessage =
-                    "COULDN'T FIND A GAMELIST TAG IN FILE FOR SYSTEM \"" + system->getName() + "\"";
+                    "Couldn't find a gamelist tag in file for system \"" + system->getName() + "\"";
             }
             SDL_Delay(500);
             continue;
@@ -531,7 +551,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                 LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
-                    mErrorMessage = "COULDN'T DELETE TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+                    mErrorMessage = "Couldn't delete temporary gamelist file, permission problems?";
                 }
                 mFailed = true;
                 mIsProcessing = false;
@@ -563,7 +583,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             LOG(LogError) << "Couldn't write to temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "COULDN'T WRITE TO TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+                mErrorMessage = "Couldn't write to temporary gamelist file, permission problems?";
             }
             // If we couldn't write to the file this will probably fail as well.
             Utils::FileSystem::removeFile(tempFile);
@@ -639,7 +659,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             LOG(LogError) << "Couldn't write to temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "COULDN'T WRITE TO TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+                mErrorMessage = "Couldn't write to temporary gamelist file, permission problems?";
             }
             Utils::FileSystem::removeFile(tempFile);
             mFailed = true;
@@ -667,7 +687,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                 LOG(LogError) << "Couldn't create backup directory \"" << targetDirectory << "\"";
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
-                    mErrorMessage = "COULDN'T CREATE BACKUP DIRECTORY, PERMISSION PROBLEMS?";
+                    mErrorMessage = "Couldn't create backup directory, permission problems?";
                 }
                 mFailed = true;
             }
@@ -684,7 +704,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                     LOG(LogError) << "Couldn't move file \"" << gamelistFile << "\"";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "COULDN'T MOVE OLD GAMELIST FILE, PERMISSION PROBLEMS?";
+                        mErrorMessage = "Couldn't move old gamelist file, permission problems?";
                     }
                     mFailed = true;
                 }
@@ -693,7 +713,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
                         mErrorMessage =
-                            "COULDN'T MOVE TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+                            "Couldn't move temporary gamelist file, permission problems?";
                     }
                     mFailed = true;
                     // Attempt to move back the old gamelist.xml file.
@@ -715,7 +735,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "COULDN'T DELETE TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+                mErrorMessage = "Couldn't delete temporary gamelist file, permission problems?";
             }
             mFailed = true;
         }
@@ -774,7 +794,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                           << collectionFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "COULDN'T FIND CUSTOM COLLECTION CONFIGURATION FILE";
+                mErrorMessage = "Couldn't find custom collection configuration file";
             }
             mFailed = true;
             mIsProcessing = false;
@@ -802,7 +822,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                           << collectionFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "COULDN'T OPEN CUSTOM COLLECTION CONFIGURATION FILE";
+                mErrorMessage = "Couldn't open custom collection configuration file";
             }
             mFailed = true;
             mIsProcessing = false;
@@ -839,7 +859,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
                     mErrorMessage =
-                        "COULDN'T DELETE TEMPORARY COLLECTION FILE, PERMISSION PROBLEMS?";
+                        "Couldn't delete temporary collection file, permission problems?";
                 }
                 mFailed = true;
                 mIsProcessing = false;
@@ -864,7 +884,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                 LOG(LogError) << "Couldn't create backup directory \"" << targetDirectory << "\"";
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
-                    mErrorMessage = "COULDN'T CREATE BACKUP DIRECTORY, PERMISSION PROBLEMS?";
+                    mErrorMessage = "Couldn't create backup directory, permission problems?";
                 }
                 mFailed = true;
                 mIsProcessing = false;
@@ -883,7 +903,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                                   << tempFile << "\"";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "COULDN'T WRITE TO TEMPORARY COLLECTION CONFIGURATION FILE";
+                        mErrorMessage = "Couldn't write to temporary collection configuration file";
                     }
                     mFailed = true;
                     mIsProcessing = false;
@@ -912,7 +932,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                                   << "\" to backup directory";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "COULDN'T MOVE OLD COLLECTION FILE, PERMISSION PROBLEMS?";
+                        mErrorMessage = "Couldn't move old collection file, permission problems?";
                     }
                     // Attempt to move back the old collection file.
                     Utils::FileSystem::renameFile(
@@ -925,7 +945,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
                         mErrorMessage =
-                            "COULDN'T MOVE TEMPORARY COLLECTION FILE, PERMISSION PROBLEMS?";
+                            "Couldn't move temporary collection file, permission problems?";
                     }
                     // Attempt to move back the old collection file.
                     Utils::FileSystem::renameFile(
@@ -948,7 +968,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
             LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "COULDN'T DELETE TEMPORARY COLLECTION FILE, PERMISSION PROBLEMS?";
+                mErrorMessage = "Couldn't delete temporary collection file, permission problems?";
             }
             mFailed = true;
         }
@@ -995,6 +1015,8 @@ void GuiOrphanedDataCleanup::update(int deltaTime)
         }
         message.append("CLEANUP");
         mStatus->setValue(message);
+        if (mError->getValue() != mErrorMessage)
+            mError->setValue(mErrorMessage);
         mCompleted = false;
     }
     else if (mFailed) {
