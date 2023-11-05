@@ -1494,7 +1494,7 @@ Here's an example where three systems have been sorted by release year instead o
 
 You only need to include systems that you want to customize sorting for, and if there's also a systemsortname tag present in the es_systems.xml file for any system, then the es_systems_sorting.xml entry will take precedence.
 
-Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011.
+Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011. Secondary sorting will always be done by the fullname tag in es_systems.xml.
 
 There are also four complete sorting files bundled with ES-DE, you can find them in the resources/sorting/ directory, or you can access them [here](https://gitlab.com/es-de/emulationstation-de/-/tree/master/resources/sorting).
 

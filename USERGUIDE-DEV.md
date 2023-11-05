@@ -359,6 +359,8 @@ In order to remove such unnecessary media files and configuration file entries, 
 
 It's recommended to run this utility with the _Show hidden games_ setting enabled as orphaned gamelist.xml folder entries may otherwise not get purged.
 
+If a system has a flatten.txt file present in the root of its directory, then the system will be completely skipped and an error will be logged (using folder flattening is strongly discouraged in general).
+
 Note that there are no guarantees that any processed gamelist.xml files will be usable in any other applications than ES-DE. An attempt is made to retain the file structure but data unknown to ES-DE may get purged during cleanup.
 
 If the utility finds any data to be removed, a backup of the old files will be made. This will end up in a `CLEANUP` directory and will contain a date and time stamp. For example:
@@ -1023,6 +1025,7 @@ However, some users have a setup where they have separated games inside their sy
 * Any identically named files will be added only once in a semi-random fashion, meaning you could miss some games
 * If there is metadata available for multiple games with the same filename (which could happen if scraping was done prior to flattening the folders) then the behavior is undefined and metadata from the wrong game may get used
 * Some systems like MS-DOS and ScummVM may be completely broken
+* The Orphaned data cleanup utility will not process the system
 * The setup may cause confusion when reorganizing your collection and similar because what you'll see inside ES-DE will not reflect what you see when navigating the ROM directory in your operating system's file manager
 
 Only enable this functionality if you know exactly what you're doing and understand the adverse side effects mentioned above. If you have any name collisions in your directory structure then make sure to rename each file to have a unique name. Also delete your gamelist.xml file and rescrape the entire system after fixing any collisions as it's otherwise random which metadata will be used for those games.

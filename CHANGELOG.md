@@ -10,13 +10,22 @@
 
 ### Detailed list of changes
 
+* Added secondary sorting by fullname when sorting systems
+* The Orphaned data cleanup utility will now skip any system where a flatten.txt file is present
+* Changed a number of error messages in the Orphaned data cleanup utility from uppercase to lowercase
+* (modern-es-de) Added system carousel fastScrolling
+* The application release number is now tracked on startup instead of the application version
 * Changed the systems sorting platform from "Peripheral" to "Console" for the fds, megacd, megacdjp, n64dd, pcenginecd and satellaview systems
 * Changed the systems sorting platform from "Peripheral" to "Console" for the sega32x, sega32xjp, sega32xna, segacd, sgb, sufami and tg-cd systems
+* Updated SDL to 2.28.5 on Windows, macOS and the Linux AppImage builds
+* Updated libgit2 to 1.7.1 on Windows and macOS
 
 ### Bug fixes
 
-* The year was incorrect in the systems sorting files for the amiga1200, amiga600, astrocde, kodi, solarus and stv systems
-* The fmtowns system was incorrectly classified as a console and with the wrong release year in the systems sortings files
+* The Orphaned data cleanup utility removed media files that had the wrong letter case on Windows and macOS (i.e. case-insensitive filesystems)
+* Horizontally scrolling text containers sometimes had an incorrect vertical offset
+* The year was incorrect in the systems sorting files for the amiga1200, amiga600, astrocde, coco, kodi, solarus, stv and trs-80 systems
+* The fmtowns system was incorrectly classified as a console and with the wrong release year in the systems sorting files
 
 ## Version 2.2.0
 
