@@ -486,7 +486,7 @@ if(APPLE)
                          ${PROJECT_SOURCE_DIR}/libswscale.7.dylib
                          ${PROJECT_SOURCE_DIR}/libfreeimage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
-                         ${PROJECT_SOURCE_DIR}/libgit2.1.6.dylib
+                         ${PROJECT_SOURCE_DIR}/libgit2.1.7.dylib
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.0.dylib)
 elseif(WIN32)
