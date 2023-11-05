@@ -9,13 +9,15 @@ The following options are included:
 
 2 color schemes:
 
-- Dark mode
-- Light mode
+- Dark
+- Light
 
-2 aspect ratios:
+4 aspect ratios:
 
 - 16:9
+- 16:9 vertical
 - 4:3
+- 4:3 vertical
 
 3 transitions:
 
@@ -23,8 +25,4 @@ The following options are included:
 - Instant
 - Fade
 
-There is no need for a dedicated 16:10 aspect ratio as the 16:9 layout scales really well.
-
-# Credits
-
-The theme is based on [recalbox-multi](https://gitlab.com/recalbox/recalbox-themes) by the Recalbox community.
+Credits and license information can be found next to this file.
