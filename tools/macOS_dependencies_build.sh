@@ -192,7 +192,7 @@ rm -f CMakeCache.txt
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF ..
 make clean
 make -j${JOBS}
-cp libgit2.1.6.4.dylib ../../../libgit2.1.6.dylib
+cp libgit2.1.7.1.dylib ../../../libgit2.1.7.dylib
 cd ../..
 
 echo
