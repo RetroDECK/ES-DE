@@ -81,6 +81,7 @@ private:
     std::atomic<bool> mNeedsReloading;
     std::atomic<int> mProcessedCount;
     bool mHasCustomCollections;
+    bool mCaseSensitiveFilesystem;
 
     enum class CleanupType {
         MEDIA,

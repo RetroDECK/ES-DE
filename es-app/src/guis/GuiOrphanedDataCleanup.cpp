@@ -33,10 +33,17 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     , mNeedsReloading {false}
     , mProcessedCount {0}
     , mHasCustomCollections {false}
+    , mCaseSensitiveFilesystem {true}
     , mCleanupType {CleanupType::MEDIA}
 {
     addChild(&mBackground);
     addChild(&mGrid);
+
+#if defined(_WIN64) || defined(__APPLE__)
+    // Although macOS may have filesystem case-sensitivity enabled it's rare and in worst case
+    // this will just leave some extra media files on the filesystem.
+    mCaseSensitiveFilesystem = false;
+#endif
 
     mMediaDescription =
         "THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
@@ -323,8 +330,14 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                 if (fileEntry.substr(separatorPos).find_last_of('.') != std::string::npos)
                     fileEntry = fileEntry.substr(0, fileEntry.find_last_of('.'));
             }
-            systemFilesRelative.emplace_back(
-                fileEntry.substr(system->getSystemEnvData()->mStartPath.length() + 1));
+            if (mCaseSensitiveFilesystem) {
+                systemFilesRelative.emplace_back(
+                    fileEntry.substr(system->getSystemEnvData()->mStartPath.length() + 1));
+            }
+            else {
+                systemFilesRelative.emplace_back(Utils::String::toUpper(
+                    fileEntry.substr(system->getSystemEnvData()->mStartPath.length() + 1)));
+            }
         }
 
         std::vector<std::string> cleanupFiles;
@@ -336,7 +349,16 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
             for (auto& mediaFile : dirContent) {
                 if (Utils::FileSystem::isDirectory(mediaFile))
                     continue;
-                std::string relativePath {mediaFile.substr(mediaTypeDir.length() + 1)};
+
+                std::string relativePath;
+                if (mCaseSensitiveFilesystem) {
+                    relativePath = mediaFile.substr(mediaTypeDir.length() + 1);
+                }
+                else {
+                    relativePath =
+                        Utils::String::toUpper(mediaFile.substr(mediaTypeDir.length() + 1));
+                }
+
                 relativePath = relativePath.substr(0, relativePath.find_last_of('.'));
                 if (std::find(systemFilesRelative.cbegin(), systemFilesRelative.cend(),
                               relativePath) == systemFilesRelative.end()) {
