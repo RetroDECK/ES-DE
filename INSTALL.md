@@ -1176,7 +1176,7 @@ If you're using the AppImage release of ES-DE then the bundled es_systems.xml fi
 
 It doesn't matter in which order you define the systems as they will be sorted by the `<fullname>` tag or by the optional `<systemsortname>` tag when displayed inside the application. But it's still a good idea to add the systems in alphabetical order to make the configuration file easier to maintain.
 
-Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011.
+Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011. Secondary sorting will always be done by the fullname tag in es_systems.xml.
 
 But instead of changing the sorting directly in the es_systems.xml file it could be a better idea to use the dedicated es_systems_sorting.xml file instead. How to do that is described later in this document.
 

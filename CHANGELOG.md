@@ -6,14 +6,17 @@
 
 ### Release overview
 
-2.2 maintenance release.
+2.2 maintenance release. This fixes some bugs and implements a new look for the Modern theme by adding a new set of carousel icons.
+
+Some improvements were also made to the systems sorting functionality.
 
 ### Detailed list of changes
 
+* Added new carousel icons and two new variants to the Modern theme
+* Added system carousel fastScrolling to the Modern theme
 * Added secondary sorting by fullname when sorting systems
 * The Orphaned data cleanup utility will now skip any system where a flatten.txt file is present
 * Changed a number of error messages in the Orphaned data cleanup utility from uppercase to lowercase
-* (modern-es-de) Added system carousel fastScrolling
 * The application release number is now tracked on startup instead of the application version
 * Changed the systems sorting platform from "Peripheral" to "Console" for the fds, megacd, megacdjp, n64dd, pcenginecd and satellaview systems
 * Changed the systems sorting platform from "Peripheral" to "Console" for the sega32x, sega32xjp, sega32xna, segacd, sgb, sufami and tg-cd systems
@@ -26,6 +29,7 @@
 * Horizontally scrolling text containers sometimes had an incorrect vertical offset
 * The year was incorrect in the systems sorting files for the amiga1200, amiga600, astrocde, coco, kodi, solarus, stv and trs-80 systems
 * The fmtowns system was incorrectly classified as a console and with the wrong release year in the systems sorting files
+* Fixed a small memory leak in the application updater
 
 ## Version 2.2.0
 
