@@ -25,7 +25,7 @@ Some improvements were also made to the systems sorting functionality.
 
 ### Bug fixes
 
-* The Orphaned data cleanup utility removed media files that had the wrong letter case on Windows and macOS (i.e. case-insensitive filesystems)
+* The Orphaned data cleanup utility removed media files that had the wrong letter case on Windows and macOS (i.e. on case-insensitive filesystems)
 * Horizontally scrolling text containers sometimes had an incorrect vertical offset
 * The year was incorrect in the systems sorting files for the amiga1200, amiga600, astrocde, coco, kodi, solarus, stv and trs-80 systems
 * The fmtowns system was incorrectly classified as a console and with the wrong release year in the systems sorting files

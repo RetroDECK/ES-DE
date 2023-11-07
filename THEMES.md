@@ -1342,7 +1342,7 @@ Properties:
     - Valid values are `horizontal`, `vertical`, `horizontalWheel` or `verticalWheel`
     - Default is `horizontal`
 * `staticImage` - type: PATH
-    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
     - This property can only be used in the `system` view.
 * `imageType` - type: STRING
     - This displays a game image of a certain media type, and can only be used in the `gamelist` view. Optionally two types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined, and any superfluous entries will be ignored. Note that defining two entries can lead to quite a performance penalty so in general it's recommended to define a single value and instead use `defaultImage` as a fallback in case no image is found.
@@ -1359,9 +1359,9 @@ Properties:
     - `none` - No image will be used, instead the game name will be displayed as text. Has no effect if `defaultImage` has been defined.
     - Default is `marquee`
 * `defaultImage` - type: PATH
-    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
 * `defaultFolderImage` - type: PATH
-    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found and the item is a folder. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found and the item is a folder. Most common extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
     - Default is the same value as `defaultImage`
     - This property can only be used in the `gamelist` view.
 * `maxItemCount` - type: FLOAT
@@ -1627,7 +1627,7 @@ Properties:
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `staticImage` - type: PATH
-    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
     - This property can only be used in the `system` view.
 * `imageType` - type: STRING
     - This displays a game image of a certain media type, and can only be used in the `gamelist` view. Optionally two types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined, and any superfluous entries will be ignored. Note that defining two entries can lead to quite a performance penalty so in general it's recommended to define a single value and instead use `defaultImage` as a fallback in case no image is found.
@@ -1644,9 +1644,9 @@ Properties:
     - `none` - No image will be used, instead the game name will be displayed as text. Has no effect if `defaultImage` has been defined.
     - Default is `marquee`
 * `defaultImage` - type: PATH
-    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
 * `defaultFolderImage` - type: PATH
-    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found and the item is a folder. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found and the item is a folder. Most common extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
     - Default is the same value as `defaultImage`
     - This property can only be used in the `gamelist` view.
 * `itemSize` - type: NORMALIZED_PAIR
@@ -1732,7 +1732,7 @@ Properties:
     - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
     - Default is `1`
 * `backgroundImage` - type: PATH
-    - Path to an optional background image file which will be displayed behind the image defined by `staticImage`, `imageType` or `defaultImage`. The aspect ratio for this image will not be preserved, it will be stretched or squashed to the aspect ratio set by `itemSize`. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to an optional background image file which will be displayed behind the image defined by `staticImage`, `imageType` or `defaultImage`. The aspect ratio for this image will not be preserved, it will be stretched or squashed to the aspect ratio set by `itemSize`. Most common extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
 * `backgroundRelativeScale` - type: FLOAT.
     - This property makes it possible to size the background relative to the overall item size. This is mostly useful when combined with the `selectorImage` property.
     - Minimum value is `0.2` and maximum value is `1`
@@ -1751,7 +1751,7 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `selectorImage` - type: PATH
-    - Path to an optional selector image file which will be displayed for the currently selected item. The aspect ratio for this image will not be preserved, it will be stretched or squashed to the aspect ratio set by `itemSize`. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to an optional selector image file which will be displayed for the currently selected item. The aspect ratio for this image will not be preserved, it will be stretched or squashed to the aspect ratio set by `itemSize`. Most common extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
 * `selectorRelativeScale` - type: FLOAT.
     - This property makes it possible to size the selector relative to the overall item size. This is mostly useful when combined with the `backgroundImage` property.
     - Minimum value is `0.2` and maximum value is `1`
@@ -2896,9 +2896,9 @@ Properties:
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
     - Default is `FFFFFFFF`
 * `filledPath` - type: PATH
-    - Path to the "filled" rating image. Any aspect ratio is supported. Note that there is no explicit padding property, so to add spaces between each icon simply make the image content smaller on the canvas. The images should always be centered on the canvas or otherwise the filledPath and unfilledPath textures will not align properly for all rating values. Most common file extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to the "filled" rating image. Any aspect ratio is supported. Note that there is no explicit padding property, so to add spaces between each icon simply make the image content smaller on the canvas. The images should always be centered on the canvas or otherwise the filledPath and unfilledPath textures will not align properly for all rating values. Most common file extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
 * `unfilledPath` - type: PATH
-    - Path to the "unfilled" rating image. Any aspect ratio is supported. Note that there is no explicit padding property, so to add spaces between each icon simply make the image content smaller on the canvas. The images should always be centered on the canvas or otherwise the filledPath and unfilledPath textures will not align properly for all rating values. Most common file extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Path to the "unfilled" rating image. Any aspect ratio is supported. Note that there is no explicit padding property, so to add spaces between each icon simply make the image content smaller on the canvas. The images should always be centered on the canvas or otherwise the filledPath and unfilledPath textures will not align properly for all rating values. Most common file extensions are supported (including .svg, .jpg, .png, .webp and unanimated .gif).
 * `overlay` - type: BOOLEAN
     - Whether to overlay the filledPath image on top of the unfilledPath image. If this property is set to false, then the unfilledPath image will only be rendered to the right of the rating value cut position. This property is useful for avoiding image aliasing artifacts that could otherwise occur when combining some rating images. It can also help with avoiding some inconsistent fade-out animations.
     - Default is `true`
