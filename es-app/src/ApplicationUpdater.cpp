@@ -190,7 +190,6 @@ void ApplicationUpdater::update()
     HttpReq::Status reqStatus {mRequest->status()};
     if (reqStatus == HttpReq::REQ_SUCCESS) {
         mStatus = ASYNC_DONE;
-        HttpReq::cleanupCurlMulti();
         return;
     }
 
