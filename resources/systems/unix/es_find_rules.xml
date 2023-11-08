@@ -666,6 +666,7 @@
             <entry>~/.local/share/applications/Proton/wine*.AppImage</entry>
             <entry>~/.local/bin/Proton/wine*.AppImage</entry>
             <entry>~/bin/Proton/wine*.AppImage</entry>
+            <entry>~/Applications/wine*roton*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="PUNES">
@@ -1025,6 +1026,7 @@
             <entry>~/.local/share/applications/Wine/wine*.AppImage</entry>
             <entry>~/.local/bin/Wine/wine*.AppImage</entry>
             <entry>~/bin/Wine/wine*.AppImage</entry>
+            <entry>~/Applications/wine*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="XENIA-WINDOWS">
