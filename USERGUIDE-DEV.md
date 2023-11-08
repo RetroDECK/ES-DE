@@ -867,6 +867,35 @@ The following Windows emulators are supported, and the setup for most of these i
 | xbox360                   | xenia            | xenia/xenia.exe         |
 | xbox360                   | xenia            | xenia/xenia_canary.exe  |
 
+**Fallback config for AppImageLauncher**
+
+[AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) will by default move any AppImage you attempt to run to the root of the ~/Applications directory. This annoyingly also includes files in subdirectories in the ~/Applications tree, so the Wine and Proton AppImages would get relocated there too.
+
+For instance:
+```
+~/Applications/Wine/wine-stable_8.0.2-x86_64.AppImage
+```
+Would be moved to:
+```
+~/Applications/wine-stable_8.0.2-x86_64_007830d9c8edbf18441ad63ed592f371.AppImage
+```
+
+A hash will be applied to the filename as part of the move process.
+
+To be able to launch these AppImages when using AppImageLauncher the following staticpath find rule is included for Wine:
+```
+<entry>~/Applications/wine*.AppImage</entry>
+```
+
+And the following rule is included for Proton:
+```
+<entry>~/Applications/wine*roton*.AppImage</entry>
+```
+
+This way you'll be able to run Wine and Proton anyway. But note that this is not a reliable solution as there may be a mixup between the Wine and Proton AppImages on game launch due to their filename similarities. However, if you only intend to use one of them, then this will work fine as it can't get mixed up with the other AppImage.
+
+An alternative solution would of course be to not use AppImageLauncher.
+
 ## Running emulators in fullscreen mode
 
 In general ES-DE does not pass command line parameters to emulators to start them in fullscreen mode. This is so as for most (if not all) emulators, command line arguments overrides the settings the user has defined. This means that windowed mode would become impossible to achieve without creating custom systems configuration entries if ES-DE enforced fullscreen mode. There are only a very few exceptions for emulators where there is no other way to enter fullscreen mode than by passing such options during game launch.
