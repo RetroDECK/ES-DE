@@ -4,4 +4,6 @@ The Slate theme is based on [recalbox-multi](https://gitlab.com/recalbox/recalbo
 
 Some graphics from the [Carbon](https://github.com/RetroPie/es-theme-carbon) theme by Rookervik.
 
+Some console and controller vector graphics by Bezza191
+
 Some logotype graphics by Dan Patrick.
