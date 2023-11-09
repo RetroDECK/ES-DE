@@ -18,7 +18,7 @@ ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distribut
 
 ## What is the relationship between ES-DE and RetroDECK?
 
-ES-DE and [RetroDECK](http://retrodeck.net) are completely separate projects, but we collaborate to give the best possible user experience. RetroDECK bundles ES-DE with all emulators in the same Flatpak so you don't need to update emulators separately or set Flatpak permissions manually. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed via RetroDECK.
+ES-DE and [RetroDECK](http://retrodeck.net) are completely separate projects, but we collaborate to give the best possible user experience. RetroDECK bundles ES-DE with all emulators in the same Flatpak so you don't need to update emulators separately or set Flatpak permissions manually. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed via RetroDECK. Note however that RetroDECK can also be used on regular Linux desktops and not only on the Steam Deck.
 
 ## What is the relationship between ES-DE and EmuDeck?
 

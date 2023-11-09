@@ -657,6 +657,8 @@ rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
 ```
 Again, the wildcard matching means this filename should be found by ES-DE when launching a game so no additional setup should be required.
 
+Just be aware that AppImageLauncher causes multiple issues and its use is therefore not recommended. You can read more about this in the next section below.
+
 If not using AppImageLauncher, then make sure to set the AppImages as executable or ES-DE will not be able to launch them. For example:
 ```
 cd ~/Applications
@@ -691,6 +693,14 @@ The following emulators are supported in AppImage format when using the bundled 
 | zmachine      | Gargoyle            | Gargoyle*.AppImage             |
 
 The EKA2L1 AppImage has the very generic name `ubuntu-latest.AppImage` and as such needs to be renamed to match the entry in the table above.
+
+## Using AppImageLauncher on Linux
+
+[AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) will by default move any AppImage you attempt to run to the root of the ~/Applications directory and integreate it into the desktop environment's application menu. While this may sound convenient it causes multiple issues.
+
+It's a gross oversimplification to assume that people want all their AppImages in the ~/Applications directory. For example OpenBOR games are supposed to be packaged as standalone units with the AppImage game engine together with all game assets as different games may require different game engine versions. Another example would be Windows games that are packaged together with Wine or Proton into an AppImage. In ES-DE there are multiple systems that can scrape and launch AppImages directly, which means they need to be placed into the ROMs directory tree.
+
+For these and other reasons it's not recommended to use AppImageLauncher. If you still insist on using it you will need to setup some symlinks to point the relocated AppImages back to their expected locations. This is covered in some specific sections of this user guide, but not everywhere as AppImageLauncher is not a recommended solution for ES-DE.
 
 ## AppImage vs Flatpak search order on Linux
 
@@ -1282,6 +1292,9 @@ Once Wine or Proton has been setup, download BigPEmu and unzip it into `~/Applic
 That's basically it, for the atarijaguar system just make sure to select _BigPEmu (Wine)_ or _BigPEmu (Proton)_ from the _Alternative emulators_ interface or set it on a per-game basis using the metadata editor.
 
 There are many settings in Wine that may affect compatibility, performance etc. but covering all that is beyond the scope of this guide.
+
+In addition to the above instructions there's an unofficial YouTube video available on how to setup BigPEmu with ES-DE:\
+https://www.youtube.com/watch?v=GuPAjgICc-4
 
 ### Commodore Amiga and CDTV
 
