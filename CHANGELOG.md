@@ -18,7 +18,6 @@ Some improvements were also made to the systems sorting functionality.
 * The Orphaned data cleanup utility will now skip any system where a flatten.txt file is present
 * Changed a number of error messages in the Orphaned data cleanup utility from uppercase to lowercase
 * The application release number is now tracked on startup instead of the application version
-* (Linux) Added fallback find rule entries for Wine and Proton in case they were relocated by AppImageLauncher
 * (slate-es-de) Added console graphics for the adam system
 * Changed the systems sorting platform from "Peripheral" to "Console" for the fds, megacd, megacdjp, n64dd, pcenginecd and satellaview systems
 * Changed the systems sorting platform from "Peripheral" to "Console" for the sega32x, sega32xjp, sega32xna, segacd, sgb, sufami and tg-cd systems

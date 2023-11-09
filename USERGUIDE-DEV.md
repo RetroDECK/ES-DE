@@ -867,7 +867,7 @@ The following Windows emulators are supported, and the setup for most of these i
 | xbox360                   | xenia            | xenia/xenia.exe         |
 | xbox360                   | xenia            | xenia/xenia_canary.exe  |
 
-**Fallback config for AppImageLauncher**
+**Setup for AppImageLauncher**
 
 [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) will by default move any AppImage you attempt to run to the root of the ~/Applications directory. This annoyingly also includes files in subdirectories in the ~/Applications tree, so the Wine and Proton AppImages would get relocated there too.
 
@@ -877,24 +877,20 @@ For instance:
 ```
 Would be moved to:
 ```
-~/Applications/wine-stable_8.0.2-x86_64_007830d9c8edbf18441ad63ed592f371.AppImage
+~/Applications/wine-stable_8.0.2-x86_64_7218a7d163a0ce403cac23ebcb3747a3.AppImage
 ```
 
 A hash will be applied to the filename as part of the move process.
 
-To be able to launch these AppImages when using AppImageLauncher the following staticpath find rule is included for Wine:
+To work around this simply symlink the newly moved and renamed AppImage back into the Wine or Proton directory, like so:
 ```
-<entry>~/Applications/wine*.AppImage</entry>
-```
-
-And the following rule is included for Proton:
-```
-<entry>~/Applications/wine*roton*.AppImage</entry>
+cd ~/Applications/Wine
+ln -s ../wine-stable_8.0.2-x86_64_7218a7d163a0ce403cac23ebcb3747a3.AppImage .
 ```
 
-This way you'll be able to run Wine and Proton anyway. But note that this is not a reliable solution as there may be a mixup between the Wine and Proton AppImages on game launch due to their filename similarities. However, if you only intend to use one of them, then this will work fine as it can't get mixed up with the other AppImage.
+While it's possible to setup a custom find rule entry to look for the Wine and Proton AppImages directly in ~/Applications this is not a good idea as the filename similarities between these two files can lead to a mixup, you really want them separated into their own directories.
 
-An alternative solution would of course be to not use AppImageLauncher.
+An alternative and recommended solution to avoid the symlinking would be to not use AppImageLauncher at all.
 
 ## Running emulators in fullscreen mode
 
