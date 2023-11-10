@@ -80,6 +80,8 @@ public:
     // Returns the number of bytes that would be used if all textures were in memory.
     static size_t getTotalTextureSize();
 
+    static void setExit() { sTextureDataManager.setExit(); }
+
 protected:
     TextureResource(const std::string& path,
                     float tileWidth,

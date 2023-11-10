@@ -29,6 +29,7 @@ public:
     void load(std::shared_ptr<TextureData> textureData);
     void remove(std::shared_ptr<TextureData> textureData);
 
+    void setExit() { mExit = true; }
     size_t getQueueSize();
 
 private:
@@ -83,6 +84,12 @@ public:
     size_t getQueueSize();
     // Load a texture, freeing resources as necessary to make space.
     void load(std::shared_ptr<TextureData> tex, bool block = false);
+    // Make sure that threadProc() does not continue to run during application shutdown.
+    void setExit()
+    {
+        if (mLoader)
+            mLoader->setExit();
+    }
 
 private:
     std::list<std::shared_ptr<TextureData>> mTextures;

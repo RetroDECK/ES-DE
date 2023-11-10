@@ -873,6 +873,7 @@ int main(int argc, char* argv[])
         delete window->peekGui();
     window->deinit();
 
+    TextureResource::setExit();
     CollectionSystemsManager::getInstance()->deinit(true);
     SystemData::deleteSystems();
     NavigationSounds::getInstance().deinit();
