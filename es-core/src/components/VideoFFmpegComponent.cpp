@@ -216,7 +216,6 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
         vertices->brightness = mBrightness;
         vertices->saturation = mSaturation * mThemeSaturation;
-        vertices->saturation = 1.0f;
         vertices->dimming = mDimming;
 
         if (mVideoCornerRadius > 0.0f) {
