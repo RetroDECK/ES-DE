@@ -125,20 +125,23 @@ https://wiki.mozilla.org/CA
 
 # Slate Theme
 
-Recalbox Multi (Slate is based on this theme, using assets from before their change to a more restrictive license in 2018) \
-https://gitlab.com/recalbox/recalbox-themes
+The Slate theme is based on [recalbox-multi](https://gitlab.com/recalbox/recalbox-themes) by the Recalbox community, prior to their license change in 2018.
 
-Carbon (some graphics taken from this theme) \
-https://github.com/RetroPie/es-theme-carbon
+Some graphics from the [Carbon](https://github.com/RetroPie/es-theme-carbon) theme by Rookervik.
 
-Some logotype graphics by Dan Patrick
+Some console and controller vector graphics by Bezza191.
+
+Some logotype graphics by Dan Patrick.
 
 # Modern Theme
 
-Nintendo Switch Theme for RetroPie (Modern is based on this theme): \
-https://github.com/lilbud/es-theme-switch
+The Modern theme is based on [es-theme-switch](https://github.com/lilbud/es-theme-switch) by lilbud, and it was modified for ES-DE by Sophia Hadash.
 
-Some logotype graphics by Dan Patrick
+Default [carousel icons](https://github.com/szymon-kulak/es-de-moderntheme-nsoicons) by Szymon Kulak.
+
+[Nintendo Switch UI Font](https://www.cufonfonts.com/font/nintendo-switch-ui) by MH1.
+
+Some logotype graphics by Dan Patrick.
 
 # Sounds
 
