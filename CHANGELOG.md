@@ -1,5 +1,15 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
+## Version 3.0.0 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+### Bug fixes
+
 ## Version 2.2.1
 
 **Release date:** 2023-11-12
@@ -18,6 +28,8 @@ Some improvements were also made to the systems sorting functionality.
 * The Orphaned data cleanup utility will now skip any system where a flatten.txt file is present
 * Changed a number of error messages in the Orphaned data cleanup utility from uppercase to lowercase
 * The application release number is now tracked on startup instead of the application version
+* (macOS) Reclassified the application as a non-game to disable Game Mode on macOS 14 Sonoma
+* (macOS) Added support for the Visual Pinball (vpinball) game system
 * (slate-es-de) Added console graphics for the adam system
 * Changed the systems sorting platform from "Peripheral" to "Console" for the fds, megacd, megacdjp, n64dd, pcenginecd and satellaview systems
 * Changed the systems sorting platform from "Peripheral" to "Console" for the sega32x, sega32xjp, sega32xna, segacd, sgb, sufami and tg-cd systems

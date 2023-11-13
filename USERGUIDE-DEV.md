@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.2 (development version) - User guide
+# EmulationStation Desktop Edition (ES-DE) v3.0 (development version) - User guide
 
 This version of the user guide is only relevant for the current ES-DE development version, if you are using the latest stable release, refer to [USERGUIDE.md](USERGUIDE.md) instead.
 
@@ -4018,7 +4018,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vic20                 | Commodore VIC-20                               | VICE xvic                         | VICE xvic **(Standalone)**        | No           | Single archive or tape, cartridge or diskette image file |
 | videopac              | Philips Videopac G7000                         | O2EM                              | MAME - Current,<br>MAME **(Standalone)** | Yes          | Single archive or ROM file |                                    |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           |                                      |
-| vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)** [UW] |                                   | No           | In separate folder interpreted as a file |
+| vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | In separate folder interpreted as a file |
 | vsmile                | VTech V.Smile                                  | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW] | No           |                                      |

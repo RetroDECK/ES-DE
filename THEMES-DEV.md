@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.2 (development version) - Themes
+# EmulationStation Desktop Edition (ES-DE) v3.0 (development version) - Themes
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
@@ -158,17 +158,19 @@ Note that the legacy theme engine had quite inaccurate text sizing and font rend
 * The defined line spacing was not always applied for automatically sized text elements
 * Font sizes were rounded to integers, leading to imprecise text sizing across different resolutions (the rounding was also done incorrectly)
 
-## System metadata and logo repositories
+## Theme assets repositories
 
-There are two useful repositories hosted by the ES-DE project that provide system metadata and system logotypes. This greatly simplifies the work of adding support for all systems that ES-DE supports.
+There are several useful repositories hosted by the ES-DE project that provide system metadata and system graphics files. Using these greatly simplifies the work of adding support for all ES-DE systems to your theme.
 
-**Metadata**
+Make sure to regularly check for updates in these repositories as corrections, improvements and additions of new systems are made continuously.
+
+### Metadata
 
 The metadata repository provides descriptions, release dates, per-system color palettes etc. and it can be found here:
 
 https://gitlab.com/es-de/themes/system-metadata
 
-By adding this to your theme, either via manually downloading and including it, or by adding it as a Git subtree, you'll be able to access its defined variables. Make sure to regularly check for updates as corrections and additions of new systems are done continuously. Also check the README.md file in the repository for more details on how to actually use the variables.
+By adding this to your theme, either via manually downloading and including it, or by adding it as a Git subtree, you'll be able to access its defined variables. Check the README.md file in the repository for details on how to actually use the variables.
 
 Here's how to add this repository as a subtree inside your theme's Git repository:
 ```
@@ -183,9 +185,47 @@ git subtree pull --prefix=system-metadata --squash system-metadata master
 
 The directory name can be changed to whatever you like using the --prefix flag.
 
-**Logos**
+### Controller outline graphics
 
-Likewise there's a repository of system logotypes that can also be added and used in the same fashion as the metadata. It can be found here:
+This repository provides controller graphics files for each system in an outline style and it can be found here:
+
+https://gitlab.com/es-de/themes/system-controllers-outline
+
+Here's how to add this repository as a subtree inside your theme's Git repository:
+```
+git remote add system-controllers-outline https://gitlab.com/es-de/themes/system-controllers-outline.git
+git subtree add --prefix=system-controllers-outline --squash system-controllers-outline master
+```
+
+To later pull in repository updates you'll run the following:
+```
+git subtree pull --prefix=system-controllers-outline --squash system-controllers-outline master
+```
+
+The directory name can be changed to whatever you like using the --prefix flag.
+
+### Mini system graphics
+
+This repository provides graphics files for each system in a "mini" style and it can be found here:
+
+https://gitlab.com/es-de/themes/system-graphics-mini
+
+Here's how to add this repository as a subtree inside your theme's Git repository:
+```
+git remote add system-graphics-mini https://gitlab.com/es-de/themes/system-graphics-mini.git
+git subtree add --prefix=system-graphics-mini --squash system-graphics-mini master
+```
+
+To later pull in repository updates you'll run the following:
+```
+git subtree pull --prefix=system-graphics-mini --squash system-graphics-mini master
+```
+
+The directory name can be changed to whatever you like using the --prefix flag.
+
+### Logos
+
+This repository provides logos for each system in color and white (the latter for use with color shifting) and it can be found here:
 
 https://gitlab.com/es-de/themes/system-logos
 
@@ -202,11 +242,13 @@ git subtree pull --prefix=system-logos --squash system-logos master
 
 The directory name can be changed to whatever you like using the --prefix flag.
 
-**Adding remotes**
+### Adding remotes
 
-Note that the remotes are only setup for your local repository, so if you clone a theme you'll need to manually add the system-metadata and/or system-logos remotes to be able to pull to these subtrees. That means you'll need to run the following commands on a freshly cloned theme repository:
+Note that the remotes are only setup for your local repository, so if you clone a theme you'll need to manually add the repository remotes to be able to pull from these subtrees. That means you'll need to run one or more of the following commands on a freshly cloned theme repository:
 ```
 git remote add system-metadata https://gitlab.com/es-de/themes/system-metadata.git
+git remote add system-controllers-outline https://gitlab.com/es-de/themes/system-controllers-outline.git
+git remote add system-graphics-mini https://gitlab.com/es-de/themes/system-graphics-mini.git
 git remote add system-logos https://gitlab.com/es-de/themes/system-logos.git
 ```
 After doing this you'll be able to pull repository updates as described above.
