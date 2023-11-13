@@ -470,7 +470,10 @@ void GuiThemeDownloader::resetRepository(git_repository* repository)
 
 void GuiThemeDownloader::makeInventory()
 {
+    const auto totalInventoryTime {std::chrono::system_clock::now()};
+
     for (auto& theme : mThemes) {
+        const auto themeInventoryTime {std::chrono::system_clock::now()};
         const std::string path {mThemeDirectory + theme.reponame};
         theme.invalidRepository = false;
         theme.corruptRepository = false;
@@ -519,8 +522,25 @@ void GuiThemeDownloader::makeInventory()
                 theme.hasLocalChanges = true;
 
             git_repository_free(repository);
+
+            LOG(LogDebug) << "GuiThemeDownloader::makeInventory(): Theme \""
+#if defined(_WIN64)
+                          << Utils::String::replace(path, "/", "\\")
+                          << "\" inventory completed in: "
+#else
+                          << path << "\" inventory completed in: "
+#endif
+                          << std::chrono::duration_cast<std::chrono::milliseconds>(
+                                 std::chrono::system_clock::now() - themeInventoryTime)
+                                 .count()
+                          << " ms";
         }
     }
+    LOG(LogDebug) << "GuiThemeDownloader::makeInventory(): Total theme inventory time: "
+                  << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         std::chrono::system_clock::now() - totalInventoryTime)
+                         .count()
+                  << " ms";
 }
 
 bool GuiThemeDownloader::renameDirectory(const std::string& path, const std::string& extension)
@@ -1158,8 +1178,14 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
             "LOCAL CUSTOMIZATIONS",
             "PROCEED",
             [this] {
+#if defined(_WIN64)
+                const std::filesystem::path themeDirectory {
+                    Utils::String::replace(mThemeDirectory, "/", "\\") +
+                    mThemes[mList->getCursorId()].reponame};
+#else
                 const std::filesystem::path themeDirectory {mThemeDirectory +
                                                             mThemes[mList->getCursorId()].reponame};
+#endif
                 LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory.string() << "\"";
                 if (!Utils::FileSystem::removeDirectory(themeDirectory.string(), true)) {
                     mWindow->pushGui(new GuiMsgBox(
