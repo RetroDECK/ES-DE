@@ -2,7 +2,7 @@ EmulationStation Desktop Edition (ES-DE) - Portable installation on Windows
 ---------------------------------------------------------------------------
 
 ES-DE release:
-2.2.1
+3.0.0-alpha
 
 The latest version can be downloaded from https://es-de.org
 Please also consider donating to the project, links for that can be found on the ES-DE website just mentioned.
