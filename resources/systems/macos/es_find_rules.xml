@@ -370,6 +370,12 @@
             <entry>/usr/local/bin/xvic</entry>
         </rule>
     </emulator>
+    <emulator name="VISUAL-PINBALL">
+        <!-- Pinball simulator Visual Pinball -->
+        <rule type="staticpath">
+            <entry>/Applications/VPinballX_GL.app/Contents/MacOS/VPinballX_GL</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="staticpath">
