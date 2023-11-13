@@ -2056,7 +2056,7 @@
         <fullname>Visual Pinball</fullname>
         <path>%ROMPATH%/vpinball</path>
         <extension>.vpt .VPT .vpx .VPX</extension>
-        <command label="Visual Pinball (Standalone)">%EMULATOR_VISUAL-PINBALL% -Minimized -Play %ROM%</command>
+        <command label="Visual Pinball (Standalone)">%EMULATOR_VISUAL-PINBALL% -play %ROM%</command>
         <platform>vpinball</platform>
         <theme>vpinball</theme>
     </system>
