@@ -252,6 +252,8 @@ If you want to create your own portable intallation from scratch or customize th
 
 A number of systems have alternative emulator entries named _Shortcut or script_ which allows the direct execution of .lnk shortcut files or .bat batch files. It's not possible by default to directly launch .ps1 PowerShell scripts. As running PowerShell scripts is not even enabled by default on Windows they are for sure not recommended. If you still want to use them the best approach is to execute them via either a .lnk shortcut file or a .bat wrapper script where you explicitly call powershell.exe with the -command flag. If you instead insist on running them directly from ES-DE, you'll need to add a custom system or find rule configuration where you execute powershell.exe instead of cmd.exe and you'll also need to add .ps1 as a file extension for each relevant system.
 
+Some disk operations can have abysmal performance on Windows, and this may be especially obvious for the theme downloader. This is often caused by anti-virus software like Microsoft Defender. If it takes say 30 seconds rather than 300 milliseconds to open the theme downloader then it may be a good idea to add an exlusion for the .emulationstation\themes\ directory to Microsoft Defender. The same may also be true for other directories like the ROMs folder if disk performance is terrible. Refer to your anti-virus software documentation on how to setup such exclusions.
+
 ## Specific notes for macOS
 
 As macOS does not support Vulkan some emulators are not available, and some that do exist have not been updated for this operating system in recent years. But emulator support is steadily improving and native ARM releases ("Apple Silicon") are also getting more common. One issue though is that some emulators are not codesigned and notarized so macOS refuses to run them by default. You can override the operating system's security settings however, which will work around this problem. Some emulators are also available via the [Homebrew](https://brew.sh) package manager and in many instances ES-DE includes support for these releases using the bundled configuration.
@@ -1219,7 +1221,7 @@ The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
 Note that Model 2 Emulator is a bit broken and on Windows most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
 
-To run Model 2 Emulator on Linux you need Wine or Proton, how to setup this is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
+To run Model 2 Emulator on Linux you need Wine or Proton, how to setup this is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
 
 After Wine or Proton has been installed, unpack the emulator files into the `~/Applications/m2emulator/` directory.
 
@@ -2617,6 +2619,76 @@ Note that you will need to enable UI controls in MAME to be able to exit the emu
 https://docs.mamedev.org/usingmame/defaultkeys.html
 
 Scraping can also be a bit challenging as MAME software list names are used and neither ScreenScraper nor TheGamesDB can parse these names. So it's recommended to run the scraper in interactive mode and refine the searches for all games that are not properly identified.
+
+### Visual Pinball
+
+The pinball simulator Visual Pinball can be a bit tricky to setup as it supports a wide range of tables. Some of these require [PinMAME](https://github.com/vpinball/pinmame) and some don't. Some simulated tables are older electromechnical design and some are of more modern solid state designs. Some are recreations of real physical games and some are purely virtual and don't exist in physical form. In many cases there is not a definitive release for a table and you may need to assemble various files to get to a fully working game.
+
+As pinball games is a complex topic it will only be covered briefly here, refer to the official Visual Pinball [documentation](https://github.com/vpinball/vpinball/blob/standalone/standalone/README.md) for more details.
+
+The Windows release of Visual Pinball can be downloaded here (make sure to get the GL version):\
+https://github.com/vpinball/vpinball/releases
+
+Apart from this the Windows-specific setup is not covered in this document, but you should be able to find a lot of resources online on this topic.
+
+The Linux and macOS releases need to be downloaded from the GitHub Actions page for the time being:\
+https://github.com/vpinball/vpinball/actions
+
+On Linux simply unpack the archive into `~/Applications/VPinballX` and make sure to give the binary executable permissions:
+```
+cd ~/Applications/VPinballX
+chmod +x VPinballX_GL
+```
+
+On macOS there is a DMG package that you simply install.
+
+Once you've installed Visual Pinball start it once outside ES-DE and its .ini configuration file will be created. On Linux and macOS this is `~/.vpinball/VPinballX.ini`
+
+Set the following entries in this file:
+```
+VPRegPath = ./
+PinMAMEPath = ./
+PinMAMEIniPath = ./
+```
+
+If you don't do this the table may still start but won't work properly and you'll not be able to actually start a game.
+
+ES-DE launches .vpx and .vpt files for the vpinball system, but most tables come shipped with multiple additional files that are needed for the table to work, for example:
+```
+~/ROMs/vpinball/fh/pinmame/
+~/ROMs/vpinball/fh/Funhouse (Williams 1990)_Bigus(MOD)1.6.directb2s
+~/ROMs/vpinball/fh/Funhouse (Williams 1990)_Bigus(MOD)1.6.ini
+~/ROMs/vpinball/fh/Funhouse (Williams 1990)_Bigus(MOD)1.6.vbs
+~/ROMs/vpinball/fh/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx
+```
+
+Assembling the necessary files to run a table is beyond the scope of this guide but there are various resources available online for this.
+
+This specific table requires PinMAME to run, and the _fh_ directory name is an example of the abbreviations commonly used in the pinball community. You can for instance find these names in the [Internet Pinball Database](https://www.ipdb.org/) where they are referred to as _Common Abbreviations_.
+
+If you don't need to retain these abbreviations then you can simply setup your games using the _directories interpreted as files_ functionality:
+```
+~/ROMs/vpinball/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx/pinmame/
+~/ROMs/vpinball/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx/Funhouse (Williams 1990)_Bigus(MOD)1.6.directb2s
+~/ROMs/vpinball/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx/Funhouse (Williams 1990)_Bigus(MOD)1.6.ini
+~/ROMs/vpinball/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx/Funhouse (Williams 1990)_Bigus(MOD)1.6.vbs
+~/ROMs/vpinball/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx
+```
+
+If you however insist on retaining these abbreviations you could use folder links to launch the .vpx or .vpt file inside the fh directory by editing the folder in the metadata editor and selecting the game file via the _Folder link_ entry.
+
+A final option would be to use the _folder flattening_ functionality, although this has many negative side effects that you need to be aware of. If going for this approach make sure to thoroughly read the [Folder flattening](USERGUIDE.md#folder-flattening) section of this document.
+
+```
+~/ROMs/vpinball/fh/pinmame/
+~/ROMs/vpinball/fh/Funhouse (Williams 1990)_Bigus(MOD)1.6.directb2s
+~/ROMs/vpinball/fh/Funhouse (Williams 1990)_Bigus(MOD)1.6.ini
+~/ROMs/vpinball/fh/Funhouse (Williams 1990)_Bigus(MOD)1.6.vbs
+~/ROMs/vpinball/fh/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx
+~/ROMs/vpinball/flatten.txt
+```
+
+With folder flattening in place the .vpx and .vpt files will show up as file entries directly in the root of the gamelist.
 
 ## Scraping
 
@@ -4016,7 +4088,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vic20                 | Commodore VIC-20                               | VICE xvic                         | VICE xvic **(Standalone)**        | No           | Single archive or tape, cartridge or diskette image file |
 | videopac              | Philips Videopac G7000                         | O2EM                              | MAME - Current,<br>MAME **(Standalone)** | Yes          | Single archive or ROM file |                                    |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           |                                      |
-| vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | In separate folder interpreted as a file |
+| vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | See the specific _Visual Pinball_ section elsewhere in this guide |
 | vsmile                | VTech V.Smile                                  | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW] | No           |                                      |

@@ -8,6 +8,9 @@
 
 ### Detailed list of changes
 
+* (Unix) Removed the -Minimized flag from the Visual Pinball launch command
+* (Windows) Updated the find rules for Visual Pinball to match the actual filenames of the official releases
+
 ### Bug fixes
 
 ## Version 2.2.1
