@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
 #include <alsa/asoundlib.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -33,7 +33,7 @@ public:
     int getVolume() const;
     void setVolume(int volume);
 
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
     static std::string mixerName;
     static std::string mixerCard;
     int mixerIndex;

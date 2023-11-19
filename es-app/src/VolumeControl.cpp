@@ -15,14 +15,14 @@
 #include <cmath>
 #endif
 
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
 std::string VolumeControl::mixerName = "Master";
 std::string VolumeControl::mixerCard = "default";
 #endif
 
 VolumeControl::VolumeControl()
 // clang-format off
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
     : mixerIndex {0}
     , mixerHandle {nullptr}
     , mixerElem {nullptr}
@@ -39,7 +39,7 @@ VolumeControl::VolumeControl()
 VolumeControl::~VolumeControl()
 {
     deinit();
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
     snd_config_update_free_global();
 #endif
 }
@@ -48,7 +48,7 @@ void VolumeControl::init()
 {
     // Initialize audio mixer interface.
 
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
     // Try to open mixer device.
     if (mixerHandle == nullptr) {
         snd_mixer_selem_id_alloca(&mixerSelemId);
@@ -139,7 +139,7 @@ void VolumeControl::deinit()
 {
     // Deinitialize audio mixer interface.
 
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
     if (mixerHandle != nullptr) {
         snd_mixer_detach(mixerHandle, mixerCard.c_str());
         snd_mixer_free(mixerHandle);
@@ -160,7 +160,7 @@ int VolumeControl::getVolume() const
 {
     int volume = 0;
 
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
     if (mixerElem != nullptr) {
         // Get volume range.
         long minVolume;
@@ -204,7 +204,7 @@ void VolumeControl::setVolume(int volume)
 {
     volume = glm::clamp(volume, 0, 100);
 
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
     if (mixerElem != nullptr) {
         // Get volume range.
         long minVolume;
