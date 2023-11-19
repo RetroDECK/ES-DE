@@ -42,6 +42,10 @@
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_timer.h>
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
 #if defined(__EMSCRIPTEN__)
 #include <emscripten.h>
 #endif
@@ -524,6 +528,12 @@ void applicationLoop()
 int main(int argc, char* argv[])
 {
     const auto applicationStartTime {std::chrono::system_clock::now()};
+
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_VERBOSE, nullptr, "ES-DE running on Android!");
+    SDL_Delay(3000);
+    return 0;
+#endif
 
     std::locale::global(std::locale("C"));
 
