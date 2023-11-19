@@ -114,6 +114,8 @@ set_property(CACHE GLSYSTEM PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     set(OpenGL_GL_PREFERENCE GLVND)
     find_package(OpenGL REQUIRED)
+elseif(ANDROID)
+    find_package(OpenGLES3 REQUIRED)
 elseif(GLES AND NOT EMSCRIPTEN)
     find_package(OpenGLES2 REQUIRED)
 endif()
@@ -129,7 +131,7 @@ elseif(WIN32)
        NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)       # MSVC
         message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
     endif()
-elseif(NOT EMSCRIPTEN)
+elseif(NOT EMSCRIPTEN AND NOT ANDROID)
     find_package(CURL REQUIRED)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
@@ -216,6 +218,10 @@ endif()
 
 if(APPLE AND CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 15.0.0)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-invalid-utf8")
+endif()
+
+if(ANDROID)
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -llog")
 endif()
 
 if(EMSCRIPTEN)
@@ -379,6 +385,18 @@ if(APPLE)
     endif()
 endif()
 
+if(ANDROID)
+    if(ANDROID_ABI MATCHES arm64-v8a)
+        message("-- Building for Android arm64-v8a")
+        set(ANDROID_CPU_ARCH arm64-v8a)
+    elseif(ANDROID_ABI MATCHES x86_64)
+        message("-- Building for Android x86_64")
+        set(ANDROID_CPU_ARCH x86_64)
+    else()
+        message(FATAL_ERROR "-- Unsupported Android ABI: " ${ANDROID_ABI})
+    endif()
+endif()
+
 # Affects the application updater and is used for displaying version info in the main menu.
 if(ES_VERSION MATCHES alpha OR ES_VERSION MATCHES beta OR ES_VERSION MATCHES dev)
     add_compile_definitions(IS_PRERELEASE)
@@ -446,6 +464,15 @@ elseif(EMSCRIPTEN)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage-CMake/FreeImage/Source
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src)
+elseif(ANDROID)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-kit/src/ffmpeg
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freeimage/FreeImage/Source
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_Android)
 else()
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${FFMPEG_INCLUDE_DIRS}
@@ -529,6 +556,22 @@ elseif(WIN32)
                              mingw32
                              Winmm.dll)
     endif()
+elseif(ANDROID)
+    set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
+                        # FFmpeg libraries.
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libavcodec.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libavfilter.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libavformat.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libavutil.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libswresample.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libswscale.so
+                        # Other dependencies.
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libcurl.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreeimage.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreetype.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libgit2.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libpugixml.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libSDL2.so)
 elseif(EMSCRIPTEN)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                          # FFmpeg core libraries.
@@ -611,6 +654,8 @@ endif()
 # OpenGL.
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     list(APPEND COMMON_LIBRARIES ${OPENGL_LIBRARIES})
+elseif(GLES AND ANDROID)
+    list(APPEND COMMON_LIBRARIES ${OPENGLES3_LIBRARIES})
 elseif(GLES)
     list(APPEND COMMON_LIBRARIES ${OPENGLES2_LIBRARIES})
 endif()
@@ -623,13 +668,18 @@ set(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 
 # Add each component.
-add_subdirectory(es-pdf-converter)
+if(NOT ANDROID)
+    add_subdirectory(es-pdf-converter)
+endif()
 add_subdirectory(external)
 add_subdirectory(es-core)
 add_subdirectory(es-app)
 
-# Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
-# Also set lottie2gif to not be built.
-add_dependencies(lunasvg es-pdf-convert)
+if(NOT ANDROID)
+    # Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
+    # Also set lottie2gif to not be built.
+    add_dependencies(lunasvg es-pdf-convert)
+endif()
+
 add_dependencies(es-core rlottie)
 set_target_properties(lottie2gif PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)
