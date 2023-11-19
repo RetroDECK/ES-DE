@@ -2683,7 +2683,7 @@ If you don't need to retain these abbreviations then you can simply setup your g
 ~/ROMs/vpinball/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx/Funhouse (Williams 1990)_Bigus(MOD)1.6.vpx
 ```
 
-If you however insist on retaining these abbreviations you could use folder links to launch the .vpx or .vpt file inside the fh directory by editing the folder in the metadata editor and selecting the game file via the _Folder link_ entry.
+If you however insist on retaining the abbreviations then you could use folder links to launch the .vpx or .vpt file inside the fh directory by editing the folder in the metadata editor and selecting the game file via the _Folder link_ entry.
 
 A final option would be to use the _folder flattening_ functionality, although this has many negative side effects that you need to be aware of. If going for this approach make sure to thoroughly read the [Folder flattening](USERGUIDE-DEV.md#folder-flattening) section of this document.
 
