@@ -768,8 +768,10 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     glyph.rows = glyphSize.y;
 
     // Upload glyph bitmap to texture.
-    mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
-                             glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+    if (glyphSize.x > 0 && glyphSize.y > 0) {
+        mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
+                                 glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+    }
 
     return &glyph;
 }
