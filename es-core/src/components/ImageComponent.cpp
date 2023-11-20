@@ -462,6 +462,15 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             }
 
             mVertices->shaderFlags = mVertices->shaderFlags | Renderer::ShaderFlags::PREMULTIPLIED;
+
+#if defined(USE_OPENGLES)
+            // This is required as not all mobile GPUs support mipmapping when using the BGRA
+            // pixel format.
+            if (mMipmapping)
+                mVertices->shaderFlags =
+                    mVertices->shaderFlags | Renderer::ShaderFlags::CONVERT_PIXEL_FORMAT;
+#endif
+
             mRenderer->drawTriangleStrips(&mVertices[0], 4);
         }
         else {

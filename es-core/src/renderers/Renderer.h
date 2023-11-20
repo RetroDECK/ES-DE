@@ -55,7 +55,8 @@ public:
         CLIPPING              = 0x00000008,
         ROTATED               = 0x00000010, // Screen rotated 90 or 270 degrees.
         ROUNDED_CORNERS       = 0x00000020,
-        ROUNDED_CORNERS_NO_AA = 0x00000040
+        ROUNDED_CORNERS_NO_AA = 0x00000040,
+        CONVERT_PIXEL_FORMAT  = 0x00000080
     };
     // clang-format on
 

@@ -102,6 +102,7 @@ uniform float OutputGamma;
 // 0x00000010 - Screen rotated 90 or 270 degrees
 // 0x00000020 - Rounded corners
 // 0x00000040 - Rounded corners with no anti-aliasing
+// 0x00000080 - Convert pixel format
 
 void main()
 {
