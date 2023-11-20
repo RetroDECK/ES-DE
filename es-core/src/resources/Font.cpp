@@ -648,8 +648,10 @@ void Font::rebuildTextures()
                               static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
 
         // Upload to texture.
-        mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
-                                 glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+        if (glyphSize.x > 0 && glyphSize.y > 0) {
+            mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x,
+                                     cursor.y, glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+        }
     }
 }
 
