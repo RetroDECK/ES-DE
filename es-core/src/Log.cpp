@@ -83,9 +83,16 @@ Log::~Log()
 
     if (!sFile.is_open()) {
         // Not open yet, print to stdout.
+#if defined(__ANDROID__)
+        __android_log_print(
+            ANDROID_LOG_ERROR, nullptr,
+            "Error: Tried to write to log file before it was open, the following won't be logged:");
+        __android_log_print(ANDROID_LOG_ERROR, nullptr, "%s", mOutStringStream.str().c_str());
+#else
         std::cerr << "Error: Tried to write to log file before it was open, "
                      "the following won't be logged:\n";
         std::cerr << mOutStringStream.str();
+#endif
         return;
     }
 
