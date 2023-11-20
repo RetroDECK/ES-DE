@@ -91,7 +91,21 @@ Log::~Log()
 
     sFile << mOutStringStream.str();
 
+#if defined(__ANDROID__)
+    if (mMessageLevel == LogError) {
+        __android_log_print(ANDROID_LOG_ERROR, nullptr, "%s", mOutStringStream.str().c_str());
+    }
+    else if (sReportingLevel >= LogDebug) {
+        if (mMessageLevel == LogInfo)
+            __android_log_print(ANDROID_LOG_INFO, nullptr, "%s", mOutStringStream.str().c_str());
+        else if (mMessageLevel == LogWarning)
+            __android_log_print(ANDROID_LOG_WARN, nullptr, "%s", mOutStringStream.str().c_str());
+        else
+            __android_log_print(ANDROID_LOG_DEBUG, nullptr, "%s", mOutStringStream.str().c_str());
+    }
+#else
     // If it's an error or the --debug flag has been set, then print to the console as well.
     if (mMessageLevel == LogError || sReportingLevel >= LogDebug)
         std::cerr << mOutStringStream.str();
+#endif
 }

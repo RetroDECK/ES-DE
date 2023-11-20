@@ -19,6 +19,10 @@
 #include <mutex>
 #include <sstream>
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
 #define LOG(level)                                                                                 \
     if (level > Log::getReportingLevel())                                                          \
         ;                                                                                          \
