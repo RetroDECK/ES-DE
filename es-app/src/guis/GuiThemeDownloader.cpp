@@ -162,6 +162,13 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
 
     git_libgit2_init();
 
+#if defined(__ANDROID__) && defined(USE_BUNDLED_CERTIFICATES)
+    git_libgit2_opts(
+        GIT_OPT_SET_SSL_CERT_LOCATIONS,
+        ResourceManager::getInstance().getResourcePath(":/certificates/curl-ca-bundle.crt").c_str(),
+        nullptr);
+#endif
+
     // The promise/future mechanism is used as signaling for the thread to indicate that
     // repository fetching has been completed.
     std::promise<bool>().swap(mPromise);
