@@ -15,6 +15,10 @@
 #include <windows.h>
 #endif
 
+#if defined(__ANDROID__)
+#include <jni.h>
+#endif
+
 namespace Utils
 {
     namespace Platform
@@ -51,6 +55,13 @@ namespace Utils
 
         // Immediately shut down the application as cleanly as possible.
         void emergencyShutdown();
+
+#if defined(__ANDROID__)
+        namespace Android
+        {
+            bool requestStoragePermission();
+        }; // namespace Android
+#endif
 
         static QuitMode sQuitMode = QuitMode::QUIT;
         // This is simply to get rid of a GCC false positive -Wunused-variable compiler warning.

@@ -42,10 +42,6 @@
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_timer.h>
 
-#if defined(__ANDROID__)
-#include <android/log.h>
-#endif
-
 #if defined(__EMSCRIPTEN__)
 #include <emscripten.h>
 #endif
@@ -455,13 +451,22 @@ bool checkApplicationHomeDirectory()
 #if defined(_WIN64)
         std::cout << "First startup, creating application home directory \""
                   << Utils::String::replace(applicationHome, "/", "\\") << "\"\n";
+#elif defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_VERBOSE, nullptr,
+                            "First startup, creating application home directory \"%s\"",
+                            applicationHome.c_str());
 #else
         std::cout << "First startup, creating application home directory \"" << applicationHome
                   << "\"\n";
 #endif
         Utils::FileSystem::createDirectory(applicationHome);
         if (!Utils::FileSystem::exists(applicationHome)) {
+#if defined(__ANDROID__)
+            __android_log_print(ANDROID_LOG_ERROR, nullptr,
+                                "Error: Couldn't create directory, permission problems?");
+#else
             std::cerr << "Error: Couldn't create directory, permission problems?\n";
+#endif
             return false;
         }
     }
@@ -528,12 +533,6 @@ void applicationLoop()
 int main(int argc, char* argv[])
 {
     const auto applicationStartTime {std::chrono::system_clock::now()};
-
-#if defined(__ANDROID__)
-    __android_log_print(ANDROID_LOG_VERBOSE, nullptr, "ES-DE running on Android!");
-    SDL_Delay(3000);
-    return 0;
-#endif
 
     std::locale::global(std::locale("C"));
 
@@ -737,6 +736,13 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+#if defined(__ANDROID__)
+    LOG(LogDebug) << "Android API level: " << SDL_GetAndroidSDKVersion();
+    LOG(LogDebug) << "Android storage state: " << SDL_AndroidGetExternalStorageState();
+    LOG(LogDebug) << "Android internal path: " << SDL_AndroidGetInternalStoragePath();
+    LOG(LogDebug) << "Android external path: " << SDL_AndroidGetExternalStoragePath();
+#endif
+
 #if defined(APPLICATION_UPDATER)
     if (!noUpdateCheck)
         ApplicationUpdater::getInstance().checkForUpdates();
@@ -775,6 +781,18 @@ int main(int argc, char* argv[])
 #define SDL_HINT_ENABLE_SCREEN_KEYBOARD "SDL_ENABLE_SCREEN_KEYBOARD"
         SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "0");
     }
+
+#if defined(__ANDROID__)
+    Utils::Platform::Android::requestStoragePermission();
+
+    const std::string storageDir {"/sdcard/ES-DE"};
+    if (!Utils::FileSystem::exists(storageDir)) {
+        LOG(LogInfo) << "Creating data directory \"" << storageDir << "\"...";
+        if (!Utils::FileSystem::createDirectory(storageDir)) {
+            LOG(LogError) << "Couldn't create directory, permission problems?";
+        }
+    }
+#endif
 
     MameNames::getInstance();
     ThemeData::populateThemes();

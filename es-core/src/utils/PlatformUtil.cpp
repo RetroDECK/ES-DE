@@ -371,6 +371,23 @@ namespace Utils
             exit(EXIT_FAILURE);
         }
 
+#if defined(__ANDROID__)
+        namespace Android
+        {
+            bool requestStoragePermission()
+            {
+                // TODO: Wait for interface to close and check actual outcome.
+                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
+                jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
+                jmethodID funcID {
+                    jniEnv->GetStaticMethodID(jniClass, "requestStoragePermissions", "()Z")};
+                const bool result {
+                    static_cast<bool>(jniEnv->CallStaticBooleanMethod(jniClass, funcID))};
+                return result;
+            }
+
+        } // namespace Android
+#endif
     } // namespace Platform
 
 } // namespace Utils
