@@ -3,8 +3,7 @@
 #  EmulationStation Desktop Edition
 #  .clang-format
 #
-#  Style configuration file for automatic C++ code formatting using clang-format.
-#  This file requires at least clang-format version 11.0.
+#  Style configuration file for automatic C++ and Java code formatting using clang-format.
 #
 
 ---
@@ -141,3 +140,16 @@ TabWidth:        8
 UseCRLF:         false
 UseTab:          Never
 ...
+---
+Language: Java
+BraceWrapping:
+  AfterClass:      true
+  AfterFunction:   true
+  BeforeElse:      true
+  IndentBraces:    false
+BreakBeforeBraces: Custom
+ColumnLimit:     100
+IndentWidth:     4
+TabWidth:        8
+UseCRLF:         false
+UseTab:          Never
