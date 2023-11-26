@@ -387,8 +387,7 @@ namespace Utils
                 return result;
             }
 
-            bool checkEmulatorInstalled(const std::string& packageName,
-                                        const std::string& component)
+            bool checkEmulatorInstalled(const std::string& packageName, const std::string& activity)
             {
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
@@ -396,20 +395,22 @@ namespace Utils
                     jniClass, "checkEmulatorInstalled", "(Ljava/lang/String;Ljava/lang/String;)Z")};
                 bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
                     jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
-                    jniEnv->NewStringUTF(component.c_str())))};
+                    jniEnv->NewStringUTF(activity.c_str())))};
                 // jniEnv->DeleteLocalRef(jniClass);
                 return returnValue;
             }
 
             int launchGame(const std::string& packageName,
-                           const std::string& component,
+                           const std::string& activity,
+                           const std::string& action,
                            std::vector<std::pair<std::string, std::string>>& extras)
             {
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
-                jmethodID methodID {jniEnv->GetStaticMethodID(
-                    jniClass, "launchGame",
-                    "(Ljava/lang/String;Ljava/lang/String;Ljava/util/Vector;Ljava/util/Vector;)Z")};
+                jmethodID methodID {
+                    jniEnv->GetStaticMethodID(jniClass, "launchGame",
+                                              "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/"
+                                              "String;Ljava/util/Vector;Ljava/util/Vector;)Z")};
                 jclass vectorClass {jniEnv->FindClass("java/util/Vector")};
                 jmethodID vectorMID {jniEnv->GetMethodID(vectorClass, "<init>", "()V")};
                 jmethodID addMethodID {
@@ -424,7 +425,8 @@ namespace Utils
                 }
                 const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
                     jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
-                    jniEnv->NewStringUTF(component.c_str()), extrasNames, extrasValues))};
+                    jniEnv->NewStringUTF(activity.c_str()), jniEnv->NewStringUTF(action.c_str()),
+                    extrasNames, extrasValues))};
                 // jniEnv->DeleteLocalRef(vectorClass);
                 // jniEnv->DeleteLocalRef(jniClass);
                 if (returnValue)

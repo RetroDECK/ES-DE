@@ -949,7 +949,8 @@ void FileData::launchGame()
 
 #if defined(__ANDROID__)
     std::string androidPackage;
-    std::string androidComponent;
+    std::string androidActivity;
+    std::string androidAction;
     std::vector<std::pair<std::string, std::string>> androidExtras;
 #endif
 
@@ -1110,13 +1111,27 @@ void FileData::launchGame()
 #if defined(__ANDROID__)
     else if (emulator.second == FileData::findEmulatorResult::FOUND_ANDROID_PACKAGE) {
         androidPackage = emulator.first;
-        const size_t pipePos {androidPackage.find('|')};
-        if (pipePos != std::string::npos) {
-            androidComponent = androidPackage.substr(pipePos + 1);
-            androidPackage = androidPackage.substr(0, pipePos);
+        size_t separatorPos {androidPackage.find('/')};
+
+        if (separatorPos != std::string::npos) {
+            androidActivity = androidPackage.substr(separatorPos + 1);
+            androidPackage = androidPackage.substr(0, separatorPos);
         }
-        LOG(LogDebug) << "FileData::launchGame(): Found Android emulator package \""
-                      << androidPackage << "\"";
+
+        separatorPos = androidPackage.find('|');
+        if (separatorPos != std::string::npos) {
+            androidAction = androidPackage.substr(separatorPos + 1);
+            androidPackage = androidPackage.substr(0, separatorPos);
+        }
+
+        separatorPos = androidActivity.find('|');
+        if (separatorPos != std::string::npos) {
+            androidAction = androidActivity.substr(separatorPos + 1);
+            androidActivity = androidActivity.substr(0, separatorPos);
+        }
+
+        LOG(LogDebug) << "FileData::launchGame(): Found emulator package \"" << androidPackage
+                      << "\"";
     }
 #endif
     else if (!isShortcut) {
@@ -1702,13 +1717,13 @@ void FileData::launchGame()
     LOG(LogDebug) << "Raw emulator launch command:";
     LOG(LogDebug) << commandRaw;
 #if defined(__ANDROID__)
-    LOG(LogInfo) << "Expanded emulator launch parameters:";
+    LOG(LogInfo) << "Expanded emulator launch arguments:";
     LOG(LogInfo) << "Package: " << androidPackage;
-    LOG(LogInfo) << "Component: "
-                 << (androidComponent == "" ? "<package default>" : androidComponent);
+    LOG(LogInfo) << "Activity: " << (androidActivity == "" ? "<package default>" : androidActivity);
+    LOG(LogInfo) << "Action: " << (androidAction == "" ? "<package default>" : androidAction);
     for (auto& extra : androidExtras) {
-        LOG(LogInfo) << "Extra name: " << extra.first;
-        LOG(LogInfo) << "Extra value: " << extra.second;
+        LOG(LogDebug) << "Extra name: " << extra.first;
+        LOG(LogDebug) << "Extra value: " << extra.second;
     }
 #else
     LOG(LogInfo) << "Expanded emulator launch command:";
@@ -1733,8 +1748,8 @@ void FileData::launchGame()
         Utils::String::stringToWideString(command),
         Utils::String::stringToWideString(startDirectory), runInBackground, hideWindow);
 #elif defined(__ANDROID__)
-    returnValue =
-        Utils::Platform::Android::launchGame(androidPackage, androidComponent, androidExtras);
+    returnValue = Utils::Platform::Android::launchGame(androidPackage, androidActivity,
+                                                       androidAction, androidExtras);
 #else
 returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
 #endif
@@ -2028,18 +2043,35 @@ const std::pair<std::string, FileData::findEmulatorResult> FileData::findEmulato
 
 #if defined(__ANDROID__)
     for (std::string& androidpackage : emulatorAndroidPackages) {
-        // If a pipe character is present in the androidpackage entry it means an explicit Intent
-        // component should be used rather than the default one. The checkEmulatorInstalled()
-        // Java function will check for the component as well and if it's not found it flags
-        // the overall emulator entry as not found.
+        // If a forward slash character is present in the androidpackage entry it means an explicit
+        // Intent activity should be used rather than the default one. The checkEmulatorInstalled()
+        // Java function will check for the activity as well and if it's not found it flags
+        // the overall emulator entry as not found. It's also possible to define an explicit
+        // Intent action using the pipe character but this is not checked for in the Java
+        // function as invalid actions will not lead to crashes.
         std::string packageName {androidpackage};
-        std::string component;
-        const size_t pipePos {packageName.find('|')};
-        if (pipePos != std::string::npos) {
-            component = packageName.substr(pipePos + 1);
-            packageName = packageName.substr(0, pipePos);
+        std::string activity;
+        std::string action;
+        size_t separatorPos {packageName.find('/')};
+
+        if (separatorPos != std::string::npos) {
+            activity = packageName.substr(separatorPos + 1);
+            packageName = packageName.substr(0, separatorPos);
         }
-        if (Utils::Platform::Android::checkEmulatorInstalled(packageName, component)) {
+
+        separatorPos = packageName.find('|');
+        if (separatorPos != std::string::npos) {
+            action = packageName.substr(separatorPos + 1);
+            packageName = packageName.substr(0, separatorPos);
+        }
+
+        separatorPos = activity.find('|');
+        if (separatorPos != std::string::npos) {
+            action = activity.substr(separatorPos + 1);
+            activity = activity.substr(0, separatorPos);
+        }
+
+        if (Utils::Platform::Android::checkEmulatorInstalled(packageName, activity)) {
             return std::make_pair(androidpackage,
                                   FileData::findEmulatorResult::FOUND_ANDROID_PACKAGE);
         }

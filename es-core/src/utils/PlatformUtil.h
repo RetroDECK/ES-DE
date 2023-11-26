@@ -61,9 +61,10 @@ namespace Utils
         {
             bool requestStoragePermission();
             bool checkEmulatorInstalled(const std::string& packageName,
-                                        const std::string& component);
+                                        const std::string& activity);
             int launchGame(const std::string& packageName,
-                           const std::string& component,
+                           const std::string& activity,
+                           const std::string& action,
                            std::vector<std::pair<std::string, std::string>>& extras);
         } // namespace Android
 #endif
