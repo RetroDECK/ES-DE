@@ -145,6 +145,7 @@ Language: Java
 BraceWrapping:
   AfterClass:      true
   AfterFunction:   true
+  BeforeCatch:     true
   BeforeElse:      true
   IndentBraces:    false
 BreakBeforeBraces: Custom
