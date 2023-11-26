@@ -56,6 +56,9 @@ void FindRules::loadFindRules()
 #elif defined(__APPLE__)
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/macos/es_find_rules.xml", false);
+#elif defined(__ANDROID__)
+    filePath = ResourceManager::getInstance().getResourcePath(":/systems/android/es_find_rules.xml",
+                                                              false);
 #else
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/unix/es_find_rules.xml", false);
@@ -84,7 +87,6 @@ void FindRules::loadFindRules()
 #else
         const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
 #endif
-
         if (!res) {
             LOG(LogError) << "Couldn't parse es_find_rules.xml: " << res.description();
             continue;
@@ -126,6 +128,9 @@ void FindRules::loadFindRules()
 #if defined(_WIN64)
                 if (ruleType != "winregistrypath" && ruleType != "winregistryvalue" &&
                     ruleType != "systempath" && ruleType != "staticpath") {
+#elif defined(__ANDROID__)
+                if (ruleType != "androidpackage" && ruleType != "systempath" &&
+                    ruleType != "staticpath") {
 #else
                 if (ruleType != "systempath" && ruleType != "staticpath") {
 #endif
@@ -145,6 +150,9 @@ void FindRules::loadFindRules()
                         emulatorRules.winRegistryPaths.emplace_back(entryValue);
                     else if (ruleType == "winregistryvalue")
                         emulatorRules.winRegistryValues.emplace_back(entryValue);
+#elif defined(__ANDROID__)
+                    else if (ruleType == "androidpackage")
+                        emulatorRules.androidPackages.emplace_back(entryValue);
 #endif
                 }
             }
@@ -154,6 +162,8 @@ void FindRules::loadFindRules()
 #if defined(_WIN64)
             emulatorRules.winRegistryPaths.clear();
             emulatorRules.winRegistryValues.clear();
+#elif defined(__ANDROID__)
+            emulatorRules.androidPackages.clear();
 #endif
         }
 
@@ -969,6 +979,8 @@ std::vector<std::string> SystemData::getConfigPath()
     path = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_systems.xml", true);
 #elif defined(__APPLE__)
     path = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_systems.xml", true);
+#elif defined(__ANDROID__)
+    path = ResourceManager::getInstance().getResourcePath(":/systems/android/es_systems.xml", true);
 #else
     path = ResourceManager::getInstance().getResourcePath(":/systems/unix/es_systems.xml", true);
 #endif

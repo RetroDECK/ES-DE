@@ -60,7 +60,12 @@ namespace Utils
         namespace Android
         {
             bool requestStoragePermission();
-        }; // namespace Android
+            bool checkEmulatorInstalled(const std::string& packageName,
+                                        const std::string& component);
+            int launchGame(const std::string& packageName,
+                           const std::string& component,
+                           std::vector<std::pair<std::string, std::string>>& extras);
+        } // namespace Android
 #endif
 
         static QuitMode sQuitMode = QuitMode::QUIT;

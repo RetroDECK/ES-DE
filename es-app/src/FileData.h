@@ -123,8 +123,16 @@ public:
     virtual FileData* getSourceFileData() { return this; }
     const std::string& getSystemName() const { return mSystemName; }
 
+    enum class findEmulatorResult {
+        FOUND_FILE,
+        FOUND_ANDROID_PACKAGE,
+        NOT_FOUND,
+        NO_RULES
+    };
+
     void launchGame();
-    const std::string findEmulatorPath(std::string& command, const bool preCommand);
+    const std::pair<std::string, FileData::findEmulatorResult> findEmulator(std::string& command,
+                                                                            const bool preCommand);
 
     using ComparisonFunction = bool(const FileData* a, const FileData* b);
     struct SortType {

@@ -379,11 +379,58 @@ namespace Utils
                 // TODO: Wait for interface to close and check actual outcome.
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
-                jmethodID funcID {
+                jmethodID methodID {
                     jniEnv->GetStaticMethodID(jniClass, "requestStoragePermissions", "()Z")};
                 const bool result {
-                    static_cast<bool>(jniEnv->CallStaticBooleanMethod(jniClass, funcID))};
+                    static_cast<bool>(jniEnv->CallStaticBooleanMethod(jniClass, methodID))};
+                // jniEnv->DeleteLocalRef(jniClass);
                 return result;
+            }
+
+            bool checkEmulatorInstalled(const std::string& packageName,
+                                        const std::string& component)
+            {
+                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
+                jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
+                jmethodID methodID {jniEnv->GetStaticMethodID(
+                    jniClass, "checkEmulatorInstalled", "(Ljava/lang/String;Ljava/lang/String;)Z")};
+                bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
+                    jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
+                    jniEnv->NewStringUTF(component.c_str())))};
+                // jniEnv->DeleteLocalRef(jniClass);
+                return returnValue;
+            }
+
+            int launchGame(const std::string& packageName,
+                           const std::string& component,
+                           std::vector<std::pair<std::string, std::string>>& extras)
+            {
+                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
+                jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
+                jmethodID methodID {jniEnv->GetStaticMethodID(
+                    jniClass, "launchGame",
+                    "(Ljava/lang/String;Ljava/lang/String;Ljava/util/Vector;Ljava/util/Vector;)Z")};
+                jclass vectorClass {jniEnv->FindClass("java/util/Vector")};
+                jmethodID vectorMID {jniEnv->GetMethodID(vectorClass, "<init>", "()V")};
+                jmethodID addMethodID {
+                    jniEnv->GetMethodID(vectorClass, "add", "(Ljava/lang/Object;)Z")};
+                jobject extrasNames {jniEnv->NewObject(vectorClass, vectorMID)};
+                jobject extrasValues {jniEnv->NewObject(vectorClass, vectorMID)};
+                for (auto& extra : extras) {
+                    jniEnv->CallBooleanMethod(extrasNames, addMethodID,
+                                              jniEnv->NewStringUTF(extra.first.c_str()));
+                    jniEnv->CallBooleanMethod(extrasValues, addMethodID,
+                                              jniEnv->NewStringUTF(extra.second.c_str()));
+                }
+                const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
+                    jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
+                    jniEnv->NewStringUTF(component.c_str()), extrasNames, extrasValues))};
+                // jniEnv->DeleteLocalRef(vectorClass);
+                // jniEnv->DeleteLocalRef(jniClass);
+                if (returnValue)
+                    return -1;
+                else
+                    return 0;
             }
 
         } // namespace Android
