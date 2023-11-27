@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Platform.cpp
 //
 //  Platform utility functions.
@@ -378,7 +378,7 @@ namespace Utils
             {
                 // TODO: Wait for interface to close and check actual outcome.
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
+                jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
                 jmethodID methodID {
                     jniEnv->GetStaticMethodID(jniClass, "requestStoragePermissions", "()Z")};
                 const bool result {
@@ -390,7 +390,7 @@ namespace Utils
             bool checkEmulatorInstalled(const std::string& packageName, const std::string& activity)
             {
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
+                jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
                 jmethodID methodID {jniEnv->GetStaticMethodID(
                     jniClass, "checkEmulatorInstalled", "(Ljava/lang/String;Ljava/lang/String;)Z")};
                 bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
@@ -406,7 +406,7 @@ namespace Utils
                            std::vector<std::pair<std::string, std::string>>& extras)
             {
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                jclass jniClass {jniEnv->FindClass("org/esde/esde/esde")};
+                jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
                 jmethodID methodID {
                     jniEnv->GetStaticMethodID(jniClass, "launchGame",
                                               "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/"
