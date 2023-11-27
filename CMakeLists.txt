@@ -286,6 +286,7 @@ endif()
 
 if(ANDROID)
     set(BUNDLED_CERTS ON)
+    add_compile_definitions(ANDROID_APPLICATION_ID="org.es_de.frontend")
 endif()
 
 if(WIN32)

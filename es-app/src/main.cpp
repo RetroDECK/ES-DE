@@ -1,20 +1,15 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition (ES-DE) is a frontend for browsing
-//  and launching games from your multi-platform game collection.
-//
-//  Originally created by Alec Lofquist.
-//  Improved and extended by the RetroPie community.
-//  Desktop Edition fork by Leon Styhre.
+//  ES-DE is a frontend for browsing and launching games from your multi-platform game collection.
 //
 //  The column limit is 100 characters.
 //  All ES-DE C++ source code is formatted using clang-format.
 //
 //  main.cpp
 //
-//  Main program loop. Interprets command-line arguments, checks for the
-//  home folder and es_settings.xml configuration file, sets up the application
-//  environment and starts listening to SDL events.
+//  Main program loop. Interprets command-line arguments, checks for the home folder
+//  and es_settings.xml configuration file, sets up the application environment and
+//  starts listening to SDL events.
 //
 
 #include "ApplicationUpdater.h"
@@ -452,7 +447,7 @@ bool checkApplicationHomeDirectory()
         std::cout << "First startup, creating application home directory \""
                   << Utils::String::replace(applicationHome, "/", "\\") << "\"\n";
 #elif defined(__ANDROID__)
-        __android_log_print(ANDROID_LOG_VERBOSE, nullptr,
+        __android_log_print(ANDROID_LOG_VERBOSE, ANDROID_APPLICATION_ID,
                             "First startup, creating application home directory \"%s\"",
                             applicationHome.c_str());
 #else
@@ -462,7 +457,7 @@ bool checkApplicationHomeDirectory()
         Utils::FileSystem::createDirectory(applicationHome);
         if (!Utils::FileSystem::exists(applicationHome)) {
 #if defined(__ANDROID__)
-            __android_log_print(ANDROID_LOG_ERROR, nullptr,
+            __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID,
                                 "Error: Couldn't create directory, permission problems?");
 #else
             std::cerr << "Error: Couldn't create directory, permission problems?\n";
