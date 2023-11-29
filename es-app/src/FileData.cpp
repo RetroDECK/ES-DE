@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  FileData.cpp
 //
 //  Provides game file data structures and functions to access and sort this information.
@@ -951,6 +951,7 @@ void FileData::launchGame()
     std::string androidPackage;
     std::string androidActivity;
     std::string androidAction;
+    std::string androidFileAsURI;
     std::vector<std::pair<std::string, std::string>> androidExtras;
 #endif
 
@@ -1616,6 +1617,8 @@ void FileData::launchGame()
     command = Utils::String::replace(command, "%ROMPATH%",
                                      Utils::FileSystem::getEscapedPath(getROMDirectory()));
 #if defined(__ANDROID__)
+    if (command.find("%ROMURI%") != std::string::npos)
+        androidFileAsURI = romRaw;
     command = Utils::String::replace(command, "%ANDROIDPACKAGE%", androidPackage);
     size_t extraPos {command.find("%EXTRA_")};
 
@@ -1721,9 +1724,12 @@ void FileData::launchGame()
     LOG(LogInfo) << "Package: " << androidPackage;
     LOG(LogInfo) << "Activity: " << (androidActivity == "" ? "<package default>" : androidActivity);
     LOG(LogInfo) << "Action: " << (androidAction == "" ? "<package default>" : androidAction);
+    if (androidFileAsURI != "") {
+        LOG(LogInfo) << "File (URI): " << androidFileAsURI;
+    }
     for (auto& extra : androidExtras) {
-        LOG(LogDebug) << "Extra name: " << extra.first;
-        LOG(LogDebug) << "Extra value: " << extra.second;
+        LOG(LogInfo) << "Extra name: " << extra.first;
+        LOG(LogInfo) << "Extra value: " << extra.second;
     }
 #else
     LOG(LogInfo) << "Expanded emulator launch command:";
@@ -1748,8 +1754,8 @@ void FileData::launchGame()
         Utils::String::stringToWideString(command),
         Utils::String::stringToWideString(startDirectory), runInBackground, hideWindow);
 #elif defined(__ANDROID__)
-    returnValue = Utils::Platform::Android::launchGame(androidPackage, androidActivity,
-                                                       androidAction, androidExtras);
+    returnValue = Utils::Platform::Android::launchGame(
+        androidPackage, androidActivity, androidAction, androidFileAsURI, androidExtras);
 #else
 returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
 #endif

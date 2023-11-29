@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  FileData.h
 //
 //  Provides game file data structures and functions to access and sort this information.

@@ -65,6 +65,7 @@ namespace Utils
             int launchGame(const std::string& packageName,
                            const std::string& activity,
                            const std::string& action,
+                           const std::string& fileAsURI,
                            std::vector<std::pair<std::string, std::string>>& extras);
         } // namespace Android
 #endif

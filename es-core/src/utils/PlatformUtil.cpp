@@ -403,14 +403,15 @@ namespace Utils
             int launchGame(const std::string& packageName,
                            const std::string& activity,
                            const std::string& action,
+                           const std::string& fileAsURI,
                            std::vector<std::pair<std::string, std::string>>& extras)
             {
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                jmethodID methodID {
-                    jniEnv->GetStaticMethodID(jniClass, "launchGame",
-                                              "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/"
-                                              "String;Ljava/util/Vector;Ljava/util/Vector;)Z")};
+                jmethodID methodID {jniEnv->GetStaticMethodID(
+                    jniClass, "launchGame",
+                    "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/"
+                    "String;Ljava/util/Vector;Ljava/util/Vector;)Z")};
                 jclass vectorClass {jniEnv->FindClass("java/util/Vector")};
                 jmethodID vectorMID {jniEnv->GetMethodID(vectorClass, "<init>", "()V")};
                 jmethodID addMethodID {
@@ -426,7 +427,7 @@ namespace Utils
                 const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
                     jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
                     jniEnv->NewStringUTF(activity.c_str()), jniEnv->NewStringUTF(action.c_str()),
-                    extrasNames, extrasValues))};
+                    jniEnv->NewStringUTF(fileAsURI.c_str()), extrasNames, extrasValues))};
                 // jniEnv->DeleteLocalRef(vectorClass);
                 // jniEnv->DeleteLocalRef(jniClass);
                 if (returnValue)
