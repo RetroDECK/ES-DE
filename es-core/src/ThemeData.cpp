@@ -709,6 +709,8 @@ void ThemeData::populateThemes()
         Utils::FileSystem::getExePath() + "/themes",
 #if defined(__APPLE__)
         Utils::FileSystem::getExePath() + "/../Resources/themes",
+#elif defined(__ANDROID__)
+        ResourceManager::getInstance().getDataDirectory() + "/themes",
 #elif defined(__unix__) && !defined(APPIMAGE_BUILD)
         Utils::FileSystem::getProgramDataPath() + "/themes",
 #endif

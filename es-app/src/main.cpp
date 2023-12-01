@@ -719,6 +719,10 @@ int main(int argc, char* argv[])
     renderer = Renderer::getInstance();
     window = Window::getInstance();
 
+#if defined(__ANDROID__)
+    Utils::Platform::Android::setupResources();
+#endif
+
     ViewController::getInstance()->setMenuColors();
     CollectionSystemsManager::getInstance();
     Screensaver screensaver;

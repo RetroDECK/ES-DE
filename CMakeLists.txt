@@ -413,7 +413,7 @@ add_compile_definitions(GLM_FORCE_XYZW_ONLY)
 
 # For Unix systems, assign the installation prefix. If it's not explicitly set,
 # we use /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD.
-if(NOT WIN32 AND NOT APPLE)
+if(NOT WIN32 AND NOT APPLE AND NOT ANDROID)
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         if(CMAKE_SYSTEM_NAME MATCHES Linux)
             set(CMAKE_INSTALL_PREFIX /usr CACHE INTERNAL CMAKE_INSTALL_PREFIX)

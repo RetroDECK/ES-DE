@@ -387,13 +387,53 @@ namespace Utils
                 return result;
             }
 
+            bool setupResources()
+            {
+                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
+                {
+                    jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
+                    jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "getDataDirectory",
+                                                                  "()Ljava/lang/String;")};
+                    jstring dataDirectory {
+                        static_cast<jstring>(jniEnv->CallStaticObjectMethod(jniClass, methodID))};
+                    const char* dataDirUtf {jniEnv->GetStringUTFChars(dataDirectory, nullptr)};
+                    ResourceManager::getInstance().setDataDirectory(std::string(dataDirUtf));
+                    jniEnv->ReleaseStringUTFChars(dataDirectory, dataDirUtf);
+                    jniEnv->DeleteLocalRef(jniClass);
+                }
+                {
+                    jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
+                    jmethodID methodID {
+                        jniEnv->GetStaticMethodID(jniClass, "setupResources", "()Z")};
+                    const bool returnValue {
+                        static_cast<bool>(jniEnv->CallStaticBooleanMethod(jniClass, methodID))};
+                    jniEnv->DeleteLocalRef(jniClass);
+                    if (returnValue) {
+                        LOG(LogError) << "Couldn't setup application resources on internal storage";
+                        return true;
+                    }
+                }
+                {
+                    jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
+                    jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "setupThemes", "()Z")};
+                    const bool returnValue {
+                        static_cast<bool>(jniEnv->CallStaticBooleanMethod(jniClass, methodID))};
+                    jniEnv->DeleteLocalRef(jniClass);
+                    if (returnValue) {
+                        LOG(LogError) << "Couldn't setup application themes on internal storage";
+                        return true;
+                    }
+                }
+                return false;
+            }
+
             bool checkEmulatorInstalled(const std::string& packageName, const std::string& activity)
             {
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
                 jmethodID methodID {jniEnv->GetStaticMethodID(
                     jniClass, "checkEmulatorInstalled", "(Ljava/lang/String;Ljava/lang/String;)Z")};
-                bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
+                const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
                     jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
                     jniEnv->NewStringUTF(activity.c_str())))};
                 // jniEnv->DeleteLocalRef(jniClass);

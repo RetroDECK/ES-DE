@@ -42,14 +42,17 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
             return applePackagePath;
         }
 #elif defined(__unix__) && !defined(APPIMAGE_BUILD)
+#if defined(__ANDROID__)
+        std::string testDataPath {mDataDirectory + "/resources/" + &path[2]};
+#else
         // Check under the data installation directory (Unix only).
         std::string testDataPath {Utils::FileSystem::getProgramDataPath() + "/resources/" +
                                   &path[2]};
-
-        if (Utils::FileSystem::exists(testDataPath)) {
-            return testDataPath;
-        }
 #endif
+        if (Utils::FileSystem::exists(testDataPath))
+            return testDataPath;
+#endif
+#if !defined(__ANDROID__)
         // Check under the ES executable directory.
         std::string testExePath {Utils::FileSystem::getExePath() + "/resources/" + &path[2]};
 
@@ -60,6 +63,14 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
         // indicate that we have a broken EmulationStation installation. If the argument
         // terminateOnFailure is set to false though, then skip this step.
         else {
+#else
+        SDL_RWops* resFile {SDL_RWFromFile(path.substr(2).c_str(), "rb")};
+        if (resFile != nullptr) {
+            SDL_RWclose(resFile);
+            return path.substr(2);
+        }
+        else {
+#endif
             if (terminateOnFailure) {
                 LOG(LogError) << "Program resource missing: " << path;
                 LOG(LogError) << "Tried to find the resource in the following locations:";
@@ -69,7 +80,9 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
 #elif defined(__unix__) && !defined(APPIMAGE_BUILD)
                 LOG(LogError) << testDataPath;
 #endif
+#if !defined(__ANDROID__)
                 LOG(LogError) << testExePath;
+#endif
                 LOG(LogError) << "Has EmulationStation been properly installed?";
                 Utils::Platform::emergencyShutdown();
             }
@@ -88,10 +101,19 @@ const ResourceData ResourceManager::getFileData(const std::string& path) const
     // Check if its a resource.
     const std::string respath {getResourcePath(path)};
 
+#if defined(__ANDROID__)
+    SDL_RWops* resFile {SDL_RWFromFile(respath.c_str(), "rb")};
+    if (resFile != nullptr) {
+        ResourceData data {loadFile(resFile)};
+        SDL_RWclose(resFile);
+        return data;
+    }
+#else
     if (Utils::FileSystem::exists(respath)) {
         ResourceData data {loadFile(respath)};
         return data;
     }
+#endif
 
     // If the file doesn't exist, return an "empty" ResourceData.
     ResourceData data {nullptr, 0};
@@ -107,7 +129,7 @@ ResourceData ResourceManager::loadFile(const std::string& path) const
 #endif
 
     stream.seekg(0, stream.end);
-    size_t size {static_cast<size_t>(stream.tellg())};
+    const size_t size {static_cast<size_t>(stream.tellg())};
     stream.seekg(0, stream.beg);
 
     // Supply custom deleter to properly free array.
@@ -115,6 +137,17 @@ ResourceData ResourceManager::loadFile(const std::string& path) const
                                          [](unsigned char* p) { delete[] p; }};
     stream.read(reinterpret_cast<char*>(data.get()), size);
     stream.close();
+
+    ResourceData ret {data, size};
+    return ret;
+}
+
+ResourceData ResourceManager::loadFile(SDL_RWops* resFile) const
+{
+    const size_t size {static_cast<size_t>(SDL_RWsize(resFile))};
+    std::shared_ptr<unsigned char> data {new unsigned char[size],
+                                         [](unsigned char* p) { delete[] p; }};
+    SDL_RWread(resFile, reinterpret_cast<char*>(data.get()), 1, size);
 
     ResourceData ret {data, size};
     return ret;
