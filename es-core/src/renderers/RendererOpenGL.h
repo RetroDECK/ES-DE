@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  RendererOpenGL.h
 //
 //  OpenGL / OpenGL ES renderering functions.

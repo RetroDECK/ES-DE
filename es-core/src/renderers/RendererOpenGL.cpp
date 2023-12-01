@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  RendererOpenGL.cpp
 //
 //  OpenGL / OpenGL ES renderering functions.
@@ -112,7 +112,7 @@ GLenum RendererOpenGL::convertTextureType(const TextureType type)
 #else
         case TextureType::BGRA:  { return GL_BGRA;            } break;
 #endif
-#if defined(__EMSCRIPTEN__)
+#if defined(__EMSCRIPTEN__) || defined(__ANDROID__)
         case TextureType::RED:   { return GL_LUMINANCE;       } break;
 #else
         case TextureType::RED:   { return GL_RED;             } break;
