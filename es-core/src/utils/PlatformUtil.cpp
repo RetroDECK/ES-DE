@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Platform.cpp
 //
 //  Platform utility functions.
@@ -387,7 +387,7 @@ namespace Utils
                 return result;
             }
 
-            bool setupResources()
+            void setDataDirectory()
             {
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 {
@@ -401,12 +401,29 @@ namespace Utils
                     jniEnv->ReleaseStringUTFChars(dataDirectory, dataDirUtf);
                     jniEnv->DeleteLocalRef(jniClass);
                 }
+            }
+
+            bool checkNeedResourceCopy(const std::string& buildIdentifier)
+            {
+                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
+                jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
+                jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "checkNeedResourceCopy",
+                                                              "(Ljava/lang/String;)Z")};
+                const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
+                    jniClass, methodID, jniEnv->NewStringUTF(buildIdentifier.c_str())))};
+                jniEnv->DeleteLocalRef(jniClass);
+                return returnValue;
+            }
+
+            bool setupResources(const std::string& buildIdentifier)
+            {
+                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 {
                     jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                    jmethodID methodID {
-                        jniEnv->GetStaticMethodID(jniClass, "setupResources", "()Z")};
-                    const bool returnValue {
-                        static_cast<bool>(jniEnv->CallStaticBooleanMethod(jniClass, methodID))};
+                    jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "setupResources",
+                                                                  "(Ljava/lang/String;)Z")};
+                    const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
+                        jniClass, methodID, jniEnv->NewStringUTF(buildIdentifier.c_str())))};
                     jniEnv->DeleteLocalRef(jniClass);
                     if (returnValue) {
                         LOG(LogError) << "Couldn't setup application resources on internal storage";
@@ -415,9 +432,10 @@ namespace Utils
                 }
                 {
                     jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                    jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "setupThemes", "()Z")};
-                    const bool returnValue {
-                        static_cast<bool>(jniEnv->CallStaticBooleanMethod(jniClass, methodID))};
+                    jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "setupThemes",
+                                                                  "(Ljava/lang/String;)Z")};
+                    const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
+                        jniClass, methodID, jniEnv->NewStringUTF(buildIdentifier.c_str())))};
                     jniEnv->DeleteLocalRef(jniClass);
                     if (returnValue) {
                         LOG(LogError) << "Couldn't setup application themes on internal storage";
@@ -436,7 +454,7 @@ namespace Utils
                 const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
                     jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
                     jniEnv->NewStringUTF(activity.c_str())))};
-                // jniEnv->DeleteLocalRef(jniClass);
+                jniEnv->DeleteLocalRef(jniClass);
                 return returnValue;
             }
 

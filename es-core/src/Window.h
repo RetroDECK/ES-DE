@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE Frontend
 //  Window.h
 //
 //  Window management, screensaver management, help prompts and splash screen.
@@ -109,7 +109,8 @@ public:
     enum class SplashScreenState {
         SCANNING,
         POPULATING,
-        RELOADING
+        RELOADING,
+        RESOURCE_COPY
     };
 
     void renderSplashScreen(SplashScreenState state, float progress);
@@ -188,6 +189,7 @@ private:
     std::unique_ptr<TextCache> mSplashTextScanning;
     std::unique_ptr<TextCache> mSplashTextPopulating;
     std::unique_ptr<TextCache> mSplashTextReloading;
+    std::unique_ptr<TextCache> mSplashTextResourceCopy;
     glm::vec4 mSplashTextPositions;
     std::vector<ProgressBarRectangle> mProgressBarRectangles;
 

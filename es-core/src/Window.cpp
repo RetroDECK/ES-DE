@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE Frontend
 //  Window.cpp
 //
 //  Window management, screensaver management, help prompts and splash screen.
@@ -144,6 +144,8 @@ bool Window::init()
         mDefaultFonts.at(1)->buildTextCache("Loading systems...", 0.0f, 0.0f, 0x777777FF));
     mSplashTextReloading = std::unique_ptr<TextCache>(
         mDefaultFonts.at(1)->buildTextCache("Reloading...", 0.0f, 0.0f, 0x777777FF));
+    mSplashTextResourceCopy = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache("Copying resources...", 0.0f, 0.0f, 0x777777FF));
 
     mSplashTextPositions.x =
         (mRenderer->getScreenWidth() - mSplashTextScanning->metrics.size.x) / 2.0f;
@@ -698,6 +700,9 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
         textPosX = mSplashTextPositions.w;
         textPosY += mDefaultFonts.at(1)->getLetterHeight();
     }
+    else if (state == SplashScreenState::RESOURCE_COPY) {
+        textPosX = (mRenderer->getScreenWidth() - mSplashTextResourceCopy->metrics.size.x) / 2.0f;
+    }
 
     trans = glm::translate(trans, glm::round(glm::vec3 {textPosX, textPosY, 0.0f}));
     mRenderer->setMatrix(trans);
@@ -708,6 +713,8 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
         mDefaultFonts.at(1)->renderTextCache(mSplashTextPopulating.get());
     else if (state == SplashScreenState::RELOADING)
         mDefaultFonts.at(1)->renderTextCache(mSplashTextReloading.get());
+    else if (state == SplashScreenState::RESOURCE_COPY)
+        mDefaultFonts.at(1)->renderTextCache(mSplashTextResourceCopy.get());
 
     mRenderer->swapBuffers();
 }

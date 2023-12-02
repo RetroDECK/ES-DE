@@ -719,10 +719,6 @@ int main(int argc, char* argv[])
     renderer = Renderer::getInstance();
     window = Window::getInstance();
 
-#if defined(__ANDROID__)
-    Utils::Platform::Android::setupResources();
-#endif
-
     ViewController::getInstance()->setMenuColors();
     CollectionSystemsManager::getInstance();
     Screensaver screensaver;
@@ -740,6 +736,24 @@ int main(int argc, char* argv[])
     LOG(LogDebug) << "Android storage state: " << SDL_AndroidGetExternalStorageState();
     LOG(LogDebug) << "Android internal path: " << SDL_AndroidGetInternalStoragePath();
     LOG(LogDebug) << "Android external path: " << SDL_AndroidGetExternalStoragePath();
+    Utils::Platform::Android::setDataDirectory();
+    {
+        std::string buildIdentifier {PROGRAM_VERSION_STRING};
+        buildIdentifier.append(" (r")
+            .append(std::to_string(PROGRAM_RELEASE_NUMBER))
+            .append("), built ")
+            .append(PROGRAM_BUILT_STRING);
+        if (Utils::Platform::Android::checkNeedResourceCopy(buildIdentifier)) {
+            LOG(LogInfo) << "Application has been updated or it's a new installation, copying "
+                            "bundled resources and themes to internal storage...";
+            if (Settings::getInstance()->getBool("SplashScreen"))
+                window->renderSplashScreen(Window::SplashScreenState::RESOURCE_COPY, 0.0f);
+            if (Utils::Platform::Android::setupResources(buildIdentifier)) {
+                LOG(LogError) << "Copying of resources and themes failed";
+                return -1;
+            }
+        }
+    }
 #endif
 
 #if defined(APPLICATION_UPDATER)

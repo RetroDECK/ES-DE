@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Platform.h
 //
 //  Platform utility functions.
@@ -60,7 +60,9 @@ namespace Utils
         namespace Android
         {
             bool requestStoragePermission();
-            bool setupResources();
+            void setDataDirectory();
+            bool checkNeedResourceCopy(const std::string& buildIdentifier);
+            bool setupResources(const std::string& buildIdentifier);
             bool checkEmulatorInstalled(const std::string& packageName,
                                         const std::string& activity);
             int launchGame(const std::string& packageName,
