@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE Frontend
 //  GuiOrphanedDataCleanup.cpp
 //
 //  Removes orphaned game media, gamelist.xml entries and custom collections entries.
@@ -39,7 +39,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     addChild(&mBackground);
     addChild(&mGrid);
 
-#if defined(_WIN64) || defined(__APPLE__)
+#if defined(_WIN64) || defined(__APPLE__) || defined(__ANDROID__)
     // Although macOS may have filesystem case-sensitivity enabled it's rare and in worst case
     // this will just leave some extra media files on the filesystem.
     mCaseSensitiveFilesystem = false;
