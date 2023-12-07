@@ -31,6 +31,18 @@
 #include <array>
 #include <fcntl.h>
 
+#if defined(__ANDROID__)
+JNIEXPORT void JNICALL Java_org_es_1de_frontend_MainActivity_nativeLogOutput(JNIEnv* jniEnv,
+                                                                             jclass jniClass,
+                                                                             jstring output,
+                                                                             jint logLevel)
+{
+    const char* outputUtf {jniEnv->GetStringUTFChars(output, nullptr)};
+    LOG(static_cast<LogLevel>(logLevel)) << outputUtf;
+    jniEnv->ReleaseStringUTFChars(output, outputUtf);
+}
+#endif
+
 namespace Utils
 {
     namespace Platform
@@ -380,10 +392,9 @@ namespace Utils
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
                 jmethodID methodID {
-                    jniEnv->GetStaticMethodID(jniClass, "requestStoragePermissions", "()Z")};
-                const bool result {
-                    static_cast<bool>(jniEnv->CallStaticBooleanMethod(jniClass, methodID))};
-                // jniEnv->DeleteLocalRef(jniClass);
+                    jniEnv->GetStaticMethodID(jniClass, "requestStoragePermissions", "()V")};
+                jniEnv->CallStaticVoidMethod(jniClass, methodID);
+                bool result {false};
                 return result;
             }
 
@@ -461,33 +472,61 @@ namespace Utils
             int launchGame(const std::string& packageName,
                            const std::string& activity,
                            const std::string& action,
-                           const std::string& fileAsURI,
-                           std::vector<std::pair<std::string, std::string>>& extras)
+                           const std::string& category,
+                           const std::string& mimeType,
+                           const std::string& data,
+                           const std::string& romRaw,
+                           const std::map<std::string, std::string>& extrasString,
+                           const std::map<std::string, std::string>& extrasBool,
+                           const std::vector<std::string>& activityFlags)
             {
                 JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
                 jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
                 jmethodID methodID {jniEnv->GetStaticMethodID(
                     jniClass, "launchGame",
                     "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/"
-                    "String;Ljava/util/Vector;Ljava/util/Vector;)Z")};
-                jclass vectorClass {jniEnv->FindClass("java/util/Vector")};
-                jmethodID vectorMID {jniEnv->GetMethodID(vectorClass, "<init>", "()V")};
-                jmethodID addMethodID {
-                    jniEnv->GetMethodID(vectorClass, "add", "(Ljava/lang/Object;)Z")};
-                jobject extrasNames {jniEnv->NewObject(vectorClass, vectorMID)};
-                jobject extrasValues {jniEnv->NewObject(vectorClass, vectorMID)};
-                for (auto& extra : extras) {
-                    jniEnv->CallBooleanMethod(extrasNames, addMethodID,
-                                              jniEnv->NewStringUTF(extra.first.c_str()));
-                    jniEnv->CallBooleanMethod(extrasValues, addMethodID,
-                                              jniEnv->NewStringUTF(extra.second.c_str()));
+                    "String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/"
+                    "HashMap;Ljava/util/HashMap;Ljava/util/List;)Z")};
+
+                jclass hashMapClass {jniEnv->FindClass("java/util/HashMap")};
+                jmethodID hashMapInit {jniEnv->GetMethodID(hashMapClass, "<init>", "(I)V")};
+
+                jobject hashMapString {
+                    jniEnv->NewObject(hashMapClass, hashMapInit, extrasString.size())};
+                jobject hashMapBool {
+                    jniEnv->NewObject(hashMapClass, hashMapInit, extrasBool.size())};
+
+                jmethodID hashMapPutMethodString {jniEnv->GetMethodID(
+                    hashMapClass, "put",
+                    "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;")};
+
+                for (auto it : extrasString) {
+                    jniEnv->CallObjectMethod(hashMapString, hashMapPutMethodString,
+                                             jniEnv->NewStringUTF(it.first.c_str()),
+                                             jniEnv->NewStringUTF(it.second.c_str()));
                 }
+
+                for (auto it : extrasBool) {
+                    jniEnv->CallObjectMethod(hashMapBool, hashMapPutMethodString,
+                                             jniEnv->NewStringUTF(it.first.c_str()),
+                                             jniEnv->NewStringUTF(it.second.c_str()));
+                }
+
+                jclass arrayListClass {jniEnv->FindClass("java/util/ArrayList")};
+                jmethodID arrayListInit {jniEnv->GetMethodID(arrayListClass, "<init>", "()V")};
+                jmethodID addMethod {
+                    jniEnv->GetMethodID(arrayListClass, "add", "(Ljava/lang/Object;)Z")};
+                jobject flags {jniEnv->NewObject(arrayListClass, arrayListInit)};
+
+                for (auto& flag : activityFlags)
+                    jniEnv->CallBooleanMethod(flags, addMethod, jniEnv->NewStringUTF(flag.c_str()));
+
                 const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
                     jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
                     jniEnv->NewStringUTF(activity.c_str()), jniEnv->NewStringUTF(action.c_str()),
-                    jniEnv->NewStringUTF(fileAsURI.c_str()), extrasNames, extrasValues))};
-                // jniEnv->DeleteLocalRef(vectorClass);
-                // jniEnv->DeleteLocalRef(jniClass);
+                    jniEnv->NewStringUTF(category.c_str()), jniEnv->NewStringUTF(mimeType.c_str()),
+                    jniEnv->NewStringUTF(data.c_str()), jniEnv->NewStringUTF(romRaw.c_str()),
+                    hashMapString, hashMapBool, flags))};
                 if (returnValue)
                     return -1;
                 else

@@ -17,6 +17,12 @@
 
 #if defined(__ANDROID__)
 #include <jni.h>
+#include <map>
+
+extern "C" void Java_org_es_1de_frontend_MainActivity_nativeLogOutput(JNIEnv* jniEnv,
+                                                                      jclass jniClass,
+                                                                      jstring output,
+                                                                      jint logLevel);
 #endif
 
 namespace Utils
@@ -68,8 +74,14 @@ namespace Utils
             int launchGame(const std::string& packageName,
                            const std::string& activity,
                            const std::string& action,
-                           const std::string& fileAsURI,
-                           std::vector<std::pair<std::string, std::string>>& extras);
+                           const std::string& category,
+                           const std::string& mimeType,
+                           const std::string& data,
+                           const std::string& romRaw,
+                           const std::map<std::string, std::string>& extrasString,
+                           const std::map<std::string, std::string>& extrasBool,
+                           const std::vector<std::string>& activityFlags);
+
         } // namespace Android
 #endif
 

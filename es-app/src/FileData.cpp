@@ -882,6 +882,7 @@ void FileData::launchGame()
     std::string commandRaw {command};
     std::string romPath {Utils::FileSystem::getEscapedPath(mPath)};
     std::string baseName {Utils::FileSystem::getStem(mPath)};
+    std::string romRaw {Utils::FileSystem::getPreferredPath(mPath)};
 
     // For the special case where a directory has a supported file extension and is therefore
     // interpreted as a file, check if there is a matching filename inside the directory.
@@ -890,7 +891,11 @@ void FileData::launchGame()
         for (std::string& file : Utils::FileSystem::getDirContent(mPath)) {
             if (Utils::FileSystem::getFileName(file) == Utils::FileSystem::getFileName(mPath) &&
                 (Utils::FileSystem::isRegularFile(file) || Utils::FileSystem::isSymlink(file))) {
+#if defined(__ANDROID__)
+                romRaw = file;
+#else
                 romPath = Utils::FileSystem::getEscapedPath(file);
+#endif
                 baseName = baseName.substr(0, baseName.find("."));
                 break;
             }
@@ -898,7 +903,6 @@ void FileData::launchGame()
     }
 
     const std::string fileName {baseName + Utils::FileSystem::getExtension(romPath)};
-    const std::string romRaw {Utils::FileSystem::getPreferredPath(mPath)};
     const std::string esPath {Utils::FileSystem::getExePath()};
     bool runInBackground {false};
 
@@ -951,8 +955,12 @@ void FileData::launchGame()
     std::string androidPackage;
     std::string androidActivity;
     std::string androidAction;
-    std::string androidFileAsURI;
-    std::vector<std::pair<std::string, std::string>> androidExtras;
+    std::string androidCategory;
+    std::string androidMimeType;
+    std::string androidData;
+    std::map<std::string, std::string> androidExtrasString;
+    std::map<std::string, std::string> androidExtrasBool;
+    std::vector<std::string> androidActivityFlags;
 #endif
 
 #if defined(_WIN64)
@@ -1117,18 +1125,6 @@ void FileData::launchGame()
         if (separatorPos != std::string::npos) {
             androidActivity = androidPackage.substr(separatorPos + 1);
             androidPackage = androidPackage.substr(0, separatorPos);
-        }
-
-        separatorPos = androidPackage.find('|');
-        if (separatorPos != std::string::npos) {
-            androidAction = androidPackage.substr(separatorPos + 1);
-            androidPackage = androidPackage.substr(0, separatorPos);
-        }
-
-        separatorPos = androidActivity.find('|');
-        if (separatorPos != std::string::npos) {
-            androidAction = androidActivity.substr(separatorPos + 1);
-            androidActivity = androidActivity.substr(0, separatorPos);
         }
 
         LOG(LogDebug) << "FileData::launchGame(): Found emulator package \"" << androidPackage
@@ -1609,6 +1605,7 @@ void FileData::launchGame()
 #endif
 #endif
 
+#if !defined(__ANDROID__)
     // Replace the remaining variables with their actual values.
     command = Utils::String::replace(command, "%ROM%", romPath);
     command = Utils::String::replace(command, "%BASENAME%", baseName);
@@ -1616,65 +1613,132 @@ void FileData::launchGame()
     command = Utils::String::replace(command, "%ROMRAW%", romRaw);
     command = Utils::String::replace(command, "%ROMPATH%",
                                      Utils::FileSystem::getEscapedPath(getROMDirectory()));
-#if defined(__ANDROID__)
-    if (command.find("%ROMURI%") != std::string::npos)
-        androidFileAsURI = romRaw;
+#else
     command = Utils::String::replace(command, "%ANDROIDPACKAGE%", androidPackage);
-    size_t extraPos {command.find("%EXTRA_")};
 
-    while (extraPos != std::string::npos) {
-        if (extraPos != std::string::npos) {
+    const std::vector<std::string> androidVariabels {
+        "%ACTION%=", "%CATEGORY%=", "%MIMETYPE%=", "%DATA%="};
+
+    for (std::string variable : androidVariabels) {
+        size_t dataPos {command.find(variable)};
+        if (dataPos != std::string::npos) {
             bool invalidEntry {false};
-            bool isQuoted {false};
-            std::string extraName;
-            std::string extraValue;
+            bool isQuoted {(command.length() > dataPos + variable.length() &&
+                            command[dataPos + variable.length()] == '\"')};
+            std::string value;
 
-            size_t equalPos {command.find("=", extraPos)};
-            if (equalPos == std::string::npos)
-                invalidEntry = true;
-
-            if (!invalidEntry && extraPos + 8 >= command.size())
-                invalidEntry = true;
-
-            if (!invalidEntry) {
-                if (command.length() > equalPos && command[equalPos + 1] == '\"')
-                    isQuoted = true;
-
-                extraName = command.substr(extraPos + 7, equalPos - (extraPos + 8));
-
-                if (isQuoted) {
-                    const size_t closeQuotePos {command.find("\"", equalPos + 2)};
-                    if (closeQuotePos != std::string::npos)
-                        extraValue = command.substr(equalPos + 2, closeQuotePos - (equalPos + 2));
-                    else
-                        invalidEntry = true;
-                }
-                else {
-                    const size_t spacePos {command.find(" ", extraPos)};
-                    if (spacePos != std::string::npos)
-                        extraValue = command.substr(equalPos + 1, spacePos - (equalPos + 1));
-                    else
-                        extraValue = command.substr(equalPos + 1, command.size() - equalPos);
-                }
-
-                if (invalidEntry) {
-                    LOG(LogError) << "Invalid entry in systems configuration file es_systems.xml";
-                    LOG(LogError) << "Raw emulator launch command:";
-                    LOG(LogError) << commandRaw;
-
-                    window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE",
-                                           6000);
-                    window->setAllowTextScrolling(true);
-                    window->setAllowFileAnimation(true);
-                    return;
-                }
-
-                if (extraName != "" && extraValue != "")
-                    androidExtras.emplace_back(make_pair(extraName, extraValue));
+            if (isQuoted) {
+                const size_t closeQuotePos {command.find("\"", dataPos + variable.length() + 1)};
+                if (closeQuotePos != std::string::npos)
+                    value = command.substr(dataPos + variable.length() + 1,
+                                           closeQuotePos - (dataPos + variable.length() + 1));
+                else
+                    invalidEntry = true;
             }
+            else {
+                const size_t spacePos {command.find(" ", dataPos)};
+                if (spacePos != std::string::npos)
+                    value = command.substr(dataPos + variable.length(),
+                                           spacePos - (dataPos + variable.length()));
+                else
+                    value = command.substr(dataPos + variable.length(),
+                                           command.size() - dataPos + variable.length());
+            }
+
+            if (invalidEntry) {
+                LOG(LogError) << "Invalid entry in systems configuration file es_systems.xml";
+                LOG(LogError) << "Raw emulator launch command:";
+                LOG(LogError) << commandRaw;
+
+                window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
+                window->setAllowTextScrolling(true);
+                window->setAllowFileAnimation(true);
+                return;
+            }
+
+            if (variable == "%ACTION%=")
+                androidAction = value;
+            else if (variable == "%DATA%=")
+                androidData = value;
+            else if (variable == "%CATEGORY%=")
+                androidCategory = value;
+            else if (variable == "%MIMETYPE%=")
+                androidMimeType = value;
         }
-        extraPos = command.find("%EXTRA_", extraPos + 1);
     }
+
+    std::vector<std::string> extraVariabels {"%EXTRA_", "%EXTRABOOL_"};
+
+    for (std::string variable : extraVariabels) {
+        size_t extraPos {command.find(variable)};
+        while (extraPos != std::string::npos) {
+            if (extraPos != std::string::npos) {
+                bool invalidEntry {false};
+                bool isQuoted {false};
+                std::string extraName;
+                std::string extraValue;
+
+                size_t equalPos {command.find("=", extraPos)};
+                if (equalPos == std::string::npos)
+                    invalidEntry = true;
+
+                if (!invalidEntry && extraPos + variable.length() + 1 >= command.size())
+                    invalidEntry = true;
+
+                if (!invalidEntry) {
+                    if (command.length() > equalPos && command[equalPos + 1] == '\"')
+                        isQuoted = true;
+
+                    extraName = command.substr(extraPos + variable.length(),
+                                               equalPos - (extraPos + variable.length() + 1));
+
+                    if (isQuoted) {
+                        const size_t closeQuotePos {command.find("\"", equalPos + 2)};
+                        if (closeQuotePos != std::string::npos)
+                            extraValue =
+                                command.substr(equalPos + 2, closeQuotePos - (equalPos + 2));
+                        else
+                            invalidEntry = true;
+                    }
+                    else {
+                        const size_t spacePos {command.find(" ", extraPos)};
+                        if (spacePos != std::string::npos)
+                            extraValue = command.substr(equalPos + 1, spacePos - (equalPos + 1));
+                        else
+                            extraValue = command.substr(equalPos + 1, command.size() - equalPos);
+                    }
+
+                    if (invalidEntry) {
+                        LOG(LogError)
+                            << "Invalid entry in systems configuration file es_systems.xml";
+                        LOG(LogError) << "Raw emulator launch command:";
+                        LOG(LogError) << commandRaw;
+
+                        window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE",
+                                               6000);
+                        window->setAllowTextScrolling(true);
+                        window->setAllowFileAnimation(true);
+                        return;
+                    }
+
+                    if (extraName != "" && extraValue != "") {
+                        if (variable == "%EXTRA_")
+                            androidExtrasString[extraName] = extraValue;
+                        else if (variable == "%EXTRABOOL_")
+                            androidExtrasBool[extraName] = extraValue;
+                    }
+                }
+            }
+            extraPos = command.find(variable, extraPos + 1);
+        }
+    }
+
+    if (command.find("%ACTIVITY_CLEAR_TASK%") != std::string::npos)
+        androidActivityFlags.emplace_back("%ACTIVITY_CLEAR_TASK%");
+    if (command.find("%ACTIVITY_CLEAR_TOP%") != std::string::npos)
+        androidActivityFlags.emplace_back("%ACTIVITY_CLEAR_TOP%");
+    if (command.find("%ACTIVITY_NO_HISTORY%") != std::string::npos)
+        androidActivityFlags.emplace_back("%ACTIVITY_NO_HISTORY%");
 #endif
 
 #if defined(_WIN64)
@@ -1722,14 +1786,28 @@ void FileData::launchGame()
 #if defined(__ANDROID__)
     LOG(LogInfo) << "Expanded emulator launch arguments:";
     LOG(LogInfo) << "Package: " << androidPackage;
-    LOG(LogInfo) << "Activity: " << (androidActivity == "" ? "<package default>" : androidActivity);
-    LOG(LogInfo) << "Action: " << (androidAction == "" ? "<package default>" : androidAction);
-    if (androidFileAsURI != "") {
-        LOG(LogInfo) << "File (URI): " << androidFileAsURI;
+    if (androidActivity != "") {
+        LOG(LogInfo) << "Activity: " << androidActivity;
     }
-    for (auto& extra : androidExtras) {
+    if (androidAction != "") {
+        LOG(LogInfo) << "Action: " << androidAction;
+    }
+    if (androidCategory != "") {
+        LOG(LogInfo) << "Category: " << androidCategory;
+    }
+    if (androidMimeType != "") {
+        LOG(LogInfo) << "MIME type: " << androidMimeType;
+    }
+    if (androidData != "") {
+        LOG(LogInfo) << "Data: " << androidData;
+    }
+    for (auto& extra : androidExtrasString) {
         LOG(LogInfo) << "Extra name: " << extra.first;
         LOG(LogInfo) << "Extra value: " << extra.second;
+    }
+    for (auto& extra : androidExtrasBool) {
+        LOG(LogInfo) << "Extra bool name: " << extra.first;
+        LOG(LogInfo) << "Extra bool value: " << extra.second;
     }
 #else
     LOG(LogInfo) << "Expanded emulator launch command:";
@@ -1755,13 +1833,14 @@ void FileData::launchGame()
         Utils::String::stringToWideString(startDirectory), runInBackground, hideWindow);
 #elif defined(__ANDROID__)
     returnValue = Utils::Platform::Android::launchGame(
-        androidPackage, androidActivity, androidAction, androidFileAsURI, androidExtras);
+        androidPackage, androidActivity, androidAction, androidCategory, androidMimeType,
+        androidData, romRaw, androidExtrasString, androidExtrasBool, androidActivityFlags);
 #else
 returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
 #endif
     // Notify the user in case of a failed game launch using a popup window.
     if (returnValue != 0) {
-        LOG(LogWarning) << "...launch terminated with nonzero return value " << returnValue;
+        LOG(LogWarning) << "Launch terminated with nonzero return value " << returnValue;
 
         window->queueInfoPopup("ERROR LAUNCHING GAME '" +
                                    Utils::String::toUpper(metadata.get("name")) + "' (ERROR CODE " +
@@ -2051,30 +2130,15 @@ const std::pair<std::string, FileData::findEmulatorResult> FileData::findEmulato
     for (std::string& androidpackage : emulatorAndroidPackages) {
         // If a forward slash character is present in the androidpackage entry it means an explicit
         // Intent activity should be used rather than the default one. The checkEmulatorInstalled()
-        // Java function will check for the activity as well and if it's not found it flags
-        // the overall emulator entry as not found. It's also possible to define an explicit
-        // Intent action using the pipe character but this is not checked for in the Java
-        // function as invalid actions will not lead to crashes.
+        // Java function will check for the activity as well and if it's not found it flags the
+        // overall emulator entry as not found.
         std::string packageName {androidpackage};
         std::string activity;
-        std::string action;
         size_t separatorPos {packageName.find('/')};
 
         if (separatorPos != std::string::npos) {
             activity = packageName.substr(separatorPos + 1);
             packageName = packageName.substr(0, separatorPos);
-        }
-
-        separatorPos = packageName.find('|');
-        if (separatorPos != std::string::npos) {
-            action = packageName.substr(separatorPos + 1);
-            packageName = packageName.substr(0, separatorPos);
-        }
-
-        separatorPos = activity.find('|');
-        if (separatorPos != std::string::npos) {
-            action = activity.substr(separatorPos + 1);
-            activity = activity.substr(0, separatorPos);
         }
 
         if (Utils::Platform::Android::checkEmulatorInstalled(packageName, activity)) {
