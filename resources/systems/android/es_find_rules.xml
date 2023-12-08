@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for Android -->
+<ruleList>
+    <emulator name="RETROARCH">
+        <rule type="androidpackage">
+            <entry>com.retroarch.aarch64/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
+            <entry>com.retroarch.ra32/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
+            <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
+        </rule>
+    </emulator>
+    <emulator name="AETHERSX2">
+        <!-- Sony PlayStation 2 emulator AetherSX2 -->
+        <rule type="androidpackage">
+            <entry>xyz.aethersx2.android/.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="CITRA">
+        <!-- Nintendo 3DS emulator Citra -->
+        <rule type="androidpackage">
+            <entry>org.citra.citra_emu/.activities.EmulationActivity</entry>
+            <entry>org.citra.citra_emu/.ui.main.MainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="CITRA-MMJ">
+        <!-- Nintendo 3DS emulator Citra MMJ -->
+        <rule type="androidpackage">
+            <entry>org.citra.emu/.ui.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="DOLPHIN">
+        <!-- Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="androidpackage">
+            <entry>org.dolphinemu.dolphinemu/.ui.main.MainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="DRASTIC">
+        <!-- Nintendo DS emulator DraStic -->
+        <rule type="androidpackage">
+            <entry>com.dsemu.drastic/.DraSticActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="DUCKSTATION">
+        <!-- Sony PlayStation 1 emulator DuckStation -->
+        <rule type="androidpackage">
+            <entry>com.github.stenzek.duckstation/.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="FLYCAST">
+        <!-- Sega Dreamcast emulator Flycast -->
+        <rule type="androidpackage">
+            <entry>com.flycast.emulator/com.reicast.emulator.MainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="MAME4DROID">
+        <!-- Arcade emulator MAME4droid -->
+        <rule type="androidpackage">
+            <entry>com.seleuco.mame4droid/.MAME4droid</entry>
+        </rule>
+    </emulator>
+    <emulator name="M64PLUS-FZ">
+        <!-- Nintendo 64 emulator M64Plus FZ -->
+        <rule type="androidpackage">
+            <entry>org.mupen64plusae.v3.fzurita.pro/paulscode.android.mupen64plusae.SplashActivity</entry>
+            <entry>org.mupen64plusae.v3.fzurita/paulscode.android.mupen64plusae.SplashActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="PPSSPP">
+        <!-- Sony PlayStation Portable emulator PPSSPP -->
+        <rule type="androidpackage">
+            <entry>org.ppsspp.ppssppgold/org.ppsspp.ppsspp.PpssppActivity</entry>
+            <entry>org.ppsspp.ppsspp/.PpssppActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="REDREAM">
+        <!-- Sega Dreamcast emulator Redream -->
+        <rule type="androidpackage">
+            <entry>io.recompiled.redream/.MainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="androidpackage">
+            <entry>org.yuzu.yuzu_emu.ea/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+            <entry>org.yuzu.yuzu_emu/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
+</ruleList>
