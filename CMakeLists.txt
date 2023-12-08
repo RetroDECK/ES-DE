@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  CMakeLists.txt
 #
 #  Main CMake configuration file.
@@ -359,7 +359,7 @@ if(VIDEO_HW_DECODING)
     message("-- Building with FFmpeg HW decoding")
 endif()
 
-if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI)
+if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI OR ANDROID)
     set(APPLICATION_UPDATER OFF)
 endif()
 
