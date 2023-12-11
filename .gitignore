@@ -33,8 +33,9 @@ emulationstation.worker.js
 /index.html
 /ROMs
 
-# Android build
+# Android
 /android
+es-core/src/utils/PlatformUtilAndroid.*
 
 # AppImage
 AppDir
