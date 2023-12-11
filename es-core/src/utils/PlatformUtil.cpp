@@ -1,7 +1,7 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE Frontend
-//  Platform.cpp
+//  ES-DE
+//  PlatformUtil.cpp
 //
 //  Platform utility functions.
 //
@@ -30,18 +30,6 @@
 
 #include <array>
 #include <fcntl.h>
-
-#if defined(__ANDROID__)
-JNIEXPORT void JNICALL Java_org_es_1de_frontend_MainActivity_nativeLogOutput(JNIEnv* jniEnv,
-                                                                             jclass jniClass,
-                                                                             jstring output,
-                                                                             jint logLevel)
-{
-    const char* outputUtf {jniEnv->GetStringUTFChars(output, nullptr)};
-    LOG(static_cast<LogLevel>(logLevel)) << outputUtf;
-    jniEnv->ReleaseStringUTFChars(output, outputUtf);
-}
-#endif
 
 namespace Utils
 {
@@ -383,158 +371,6 @@ namespace Utils
             exit(EXIT_FAILURE);
         }
 
-#if defined(__ANDROID__)
-        namespace Android
-        {
-            bool requestStoragePermission()
-            {
-                // TODO: Wait for interface to close and check actual outcome.
-                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                jmethodID methodID {
-                    jniEnv->GetStaticMethodID(jniClass, "requestStoragePermissions", "()V")};
-                jniEnv->CallStaticVoidMethod(jniClass, methodID);
-                bool result {false};
-                return result;
-            }
-
-            void setDataDirectory()
-            {
-                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                {
-                    jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                    jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "getDataDirectory",
-                                                                  "()Ljava/lang/String;")};
-                    jstring dataDirectory {
-                        static_cast<jstring>(jniEnv->CallStaticObjectMethod(jniClass, methodID))};
-                    const char* dataDirUtf {jniEnv->GetStringUTFChars(dataDirectory, nullptr)};
-                    ResourceManager::getInstance().setDataDirectory(std::string(dataDirUtf));
-                    jniEnv->ReleaseStringUTFChars(dataDirectory, dataDirUtf);
-                    jniEnv->DeleteLocalRef(jniClass);
-                }
-            }
-
-            bool checkNeedResourceCopy(const std::string& buildIdentifier)
-            {
-                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "checkNeedResourceCopy",
-                                                              "(Ljava/lang/String;)Z")};
-                const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
-                    jniClass, methodID, jniEnv->NewStringUTF(buildIdentifier.c_str())))};
-                jniEnv->DeleteLocalRef(jniClass);
-                return returnValue;
-            }
-
-            bool setupResources(const std::string& buildIdentifier)
-            {
-                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                {
-                    jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                    jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "setupResources",
-                                                                  "(Ljava/lang/String;)Z")};
-                    const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
-                        jniClass, methodID, jniEnv->NewStringUTF(buildIdentifier.c_str())))};
-                    jniEnv->DeleteLocalRef(jniClass);
-                    if (returnValue) {
-                        LOG(LogError) << "Couldn't setup application resources on internal storage";
-                        return true;
-                    }
-                }
-                {
-                    jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                    jmethodID methodID {jniEnv->GetStaticMethodID(jniClass, "setupThemes",
-                                                                  "(Ljava/lang/String;)Z")};
-                    const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
-                        jniClass, methodID, jniEnv->NewStringUTF(buildIdentifier.c_str())))};
-                    jniEnv->DeleteLocalRef(jniClass);
-                    if (returnValue) {
-                        LOG(LogError) << "Couldn't setup application themes on internal storage";
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            bool checkEmulatorInstalled(const std::string& packageName, const std::string& activity)
-            {
-                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                jmethodID methodID {jniEnv->GetStaticMethodID(
-                    jniClass, "checkEmulatorInstalled", "(Ljava/lang/String;Ljava/lang/String;)Z")};
-                const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
-                    jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
-                    jniEnv->NewStringUTF(activity.c_str())))};
-                jniEnv->DeleteLocalRef(jniClass);
-                return returnValue;
-            }
-
-            int launchGame(const std::string& packageName,
-                           const std::string& activity,
-                           const std::string& action,
-                           const std::string& category,
-                           const std::string& mimeType,
-                           const std::string& data,
-                           const std::string& romRaw,
-                           const std::map<std::string, std::string>& extrasString,
-                           const std::map<std::string, std::string>& extrasBool,
-                           const std::vector<std::string>& activityFlags)
-            {
-                JNIEnv* jniEnv {reinterpret_cast<JNIEnv*>(SDL_AndroidGetJNIEnv())};
-                jclass jniClass {jniEnv->FindClass("org/es_de/frontend/MainActivity")};
-                jmethodID methodID {jniEnv->GetStaticMethodID(
-                    jniClass, "launchGame",
-                    "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/"
-                    "String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/"
-                    "HashMap;Ljava/util/HashMap;Ljava/util/List;)Z")};
-
-                jclass hashMapClass {jniEnv->FindClass("java/util/HashMap")};
-                jmethodID hashMapInit {jniEnv->GetMethodID(hashMapClass, "<init>", "(I)V")};
-
-                jobject hashMapString {
-                    jniEnv->NewObject(hashMapClass, hashMapInit, extrasString.size())};
-                jobject hashMapBool {
-                    jniEnv->NewObject(hashMapClass, hashMapInit, extrasBool.size())};
-
-                jmethodID hashMapPutMethodString {jniEnv->GetMethodID(
-                    hashMapClass, "put",
-                    "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;")};
-
-                for (auto it : extrasString) {
-                    jniEnv->CallObjectMethod(hashMapString, hashMapPutMethodString,
-                                             jniEnv->NewStringUTF(it.first.c_str()),
-                                             jniEnv->NewStringUTF(it.second.c_str()));
-                }
-
-                for (auto it : extrasBool) {
-                    jniEnv->CallObjectMethod(hashMapBool, hashMapPutMethodString,
-                                             jniEnv->NewStringUTF(it.first.c_str()),
-                                             jniEnv->NewStringUTF(it.second.c_str()));
-                }
-
-                jclass arrayListClass {jniEnv->FindClass("java/util/ArrayList")};
-                jmethodID arrayListInit {jniEnv->GetMethodID(arrayListClass, "<init>", "()V")};
-                jmethodID addMethod {
-                    jniEnv->GetMethodID(arrayListClass, "add", "(Ljava/lang/Object;)Z")};
-                jobject flags {jniEnv->NewObject(arrayListClass, arrayListInit)};
-
-                for (auto& flag : activityFlags)
-                    jniEnv->CallBooleanMethod(flags, addMethod, jniEnv->NewStringUTF(flag.c_str()));
-
-                const bool returnValue {static_cast<bool>(jniEnv->CallStaticBooleanMethod(
-                    jniClass, methodID, jniEnv->NewStringUTF(packageName.c_str()),
-                    jniEnv->NewStringUTF(activity.c_str()), jniEnv->NewStringUTF(action.c_str()),
-                    jniEnv->NewStringUTF(category.c_str()), jniEnv->NewStringUTF(mimeType.c_str()),
-                    jniEnv->NewStringUTF(data.c_str()), jniEnv->NewStringUTF(romRaw.c_str()),
-                    hashMapString, hashMapBool, flags))};
-                if (returnValue)
-                    return -1;
-                else
-                    return 0;
-            }
-
-        } // namespace Android
-#endif
     } // namespace Platform
 
 } // namespace Utils

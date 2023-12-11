@@ -1,7 +1,7 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE Frontend
-//  Platform.h
+//  ES-DE
+//  PlatformUtil.h
 //
 //  Platform utility functions.
 //
@@ -16,14 +16,9 @@
 #endif
 
 #if defined(__ANDROID__)
-#include <jni.h>
-#include <map>
-
-extern "C" void Java_org_es_1de_frontend_MainActivity_nativeLogOutput(JNIEnv* jniEnv,
-                                                                      jclass jniClass,
-                                                                      jstring output,
-                                                                      jint logLevel);
+#include "utils/PlatformUtilAndroid.h"
 #endif
+
 
 namespace Utils
 {
@@ -61,29 +56,6 @@ namespace Utils
 
         // Immediately shut down the application as cleanly as possible.
         void emergencyShutdown();
-
-#if defined(__ANDROID__)
-        namespace Android
-        {
-            bool requestStoragePermission();
-            void setDataDirectory();
-            bool checkNeedResourceCopy(const std::string& buildIdentifier);
-            bool setupResources(const std::string& buildIdentifier);
-            bool checkEmulatorInstalled(const std::string& packageName,
-                                        const std::string& activity);
-            int launchGame(const std::string& packageName,
-                           const std::string& activity,
-                           const std::string& action,
-                           const std::string& category,
-                           const std::string& mimeType,
-                           const std::string& data,
-                           const std::string& romRaw,
-                           const std::map<std::string, std::string>& extrasString,
-                           const std::map<std::string, std::string>& extrasBool,
-                           const std::vector<std::string>& activityFlags);
-
-        } // namespace Android
-#endif
 
         static QuitMode sQuitMode = QuitMode::QUIT;
         // This is simply to get rid of a GCC false positive -Wunused-variable compiler warning.
