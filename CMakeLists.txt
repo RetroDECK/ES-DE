@@ -221,7 +221,8 @@ if(APPLE AND CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 15.0.0)
 endif()
 
 if(ANDROID)
-    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -llog")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -llog")
 endif()
 
 if(EMSCRIPTEN)
@@ -442,7 +443,8 @@ set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/lunasvg/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rlottie/inc
-                        ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
+                        ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src
+                        ${CMAKE_CURRENT_SOURCE_DIR}/es-pdf-converter/src)
 
 if(APPLE)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
@@ -572,11 +574,15 @@ elseif(ANDROID)
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libswscale.so
                         # Other dependencies.
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libcurl.so
-                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreeimage.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libcrypto.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreeimage.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreetype.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libgit2.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libjpeg.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libpoppler.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libpugixml.a
-                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libSDL2.so)
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libSDL2.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libssl.so)
 elseif(EMSCRIPTEN)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                          # FFmpeg core libraries.
@@ -673,18 +679,14 @@ set(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 
 # Add each component.
-if(NOT ANDROID)
-    add_subdirectory(es-pdf-converter)
-endif()
+add_subdirectory(es-pdf-converter)
 add_subdirectory(external)
 add_subdirectory(es-core)
 add_subdirectory(es-app)
 
-if(NOT ANDROID)
-    # Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
-    # Also set lottie2gif to not be built.
-    add_dependencies(lunasvg es-pdf-convert)
-endif()
+# Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
+# Also set lottie2gif to not be built.
+add_dependencies(lunasvg es-pdf-convert)
 
 add_dependencies(es-core rlottie)
 set_target_properties(lottie2gif PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)

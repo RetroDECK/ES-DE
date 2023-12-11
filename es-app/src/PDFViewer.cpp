@@ -20,6 +20,10 @@
 #include <windows.h>
 #endif
 
+#if defined(__ANDROID__)
+#include "ConvertPDF.h"
+#endif
+
 #define DEBUG_PDF_CONVERSION false
 
 #define KEY_REPEAT_START_DELAY 600
@@ -51,6 +55,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
 {
     ViewController::getInstance()->pauseViewVideos();
 
+#if !defined(__ANDROID__)
 #if defined(_WIN64)
     const std::string convertBinary {"/es-pdf-converter/es-pdf-convert.exe"};
 #else
@@ -67,6 +72,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
         ViewController::getInstance()->startViewVideos();
         return false;
     }
+#endif // !__ANDROID__
 
     mGame = game;
     mManualPath = mGame->getManualPath();
@@ -298,6 +304,8 @@ bool PDFViewer::getDocumentInfo()
     // Close process and thread handles.
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
+#elif defined(__ANDROID__)
+    ConvertPDF::processFile(mManualPath, "-fileinfo", 0, 0, 0, commandOutput);
 #else
     FILE* commandPipe;
     std::array<char, 512> buffer {};
@@ -439,6 +447,13 @@ void PDFViewer::convertPage(int pageNum)
         CloseHandle(childStdoutRead);
         WaitForSingleObject(pi.hThread, INFINITE);
         WaitForSingleObject(pi.hProcess, INFINITE);
+#elif (__ANDROID__)
+        ConvertPDF::processFile(mManualPath, "-convert", pageNum,
+                                static_cast<int>(mPages[pageNum].width),
+                                static_cast<int>(mPages[pageNum].height), imageData);
+        mPages[pageNum].imageData.insert(mPages[pageNum].imageData.end(),
+                                         std::make_move_iterator(imageData.begin()),
+                                         std::make_move_iterator(imageData.end()));
 #else
         FILE* commandPipe;
         std::array<char, 512> buffer {};
@@ -461,6 +476,8 @@ void PDFViewer::convertPage(int pageNum)
 #if defined(_WIN64)
         if (!processReturnValue || (static_cast<int>(imageDataSize) <
                                     mPages[pageNum].width * mPages[pageNum].height * 4)) {
+#elif defined(__ANDROID__)
+        if (static_cast<int>(imageDataSize) < mPages[pageNum].width * mPages[pageNum].height * 4) {
 #else
         if (returnValue != 0 || (static_cast<int>(imageDataSize) <
                                  mPages[pageNum].width * mPages[pageNum].height * 4)) {

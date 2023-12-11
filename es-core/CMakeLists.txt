@@ -169,6 +169,11 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.cpp
 )
 
+if(ANDROID)
+    set(CORE_HEADERS ${CORE_HEADERS} ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtilAndroid.h)
+    set(CORE_SOURCES ${CORE_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtilAndroid.cpp)
+endif()
+
 #---------------------------------------------------------------------------------------------------
 # Miscellaneous configuration.
 
