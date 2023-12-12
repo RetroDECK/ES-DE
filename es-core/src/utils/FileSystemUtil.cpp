@@ -8,9 +8,9 @@
 //  remove files etc.
 //
 
-#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) &&                       \
-    !defined(__NetBSD__) && !defined(__EMSCRIPTEN__)
-#define _FILE_OFFSET_BITS 64
+#if defined(__ANDROID__)
+#include "utils/PlatformUtilAndroid.h"
+#include <SDL2/SDL_system.h>
 #endif
 
 #if defined(__APPLE__)
@@ -365,10 +365,12 @@ namespace Utils
 
         std::string getProgramDataPath()
         {
-#if defined(__unix__)
+#if defined(__ANDROID__)
+            return AndroidVariables::sAndroidDataDirectory;
+#elif defined(__unix__)
             return installPrefix + "/share/emulationstation";
 #else
-            return "";
+    return "";
 #endif
         }
 

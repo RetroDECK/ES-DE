@@ -44,9 +44,6 @@ public:
     void unloadAll();
     void reloadAll();
 
-    void setDataDirectory(const std::string& dataDirectory) { mDataDirectory = dataDirectory; }
-    const std::string& getDataDirectory() const { return mDataDirectory; }
-
     std::string getResourcePath(const std::string& path, bool terminateOnFailure = true) const;
     const ResourceData getFileData(const std::string& path) const;
     bool fileExists(const std::string& path) const;
@@ -58,7 +55,6 @@ private:
     ResourceData loadFile(SDL_RWops* resFile) const;
 
     std::list<std::weak_ptr<IReloadable>> mReloadables;
-    std::string mDataDirectory;
 };
 
 #endif // ES_CORE_RESOURCES_RESOURCE_MANAGER_H

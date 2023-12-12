@@ -37,6 +37,10 @@
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_timer.h>
 
+#if defined(__ANDROID__)
+#include "utils/PlatformUtilAndroid.h"
+#endif
+
 #if defined(__EMSCRIPTEN__)
 #include <emscripten.h>
 #endif

@@ -41,18 +41,22 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
         if (Utils::FileSystem::exists(applePackagePath)) {
             return applePackagePath;
         }
-#elif defined(__unix__) && !defined(APPIMAGE_BUILD)
-#if defined(__ANDROID__)
-        std::string testDataPath {mDataDirectory + "/resources/" + &path[2]};
-#else
-        // Check under the data installation directory (Unix only).
+#elif (defined(__unix__) && !defined(APPIMAGE_BUILD)) || defined(__ANDROID__)
+        // Check in the program data directory.
         std::string testDataPath {Utils::FileSystem::getProgramDataPath() + "/resources/" +
                                   &path[2]};
-#endif
         if (Utils::FileSystem::exists(testDataPath))
             return testDataPath;
 #endif
-#if !defined(__ANDROID__)
+#if defined(__ANDROID__)
+        // Check in the assets directory using AssetManager.
+        SDL_RWops* resFile {SDL_RWFromFile(path.substr(2).c_str(), "rb")};
+        if (resFile != nullptr) {
+            SDL_RWclose(resFile);
+            return path.substr(2);
+        }
+        else {
+#else
         // Check under the ES executable directory.
         std::string testExePath {Utils::FileSystem::getExePath() + "/resources/" + &path[2]};
 
@@ -62,13 +66,6 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
         // For missing resources, log an error and terminate the application. This should
         // indicate that we have a broken EmulationStation installation. If the argument
         // terminateOnFailure is set to false though, then skip this step.
-        else {
-#else
-        SDL_RWops* resFile {SDL_RWFromFile(path.substr(2).c_str(), "rb")};
-        if (resFile != nullptr) {
-            SDL_RWclose(resFile);
-            return path.substr(2);
-        }
         else {
 #endif
             if (terminateOnFailure) {
@@ -102,6 +99,7 @@ const ResourceData ResourceManager::getFileData(const std::string& path) const
     const std::string respath {getResourcePath(path)};
 
 #if defined(__ANDROID__)
+    // Check in the assets directory using AssetManager.
     SDL_RWops* resFile {SDL_RWFromFile(respath.c_str(), "rb")};
     if (resFile != nullptr) {
         ResourceData data {loadFile(resFile)};

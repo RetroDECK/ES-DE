@@ -696,32 +696,27 @@ void ThemeData::populateThemes()
         userThemeDirectory = defaultUserThemeDir;
     }
 
-#if defined(__unix__) || defined(__APPLE__)
-#if defined(APPIMAGE_BUILD)
-    static const size_t pathCount {2};
-#else
-    static const size_t pathCount {3};
-#endif
-#else
-    static const size_t pathCount {2};
-#endif
-    std::string paths[pathCount] = {
+#if defined(__ANDROID__)
+    const std::vector<std::string> themePaths {Utils::FileSystem::getProgramDataPath() + "/themes",
+                                               userThemeDirectory};
+#elif defined(__APPLE__)
+    const std::vector<std::string> themePaths {
         Utils::FileSystem::getExePath() + "/themes",
-#if defined(__APPLE__)
-        Utils::FileSystem::getExePath() + "/../Resources/themes",
-#elif defined(__ANDROID__)
-        ResourceManager::getInstance().getDataDirectory() + "/themes",
-#elif defined(__unix__) && !defined(APPIMAGE_BUILD)
-        Utils::FileSystem::getProgramDataPath() + "/themes",
+        Utils::FileSystem::getExePath() + "/../Resources/themes", userThemeDirectory};
+#elif defined(_WIN64) || defined(APPIMAGE_BUILD)
+    const std::vector<std::string> themePaths {Utils::FileSystem::getExePath() + "/themes",
+                                               userThemeDirectory};
+#else
+    const std::vector<std::string> themePaths {Utils::FileSystem::getExePath() + "/themes",
+                                               Utils::FileSystem::getProgramDataPath() + "/themes",
+                                               userThemeDirectory};
 #endif
-        userThemeDirectory
-    };
 
-    for (size_t i {0}; i < pathCount; ++i) {
-        if (!Utils::FileSystem::isDirectory(paths[i]))
+    for (auto path : themePaths) {
+        if (!Utils::FileSystem::isDirectory(path))
             continue;
 
-        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(paths[i])};
+        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(path)};
 
         for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
@@ -732,7 +727,6 @@ void ThemeData::populateThemes()
                      Utils::String::toLower(themeDirName.substr(themeDirName.length() - 8, 8)) ==
                          "disabled"))
                     continue;
-
 #if defined(_WIN64)
                 LOG(LogDebug) << "Loading theme capabilities for \""
                               << Utils::String::replace(*it, "/", "\\") << "\"...";
@@ -745,9 +739,8 @@ void ThemeData::populateThemes()
                     continue;
 
                 std::string themeName;
-                if (capabilities.themeName != "") {
+                if (capabilities.themeName != "")
                     themeName.append(" (\"").append(capabilities.themeName).append("\")");
-                }
 
 #if defined(_WIN64)
                 LOG(LogInfo) << "Added theme \"" << Utils::String::replace(*it, "/", "\\") << "\""

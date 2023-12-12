@@ -15,11 +15,6 @@
 #include <windows.h>
 #endif
 
-#if defined(__ANDROID__)
-#include "utils/PlatformUtilAndroid.h"
-#endif
-
-
 namespace Utils
 {
     namespace Platform

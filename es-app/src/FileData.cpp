@@ -25,6 +25,10 @@
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
 
+#if defined(__ANDROID__)
+#include "utils/PlatformUtilAndroid.h"
+#endif
+
 #include <assert.h>
 #include <regex>
 
