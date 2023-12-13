@@ -43,7 +43,7 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
         }
 #elif (defined(__unix__) && !defined(APPIMAGE_BUILD)) || defined(__ANDROID__)
         // Check in the program data directory.
-        std::string testDataPath {Utils::FileSystem::getProgramDataPath() + "/resources/" +
+        std::string testDataPath {Utils::FileSystem::getProgramDataPath().string() + "/resources/" +
                                   &path[2]};
         if (Utils::FileSystem::exists(testDataPath))
             return testDataPath;

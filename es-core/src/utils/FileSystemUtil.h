@@ -26,19 +26,23 @@ namespace Utils
         StringList getPathList(const std::string& path);
         void setHomePath(const std::string& path);
         std::string getHomePath();
+        std::filesystem::path getHomePathSTD();
         std::string getSystemHomeDirectory();
-        std::string getCWDPath();
+        std::filesystem::path getESDataDirectory();
         std::string getPathToBinary(const std::string& executable);
         void setExePath(const std::string& path);
         std::string getExePath();
+        std::filesystem::path getExePathSTD();
         std::string getEsBinary();
-        std::string getProgramDataPath();
+        std::filesystem::path getEsBinarySTD();
+        std::filesystem::path getProgramDataPath();
         std::string getPreferredPath(const std::string& path);
         std::string getGenericPath(const std::string& path);
         std::string getEscapedPath(const std::string& path);
         std::string getCanonicalPath(const std::string& path);
-        std::string getAbsolutePath(const std::string& path,
-                                    const std::string& base = getCWDPath());
+        std::string getAbsolutePath(
+            const std::string& path,
+            const std::string& base = std::filesystem::current_path().string());
         std::string getParent(const std::string& path);
         std::string getFileName(const std::string& path);
         std::string getStem(const std::string& path);
@@ -66,6 +70,7 @@ namespace Utils
         bool removeDirectory(const std::string& path, bool recursive);
         bool createDirectory(const std::string& path);
         bool exists(const std::string& path);
+        bool existsSTD(const std::filesystem::path& path);
         bool driveExists(const std::string& path);
         bool isAbsolute(const std::string& path);
         bool isRegularFile(const std::string& path);

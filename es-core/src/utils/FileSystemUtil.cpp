@@ -42,14 +42,14 @@
 // build environment is broken.
 #if defined(__unix__)
 #if defined(ES_INSTALL_PREFIX)
-const std::string installPrefix {ES_INSTALL_PREFIX};
+const std::filesystem::path installPrefix {ES_INSTALL_PREFIX};
 #else
 #if defined(__linux__)
-const std::string installPrefix {"/usr"};
+const std::filesystem::path installPrefix {"/usr"};
 #elif defined(__NetBSD__)
-const std::string installPrefix {"/usr/pkg"};
+const std::filesystem::path installPrefix {"/usr/pkg"};
 #else
-const std::string installPrefix {"/usr/local"};
+const std::filesystem::path installPrefix {"/usr/local"};
 #endif
 #endif
 #endif
@@ -59,8 +59,9 @@ namespace Utils
     namespace FileSystem
     {
         static std::string homePath;
-        static std::string exePath;
-        static std::string esBinary;
+        static std::filesystem::path homePathSTD;
+        static std::filesystem::path exePath;
+        static std::filesystem::path esBinary;
 
         StringList getDirContent(const std::string& path, const bool recursive)
         {
@@ -168,6 +169,7 @@ namespace Utils
         {
             // Set home path.
             homePath = getGenericPath(path);
+            homePathSTD = std::filesystem::path {homePath};
         }
 
         std::string getHomePath()
@@ -208,9 +210,50 @@ namespace Utils
 
             // No homepath found, fall back to current working directory.
             if (!homePath.length())
-                homePath = getCWDPath();
+                homePath = std::filesystem::current_path().string();
 
             return homePath;
+        }
+
+        std::filesystem::path getHomePathSTD()
+        {
+            // Only construct the homepath once.
+            if (!homePathSTD.empty())
+                return homePathSTD;
+
+#if defined(_WIN64)
+            // On Windows we need to check HOMEDRIVE and HOMEPATH.
+            std::wstring envHomeDrive;
+            std::wstring envHomePath;
+#if defined(_MSC_VER) // MSVC compiler.
+            wchar_t* buffer;
+            if (!_wdupenv_s(&buffer, nullptr, L"HOMEDRIVE"))
+                envHomeDrive = buffer;
+            if (!_wdupenv_s(&buffer, nullptr, L"HOMEPATH"))
+                envHomePath = buffer;
+#else
+            envHomeDrive = _wgetenv(L"HOMEDRIVE");
+            envHomePath = _wgetenv(L"HOMEPATH");
+#endif
+            if (envHomeDrive.length() && envHomePath.length())
+                homePathSTD = std::filesystem::path {
+                    getGenericPath(Utils::String::wideStringToString(envHomeDrive) + "/" +
+                                   Utils::String::wideStringToString(envHomePath))};
+
+#else
+
+            std::string envHome;
+            if (getenv("HOME") != nullptr)
+                envHome = getenv("HOME");
+            if (envHome.length())
+                homePathSTD = std::filesystem::path {getGenericPath(envHome)};
+#endif
+
+            // No homepath found, fall back to current working directory.
+            if (homePathSTD.empty())
+                homePathSTD = std::filesystem::current_path();
+
+            return homePathSTD;
         }
 
         std::string getSystemHomeDirectory()
@@ -241,18 +284,12 @@ namespace Utils
             return "";
         }
 
-        std::string getCWDPath()
+        std::filesystem::path getESDataDirectory()
         {
-            // Return current working directory.
-
-#if defined(_WIN64)
-            wchar_t tempWide[512];
-            return (_wgetcwd(tempWide, 512) ?
-                        getGenericPath(Utils::String::wideStringToString(tempWide)) :
-                        "");
+#if defined(__ANDROID__)
+            return getHomePathSTD().append(".emulationstation");
 #else
-            char temp[512];
-            return (getcwd(temp, 512) ? getGenericPath(temp) : "");
+            return getHomePathSTD().append(".emulationstation");
 #endif
         }
 
@@ -321,37 +358,50 @@ namespace Utils
 
         void setExePath(const std::string& path)
         {
+            std::string exePathTemp;
+            std::string esBinaryTemp;
+
             constexpr int pathMax {32767};
 #if defined(_WIN64)
             std::wstring result(pathMax, 0);
             if (GetModuleFileNameW(nullptr, &result[0], pathMax) != 0)
-                exePath = Utils::String::wideStringToString(result);
+                exePathTemp = Utils::String::wideStringToString(result);
 #else
             std::string result(pathMax, 0);
             if (readlink("/proc/self/exe", &result[0], pathMax) != -1)
-                exePath = result;
+                exePathTemp = result;
 #endif
-            exePath.erase(std::find(exePath.begin(), exePath.end(), '\0'), exePath.end());
-            esBinary = exePath;
-            exePath = getCanonicalPath(exePath);
+            exePathTemp.erase(std::find(exePathTemp.begin(), exePathTemp.end(), '\0'),
+                              exePathTemp.end());
+            esBinaryTemp = exePathTemp;
+            exePathTemp = getCanonicalPath(exePathTemp);
 
             // Fallback to argv[0] if everything else fails.
-            if (exePath.empty()) {
-                esBinary = path;
-                exePath = getCanonicalPath(path);
+            if (exePathTemp.empty()) {
+                esBinaryTemp = path;
+                exePathTemp = getCanonicalPath(path);
             }
-            if (isRegularFile(exePath))
-                exePath = getParent(exePath);
+            if (isRegularFile(exePathTemp))
+                exePathTemp = getParent(exePathTemp);
+
+            exePath = std::filesystem::path {exePathTemp};
+            esBinary = std::filesystem::path {esBinaryTemp};
 
 #if defined(APPIMAGE_BUILD)
             // We need to check that the APPIMAGE variable is available as the APPIMAGE_BUILD
             // build flag could have been passed without running as an actual AppImage.
             if (getenv("APPIMAGE") != nullptr)
-                esBinary = getenv("APPIMAGE");
+                esBinary = std::filesystem::path {getenv("APPIMAGE")};
 #endif
         }
 
         std::string getExePath()
+        {
+            // Return executable path.
+            return exePath.string();
+        }
+
+        std::filesystem::path getExePathSTD()
         {
             // Return executable path.
             return exePath;
@@ -360,17 +410,23 @@ namespace Utils
         std::string getEsBinary()
         {
             // Return the absolute path to the ES-DE binary.
+            return esBinary.string();
+        }
+
+        std::filesystem::path getEsBinarySTD()
+        {
+            // Return the absolute path to the ES-DE binary.
             return esBinary;
         }
 
-        std::string getProgramDataPath()
+        std::filesystem::path getProgramDataPath()
         {
 #if defined(__ANDROID__)
             return AndroidVariables::sPrivateDataDirectory;
 #elif defined(__unix__)
-            return installPrefix + "/share/emulationstation";
+            return std::filesystem::path {installPrefix}.append("share").append("emulationstation");
 #else
-    return "";
+    return std::filesystem::path {};
 #endif
         }
 
@@ -789,7 +845,7 @@ namespace Utils
         bool createEmptyFile(const std::filesystem::path& path)
         {
             const std::filesystem::path cleanPath {path.lexically_normal().make_preferred()};
-            if (exists(path)) {
+            if (existsSTD(path)) {
                 LOG(LogError) << "Couldn't create target file \"" << cleanPath.string()
                               << "\" as it already exists";
                 return false;
@@ -884,6 +940,22 @@ namespace Utils
         bool exists(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
+            try {
+#if defined(_WIN64)
+                return std::filesystem::exists(Utils::String::stringToWideString(genericPath));
+#else
+                return std::filesystem::exists(genericPath);
+#endif
+            }
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::exists(): " << error.what();
+                return false;
+            }
+        }
+
+        bool existsSTD(const std::filesystem::path& path)
+        {
+            const std::string& genericPath {getGenericPath(path.string())};
             try {
 #if defined(_WIN64)
                 return std::filesystem::exists(Utils::String::stringToWideString(genericPath));
