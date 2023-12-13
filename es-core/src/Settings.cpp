@@ -363,8 +363,8 @@ void Settings::setDefaults()
 void Settings::saveFile()
 {
     LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.xml";
-    const std::string path =
-        Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.xml";
+    const std::filesystem::path path {
+        Utils::FileSystem::getESDataDirectory().append("es_settings.xml")};
 
     pugi::xml_document doc;
 
@@ -383,9 +383,9 @@ void Settings::saveFile()
     }
 
 #if defined(_WIN64)
-    doc.save_file(Utils::String::stringToWideString(path).c_str());
+    doc.save_file(Utils::String::stringToWideString(path.string()).c_str());
 #else
-    doc.save_file(path.c_str());
+    doc.save_file(path.string().c_str());
 #endif
 
     Scripting::fireEvent("config-changed");
@@ -394,18 +394,18 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    const std::string configFile {Utils::FileSystem::getHomePath() +
-                                  "/.emulationstation/es_settings.xml"};
+    std::filesystem::path configFile {
+        Utils::FileSystem::getESDataDirectory().append("es_settings.xml")};
 
-    if (!Utils::FileSystem::exists(configFile))
+    if (!Utils::FileSystem::existsSTD(configFile))
         return;
 
     pugi::xml_document doc;
 #if defined(_WIN64)
     pugi::xml_parse_result result {
-        doc.load_file(Utils::String::stringToWideString(configFile).c_str())};
+        doc.load_file(Utils::String::stringToWideString(configFile.string()).c_str())};
 #else
-    pugi::xml_parse_result result {doc.load_file(configFile.c_str())};
+    pugi::xml_parse_result result {doc.load_file(configFile.string().c_str())};
 #endif
     if (!result) {
         LOG(LogError) << "Couldn't parse the es_settings.xml file: " << result.description();
