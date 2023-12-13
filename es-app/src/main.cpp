@@ -740,7 +740,7 @@ int main(int argc, char* argv[])
     LOG(LogDebug) << "Android storage state: " << SDL_AndroidGetExternalStorageState();
     LOG(LogDebug) << "Android internal path: " << SDL_AndroidGetInternalStoragePath();
     LOG(LogDebug) << "Android external path: " << SDL_AndroidGetExternalStoragePath();
-    Utils::Platform::Android::setDataDirectory();
+    Utils::Platform::Android::setPrivateDataDirectory();
     {
         std::string buildIdentifier {PROGRAM_VERSION_STRING};
         buildIdentifier.append(" (r")

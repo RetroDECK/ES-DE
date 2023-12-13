@@ -366,7 +366,7 @@ namespace Utils
         std::string getProgramDataPath()
         {
 #if defined(__ANDROID__)
-            return AndroidVariables::sAndroidDataDirectory;
+            return AndroidVariables::sPrivateDataDirectory;
 #elif defined(__unix__)
             return installPrefix + "/share/emulationstation";
 #else
