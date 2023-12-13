@@ -667,73 +667,61 @@ void ThemeData::populateThemes()
     // Check for themes first under the user theme directory (which is in the ES-DE home directory
     // by default), then under the data installation directory (Unix only) and last under the ES-DE
     // binary directory.
-    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
-                                           "/.emulationstation/themes"};
-    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
+    const std::filesystem::path defaultUserThemeDir {
+        Utils::FileSystem::getESDataDirectory().append("themes")};
+    const std::filesystem::path userThemeDirSetting {Utils::FileSystem::expandHomePath(
         Settings::getInstance()->getString("UserThemeDirectory"))};
-#if defined(_WIN64)
-    userThemeDirSetting = Utils::String::replace(userThemeDirSetting, "\\", "/");
-#endif
-    std::string userThemeDirectory;
+    std::filesystem::path userThemeDirectory;
 
-    if (userThemeDirSetting == "") {
+    if (userThemeDirSetting.empty()) {
         userThemeDirectory = defaultUserThemeDir;
     }
-    else if (Utils::FileSystem::isDirectory(userThemeDirSetting) ||
-             Utils::FileSystem::isSymlink(userThemeDirSetting)) {
+    else if (Utils::FileSystem::isDirectorySTD(userThemeDirSetting) ||
+             Utils::FileSystem::isSymlinkSTD(userThemeDirSetting)) {
         userThemeDirectory = userThemeDirSetting;
-#if defined(_WIN64)
-        LOG(LogInfo) << "Setting user theme directory to \""
-                     << Utils::String::replace(userThemeDirectory, "/", "\\") << "\"";
-#else
-        LOG(LogInfo) << "Setting user theme directory to \"" << userThemeDirectory << "\"";
-#endif
+        LOG(LogInfo) << "Setting user theme directory to \"" << userThemeDirectory.string() << "\"";
     }
     else {
-        LOG(LogWarning) << "Requested user theme directory \"" << userThemeDirSetting
+        LOG(LogWarning) << "Requested user theme directory \"" << userThemeDirSetting.string()
                         << "\" does not exist or is not a directory, reverting to \""
-                        << defaultUserThemeDir << "\"";
+                        << defaultUserThemeDir.string() << "\"";
         userThemeDirectory = defaultUserThemeDir;
     }
 
 #if defined(__ANDROID__)
-    const std::vector<std::string> themePaths {
-        Utils::FileSystem::getProgramDataPath().string() + "/themes", userThemeDirectory};
+    const std::vector<std::filesystem::path> themePaths {
+        Utils::FileSystem::getProgramDataPath().append("themes"), userThemeDirectory};
 #elif defined(__APPLE__)
-    const std::vector<std::string> themePaths {
-        Utils::FileSystem::getExePath() + "/themes",
-        Utils::FileSystem::getExePath() + "/../Resources/themes", userThemeDirectory};
+    const std::vector<std::filesystem::path> themePaths {
+        Utils::FileSystem::getExePathSTD().append("themes"),
+        Utils::FileSystem::getExePathSTD().parent_path().append("Resources").append("themes"),
+        userThemeDirectory};
 #elif defined(_WIN64) || defined(APPIMAGE_BUILD)
-    const std::vector<std::string> themePaths {Utils::FileSystem::getExePath() + "/themes",
-                                               userThemeDirectory};
+    const std::vector<std::filesystem::path> themePaths {
+        Utils::FileSystem::getExePathSTD().append("themes"), userThemeDirectory};
 #else
-    const std::vector<std::string> themePaths {
-        Utils::FileSystem::getExePath() + "/themes",
-        Utils::FileSystem::getProgramDataPath().string() + "/themes", userThemeDirectory};
+    const std::vector<std::filesystem::path> themePaths {
+        Utils::FileSystem::getExePathSTD().append("themes"),
+        Utils::FileSystem::getProgramDataPath().append("themes"), userThemeDirectory};
 #endif
 
     for (auto path : themePaths) {
-        if (!Utils::FileSystem::isDirectory(path))
+        if (!Utils::FileSystem::isDirectorySTD(path))
             continue;
 
-        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(path)};
+        Utils::FileSystem::FileList dirContent {Utils::FileSystem::getDirContentSTD(path)};
 
-        for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
+        for (Utils::FileSystem::FileList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
-            if (Utils::FileSystem::isDirectory(*it)) {
-                const std::string themeDirName {Utils::FileSystem::getFileName(*it)};
+            if (Utils::FileSystem::isDirectorySTD(*it)) {
+                const std::string themeDirName {Utils::FileSystem::getFileNameSTD(*it).string()};
                 if (themeDirName == "themes-list" ||
                     (themeDirName.length() >= 8 &&
                      Utils::String::toLower(themeDirName.substr(themeDirName.length() - 8, 8)) ==
                          "disabled"))
                     continue;
-#if defined(_WIN64)
-                LOG(LogDebug) << "Loading theme capabilities for \""
-                              << Utils::String::replace(*it, "/", "\\") << "\"...";
-#else
-                LOG(LogDebug) << "Loading theme capabilities for \"" << *it << "\"...";
-#endif
-                ThemeCapability capabilities {parseThemeCapabilities(*it)};
+                LOG(LogDebug) << "Loading theme capabilities for \"" << (*it).string() << "\"...";
+                ThemeCapability capabilities {parseThemeCapabilities((*it).string())};
 
                 if (!capabilities.validTheme)
                     continue;
@@ -742,12 +730,8 @@ void ThemeData::populateThemes()
                 if (capabilities.themeName != "")
                     themeName.append(" (\"").append(capabilities.themeName).append("\")");
 
-#if defined(_WIN64)
-                LOG(LogInfo) << "Added theme \"" << Utils::String::replace(*it, "/", "\\") << "\""
-                             << themeName;
-#else
-                LOG(LogInfo) << "Added theme \"" << *it << "\"" << themeName;
-#endif
+                LOG(LogInfo) << "Added theme \"" << (*it).string() << "\"" << themeName;
+
                 int aspectRatios {0};
                 if (capabilities.aspectRatios.size() > 0)
                     aspectRatios = static_cast<int>(capabilities.aspectRatios.size()) - 1;
@@ -759,7 +743,7 @@ void ThemeData::populateThemes()
                               << " and " << capabilities.transitions.size() << " transition"
                               << (capabilities.transitions.size() != 1 ? "s" : "");
 
-                Theme theme {*it, capabilities};
+                Theme theme {(*it).string(), capabilities};
                 sThemes[theme.getName()] = theme;
             }
         }
