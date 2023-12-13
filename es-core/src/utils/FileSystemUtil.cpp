@@ -100,6 +100,26 @@ namespace Utils
             return contentList;
         }
 
+        FileList getDirContentSTD(const std::filesystem::path& path, const bool recursive)
+        {
+            FileList fileList;
+
+            if (!isDirectorySTD(path))
+                return fileList;
+
+            if (recursive) {
+                for (auto& entry : std::filesystem::recursive_directory_iterator(path))
+                    fileList.emplace_back(entry);
+            }
+            else {
+                for (auto& entry : std::filesystem::directory_iterator(path))
+                    fileList.emplace_back(entry);
+            }
+
+            fileList.sort();
+            return fileList;
+        }
+
         StringList getMatchingFiles(const std::string& pattern)
         {
             StringList files;
@@ -235,10 +255,10 @@ namespace Utils
             envHomeDrive = _wgetenv(L"HOMEDRIVE");
             envHomePath = _wgetenv(L"HOMEPATH");
 #endif
-            if (envHomeDrive.length() && envHomePath.length())
-                homePathSTD = std::filesystem::path {
-                    getGenericPath(Utils::String::wideStringToString(envHomeDrive) + "/" +
-                                   Utils::String::wideStringToString(envHomePath))};
+            if (envHomeDrive.length() && envHomePath.length()) {
+                homePathSTD = envHomeDrive;
+                homePathSTD.append(envHomePath);
+            }
 
 #else
 
@@ -359,7 +379,6 @@ namespace Utils
         void setExePath(const std::string& path)
         {
             std::string exePathTemp;
-            std::string esBinaryTemp;
 
             constexpr int pathMax {32767};
 #if defined(_WIN64)
@@ -373,19 +392,18 @@ namespace Utils
 #endif
             exePathTemp.erase(std::find(exePathTemp.begin(), exePathTemp.end(), '\0'),
                               exePathTemp.end());
-            esBinaryTemp = exePathTemp;
-            exePathTemp = getCanonicalPath(exePathTemp);
+            esBinary = exePathTemp;
+            exePath = exePathTemp;
+            exePath = getCanonicalPathSTD(exePath);
 
             // Fallback to argv[0] if everything else fails.
-            if (exePathTemp.empty()) {
-                esBinaryTemp = path;
-                exePathTemp = getCanonicalPath(path);
+            if (exePath.empty()) {
+                esBinary = path;
+                exePath = getCanonicalPathSTD(esBinary);
             }
-            if (isRegularFile(exePathTemp))
-                exePathTemp = getParent(exePathTemp);
 
-            exePath = std::filesystem::path {exePathTemp};
-            esBinary = std::filesystem::path {esBinaryTemp};
+            if (isRegularFileSTD(exePath))
+                exePath = exePath.parent_path();
 
 #if defined(APPIMAGE_BUILD)
             // We need to check that the APPIMAGE variable is available as the APPIMAGE_BUILD
@@ -504,6 +522,9 @@ namespace Utils
 
         std::string getCanonicalPath(const std::string& path)
         {
+            if (path.empty())
+                return "";
+
             // Hack for builtin resources.
             if ((path[0] == ':') && (path[1] == '/'))
                 return path;
@@ -564,6 +585,18 @@ namespace Utils
             return canonicalPath;
         }
 
+        std::filesystem::path getCanonicalPathSTD(const std::filesystem::path& path)
+        {
+            if (path.empty())
+                return path;
+
+            // Hack for builtin resources.
+            if ((path.string()[0] == ':') && (path.string()[1] == '/'))
+                return path;
+
+            return std::filesystem::canonical(path);
+        }
+
         std::string getAbsolutePath(const std::string& path, const std::string& base)
         {
             const std::string& absolutePath {getGenericPath(path)};
@@ -599,6 +632,11 @@ namespace Utils
 
             // No '/' found, entire path is a filename.
             return genericPath;
+        }
+
+        std::filesystem::path getFileNameSTD(const std::filesystem::path& path)
+        {
+            return path.filename();
         }
 
         std::string getStem(const std::string& path)
@@ -1018,6 +1056,17 @@ namespace Utils
             }
         }
 
+        bool isRegularFileSTD(const std::filesystem::path& path)
+        {
+            try {
+                return std::filesystem::is_regular_file(path);
+            }
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::isRegularFile(): " << error.what();
+                return false;
+            }
+        }
+
         bool isDirectory(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
@@ -1035,6 +1084,17 @@ namespace Utils
             }
         }
 
+        bool isDirectorySTD(const std::filesystem::path& path)
+        {
+            try {
+                return std::filesystem::is_directory(path);
+            }
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::isDirectory(): " << error.what();
+                return false;
+            }
+        }
+
         bool isSymlink(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
@@ -1044,6 +1104,17 @@ namespace Utils
 #else
                 return std::filesystem::is_symlink(genericPath);
 #endif
+            }
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::isSymlink(): " << error.what();
+                return false;
+            }
+        }
+
+        bool isSymlinkSTD(const std::filesystem::path& path)
+        {
+            try {
+                return std::filesystem::is_symlink(path);
             }
             catch (std::filesystem::filesystem_error& error) {
                 LOG(LogError) << "FileSystemUtil::isSymlink(): " << error.what();

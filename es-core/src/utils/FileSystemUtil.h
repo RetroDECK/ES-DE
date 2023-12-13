@@ -20,8 +20,10 @@ namespace Utils
     namespace FileSystem
     {
         using StringList = std::list<std::string>;
+        using FileList = std::list<std::filesystem::path>;
 
         StringList getDirContent(const std::string& path, const bool recursive = false);
+        FileList getDirContentSTD(const std::filesystem::path& path, const bool recursive = false);
         StringList getMatchingFiles(const std::string& pattern);
         StringList getPathList(const std::string& path);
         void setHomePath(const std::string& path);
@@ -40,11 +42,13 @@ namespace Utils
         std::string getGenericPath(const std::string& path);
         std::string getEscapedPath(const std::string& path);
         std::string getCanonicalPath(const std::string& path);
+        std::filesystem::path getCanonicalPathSTD(const std::filesystem::path& path);
         std::string getAbsolutePath(
             const std::string& path,
             const std::string& base = std::filesystem::current_path().string());
         std::string getParent(const std::string& path);
         std::string getFileName(const std::string& path);
+        std::filesystem::path getFileNameSTD(const std::filesystem::path& path);
         std::string getStem(const std::string& path);
         std::string getExtension(const std::string& path);
         long getFileSize(const std::filesystem::path& path);
@@ -74,8 +78,11 @@ namespace Utils
         bool driveExists(const std::string& path);
         bool isAbsolute(const std::string& path);
         bool isRegularFile(const std::string& path);
+        bool isRegularFileSTD(const std::filesystem::path& path);
         bool isDirectory(const std::string& path);
+        bool isDirectorySTD(const std::filesystem::path& path);
         bool isSymlink(const std::string& path);
+        bool isSymlinkSTD(const std::filesystem::path& path);
         bool isHidden(const std::string& path);
 
     } // namespace FileSystem
