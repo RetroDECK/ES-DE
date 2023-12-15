@@ -47,7 +47,6 @@ public:
     static void setReportingLevel(LogLevel level);
 
     // These functions are not thread safe.
-    static std::string getLogPath();
     static void init();
     static void open();
 
@@ -66,6 +65,7 @@ private:
     static inline std::ofstream sFile;
     static inline LogLevel sReportingLevel = LogInfo;
     static inline std::mutex sLogMutex;
+    static inline std::filesystem::path sLogPath;
     LogLevel mMessageLevel;
 };
 

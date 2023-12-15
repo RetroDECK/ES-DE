@@ -22,16 +22,12 @@ void Log::setReportingLevel(LogLevel level)
     sReportingLevel = level;
 }
 
-std::string Log::getLogPath()
-{
-    return Utils::FileSystem::getHomePath() + "/.emulationstation/es_log.txt";
-}
-
 void Log::init()
 {
-    Utils::FileSystem::removeFile(getLogPath() + ".bak");
+    sLogPath = Utils::FileSystem::getAppDataDirectory().append("es_log.txt");
+    Utils::FileSystem::removeFile(sLogPath.string() + ".bak");
     // Rename the previous log file.
-    Utils::FileSystem::renameFile(getLogPath(), getLogPath() + ".bak", true);
+    Utils::FileSystem::renameFile(sLogPath.string(), sLogPath.string() + ".bak", true);
     return;
 }
 
@@ -39,9 +35,9 @@ void Log::open()
 {
     std::unique_lock<std::mutex> lock {sLogMutex};
 #if defined(_WIN64)
-    sFile.open(Utils::String::stringToWideString(getLogPath()).c_str());
+    sFile.open(Utils::String::stringToWideString(sLogPath.string()).c_str());
 #else
-    sFile.open(getLogPath().c_str());
+    sFile.open(sLogPath.string().c_str());
 #endif
 }
 
