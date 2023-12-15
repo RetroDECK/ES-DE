@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ThemeData.h
 //
 //  Finds available themes on the file system and loads and parses these.

@@ -1,15 +1,15 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Scripting.cpp
 //
 //  Executes custom scripts for various events.
 //  By calling fireEvent() the scripts inside the directory corresponding to the
 //  argument "eventName" will be executed with arg1, arg2, arg3 and arg4 as arguments.
 //
-//  The scripts are searched for in ~/.emulationstation/scripts/<eventName>
+//  The scripts are searched for in <application data>/scripts/<eventName>
 //  For example, if the event is called "game-start", all scripts inside the directory
-//  ~/.emulationstation/scripts/game-start/ will be executed.
+//  <application data>/scripts/game-start/ will be executed.
 //
 
 #include "Scripting.h"
@@ -37,12 +37,12 @@ namespace Scripting
                       << "\" \"" << arg3 << "\" \"" << arg4 << "\"";
 
         std::list<std::string> scriptDirList;
-        std::string scriptDir;
+        std::filesystem::path scriptDir;
 
-        // Check in homepath.
-        scriptDir = Utils::FileSystem::getHomePath() + "/.emulationstation/scripts/" + eventName;
-        if (Utils::FileSystem::exists(scriptDir))
-            scriptDirList.push_back(scriptDir);
+        // Check in application data directory.
+        scriptDir = Utils::FileSystem::getAppDataDirectory().append("scripts").append(eventName);
+        if (Utils::FileSystem::existsSTD(scriptDir))
+            scriptDirList.push_back(scriptDir.string());
 
         for (auto dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); ++dirIt) {
             std::list<std::string> scripts {Utils::FileSystem::getDirContent(*dirIt)};

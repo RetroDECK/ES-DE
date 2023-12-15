@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiThemeDownloader.cpp
 //
 //  Theme downloader.
@@ -174,28 +174,33 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     std::promise<bool>().swap(mPromise);
     mFuture = mPromise.get_future();
 
-    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
-                                           "/.emulationstation/themes"};
-    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
+#if defined(__ANDROID__)
+    mThemeDirectory = Utils::FileSystem::getInternalAppDataDirectory().append("themes").string();
+#else
+    const std::filesystem::path defaultUserThemeDir {
+        Utils::FileSystem::getAppDataDirectory().append("themes")};
+    const std::filesystem::path userThemeDirSetting {Utils::FileSystem::expandHomePath(
         Settings::getInstance()->getString("UserThemeDirectory"))};
+
 #if defined(_WIN64)
     mThemeDirectory = Utils::String::replace(mThemeDirectory, "\\", "/");
 #endif
 
-    if (userThemeDirSetting == "") {
-        mThemeDirectory = defaultUserThemeDir;
+    if (userThemeDirSetting.empty()) {
+        mThemeDirectory = defaultUserThemeDir.string();
     }
-    else if (Utils::FileSystem::isDirectory(userThemeDirSetting) ||
-             Utils::FileSystem::isSymlink(userThemeDirSetting)) {
-        mThemeDirectory = userThemeDirSetting;
+    else if (Utils::FileSystem::isDirectorySTD(userThemeDirSetting) ||
+             Utils::FileSystem::isSymlinkSTD(userThemeDirSetting)) {
+        mThemeDirectory = userThemeDirSetting.string();
     }
     else {
         LOG(LogWarning) << "GuiThemeDownloader: Requested user theme directory \""
-                        << userThemeDirSetting
+                        << userThemeDirSetting.string()
                         << "\" does not exist or is not a directory, reverting to \""
-                        << defaultUserThemeDir << "\"";
-        mThemeDirectory = defaultUserThemeDir;
+                        << defaultUserThemeDir.string() << "\"";
+        mThemeDirectory = defaultUserThemeDir.string();
     }
+#endif // __ANDROID__
 
     if (mThemeDirectory.back() != '/')
         mThemeDirectory.append("/");
@@ -588,8 +593,8 @@ void GuiThemeDownloader::parseThemesList()
 #if (LOCAL_TESTING_FILE)
     LOG(LogWarning) << "GuiThemeDownloader: Using local \"themes.json\" testing file";
 
-    const std::string themesFile {Utils::FileSystem::getHomePath() +
-                                  "/.emulationstation/themes.json"};
+    const std::string themesFile {
+        Utils::FileSystem::getAppDataDirectory().append("themes.json").string()};
 #else
     const std::string themesFile {mThemeDirectory + "themes-list/themes.json"};
 #endif

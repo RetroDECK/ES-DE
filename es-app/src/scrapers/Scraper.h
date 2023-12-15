@@ -212,8 +212,8 @@ private:
     bool* mSavedNewMediaPtr;
 };
 
-// Downloads to the home directory, using this subdirectory structure:
-// ".emulationstation/downloaded_media/[system_name]/[media_type]/[game_name].[file_extension]".
+// Downloads media using this subdirectory structure:
+// <application data>/downloaded_media/<system_name>/<media_type>/<game_name>.<file_extension>
 // The subdirectories are automatically created if they do not exist.
 std::string getSaveAsPath(const ScraperSearchParams& params,
                           const std::string& filetypeSubdirectory,

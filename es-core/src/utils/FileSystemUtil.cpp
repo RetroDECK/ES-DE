@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  FileSystemUtil.cpp
 //
 //  Low-level filesystem functions.
@@ -198,6 +198,11 @@ namespace Utils
             if (homePath.length())
                 return homePath;
 
+#if defined(__ANDROID__)
+            homePath = AndroidVariables::sAppDataDirectory;
+            return homePath;
+#endif
+
 #if defined(_WIN64)
             // On Windows we need to check HOMEDRIVE and HOMEPATH.
             if (!homePath.length()) {
@@ -241,6 +246,11 @@ namespace Utils
             if (!homePathSTD.empty())
                 return homePathSTD;
 
+#if defined(__ANDROID__)
+            homePathSTD =
+                std::filesystem::path {getGenericPath(AndroidVariables::sAppDataDirectory)};
+            return homePathSTD;
+#endif
 #if defined(_WIN64)
             // On Windows we need to check HOMEDRIVE and HOMEPATH.
             std::wstring envHomeDrive;
@@ -261,7 +271,6 @@ namespace Utils
             }
 
 #else
-
             std::string envHome;
             if (getenv("HOME") != nullptr)
                 envHome = getenv("HOME");
@@ -304,12 +313,21 @@ namespace Utils
             return "";
         }
 
-        std::filesystem::path getESDataDirectory()
+        std::filesystem::path getAppDataDirectory()
         {
 #if defined(__ANDROID__)
-            return getHomePathSTD().append(".emulationstation");
+            return getHomePathSTD();
 #else
             return getHomePathSTD().append(".emulationstation");
+#endif
+        }
+
+        std::filesystem::path getInternalAppDataDirectory()
+        {
+#if defined(__ANDROID__)
+            return AndroidVariables::sExternalDataDirectory;
+#else
+            return std::filesystem::path {};
 #endif
         }
 
@@ -332,8 +350,8 @@ namespace Utils
 
             // Using a temporary file is the only viable solution I've found to communicate
             // between the sandbox and the outside world.
-            const std::string& tempFile {Utils::FileSystem::getHomePath() + "/.emulationstation/" +
-                                         ".flatpak_emulator_binary_path.tmp"};
+            const std::string tempFile {Utils::FileSystem::getAppDataDirectory().string() +
+                                        ".flatpak_emulator_binary_path.tmp"};
 
             std::string emulatorPath;
 
@@ -440,7 +458,7 @@ namespace Utils
         std::filesystem::path getProgramDataPath()
         {
 #if defined(__ANDROID__)
-            return AndroidVariables::sPrivateDataDirectory;
+            return AndroidVariables::sInternalDataDirectory;
 #elif defined(__unix__)
             return std::filesystem::path {installPrefix}.append("share").append("emulationstation");
 #else

@@ -152,6 +152,10 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
 
 const std::string FileData::getROMDirectory()
 {
+#if defined(__ANDROID__)
+    return AndroidVariables::sROMDirectory.string();
+#endif
+
     const std::string& romDirSetting {Settings::getInstance()->getString("ROMDirectory")};
     std::string romDirPath;
 
@@ -184,8 +188,9 @@ const std::string FileData::getMediaDirectory()
     const std::string& mediaDirSetting {Settings::getInstance()->getString("MediaDirectory")};
     std::string mediaDirPath;
 
-    if (mediaDirSetting == "") {
-        mediaDirPath = Utils::FileSystem::getHomePath() + "/.emulationstation/downloaded_media/";
+    if (mediaDirSetting.empty()) {
+        mediaDirPath =
+            Utils::FileSystem::getAppDataDirectory().append("downloaded_media").string() + "/";
     }
     else {
         mediaDirPath = mediaDirSetting;

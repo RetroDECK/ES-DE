@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  InputManager.cpp
 //
 //  Low-level input handling.
@@ -86,14 +86,14 @@ void InputManager::init()
     // the bundled mapping is incorrect, or the SDL version is a bit older, it makes sense to be
     // able to customize this. If a controller GUID is present in the mappings file that is
     // already present inside SDL, the custom mapping will overwrite the bundled one.
-    std::string mappingsFile {Utils::FileSystem::getHomePath() + "/.emulationstation/" +
-                              "es_controller_mappings.cfg"};
+    std::filesystem::path mappingsFile {
+        Utils::FileSystem::getAppDataDirectory().append("es_controller_mappings.cfg")};
 
-    if (!Utils::FileSystem::exists(mappingsFile))
+    if (!Utils::FileSystem::existsSTD(mappingsFile))
         mappingsFile = ResourceManager::getInstance().getResourcePath(
             ":/controllers/es_controller_mappings.cfg");
 
-    int controllerMappings {SDL_GameControllerAddMappingsFromFile(mappingsFile.c_str())};
+    int controllerMappings {SDL_GameControllerAddMappingsFromFile(mappingsFile.string().c_str())};
 
     if (controllerMappings != -1 && controllerMappings != 0) {
         LOG(LogInfo) << "Loaded " << controllerMappings << " controller "
@@ -255,16 +255,12 @@ void InputManager::doOnFinish()
 
 std::string InputManager::getConfigPath()
 {
-    std::string path {Utils::FileSystem::getHomePath()};
-    path.append("/.emulationstation/es_input.xml");
-    return path;
+    return Utils::FileSystem::getAppDataDirectory().append("es_input.xml").string();
 }
 
 std::string InputManager::getTemporaryConfigPath()
 {
-    std::string path {Utils::FileSystem::getHomePath()};
-    path.append("/.emulationstation/es_temporaryinput.xml");
-    return path;
+    return Utils::FileSystem::getAppDataDirectory().append("es_temporaryinput.xml").string();
 }
 
 int InputManager::getNumConfiguredDevices()

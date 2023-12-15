@@ -441,25 +441,21 @@ bool parseArguments(const std::vector<std::string>& arguments)
     return true;
 }
 
-bool checkApplicationHomeDirectory()
+bool checkApplicationDataDirectory()
 {
-    // Check that the application home directory exists, otherwise create it.
-    std::string home {Utils::FileSystem::getHomePath()};
-    std::string applicationHome {home + "/.emulationstation"};
-    if (!Utils::FileSystem::exists(applicationHome)) {
-#if defined(_WIN64)
-        std::cout << "First startup, creating application home directory \""
-                  << Utils::String::replace(applicationHome, "/", "\\") << "\"\n";
-#elif defined(__ANDROID__)
+    // Check that the application data directory exists, otherwise create it.
+    const std::filesystem::path applicationData {Utils::FileSystem::getAppDataDirectory()};
+    if (!Utils::FileSystem::existsSTD(applicationData)) {
+#if defined(__ANDROID__)
         __android_log_print(ANDROID_LOG_VERBOSE, ANDROID_APPLICATION_ID,
-                            "First startup, creating application home directory \"%s\"",
-                            applicationHome.c_str());
+                            "First startup, creating application data directory \"%s\"",
+                            applicationData.string().c_str());
 #else
-        std::cout << "First startup, creating application home directory \"" << applicationHome
-                  << "\"\n";
+        std::cout << "First startup, creating application data directory \""
+                  << applicationData.string() << "\"\n";
 #endif
-        Utils::FileSystem::createDirectory(applicationHome);
-        if (!Utils::FileSystem::exists(applicationHome)) {
+        Utils::FileSystem::createDirectory(applicationData.string());
+        if (!Utils::FileSystem::existsSTD(applicationData)) {
 #if defined(__ANDROID__)
             __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID,
                                 "Error: Couldn't create directory, permission problems?");
@@ -535,6 +531,10 @@ int main(int argc, char* argv[])
 
     std::locale::global(std::locale("C"));
 
+#if defined(__ANDROID__)
+    Utils::Platform::Android::setDataDirectories();
+#endif
+
 #if defined(__APPLE__)
     // This is a workaround to disable the incredibly annoying save state functionality in
     // macOS which forces a restore of the previous window state. The problem is that this
@@ -590,8 +590,8 @@ int main(int argc, char* argv[])
     FreeImage_Initialise();
 #endif
 
-    // If ~/.emulationstation doesn't exist and cannot be created, bail.
-    if (!checkApplicationHomeDirectory())
+    // If the application data directory doesn't exist and can't be created, then exit.
+    if (!checkApplicationDataDirectory())
         return 1;
 
     // Start the logger.
@@ -632,8 +632,8 @@ int main(int argc, char* argv[])
 
     // Check if the configuration file exists, and if not, create it.
     // This should only happen on first application startup.
-    if (!Utils::FileSystem::exists(Utils::FileSystem::getHomePath() +
-                                   "/.emulationstation/es_settings.xml")) {
+    if (!Utils::FileSystem::existsSTD(
+            Utils::FileSystem::getAppDataDirectory().append("es_settings.xml"))) {
         LOG(LogInfo) << "Settings file es_settings.xml does not exist, creating it...";
         Settings::getInstance()->saveFile();
     }
@@ -659,63 +659,60 @@ int main(int argc, char* argv[])
         Settings::getInstance()->saveFile();
     }
 
-    // Create the gamelists directory in the application home folder.
-    const std::string gamelistsDir {Utils::FileSystem::getHomePath() +
-                                    "/.emulationstation/gamelists"};
-    if (!Utils::FileSystem::exists(gamelistsDir)) {
-#if defined(_WIN64)
-        LOG(LogInfo) << "Creating gamelists directory \""
-                     << Utils::String::replace(gamelistsDir, "/", "\\") << "\"...";
-#else
-        LOG(LogInfo) << "Creating gamelists directory \"" << gamelistsDir << "\"...";
-#endif
-        Utils::FileSystem::createDirectory(gamelistsDir);
-        if (!Utils::FileSystem::exists(gamelistsDir)) {
+    // Create the gamelists folder in the application data directory.
+    const std::filesystem::path gamelistsDir {
+        Utils::FileSystem::getAppDataDirectory().append("gamelists")};
+    if (!Utils::FileSystem::existsSTD(gamelistsDir)) {
+        LOG(LogInfo) << "Creating gamelists directory \"" << gamelistsDir.string() << "\"...";
+        Utils::FileSystem::createDirectory(gamelistsDir.string());
+        if (!Utils::FileSystem::existsSTD(gamelistsDir)) {
             LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
         }
     }
 
-    // Create the themes directory in the application home directory (or elsewhere if the
-    // UserThemeDirectory setting has been defined).
-    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
-                                           "/.emulationstation/themes"};
-    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
-        Settings::getInstance()->getString("UserThemeDirectory"))};
-#if defined(_WIN64)
-    userThemeDirSetting = Utils::String::replace(userThemeDirSetting, "\\", "/");
-#endif
-    std::string userThemeDirectory;
+#if defined(__ANDROID__)
+    const std::filesystem::path themeDir {
+        Utils::FileSystem::getAppDataDirectory().append("themes")};
+    if (!Utils::FileSystem::existsSTD(themeDir)) {
+        LOG(LogInfo) << "Creating themes directory \"" << themeDir.string() << "\"...";
 
-    if (userThemeDirSetting == "")
+        Utils::FileSystem::createDirectory(themeDir.string());
+        if (!Utils::FileSystem::existsSTD(themeDir)) {
+            LOG(LogWarning) << "Couldn't create directory, permission problems?";
+        }
+    }
+#else
+    // Create the themes folder in the application data directory (or elsewhere if the
+    // UserThemeDirectory setting has been defined).
+    const std::filesystem::path defaultUserThemeDir {
+        Utils::FileSystem::getAppDataDirectory().append("themes")};
+    std::filesystem::path userThemeDirSetting {Utils::FileSystem::expandHomePath(
+        Settings::getInstance()->getString("UserThemeDirectory"))};
+    std::filesystem::path userThemeDirectory;
+
+    if (userThemeDirSetting.empty())
         userThemeDirectory = defaultUserThemeDir;
     else
         userThemeDirectory = userThemeDirSetting;
 
-    if (!Utils::FileSystem::exists(userThemeDirectory)) {
-#if defined(_WIN64)
-        LOG(LogInfo) << "Creating user theme directory \""
-                     << Utils::String::replace(userThemeDirectory, "/", "\\") << "\"...";
-#else
-        LOG(LogInfo) << "Creating themes directory \"" << userThemeDirectory << "\"...";
-#endif
-        Utils::FileSystem::createDirectory(userThemeDirectory);
-        if (!Utils::FileSystem::exists(userThemeDirectory)) {
+    if (!Utils::FileSystem::existsSTD(userThemeDirectory)) {
+        LOG(LogInfo) << "Creating themes directory \"" << userThemeDirectory.string() << "\"...";
+
+        Utils::FileSystem::createDirectory(userThemeDirectory.string());
+        if (!Utils::FileSystem::existsSTD(userThemeDirectory)) {
             LOG(LogWarning) << "Couldn't create directory, permission problems?";
         }
     }
-
-    // Create the scripts directory in the application home folder. This is only required
-    // for custom event scripts so it's also created as a convenience.
-    const std::string scriptsDir {Utils::FileSystem::getHomePath() + "/.emulationstation/scripts"};
-    if (!Utils::FileSystem::exists(scriptsDir)) {
-#if defined(_WIN64)
-        LOG(LogInfo) << "Creating scripts directory \""
-                     << Utils::String::replace(scriptsDir, "/", "\\") << "\"...";
-#else
-        LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir << "\"...";
 #endif
-        Utils::FileSystem::createDirectory(scriptsDir);
-        if (!Utils::FileSystem::exists(scriptsDir)) {
+
+    // Create the scripts folder in the application data directory. This is only required
+    // for custom event scripts so it's also created as a convenience.
+    const std::filesystem::path scriptsDir {
+        Utils::FileSystem::getAppDataDirectory().append("scripts")};
+    if (!Utils::FileSystem::existsSTD(scriptsDir)) {
+        LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir.string() << "\"...";
+        Utils::FileSystem::createDirectory(scriptsDir.string());
+        if (!Utils::FileSystem::existsSTD(scriptsDir)) {
             LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
         }
     }
@@ -740,7 +737,6 @@ int main(int argc, char* argv[])
     LOG(LogDebug) << "Android storage state: " << SDL_AndroidGetExternalStorageState();
     LOG(LogDebug) << "Android internal path: " << SDL_AndroidGetInternalStoragePath();
     LOG(LogDebug) << "Android external path: " << SDL_AndroidGetExternalStoragePath();
-    Utils::Platform::Android::setPrivateDataDirectory();
     {
         std::string buildIdentifier {PROGRAM_VERSION_STRING};
         buildIdentifier.append(" (r")
@@ -801,14 +797,7 @@ int main(int argc, char* argv[])
 
 #if defined(__ANDROID__)
     Utils::Platform::Android::requestStoragePermission();
-
-    const std::string storageDir {"/sdcard/ES-DE"};
-    if (!Utils::FileSystem::exists(storageDir)) {
-        LOG(LogInfo) << "Creating data directory \"" << storageDir << "\"...";
-        if (!Utils::FileSystem::createDirectory(storageDir)) {
-            LOG(LogError) << "Couldn't create directory, permission problems?";
-        }
-    }
+    Utils::Platform::Android::setROMDirectory();
 #endif
 
     MameNames::getInstance();

@@ -1,12 +1,12 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GamesDBJSONScraperResources.cpp
 //
 //  Functions specifically for scraping from thegamesdb.net
 //  Called from GamesDBJSONScraper.
 //
-//  Downloads these resource files to ~/.emulationstation/scrapers:
+//  Downloads these resource files to the scrapers folder in the application data directory:
 //  gamesdb_developers.json
 //  gamesdb_genres.json
 //  gamesdb_publishers.json
@@ -64,8 +64,7 @@ namespace
 
 std::string getScrapersResouceDir()
 {
-    return Utils::FileSystem::getGenericPath(Utils::FileSystem::getHomePath() +
-                                             "/.emulationstation/" + SCRAPER_RESOURCES_DIR);
+    return Utils::FileSystem::getAppDataDirectory().append(SCRAPER_RESOURCES_DIR).string();
 }
 
 std::string TheGamesDBJSONRequestResources::getApiKey() const { return GamesDBAPIKey; }

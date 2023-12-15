@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiMenu.cpp
 //
 //  Main menu.
@@ -1183,7 +1183,8 @@ void GuiMenu::openOtherOptions()
     rowMediaDir.addElement(bracketMediaDirectory, false);
     std::string titleMediaDir {"ENTER GAME MEDIA DIRECTORY"};
     std::string mediaDirectoryStaticText {"Default directory:"};
-    std::string defaultDirectoryText {"~/.emulationstation/downloaded_media/"};
+    std::string defaultDirectoryText {
+        Utils::FileSystem::getAppDataDirectory().append("downloaded_media").string()};
     std::string initValueMediaDir {Settings::getInstance()->getString("MediaDirectory")};
     bool multiLineMediaDir {false};
     auto updateValMediaDir = [this](const std::string& newVal) {

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  CollectionSystemsManager.cpp
 //
 //  Manages collections of the following two types:
@@ -1437,7 +1437,7 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig()
     std::vector<std::string> configPaths {SystemData::getConfigPath()};
 
     // Here we don't honor the <loadExclusive> tag which may be present in the custom es_systems.xml
-    // file under ~/.emulationstation/custom_systems as we really want to include all the themes
+    // file under <application data>/custom_systems as we really want to include all the themes
     // supported by ES-DE. Otherwise a user may accidentally create a custom collection that
     // corresponds to a supported theme.
     for (auto path : configPaths) {
@@ -1625,6 +1625,5 @@ std::string CollectionSystemsManager::getCustomCollectionConfigPath(
 
 std::string CollectionSystemsManager::getCollectionsFolder()
 {
-    return Utils::FileSystem::getGenericPath(Utils::FileSystem::getHomePath() +
-                                             "/.emulationstation/collections");
+    return Utils::FileSystem::getAppDataDirectory().append("collections").string();
 }

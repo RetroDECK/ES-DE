@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Settings.cpp
 //
 //  Functions to read from and write to the configuration file es_settings.xml.
@@ -326,7 +326,9 @@ void Settings::setDefaults()
     mBoolMap["DebugSkipMissingThemeFilesCustomCollections"] = {true, true};
     mBoolMap["LegacyGamelistFileLocation"] = {false, false};
     mStringMap["OpenGLVersion"] = {"", ""};
+#if !defined(__ANDROID__)
     mStringMap["ROMDirectory"] = {"", ""};
+#endif
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
     mStringMap["UserThemeDirectory"] = {"", ""};
     mIntMap["LottieMaxFileCache"] = {150, 150};
@@ -364,7 +366,7 @@ void Settings::saveFile()
 {
     LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.xml";
     const std::filesystem::path path {
-        Utils::FileSystem::getESDataDirectory().append("es_settings.xml")};
+        Utils::FileSystem::getAppDataDirectory().append("es_settings.xml")};
 
     pugi::xml_document doc;
 
@@ -395,7 +397,7 @@ void Settings::saveFile()
 void Settings::loadFile()
 {
     std::filesystem::path configFile {
-        Utils::FileSystem::getESDataDirectory().append("es_settings.xml")};
+        Utils::FileSystem::getAppDataDirectory().append("es_settings.xml")};
 
     if (!Utils::FileSystem::existsSTD(configFile))
         return;

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ThemeData.cpp
 //
 //  Finds available themes on the file system and loads and parses these.
@@ -667,8 +667,12 @@ void ThemeData::populateThemes()
     // Check for themes first under the user theme directory (which is in the ES-DE home directory
     // by default), then under the data installation directory (Unix only) and last under the ES-DE
     // binary directory.
+#if defined(__ANDROID__)
+    const std::filesystem::path userThemeDirectory {
+        Utils::FileSystem::getInternalAppDataDirectory().append("themes")};
+#else
     const std::filesystem::path defaultUserThemeDir {
-        Utils::FileSystem::getESDataDirectory().append("themes")};
+        Utils::FileSystem::getAppDataDirectory().append("themes")};
     const std::filesystem::path userThemeDirSetting {Utils::FileSystem::expandHomePath(
         Settings::getInstance()->getString("UserThemeDirectory"))};
     std::filesystem::path userThemeDirectory;
@@ -687,10 +691,12 @@ void ThemeData::populateThemes()
                         << defaultUserThemeDir.string() << "\"";
         userThemeDirectory = defaultUserThemeDir;
     }
+#endif
 
 #if defined(__ANDROID__)
     const std::vector<std::filesystem::path> themePaths {
-        Utils::FileSystem::getProgramDataPath().append("themes"), userThemeDirectory};
+        Utils::FileSystem::getProgramDataPath().append("themes"), userThemeDirectory,
+        Utils::FileSystem::getAppDataDirectory().append("themes")};
 #elif defined(__APPLE__)
     const std::vector<std::filesystem::path> themePaths {
         Utils::FileSystem::getExePathSTD().append("themes"),

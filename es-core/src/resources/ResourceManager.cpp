@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ResourceManager.cpp
 //
 //  Handles the application resources (fonts, graphics, sounds etc.).
@@ -28,8 +28,8 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
     if ((path[0] == ':') && (path[1] == '/')) {
 
         // Check under the home directory.
-        std::string testHome {Utils::FileSystem::getHomePath() + "/.emulationstation/resources/" +
-                              &path[2]};
+        std::string testHome {
+            Utils::FileSystem::getAppDataDirectory().append("resources").string() + "/" + &path[2]};
         if (Utils::FileSystem::exists(testHome))
             return testHome;
 

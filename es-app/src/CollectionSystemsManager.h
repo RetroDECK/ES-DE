@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  CollectionSystemsManager.h
 //
 //  Manages collections of the following two types:
