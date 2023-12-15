@@ -137,6 +137,41 @@ void ViewController::setMenuColors()
     }
 }
 
+void ViewController::legacyAppDataDialog()
+{
+    const std::string upgradeMessage {
+        "IN ES-DE 3.0 THE APPLICATION DATA DIRECTORY HAS CHANGED FROM \".emulationstation\" to "
+        "\"ES-DE\"\nPLEASE RENAME YOUR CURRENT DATA DIRECTORY:\n" +
+        Utils::FileSystem::getAppDataDirectory().string() + "\nTO THE FOLLOWING:\n" +
+        Utils::FileSystem::getAppDataDirectory().parent_path().append("ES-DE").string()};
+
+    mWindow->pushGui(new GuiMsgBox(
+        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
+        true,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.85f :
+             0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
+}
+
+void ViewController::migratedAppDataFilesDialog()
+{
+    const std::string message {"SETTINGS HAVE BEEN MIGRATED FROM A LEGACY APPLICATION DATA "
+                               "DIRECTORY STRUCTURE, YOU NEED TO RESTART ES-DE TO APPLY "
+                               "THE CONFIGURATION"};
+
+    mWindow->pushGui(new GuiMsgBox(
+        HelpStyle(), message.c_str(), "QUIT",
+        [] {
+            SDL_Event quit;
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
+        },
+        "", nullptr, "", nullptr, nullptr, true, true,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.65f :
+             0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
+}
+
 void ViewController::unsafeUpgradeDialog()
 {
     const std::string upgradeMessage {
@@ -146,6 +181,7 @@ void ViewController::unsafeUpgradeDialog()
         "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
         "README.TXT FILE THAT CAN BE FOUND IN THE EMULATIONSTATION-DE "
         "DIRECTORY."};
+
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
         true,

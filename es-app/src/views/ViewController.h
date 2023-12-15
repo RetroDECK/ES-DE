@@ -34,6 +34,8 @@ public:
 
     // These functions are called from main().
     void setMenuColors();
+    void legacyAppDataDialog();
+    void migratedAppDataFilesDialog();
     void unsafeUpgradeDialog();
     void invalidSystemsFileDialog();
     void noGamesDialog();

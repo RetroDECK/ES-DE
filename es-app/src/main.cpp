@@ -656,6 +656,8 @@ int main(int argc, char* argv[])
     Settings::getInstance()->setInt("ScreenHeight", 720);
 #endif
 
+    bool migratedSettings {false};
+
     {
         if (!Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
             // Create the settings folder in the application data directory.
@@ -668,11 +670,33 @@ int main(int argc, char* argv[])
                     LOG(LogError) << "Couldn't create directory, permission problems?";
                 }
             }
+            std::filesystem::path settingsPathOld;
+            std::filesystem::path settingsPathNew;
+            settingsPathOld = Utils::FileSystem::getAppDataDirectory().append("es_settings.xml");
+            settingsPathNew = Utils::FileSystem::getAppDataDirectory()
+                                  .append("settings")
+                                  .append("es_settings.xml");
+            if (!Utils::FileSystem::existsSTD(settingsPathNew) &&
+                Utils::FileSystem::existsSTD(settingsPathOld)) {
+                Utils::FileSystem::renameFile(settingsPathOld.string(), settingsPathNew.string(),
+                                              false);
+                Settings::getInstance()->loadFile();
+                migratedSettings = true;
+            }
+            settingsPathOld = Utils::FileSystem::getAppDataDirectory().append("es_input.xml");
+            settingsPathNew =
+                Utils::FileSystem::getAppDataDirectory().append("settings").append("es_input.xml");
+            if (!Utils::FileSystem::existsSTD(settingsPathNew) &&
+                Utils::FileSystem::existsSTD(settingsPathOld)) {
+                Utils::FileSystem::renameFile(settingsPathOld.string(), settingsPathNew.string(),
+                                              false);
+                migratedSettings = true;
+            }
         }
     }
 
     {
-        // Check if the configuration file exists, and if not, create it.
+        // Check if the es_settings.xml file exists, and if not, create it.
         std::filesystem::path settingsPath;
         if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
             settingsPath = Utils::FileSystem::getAppDataDirectory().append("es_settings.xml");
@@ -787,6 +811,17 @@ int main(int argc, char* argv[])
                 if (!Utils::FileSystem::existsSTD(controllersDir)) {
                     LOG(LogWarning) << "Couldn't create directory, permission problems?";
                 }
+            }
+            std::filesystem::path configPathOld {
+                Utils::FileSystem::getAppDataDirectory().append("es_controller_mappings.cfg")};
+            std::filesystem::path configPathNew {Utils::FileSystem::getAppDataDirectory()
+                                                     .append("controllers")
+                                                     .append("es_controller_mappings.cfg")};
+            if (!Utils::FileSystem::existsSTD(configPathNew) &&
+                Utils::FileSystem::existsSTD(configPathOld)) {
+                Utils::FileSystem::renameFile(configPathOld.string(), configPathNew.string(),
+                                              false);
+                migratedSettings = true;
             }
         }
     }
@@ -950,6 +985,14 @@ int main(int argc, char* argv[])
             }
         }
 #endif
+
+        if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
+            ViewController::getInstance()->legacyAppDataDialog();
+
+        if (migratedSettings) {
+            LOG(LogInfo) << "Migrated settings from a legacy application data directory structure";
+            ViewController::getInstance()->migratedAppDataFilesDialog();
+        }
 
         LOG(LogInfo) << "Application startup time: "
                      << std::chrono::duration_cast<std::chrono::milliseconds>(
