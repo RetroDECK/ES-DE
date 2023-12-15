@@ -86,8 +86,17 @@ void InputManager::init()
     // the bundled mapping is incorrect, or the SDL version is a bit older, it makes sense to be
     // able to customize this. If a controller GUID is present in the mappings file that is
     // already present inside SDL, the custom mapping will overwrite the bundled one.
-    std::filesystem::path mappingsFile {
-        Utils::FileSystem::getAppDataDirectory().append("es_controller_mappings.cfg")};
+    std::filesystem::path mappingsFile;
+
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
+        mappingsFile =
+            Utils::FileSystem::getAppDataDirectory().append("es_controller_mappings.cfg");
+    }
+    else {
+        mappingsFile = Utils::FileSystem::getAppDataDirectory()
+                           .append("controllers")
+                           .append("es_controller_mappings.cfg");
+    }
 
     if (!Utils::FileSystem::existsSTD(mappingsFile))
         mappingsFile = ResourceManager::getInstance().getResourcePath(
@@ -255,12 +264,28 @@ void InputManager::doOnFinish()
 
 std::string InputManager::getConfigPath()
 {
-    return Utils::FileSystem::getAppDataDirectory().append("es_input.xml").string();
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
+        return Utils::FileSystem::getAppDataDirectory().append("es_input.xml").string();
+    }
+    else {
+        return Utils::FileSystem::getAppDataDirectory()
+            .append("settings")
+            .append("es_input.xml")
+            .string();
+    }
 }
 
 std::string InputManager::getTemporaryConfigPath()
 {
-    return Utils::FileSystem::getAppDataDirectory().append("es_temporaryinput.xml").string();
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
+        return Utils::FileSystem::getAppDataDirectory().append("es_temporaryinput.xml").string();
+    }
+    else {
+        return Utils::FileSystem::getAppDataDirectory()
+            .append("settings")
+            .append("es_temporaryinput.xml")
+            .string();
+    }
 }
 
 int InputManager::getNumConfiguredDevices()

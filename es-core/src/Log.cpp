@@ -8,6 +8,7 @@
 //
 
 #include "Log.h"
+#include "Settings.h"
 #include "utils/StringUtil.h"
 
 LogLevel Log::getReportingLevel()
@@ -24,7 +25,11 @@ void Log::setReportingLevel(LogLevel level)
 
 void Log::init()
 {
-    sLogPath = Utils::FileSystem::getAppDataDirectory().append("es_log.txt");
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
+        sLogPath = Utils::FileSystem::getAppDataDirectory().append("es_log.txt");
+    else
+        sLogPath = Utils::FileSystem::getAppDataDirectory().append("logs").append("es_log.txt");
+
     Utils::FileSystem::removeFile(sLogPath.string() + ".bak");
     // Rename the previous log file.
     Utils::FileSystem::renameFile(sLogPath.string(), sLogPath.string() + ".bak", true);

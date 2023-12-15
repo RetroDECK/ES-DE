@@ -46,6 +46,7 @@ namespace
         "DebugGrid",
         "DebugText",
         "DebugImage",
+        "LegacyAppDataDirectory",
         "ScraperFilter",
         "TransitionsSystemToSystem",
         "TransitionsSystemToGamelist",
@@ -77,6 +78,8 @@ Settings::Settings()
 {
     mWasChanged = false;
     setDefaults();
+    if (Utils::FileSystem::getAppDataDirectory().filename().string() == ".emulationstation")
+        mBoolMap["LegacyAppDataDirectory"] = std::make_pair(true, true);
     loadFile();
 }
 
@@ -347,6 +350,7 @@ void Settings::setDefaults()
     mBoolMap["DebugGrid"] = {false, false};
     mBoolMap["DebugText"] = {false, false};
     mBoolMap["DebugImage"] = {false, false};
+    mBoolMap["LegacyAppDataDirectory"] = {false, false};
     mIntMap["ScraperFilter"] = {0, 0};
     mIntMap["TransitionsSystemToSystem"] = {ViewTransitionAnimation::INSTANT,
                                             ViewTransitionAnimation::INSTANT};
@@ -364,9 +368,14 @@ void Settings::setDefaults()
 
 void Settings::saveFile()
 {
-    LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.xml";
-    const std::filesystem::path path {
-        Utils::FileSystem::getAppDataDirectory().append("es_settings.xml")};
+    std::filesystem::path path;
+    if (mBoolMap["LegacyAppDataDirectory"].second == true) {
+        path = Utils::FileSystem::getAppDataDirectory().append("es_settings.xml");
+    }
+    else {
+        path =
+            Utils::FileSystem::getAppDataDirectory().append("settings").append("es_settings.xml");
+    }
 
     pugi::xml_document doc;
 
@@ -396,18 +405,24 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    std::filesystem::path configFile {
-        Utils::FileSystem::getAppDataDirectory().append("es_settings.xml")};
+    std::filesystem::path path;
+    if (mBoolMap["LegacyAppDataDirectory"].second == true) {
+        path = Utils::FileSystem::getAppDataDirectory().append("es_settings.xml");
+    }
+    else {
+        path =
+            Utils::FileSystem::getAppDataDirectory().append("settings").append("es_settings.xml");
+    }
 
-    if (!Utils::FileSystem::existsSTD(configFile))
+    if (!Utils::FileSystem::existsSTD(path))
         return;
 
     pugi::xml_document doc;
 #if defined(_WIN64)
     pugi::xml_parse_result result {
-        doc.load_file(Utils::String::stringToWideString(configFile.string()).c_str())};
+        doc.load_file(Utils::String::stringToWideString(path.string()).c_str())};
 #else
-    pugi::xml_parse_result result {doc.load_file(configFile.string().c_str())};
+    pugi::xml_parse_result result {doc.load_file(path.string().c_str())};
 #endif
     if (!result) {
         LOG(LogError) << "Couldn't parse the es_settings.xml file: " << result.description();

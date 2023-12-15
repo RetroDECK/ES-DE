@@ -15,6 +15,12 @@
 #include <list>
 #include <string>
 
+class FileSystemVariables
+{
+public:
+    static inline std::filesystem::path sAppDataDirectory;
+};
+
 namespace Utils
 {
     namespace FileSystem

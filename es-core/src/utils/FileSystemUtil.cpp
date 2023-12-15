@@ -199,7 +199,7 @@ namespace Utils
                 return homePath;
 
 #if defined(__ANDROID__)
-            homePath = AndroidVariables::sAppDataDirectory;
+            homePath = FileSystemVariables::sAppDataDirectory;
             return homePath;
 #endif
 
@@ -248,7 +248,7 @@ namespace Utils
 
 #if defined(__ANDROID__)
             homePathSTD =
-                std::filesystem::path {getGenericPath(AndroidVariables::sAppDataDirectory)};
+                std::filesystem::path {getGenericPath(FileSystemVariables::sAppDataDirectory)};
             return homePathSTD;
 #endif
 #if defined(_WIN64)
@@ -318,7 +318,17 @@ namespace Utils
 #if defined(__ANDROID__)
             return getHomePathSTD();
 #else
-            return getHomePathSTD().append(".emulationstation");
+            if (FileSystemVariables::sAppDataDirectory.empty()) {
+                if (Utils::FileSystem::existsSTD(getHomePathSTD().append(".emulationstation"))) {
+                    FileSystemVariables::sAppDataDirectory =
+                        getHomePathSTD().append(".emulationstation");
+                }
+                else {
+                    FileSystemVariables::sAppDataDirectory = getHomePathSTD().append("ES-DE");
+                }
+            }
+
+            return FileSystemVariables::sAppDataDirectory;
 #endif
         }
 
