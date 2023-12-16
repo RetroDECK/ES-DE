@@ -50,15 +50,18 @@ void FindRules::loadFindRules()
         LOG(LogInfo) << "Found custom find rules configuration file";
     }
 
-#if defined(_WIN64)
+#if defined(__linux__)
+    filePath =
+        ResourceManager::getInstance().getResourcePath(":/systems/linux/es_find_rules.xml", false);
+#elif defined(__ANDROID__)
+    filePath = ResourceManager::getInstance().getResourcePath(":/systems/android/es_find_rules.xml",
+                                                              false);
+#elif defined(_WIN64)
     filePath = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_find_rules.xml",
                                                               false);
 #elif defined(__APPLE__)
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/macos/es_find_rules.xml", false);
-#elif defined(__ANDROID__)
-    filePath = ResourceManager::getInstance().getResourcePath(":/systems/android/es_find_rules.xml",
-                                                              false);
 #else
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/unix/es_find_rules.xml", false);
@@ -976,12 +979,14 @@ std::vector<std::string> SystemData::getConfigPath()
         paths.emplace_back(path);
     }
 
-#if defined(_WIN64)
+#if defined(__linux__)
+    path = ResourceManager::getInstance().getResourcePath(":/systems/linux/es_systems.xml", true);
+#elif defined(__ANDROID__)
+    path = ResourceManager::getInstance().getResourcePath(":/systems/android/es_systems.xml", true);
+#elif defined(_WIN64)
     path = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_systems.xml", true);
 #elif defined(__APPLE__)
     path = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_systems.xml", true);
-#elif defined(__ANDROID__)
-    path = ResourceManager::getInstance().getResourcePath(":/systems/android/es_systems.xml", true);
 #else
     path = ResourceManager::getInstance().getResourcePath(":/systems/unix/es_systems.xml", true);
 #endif

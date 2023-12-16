@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for Unix -->
+<!-- This is the ES-DE find rules configuration file for BSD Unix -->
 <ruleList>
     <emulator name="OS-SHELL">
         <!-- Operating system shell -->
@@ -11,51 +11,18 @@
     <emulator name="RETROARCH">
         <rule type="systempath">
             <entry>retroarch</entry>
-            <entry>org.libretro.RetroArch</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/RetroArch-Linux*.AppImage</entry>
-            <entry>~/.local/share/applications/RetroArch-Linux*.AppImage</entry>
-            <entry>~/.local/bin/RetroArch-Linux*.AppImage</entry>
-            <entry>~/bin/RetroArch-Linux*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.libretro.RetroArch</entry>
         </rule>
     </emulator>
     <core name="RETROARCH">
         <rule type="corepath">
-            <!-- Non-portable AppImage and compiled from source -->
+            <!-- Compiled from source -->
             <entry>~/.config/retroarch/cores</entry>
-            <!-- Portable AppImage -->
-            <entry>~/Applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
-            <entry>~/.local/share/applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
-            <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
-            <entry>~/bin/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
-            <!-- Flatpak package -->
-            <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
-            <!-- Snap package -->
-            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
-            <!-- Ubuntu and Linux Mint repository -->
-            <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
-            <!-- Fedora repository -->
-            <entry>/usr/lib64/libretro</entry>
-            <!-- Manjaro repository -->
-            <entry>/usr/lib/libretro</entry>
             <!-- FreeBSD and OpenBSD repository -->
             <entry>/usr/local/lib/libretro</entry>
             <!-- NetBSD repository -->
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
-    <emulator name="3DSEN-WINDOWS">
-        <!-- Nintendo NES and Famicom emulator 3dSen -->
-        <rule type="staticpath">
-            <entry>~/Applications/3dSen/3dSen.exe</entry>
-            <entry>~/.local/share/applications/3dSen/3dSen.exe</entry>
-            <entry>~/.local/bin/3dSen/3dSen.exe</entry>
-            <entry>~/bin/3dSen/3dSen.exe</entry>
-        </rule>
-    </emulator>
     <emulator name="ADVANCEMAME">
         <!-- Arcade emulator AdvanceMAME -->
         <rule type="systempath">
@@ -84,64 +51,30 @@
         <!-- Multi-system emulator ares -->
         <rule type="systempath">
             <entry>ares</entry>
-            <entry>dev.ares.ares</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/dev.ares.ares</entry>
-            <entry>~/.local/share/flatpak/exports/bin/dev.ares.ares</entry>
         </rule>
     </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="systempath">
             <entry>atari800</entry>
-            <entry>atari800-jz.atari800</entry>
         </rule>
     </emulator>
     <emulator name="BASILISKII">
         <!-- Macintosh 68k emulator Basilisk II -->
         <rule type="systempath">
             <entry>BasiliskII</entry>
-            <entry>net.cebix.basilisk</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/BasiliskII*.AppImage</entry>
-            <entry>~/.local/share/applications/BasiliskII*.AppImage</entry>
-            <entry>~/.local/bin/BasiliskII*.AppImage</entry>
-            <entry>~/bin/BasiliskII*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/net.cebix.basilisk</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
-        </rule>
-    </emulator>
-    <emulator name="BIGPEMU-WINDOWS">
-        <!-- Atari Jaguar emulator BigPEmu -->
-        <rule type="staticpath">
-            <entry>~/Applications/BigPEmu/BigPEmu.exe</entry>
-            <entry>~/.local/share/applications/BigPEmu/BigPEmu.exe</entry>
-            <entry>~/.local/bin/BigPEmu/BigPEmu.exe</entry>
-            <entry>~/bin/BigPEmu/BigPEmu.exe</entry>
         </rule>
     </emulator>
     <emulator name="BLASTEM">
         <!-- Sega Mega Drive/Genesis emulator BlastEm -->
         <rule type="systempath">
             <entry>blastem</entry>
-            <entry>com.retrodev.blastem</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/com.retrodev.blastem</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.retrodev.blastem</entry>
         </rule>
     </emulator>
     <emulator name="BSNES">
         <!-- Super Nintendo/Super Famicom emulator bsnes -->
         <rule type="systempath">
             <entry>bsnes</entry>
-            <entry>dev.bsnes.bsnes</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/dev.bsnes.bsnes</entry>
-            <entry>~/.local/share/flatpak/exports/bin/dev.bsnes.bsnes</entry>
         </rule>
     </emulator>
     <emulator name="CEMU">
@@ -151,34 +84,16 @@
             <entry>Cemu</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/Cemu*.AppImage</entry>
-            <entry>~/.local/share/applications/Cemu*.AppImage</entry>
-            <entry>~/.local/bin/Cemu*.AppImage</entry>
-            <entry>~/bin/Cemu*.AppImage</entry>
             <entry>~/Applications/Cemu/Cemu</entry>
             <entry>~/.local/share/applications/Cemu/Cemu</entry>
             <entry>~/.local/bin/Cemu/Cemu</entry>
             <entry>~/bin/Cemu/Cemu</entry>
-            <entry>/var/lib/flatpak/exports/bin/info.cemu.Cemu</entry>
-            <entry>~/.local/share/flatpak/exports/bin/info.cemu.Cemu</entry>
         </rule>
     </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="systempath">
             <entry>citra</entry>
-            <entry>citra-emu.citra-nightly</entry>
-            <entry>org.citra_emu.citra</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/citra-qt*.AppImage</entry>
-            <entry>~/.local/share/applications/citra-qt*.AppImage</entry>
-            <entry>~/.local/bin/citra-qt*.AppImage</entry>
-            <entry>~/bin/citra-qt*.AppImage</entry>
-            <entry>~/.citra/canary/citra-qt.AppImage</entry>
-            <entry>~/.citra/nightly/citra-qt.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.citra_emu.citra</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.citra_emu.citra</entry>
         </rule>
     </emulator>
     <emulator name="CPCEMU">
@@ -202,62 +117,28 @@
             <entry>~/bin/CSpect/CSpect.exe</entry>
         </rule>
     </emulator>
-    <emulator name="DEMUL-WINDOWS">
-        <!-- Sega Dreamcast emulator Demul -->
-        <rule type="staticpath">
-            <entry>~/Applications/demul/demul.exe</entry>
-            <entry>~/.local/share/applications/demul/demul.exe</entry>
-            <entry>~/.local/bin/demul/demul.exe</entry>
-            <entry>~/bin/demul/demul.exe</entry>
-        </rule>
-    </emulator>
     <emulator name="DESMUME">
         <!-- Nintendo DS emulator DeSmuME -->
         <rule type="systempath">
             <entry>desmume</entry>
-            <entry>org.desmume.DeSmuME</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.desmume.DeSmuME</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.desmume.DeSmuME</entry>
         </rule>
     </emulator>
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
             <entry>dolphin-emu</entry>
-            <entry>dolphin-emulator.dolphin-emu</entry>
-            <entry>org.DolphinEmu.dolphin-emu</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/Dolphin_Emulator*.AppImage</entry>
-            <entry>~/.local/share/applications/Dolphin_Emulator*.AppImage</entry>
-            <entry>~/.local/bin/Dolphin_Emulator*.AppImage</entry>
-            <entry>~/bin/Dolphin_Emulator*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-STAGING">
         <!-- DOS emulator DOSBox Staging -->
         <rule type="systempath">
             <entry>dosbox-staging</entry>
-            <entry>io.github.dosbox-staging</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-X">
         <!-- DOS emulator DOSBox-X -->
         <rule type="systempath">
             <entry>dosbox-x</entry>
-            <entry>com.dosbox_x.DOSBox-X</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/com.dosbox_x.DOSBox-X</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.dosbox_x.DOSBox-X</entry>
         </rule>
     </emulator>
     <emulator name="DUCKSTATION">
@@ -265,23 +146,6 @@
         <rule type="systempath">
             <entry>duckstation-nogui</entry>
             <entry>duckstation-qt</entry>
-            <entry>org.duckstation.DuckStation</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/DuckStation*.AppImage</entry>
-            <entry>~/.local/share/applications/DuckStation*.AppImage</entry>
-            <entry>~/.local/bin/DuckStation*.AppImage</entry>
-            <entry>~/bin/DuckStation*.AppImage</entry>
-            <entry>~/Applications/duckstation-nogui*.AppImage</entry>
-            <entry>~/.local/share/applications/duckstation-nogui*.AppImage</entry>
-            <entry>~/.local/bin/duckstation-nogui*.AppImage</entry>
-            <entry>~/bin/duckstation-nogui*.AppImage</entry>
-            <entry>~/Applications/duckstation-qt*.AppImage</entry>
-            <entry>~/.local/share/applications/duckstation-qt*.AppImage</entry>
-            <entry>~/.local/bin/duckstation-qt*.AppImage</entry>
-            <entry>~/bin/duckstation-qt*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.duckstation.DuckStation</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.duckstation.DuckStation</entry>
         </rule>
     </emulator>
     <emulator name="EASYRPG">
@@ -301,21 +165,6 @@
         <rule type="systempath">
             <entry>eka2l1_qt</entry>
         </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/EKA2L1*.AppImage</entry>
-            <entry>~/.local/share/applications/EKA2L1*.AppImage</entry>
-            <entry>~/.local/bin/EKA2L1*.AppImage</entry>
-            <entry>~/bin/EKA2L1*.AppImage</entry>
-        </rule>
-    </emulator>
-    <emulator name="EKA2L1-WINDOWS">
-        <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
-        <rule type="staticpath">
-            <entry>~/Applications/EKA2L1/eka2l1_qt.exe</entry>
-            <entry>~/.local/share/applications/EKA2L1/eka2l1_qt.exe</entry>
-            <entry>~/.local/bin/EKA2L1/eka2l1_qt.exe</entry>
-            <entry>~/bin/EKA2L1/eka2l1_qt.exe</entry>
-        </rule>
     </emulator>
     <emulator name="FINALBURN-NEO">
         <!-- Arcade emulator FinalBurn Neo -->
@@ -333,27 +182,12 @@
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="systempath">
             <entry>flycast</entry>
-            <entry>org.flycast.Flycast</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/flycast-x86*.AppImage</entry>
-            <entry>~/.local/share/applications/flycast-x86*.AppImage</entry>
-            <entry>~/.local/bin/flycast-x86*.AppImage</entry>
-            <entry>~/bin/flycast-x86*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.flycast.Flycast</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.flycast.Flycast</entry>
         </rule>
     </emulator>
     <emulator name="FLYCAST-DOJO">
         <!-- Sega Dreamcast emulator Flycast Dojo -->
         <rule type="systempath">
             <entry>flycast-dojo</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/flycast-dojo*.AppImage</entry>
-            <entry>~/.local/share/applications/flycast-dojo*.AppImage</entry>
-            <entry>~/.local/bin/flycast-dojo*.AppImage</entry>
-            <entry>~/bin/flycast-dojo*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="FS-UAE">
@@ -362,35 +196,17 @@
             <entry>fs-uae-launcher</entry>
             <entry>fsuae.launcher</entry>
         </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
-        </rule>
     </emulator>
     <emulator name="FUSE">
         <!-- Sinclair ZX Spectrum emulator Fuse -->
         <rule type="systempath">
             <entry>fuse</entry>
-            <entry>net.sf.fuse_emulator</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.sf.fuse_emulator</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.sf.fuse_emulator</entry>
         </rule>
     </emulator>
     <emulator name="GARGOYLE">
         <!-- Interactive fiction player Gargoyle -->
         <rule type="systempath">
             <entry>gargoyle</entry>
-            <entry>io.github.garglk.Gargoyle</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/Gargoyle*.AppImage</entry>
-            <entry>~/.local/share/applications/Gargoyle*.AppImage</entry>
-            <entry>~/.local/bin/Gargoyle*.AppImage</entry>
-            <entry>~/bin/Gargoyle*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/io.github.garglk.Gargoyle</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.github.garglk.Gargoyle</entry>
         </rule>
     </emulator>
     <emulator name="GEARBOY">
@@ -405,24 +221,10 @@
             <entry>~/bin/gearboy/gearboy</entry>
         </rule>
     </emulator>
-    <emulator name="GOPHER2600">
-        <!-- Atari 2600 emulator Gopher2600 -->
-        <rule type="staticpath">
-            <entry>~/Applications/gopher2600/gopher2600_linux_amd64</entry>
-            <entry>~/.local/share/applications/gopher2600/gopher2600_linux_amd64</entry>
-            <entry>~/.local/bin/gopher2600/gopher2600_linux_amd64</entry>
-            <entry>~/bin/gopher2600/gopher2600_linux_amd64</entry>
-        </rule>
-    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="systempath">
             <entry>hatari</entry>
-            <entry>org.tuxfamily.hatari</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.tuxfamily.hatari</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.tuxfamily.hatari</entry>
         </rule>
     </emulator>
     <emulator name="HYPSEUS-SINGE">
@@ -461,24 +263,10 @@
             <entry>~/bin/linapple/linapple</entry>
         </rule>
     </emulator>
-    <emulator name="M2EMULATOR-WINDOWS">
-        <!-- Sega Model 2 Emulator -->
-        <rule type="staticpath">
-            <entry>~/Applications/m2emulator/EMULATOR.EXE</entry>
-            <entry>~/.local/share/applications/m2emulator/EMULATOR.EXE</entry>
-            <entry>~/.local/bin/m2emulator/EMULATOR.EXE</entry>
-            <entry>~/bin/m2emulator/EMULATOR.EXE</entry>
-        </rule>
-    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
             <entry>mame</entry>
-            <entry>org.mamedev.MAME</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.mamedev.MAME</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.mamedev.MAME</entry>
         </rule>
     </emulator>
     <emulator name="MEDNAFEN">
@@ -486,21 +274,12 @@
         <rule type="systempath">
             <entry>mednafen</entry>
         </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
-        </rule>
     </emulator>
     <emulator name="MELONDS">
         <!-- Nintendo DS and DSi emulator melonDS -->
         <rule type="systempath">
             <entry>melonds</entry>
             <entry>melonDS</entry>
-            <entry>net.kuribo64.melonDS</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.kuribo64.melonDS</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.kuribo64.melonDS</entry>
         </rule>
     </emulator>
     <emulator name="MESEN">
@@ -508,60 +287,30 @@
         <rule type="systempath">
             <entry>mesen2</entry>
         </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/Mesen*.AppImage</entry>
-            <entry>~/.local/share/applications/Mesen*.AppImage</entry>
-            <entry>~/.local/bin/Mesen*.AppImage</entry>
-            <entry>~/bin/Mesen*.AppImage</entry>
-        </rule>
     </emulator>
     <emulator name="MGBA">
         <!-- Nintendo Game Boy Advance emulator mGBA -->
         <rule type="systempath">
             <entry>mgba</entry>
             <entry>mgba-qt</entry>
-            <entry>io.mgba.mGBA</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/mGBA*.AppImage</entry>
-            <entry>~/.local/share/applications/mGBA*.AppImage</entry>
-            <entry>~/.local/bin/mGBA*.AppImage</entry>
-            <entry>~/bin/mGBA*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/io.mgba.mGBA</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.mgba.mGBA</entry>
         </rule>
     </emulator>
     <emulator name="MUPEN64PLUS">
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="systempath">
             <entry>m64p</entry>
-            <entry>io.github.m64p.m64p</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/io.github.m64p.m64p</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.github.m64p.m64p</entry>
         </rule>
     </emulator>
     <emulator name="NESTOPIA-UE">
         <!-- Nintendo NES and Famicom emulator Nestopia UE -->
         <rule type="systempath">
             <entry>nestopia</entry>
-            <entry>ca._0ldsk00l.Nestopia</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
-            <entry>~/.local/share/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
         </rule>
     </emulator>
     <emulator name="OPENMSX">
         <!-- MSX home computer emulator openMSX -->
         <rule type="systempath">
             <entry>openmsx</entry>
-            <entry>org.openmsx.openMSX</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.openmsx.openMSX</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.openmsx.openMSX</entry>
         </rule>
     </emulator>
     <emulator name="ORICUTRON">
@@ -580,27 +329,7 @@
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">
             <entry>pcsx2-qt</entry>
-            <entry>net.pcsx2.PCSX2</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/pcsx2*.AppImage</entry>
-            <entry>~/.local/share/applications/pcsx2*.AppImage</entry>
-            <entry>~/.local/bin/pcsx2*.AppImage</entry>
-            <entry>~/bin/pcsx2*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
-        </rule>
-    </emulator>
-    <emulator name="PCSX2-LEGACY">
-        <!-- Sony PlayStation 2 emulator PCSX2 (legacy) -->
-        <rule type="systempath">
-            <entry>PCSX2</entry>
             <entry>pcsx2</entry>
-            <entry>net.pcsx2.PCSX2</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
         </rule>
     </emulator>
     <emulator name="PICO-8">
@@ -615,31 +344,12 @@
             <entry>~/bin/pico-8/pico8</entry>
         </rule>
     </emulator>
-    <emulator name="PLAY!">
-        <!-- Sony PlayStation 2 emulator Play! -->
-        <rule type="systempath">
-            <entry>org.purei.Play</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/Play!*.AppImage</entry>
-            <entry>~/.local/share/applications/Play!*.AppImage</entry>
-            <entry>~/.local/bin/Play!*.AppImage</entry>
-            <entry>~/bin/Play!*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.purei.Play</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.purei.Play</entry>
-        </rule>
-    </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="systempath">
             <entry>ppsspp-emu.ppsspp-sdl</entry>
             <entry>PPSSPPSDL</entry>
             <entry>PPSSPPQt</entry>
-            <entry>org.ppsspp.PPSSPP</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
         </rule>
     </emulator>
     <emulator name="PRBOOM-PLUS">
@@ -652,20 +362,6 @@
         <!-- PrimeHack, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
             <entry>primehack</entry>
-            <entry>io.github.shiiion.primehack</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/io.github.shiiion.primehack</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.github.shiiion.primehack</entry>
-        </rule>
-    </emulator>
-    <emulator name="PROTON">
-        <!-- Microsoft Windows compatibility layer Proton -->
-        <rule type="staticpath">
-            <entry>~/Applications/Proton/wine*.AppImage</entry>
-            <entry>~/.local/share/applications/Proton/wine*.AppImage</entry>
-            <entry>~/.local/bin/Proton/wine*.AppImage</entry>
-            <entry>~/bin/Proton/wine*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="PUNES">
@@ -708,31 +404,12 @@
         <!-- Nintendo 64 emulator Rosalie's Mupen GUI -->
         <rule type="systempath">
             <entry>RMG</entry>
-            <entry>com.github.Rosalie241.RMG</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/RMG*.AppImage</entry>
-            <entry>~/.local/share/applications/RMG*.AppImage</entry>
-            <entry>~/.local/bin/RMG*.AppImage</entry>
-            <entry>~/bin/RMG*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/com.github.Rosalie241.RMG</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.github.Rosalie241.RMG</entry>
         </rule>
     </emulator>
     <emulator name="RPCS3">
         <!-- Sony PlayStation 3 emulator RPCS3 -->
         <rule type="systempath">
             <entry>rpcs3</entry>
-            <entry>rpcs3-emu.rpcs3</entry>
-            <entry>net.rpcs3.RPCS3</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/rpcs3*.AppImage</entry>
-            <entry>~/.local/share/applications/rpcs3*.AppImage</entry>
-            <entry>~/.local/bin/rpcs3*.AppImage</entry>
-            <entry>~/bin/rpcs3*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/net.rpcs3.RPCS3</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.rpcs3.RPCS3</entry>
         </rule>
     </emulator>
     <emulator name="RUFFLE">
@@ -752,11 +429,8 @@
         <rule type="systempath">
             <entry>Ryujinx</entry>
             <entry>Ryujinx.Ava</entry>
-            <entry>org.ryujinx.Ryujinx</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
             <entry>~/Applications/publish/Ryujinx</entry>
             <entry>~/.local/share/applications/publish/Ryujinx</entry>
             <entry>~/.local/bin/publish/Ryujinx</entry>
@@ -771,22 +445,12 @@
         <!-- Nintendo Game Boy and Game Boy Color emulator SameBoy -->
         <rule type="systempath">
             <entry>sameboy</entry>
-            <entry>io.github.sameboy.SameBoy</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/io.github.sameboy.SameBoy</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.github.sameboy.SameBoy</entry>
         </rule>
     </emulator>
     <emulator name="SCUMMVM">
         <!-- ScummVM game engine -->
         <rule type="systempath">
             <entry>scummvm</entry>
-            <entry>org.scummvm.ScummVM</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.scummvm.ScummVM</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.scummvm.ScummVM</entry>
         </rule>
     </emulator>
     <emulator name="SDL2TRS">
@@ -806,12 +470,6 @@
         <rule type="systempath">
             <entry>SheepShaver</entry>
         </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/SheepShaver*.AppImage</entry>
-            <entry>~/.local/share/applications/SheepShaver*.AppImage</entry>
-            <entry>~/.local/bin/SheepShaver*.AppImage</entry>
-            <entry>~/bin/SheepShaver*.AppImage</entry>
-        </rule>
     </emulator>
     <emulator name="SIMCOUPE">
         <!-- SAM Coupé emulator SimCoupé -->
@@ -829,11 +487,6 @@
         <!-- Nintendo 64 emulator simple64 -->
         <rule type="systempath">
             <entry>simple64-gui</entry>
-            <entry>io.github.simple64.simple64</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/io.github.simple64.simple64</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.github.simple64.simple64</entry>
         </rule>
     </emulator>
     <emulator name="SKYEMU">
@@ -853,15 +506,6 @@
         <rule type="systempath">
             <entry>snes9x</entry>
             <entry>snes9x-gtk</entry>
-            <entry>com.snes9x.Snes9x</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/Snes9x*.AppImage</entry>
-            <entry>~/.local/share/applications/Snes9x*.AppImage</entry>
-            <entry>~/.local/bin/Snes9x*.AppImage</entry>
-            <entry>~/bin/Snes9x*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/com.snes9x.Snes9x</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.snes9x.Snes9x</entry>
         </rule>
     </emulator>
     <emulator name="SOLARUS">
@@ -869,10 +513,6 @@
         <rule type="systempath">
             <entry>solarus-run</entry>
             <entry>solarus.run</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
         </rule>
     </emulator>
     <emulator name="STEAM">
@@ -885,11 +525,6 @@
         <!-- Atari 2600 emulator Stella -->
         <rule type="systempath">
             <entry>stella</entry>
-            <entry>io.github.stella_emu.Stella</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/io.github.stella_emu.Stella</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.github.stella_emu.Stella</entry>
         </rule>
     </emulator>
     <emulator name="SUPERMODEL">
@@ -902,31 +537,18 @@
             <entry>~/.local/share/applications/Supermodel/supermodel</entry>
             <entry>~/.local/bin/Supermodel/supermodel</entry>
             <entry>~/bin/Supermodel/supermodel</entry>
-            <entry>/var/lib/flatpak/exports/bin/com.supermodel3.Supermodel</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.supermodel3.Supermodel</entry>
         </rule>
     </emulator>
     <emulator name="TIC-80">
         <!-- TIC-80 Fantasy Computer (game engine) -->
         <rule type="systempath">
             <entry>tic80</entry>
-            <entry>com.tic80.TIC_80</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/com.tic80.TIC_80</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.tic80.TIC_80</entry>
         </rule>
     </emulator>
     <emulator name="TRIFORCE">
         <!-- Triforce, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
             <entry>dolphin-emu-triforce</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/dolphin-emu-triforce*.AppImage</entry>
-            <entry>~/.local/share/applications/dolphin-emu-triforce*.AppImage</entry>
-            <entry>~/.local/bin/dolphin-emu-triforce*.AppImage</entry>
-            <entry>~/bin/dolphin-emu-triforce*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="TSUGARU">
@@ -948,34 +570,18 @@
         <!-- Commodore 8-bit computer emulator VICE (x64sc accurate) -->
         <rule type="systempath">
             <entry>x64sc</entry>
-            <entry>vice-jz.x64sc</entry>
-            <entry>net.sf.VICE</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.sf.VICE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE</entry>
         </rule>
     </emulator>
     <emulator name="VICE-XPLUS4">
         <!-- Commodore 8-bit computer emulator VICE (xplus4) -->
         <rule type="systempath">
             <entry>xplus4</entry>
-            <entry>vice-jz.xplus4</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4 net.sf.VICE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4 net.sf.VICE</entry>
         </rule>
     </emulator>
     <emulator name="VICE-XVIC">
         <!-- Commodore 8-bit computer emulator VICE (xvic) -->
         <rule type="systempath">
             <entry>xvic</entry>
-            <entry>vice-jz.xvic</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
         </rule>
     </emulator>
     <emulator name="VISUAL-PINBALL">
@@ -1007,37 +613,6 @@
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
             <entry>xemu</entry>
-            <entry>app.xemu.xemu</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/xemu*.AppImage</entry>
-            <entry>~/.local/share/applications/xemu*.AppImage</entry>
-            <entry>~/.local/bin/xemu*.AppImage</entry>
-            <entry>~/bin/xemu*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/app.xemu.xemu</entry>
-            <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
-        </rule>
-    </emulator>
-    <emulator name="WINE">
-        <!-- Microsoft Windows compatibility layer Wine -->
-        <rule type="staticpath">
-            <entry>~/Applications/Wine/wine*.AppImage</entry>
-            <entry>~/.local/share/applications/Wine/wine*.AppImage</entry>
-            <entry>~/.local/bin/Wine/wine*.AppImage</entry>
-            <entry>~/bin/Wine/wine*.AppImage</entry>
-        </rule>
-    </emulator>
-    <emulator name="XENIA-WINDOWS">
-        <!-- Microsoft Xbox 360 emulator xenia -->
-        <rule type="staticpath">
-            <entry>~/Applications/xenia/xenia.exe</entry>
-            <entry>~/.local/share/applications/xenia/xenia.exe</entry>
-            <entry>~/.local/bin/xenia/xenia.exe</entry>
-            <entry>~/bin/xenia/xenia.exe</entry>
-            <entry>~/Applications/xenia/xenia_canary.exe</entry>
-            <entry>~/.local/share/applications/xenia/xenia_canary.exe</entry>
-            <entry>~/.local/bin/xenia/xenia_canary.exe</entry>
-            <entry>~/bin/xenia/xenia_canary.exe</entry>
         </rule>
     </emulator>
     <emulator name="XROAR">
@@ -1056,15 +631,6 @@
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="systempath">
             <entry>yuzu</entry>
-            <entry>org.yuzu_emu.yuzu</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/yuzu*.AppImage</entry>
-            <entry>~/.local/share/applications/yuzu*.AppImage</entry>
-            <entry>~/.local/bin/yuzu*.AppImage</entry>
-            <entry>~/bin/yuzu*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">
