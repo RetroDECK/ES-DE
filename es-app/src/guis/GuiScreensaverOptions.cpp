@@ -223,7 +223,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     };
     rowCustomImageDir.makeAcceptInputHandler(
         [this, s, titleCustomImageDir, defaultImageDirStaticText, defaultImageDirText,
-         initValueMediaDir, updateValMediaDir, multiLineMediaDir] {
+         initValueMediaDir, updateValMediaDir] {
             if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
                     getHelpStyle(), s->getMenu().getPosition().y, titleCustomImageDir,
