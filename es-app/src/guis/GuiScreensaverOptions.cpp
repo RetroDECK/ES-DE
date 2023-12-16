@@ -216,7 +216,6 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
                                                .string()};
     const std::string initValueMediaDir {
         Settings::getInstance()->getString("ScreensaverSlideshowCustomDir")};
-    const bool multiLineMediaDir {false};
     auto updateValMediaDir = [s](const std::string& newVal) {
         Settings::getInstance()->setString("ScreensaverSlideshowCustomDir", newVal);
         s->setNeedsSaving();
@@ -228,15 +227,15 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
                 getHelpStyle(), s->getMenu().getPosition().y, titleCustomImageDir,
                 Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
-                updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
-                defaultImageDirStaticText, defaultImageDirText, "load default directory"));
+                updateValMediaDir, false, "SAVE", "SAVE CHANGES?", defaultImageDirStaticText,
+                defaultImageDirText, "load default directory"));
         }
         else {
             mWindow->pushGui(new GuiTextEditPopup(
                 getHelpStyle(), titleCustomImageDir,
                 Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
-                updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
-                defaultImageDirStaticText, defaultImageDirText, "load default directory"));
+                updateValMediaDir, false, "SAVE", "SAVE CHANGES?", defaultImageDirStaticText,
+                defaultImageDirText, "load default directory"));
         }
     });
     s->addRow(rowCustomImageDir);
