@@ -470,7 +470,7 @@ namespace Utils
 #if defined(__ANDROID__)
             return AndroidVariables::sInternalDataDirectory;
 #elif defined(__unix__)
-            return std::filesystem::path {installPrefix}.append("share").append("emulationstation");
+            return std::filesystem::path {installPrefix}.append("share").append("es-de");
 #else
     return std::filesystem::path {};
 #endif

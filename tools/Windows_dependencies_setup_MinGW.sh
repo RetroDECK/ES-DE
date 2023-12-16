@@ -1,7 +1,7 @@
 #!/bin/sh
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  Windows_dependencies_setup_MinGW.sh
 #
 #  Downloads and prepares the external dependencies for building in-tree.

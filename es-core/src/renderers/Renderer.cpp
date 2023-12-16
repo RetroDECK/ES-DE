@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Renderer.cpp
 //
 //  Generic rendering functions.
@@ -221,10 +221,9 @@ bool Renderer::createWindow()
         windowFlags = SDL_WINDOW_OPENGL;
 #endif
 
-    if ((mSDLWindow =
-             SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
-                              SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex), mWindowWidth,
-                              mWindowHeight, windowFlags)) == nullptr) {
+    if ((mSDLWindow = SDL_CreateWindow("ES-DE", SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
+                                       SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex), mWindowWidth,
+                                       mWindowHeight, windowFlags)) == nullptr) {
         LOG(LogError) << "Couldn't create SDL window. " << SDL_GetError();
         return false;
     }
@@ -250,7 +249,7 @@ bool Renderer::createWindow()
                  << std::to_string(displayMode.w * scaleFactor) << "x"
                  << std::to_string(displayMode.h * scaleFactor) << ")";
     LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate) << " Hz";
-    LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(sScreenWidth) << "x"
+    LOG(LogInfo) << "Application resolution: " << std::to_string(sScreenWidth) << "x"
                  << std::to_string(sScreenHeight) << " (physical resolution "
                  << std::to_string(sScreenWidth * scaleFactor) << "x"
                  << std::to_string(sScreenHeight * scaleFactor) << ")";
@@ -268,7 +267,7 @@ bool Renderer::createWindow()
     LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
                  << std::to_string(displayMode.h);
     LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate) << " Hz";
-    LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(sScreenWidth) << "x"
+    LOG(LogInfo) << "Application resolution: " << std::to_string(sScreenWidth) << "x"
                  << std::to_string(sScreenHeight);
 #endif
 

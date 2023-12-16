@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  mame_merge_index_files.sh
 #
 #  This script merges older ROM index files with newly generated ones.

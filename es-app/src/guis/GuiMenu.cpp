@@ -14,8 +14,8 @@
 #include <winsock2.h>
 #endif
 
+#include "ApplicationVersion.h"
 #include "CollectionSystemsManager.h"
-#include "EmulationStation.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "Scripting.h"
@@ -73,12 +73,12 @@ GuiMenu::GuiMenu()
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
 #if defined(__APPLE__)
-        addEntry("QUIT EMULATIONSTATION", mMenuColorPrimary, false, [this] { openQuitMenu(); });
+        addEntry("QUIT ES-DE", mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #else
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
             addEntry("QUIT", mMenuColorPrimary, true, [this] { openQuitMenu(); });
         else
-            addEntry("QUIT EMULATIONSTATION", mMenuColorPrimary, false, [this] { openQuitMenu(); });
+            addEntry("QUIT ES-DE", mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #endif
     }
 
@@ -1789,8 +1789,8 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        auto quitText = std::make_shared<TextComponent>(
-            "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+        auto quitText = std::make_shared<TextComponent>("QUIT ES-DE", Font::get(FONT_SIZE_MEDIUM),
+                                                        mMenuColorPrimary);
         quitText->setSelectable(true);
         row.addElement(quitText, true);
         s->addRow(row);
@@ -1840,10 +1840,10 @@ void GuiMenu::addVersionInfo()
     mVersion.setColor(mMenuColorTertiary);
 
 #if defined(IS_PRERELEASE)
-    mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
-                     " (Built " + __DATE__ + ")");
+    mVersion.setText("ES-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) + " (Built " +
+                     __DATE__ + ")");
 #else
-    mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+    mVersion.setText("ES-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 #endif
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);

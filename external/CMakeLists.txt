@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  CMakeLists.txt (external)
 #
 #  CMake configuration for bundled dependencies built in-tree.

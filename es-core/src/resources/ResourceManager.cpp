@@ -64,7 +64,7 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
             return testExePath;
         }
         // For missing resources, log an error and terminate the application. This should
-        // indicate that we have a broken EmulationStation installation. If the argument
+        // indicate that we have a broken ES-DE installation. If the argument
         // terminateOnFailure is set to false though, then skip this step.
         else {
 #endif
@@ -80,7 +80,7 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
 #if !defined(__ANDROID__)
                 LOG(LogError) << testExePath;
 #endif
-                LOG(LogError) << "Has EmulationStation been properly installed?";
+                LOG(LogError) << "Has ES-DE been properly installed?";
                 Utils::Platform::emergencyShutdown();
             }
             else {

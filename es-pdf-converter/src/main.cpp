@@ -48,7 +48,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
         validArguments = false;
 
     if (!validArguments) {
-        std::cout << "This binary is only intended to be executed by EmulationStation.exe (ES-DE)"
+        std::cout << "This binary is only intended to be executed by ES-DE.exe"
                   << std::endl;
         exit(-1);
     }
@@ -79,9 +79,9 @@ int main(int argc, char* argv[])
 
     if (!validArguments) {
 #if defined(__APPLE__)
-        std::cout << "This binary is only intended to be executed by EmulationStation (ES-DE)"
+        std::cout << "This binary is only intended to be executed by ES-DE"
 #else
-        std::cout << "This binary is only intended to be executed by emulationstation (ES-DE)"
+        std::cout << "This binary is only intended to be executed by es-de"
 #endif
                   << std::endl;
         exit(-1);

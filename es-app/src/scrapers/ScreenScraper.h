@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ScreenScraper.h
 //
 //  Functions specifically for scraping from screenscraper.fr
@@ -10,7 +10,7 @@
 #ifndef ES_APP_SCRAPERS_SCREEN_SCRAPER_H
 #define ES_APP_SCRAPERS_SCREEN_SCRAPER_H
 
-#include "EmulationStation.h"
+#include "ApplicationVersion.h"
 #include "scrapers/Scraper.h"
 
 namespace pugi

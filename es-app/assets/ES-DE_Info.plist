@@ -3,19 +3,19 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>org.es-de.EmulationStation</string>
+    <string>org.es-de.Frontend</string>
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
     <key>CFBundleDisplayName</key>
-    <string>EmulationStation Desktop Edition</string>
+    <string>ES-DE</string>
     <key>CFBundleExecutable</key>
-    <string>EmulationStation</string>
+    <string>ES-DE</string>
     <key>CFBundleGetInfoString</key>
-    <string>EmulationStation Desktop Edition 3.0.0</string>
+    <string>ES-DE 3.0.0</string>
     <key>CFBundleIconFile</key>
-    <string>EmulationStation-DE.icns</string>
+    <string>ES-DE.icns</string>
     <key>CFBundleName</key>
-    <string>EmulationStation Desktop Edition</string>
+    <string>ES-DE</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
@@ -37,9 +37,9 @@
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>NSMainNibFile</key>
-    <string>EmulationStation</string>
+    <string>ES-DE</string>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright (c) 2020-2023 Leon Styhre
+    <string>Copyright (c) 2020-2024 Leon Styhre
 Copyright (c) 2014 Alec Lofquist
 Licensed under the MIT license</string>
 </dict>

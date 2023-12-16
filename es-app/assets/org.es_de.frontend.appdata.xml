@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-    <id>org.es_de.emulationstation-de</id>
-    <name>EmulationStation Desktop Edition</name>
+    <id>org.es_de.frontend</id>
+    <name>ES-DE</name>
     <summary>Emulator frontend</summary>
     <description>
-        <p>EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and
+        <p>ES-DE (EmulationStation Desktop Edition) is a frontend for browsing and
            launching games from your multi-platform game collection.</p>
     </description>
-    <launchable type="desktop-id">org.es_de.emulationstation-de.desktop</launchable>
+    <launchable type="desktop-id">org.es_de.frontend.desktop</launchable>
     <categories>
         <category>Game</category>
         <category>Emulator</category>

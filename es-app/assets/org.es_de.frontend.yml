@@ -1,16 +1,16 @@
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
-#  org.es_de.emulationstation-de.yml
+#  ES-DE
+#  org.es_de.frontend.yml
 #
 #  Flatpak manifest file for use with flatpak-builder.
 #
 
-app-id: org.es_de.emulationstation-de
+app-id: org.es_de.frontend-de
 sdk: org.freedesktop.Sdk
 runtime: org.freedesktop.Platform
 runtime-version: '21.08'
-command: emulationstation
+command: es-de
 finish-args:
   - --share=ipc
   - --socket=x11

@@ -7,12 +7,12 @@
 #  Also contains the application packaging configuration.
 #
 
-project(emulationstation-de)
+project(es-de)
 
 set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationUpdater.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationVersion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/EmulationStation.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.h
@@ -112,7 +112,7 @@ set(ES_SOURCES
 )
 
 if(WIN32)
-    LIST(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation.rc)
+    LIST(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE.rc)
 endif()
 
 #---------------------------------------------------------------------------------------------------
@@ -121,31 +121,31 @@ endif()
 # Define target.
 if(APPLE)
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    add_executable(EmulationStation ${ES_SOURCES} ${ES_HEADERS})
-    target_link_libraries(EmulationStation ${COMMON_LIBRARIES} es-core)
-    set_target_properties(EmulationStation PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
+    add_executable(ES-DE ${ES_SOURCES} ${ES_HEADERS})
+    target_link_libraries(ES-DE ${COMMON_LIBRARIES} es-core)
+    set_target_properties(ES-DE PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
     if(CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 15.0.0)
-        target_link_options(EmulationStation PRIVATE LINKER:-no_warn_duplicate_libraries)
+        target_link_options(ES-DE PRIVATE LINKER:-no_warn_duplicate_libraries)
     endif()
 elseif(WIN32)
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    add_executable(EmulationStation WIN32 ${ES_SOURCES} ${ES_HEADERS})
-    target_link_libraries(EmulationStation ${COMMON_LIBRARIES} es-core)
-    set_target_properties(EmulationStation PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
+    add_executable(ES-DE WIN32 ${ES_SOURCES} ${ES_HEADERS})
+    target_link_libraries(ES-DE ${COMMON_LIBRARIES} es-core)
+    set_target_properties(ES-DE PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
 elseif(ANDROID)
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_library(main MODULE ${ES_SOURCES} ${ES_HEADERS})
     target_link_libraries(main PRIVATE ${COMMON_LIBRARIES} ${CMAKE_DL_LIBS} es-core es-pdf-convert)
 else()
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    add_executable(emulationstation ${ES_SOURCES} ${ES_HEADERS})
-    target_link_libraries(emulationstation ${COMMON_LIBRARIES} ${CMAKE_DL_LIBS} es-core)
-    set_target_properties(emulationstation PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
+    add_executable(es-de ${ES_SOURCES} ${ES_HEADERS})
+    target_link_libraries(es-de ${COMMON_LIBRARIES} ${CMAKE_DL_LIBS} es-core)
+    set_target_properties(es-de PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
 # Setup for installation and package generation.
 if(WIN32)
-    install(TARGETS EmulationStation RUNTIME DESTINATION .)
+    install(TARGETS ES-DE RUNTIME DESTINATION .)
     install(TARGETS es-pdf-convert RUNTIME DESTINATION es-pdf-converter)
     if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         set(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION .)
@@ -278,10 +278,10 @@ elseif(APPLE)
     # So an extra 'Resources' directory was added to the CMAKE_INSTALL_PREFIX variable as well
     # to compensate for this. It's a bad solution to the problem and there must surely be a
     # better way to fix this.
-    install(TARGETS EmulationStation RUNTIME DESTINATION ../MacOS)
+    install(TARGETS ES-DE RUNTIME DESTINATION ../MacOS)
     install(TARGETS es-pdf-convert RUNTIME DESTINATION ../MacOS)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns DESTINATION ../Resources)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist DESTINATION .. RENAME Info.plist)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE.icns DESTINATION ../Resources)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE_Info.plist DESTINATION .. RENAME Info.plist)
 
     set(APPLE_DYLIB_PERMISSIONS OWNER_WRITE OWNER_READ OWNER_EXECUTE
                                 GROUP_READ GROUP_EXECUTE
@@ -330,33 +330,33 @@ elseif(APPLE)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de DESTINATION ../Resources/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION ../Resources)
 elseif(NOT ANDROID)
-    install(TARGETS emulationstation RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+    install(TARGETS es-de RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     install(TARGETS es-pdf-convert RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     if(CMAKE_SYSTEM_NAME MATCHES Linux)
-        install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.6.gz
+        install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/es-de.6.gz
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man6)
     else()
-        install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.6.gz
+        install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/es-de.6.gz
             DESTINATION ${CMAKE_INSTALL_PREFIX}/man/man6)
     endif()
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.desktop
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/es-de)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.frontend.desktop
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.svg
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.frontend.svg
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.svg
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.frontend.svg
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.appdata.xml
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.frontend.appdata.xml
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/es-de)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation/themes)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/es-de/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation/themes)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/es-de/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/es-de)
 endif()
 
 include(InstallRequiredSystemLibraries)
@@ -364,17 +364,17 @@ include(InstallRequiredSystemLibraries)
 #---------------------------------------------------------------------------------------------------
 # General CPack settings.
 
-set(CPACK_PACKAGE_NAME emulationstation-de)
+set(CPACK_PACKAGE_NAME es-de)
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Emulator frontend")
-set(CPACK_PACKAGE_DESCRIPTION "EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and launching games from your multi-platform game collection.")
+set(CPACK_PACKAGE_DESCRIPTION "ES-DE (EmulationStation Desktop Edition) is a frontend for browsing and launching games from your multi-platform game collection.")
 set(CPACK_PACKAGE_VERSION ${ES_VERSION})
 
 if(APPLE)
     # Shorter line length license file to be able to fit inside the drag-and-drop installer window without introducing extra line breaks.
-    set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_LICENSE_macOS)
+    set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE_LICENSE_macOS)
 elseif(WIN32)
     # The installer window looks a bit different on Windows so a specific file for this OS is required.
-    set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_LICENSE_Windows)
+    set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE_LICENSE_Windows)
 else()
     set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 endif()
@@ -390,40 +390,40 @@ endif()
 # Settings per operating system and generator type.
 if(APPLE)
     set(CPACK_GENERATOR Bundle)
-    set(CPACK_PACKAGE_FILE_NAME EmulationStation-DE-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE})
-    set(CPACK_DMG_VOLUME_NAME "EmulationStation Desktop Edition ${CPACK_PACKAGE_VERSION}")
-    set(CPACK_PACKAGE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns)
-    set(CPACK_DMG_DS_STORE ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_DS_Store)
-    set(CPACK_BUNDLE_NAME "EmulationStation Desktop Edition")
-    set(CPACK_BUNDLE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns)
-    set(CPACK_BUNDLE_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist)
+    set(CPACK_PACKAGE_FILE_NAME ES-DE_${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE})
+    set(CPACK_DMG_VOLUME_NAME "ES-DE ${CPACK_PACKAGE_VERSION}")
+    set(CPACK_PACKAGE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE.icns)
+    set(CPACK_DMG_DS_STORE ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE_DS_Store)
+    set(CPACK_BUNDLE_NAME "ES-DE")
+    set(CPACK_BUNDLE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE.icns)
+    set(CPACK_BUNDLE_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE_Info.plist)
     if(MACOS_CODESIGN_IDENTITY)
         set(CPACK_BUNDLE_APPLE_CERT_APP "Developer ID Application: ${MACOS_CODESIGN_IDENTITY}")
         set(CPACK_BUNDLE_APPLE_CODESIGN_PARAMETER "--deep --force --options runtime")
     endif()
 elseif(WIN32)
     set(CPACK_GENERATOR NSIS)
-    set(CPACK_PACKAGE_FILE_NAME EmulationStation-DE-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE})
-    set(CPACK_PACKAGE_INSTALL_DIRECTORY EmulationStation-DE)
-    set(CPACK_PACKAGE_EXECUTABLES EmulationStation EmulationStation)
+    set(CPACK_PACKAGE_FILE_NAME ES-DE_${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE})
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY ES-DE)
+    set(CPACK_PACKAGE_EXECUTABLES ES-DE ES-DE)
     set(CPACK_NSIS_INSTALL_ROOT ${PROGRAMFILES64})
     set(CPACK_NSIS_EXECUTABLES_DIRECTORY .)
-    set(CPACK_NSIS_MUI_ICON ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation.ico)
+    set(CPACK_NSIS_MUI_ICON ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE.ico)
     set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
-    set(CPACK_NSIS_DISPLAY_NAME "EmulationStation Desktop Edition ${CPACK_PACKAGE_VERSION}")
-    set(CPACK_NSIS_PACKAGE_NAME "EmulationStation Desktop Edition")
-    set(CPACK_NSIS_INSTALLED_ICON_NAME EmulationStation.exe)
-    set(CPACK_NSIS_WELCOME_TITLE "EmulationStation Desktop Edition Installer")
-    set(CPACK_NSIS_FINISH_TITLE "EmulationStation Desktop Edition Installation Completed")
+    set(CPACK_NSIS_DISPLAY_NAME "ES-DE ${CPACK_PACKAGE_VERSION}")
+    set(CPACK_NSIS_PACKAGE_NAME "ES-DE")
+    set(CPACK_NSIS_INSTALLED_ICON_NAME ES-DE.exe)
+    set(CPACK_NSIS_WELCOME_TITLE "ES-DE Installer")
+    set(CPACK_NSIS_FINISH_TITLE "ES-DE Installation Completed")
     set(CPACK_NSIS_MANIFEST_DPI_AWARE ON)
     set(CPACK_NSIS_MENU_LINKS "https://es-de.org" "ES-DE Website" "https://es-de.org" "Please Donate")
 else()
-    set(CPACK_PACKAGE_INSTALL_DIRECTORY emulationstation_${CMAKE_PACKAGE_VERSION})
-    set(CPACK_PACKAGE_EXECUTABLES emulationstation emulationstation)
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY es-de_${CMAKE_PACKAGE_VERSION})
+    set(CPACK_PACKAGE_EXECUTABLES es-de es-de)
     if(LINUX_CPACK_GENERATOR MATCHES DEB)
         set(CPACK_GENERATOR DEB)
     endif()
-    set(CPACK_DEBIAN_FILE_NAME emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.deb)
+    set(CPACK_DEBIAN_FILE_NAME es-de_${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.deb)
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Leon Styhre <info@es-de.org>")
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE https://es-de.org)
     set(CPACK_DEBIAN_PACKAGE_SECTION games)
@@ -432,7 +432,7 @@ else()
     if(LINUX_CPACK_GENERATOR MATCHES RPM)
         set(CPACK_GENERATOR RPM)
     endif()
-    set(CPACK_RPM_FILE_NAME emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.rpm)
+    set(CPACK_RPM_FILE_NAME es-de_${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.rpm)
     set(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
     set(CPACK_RPM_PACKAGE_LICENSE MIT)
     list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION ${CMAKE_INSTALL_PREFIX})

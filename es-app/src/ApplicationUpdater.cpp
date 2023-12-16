@@ -9,7 +9,7 @@
 
 #include "ApplicationUpdater.h"
 
-#include "EmulationStation.h"
+#include "ApplicationVersion.h"
 #include "Log.h"
 #include "Settings.h"
 #include "resources/ResourceManager.h"

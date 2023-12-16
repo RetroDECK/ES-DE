@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  create_AppImage.sh
 #
 #  Runs the complete process of building a Linux AppImage.
@@ -72,22 +72,18 @@ make clean
 make -j${JOBS}
 make install DESTDIR=AppDir
 cd AppDir
-ln -s usr/bin/emulationstation AppRun
-ln -s usr/share/pixmaps/emulationstation.svg .
-ln -s usr/share/applications/org.es_de.emulationstation-de.desktop .
-ln -s emulationstation.svg .DirIcon
+ln -s usr/bin/es-de AppRun
+ln -s usr/share/pixmaps/es-de.svg .
+ln -s usr/share/applications/org.es_de.frontend.desktop .
+ln -s es-de.svg .DirIcon
 cd usr/bin
-ln -s ../share/emulationstation/resources .
-ln -s ../share/emulationstation/themes .
+ln -s ../share/es-de/resources .
+ln -s ../share/es-de/themes .
 cd ../../..
 
 ./linuxdeploy-x86_64.AppImage -l /lib/x86_64-linux-gnu/libOpenGL.so.0 -l /lib/x86_64-linux-gnu/libGLdispatch.so.0 -l /lib/x86_64-linux-gnu/libgio-2.0.so.0 --appdir AppDir
 cp external/SDL/build/${SDL_SHARED_LIBRARY} AppDir/usr/lib/libSDL2-2.0.so.0
 ./appimagetool-x86_64.AppImage AppDir
 
-#VERSION=$(grep PROGRAM_VERSION_STRING es-app/src/EmulationStation.h | cut -f3 -d" " | sed s/\"//g)
-#mv EmulationStation_Desktop_Edition-x86_64.AppImage EmulationStation-DE-${VERSION}-x64.AppImage
-#echo -e "\nCreated AppImage EmulationStation-DE-${VERSION}-x64.AppImage"
-
-mv EmulationStation_Desktop_Edition-x86_64.AppImage EmulationStation-DE-x64.AppImage
-echo -e "\nCreated AppImage EmulationStation-DE-x64.AppImage"
+mv ES-DE-x86_64.AppImage ES-DE_x64.AppImage
+echo -e "\nCreated AppImage ES-DE_x64.AppImage"

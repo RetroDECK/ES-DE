@@ -11,12 +11,12 @@
 cmake_minimum_required(VERSION 3.13)
 if(APPLE)
     # Set this to the minimum supported macOS version, and also update
-    # es-app/assets/EmulationStation-DE_Info.plist accordingly.
+    # es-app/assets/ES-DE_Info.plist accordingly.
     set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15 CACHE STRING "macOS deployment target")
     # This optional variable is used for code signing the DMG installer.
     set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS code signing certificate identity")
 endif()
-project(emulationstation-de)
+project(es-de)
 
 # Application version, update this when making a new release.
 set(ES_VERSION 3.0.0-alpha)
@@ -157,12 +157,12 @@ endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES Clang)
     message("-- Compiler is Clang/LLVM")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0.0)
-        message(SEND_ERROR "You need at least Clang 5.0.0 to compile EmulationStation-DE")
+        message(SEND_ERROR "You need at least Clang 5.0.0 to compile ES-DE")
     endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     message("-- Compiler is GNU/GCC")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.1)
-        message(SEND_ERROR "You need at least GCC 7.1 to compile EmulationStation-DE")
+        message(SEND_ERROR "You need at least GCC 7.1 to compile ES-DE")
     endif()
     if(WIN32)
         set(CMAKE_CXX_FLAGS "-mwindows ${CMAKE_CXX_FLAGS}")
@@ -229,8 +229,8 @@ if(EMSCRIPTEN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2 -pthread")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s INITIAL_MEMORY=33554432 -s ALLOW_MEMORY_GROWTH=1 -s WASM=1 -s ASSERTIONS=1 -s EXIT_RUNTIME=1 -s USE_SDL=2 \
                                 -pthread -s PTHREAD_POOL_SIZE=4 -s DEMANGLE_SUPPORT=1 -s USE_WEBGL2=1 -s FULL_ES3=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s ASYNCIFY \
-                                --preload-file ${PROJECT_SOURCE_DIR}/resources@/home/web_user/.emulationstation/resources/ \
-                                --preload-file ${PROJECT_SOURCE_DIR}/themes/slate-es-de@/home/web_user/.emulationstation/themes/slate-es-de/ \
+                                --preload-file ${PROJECT_SOURCE_DIR}/resources@/home/web_user/ES-DE/resources/ \
+                                --preload-file ${PROJECT_SOURCE_DIR}/themes/slate-es-de@/home/web_user/ES-DE/themes/slate-es-de/ \
                                 --preload-file ${PROJECT_SOURCE_DIR}/ROMs@/home/web_user/ROMs/")
 endif()
 
@@ -636,7 +636,7 @@ endif()
 if(APPLE)
     # See es-app/CMakeLists.txt for an explation for why an extra "Resources" directory
     # has been added to the install prefix.
-    set(CMAKE_INSTALL_PREFIX "/Applications/EmulationStation Desktop Edition.app/Contents/Resources")
+    set(CMAKE_INSTALL_PREFIX "/Applications/ES-DE.app/Contents/Resources")
 
     # Set the same rpath links for the install executable as for the build executable.
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

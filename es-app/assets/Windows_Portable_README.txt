@@ -1,4 +1,4 @@
-EmulationStation Desktop Edition (ES-DE) - Portable installation on Windows
+ES-DE (EmulationStation Desktop Edition) - Portable installation on Windows
 ---------------------------------------------------------------------------
 
 ES-DE release:
@@ -15,18 +15,18 @@ New installation:
 1) The ROMs_ALL directory contains all the systems that ES-DE supports, but to decrease application startup time only copy the folders you need to the ROMs directory
 2) Place your games into their respective folders in the ROMs directory tree
 3) Place your emulators inside the Emulators directory
-4) Start ES-DE using EmulationStation.exe and enjoy some retrogaming!
+4) Start ES-DE using ES-DE.exe and enjoy some retrogaming!
 
 Upgrading from an older release:
-1) Rename your old EmulationStation-DE directory, for example to EmulationStation-DE_OLD
-2) Move your games from EmulationStation-DE_OLD\ROMs\ to EmulationStation-DE\ROMs\
-3) Move your emulators from EmulationStation-DE_OLD\Emulators\ to EmulationStation-DE\Emulators\
-4) Move the contents of EmulationStation-DE_OLD\.emulationstation\ to EmulationStation-DE\.emulationstation\
+1) Rename your old ES-DE directory, for example to ES-DE_OLD
+2) Move your games from ES-DE_OLD\ROMs\ to ES-DE\ROMs\
+3) Move your emulators from ES-DE_OLD\Emulators\ to ES-DE\Emulators\
+4) Move the contents of ES-DE_OLD\ES-DE\ to ES-DE\ES-DE\
    This last step includes your settings, custom collections, custom systems, scraped/downloaded media, gamelist.xml files, scripts and themes
 5) Update your themes using the theme downloader to get support for all the latest systems and features
 
-In case of issues, check .emulationstation\es_log.txt for clues as to what went wrong.
-Enabling the "Debug mode" setting in the "Other settings" menu or starting EmulationStation.exe with the --debug flag will provide additional details.
+In case of issues, check ES-DE\es_log.txt for clues as to what went wrong.
+Enabling the "Debug mode" setting in the "Other settings" menu or starting ES-DE.exe with the --debug flag will provide additional details.
 
 Refer to the FAQ and user guide for more detailed instructions and documentation:
 https://gitlab.com/es-de/emulationstation-de/-/blob/master/FAQ.md

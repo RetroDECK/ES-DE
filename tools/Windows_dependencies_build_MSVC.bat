@@ -1,6 +1,6 @@
 ::  SPDX-License-Identifier: MIT
 ::
-::  EmulationStation Desktop Edition
+::  ES-DE
 ::  Windows_dependencies_build_MSVC.bat
 ::
 ::  Builds the external dependencies in-tree using MSVC.

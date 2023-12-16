@@ -18,18 +18,18 @@
 *.d
 
 # Compiled executable
-emulationstation
-EmulationStation
-EmulationStation.exe
-es-pdf-convert
-es-pdf-convert.exe
+/es-de
+/ES-DE
+/ES-DE.exe
+/es-pdf-convert
+/es-pdf-convert.exe
 
 # Emscripten build
-emulationstation.data
-emulationstation.html
-emulationstation.js
-emulationstation.wasm
-emulationstation.worker.js
+es-de.data
+es-de.html
+es-de.js
+es-de.wasm
+es-de.worker.js
 /index.html
 /ROMs
 
@@ -42,7 +42,7 @@ AppDir
 *.AppImage
 
 # Core dumps
-emulationstation.core
+es-de.core
 
 # Profiling data
 callgrind.out.*
@@ -64,21 +64,21 @@ CMakeFiles
 cmake_install.cmake
 Makefile
 install_manifest.txt
-EmulationStation.exe.manifest
+ES-DE.exe.manifest
 
 # CPack
 _CPack_Packages
-emulationstation-de*.deb
-emulationstation-de*.rpm
-EmulationStation-DE*.dmg
-EmulationStation-DE*.exe
+es-de*.deb
+es-de*.rpm
+ES-DE*.dmg
+ES-DE*.exe
 
 # macOS
 .DS_Store
 
 # MSVC
-EmulationStation.ilk
-EmulationStation.pdb
+ES-DE.ilk
+ES-DE.pdb
 es-pdf-convert.ilk
 es-pdf-convert.pdb
 lunasvg.exp

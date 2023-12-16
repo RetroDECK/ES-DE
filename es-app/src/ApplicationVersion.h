@@ -1,12 +1,11 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation.h
-//
-//  Version and build information.
+//  ES-DE
+//  ApplicationVersion.h
 //
 
-#ifndef ES_APP_EMULATION_STATION_H
-#define ES_APP_EMULATION_STATION_H
+#ifndef ES_APP_APPLICATION_VERSION_H
+#define ES_APP_APPLICATION_VERSION_H
 
 // These numbers and strings need to be manually updated for a new version.
 // Do this version number update as the very last commit for the new release version.
@@ -23,4 +22,4 @@
 #define RESOURCE_VERSION_STRING "3,0,0\0"
 #define RESOURCE_VERSION PROGRAM_VERSION_MAJOR, PROGRAM_VERSION_MINOR, PROGRAM_VERSION_MAINTENANCE
 
-#endif // ES_APP_EMULATION_STATION_H
+#endif // ES_APP_APPLICATION_VERSION_H

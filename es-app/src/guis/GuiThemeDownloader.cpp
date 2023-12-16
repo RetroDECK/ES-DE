@@ -8,7 +8,7 @@
 
 #include "guis/GuiThemeDownloader.h"
 
-#include "EmulationStation.h"
+#include "ApplicationVersion.h"
 #include "ThemeData.h"
 #include "components/MenuComponent.h"
 #include "resources/ResourceManager.h"

@@ -13,9 +13,9 @@
 //
 
 #include "ApplicationUpdater.h"
+#include "ApplicationVersion.h"
 #include "AudioManager.h"
 #include "CollectionSystemsManager.h"
-#include "EmulationStation.h"
 #include "InputManager.h"
 #include "Log.h"
 #include "MameNames.h"
@@ -385,15 +385,15 @@ bool parseArguments(const std::vector<std::string>& arguments)
             Log::setReportingLevel(LogDebug);
         }
         else if (arguments[i] == "--version" || arguments[i] == "-v") {
-            std::cout << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << " (r"
+            std::cout << "ES-DE v" << PROGRAM_VERSION_STRING << " (r"
                       << PROGRAM_RELEASE_NUMBER << ")\n";
             return false;
         }
         else if (arguments[i] == "--help" || arguments[i] == "-h") {
             std::cout <<
                 // clang-format off
-"Usage: emulationstation [options]\n"
-"EmulationStation Desktop Edition, Emulator Frontend\n\n"
+"Usage: es-de [options]\n"
+"ES-DE (EmulationStation Desktop Edition), Emulator Frontend\n\n"
 "Options:\n"
 "  --display [1 to 4]                    Display/monitor to use\n"
 "  --resolution [width] [height]         Application resolution\n"
@@ -428,7 +428,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
         else {
             const std::string argUnknown {arguments[i]};
             std::cout << "Unknown option '" << argUnknown << "'.\n";
-            std::cout << "Try 'emulationstation --help' for more information.\n";
+            std::cout << "Try 'es-de --help' for more information.\n";
             return false;
         }
     }
@@ -540,7 +540,7 @@ int main(int argc, char* argv[])
     // macOS which forces a restore of the previous window state. The problem is that this
     // removes the splash screen on startup and it may have other adverse effects as well.
     std::string saveStateDir {Utils::FileSystem::expandHomePath(
-        "~/Library/Saved Application State/org.es-de.EmulationStation.savedState")};
+        "~/Library/Saved Application State/org.es-de.Frontend.savedState")};
     // Deletion of the state files should normally not be required as there shouldn't be any
     // files to begin with. But maybe the files can still be created for unknown reasons
     // as macOS really really loves to restore windows. Let's therefore include this deletion
@@ -623,7 +623,7 @@ int main(int argc, char* argv[])
     // Start the logger.
     Log::init();
     Log::open();
-    LOG(LogInfo) << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << " (r"
+    LOG(LogInfo) << "ES-DE v" << PROGRAM_VERSION_STRING << " (r"
                  << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
     if (portableMode) {
         LOG(LogInfo) << "Running in portable mode";
@@ -639,7 +639,7 @@ int main(int argc, char* argv[])
     if (createSystemDirectories) {
         if (!SystemData::createSystemDirectories() && !Settings::getInstance()->getBool("Debug"))
             std::cout << "System directories successfully created" << std::endl;
-        LOG(LogInfo) << "EmulationStation cleanly shutting down";
+        LOG(LogInfo) << "ES-DE cleanly shutting down";
 #if defined(_WIN64)
         FreeConsole();
 #endif
@@ -1042,7 +1042,7 @@ int main(int argc, char* argv[])
 
     Utils::Platform::processQuitMode();
 
-    LOG(LogInfo) << "EmulationStation cleanly shutting down";
+    LOG(LogInfo) << "ES-DE cleanly shutting down";
 
 #if defined(_WIN64)
     FreeConsole();

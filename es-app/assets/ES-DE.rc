@@ -1,4 +1,4 @@
-#include "EmulationStation.h"
+#include "ApplicationVersion.h"
 
 #include "windows.h"
 
@@ -21,13 +21,13 @@ BEGIN
         BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "es-de.org\0"
-            VALUE "FileDescription", "EmulationStation\0"
+            VALUE "FileDescription", "ES-DE\0"
             VALUE "FileVersion", RESOURCE_VERSION_STRING
-            VALUE "InternalName", "emulationstation.exe\0"
-            VALUE "LegalCopyright", "Copyright (c) 2020-2023 Leon Styhre\0"
+            VALUE "InternalName", "ES-DE.exe\0"
+            VALUE "LegalCopyright", "Copyright (c) 2020-2024 Leon Styhre\0"
             VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "emulationstation.exe\0"
-            VALUE "ProductName", "EmulationStation\0"
+            VALUE "OriginalFilename", "ES-DE.exe\0"
+            VALUE "ProductName", "ES-DE\0"
             VALUE "ProductVersion", PROGRAM_VERSION_STRING
         END
     END
@@ -37,4 +37,4 @@ BEGIN
     END
 END
 
-IDI_ES_LOGO ICON DISCARDABLE "EmulationStation.ico"
+IDI_ES_LOGO ICON DISCARDABLE "ES-DE.ico"

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ViewController.h
 //
 //  Handles overall system navigation including animations and transitions.
