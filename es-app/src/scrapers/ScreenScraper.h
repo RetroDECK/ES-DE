@@ -72,9 +72,8 @@ public:
 #else
         const std::string platformIdentifier {" O"};
 #endif
-        const std::string API_SOFT_NAME = "EmulationStation-DE " +
-                                          static_cast<std::string>(PROGRAM_VERSION_STRING) +
-                                          platformIdentifier;
+        const std::string API_SOFT_NAME =
+            "ES-DE " + static_cast<std::string>(PROGRAM_VERSION_STRING) + platformIdentifier;
 
         // Which type of image artwork we need. Possible values (not a comprehensive list):
         // - ss: in-game screenshot
