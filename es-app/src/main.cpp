@@ -807,6 +807,31 @@ int main(int argc, char* argv[])
     }
 
     {
+        // Create the screensavers and screensavers/custom_slideshow directories.
+        const std::filesystem::path screensaversDir {
+            Utils::FileSystem::getAppDataDirectory().append("screensavers")};
+        const std::filesystem::path slideshowDir {Utils::FileSystem::getAppDataDirectory()
+                                                      .append("screensavers")
+                                                      .append("custom_slideshow")};
+        if (!Utils::FileSystem::existsSTD(screensaversDir)) {
+            LOG(LogInfo) << "Creating screensavers directory \"" << screensaversDir.string()
+                         << "\"...";
+            Utils::FileSystem::createDirectory(screensaversDir.string());
+            if (!Utils::FileSystem::existsSTD(screensaversDir)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
+        }
+        if (!Utils::FileSystem::existsSTD(slideshowDir)) {
+            LOG(LogInfo) << "Creating custom_slideshow directory \"" << slideshowDir.string()
+                         << "\"...";
+            Utils::FileSystem::createDirectory(slideshowDir.string());
+            if (!Utils::FileSystem::existsSTD(slideshowDir)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
+        }
+    }
+
+    {
         if (!Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
             // Create the controllers folder in the application data directory.
             const std::filesystem::path controllersDir {
