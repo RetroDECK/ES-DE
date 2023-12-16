@@ -109,7 +109,7 @@
         <name>arcade</name>
         <fullname>Arcade</fullname>
         <path>%ROMPATH%/arcade</path>
-        <extension>.cmd .CMD .desktop .sh .7z .7Z .zip .ZIP</extension>
+        <extension>.cmd .CMD .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -435,7 +435,7 @@
         <name>doom</name>
         <fullname>Doom</fullname>
         <path>%ROMPATH%/doom</path>
-        <extension>.desktop .iwad .IWAD .pk4 .PK4 .pwad .PWAD .sh .wad .WAD</extension>
+        <extension>.iwad .IWAD .pwad .PWAD .wad .WAD</extension>
         <command label="PrBoom">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=prboom_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>pc, pcwindows</platform>
         <theme>doom</theme>
@@ -797,7 +797,7 @@
         <name>mame</name>
         <fullname>Multiple Arcade Machine Emulator</fullname>
         <path>%ROMPATH%/mame</path>
-        <extension>.cmd .CMD .desktop .sh .7z .7Z .zip .ZIP</extension>
+        <extension>.cmd .CMD .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -1799,7 +1799,7 @@
         <name>windows3x</name>
         <fullname>Microsoft Windows 3.x</fullname>
         <path>%ROMPATH%/windows3x</path>
-        <extension>.bat .BAT .desktop .dosz .DOSZ .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .dosz .DOSZ .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=dosbox_pure_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>windows3x</platform>
         <theme>windows3x</theme>
@@ -1808,7 +1808,7 @@
         <name>windows9x</name>
         <fullname>Microsoft Windows 9x</fullname>
         <path>%ROMPATH%/windows9x</path>
-        <extension>.bat .BAT .desktop .dosz .DOSZ .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .dosz .DOSZ .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=dosbox_pure_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>pcwindows</platform>
         <theme>windows9x</theme>
