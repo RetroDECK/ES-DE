@@ -199,14 +199,14 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
 
     // Custom image directory.
     ComponentListRow rowCustomImageDir;
-    auto screensaverSlideshowImageDir = std::make_shared<TextComponent>(
+    auto ScreensaverSlideshowCustomDir = std::make_shared<TextComponent>(
         "CUSTOM IMAGE DIRECTORY", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
     auto bracketCustomImageDir = std::make_shared<ImageComponent>();
     bracketCustomImageDir->setResize(
         glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     bracketCustomImageDir->setImage(":/graphics/arrow.svg");
     bracketCustomImageDir->setColorShift(mMenuColorPrimary);
-    rowCustomImageDir.addElement(screensaverSlideshowImageDir, true);
+    rowCustomImageDir.addElement(ScreensaverSlideshowCustomDir, true);
     rowCustomImageDir.addElement(bracketCustomImageDir, false);
     const std::string titleCustomImageDir {"CUSTOM IMAGE DIRECTORY"};
     const std::string defaultImageDirStaticText {"Default directory:"};
@@ -215,10 +215,10 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
                                                .append("custom_slideshow")
                                                .string()};
     const std::string initValueMediaDir {
-        Settings::getInstance()->getString("ScreensaverSlideshowImageDir")};
+        Settings::getInstance()->getString("ScreensaverSlideshowCustomDir")};
     const bool multiLineMediaDir {false};
     auto updateValMediaDir = [this, s](const std::string& newVal) {
-        Settings::getInstance()->setString("ScreensaverSlideshowImageDir", newVal);
+        Settings::getInstance()->setString("ScreensaverSlideshowCustomDir", newVal);
         s->setNeedsSaving();
     };
     rowCustomImageDir.makeAcceptInputHandler(
@@ -227,14 +227,14 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
             if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
                     getHelpStyle(), s->getMenu().getPosition().y, titleCustomImageDir,
-                    Settings::getInstance()->getString("ScreensaverSlideshowImageDir"),
+                    Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
                     updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
                     defaultImageDirStaticText, defaultImageDirText, "load default directory"));
             }
             else {
                 mWindow->pushGui(new GuiTextEditPopup(
                     getHelpStyle(), titleCustomImageDir,
-                    Settings::getInstance()->getString("ScreensaverSlideshowImageDir"),
+                    Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
                     updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
                     defaultImageDirStaticText, defaultImageDirText, "load default directory"));
             }

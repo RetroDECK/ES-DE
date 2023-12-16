@@ -202,7 +202,7 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverSlideshowScanlines"] = {false, false};
     mBoolMap["ScreensaverSlideshowCustomImages"] = {false, false};
     mBoolMap["ScreensaverSlideshowRecurse"] = {false, false};
-    mStringMap["ScreensaverSlideshowImageDir"] = {"", ""};
+    mStringMap["ScreensaverSlideshowCustomDir"] = {"", ""};
 
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreensaverSwapVideoTimeout"] = {0, 0};

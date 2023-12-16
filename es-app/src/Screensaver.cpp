@@ -465,7 +465,7 @@ void Screensaver::generateVideoList()
 void Screensaver::generateCustomImageList()
 {
     std::string imageDir {Utils::FileSystem::expandHomePath(
-        Settings::getInstance()->getString("ScreensaverSlideshowImageDir"))};
+        Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"))};
 
     if (imageDir.empty())
         imageDir = Utils::FileSystem::getAppDataDirectory()
