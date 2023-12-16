@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.2 - Themes
+# ES-DE (EmulationStation Desktop Edition) v2.2 - Themes
 
 If creating themes specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Themes made for ES-DE are not compatible with any other EmulationStation forks (and vice versa) and the -es-de extension makes it clear that it's an ES-DE theme. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting themes from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
 

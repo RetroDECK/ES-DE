@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.2 - Building and advanced configuration
+# ES-DE (EmulationStation Desktop Edition) v2.2 - Building and advanced configuration
 
 Table of contents:
 
@@ -1466,7 +1466,7 @@ Here is yet another example with the addition of the `snes` system where some fi
 
 This file makes it possible to apply a custom systems sorting without having to modify the es_systems.xml file directly. It should be placed in the custom_systems directory, e.g.  `~/.emulationstation/custom_systems/es_systems_sorting.xml`
 
-Note that in order for ES-DE to load this file you'll need to set the _Systems sorting_ option in the _Other settings_ menu to _Full names or custom_.
+Note that in order for ES-DE to load this file you'll need to set the _Systems sorting_ option in the _UI settings_ menu to _Full names or custom_.
 
 The structure of this file is essentially a simplified version of the es_systems.xml file, but with only the `<name>` and `<systemsortname>` tags present per system.
 

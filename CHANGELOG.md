@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) - Changelog
+# ES-DE (EmulationStation Desktop Edition) - Changelog
 
 ## Version 3.0.0 (in development)
 
@@ -8,10 +8,16 @@
 
 ### Detailed list of changes
 
+* Renamed the application from EmulationStation Desktop Edition to ES-DE
+* Renamed the application data directory from .emulationstation to ES-DE
 * (Unix) Removed the -Minimized flag from the Visual Pinball launch command
 * (Windows) Updated the find rules for Visual Pinball to match the actual filenames of the official releases
+* Added workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
+* Replaced a number of homecooked functions in FileSystemUtil with those from the C++ Standard Library
 
 ### Bug fixes
+
+* Font textures were sometimes updated with empty glyhps which generated OpenGL errors on some mobile GPUs
 
 ## Version 2.2.1
 

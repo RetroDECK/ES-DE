@@ -1,11 +1,10 @@
-# EmulationStation Desktop Edition (ES-DE) - Credits
+# ES-DE (EmulationStation Desktop Edition) - Credits
 
 # Programming
 
-**Desktop Edition**\
+**ES-DE**\
 Leon Styhre \
-Sophia Hadash \
-Joseph Geumlek
+Sophia Hadash
 
 **RetroPie fork**\
 RetroPie community

@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v3.0 (development version) - Themes
+# ES-DE (EmulationStation Desktop Edition) v3.0 (development version) - Themes
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 

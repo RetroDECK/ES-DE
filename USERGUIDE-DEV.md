@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v3.0 (development version) - User guide
+# ES-DE (EmulationStation Desktop Edition) v3.0 (development version) - User guide
 
 This version of the user guide is only relevant for the current ES-DE development version, if you are using the latest stable release, refer to [USERGUIDE.md](USERGUIDE.md) instead.
 

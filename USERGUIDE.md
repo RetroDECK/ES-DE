@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.2 - User guide
+# ES-DE (EmulationStation Desktop Edition) v2.2 - User guide
 
 It's generally recommended to read the [Frequently Asked Questions (FAQ)](FAQ.md) document prior to diving into the information in this guide.
 

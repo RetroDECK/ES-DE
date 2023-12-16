@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) - Frequently Asked Questions
+# ES-DE (EmulationStation Desktop Edition) - Frequently Asked Questions
 
 ## What is this project and how is it related to other EmulationStation forks?
 
