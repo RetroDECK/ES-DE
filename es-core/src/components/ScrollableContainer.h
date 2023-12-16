@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ScrollableContainer.h
 //
 //  Component containing scrollable information, used for the game

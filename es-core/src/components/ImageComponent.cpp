@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ImageComponent.cpp
 //
 //  Handles images: loading, resizing, cropping, color shifting etc.

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiGamelistOptions.h
 //
 //  Gamelist options menu for the 'Jump to...' quick selector,

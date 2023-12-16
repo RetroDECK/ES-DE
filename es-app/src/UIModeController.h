@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  UIModeController.h
 //
 //  Handling of application user interface modes (full, kiosk and kid).

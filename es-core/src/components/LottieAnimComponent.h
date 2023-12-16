@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  LottieAnimComponent.h
 //
 //  Component to play Lottie animations using the rlottie library.

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  HelpComponent.cpp
 //
 //  Help information in icon and text pairs.

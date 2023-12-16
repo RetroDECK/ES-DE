@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  TextListComponent.h
 //
 //  Text list, usable in both the system and gamelist views.

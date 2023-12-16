@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiTextEditKeyboardPopup.cpp
 //
 //  Text edit popup with a virtual keyboard.

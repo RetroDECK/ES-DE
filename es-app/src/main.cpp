@@ -393,7 +393,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
             std::cout <<
                 // clang-format off
 "Usage: es-de [options]\n"
-"ES-DE (EmulationStation Desktop Edition), Emulator Frontend\n\n"
+"ES-DE (ES-DE), Emulator Frontend\n\n"
 "Options:\n"
 "  --display [1 to 4]                    Display/monitor to use\n"
 "  --resolution [width] [height]         Application resolution\n"

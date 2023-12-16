@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  AnimatedImageComponent.cpp
 //
 //  Creates animation from multiple images files.

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.

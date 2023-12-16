@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ComponentGrid.cpp
 //
 //  Provides basic layout of components in an X*Y grid.

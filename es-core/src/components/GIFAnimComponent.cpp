@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GIFAnimComponent.cpp
 //
 //  Component to play GIF animations.

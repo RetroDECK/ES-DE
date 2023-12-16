@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  PrimaryComponent.h
 //
 //  Base class for the primary components (carousel, grid and textlist).

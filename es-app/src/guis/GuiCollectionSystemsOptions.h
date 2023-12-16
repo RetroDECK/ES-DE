@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiCollectionSystemsOptions.h
 //
 //  User interface for the game collection settings.

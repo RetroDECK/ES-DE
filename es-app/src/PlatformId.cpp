@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  PlatformId.cpp
 //
 //  Index of all supported systems/platforms.

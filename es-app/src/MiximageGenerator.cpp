@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  MiximageGenerator.cpp
 //
 //  Generates miximages from screenshots, marquees, 3D boxes/covers and physical media images.

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  LambdaAnimation.h
 //
 //  Custom animations, expressed as lambdas.

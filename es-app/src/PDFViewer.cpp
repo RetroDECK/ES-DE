@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  PDFViewer.cpp
 //
 //  Parses and renders pages using the Poppler library via the external es-pdf-convert binary.

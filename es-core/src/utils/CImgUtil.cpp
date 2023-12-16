@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  CImgUtil.cpp
 //
 //  Utility functions using the CImg image processing library.

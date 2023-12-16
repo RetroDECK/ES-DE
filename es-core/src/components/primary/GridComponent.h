@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GridComponent.h
 //
 //  Grid, usable in both the system and gamelist views.

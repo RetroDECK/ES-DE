@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ComponentList.cpp
 //
 //  Used to lay out and navigate lists in GUI menus.

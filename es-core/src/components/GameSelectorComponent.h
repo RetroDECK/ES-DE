@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GameSelectorComponent.h
 //
 //  Makes a selection of games based on theme-controlled criteria.

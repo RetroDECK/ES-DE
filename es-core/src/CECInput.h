@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  CECInput.h
 //
 //  CEC (Consumer Electronics Control) input.
