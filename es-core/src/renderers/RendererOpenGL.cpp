@@ -241,15 +241,13 @@ bool RendererOpenGL::createContext()
 #endif
 
 #if defined(USE_OPENGLES)
-    LOG(LogInfo) << "Application renderer: OpenGL ES " << mMajorGLVersion << "."
-                 << mMinorGLVersion;
+    LOG(LogInfo) << "Application renderer: OpenGL ES " << mMajorGLVersion << "." << mMinorGLVersion;
 #else
 #if defined(_WIN64)
-    LOG(LogInfo) << "Application renderer: OpenGL " << mMajorGLVersion << "."
-                 << mMinorGLVersion << " with GLEW";
+    LOG(LogInfo) << "Application renderer: OpenGL " << mMajorGLVersion << "." << mMinorGLVersion
+                 << " with GLEW";
 #else
-    LOG(LogInfo) << "Application renderer: OpenGL " << mMajorGLVersion << "."
-                 << mMinorGLVersion;
+    LOG(LogInfo) << "Application renderer: OpenGL " << mMajorGLVersion << "." << mMinorGLVersion;
 #endif
 #endif
 
