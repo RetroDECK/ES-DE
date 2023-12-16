@@ -221,24 +221,24 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
         Settings::getInstance()->setString("ScreensaverSlideshowCustomDir", newVal);
         s->setNeedsSaving();
     };
-    rowCustomImageDir.makeAcceptInputHandler(
-        [this, s, titleCustomImageDir, defaultImageDirStaticText, defaultImageDirText,
-         initValueMediaDir, updateValMediaDir] {
-            if (Settings::getInstance()->getBool("VirtualKeyboard")) {
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    getHelpStyle(), s->getMenu().getPosition().y, titleCustomImageDir,
-                    Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
-                    updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
-                    defaultImageDirStaticText, defaultImageDirText, "load default directory"));
-            }
-            else {
-                mWindow->pushGui(new GuiTextEditPopup(
-                    getHelpStyle(), titleCustomImageDir,
-                    Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
-                    updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
-                    defaultImageDirStaticText, defaultImageDirText, "load default directory"));
-            }
-        });
+    rowCustomImageDir.makeAcceptInputHandler([this, s, titleCustomImageDir,
+                                              defaultImageDirStaticText, defaultImageDirText,
+                                              initValueMediaDir, updateValMediaDir] {
+        if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                getHelpStyle(), s->getMenu().getPosition().y, titleCustomImageDir,
+                Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
+                updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
+                defaultImageDirStaticText, defaultImageDirText, "load default directory"));
+        }
+        else {
+            mWindow->pushGui(new GuiTextEditPopup(
+                getHelpStyle(), titleCustomImageDir,
+                Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
+                updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
+                defaultImageDirStaticText, defaultImageDirText, "load default directory"));
+        }
+    });
     s->addRow(rowCustomImageDir);
 
     s->setSize(mSize);
