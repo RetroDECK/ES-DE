@@ -319,7 +319,11 @@ namespace Utils
             return getHomePathSTD();
 #else
             if (FileSystemVariables::sAppDataDirectory.empty()) {
-                if (Utils::FileSystem::existsSTD(getHomePathSTD().append(".emulationstation"))) {
+                if (Utils::FileSystem::existsSTD(getHomePathSTD().append("ES-DE"))) {
+                    FileSystemVariables::sAppDataDirectory = getHomePathSTD().append("ES-DE");
+                }
+                else if (Utils::FileSystem::existsSTD(
+                             getHomePathSTD().append(".emulationstation"))) {
                     FileSystemVariables::sAppDataDirectory =
                         getHomePathSTD().append(".emulationstation");
                 }
