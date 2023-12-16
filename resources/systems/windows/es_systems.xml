@@ -509,7 +509,7 @@
         <name>doom</name>
         <fullname>Doom</fullname>
         <path>%ROMPATH%\doom</path>
-        <extension>.bat .BAT .iwad .IWAD .lnk .LNK .pk4 .PK4 .pwad .PWAD .wad .WAD</extension>
+        <extension>.bat .BAT .ipk3 .IPK3 .iwad .IWAD .lnk .LNK .pk3 .PK3 .pk4 .PK4 .pwad .PWAD .wad .WAD</extension>
         <command label="PrBoom">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\prboom_libretro.dll %ROM%</command>
         <command label="PrBoom+ (Standalone)">%EMULATOR_PRBOOM-PLUS% -iwad %ROM%</command>
         <command label="Boom 3">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\boom3_libretro.dll %ROM%</command>
