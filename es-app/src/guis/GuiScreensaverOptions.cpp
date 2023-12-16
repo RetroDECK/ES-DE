@@ -15,6 +15,8 @@
 #include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
+#include "guis/GuiTextEditPopup.h"
 
 GuiScreensaverOptions::GuiScreensaverOptions(const std::string& title)
     : GuiSettings {title}
@@ -196,20 +198,48 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     });
 
     // Custom image directory.
+    ComponentListRow rowCustomImageDir;
     auto screensaverSlideshowImageDir = std::make_shared<TextComponent>(
-        "", Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_RIGHT);
-    s->addEditableTextComponent(
-        "CUSTOM IMAGE DIRECTORY", screensaverSlideshowImageDir,
-        Settings::getInstance()->getString("ScreensaverSlideshowImageDir"),
-        Settings::getInstance()->getDefaultString("ScreensaverSlideshowImageDir"));
-    s->addSaveFunc([screensaverSlideshowImageDir, s] {
-        if (screensaverSlideshowImageDir->getValue() !=
-            Settings::getInstance()->getString("ScreensaverSlideshowImageDir")) {
-            Settings::getInstance()->setString("ScreensaverSlideshowImageDir",
-                                               screensaverSlideshowImageDir->getValue());
-            s->setNeedsSaving();
-        }
-    });
+        "CUSTOM IMAGE DIRECTORY", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+    auto bracketCustomImageDir = std::make_shared<ImageComponent>();
+    bracketCustomImageDir->setResize(
+        glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+    bracketCustomImageDir->setImage(":/graphics/arrow.svg");
+    bracketCustomImageDir->setColorShift(mMenuColorPrimary);
+    rowCustomImageDir.addElement(screensaverSlideshowImageDir, true);
+    rowCustomImageDir.addElement(bracketCustomImageDir, false);
+    const std::string titleCustomImageDir {"CUSTOM IMAGE DIRECTORY"};
+    const std::string defaultImageDirStaticText {"Default directory:"};
+    const std::string defaultImageDirText {Utils::FileSystem::getAppDataDirectory()
+                                               .append("screensavers")
+                                               .append("custom_slideshow")
+                                               .string()};
+    const std::string initValueMediaDir {
+        Settings::getInstance()->getString("ScreensaverSlideshowImageDir")};
+    const bool multiLineMediaDir {false};
+    auto updateValMediaDir = [this, s](const std::string& newVal) {
+        Settings::getInstance()->setString("ScreensaverSlideshowImageDir", newVal);
+        s->setNeedsSaving();
+    };
+    rowCustomImageDir.makeAcceptInputHandler(
+        [this, s, titleCustomImageDir, defaultImageDirStaticText, defaultImageDirText,
+         initValueMediaDir, updateValMediaDir, multiLineMediaDir] {
+            if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    getHelpStyle(), s->getMenu().getPosition().y, titleCustomImageDir,
+                    Settings::getInstance()->getString("ScreensaverSlideshowImageDir"),
+                    updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
+                    defaultImageDirStaticText, defaultImageDirText, "load default directory"));
+            }
+            else {
+                mWindow->pushGui(new GuiTextEditPopup(
+                    getHelpStyle(), titleCustomImageDir,
+                    Settings::getInstance()->getString("ScreensaverSlideshowImageDir"),
+                    updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
+                    defaultImageDirStaticText, defaultImageDirText, "load default directory"));
+            }
+        });
+    s->addRow(rowCustomImageDir);
 
     s->setSize(mSize);
     mWindow->pushGui(s);

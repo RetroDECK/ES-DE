@@ -464,8 +464,14 @@ void Screensaver::generateVideoList()
 
 void Screensaver::generateCustomImageList()
 {
-    std::string imageDir = Utils::FileSystem::expandHomePath(
-        Settings::getInstance()->getString("ScreensaverSlideshowImageDir"));
+    std::string imageDir {Utils::FileSystem::expandHomePath(
+        Settings::getInstance()->getString("ScreensaverSlideshowImageDir"))};
+
+    if (imageDir.empty())
+        imageDir = Utils::FileSystem::getAppDataDirectory()
+                       .append("screensavers")
+                       .append("custom_slideshow")
+                       .string();
 
     // This makes it possible to set the custom image directory relative to the ES-DE binary
     // directory or the ROM directory.
@@ -473,19 +479,23 @@ void Screensaver::generateCustomImageList()
     imageDir = Utils::String::replace(imageDir, "%ROMPATH%", FileData::getROMDirectory());
 
     if (imageDir != "" && Utils::FileSystem::isDirectory(imageDir)) {
-        std::string imageFilter {".jpg, .JPG, .png, .PNG"};
-        Utils::FileSystem::StringList dirContent = Utils::FileSystem::getDirContent(
-            imageDir, Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"));
+        const std::vector<std::string> extList {".jpg", ".JPG",  ".png",  ".PNG", ".gif",
+                                                ".GIF", ".webp", ".WEBP", ".svg", ".SVG"};
+
+        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(
+            imageDir, Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"))};
 
         for (auto it = dirContent.begin(); it != dirContent.end(); ++it) {
             if (Utils::FileSystem::isRegularFile(*it)) {
-                if (imageFilter.find(Utils::FileSystem::getExtension(*it)) != std::string::npos)
+                if (std::find(extList.cbegin(), extList.cend(),
+                              Utils::FileSystem::getExtension(*it)) != extList.cend())
                     mImageCustomFiles.push_back(*it);
             }
         }
     }
     else {
-        LOG(LogWarning) << "Custom screensaver image directory '" << imageDir << "' does not exist";
+        LOG(LogWarning) << "Custom screensaver image directory \"" << imageDir
+                        << "\" does not exist";
     }
 
     mCustomFilesInventory.insert(mCustomFilesInventory.begin(), mImageCustomFiles.begin(),
