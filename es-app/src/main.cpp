@@ -385,8 +385,8 @@ bool parseArguments(const std::vector<std::string>& arguments)
             Log::setReportingLevel(LogDebug);
         }
         else if (arguments[i] == "--version" || arguments[i] == "-v") {
-            std::cout << "ES-DE v" << PROGRAM_VERSION_STRING << " (r"
-                      << PROGRAM_RELEASE_NUMBER << ")\n";
+            std::cout << "ES-DE v" << PROGRAM_VERSION_STRING << " (r" << PROGRAM_RELEASE_NUMBER
+                      << ")\n";
             return false;
         }
         else if (arguments[i] == "--help" || arguments[i] == "-h") {
@@ -616,6 +616,13 @@ int main(int argc, char* argv[])
                     std::cerr << "Couldn't create directory, permission problems?" << std::endl;
 #endif
                 }
+                else {
+                    // Remove any old logs in the root of the directory.
+                    Utils::FileSystem::removeFile(
+                        Utils::FileSystem::getAppDataDirectory().append("es_log.txt").string());
+                    Utils::FileSystem::removeFile(
+                        Utils::FileSystem::getAppDataDirectory().append("es_log.txt.bak").string());
+                }
             }
         }
     }
@@ -623,8 +630,8 @@ int main(int argc, char* argv[])
     // Start the logger.
     Log::init();
     Log::open();
-    LOG(LogInfo) << "ES-DE v" << PROGRAM_VERSION_STRING << " (r"
-                 << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
+    LOG(LogInfo) << "ES-DE v" << PROGRAM_VERSION_STRING << " (r" << PROGRAM_RELEASE_NUMBER
+                 << "), built " << PROGRAM_BUILT_STRING;
     if (portableMode) {
         LOG(LogInfo) << "Running in portable mode";
         Settings::getInstance()->setBool("PortableMode", true);
