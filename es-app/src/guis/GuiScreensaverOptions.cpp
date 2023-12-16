@@ -217,7 +217,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     const std::string initValueMediaDir {
         Settings::getInstance()->getString("ScreensaverSlideshowCustomDir")};
     const bool multiLineMediaDir {false};
-    auto updateValMediaDir = [this, s](const std::string& newVal) {
+    auto updateValMediaDir = [s](const std::string& newVal) {
         Settings::getInstance()->setString("ScreensaverSlideshowCustomDir", newVal);
         s->setNeedsSaving();
     };
