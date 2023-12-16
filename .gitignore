@@ -22,7 +22,7 @@
 /ES-DE
 /ES-DE.exe
 /es-pdf-convert
-/es-pdf-convert.exe
+/es-pdf-converter/es-pdf-convert.exe
 
 # Emscripten build
 es-de.data
