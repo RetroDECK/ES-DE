@@ -1434,7 +1434,8 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
     // If it's a gamelist to system transition and these animations are set to slide.
     if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
             "TransitionsGamelistToSystem")) == ViewTransitionAnimation::SLIDE &&
-        viewState.previouslyViewed == ViewController::ViewMode::GAMELIST)
+        viewState.previouslyViewed == ViewController::ViewMode::GAMELIST &&
+        ViewController::getInstance()->isCameraMoving())
         stationaryApplicable = true;
 
     for (int i {renderBefore}; i <= renderAfter; ++i) {
