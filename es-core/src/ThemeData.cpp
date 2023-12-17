@@ -66,7 +66,8 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRati
     {"21:9", "21:9"},
     {"21:9_vertical", "21:9 vertical"},
     {"32:9", "32:0"},
-    {"32:9_vertical", "32:9 vertical"}};
+    {"32:9_vertical", "32:9 vertical"},
+    {"1:1", "1:1"}};
 
 std::map<std::string, float> ThemeData::sAspectRatioMap {
     {"16:9", 1.7777f},
@@ -82,7 +83,8 @@ std::map<std::string, float> ThemeData::sAspectRatioMap {
     {"21:9", 2.3703f},
     {"21:9_vertical", 0.4219f},
     {"32:9", 3.5555f},
-    {"32:9_vertical", 0.2813f}};
+    {"32:9_vertical", 0.2813f},
+    {"1:1", 1.0f}};
 
 std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
     // The data type is defined by the parent property.

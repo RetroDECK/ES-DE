@@ -163,7 +163,7 @@ bool Renderer::createWindow()
         sScreenHeight = tempVal;
     }
 
-    if (sScreenHeight > sScreenWidth)
+    if (sScreenHeight >= sScreenWidth)
         sIsVerticalOrientation = true;
     else
         sIsVerticalOrientation = false;
