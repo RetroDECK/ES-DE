@@ -18,7 +18,7 @@ https://github.com/lilbud/es-de-theme-stuff
 
 To test whether your theme includes support for all ES-DE systems, download one of the following archives which contain ROM directory trees fully populated with dummy files:
 
-[ROMs_ALL_Unix.zip](tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
+[ROMs_ALL_Linux.zip](tools/system-dirs-dummy-files/ROMs_ALL_Linux.zip)\
 [ROMs_ALL_macOS.zip](tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
 [ROMs_ALL_Windows.zip](tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
 
@@ -1341,7 +1341,7 @@ For any given step, the configuration is parsed in the exact order that it's def
 ## Property data types
 
 * NORMALIZED_PAIR - two decimal values delimited by a space, for example `0.25 0.5`
-* PATH - path to a resource. If the first character is a tilde (`~`) then it will be expanded to the user's home directory (`$HOME` for Unix and macOS and `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a dot (`.`) then the resource will be searched for relative to the location of the theme file, for example `./myfont.ttf` or `./../core/fonts/myfont.ttf`
+* PATH - path to a resource. If the first character is a tilde (`~`) then it will be expanded to the user's home directory (`$HOME` for Linux, BSD Unix and macOS and `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a dot (`.`) then the resource will be searched for relative to the location of the theme file, for example `./myfont.ttf` or `./../core/fonts/myfont.ttf`
 * BOOLEAN - `true`/`1` or `false`/`0`
 * COLOR - a hexadecimal RGB or RGBA color value consisting of 6 or 8 digits. If a 6 digit value is used then the alpha channel will be set to `FF` (completely opaque)
 * UNSIGNED_INTEGER - an unsigned integer value
@@ -2988,7 +2988,7 @@ Properties:
 
 #### helpsystem
 
-The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
+The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements. It also has to have its name attribute set to `help` or the configuration will not get loaded.
 
 It's possible to set this element as right-aligned or center-aligned using a combination of the `pos` and `origin` properties. For example `<pos>1 1</pos>` and `<origin>1 1</origin>` will place it in the lower right corner of the screen.
 

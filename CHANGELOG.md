@@ -10,6 +10,14 @@
 
 * Renamed the application from EmulationStation Desktop Edition to ES-DE
 * Renamed the application data directory from .emulationstation to ES-DE
+* Split the es_find_rules.xml and es_systems.xml files for Linux and BSD Unix into separate directories
+* Added support for .webp, .svg and unanimated .gif files to the slideshow screensaver when using a custom image directory
+* Changed the default slideshow custom image directory from slideshow/custom_images to screensavers/custom_slideshow
+* Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir
+* Added the .zso file extension to the ps2 system
+* Added the .zar file extension to the xbox360 system on Linux and Windows
+* Added the .pk3 and .ipk3 file extensions to the doom system on Linux, Unix and Windows
+* Added the .dirksimple file extension to the daphne and laserdisc systems
 * (Unix) Removed the -Minimized flag from the Visual Pinball launch command
 * (Windows) Updated the find rules for Visual Pinball to match the actual filenames of the official releases
 * Added workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format

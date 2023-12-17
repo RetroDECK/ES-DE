@@ -16,7 +16,7 @@ https://github.com/lilbud/es-de-theme-stuff
 
 To test whether your theme includes support for all ES-DE systems, download one of the following archives which contain ROM directory trees fully populated with dummy files:
 
-[ROMs_ALL_Unix.zip](tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
+[ROMs_ALL_Linux.zip](tools/system-dirs-dummy-files/ROMs_ALL_Linux.zip)\
 [ROMs_ALL_macOS.zip](tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
 [ROMs_ALL_Windows.zip](tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
 
@@ -2986,7 +2986,8 @@ Properties:
 
 #### helpsystem
 
-The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
+The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements. It also has to have its name attribute set to `help` or the configuration will not get loaded.
+
 
 It's possible to set this element as right-aligned or center-aligned using a combination of the `pos` and `origin` properties. For example `<pos>1 1</pos>` and `<origin>1 1</origin>` will place it in the lower right corner of the screen.
 
