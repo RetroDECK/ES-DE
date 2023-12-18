@@ -275,6 +275,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"stationary", STRING},
+       {"renderDuringTransitions", BOOLEAN},
        {"flipHorizontal", BOOLEAN},
        {"flipVertical", BOOLEAN},
        {"path", PATH},

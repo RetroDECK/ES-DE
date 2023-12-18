@@ -31,6 +31,7 @@ GuiComponent::GuiComponent()
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
     , mStationary {Stationary::NEVER}
+    , mRenderDuringTransitions {true}
     , mBrightness {0.0f}
     , mOpacity {1.0f}
     , mSaturation {1.0f}

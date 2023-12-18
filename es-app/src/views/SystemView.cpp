@@ -1476,10 +1476,33 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
             };
 
+            auto renderChildFunc = [this, &viewState](GuiComponent* child, glm::mat4 trans) {
+                if (child->getRenderDuringTransitions()) {
+                    child->render(trans);
+                }
+                else {
+                    bool renderChild {false};
+                    if (!ViewController::getInstance()->isCameraMoving())
+                        renderChild = true;
+                    else if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
+                        renderChild = true;
+                    else if (viewState.viewing == viewState.previouslyViewed)
+                        renderChild = true;
+                    else if (static_cast<ViewTransitionAnimation>(
+                                 Settings::getInstance()->getInt("TransitionsSystemToGamelist")) !=
+                                 ViewTransitionAnimation::SLIDE &&
+                             viewState.viewing == ViewController::ViewMode::GAMELIST)
+                        renderChild = true;
+
+                    if (renderChild)
+                        child->render(trans);
+                }
+            };
+
             clipRectFunc();
 
             if (mSystemElements.size() > static_cast<size_t>(index)) {
-                for (auto child : mSystemElements[index].children) {
+                for (GuiComponent* child : mSystemElements[index].children) {
                     bool renderChild {true};
                     bool childStationary {false};
                     if (stationaryApplicable) {
@@ -1520,11 +1543,11 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         if (renderChild) {
                             if (childStationary) {
                                 mRenderer->popClipRect();
-                                child->render(mRenderer->getIdentity());
+                                renderChildFunc(child, mRenderer->getIdentity());
                                 clipRectFunc();
                             }
                             else {
-                                child->render(elementTrans);
+                                renderChildFunc(child, elementTrans);
                             }
                         }
                     }
@@ -1534,11 +1557,11 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         if (renderChild) {
                             if (childStationary) {
                                 mRenderer->popClipRect();
-                                child->render(mRenderer->getIdentity());
+                                renderChildFunc(child, mRenderer->getIdentity());
                                 clipRectFunc();
                             }
                             else {
-                                child->render(elementTrans);
+                                renderChildFunc(child, elementTrans);
                             }
                         }
                     }

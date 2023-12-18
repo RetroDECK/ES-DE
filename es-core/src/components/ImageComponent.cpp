@@ -557,6 +557,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << element.substr(6) << "\" defined as \"" << stationary << "\"";
     }
 
+    if (elem->has("renderDuringTransitions"))
+        mRenderDuringTransitions = elem->get<bool>("renderDuringTransitions");
+
     // Enable linear interpolation by default if element is arbitrarily rotated.
     if (properties & ThemeFlags::ROTATION && elem->has("rotation")) {
         const float rotation {std::abs(elem->get<float>("rotation"))};
