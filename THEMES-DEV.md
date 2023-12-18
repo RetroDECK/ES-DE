@@ -887,6 +887,7 @@ Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary
 | 5:4              | 5:4_vertical   | 1280x1024                                      |
 | 21:9             | 21:9_vertical  | 2560x1080, 3840x1600, 5120x2160                |
 | 32:9             | 32:9_vertical  | 3840x1080, 5120x1440                           |
+| 1:1              | 1:1            | Any square resolution                          |
 
 The 21:9 and 32:9 aspect ratios are approximate as monitors of slightly different ratios are collectively marketed using these numbers.
 
@@ -2075,6 +2076,10 @@ Properties:
     - `always` - Set element as stationary during all transitions.
     - `never` - Don't set element as stationary during any transitions.
     - Default is `never`
+* `renderDuringTransitions` - type: BOOLEAN
+    - This special property which is only usable for slide transitions between the system and gamelist views makes it possible to for example have a background image stay seamlessly in place when transitioning, or being able to use semi-transparent stationary elements without having them render on top of each other during transitions. For this to work correctly only define `stationary` for one view and set `renderDuringTransitions` to false for the corresponding element in the other view. This way the element from the former view will keep rendering until the slide animation has been completed, after which the latter view will "take over" by rendering the element normally.
+    - This property can only be used if slide transitions are used, and only when moving from the system view to the gamelist view, or vice versa.
+    - Default is `true`
 * `flipHorizontal` - type: BOOLEAN
     - Flips the image texture horizontally.
     - Default is `false`
