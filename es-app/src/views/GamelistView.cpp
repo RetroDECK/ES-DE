@@ -416,26 +416,20 @@ void GamelistView::render(const glm::mat4& parentTrans)
     const ViewController::State viewState {ViewController::getInstance()->getState()};
     bool stationaryApplicable {false};
 
-    auto renderChildFunc = [this, &viewState](int i, glm::mat4 trans) {
-        if (getChild(i)->getRenderDuringTransitions()) {
+    auto renderChildCondFunc = [this, &viewState](int i, glm::mat4 trans) {
+        bool renderChild {false};
+        if (!ViewController::getInstance()->isCameraMoving())
+            renderChild = true;
+        else if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
+            renderChild = true;
+        else if (viewState.viewing == viewState.previouslyViewed)
+            renderChild = true;
+        else if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+                     "TransitionsGamelistToSystem")) != ViewTransitionAnimation::SLIDE &&
+                 viewState.viewing == ViewController::ViewMode::SYSTEM_SELECT)
+            renderChild = true;
+        if (renderChild)
             getChild(i)->render(trans);
-        }
-        else {
-            bool renderChild {false};
-            if (!ViewController::getInstance()->isCameraMoving())
-                renderChild = true;
-            else if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
-                renderChild = true;
-            else if (viewState.viewing == viewState.previouslyViewed)
-                renderChild = true;
-            else if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
-                         "TransitionsGamelistToSystem")) != ViewTransitionAnimation::SLIDE &&
-                     viewState.viewing == ViewController::ViewMode::SYSTEM_SELECT)
-                renderChild = true;
-
-            if (renderChild)
-                getChild(i)->render(trans);
-        }
     };
 
     // If it's the startup animation, then don't apply stationary properties.
@@ -489,11 +483,17 @@ void GamelistView::render(const glm::mat4& parentTrans)
             if (viewState.getSystem() != mRoot->getSystem())
                 continue;
             mRenderer->popClipRect();
-            renderChildFunc(i, mRenderer->getIdentity());
+            if (getChild(i)->getRenderDuringTransitions())
+                getChild(i)->render(mRenderer->getIdentity());
+            else
+                renderChildCondFunc(i, mRenderer->getIdentity());
             clipRectFunc();
         }
         else {
-            renderChildFunc(i, trans);
+            if (getChild(i)->getRenderDuringTransitions())
+                getChild(i)->render(trans);
+            else
+                renderChildCondFunc(i, trans);
         }
     }
 

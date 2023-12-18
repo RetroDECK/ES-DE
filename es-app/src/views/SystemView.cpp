@@ -1476,27 +1476,20 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
             };
 
-            auto renderChildFunc = [this, &viewState](GuiComponent* child, glm::mat4 trans) {
-                if (child->getRenderDuringTransitions()) {
+            auto renderChildCondFunc = [this, &viewState](GuiComponent* child, glm::mat4 trans) {
+                bool renderChild {false};
+                if (!ViewController::getInstance()->isCameraMoving())
+                    renderChild = true;
+                else if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
+                    renderChild = true;
+                else if (viewState.viewing == viewState.previouslyViewed)
+                    renderChild = true;
+                else if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+                             "TransitionsSystemToGamelist")) != ViewTransitionAnimation::SLIDE &&
+                         viewState.viewing == ViewController::ViewMode::GAMELIST)
+                    renderChild = true;
+                if (renderChild)
                     child->render(trans);
-                }
-                else {
-                    bool renderChild {false};
-                    if (!ViewController::getInstance()->isCameraMoving())
-                        renderChild = true;
-                    else if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
-                        renderChild = true;
-                    else if (viewState.viewing == viewState.previouslyViewed)
-                        renderChild = true;
-                    else if (static_cast<ViewTransitionAnimation>(
-                                 Settings::getInstance()->getInt("TransitionsSystemToGamelist")) !=
-                                 ViewTransitionAnimation::SLIDE &&
-                             viewState.viewing == ViewController::ViewMode::GAMELIST)
-                        renderChild = true;
-
-                    if (renderChild)
-                        child->render(trans);
-                }
             };
 
             clipRectFunc();
@@ -1543,11 +1536,17 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         if (renderChild) {
                             if (childStationary) {
                                 mRenderer->popClipRect();
-                                renderChildFunc(child, mRenderer->getIdentity());
+                                if (child->getRenderDuringTransitions())
+                                    child->render(mRenderer->getIdentity());
+                                else
+                                    renderChildCondFunc(child, mRenderer->getIdentity());
                                 clipRectFunc();
                             }
                             else {
-                                renderChildFunc(child, elementTrans);
+                                if (child->getRenderDuringTransitions())
+                                    child->render(elementTrans);
+                                else
+                                    renderChildCondFunc(child, elementTrans);
                             }
                         }
                     }
@@ -1557,11 +1556,17 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         if (renderChild) {
                             if (childStationary) {
                                 mRenderer->popClipRect();
-                                renderChildFunc(child, mRenderer->getIdentity());
+                                if (child->getRenderDuringTransitions())
+                                    child->render(mRenderer->getIdentity());
+                                else
+                                    renderChildCondFunc(child, mRenderer->getIdentity());
                                 clipRectFunc();
                             }
                             else {
-                                renderChildFunc(child, elementTrans);
+                                if (child->getRenderDuringTransitions())
+                                    child->render(elementTrans);
+                                else
+                                    renderChildCondFunc(child, elementTrans);
                             }
                         }
                     }
