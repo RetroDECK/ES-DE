@@ -878,16 +878,18 @@ The variant, color scheme and transitions names as well as their labels can be s
 
 Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary values, instead they have to use a value from the _horizontal name_ or _vertical name_ columns in the following table:
 
-| Horizontal name  | Vertical name  | Common resolutions                             |
-| :--------------- | :------------- | :--------------------------------------------- |
-| 16:9             | 16:9_vertical  | 1280x720, 1920x1080, 2560x1440, 3840x2160      |
-| 16:10            | 16:10_vertical | 1280x800, 1440x900, 1920x1200                  |
-| 3:2              | 3:2_vertical   | 2160x1440                                      |
-| 4:3              | 4:3_vertical   | 320x240, 640x480, 800x600, 1024x768, 1600x1200 |
-| 5:4              | 5:4_vertical   | 1280x1024                                      |
-| 21:9             | 21:9_vertical  | 2560x1080, 3840x1600, 5120x2160                |
-| 32:9             | 32:9_vertical  | 3840x1080, 5120x1440                           |
-| 1:1              | 1:1            | Any square resolution                          |
+| Horizontal name  | Vertical name   | Common resolutions                             |
+| :--------------- | :-------------- | :--------------------------------------------- |
+| 16:9             | 16:9_vertical   | 1280x720, 1920x1080, 2560x1440, 3840x2160      |
+| 16:10            | 16:10_vertical  | 1280x800, 1440x900, 1920x1200                  |
+| 3:2              | 3:2_vertical    | 2160x1440                                      |
+| 4:3              | 4:3_vertical    | 320x240, 640x480, 800x600, 1024x768, 1600x1200 |
+| 5:4              | 5:4_vertical    | 1280x1024                                      |
+| 19.5:9           | 19.5:9_vertical | 2340x1080, 2532x1170                           |
+| 20:9             | 20:9_vertical   | 2400x1080, 1600x720                            |
+| 21:9             | 21:9_vertical   | 2560x1080, 3840x1600, 5120x2160                |
+| 32:9             | 32:9_vertical   | 3840x1080, 5120x1440                           |
+| 1:1              | 1:1             | Any square resolution                          |
 
 The 21:9 and 32:9 aspect ratios are approximate as monitors of slightly different ratios are collectively marketed using these numbers.
 
