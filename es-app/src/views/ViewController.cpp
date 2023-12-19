@@ -142,8 +142,8 @@ void ViewController::legacyAppDataDialog()
     const std::string upgradeMessage {
         "AS OF ES-DE 3.0.0 THE APPLICATION DATA DIRECTORY HAS CHANGED FROM \".emulationstation\" "
         "to \"ES-DE\"\nPLEASE RENAME YOUR CURRENT DATA DIRECTORY:\n" +
-        Utils::FileSystem::getAppDataDirectory().string() + "\nTO THE FOLLOWING:\n" +
-        Utils::FileSystem::getAppDataDirectory().parent_path().append("ES-DE").string()};
+        Utils::FileSystem::getAppDataDirectory() + "\nTO THE FOLLOWING:\n" +
+        Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()) + "/ES-DE"};
 
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,

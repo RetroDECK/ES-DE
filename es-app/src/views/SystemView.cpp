@@ -1476,7 +1476,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
             };
 
-            auto renderChildCondFunc = [this, &viewState](GuiComponent* child, glm::mat4 trans) {
+            auto renderChildCondFunc = [&viewState](GuiComponent* child, glm::mat4 trans) {
                 bool renderChild {false};
                 if (!ViewController::getInstance()->isCameraMoving())
                     renderChild = true;

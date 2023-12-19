@@ -18,7 +18,7 @@
 class FileSystemVariables
 {
 public:
-    static inline std::filesystem::path sAppDataDirectory;
+    static inline std::string sAppDataDirectory;
 };
 
 namespace Utils
@@ -26,36 +26,29 @@ namespace Utils
     namespace FileSystem
     {
         using StringList = std::list<std::string>;
-        using FileList = std::list<std::filesystem::path>;
 
         StringList getDirContent(const std::string& path, const bool recursive = false);
-        FileList getDirContentSTD(const std::filesystem::path& path, const bool recursive = false);
         StringList getMatchingFiles(const std::string& pattern);
         StringList getPathList(const std::string& path);
         void setHomePath(const std::string& path);
         std::string getHomePath();
-        std::filesystem::path getHomePathSTD();
+        std::string getAppDataDirectory();
+        std::string getInternalAppDataDirectory();
         std::string getSystemHomeDirectory();
-        std::filesystem::path getAppDataDirectory();
-        std::filesystem::path getInternalAppDataDirectory();
+        std::string getCWDPath();
         std::string getPathToBinary(const std::string& executable);
         void setExePath(const std::string& path);
         std::string getExePath();
-        std::filesystem::path getExePathSTD();
         std::string getEsBinary();
-        std::filesystem::path getEsBinarySTD();
-        std::filesystem::path getProgramDataPath();
+        std::string getProgramDataPath();
         std::string getPreferredPath(const std::string& path);
         std::string getGenericPath(const std::string& path);
         std::string getEscapedPath(const std::string& path);
         std::string getCanonicalPath(const std::string& path);
-        std::filesystem::path getCanonicalPathSTD(const std::filesystem::path& path);
-        std::string getAbsolutePath(
-            const std::string& path,
-            const std::string& base = std::filesystem::current_path().string());
+        std::string getAbsolutePath(const std::string& path,
+                                    const std::string& base = getCWDPath());
         std::string getParent(const std::string& path);
         std::string getFileName(const std::string& path);
-        std::filesystem::path getFileNameSTD(const std::filesystem::path& path);
         std::string getStem(const std::string& path);
         std::string getExtension(const std::string& path);
         long getFileSize(const std::filesystem::path& path);
@@ -81,15 +74,11 @@ namespace Utils
         bool removeDirectory(const std::string& path, bool recursive);
         bool createDirectory(const std::string& path);
         bool exists(const std::string& path);
-        bool existsSTD(const std::filesystem::path& path);
         bool driveExists(const std::string& path);
         bool isAbsolute(const std::string& path);
         bool isRegularFile(const std::string& path);
-        bool isRegularFileSTD(const std::filesystem::path& path);
         bool isDirectory(const std::string& path);
-        bool isDirectorySTD(const std::filesystem::path& path);
         bool isSymlink(const std::string& path);
-        bool isSymlinkSTD(const std::filesystem::path& path);
         bool isHidden(const std::string& path);
 
     } // namespace FileSystem

@@ -468,10 +468,7 @@ void Screensaver::generateCustomImageList()
         Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"))};
 
     if (imageDir.empty())
-        imageDir = Utils::FileSystem::getAppDataDirectory()
-                       .append("screensavers")
-                       .append("custom_slideshow")
-                       .string();
+        imageDir = Utils::FileSystem::getAppDataDirectory() + "/screensavers/custom_slideshow";
 
     // This makes it possible to set the custom image directory relative to the ES-DE binary
     // directory or the ROM directory.

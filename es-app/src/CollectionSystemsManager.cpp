@@ -1625,5 +1625,6 @@ std::string CollectionSystemsManager::getCustomCollectionConfigPath(
 
 std::string CollectionSystemsManager::getCollectionsFolder()
 {
-    return Utils::FileSystem::getAppDataDirectory().append("collections").string();
+    return Utils::FileSystem::getGenericPath(Utils::FileSystem::getAppDataDirectory() +
+                                             "/collections");
 }

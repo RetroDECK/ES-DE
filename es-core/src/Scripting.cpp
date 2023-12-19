@@ -37,12 +37,12 @@ namespace Scripting
                       << "\" \"" << arg3 << "\" \"" << arg4 << "\"";
 
         std::list<std::string> scriptDirList;
-        std::filesystem::path scriptDir;
+        std::string scriptDir;
 
         // Check in application data directory.
-        scriptDir = Utils::FileSystem::getAppDataDirectory().append("scripts").append(eventName);
-        if (Utils::FileSystem::existsSTD(scriptDir))
-            scriptDirList.push_back(scriptDir.string());
+        scriptDir = Utils::FileSystem::getAppDataDirectory() + "/scripts/" + eventName;
+        if (Utils::FileSystem::exists(scriptDir))
+            scriptDirList.push_back(scriptDir);
 
         for (auto dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); ++dirIt) {
             std::list<std::string> scripts {Utils::FileSystem::getDirContent(*dirIt)};

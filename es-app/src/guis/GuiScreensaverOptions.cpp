@@ -210,10 +210,8 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     rowCustomImageDir.addElement(bracketCustomImageDir, false);
     const std::string titleCustomImageDir {"CUSTOM IMAGE DIRECTORY"};
     const std::string defaultImageDirStaticText {"Default directory:"};
-    const std::string defaultImageDirText {Utils::FileSystem::getAppDataDirectory()
-                                               .append("screensavers")
-                                               .append("custom_slideshow")
-                                               .string()};
+    const std::string defaultImageDirText {Utils::FileSystem::getAppDataDirectory() +
+                                           "/screensavers/custom_slideshow"};
     const std::string initValueMediaDir {
         Settings::getInstance()->getString("ScreensaverSlideshowCustomDir")};
     auto updateValMediaDir = [s](const std::string& newVal) {

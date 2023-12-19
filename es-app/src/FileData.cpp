@@ -153,7 +153,7 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
 const std::string FileData::getROMDirectory()
 {
 #if defined(__ANDROID__)
-    return AndroidVariables::sROMDirectory.string();
+    return AndroidVariables::sROMDirectory;
 #endif
 
     const std::string& romDirSetting {Settings::getInstance()->getString("ROMDirectory")};
@@ -189,8 +189,7 @@ const std::string FileData::getMediaDirectory()
     std::string mediaDirPath;
 
     if (mediaDirSetting.empty()) {
-        mediaDirPath =
-            Utils::FileSystem::getAppDataDirectory().append("downloaded_media").string() + "/";
+        mediaDirPath = Utils::FileSystem::getAppDataDirectory() + "/downloaded_media/";
     }
     else {
         mediaDirPath = mediaDirSetting;
@@ -879,8 +878,13 @@ void FileData::launchGame()
         }
     }
     else {
-        LOG(LogDebug) << "FileData::launchGame(): Using default emulator \""
-                      << mEnvData->mLaunchCommands.front().second << "\"";
+        if (!mEnvData->mLaunchCommands.front().second.empty()) {
+            LOG(LogDebug) << "FileData::launchGame(): Using default emulator \""
+                          << mEnvData->mLaunchCommands.front().second << "\"";
+        }
+        else {
+            LOG(LogDebug) << "FileData::launchGame(): Using default emulator";
+        }
     }
 
     if (command.empty())
@@ -2295,7 +2299,10 @@ const std::pair<std::string, FileData::findEmulatorResult> FileData::findEmulato
     }
 #endif
 
-    return std::make_pair(exePath, FileData::findEmulatorResult::NOT_FOUND);
+    if (exePath.empty())
+        return std::make_pair("", FileData::findEmulatorResult::NOT_FOUND);
+    else
+        return std::make_pair(exePath, FileData::findEmulatorResult::FOUND_FILE);
 }
 
 CollectionFileData::CollectionFileData(FileData* file, SystemData* system)

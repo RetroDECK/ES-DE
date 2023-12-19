@@ -444,18 +444,18 @@ bool parseArguments(const std::vector<std::string>& arguments)
 bool checkApplicationDataDirectory()
 {
     // Check that the application data directory exists, otherwise create it.
-    const std::filesystem::path applicationData {Utils::FileSystem::getAppDataDirectory()};
-    if (!Utils::FileSystem::existsSTD(applicationData)) {
+    const std::string applicationData {Utils::FileSystem::getAppDataDirectory()};
+    if (!Utils::FileSystem::exists(applicationData)) {
 #if defined(__ANDROID__)
         __android_log_print(ANDROID_LOG_VERBOSE, ANDROID_APPLICATION_ID,
                             "First startup, creating application data directory \"%s\"",
-                            applicationData.string().c_str());
+                            applicationData.c_str());
 #else
-        std::cout << "First startup, creating application data directory \""
-                  << applicationData.string() << "\"\n";
+        std::cout << "First startup, creating application data directory \"" << applicationData
+                  << "\"\n";
 #endif
-        Utils::FileSystem::createDirectory(applicationData.string());
-        if (!Utils::FileSystem::existsSTD(applicationData)) {
+        Utils::FileSystem::createDirectory(applicationData);
+        if (!Utils::FileSystem::exists(applicationData)) {
 #if defined(__ANDROID__)
             __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID,
                                 "Error: Couldn't create directory, permission problems?");
@@ -597,18 +597,16 @@ int main(int argc, char* argv[])
     {
         if (!Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
             // Create the logs folder in the application data directory.
-            const std::filesystem::path logsDir {
-                Utils::FileSystem::getAppDataDirectory().append("logs")};
-            if (!Utils::FileSystem::isDirectorySTD(logsDir)) {
+            const std::string logsDir {Utils::FileSystem::getAppDataDirectory() + "/logs"};
+            if (!Utils::FileSystem::isDirectory(logsDir)) {
 #if defined(__ANDROID__)
                 __android_log_print(ANDROID_LOG_VERBOSE, ANDROID_APPLICATION_ID,
-                                    "Creating logs directory \"%s\"...", logsDir.string().c_str());
+                                    "Creating logs directory \"%s\"...", logsDir.c_str());
 #else
-                std::cout << "Creating logs directory \"" << logsDir.string() << "\"..."
-                          << std::endl;
+                std::cout << "Creating logs directory \"" << logsDir << "\"..." << std::endl;
 #endif
-                Utils::FileSystem::createDirectory(logsDir.string());
-                if (!Utils::FileSystem::isDirectorySTD(logsDir)) {
+                Utils::FileSystem::createDirectory(logsDir);
+                if (!Utils::FileSystem::isDirectory(logsDir)) {
 #if defined(__ANDROID__)
                     __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID,
                                         "Couldn't create directory, permission problems?");
@@ -618,10 +616,10 @@ int main(int argc, char* argv[])
                 }
                 else {
                     // Remove any old logs in the root of the directory.
-                    Utils::FileSystem::removeFile(
-                        Utils::FileSystem::getAppDataDirectory().append("es_log.txt").string());
-                    Utils::FileSystem::removeFile(
-                        Utils::FileSystem::getAppDataDirectory().append("es_log.txt.bak").string());
+                    Utils::FileSystem::removeFile(Utils::FileSystem::getAppDataDirectory() +
+                                                  "/es_log.txt");
+                    Utils::FileSystem::removeFile(Utils::FileSystem::getAppDataDirectory() +
+                                                  "/es_log.txt.bak");
                 }
             }
         }
@@ -668,35 +666,30 @@ int main(int argc, char* argv[])
     {
         if (!Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
             // Create the settings folder in the application data directory.
-            const std::filesystem::path settingsDir {
-                Utils::FileSystem::getAppDataDirectory().append("settings")};
-            if (!Utils::FileSystem::isDirectorySTD(settingsDir)) {
-                LOG(LogInfo) << "Creating settings directory \"" << settingsDir.string() << "\"...";
-                Utils::FileSystem::createDirectory(settingsDir.string());
-                if (!Utils::FileSystem::isDirectorySTD(settingsDir)) {
+            const std::string settingsDir {Utils::FileSystem::getAppDataDirectory() + "/settings"};
+            if (!Utils::FileSystem::isDirectory(settingsDir)) {
+                LOG(LogInfo) << "Creating settings directory \"" << settingsDir << "\"...";
+                Utils::FileSystem::createDirectory(settingsDir);
+                if (!Utils::FileSystem::isDirectory(settingsDir)) {
                     LOG(LogError) << "Couldn't create directory, permission problems?";
                 }
             }
-            std::filesystem::path settingsPathOld;
-            std::filesystem::path settingsPathNew;
-            settingsPathOld = Utils::FileSystem::getAppDataDirectory().append("es_settings.xml");
-            settingsPathNew = Utils::FileSystem::getAppDataDirectory()
-                                  .append("settings")
-                                  .append("es_settings.xml");
-            if (!Utils::FileSystem::existsSTD(settingsPathNew) &&
-                Utils::FileSystem::existsSTD(settingsPathOld)) {
-                Utils::FileSystem::renameFile(settingsPathOld.string(), settingsPathNew.string(),
-                                              false);
+            std::string settingsPathOld;
+            std::string settingsPathNew;
+            settingsPathOld = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
+            settingsPathNew =
+                Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
+            if (!Utils::FileSystem::exists(settingsPathNew) &&
+                Utils::FileSystem::exists(settingsPathOld)) {
+                Utils::FileSystem::renameFile(settingsPathOld, settingsPathNew, false);
                 Settings::getInstance()->loadFile();
                 migratedSettings = true;
             }
-            settingsPathOld = Utils::FileSystem::getAppDataDirectory().append("es_input.xml");
-            settingsPathNew =
-                Utils::FileSystem::getAppDataDirectory().append("settings").append("es_input.xml");
-            if (!Utils::FileSystem::existsSTD(settingsPathNew) &&
-                Utils::FileSystem::existsSTD(settingsPathOld)) {
-                Utils::FileSystem::renameFile(settingsPathOld.string(), settingsPathNew.string(),
-                                              false);
+            settingsPathOld = Utils::FileSystem::getAppDataDirectory() + "/es_input.xml";
+            settingsPathNew = Utils::FileSystem::getAppDataDirectory() + "/settings/es_input.xml";
+            if (!Utils::FileSystem::exists(settingsPathNew) &&
+                Utils::FileSystem::exists(settingsPathOld)) {
+                Utils::FileSystem::renameFile(settingsPathOld, settingsPathNew, false);
                 migratedSettings = true;
             }
         }
@@ -704,15 +697,13 @@ int main(int argc, char* argv[])
 
     {
         // Check if the es_settings.xml file exists, and if not, create it.
-        std::filesystem::path settingsPath;
+        std::string settingsPath;
         if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
-            settingsPath = Utils::FileSystem::getAppDataDirectory().append("es_settings.xml");
+            settingsPath = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
         else
-            settingsPath = Utils::FileSystem::getAppDataDirectory()
-                               .append("settings")
-                               .append("es_settings.xml");
+            settingsPath = Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
 
-        if (!Utils::FileSystem::existsSTD(settingsPath)) {
+        if (!Utils::FileSystem::exists(settingsPath)) {
             LOG(LogInfo) << "Settings file es_settings.xml does not exist, creating it...";
             Settings::getInstance()->saveFile();
         }
@@ -743,12 +734,11 @@ int main(int argc, char* argv[])
 
     {
         // Create the gamelists folder in the application data directory.
-        const std::filesystem::path gamelistsDir {
-            Utils::FileSystem::getAppDataDirectory().append("gamelists")};
-        if (!Utils::FileSystem::existsSTD(gamelistsDir)) {
-            LOG(LogInfo) << "Creating gamelists directory \"" << gamelistsDir.string() << "\"...";
-            Utils::FileSystem::createDirectory(gamelistsDir.string());
-            if (!Utils::FileSystem::existsSTD(gamelistsDir)) {
+        const std::string gamelistsDir {Utils::FileSystem::getAppDataDirectory() + "/gamelists"};
+        if (!Utils::FileSystem::exists(gamelistsDir)) {
+            LOG(LogInfo) << "Creating gamelists directory \"" << gamelistsDir << "\"...";
+            Utils::FileSystem::createDirectory(gamelistsDir);
+            if (!Utils::FileSystem::exists(gamelistsDir)) {
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
@@ -756,36 +746,34 @@ int main(int argc, char* argv[])
 
     {
 #if defined(__ANDROID__)
-        const std::filesystem::path themeDir {
-            Utils::FileSystem::getAppDataDirectory().append("themes")};
-        if (!Utils::FileSystem::existsSTD(themeDir)) {
-            LOG(LogInfo) << "Creating themes directory \"" << themeDir.string() << "\"...";
+        const std::string themeDir {Utils::FileSystem::getAppDataDirectory() + "/themes"};
+        if (!Utils::FileSystem::exists(themeDir)) {
+            LOG(LogInfo) << "Creating themes directory \"" << themeDir << "\"...";
 
-            Utils::FileSystem::createDirectory(themeDir.string());
-            if (!Utils::FileSystem::existsSTD(themeDir)) {
+            Utils::FileSystem::createDirectory(themeDir);
+            if (!Utils::FileSystem::exists(themeDir)) {
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
 #else
         // Create the themes folder in the application data directory (or elsewhere if the
         // UserThemeDirectory setting has been defined).
-        const std::filesystem::path defaultUserThemeDir {
-            Utils::FileSystem::getAppDataDirectory().append("themes")};
-        std::filesystem::path userThemeDirSetting {Utils::FileSystem::expandHomePath(
+        const std::string defaultUserThemeDir {Utils::FileSystem::getAppDataDirectory() +
+                                               "/themes"};
+        std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
             Settings::getInstance()->getString("UserThemeDirectory"))};
-        std::filesystem::path userThemeDirectory;
+        std::string userThemeDirectory;
 
         if (userThemeDirSetting.empty())
             userThemeDirectory = defaultUserThemeDir;
         else
             userThemeDirectory = userThemeDirSetting;
 
-        if (!Utils::FileSystem::existsSTD(userThemeDirectory)) {
-            LOG(LogInfo) << "Creating themes directory \"" << userThemeDirectory.string()
-                         << "\"...";
+        if (!Utils::FileSystem::exists(userThemeDirectory)) {
+            LOG(LogInfo) << "Creating themes directory \"" << userThemeDirectory << "\"...";
 
-            Utils::FileSystem::createDirectory(userThemeDirectory.string());
-            if (!Utils::FileSystem::existsSTD(userThemeDirectory)) {
+            Utils::FileSystem::createDirectory(userThemeDirectory);
+            if (!Utils::FileSystem::exists(userThemeDirectory)) {
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
@@ -795,12 +783,11 @@ int main(int argc, char* argv[])
     {
         // Create the scripts folder in the application data directory. This is only required
         // for custom event scripts so it's also created as a convenience.
-        const std::filesystem::path scriptsDir {
-            Utils::FileSystem::getAppDataDirectory().append("scripts")};
-        if (!Utils::FileSystem::existsSTD(scriptsDir)) {
-            LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir.string() << "\"...";
-            Utils::FileSystem::createDirectory(scriptsDir.string());
-            if (!Utils::FileSystem::existsSTD(scriptsDir)) {
+        const std::string scriptsDir {Utils::FileSystem::getAppDataDirectory() + "/scripts"};
+        if (!Utils::FileSystem::exists(scriptsDir)) {
+            LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir << "\"...";
+            Utils::FileSystem::createDirectory(scriptsDir);
+            if (!Utils::FileSystem::exists(scriptsDir)) {
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
@@ -808,24 +795,21 @@ int main(int argc, char* argv[])
 
     {
         // Create the screensavers and screensavers/custom_slideshow directories.
-        const std::filesystem::path screensaversDir {
-            Utils::FileSystem::getAppDataDirectory().append("screensavers")};
-        const std::filesystem::path slideshowDir {Utils::FileSystem::getAppDataDirectory()
-                                                      .append("screensavers")
-                                                      .append("custom_slideshow")};
-        if (!Utils::FileSystem::existsSTD(screensaversDir)) {
-            LOG(LogInfo) << "Creating screensavers directory \"" << screensaversDir.string()
-                         << "\"...";
-            Utils::FileSystem::createDirectory(screensaversDir.string());
-            if (!Utils::FileSystem::existsSTD(screensaversDir)) {
+        const std::string screensaversDir {Utils::FileSystem::getAppDataDirectory() +
+                                           "/screensavers"};
+        const std::string slideshowDir {Utils::FileSystem::getAppDataDirectory() +
+                                        "/screensavers/custom_slideshow"};
+        if (!Utils::FileSystem::exists(screensaversDir)) {
+            LOG(LogInfo) << "Creating screensavers directory \"" << screensaversDir << "\"...";
+            Utils::FileSystem::createDirectory(screensaversDir);
+            if (!Utils::FileSystem::exists(screensaversDir)) {
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
-        if (!Utils::FileSystem::existsSTD(slideshowDir)) {
-            LOG(LogInfo) << "Creating custom_slideshow directory \"" << slideshowDir.string()
-                         << "\"...";
-            Utils::FileSystem::createDirectory(slideshowDir.string());
-            if (!Utils::FileSystem::existsSTD(slideshowDir)) {
+        if (!Utils::FileSystem::exists(slideshowDir)) {
+            LOG(LogInfo) << "Creating custom_slideshow directory \"" << slideshowDir << "\"...";
+            Utils::FileSystem::createDirectory(slideshowDir);
+            if (!Utils::FileSystem::exists(slideshowDir)) {
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
@@ -834,25 +818,22 @@ int main(int argc, char* argv[])
     {
         if (!Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
             // Create the controllers folder in the application data directory.
-            const std::filesystem::path controllersDir {
-                Utils::FileSystem::getAppDataDirectory().append("controllers")};
-            if (!Utils::FileSystem::existsSTD(controllersDir)) {
-                LOG(LogInfo) << "Creating controllers directory \"" << controllersDir.string()
-                             << "\"...";
-                Utils::FileSystem::createDirectory(controllersDir.string());
-                if (!Utils::FileSystem::existsSTD(controllersDir)) {
+            const std::string controllersDir {Utils::FileSystem::getAppDataDirectory() +
+                                              "/controllers"};
+            if (!Utils::FileSystem::exists(controllersDir)) {
+                LOG(LogInfo) << "Creating controllers directory \"" << controllersDir << "\"...";
+                Utils::FileSystem::createDirectory(controllersDir);
+                if (!Utils::FileSystem::exists(controllersDir)) {
                     LOG(LogWarning) << "Couldn't create directory, permission problems?";
                 }
             }
-            std::filesystem::path configPathOld {
-                Utils::FileSystem::getAppDataDirectory().append("es_controller_mappings.cfg")};
-            std::filesystem::path configPathNew {Utils::FileSystem::getAppDataDirectory()
-                                                     .append("controllers")
-                                                     .append("es_controller_mappings.cfg")};
-            if (!Utils::FileSystem::existsSTD(configPathNew) &&
-                Utils::FileSystem::existsSTD(configPathOld)) {
-                Utils::FileSystem::renameFile(configPathOld.string(), configPathNew.string(),
-                                              false);
+            std::string configPathOld {Utils::FileSystem::getAppDataDirectory() +
+                                       "/es_controller_mappings.cfg"};
+            std::string configPathNew {Utils::FileSystem::getAppDataDirectory() +
+                                       "/controllers/es_controller_mappings.cfg"};
+            if (!Utils::FileSystem::exists(configPathNew) &&
+                Utils::FileSystem::exists(configPathOld)) {
+                Utils::FileSystem::renameFile(configPathOld, configPathNew, false);
                 migratedSettings = true;
             }
         }

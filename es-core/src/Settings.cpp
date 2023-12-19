@@ -78,7 +78,8 @@ Settings::Settings()
 {
     mWasChanged = false;
     setDefaults();
-    if (Utils::FileSystem::getAppDataDirectory().filename().string() == ".emulationstation")
+    if (Utils::FileSystem::getFileName(Utils::FileSystem::getAppDataDirectory()) ==
+        ".emulationstation")
         mBoolMap["LegacyAppDataDirectory"] = std::make_pair(true, true);
     loadFile();
 }
@@ -367,13 +368,12 @@ void Settings::setDefaults()
 
 void Settings::saveFile()
 {
-    std::filesystem::path path;
+    std::string path;
     if (mBoolMap["LegacyAppDataDirectory"].second == true) {
-        path = Utils::FileSystem::getAppDataDirectory().append("es_settings.xml");
+        path = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
     }
     else {
-        path =
-            Utils::FileSystem::getAppDataDirectory().append("settings").append("es_settings.xml");
+        path = Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
     }
 
     pugi::xml_document doc;
@@ -393,9 +393,9 @@ void Settings::saveFile()
     }
 
 #if defined(_WIN64)
-    doc.save_file(Utils::String::stringToWideString(path.string()).c_str());
+    doc.save_file(Utils::String::stringToWideString(path).c_str());
 #else
-    doc.save_file(path.string().c_str());
+    doc.save_file(path.c_str());
 #endif
 
     Scripting::fireEvent("config-changed");
@@ -404,24 +404,20 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    std::filesystem::path path;
-    if (mBoolMap["LegacyAppDataDirectory"].second == true) {
-        path = Utils::FileSystem::getAppDataDirectory().append("es_settings.xml");
-    }
-    else {
-        path =
-            Utils::FileSystem::getAppDataDirectory().append("settings").append("es_settings.xml");
-    }
+    std::string path;
+    if (mBoolMap["LegacyAppDataDirectory"].second == true)
+        path = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
+    else
+        path = Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
 
-    if (!Utils::FileSystem::existsSTD(path))
+    if (!Utils::FileSystem::exists(path))
         return;
 
     pugi::xml_document doc;
 #if defined(_WIN64)
-    pugi::xml_parse_result result {
-        doc.load_file(Utils::String::stringToWideString(path.string()).c_str())};
+    pugi::xml_parse_result result {doc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
-    pugi::xml_parse_result result {doc.load_file(path.string().c_str())};
+    pugi::xml_parse_result result {doc.load_file(path.c_str())};
 #endif
     if (!result) {
         LOG(LogError) << "Couldn't parse the es_settings.xml file: " << result.description();

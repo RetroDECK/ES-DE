@@ -65,7 +65,7 @@ private:
     static inline std::ofstream sFile;
     static inline LogLevel sReportingLevel = LogInfo;
     static inline std::mutex sLogMutex;
-    static inline std::filesystem::path sLogPath;
+    static inline std::string sLogPath;
     LogLevel mMessageLevel;
 };
 

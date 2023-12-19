@@ -41,11 +41,10 @@ FindRules::FindRules()
 
 void FindRules::loadFindRules()
 {
-    std::vector<std::filesystem::path> paths;
-    std::filesystem::path filePath {Utils::FileSystem::getAppDataDirectory()
-                                        .append("custom_systems")
-                                        .append("es_find_rules.xml")};
-    if (Utils::FileSystem::existsSTD(filePath)) {
+    std::vector<std::string> paths;
+    std::string filePath {Utils::FileSystem::getAppDataDirectory() +
+                          "/custom_systems/es_find_rules.xml"};
+    if (Utils::FileSystem::exists(filePath)) {
         paths.emplace_back(filePath);
         LOG(LogInfo) << "Found custom find rules configuration file";
     }
@@ -78,17 +77,17 @@ void FindRules::loadFindRules()
     for (auto& path : paths) {
 #if defined(_WIN64)
         LOG(LogInfo) << "Parsing find rules configuration file \""
-                     << Utils::String::replace(path.string(), "/", "\\") << "\"...";
+                     << Utils::String::replace(path, "/", "\\") << "\"...";
 #else
-        LOG(LogInfo) << "Parsing find rules configuration file \"" << path.string() << "\"...";
+        LOG(LogInfo) << "Parsing find rules configuration file \"" << path << "\"...";
 #endif
 
         pugi::xml_document doc;
 #if defined(_WIN64)
         const pugi::xml_parse_result& res {
-            doc.load_file(Utils::String::stringToWideString(path.string()).c_str())};
+            doc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
-        const pugi::xml_parse_result& res {doc.load_file(path.string().c_str())};
+        const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
 #endif
         if (!res) {
             LOG(LogError) << "Couldn't parse es_find_rules.xml: " << res.description();
@@ -851,10 +850,9 @@ bool SystemData::loadConfig()
 void SystemData::loadSortingConfig()
 {
     const std::string sortSetting {Settings::getInstance()->getString("SystemsSorting")};
-    const std::filesystem::path customFilePath {Utils::FileSystem::getAppDataDirectory()
-                                                    .append("custom_systems")
-                                                    .append("es_systems_sorting.xml")};
-    const bool customFileExists {Utils::FileSystem::existsSTD(customFilePath)};
+    const std::string customFilePath {Utils::FileSystem::getAppDataDirectory() +
+                                      "/custom_systems/es_systems_sorting.xml"};
+    const bool customFileExists {Utils::FileSystem::exists(customFilePath)};
 
     std::string path;
     bool bundledFile {false};
@@ -885,7 +883,7 @@ void SystemData::loadSortingConfig()
                         "bundled file has been selected";
     }
     else if (!bundledFile && customFileExists) {
-        path = customFilePath.string();
+        path = customFilePath;
     }
 
     if (path.empty()) {
@@ -960,19 +958,18 @@ std::vector<std::string> SystemData::getConfigPath()
 {
     std::vector<std::string> paths;
 
-    const std::filesystem::path customSystemsDirectory {
-        Utils::FileSystem::getAppDataDirectory().append("custom_systems")};
+    const std::string customSystemsDirectory {Utils::FileSystem::getAppDataDirectory() +
+                                              "/custom_systems"};
 
-    if (!Utils::FileSystem::existsSTD(customSystemsDirectory)) {
-        LOG(LogInfo) << "Creating custom systems directory \"" << customSystemsDirectory.string()
-                     << "\"...";
-        Utils::FileSystem::createDirectory(customSystemsDirectory.string());
-        if (!Utils::FileSystem::existsSTD(customSystemsDirectory)) {
+    if (!Utils::FileSystem::exists(customSystemsDirectory)) {
+        LOG(LogInfo) << "Creating custom systems directory \"" << customSystemsDirectory << "\"...";
+        Utils::FileSystem::createDirectory(customSystemsDirectory);
+        if (!Utils::FileSystem::exists(customSystemsDirectory)) {
             LOG(LogError) << "Couldn't create directory, permission problems?";
         }
     }
 
-    std::string path {customSystemsDirectory.string() + "/es_systems.xml"};
+    std::string path {customSystemsDirectory + "/es_systems.xml"};
 
     if (Utils::FileSystem::exists(path)) {
         LOG(LogInfo) << "Found custom systems configuration file";
@@ -1313,36 +1310,35 @@ SystemData* SystemData::getPrev() const
 
 std::string SystemData::getGamelistPath(bool forWrite) const
 {
-    std::filesystem::path filePath {mRootFolder->getPath() + "/gamelist.xml"};
-    const std::filesystem::path gamelistPath {
-        Utils::FileSystem::getAppDataDirectory().append("gamelists").append(mName)};
+    std::string filePath {mRootFolder->getPath() + "/gamelist.xml"};
+    const std::string gamelistPath {Utils::FileSystem::getAppDataDirectory() + "/gamelists/" +
+                                    mName};
 
-    if (Utils::FileSystem::existsSTD(filePath)) {
+    if (Utils::FileSystem::exists(filePath)) {
         if (Settings::getInstance()->getBool("LegacyGamelistFileLocation")) {
-            return filePath.string();
+            return filePath;
         }
         else {
 #if defined(_WIN64)
             LOG(LogWarning) << "Found a gamelist.xml file in \""
                             << Utils::String::replace(mRootFolder->getPath(), "/", "\\")
-                            << "\\\" which will not get loaded, move it to \""
-                            << gamelistPath.string() << "\\\" or otherwise delete it";
+                            << "\\\" which will not get loaded, move it to \"" << gamelistPath
+                            << "\\\" or otherwise delete it";
 #else
             LOG(LogWarning) << "Found a gamelist.xml file in \"" << mRootFolder->getPath()
-                            << "/\" which will not get loaded, move it to \""
-                            << gamelistPath.string() << "/\" or otherwise delete it";
+                            << "/\" which will not get loaded, move it to \"" << gamelistPath
+                            << "/\" or otherwise delete it";
 #endif
         }
     }
 
-    filePath = gamelistPath;
-    filePath.append("gamelist.xml");
+    filePath = gamelistPath + "/gamelist.xml";
 
     // Make sure the directory exists if we're going to write to it, or crashes will happen.
     if (forWrite)
-        Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(filePath.string()));
-    if (forWrite || Utils::FileSystem::existsSTD(filePath))
-        return filePath.string();
+        Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(filePath));
+    if (forWrite || Utils::FileSystem::exists(filePath))
+        return filePath;
 
     return "";
 }

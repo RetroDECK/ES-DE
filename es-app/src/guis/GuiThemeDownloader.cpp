@@ -175,32 +175,30 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     mFuture = mPromise.get_future();
 
 #if defined(__ANDROID__)
-    mThemeDirectory = Utils::FileSystem::getInternalAppDataDirectory().append("themes").string();
+    mThemeDirectory = Utils::FileSystem::getInternalAppDataDirectory() + "/themes";
 #else
-    const std::filesystem::path defaultUserThemeDir {
-        Utils::FileSystem::getAppDataDirectory().append("themes")};
-    const std::filesystem::path userThemeDirSetting {Utils::FileSystem::expandHomePath(
+    const std::string defaultUserThemeDir {Utils::FileSystem::getAppDataDirectory() + "/themes"};
+    const std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
         Settings::getInstance()->getString("UserThemeDirectory"))};
 
 #if defined(_WIN64)
     mThemeDirectory = Utils::String::replace(mThemeDirectory, "\\", "/");
 #endif
-
     if (userThemeDirSetting.empty()) {
-        mThemeDirectory = defaultUserThemeDir.string();
+        mThemeDirectory = defaultUserThemeDir;
     }
-    else if (Utils::FileSystem::isDirectorySTD(userThemeDirSetting) ||
-             Utils::FileSystem::isSymlinkSTD(userThemeDirSetting)) {
-        mThemeDirectory = userThemeDirSetting.string();
+    else if (Utils::FileSystem::isDirectory(userThemeDirSetting) ||
+             Utils::FileSystem::isSymlink(userThemeDirSetting)) {
+        mThemeDirectory = userThemeDirSetting;
     }
     else {
         LOG(LogWarning) << "GuiThemeDownloader: Requested user theme directory \""
-                        << userThemeDirSetting.string()
+                        << userThemeDirSetting
                         << "\" does not exist or is not a directory, reverting to \""
-                        << defaultUserThemeDir.string() << "\"";
-        mThemeDirectory = defaultUserThemeDir.string();
+                        << defaultUserThemeDir << "\"";
+        mThemeDirectory = defaultUserThemeDir;
     }
-#endif // __ANDROID__
+#endif
 
     if (mThemeDirectory.back() != '/')
         mThemeDirectory.append("/");
@@ -593,8 +591,7 @@ void GuiThemeDownloader::parseThemesList()
 #if (LOCAL_TESTING_FILE)
     LOG(LogWarning) << "GuiThemeDownloader: Using local \"themes.json\" testing file";
 
-    const std::string themesFile {
-        Utils::FileSystem::getAppDataDirectory().append("themes.json").string()};
+    const std::string themesFile {Utils::FileSystem::getAppDataDirectory() + "/themes.json"};
 #else
     const std::string themesFile {mThemeDirectory + "themes-list/themes.json"};
 #endif
@@ -1191,15 +1188,15 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
             "PROCEED",
             [this] {
 #if defined(_WIN64)
-                const std::filesystem::path themeDirectory {
+                const std::string themeDirectory {
                     Utils::String::replace(mThemeDirectory, "/", "\\") +
                     mThemes[mList->getCursorId()].reponame};
 #else
-                const std::filesystem::path themeDirectory {mThemeDirectory +
-                                                            mThemes[mList->getCursorId()].reponame};
+                const std::string themeDirectory {mThemeDirectory +
+                                                  mThemes[mList->getCursorId()].reponame};
 #endif
-                LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory.string() << "\"";
-                if (!Utils::FileSystem::removeDirectory(themeDirectory.string(), true)) {
+                LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory << "\"";
+                if (!Utils::FileSystem::removeDirectory(themeDirectory, true)) {
                     mWindow->pushGui(new GuiMsgBox(
                         getHelpStyle(), "COULDN'T DELETE THEME, PERMISSION PROBLEMS?", "OK",
                         [] { return; }, "", nullptr, "", nullptr, nullptr, true));

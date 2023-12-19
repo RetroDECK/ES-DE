@@ -64,7 +64,7 @@ namespace
 
 std::string getScrapersResouceDir()
 {
-    return Utils::FileSystem::getAppDataDirectory().append(SCRAPER_RESOURCES_DIR).string();
+    return Utils::FileSystem::getAppDataDirectory() + "/" + SCRAPER_RESOURCES_DIR;
 }
 
 std::string TheGamesDBJSONRequestResources::getApiKey() const { return GamesDBAPIKey; }

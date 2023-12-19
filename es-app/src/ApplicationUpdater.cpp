@@ -211,14 +211,14 @@ void ApplicationUpdater::parseFile()
 #if (LOCAL_TESTING_FILE)
     LOG(LogWarning) << "ApplicationUpdater: Using local \"latest_release.json\" testing file";
 
-    const std::filesystem::path localReleaseFile {
-        Utils::FileSystem::getAppDataDirectory().append("latest_release.json")};
+    const std::string localReleaseFile {Utils::FileSystem::getAppDataDirectory() +
+                                        "/latest_release.json"};
 
-    if (!Utils::FileSystem::existsSTD(localReleaseFile))
+    if (!Utils::FileSystem::exists(localReleaseFile))
         throw std::runtime_error("Local testing file not found");
 
     const ResourceData& localReleaseFileData {
-        ResourceManager::getInstance().getFileData(localReleaseFile.string())};
+        ResourceManager::getInstance().getFileData(localReleaseFile)};
     doc.Parse(reinterpret_cast<const char*>(localReleaseFileData.ptr.get()),
               localReleaseFileData.length);
 #else

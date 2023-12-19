@@ -26,13 +26,13 @@ void Log::setReportingLevel(LogLevel level)
 void Log::init()
 {
     if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
-        sLogPath = Utils::FileSystem::getAppDataDirectory().append("es_log.txt");
+        sLogPath = Utils::FileSystem::getAppDataDirectory() + "/es_log.txt";
     else
-        sLogPath = Utils::FileSystem::getAppDataDirectory().append("logs").append("es_log.txt");
+        sLogPath = Utils::FileSystem::getAppDataDirectory() + "/logs/es_log.txt";
 
-    Utils::FileSystem::removeFile(sLogPath.string() + ".bak");
+    Utils::FileSystem::removeFile(sLogPath + ".bak");
     // Rename the previous log file.
-    Utils::FileSystem::renameFile(sLogPath.string(), sLogPath.string() + ".bak", true);
+    Utils::FileSystem::renameFile(sLogPath, sLogPath + ".bak", true);
     return;
 }
 
@@ -40,9 +40,9 @@ void Log::open()
 {
     std::unique_lock<std::mutex> lock {sLogMutex};
 #if defined(_WIN64)
-    sFile.open(Utils::String::stringToWideString(sLogPath.string()).c_str());
+    sFile.open(Utils::String::stringToWideString(sLogPath).c_str());
 #else
-    sFile.open(sLogPath.string().c_str());
+    sFile.open(sLogPath.c_str());
 #endif
 }
 

@@ -28,8 +28,7 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
     if ((path[0] == ':') && (path[1] == '/')) {
 
         // Check under the home directory.
-        std::string testHome {
-            Utils::FileSystem::getAppDataDirectory().append("resources").string() + "/" + &path[2]};
+        std::string testHome {Utils::FileSystem::getAppDataDirectory() + "/resources/" + &path[2]};
         if (Utils::FileSystem::exists(testHome))
             return testHome;
 
@@ -43,7 +42,7 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
         }
 #elif (defined(__unix__) && !defined(APPIMAGE_BUILD)) || defined(__ANDROID__)
         // Check in the program data directory.
-        std::string testDataPath {Utils::FileSystem::getProgramDataPath().string() + "/resources/" +
+        std::string testDataPath {Utils::FileSystem::getProgramDataPath() + "/resources/" +
                                   &path[2]};
         if (Utils::FileSystem::exists(testDataPath))
             return testDataPath;

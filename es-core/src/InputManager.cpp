@@ -86,23 +86,21 @@ void InputManager::init()
     // the bundled mapping is incorrect, or the SDL version is a bit older, it makes sense to be
     // able to customize this. If a controller GUID is present in the mappings file that is
     // already present inside SDL, the custom mapping will overwrite the bundled one.
-    std::filesystem::path mappingsFile;
+    std::string mappingsFile;
 
     if (Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
-        mappingsFile =
-            Utils::FileSystem::getAppDataDirectory().append("es_controller_mappings.cfg");
+        mappingsFile = Utils::FileSystem::getAppDataDirectory() + "/es_controller_mappings.cfg";
     }
     else {
-        mappingsFile = Utils::FileSystem::getAppDataDirectory()
-                           .append("controllers")
-                           .append("es_controller_mappings.cfg");
+        mappingsFile =
+            Utils::FileSystem::getAppDataDirectory() + "/controllers/es_controller_mappings.cfg";
     }
 
-    if (!Utils::FileSystem::existsSTD(mappingsFile))
+    if (!Utils::FileSystem::exists(mappingsFile))
         mappingsFile = ResourceManager::getInstance().getResourcePath(
             ":/controllers/es_controller_mappings.cfg");
 
-    int controllerMappings {SDL_GameControllerAddMappingsFromFile(mappingsFile.string().c_str())};
+    int controllerMappings {SDL_GameControllerAddMappingsFromFile(mappingsFile.c_str())};
 
     if (controllerMappings != -1 && controllerMappings != 0) {
         LOG(LogInfo) << "Loaded " << controllerMappings << " controller "
@@ -264,28 +262,18 @@ void InputManager::doOnFinish()
 
 std::string InputManager::getConfigPath()
 {
-    if (Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
-        return Utils::FileSystem::getAppDataDirectory().append("es_input.xml").string();
-    }
-    else {
-        return Utils::FileSystem::getAppDataDirectory()
-            .append("settings")
-            .append("es_input.xml")
-            .string();
-    }
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
+        return Utils::FileSystem::getAppDataDirectory() + "/es_input.xml";
+    else
+        return Utils::FileSystem::getAppDataDirectory() + "/settings/es_input.xml";
 }
 
 std::string InputManager::getTemporaryConfigPath()
 {
-    if (Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
-        return Utils::FileSystem::getAppDataDirectory().append("es_temporaryinput.xml").string();
-    }
-    else {
-        return Utils::FileSystem::getAppDataDirectory()
-            .append("settings")
-            .append("es_temporaryinput.xml")
-            .string();
-    }
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
+        return Utils::FileSystem::getAppDataDirectory() + "/es_temporaryinput.xml";
+    else
+        return Utils::FileSystem::getAppDataDirectory() + "/settings/es_temporaryinput.xml";
 }
 
 int InputManager::getNumConfiguredDevices()
