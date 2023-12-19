@@ -1,7 +1,7 @@
 ::  SPDX-License-Identifier: MIT
 ::
 ::  ES-DE
-::  Windows_dependencies_setup_MSVC.bat
+::  Windows_dependencies_setup.bat
 ::
 ::  Downloads and prepares the external dependencies for building in-tree using MSVC.
 ::  If the directories already exist they will be removed and the libraries will be downloaded again.

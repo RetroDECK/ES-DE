@@ -127,8 +127,7 @@ if(APPLE)
     endif()
     find_package(CURL REQUIRED)
 elseif(WIN32)
-    if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/libpugixml.dll AND # MinGW
-       NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)       # MSVC
+    if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)
         message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
     endif()
 elseif(NOT EMSCRIPTEN AND NOT ANDROID)
@@ -164,12 +163,9 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.1)
         message(SEND_ERROR "You need at least GCC 7.1 to compile ES-DE")
     endif()
-    if(WIN32)
-        set(CMAKE_CXX_FLAGS "-mwindows ${CMAKE_CXX_FLAGS}")
-    endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     message("-- Compiler is MSVC")
-    # If using the MSVC compiler on Windows, disable the built-in min() and max() macros.
+    # Disable the built-in min() and max() macros.
     add_compile_definitions(NOMINMAX)
 endif()
 
@@ -525,44 +521,23 @@ if(APPLE)
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.0.dylib)
 elseif(WIN32)
-    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec.lib
-                             ${PROJECT_SOURCE_DIR}/avfilter.lib
-                             ${PROJECT_SOURCE_DIR}/avformat.lib
-                             ${PROJECT_SOURCE_DIR}/avutil.lib
-                             ${PROJECT_SOURCE_DIR}/swresample.lib
-                             ${PROJECT_SOURCE_DIR}/swscale.lib
-                             ${PROJECT_SOURCE_DIR}/FreeImage.lib
-                             ${PROJECT_SOURCE_DIR}/git2.lib
-                             ${PROJECT_SOURCE_DIR}/glew32.lib
-                             ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
-                             ${PROJECT_SOURCE_DIR}/freetype.lib
-                             ${PROJECT_SOURCE_DIR}/lunasvg.lib
-                             ${PROJECT_SOURCE_DIR}/pugixml.lib
-                             ${PROJECT_SOURCE_DIR}/rlottie.lib
-                             ${PROJECT_SOURCE_DIR}/SDL2main.lib
-                             ${PROJECT_SOURCE_DIR}/SDL2.lib
-                             Winmm.dll)
-    else()
-        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec-60.dll
-                             ${PROJECT_SOURCE_DIR}/avfilter-9.dll
-                             ${PROJECT_SOURCE_DIR}/avformat-60.dll
-                             ${PROJECT_SOURCE_DIR}/avutil-58.dll
-                             ${PROJECT_SOURCE_DIR}/swresample-4.dll
-                             ${PROJECT_SOURCE_DIR}/swscale-7.dll
-                             ${PROJECT_SOURCE_DIR}/FreeImage.dll
-                             ${PROJECT_SOURCE_DIR}/libgit2.dll
-                             ${PROJECT_SOURCE_DIR}/glew32.dll
-                             ${PROJECT_SOURCE_DIR}/libcurl-x64.dll
-                             ${PROJECT_SOURCE_DIR}/libfreetype.dll
-                             ${PROJECT_SOURCE_DIR}/liblunasvg.dll
-                             ${PROJECT_SOURCE_DIR}/libpugixml.dll
-                             ${PROJECT_SOURCE_DIR}/libSDL2main.a
-                             ${PROJECT_SOURCE_DIR}/librlottie.dll
-                             ${PROJECT_SOURCE_DIR}/SDL2.dll
-                             mingw32
-                             Winmm.dll)
-    endif()
+    set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec.lib
+                            ${PROJECT_SOURCE_DIR}/avfilter.lib
+                            ${PROJECT_SOURCE_DIR}/avformat.lib
+                            ${PROJECT_SOURCE_DIR}/avutil.lib
+                            ${PROJECT_SOURCE_DIR}/swresample.lib
+                            ${PROJECT_SOURCE_DIR}/swscale.lib
+                            ${PROJECT_SOURCE_DIR}/FreeImage.lib
+                            ${PROJECT_SOURCE_DIR}/git2.lib
+                            ${PROJECT_SOURCE_DIR}/glew32.lib
+                            ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
+                            ${PROJECT_SOURCE_DIR}/freetype.lib
+                            ${PROJECT_SOURCE_DIR}/lunasvg.lib
+                            ${PROJECT_SOURCE_DIR}/pugixml.lib
+                            ${PROJECT_SOURCE_DIR}/rlottie.lib
+                            ${PROJECT_SOURCE_DIR}/SDL2main.lib
+                            ${PROJECT_SOURCE_DIR}/SDL2.lib
+                            Winmm.dll)
 elseif(ANDROID)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                         # FFmpeg libraries.

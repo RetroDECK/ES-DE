@@ -1,7 +1,7 @@
 ::  SPDX-License-Identifier: MIT
 ::
 ::  ES-DE
-::  Windows_dependencies_build_MSVC.bat
+::  Windows_dependencies_build.bat
 ::
 ::  Builds the external dependencies in-tree using MSVC.
 ::  The Windows_dependencies_setup_MSVC.bat script must have been executed prior to this.

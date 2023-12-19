@@ -27,11 +27,6 @@ endif()
 unset(CMAKE_CXX_FLAGS)
 unset(CMAKE_EXE_LINKER_FLAGS)
 
-# Strip the DLL files when building with MinGW.
-if(WIN32 AND NOT CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
-endif()
-
 if (WIN32)
     set(BUILD_SHARED_LIBS ON)
 else()
