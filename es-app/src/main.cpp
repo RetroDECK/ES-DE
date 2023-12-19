@@ -243,7 +243,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
             const int width {stoi(arguments[i + 1])};
             const int height {stoi(arguments[i + 2])};
             if (width < 224 || height < 224 || width > 7680 || height > 7680 ||
-                height < width / 4 || width < height / 2) {
+                height < width / 4 || width < height / 3) {
                 std::cerr << "Error: Unsupported resolution " << width << "x" << height
                           << " supplied\n";
                 return false;
