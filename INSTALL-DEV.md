@@ -162,7 +162,7 @@ make -j8
 ```
 Due to buggy AMD GPU drivers it could be a good idea to use the `LSAN_suppressions` file included in the repository to avoid reports of a lot of irrelevant issue, for example:
 ```
-LSAN_OPTIONS="suppressions=tools/LSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
+LSAN_OPTIONS="suppressions=tools/LSAN_suppressions" ./es-de --debug --resolution 2560 1440
 ```
 
 This applies to LeakSanitizer specifically, which is integrated into AddressSanitizer.
@@ -175,7 +175,7 @@ make -j8
 
 It could also be a good idea to use the `TSAN_suppressions` file included in the repository to suppress issues reported by some third party libraries, for example:
 ```
-TSAN_OPTIONS="suppressions=tools/TSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
+TSAN_OPTIONS="suppressions=tools/TSAN_suppressions" ./es-de --debug --resolution 2560 1440
 ```
 
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
@@ -196,17 +196,17 @@ As for advanced debugging, Valgrind is a very powerful and useful tool which can
 The most common tool is Memcheck to check for memory leaks, which you run like this:
 
 ```
-valgrind --tool=memcheck --leak-check=full --log-file=../valgrind_run_01 ./emulationstation
+valgrind --tool=memcheck --leak-check=full --log-file=../valgrind_run_01 ./es-de
 ```
 
 There are numerous flags that can be used, for example this will also track reachable memory which could indicate further leaks:
 ```
-valgrind --tool=memcheck --leak-check=full --track-origins=yes --show-reachable=yes --log-file=../valgrind_run_01 ./emulationstation
+valgrind --tool=memcheck --leak-check=full --track-origins=yes --show-reachable=yes --log-file=../valgrind_run_01 ./es-de
 ```
 
 Another helpful tool is the Callgrind call-graph analyzer:
 ```
-valgrind --tool=callgrind --log-file=../valgrind_run_01 ./emulationstation
+valgrind --tool=callgrind --log-file=../valgrind_run_01 ./es-de
 ```
 
 The output file can be loaded into an application such as KCachegrind for data analysis.
@@ -215,7 +215,7 @@ The output file can be loaded into an application such as KCachegrind for data a
 
 Yet another very useful Valgrind tool is the Massif heap profiler, which can be run like this:
 ```
-valgrind --tool=massif --massif-out-file=../massif.out.01 ./emulationstation
+valgrind --tool=massif --massif-out-file=../massif.out.01 ./es-de
 ```
 
 The output file can be loaded into an application such as Massif-Visualizer for analysis.
@@ -303,35 +303,35 @@ sudo make install
 Assuming the default installation prefix /usr has been used, this is the directory structure for the installation:
 
 ```
-/usr/bin/emulationstation
+/usr/bin/es-de
 /usr/bin/es-pdf-convert
-/usr/share/applications/org.es_de.emulationstation-de.desktop
-/usr/share/emulationstation/licenses/*
-/usr/share/emulationstation/resources/*
-/usr/share/emulationstation/themes/*
-/usr/share/emulationstation/LICENSE
-/usr/share/icons/hicolor/scalable/apps/org.es_de.emulationstation-de.svg
-/usr/share/man/man6/emulationstation.6.gz
-/usr/share/metainfo/org.es_de.emulationstation-de.appdata.xml
-/usr/share/pixmaps/org.es_de.emulationstation-de.svg
+/usr/share/applications/org.es_de.frontend.desktop
+/usr/share/es-de/licenses/*
+/usr/share/es-de/resources/*
+/usr/share/es-de/themes/*
+/usr/share/es-de/LICENSE
+/usr/share/icons/hicolor/scalable/apps/org.es_de.frontend.svg
+/usr/share/man/man6/es-de.6.gz
+/usr/share/metainfo/org.es_de.frontend.appdata.xml
+/usr/share/pixmaps/org.es_de.frontend.svg
 ```
 
 However, when installing manually instead of building a package, it's recommended to change the install prefix to /usr/local instead of /usr.
 
-Be aware that if using the GNOME desktop environment, /usr/share/pixmaps/emulationstation.svg must exist in order for the ES-DE icon to be shown in the Dash and task switcher.
+Be aware that if using the GNOME desktop environment, /usr/share/pixmaps/org.es_de.frontend.svg must exist in order for the ES-DE icon to be shown in the Dash and task switcher.
 
 ES-DE will look in the following locations for application resources, in the listed order:
 
-* \<home\>/.emulationstation/resources/
-* \<install prefix\>/share/emulationstation/resources/
+* \<home\>/ES-DE/resources/
+* \<install prefix\>/share/es-de/resources/
 * \<ES-DE executable directory\>/resources/
 
 The resources directory is critical, without it the application won't start.
 
 As well the following locations will be searched for themes, also in the listed order:
 
-* \<home\>/.emulationstation/themes/
-* \<install prefix\>/share/emulationstation/themes/
+* \<home\>/ES-DE/themes/
+* \<install prefix\>/share/es-de/themes/
 * \<ES-DE executable directory\>/themes/
 
 A theme is not mandatory to start the application, but ES-DE will be basically useless without it.
@@ -346,23 +346,23 @@ Creation of Debian .deb packages is enabled by default, simply run `cpack` to ge
 myusername@computer:~/emulationstation-de$ cpack
 CPack: Create package using DEB
 CPack: Install projects
-CPack: - Run preinstall target for: emulationstation-de
-CPack: - Install project: emulationstation-de []
+CPack: - Run preinstall target for: es-de
+CPack: - Install project: es-de []
 CPack: Create package
 CPackDeb: - Generating dependency list
-CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-2.2.0-x64.deb generated.
+CPack: - package: /home/myusername/emulationstation-de/es-de_3.0.0-x64.deb generated.
 ```
 
 You may want to check that the dependencies look fine, as they're (mostly) automatically generated by CMake:
 
 ```
-dpkg -I ./emulationstation-de-2.2.0-x64.deb
+dpkg -I ./es-de_3.0.0-x64.deb
 ```
 
 The package can now be installed using a package manager, for example apt:
 
 ```
-sudo apt install ./emulationstation-de-2.2.0-x64.deb
+sudo apt install ./es-de_3.0.0-x64.deb
 ```
 
 To build an RPM package instead, set the flag LINUX_CPACK_GENERATOR to RPM when running cmake, for example:
@@ -377,11 +377,11 @@ Then simply run `cpack`:
 myusername@computer:~/emulationstation-de$ cpack
 CPack: Create package using RPM
 CPack: Install projects
-CPack: - Run preinstall target for: emulationstation-de
-CPack: - Install project: emulationstation-de []
+CPack: - Run preinstall target for: es-de
+CPack: - Install project: es-de []
 CPack: Create package
-CPackRPM: Will use GENERATED spec file: /home/myusername/emulationstation-de/_CPack_Packages/Linux/RPM/SPECS/emulationstation-de.spec
-CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-2.2.0-x64.rpm generated.
+CPackRPM: Will use GENERATED spec file: /home/myusername/emulationstation-de/_CPack_Packages/Linux/RPM/SPECS/es-de.spec
+CPack: - package: /home/myusername/emulationstation-de/es-de_3.0.0-x64.rpm generated
 ```
 
 On Fedora, you need to install rpmbuild before this command can be run:
@@ -391,17 +391,17 @@ sudo dnf install rpm-build
 
 After the package generation you can check that the metadata looks fine using the `rpm` command:
 ```
-rpm -qi ./emulationstation-de-2.2.0-x64.rpm
+rpm -qi ./es-de_3.0.0-x64.rpm
 ```
 
 To see the automatically generated dependencies, run this:
 ```
-rpm -q --requires ./emulationstation-de-2.2.0-x64.rpm
+rpm -q --requires ./es-de_3.0.0-x64.rpm
 ```
 
 And of course, you can also install the package:
 ```
-sudo dnf install ./emulationstation-de-2.2.0-x64.rpm
+sudo dnf install ./es-de_3.0.0-x64.rpm
 ```
 
 **Creating an AppImage**
@@ -576,37 +576,37 @@ make install
 This will be the directory structure for the installation:
 
 ```
-/Applications/EmulationStation Desktop Edition.app/Contents/Info.plist
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/EmulationStation
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/es-pdf-convert
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libSDL2-2.0.0.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavcodec.60.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavfilter.9.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavformat.60.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavutil.58.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfontconfig.1.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreetype.6.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libgit2.1.6.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libjpeg.62.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libopenjp2.7.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpoppler-cpp.0.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpoppler.129.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpostproc.57.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswresample.4.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswscale.7.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libtiff.6.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbis.0.4.9.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbisenc.2.0.12.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/Resources/EmulationStation-DE.icns
-/Applications/EmulationStation Desktop Edition.app/Contents/Resources/LICENSE
-/Applications/EmulationStation Desktop Edition.app/Contents/Resources/licenses/*
-/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/*
-/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/*
+/Applications/ES-DE.app/Contents/Info.plist
+/Applications/ES-DE.app/Contents/MacOS/ES-DE
+/Applications/ES-DE.app/Contents/MacOS/es-pdf-convert
+/Applications/ES-DE.app/Contents/MacOS/libSDL2-2.0.0.dylib
+/Applications/ES-DE.app/Contents/MacOS/libavcodec.60.dylib
+/Applications/ES-DE.app/Contents/MacOS/libavfilter.9.dylib
+/Applications/ES-DE.app/Contents/MacOS/libavformat.60.dylib
+/Applications/ES-DE.app/Contents/MacOS/libavutil.58.dylib
+/Applications/ES-DE.app/Contents/MacOS/libfontconfig.1.dylib
+/Applications/ES-DE.app/Contents/MacOS/libfreetype.6.dylib
+/Applications/ES-DE.app/Contents/MacOS/libgit2.1.6.dylib
+/Applications/ES-DE.app/Contents/MacOS/libjpeg.62.dylib
+/Applications/ES-DE.app/Contents/MacOS/libopenjp2.7.dylib
+/Applications/ES-DE.app/Contents/MacOS/libpoppler-cpp.0.dylib
+/Applications/ES-DE.app/Contents/MacOS/libpoppler.129.dylib
+/Applications/ES-DE.app/Contents/MacOS/libpostproc.57.dylib
+/Applications/ES-DE.app/Contents/MacOS/libswresample.4.dylib
+/Applications/ES-DE.app/Contents/MacOS/libswscale.7.dylib
+/Applications/ES-DE.app/Contents/MacOS/libtiff.6.dylib
+/Applications/ES-DE.app/Contents/MacOS/libvorbis.0.4.9.dylib
+/Applications/ES-DE.app/Contents/MacOS/libvorbisenc.2.0.12.dylib
+/Applications/ES-DE.app/Contents/Resources/ES-DE.icns
+/Applications/ES-DE.app/Contents/Resources/LICENSE
+/Applications/ES-DE.app/Contents/Resources/licenses/*
+/Applications/ES-DE.app/Contents/Resources/resources/*
+/Applications/ES-DE.app/Contents/Resources/themes/*
 ```
 
 ES-DE will look in the following locations for application resources, in the listed order:
 
-* \<home\>/.emulationstation/resources/
+* \<home\>/ES-DE/resources/
 * \<ES-DE executable directory\>/../Resources/resources/
 * \<ES-DE executable directory\>/resources/
 
@@ -614,7 +614,7 @@ The resources directory is critical, without it the application won't start.
 
 As well the following locations will be searched for themes, also in the listed order:
 
-* \<HOME\>/.emulationstation/themes/
+* \<HOME\>/ES-DE/themes/
 * \<ES-DE executable directory\>/../Resources/themes/
 * \<ES-DE executable directory\>/themes/
 
@@ -630,19 +630,15 @@ Simply run `cpack` to build a .dmg disk image/installer:
 myusername@computer:~/emulationstation-de$ cpack
 CPack: Create package using Bundle
 CPack: Install projects
-CPack: - Run preinstall target for: emulationstation-de
-CPack: - Install project: emulationstation-de []
+CPack: - Run preinstall target for: es-de
+CPack: - Install project: es-de []
 CPack: Create package
-CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-2.2.0-x64.dmg generated.
+CPack: - package: /Users/myusername/emulationstation-de/ES-DE_3.0.0-arm64.dmg generated.
 ```
 
 ## Building on Windows
 
-Although both Microsoft Visual C++ (MSVC) and GCC (MinGW) have historically been supported for building ES-DE on Windows, as of the 2.2.0 release MinGW is no longer recommended and support for it will likely be dropped in future releases.
-
-Although MinGW produces much higher quality code than MSVC with ES-DE running around 10% to 25% faster it's unfortunately not sustainable to keep using it. There are multiple technical issues with third party libraries like severe threading issues with FFmpeg and some libraries like Poppler not being readily available. Debugging with MinGW is also a very slow and tedious process compared to MSVC. MinGW up to 9.2.0 works more or less fine but anything more modern than this introduces issues like FFmpeg's avfilter_graph_free() call taking up to 7000 times longer to complete which makes video playback unusable. Setting filter graphs to use single threads solves some but not all issues. As well libgit2 has (probably) a race condition that causes random repository corruption that is likely only present when using MinGW.
-
-Clang/LLVM has also been evaluated but it suffers from at least the same threading issues as MinGW, likely because it uses libraries from the latter. It also fails to build some of the third party libraries needed by ES-DE.
+Only the Microsoft Visual C++ (MSVC) compiler is supported on Windows. Although MinGW/GCC produces higher quality code with ES-DE running around 10% to 25% faster it's unfortunately not sustainable to use it. There are multiple technical issues with third party libraries like severe threading issues with FFmpeg and some libraries like Poppler not being readily available.
 
 **MSVC setup**
 
@@ -679,21 +675,6 @@ The way the MSVC environment works is that a specific developer shell is provide
 
 It's important to choose the x64-specific shell and not the x86 variant, as ES-DE will only compile as a 64-bit application.
 
-**MinGW (GCC) setup**
-
-Download the following packages and install them:
-
-[https://gitforwindows.org](https://gitforwindows.org)
-
-[https://cmake.org/download](https://cmake.org/download)
-
-Download the _MinGW-w64 based_ version of GCC: \
-[https://jmeubank.github.io/tdm-gcc](https://jmeubank.github.io/tdm-gcc)
-
-After installation, make a copy of `TDM-GCC-64\bin\mingw32-make` to `make` for your convenience.
-
-Only version 9.2.0 of MinGW has been confirmed to work correctly, anything newer introduces severe problems and MSVC should instead be used if a more modern compiler is required.
-
 **Other preparations**
 
 In order to get clang-format onto the system you need to download and install Clang/LLVM: \
@@ -709,7 +690,7 @@ Configure Git. Details about its setup is beyond the scope of this document, but
 
 It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the code editor. But if not done, lines breaks will anyway be converted when running clang-format on the code, as explained [here](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting).
 
-The instructions below assume all build steps for MSVC are done in the MSVC developer console (x64 Native Tools Command Prompt for VS) and all MinGW build steps are done using the Git Bash shell.
+The instructions below assume all build steps for MSVC are done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
 
 **Cloning and setting up dependencies**
 
@@ -726,29 +707,21 @@ cd emulationstation-de
 git checkout stable-2.2
 ```
 
-On Windows all dependencies are kept in-tree in the `external` directory tree. Most of the libraries can be downloaded in binary form, but a few need to be built from source code. There are four scripts in the tools directory that automate this entirely. Two of them are used for the MSVC compiler and the other two for MinGW.
+On Windows all dependencies are kept in-tree in the `external` directory tree. Most of the libraries can be downloaded in binary form, but a few need to be built from source code. There are two scripts in the tools directory that automate this entirely. You run them like this:
 
-For MSVC, you run them like this:
 ```
 cd emulationstation-de
-tools\Windows_dependencies_setup_MSVC.bat
-tools\Windows_dependencies_build_MSVC.bat
-```
-
-And for MinGW like the following:
-```
-cd emulationstation-de
-tools/Windows_dependencies_setup_MinGW.sh
-tools/Windows_dependencies_build_MinGW.sh
+tools\Windows_dependencies_setup.bat
+tools\Windows_dependencies_build.bat
 ```
 
 Re-running the setup script will delete and download all dependencies again, and re-running the build script will clean and rebuild from scratch.
 
-The setup scripts for both MSVC and MinGW will download and launch an installer for OpenSSL for Windows if this has not already been installed on the build machine. Just run through the installer using the default settings and everything should work fine.
+The setup scripts will download and launch an installer for OpenSSL for Windows if this has not already been installed on the build machine. Just run through the installer using the default settings and everything should work fine.
 
 Following these preparations, ES-DE should be ready to be compiled.
 
-**Building ES-DE using MSVC**
+**Building ES-DE**
 
 It's assumed that [Jom](https://wiki.qt.io/Jom) is used, but if instead using nmake then just remove _JOM_ from the -G flag argument and remove the -j flag as nmake does not support building in parallel.
 
@@ -777,31 +750,7 @@ nmake
 
 ThreadSanitizer and UndefinedBehaviorSanitizer aren't available for the MSVC compiler.
 
-There are a number of compiler warnings for the bundled rlottie library when building with MSVC. Unfortunately these need to be resolved upstream, but everything should still work fine so the warnings can be ignored for now.
-
-**Building ES-DE using MinGW**
-
-For a release build:
-
-```
-cmake -G "MinGW Makefiles" .
-make -j8
-```
-
-Or for a debug build:
-
-```
-cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug .
-make -j8
-```
-
-Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
-
-Unfortunately AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer do not seem to be supported with MinGW.
-
-You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
-
-Note that compilation time is much longer than on Unix/Linux or macOS, and linking is incredibly slow for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
+There are a number of compiler warnings for the bundled rlottie library. Unfortunately these need to be resolved upstream, but everything should still work fine so the warnings can be ignored for now.
 
 **TLS/SSL certificates**
 
@@ -829,24 +778,24 @@ After the installation has been completed, go to the emulationstation-de directo
 $ cpack
 CPack: Create package using NSIS
 CPack: Install projects
-CPack: - Run preinstall target for: emulationstation-de
-CPack: - Install project: emulationstation-de []
+CPack: - Run preinstall target for: es-de
+CPack: - Install project: es-de []
 CPack: Create package
-CPack: - package: C:/Programming/emulationstation-de/EmulationStation-DE-2.2.0-x64.exe generated.
+CPack: - package: C:/Programming/emulationstation-de/ES-DE_3.0.0-x64.exe generated.
 ```
 
-The default installation directory suggested by the installer is `C:\Program Files\EmulationStation-DE` but this can of course be changed by the user.
+The default installation directory suggested by the installer is `C:\Program Files\ES-DE` but this can of course be changed by the user.
 
 ES-DE will look in the following locations for application resources, in the listed order:
 
-* \<home\>\\.emulationstation\resources\
+* \<home\>\\ES-DE\resources\
 * \<ES-DE executable directory\>\resources\
 
 The resources directory is critical, without it the application won't start.
 
 As well the following locations will be searched for themes, also in the listed order:
 
-* \<home\>\\.emulationstation\themes\
+* \<home\>\\ES-DE\themes\
 * \<ES-DE executable directory\>\themes\
 
 A theme is not mandatory to start the application, but ES-DE will be basically useless without it.
@@ -1017,9 +966,9 @@ The reason to not simply replace the BIOS and devices files with the new version
 
 ## Configuration
 
-**~/.emulationstation/es_settings.xml**
+**~/ES-DE/settings/es_settings.xml**
 
-When ES-DE is first started, a configuration file will be created as `~/.emulationstation/es_settings.xml`
+When ES-DE is first started, a configuration file will be created as `~/ES-DE/settings/es_settings.xml`
 
 This file will contain all supported settings at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES-DE to update all the necessary settings.
 
@@ -1051,11 +1000,11 @@ There is also support to add the variable %ESPATH% to the ROM directory setting,
 <string name="ROMDirectory" value="%ESPATH%/../ROMs" />
 ```
 
-**~/.emulationstation/es_input.xml**
+**~/ES-DE/settings/es_input.xml**
 
 As ES-DE auto-configures the keyboard and controllers, neither the input configuration step or manual adjustments to the es_input.xml file should normally be needed. Actually, unless the button layout has been customized using the input configurator, the es_input.xml file will not even exist.
 
-But if you have customized your button layout and your controller or keyboard stop working, you can delete the `~/.emulationstation/es_input.xml` file to remove the customizations, or you can start ES-DE with the `--force-input-config` command line option to make the input configurator appear.
+But if you have customized your button layout and your controller or keyboard stop working, you can delete the `~/ES-DE/settings/es_input.xml` file to remove the customizations, or you can start ES-DE with the `--force-input-config` command line option to make the input configurator appear.
 
 The input configuration is described in the [User guide](USERGUIDE-DEV.md#input-device-configuration).
 
@@ -1091,7 +1040,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 
 _The --anti-aliasing option is not available if ES-DE is built using the OpenGL ES renderer and the --no-update-check option is not available for builds where the application updater is disabled._
 
-As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES-DE will use `~/games/emulation/.emulationstation` as its application home directory. Be aware that this option completely replaces what is considered the home directory, meaning the default ROM directory ~/ROMs would be resolved to ~/games/emulation/ROMs. The same is true for the emulator core locations if es_find_rules.xml is configured to look for them relative to the home directory. So of course RetroArch and other emulators would also need to be configured to use ~/games/emulation as its base directory in this instance.
+As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `es-de --home ~/games/emulation`, ES-DE will use `~/games/emulation/ES-DE` as its application data directory. Be aware that this option completely replaces what is considered the home directory, meaning the default ROM directory ~/ROMs would be resolved to ~/games/emulation/ROMs. The same is true for the emulator core locations if es_find_rules.xml is configured to look for them relative to the home directory. So of course RetroArch and other emulators would also need to be configured to use ~/games/emulation as its base directory in this instance.
 
 Setting --resolution to a lower or higher value than the display resolution will add a border to the application window. The exception is if defining a lower resolution than the display resolution in combination with the --fullscreen-padding flag as this will pad the screen contents on a black background. This can be combined with the --screenoffset option for exact positioning on displays where bezels or similar may obstruct part of the viewable area.
 
@@ -1132,7 +1081,7 @@ Enabling this will skip all debug messages about missing files specifically for 
 
 **LegacyGamelistFileLocation**
 
-As of ES-DE 2.0.0 any gamelist.xml files stored in the game system directories (e.g. under `~/ROMs/`) will not get loaded, they are instead required to be placed in the `~/.emulationstation/gamelists/` directory tree. By setting this option to `true` it's however possible to retain the old behavior of first looking for gamelist.xml files in the system directories on startup. Note that even if this setting is enabled ES-DE will still always create new gamelist.xml files under `~/.emulationstation/gamelists/` which was the case also for the 1.x.x releases.
+As of ES-DE 2.0.0 any gamelist.xml files stored in the game system directories (e.g. under `~/ROMs/`) will not get loaded, they are instead required to be placed in the `~/ES-DE/gamelists/` directory tree. By setting this option to `true` it's however possible to retain the old behavior of first looking for gamelist.xml files in the system directories on startup. Note that even if this setting is enabled ES-DE will still always create new gamelist.xml files under `~/ES-DE/gamelists/` which was the case also for the 1.x.x releases.
 
 **LottieMaxFileCache**
 
@@ -1160,7 +1109,261 @@ The passkey to use to change from the _Kiosk_ or _Kid_ UI modes to the _Full_ UI
 
 **UserThemeDirectory**
 
-Sets the user theme directory. If left blank it will default to `~/.emulationstation/themes/`
+Sets the user theme directory. If left blank it will default to `~/ES-DE/themes/`
+
+## es_find_rules.xml
+
+This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.
+
+The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy can be placed in ~/ES-DE/custom_systems, which will complement the bundled file.
+
+Here's an example es_find_rules.xml file for Linux (this is not the complete file shipped with ES-DE as that would be too large to include here):
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for Linux -->
+<ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>bash</entry>
+            <entry>sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="RETROARCH">
+        <rule type="systempath">
+            <entry>retroarch</entry>
+            <entry>org.libretro.RetroArch</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/RetroArch-Linux*.AppImage</entry>
+            <entry>~/.local/bin/RetroArch-Linux*.AppImage</entry>
+            <entry>~/bin/RetroArch-Linux*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.libretro.RetroArch</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <!-- Snap package -->
+            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
+            <!-- Flatpak package -->
+            <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
+            <!-- AppImage and compiled from source -->
+            <entry>~/.config/retroarch/cores</entry>
+            <!-- Ubuntu and Linux Mint repository -->
+            <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
+            <!-- Fedora repository -->
+            <entry>/usr/lib64/libretro</entry>
+            <!-- Manjaro repository -->
+            <entry>/usr/lib/libretro</entry>
+        </rule>
+    </core>
+    <emulator name="DOSBOX-STAGING">
+        <!-- DOS emulator DOSBox Staging -->
+        <rule type="systempath">
+            <entry>dosbox-staging</entry>
+            <entry>io.github.dosbox-staging</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.dosbox-staging</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu</entry>
+            <entry>org.yuzu_emu.yuzu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/yuzu*.AppImage</entry>
+            <entry>~/.local/bin/yuzu*.AppImage</entry>
+            <entry>~/bin/yuzu*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+        </rule>
+    </emulator>
+</ruleList>
+```
+
+It's pretty straightforward, there are currently four rules supported for finding emulators, `winregistrypath`, `winregistryvalue`, `systempath` and `staticpath` and there is one rule supported for finding the emulator cores, `corepath`.
+
+Of these, `winregistrypath` and `winregistryvalue` are only available on Windows, and attempting to use the rule on any other operating system will generate a warning in the log file when processing the es_find_rules.xml file.
+
+The `name` attribute must correspond to the command tags in es_systems.xml, take for example this line:
+```xml
+<command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+```
+
+Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so pretty).
+
+Of course this makes it possible to add any number of emulators to the configuration file.
+
+The find rules can also be used by the %PRECOMMAND_ variable, which is for instance useful for running Windows emulators on Linux using Wine or Proton. In the following example two separate find rules are used, one for the %PRECOMMAND_ variable and another one for the %EMULATOR_ variable:
+```xml
+<command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
+```
+
+The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, a search will be performed for the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe`. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the default value for the key actually exists. If not, it will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
+
+The `winregistryvalue` rule will search for the specific registry value, and if it exists, it will use that value as the path to the emulator binary. HKEY_CURRENT_USER will be tried first, followed by HKEY_LOCAL_MACHINE. In the same manner as `winregistrypath`, ES-DE will check that the binary defined in the registry value actually exists. If not, it will proceed with the next rule. For example, if setting the `<entry>` tag for this rule to `SOFTWARE\Valve\Steam\SteamExe`, the emulator binary would be set to `c:\program files (x86)\steam\steam.exe`, assuming that's where Steam has been installed. As this rule can be used to query any value in the Registry, it's a quite powerful tool to locate various emulators and applications. In addition to this it's posssible to append an arbitrary string to the key value if it's found and use that as the emulator binary path. This is accomplished by using the pipe sign, so for example the entry `SOFTWARE\PCSX2\Install_Dir|\pcsx2.exe` will look for the key `SOFTWARE\PCSX2\Install_Dir` and if it's found it will take the value of that key and append the string `\pcsx2.exe` to it. This could for example result in `C:\Program Files (x86)\PCSX2\pcsx2.exe`. Also for this setup, ES-DE will check that the emulator binary actually exists, or it will proceed to the next rule.
+
+The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must be included in the entry tag. Wildcards (*) are supported for the emulator binary, but not for directories. Wildcards are very useful for AppImages which often embed version information into the filenames. Note that if multiple files match a wildcard pattern, the first file returned by the operating system will be selected.
+
+```xml
+<rule type="staticpath">
+    <!-- This is supported, first matching file will be selected -->
+    <entry>~/Applications/yuzu*.AppImage</entry>
+    <!-- This is also supported -->
+    <entry>~/Applications/yuzu*.App*</entry>
+    <!-- This is NOT supported -->
+    <entry>~/App*/yuzu*.AppImage</entry>
+</rule>
+```
+
+There is also support for substituting the emulator binary in a staticpath rule with an explicit command. To accomplish this add a pipe (|) character after the emulator entry followed by the command to execute. This is for example useful for Flatpaks when you want to check the presence of a package while still launching a specific command inside the package using the --command option. For example:
+
+``` xml
+<rule type="staticpath">
+    <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+    <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+</rule>
+```
+
+This will execute the regular logic of checking if the Mednaffe Flatpak is installed but will actually run the command after the pipe character when launching the game. Note that no checks or controls are in place for the explicitly defined command, it's just blindly executed.
+
+The winregistrypath rules are always processed first, followed by winregistryvalue, then systempath and finally staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
+
+As for `corepath` this rule is simply a path to search for the emulator core.
+
+Each rule supports multiple entry tags which are tried in the order that they are defined in the file.
+
+The %ESPATH% and %ROMPATH% variables can be used inside the staticpath rules and the %ESPATH% and %EMUPATH% variables can be used inside the corepath rules.
+
+The tilde symbol `~` is supported for the staticpath and corepath rules and will expand to the user home directory. Be aware that if ES-DE has been started with the --home command line option, the home directory is considered to be whatever path was passed as an argument to that option. The same is true if using a portable.txt file.
+
+All these options combined makes it possible to create quite powerful find rules.
+
+For reference, here are also example es_find_rules.xml files for macOS and Windows:
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for macOS -->
+<ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>zsh</entry>
+            <entry>bash</entry>
+        </rule>
+    </emulator>
+    <emulator name="RETROARCH">
+        <rule type="staticpath">
+            <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <!-- RetroArch >= v1.9.2 -->
+            <entry>~/Library/Application Support/RetroArch/cores</entry>
+            <!-- RetroArch < v1.9.2 -->
+            <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
+        </rule>
+    </core>
+    <emulator name="DOSBOX-STAGING">
+        <!-- DOS emulator DOSBox Staging -->
+        <rule type="staticpath">
+            <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
+            <entry>/opt/homebrew/bin/dosbox-staging</entry>
+            <entry>/usr/local/bin/dosbox-staging</entry>
+        </rule>
+    </emulator>
+    <emulator name="MUPEN64PLUS">
+        <!-- Nintendo 64 emulator Mupen64Plus -->
+        <rule type="staticpath">
+            <entry>/Applications/mupen64plus.app/Contents/MacOS/mupen64plus</entry>
+            <entry>/usr/local/bin/mupen64plus</entry>
+        </rule>
+    </emulator>
+    <emulator name="PCSX2">
+        <!-- Sony PlayStation 2 emulator PCSX2 -->
+        <rule type="staticpath">
+            <entry>/Applications/PCSX2.app/Contents/MacOS/PCSX2</entry>
+        </rule>
+    </emulator>
+</ruleList>
+```
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for Windows -->
+<ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>cmd.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="RETROARCH">
+        <rule type="winregistrypath">
+            <!-- Check for an App Paths entry in the Windows Registry -->
+            <entry>retroarch.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <!-- This requires that the user has manually updated the Path variable -->
+            <entry>retroarch.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- Some reasonable installation locations as fallback -->
+            <entry>C:\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\RetroArch\retroarch.exe</entry>
+            <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
+            <!-- Steam release at some default locations -->
+            <entry>C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\Emulators\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\Emulators\RetroArch\retroarch.exe</entry>
+            <entry>%ESPATH%\..\Emulators\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\..\Emulators\RetroArch\retroarch.exe</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <entry>%EMUPATH%\cores</entry>
+        </rule>
+    </core>
+    <emulator name="PCSX2">
+        <!-- Sony PlayStation 2 emulator PCSX2 -->
+        <rule type="systempath">
+            <entry>pcsx2-qt.exe</entry>
+            <entry>pcsx2-qtx64.exe</entry>
+            <entry>pcsx2-qtx64-avx2.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
+            <entry>%ESPATH%\..\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\..\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+        </rule>
+    </emulator>
+</ruleList>
+```
 
 ## es_systems.xml
 
@@ -1168,11 +1371,11 @@ The es_systems.xml file contains the game systems configuration data for ES-DE, 
 
 ES-DE ships with a comprehensive `es_systems.xml` file and most users will probably never need to make any customizations. But there may be special circumstances such as wanting to use different emulators for some game systems or perhaps to add additional systems altogether.
 
-To accomplish this, ES-DE supports customizations via a separate es_systems.xml file that is to be placed in the `custom_systems` folder in the application home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden via the --home command line option.)
+To accomplish this, ES-DE supports customizations via a separate es_systems.xml file that is to be placed in the `custom_systems` folder in the application home directory, i.e. `~/ES-DE/custom_systems/es_systems.xml`. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden via the --home command line option.)
 
 This custom file functionality is designed to be complementary to the bundled es_systems.xml file, meaning you should only add entries to the custom configuration file for game systems that you actually want to add or override. So to for example customize a single system, this file should only contain a single `<system>` tag. The structure of the custom file is identical to the bundled file with the exception of an additional optional tag named `<loadExclusive/>`. If this is placed in the custom es_systems.xml file, ES-DE will not load the bundled file. This is normally not recommended and should only be used for special situations. At the end of this section you can find an example of a custom es_systems.xml file.
 
-The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
+The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/es-de/resources/systems/linux/es_systems.xml` on Linux, `/Applications/ES-DE.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\ES-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
 
 If you're using the AppImage release of ES-DE then the bundled es_systems.xml file is embedded in the AppImage together with the rest of the resources.
 
@@ -1398,10 +1601,10 @@ And finally one for Windows:
 </system>
 ```
 
-As well, here's an example for Unix of a custom es_systems.xml file placed in ~/.emulationstation/custom_systems/ that overrides a single game system from the bundled configuration file:
+As well, here's an example for Linux of a custom es_systems.xml file placed in ~/ES-DE/custom_systems/ that overrides a single game system from the bundled configuration file:
 ```xml
 <?xml version="1.0"?>
-<!-- This is a custom ES-DE game systems configuration file for Unix -->
+<!-- This is a custom ES-DE game systems configuration file for Linux -->
 <systemList>
     <system>
         <name>nes</name>
@@ -1464,9 +1667,130 @@ Here is yet another example with the addition of the `snes` system where some fi
 </systemList>
 ```
 
+## es_find_rules.xml and es_systems.xml on Android
+
+ES-DE works a bit differently on Android which is also reflected in the es_find_rules.xml and es_systems.xml configuration. Emulators on Android are launched via so-called _Intents_ which is an API rather than the typical command line approach used on Unix systems. Although ES-DE on Windows also uses an API call to launch emulators it's still closely connected to the regular operating system paradigms on how to start binaries and pass application options so the systems configuration still looks quite traditional. On Android this is not the case and there is therefore a heavy use of variables to reflect the Intent API functionality.
+
+To better understand the configuration in this section it could be a good idea to refer the official Android documentation:\
+https://developer.android.com/reference/android/content/Intent
+
+There is a command line tool in Android named _am_ which implements the _Intent_ API and can be used to test emulator launching, but this is not intended to be used by other applications and therefore ES-DE implements direct (albeit partial) support for the Intent API. Testing the modern FileProvider interface using the _am_ utility may also be difficult, or maybe impossible.
+
+**es_find_rules.xml**
+
+The es_find_rules.xml file is structured the same as for the other operating systems but there'a special _androidpackage_ find rule where you define the name of the emulator package as well as optionally which _activity_ to launch. If the activity is not defined then the default one for the package will be used. Although this may work in some instances it's usually a good idea to explicity set it. Apart from that the find rules work as on the other platforms, i.e. they will be traversed in the order they are defined. So by adding multiple _androidpackage_ entries for an emulator it's possible to look for multiple releases or forks without having to create separate emulator entries in es_systems.xml. It's also possible to override find rules by adding an ES-DE/custom_systems/es_find_rules.xml file, again the same logic applies as for all other platforms.
+
+The _androidpackage_ find rule entries are structured as `<entry>packagename/activity</entry>` and if only a package is defined then the forward slash can be omitted, i.e. only `<entry>packagename</entry>` is needed.
+
+Here's an example es_find_rules.xml file defining two emulators:
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for Android -->
+<ruleList>
+    <emulator name="RETROARCH">
+        <rule type="androidpackage">
+            <entry>com.retroarch.aarch64/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
+            <entry>com.retroarch.ra32/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
+            <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="androidpackage">
+            <entry>org.yuzu.yuzu_emu.ea/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+            <entry>org.yuzu.yuzu_emu/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
+</ruleList>
+```
+
+**es_systems.xml**
+
+The es_systems.xml file on Android utilizes variables heavily to implement the _Intent_ API and these variables are covered in detail below. It's possible to override the systems configuration by adding an ES-DE/custom_systems/es_systems.xml file, the same logic applies as for all other platforms.
+
+`%EMULATOR_` - This utilizes the emulator find rules as defined in `es_find_rules.xml`. This is the only way to configure the launch command on Android and it works identically to the other platforms.
+
+`%ACTION%` - The general Intent action to be performed, you need to assign its value using an equal sign.
+
+There are two main ways to pass options to emulators, using _extras_ or using the _data_ URI. There can only be a single data URI but there can be an arbitrary amount of extras. To understand more about the way this works, you can read about the _putExtra()_ and and _setData()_ functions here:\
+https://developer.android.com/reference/android/content/Intent
+
+There are three approaches to passing game ROMs to emulators by using the following variables:
+
+`%ROM%` - Replaced with the absolute path to the selected ROM. This is a traditional method to provide the game ROM and its use will likely decrease or go away completely long term as emulators move to more modern methods.
+
+`%ROMSAF%` - Replaced with an Android Storage Access Framework (SAF) document URI which always starts with the _content://com.android.externalstorage.documents/_ string. You can read more about the SAF here:\
+https://developer.android.com/guide/topics/providers/document-provider
+
+`%ROMPROVIDER%` - This is the most modern approach to passing game ROMs to emulators. It uses the _FileProvider_ API to provide permissions to the file. This means that you don't need to setup the emulator upfront to have access to the directory where the game file is stored, access is instead temporarily granted by ES-DE. You can read more about the FileProvider API here:\
+https://developer.android.com/reference/androidx/core/content/FileProvider
+
+The `%ROM%` and `%ROMSAF%` variables can be used with both the `%DATA%` and `%EXTRA_` variables, but `%ROMPROVIDER%` can only be used with the `%DATA%` variable. For the `%DATA%` variable you'll just assign the ROM variable with an equal sign as there can only be a single _setData()_ API call per Intent. For the `%EXTRA_` variable you need to specify a name of the extra and then define it using an equal sign as an arbitrary amount of _putExtra()_ API calls can be used for an Intent. There is also a special `%EXTRABOOL_` variable that specifically passes boolean values (true/false) to emulators that support such arguments.
+
+Here are some examples to clarify how this works:
+```
+%DATA%=%ROM%
+%DATA%=%ROMSAF%
+%DATA%=%ROMPROVIDER%
+%EXTRA_ROM%=%ROM%
+%EXTRA_bootPath%=%ROMSAF%
+%EXTRABOOL_resumeState%=false
+```
+
+There is also support for a couple of activity flags that affect the emulator/game launch behavior, you can read more about these flags here:\
+https://developer.android.com/reference/android/content/Intent
+
+The descriptions below are taken from the official documentation just linked above:
+
+`%ACTIVITY_CLEAR_TASK%` - If set in an Intent passed to Context.startActivity(), this flag will cause any existing task that would be associated with the activity to be cleared before the activity is started. That is, the activity becomes the new root of an otherwise empty task, and any old activities are finished.
+
+`%ACTIVITY_CLEAR_TOP%` - If set, and the activity being launched is already running in the current task, then instead of launching a new instance of that activity, all of the other activities on top of it will be closed and this Intent will be delivered to the (now on top) old activity as a new Intent.
+
+`%ACTIVITY_NO_HISTORY%` - If set, the new activity is not kept in the history stack. As soon as the user navigates away from it, the activity is finished. This may also be set with the noHistory attribute. If set, onActivityResult() is never invoked when the current activity starts a new activity which sets a result and finishes.
+
+Here's an example es_systems.xml file for Android:
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE game systems configuration file for Android -->
+<systemList>
+    <system>
+        <name>gc</name>
+        <fullname>Nintendo GameCube</fullname>
+        <path>%ROMPATH%/gc</path>
+        <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
+        <command label="Dolphin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/dolphin_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %DATA%=%ROMPROVIDER%</command>
+        <platform>gc</platform>
+        <theme>gc</theme>
+    </system>
+    <system>
+        <name>n3ds</name>
+        <fullname>Nintendo 3DS</fullname>
+        <path>%ROMPATH%/n3ds</path>
+        <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
+        <command label="Citra">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/citra_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Citra (Standalone)">%EMULATOR_CITRA% %ACTIVITY_NO_HISTORY% %EXTRA_SelectedGame%=%ROMSAF%</command>
+        <command label="Citra MMJ (Standalone)">%EMULATOR_CITRA-MMJ% %EXTRA_GamePath%=%ROM%</command>
+        <platform>n3ds</platform>
+        <theme>n3ds</theme>
+    </system>
+    <system>
+        <name>psx</name>
+        <fullname>Sony PlayStation</fullname>
+        <path>%ROMPATH%/psx</path>
+        <extension>.bin .BIN .cbn .CBN .ccd .CCD .chd .CHD .cue .CUE .ecm .ECM .exe .EXE .img .IMG .iso .ISO .m3u .M3U .mdf .MDF .mds .MDS .minipsf .MINIPSF .pbp .PBP .psexe .PSEXE .psf .PSF .toc .TOC .z .Z .znx .ZNX .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle PSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_psx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% %EXTRABOOL_resumeState%=false %EXTRA_bootPath%=%ROMSAF%</command>
+        <platform>psx</platform>
+        <theme>psx</theme>
+    </system>
+</systemList>
+```
+
 ## es_systems_sorting.xml
 
-This file makes it possible to apply a custom systems sorting without having to modify the es_systems.xml file directly. It should be placed in the custom_systems directory, e.g.  `~/.emulationstation/custom_systems/es_systems_sorting.xml`
+This file makes it possible to apply custom systems sorting without having to modify the es_systems.xml file directly. It should be placed in the custom_systems directory, e.g.  `~/ES-DE/custom_systems/es_systems_sorting.xml`
 
 Note that in order for ES-DE to load this file you'll need to set the _Systems sorting_ option in the _UI settings_ menu to _Full names or custom_.
 
@@ -1507,272 +1831,14 @@ These files include all systems supported by ES-DE and provide the following sor
 
 You can apply any of these sorting files via the _Systems sorting_ option in the _Other settings_ menu. Note that in order to load a es_systems_sorting.xml file placed in the custom_systems directory you'll need to set this option to _Full names or custom_.
 
-## es_find_rules.xml
-
-This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.
-
-The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will complement the bundled file.
-
-Here's an example es_find_rules.xml file for Unix (this is not the complete file shipped with ES-DE as that would be too large to include here):
-```xml
-<?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for Unix -->
-<ruleList>
-    <emulator name="OS-SHELL">
-        <!-- Operating system shell -->
-        <rule type="systempath">
-            <entry>bash</entry>
-            <entry>sh</entry>
-        </rule>
-    </emulator>
-    <emulator name="RETROARCH">
-        <rule type="systempath">
-            <entry>retroarch</entry>
-            <entry>org.libretro.RetroArch</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/RetroArch-Linux*.AppImage</entry>
-            <entry>~/.local/bin/RetroArch-Linux*.AppImage</entry>
-            <entry>~/bin/RetroArch-Linux*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.libretro.RetroArch</entry>
-        </rule>
-    </emulator>
-    <core name="RETROARCH">
-        <rule type="corepath">
-            <!-- Snap package -->
-            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
-            <!-- Flatpak package -->
-            <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
-            <!-- AppImage and compiled from source -->
-            <entry>~/.config/retroarch/cores</entry>
-            <!-- Ubuntu and Linux Mint repository -->
-            <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
-            <!-- Fedora repository -->
-            <entry>/usr/lib64/libretro</entry>
-            <!-- Manjaro repository -->
-            <entry>/usr/lib/libretro</entry>
-            <!-- FreeBSD and OpenBSD repository -->
-            <entry>/usr/local/lib/libretro</entry>
-            <!-- NetBSD repository -->
-            <entry>/usr/pkg/lib/libretro</entry>
-        </rule>
-    </core>
-    <emulator name="DOSBOX-STAGING">
-        <!-- DOS emulator DOSBox Staging -->
-        <rule type="systempath">
-            <entry>dosbox-staging</entry>
-            <entry>io.github.dosbox-staging</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
-            <entry>~/.local/share/flatpak/exports/bin/io.github.dosbox-staging</entry>
-        </rule>
-    </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="systempath">
-            <entry>yuzu</entry>
-            <entry>org.yuzu_emu.yuzu</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/yuzu*.AppImage</entry>
-            <entry>~/.local/bin/yuzu*.AppImage</entry>
-            <entry>~/bin/yuzu*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-        </rule>
-    </emulator>
-</ruleList>
-```
-
-It's pretty straightforward, there are currently four rules supported for finding emulators, `winregistrypath`, `winregistryvalue`, `systempath` and `staticpath` and there is one rule supported for finding the emulator cores, `corepath`.
-
-Of these, `winregistrypath` and `winregistryvalue` are only available on Windows, and attempting to use the rule on any other operating system will generate a warning in the log file when processing the es_find_rules.xml file.
-
-The `name` attribute must correspond to the command tags in es_systems.xml, take for example this line:
-```xml
-<command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
-```
-
-Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so pretty).
-
-Of course this makes it possible to add any number of emulators to the configuration file.
-
-The find rules can also be used by the %PRECOMMAND_ variable, which is for instance useful for running Windows emulators on Linux using Wine or Proton. In the following example two separate find rules are used, one for the %PRECOMMAND_ variable and another one for the %EMULATOR_ variable:
-```xml
-<command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
-```
-
-The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, a search will be performed for the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe`. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the default value for the key actually exists. If not, it will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
-
-The `winregistryvalue` rule will search for the specific registry value, and if it exists, it will use that value as the path to the emulator binary. HKEY_CURRENT_USER will be tried first, followed by HKEY_LOCAL_MACHINE. In the same manner as `winregistrypath`, ES-DE will check that the binary defined in the registry value actually exists. If not, it will proceed with the next rule. For example, if setting the `<entry>` tag for this rule to `SOFTWARE\Valve\Steam\SteamExe`, the emulator binary would be set to `c:\program files (x86)\steam\steam.exe`, assuming that's where Steam has been installed. As this rule can be used to query any value in the Registry, it's a quite powerful tool to locate various emulators and applications. In addition to this it's posssible to append an arbitrary string to the key value if it's found and use that as the emulator binary path. This is accomplished by using the pipe sign, so for example the entry `SOFTWARE\PCSX2\Install_Dir|\pcsx2.exe` will look for the key `SOFTWARE\PCSX2\Install_Dir` and if it's found it will take the value of that key and append the string `\pcsx2.exe` to it. This could for example result in `C:\Program Files (x86)\PCSX2\pcsx2.exe`. Also for this setup, ES-DE will check that the emulator binary actually exists, or it will proceed to the next rule.
-
-The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must be included in the entry tag. Wildcards (*) are supported for the emulator binary, but not for directories. Wildcards are very useful for AppImages which often embed version information into the filenames. Note that if multiple files match a wildcard pattern, the first file returned by the operating system will be selected.
-
-```xml
-<rule type="staticpath">
-    <!-- This is supported, first matching file will be selected -->
-    <entry>~/Applications/yuzu*.AppImage</entry>
-    <!-- This is also supported -->
-    <entry>~/Applications/yuzu*.App*</entry>
-    <!-- This is NOT supported -->
-    <entry>~/App*/yuzu*.AppImage</entry>
-</rule>
-```
-
-There is also support for substituting the emulator binary in a staticpath rule with an explicit command. To accomplish this add a pipe (|) character after the emulator entry followed by the command to execute. This is for example useful for Flatpaks when you want to check the presence of a package while still launching a specific command inside the package using the --command option. For example:
-
-``` xml
-<rule type="staticpath">
-    <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
-    <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
-</rule>
-```
-
-This will execute the regular logic of checking if the Mednaffe Flatpak is installed but will actually run the command after the pipe character when launching the game. Note that no checks or controls are in place for the explicitly defined command, it's just blindly executed.
-
-The winregistrypath rules are always processed first, followed by winregistryvalue, then systempath and finally staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
-
-As for `corepath` this rule is simply a path to search for the emulator core.
-
-Each rule supports multiple entry tags which are tried in the order that they are defined in the file.
-
-The %ESPATH% and %ROMPATH% variables can be used inside the staticpath rules and the %ESPATH% and %EMUPATH% variables can be used inside the corepath rules.
-
-The tilde symbol `~` is supported for the staticpath and corepath rules and will expand to the user home directory. Be aware that if ES-DE has been started with the --home command line option, the home directory is considered to be whatever path was passed as an argument to that option. The same is true if using a portable.txt file.
-
-All these options combined makes it possible to create quite powerful find rules.
-
-For reference, here are also example es_find_rules.xml files for macOS and Windows:
-
-```xml
-<?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for macOS -->
-<ruleList>
-    <emulator name="OS-SHELL">
-        <!-- Operating system shell -->
-        <rule type="systempath">
-            <entry>zsh</entry>
-            <entry>bash</entry>
-        </rule>
-    </emulator>
-    <emulator name="RETROARCH">
-        <rule type="staticpath">
-            <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
-        </rule>
-    </emulator>
-    <core name="RETROARCH">
-        <rule type="corepath">
-            <!-- RetroArch >= v1.9.2 -->
-            <entry>~/Library/Application Support/RetroArch/cores</entry>
-            <!-- RetroArch < v1.9.2 -->
-            <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
-        </rule>
-    </core>
-    <emulator name="DOSBOX-STAGING">
-        <!-- DOS emulator DOSBox Staging -->
-        <rule type="staticpath">
-            <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
-            <entry>/opt/homebrew/bin/dosbox-staging</entry>
-            <entry>/usr/local/bin/dosbox-staging</entry>
-        </rule>
-    </emulator>
-    <emulator name="MUPEN64PLUS">
-        <!-- Nintendo 64 emulator Mupen64Plus -->
-        <rule type="staticpath">
-            <entry>/Applications/mupen64plus.app/Contents/MacOS/mupen64plus</entry>
-            <entry>/usr/local/bin/mupen64plus</entry>
-        </rule>
-    </emulator>
-    <emulator name="PCSX2">
-        <!-- Sony PlayStation 2 emulator PCSX2 -->
-        <rule type="staticpath">
-            <entry>/Applications/PCSX2.app/Contents/MacOS/PCSX2</entry>
-        </rule>
-    </emulator>
-</ruleList>
-```
-
-```xml
-<?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for Windows -->
-<ruleList>
-    <emulator name="OS-SHELL">
-        <!-- Operating system shell -->
-        <rule type="systempath">
-            <entry>cmd.exe</entry>
-        </rule>
-    </emulator>
-    <emulator name="RETROARCH">
-        <rule type="winregistrypath">
-            <!-- Check for an App Paths entry in the Windows Registry -->
-            <entry>retroarch.exe</entry>
-        </rule>
-        <rule type="systempath">
-            <!-- This requires that the user has manually updated the Path variable -->
-            <entry>retroarch.exe</entry>
-        </rule>
-        <rule type="staticpath">
-            <!-- Some reasonable installation locations as fallback -->
-            <entry>C:\RetroArch-Win64\retroarch.exe</entry>
-            <entry>C:\RetroArch\retroarch.exe</entry>
-            <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
-            <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
-            <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
-            <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
-            <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
-            <!-- Steam release at some default locations -->
-            <entry>C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
-            <entry>D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
-            <entry>C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
-            <entry>D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
-            <!-- Portable installation -->
-            <entry>%ESPATH%\Emulators\RetroArch-Win64\retroarch.exe</entry>
-            <entry>%ESPATH%\Emulators\RetroArch\retroarch.exe</entry>
-            <entry>%ESPATH%\..\Emulators\RetroArch-Win64\retroarch.exe</entry>
-            <entry>%ESPATH%\..\Emulators\RetroArch\retroarch.exe</entry>
-        </rule>
-    </emulator>
-    <core name="RETROARCH">
-        <rule type="corepath">
-            <entry>%EMUPATH%\cores</entry>
-        </rule>
-    </core>
-    <emulator name="PCSX2">
-        <!-- Sony PlayStation 2 emulator PCSX2 -->
-        <rule type="systempath">
-            <entry>pcsx2-qt.exe</entry>
-            <entry>pcsx2-qtx64.exe</entry>
-            <entry>pcsx2-qtx64-avx2.exe</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
-            <entry>%ESPATH%\..\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
-        </rule>
-    </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="systempath">
-            <entry>yuzu.exe</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\..\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-        </rule>
-    </emulator>
-</ruleList>
-```
-
 ## gamelist.xml
 
 The gamelist.xml file for a system defines the metadata for its entries, such as the game names, descriptions, release dates and ratings.
 
-As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game media is configurable either manually in `es_settings.xml` or via the GUI. If configured manually in es_settings.xml, it looks something like this:
+As of the fork to ES-DE, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game media is configurable either manually in `es_settings.xml` or via the GUI. If configured manually in es_settings.xml, it looks something like this:
 
 ```xml
-<string name="MediaDirectory" value="~/games/media/emulationstation" />
+<string name="MediaDirectory" value="~/games/media/ES-DE" />
 ```
 
 There is also support to add the variable %ESPATH% to the media directory setting, this will expand to the path where the ES-DE executable is started from. You should normally not need this, but the option is there for special cases. For example:
@@ -1781,17 +1847,17 @@ There is also support to add the variable %ESPATH% to the media directory settin
 <string name="MediaDirectory" value="%ESPATH%/../downloaded_media" />
 ```
 
-The default media directory is `~/.emulationstation/downloaded_media`
+The default media directory is `~/ES-DE/downloaded_media`
 
 You can use ES-DE's scrapers to populate the gamelist.xml files, or manually update individual entries using the metadata editor. All of this is explained in the [User guide](USERGUIDE-DEV.md).
 
-The gamelist.xml files are searched for in the ES-DE home directory, i.e. `~/.emulationstation/gamelists/<system name>/gamelist.xml`
+The gamelist.xml files are searched for in the ES-DE home directory, i.e. `~/ES-DE/gamelists/<system name>/gamelist.xml`
 
 For example:
 
 ```
-~/.emulationstation/gamelists/c64/gamelist.xml
-~/.emulationstation/gamelists/megadrive/gamelist.xml
+~/ES-DE/gamelists/c64/gamelist.xml
+~/ES-DE/gamelists/megadrive/gamelist.xml
 ```
 
 **gamelist.xml file structure**
@@ -1922,7 +1988,7 @@ Before attempting to add a custom profile for your controller you need to check 
 
 ES-DE uses the [SDL](https://www.libsdl.org) (Simple DirectMedia Layer) library to handle controller input, so in order for a controller to work in ES-DE, it has to be supported by SDL. There is however a possibility to add custom controller profiles to SDL which in some cases could enable devices in ES-DE that would otherwise not be supported. This is generally a temporary solution though, as controller support is constantly getting improved natively in SDL. As a first step it's therefore recommended to open a request at the SDL [issue tracker](https://github.com/libsdl-org/SDL/issues) to have your specific controller added to a future SDL release.
 
-Assuming the controller works in other applications than ES-DE, you can attempt to add a custom profile by creating the file `~/.emulationstation/es_controller_mappings.cfg` and enter the appropriate configuration inside this file.
+Assuming the controller works in other applications than ES-DE, you can attempt to add a custom profile by creating the file `~/ES-DE/controllers/es_controller_mappings.cfg` and enter the appropriate configuration inside this file.
 
 The required format is described here:\
 https://github.com/gabomdq/SDL_GameControllerDB
@@ -1932,7 +1998,7 @@ https://raw.githubusercontent.com/gabomdq/SDL_GameControllerDB/master/gamecontro
 
 But just do this as a first step to see whether you controller gets enabled. If it does, then you should remove all entries that are not relevant. That is important as this file will take precedence over the built-in controller profiles in the SDL library, so any future controller bug fixes and similar would not apply. In the past the gamecontrollerdb.txt file has also included some invalid configuration entries, so even though it may make your controller work, it could actually break some other controllers that you may want to use now or in the future.
 
-Therefore only keep the entries in the es_controller_mappings.cfg file that are relevant for your devices. You can find each relevant controller GUID by starting ES-DE and then looking in the ~/.emulationstation/es_log.txt file. You should see entries such as the following:
+Therefore only keep the entries in the es_controller_mappings.cfg file that are relevant for your devices. You can find each relevant controller GUID by starting ES-DE and then looking in the `~/ES-DE/logs/es_log.txt` file. You should see entries such as the following:
 ```
 May 16 18:26:17 Info:   Added controller with custom configuration: "X360 Controller" (GUID: 030000005e0400008e02000010010000, instance ID: 0, device index: 0)
 ```
@@ -1954,26 +2020,26 @@ For this example, let's assume that the removable media has the device name `F:\
 These are the steps to perform:
 
 * Install ES-DE
-* Copy the EmulationStation-DE installation directory to F:\
-* Create a directory named F:\EmulationStation-DE\Emulators
-* Copy your emulator directories to F:\EmulationStation-DE\Emulators\
-* Copy your ROMs directory to F:\EmulationStation-DE\
-* Create an empty file named portable.txt in F:\EmulationStation-DE\
+* Copy the ES-DE installation directory to F:\
+* Create a directory named F:\ES-DE\Emulators
+* Copy your emulator directories to F:\ES-DE\Emulators\
+* Copy your ROMs directory to F:\ES-DE\
+* Create an empty file named portable.txt in F:\ES-DE\
 
 You should end up with something like this:
 ```
-F:\EmulationStation-DE\
-F:\EmulationStation-DE\Emulators\dosbox-staging\
-F:\EmulationStation-DE\Emulators\RetroArch-Win64\
-F:\EmulationStation-DE\Emulators\RPCS3\
-F:\EmulationStation-DE\Emulators\xemu\
-F:\EmulationStation-DE\ROMs\
-F:\EmulationStation-DE\portable.txt
+F:\ES-DE\
+F:\ES-DE\Emulators\dosbox-staging\
+F:\ES-DE\Emulators\RetroArch-Win64\
+F:\ES-DE\Emulators\RPCS3\
+F:\ES-DE\Emulators\xemu\
+F:\ES-DE\ROMs\
+F:\ES-DE\portable.txt
 ```
 
-This is just an example as you may of course not use these specific emulators. There are also many more emulators supported as detailed in the `es_find_rules.xml` configuration file. As well there will be many more files and directories than those listed above inside the F:\EmulationStation-DE folder.
+This is just an example as you may of course not use these specific emulators. There are also many more emulators supported as detailed in the `es_find_rules.xml` configuration file. As well there will be many more files and directories than those listed above inside the F:\ES-DE folder.
 
-How the portable setup works is that when ES-DE finds a file named portable.txt in its executable directory, it will by default locate the .emulationstation directory directly inside this folder. It's also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under F:\ for this example.
+How the portable setup works is that when ES-DE finds a file named portable.txt in its executable directory, it will by default locate the ES-DE application data directory directly inside this folder. It's also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the ES-DE application data directory will be located in the parent folder, which would be directly under F:\ for this example.
 
 If the --home command line parameter is passed when starting ES-DE, that will override the portable.txt file.
 
@@ -1982,12 +2048,12 @@ Start ES-DE from the F:\ device and check that everything works as expected. Jus
 Following this, optionally copy any existing gamelist.xml files, game media files etc. to the removable media. For example:
 
 ```
-F:\EmulationStation-DE\.emulationstation\collections\
-F:\EmulationStation-DE\.emulationstation\downloaded_media\
-F:\EmulationStation-DE\.emulationstation\gamelists\
+F:\ES-DE\ES-DE\collections\
+F:\ES-DE\ES-DE\downloaded_media\
+F:\ES-DE\ES-DE\gamelists\
 ```
 
-You could alternatively copy over your entire .emulationstation directory, but in this case make sure that you have no settings in es_settings.xml that point to a specific location on your local filesystem, such as the game ROMs or game media directories.
+You could alternatively copy over your entire ES-DE application data directory, but in this case make sure that you have no settings in es_settings.xml that point to a specific location on your local filesystem, such as the game ROMs or game media directories.
 
 You now have a fully functional portable retrogaming installation!
 
@@ -2030,7 +2096,7 @@ The following examples are for Unix systems, but it works the same way on macOS 
 
 As can be seen in the table above, the events executed when a game starts and ends are named _game-start_ and _game-end_
 
-So let's create the folders for these events in the scripts directory. The location is `~/.emulationstation/scripts`
+So let's create the folders for these events in the scripts directory. The location is `~/ES-DE/scripts`
 
 **Game log**
 
@@ -2041,7 +2107,7 @@ Let's name the start script `game_start_logging.sh` with the following contents:
 ```
 #!/bin/bash
 TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
-echo Starting game "\""${2}"\"" "\""${4}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
+echo Starting game "\""${2}"\"" "\""${4}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/ES-DE/logs/game_playlog.txt
 ```
 
 And let's name the end script `game_end_logging.sh` with the following contents:
@@ -2049,14 +2115,14 @@ And let's name the end script `game_end_logging.sh` with the following contents:
 ```
 #!/bin/bash
 TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
-echo "Ending game  " "\""${2}"\"" "\""${4}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
+echo "Ending game  " "\""${2}"\"" "\""${4}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/ES-DE/logs/game_playlog.txt
 ```
 
 After creating the two scripts, you should have something like this on the filesystem:
 
 ```
-~/.emulationstation/scripts/game-start/game_start_logging.sh
-~/.emulationstation/scripts/game-end/game_end_logging.sh
+~/ES-DE/scripts/game-start/game_start_logging.sh
+~/ES-DE/scripts/game-end/game_end_logging.sh
 ```
 
 Don't forget to make the scripts executable (e.g. "chmod 755 ./game_start_logging.sh").
@@ -2065,15 +2131,14 @@ If we now start ES-DE with the debug flag and launch a game, something like the 
 
 ```
 Aug 05 14:19:24 Debug:  Scripting::fireEvent(): game-start "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System"
-Aug 05 14:19:24 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-start/game_start_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System"
+Aug 05 14:19:24 Debug:  Executing: /home/myusername/ES-DE/scripts/game-start/game_start_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System"
 .
 .
 Aug 05 14:27:15 Debug:  Scripting::fireEvent(): game-end "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System" ""
-Aug 05 14:27:15 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-end/game_end_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System"
-
+Aug 05 14:27:15 Debug:  Executing: /home/myusername/ES-DE/scripts/game-end/game_end_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System"
 ```
 
-Finally after running some games, ~/.emulationstation/game_playlog.txt should contain something like the following:
+Finally after running some games, ~/ES-DE/logs/game_playlog.txt should contain something like the following:
 
 ```
 Starting game "The Legend Of Zelda" "Nintendo Entertainment System" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:19:24
@@ -2101,7 +2166,7 @@ Then create the end script, which we'll name `set_resolution_4K.sh`:
 #!/bin/sh
 xrandr -s 3840x2160
 sleep 0.3
-xdotool search --class emulationstation windowactivate
+xdotool search --class es-de windowactivate
 ```
 
 The last two lines are optional, they're used to set the focus back to ES-DE in case you're running attention-seeking applications such as Kodi which may steal focus after resolution changes. You may need to adjust the sleep time to get this to work reliably though, as the timing may differ between different computers and graphics drivers.
@@ -2109,8 +2174,8 @@ The last two lines are optional, they're used to set the focus back to ES-DE in 
 After creating the two scripts, you should have something like this on the filesystem:
 
 ```
-~/.emulationstation/scripts/game-start/set_resolution_1080p.sh
-~/.emulationstation/scripts/game-end/set_resolution_4K.sh
+~/ES-DE/scripts/game-start/set_resolution_1080p.sh
+~/ES-DE/scripts/game-end/set_resolution_4K.sh
 ```
 
 Don't forget to make the scripts executable (e.g. "chmod 755 ./set_resolution_1080p.sh").

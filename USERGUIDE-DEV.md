@@ -38,12 +38,12 @@ The installation procedure is just covered briefly here and may differ a bit for
 
 The AppImage release should be usable on most modern x86 64-bit Linux distributions. After download you may have to set the file as executable, such as this:
 ```
-chmod +x EmulationStation-DE-x64.AppImage
+chmod +x ES-DE_x64.AppImage
 ```
 
 Or if you're using the Steam Deck AppImage:
 ```
-chmod +x EmulationStation-DE-x64_SteamDeck.AppImage
+chmod +x ES-DE_x64_SteamDeck.AppImage
 ```
 
 To run AppImage files you need libfuse2 installed, but some newer distributions like Ubuntu 22.04 LTS no longer ship with this library preinstalled. You can however easily install it like this:
@@ -59,11 +59,11 @@ There's not really much to say about these operating systems, just install ES-DE
 
 **On first application startup**
 
-Upon first startup, ES-DE will create its `~/.emulationstation` home directory.
+Upon first startup, ES-DE will create its `~/ES-DE` application data directory.
 
-On Linux this means `/home/<username>/.emulationstation`, on macOS `/Users/<username>/.emulationstation` and on Windows `C:\Users\<username>\.emulationstation` or `EmulationStation-DE\.emulationstation` depending on whether the installer release or the portable release is used.
+On Linux this means `/home/<username>/ES-DE`, on macOS `/Users/<username>/ES-DE` and on Windows `C:\Users\<username>\ES-DE` or `ES-DE\ES-DE` depending on whether the installer release or the portable release is used.
 
-Also on first startup the configuration file `es_settings.xml` will be generated in the ES-DE home directory, containing all the application settings at their default values. Following this, a file named `es_systems.xml` will be loaded from the resources directory (which is part of the ES-DE installation). This file contains the game system definitions including which emulator to use per platform. For many systems there are also alternative emulators defined which can be applied system-wide or per game. How that works is explained later in this guide. A customized systems configuration file can also be used, as described in the next section below.
+Also on first startup the configuration file `es_settings.xml` will be generated in the `ES-DE/settings` directory, containing all the application settings at their default values. Following this, a file named `es_systems.xml` will be loaded from the resources directory (which is part of the ES-DE installation). This file contains the game system definitions including which emulator to use per platform. For many systems there are also alternative emulators defined which can be applied system-wide or per game. How that works is explained later in this guide. A customized systems configuration file can also be used, as described in the next section below.
 
 In addition to es_systems.xml there's an `es_find_rules.xml` file that gets loaded as well and which contains rules on how to locate the emulators, i.e. how to find out where they've been installed.
 
@@ -113,18 +113,18 @@ epic: Epic Games Store
 famicom: Nintendo Family Computer
 ```
 
-If a custom es_systems.xml file is present in ~/.emulationstation/custom_systems/ any entries from this file will have their names trailed by the text _(custom system)_. So if the _dos_ system in the example above would be present in the custom systems configuration file, the system would be shown as _dos (custom system)_ instead of simply _dos_. This is only applicable for the systems.txt and systeminfo.txt files, the trailing text is not applied or used anywhere else in the application.
+If a custom es_systems.xml file is present in ~/ES-DE/custom_systems/ any entries from this file will have their names trailed by the text _(custom system)_. So if the _dos_ system in the example above would be present in the custom systems configuration file, the system would be shown as _dos (custom system)_ instead of simply _dos_. This is only applicable for the systems.txt and systeminfo.txt files, the trailing text is not applied or used anywhere else in the application.
 
 ![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 ## Upgrading to a newer release
 
-**Note:** Before upgrading ES-DE, make sure that you have not made any system customizations anywhere in the installation directory structure as these files will be overwritten during the upgrade process. All customizations should go into ~/.emulationstation/custom_systems/ as described elsewhere in this guide. None of the upgrade methods mentioned below will ever touch any files inside your .emulationstation directory tree.
+**Note:** Before upgrading ES-DE, make sure that you have not made any system customizations anywhere in the installation directory structure as these files will be overwritten during the upgrade process. All customizations should go into ~/ES-DE/custom_systems/ as described elsewhere in this guide. None of the upgrade methods mentioned below will ever touch any files inside your ES-DE directory tree.
 
-There is a built-in application updater that can automatically update the Linux AppImage releases, and as of ES-DE 2.2.0 there is also support for downloading the Windows and macOS packages. Just be aware that these will still need to be manually installed. Using the application updater is straightforward, just follow the on-screen instructions. For the AppImage releases the old file is retained by renaming it, adding its version to the filename followed by the .OLD extension, for example `EmulationStation-DE-x64_SteamDeck.AppImage_2.1.0.OLD`
+There is a built-in application updater that can automatically update the Linux AppImage releases, and as of ES-DE 2.2.0 there is also support for downloading the Windows and macOS packages. Just be aware that these will still need to be manually installed. Using the application updater is straightforward, just follow the on-screen instructions. For the AppImage releases the old file is retained by renaming it, adding its version to the filename followed by the .OLD extension, for example `ES-DE_x64_SteamDeck.AppImage_3.0.0.OLD`
 
-Note that the updater will keep whatever filename you had for your running AppImage file, which could potentially be confusing if you for example added version information to the filename. It's always recommend to keep the default AppImage filenames, i.e. `EmulationStation-DE-x64.AppImage` and `EmulationStation-DE-x64_SteamDeck.AppImage`
+Note that the updater will keep whatever filename you had for your running AppImage file, which could potentially be confusing if you for example added version information to the filename. It's always recommend to keep the default AppImage filenames, i.e. `ES-DE_x64.AppImage` and `ES-DE_x64_SteamDeck.AppImage`
 
 On Windows and macOS you can specify to which directory you want to save the downloaded file. The default is `C:\Users\myusername\Downloads` on Windows and `/Users/myusername/Downloads` on macOS.
 
@@ -145,7 +145,7 @@ AUR upgrades should be automatically handled via your package manager and it sho
 
 **macOS**
 
-Open _Applications_ in Finder and right click on _EmulationStation Desktop Edition_ and choose _Move to Trash_. Then simply install the new release using the .dmg drag-and-drop installer.
+Open _Applications_ in Finder and right click on _ES-DE_ and choose _Move to Trash_. Then simply install the new release using the .dmg drag-and-drop installer.
 
 **Windows installer**
 
@@ -191,7 +191,7 @@ Note that if the setting _Only show games from gamelist.xml files_ has been enab
 
 ## Placing games and other resources on network shares
 
-Although ES-DE does support placing game ROMs, the `.emulationstation` home directory and the `downloaded_media` directory on network shares, this can lead to serious performance problems in some instances. Especially problematic is the Microsoft SMB protocol as it offers abysmal performance for some disk operations on which ES-DE relies heavily. For small game libraries this can still be acceptable, but for libraries with hundreds or thousands of games the application startup time and overall usage will be very painful or even unusable. Similar issues could occur when using file hosting services like Google Drive.
+Although ES-DE does support placing game ROMs, the `ES-DE` application data directory and the `downloaded_media` directory on network shares, this can lead to serious performance problems in some instances. Especially problematic is the Microsoft SMB protocol as it offers abysmal performance for some disk operations on which ES-DE relies heavily. For small game libraries this can still be acceptable, but for libraries with hundreds or thousands of games the application startup time and overall usage will be very painful or even unusable. Similar issues could occur when using file hosting services like Google Drive.
 
 A general recommendation is to place all game files and other data on drives connected directly to the machine where ES-DE is running. Even using low speed technology like USB thumb drives, SD cards etc. is generally fine and leads to acceptable performance in most instances.
 
@@ -233,7 +233,7 @@ In order for ES-DE to run, graphics drivers with OpenGL support have to be insta
 
 On some GPUs with buggy drivers, ES-DE may only display a black screen on startup or when launching a game. The problem can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for example:
 ```
-EmulationStation.exe --resolution 1281 800
+ES-DE.exe --resolution 1281 800
 ```
 
 Some computers using Intel Iris Xe GPUs refuse to start ES-DE or display excessive graphics corruption. These problems are seemingly caused by driver bugs and do not occur when using Linux with the same hardware. There is no known solution or workaround to this issue other than switching to Linux or waiting for Intel to resolve the problem with a driver update.
@@ -254,7 +254,7 @@ If you want to create your own portable intallation from scratch or customize th
 
 A number of systems have alternative emulator entries named _Shortcut or script_ which allows the direct execution of .lnk shortcut files or .bat batch files. It's not possible by default to directly launch .ps1 PowerShell scripts. As running PowerShell scripts is not even enabled by default on Windows they are for sure not recommended. If you still want to use them the best approach is to execute them via either a .lnk shortcut file or a .bat wrapper script where you explicitly call powershell.exe with the -command flag. If you instead insist on running them directly from ES-DE, you'll need to add a custom system or find rule configuration where you execute powershell.exe instead of cmd.exe and you'll also need to add .ps1 as a file extension for each relevant system.
 
-Some disk operations can have abysmal performance on Windows, and this may be especially obvious for the theme downloader. This is often caused by anti-virus software like Microsoft Defender. If it takes say 30 seconds rather than 300 milliseconds to open the theme downloader then it may be a good idea to add an exlusion for the .emulationstation\themes\ directory to Microsoft Defender. The same may also be true for other directories like the ROMs folder if disk performance is terrible. Refer to your anti-virus software documentation on how to setup such exclusions.
+Some disk operations can have abysmal performance on Windows, and this may be especially obvious for the theme downloader. This is often caused by anti-virus software like Microsoft Defender. If it takes say 30 seconds rather than 300 milliseconds to open the theme downloader then it may be a good idea to add an exlusion for the ES-DE\themes\ directory to Microsoft Defender. The same may also be true for other directories like the ROMs folder if disk performance is terrible. Refer to your anti-virus software documentation on how to setup such exclusions.
 
 ## Specific notes for macOS
 
@@ -270,13 +270,11 @@ At the time of writing there is an additional issue with the ARM release of Retr
 
 The first time you launch a RetroArch-emulated game from within ES-DE the operating system will present you with a security option with the following description:
 
-`"EmulationStation Desktop Edition" would like to access files in your Documents folder.`
+`"ES-DE" would like to access files in your Documents folder.`
 
 If you don't allow this, you will not be able to place system BIOS ROMs in the RetroArch default system directory `~/Documents/RetroArch/system` even if you've already given RetroArch access to this folder. This is so because RetroArch runs as a subprocess to ES-DE and therefore inherits the security settings from the parent application. Attempting to launch a game without enabling the access will simply display an error message in the emulator that the BIOS files are missing. This of course only applies to emulators that require BIOS ROMs, all other games should work fine regardless of this security setting.
 
-If you accidentally refused ES-DE the folder access, you can fix this by opening _System Settings_, selecting _Privacy & Security_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
-
-By default files and directories starting with a dot are hidden on macOS, so to show the .emulationstation directory in your home directory you need to enable hidden files in Finder. You do this using the keyboard combination Shift + Command + . (dot).
+If you accidentally refused ES-DE the folder access, you can fix this by opening _System Settings_, selecting _Privacy & Security_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _ES-DE_.
 
 A minor annoyance is that macOS creates metadata files starting with ._ in the filename when placing game/ROM files on some filesystem types such as exFAT. This means that you will see double entries inside ES-DE for all such games. To hide these extra files, the option _Show hidden files and folders (requires restart)_ in the _Other settings_ menu can be set to disabled.
 
@@ -314,7 +312,7 @@ In general, 720p works fine with the RPi 4, and 1080p is tolerable but not reall
 
 The game systems configuration file `es_systems.xml` is located in the ES-DE resources directory which is part of the application installation. As such this file is not intended to be modified directly. If system customizations are required, a separate es_systems.xml file should instead be placed in the `custom_systems` folder in the ES-DE home directory.
 
-On Linux this means `/home/<username>/.emulationstation/custom_systems/es_systems.xml`, on macOS `/Users/<username>/.emulationstation/custom_systems/es_systems.xml` and on Windows `C:\Users\<username>\.emulationstation\custom_systems\es_systems.xml` or `EmulationStation-DE\.emulationstation\custom_systems\es_systems.xml` depending on whether the installer release or the portable release is used.
+On Linux this means `/home/<username>/ES-DE/custom_systems/es_systems.xml`, on macOS `/Users/<username>/ES-DE/custom_systems/es_systems.xml` and on Windows `C:\Users\<username>\ES-DE\custom_systems\es_systems.xml` or `ES-DE\ES-DE\custom_systems\es_systems.xml` depending on whether the installer release or the portable release is used.
 
 If you're using the AppImage release of ES-DE then the bundled es_systems.xml file is embedded in the AppImage together with the rest of the resources. You can extract it if you need it as a reference when creating your customized entries, or you can find it [here](https://gitlab.com/es-de/emulationstation-de/-/tree/master/resources/systems/linux).
 
@@ -335,11 +333,11 @@ ES-DE is designed to be backward compatible to a certain degree. That is, it sho
 Due to this, always make backups of at least the following directories before testing ES-DE for the first time:
 
 ```
-~/.emulationstation/gameslists/
-~/.emulationstation/collections/
+~/ES-DE/gameslists/
+~/ES-DE/collections/
 ```
 
-If you have gamelist.xml files in your ROMs directory tree then ES-DE will ignore those by default, so you need to move them to the ~/.emulationstation/gamelists/ tree.
+If you have gamelist.xml files in your ROMs directory tree then ES-DE will ignore those by default, so you need to move them to the ~/ES-DE/gamelists/ tree.
 
 It's also strongly adviced to not rename an old es_settings.cfg file to es_settings.xml for use in ES-DE as it may cause undefined behavior and crashes.
 
@@ -361,7 +359,7 @@ Example of a correct path tag readable by ES-DE:
 
 Manually removing game files from the ROMs directory tree instead of deleting them from ES-DE using the metadata editor will make any corresponding scraped media files, gamelist.xml entries and custom collection entries orphaned, i.e. they will refer to non-existent files. Although this is correctly handled by ES-DE and is not causing any serious issues, it does lead to unnecessary disk space usage and it does produce log warnings in es_log.txt on application startup. If a huge amount of game files have been manually removed it can also lead to performance problems.
 
-In order to remove such unnecessary media files and configuration file entries, the _Orphaned data cleanup_ utility in the _Utilities_ menu can be used. This tool should be largely self-explanatory. And although it should generally be safe to use, unforeseen issues can occur so make sure to make backups of at least your `.emulationstation/gamelists` and `.emulationstation/collections` directories before attempting to use this tool.
+In order to remove such unnecessary media files and configuration file entries, the _Orphaned data cleanup_ utility in the _Utilities_ menu can be used. This tool should be largely self-explanatory. And although it should generally be safe to use, unforeseen issues can occur so make sure to make backups of at least your `ES-DE/gamelists` and `ES-DE/collections` directories before attempting to use this tool.
 
 It's recommended to run this utility with the _Show hidden games_ setting enabled as orphaned gamelist.xml folder entries may otherwise not get purged.
 
@@ -371,17 +369,17 @@ Note that there are no guarantees that any processed gamelist.xml files will be 
 
 If the utility finds any data to be removed, a backup of the old files will be made. This will end up in a `CLEANUP` directory and will contain a date and time stamp. For example:
 ```
-~/.emulationstation/gamelists/CLEANUP/2023-07-27_142830/dos/gamelist.xml
-~/.emulationstation/gamelists/CLEANUP/2023-07-27_142830/ports/gamelist.xml
-~/.emulationstation/collections/CLEANUP/2023-07-27_143216/custom-Action.cfg
-~/.emulationstation/collections/CLEANUP/2023-07-27_143216/custom-Fighting.cfg
-~/.emulationstation/downloaded_media/CLEANUP/2023-07-27_123406/atari2600/titlescreens/H.E.R.O..png
-~/.emulationstation/downloaded_media/CLEANUP/2023-07-27_123406/c64/3dboxes/Minerer 2049.crt.png
+~/ES-DE/gamelists/CLEANUP/2023-07-27_142830/dos/gamelist.xml
+~/ES-DE/gamelists/CLEANUP/2023-07-27_142830/ports/gamelist.xml
+~/ES-DE/collections/CLEANUP/2023-07-27_143216/custom-Action.cfg
+~/ES-DE/collections/CLEANUP/2023-07-27_143216/custom-Fighting.cfg
+~/ES-DE/downloaded_media/CLEANUP/2023-07-27_123406/atari2600/titlescreens/H.E.R.O..png
+~/ES-DE/downloaded_media/CLEANUP/2023-07-27_123406/c64/3dboxes/Minerer 2049.crt.png
 ```
 
 This means that you will need to manually delete these backup directories to free up disk space when you are certain that you no longer need the data.
 
-All files and entries that are removed are logged to `~/.emulationstation/es_log.txt` so it could be a good idea to make a backup copy of this file after running the cleanup, for future reference.
+All files and entries that are removed are logged to `~/ES-DE/logs/es_log.txt` so it could be a good idea to make a backup copy of this file after running the cleanup, for future reference.
 
 Any media directories that are empty after the cleanup will also be removed by this utility.
 
@@ -408,22 +406,22 @@ Below are some examples. For consistency it's assumed that the display resolutio
 
 Running at a lower application resolution in a window:
 ```
-emulationstation --resolution 1280 720
+es-de --resolution 1280 720
 ```
 
 Running at a lower application resolution in padded fullscreen mode:
 ```
-emulationstation --resolution 1824 1026 --fullscreen-padding 1
+es-de --resolution 1824 1026 --fullscreen-padding 1
 ```
 
 Same as above but also offsetting the screen slightly to the left and downwards:
 ```
-emulationstation --resolution 1824 1026 --fullscreen-padding 1 --screenoffset -40 22
+es-de --resolution 1824 1026 --fullscreen-padding 1 --screenoffset -40 22
 ```
 
 Rotate application screen contents 90 degrees while running at the native 1920x1080 screen resolution:
 ```
-emulationstation --screenrotate 90
+es-de --screenrotate 90
 ```
 
 ## Input device configuration
@@ -436,7 +434,7 @@ The actual procedure to map the inputs should be self-explanatory, just follow t
 
 Any custom configuration is applied per unique device ID (GUID). So if two identical controllers are used with ES-DE, both will have the same configuration applied. If connecting controllers of the same type but of different revisions, the GUID may differ and therefore the custom configuration would need to be applied to each device individually.
 
-If you have issues with your input configuration, as a last resort you can reset all mappings by deleting or renaming the file `~/.emulationstation/es_input.xml`
+If you have issues with your input configuration, as a last resort you can reset all mappings by deleting or renaming the file `~/ES-DE/settings/es_input.xml`
 
 ## System view (main screen)
 
@@ -561,13 +559,13 @@ As of ES-DE 2.2.0 no legacy EmulationStation themes are supported, such as those
 
 There are several user-selectable theme options in the _UI Settings_ menu, most notably _Theme variant_ which is essentially a form of theme profile. This could be anything, like different ways to navigate the themes, different layouts and designs etc. Additionally the _Theme color scheme_ setting makes it possible to select between different color schemes, if supported by the theme. The two remaining options _Theme aspect ratio_ and _Theme transitions_ are also important but you can normally leave them at their default _Automatic_ values, especially the _Theme aspect ratio_ option as it will be automatically detected. Be aware that all these theme settings are optional, it's up to the theme developer whether to add support for them to their themes.
 
-Themes are most easily installed using the built-in theme downloader, but you can also manually add them to your ES-DE home directory, i.e. `~/.emulationstation/themes/`. By just adding them there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the .emulationstation folder can be found in the root of the EmulationStation-DE directory.
+Themes are most easily installed using the built-in theme downloader, but you can also manually add them to your ES-DE home directory, i.e. `~/ES-DE/themes/`. By just adding them there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the ES-DE application data can be found in the root of the ES-DE directory.
 
-Although you should place additional themes in your ES-DE home directory, the default Slate and Modern themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/emulationstation/themes/` on Linux, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/` on macOS or `C:\Program Files\EmulationStation-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the EmulationStation-DE directory.
+Although you should place additional themes in your ES-DE home directory, the default Slate and Modern themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/es-de/themes/` on Linux, `/Applications/ES-DE.app/Contents/Resources/themes/` on macOS or `C:\Program Files\ES-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the ES-DE directory.
 
 Note that if using the AppImage release on Linux, then there is no installation folder as all files are contained inside the AppImage file.
 
-If you would like to customize the Slate or Modern themes, simply make a copy of their directories to `~/.emulationstation/themes/` and then those copies will take precedence over the ones in the application installation directory.
+If you would like to customize the Slate or Modern themes, simply make a copy of their directories to `~/ES-DE/themes/` and then those copies will take precedence over the ones in the application installation directory.
 
 Refer to the official themes list for a selection of high-quality themes (these are also available via the built-in theme downloader):\
 https://gitlab.com/es-de/themes/themes-list
@@ -589,7 +587,7 @@ If you have manually downloaded any of the themes from the [official themes list
 
 If you have customized a theme by for instance modifying any of its XML files, then this will be highlighted with an exclamation mark and the text _LOCAL CHANGES_ in the theme downloader interface. If you attempt to fetch updates for such a theme you will be asked a question of whether to overwrite your local changes, or whether to cancel. If you have however added additional files to the theme that are not included in the theme repository, then these will not interfere and you can go ahead and fetch theme updates without any risk of having your local files being deleted. But there is a special (although unlikely) situation, if you add files that are not part of the theme repository but that are later added by the theme developer as well, then your local copies of any such files will be ovewritten when fetching theme updates.
 
-In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. The latter is named _themes-list_ so by just deleting this directory (i.e. `~/.emulationstation/themes/themes-list`) you'll reset the theme downloader to its initial state.
+In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. The latter is named _themes-list_ so by just deleting this directory (i.e. `~/ES-DE/themes/themes-list`) you'll reset the theme downloader to its initial state.
 
 Note that the exFAT filesystem can't be used as it makes the theme downloader fail. But using this filesystem is strongly discouraged anyway as it offers very poor disk I/O performance which makes ES-DE run really slowly.
 
@@ -736,7 +734,7 @@ There is however a workaround available to launch the Flatpak first, should you 
 
 For example if using the ES-DE AppImage release, this would be the command to execute:
 ```
-PATH=/var/lib/flatpak/exports/bin:~/.local/share/flatpak/exports/bin:$PATH ./EmulationStation-DE-x64.AppImage
+PATH=/var/lib/flatpak/exports/bin:~/.local/share/flatpak/exports/bin:$PATH ./ES-DE_x64.AppImage
 ```
 
 Obviously you would need to change the path to the AppImage if it's not in your current working directory.
@@ -955,7 +953,7 @@ It's highly recommended to use filenames that correspond to the full name of the
 
 Symlinks are supported for both ROM directories and individual game files, but make sure to never symlink between files within the same system directory or there may be undefined application behavior when scraping, launching games etc.
 
-The default game folder is ~/ROMs. On Linux this defaults to `/home/<username>/ROMs`, on macOS `/Users/<username>/ROMs` and on Windows `C:\Users\<username>\ROMs` or `EmulationStation-DE\ROMs` depending on whether the installer release or the portable release is used. If the --home command line option was used to start ES-DE, the tilde symbol will resolve to whatever directory was passed as an argument to this option.
+The default game folder is ~/ROMs. On Linux this defaults to `/home/<username>/ROMs`, on macOS `/Users/<username>/ROMs` and on Windows `C:\Users\<username>\ROMs` or `ES-DE\ROMs` depending on whether the installer release or the portable release is used. If the --home command line option was used to start ES-DE, the tilde symbol will resolve to whatever directory was passed as an argument to this option.
 
 Assuming the default ROM directory is used, we need to create a subdirectory corresponding to the \<path\> tag in es_systems.xml, for this example it's `nes`.
 
@@ -965,7 +963,7 @@ So it would look something like the following:
 /home/myusername/ROMs/nes     # Linux
 /Users/myusername/ROMs/nes    # macOS
 C:\Users\myusername\ROMs\nes  # Windows installer
-EmulationStation-DE\ROMs\nes  # Windows portable
+ES-DE\ROMs\nes                # Windows portable
 ```
 
 Now simply copy your game ROMs into this folder, and you should end up with something like this Linux example:
@@ -2771,7 +2769,7 @@ Apart from this, hopefully the scraping process should be self-explanatory.
 
 If you already have a library of game media (images, videos and PDF manuals) you can manually copy these files into ES-DE. The same procedure applies if you want to add media for individual games, for instance when the scraper did not return any results or if you didn't like the media it provided.
 
-The default media directory is `~/.emulationstation/downloaded_media/<system name>/<media type>`
+The default media directory is `~/ES-DE/downloaded_media/<system name>/<media type>`
 
 This directory can however be changed using the _Game media directory_ setting in the _Other settings_ menu so make sure to check this setting before attempting to follow the instructions below. If the setting is blank, then the default directory is in use.
 
@@ -2779,25 +2777,25 @@ See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table 
 
 An example on Linux:
 ```
-/home/myusername/.emulationstation/downloaded_media/c64/screenshots/
+/home/myusername/ES-DE/downloaded_media/c64/screenshots/
 ```
 
 An example on macOS:
 
 ```
-/Users/myusername/.emulationstation/downloaded_media/c64/screenshots/
+/Users/myusername/ES-DE/downloaded_media/c64/screenshots/
 ```
 
 An example on Windows (installer release):
 
 ```
-C:\Users\Myusername\.emulationstation\downloaded_media\c64\screenshots\
+C:\Users\Myusername\ES-DE\downloaded_media\c64\screenshots\
 ```
 
 An example on Windows (portable release):
 
 ```
-EmulationStation-DE\.emulationstation\downloaded_media\c64\screenshots\
+ES-DE\ES-DE\downloaded_media\c64\screenshots\
 ```
 
 The media directories per game system are:
@@ -2828,8 +2826,8 @@ The media files must correspond exactly to the game files. Take for example this
 For this example, the filename structure needs to look like the following:
 
 ```
-~/.emulationstation/downloaded_media/c64/screenshots/Multidisk/Last Ninja 2/Last Ninja 2.jpg
-~/.emulationstation/downloaded_media/c64/videos/Multidisk/Last Ninja 2/Last Ninja 2.mp4
+~/ES-DE/downloaded_media/c64/screenshots/Multidisk/Last Ninja 2/Last Ninja 2.jpg
+~/ES-DE/downloaded_media/c64/videos/Multidisk/Last Ninja 2/Last Ninja 2.mp4
 ```
 
 Note that there is seemingly an exception to this logic if the _Directories interpreted as files_ functionality has been used, in which case the "file extension" added to the directory is also included in the game media filenames. Take for example the following ScummVM game:
@@ -2840,8 +2838,8 @@ Note that there is seemingly an exception to this logic if the _Directories inte
 The media files for this directory which is interpreted as a file will be:
 
 ```
-~/.emulationstation/downloaded_media/scummvm/screenshots/dig.scummvm.png
-~/.emulationstation/downloaded_media/scummvm/videos/dig.scummvm.mp4
+~/ES-DE/downloaded_media/scummvm/screenshots/dig.scummvm.png
+~/ES-DE/downloaded_media/scummvm/videos/dig.scummvm.mp4
 ```
 
 This is not a bug as these are not really file extensions after all, it's just a directory with a dot in the filename that happens to look like a file extension because that's how the _Directories interpreted as files_ logic works.
@@ -3141,7 +3139,7 @@ If set to _None_, the system view will be displayed on startup. Any other value 
 
 **Systems sorting**
 
-The order in which to sort the game systems. The default option is _Full names or custom_ which will sort by full system names, unless there is a ~/.emulationstation/custom_systems/es_systems_sorting.xml file present which will then be used instead. The other options are using the bundled sorting configuration files for _Release year_ or _Manufacturer, release year_ or _HW type, release year_ or _Manufacturer, HW type, release year_. If using any of these bundled sorting files, then any ~/.emulationstation/custom_systems/es_systems_sorting.xml will be ignored. When changing this setting ES-DE will automatically reload.
+The order in which to sort the game systems. The default option is _Full names or custom_ which will sort by full system names, unless there is a ~/ES-DE/custom_systems/es_systems_sorting.xml file present which will then be used instead. The other options are using the bundled sorting configuration files for _Release year_ or _Manufacturer, release year_ or _HW type, release year_ or _Manufacturer, HW type, release year_. If using any of these bundled sorting files, then any ~/ES-DE/custom_systems/es_systems_sorting.xml will be ignored. When changing this setting ES-DE will automatically reload.
 
 **Game default sort order**
 
@@ -3373,7 +3371,7 @@ If enabling this option, only the first controller detected during startup will 
 
 **Ignore keyboard input**
 
-If this setting is enabled then all keyboard input will be ignored, except the quit shortcut used to shut down the application. The main reason for ignoring keyboard input is if running Steam in parallel to ES-DE and you need to use the Steam Input's _Desktop Layout_ functionality to send keyboard input using the controller. In this case double or conflicting input will be sent to ES-DE as both the controller and keyboard events are read by the application. It's however generally a better idea to disable this functionality altogether in Steam and leave the ES-DE setting untouched. If you accidentally enable this setting when using a keyboard as input device, then you'll either need to plug in a controller to disable it again, or you'll need to modify the _InputIgnoreKeyboard_ entry in the ~/.emulationstation/es_settings.xml configuration file.
+If this setting is enabled then all keyboard input will be ignored, except the quit shortcut used to shut down the application. The main reason for ignoring keyboard input is if running Steam in parallel to ES-DE and you need to use the Steam Input's _Desktop Layout_ functionality to send keyboard input using the controller. In this case double or conflicting input will be sent to ES-DE as both the controller and keyboard events are read by the application. It's however generally a better idea to disable this functionality altogether in Steam and leave the ES-DE setting untouched. If you accidentally enable this setting when using a keyboard as input device, then you'll either need to plug in a controller to disable it again, or you'll need to modify the _InputIgnoreKeyboard_ entry in the ~/ES-DE/settings/es_settings.xml configuration file.
 
 **Configure keyboard and controllers**
 
@@ -3432,7 +3430,7 @@ _The system-wide alternative emulators interface. An entry in bold and with a ge
 
 **Game media directory**
 
-This setting defines the directory for game media, i.e. images, videos and PDF manuals that have normally been downloaded by the scraper. The default location is _~/.emulationstation/downloaded_media_
+This setting defines the directory for game media, i.e. images, videos and PDF manuals that have normally been downloaded by the scraper. The default location is _~/ES-DE/downloaded_media_
 
 **VRAM limit**
 
@@ -3538,15 +3536,15 @@ This utility will create all game system directories inside your ROM directory t
 
 This utility will rescan the ROM directory for any changes such as added or removed games and systems without having to restart the application. But don't use this utility to reload changes to gamelist.xml files that you have made outside ES-DE as this can lead to data corruption. If you need to manually edit your gamelist.xml files then do this while ES-DE is shut down.
 
-### Quit / Quit EmulationStation
+### Quit / Quit ES-DE
 
-The _Quit_ menu or _Quit EmulationStation_ entry as described by the _Show quit menu (reboot and power off entries)_ option above.
+The _Quit_ menu or _Quit ES-DE_ entry as described by the _Show quit menu (reboot and power off entries)_ option above.
 
 If the menu is enabled, these are its entries:
 
-**Quit EmulationStation**
+**Quit ES-DE**
 
-If the option _When to save game metadata_ has been set to _On exit_, the gamelist.xml files will be updated at this point. This applies also if the Quit menu is disabled and replaced by the _Quit EmulationStation_ entry.
+If the option _When to save game metadata_ has been set to _On exit_, the gamelist.xml files will be updated at this point. This applies also if the Quit menu is disabled and replaced by the _Quit ES-DE_ entry.
 
 **Reboot system** _(All operating systems except macOS)_
 
@@ -3854,9 +3852,9 @@ _Example of custom collections, here configured as genres._
 _When editing a custom collection and the theme uses a textlist, then a tick symbol will be displayed for any game that is part of the collection._
 
 
-The way that custom collections are implemented is very simple. There is a single configuration file per collection inside the folder `~/.emulationstation/collections`
+The way that custom collections are implemented is very simple. There is a single configuration file per collection inside the folder `~/ES-DE/collections`
 
-For this example a file will have been created named `~/.emulationstation/collections/custom-Platform.cfg`
+For this example a file will have been created named `~/ES-DE/collections/custom-Platform.cfg`
 
 The file contents is simply a list of ROM files, such as the following:
 
@@ -3872,7 +3870,7 @@ The file contents is simply a list of ROM files, such as the following:
 
 Any changes to custom collections, for example adding or removing a game, will be immediately written to the corresponding collection configuration file.
 
-If you copy or migrate a collection from a previous version of EmulationStation or if you're setting up ES-DE on a new computer, the collection will not be enabled by just copying its configuration file to the `~/.emulationstation/collections` directory. You always need to explicitly enable each collection via the menu.
+If you copy or migrate a collection from a previous version of EmulationStation or if you're setting up ES-DE on a new computer, the collection will not be enabled by just copying its configuration file to the `~/ES-DE/collections` directory. You always need to explicitly enable each collection via the menu.
 
 If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, then these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection.
 

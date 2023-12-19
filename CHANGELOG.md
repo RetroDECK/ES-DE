@@ -20,10 +20,11 @@
 * Added the .dirksimple file extension to the daphne and laserdisc systems
 * (Unix) Removed the -Minimized flag from the Visual Pinball launch command
 * (Windows) Updated the find rules for Visual Pinball to match the actual filenames of the official releases
+* (Windows) Added the %RUNINBACKGROUND% variable for the epic system
+* (Windows) Removed support for building the application using MinGW
 * Added a "renderDuringTransitions" property to the image element
 * Added support for the 1:1 display aspect ratio
 * Added workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
-* Replaced a number of homecooked functions in FileSystemUtil with those from the C++ Standard Library
 
 ### Bug fixes
 
