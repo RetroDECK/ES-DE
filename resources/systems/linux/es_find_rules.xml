@@ -993,6 +993,10 @@
             <entry>Vita3K</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/Vita3K*.AppImage</entry>
+            <entry>~/.local/share/applications/Vita3K*.AppImage</entry>
+            <entry>~/.local/bin/Vita3K*.AppImage</entry>
+            <entry>~/bin/Vita3K*.AppImage</entry>
             <entry>~/Applications/Vita3K/Vita3K</entry>
             <entry>~/.local/share/applications/Vita3K/Vita3K</entry>
             <entry>~/.local/bin/Vita3K/Vita3K</entry>
