@@ -286,6 +286,47 @@ void GuiMenu::openUIOptions()
     themeColorSchemesFunc(Settings::getInstance()->getString("Theme"),
                           Settings::getInstance()->getString("ThemeColorScheme"));
 
+    // Theme font sizes.
+    auto themeFontSize = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "THEME FONT SIZE", false);
+    s->addWithLabel("THEME FONT SIZE", themeFontSize);
+    s->addSaveFunc([themeFontSize, s] {
+        if (themeFontSize->getSelected() != Settings::getInstance()->getString("ThemeFontSize")) {
+            Settings::getInstance()->setString("ThemeFontSize", themeFontSize->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
+    auto themeFontSizeFunc = [=](const std::string& selectedTheme,
+                                 const std::string& selectedFontSize) {
+        std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+            currentSet {themes.find(selectedTheme)};
+        if (currentSet == themes.cend())
+            return;
+        // We need to recreate the OptionListComponent entries.
+        themeFontSize->clearEntries();
+        if (currentSet->second.capabilities.fontSizes.size() > 0) {
+            for (auto& fontSize : currentSet->second.capabilities.fontSizes)
+                themeFontSize->add(ThemeData::getFontSizeLabel(fontSize), fontSize,
+                                   fontSize == selectedFontSize);
+            if (themeFontSize->getSelectedObjects().size() == 0)
+                themeFontSize->selectEntry(0);
+        }
+        else {
+            themeFontSize->add("None defined", "none", true);
+            themeFontSize->setEnabled(false);
+            themeFontSize->setOpacity(DISABLED_OPACITY);
+            themeFontSize->getParent()
+                ->getChild(themeFontSize->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+    };
+
+    themeFontSizeFunc(Settings::getInstance()->getString("Theme"),
+                      Settings::getInstance()->getString("ThemeFontSize"));
+
     // Theme aspect ratios.
     auto themeAspectRatio = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "THEME ASPECT RATIO", false);
@@ -889,6 +930,7 @@ void GuiMenu::openUIOptions()
         if (!firstRun) {
             themeVariantsFunc(themeName, themeVariant->getSelected());
             themeColorSchemesFunc(themeName, themeColorScheme->getSelected());
+            themeFontSizeFunc(themeName, themeFontSize->getSelected());
             themeAspectRatiosFunc(themeName, themeAspectRatio->getSelected());
             themeTransitionsFunc(themeName, themeTransitions->getSelected());
         }
@@ -923,6 +965,20 @@ void GuiMenu::openUIOptions()
             themeColorScheme->setOpacity(DISABLED_OPACITY);
             themeColorScheme->getParent()
                 ->getChild(themeColorScheme->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        if (selectedTheme->second.capabilities.fontSizes.size() > 0) {
+            themeFontSize->setEnabled(true);
+            themeFontSize->setOpacity(1.0f);
+            themeFontSize->getParent()
+                ->getChild(themeFontSize->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+        else {
+            themeFontSize->setEnabled(false);
+            themeFontSize->setOpacity(DISABLED_OPACITY);
+            themeFontSize->getParent()
+                ->getChild(themeFontSize->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
         if (selectedTheme->second.capabilities.aspectRatios.size() > 0) {

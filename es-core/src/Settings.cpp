@@ -165,6 +165,7 @@ void Settings::setDefaults()
     mStringMap["Theme"] = {"slate-es-de", "slate-es-de"};
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeColorScheme"] = {"", ""};
+    mStringMap["ThemeFontSize"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
     mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};

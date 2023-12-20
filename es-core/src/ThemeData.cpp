@@ -51,6 +51,13 @@ std::vector<std::string> ThemeData::sSupportedTransitionAnimations {
     {"builtin-slide"},
     {"builtin-fade"}};
 
+std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedFontSizes {
+    {"medium", "medium"},
+    {"large", "large"},
+    {"small", "small"},
+    {"x-large", "extra large"},
+    {"x-small", "extra small"}};
+
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
     {"automatic", "automatic"},
     {"16:9", "16:9"},
@@ -596,6 +603,17 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
             mSelectedColorScheme = mColorSchemes.front();
     }
 
+    if (sCurrentTheme->second.capabilities.fontSizes.size() > 0) {
+        for (auto& fontSize : sCurrentTheme->second.capabilities.fontSizes)
+            mFontSizes.emplace_back(fontSize);
+
+        if (std::find(mFontSizes.cbegin(), mFontSizes.cend(),
+                      Settings::getInstance()->getString("ThemeFontSize")) != mFontSizes.cend())
+            mSelectedFontSize = Settings::getInstance()->getString("ThemeFontSize");
+        else
+            mSelectedFontSize = mFontSizes.front();
+    }
+
     sAspectRatioMatch = false;
 
     if (sCurrentTheme->second.capabilities.aspectRatios.size() > 0) {
@@ -633,6 +651,7 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
 
     parseVariables(root);
     parseColorSchemes(root);
+    parseFontSizes(root);
     parseIncludes(root);
     parseViews(root);
     if (root.child("feature") != nullptr)
@@ -768,6 +787,8 @@ void ThemeData::populateThemes()
                               << " variant" << (capabilities.variants.size() != 1 ? "s" : "")
                               << ", " << capabilities.colorSchemes.size() << " color scheme"
                               << (capabilities.colorSchemes.size() != 1 ? "s" : "") << ", "
+                              << capabilities.fontSizes.size() << " font size"
+                              << (capabilities.fontSizes.size() != 1 ? "s" : "") << ", "
                               << aspectRatios << " aspect ratio" << (aspectRatios != 1 ? "s" : "")
                               << " and " << capabilities.transitions.size() << " transition"
                               << (capabilities.transitions.size() != 1 ? "s" : "");
@@ -817,6 +838,18 @@ const std::string ThemeData::getSystemThemeFile(const std::string& system)
     }
 
     return theme->second.getThemePath(system);
+}
+
+const std::string ThemeData::getFontSizeLabel(const std::string& fontSize)
+{
+    auto it = std::find_if(sSupportedFontSizes.cbegin(), sSupportedFontSizes.cend(),
+                           [&fontSize](const std::pair<std::string, std::string>& entry) {
+                               return entry.first == fontSize;
+                           });
+    if (it != sSupportedFontSizes.cend())
+        return it->second;
+    else
+        return "invalid font size";
 }
 
 const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
@@ -980,6 +1013,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 {
     ThemeCapability capabilities;
     std::vector<std::string> aspectRatiosTemp;
+    std::vector<std::string> fontSizesTemp;
     bool hasTriggers {false};
 
     const std::string capFile {path + "/capabilities.xml"};
@@ -1030,6 +1064,29 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 }
                 else {
                     aspectRatiosTemp.emplace_back(value);
+                }
+            }
+        }
+
+        for (pugi::xml_node fontSize {themeCapabilities.child("fontSize")}; fontSize;
+             fontSize = fontSize.next_sibling("fontSize")) {
+            const std::string& value {fontSize.text().get()};
+            if (std::find_if(sSupportedFontSizes.cbegin(), sSupportedFontSizes.cend(),
+                             [&value](const std::pair<std::string, std::string>& entry) {
+                                 return entry.first == value;
+                             }) == sSupportedFontSizes.cend()) {
+                LOG(LogWarning) << "Declared font size \"" << value
+                                << "\" is not supported, ignoring entry in \"" << capFile << "\"";
+            }
+            else {
+                if (std::find(fontSizesTemp.cbegin(), fontSizesTemp.cend(), value) !=
+                    fontSizesTemp.cend()) {
+                    LOG(LogWarning)
+                        << "Font size \"" << value
+                        << "\" is declared multiple times, ignoring entry in \"" << capFile << "\"";
+                }
+                else {
+                    fontSizesTemp.emplace_back(value);
                 }
             }
         }
@@ -1411,6 +1468,17 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
         }
     }
 
+    // Add the font sizes in the order they are defined in sSupportedFontSizes so they always
+    // show up in the same order in the UI Settings menu.
+    if (!fontSizesTemp.empty()) {
+        for (auto& fontSize : sSupportedFontSizes) {
+            if (std::find(fontSizesTemp.cbegin(), fontSizesTemp.cend(), fontSize.first) !=
+                fontSizesTemp.cend()) {
+                capabilities.fontSizes.emplace_back(fontSize.first);
+            }
+        }
+    }
+
     if (hasTriggers) {
         for (auto& variant : capabilities.variants) {
             for (auto it = variant.overrides.begin(); it != variant.overrides.end();) {
@@ -1500,6 +1568,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         parseTransitions(theme);
         parseVariables(theme);
         parseColorSchemes(theme);
+        parseFontSizes(theme);
         parseIncludes(theme);
         parseViews(theme);
         if (theme.child("feature") != nullptr)
@@ -1549,6 +1618,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
                 parseTransitions(node);
                 parseVariables(node);
                 parseColorSchemes(node);
+                parseFontSizes(node);
                 parseIncludes(node);
                 parseViews(node);
                 parseAspectRatios(node);
@@ -1596,6 +1666,43 @@ void ThemeData::parseColorSchemes(const pugi::xml_node& root)
     }
 }
 
+void ThemeData::parseFontSizes(const pugi::xml_node& root)
+{
+    if (sCurrentTheme == sThemes.end())
+        return;
+
+    if (mSelectedFontSize == "")
+        return;
+
+    ThemeException error;
+    error << "ThemeData::parseFontSizes(): ";
+    error.setFiles(mPaths);
+
+    for (pugi::xml_node node {root.child("fontSize")}; node; node = node.next_sibling("fontSize")) {
+        if (!node.attribute("name"))
+            throw error << ": <fontSize> tag missing \"name\" attribute";
+
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
+        std::string viewKey;
+        while (off != std::string::npos || prevOff != std::string::npos) {
+            viewKey = nameAttr.substr(prevOff, off - prevOff);
+            prevOff = nameAttr.find_first_not_of(delim, off);
+            off = nameAttr.find_first_of(delim, prevOff);
+
+            if (std::find(mFontSizes.cbegin(), mFontSizes.cend(), viewKey) == mFontSizes.cend()) {
+                throw error << ": <fontSize> value \"" << viewKey
+                            << "\" is not defined in capabilities.xml";
+            }
+
+            if (mSelectedFontSize == viewKey)
+                parseVariables(node);
+        }
+    }
+}
+
 void ThemeData::parseAspectRatios(const pugi::xml_node& root)
 {
     if (sCurrentTheme == sThemes.end())
@@ -1633,6 +1740,7 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
             if (sSelectedAspectRatio == viewKey) {
                 parseVariables(node);
                 parseColorSchemes(node);
+                parseFontSizes(node);
                 parseIncludes(node);
                 parseViews(node);
             }
