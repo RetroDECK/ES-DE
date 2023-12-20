@@ -67,9 +67,9 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mAspectRatiosLabel, glm::ivec2 {3, 0}, false, true, glm::ivec2 {1, 1});
 
-    mFutureUseLabel =
+    mFontSizesLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), mMenuColorTitle, ALIGN_LEFT);
-    mCenterGrid->setEntry(mFutureUseLabel, glm::ivec2 {3, 1}, false, true, glm::ivec2 {1, 1});
+    mCenterGrid->setEntry(mFontSizesLabel, glm::ivec2 {3, 1}, false, true, glm::ivec2 {1, 1});
 
     mCenterGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {5, 0}, false, false,
                           glm::ivec2 {1, 5});
@@ -86,9 +86,9 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
         "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mAspectRatiosCount, glm::ivec2 {4, 0}, false, true, glm::ivec2 {1, 1});
 
-    mFutureUseCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
+    mFontSizesCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
                                                       mMenuColorTitle, ALIGN_LEFT);
-    mCenterGrid->setEntry(mFutureUseCount, glm::ivec2 {4, 1}, false, true, glm::ivec2 {1, 1});
+    mCenterGrid->setEntry(mFontSizesCount, glm::ivec2 {4, 1}, false, true, glm::ivec2 {1, 1});
 
     mDownloadStatus = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
                                                       mMenuColorTitle, ALIGN_LEFT);
@@ -674,6 +674,12 @@ void GuiThemeDownloader::parseThemesList()
                     themeEntry.aspectRatios.emplace_back(aspectRatios[i].GetString());
             }
 
+            if (theme.HasMember("fontSizes") && theme["fontSizes"].IsArray()) {
+                const rapidjson::Value& fontSizes {theme["fontSizes"]};
+                for (int i {0}; i < static_cast<int>(fontSizes.Size()); ++i)
+                    themeEntry.fontSizes.emplace_back(fontSizes[i].GetString());
+            }
+
             if (theme.HasMember("transitions") && theme["transitions"].IsArray()) {
                 const rapidjson::Value& transitions {theme["transitions"]};
                 for (int i {0}; i < static_cast<int>(transitions.Size()); ++i)
@@ -855,6 +861,7 @@ void GuiThemeDownloader::populateGUI()
     mVariantsLabel->setText("VARIANTS:");
     mColorSchemesLabel->setText("COLOR SCHEMES:");
     mAspectRatiosLabel->setText("ASPECT RATIOS:");
+    mFontSizesLabel->setText("FONT SIZES:");
 
     updateInfoPane();
     updateHelpPrompts();
@@ -930,6 +937,7 @@ void GuiThemeDownloader::updateInfoPane()
     mVariantCount->setText(std::to_string(mThemes[mList->getCursorId()].variants.size()));
     mColorSchemesCount->setText(std::to_string(mThemes[mList->getCursorId()].colorSchemes.size()));
     mAspectRatiosCount->setText(std::to_string(mThemes[mList->getCursorId()].aspectRatios.size()));
+    mFontSizesCount->setText(std::to_string(mThemes[mList->getCursorId()].fontSizes.size()));
     mAuthor->setText("CREATED BY " + Utils::String::toUpper(mThemes[mList->getCursorId()].author));
 }
 

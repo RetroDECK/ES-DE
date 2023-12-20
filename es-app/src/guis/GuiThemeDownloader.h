@@ -64,6 +64,7 @@ private:
         std::vector<std::string> variants;
         std::vector<std::string> colorSchemes;
         std::vector<std::string> aspectRatios;
+        std::vector<std::string> fontSizes;
         std::vector<std::string> transitions;
         std::vector<Screenshot> screenshots;
         bool newEntry;
@@ -165,12 +166,12 @@ private:
     std::shared_ptr<TextComponent> mVariantsLabel;
     std::shared_ptr<TextComponent> mColorSchemesLabel;
     std::shared_ptr<TextComponent> mAspectRatiosLabel;
-    std::shared_ptr<TextComponent> mFutureUseLabel;
+    std::shared_ptr<TextComponent> mFontSizesLabel;
     std::shared_ptr<TextComponent> mAuthor;
     std::shared_ptr<TextComponent> mVariantCount;
     std::shared_ptr<TextComponent> mColorSchemesCount;
     std::shared_ptr<TextComponent> mAspectRatiosCount;
-    std::shared_ptr<TextComponent> mFutureUseCount;
+    std::shared_ptr<TextComponent> mFontSizesCount;
 };
 
 #endif // ES_APP_GUIS_GUI_THEME_DOWNLOADER_H
