@@ -11,6 +11,7 @@
 * Renamed the application from EmulationStation Desktop Edition to ES-DE
 * Renamed the application data directory from .emulationstation to ES-DE
 * Split the es_find_rules.xml and es_systems.xml files for Linux and BSD Unix into separate directories
+* Added support for defining font sizes from the theme configuration and selecting these from the UI settings menu
 * Added support for .webp, .svg and unanimated .gif files to the slideshow screensaver when using a custom image directory
 * Changed the default slideshow custom image directory from slideshow/custom_images to screensavers/custom_slideshow
 * Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir

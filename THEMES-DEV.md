@@ -653,6 +653,95 @@ Here's an example configuration:
 </theme>
 ```
 
+## Font sizes
+
+The optional font sizes functionality makes it possible to use a set of predefined size options and connect these to theme variables that can be used to apply different text sizes and related design changes. The font sizes declared for the theme can be selected via the _Theme font size_ setting in the _UI Settings_ menu.
+
+To understand the basics on how to use variables, make sure to read the _Theme variables_ section elsewhere in this document.
+
+To use the font size entries you first need to declare them using `<fontSize>` tag pairs in the `capabilities.xml` file. The following sizes are available:
+
+| capabilities.xml name | UI Settings label |
+| :-------------------- | :---------------  |
+| medium                | medium            |
+| large                 | large             |
+| small                 | small             |
+| x-large               | extra large       |
+| x-small               | extra small       |
+
+The options will always be listed in the above order in the _UI Settings_ menu.
+
+Here's an example of a theme that implements three of these sizes:
+
+```xml
+<!-- Theme capabilities for mytheme-es-de -->
+<themeCapabilities>
+    <themeName>My theme</themeName>
+
+    <fontSize>medium</fontSize>
+    <fontSize>small</fontSize>
+    <fontSize>x-small</fontSize>
+</themeCapabilities>
+```
+
+In the theme configuration you'll also use a `<fontSize>` tag pair combined with a `<variable>` tag pair to define the variables you want to apply per font size.
+
+These `<fontSize>` tag pairs can be placed directly inside the `<theme>` tags, inside the `<variants>` tags or inside the `<aspectRatio>` tags.
+
+The mandatory name attribute is used to specificy which font size to use, and multiple values can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks).
+
+Here's an example configuration:
+
+```xml
+<theme>
+    <fontSize name="medium">
+        <variables>
+            <gameCounterFontSize>0.025</gameCounterFontSize>
+            <gameCounterPos>0.5 0.6437</gameCounterPos>
+            <gameNameFontSize>0.022</gameNameFontSize>
+            <publisherFontSize>0.016</publisherFontSize>
+        </variables>
+    </fontSize>
+    <fontSize name="small">
+        <variables>
+            <gameCounterFontSize>0.015</gameCounterFontSize>
+            <gameCounterPos>0.45 0.6437</gameCounterPos>
+            <gameNameFontSize>0.013</gameNameFontSize>
+        </variables>
+    </fontSize>
+    <fontSize name="x-small">
+        <variables>
+            <gameCounterFontSize>0.008</gameCounterFontSize>
+            <gameCounterPos>0.4 0.6437</gameCounterPos>
+            <gameNameFontSize>0.006</gameNameFontSize>
+        </variables>
+    <fontSize name="small, x-small">
+        <variables>
+            <publisherFontSize>0.011</publisherFontSize>
+        </variables>
+    </fontSize>
+
+    <view name="system">
+        <text name="gameCounter">
+            <pos>${gameCounterPos}</pos>
+            <size>1 0.056</size>
+            <fontSize>${gameCounterFontSize}</fontSize>
+        </text>
+    <view name="gamelist">
+        <text name="gameName">
+            <pos>0.2 0.3412</pos>
+            <size>0.2 0.040</size>
+            <fontSize>${gameNameFontSize}</fontSize>
+        </text>
+        <text name="publisher">
+            <pos>0.33 0.3412</pos>
+            <size>0.18 0.040</size>
+            <fontSize>${publisherFontSize}</fontSize>
+        </text>
+    </view>
+</theme>
+```
+
 ## Aspect ratios
 
 The aspect ratio support works almost identically to the variants and color schemes with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme can still decide which of the aspect ratios to support (or none at all in which case the theme aspect ratio is left undefined) but it can't create entirely new aspect ratio entries.
@@ -1332,10 +1421,11 @@ It's important to understand how the theme configuration files are parsed in ord
 1) Transitions
 2) Variables
 3) Color schemes
-4) Included files
-5) "General" (non-variant) configuration
-6) Variants
-7) Aspect ratios
+4) Font sizes
+5) Included files
+6) "General" (non-variant) configuration
+7) Variants
+8) Aspect ratios
 
 When including a file using the `<include>` tag (i.e. step 4 above) then all steps listed above are executed for that included file prior to continuing to the next line after the `<include>` tag.
 
