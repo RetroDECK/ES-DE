@@ -10,6 +10,9 @@
     <aspectRatio>4:3</aspectRatio>
     <aspectRatio>21:9</aspectRatio>
 
+    <fontSize>medium</fontSize>
+    <fontSize>large</fontSize>
+
     <colorScheme name="dark">
         <label>Dark</label>
     </colorScheme>
