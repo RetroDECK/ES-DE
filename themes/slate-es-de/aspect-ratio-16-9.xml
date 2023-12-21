@@ -25,7 +25,7 @@
     <fontSize name="large">
         <variables>
             <helpsystemFontSize>0.035</helpsystemFontSize>
-            <systemInfoSize>0.40 0.03</systemInfoSize>
+            <systemInfoSize>0.416 0.03</systemInfoSize>
             <systemInfoFontSize>0.024</systemInfoFontSize>
             <systemInfoPos1>0.38 0.680</systemInfoPos1>
             <systemInfoPos2>0.38 0.705</systemInfoPos2>
