@@ -140,7 +140,7 @@ void ViewController::setMenuColors()
 void ViewController::legacyAppDataDialog()
 {
     const std::string upgradeMessage {
-        "AS OF ES-DE 3.0.0 THE APPLICATION DATA DIRECTORY HAS CHANGED FROM \".emulationstation\" "
+        "AS OF ES-DE 3.0 THE APPLICATION DATA DIRECTORY HAS CHANGED FROM \".emulationstation\" "
         "to \"ES-DE\"\nPLEASE RENAME YOUR CURRENT DATA DIRECTORY:\n" +
         Utils::FileSystem::getAppDataDirectory() + "\nTO THE FOLLOWING:\n" +
         Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()) + "/ES-DE"};
