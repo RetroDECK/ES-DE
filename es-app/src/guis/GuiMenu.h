@@ -44,6 +44,7 @@ private:
     void openConfigInput(GuiSettings* settings);
     void openCollectionSystemOptions();
     void openOtherOptions();
+    void openRetroDeckConfigurator();
     void openUtilities();
     void openQuitMenu();
 
@@ -54,3 +55,4 @@ private:
 };
 
 #endif // ES_APP_GUIS_GUI_MENU_H
+

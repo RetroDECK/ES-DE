@@ -193,101 +193,13 @@ void ViewController::noGamesDialog()
 #endif
 
     mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "CHANGE ROM DIRECTORY",
-        [this] {
-            std::string currentROMDirectory;
-#if defined(_WIN64)
-            currentROMDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
-#else
-            currentROMDirectory = FileData::getROMDirectory();
-#endif
-            if (Settings::getInstance()->getBool("VirtualKeyboard")) {
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    HelpStyle(), 0.0f, "ENTER ROM DIRECTORY PATH", currentROMDirectory,
-                    [this, currentROMDirectory](const std::string& newROMDirectory) {
-                        if (currentROMDirectory != newROMDirectory) {
-                            Settings::getInstance()->setString(
-                                "ROMDirectory", Utils::String::trim(newROMDirectory));
-                            Settings::getInstance()->saveFile();
-#if defined(_WIN64)
-                            mRomDirectory =
-                                Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
-#else
-                            mRomDirectory = FileData::getROMDirectory();
-#endif
-                            mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                            mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                           "ROM DIRECTORY SETTING SAVED, RESTART\n"
-                                                           "THE APPLICATION TO RESCAN THE SYSTEMS",
-                                                           "OK", nullptr, "", nullptr, "", nullptr,
-                                                           nullptr, true, true));
-                        }
-                    },
-                    false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
-                    currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
-                    "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
-            }
-            else {
-                mWindow->pushGui(new GuiTextEditPopup(
-                    HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
-                    [this](const std::string& newROMDirectory) {
-                        Settings::getInstance()->setString("ROMDirectory",
-                                                           Utils::String::trim(newROMDirectory));
-                        Settings::getInstance()->saveFile();
-#if defined(_WIN64)
-                        mRomDirectory =
-                            Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
-#else
-                        mRomDirectory = FileData::getROMDirectory();
-#endif
-                        mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                       "ROM DIRECTORY SETTING SAVED, RESTART\n"
-                                                       "THE APPLICATION TO RESCAN THE SYSTEMS",
-                                                       "OK", nullptr, "", nullptr, "", nullptr,
-                                                       nullptr, true));
-                    },
-                    false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
-                    currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
-                    "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
-            }
-        },
-        "CREATE DIRECTORIES",
-        [this] {
-            mWindow->pushGui(new GuiMsgBox(
-                HelpStyle(),
-                "THIS WILL CREATE DIRECTORIES FOR ALL THE\n"
-                "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
-                "THIS MAY CREATE A LOT OF FOLDERS SO IT'S\n"
-                "ADVICED TO REMOVE THE ONES YOU DON'T NEED",
-                "PROCEED",
-                [this] {
-                    if (!SystemData::createSystemDirectories()) {
-                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                       "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY\n"
-                                                       "GENERATED, EXIT THE APPLICATION AND PLACE\n"
-                                                       "YOUR GAMES IN THE NEWLY CREATED FOLDERS",
-                                                       "OK", nullptr, "", nullptr, "", nullptr,
-                                                       nullptr, true));
-                    }
-                    else {
-                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                       "ERROR CREATING THE SYSTEM DIRECTORIES,\n"
-                                                       "PERMISSION PROBLEMS OR DISK FULL?\n\n"
-                                                       "SEE THE LOG FILE FOR MORE DETAILS",
-                                                       "OK", nullptr, "", nullptr, "", nullptr,
-                                                       nullptr, true));
-                    }
-                },
-                "CANCEL", nullptr, "", nullptr, nullptr, false));
-        },
-        "QUIT",
+        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "QUIT",
         [] {
             SDL_Event quit;
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-        nullptr, true, false,
+        "", nullptr, "", nullptr, nullptr, true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
              0.62f * (1.778f / mRenderer->getScreenAspectRatio())));

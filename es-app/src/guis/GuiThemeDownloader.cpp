@@ -600,8 +600,8 @@ void GuiThemeDownloader::parseThemesList()
                                "downloading is not recommended";
             mWindow->pushGui(new GuiMsgBox(
                 getHelpStyle(),
-                "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE BEFORE "
-                "PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION",
+                "ES-DE THEME ENGINE WAS UPDATED UPSTREAM. THESE THEMES MAY NOT BE COMPATIBLE WITH THE CURRENT RETRODECK VERSION."
+                "CHECK IF A NEW RETRODECK UPDATE IS AVAILABLE, ELSE PLEASE WAIT FOR IT OR PROCEED AT YOUR OWN RISK.",
                 "OK", [] { return; }, "", nullptr, "", nullptr, nullptr, true));
         }
     }

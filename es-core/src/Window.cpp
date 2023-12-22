@@ -180,7 +180,7 @@ bool Window::init()
     progressBarRect.barHeight -= borderThickness * 2.0f;
     progressBarRect.barPosX += borderThickness;
     progressBarRect.barPosY += borderThickness;
-    progressBarRect.color = 0x79010FFF;
+    progressBarRect.color = 0xC858E6FF;
     mProgressBarRectangles.emplace_back(progressBarRect);
 
     mBackgroundOverlay->setImage(":/graphics/frame.png");

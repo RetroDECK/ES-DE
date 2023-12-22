@@ -70,15 +70,17 @@ GuiMenu::GuiMenu()
     if (isFullUI)
         addEntry("UTILITIES", mMenuColorPrimary, true, [this] { openUtilities(); });
 
+    addEntry("RETRODECK CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckConfigurator(); });
+
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
 #if defined(__APPLE__)
-        addEntry("QUIT EMULATIONSTATION", mMenuColorPrimary, false, [this] { openQuitMenu(); });
+        addEntry("QUIT RETRODECK", mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #else
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
             addEntry("QUIT", mMenuColorPrimary, true, [this] { openQuitMenu(); });
         else
-            addEntry("QUIT EMULATIONSTATION", mMenuColorPrimary, false, [this] { openQuitMenu(); });
+            addEntry("QUIT RETRODECK", mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #endif
     }
 
@@ -1789,7 +1791,7 @@ void GuiMenu::openQuitMenu()
                 "NO", nullptr));
         });
         auto quitText = std::make_shared<TextComponent>(
-            "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+            "QUIT RETRODECK", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         quitText->setSelectable(true);
         row.addElement(quitText, true);
         s->addRow(row);
@@ -1946,4 +1948,17 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "close menu"));
     prompts.push_back(HelpPrompt("start", "close menu"));
     return prompts;
+}
+
+void GuiMenu::openRetroDeckConfigurator()
+{
+    // Launch the configurator.sh script
+    std::string command;
+    std::string startDirectory;
+    bool runInBackground;
+    command = "bash /app/tools/configurator.sh";
+    startDirectory = "/app/tools";
+    runInBackground = false;
+    int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
+    // You can add any checks for the script's outcome here.
 }
