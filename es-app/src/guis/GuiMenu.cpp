@@ -1008,7 +1008,7 @@ void GuiMenu::openSoundOptions()
 {
     auto s = new GuiSettings("SOUND SETTINGS");
 
-// TODO: Implement volume slider logic for macOS and Android.
+// TODO: Implement system volume support for macOS and Android.
 #if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__) &&                       \
     !defined(__OpenBSD__) && !defined(__NetBSD__)
     // System volume.
