@@ -858,6 +858,7 @@ int main(int argc, char* argv[])
 
 #if defined(__ANDROID__)
     LOG(LogDebug) << "Android API level: " << SDL_GetAndroidSDKVersion();
+    Utils::Platform::Android::printDeviceInfo();
     int storageState {SDL_AndroidGetExternalStorageState()};
     if (storageState == 0) {
         LOG(LogError) << "Android external storage state: " << SDL_GetError();
