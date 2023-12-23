@@ -1008,9 +1008,9 @@ void GuiMenu::openSoundOptions()
 {
     auto s = new GuiSettings("SOUND SETTINGS");
 
-// TODO: Hide the volume slider on macOS and BSD Unix until the volume control logic has been
-// implemented for these operating systems.
-#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
+// TODO: Implement volume slider logic for macOS and Android.
+#if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__) &&                       \
+    !defined(__OpenBSD__) && !defined(__NetBSD__)
     // System volume.
     // The reason to create the VolumeControl object every time instead of making it a singleton
     // is that this is the easiest way to detect new default audio devices or changes to the
