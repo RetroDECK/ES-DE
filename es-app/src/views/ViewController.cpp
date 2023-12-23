@@ -1109,7 +1109,10 @@ bool ViewController::input(InputConfig* config, Input input)
     // If we're in this state and then register some input, it means that the user is back in ES-DE.
     // Therefore unset the game launch flag and update all the GUI components. This will re-enable
     // the video player and scrolling of game names and game descriptions as well as letting the
-    // screensaver start on schedule.
+    // screensaver start on schedule. On Android the onResume() method will call the native onResume
+    // function which will perform the same steps as shown below (on Android we always keep running
+    // when launching games).
+#if !defined(__ANDROID__)
     if (mWindow->getGameLaunchedState()) {
         mWindow->setAllowTextScrolling(true);
         mWindow->setAllowFileAnimation(true);
@@ -1119,13 +1122,14 @@ bool ViewController::input(InputConfig* config, Input input)
         if (config->isMappedTo("a", input) && input.value != 0)
             return true;
         // Trigger the game-end event.
-        if (mGameEndEventParams.size() == 5) {
-            Scripting::fireEvent(mGameEndEventParams[0], mGameEndEventParams[1],
-                                 mGameEndEventParams[2], mGameEndEventParams[3],
-                                 mGameEndEventParams[4]);
-            mGameEndEventParams.clear();
+        auto& eventParams = mWindow->getGameEndEventParams();
+        if (eventParams.size() == 5) {
+            Scripting::fireEvent(eventParams[0], eventParams[1], eventParams[2], eventParams[3],
+                                 eventParams[4]);
+            eventParams.clear();
         }
     }
+#endif
 
     // Open the main menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&

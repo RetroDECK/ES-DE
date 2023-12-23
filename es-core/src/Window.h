@@ -156,6 +156,7 @@ public:
     void invalidateCachedBackground();
     bool isInvalidatingCachedBackground() { return mInvalidateCacheTimer > 0; }
 
+    std::vector<std::string>& getGameEndEventParams() { return mGameEndEventParams; }
     bool getGameLaunchedState() { return mGameLaunchedState; }
     void setAllowTextScrolling(bool value) { mAllowTextScrolling = value; }
     bool getAllowTextScrolling() { return mAllowTextScrolling; }
@@ -207,6 +208,7 @@ private:
     std::queue<std::pair<std::string, int>> mInfoPopupQueue;
     std::shared_ptr<TextureResource> mPostprocessedBackground;
 
+    std::vector<std::string> mGameEndEventParams;
     std::string mListScrollText;
     std::shared_ptr<Font> mListScrollFont;
     float mListScrollOpacity;
@@ -223,9 +225,9 @@ private:
     bool mRenderMediaViewer;
     bool mRenderLaunchScreen;
     bool mRenderPDFViewer;
-    bool mGameLaunchedState;
-    bool mAllowTextScrolling;
-    bool mAllowFileAnimation;
+    std::atomic<bool> mGameLaunchedState;
+    std::atomic<bool> mAllowTextScrolling;
+    std::atomic<bool> mAllowFileAnimation;
     bool mCachedBackground;
     bool mInvalidatedCachedBackground;
     bool mInitiateCacheTimer;

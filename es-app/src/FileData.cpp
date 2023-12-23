@@ -915,6 +915,12 @@ void FileData::launchGame()
 
     const std::string fileName {baseName + Utils::FileSystem::getExtension(romPath)};
     const std::string esPath {Utils::FileSystem::getExePath()};
+
+#if defined(__ANDROID__)
+    // On Android we always run in the background, although the logic is a bit different
+    // as we don't need to wake up the application manually.
+    bool runInBackground {true};
+#else
     bool runInBackground {false};
 
     // In addition to the global RunInBackground setting it's possible to define this flag
@@ -933,6 +939,7 @@ void FileData::launchGame()
     // The global setting always applies.
     if (Settings::getInstance()->getBool("RunInBackground"))
         runInBackground = true;
+#endif
 
 #if !defined(_WIN64)
     // Whether to parse .desktop files on Unix or open apps or alias files on macOS.
@@ -1893,8 +1900,7 @@ returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBack
                              getSourceFileData()->getSystem()->getFullName());
     }
     else {
-        std::vector<std::string>& gameEndParams {
-            ViewController::getInstance()->getGameEndEventParams()};
+        std::vector<std::string>& gameEndParams {window->getGameEndEventParams()};
         gameEndParams.emplace_back("game-end");
         gameEndParams.emplace_back(romPath);
         gameEndParams.emplace_back(getSourceFileData()->metadata.get("name"));

@@ -93,7 +93,6 @@ public:
         mWindow->setBlockInput(true);
     };
     const bool getGameLaunchTriggered() { return (mGameToLaunch != nullptr); }
-    std::vector<std::string>& getGameEndEventParams() { return mGameEndEventParams; }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -184,7 +183,6 @@ private:
     std::shared_ptr<SystemView> mSystemListView;
     ViewTransitionAnimation mLastTransitionAnim;
 
-    std::vector<std::string> mGameEndEventParams;
     FileData* mGameToLaunch;
     State mState;
 
