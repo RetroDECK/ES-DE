@@ -89,7 +89,11 @@ namespace Scripting
                     .append(arg4)
                     .append(arg4Quotation);
                 LOG(LogDebug) << "Executing: " << script;
+#if defined(__ANDROID__)
+                Utils::Platform::runSystemCommand("sh " + script);
+#else
                 Utils::Platform::runSystemCommand(script);
+#endif
             }
         }
     }
