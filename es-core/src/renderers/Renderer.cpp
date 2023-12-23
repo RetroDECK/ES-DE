@@ -305,10 +305,12 @@ bool Renderer::createWindow()
     setIcon();
     setSwapInterval();
 
-#if defined(_WIN64)
+#if defined(_WIN64) || defined(__ANDROID__)
     // It seems as if Windows needs this to avoid a brief white screen flash on startup.
     // Possibly this is driver-specific rather than OS-specific. There is additional code
     // in init() to work around the white screen flash issue on all operating systems.
+    // On Android the swap is also necessary to avoid displaying random garbage when
+    // the rendering starts.
     swapBuffers();
 #endif
 
