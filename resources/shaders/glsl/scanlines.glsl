@@ -24,7 +24,7 @@
 #if defined(VERTEX)
 
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 uniform mat4 MVPMatrix;
@@ -53,7 +53,7 @@ void main()
 #elif defined(FRAGMENT)
 
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 uniform vec2 texSize;

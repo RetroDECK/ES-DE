@@ -30,7 +30,7 @@ void main(void)
 #elif defined(FRAGMENT)
 
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 in vec2 position;

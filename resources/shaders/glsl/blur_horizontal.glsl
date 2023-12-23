@@ -24,7 +24,7 @@ void main()
 #elif defined(FRAGMENT)
 
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 uniform uint shaderFlags;
