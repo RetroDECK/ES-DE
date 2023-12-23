@@ -72,7 +72,7 @@ GuiMenu::GuiMenu()
 
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__ANDROID__)
         addEntry("QUIT ES-DE", mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #else
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
@@ -1669,7 +1669,7 @@ void GuiMenu::openOtherOptions()
 
 // macOS requires root privileges to reboot and power off so it doesn't make much
 // sense to enable this setting and menu entry for that operating system.
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(__ANDROID__)
     // Whether to show the quit menu with the options to reboot and shutdown the computer.
     auto showQuitMenu = std::make_shared<SwitchComponent>();
     showQuitMenu->setState(Settings::getInstance()->getBool("ShowQuitMenu"));

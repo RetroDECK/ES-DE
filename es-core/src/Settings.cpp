@@ -300,7 +300,7 @@ void Settings::setDefaults()
     mBoolMap["EnableMenuKidMode"] = {false, false};
 // macOS requires root privileges to reboot and power off so it doesn't make much
 // sense to enable this setting and menu entry for that operating system.
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(__ANDROID__)
     mBoolMap["ShowQuitMenu"] = {false, false};
 #endif
 
