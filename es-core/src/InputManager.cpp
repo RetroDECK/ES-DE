@@ -635,7 +635,8 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
     SDL_GameController* controller {SDL_GameControllerOpen(deviceIndex)};
 
     if (controller == nullptr) {
-        LOG(LogError) << "Couldn't add controller with device index " << deviceIndex;
+        LOG(LogError) << "Couldn't add controller with device index " << deviceIndex << " ("
+                      << SDL_GetError() << ")";
         return;
     }
 
