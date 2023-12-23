@@ -1472,6 +1472,7 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
+#if !defined(__ANDROID__)
     // Run ES in the background when a game has been launched.
     auto runInBackground = std::make_shared<SwitchComponent>();
     runInBackground->setState(Settings::getInstance()->getBool("RunInBackground"));
@@ -1482,6 +1483,7 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
+#endif
 
 #if defined(VIDEO_HW_DECODING)
     // Whether to enable hardware decoding for the FFmpeg video player.

@@ -275,7 +275,9 @@ void Settings::setDefaults()
 #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = {false, false};
 #endif
+#if !defined(__ANDROID__)
     mBoolMap["RunInBackground"] = {false, false};
+#endif
 #if defined(VIDEO_HW_DECODING)
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
