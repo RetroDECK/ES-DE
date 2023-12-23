@@ -728,9 +728,9 @@ void ThemeData::populateThemes()
 #endif
 
 #if defined(__ANDROID__)
-    const std::vector<std::string> themePaths {
-        Utils::FileSystem::getProgramDataPath() + "/themes", userThemeDirectory,
-        Utils::FileSystem::getAppDataDirectory() + "/themes"};
+    const std::vector<std::string> themePaths {Utils::FileSystem::getProgramDataPath() + "/themes",
+                                               Utils::FileSystem::getAppDataDirectory() + "/themes",
+                                               userThemeDirectory};
 #elif defined(__APPLE__)
     const std::vector<std::string> themePaths {
         Utils::FileSystem::getExePath() + "/themes",
