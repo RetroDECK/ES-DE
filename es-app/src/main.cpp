@@ -856,9 +856,18 @@ int main(int argc, char* argv[])
 
 #if defined(__ANDROID__)
     LOG(LogDebug) << "Android API level: " << SDL_GetAndroidSDKVersion();
-    LOG(LogDebug) << "Android storage state: " << SDL_AndroidGetExternalStorageState();
-    LOG(LogDebug) << "Android internal path: " << SDL_AndroidGetInternalStoragePath();
-    LOG(LogDebug) << "Android external path: " << SDL_AndroidGetExternalStoragePath();
+    int storageState {SDL_AndroidGetExternalStorageState()};
+    if (storageState == 0) {
+        LOG(LogError) << "Android external storage state: " << SDL_GetError();
+    }
+    else if (storageState == 1) {
+        LOG(LogWarning) << "Android external storage state: mounted read-only";
+    }
+    else {
+        LOG(LogDebug) << "Android external storage state: mounted read/write";
+    }
+    LOG(LogDebug) << "Android internal directory: " << AndroidVariables::sInternalDataDirectory;
+    LOG(LogDebug) << "Android external directory: " << AndroidVariables::sExternalDataDirectory;
     {
         std::string buildIdentifier {PROGRAM_VERSION_STRING};
         buildIdentifier.append(" (r")
