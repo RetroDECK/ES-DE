@@ -140,10 +140,6 @@ int ConvertPDF::processFile(
         return (-1);
     }
 
-#if defined(__ANDROID__)
-    __android_log_print(ANDROID_LOG_ERROR, "org.es_de.frontend", "PDF CONVERTING BREAK 10");
-#endif
-
     const poppler::page* page {document->create_page(pageNum - 1)};
 
     if (page == nullptr) {
