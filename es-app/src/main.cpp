@@ -563,6 +563,7 @@ int main(int argc, char* argv[])
     outputToConsole();
 #endif
 
+#if !defined(__ANDROID__)
     {
         std::vector<std::string> arguments;
         for (int i {0}; i < argc; ++i)
@@ -578,6 +579,7 @@ int main(int argc, char* argv[])
         }
 #endif
     }
+#endif
 
     if (!Settings::getInstance()->getBool("DebugFlag") &&
         Settings::getInstance()->getBool("DebugMode")) {
