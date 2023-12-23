@@ -1595,7 +1595,7 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-#if defined(__unix__)
+#if defined(__unix__) && !defined(__ANDROID__)
     // Whether to disable desktop composition.
     auto disableComposition = std::make_shared<SwitchComponent>();
     disableComposition->setState(Settings::getInstance()->getBool("DisableComposition"));

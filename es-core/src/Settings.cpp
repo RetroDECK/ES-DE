@@ -292,7 +292,7 @@ void Settings::setDefaults()
     mBoolMap["CustomEventScripts"] = {false, false};
     mBoolMap["ParseGamelistOnly"] = {false, false};
     mBoolMap["MAMENameStripExtraInfo"] = {true, true};
-#if defined(__unix__)
+#if defined(__unix__) && !defined(__ANDROID__)
     mBoolMap["DisableComposition"] = {false, false};
 #endif
     mBoolMap["DebugMode"] = {false, false};

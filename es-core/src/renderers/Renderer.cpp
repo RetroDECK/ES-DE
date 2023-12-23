@@ -172,7 +172,7 @@ bool Renderer::createWindow()
     // games or when manually switching windows using the task switcher).
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
-#if defined(__unix__)
+#if defined(__unix__) && !defined(__ANDROID__)
     // Disabling desktop composition can lead to better framerates and a more fluid user
     // interface, but with some drivers it can cause strange behaviors when returning to
     // the desktop.
