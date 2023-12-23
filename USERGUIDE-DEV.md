@@ -688,6 +688,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | ps2           | PCSX2               | pcsx2*.AppImage                |
 | ps2           | Play!               | Play!*.AppImage                |
 | ps3           | RPCS3               | rpcs3*.AppImage                |
+| psvita        | Vita3K              | Vita3K*.AppImage               |
 | psx           | DuckStation         | DuckStation*.AppImage          |
 | snes          | Snes9x              | Snes9x*.AppImage               |
 | switch        | Yuzu                | yuzu*.AppImage                 |
@@ -3121,6 +3122,10 @@ Themes optionally support variants which are a type of theme profiles defined by
 
 If the theme author has included multiple color schemes, then these can be selected between using this menu option.
 
+**Theme font size**
+
+If the theme author has included support for multiple font/text sizes, then these can be selected between using this menu option. Possible choices are _medium, large, small, extra large_ and _extra small_. What layout changes these font size options actually make is completely up to the theme author.
+
 **Theme aspect ratio**
 
 Themes could optionally be optimized for different screen aspect ratios. ES-DE supports 16:9, 16:10, 3:2, 4:3, 5:4, 21:9 and 32:9 in both horizontal and vertical orientation, but it's completely up to the theme author which of these are actually supported by the theme. It's normally best to leave this setting at _Automatic_ in which case ES-DE will automatically select the aspect ratio that most closely matches the screen resolution. The _Automatic_ option is however only available if the theme supports at least two aspect ratios.
@@ -3468,7 +3473,7 @@ For platforms and package formats where the previous setting above is available 
 
 With this setting enabled, the taskbar will be hidden when launching ES-DE, and it will be restored when the application exits. This can make for a more seamless experience as the taskbar could otherwise flash by briefly when launching and returning from games.
 
-**Run in background (while game is launched)**
+**Run in background (while game is launched)** _(All operating systems except Android)_
 
 Enabling this option makes ES-DE continue to run while a game is launched. This is normally not recommended as it leads to a slightly strange application behavior and it also removes the ability to capture return codes and log output from the emulators. Generally this option should only be enabled if there are issues with launching games while suspending ES-DE. Note however that some systems like Valve Steam will always keep ES-DE running in the background because they require it for technical reasons (i.e. those systems will override this menu option).
 
@@ -3516,7 +3521,7 @@ Displays the framerate and VRAM statistics as an overlay. This can be useful to 
 
 Enabling or disabling the menu when the UI mode is set to _Kid_. Mostly intended for testing purposes as it's not recommended to enable the menu in this restricted mode.
 
-**Show quit menu (reboot and power off entries)** _(All operating systems except macOS)_
+**Show quit menu (reboot and power off entries)** _(All operating systems except macOS and Android)_
 
 With this setting enabled, there is a Quit menu shown as the last entry on the main menu which provides options to quit ES-DE, to reboot the computer or to power off the computer. With this setting disabled, there will simply be an entry to quit the application instead of the complete quit menu.
 
@@ -3546,11 +3551,11 @@ If the menu is enabled, these are its entries:
 
 If the option _When to save game metadata_ has been set to _On exit_, the gamelist.xml files will be updated at this point. This applies also if the Quit menu is disabled and replaced by the _Quit ES-DE_ entry.
 
-**Reboot system** _(All operating systems except macOS)_
+**Reboot system** _(All operating systems except macOS and Android)_
 
 Self explanatory.
 
-**Power off system** _(All operating systems except macOS)_
+**Power off system** _(All operating systems except macOS and Android)_
 
 Self explanatory.
 

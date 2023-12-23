@@ -1010,6 +1010,8 @@ The input configuration is described in the [User guide](USERGUIDE-DEV.md#input-
 
 ## Command line options
 
+_There are no command line options available on Android as this operating system works completely differently than all other supported platforms._
+
 You can use **--help** or **-h** to view the list of command line options, as shown here.
 
 ```

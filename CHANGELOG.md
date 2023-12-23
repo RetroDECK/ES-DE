@@ -12,10 +12,13 @@
 * Renamed the application data directory from .emulationstation to ES-DE
 * Split the es_find_rules.xml and es_systems.xml files for Linux and BSD Unix into separate directories
 * Added support for defining font sizes from the theme configuration and selecting these from the UI settings menu
+* Added the theme font sizes count to the theme downloader interface
+* Added support for medium and large font sizes to the Slate and Modern themes
 * Added support for .webp, .svg and unanimated .gif files to the slideshow screensaver when using a custom image directory
 * Changed the default slideshow custom image directory from slideshow/custom_images to screensavers/custom_slideshow
 * Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir
 * Added Mednafen standalone as an alternative emulator for the gb, gba and gbc systems
+* (Linux) Added support for the AppImage release of Vita3K
 * Added the .zso file extension to the ps2 system
 * Added the .zar file extension to the xbox360 system on Linux and Windows
 * Added the .pk3 and .ipk3 file extensions to the doom system on Linux, Unix and Windows
@@ -27,6 +30,7 @@
 * Added a "renderDuringTransitions" property to the image element
 * Added support for more extreme vertical resolutions than previously allowed
 * Added support for the 19.5:9, 20:9 and 1:1 display aspect ratios
+* The SDL error message is now printed to the log if a controller could not be added
 * Added workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
 
 ### Bug fixes
