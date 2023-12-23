@@ -453,15 +453,25 @@ bool InputManager::parseEvent(const SDL_Event& event)
 
             // There is no need to handle the OS-default quit shortcut (Alt + F4 on Windows and
             // Linux and Command + Q on macOS) as that's taken care of by the window manager.
+            // The exception is Android as there are are no default quit shortcuts on this OS.
             std::string quitShortcut {Settings::getInstance()->getString("KeyboardQuitShortcut")};
 #if defined(__APPLE__)
             if (quitShortcut != "CmdQ") {
+#elif defined(__ANDROID__)
+            if (true) {
 #else
             if (quitShortcut != "AltF4") {
 #endif
                 bool quitES {false};
+#if defined(__ANDROID__)
+                if (quitShortcut == "AltF4" && event.key.keysym.sym == SDLK_F4 &&
+                    (event.key.keysym.mod & KMOD_LALT))
+                    quitES = true;
+                else if (quitShortcut == "F4" && event.key.keysym.sym == SDLK_F4 &&
+#else
                 if (quitShortcut == "F4" && event.key.keysym.sym == SDLK_F4 &&
-                    !(event.key.keysym.mod & KMOD_LALT))
+#endif
+                         !(event.key.keysym.mod & KMOD_LALT))
                     quitES = true;
                 else if (quitShortcut == "CtrlQ" && event.key.keysym.sym == SDLK_q &&
                          event.key.keysym.mod & KMOD_CTRL)
