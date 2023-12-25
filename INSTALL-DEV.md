@@ -1048,7 +1048,7 @@ Setting --resolution to a lower or higher value than the display resolution will
 
 The --no-update-check option only disabled the application updater for the current startup. To permanently disable this functionality use the _Check for application updates_ option in the _Other settings_ menu. The command line option is primarily intended for the unlikely event that the application updater breaks the application and makes it impossible to start.
 
-Running with the --create-system-dirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created.
+Running with the --create-system-dirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created. By default placeholder entries will be skipped, if you want to still create these directories then set the CreatePlaceholderSystemDirectories option to true in es_settings.xml.
 
 For the following options, the es_settings.xml file is immediately updated/saved when passing the parameter:
 ```
@@ -1068,6 +1068,10 @@ The --ignore-gamelist option is only active during the program session and is no
 ## Settings not configurable via the GUI
 
 There are some settings which are not configurable via the GUI as modifying these should normally not be required. To still change these, edit the es_settings.xml file directly.
+
+**CreatePlaceholderSystemDirectories**
+
+If a system in es_systems.xml has a single command tag with the text _PLACEHOLDER_ anywhere in the tag (regardless of letter case) then its directory and _systeminfo.txt_ file will not get created when running with the --create-system-dirs command line option, or when using the _Create/update system directories_ entry in the _Utilities_ menu or when pressing the _Create directories_ button in the no-games startup dialog. However setting this option to true will override the behavior so the placeholder directories will still be created.
 
 **DebugSkipInputLogging**
 
@@ -1499,6 +1503,13 @@ Below is an overview of the file layout with various examples. For the command t
         The optional %HIDEWINDOW% variable is used to hide the console window which would otherwise be visible when launching games
         and %ESCAPESPECIALS% escapes the characters &()^=;, that cmd.exe can't otherwise handle. -->
         <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
+
+        <!-- If there is only a single command tag for a system and it has the text PLACEHOLDER anywhere in the tag (regardless of
+        letter case) then the system will not get created when running with the --create-system-dirs command line option, or when
+        using the "Create/update system directories" entry in the Utilities menu or when pressing the "Create directories" button
+        in the no-games startup dialog. It is however possible to override this behavior by setting the option
+        CreatePlaceholderSystemDirectories to true in es_settings.xml -->
+        <command>PLACEHOLDER %ROM%</command>
 
         <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in es-app/src/PlatformId.cpp.
         The entry is case insensitive as it will be converted to lower case during startup.

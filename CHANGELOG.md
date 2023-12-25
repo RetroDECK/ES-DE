@@ -17,6 +17,7 @@
 * Added support for .webp, .svg and unanimated .gif files to the slideshow screensaver when using a custom image directory
 * Changed the default slideshow custom image directory from slideshow/custom_images to screensavers/custom_slideshow
 * Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir
+* The HTTP error code will now be shown on scraper errors instead of the "File is smaller than 350 bytes" message
 * Added Mednafen standalone as an alternative emulator for the gb, gba and gbc systems
 * (Linux) Added support for the AppImage release of Vita3K
 * Added the .zso file extension to the ps2 system
@@ -28,13 +29,16 @@
 * (Windows) Added the %RUNINBACKGROUND% variable for the epic system
 * (Windows) Removed support for building the application using MinGW
 * Added a "renderDuringTransitions" property to the image element
+* Placeholder entries in es_systems.xml are now skipped by default when creating the system directories and systemsinfo.txt files
+* Added a CreatePlaceholderSystemDirectories option that can be manually set in es_settings.xml to still create placeholder directories
 * Added support for more extreme vertical resolutions than previously allowed
 * Added support for the 19.5:9, 20:9 and 1:1 display aspect ratios
-* The SDL error message is now printed to the log if a controller could not be added
+* The relevant SDL error message is now printed to the log if a controller could not be added
 * Added workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
 
 ### Bug fixes
 
+* Attempting to create the system directories with invalid entries in es_systems.xml could crash the application
 * Stationary image elements could sometimes glitch out during carousel navigation
 * Font textures were sometimes updated with empty glyhps which generated OpenGL errors on some mobile GPUs
 
