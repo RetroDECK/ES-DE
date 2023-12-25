@@ -1718,12 +1718,23 @@ void GuiMenu::openUtilities()
 
     ComponentListRow row;
 
+#if defined(ANDROID_LITE_RELEASE)
+    auto orphanedDataCleanup =
+        std::make_shared<TextComponent>("ORPHANED DATA CLEANUP (FULL VERSION ONLY)",
+                                        Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+    orphanedDataCleanup->setOpacity(DISABLED_OPACITY);
+    row.addElement(orphanedDataCleanup, true);
+    auto orphanedDataCleanupArrow = mMenu.makeArrow();
+    orphanedDataCleanupArrow->setOpacity(DISABLED_OPACITY);
+    row.addElement(orphanedDataCleanupArrow, false);
+#else
     row.addElement(std::make_shared<TextComponent>("ORPHANED DATA CLEANUP",
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
     row.addElement(mMenu.makeArrow(), false);
     row.makeAcceptInputHandler(std::bind(
         [this] { mWindow->pushGui(new GuiOrphanedDataCleanup([&]() { close(true); })); }));
+#endif
     s->addRow(row);
 
     row.elements.clear();
@@ -1897,11 +1908,17 @@ void GuiMenu::addVersionInfo()
     mVersion.setFont(Font::get(FONT_SIZE_SMALL));
     mVersion.setColor(mMenuColorTertiary);
 
-#if defined(IS_PRERELEASE)
-    mVersion.setText("ES-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) + " (Built " +
-                     __DATE__ + ")");
+#if defined(ANDROID_LITE_RELEASE)
+    const std::string applicationName {"ES-DE LITE"};
 #else
-    mVersion.setText("ES-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+    const std::string applicationName {"ES-DE"};
+#endif
+
+#if defined(IS_PRERELEASE)
+    mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
+                     " (Built " + __DATE__ + ")");
+#else
+    mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 #endif
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);

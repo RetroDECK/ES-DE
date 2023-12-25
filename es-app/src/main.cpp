@@ -630,14 +630,21 @@ int main(int argc, char* argv[])
     // Start the logger.
     Log::init();
     Log::open();
-    LOG(LogInfo) << "ES-DE v" << PROGRAM_VERSION_STRING << " (r" << PROGRAM_RELEASE_NUMBER
-                 << "), built " << PROGRAM_BUILT_STRING;
-    if (portableMode) {
-        LOG(LogInfo) << "Running in portable mode";
-        Settings::getInstance()->setBool("PortableMode", true);
-    }
-    else {
-        Settings::getInstance()->setBool("PortableMode", false);
+    {
+#if defined(ANDROID_LITE_RELEASE)
+        const std::string applicationName {"ES-DE Lite"};
+#else
+        const std::string applicationName {"ES-DE"};
+#endif
+        LOG(LogInfo) << applicationName << " v" << PROGRAM_VERSION_STRING << " (r"
+                     << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
+        if (portableMode) {
+            LOG(LogInfo) << "Running in portable mode";
+            Settings::getInstance()->setBool("PortableMode", true);
+        }
+        else {
+            Settings::getInstance()->setBool("PortableMode", false);
+        }
     }
 
     // Always close the log on exit.
