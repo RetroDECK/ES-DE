@@ -1122,6 +1122,18 @@ bool SystemData::createSystemDirectories()
                     return (std::isspace(character) || character == ',');
                 }) != platform.cend()};
 
+            if (name.empty()) {
+                LOG(LogError)
+                    << "A system in the es_systems.xml file has no name defined, skipping entry";
+                continue;
+            }
+            else if (fullname.empty() || path.empty() || extensions.empty() || commands.empty()) {
+                LOG(LogError) << "System \"" << name
+                              << "\" is missing the fullname, path, "
+                                 "extension, or command tag, skipping entry";
+                continue;
+            }
+
             themeFolder = system.child("theme").text().as_string(name.c_str());
 
             // Check that the %ROMPATH% variable is actually used for the path element.
@@ -1203,7 +1215,10 @@ bool SystemData::createSystemDirectories()
             }
             systemInfoFile << "Platform" << (multiplePlatforms ? "s" : "")
                            << " (for scraping):" << std::endl;
-            systemInfoFile << platform << std::endl << std::endl;
+            if (platform.empty())
+                systemInfoFile << "None defined" << std::endl << std::endl;
+            else
+                systemInfoFile << platform << std::endl << std::endl;
             systemInfoFile << "Theme folder:" << std::endl;
             systemInfoFile << themeFolder << std::endl;
             systemInfoFile.close();
