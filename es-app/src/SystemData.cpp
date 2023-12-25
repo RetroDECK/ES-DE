@@ -1134,6 +1134,19 @@ bool SystemData::createSystemDirectories()
                 continue;
             }
 
+            if (commands.size() == 1 &&
+                Utils::String::toLower(commands.front()).find("placeholder") != std::string::npos) {
+                if (Settings::getInstance()->getBool("CreatePlaceholderSystemDirectories")) {
+                    LOG(LogInfo) << "System \"" << name
+                                 << "\" is a placeholder but creating directory anyway as "
+                                    "CreatePlaceholderSystemDirectories is set to true";
+                }
+                else {
+                    LOG(LogInfo) << "System \"" << name << "\" is a placeholder, skipping entry";
+                    continue;
+                }
+            }
+
             themeFolder = system.child("theme").text().as_string(name.c_str());
 
             // Check that the %ROMPATH% variable is actually used for the path element.

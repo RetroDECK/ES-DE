@@ -331,6 +331,7 @@ void Settings::setDefaults()
     mBoolMap["DebugSkipMissingThemeFiles"] = {false, false};
     mBoolMap["DebugSkipMissingThemeFilesCustomCollections"] = {true, true};
     mBoolMap["LegacyGamelistFileLocation"] = {false, false};
+    mBoolMap["CreatePlaceholderSystemDirectories"] = {false, false};
     mStringMap["OpenGLVersion"] = {"", ""};
 #if !defined(__ANDROID__)
     mStringMap["ROMDirectory"] = {"", ""};
