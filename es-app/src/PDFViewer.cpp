@@ -305,7 +305,8 @@ bool PDFViewer::getDocumentInfo()
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
 #elif defined(__ANDROID__)
-    ConvertPDF::processFile(mManualPath, "-fileinfo", 0, 0, 0, commandOutput);
+    if (ConvertPDF::processFile(mManualPath, "-fileinfo", 0, 0, 0, commandOutput) == -1)
+        return false;
 #else
     FILE* commandPipe;
     std::array<char, 512> buffer {};
