@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  blur_horizontal.glsl
 //
 //  Horizontal gaussian blur.
