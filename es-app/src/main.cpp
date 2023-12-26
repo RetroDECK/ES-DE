@@ -494,6 +494,14 @@ void applicationLoop()
 #if !defined(__EMSCRIPTEN__)
     while (true) {
 #endif
+
+#if defined(__ANDROID__)
+        // Workaround for an SDL issue where SDL_PollEvent() consumes all available CPU
+        // cycles when the application has been stopped.
+        while (AndroidVariables::sPaused)
+            SDL_Delay(10);
+#endif
+
         if (SDL_PollEvent(&event)) {
             do {
                 InputManager::getInstance().parseEvent(event);
