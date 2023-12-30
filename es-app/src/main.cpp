@@ -603,7 +603,9 @@ int main(int argc, char* argv[])
     }
 
 #if defined(__ANDROID__)
-    // Utils::Platform::Android::startConfigurator();
+    Utils::Platform::Android::startConfigurator();
+    while (AndroidVariables::sHold)
+        SDL_Delay(20);
     Utils::Platform::Android::setROMDirectory();
 #endif
 
