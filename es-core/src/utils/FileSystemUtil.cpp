@@ -70,28 +70,6 @@ namespace Utils
             if (!isDirectory(genericPath))
                 return contentList;
 
-#if defined(__ANDROID__)
-            if (path.substr(0, FileSystemVariables::sAppDataDirectory.length()) ==
-                FileSystemVariables::sAppDataDirectory) {
-                Utils::Platform::Android::getDirContent(
-                    path.substr(FileSystemVariables::sAppDataDirectory.length() + 1),
-                    FileSystemVariables::sAppDataDirectory, AndroidVariables::sAppDataPathID,
-                    recursive, contentList);
-                contentList.sort();
-                return contentList;
-            }
-
-            if (path.substr(0, AndroidVariables::sROMDirectory.length()) ==
-                AndroidVariables::sROMDirectory) {
-                Utils::Platform::Android::getDirContent(
-                    path.substr(AndroidVariables::sROMDirectory.length()),
-                    AndroidVariables::sROMDirectory, AndroidVariables::sRomPathID, recursive,
-                    contentList);
-                contentList.sort();
-                return contentList;
-            }
-#endif
-
             if (recursive) {
 #if defined(_WIN64)
                 for (auto& entry : std::filesystem::recursive_directory_iterator(
