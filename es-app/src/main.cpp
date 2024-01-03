@@ -546,10 +546,6 @@ int main(int argc, char* argv[])
 
     std::locale::global(std::locale("C"));
 
-#if defined(__ANDROID__)
-    Utils::Platform::Android::setDataDirectories();
-#endif
-
 #if defined(__APPLE__)
     // This is a workaround to disable the incredibly annoying save state functionality in
     // macOS which forces a restore of the previous window state. The problem is that this
@@ -596,18 +592,21 @@ int main(int argc, char* argv[])
     }
 #endif
 
+#if defined(__ANDROID__)
+    Utils::Platform::Android::requestStoragePermission();
+
+    while (AndroidVariables::sHold)
+        SDL_Delay(20);
+
+    Utils::Platform::Android::setDataDirectories();
+    Utils::Platform::Android::setROMDirectory();
+#endif
+
     if (!Settings::getInstance()->getBool("DebugFlag") &&
         Settings::getInstance()->getBool("DebugMode")) {
         Settings::getInstance()->setBool("Debug", true);
         Log::setReportingLevel(LogDebug);
     }
-
-#if defined(__ANDROID__)
-    Utils::Platform::Android::startConfigurator();
-    while (AndroidVariables::sHold)
-        SDL_Delay(20);
-    Utils::Platform::Android::setROMDirectory();
-#endif
 
 #if defined(FREEIMAGE_LIB)
     // Call this ONLY when linking with FreeImage as a static library.
