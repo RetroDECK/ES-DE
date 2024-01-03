@@ -35,6 +35,7 @@ es-de.worker.js
 
 # Android
 /android
+/logback.log
 es-core/src/utils/PlatformUtilAndroid.*
 
 # AppImage
