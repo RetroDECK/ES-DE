@@ -29,12 +29,13 @@
 * (Windows) Added the %RUNINBACKGROUND% variable for the epic system
 * (Windows) Removed support for building the application using MinGW
 * Added a "renderDuringTransitions" property to the image element
-* Placeholder entries in es_systems.xml are now skipped by default when creating the system directories and systemsinfo.txt files
+* Placeholder entries in es_systems.xml are now skipped by default when creating the system directories and systeminfo.txt files
 * Added a CreatePlaceholderSystemDirectories option that can be manually set in es_settings.xml to still create placeholder directories
 * Added support for more extreme vertical resolutions than previously allowed
 * Added support for the 19.5:9, 20:9 and 1:1 display aspect ratios
 * The relevant SDL error message is now printed to the log if a controller could not be added
-* Added workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
+* Added rendering workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
+* Added the UTF8-CPP library as a dependency
 
 ### Bug fixes
 

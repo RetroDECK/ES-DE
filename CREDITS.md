@@ -73,6 +73,9 @@ https://github.com/Samsung/rlottie
 SDL \
 https://www.libsdl.org
 
+UTF8-CPP \
+https://github.com/nemtrif/utfcpp
+
 Vorbis \
 https://gitlab.xiph.org/xiph/vorbis
 
