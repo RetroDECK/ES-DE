@@ -678,7 +678,7 @@
         <path>%ROMPATH%/gc</path>
         <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
         <command label="Dolphin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/dolphin_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %DATA%=%ROMSAF%</command>
+        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %CATEGORY%=android.intent.category.LAUNCHER %DATA%=%ROMPROVIDER%</command>
         <platform>gc</platform>
         <theme>gc</theme>
     </system>
@@ -1299,7 +1299,7 @@
         <path>%ROMPATH%/psp</path>
         <extension>.chd .CHD .cso .CSO .elf .ELF .iso .ISO .pbp .PBP .prx .PRX .7z .7Z .zip .ZIP</extension>
         <command label="PPSSPP">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=ppsspp_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="PPSSPP (Standalone)">%EMULATOR_PPSSPP% %CATEGORY%=android.intent.category.DEFAULT %MIMETYPE%=application/octet-stream %DATA%=%ROMSAF%</command>
+        <command label="PPSSPP (Standalone)">%EMULATOR_PPSSPP% %ACTION%=android.intent.action.VIEW %CATEGORY%=android.intent.category.DEFAULT %DATA%=%ROMPROVIDER%</command>
         <platform>psp</platform>
         <theme>psp</theme>
     </system>
@@ -1599,7 +1599,7 @@
         <fullname>Nintendo Switch</fullname>
         <path>%ROMPATH%/switch</path>
         <extension>.nca .NCA .nro .NRO .nso .NSO .nsp .NSP .xci .XCI</extension>
-        <command label="Yuzu (Standalone)">%EMULATOR_YUZU% %ACTION%=android.nfc.action.TECH_DISCOVERED %DATA%=%ROMSAF%</command>
+        <command label="Yuzu (Standalone)">%EMULATOR_YUZU% %ACTION%=android.nfc.action.TECH_DISCOVERED %DATA%=%ROMPROVIDER%</command>
         <platform>switch</platform>
         <theme>switch</theme>
     </system>
@@ -1773,7 +1773,7 @@
         <path>%ROMPATH%/wii</path>
         <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
         <command label="Dolphin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/dolphin_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %DATA%=%ROMSAF%</command>
+        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %CATEGORY%=android.intent.category.LAUNCHER %DATA%=%ROMPROVIDER%</command>
         <platform>wii</platform>
         <theme>wii</theme>
     </system>
