@@ -593,10 +593,14 @@ int main(int argc, char* argv[])
 #endif
 
 #if defined(__ANDROID__)
-    Utils::Platform::Android::requestStoragePermission();
+    if (Utils::Platform::Android::checkConfigurationNeeded())
+        Utils::Platform::Android::startConfigurator();
 
     while (AndroidVariables::sHold)
         SDL_Delay(20);
+
+    if (Utils::Platform::Android::checkConfigurationNeeded())
+        exit(0);
 
     Utils::Platform::Android::setDataDirectories();
     Utils::Platform::Android::setROMDirectory();
@@ -916,6 +920,8 @@ int main(int argc, char* argv[])
             }
         }
     }
+    if (Utils::Platform::Android::getCreateSystemDirectories())
+        SystemData::createSystemDirectories();
 #endif
 
 #if defined(APPLICATION_UPDATER)
