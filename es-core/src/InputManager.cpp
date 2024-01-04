@@ -451,6 +451,15 @@ bool InputManager::parseEvent(const SDL_Event& event)
             if (event.key.repeat)
                 return false;
 
+#if defined(__ANDROID__)
+            // Quit application if the back button is pressed.
+            if (event.key.keysym.sym == SDLK_AC_BACK) {
+                SDL_Event quit;
+                quit.type = SDL_QUIT;
+                SDL_PushEvent(&quit);
+                return false;
+            }
+#endif
             // There is no need to handle the OS-default quit shortcut (Alt + F4 on Windows and
             // Linux and Command + Q on macOS) as that's taken care of by the window manager.
             // The exception is Android as there are are no default quit shortcuts on this OS.
