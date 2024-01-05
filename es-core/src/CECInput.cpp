@@ -48,7 +48,7 @@ static void onKeyPress(void* /*cbParam*/, const CEC::cec_keypress* key)
 {
     LOG(LogDebug) << "CECInput::onKeyPress keycode: " << CECInput::getKeyCodeString(key->keycode);
 
-    SDL_Event event;
+    SDL_Event event {};
     event.type = (key->duration > 0) ? SDL_USER_CECBUTTONUP : SDL_USER_CECBUTTONDOWN;
     event.user.code = key->keycode;
     SDL_PushEvent(&event);

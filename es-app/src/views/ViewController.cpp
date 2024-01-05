@@ -162,7 +162,7 @@ void ViewController::migratedAppDataFilesDialog()
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), message.c_str(), "QUIT",
         [] {
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
@@ -201,7 +201,7 @@ void ViewController::invalidSystemsFileDialog()
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), errorMessage.c_str(), "QUIT",
         [] {
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
@@ -318,7 +318,7 @@ void ViewController::noGamesDialog()
         },
         "QUIT",
         [] {
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
@@ -1462,7 +1462,7 @@ void ViewController::rescanROMDirectory()
     SystemData::loadConfig();
 
     if (SystemData::sStartupExitSignal) {
-        SDL_Event quit;
+        SDL_Event quit {};
         quit.type = SDL_QUIT;
         SDL_PushEvent(&quit);
         return;
@@ -1477,7 +1477,7 @@ void ViewController::rescanROMDirectory()
     else {
         preload();
         if (SystemData::sStartupExitSignal) {
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
             return;

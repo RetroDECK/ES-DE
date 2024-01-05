@@ -330,7 +330,7 @@ namespace Utils
         {
             sQuitMode = mode;
 
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
             return 0;

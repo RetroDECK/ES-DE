@@ -22,7 +22,6 @@
 
 class InputConfig;
 class Window;
-union SDL_Event;
 
 class InputManager
 {

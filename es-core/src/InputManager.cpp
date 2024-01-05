@@ -454,7 +454,7 @@ bool InputManager::parseEvent(const SDL_Event& event)
 #if defined(__ANDROID__)
             // Quit application if the back button is pressed.
             if (event.key.keysym.sym == SDLK_AC_BACK) {
-                SDL_Event quit;
+                SDL_Event quit {};
                 quit.type = SDL_QUIT;
                 SDL_PushEvent(&quit);
                 return false;
@@ -490,7 +490,7 @@ bool InputManager::parseEvent(const SDL_Event& event)
                     quitES = true;
 
                 if (quitES) {
-                    SDL_Event quit;
+                    SDL_Event quit {};
                     quit.type = SDL_QUIT;
                     SDL_PushEvent(&quit);
                     return false;
