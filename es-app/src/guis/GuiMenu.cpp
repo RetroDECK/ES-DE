@@ -1832,7 +1832,11 @@ void GuiMenu::openUtilities()
 
 void GuiMenu::openQuitMenu()
 {
+#if defined(__APPLE__) || defined(__ANDROID__)
+    if (true) {
+#else
     if (!Settings::getInstance()->getBool("ShowQuitMenu")) {
+#endif
         mWindow->pushGui(new GuiMsgBox(
             this->getHelpStyle(), "REALLY QUIT?", "YES",
             [this] {
