@@ -903,6 +903,7 @@ int main(int argc, char* argv[])
     }
     LOG(LogDebug) << "Android internal directory: " << AndroidVariables::sInternalDataDirectory;
     LOG(LogDebug) << "Android external directory: " << AndroidVariables::sExternalDataDirectory;
+
     {
         std::string buildIdentifier {PROGRAM_VERSION_STRING};
         buildIdentifier.append(" (r")
@@ -920,8 +921,12 @@ int main(int argc, char* argv[])
             }
         }
     }
-    if (Utils::Platform::Android::getCreateSystemDirectories())
+
+    if (Utils::Platform::Android::getCreateSystemDirectories()) {
+        if (Settings::getInstance()->getBool("SplashScreen"))
+            window->renderSplashScreen(Window::SplashScreenState::DIR_CREATION, 0.0f);
         SystemData::createSystemDirectories();
+    }
 #endif
 
 #if defined(APPLICATION_UPDATER)

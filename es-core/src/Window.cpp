@@ -146,6 +146,8 @@ bool Window::init()
         mDefaultFonts.at(1)->buildTextCache("Reloading...", 0.0f, 0.0f, 0x777777FF));
     mSplashTextResourceCopy = std::unique_ptr<TextCache>(
         mDefaultFonts.at(1)->buildTextCache("Copying resources...", 0.0f, 0.0f, 0x777777FF));
+    mSplashTextDirCreation = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
+        "Creating system directories...", 0.0f, 0.0f, 0x777777FF));
 
     mSplashTextPositions.x =
         (mRenderer->getScreenWidth() - mSplashTextScanning->metrics.size.x) / 2.0f;
@@ -703,6 +705,9 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
     else if (state == SplashScreenState::RESOURCE_COPY) {
         textPosX = (mRenderer->getScreenWidth() - mSplashTextResourceCopy->metrics.size.x) / 2.0f;
     }
+    else if (state == SplashScreenState::DIR_CREATION) {
+        textPosX = (mRenderer->getScreenWidth() - mSplashTextDirCreation->metrics.size.x) / 2.0f;
+    }
 
     trans = glm::translate(trans, glm::round(glm::vec3 {textPosX, textPosY, 0.0f}));
     mRenderer->setMatrix(trans);
@@ -715,6 +720,8 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
         mDefaultFonts.at(1)->renderTextCache(mSplashTextReloading.get());
     else if (state == SplashScreenState::RESOURCE_COPY)
         mDefaultFonts.at(1)->renderTextCache(mSplashTextResourceCopy.get());
+    else if (state == SplashScreenState::DIR_CREATION)
+        mDefaultFonts.at(1)->renderTextCache(mSplashTextDirCreation.get());
 
     mRenderer->swapBuffers();
 }

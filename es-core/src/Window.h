@@ -110,7 +110,8 @@ public:
         SCANNING,
         POPULATING,
         RELOADING,
-        RESOURCE_COPY
+        RESOURCE_COPY,
+        DIR_CREATION
     };
 
     void renderSplashScreen(SplashScreenState state, float progress);
@@ -191,6 +192,7 @@ private:
     std::unique_ptr<TextCache> mSplashTextPopulating;
     std::unique_ptr<TextCache> mSplashTextReloading;
     std::unique_ptr<TextCache> mSplashTextResourceCopy;
+    std::unique_ptr<TextCache> mSplashTextDirCreation;
     glm::vec4 mSplashTextPositions;
     std::vector<ProgressBarRectangle> mProgressBarRectangles;
 
