@@ -593,14 +593,15 @@ int main(int argc, char* argv[])
 #endif
 
 #if defined(__ANDROID__)
-    if (Utils::Platform::Android::checkConfigurationNeeded())
+    if (Utils::Platform::Android::checkConfigurationNeeded()) {
         Utils::Platform::Android::startConfigurator();
 
-    while (AndroidVariables::sHold)
-        SDL_Delay(20);
+        while (AndroidVariables::sHold)
+            SDL_Delay(20);
 
-    if (Utils::Platform::Android::checkConfigurationNeeded())
-        exit(0);
+        if (Utils::Platform::Android::checkConfigurationNeeded())
+            exit(0);
+    }
 
     Utils::Platform::Android::setDataDirectories();
     Utils::Platform::Android::setROMDirectory();
