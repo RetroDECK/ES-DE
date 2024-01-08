@@ -110,12 +110,10 @@ void InputManager::init()
     int numJoysticks {SDL_NumJoysticks()};
 
     // Make sure that every joystick is actually supported by the GameController API.
-    for (int i {0}; i < numJoysticks; ++i)
-        if (!SDL_IsGameController(i))
-            --numJoysticks;
-
-    for (int i {0}; i < numJoysticks; ++i)
-        addControllerByDeviceIndex(nullptr, i);
+    for (int i {0}; i < numJoysticks; ++i) {
+        if (SDL_IsGameController(i))
+            addControllerByDeviceIndex(nullptr, i);
+    }
 
     SDL_USER_CECBUTTONDOWN = SDL_RegisterEvents(2);
     SDL_USER_CECBUTTONUP = SDL_USER_CECBUTTONDOWN + 1;
