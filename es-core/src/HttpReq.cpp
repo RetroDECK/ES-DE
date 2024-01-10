@@ -41,6 +41,7 @@ HttpReq::HttpReq(const std::string& url, bool scraperRequest)
     , mHandle(nullptr)
     , mTotalBytes {0}
     , mDownloadedBytes {0}
+    , mScraperRequest {scraperRequest}
 {
     // The multi-handle is cleaned up via a call from GuiScraperSearch after the scraping
     // has been completed for a game, meaning the handle is valid for all curl requests
@@ -81,7 +82,7 @@ HttpReq::HttpReq(const std::string& url, bool scraperRequest)
 
     long connectionTimeout;
 
-    if (scraperRequest) {
+    if (mScraperRequest) {
         connectionTimeout =
             static_cast<long>(Settings::getInstance()->getInt("ScraperConnectionTimeout"));
 
@@ -103,7 +104,7 @@ HttpReq::HttpReq(const std::string& url, bool scraperRequest)
 
     long transferTimeout;
 
-    if (scraperRequest) {
+    if (mScraperRequest) {
         transferTimeout =
             static_cast<long>(Settings::getInstance()->getInt("ScraperTransferTimeout"));
 
@@ -259,10 +260,18 @@ HttpReq::Status HttpReq::status()
                     req->onError(curl_easy_strerror(msg->data.result));
                 }
                 else if (msg->data.result == CURLE_HTTP_RETURNED_ERROR) {
-                    req->mStatus = REQ_BAD_STATUS_CODE;
                     long responseCode;
                     curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &responseCode);
-                    req->onError("Server returned HTTP error code " + std::to_string(responseCode));
+
+                    if (responseCode == 404 && mScraperRequest &&
+                        Settings::getInstance()->getBool("ScraperIgnoreHTTP404Errors")) {
+                        req->mStatus = REQ_RESOURCE_NOT_FOUND;
+                    }
+                    else {
+                        req->onError("Server returned HTTP error code " +
+                                     std::to_string(responseCode));
+                        req->mStatus = REQ_BAD_STATUS_CODE;
+                    }
                 }
                 else {
                     req->mStatus = REQ_IO_ERROR;

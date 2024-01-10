@@ -25,10 +25,11 @@ public:
     enum Status {
         // clang-format off
         REQ_IN_PROGRESS,         // Request is in progress.
-        REQ_SUCCESS,             // Request completed successfully, get it with getContent().
-        REQ_IO_ERROR,            // Some error happened, get it with getErrorMsg().
+        REQ_SUCCESS,             // Request completed successfully.
+        REQ_IO_ERROR,            // An error occured.
         REQ_FAILED_VERIFICATION, // Peer's certificate or fingerprint wasn't verified correctly.
-        REQ_BAD_STATUS_CODE,     // Some invalid HTTP response status code happened (non-200).
+        REQ_BAD_STATUS_CODE,     // HTTP error response >= 400.
+        REQ_RESOURCE_NOT_FOUND,  // HTTP error code 404 specifically.
         REQ_INVALID_RESPONSE,    // The HTTP response was invalid.
         REQ_UNDEFINED_ERROR
         // clang-format on
@@ -69,6 +70,7 @@ private:
     std::string mErrorMsg;
     std::atomic<long> mTotalBytes;
     std::atomic<long> mDownloadedBytes;
+    bool mScraperRequest;
 };
 
 #endif // ES_CORE_HTTP_REQ_H

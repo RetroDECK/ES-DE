@@ -168,6 +168,13 @@ void ScraperHttpRequest::update()
     if (status == HttpReq::REQ_IN_PROGRESS)
         return;
 
+    if (status == HttpReq::REQ_RESOURCE_NOT_FOUND) {
+        LOG(LogWarning)
+            << "ScraperHttpRequest: Server returned HTTP error code 404 (resource not found)";
+        setStatus(ASYNC_DONE);
+        return;
+    }
+
     // Everything else is some sort of error.
     LOG(LogError) << "ScraperHttpRequest network error (status: " << status << ") - "
                   << mReq->getErrorMsg();
