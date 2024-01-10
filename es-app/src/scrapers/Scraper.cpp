@@ -169,7 +169,7 @@ void ScraperHttpRequest::update()
         return;
 
     if (status == HttpReq::REQ_RESOURCE_NOT_FOUND) {
-        LOG(LogWarning)
+        LOG(LogDebug)
             << "ScraperHttpRequest: Server returned HTTP error code 404 (resource not found)";
         setStatus(ASYNC_DONE);
         return;
