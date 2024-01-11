@@ -18,6 +18,8 @@
 * Changed the default slideshow custom image directory from slideshow/custom_images to screensavers/custom_slideshow
 * Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir
 * The HTTP error code will now be shown on scraper errors instead of the "File is smaller than 350 bytes" message
+* Removed the ScraperHaltOnInvalidMedia option as it has been superseded by the HTTP error code logic
+* Added a ScraperIgnoreHTTP404Errors option that can be manually set in es_settings.xml to ignore 404 errors (resource not found)
 * Added Mednafen standalone as an alternative emulator for the gb, gba and gbc systems
 * (Linux) Added support for the AppImage release of Vita3K
 * Added the .zso file extension to the ps2 system
@@ -31,6 +33,7 @@
 * Added a "renderDuringTransitions" property to the image element
 * Placeholder entries in es_systems.xml are now skipped by default when creating the system directories and systeminfo.txt files
 * Added a CreatePlaceholderSystemDirectories option that can be manually set in es_settings.xml to still create placeholder directories
+* Changed the ScreenScraper URL from https://www.screenscraper.fr/api2 to https://api.screenscraper.fr/api2
 * Added support for more extreme vertical resolutions than previously allowed
 * Added support for the 19.5:9, 20:9 and 1:1 display aspect ratios
 * The relevant SDL error message is now printed to the log if a controller could not be added
@@ -40,6 +43,7 @@
 ### Bug fixes
 
 * Attempting to create the system directories with invalid entries in es_systems.xml could crash the application
+* Sometimes controllers were not added correctly when there was a mix of supported and unsupported devices present
 * Stationary image elements could sometimes glitch out during carousel navigation
 * Font textures were sometimes updated with empty glyhps which generated OpenGL errors on some mobile GPUs
 

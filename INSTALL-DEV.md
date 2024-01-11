@@ -1109,6 +1109,10 @@ Sets the server connection timeout for the scraper. Minimum value is 0 seconds (
 
 Sets the transfer timeout per HTTPS request. Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 120 seconds.
 
+**ScraperIgnoreHTTP404Errors**
+
+Normally the scraper will stop whenever an HTTP error code with value 400 or above is returned from the scraper service, but by default there is an exception for 404 errors (resource not found). Changing this setting to _false_ will make the scraper handle 404 errors as all other error codes, meaning it will run through the configured retry attempts and then display an error notification dialog if the resource could not be retrieved.
+
 **UIMode_passkey**
 
 The passkey to use to change from the _Kiosk_ or _Kid_ UI modes to the _Full_ UI mode.
