@@ -950,20 +950,6 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
-    // Halt scraping on invalid media files.
-    auto scraperHaltOnInvalidMedia = std::make_shared<SwitchComponent>();
-    scraperHaltOnInvalidMedia->setState(
-        Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia"));
-    s->addWithLabel("HALT ON INVALID MEDIA FILES", scraperHaltOnInvalidMedia);
-    s->addSaveFunc([scraperHaltOnInvalidMedia, s] {
-        if (scraperHaltOnInvalidMedia->getState() !=
-            Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia")) {
-            Settings::getInstance()->setBool("ScraperHaltOnInvalidMedia",
-                                             scraperHaltOnInvalidMedia->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     // Search using file hashes for non-interactive mode.
     auto scraperSearchFileHash = std::make_shared<SwitchComponent>();
     scraperSearchFileHash->setState(Settings::getInstance()->getBool("ScraperSearchFileHash"));

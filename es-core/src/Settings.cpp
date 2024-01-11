@@ -149,7 +149,6 @@ void Settings::setDefaults()
     mIntMap["ScraperRetryOnErrorTimer"] = {3, 3};
     mIntMap["ScraperSearchFileHashMaxSize"] = {384, 384};
     mBoolMap["ScraperOverwriteData"] = {true, true};
-    mBoolMap["ScraperHaltOnInvalidMedia"] = {true, true};
     mBoolMap["ScraperIgnoreHTTP404Errors"] = {true, true};
     mBoolMap["ScraperSearchFileHash"] = {true, true};
     mBoolMap["ScraperSearchMetadataName"] = {true, true};
