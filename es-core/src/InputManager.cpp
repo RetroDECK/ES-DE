@@ -22,8 +22,11 @@
 #include <pugixml.hpp>
 
 #define KEYBOARD_GUID_STRING "-1"
-#define TOUCH_GUID_STRING "-2"
-#define CEC_GUID_STRING "-3"
+#define CEC_GUID_STRING "-2"
+
+#if defined(__ANDROID__)
+#define TOUCH_GUID_STRING "-3"
+#endif
 
 namespace
 {

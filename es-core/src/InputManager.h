@@ -12,7 +12,10 @@
 #define ES_CORE_INPUT_MANAGER_H
 
 #include "CECInput.h"
+
+#if defined(__ANDROID__)
 #include "InputOverlay.h"
+#endif
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_joystick.h>
