@@ -38,7 +38,6 @@
 #include <SDL2/SDL_timer.h>
 
 #if defined(__ANDROID__)
-#include "InputOverlay.h"
 #include "utils/PlatformUtilAndroid.h"
 #endif
 

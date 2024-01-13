@@ -731,6 +731,7 @@ void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
 
 void InputManager::loadTouchConfig()
 {
+#if defined(__ANDROID__)
     InputConfig* cfg {mTouchInputConfig.get()};
 
     if (cfg->isConfigured())
@@ -749,9 +750,10 @@ void InputManager::loadTouchConfig()
     cfg->mapInput("Y", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_Y, 1, true));
     cfg->mapInput("LeftShoulder", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_LEFTSHOULDER, 1, true));
     cfg->mapInput("RightShoulder", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, 1, true));
-    cfg->mapInput("LeftTrigger", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_AXIS_TRIGGERLEFT, 1, true));
-    cfg->mapInput("RightTrigger", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_AXIS_TRIGGERRIGHT, 1, true));
+    cfg->mapInput("LeftTrigger", Input(DEVICE_TOUCH, TYPE_TOUCH, InputOverlay::TriggerButtons::TRIGGER_LEFT, 1, true));
+    cfg->mapInput("RightTrigger", Input(DEVICE_TOUCH, TYPE_TOUCH, InputOverlay::TriggerButtons::TRIGGER_RIGHT, 1, true));
     // clang-format on
+#endif
 }
 
 void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
