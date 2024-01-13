@@ -17,12 +17,14 @@
 #include <vector>
 
 #define DEVICE_KEYBOARD -1
-#define DEVICE_CEC -2
+#define DEVICE_TOUCH -2
+#define DEVICE_CEC -3
 
 enum InputType {
     TYPE_AXIS,
     TYPE_BUTTON,
     TYPE_KEY,
+    TYPE_TOUCH,
     TYPE_CEC_BUTTON,
     TYPE_COUNT
 };

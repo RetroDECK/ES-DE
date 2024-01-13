@@ -239,6 +239,9 @@ void Settings::setDefaults()
 
     // Input device settings.
     mStringMap["InputControllerType"] = {"xbox", "xbox"};
+#if defined(__ANDROID__)
+    mBoolMap["InputTouchOverlay"] = {true, true};
+#endif
     mBoolMap["InputOnlyFirstController"] = {false, false};
     mBoolMap["InputIgnoreKeyboard"] = {false, false};
 

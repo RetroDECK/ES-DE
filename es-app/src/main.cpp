@@ -38,6 +38,7 @@
 #include <SDL2/SDL_timer.h>
 
 #if defined(__ANDROID__)
+#include "InputOverlay.h"
 #include "utils/PlatformUtilAndroid.h"
 #endif
 
@@ -890,6 +891,8 @@ int main(int argc, char* argv[])
     }
 
 #if defined(__ANDROID__)
+    InputOverlay::getInstance();
+
     LOG(LogDebug) << "Android API level: " << SDL_GetAndroidSDKVersion();
     Utils::Platform::Android::printDeviceInfo();
     int storageState {SDL_AndroidGetExternalStorageState()};

@@ -1144,6 +1144,20 @@ void GuiMenu::openInputDeviceOptions()
         }
     });
 
+#if defined(__ANDROID__)
+    // Whether to enable the touch overlay.
+    auto inputTouchOverlay = std::make_shared<SwitchComponent>();
+    inputTouchOverlay->setState(Settings::getInstance()->getBool("InputTouchOverlay"));
+    s->addWithLabel("ENABLE TOUCH OVERLAY", inputTouchOverlay);
+    s->addSaveFunc([inputTouchOverlay, s] {
+        if (Settings::getInstance()->getBool("InputTouchOverlay") !=
+            inputTouchOverlay->getState()) {
+            Settings::getInstance()->setBool("InputTouchOverlay", inputTouchOverlay->getState());
+            s->setNeedsSaving();
+        }
+    });
+#endif
+
     // Whether to only accept input from the first controller.
     auto inputOnlyFirstController = std::make_shared<SwitchComponent>();
     inputOnlyFirstController->setState(

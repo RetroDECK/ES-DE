@@ -18,6 +18,10 @@
 #include "guis/GuiInfoPopup.h"
 #include "resources/Font.h"
 
+#if defined(__ANDROID__)
+#include "InputOverlay.h"
+#endif
+
 #include <algorithm>
 #include <iomanip>
 
@@ -661,6 +665,11 @@ void Window::render()
 
     if (mRenderScreensaver)
         mScreensaver->renderScreensaver();
+
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("InputTouchOverlay"))
+        InputOverlay::getInstance().render(mRenderer->getIdentity());
+#endif
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
         mRenderer->setMatrix(mRenderer->getIdentity());
