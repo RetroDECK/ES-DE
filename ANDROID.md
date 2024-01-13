@@ -108,7 +108,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra MMJ **(Standalone)** | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | ParaLLEl N64                      | Yes          |                                      |
-| nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>melonDS,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
+| nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>melonDS DS,<br>melonDS,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | MAME4droid **(Standalone)** | Yes          | Single archive or ROM file |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |

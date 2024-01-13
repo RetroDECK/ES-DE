@@ -18,9 +18,10 @@
 * Changed the default slideshow custom image directory from slideshow/custom_images to screensavers/custom_slideshow
 * Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir
 * The HTTP error code will now be shown on scraper errors instead of the "File is smaller than 350 bytes" message
-* Removed the ScraperHaltOnInvalidMedia option as it has been superseded by the HTTP error code logic
+* Removed the ScraperHaltOnInvalidMedia option and corresponding menu entry as it has been superseded by the HTTP error code logic
 * Added a ScraperIgnoreHTTP404Errors option that can be manually set in es_settings.xml to ignore 404 errors (resource not found)
 * Added Mednafen standalone as an alternative emulator for the gb, gba and gbc systems
+* Added the melonDS DS RetroArch core as an alternative emulator for the nds system
 * (Linux) Added support for the AppImage release of Vita3K
 * Added the .zso file extension to the ps2 system
 * Added the .zar file extension to the xbox360 system on Linux and Windows
