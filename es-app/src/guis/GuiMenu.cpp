@@ -1179,6 +1179,12 @@ void GuiMenu::openInputDeviceOptions()
         if (Settings::getInstance()->getBool("InputTouchOverlay") !=
             inputTouchOverlay->getState()) {
             Settings::getInstance()->setBool("InputTouchOverlay", inputTouchOverlay->getState());
+
+            if (Settings::getInstance()->getBool("InputTouchOverlay"))
+                InputOverlay::getInstance().createButtons();
+            else
+                InputOverlay::getInstance().clearButtons();
+
             s->setNeedsSaving();
         }
     });
