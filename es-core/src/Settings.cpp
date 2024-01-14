@@ -240,6 +240,7 @@ void Settings::setDefaults()
     // Input device settings.
     mStringMap["InputControllerType"] = {"xbox", "xbox"};
 #if defined(__ANDROID__)
+    mStringMap["InputTouchOverlaySize"] = {"medium", "medium"};
     mBoolMap["InputTouchOverlay"] = {true, true};
 #endif
     mBoolMap["InputOnlyFirstController"] = {false, false};

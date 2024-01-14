@@ -38,6 +38,10 @@
 #include "guis/GuiThemeDownloader.h"
 #include "utils/PlatformUtil.h"
 
+#if defined(__ANDROID__)
+#include "InputOverlay.h"
+#endif
+
 #include <SDL2/SDL_events.h>
 #include <algorithm>
 
@@ -1145,6 +1149,28 @@ void GuiMenu::openInputDeviceOptions()
     });
 
 #if defined(__ANDROID__)
+    // Touch overlay size.
+    auto touchOverlaySize = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "TOUCH OVERLAY SIZE", false);
+    std::string selectedOverlaySize {Settings::getInstance()->getString("InputTouchOverlaySize")};
+    touchOverlaySize->add("MEDIUM", "medium", selectedOverlaySize == "medium");
+    touchOverlaySize->add("LARGE", "large", selectedOverlaySize == "large");
+    touchOverlaySize->add("SMALL", "small", selectedOverlaySize == "small");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the overlay size to "medium" in this case.
+    if (touchOverlaySize->getSelectedObjects().size() == 0)
+        touchOverlaySize->selectEntry(0);
+    s->addWithLabel("TOUCH OVERLAY SIZE", touchOverlaySize);
+    s->addSaveFunc([touchOverlaySize, s] {
+        if (touchOverlaySize->getSelected() !=
+            Settings::getInstance()->getString("InputTouchOverlaySize")) {
+            Settings::getInstance()->setString("InputTouchOverlaySize",
+                                               touchOverlaySize->getSelected());
+            s->setNeedsSaving();
+            InputOverlay::getInstance().createButtons();
+        }
+    });
+
     // Whether to enable the touch overlay.
     auto inputTouchOverlay = std::make_shared<SwitchComponent>();
     inputTouchOverlay->setState(Settings::getInstance()->getBool("InputTouchOverlay"));
@@ -1156,6 +1182,33 @@ void GuiMenu::openInputDeviceOptions()
             s->setNeedsSaving();
         }
     });
+
+    if (!Settings::getInstance()->getBool("InputTouchOverlay")) {
+        touchOverlaySize->setEnabled(false);
+        touchOverlaySize->setOpacity(DISABLED_OPACITY);
+        touchOverlaySize->getParent()
+            ->getChild(touchOverlaySize->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
+    auto inputTouchOverlayCallback = [touchOverlaySize]() {
+        if (touchOverlaySize->getEnabled()) {
+            touchOverlaySize->setEnabled(false);
+            touchOverlaySize->setOpacity(DISABLED_OPACITY);
+            touchOverlaySize->getParent()
+                ->getChild(touchOverlaySize->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            touchOverlaySize->setEnabled(true);
+            touchOverlaySize->setOpacity(1.0f);
+            touchOverlaySize->getParent()
+                ->getChild(touchOverlaySize->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+    };
+
+    inputTouchOverlay->setCallback(inputTouchOverlayCallback);
 #endif
 
     // Whether to only accept input from the first controller.
