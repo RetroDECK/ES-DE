@@ -601,6 +601,12 @@ int main(int argc, char* argv[])
 
         if (Utils::Platform::Android::checkConfigurationNeeded())
             exit(0);
+
+        // Always enable the touch overlay after running the configurator.
+        if (!Settings::getInstance()->getBool("InputTouchOverlay")) {
+            Settings::getInstance()->setBool("InputTouchOverlay", true);
+            Settings::getInstance()->saveFile();
+        }
     }
 
     Utils::Platform::Android::setDataDirectories();
