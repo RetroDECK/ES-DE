@@ -17,8 +17,8 @@
 #include <vector>
 
 #define DEVICE_KEYBOARD -1
-#define DEVICE_TOUCH -2
-#define DEVICE_CEC -3
+#define DEVICE_CEC -2
+#define DEVICE_TOUCH -3
 
 enum InputType {
     TYPE_AXIS,
@@ -81,6 +81,10 @@ public:
             }
             case TYPE_KEY: {
                 stream << "Key " << SDL_GetKeyName((SDL_Keycode)id);
+                break;
+            }
+            case TYPE_TOUCH: {
+                stream << "Button " << id;
                 break;
             }
             case TYPE_CEC_BUTTON: {

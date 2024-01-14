@@ -28,6 +28,8 @@ std::string InputConfig::inputTypeToString(InputType type)
             return "button";
         case TYPE_KEY:
             return "key";
+        case TYPE_TOUCH:
+            return "touch-button";
         case TYPE_CEC_BUTTON:
             return "cec-button";
         default:
@@ -43,6 +45,8 @@ InputType InputConfig::stringToInputType(const std::string& type)
         return TYPE_BUTTON;
     if (type == "key")
         return TYPE_KEY;
+    if (type == "touch-button")
+        return TYPE_TOUCH;
     if (type == "cec-button")
         return TYPE_CEC_BUTTON;
     return TYPE_COUNT;
