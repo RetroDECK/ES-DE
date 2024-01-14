@@ -896,7 +896,7 @@ int main(int argc, char* argv[])
     }
 
 #if defined(__ANDROID__)
-    InputOverlay::getInstance();
+    InputOverlay::getInstance().init();
 
     LOG(LogDebug) << "Android API level: " << SDL_GetAndroidSDKVersion();
     Utils::Platform::Android::printDeviceInfo();

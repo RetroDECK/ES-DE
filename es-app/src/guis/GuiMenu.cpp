@@ -1171,6 +1171,21 @@ void GuiMenu::openInputDeviceOptions()
         }
     });
 
+    // Touch overlay fade-out timer.
+    auto touchOverlayFadeTime = std::make_shared<SliderComponent>(0.0f, 20.0f, 1.0f, "s");
+    touchOverlayFadeTime->setValue(
+        static_cast<float>(Settings::getInstance()->getInt("InputTouchOverlayFadeTime")));
+    s->addWithLabel("TOUCH OVERLAY FADE-OUT TIME", touchOverlayFadeTime);
+    s->addSaveFunc([touchOverlayFadeTime, s] {
+        if (touchOverlayFadeTime->getValue() !=
+            static_cast<float>(Settings::getInstance()->getInt("InputTouchOverlayFadeTime"))) {
+            Settings::getInstance()->setInt("InputTouchOverlayFadeTime",
+                                            static_cast<int>(touchOverlayFadeTime->getValue()));
+            InputOverlay::getInstance().resetFadeTimer();
+            s->setNeedsSaving();
+        }
+    });
+
     // Whether to enable the touch overlay.
     auto inputTouchOverlay = std::make_shared<SwitchComponent>();
     inputTouchOverlay->setState(Settings::getInstance()->getBool("InputTouchOverlay"));
@@ -1179,12 +1194,10 @@ void GuiMenu::openInputDeviceOptions()
         if (Settings::getInstance()->getBool("InputTouchOverlay") !=
             inputTouchOverlay->getState()) {
             Settings::getInstance()->setBool("InputTouchOverlay", inputTouchOverlay->getState());
-
             if (Settings::getInstance()->getBool("InputTouchOverlay"))
                 InputOverlay::getInstance().createButtons();
             else
                 InputOverlay::getInstance().clearButtons();
-
             s->setNeedsSaving();
         }
     });
@@ -1195,9 +1208,16 @@ void GuiMenu::openInputDeviceOptions()
         touchOverlaySize->getParent()
             ->getChild(touchOverlaySize->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
+
+        touchOverlayFadeTime->setEnabled(false);
+        touchOverlayFadeTime->setOpacity(DISABLED_OPACITY);
+        touchOverlayFadeTime->getParent()
+            ->getChild(touchOverlayFadeTime->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
     }
 
-    auto inputTouchOverlayCallback = [this, inputTouchOverlay, touchOverlaySize]() {
+    auto inputTouchOverlayCallback = [this, inputTouchOverlay, touchOverlaySize,
+                                      touchOverlayFadeTime]() {
         if (!inputTouchOverlay->getState()) {
             const std::string message {
                 "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU WILL "
@@ -1221,12 +1241,24 @@ void GuiMenu::openInputDeviceOptions()
             touchOverlaySize->getParent()
                 ->getChild(touchOverlaySize->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
+
+            touchOverlayFadeTime->setEnabled(false);
+            touchOverlayFadeTime->setOpacity(DISABLED_OPACITY);
+            touchOverlayFadeTime->getParent()
+                ->getChild(touchOverlayFadeTime->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
         }
         else {
             touchOverlaySize->setEnabled(true);
             touchOverlaySize->setOpacity(1.0f);
             touchOverlaySize->getParent()
                 ->getChild(touchOverlaySize->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+
+            touchOverlayFadeTime->setEnabled(true);
+            touchOverlayFadeTime->setOpacity(1.0f);
+            touchOverlayFadeTime->getParent()
+                ->getChild(touchOverlayFadeTime->getChildIndex() - 1)
                 ->setOpacity(1.0f);
         }
     };

@@ -447,6 +447,11 @@ void Window::update(int deltaTime)
 
     if (mScreensaver && mRenderScreensaver)
         mScreensaver->update(deltaTime);
+
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("InputTouchOverlay"))
+        InputOverlay::getInstance().update(deltaTime);
+#endif
 }
 
 bool Window::isBackgroundDimmed()

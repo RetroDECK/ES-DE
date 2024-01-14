@@ -241,6 +241,7 @@ void Settings::setDefaults()
     mStringMap["InputControllerType"] = {"xbox", "xbox"};
 #if defined(__ANDROID__)
     mStringMap["InputTouchOverlaySize"] = {"medium", "medium"};
+    mIntMap["InputTouchOverlayFadeTime"] = {6, 6};
     mBoolMap["InputTouchOverlay"] = {true, true};
 #endif
     mBoolMap["InputOnlyFirstController"] = {false, false};
