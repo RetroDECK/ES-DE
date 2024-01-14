@@ -1191,7 +1191,24 @@ void GuiMenu::openInputDeviceOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
-    auto inputTouchOverlayCallback = [touchOverlaySize]() {
+    auto inputTouchOverlayCallback = [this, inputTouchOverlay, touchOverlaySize]() {
+        if (!inputTouchOverlay->getState()) {
+            const std::string message {
+                "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU WILL "
+                "LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO TEMPORARILY "
+                "PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, OR YOU "
+                "COULD CLEAR THE APP STORAGE IN THE ANDROID SETTINGS TO FORCE THE CONFIGURATOR "
+                "TO RUN ON NEXT STARTUP"};
+
+            Window* window {mWindow};
+            window->pushGui(
+                new GuiMsgBox(getHelpStyle(), message, "OK", nullptr, "", nullptr, "", nullptr,
+                              nullptr, true, true,
+                              (mRenderer->getIsVerticalOrientation() ?
+                                   0.84f :
+                                   0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
+        }
+
         if (touchOverlaySize->getEnabled()) {
             touchOverlaySize->setEnabled(false);
             touchOverlaySize->setOpacity(DISABLED_OPACITY);
