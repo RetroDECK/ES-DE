@@ -40,6 +40,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     target_compile_options(lunasvg PRIVATE "/wd4251" "/wd4267")
 endif()
 
+if(ANDROID)
+    set_target_properties(lunasvg PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
+endif()
+
 # Disable threading support for rlottie as this functionality actually leads to far worse
 # performance. As well there is a bug on Windows that makes rlottie hang forever on application
 # shutdown if compiled using MinGW with threading support enabled.
@@ -58,6 +62,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     target_compile_options(rlottie PRIVATE "/wd4244" "/wd4251" "/wd4263" "/wd4334" "/wd4267" "/wd4530" "/wd4996")
 else()
     target_compile_options(rlottie PRIVATE "-w")
+endif()
+
+if(ANDROID)
+    set_target_properties(rlottie PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
 endif()
 
 # Build LunaSVG before rlottie.
