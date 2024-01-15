@@ -41,7 +41,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
 endif()
 
 if(ANDROID)
-    set_target_properties(lunasvg PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
+    if(ANDROID_LITE_RELEASE)
+        set_target_properties(lunasvg PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                              ${PROJECT_SOURCE_DIR}/android_lite_${ANDROID_ABI})
+    else()
+        set_target_properties(lunasvg PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                              ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
+    endif()
 endif()
 
 # Disable threading support for rlottie as this functionality actually leads to far worse
@@ -65,7 +71,13 @@ else()
 endif()
 
 if(ANDROID)
-    set_target_properties(rlottie PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
+    if(ANDROID_LITE_RELEASE)
+        set_target_properties(rlottie PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                              ${PROJECT_SOURCE_DIR}/android_lite_${ANDROID_ABI})
+    else()
+        set_target_properties(rlottie PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                              ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
+    endif()
 endif()
 
 # Build LunaSVG before rlottie.
