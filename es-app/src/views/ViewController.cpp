@@ -213,6 +213,14 @@ void ViewController::invalidSystemsFileDialog()
 
 void ViewController::noGamesDialog()
 {
+#if defined(__ANDROID__)
+    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN "
+                           "THE CONFIGURED ROM DIRECTORY. OPTIONALLY THE ROM "
+                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
+                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+                           "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+                           "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+#else
     mNoGamesErrorMessage = "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
                            "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
                            "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM "
@@ -220,6 +228,7 @@ void ViewController::noGamesDialog()
                            "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
                            "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
                            "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+#endif
 
 #if defined(_WIN64)
     mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
@@ -227,6 +236,10 @@ void ViewController::noGamesDialog()
     mRomDirectory = FileData::getROMDirectory();
 #endif
 
+#if defined(__ANDROID__)
+    mNoGamesMessageBox = new GuiMsgBox(
+        HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
+#else
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "CHANGE ROM DIRECTORY",
         [this] {
@@ -287,6 +300,7 @@ void ViewController::noGamesDialog()
                     "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
             }
         },
+#endif // __ANDROID__
         "CREATE DIRECTORIES",
         [this] {
             mWindow->pushGui(new GuiMsgBox(
@@ -322,10 +336,17 @@ void ViewController::noGamesDialog()
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
+#if defined(__ANDROID__)
+        "", nullptr, nullptr, true, false,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.90f :
+             0.58f * (1.778f / mRenderer->getScreenAspectRatio())));
+#else
         nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
              0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
+#endif
 
     mWindow->pushGui(mNoGamesMessageBox);
 }
