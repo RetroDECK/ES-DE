@@ -1293,6 +1293,17 @@ void GuiMenu::openInputDeviceOptions()
         }
     });
 
+    // Whether to swap the A/B and X/Y buttons.
+    auto inputSwapButtons = std::make_shared<SwitchComponent>();
+    inputSwapButtons->setState(Settings::getInstance()->getBool("InputSwapButtons"));
+    s->addWithLabel("SWAP A/B AND X/Y BUTTONS", inputSwapButtons);
+    s->addSaveFunc([inputSwapButtons, s] {
+        if (Settings::getInstance()->getBool("InputSwapButtons") != inputSwapButtons->getState()) {
+            Settings::getInstance()->setBool("InputSwapButtons", inputSwapButtons->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Configure keyboard and controllers.
     ComponentListRow configureInputRow;
     configureInputRow.elements.clear();

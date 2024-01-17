@@ -127,7 +127,7 @@ std::string UIModeController::getFormattedPassKeyStr()
         std::string symbolX;
         std::string symbolY;
 
-        if (controllerType == "snes") {
+        if (Settings::getInstance()->getBool("InputSwapButtons") || controllerType == "snes") {
             symbolA = "B";
             symbolB = "A";
             symbolX = "Y";

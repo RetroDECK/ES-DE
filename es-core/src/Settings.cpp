@@ -246,6 +246,7 @@ void Settings::setDefaults()
 #endif
     mBoolMap["InputOnlyFirstController"] = {false, false};
     mBoolMap["InputIgnoreKeyboard"] = {false, false};
+    mBoolMap["InputSwapButtons"] = {false, false};
 
     // Game collection settings.
     mStringMap["CollectionSystemsAuto"] = {"", ""};

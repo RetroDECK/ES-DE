@@ -9,6 +9,7 @@
 #include "InputConfig.h"
 
 #include "Log.h"
+#include "Settings.h"
 
 #include <pugixml.hpp>
 
@@ -54,7 +55,7 @@ InputType InputConfig::stringToInputType(const std::string& type)
 
 std::string InputConfig::toLower(std::string str)
 {
-    for (unsigned int i = 0; i < str.length(); ++i)
+    for (unsigned int i {0}; i < str.length(); ++i)
         str[i] = static_cast<char>(tolower(str[i]));
 
     return str;
@@ -125,7 +126,7 @@ std::vector<std::string> InputConfig::getMappedTo(Input input)
     std::vector<std::string> maps;
 
     for (auto it = mNameMap.cbegin(); it != mNameMap.cend(); ++it) {
-        Input chk = it->second;
+        Input chk {it->second};
 
         if (!chk.configured)
             continue;
@@ -145,7 +146,20 @@ std::vector<std::string> InputConfig::getMappedTo(Input input)
 
 bool InputConfig::getInputByName(const std::string& name, Input* result)
 {
-    auto it = mNameMap.find(toLower(name));
+    std::string nameInput {name};
+
+    if (Settings::getInstance()->getBool("InputSwapButtons")) {
+        if (name == "a")
+            nameInput = "b";
+        else if (name == "b")
+            nameInput = "a";
+        else if (name == "x")
+            nameInput = "y";
+        else if (name == "y")
+            nameInput = "x";
+    }
+
+    auto it = mNameMap.find(toLower(nameInput));
     if (it != mNameMap.cend()) {
         *result = it->second;
         return true;
@@ -166,10 +180,10 @@ void InputConfig::loadFromXML(pugi::xml_node& node)
 {
     clear();
 
-    for (pugi::xml_node input = node.child("input"); input; input = input.next_sibling("input")) {
-        std::string name = input.attribute("name").as_string();
-        std::string type = input.attribute("type").as_string();
-        InputType typeEnum = stringToInputType(type);
+    for (pugi::xml_node input {node.child("input")}; input; input = input.next_sibling("input")) {
+        std::string name {input.attribute("name").as_string()};
+        std::string type {input.attribute("type").as_string()};
+        InputType typeEnum {stringToInputType(type)};
 
         if (typeEnum == TYPE_COUNT) {
             LOG(LogError) << "InputConfig load error - input of type \"" << type
@@ -177,8 +191,8 @@ void InputConfig::loadFromXML(pugi::xml_node& node)
             continue;
         }
 
-        int id = input.attribute("id").as_int();
-        int value = input.attribute("value").as_int();
+        int id {input.attribute("id").as_int()};
+        int value {input.attribute("value").as_int()};
 
         if (value == 0) {
             LOG(LogWarning) << "InputConfig value is 0 for " << type << " " << id << "!\n";
@@ -190,7 +204,7 @@ void InputConfig::loadFromXML(pugi::xml_node& node)
 
 void InputConfig::writeToXML(pugi::xml_node& parent)
 {
-    pugi::xml_node cfg = parent.append_child("inputConfig");
+    pugi::xml_node cfg {parent.append_child("inputConfig")};
 
     if (mDeviceId == DEVICE_KEYBOARD) {
         cfg.append_attribute("type") = "keyboard";
@@ -211,7 +225,7 @@ void InputConfig::writeToXML(pugi::xml_node& parent)
         if (!it->second.configured)
             continue;
 
-        pugi::xml_node input = cfg.append_child("input");
+        pugi::xml_node input {cfg.append_child("input")};
         input.append_attribute("name") = it->first.c_str();
         input.append_attribute("type") = inputTypeToString(it->second.type).c_str();
         input.append_attribute("id").set_value(it->second.id);

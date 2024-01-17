@@ -33,6 +33,18 @@ void HelpComponent::assignIcons()
     std::map<std::string, std::string> sIconPathMapOld {sIconPathMap};
     sIconPathMap.clear();
 
+    std::string buttonA {"a"};
+    std::string buttonB {"b"};
+    std::string buttonX {"x"};
+    std::string buttonY {"y"};
+
+    if (Settings::getInstance()->getBool("InputSwapButtons")) {
+        buttonA = "b";
+        buttonB = "a";
+        buttonX = "y";
+        buttonY = "x";
+    }
+
     // These graphics files are common between all controller types.
     sIconPathMap["up/down"] = mStyle.mCustomButtons.dpad_updown.empty() ?
                                   ":/graphics/help/dpad_updown.svg" :
@@ -67,18 +79,18 @@ void HelpComponent::assignIcons()
 
     // These graphics files are custom per controller type.
     if (controllerType == "snes") {
-        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_SNES.empty() ?
-                                ":/graphics/help/button_a_SNES.svg" :
-                                mStyle.mCustomButtons.button_a_SNES;
-        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_SNES.empty() ?
-                                ":/graphics/help/button_b_SNES.svg" :
-                                mStyle.mCustomButtons.button_b_SNES;
-        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_SNES.empty() ?
-                                ":/graphics/help/button_x_SNES.svg" :
-                                mStyle.mCustomButtons.button_x_SNES;
-        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_SNES.empty() ?
-                                ":/graphics/help/button_y_SNES.svg" :
-                                mStyle.mCustomButtons.button_y_SNES;
+        sIconPathMap[buttonA] = mStyle.mCustomButtons.button_a_SNES.empty() ?
+                                    ":/graphics/help/button_a_SNES.svg" :
+                                    mStyle.mCustomButtons.button_a_SNES;
+        sIconPathMap[buttonB] = mStyle.mCustomButtons.button_b_SNES.empty() ?
+                                    ":/graphics/help/button_b_SNES.svg" :
+                                    mStyle.mCustomButtons.button_b_SNES;
+        sIconPathMap[buttonX] = mStyle.mCustomButtons.button_x_SNES.empty() ?
+                                    ":/graphics/help/button_x_SNES.svg" :
+                                    mStyle.mCustomButtons.button_x_SNES;
+        sIconPathMap[buttonY] = mStyle.mCustomButtons.button_y_SNES.empty() ?
+                                    ":/graphics/help/button_y_SNES.svg" :
+                                    mStyle.mCustomButtons.button_y_SNES;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_SNES.empty() ?
                                    ":/graphics/help/button_back_SNES.svg" :
                                    mStyle.mCustomButtons.button_back_SNES;
@@ -87,18 +99,18 @@ void HelpComponent::assignIcons()
                                     mStyle.mCustomButtons.button_start_SNES;
     }
     else if (controllerType == "switchpro") {
-        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_switch.empty() ?
-                                ":/graphics/help/button_a_switch.svg" :
-                                mStyle.mCustomButtons.button_a_switch;
-        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_switch.empty() ?
-                                ":/graphics/help/button_b_switch.svg" :
-                                mStyle.mCustomButtons.button_b_switch;
-        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_switch.empty() ?
-                                ":/graphics/help/button_x_switch.svg" :
-                                mStyle.mCustomButtons.button_x_switch;
-        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_switch.empty() ?
-                                ":/graphics/help/button_y_switch.svg" :
-                                mStyle.mCustomButtons.button_y_switch;
+        sIconPathMap[buttonA] = mStyle.mCustomButtons.button_a_switch.empty() ?
+                                    ":/graphics/help/button_a_switch.svg" :
+                                    mStyle.mCustomButtons.button_a_switch;
+        sIconPathMap[buttonB] = mStyle.mCustomButtons.button_b_switch.empty() ?
+                                    ":/graphics/help/button_b_switch.svg" :
+                                    mStyle.mCustomButtons.button_b_switch;
+        sIconPathMap[buttonX] = mStyle.mCustomButtons.button_x_switch.empty() ?
+                                    ":/graphics/help/button_x_switch.svg" :
+                                    mStyle.mCustomButtons.button_x_switch;
+        sIconPathMap[buttonY] = mStyle.mCustomButtons.button_y_switch.empty() ?
+                                    ":/graphics/help/button_y_switch.svg" :
+                                    mStyle.mCustomButtons.button_y_switch;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_switch.empty() ?
                                    ":/graphics/help/button_back_switch.svg" :
                                    mStyle.mCustomButtons.button_back_switch;
@@ -107,18 +119,18 @@ void HelpComponent::assignIcons()
                                     mStyle.mCustomButtons.button_start_switch;
     }
     else if (controllerType == "ps123") {
-        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
-                                ":/graphics/help/button_a_PS.svg" :
-                                mStyle.mCustomButtons.button_a_PS;
-        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_PS.empty() ?
-                                ":/graphics/help/button_b_PS.svg" :
-                                mStyle.mCustomButtons.button_b_PS;
-        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_PS.empty() ?
-                                ":/graphics/help/button_x_PS.svg" :
-                                mStyle.mCustomButtons.button_x_PS;
-        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_PS.empty() ?
-                                ":/graphics/help/button_y_PS.svg" :
-                                mStyle.mCustomButtons.button_y_PS;
+        sIconPathMap[buttonA] = mStyle.mCustomButtons.button_a_PS.empty() ?
+                                    ":/graphics/help/button_a_PS.svg" :
+                                    mStyle.mCustomButtons.button_a_PS;
+        sIconPathMap[buttonB] = mStyle.mCustomButtons.button_b_PS.empty() ?
+                                    ":/graphics/help/button_b_PS.svg" :
+                                    mStyle.mCustomButtons.button_b_PS;
+        sIconPathMap[buttonX] = mStyle.mCustomButtons.button_x_PS.empty() ?
+                                    ":/graphics/help/button_x_PS.svg" :
+                                    mStyle.mCustomButtons.button_x_PS;
+        sIconPathMap[buttonY] = mStyle.mCustomButtons.button_y_PS.empty() ?
+                                    ":/graphics/help/button_y_PS.svg" :
+                                    mStyle.mCustomButtons.button_y_PS;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS123.empty() ?
                                    ":/graphics/help/button_back_PS123.svg" :
                                    mStyle.mCustomButtons.button_back_PS123;
@@ -127,18 +139,18 @@ void HelpComponent::assignIcons()
                                     mStyle.mCustomButtons.button_start_PS123;
     }
     else if (controllerType == "ps4") {
-        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
-                                ":/graphics/help/button_a_PS.svg" :
-                                mStyle.mCustomButtons.button_a_PS;
-        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_PS.empty() ?
-                                ":/graphics/help/button_b_PS.svg" :
-                                mStyle.mCustomButtons.button_b_PS;
-        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_PS.empty() ?
-                                ":/graphics/help/button_x_PS.svg" :
-                                mStyle.mCustomButtons.button_x_PS;
-        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_PS.empty() ?
-                                ":/graphics/help/button_y_PS.svg" :
-                                mStyle.mCustomButtons.button_y_PS;
+        sIconPathMap[buttonA] = mStyle.mCustomButtons.button_a_PS.empty() ?
+                                    ":/graphics/help/button_a_PS.svg" :
+                                    mStyle.mCustomButtons.button_a_PS;
+        sIconPathMap[buttonB] = mStyle.mCustomButtons.button_b_PS.empty() ?
+                                    ":/graphics/help/button_b_PS.svg" :
+                                    mStyle.mCustomButtons.button_b_PS;
+        sIconPathMap[buttonX] = mStyle.mCustomButtons.button_x_PS.empty() ?
+                                    ":/graphics/help/button_x_PS.svg" :
+                                    mStyle.mCustomButtons.button_x_PS;
+        sIconPathMap[buttonY] = mStyle.mCustomButtons.button_y_PS.empty() ?
+                                    ":/graphics/help/button_y_PS.svg" :
+                                    mStyle.mCustomButtons.button_y_PS;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS4.empty() ?
                                    ":/graphics/help/button_back_PS4.svg" :
                                    mStyle.mCustomButtons.button_back_PS4;
@@ -147,18 +159,18 @@ void HelpComponent::assignIcons()
                                     mStyle.mCustomButtons.button_start_PS4;
     }
     else if (controllerType == "ps5") {
-        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
-                                ":/graphics/help/button_a_PS.svg" :
-                                mStyle.mCustomButtons.button_a_PS;
-        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_PS.empty() ?
-                                ":/graphics/help/button_b_PS.svg" :
-                                mStyle.mCustomButtons.button_b_PS;
-        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_PS.empty() ?
-                                ":/graphics/help/button_x_PS.svg" :
-                                mStyle.mCustomButtons.button_x_PS;
-        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_PS.empty() ?
-                                ":/graphics/help/button_y_PS.svg" :
-                                mStyle.mCustomButtons.button_y_PS;
+        sIconPathMap[buttonA] = mStyle.mCustomButtons.button_a_PS.empty() ?
+                                    ":/graphics/help/button_a_PS.svg" :
+                                    mStyle.mCustomButtons.button_a_PS;
+        sIconPathMap[buttonB] = mStyle.mCustomButtons.button_b_PS.empty() ?
+                                    ":/graphics/help/button_b_PS.svg" :
+                                    mStyle.mCustomButtons.button_b_PS;
+        sIconPathMap[buttonX] = mStyle.mCustomButtons.button_x_PS.empty() ?
+                                    ":/graphics/help/button_x_PS.svg" :
+                                    mStyle.mCustomButtons.button_x_PS;
+        sIconPathMap[buttonY] = mStyle.mCustomButtons.button_y_PS.empty() ?
+                                    ":/graphics/help/button_y_PS.svg" :
+                                    mStyle.mCustomButtons.button_y_PS;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS5.empty() ?
                                    ":/graphics/help/button_back_PS5.svg" :
                                    mStyle.mCustomButtons.button_back_PS5;
@@ -168,18 +180,18 @@ void HelpComponent::assignIcons()
     }
     else if (controllerType == "xbox360") {
 
-        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_XBOX.empty() ?
-                                ":/graphics/help/button_a_XBOX.svg" :
-                                mStyle.mCustomButtons.button_a_XBOX;
-        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_XBOX.empty() ?
-                                ":/graphics/help/button_b_XBOX.svg" :
-                                mStyle.mCustomButtons.button_b_XBOX;
-        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_XBOX.empty() ?
-                                ":/graphics/help/button_x_XBOX.svg" :
-                                mStyle.mCustomButtons.button_x_XBOX;
-        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_XBOX.empty() ?
-                                ":/graphics/help/button_y_XBOX.svg" :
-                                mStyle.mCustomButtons.button_y_XBOX;
+        sIconPathMap[buttonA] = mStyle.mCustomButtons.button_a_XBOX.empty() ?
+                                    ":/graphics/help/button_a_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_a_XBOX;
+        sIconPathMap[buttonB] = mStyle.mCustomButtons.button_b_XBOX.empty() ?
+                                    ":/graphics/help/button_b_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_b_XBOX;
+        sIconPathMap[buttonX] = mStyle.mCustomButtons.button_x_XBOX.empty() ?
+                                    ":/graphics/help/button_x_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_x_XBOX;
+        sIconPathMap[buttonY] = mStyle.mCustomButtons.button_y_XBOX.empty() ?
+                                    ":/graphics/help/button_y_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_y_XBOX;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_XBOX360.empty() ?
                                    ":/graphics/help/button_back_XBOX360.svg" :
                                    mStyle.mCustomButtons.button_back_XBOX360;
@@ -189,18 +201,18 @@ void HelpComponent::assignIcons()
     }
     else {
         // Xbox One and later.
-        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_XBOX.empty() ?
-                                ":/graphics/help/button_a_XBOX.svg" :
-                                mStyle.mCustomButtons.button_a_XBOX;
-        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_XBOX.empty() ?
-                                ":/graphics/help/button_b_XBOX.svg" :
-                                mStyle.mCustomButtons.button_b_XBOX;
-        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_XBOX.empty() ?
-                                ":/graphics/help/button_x_XBOX.svg" :
-                                mStyle.mCustomButtons.button_x_XBOX;
-        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_XBOX.empty() ?
-                                ":/graphics/help/button_y_XBOX.svg" :
-                                mStyle.mCustomButtons.button_y_XBOX;
+        sIconPathMap[buttonA] = mStyle.mCustomButtons.button_a_XBOX.empty() ?
+                                    ":/graphics/help/button_a_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_a_XBOX;
+        sIconPathMap[buttonB] = mStyle.mCustomButtons.button_b_XBOX.empty() ?
+                                    ":/graphics/help/button_b_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_b_XBOX;
+        sIconPathMap[buttonX] = mStyle.mCustomButtons.button_x_XBOX.empty() ?
+                                    ":/graphics/help/button_x_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_x_XBOX;
+        sIconPathMap[buttonY] = mStyle.mCustomButtons.button_y_XBOX.empty() ?
+                                    ":/graphics/help/button_y_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_y_XBOX;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_XBOX.empty() ?
                                    ":/graphics/help/button_back_XBOX.svg" :
                                    mStyle.mCustomButtons.button_back_XBOX;
