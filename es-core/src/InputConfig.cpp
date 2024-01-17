@@ -148,7 +148,7 @@ bool InputConfig::getInputByName(const std::string& name, Input* result)
 {
     std::string nameInput {name};
 
-    if (Settings::getInstance()->getBool("InputSwapButtons")) {
+    if (Settings::getInstance()->getBool("InputSwapButtons") && mDeviceId != DEVICE_KEYBOARD) {
         if (name == "a")
             nameInput = "b";
         else if (name == "b")
