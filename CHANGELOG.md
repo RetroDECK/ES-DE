@@ -10,10 +10,12 @@
 
 * Renamed the application from EmulationStation Desktop Edition to ES-DE
 * Renamed the application data directory from .emulationstation to ES-DE
+* Updated the splash screen to reflect the new application name
 * Split the es_find_rules.xml and es_systems.xml files for Linux and BSD Unix into separate directories
 * Added support for defining font sizes from the theme configuration and selecting these from the UI settings menu
 * Added the theme font sizes count to the theme downloader interface
 * Added support for medium and large font sizes to the Slate and Modern themes
+* Added an option to the Input device settings menu to swap the A/B and X/Y buttons
 * Added support for .webp, .svg and unanimated .gif files to the slideshow screensaver when using a custom image directory
 * Changed the default slideshow custom image directory from slideshow/custom_images to screensavers/custom_slideshow
 * Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir
@@ -32,6 +34,7 @@
 * (Windows) Added the %RUNINBACKGROUND% variable for the epic system
 * (Windows) Removed support for building the application using MinGW
 * Added a "renderDuringTransitions" property to the image element
+* Replaced the default d-pad helpsystem images to make them more legible when using smaller screen sizes
 * Placeholder entries in es_systems.xml are now skipped by default when creating the system directories and systeminfo.txt files
 * Added a CreatePlaceholderSystemDirectories option that can be manually set in es_settings.xml to still create placeholder directories
 * Changed the ScreenScraper URL from https://www.screenscraper.fr/api2 to https://api.screenscraper.fr/api2

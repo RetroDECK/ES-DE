@@ -492,6 +492,8 @@ When editing text it's also possible to paste from the clipboard into ES-DE usin
 
 Default keyboard mappings are shown in brackets below.
 
+It's assumed that the option _Swap A/B and X/Y buttons_ in the _Input device settings_ menu is disabled as some buttons will otherwise obviously be swapped.
+
 **Up and down**\
 _(Arrow up / Arrow down)_
 
@@ -3381,6 +3383,10 @@ The touch overlay applies a layer of virtual buttons on top of the ES-DE window.
 **Only accept input from first controller**
 
 If enabling this option, only the first controller detected during startup will send its input to ES-DE (the keyboard input is unaffected by this setting and will be enabled regardless). This is a good way to limit potential chaos with multiple persons fighting over which games to play. Note that disconnecting and reconnecting controllers while ES-DE is running may change what is considered the first controller. This setting does not affect the emulators in any way, it's only applied to ES-DE. Another issue is that some wireless controllers have buggy drivers and will register as two devices, meaning all button presses will be registered twice inside ES-DE. Using this option is one solution to the problem, although it's also possible to blacklist the extra controller entry, as described [here](INSTALL-DEV.md#adding-custom-controller-profiles).
+
+**Swap A/B and X/Y buttons**
+
+When enabling this setting the functions for the A/B and X/Y buttons will be swapped and the helpsystem will be updated accordingly. The primary purpose of this setting is for using controllers like Nintendo Switch Pro and some handhelds which have swapped the physical positions of these buttons. With this setting enabled you'll be able to rely on your muscle memory from using any other controller type with a normal button layout. Note that the button swap does not apply to the keyboard which leads to a slight inconsistency as the helpsystem will only match the controller and not the keyboard.
 
 **Ignore keyboard input**
 
