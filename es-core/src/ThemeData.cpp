@@ -570,7 +570,7 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
 
     // Check for legacy theme version.
     if (root.child("formatVersion") != nullptr)
-        throw error << ": Legacy <formatVersion> tag found";
+        throw error << ": Unsupported <formatVersion> tag found";
 
     if (sCurrentTheme->second.capabilities.variants.size() > 0) {
         for (auto& variant : sCurrentTheme->second.capabilities.variants)
@@ -1512,7 +1512,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
 
     // Check for legacy theme version.
     if (root.child("formatVersion") != nullptr)
-        throw error << ": Legacy <formatVersion> tag found";
+        throw error << ": Unsupported <formatVersion> tag found";
 
     for (pugi::xml_node node {root.child("include")}; node; node = node.next_sibling("include")) {
         std::string relPath {resolvePlaceholders(node.text().as_string())};
