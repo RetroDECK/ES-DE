@@ -1,4 +1,4 @@
-# Modern for EmulationStation Desktop Edition (modern-es-de)
+# Modern for ES-DE (modern-es-de)
 
 The following options are included:
 
