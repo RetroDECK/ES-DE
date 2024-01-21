@@ -675,7 +675,7 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
     int loadedItems {0};
 
     if (currRow > 0) {
-        if (GuiComponent::isAnimationPlaying(0) || mItemSpacing.y < mVerticalMargin) {
+        if (GuiComponent::isAnimationPlaying(0) || mItemSpacing.y <= mVerticalMargin) {
             loadItems += mColumns;
             startPos = (currRow - 1) * mColumns;
         }
