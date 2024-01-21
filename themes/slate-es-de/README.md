@@ -12,6 +12,11 @@ The following options are included:
 - Dark
 - Light
 
+2 font sizes:
+
+- Medium
+- Large
+
 4 aspect ratios:
 
 - 16:9
