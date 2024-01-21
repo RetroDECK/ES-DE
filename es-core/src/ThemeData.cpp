@@ -1506,15 +1506,15 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 
 void ThemeData::parseIncludes(const pugi::xml_node& root)
 {
-    ThemeException error;
-    error << "ThemeData::parseIncludes(): ";
-    error.setFiles(mPaths);
-
-    // Check if there's an unsupported theme version tag.
-    if (root.child("formatVersion") != nullptr)
-        throw error << ": Unsupported <formatVersion> tag found";
-
     for (pugi::xml_node node {root.child("include")}; node; node = node.next_sibling("include")) {
+        ThemeException error;
+        error << "ThemeData::parseIncludes(): ";
+        error.setFiles(mPaths);
+
+        // Check if there's an unsupported theme version tag.
+        if (root.child("formatVersion") != nullptr)
+            throw error << ": Unsupported <formatVersion> tag found";
+
         std::string relPath {resolvePlaceholders(node.text().as_string())};
         std::string path {Utils::FileSystem::resolveRelativePath(relPath, mPaths.back(), true)};
 
