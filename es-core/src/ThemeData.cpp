@@ -568,7 +568,7 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     if (!root)
         throw error << ": Missing <theme> tag";
 
-    // Check for legacy theme version.
+    // Check if there's an unsupported theme version tag.
     if (root.child("formatVersion") != nullptr)
         throw error << ": Unsupported <formatVersion> tag found";
 
@@ -655,7 +655,7 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     parseIncludes(root);
     parseViews(root);
     if (root.child("feature") != nullptr)
-        throw error << ": Legacy <feature> tag found";
+        throw error << ": Unsupported <feature> tag found";
     parseVariants(root);
     parseAspectRatios(root);
 }
@@ -1510,7 +1510,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
     error << "ThemeData::parseIncludes(): ";
     error.setFiles(mPaths);
 
-    // Check for legacy theme version.
+    // Check if there's an unsupported theme version tag.
     if (root.child("formatVersion") != nullptr)
         throw error << ": Unsupported <formatVersion> tag found";
 
@@ -1572,7 +1572,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         parseIncludes(theme);
         parseViews(theme);
         if (theme.child("feature") != nullptr)
-            throw error << ": Legacy <feature> tag found";
+            throw error << ": Unsupported <feature> tag found";
         parseVariants(theme);
         parseAspectRatios(theme);
 
@@ -1871,8 +1871,8 @@ void ThemeData::parseElement(const pugi::xml_node& root,
     element.type = root.name();
 
     if (root.attribute("extra") != nullptr)
-        throw error << ": Legacy \"extra\" attribute found for element of type \"" << element.type
-                    << "\"";
+        throw error << ": Unsupported \"extra\" attribute found for element of type \""
+                    << element.type << "\"";
 
     for (pugi::xml_node node {root.first_child()}; node; node = node.next_sibling()) {
         auto typeIt = typeMap.find(node.name());
