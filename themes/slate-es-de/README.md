@@ -1,4 +1,4 @@
-# Slate for EmulationStation Desktop Edition (slate-es-de)
+# Slate for ES-DE (slate-es-de)
 
 The following options are included:
 

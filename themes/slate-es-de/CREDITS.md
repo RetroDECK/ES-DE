@@ -1,4 +1,4 @@
-# Slate for EmulationStation Desktop Edition - credits
+# Slate for ES-DE - credits
 
 The Slate theme is based on [recalbox-multi](https://gitlab.com/recalbox/recalbox-themes) by the Recalbox community, prior to their license change in 2018.
 
