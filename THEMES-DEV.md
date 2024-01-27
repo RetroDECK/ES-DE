@@ -2007,6 +2007,10 @@ Properties:
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the textlist exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
+* `selectorWidth` - type: FLOAT
+    - Width of the selector bar. If an image has been defined using `selectorImagePath` then setting this property to zero will retain the aspect ratio for that image.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is the equivalent value as the width of the overall element.
 * `selectorHeight` - type: FLOAT
     - Height of the selector bar. This is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if making use of this property.
     - Minimum value is `0` and maximum value is `1`
@@ -3023,6 +3027,9 @@ Properties:
     - `always` - Set element as stationary during all transitions.
     - `never` - Don't set element as stationary during any transitions.
     - Default is `never`
+* `hideIfZero` - type: BOOLEAN
+    - If set to true then the element will not get rendered if the rating value is zero.
+    - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
 * `gameselectorEntry` - type: UNSIGNED_INTEGER

@@ -34,12 +34,15 @@
 * (Windows) Added the %RUNINBACKGROUND% variable for the epic system
 * (Windows) Removed support for building the application using MinGW
 * Added a "renderDuringTransitions" property to the image element
+* Added a "selectorWidth" property to the textlist element
+* Added a "hideIfZero" property to the rating element
 * Replaced the default d-pad helpsystem images to make them more legible when using smaller screen sizes
 * Placeholder entries in es_systems.xml are now skipped by default when creating the system directories and systeminfo.txt files
 * Added a CreatePlaceholderSystemDirectories option that can be manually set in es_settings.xml to still create placeholder directories
 * Changed the ScreenScraper URL from https://www.screenscraper.fr/api2 to https://api.screenscraper.fr/api2
 * Added support for more extreme vertical resolutions than previously allowed
 * Added support for the 19.5:9, 20:9 and 1:1 display aspect ratios
+* If any legacy theme configuration is encountered the error messages now simply state that the config is unsupported
 * The relevant SDL error message is now printed to the log if a controller could not be added
 * Added rendering workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
 * Added the UTF8-CPP library as a dependency
@@ -48,7 +51,9 @@
 
 * Attempting to create the system directories with invalid entries in es_systems.xml could crash the application
 * Sometimes controllers were not added correctly when there was a mix of supported and unsupported devices present
+* The last grid row would sometimes not render correctly if fractionalRows was set to true
 * Stationary image elements could sometimes glitch out during carousel navigation
+* Theme loading debug output would sometimes print incorrect paths when the configuration included files using variables
 * Font textures were sometimes updated with empty glyhps which generated OpenGL errors on some mobile GPUs
 
 ## Version 2.2.1
