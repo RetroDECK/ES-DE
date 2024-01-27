@@ -23,7 +23,6 @@
             <gamelistSystemNameFontSize>0.03</gamelistSystemNameFontSize>
             <gamelistFontSize>0.030</gamelistFontSize>
             <gamelistLineSpacing>1.9</gamelistLineSpacing>
-            <gamelistSelectorVerticalOffset>-0.0015</gamelistSelectorVerticalOffset>
             <gamelistInfoFontSize>0.03</gamelistInfoFontSize>
             <descriptionFontSize>0.03</descriptionFontSize>
             <descriptionLineSpacing>1.2</descriptionLineSpacing>
@@ -48,7 +47,6 @@
             <gamelistSystemNameFontSize>0.04</gamelistSystemNameFontSize>
             <gamelistFontSize>0.0368</gamelistFontSize>
             <gamelistLineSpacing>1.7</gamelistLineSpacing>
-            <gamelistSelectorVerticalOffset>0.0025</gamelistSelectorVerticalOffset>
             <gamelistInfoFontSize>0.036</gamelistInfoFontSize>
             <descriptionFontSize>0.037</descriptionFontSize>
             <descriptionLineSpacing>1.15</descriptionLineSpacing>
@@ -199,10 +197,7 @@
                 <pos>0.04 0.182</pos>
                 <size>0.31 0.68</size>
                 <origin>0 0</origin>
-                <selectorHeight>0.075</selectorHeight>
-                <selectorVerticalOffset>${gamelistSelectorVerticalOffset}</selectorVerticalOffset>
                 <selectorColor>${mainColor}</selectorColor>
-                <selectorImagePath>./assets/selector.png</selectorImagePath>
                 <selectedColor>${mainColor}</selectedColor>
                 <primaryColor>${secondaryColor}</primaryColor>
                 <secondaryColor>${tertiaryColor}</secondaryColor>
