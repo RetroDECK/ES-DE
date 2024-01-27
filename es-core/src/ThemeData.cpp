@@ -249,6 +249,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
+       {"selectorWidth", FLOAT},
        {"selectorHeight", FLOAT},
        {"selectorHorizontalOffset", FLOAT},
        {"selectorVerticalOffset", FLOAT},
