@@ -488,6 +488,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"stationary", STRING},
+       {"hideIfZero", BOOLEAN},
        {"gameselector", STRING},
        {"gameselectorEntry", UNSIGNED_INTEGER},
        {"interpolation", STRING},

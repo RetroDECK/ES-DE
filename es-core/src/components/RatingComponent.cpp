@@ -21,6 +21,7 @@ RatingComponent::RatingComponent(bool colorizeChanges, bool linearInterpolation)
     , mColorChangedValue {mMenuColorPrimary}
     , mColorizeChanges {colorizeChanges}
     , mOverlay {true}
+    , mHideIfZero {false}
 {
     mSize = glm::vec2 {std::round(mRenderer->getScreenHeight() * 0.06f) * NUM_RATING_STARS,
                        std::round(mRenderer->getScreenHeight() * 0.06f)};
@@ -127,6 +128,9 @@ void RatingComponent::render(const glm::mat4& parentTrans)
     if (!isVisible() || mThemeOpacity == 0.0f || mOpacity == 0.0f)
         return;
 
+    if (mHideIfZero && mValue == 0.0f)
+        return;
+
     glm::mat4 trans {parentTrans * getTransform()};
 
     mIconUnfilled.setOpacity(mOpacity * mThemeOpacity);
@@ -226,6 +230,9 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                "\"stationary\" for element \""
                             << element.substr(7) << "\" defined as \"" << stationary << "\"";
     }
+
+    if (elem->has("hideIfZero"))
+        mHideIfZero = elem->get<bool>("hideIfZero");
 
     bool linearInterpolation {false};
 

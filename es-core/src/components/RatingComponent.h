@@ -61,6 +61,7 @@ private:
 
     bool mColorizeChanges;
     bool mOverlay;
+    bool mHideIfZero;
 };
 
 #endif // ES_APP_COMPONENTS_RATING_COMPONENT_H
