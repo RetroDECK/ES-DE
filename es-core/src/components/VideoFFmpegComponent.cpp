@@ -224,12 +224,26 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         vertices->dimming = mDimming;
 
         if (mVideoCornerRadius > 0.0f) {
-            // We don't want to apply anti-aliasing to rounded corners as the black frame is
-            // rendered behind the video and that would generate ugly edge artifacts for any
-            // videos with lighter content.
-            vertices->cornerRadius = mVideoCornerRadius;
-            vertices->shaderFlags =
-                vertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS_NO_AA;
+            // Don't round the corners for the video frame if pillarboxes are enabled.
+            // For extreme roundings it will still get applied though as we don't want the
+            // video content to render outside the black frame.
+            bool renderVideoCorners {true};
+            if (mDrawPillarboxes) {
+                if (mBlackFrame.getSize().x > mSize.x &&
+                    mBlackFrame.getSize().x - mSize.x >= mVideoCornerRadius * 2.0f)
+                    renderVideoCorners = false;
+                else if (mBlackFrame.getSize().y > mSize.y &&
+                         mBlackFrame.getSize().y - mSize.y >= mVideoCornerRadius * 2.0f)
+                    renderVideoCorners = false;
+            }
+            if (renderVideoCorners) {
+                vertices->cornerRadius = mVideoCornerRadius;
+                // We don't want to apply anti-aliasing to rounded corners as the black frame is
+                // rendered behind the video and that would generate ugly edge artifacts for any
+                // videos with lighter content.
+                vertices->shaderFlags =
+                    vertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS_NO_AA;
+            }
         }
 
         std::unique_lock<std::mutex> pictureLock {mPictureMutex};
