@@ -189,6 +189,11 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             mBlackFrame.render(trans);
         }
 
+        if (mDrawPillarboxes && (mBlackFrameOffset.x != 0.0f || mBlackFrameOffset.y != 0.0f)) {
+            trans =
+                glm::translate(trans, glm::vec3 {mBlackFrameOffset.x, mBlackFrameOffset.y, 0.0f});
+        }
+
         mRenderer->setMatrix(trans);
 
         // This is needed to avoid a slight gap before the video starts playing.
@@ -196,10 +201,10 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             return;
 
         // clang-format off
-        vertices[0] = {{0.0f + mBlackFrameOffset.x,    0.0f + mBlackFrameOffset.y     }, {mTopLeftCrop.x,            1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
-        vertices[1] = {{0.0f + mBlackFrameOffset.x,    mSize.y + mBlackFrameOffset.y  }, {mTopLeftCrop.x,            1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
-        vertices[2] = {{mSize.x + mBlackFrameOffset.x, 0.0f + + mBlackFrameOffset.y   }, {mBottomRightCrop.x * 1.0f, 1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
-        vertices[3] = {{mSize.x + mBlackFrameOffset.x, mSize.y + + mBlackFrameOffset.y}, {mBottomRightCrop.x * 1.0f, 1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
+        vertices[0] = {{0.0f,    0.0f   }, {mTopLeftCrop.x,            1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
+        vertices[1] = {{0.0f,    mSize.y}, {mTopLeftCrop.x,            1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
+        vertices[2] = {{mSize.x, 0.0f   }, {mBottomRightCrop.x * 1.0f, 1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
+        vertices[3] = {{mSize.x, mSize.y}, {mBottomRightCrop.x * 1.0f, 1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
         // clang-format on
 
         vertices[0].color = mColorShift;
