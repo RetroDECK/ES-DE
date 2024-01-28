@@ -999,7 +999,7 @@ void GamelistView::updateView(const CursorState& state)
                  file->getPath() == file->getSystem()->getName()) &&
                 (metadata == "systemName" || metadata == "systemFullname" ||
                  metadata == "sourceSystemName" || metadata == "sourceSystemFullname")) {
-                text->setValue("");
+                text->setValue(text->getDefaultValue());
                 continue;
             }
 

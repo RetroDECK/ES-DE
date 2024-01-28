@@ -62,6 +62,8 @@ public:
     std::string getHiddenValue() const override { return mHiddenText; }
     void setHiddenValue(const std::string& value) override { setHiddenText(value); }
 
+    const std::string getDefaultValue() const { return mDefaultValue; }
+
     float const getOpacity() const override
     {
         return static_cast<float>((mColor & 0x000000FF) / 255.0f);
