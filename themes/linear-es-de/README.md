@@ -19,6 +19,13 @@ The following options are included:
 - LIVE
 - PSN
 
+4 aspect ratios:
+
+- 16:9
+- 16:10
+- 4:3
+- 21:9
+
 3 transitions:
 
 - Instant and slide

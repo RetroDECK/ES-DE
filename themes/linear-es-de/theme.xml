@@ -19,6 +19,19 @@
         <gradientImage>./assets/images/gradient.svg</gradientImage>
     </variables>
 
+    <aspectRatio name="16:9">
+        <include>./aspect-ratio-16-9.xml</include>
+    </aspectRatio>
+    <aspectRatio name="16:10">
+        <include>./aspect-ratio-16-10.xml</include>
+    </aspectRatio>
+    <aspectRatio name="4:3">
+        <include>./aspect-ratio-4-3.xml</include>
+    </aspectRatio>
+    <aspectRatio name="21:9">
+        <include>./aspect-ratio-21-9.xml</include>
+    </aspectRatio>
+
     <variant name="all">
         <view name="system, gamelist">
             <image name="background">
@@ -32,7 +45,6 @@
             </image>
             <image name="helpsystemPanel">
                 <pos>0 1</pos>
-                <size>1 0.06</size>
                 <origin>0 1</origin>
                 <stationary>always</stationary>
                 <path>${pixelImage}</path>
@@ -41,7 +53,7 @@
                 <zIndex>60</zIndex>
             </image>
             <helpsystem name="help">
-                <pos>0.5 0.985</pos>
+                <pos>0.5 0.9855</pos>
                 <origin>0.5 1</origin>
                 <textColor>${primaryColor}</textColor>
                 <iconColor>${primaryColor}</iconColor>
@@ -231,8 +243,7 @@
                 <color>${secondaryColor}</color>
             </text>
             <text name="description">
-                <pos>0.405 0.67</pos>
-                <size>0.374 0.27</size>
+                <size>0.374 0.268</size>
                 <metadata>description</metadata>
                 <container>true</container>
                 <containerScrollSpeed>1</containerScrollSpeed>
@@ -549,7 +560,6 @@
                 <color>${primaryColor}</color>
             </image>
             <text name="customCollectionName">
-                <pos>0.03 0.043</pos>
                 <size>0.36 0.029</size>
                 <origin>0 0</origin>
                 <fontPath>${primaryFont}</fontPath>
@@ -587,8 +597,6 @@
     <variant name="textlistWithVideos">
         <view name="gamelist">
             <video name="gameVideo">
-                <pos>0.592 0.417</pos>
-                <maxSize>0.377 0.485</maxSize>
                 <origin>0.5 0.5</origin>
                 <imageType>image</imageType>
                 <interpolation>nearest</interpolation>
@@ -604,8 +612,6 @@
     <variant name="textlistWithoutVideos">
         <view name="gamelist">
             <image name="gameImage">
-                <pos>0.592 0.417</pos>
-                <maxSize>0.377 0.485</maxSize>
                 <origin>0.5 0.5</origin>
                 <imageType>image</imageType>
                 <scrollFadeIn>true</scrollFadeIn>
@@ -616,8 +622,6 @@
     <variant name="simpleTextlistWithVideos">
         <view name="gamelist">
             <video name="gameVideo">
-                <pos>0.66 0.174</pos>
-                <maxSize>0.5 0.725</maxSize>
                 <origin>0.5 0</origin>
                 <imageType>image</imageType>
                 <interpolation>nearest</interpolation>
@@ -633,8 +637,6 @@
     <variant name="simpleTextlistWithoutVideos">
         <view name="gamelist">
             <image name="gameImage">
-                <pos>0.66 0.174</pos>
-                <maxSize>0.5 0.725</maxSize>
                 <origin>0.5 0</origin>
                 <imageType>image</imageType>
                 <scrollFadeIn>true</scrollFadeIn>
