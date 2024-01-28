@@ -839,7 +839,7 @@ void SystemView::updateGameCount(SystemData* system)
     else {
         ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ") << "("
            << gameCount.second << " Favorite" << (gameCount.second == 1 ? ")" : "s)");
-        ssGames << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ");
+        ssGames << gameCount.first << " Game" << (gameCount.first == 1 ? "" : "s");
         ssFavorites << gameCount.second << " Favorite" << (gameCount.second == 1 ? "" : "s");
         games = true;
     }
