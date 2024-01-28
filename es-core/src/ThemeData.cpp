@@ -820,11 +820,11 @@ const std::string ThemeData::getSystemThemeFile(const std::string& system)
     std::map<std::string, Theme, StringComparator>::const_iterator theme {
         sThemes.find(Settings::getInstance()->getString("Theme"))};
     if (theme == sThemes.cend()) {
-        // Currently configured theme is missing, attempt to load the default theme slate-es-de
+        // Currently configured theme is missing, attempt to load the default theme linear-es-de
         // instead, and if that's also missing then pick the first available one.
         bool defaultSetFound {true};
 
-        theme = sThemes.find("slate-es-de");
+        theme = sThemes.find("linear-es-de");
 
         if (theme == sThemes.cend()) {
             theme = sThemes.cbegin();

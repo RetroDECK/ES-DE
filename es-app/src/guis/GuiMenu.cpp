@@ -166,12 +166,12 @@ void GuiMenu::openUIOptions()
                 Scripting::fireEvent("theme-changed", theme->getSelected(),
                                      Settings::getInstance()->getString("Theme"));
                 // Handle the situation where the previously selected theme has been deleted
-                // using the theme downloader. In this case attempt to fall back to slate-es-de
+                // using the theme downloader. In this case attempt to fall back to linear-es-de
                 // and if this theme doesn't exist then select the first available one.
                 auto themes = ThemeData::getThemes();
                 if (themes.find(theme->getSelected()) == themes.end()) {
-                    if (themes.find("slate-es-de") != themes.end())
-                        Settings::getInstance()->setString("Theme", "slate-es-de");
+                    if (themes.find("linear-es-de") != themes.end())
+                        Settings::getInstance()->setString("Theme", "linear-es-de");
                     else
                         Settings::getInstance()->setString("Theme", themes.begin()->first);
                 }
