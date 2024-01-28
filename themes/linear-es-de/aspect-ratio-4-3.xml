@@ -61,7 +61,7 @@
         <view name="gamelist">
             <video name="gameVideo">
                 <pos>0.655 0.25</pos>
-                <maxSize>0.5 0.55</maxSize>
+                <maxSize>0.5 0.52</maxSize>
             </video>
         </view>
     </variant>
@@ -70,7 +70,7 @@
         <view name="gamelist">
             <image name="gameImage">
                 <pos>0.655 0.25</pos>
-                <maxSize>0.5 0.55</maxSize>
+                <maxSize>0.5 0.52</maxSize>
             </image>
         </view>
     </variant>
