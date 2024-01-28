@@ -11,6 +11,7 @@
 * Renamed the application from EmulationStation Desktop Edition to ES-DE
 * Renamed the application data directory from .emulationstation to ES-DE
 * Updated the splash screen to reflect the new application name
+* Added a new default theme named "Linear"
 * Split the es_find_rules.xml and es_systems.xml files for Linux and BSD Unix into separate directories
 * Added support for defining font sizes from the theme configuration and selecting these from the UI settings menu
 * Added the theme font sizes count to the theme downloader interface
@@ -36,6 +37,8 @@
 * Added a "renderDuringTransitions" property to the image element
 * Added a "selectorWidth" property to the textlist element
 * Added a "hideIfZero" property to the rating element
+* Combining video pillarboxes with rounded corners will no longer round corners for the actual video frame (except for extreme values)
+* Made the text element "defaultValue" property usable with the metadata types systemName, systemFullname, sourceSystemName and sourceSystemFullname
 * Replaced the default d-pad helpsystem images to make them more legible when using smaller screen sizes
 * Placeholder entries in es_systems.xml are now skipped by default when creating the system directories and systeminfo.txt files
 * Added a CreatePlaceholderSystemDirectories option that can be manually set in es_settings.xml to still create placeholder directories
@@ -53,6 +56,8 @@
 * Sometimes controllers were not added correctly when there was a mix of supported and unsupported devices present
 * The last grid row would sometimes not render correctly if fractionalRows was set to true
 * Stationary image elements could sometimes glitch out during carousel navigation
+* Videos were sometimes positioned incorrectly if combining pillarboxes with rounded corners while using an origin value higher than 0.5
+* An extra space character was appended to text elements when setting the systemdata property to gamecountGames or gamecountGamesNoText
 * Theme loading debug output would sometimes print incorrect paths when the configuration included files using variables
 * Font textures were sometimes updated with empty glyhps which generated OpenGL errors on some mobile GPUs
 
