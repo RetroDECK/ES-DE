@@ -19,6 +19,41 @@
         <gradientImage>./assets/images/gradient.svg</gradientImage>
     </variables>
 
+    <fontSize name="medium">
+        <variables>
+            <gameCounterFontSize>0.032</gameCounterFontSize>
+            <systemNamePos>0.03 0.05</systemNamePos>
+            <systemNameFontSize>0.05</systemNameFontSize>
+            <systemLabelFontSize>0.035</systemLabelFontSize>
+            <textlistFontSize>0.035</textlistFontSize>
+            <descriptionFontSize>0.032</descriptionFontSize>
+            <gamelistInfoFontSize>0.03</gamelistInfoFontSize>
+            <gamelistInfoFontSizeLarge>0.032</gamelistInfoFontSizeLarge>
+            <metadataFontSize>0.03</metadataFontSize>
+            <carouselGameNameFontSize>0.05</carouselGameNameFontSize>
+            <carouselMetadataFontSize>0.03</carouselMetadataFontSize>
+            <carouselMetadataIconsSize>0.018 0</carouselMetadataIconsSize>
+            <carouselRatingSize>0.115 0.031</carouselRatingSize>
+        </variables>
+    </fontSize>
+    <fontSize name="large">
+        <variables>
+            <gameCounterFontSize>0.038</gameCounterFontSize>
+            <systemNamePos>0.03 0.045</systemNamePos>
+            <systemNameFontSize>0.06</systemNameFontSize>
+            <systemLabelFontSize>0.038</systemLabelFontSize>
+            <textlistFontSize>0.041</textlistFontSize>
+            <descriptionFontSize>0.038</descriptionFontSize>
+            <gamelistInfoFontSize>0.036</gamelistInfoFontSize>
+            <gamelistInfoFontSizeLarge>0.038</gamelistInfoFontSizeLarge>
+            <metadataFontSize>0.034</metadataFontSize>
+            <carouselGameNameFontSize>0.06</carouselGameNameFontSize>
+            <carouselMetadataFontSize>0.036</carouselMetadataFontSize>
+            <carouselMetadataIconsSize>0.02 0</carouselMetadataIconsSize>
+            <carouselRatingSize>0.118 0.034</carouselRatingSize>
+        </variables>
+    </fontSize>
+
     <aspectRatio name="16:9">
         <include>./aspect-ratio-16-9.xml</include>
     </aspectRatio>
@@ -58,7 +93,6 @@
                 <textColor>${primaryColor}</textColor>
                 <iconColor>${primaryColor}</iconColor>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.032</fontSize>
                 <letterCase>capitalize</letterCase>
             </helpsystem>
         </view>
@@ -134,13 +168,13 @@
                 <color>${backgroundColor}</color>
                 <zIndex>12</zIndex>
             </image>
-            <text name="gameCounterCorner">
+            <text name="gameCounter">
                 <pos>0.986 0.025</pos>
                 <size>0.2 0.031</size>
                 <origin>1 0</origin>
                 <systemdata>gamecountGames</systemdata>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.032</fontSize>
+                <fontSize>${gameCounterFontSize}</fontSize>
                 <horizontalAlignment>right</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <letterCase>capitalize</letterCase>
@@ -191,7 +225,7 @@
                 <secondaryColor>${gamelistTextlistSecondaryColor}</secondaryColor>
                 <selectedColor>${gamelistTextlistSelectorColor}</selectedColor>
                 <fontPath>${secondaryFont}</fontPath>
-                <fontSize>0.035</fontSize>
+                <fontSize>${textlistFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <horizontalMargin>0.01</horizontalMargin>
                 <letterCase>none</letterCase>
@@ -226,12 +260,12 @@
                 <color>${gamelistWatermarkLogoColor}</color>
             </image>
             <text name="systemName">
-                <pos>0.03 0.05</pos>
-                <size>0.48 0.029</size>
+                <pos>${systemNamePos}</pos>
+                <size>0.7 0.029</size>
                 <origin>0 0</origin>
                 <text>${system.fullName}</text>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.05</fontSize>
+                <fontSize>${systemNameFontSize}</fontSize>
                 <color>${primaryColor}</color>
             </text>
             <text name="system-label">
@@ -239,7 +273,7 @@
                 <size>0.48 0.029</size>
                 <origin>0 0</origin>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.035</fontSize>
+                <fontSize>${systemLabelFontSize}</fontSize>
                 <color>${secondaryColor}</color>
             </text>
             <text name="description">
@@ -250,7 +284,7 @@
                 <containerStartDelay>4.5</containerStartDelay>
                 <containerResetDelay>7</containerResetDelay>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.032</fontSize>
+                <fontSize>${descriptionFontSize}</fontSize>
                 <lineSpacing>1.2</lineSpacing>
                 <color>${primaryColor}</color>
             </text>
@@ -294,7 +328,7 @@
                 <text>Rating</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${gamelistMetadataLabelColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -322,7 +356,7 @@
                 <text>Released</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${gamelistMetadataLabelColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -334,7 +368,7 @@
                 <metadata>releasedate</metadata>
                 <defaultValue>:space:</defaultValue>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -354,7 +388,7 @@
                 <text>Players</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${gamelistMetadataLabelColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -366,7 +400,7 @@
                 <metadata>players</metadata>
                 <defaultValue>:space:</defaultValue>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -386,7 +420,7 @@
                 <text>Genre</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${gamelistMetadataLabelColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -402,7 +436,7 @@
                 <containerScrollSpeed>0.7</containerScrollSpeed>
                 <containerStartDelay>2</containerStartDelay>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <lineSpacing>1.2</lineSpacing>
@@ -422,7 +456,7 @@
                 <text>Developer</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${gamelistMetadataLabelColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -438,7 +472,7 @@
                 <containerScrollSpeed>0.7</containerScrollSpeed>
                 <containerStartDelay>2</containerStartDelay>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <lineSpacing>1.2</lineSpacing>
@@ -458,7 +492,7 @@
                 <text>Publisher</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${gamelistMetadataLabelColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -474,7 +508,7 @@
                 <containerScrollSpeed>0.7</containerScrollSpeed>
                 <containerStartDelay>2</containerStartDelay>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <lineSpacing>1.2</lineSpacing>
@@ -494,7 +528,7 @@
                 <text>Last Played</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${gamelistMetadataLabelColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -506,7 +540,7 @@
                 <metadata>lastplayed</metadata>
                 <defaultValue>:space:</defaultValue>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <lineSpacing>1</lineSpacing>
@@ -526,7 +560,7 @@
                 <size>0.163 0.031</size>
                 <origin>1 0</origin>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${gamelistInfoFontSize}</fontSize>
                 <horizontalAlignment>right</horizontalAlignment>
                 <color>${primaryColor}</color>
             </gamelistinfo>
@@ -546,7 +580,7 @@
                 <secondaryColor>${gamelistTextlistSecondaryColor}</secondaryColor>
                 <selectedColor>${gamelistTextlistSelectorColor}</selectedColor>
                 <fontPath>${secondaryFont}</fontPath>
-                <fontSize>0.035</fontSize>
+                <fontSize>${textlistFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <horizontalMargin>0.01</horizontalMargin>
                 <letterCase>none</letterCase>
@@ -587,7 +621,7 @@
                 <size>0.25 0.031</size>
                 <origin>1 0</origin>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.032</fontSize>
+                <fontSize>${gamelistInfoFontSizeLarge}</fontSize>
                 <horizontalAlignment>right</horizontalAlignment>
                 <color>${primaryColor}</color>
             </gamelistinfo>
@@ -728,14 +762,15 @@
             </image>
             <text name="gameName">
                 <pos>0.5 0.87</pos>
-                <size>1 0.08</size>
+                <size>0.97 0.08</size>
                 <origin>0.5 0.5</origin>
                 <metadata>name</metadata>
                 <systemNameSuffix>false</systemNameSuffix>
                 <container>true</container>
                 <containerType>horizontal</containerType>
+                <containerStartDelay>2.5</containerStartDelay>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.05</fontSize>
+                <fontSize>${carouselGameNameFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${primaryColor}</color>
             </text>
@@ -759,7 +794,7 @@
                 <size>0.25 0.031</size>
                 <origin>1 0</origin>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.032</fontSize>
+                <fontSize>${gamelistInfoFontSizeLarge}</fontSize>
                 <horizontalAlignment>right</horizontalAlignment>
                 <color>${primaryColor}</color>
             </gamelistinfo>
@@ -780,32 +815,32 @@
         <view name="gamelist">
             <rating name="rating">
                 <pos>0.12 0.7</pos>
-                <size>0.115 0.031</size>
+                <size>${carouselRatingSize}</size>
                 <origin>0 0.5</origin>
                 <color>${primaryColor}</color>
                 <overlay>false</overlay>
             </rating>
             <image name="playersIcon">
-                <pos>0.12 0.74</pos>
-                <size>0.018 0</size>
+                <pos>0.12 0.744</pos>
+                <size>${carouselMetadataIconsSize}</size>
                 <origin>0 0.5</origin>
                 <path>./assets/images/icon-players.svg</path>
                 <metadataElement>true</metadataElement>
                 <color>${primaryColor}</color>
             </image>
             <text name="players">
-                <pos>0.146 0.74</pos>
+                <pos>0.146 0.744</pos>
                 <size>0.164 0.029</size>
                 <origin>0 0.5</origin>
                 <metadata>players</metadata>
                 <defaultValue>:space:</defaultValue>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${carouselMetadataFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <color>${primaryColor}</color>
             </text>
             <text name="genre">
-                <pos>0.12 0.78</pos>
+                <pos>0.12 0.788</pos>
                 <size>0.19 0.03</size>
                 <origin>0 0.5</origin>
                 <metadata>genre</metadata>
@@ -816,14 +851,14 @@
                 <containerStartDelay>2</containerStartDelay>
                 <containerScrollGap>0.9</containerScrollGap>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${carouselMetadataFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <lineSpacing>1.2</lineSpacing>
             </text>
             <image name="releaseDateIcon">
                 <pos>0.72 0.7</pos>
-                <size>0.018 0</size>
+                <size>${carouselMetadataIconsSize}</size>
                 <origin>0 0.5</origin>
                 <path>./assets/images/icon-release-date.svg</path>
                 <metadataElement>true</metadataElement>
@@ -836,13 +871,13 @@
                 <metadata>releasedate</metadata>
                 <defaultValue>:space:</defaultValue>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.029</fontSize>
+                <fontSize>${carouselMetadataFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <lineSpacing>1</lineSpacing>
             </datetime>
             <text name="developer">
-                <pos>0.72 0.74</pos>
+                <pos>0.72 0.744</pos>
                 <size>0.26 0.029</size>
                 <origin>0 0.5</origin>
                 <metadata>developer</metadata>
@@ -853,13 +888,13 @@
                 <containerStartDelay>2</containerStartDelay>
                 <containerScrollGap>0.9</containerScrollGap>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.029</fontSize>
+                <fontSize>${carouselMetadataFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <letterCase>none</letterCase>
             </text>
             <text name="publisher">
-                <pos>0.72 0.78</pos>
+                <pos>0.72 0.788</pos>
                 <size>0.26 0.029</size>
                 <origin>0 0.5</origin>
                 <metadata>publisher</metadata>
@@ -870,7 +905,7 @@
                 <containerStartDelay>2</containerStartDelay>
                 <containerScrollGap>0.9</containerScrollGap>
                 <fontPath>${primaryFont}</fontPath>
-                <fontSize>0.029</fontSize>
+                <fontSize>${carouselMetadataFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <color>${primaryColor}</color>
                 <letterCase>none</letterCase>

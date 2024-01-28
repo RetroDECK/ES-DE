@@ -1,16 +1,32 @@
 <theme>
+    <fontSize name="medium">
+        <variables>
+            <helpsystemFontSize>0.032</helpsystemFontSize>
+            <helpsystemPanelSize>1 0.06</helpsystemPanelSize>
+        </variables>
+    </fontSize>
+    <fontSize name="large">
+        <variables>
+            <helpsystemFontSize>0.038</helpsystemFontSize>
+            <helpsystemPanelSize>1 0.064</helpsystemPanelSize>
+        </variables>
+    </fontSize>
+
     <variant name="all">
         <view name="system, gamelist">
             <image name="helpsystemPanel">
-                <size>1 0.06</size>
+                <size>${helpsystemPanelSize}</size>
             </image>
+            <helpsystem name="help">
+                <fontSize>${helpsystemFontSize}</fontSize>
+            </helpsystem>
         </view>
     </variant>
 
     <variant name="textlistWithVideos, textlistWithoutVideos">
         <view name="gamelist">
             <text name="description">
-                <pos>0.405 0.67</pos>
+                <pos>0.405 0.674</pos>
             </text>
         </view>
     </variant>

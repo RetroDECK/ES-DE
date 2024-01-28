@@ -86,7 +86,7 @@
             <gamelistTextlistSecondaryColor>000072</gamelistTextlistSecondaryColor>
             <gamelistMetadataPanelColor>0039AF</gamelistMetadataPanelColor>
             <gamelistMetadataLabelColor>000000</gamelistMetadataLabelColor>
-            <gamelistWatermarkLogoColor>0D3FB2</gamelistWatermarkLogoColor>
+            <gamelistWatermarkLogoColor>1B4DC0</gamelistWatermarkLogoColor>
         </variables>
     </colorScheme>
 </theme>
