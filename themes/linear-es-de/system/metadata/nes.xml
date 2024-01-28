@@ -1,0 +1,18 @@
+<theme>
+   <variables>
+      <systemName>Nintendo Entertainment System</systemName>
+      <systemDescription>The history of the Nintendo Entertainment System (NES) spans the 1982 development of the Family Computer, to the 1985 launch of the NES, to Nintendo's rise to global dominance based upon this platform throughout the late 1980s. The Family Computer (ファミリーコンピュータ) or Famicom (ファミコン) was developed in 1982 and launched in 1983 in Japan. Following the North American video game crash of 1983, the Famicom was adapted into the NES which was launched in North America in 1985. Transitioning the company from its arcade game history into this combined global 8-bit home video game console platform, the Famicom and NES continued to aggressively compete with the next-generation 16-bit consoles including the 1988 Sega Genesis. The platform was succeeded by the Super Famicom in 1990 and the Super Nintendo Entertainment System in 1991, but its support and production continued until 1995. Interest in the NES has been renewed by collectors and emulators, including Nintendo's own Virtual Console platform.</systemDescription>
+      <systemDescriptionSource>https://en.wikipedia.org/wiki/History_of_the_Nintendo_Entertainment_System</systemDescriptionSource>
+      <systemManufacturer>Nintendo</systemManufacturer>
+      <systemReleaseYear>1985</systemReleaseYear>
+      <systemReleaseDate>1985-10-18</systemReleaseDate>
+      <systemReleaseDateFormated>October 18, 1985</systemReleaseDateFormated>
+      <systemHardwareType>Console</systemHardwareType>
+      <systemCoverSize>3-4</systemCoverSize>
+      <systemColor>B93041</systemColor>
+      <systemColorPalette1>CD3332</systemColorPalette1>
+      <systemColorPalette2>FFFFFF</systemColorPalette2>
+      <systemColorPalette3>666666</systemColorPalette3>
+      <systemColorPalette4>212121</systemColorPalette4>
+   </variables>
+</theme>
