@@ -635,75 +635,91 @@ void GuiThemeDownloader::parseThemesList()
         }
     }
 
-    if (doc.HasMember("themes") && doc["themes"].IsArray()) {
-        const rapidjson::Value& themes {doc["themes"]};
-        for (int i {0}; i < static_cast<int>(themes.Size()); ++i) {
-            ThemeEntry themeEntry;
-            const rapidjson::Value& theme {themes[i]};
+#if defined(__ANDROID__)
+    const std::vector<std::string> themeKeys {"themes", "themesAndroid"};
+#else
+    const std::vector<std::string> themeKeys {"themes"};
+#endif
 
-            if (theme.HasMember("name") && theme["name"].IsString())
-                themeEntry.name = theme["name"].GetString();
+    for (auto& themeKey : themeKeys) {
+        if (doc.HasMember(themeKey.c_str()) && doc[themeKey.c_str()].IsArray()) {
+            const rapidjson::Value& themes {doc[themeKey.c_str()]};
+            for (int i {0}; i < static_cast<int>(themes.Size()); ++i) {
+                ThemeEntry themeEntry;
+                const rapidjson::Value& theme {themes[i]};
 
-            if (theme.HasMember("reponame") && theme["reponame"].IsString())
-                themeEntry.reponame = theme["reponame"].GetString();
+                if (theme.HasMember("name") && theme["name"].IsString())
+                    themeEntry.name = theme["name"].GetString();
 
-            if (theme.HasMember("url") && theme["url"].IsString())
-                themeEntry.url = theme["url"].GetString();
+                if (theme.HasMember("reponame") && theme["reponame"].IsString())
+                    themeEntry.reponame = theme["reponame"].GetString();
 
-            if (theme.HasMember("author") && theme["author"].IsString())
-                themeEntry.author = theme["author"].GetString();
+                if (theme.HasMember("url") && theme["url"].IsString())
+                    themeEntry.url = theme["url"].GetString();
 
-            if (theme.HasMember("newEntry") && theme["newEntry"].IsBool())
-                themeEntry.newEntry = theme["newEntry"].GetBool();
+                if (theme.HasMember("author") && theme["author"].IsString())
+                    themeEntry.author = theme["author"].GetString();
 
-            if (theme.HasMember("variants") && theme["variants"].IsArray()) {
-                const rapidjson::Value& variants {theme["variants"]};
-                for (int i {0}; i < static_cast<int>(variants.Size()); ++i)
-                    themeEntry.variants.emplace_back(variants[i].GetString());
-            }
+                if (theme.HasMember("newEntry") && theme["newEntry"].IsBool())
+                    themeEntry.newEntry = theme["newEntry"].GetBool();
 
-            if (theme.HasMember("colorSchemes") && theme["colorSchemes"].IsArray()) {
-                const rapidjson::Value& colorSchemes {theme["colorSchemes"]};
-                for (int i {0}; i < static_cast<int>(colorSchemes.Size()); ++i)
-                    themeEntry.colorSchemes.emplace_back(colorSchemes[i].GetString());
-            }
-
-            if (theme.HasMember("aspectRatios") && theme["aspectRatios"].IsArray()) {
-                const rapidjson::Value& aspectRatios {theme["aspectRatios"]};
-                for (int i {0}; i < static_cast<int>(aspectRatios.Size()); ++i)
-                    themeEntry.aspectRatios.emplace_back(aspectRatios[i].GetString());
-            }
-
-            if (theme.HasMember("fontSizes") && theme["fontSizes"].IsArray()) {
-                const rapidjson::Value& fontSizes {theme["fontSizes"]};
-                for (int i {0}; i < static_cast<int>(fontSizes.Size()); ++i)
-                    themeEntry.fontSizes.emplace_back(fontSizes[i].GetString());
-            }
-
-            if (theme.HasMember("transitions") && theme["transitions"].IsArray()) {
-                const rapidjson::Value& transitions {theme["transitions"]};
-                for (int i {0}; i < static_cast<int>(transitions.Size()); ++i)
-                    themeEntry.transitions.emplace_back(transitions[i].GetString());
-            }
-
-            if (theme.HasMember("screenshots") && theme["screenshots"].IsArray()) {
-                const rapidjson::Value& screenshots {theme["screenshots"]};
-                for (int i {0}; i < static_cast<int>(screenshots.Size()); ++i) {
-                    Screenshot screenshotEntry;
-                    if (screenshots[i].HasMember("image") && screenshots[i]["image"].IsString())
-                        screenshotEntry.image = screenshots[i]["image"].GetString();
-
-                    if (screenshots[i].HasMember("caption") && screenshots[i]["caption"].IsString())
-                        screenshotEntry.caption = screenshots[i]["caption"].GetString();
-
-                    if (screenshotEntry.image != "" && screenshotEntry.caption != "")
-                        themeEntry.screenshots.emplace_back(screenshotEntry);
+                if (theme.HasMember("variants") && theme["variants"].IsArray()) {
+                    const rapidjson::Value& variants {theme["variants"]};
+                    for (int i {0}; i < static_cast<int>(variants.Size()); ++i)
+                        themeEntry.variants.emplace_back(variants[i].GetString());
                 }
-            }
 
-            mThemes.emplace_back(themeEntry);
+                if (theme.HasMember("colorSchemes") && theme["colorSchemes"].IsArray()) {
+                    const rapidjson::Value& colorSchemes {theme["colorSchemes"]};
+                    for (int i {0}; i < static_cast<int>(colorSchemes.Size()); ++i)
+                        themeEntry.colorSchemes.emplace_back(colorSchemes[i].GetString());
+                }
+
+                if (theme.HasMember("aspectRatios") && theme["aspectRatios"].IsArray()) {
+                    const rapidjson::Value& aspectRatios {theme["aspectRatios"]};
+                    for (int i {0}; i < static_cast<int>(aspectRatios.Size()); ++i)
+                        themeEntry.aspectRatios.emplace_back(aspectRatios[i].GetString());
+                }
+
+                if (theme.HasMember("fontSizes") && theme["fontSizes"].IsArray()) {
+                    const rapidjson::Value& fontSizes {theme["fontSizes"]};
+                    for (int i {0}; i < static_cast<int>(fontSizes.Size()); ++i)
+                        themeEntry.fontSizes.emplace_back(fontSizes[i].GetString());
+                }
+
+                if (theme.HasMember("transitions") && theme["transitions"].IsArray()) {
+                    const rapidjson::Value& transitions {theme["transitions"]};
+                    for (int i {0}; i < static_cast<int>(transitions.Size()); ++i)
+                        themeEntry.transitions.emplace_back(transitions[i].GetString());
+                }
+
+                if (theme.HasMember("screenshots") && theme["screenshots"].IsArray()) {
+                    const rapidjson::Value& screenshots {theme["screenshots"]};
+                    for (int i {0}; i < static_cast<int>(screenshots.Size()); ++i) {
+                        Screenshot screenshotEntry;
+                        if (screenshots[i].HasMember("image") && screenshots[i]["image"].IsString())
+                            screenshotEntry.image = screenshots[i]["image"].GetString();
+
+                        if (screenshots[i].HasMember("caption") &&
+                            screenshots[i]["caption"].IsString())
+                            screenshotEntry.caption = screenshots[i]["caption"].GetString();
+
+                        if (screenshotEntry.image != "" && screenshotEntry.caption != "")
+                            themeEntry.screenshots.emplace_back(screenshotEntry);
+                    }
+                }
+
+                mThemes.emplace_back(themeEntry);
+            }
         }
     }
+
+    std::sort(std::begin(mThemes), std::end(mThemes), [](ThemeEntry a, ThemeEntry b) {
+        if (Utils::String::toUpper(a.name) < Utils::String::toUpper(b.name))
+            return true;
+        else
+            return false;
+    });
 
     LOG(LogDebug) << "GuiThemeDownloader::parseThemesList(): Parsed " << mThemes.size()
                   << " themes";
