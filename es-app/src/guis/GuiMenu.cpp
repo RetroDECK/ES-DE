@@ -1156,6 +1156,7 @@ void GuiMenu::openInputDeviceOptions()
     touchOverlaySize->add("MEDIUM", "medium", selectedOverlaySize == "medium");
     touchOverlaySize->add("LARGE", "large", selectedOverlaySize == "large");
     touchOverlaySize->add("SMALL", "small", selectedOverlaySize == "small");
+    touchOverlaySize->add("EXTRA SMALL", "x-small", selectedOverlaySize == "x-small");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the overlay size to "medium" in this case.
     if (touchOverlaySize->getSelectedObjects().size() == 0)
@@ -1166,6 +1167,29 @@ void GuiMenu::openInputDeviceOptions()
             Settings::getInstance()->getString("InputTouchOverlaySize")) {
             Settings::getInstance()->setString("InputTouchOverlaySize",
                                                touchOverlaySize->getSelected());
+            s->setNeedsSaving();
+            InputOverlay::getInstance().createButtons();
+        }
+    });
+
+    // Touch overlay opacity.
+    auto touchOverlayOpacity = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "TOUCH OVERLAY OPACITY", false);
+    std::string selectedOverlayOpacity {
+        Settings::getInstance()->getString("InputTouchOverlayOpacity")};
+    touchOverlayOpacity->add("NORMAL", "normal", selectedOverlayOpacity == "normal");
+    touchOverlayOpacity->add("LOW", "low", selectedOverlayOpacity == "low");
+    touchOverlayOpacity->add("VERY LOW", "verylow", selectedOverlayOpacity == "verylow");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the overlay opacity to "normal" in this case.
+    if (touchOverlayOpacity->getSelectedObjects().size() == 0)
+        touchOverlayOpacity->selectEntry(0);
+    s->addWithLabel("TOUCH OVERLAY OPACITY", touchOverlayOpacity);
+    s->addSaveFunc([touchOverlayOpacity, s] {
+        if (touchOverlayOpacity->getSelected() !=
+            Settings::getInstance()->getString("InputTouchOverlayOpacity")) {
+            Settings::getInstance()->setString("InputTouchOverlayOpacity",
+                                               touchOverlayOpacity->getSelected());
             s->setNeedsSaving();
             InputOverlay::getInstance().createButtons();
         }
@@ -1209,6 +1233,12 @@ void GuiMenu::openInputDeviceOptions()
             ->getChild(touchOverlaySize->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
 
+        touchOverlayOpacity->setEnabled(false);
+        touchOverlayOpacity->setOpacity(DISABLED_OPACITY);
+        touchOverlayOpacity->getParent()
+            ->getChild(touchOverlayOpacity->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+
         touchOverlayFadeTime->setEnabled(false);
         touchOverlayFadeTime->setOpacity(DISABLED_OPACITY);
         touchOverlayFadeTime->getParent()
@@ -1217,7 +1247,7 @@ void GuiMenu::openInputDeviceOptions()
     }
 
     auto inputTouchOverlayCallback = [this, inputTouchOverlay, touchOverlaySize,
-                                      touchOverlayFadeTime]() {
+                                      touchOverlayOpacity, touchOverlayFadeTime]() {
         if (!inputTouchOverlay->getState()) {
             const std::string message {
                 "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU WILL "
@@ -1242,6 +1272,12 @@ void GuiMenu::openInputDeviceOptions()
                 ->getChild(touchOverlaySize->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
 
+            touchOverlayOpacity->setEnabled(false);
+            touchOverlayOpacity->setOpacity(DISABLED_OPACITY);
+            touchOverlayOpacity->getParent()
+                ->getChild(touchOverlayOpacity->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+
             touchOverlayFadeTime->setEnabled(false);
             touchOverlayFadeTime->setOpacity(DISABLED_OPACITY);
             touchOverlayFadeTime->getParent()
@@ -1253,6 +1289,12 @@ void GuiMenu::openInputDeviceOptions()
             touchOverlaySize->setOpacity(1.0f);
             touchOverlaySize->getParent()
                 ->getChild(touchOverlaySize->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+
+            touchOverlayOpacity->setEnabled(true);
+            touchOverlayOpacity->setOpacity(1.0f);
+            touchOverlayOpacity->getParent()
+                ->getChild(touchOverlayOpacity->getChildIndex() - 1)
                 ->setOpacity(1.0f);
 
             touchOverlayFadeTime->setEnabled(true);
