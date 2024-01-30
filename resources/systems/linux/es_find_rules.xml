@@ -674,6 +674,8 @@
             <entry>~/.local/share/applications/punes/punes</entry>
             <entry>~/.local/bin/punes/punes</entry>
             <entry>~/bin/punes/punes</entry>
+            <entry>/var/lib/flatpak/exports/bin/io.github.punesemu.puNES</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.punesemu.puNES</entry>
         </rule>
     </emulator>
     <emulator name="QUASI88">
