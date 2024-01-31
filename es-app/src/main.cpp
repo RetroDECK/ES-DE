@@ -796,6 +796,14 @@ int main(int argc, char* argv[])
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
+        if (!Utils::FileSystem::exists(themeDir + "/.nomedia")) {
+            LOG(LogInfo) << "Creating \"no media\" file \"" << themeDir + "/.nomedia"
+                         << "\"...";
+            Utils::FileSystem::createEmptyFile(themeDir + "/.nomedia");
+            if (!Utils::FileSystem::exists(themeDir + "/.nomedia")) {
+                LOG(LogWarning) << "Couldn't create file, permission problems?";
+            }
+        }
 #else
         // Create the themes folder in the application data directory (or elsewhere if the
         // UserThemeDirectory setting has been defined).
@@ -818,6 +826,21 @@ int main(int argc, char* argv[])
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
+#endif
+    }
+
+    {
+#if defined(__ANDROID__)
+        const std::string mediaDirectory {FileData::getMediaDirectory()};
+        if (Utils::FileSystem::exists(mediaDirectory))
+            if (!Utils::FileSystem::exists(mediaDirectory + ".nomedia")) {
+                LOG(LogInfo) << "Creating \"no media\" file \"" << mediaDirectory + ".nomedia"
+                             << "\"...";
+                Utils::FileSystem::createEmptyFile(mediaDirectory + ".nomedia");
+                if (!Utils::FileSystem::exists(mediaDirectory + ".nomedia")) {
+                    LOG(LogWarning) << "Couldn't create file, permission problems?";
+                }
+            }
 #endif
     }
 
@@ -847,6 +870,16 @@ int main(int argc, char* argv[])
                 LOG(LogWarning) << "Couldn't create directory, permission problems?";
             }
         }
+#if defined(__ANDROID__)
+        if (!Utils::FileSystem::exists(screensaversDir + "/.nomedia")) {
+            LOG(LogInfo) << "Creating \"no media\" file \"" << screensaversDir + "/.nomedia"
+                         << "\"...";
+            Utils::FileSystem::createEmptyFile(screensaversDir + "/.nomedia");
+            if (!Utils::FileSystem::exists(screensaversDir + "/.nomedia")) {
+                LOG(LogWarning) << "Couldn't create file, permission problems?";
+            }
+        }
+#endif
         if (!Utils::FileSystem::exists(slideshowDir)) {
             LOG(LogInfo) << "Creating custom_slideshow directory \"" << slideshowDir << "\"...";
             Utils::FileSystem::createDirectory(slideshowDir);
