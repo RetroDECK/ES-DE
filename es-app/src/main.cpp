@@ -494,24 +494,9 @@ void applicationLoop()
 #if !defined(__EMSCRIPTEN__)
     while (true) {
 #endif
-
-#if defined(__ANDROID__)
-        // Workaround for an SDL issue where SDL_PollEvent() consumes all available CPU
-        // cycles when the application has been stopped. This issue is only present when
-        // using the AAudio driver and as OpenSL ES is now used instead this code can be
-        // disabled for the time being.
-        // while (AndroidVariables::sPaused)
-        //     SDL_Delay(10);
-#endif
-
         if (SDL_PollEvent(&event)) {
             do {
                 InputManager::getInstance().parseEvent(event);
-
-                // if (event.type == SDL_APP_WILLENTERBACKGROUND) {
-                //     AndroidVariables::sPaused = true;
-                //     break;
-                // }
 
                 if (event.type == SDL_QUIT)
 #if !defined(__EMSCRIPTEN__)
