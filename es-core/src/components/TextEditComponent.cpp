@@ -79,8 +79,10 @@ void TextEditComponent::setValue(const std::string& val)
 
 void TextEditComponent::textInput(const std::string& text, const bool pasting)
 {
+#if !defined(__ANDROID__)
     if (mMaskInput && !pasting)
         return;
+#endif
 
     // Allow pasting up to a reasonable max clipboard size.
     if (pasting && text.length() > (isMultiline() ? 16384 : 300))
@@ -197,11 +199,13 @@ bool TextEditComponent::input(InputConfig* config, Input input)
                 }
                 return true;
             }
+#if !defined(__ANDROID__)
             else if (input.id == SDLK_BACKSPACE) {
                 mMaskInput = false;
                 textInput("\b");
                 return true;
             }
+#endif
         }
 
         if (cursorLeft || cursorRight) {

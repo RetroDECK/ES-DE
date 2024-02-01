@@ -888,6 +888,12 @@ void GuiMenu::openUIOptions()
             Settings::getInstance()->setBool("VirtualKeyboard", virtualKeyboard->getState());
             s->setNeedsSaving();
             s->setInvalidateCachedBackground();
+#if defined(__ANDROID__)
+            if (Settings::getInstance()->getBool("VirtualKeyboard"))
+                SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "0");
+            else
+                SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "1");
+#endif
         }
     });
 

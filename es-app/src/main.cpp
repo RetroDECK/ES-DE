@@ -988,7 +988,12 @@ int main(int argc, char* argv[])
     LOG(LogInfo) << "SDL version: " << std::to_string(version.major) << "."
                  << std::to_string(version.minor) << "." << std::to_string(version.patch);
 
-#if !defined(__ANDROID__)
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("VirtualKeyboard"))
+        SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "0");
+    else
+        SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "1");
+#else
     if (version.major > 2 || (version.major == 2 && version.minor >= 28)) {
         // This will prevent the popup virtual keyboard of any handheld device from being
         // automatically displayed on top of the ES-DE virtual keyboard.
