@@ -24,8 +24,10 @@
 * Removed the ScraperHaltOnInvalidMedia option and corresponding menu entry as it has been superseded by the HTTP error code logic
 * Added a ScraperIgnoreHTTP404Errors option that can be manually set in es_settings.xml to ignore 404 errors (resource not found)
 * Added Mednafen standalone as an alternative emulator for the gb, gba and gbc systems
+* Added Mesen standalone as an alternative emulator for the multivision and sg-1000 systems on Linux, Unix and Windows
 * Added the melonDS DS RetroArch core as an alternative emulator for the nds system
 * (Linux) Added support for the AppImage release of Vita3K
+* (Linux) Added support for the Flatpak release of puNES
 * Added the .zso file extension to the ps2 system
 * Added the .zar file extension to the xbox360 system on Linux and Windows
 * Added the .pk3 and .ipk3 file extensions to the doom system on Linux, Unix and Windows
