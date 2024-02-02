@@ -578,6 +578,8 @@ int main(int argc, char* argv[])
 #endif
 
 #if defined(__ANDROID__)
+    bool resetTouchOverlay {false};
+
     if (Utils::Platform::Android::checkConfigurationNeeded()) {
         Utils::Platform::Android::startConfigurator();
 
@@ -588,10 +590,7 @@ int main(int argc, char* argv[])
             exit(0);
 
         // Always enable the touch overlay after running the configurator.
-        if (!Settings::getInstance()->getBool("InputTouchOverlay")) {
-            Settings::getInstance()->setBool("InputTouchOverlay", true);
-            Settings::getInstance()->saveFile();
-        }
+        resetTouchOverlay = true;
     }
 
     Utils::Platform::Android::setDataDirectories();
@@ -738,6 +737,13 @@ int main(int argc, char* argv[])
             Settings::getInstance()->saveFile();
         }
     }
+
+#if defined(__ANDROID__)
+    if (resetTouchOverlay) {
+        Settings::getInstance()->setBool("InputTouchOverlay", true);
+        Settings::getInstance()->saveFile();
+    }
+#endif
 
     {
         // Check if the application release number has changed, which would normally mean that the
