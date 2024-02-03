@@ -30,7 +30,7 @@
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="androidpackage">
-            <entry>org.dolphinemu.dolphinemu/.ui.main.MainActivity</entry>
+            <entry>org.dolphinemu.dolphinemu/.ui.main.TvMainActivity</entry>
         </rule>
     </emulator>
     <emulator name="DRASTIC">
