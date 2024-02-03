@@ -634,8 +634,31 @@ void CollectionSystemsManager::setEditMode(const std::string& collectionName, bo
     mEditingCollectionSystemData = sysData;
 
     if (showPopup) {
+        const std::string controllerType {
+            Settings::getInstance()->getString("InputControllerType")};
+        std::string editButton;
+
+        if (controllerType == "ps123" || controllerType == "ps4" || controllerType == "ps5") {
+#if defined(_MSC_VER) // MSVC compiler.
+            if (Settings::getInstance()->getBool("InputSwapButtons"))
+                editButton = Utils::String::wideStringToString(L"\uF04D"); // Square.
+            else
+                editButton = Utils::String::wideStringToString(L"\uF0D8"); // Triangle.
+#else
+            if (Settings::getInstance()->getBool("InputSwapButtons"))
+                editButton = "\uF04D"; // Square.
+            else
+                editButton = "\uF0D8"; // Triangle.
+#endif
+        }
+        else {
+            if (Settings::getInstance()->getBool("InputSwapButtons"))
+                editButton = "'X'";
+            else
+                editButton = "'Y'";
+        }
         mWindow->queueInfoPopup("EDITING '" + Utils::String::toUpper(collectionName) +
-                                    "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'",
+                                    "' COLLECTION, ADD/REMOVE GAMES WITH " + editButton,
                                 10000);
     }
 }
