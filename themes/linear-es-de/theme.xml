@@ -254,7 +254,7 @@
         <view name="gamelist">
             <image name="systemWatermarkLogo">
                 <pos>0.88 0.845</pos>
-                <maxSize>0.15 0.15</maxSize>
+                <maxSize>0.14 0.10</maxSize>
                 <origin>0.5 0.5</origin>
                 <path>./system/logos/${system.theme}.svg</path>
                 <color>${gamelistWatermarkLogoColor}</color>
