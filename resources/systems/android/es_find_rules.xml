@@ -89,6 +89,12 @@
             <entry>io.recompiled.redream/.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SNES9X-EXPLUS">
+        <!-- Super Nintendo emulator Snes9x EX+ -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.Snes9xPlus/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="androidpackage">
