@@ -637,6 +637,7 @@
         <command label="SameBoy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=sameboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Gearboy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="TGB Dual">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=tgbdual_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="DoubleCherryGB">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=DoubleCherryGB_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mesen-s_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bsnes_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -665,6 +666,7 @@
         <command label="SameBoy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=sameboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Gearboy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="TGB Dual">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=tgbdual_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="DoubleCherryGB">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=DoubleCherryGB_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mesen-s_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bsnes_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
