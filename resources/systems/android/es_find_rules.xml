@@ -76,6 +76,12 @@
             <entry>me.magnum.melonds/.ui.emulator.EmulatorActivity</entry>
         </rule>
     </emulator>
+    <emulator name="NES-EMU">
+        <!-- Nintendo NES and Famicom emulator NES.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.NesEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="androidpackage">
