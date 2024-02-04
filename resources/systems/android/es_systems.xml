@@ -636,6 +636,7 @@
         <path>%ROMPATH%/gb</path>
         <extension>.bs .BS .cgb .CGB .dmg .DMG .gb .GB .gbc .GBC .sgb .SGB .sfc .SFC .smc .SMC .7z .7Z .zip .ZIP</extension>
         <command label="Gambatte">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gambatte_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="GBC.emu (Standalone)">%EMULATOR_GBC-EMU% %DATA%=%ROMSAF%</command>
         <command label="SameBoy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=sameboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Gearboy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="TGB Dual">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=tgbdual_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -665,6 +666,7 @@
         <path>%ROMPATH%/gbc</path>
         <extension>.bs .BS .cgb .CGB .dmg .DMG .gb .GB .gbc .GBC .sgb .SGB .sfc .SFC .smc .SMC .7z .7Z .zip .ZIP</extension>
         <command label="Gambatte">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gambatte_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="GBC.emu (Standalone)">%EMULATOR_GBC-EMU% %DATA%=%ROMSAF%</command>
         <command label="SameBoy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=sameboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Gearboy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="TGB Dual">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=tgbdual_libretro_android.so %EXTRA_ROM%=%ROM%</command>
