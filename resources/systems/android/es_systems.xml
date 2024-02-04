@@ -1050,6 +1050,7 @@
         <extension>.app .APP .bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
         <command label="melonDS DS">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=melondsds_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=melonds_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ACTION%=me.magnum.melonds.LAUNCH_ROM %EXTRA_uri%=%ROMSAF%</command>
         <command label="DeSmuME">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=desmume_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=desmume2015_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DraStic (Standalone)">%EMULATOR_DRASTIC% %DATA%=%ROMSAF%</command>
