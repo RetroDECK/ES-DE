@@ -24,7 +24,8 @@
 * Removed the ScraperHaltOnInvalidMedia option and corresponding menu entry as it has been superseded by the HTTP error code logic
 * Added a ScraperIgnoreHTTP404Errors option that can be manually set in es_settings.xml to ignore 404 errors (resource not found)
 * Added Mednafen standalone as an alternative emulator for the gb, gba and gbc systems
-* Added Mesen standalone as an alternative emulator for the multivision and sg-1000 systems on Linux, Unix and Windows
+* Added Mesen standalone as an alternative emulator for the gamegear, mastersystem, multivision and sg-1000 systems on Linux, Unix and Windows
+* Set Mesen standalone to specifically run in Super Game Boy mode for the sgb system on Linux, Unix and Windows
 * Added the melonDS DS RetroArch core as an alternative emulator for the nds system
 * (Linux) Added support for the AppImage release of Vita3K
 * (Linux) Added support for the Flatpak release of puNES
@@ -62,6 +63,8 @@
 * An extra space character was appended to text elements when setting the systemdata property to gamecountGames or gamecountGamesNoText
 * Theme loading debug output would sometimes print incorrect paths when the configuration included files using variables
 * Font textures were sometimes updated with empty glyhps which generated OpenGL errors on some mobile GPUs
+* The custom collection editing popup did not show the correct button name if the controller type was a PlayStation variant
+* The UI mode confirmation dialog did not show the correct button descriptions if the controller type was PlayStation 1/2/3
 
 ## Version 2.2.1
 

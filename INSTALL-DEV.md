@@ -1733,6 +1733,8 @@ The es_systems.xml file on Android utilizes variables heavily to implement the _
 There are two main ways to pass options to emulators, using _extras_ or using the _data_ URI. There can only be a single data URI but there can be an arbitrary amount of extras. To understand more about the way this works, you can read about the _putExtra()_ and and _setData()_ functions here:\
 https://developer.android.com/reference/android/content/Intent
 
+`%MIMETYPE%` - Sets an explicit MIME type, which you need to assign using an equal sign such as %MIMETYPE%=text/plain. You will rarely, if ever, need to set an explicit MIME type so this variable is of limited use. By default Android will set the MIME type to application/octet-stream which is normally what you want.
+
 There are three approaches to passing game ROMs to emulators by using the following variables:
 
 `%ROM%` - Replaced with the absolute path to the selected ROM. This is a traditional method to provide the game ROM and its use will likely decrease or go away completely long term as emulators move to more modern methods.
