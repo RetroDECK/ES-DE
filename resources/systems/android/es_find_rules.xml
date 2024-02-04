@@ -57,6 +57,12 @@
             <entry>com.flycast.emulator/com.reicast.emulator.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="GBA-EMU">
+        <!-- Nintendo Game Boy Advance emulator GBA.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.GbaEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="GBC-EMU">
         <!-- Nintendo Game Boy and Game Boy Color emulator GBC.emu -->
         <rule type="androidpackage">
