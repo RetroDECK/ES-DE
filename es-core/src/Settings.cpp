@@ -344,7 +344,9 @@ void Settings::setDefaults()
     mStringMap["ROMDirectory"] = {"", ""};
 #endif
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
+#if !defined(__ANDROID__)
     mStringMap["UserThemeDirectory"] = {"", ""};
+#endif
     mIntMap["LottieMaxFileCache"] = {150, 150};
     mIntMap["LottieMaxTotalCache"] = {1024, 1024};
     mIntMap["ScraperConnectionTimeout"] = {30, 30};
