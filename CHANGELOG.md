@@ -26,7 +26,8 @@
 * Added Mednafen standalone as an alternative emulator for the gb, gba and gbc systems
 * Added Mesen standalone as an alternative emulator for the gamegear, mastersystem, multivision and sg-1000 systems on Linux, Unix and Windows
 * Set Mesen standalone to specifically run in Super Game Boy mode for the sgb system on Linux, Unix and Windows
-* Added the melonDS DS RetroArch core as an alternative emulator for the nds system
+* Added the DoubleCherryGB RetroArch core as an alternative emulator for the gb and gbc systems on Linux, Unix and Windows
+* Added the melonDS DS RetroArch core as the default emulator for the nds system
 * (Linux) Added support for the AppImage release of Vita3K
 * (Linux) Added support for the Flatpak release of puNES
 * Added the .zso file extension to the ps2 system

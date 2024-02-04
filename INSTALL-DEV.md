@@ -1117,7 +1117,7 @@ Normally the scraper will stop whenever an HTTP error code with value 400 or abo
 
 The passkey to use to change from the _Kiosk_ or _Kid_ UI modes to the _Full_ UI mode.
 
-**UserThemeDirectory**
+**UserThemeDirectory** _(All operating systems except Android)_
 
 Sets the user theme directory. If left blank it will default to `~/ES-DE/themes/`
 
@@ -1730,10 +1730,10 @@ The es_systems.xml file on Android utilizes variables heavily to implement the _
 
 `%ACTION%` - The general Intent action to be performed, you need to assign its value using an equal sign.
 
+`%MIMETYPE%` - Sets an explicit MIME type, which you need to assign using an equal sign such as %MIMETYPE%=text/plain. You will rarely, if ever, need to set an explicit MIME type so this variable is of limited use. By default Android will set the MIME type to application/octet-stream which is normally what you want.
+
 There are two main ways to pass options to emulators, using _extras_ or using the _data_ URI. There can only be a single data URI but there can be an arbitrary amount of extras. To understand more about the way this works, you can read about the _putExtra()_ and and _setData()_ functions here:\
 https://developer.android.com/reference/android/content/Intent
-
-`%MIMETYPE%` - Sets an explicit MIME type, which you need to assign using an equal sign such as %MIMETYPE%=text/plain. You will rarely, if ever, need to set an explicit MIME type so this variable is of limited use. By default Android will set the MIME type to application/octet-stream which is normally what you want.
 
 There are three approaches to passing game ROMs to emulators by using the following variables:
 
