@@ -8,6 +8,12 @@
             <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
         </rule>
     </emulator>
+    <emulator name="C64-EMU">
+        <!-- Commodore 8-bit computer emulator C64.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.C64Emu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="AETHERSX2">
         <!-- Sony PlayStation 2 emulator AetherSX2 -->
         <rule type="androidpackage">

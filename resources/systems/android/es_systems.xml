@@ -270,6 +270,7 @@
         <command label="VICE x64 Fast">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vice_x64_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VICE x64 SuperCPU">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vice_xscpu64_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VICE x128">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vice_x128_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="C64.emu (Standalone)">%EMULATOR_C64-EMU% %DATA%=%ROMSAF%</command>
         <platform>c64</platform>
         <theme>c64</theme>
     </system>
