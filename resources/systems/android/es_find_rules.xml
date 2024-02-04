@@ -106,6 +106,12 @@
             <entry>com.explusalpha.NesEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="PCE-EMU">
+        <!-- NEC PC Engine/TurboGrafx-16 emulator PCE.emu -->
+        <rule type="androidpackage">
+            <entry>com.PceEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="androidpackage">

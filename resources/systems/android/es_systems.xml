@@ -1223,6 +1223,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_fast_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="PCE.emu (Standalone)">%EMULATOR_PCE-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>pcengine</platform>
         <theme>pcengine</theme>
     </system>
@@ -1233,6 +1234,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_fast_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="PCE.emu (Standalone)">%EMULATOR_PCE-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>pcenginecd</platform>
         <theme>pcenginecd</theme>
     </system>
@@ -1652,6 +1654,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_fast_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="PCE.emu (Standalone)">%EMULATOR_PCE-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>pcengine</platform>
         <theme>tg16</theme>
     </system>
@@ -1662,6 +1665,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_fast_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="PCE.emu (Standalone)">%EMULATOR_PCE-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>pcenginecd</platform>
         <theme>tg-cd</theme>
     </system>
