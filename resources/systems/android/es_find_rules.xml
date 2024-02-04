@@ -69,17 +69,23 @@
             <entry>com.explusalpha.GbcEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="M64PLUS-FZ">
+        <!-- Nintendo 64 emulator M64Plus FZ -->
+        <rule type="androidpackage">
+            <entry>org.mupen64plusae.v3.fzurita.pro/paulscode.android.mupen64plusae.SplashActivity</entry>
+            <entry>org.mupen64plusae.v3.fzurita/paulscode.android.mupen64plusae.SplashActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME4DROID">
         <!-- Arcade emulator MAME4droid -->
         <rule type="androidpackage">
             <entry>com.seleuco.mame4droid/.MAME4droid</entry>
         </rule>
     </emulator>
-    <emulator name="M64PLUS-FZ">
-        <!-- Nintendo 64 emulator M64Plus FZ -->
+    <emulator name="MD-EMU">
+        <!-- Sega Mega Drive/Genesis emulator MD.emu -->
         <rule type="androidpackage">
-            <entry>org.mupen64plusae.v3.fzurita.pro/paulscode.android.mupen64plusae.SplashActivity</entry>
-            <entry>org.mupen64plusae.v3.fzurita/paulscode.android.mupen64plusae.SplashActivity</entry>
+            <entry>com.explusalpha.MdEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
     <emulator name="MELONDS">
