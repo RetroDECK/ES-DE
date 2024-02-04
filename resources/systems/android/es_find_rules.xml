@@ -21,6 +21,12 @@
             <entry>org.citra.citra_emu/.ui.main.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="CITRA-CANARY">
+        <!-- Nintendo 3DS emulator Citra Canary -->
+        <rule type="androidpackage">
+            <entry>org.citra.citra_emu.canary/org.citra.citra_emu.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="CITRA-MMJ">
         <!-- Nintendo 3DS emulator Citra MMJ -->
         <rule type="androidpackage">
