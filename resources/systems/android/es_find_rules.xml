@@ -106,6 +106,12 @@
             <entry>me.magnum.melonds/.ui.emulator.EmulatorActivity</entry>
         </rule>
     </emulator>
+    <emulator name="MSX-EMU">
+        <!-- MSX home computer and ColecoVision emulator MSX.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.MsxEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="NES-EMU">
         <!-- Nintendo NES and Famicom emulator NES.emu -->
         <rule type="androidpackage">
