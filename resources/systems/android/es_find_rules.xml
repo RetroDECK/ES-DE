@@ -149,6 +149,12 @@
             <entry>com.explusalpha.Snes9xPlus/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SWAN-EMU">
+        <!-- Bandai WonderSwan emulator Swan.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.SwanEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="androidpackage">

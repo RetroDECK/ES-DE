@@ -1854,6 +1854,7 @@
         <path>%ROMPATH%/wonderswan</path>
         <extension>.pc2 .PC2 .ws .WS .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Cygne">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_wswan_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Swan.emu (Standalone)">%EMULATOR_SWAN-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>wonderswan</platform>
         <theme>wonderswan</theme>
     </system>
@@ -1863,6 +1864,7 @@
         <path>%ROMPATH%/wonderswancolor</path>
         <extension>.pc2 .PC2 .ws .WS .wsc .WSC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Cygne">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_wswan_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Swan.emu (Standalone)">%EMULATOR_SWAN-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>wonderswancolor</platform>
         <theme>wonderswancolor</theme>
     </system>
