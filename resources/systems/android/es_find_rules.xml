@@ -155,6 +155,12 @@
             <entry>io.recompiled.redream/.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SATURN-EMU">
+        <!-- Sega Saturn emulator Saturn.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.SaturnEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X-EXPLUS">
         <!-- Super Nintendo emulator Snes9x EX+ -->
         <rule type="androidpackage">
