@@ -118,6 +118,12 @@
             <entry>com.explusalpha.MsxEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="NEO-EMU">
+        <!-- SNK Neo Geo emulator NEO.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.NeoEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="NES-EMU">
         <!-- Nintendo NES and Famicom emulator NES.emu -->
         <rule type="androidpackage">
