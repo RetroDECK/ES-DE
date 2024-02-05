@@ -100,6 +100,12 @@
             <entry>com.seleuco.mame4droid/.MAME4droid</entry>
         </rule>
     </emulator>
+    <emulator name="MAME4DROID-2024">
+        <!-- Arcade emulator MAME4droid 2024 -->
+        <rule type="androidpackage">
+            <entry>com.seleuco.mame4d2024/com.seleuco.mame4droid.MAME4droid</entry>
+        </rule>
+    </emulator>
     <emulator name="MD-EMU">
         <!-- Sega Mega Drive/Genesis emulator MD.emu -->
         <rule type="androidpackage">

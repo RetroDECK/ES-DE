@@ -114,6 +114,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="NEO.emu (Standalone)">%EMULATOR_NEO-EMU% %DATA%=%ROMSAF%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -352,6 +353,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbalpha2012_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -370,6 +372,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbalpha2012_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -386,6 +389,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbalpha2012_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -402,6 +406,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbalpha2012_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -815,6 +820,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="NEO.emu (Standalone)">%EMULATOR_NEO-EMU% %DATA%=%ROMSAF%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -1085,6 +1091,7 @@
         <extension>.7z .7Z .zip .ZIP</extension>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="NEO.emu (Standalone)">%EMULATOR_NEO-EMU% %DATA%=%ROMSAF%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>neogeo</platform>
         <theme>neogeo</theme>
@@ -1588,6 +1595,7 @@
         <path>%ROMPATH%/stv</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>arcade</platform>
         <theme>stv</theme>
