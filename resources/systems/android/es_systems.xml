@@ -222,6 +222,7 @@
         <extension>.lnx .LNX .o .O .7z .7Z .zip .ZIP</extension>
         <command label="Handy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=handy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle Lynx">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_lynx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Lynx.emu (Standalone)">%EMULATOR_LYNX-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>atarilynx</platform>
         <theme>atarilynx</theme>
     </system>

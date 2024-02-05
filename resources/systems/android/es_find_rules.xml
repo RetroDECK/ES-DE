@@ -81,6 +81,12 @@
             <entry>com.explusalpha.GbcEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="LYNX-EMU">
+        <!-- Atari Lynx emulator Lynx.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.LynxEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="M64PLUS-FZ">
         <!-- Nintendo 64 emulator M64Plus FZ -->
         <rule type="androidpackage">
