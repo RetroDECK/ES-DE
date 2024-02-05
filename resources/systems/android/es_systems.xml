@@ -1138,6 +1138,7 @@
         <extension>.ngc .NGC .ngp .NGP .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle NeoPop">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_ngp_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="RACE">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=race_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="NGP.emu (Standalone)">%EMULATOR_NGP-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>ngp</platform>
         <theme>ngp</theme>
     </system>
@@ -1148,6 +1149,7 @@
         <extension>.ngc .NGC .ngp .NGP .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle NeoPop">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_ngp_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="RACE">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=race_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="NGP.emu (Standalone)">%EMULATOR_NGP-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>ngpc</platform>
         <theme>ngpc</theme>
     </system>

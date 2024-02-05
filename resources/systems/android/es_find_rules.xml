@@ -130,6 +130,12 @@
             <entry>com.explusalpha.NesEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="NGP-EMU">
+        <!-- SNK Neo Geo Pocket emulator NGP.emu -->
+        <rule type="androidpackage">
+            <entry>com.explusalpha.NgpEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PCE-EMU">
         <!-- NEC PC Engine/TurboGrafx-16 emulator PCE.emu -->
         <rule type="androidpackage">
