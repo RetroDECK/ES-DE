@@ -148,6 +148,12 @@
             <entry>com.PceEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="PLAY!">
+        <!-- Sony PlayStation 2 emulator Play! -->
+        <rule type="androidpackage">
+            <entry>com.virtualapplications.play/.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="androidpackage">
