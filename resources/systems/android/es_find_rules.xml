@@ -142,6 +142,12 @@
             <entry>com.explusalpha.NgpEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="OPENBOR">
+        <!-- OpenBOR Game Engine -->
+        <rule type="androidpackage">
+            <entry>org.openbor.engine/.GameActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PCE-EMU">
         <!-- NEC PC Engine/TurboGrafx-16 emulator PCE.emu -->
         <rule type="androidpackage">

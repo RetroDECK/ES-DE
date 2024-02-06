@@ -1176,8 +1176,8 @@
         <name>openbor</name>
         <fullname>OpenBOR Game Engine</fullname>
         <path>%ROMPATH%/openbor</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.openbor</extension>
+        <command label="OpenBOR (Standalone)">%EMULATOR_OPENBOR% %ACTION%=android.intent.action.MAIN</command>
         <platform>openbor</platform>
         <theme>openbor</theme>
     </system>
