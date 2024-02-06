@@ -977,6 +977,7 @@ void FileData::launchGame()
     std::string androidMimeType;
     std::string androidData;
     std::map<std::string, std::string> androidExtrasString;
+    std::map<std::string, std::string> androidExtrasStringArray;
     std::map<std::string, std::string> androidExtrasBool;
     std::vector<std::string> androidActivityFlags;
 #endif
@@ -1685,7 +1686,7 @@ void FileData::launchGame()
         }
     }
 
-    std::vector<std::string> extraVariabels {"%EXTRA_", "%EXTRABOOL_"};
+    std::vector<std::string> extraVariabels {"%EXTRA_", "%EXTRAARRAY_", "%EXTRABOOL_"};
 
     for (std::string variable : extraVariabels) {
         size_t extraPos {command.find(variable)};
@@ -1742,6 +1743,8 @@ void FileData::launchGame()
                     if (extraName != "" && extraValue != "") {
                         if (variable == "%EXTRA_")
                             androidExtrasString[extraName] = extraValue;
+                        else if (variable == "%EXTRAARRAY_")
+                            androidExtrasStringArray[extraName] = extraValue;
                         else if (variable == "%EXTRABOOL_")
                             androidExtrasBool[extraName] = extraValue;
                     }
@@ -1823,6 +1826,10 @@ void FileData::launchGame()
         LOG(LogInfo) << "Extra name: " << extra.first;
         LOG(LogInfo) << "Extra value: " << extra.second;
     }
+    for (auto& extra : androidExtrasStringArray) {
+        LOG(LogInfo) << "Extra array name: " << extra.first;
+        LOG(LogInfo) << "Extra array value: " << extra.second;
+    }
     for (auto& extra : androidExtrasBool) {
         LOG(LogInfo) << "Extra bool name: " << extra.first;
         LOG(LogInfo) << "Extra bool value: " << extra.second;
@@ -1852,7 +1859,8 @@ void FileData::launchGame()
 #elif defined(__ANDROID__)
     returnValue = Utils::Platform::Android::launchGame(
         androidPackage, androidActivity, androidAction, androidCategory, androidMimeType,
-        androidData, romRaw, androidExtrasString, androidExtrasBool, androidActivityFlags);
+        androidData, romRaw, androidExtrasString, androidExtrasStringArray, androidExtrasBool,
+        androidActivityFlags);
 #else
 returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
 #endif
