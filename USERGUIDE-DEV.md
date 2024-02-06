@@ -1770,11 +1770,13 @@ There are two ways to play these games, either via emulation or via simulation.
 
 **Method 1, emulation**
 
-Proper emulation is done via the MAME standalone emulator. The games need to be in the MAME format and follow the MAME software list naming conventions, i.e. it will not be possible to run .mgw games with this emulator. The example game _Donkey Kong_ would have the filename `gnw_dkong.zip` and you'll place this file in the `gameandwatch` or `lcdgames` directory.
+Proper emulation is done via the MAME - Current RetroArch core or the MAME standalone emulator. The games need to be in the MAME format and follow the MAME software list naming conventions, i.e. it will not be possible to run .mgw games with this emulator. The example game _Donkey Kong_ would have the filename `gnw_dkong.zip` and you'll place this file in the `gameandwatch` or `lcdgames` directory.
 
 However the game is only half of what's needed to properly emulate these games as you'll also need the artwork to see an image of the actual physical device when running the game. The artwork would also come in a .zip file with the same name as the game itself, e.g. `gnw_dkong.zip` and it must be located in the MAME artwork directory so it can be found by MAME.
 
-For the artwork location there are two options available in the form of two separate MAME emulator entries, either the default _MAME Local Artwork (Standalone)_ entry or _MAME (Standalone)_. The former will require the artwork files to be placed in a directory inside the `gameandwatch` or `lcdgames` folder, which can be quite convenient as it's then bundled with the game files. Simply create an `artwork` subdirectory and place the files there. The second emulator entry will require the artwork files to be placed in the default MAME artwork directory. This location differs between operating systems and distributions so refer to the MAME documentation on where to find this folder. Here's an example of what _Donkey Kong_ would look like when going for the default option using the `gameandwatch` system:
+For the RetroArch core this means it has to be placed in the system directory, specifically in `system/mame/artwork/`
+
+For MAME standalone there are two options available for the artwork location in the form of two separate MAME emulator entries, either the default _MAME Local Artwork (Standalone)_ entry or _MAME (Standalone)_. The former will require the artwork files to be placed in a directory inside the `gameandwatch` or `lcdgames` folder, which can be quite convenient as it's then bundled with the game files. Simply create an `artwork` subdirectory and place the files there. The second emulator entry will require the artwork files to be placed in the default MAME artwork directory. This location differs between operating systems and distributions so refer to the MAME documentation on where to find this folder. Here's an example of what _Donkey Kong_ would look like when going for the default option using the `gameandwatch` system:
 
 ```
 ~/ROMs/gameandwatch/gnw_dkong.zip
@@ -1783,7 +1785,7 @@ For the artwork location there are two options available in the form of two sepa
 
 As the artwork files also come with the .zip file extension they will show up inside ES-DE as if they were game files. So it's recommended to hide the entire artwork directory using the _Hidden_ option in the metadata editor, or alternatively exclude them from the multi-scraper using the _Exclude from multi-scraper_ option.
 
-Be aware that neither ScreenScraper nor TheGamesDB currently support the MAME software list names natively so you'll need to refine the searches or the scraper services are unlikely to return any results at all (or very inaccurate results at best).
+Be aware that neither ScreenScraper nor TheGamesDB currently support the MAME software list names natively so you'll need to refine the searches or the scraper services are unlikely to return any results at all (or very inaccurate results at best). However, if you have game files that match the MD5 hashes in the ScreenScraper database, then the games will scrape correctly regardless of their names.
 
 **Method 2, simulation**
 
@@ -4008,7 +4010,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fmtowns               | Fujitsu FM Towns                               | MAME - Current,<br>MAME **(Standalone)** | Tsugaru **(Standalone)** [LW] | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | fpinball              | Future Pinball                                 | Future Pinball **(Standalone)** [W] |                                   | No           |                                      |
 | gamate                | Bit Corporation Gamate                         | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
-| gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
+| gameandwatch          | Nintendo Game and Watch                        | MAME - Current                    | MAME Local Artwork **(Standalone)**,<br>MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
 | gamecom               | Tiger Electronics Game.com                     | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [LW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [LW],<br>TGB Dual,<br>DoubleCherryGB [LW],<br>Mesen-S,<br>Mesen **(Standalone)** [LW],<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>SkyEmu **(Standalone)** | No           | Single archive or ROM file |
@@ -4022,7 +4024,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       | KEmulator **(Standalone)** [W]    | No           | Single .jar file       |
 | kodi                  | Kodi Home Theatre Software                     | Kodi **(Standalone)**             |                                   | No           | Shortcut (.desktop/.app/.lnk) file |
 | laserdisc             | LaserDisc Games                                | Hypseus [Daphne] **(Standalone)** | Hypseus [Singe] **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)**,<br>DirkSimple | Depends     | See the specific _LaserDisc Games_ section elsewhere in this guide |
-| lcdgames              | LCD Handheld Games                             | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
+| lcdgames              | LCD Handheld Games                             | MAME - Current                    | MAME Local Artwork **(Standalone)**,<br>MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
 | lowresnx              | LowRes NX Fantasy Console                      | LowRes NX                         |                                   | No           | Single ROM file       |
 | lutris                | Lutris Open Gaming Platform                    | Lutris **(Standalone)** [L]       |                                   | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |

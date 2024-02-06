@@ -6,7 +6,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 
 | System name           | Full name                                      | Default emulator                  | Alternative emulators             | Needs BIOS   | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
-| 3do                   | 3DO Interactive Multiplayer                    | Opera                             |                                   |              |                                      |
+| 3do                   | 3DO Interactive Multiplayer                    | Opera                             | Real3DOPlayer **(Standalone)**    | Yes          |                                      |
 | adam                  | Coleco Adam                                    | _Placeholder_                     |                                   |              |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Placeholder_                     |                                   |              |                                      |
 | amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          |                                      |
@@ -65,7 +65,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fmtowns               | Fujitsu FM Towns                               | _Placeholder_                     |                                   |              |                                      |
 | fpinball              | Future Pinball                                 | _Placeholder_                     |                                   |              |                                      |
 | gamate                | Bit Corporation Gamate                         | _Placeholder_                     |                                   |              |                                      |
-| gameandwatch          | Nintendo Game and Watch                        | Handheld Electronic (GW)          |                                   | No           |                                      |
+| gameandwatch          | Nintendo Game and Watch                        | Multi (MESS)                      | Handheld Electronic (GW)          | No           | Single archive or ROM file           |
 | gamecom               | Tiger Electronics Game.com                     | _Placeholder_                     |                                   |              |                                      |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive | No           | Single archive or ROM file |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | GBC.emu **(Standalone)**,<br>SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M | No           | Single archive or ROM file |
@@ -79,7 +79,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | No           | Single .jar file                     |
 | kodi                  | Kodi Home Theatre Software                     | _Placeholder_                     |                                   |              |                                      |
 | laserdisc             | LaserDisc Games                                | DirkSimple                        |                                   | No           |                                      |
-| lcdgames              | LCD Handheld Games                             | Handheld Electronic (GW)          |                                   | No           |                                      |
+| lcdgames              | LCD Handheld Games                             | Multi (MESS)                      | Handheld Electronic (GW)          | No           | Single archive or ROM file           |
 | lowresnx              | LowRes NX Fantasy Console                      | LowRes NX                         |                                   | No           | Single ROM file                      |
 | lutris                | Lutris Open Gaming Platform                    | _Placeholder_                     |                                   |              |                                      |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
@@ -131,11 +131,11 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | NXEngine (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War | Yes for ECWolf |                                      |
-| ps2                   | Sony PlayStation 2                             | AetherSX2 **(Standalone)**        |                                   | Yes          |                                      |
+| ps2                   | Sony PlayStation 2                             | AetherSX2 **(Standalone)**        | Play! **(Standalone)**            | Yes for AetherSX2 |                                      |
 | ps3                   | Sony PlayStation 3                             | _Placeholder_                     |                                   |              |                                      |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file               |
-| psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
+| psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           |                                   | Yes          |                                      |
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | pv1000                | Casio PV-1000                                  | _Placeholder_                     |                                   |              |                                      |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero] | No           |                                      |

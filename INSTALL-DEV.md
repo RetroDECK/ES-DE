@@ -1735,6 +1735,14 @@ The es_systems.xml file on Android utilizes variables heavily to implement the _
 There are two main ways to pass options to emulators, using _extras_ or using the _data_ URI. There can only be a single data URI but there can be an arbitrary amount of extras. To understand more about the way this works, you can read about the _putExtra()_ and and _setData()_ functions here:\
 https://developer.android.com/reference/android/content/Intent
 
+`%EXTRA_` - This passes an _extra_ which contains any additional information that the emulator may support. This is provided as a key/value pair where you define the key name following the literal %EXTRA_ string and terminate it with a % sign and then assign the value using an equal sign. For example %EXTRA_LIBRETRO%=puae_libretro_android.so will pass the extra named _LIBRETRO_ with its value set to _puae_libretro_android.so_. You can pass an unlimited number of extras and you can also use various ROM variables in combination with this as described below.
+
+`%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_.
+
+`%EXTRABOOL_` - Sets an extra with a boolean value, i.e. true/1 or false/0.
+
+`%DATA%` - Sets the data URI value for the intent using an equal sign. This is normally combined with one of the ROM variables.
+
 There are three approaches to passing game ROMs to emulators by using the following variables:
 
 `%ROM%` - Replaced with the absolute path to the selected ROM. This is a traditional method to provide the game ROM and its use will likely decrease or go away completely long term as emulators move to more modern methods.
@@ -1745,7 +1753,7 @@ https://developer.android.com/guide/topics/providers/document-provider
 `%ROMPROVIDER%` - This is the most modern approach to passing game ROMs to emulators. It uses the _FileProvider_ API to provide permissions to the file. This means that you don't need to setup the emulator upfront to have access to the directory where the game file is stored, access is instead temporarily granted by ES-DE. You can read more about the FileProvider API here:\
 https://developer.android.com/reference/androidx/core/content/FileProvider
 
-The `%ROM%` and `%ROMSAF%` variables can be used with both the `%DATA%` and `%EXTRA_` variables, but `%ROMPROVIDER%` can only be used with the `%DATA%` variable. For the `%DATA%` variable you'll just assign the ROM variable with an equal sign as there can only be a single _setData()_ API call per Intent. For the `%EXTRA_` variable you need to specify a name of the extra and then define it using an equal sign as an arbitrary amount of _putExtra()_ API calls can be used for an Intent. There is also a special `%EXTRABOOL_` variable that specifically passes boolean values (true/false) to emulators that support such arguments.
+The `%ROM%` and `%ROMSAF%` variables can be used with both the `%DATA%` and `%EXTRA_` variables, but `%ROMPROVIDER%` can only be used with the `%DATA%` variable. For the `%DATA%` variable you'll just assign the ROM variable with an equal sign as there can only be a single _setData()_ API call per Intent. For the `%EXTRA_` variable you need to specify a name of the extra and then define it using an equal sign as an arbitrary amount of _putExtra()_ API calls can be used for an Intent.
 
 Here are some examples to clarify how this works:
 ```
