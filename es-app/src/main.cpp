@@ -62,6 +62,11 @@ namespace
     Window* window {nullptr};
     int lastTime {0};
 
+#if defined(__ANDROID__)
+    int inputBlockTime {0};
+    bool blockInput {false};
+#endif
+
 #if defined(APPLICATION_UPDATER)
     bool noUpdateCheck {false};
 #endif
@@ -496,6 +501,15 @@ void applicationLoop()
 #endif
         if (SDL_PollEvent(&event)) {
             do {
+#if defined(__ANDROID__)
+                // Prevent that button presses get registered immediately when entering the
+                // foreground (which most commonly mean we're returning from a game).
+                if (event.type == SDL_APP_WILLENTERFOREGROUND) {
+                    blockInput = true;
+                    inputBlockTime = 0;
+                    window->setBlockInput(true);
+                }
+#endif
                 InputManager::getInstance().parseEvent(event);
 
                 if (event.type == SDL_QUIT)
@@ -515,6 +529,16 @@ void applicationLoop()
         if (deltaTime < 0)
             deltaTime = 1000;
 
+#if defined(__ANDROID__)
+        if (blockInput) {
+            inputBlockTime += deltaTime;
+            if (inputBlockTime > 300) {
+                inputBlockTime = 0;
+                blockInput = false;
+                window->setBlockInput(false);
+            }
+        }
+#endif
         window->update(deltaTime);
         window->render();
 
