@@ -613,7 +613,8 @@
         <name>gameandwatch</name>
         <fullname>Nintendo Game and Watch</fullname>
         <path>%ROMPATH%/gameandwatch</path>
-        <extension>.mgw .MGW</extension>
+        <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
+        <command label="Multi (MESS)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamemess_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Handheld Electronic (GW)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gw_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>gameandwatch</platform>
         <theme>gameandwatch</theme>
@@ -770,7 +771,8 @@
         <name>lcdgames</name>
         <fullname>LCD Handheld Games</fullname>
         <path>%ROMPATH%/lcdgames</path>
-        <extension>.mgw .MGW</extension>
+        <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
+        <command label="Multi (MESS)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamemess_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Handheld Electronic (GW)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gw_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>lcdgames, gameandwatch</platform>
         <theme>lcdgames</theme>
