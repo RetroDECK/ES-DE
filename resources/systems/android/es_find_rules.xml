@@ -155,6 +155,12 @@
             <entry>org.ppsspp.ppsspp/.PpssppActivity</entry>
         </rule>
     </emulator>
+    <emulator name="REAL3DOPLAYER">
+        <!-- 3DO Interactive Multiplayer emulator Real3DOPlayer -->
+        <rule type="androidpackage">
+            <entry>ru.vastness.altmer.real3doplayer/.EmulatorActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="androidpackage">
