@@ -65,7 +65,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fmtowns               | Fujitsu FM Towns                               | _Placeholder_                     |                                   |              |                                      |
 | fpinball              | Future Pinball                                 | _Placeholder_                     |                                   |              |                                      |
 | gamate                | Bit Corporation Gamate                         | _Placeholder_                     |                                   |              |                                      |
-| gameandwatch          | Nintendo Game and Watch                        | Multi (MESS)                      | Handheld Electronic (GW)          | No           | Single archive or ROM file           |
+| gameandwatch          | Nintendo Game and Watch                        | Multi (MESS)                      | MAME4droid 2024 **(Standalone)**,<br>Handheld Electronic (GW) | No           | Single archive or ROM file           |
 | gamecom               | Tiger Electronics Game.com                     | _Placeholder_                     |                                   |              |                                      |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive | No           | Single archive or ROM file |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | GBC.emu **(Standalone)**,<br>SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M | No           | Single archive or ROM file |
@@ -79,7 +79,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | No           | Single .jar file                     |
 | kodi                  | Kodi Home Theatre Software                     | _Placeholder_                     |                                   |              |                                      |
 | laserdisc             | LaserDisc Games                                | DirkSimple                        |                                   | No           |                                      |
-| lcdgames              | LCD Handheld Games                             | Multi (MESS)                      | Handheld Electronic (GW)          | No           | Single archive or ROM file           |
+| lcdgames              | LCD Handheld Games                             | Multi (MESS)                      | MAME4droid 2024 **(Standalone)**,<br>Handheld Electronic (GW) | No           | Single archive or ROM file           |
 | lowresnx              | LowRes NX Fantasy Console                      | LowRes NX                         |                                   | No           | Single ROM file                      |
 | lutris                | Lutris Open Gaming Platform                    | _Placeholder_                     |                                   |              |                                      |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
@@ -117,7 +117,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |
 | odyssey2              | Magnavox Odyssey 2                             | O2EM                              |                                   | Yes          | Single archive or ROM file           |
-| openbor               | OpenBOR Game Engine                            | _Placeholder_                     |                                   |              |                                      |
+| openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)**          |                                   | No           | .openbor dummy file                  |
 | oric                  | Tangerine Computer Systems Oric                | _Placeholder_                     |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
 | pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN        | No           |                                      |
