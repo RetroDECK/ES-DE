@@ -97,8 +97,13 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
 
     float textHeight = mText->getFont()->getHeight();
 
+#if defined(__ANDROID__)
+    if (multiLine)
+        textHeight *= 2.0f;
+#else
     if (multiLine)
         textHeight *= 6.0f;
+#endif
 
     mText->setSize(0.0f, textHeight);
 
