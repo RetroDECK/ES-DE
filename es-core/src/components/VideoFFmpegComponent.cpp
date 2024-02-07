@@ -310,6 +310,24 @@ void VideoFFmpegComponent::updatePlayer()
     if (mPaused || !mFormatContext)
         return;
 
+    const long double deltaTime {
+        static_cast<long double>(std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                     std::chrono::high_resolution_clock::now() - mTimeReference)
+                                     .count()) /
+        1000000000.0l};
+
+    // If there were more than 2 seconds since the last update then it's not a normal delay, for
+    // example the application may have been suspended or the computer was resumed from sleep.
+    // In this case don't proceed and instead wait for the next update. This avoids a massive
+    // fast-forward as the frame processing would otherwise have tried to catch up. This may
+    // not result in perfect video and sound synchronization on some platforms, for example
+    // on Android the audio buffers are emptied before suspending the application after the
+    // video processing has already been halted.
+    if (deltaTime > 2.0) {
+        mTimeReference = std::chrono::high_resolution_clock::now();
+        return;
+    }
+
     // Output any audio that has been added by the processing thread.
     std::unique_lock<std::mutex> audioLock {mAudioMutex};
     if (mOutputAudio.size()) {
@@ -318,14 +336,8 @@ void VideoFFmpegComponent::updatePlayer()
         mOutputAudio.clear();
     }
 
-    if (mIsActuallyPlaying && mStartTimeAccumulation) {
-        mAccumulatedTime =
-            mAccumulatedTime +
-            static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(
-                                    std::chrono::high_resolution_clock::now() - mTimeReference)
-                                    .count()) /
-                1000000000.0l;
-    }
+    if (mIsActuallyPlaying && mStartTimeAccumulation)
+        mAccumulatedTime = mAccumulatedTime + static_cast<double>(deltaTime);
 
     mTimeReference = std::chrono::high_resolution_clock::now();
 
