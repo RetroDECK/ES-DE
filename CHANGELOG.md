@@ -38,10 +38,11 @@
 * (Unix) Removed the -Minimized flag from the Visual Pinball launch command
 * (Windows) Updated the find rules for Visual Pinball to match the actual filenames of the official releases
 * (Windows) Added the %RUNINBACKGROUND% variable for the epic system
-* (Windows) Removed support for building the application using MinGW
+* Added conversion of an additional HTML character code when scraping using ScreenScraper
 * Added a "renderDuringTransitions" property to the image element
 * Added a "selectorWidth" property to the textlist element
 * Added a "hideIfZero" property to the rating element
+* Putting the computer to sleep while a video was playing will no longer result in a massive fast-forward on resume
 * Combining video pillarboxes with rounded corners will no longer round corners for the actual video frame (except for extreme values)
 * Made the text element "defaultValue" property usable with the metadata types systemName, systemFullname, sourceSystemName and sourceSystemFullname
 * Replaced the default d-pad helpsystem images to make them more legible when using smaller screen sizes
@@ -51,6 +52,7 @@
 * Added support for more extreme vertical resolutions than previously allowed
 * Added support for the 19.5:9, 20:9 and 1:1 display aspect ratios
 * If any legacy theme configuration is encountered the error messages now simply state that the config is unsupported
+* (Windows) Removed support for building the application using MinGW
 * The relevant SDL error message is now printed to the log if a controller could not be added
 * Added rendering workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
 * Added the UTF8-CPP library as a dependency
