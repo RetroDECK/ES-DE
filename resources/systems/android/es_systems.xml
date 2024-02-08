@@ -569,8 +569,8 @@
         <name>flash</name>
         <fullname>Adobe Flash</fullname>
         <path>%ROMPATH%/flash</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.swf .SWF</extension>
+        <command label="Ruffle (Standalone)">%EMULATOR_RUFFLE% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>flash</platform>
         <theme>flash</theme>
     </system>

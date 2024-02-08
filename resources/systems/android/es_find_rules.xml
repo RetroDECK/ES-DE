@@ -179,6 +179,12 @@
             <entry>io.recompiled.redream/.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="RUFFLE">
+        <!-- Adobe Flash player Ruffle -->
+        <rule type="androidpackage">
+            <entry>rs.ruffle/.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SATURN-EMU">
         <!-- Sega Saturn emulator Saturn.emu -->
         <rule type="androidpackage">
