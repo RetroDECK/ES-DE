@@ -123,12 +123,12 @@ protected:
                  std::vector<ScraperSearchResult>& results) override;
 
     void processGame(const pugi::xml_document& xmldoc, std::vector<ScraperSearchResult>& results);
-    bool processMedia(ScraperSearchResult& result,
-                      const pugi::xml_node& media_list,
-                      std::string& mediaType,
-                      std::string& fileURL,
-                      std::string& fileFormat,
-                      const std::string& region);
+    int processMedia(ScraperSearchResult& result,
+                     const pugi::xml_node& media_list,
+                     std::string& mediaType,
+                     std::string& fileURL,
+                     std::string& fileFormat,
+                     const std::string& region);
     bool isGameRequest() { return !mRequestQueue; }
 
     std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;
