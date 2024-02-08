@@ -205,15 +205,15 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
                 "", nullptr, nullptr, true));
         }
         else {
+            if (mText->isEditing())
+                mText->stopEditing();
             delete this;
             return true;
         }
     }
 
-    if (mText->isEditing() && config->isMappedLike("down", input) && input.value) {
-        mText->stopEditing();
+    if (mText->isEditing() && config->isMappedLike("down", input) && input.value)
         mGrid.setCursorTo(mGrid.getSelectedComponent());
-    }
 
     // Left shoulder button deletes a character (backspace).
     if (config->isMappedTo("leftshoulder", input)) {

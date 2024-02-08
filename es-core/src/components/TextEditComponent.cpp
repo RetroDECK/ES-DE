@@ -130,6 +130,9 @@ std::string TextEditComponent::getValue() const
 
 void TextEditComponent::startEditing()
 {
+    if (mEditing)
+        return;
+
     SDL_StartTextInput();
     mEditing = true;
     updateHelpPrompts();
@@ -138,6 +141,9 @@ void TextEditComponent::startEditing()
 
 void TextEditComponent::stopEditing()
 {
+    if (!mEditing)
+        return;
+
     SDL_StopTextInput();
     mEditing = false;
     mMaskInput = false;
@@ -215,7 +221,7 @@ bool TextEditComponent::input(InputConfig* config, Input input)
             moveCursor(mCursorRepeatDir);
             return false;
         }
-        else if (cursorDown) {
+        else if (cursorDown && isEditing()) {
             // Stop editing and let the button down event be captured by the parent component.
             stopEditing();
             return false;
@@ -237,6 +243,9 @@ bool TextEditComponent::input(InputConfig* config, Input input)
             setCursor(mText.length());
             return true;
         }
+
+        if (config->isMappedTo("b", input))
+            stopEditing();
 
         // Consume all input when editing text.
         mMaskInput = false;
