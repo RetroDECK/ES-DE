@@ -317,14 +317,19 @@ void VideoFFmpegComponent::updatePlayer()
         1000000000.0l};
 
     // If there were more than 2 seconds since the last update then it's not a normal delay, for
-    // example the application may have been suspended or the computer was resumed from sleep.
-    // In this case don't proceed and instead wait for the next update. This avoids a massive
-    // fast-forward as the frame processing would otherwise have tried to catch up. This may
-    // not result in perfect video and sound synchronization on some platforms, for example
-    // on Android the audio buffers are emptied before suspending the application after the
-    // video processing has already been halted.
+    // example the application may have been suspended or the computer may have been resumed from
+    // sleep. In this case don't proceed and instead wait for the next update. This avoids a
+    // massive fast-forward as the frame processing would otherwise have tried to catch up.
+    // The frame queues are emptied as well and the audio stream is cleared in order to
+    // re-synchronize the streams. This is neeeded as some platforms like Android keep processing
+    // the audio buffers before suspending the application (i.e. after rendering has stopped).
     if (deltaTime > 2.0) {
+        AudioManager::getInstance().clearStream();
         mTimeReference = std::chrono::high_resolution_clock::now();
+        while (mAudioFrameQueue.size() > 1 && mVideoFrameQueue.size() > 1 &&
+               mAudioFrameQueue.front().pts > mVideoFrameQueue.front().pts) {
+            mVideoFrameQueue.pop();
+        }
         return;
     }
 
