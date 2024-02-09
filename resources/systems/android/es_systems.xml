@@ -1138,8 +1138,8 @@
         <name>ngage</name>
         <fullname>Nokia N-Gage</fullname>
         <path>%ROMPATH%/ngage</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.ngage .zip .ZIP</extension>
+        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1%</command>
         <platform>ngage</platform>
         <theme>ngage</theme>
     </system>
@@ -1662,8 +1662,8 @@
         <name>symbian</name>
         <fullname>Symbian</fullname>
         <path>%ROMPATH%/symbian</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.sis .SIS .sisx .SISX .symbian</extension>
+        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1%</command>
         <platform>ngage</platform>
         <theme>symbian</theme>
     </system>
