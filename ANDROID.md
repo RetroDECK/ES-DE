@@ -1,5 +1,141 @@
 # ES-DE (EmulationStation Desktop Edition) v3.0 (development version) - Android documentation
 
+This document contains information specific to the Android release, for more general ES-DE documentation refer to the [User guide](USERGUIDE-DEV.md).
+
+Table of contents:
+
+[[_TOC_]]
+
+## Emulator installation and setup
+
+This section does not cover all emulators that ES-DE supports, but rather the ones where there are special considerations or setup procedures.
+
+In general emulation is not that mature on Android compared to other platforms, and emulator availability on the Google Play store leaves a lot to be desired. Many emulators are not there at all, or they are present but have been crippled or have not been updated for a very long time. You will need to sideload a lot of the emulators supported by ES-DE to have a good emulation setup, but thankfully this is not very difficult to do.
+
+The exact producedure for how to install APKs manually is not covered here but there are many resources available online on how to accomplish this.
+
+There is also the [F-Droid](https://f-droid.org/) app store as an alternative to Google Play, and this service contains a couple of emulators that are not present on the Play store, or that are present there but haven't been updated for a very long time.
+
+Some emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game ROMs on launch. This means that no access permissions need to be setup in the emulator upfront. For those emulators which do not support the FileProvider API, you will generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`. But this is not the case for some emulators like RetroArch which may still be using an older storage access method.
+
+The following emulators are configured for FileProvider access:
+* 2600.emu
+* C64.emu
+* GBA.emu
+* GBC.emu
+* Lynx.emu
+* MD.emu
+* MAME4droid 2024
+* MAME4droid
+* NES.emu
+* NGP.emu
+* PCE.emu
+* Play!
+* Ruffle
+* Saturn.emu
+* Swan.emu
+* Yuzu
+
+Note that some of these emulators still require BIOS files, so not all of them will be completely free from manual configuration.
+
+The following emulators have partial FileProvider access support but are currently not configured for that in ES-DE:
+* Dolphin (the FileProvider interface is broken on Android 13 and later)
+* M64Plus FZ (the FileProvider interface doesn't work reliably and game launching randomly fails when using it)
+* PPSSPP (the FileProvider interface doesn't work with .chd files specifically)
+
+### RetroArch
+
+The RetroArch release in the Play Store is not very good and is therefore not recommended. To get access to all cores make sure to instead manually download and install the 64-bit/aarch64 APK from their website:
+
+https://retroarch.com/
+
+You could alternatively install the release on the F-Droid store.
+
+### AetherSX2 / NetherSX2
+
+Although the emulator entry is named AetherSX2 the recommended release of this emulator is actually the NetherSX2 version as the AetherSX2 release on the Google Play store doesn't work correctly and probably can't be used with ES-DE at all. You'll need to search for this APK online, the filename you'll want is `15210-v1.5-4248-noads.apk`
+
+### Citra
+
+The version of Citra on the Google Play store is very old and barely works. Instead download either the Canary or Nightly builds from the Citra website or use the Citra MMJ fork:
+
+https://citra-emu.org/download/
+
+https://github.com/weihuoya/citra/releases
+
+### Dolphin
+
+The Play store version is somehow up to date and could be used, otherwise the F-Droid store version is up to date, or you could download the latest release directly from their website:
+
+https://dolphin-emu.org/
+
+In the past there were multiple unofficial ports, but these are not really recommended any longer as most of them don't seem to have been updated in a long time and are likely to have been surpassed by the official Dolphin release.
+
+### EKA2L1
+
+This emulator can be downloaded from their GitHub page:
+
+https://github.com/EKA2L1/EKA2L1
+
+There does not seem to be a way to launch individual EKA2L1 games from a frontend application on Android, instead ES-DE will simply launch the EKA2L1 user interface and you'll have to manually start your game from there.
+
+### EX Plus Alpha
+
+These set of emulators also known as the "Robert Broglia" emulators consist of 2600.emu, C64.emu, GBA.emu, GBC.emu, Lynx.emu, NEO.emu, NES.emu, NGP.emu, MD.emu, MSX.emu, PCE.emu, Snes9x EX+, Saturn.emu and Swan.emu
+
+You can install them via Google Play (as paid apps) or download them from their GitHub automatic build system:
+
+https://github.com/Rakashazi/emu-ex-plus-alpha/actions
+
+
+### Fake-08
+
+This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manaully install it. After download you'll need to place it inside's RetroArch's downloads directory and then install it from the RetroArch app. Details on how to accomplish this can be found on the Internet:
+
+https://github.com/jtothebell/fake-08
+
+### Flycast
+
+Flycast is not available on the Play store or the F-Droid store, but it can be downloaded from their GitHub site:
+
+https://github.com/flyinghead/flycast/releases
+
+### melonDS
+
+This emulator can be installed from the Play store but it's quite buggy. Every time you add a new game to the ROM directory you need to start the emulator and manually refresh the game list or you won't be able to launch the game from ES-DE. Filenames containing parentheses also don't work and need to be renamed or they can't be launched from ES-DE. The same is probably true for a number of additional characters.
+
+### OpenBOR
+
+Although OpenBOR is working fine on Android it's not possible to properly integrate it with a frontend, you'll instead need to install your game PAKs into the `/sdcard/OpenBOR/Paks` directory and create dummy .openbor files for your games in `ROMs/openbor` and after launching a game from ES-DE you need to manually start it from inside the OpenBOR GUI. You can download the latest APK from here:
+
+https://github.com/DCurrent/openbor/releases
+
+The version named _OpenBOR v3.0 Build 6391_ has for example been proven to work well.
+
+### Play!
+
+This PlayStation 2 emulator can be downloaded from here:
+
+https://www.purei.org/downloads.php
+
+### Real3DOPlayer
+
+This 3DO Interactive Multiplayer emulator can be downloaded from here:
+
+http://www.arts-union.ru/node/23
+
+### Redream
+
+Redream is available on the Play store but is as of writing this not usable on Android 13 and later due to Intent filter changes introduced by Google. An emulator update is required before Redream becomes usable again.
+
+### Vita3K
+
+This PlayStation Vita emulator can be downloaded from their GitHub site:
+
+https://github.com/Vita3K/Vita3K-Android
+
+## Supported game systems
+
 All emulators are RetroArch cores unless marked as **(Standalone)**
 
 The **@** symbol indicates that the emulator is _deprecated_ and will be removed in a future ES-DE release.
@@ -113,11 +249,11 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)** | No           | Single archive or ROM file           |
-| ngage                 | Nokia N-Gage                                   | _Placeholder_                     |                                   |              |                                      |
+| ngage                 | Nokia N-Gage                                   | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |
 | odyssey2              | Magnavox Odyssey 2                             | O2EM                              |                                   | Yes          | Single archive or ROM file           |
-| openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)**          |                                   | No           | .openbor dummy file                  |
+| openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)**          |                                   | No           | See the specific _OpenBOR_ section in the User guide |
 | oric                  | Tangerine Computer Systems Oric                | _Placeholder_                     |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
 | pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN        | No           |                                      |
@@ -127,7 +263,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   | Yes          |                                      |
-| pico8                 | PICO-8 Fantasy Console                         | Fake-08                           | Retro8                            | No           | Single .p8 file                      |
+| pico8                 | PICO-8 Fantasy Console                         | Fake-08                           | Retro8                            | No           | See the specific _PICO-8_ section in the User guide |
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | NXEngine (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War | Yes for ECWolf |                                      |
@@ -135,7 +271,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ps3                   | Sony PlayStation 3                             | _Placeholder_                     |                                   |              |                                      |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file               |
-| psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           |                                   | Yes          |                                      |
+| psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           |                                   | Yes          | See the specific _Sony PlayStation Vita_ section in the User guide |
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | pv1000                | Casio PV-1000                                  | _Placeholder_                     |                                   |              |                                      |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero] | No           |                                      |
@@ -163,7 +299,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | supervision           | Watara Supervision                             | Potator                           |                                   | No           | Single archive or ROM file           |
 | supracan              | Funtech Super A'Can                            | _Placeholder_                     |                                   |              |                                      |
 | switch                | Nintendo Switch                                | Yuzu **(Standalone)**             |                                   | Yes          |                                      |
-| symbian               | Symbian                                        | _Placeholder_                     |                                   |              |                                      |
+| symbian               | Symbian                                        | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | tanodragon            | Tano Dragon                                    | _Placeholder_                     |                                   |              |                                      |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | Yes          |                                      |

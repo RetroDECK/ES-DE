@@ -2149,9 +2149,20 @@ Starting ES-DE should now show the _Super Mario 3D World_ entry for the Wii U sy
 
 ### OpenBOR
 
-The Open Beats of Rage (OpenBOR) game engine is available on Windows and Linux. Unfortunately the macOS ports seems to have been abandoned.
+The Open Beats of Rage (OpenBOR) game engine is available on Android, Windows and Linux. Unfortunately the macOS port seems to have been abandoned.
 
 These games are often but not always distributed together with the game engine as specific engine versions may be required for some games. The setup is slightly different between Windows and Linux so they are described separately here.
+
+**Android**
+
+Unfortunately there does not seem to be a way to launch individual OpenBOR games from ES-DE on Android, instead the OpenBOR user interface will open on game launch and you need to manually start your game from there. This means games need to be installed upfront in OpenBOR and .openbor dummy files should be added to the `ROMs/openbor` directory. These will then appear as individual games inside ES-DE and you can add metadata to them, scrape them etc. Refer to the OpenBOR documentation on how to add your game PAKs.
+
+Here's an example setup:
+
+```
+/storage/emulated/0/ROMs/openbor/D&D - K&D - The Endless Quest LNS.openbor
+/storage/emulated/0/ROMs/openbor/He-Man.openbor
+```
 
 **Windows:**
 
@@ -2225,6 +2236,8 @@ Doing this will make the game show up as if it was a single file inside ES-DE an
 
 PICO-8 Fantasy Console is a game engine developed by [Lexaloffle Games](https://www.lexaloffle.com/pico-8.php) that you need to buy a license to use. Doing so will provide you with download links to releases for Linux, macOS and Windows. Make sure to use the 64-bit release as the 32-bit release reportedly has some technical issues. On macOS and Windows the installation is straightforward, but on Linux you need to place PICO-8 in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details.
 
+On Android it's recommended to use the Fake-08 RetroArch core, although this needs to be manually downloaded. How that is done is covered briefly in the [ANDROID.md](ANDROID.md#fake-08) document.
+
 After the emulator has been installed you are ready to add some games. There are two ways to play games using PICO-8, either to add them to ES-DE as for any other system, or using the built-in Splore tool to explore and run games all through the PICO-8 user interface.
 
 For the first approach you can download games from the [PICO-8 forum](https://www.lexaloffle.com/bbs/?cat=7) and these are quite uniquely distributed as .png images. You just download these and place them inside the ~/ROMs/pico8 directory, for example:
@@ -2244,15 +2257,16 @@ This is what the complete setup could look like:
 ~/ROMs/pico8/xzero-3.p8.png
 ```
 
-**Using the Retro8 RetroArch core**
+**Using the Fake-08 and Retro8 RetroArch cores**
 
-ES-DE also includes support for the Retro8 RetroArch core but it's borderline unusable and does not seem to be actively developed any longer. If you still want to use it, then you first need to rename your game files by removing _.png_ from the end of the filenames, like this:
+On Android the Fake-08 core provides a good alternative to the official PICO-8 engine which is not available on this operating system. ES-DE also includes support for the Retro8 RetroArch core across all platforms, but it's borderline unusable and does not seem to be actively developed any longer.
+
+Neither Fake-08 nor Retro8 support the .png file extension, so in order to use these cores you need to remove that extension from your game files and only keep the .p8 extension, such as this:
+
 ```
 ~/ROMs/pico8/c_e_l_e_s_t_e-0.p8
 ~/ROMs/pico8/xzero-3.p8
 ```
-
-Following this just select the _Retro8_ alternative emulator and the games will (somehow) work.
 
 ### Ports and desktop applications
 
@@ -2413,7 +2427,7 @@ When using this setup method you need to set the alternative emulator to _RPCS3 
 
 Support for the PS Vita is currently experimental due to the early stages of development for the Vita3K emulator. While there's a growing list of games that are playable, integration with ES-DE is a bit rough at the moment. Hopefully this will improve as Vita3K evolves.
 
-On Windows the Vita3K installation is straightforward, but on Linux you may need to place the emulator in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details. If using a Linux distribution that provides Vita3K via the repository (such as the AUR on Arch/Manjaro) then you can skip this step and install the emulator using your OS package manager.
+On Android and Windows the Vita3K installation is straightforward, but on Linux you may need to place the emulator in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details. If using a Linux distribution that provides Vita3K via the repository (such as the AUR on Arch/Manjaro) then you can skip this step and install the emulator using your OS package manager.
 
 Although a macOS release of Vita3K seems to be in the works this does not seem to be readily available for download so there is currently no macOS support for this system in ES-DE.
 
@@ -2466,6 +2480,19 @@ On macOS the shortcuts come with the .app extension and are actually directories
 **At the time of writing the Linux AppImage release of EKA2L1 is partially broken and can't be used to run N-Gage games, instead an alternative emulator entry to run the Windows version of EKA2L1 can be used. This should only be temporary until the bugs have been resolved by the EKA2L1 team, so detailed instructions on how to setup the Windows version on Linux will not be provided below. The documentation instead assumes that the AppImage works as intended.**
 
 As the Nokia N-Gage was running Symbian it may seem like the _ngage_ and _symbian_ systems would be identical. There is however a difference in that N-Gage games were shipped on MMC memory cards while regular Symbian games were packaged as _Software Installation Script_ files with the .sis or .sisx extension. Although the EKA2L1 emulator is used for both systems the setup is quite different, as detailed below.
+
+**Android**
+
+Unfortunately there does not seem to be a way to launch individual games from ES-DE on Android specifically, so instead the EKA2L1 user interface will open on game launch and you need to manually start your game from inside the emulator. As games need to be installed upfront in the emulator as described below it's probably a good idea to just setup dummy game files with the .symbian or .ngage file extensions inside the ES-DE ROMs directory tree. These will then appear as indvidual games inside ES-DE and you can add metadata to them, scrape them etc.
+
+Here's an example setup:
+```
+/storage/emulated/0/ROMs/ngage/Asphalt 2.ngage
+/storage/emulated/0/ROMs/ngage/Bomberman.ngage
+/storage/emulated/0/ROMs/ngage/CallofDuty.ngage
+/storage/emulated/0/ROMs/symbian/Animal Farm.symbian
+/storage/emulated/0/ROMs/symbian/AnotherWorld.symbian
+```
 
 **General setup**
 
