@@ -166,6 +166,13 @@
             <entry>com.PceEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="PIZZA-BOY-GBA">
+        <!-- Nintendo Game Boy Advance emulator Pizza Boy GBA -->
+        <rule type="androidpackage">
+            <entry>it.dbtecno.pizzaboygbapro/it.dbtecno.pizzaboygbapro.MainActivity</entry>
+            <entry>it.dbtecno.pizzaboygba/it.dbtecno.pizzaboygba.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PIZZA-BOY-GBC">
         <!-- Nintendo Game Boy and Game Boy Color emulator Pizza Boy GBC -->
         <rule type="androidpackage">
