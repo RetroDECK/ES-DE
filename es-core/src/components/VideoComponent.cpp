@@ -14,8 +14,6 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 
-#include <SDL2/SDL_timer.h>
-
 #define SCREENSAVER_FADE_IN_TIME 900
 #define MEDIA_VIEWER_FADE_IN_TIME 600
 

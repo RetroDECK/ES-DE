@@ -94,6 +94,11 @@ public:
         for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
             video->muteVideoPlayer();
     }
+    void resetViewVideosTimer() override
+    {
+        for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
+            video->resetVideoPlayerTimer();
+    }
 
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 

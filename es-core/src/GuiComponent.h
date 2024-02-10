@@ -310,6 +310,8 @@ public:
     virtual void stopViewVideos() {}
     virtual void pauseViewVideos() {}
     virtual void muteViewVideos() {}
+    // Needed on Android to reset the static image delay timer on activity resume.
+    virtual void resetViewVideosTimer() {}
 
     // Used to reset various components like text scrolling, animations etc.
     virtual void resetComponent() {}

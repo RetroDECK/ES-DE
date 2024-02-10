@@ -85,6 +85,8 @@ public:
     void stopViewVideos() override { mCurrentView->stopViewVideos(); }
     void pauseViewVideos() override { mCurrentView->pauseViewVideos(); }
     void muteViewVideos() override { mCurrentView->muteViewVideos(); }
+    // Needed on Android to reset the static image delay timer on activity resume.
+    void resetViewVideosTimer() override { mCurrentView->resetViewVideosTimer(); }
 
     void onFileChanged(FileData* file, bool reloadGamelist);
     void triggerGameLaunch(FileData* game)

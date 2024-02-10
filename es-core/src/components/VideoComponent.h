@@ -15,6 +15,8 @@
 #include <atomic>
 #include <string>
 
+#include <SDL2/SDL_timer.h>
+
 class MediaViewer;
 class TextureResource;
 
@@ -83,6 +85,9 @@ public:
     void startVideoPlayer();
     virtual void stopVideoPlayer(bool muteAudio = true) {}
     virtual void pauseVideoPlayer() {}
+
+    // Needed on Android to reset the static image delay timer on activity resume.
+    void resetVideoPlayerTimer() { mStartTime = SDL_GetTicks() + mConfig.startDelay; }
 
     // Handle looping of the video. Must be called periodically.
     virtual void handleLooping() {}

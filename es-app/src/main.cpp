@@ -508,6 +508,7 @@ void applicationLoop()
                     blockInput = true;
                     inputBlockTime = 0;
                     window->setBlockInput(true);
+                    ViewController::getInstance()->resetViewVideosTimer();
                 }
 #endif
                 InputManager::getInstance().parseEvent(event);
