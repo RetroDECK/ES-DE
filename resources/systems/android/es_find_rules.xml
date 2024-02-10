@@ -75,6 +75,12 @@
             <entry>com.flycast.emulator/com.reicast.emulator.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="FPSE">
+        <!-- Sony PlayStation 1 emulator FPse -->
+        <rule type="androidpackage">
+            <entry>com.emulator.fpse/.Main</entry>
+        </rule>
+    </emulator>
     <emulator name="GBA-EMU">
         <!-- Nintendo Game Boy Advance emulator GBA.emu -->
         <rule type="androidpackage">
