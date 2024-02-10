@@ -331,8 +331,8 @@
         <path>%ROMPATH%/colecovision</path>
         <extension>.bin .BIN .cas .CAS .col .COL .cv .CV .dsk .DSK .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ri .RI .rom .ROM .sc .SC .sg .SG .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <command label="Gearcoleco">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearcoleco_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <platform>colecovision</platform>
         <theme>colecovision</theme>
     </system>
@@ -651,7 +651,6 @@
         <path>%ROMPATH%/gb</path>
         <extension>.bs .BS .cgb .CGB .dmg .DMG .gb .GB .gbc .GBC .sgb .SGB .sfc .SFC .smc .SMC .7z .7Z .zip .ZIP</extension>
         <command label="Gambatte">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gambatte_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="GBC.emu (Standalone)">%EMULATOR_GBC-EMU% %DATA%=%ROMPROVIDER%</command>
         <command label="SameBoy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=sameboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Gearboy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="TGB Dual">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=tgbdual_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -660,6 +659,7 @@
         <command label="bsnes">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bsnes_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vbam_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="GBC.emu (Standalone)">%EMULATOR_GBC-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>gb</platform>
         <theme>gb</theme>
     </system>
@@ -670,9 +670,9 @@
         <extension>.agb .AGB .bin .BIN .cgb .CGB .dmg .DMG .gb .GB .gba .GBA .gbc .GBC .sgb .SGB .7z .7Z .zip .ZIP</extension>
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vbam_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="GBA.emu (Standalone)">%EMULATOR_GBA-EMU% %DATA%=%ROMPROVIDER%</command>
         <command label="VBA Next">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vba_next_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="gpSP">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gpsp_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="GBA.emu (Standalone)">%EMULATOR_GBA-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>gba</platform>
         <theme>gba</theme>
     </system>
@@ -682,7 +682,6 @@
         <path>%ROMPATH%/gbc</path>
         <extension>.bs .BS .cgb .CGB .dmg .DMG .gb .GB .gbc .GBC .sgb .SGB .sfc .SFC .smc .SMC .7z .7Z .zip .ZIP</extension>
         <command label="Gambatte">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gambatte_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="GBC.emu (Standalone)">%EMULATOR_GBC-EMU% %DATA%=%ROMPROVIDER%</command>
         <command label="SameBoy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=sameboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Gearboy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="TGB Dual">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=tgbdual_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -691,6 +690,7 @@
         <command label="bsnes">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bsnes_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vbam_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="GBC.emu (Standalone)">%EMULATOR_GBC-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>gbc</platform>
         <theme>gbc</theme>
     </system>
@@ -959,8 +959,8 @@
         <path>%ROMPATH%/msx</path>
         <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fmsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <platform>msx</platform>
         <theme>msx</theme>
     </system>
@@ -970,8 +970,8 @@
         <path>%ROMPATH%/msx1</path>
         <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fmsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <platform>msx</platform>
         <theme>msx1</theme>
     </system>
@@ -981,8 +981,8 @@
         <path>%ROMPATH%/msx2</path>
         <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fmsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <platform>msx2</platform>
         <theme>msx2</theme>
     </system>
