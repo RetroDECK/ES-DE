@@ -660,6 +660,7 @@
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vbam_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="GBC.emu (Standalone)">%EMULATOR_GBC-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="Pizza Boy GBC (Standalone)">%EMULATOR_PIZZA-BOY-GBC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_rom_uri%=%ROM%</command>
         <platform>gb</platform>
         <theme>gb</theme>
     </system>
@@ -691,6 +692,7 @@
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vbam_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="GBC.emu (Standalone)">%EMULATOR_GBC-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="Pizza Boy GBC (Standalone)">%EMULATOR_PIZZA-BOY-GBC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_rom_uri%=%ROM%</command>
         <platform>gbc</platform>
         <theme>gbc</theme>
     </system>

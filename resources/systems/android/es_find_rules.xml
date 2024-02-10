@@ -166,6 +166,13 @@
             <entry>com.PceEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="PIZZA-BOY-GBC">
+        <!-- Nintendo Game Boy and Game Boy Color emulator Pizza Boy GBC -->
+        <rule type="androidpackage">
+            <entry>it.dbtecno.pizzaboypro/it.dbtecno.pizzaboypro.MainActivity</entry>
+            <entry>it.dbtecno.pizzaboy/it.dbtecno.pizzaboy.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PLAY!">
         <!-- Sony PlayStation 2 emulator Play! -->
         <rule type="androidpackage">
