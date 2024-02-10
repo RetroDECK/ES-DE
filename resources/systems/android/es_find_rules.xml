@@ -81,6 +81,12 @@
             <entry>com.emulator.fpse/.Main</entry>
         </rule>
     </emulator>
+    <emulator name="FPSE-NG">
+        <!-- Sony PlayStation 1 emulator FPseNG -->
+        <rule type="androidpackage">
+            <entry>com.emulator.fpse64/.Main</entry>
+        </rule>
+    </emulator>
     <emulator name="GBA-EMU">
         <!-- Nintendo Game Boy Advance emulator GBA.emu -->
         <rule type="androidpackage">
