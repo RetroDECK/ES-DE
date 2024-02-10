@@ -508,6 +508,7 @@ void applicationLoop()
                     blockInput = true;
                     inputBlockTime = 0;
                     window->setBlockInput(true);
+                    Utils::Platform::Android::onResume();
                     ViewController::getInstance()->resetViewVideosTimer();
                 }
 #endif
