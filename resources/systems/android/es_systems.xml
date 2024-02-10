@@ -1374,6 +1374,7 @@
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=pcsx_rearmed_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="SwanStation">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=swanstation_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% %EXTRABOOL_resumeState%=false %EXTRA_bootPath%=%ROMSAF%</command>
+        <command label="ePSXe (Standalone)">%EMULATOR_EPSXE% %ACTION%=android.intent.action.MAIN %EXTRA_com.epsxe.ePSXe.isoName%=%ROMSAF%</command>
         <command label="FPseNG (Standalone)">%EMULATOR_FPSE-NG% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="FPse (Standalone)">%EMULATOR_FPSE% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>psx</platform>

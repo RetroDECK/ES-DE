@@ -69,6 +69,12 @@
             <entry>com.github.eka2l1/.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="EPSXE">
+        <!-- Sony PlayStation 1 emulator ePSXe -->
+        <rule type="androidpackage">
+            <entry>com.epsxe.ePSXe/.ePSXe</entry>
+        </rule>
+    </emulator>
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="androidpackage">
