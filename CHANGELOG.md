@@ -23,8 +23,9 @@
 * The HTTP error code will now be shown on scraper errors instead of the "File is smaller than 350 bytes" message
 * Removed the ScraperHaltOnInvalidMedia option and corresponding menu entry as it has been superseded by the HTTP error code logic
 * Added a ScraperIgnoreHTTP404Errors option that can be manually set in es_settings.xml to ignore 404 errors (resource not found)
-* Added Mednafen standalone as an alternative emulator for the gb, gba and gbc systems
-* Added Mesen standalone as an alternative emulator for the gamegear, mastersystem, multivision and sg-1000 systems on Linux, Unix and Windows
+* Added Mednafen standalone as an alternative emulator for the gb, gba, gbc and supergrafx systems
+* Added Mesen standalone as an alternative emulator for the gamegear, mastersystem and multivision systems on Linux, Unix and Windows
+* Added Mesen standalone as an alternative emulator for the sg-1000 and supergrafx systems on Linux, Unix and Windows
 * Set Mesen standalone to specifically run in Super Game Boy mode for the sgb system on Linux, Unix and Windows
 * Added the DoubleCherryGB RetroArch core as an alternative emulator for the gb and gbc systems on Linux, Unix and Windows
 * Added the MAME - Current RetroArch core as the default emulator for the gameandwatch and lcdgames systems

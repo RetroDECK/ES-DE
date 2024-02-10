@@ -8,15 +8,13 @@ Table of contents:
 
 ## Emulator installation and setup
 
-This section does not cover all emulators that ES-DE supports, but rather the ones where there are special considerations or setup procedures.
+In general emulation is not that mature on Android compared to other platforms, and emulator availability on the Google Play store leaves a lot to be desired. Many emulators are not there at all, or they are present but have been crippled or have not been updated for a very long time. As well many emulators simply don't integrate with a frontend application like ES-DE as they offer no way of launching games from an external application. So although it may look like emulator availability is not that bad when browsing the Play store, a lot of those emulators are unfortunately not usable in practice.
 
-In general emulation is not that mature on Android compared to other platforms, and emulator availability on the Google Play store leaves a lot to be desired. Many emulators are not there at all, or they are present but have been crippled or have not been updated for a very long time. You will need to sideload a lot of the emulators supported by ES-DE to have a good emulation setup, but thankfully this is not very difficult to do.
-
-The exact producedure for how to install APKs manually is not covered here but there are many resources available online on how to accomplish this.
+Some of the emulators that are supported by ES-DE have to be sideloaded using a manually downloaded APK. But thankfully this is not very difficult to do. The exact producedure for how to install APKs manually is not covered here but there are many resources available online on how to accomplish this.
 
 There is also the [F-Droid](https://f-droid.org/) app store as an alternative to Google Play, and this service contains a couple of emulators that are not present on the Play store, or that are present there but haven't been updated for a very long time.
 
-Some emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game ROMs on launch. This means that no access permissions need to be setup in the emulator upfront. For those emulators which do not support the FileProvider API, you will generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`. But this is not the case for some emulators like RetroArch which may still be using an older storage access method.
+A number of emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game ROMs on launch. This means that no access permission needs to be setup in the emulator upfront. For those emulators which do not support the FileProvider API, you will generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`. But this is not the case for some emulators like RetroArch which may still be using an older storage access method.
 
 The following emulators are configured for FileProvider access:
 * 2600.emu
@@ -53,7 +51,11 @@ You could alternatively install the release on the F-Droid store.
 
 ### AetherSX2 / NetherSX2
 
-Although the emulator entry is named AetherSX2 the recommended release of this emulator is actually the NetherSX2 version as the AetherSX2 release on the Google Play store doesn't work correctly and probably can't be used with ES-DE at all. You'll need to search for this APK online, the filename you'll want is `15210-v1.5-4248-noads.apk`
+Although the emulator entry is named AetherSX2 the recommended release of this emulator is actually the NetherSX2 patched version as the AetherSX2 release on the Google Play store doesn't work correctly and probably can't be used with ES-DE at all. You'll need to search for this APK online, the filename you'll want is `15210-v1.5-4248-noads.apk`
+
+If you prefer to apply the NetherSX2 patch yourself then you can find all relevant information here:
+
+https://github.com/Trixarian/NetherSX2-patch
 
 ### Citra
 
@@ -67,19 +69,31 @@ https://github.com/weihuoya/citra/releases
 
 The Play store version is somehow up to date and could be used, otherwise the F-Droid store version is up to date, or you could download the latest release directly from their website:
 
-https://dolphin-emu.org/
+https://dolphin-emu.org/download/
 
 In the past there were multiple unofficial ports, but these are not really recommended any longer as most of them don't seem to have been updated in a long time and are likely to have been surpassed by the official Dolphin release.
+
+### DraStic
+
+This emulator can be installed from the Play store as a paid app. Note that it does not support launching of zipped game files.
+
+### DuckStation
+
+The Play store version of this emulator is getting frequent updates and is therefore recommended. This is probably the best PlayStation emulator on Android.
 
 ### EKA2L1
 
 This emulator can be downloaded from their GitHub page:
 
-https://github.com/EKA2L1/EKA2L1
+https://github.com/EKA2L1/EKA2L1/releases
 
 There does not seem to be a way to launch individual EKA2L1 games from a frontend application on Android, instead ES-DE will simply launch the EKA2L1 user interface and you'll have to manually start your game from there.
 
-### EX Plus Alpha
+### ePSXe
+
+This emulator can be installed from the Play store as a paid app.
+
+### EX Plus Alpha emulators
 
 These set of emulators also known as the "Robert Broglia" emulators consist of 2600.emu, C64.emu, GBA.emu, GBC.emu, Lynx.emu, NEO.emu, NES.emu, NGP.emu, MD.emu, MSX.emu, PCE.emu, Snes9x EX+, Saturn.emu and Swan.emu
 
@@ -87,12 +101,15 @@ You can install them via Google Play (as paid apps) or download them from their 
 
 https://github.com/Rakashazi/emu-ex-plus-alpha/actions
 
+There are also some BIOS files and similar that are needed to run these emulators, and which can be downloaded from here:
+
+https://www.explusalpha.com/
 
 ### Fake-08
 
-This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manaully install it. After download you'll need to place it inside's RetroArch's downloads directory and then install it from the RetroArch app. Details on how to accomplish this can be found on the Internet:
+This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manaully install it. After download you'll need to place it inside's RetroArch's downloads directory and then install it from the RetroArch app. Details on how to accomplish this can be found on the Internet. Fake-08 can be downloaded from their GitHub site:
 
-https://github.com/jtothebell/fake-08
+https://github.com/jtothebell/fake-08/releases
 
 ### Flycast
 
@@ -100,9 +117,27 @@ Flycast is not available on the Play store or the F-Droid store, but it can be d
 
 https://github.com/flyinghead/flycast/releases
 
+### FPse and FPseNG
+
+These emulators can be installed from the Play store as a paid apps. FPseNG is the more modern version so it's probably best to go for that. As .chd files are not supported and because these emulators can't run games with dots in their directory names it's probably better to use DuckStation unless you have a good reason not to.
+
+### MAME4droid
+
+This emulator can be installed from the Play store. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a frequent MAME release while the older _MAME4droid_ emulator is using an ancient MAME release.
+
 ### melonDS
 
 This emulator can be installed from the Play store but it's quite buggy. Every time you add a new game to the ROM directory you need to start the emulator and manually refresh the game list or you won't be able to launch the game from ES-DE. Filenames containing parentheses also don't work and need to be renamed or they can't be launched from ES-DE. The same is probably true for a number of additional characters.
+
+### M64Plus FZ
+
+This emulator can be installed from the Play store. The Pro version is recommended to avoid annoying ads.
+
+### Nesoid
+
+Nesoid is not available on the Play store but it can be installed from the F-Droid store, or it can be downloaded from their GitHub site:
+
+https://github.com/proninyaroslav/nesoid/releases
 
 ### OpenBOR
 
@@ -112,11 +147,25 @@ https://github.com/DCurrent/openbor/releases
 
 The version named _OpenBOR v3.0 Build 6391_ has for example been proven to work well.
 
+### Pizza Boy emulators
+
+The Pizza Boy GBA and Pizza Boy GBC emulators can be installed from the Play store. There are Basic (free) versions and Pro (paid) versions available.
+
+As of writing this, the Basic version of the GBA emulator does not seem to be able to launch games from ES-DE, but the Pro version is working fine. Both the Basic and Pro versions of the GBC emulator are working fine however.
+
 ### Play!
 
 This PlayStation 2 emulator can be downloaded from here:
 
 https://www.purei.org/downloads.php
+
+### PPSSPP
+
+The Play store version of this emulator is getting frequent updates and is therefore recommended.
+
+### Ruffle
+
+This emulator can be installed from the Play store.
 
 ### Real3DOPlayer
 
@@ -132,7 +181,11 @@ Redream is available on the Play store but is as of writing this not usable on A
 
 This PlayStation Vita emulator can be downloaded from their GitHub site:
 
-https://github.com/Vita3K/Vita3K-Android
+https://github.com/Vita3K/Vita3K-Android/releases
+
+### Yuzu
+
+The Play store version of this emulator is getting frequent updates and is therefore recommended. There's an Early Access version as well which is also recommended.
 
 ## Supported game systems
 
@@ -175,7 +228,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   | Yes          | Single archive or ROM file           |
 | coco                  | Tandy Color Computer                           | _Placeholder_                     |                                   |              |                                      |
-| colecovision          | Coleco ColecoVision                            | blueMSX                           | MSX.emu **(Standalone)**,<br>Gearcoleco | Yes          | Single archive or ROM file           |
+| colecovision          | Coleco ColecoVision                            | blueMSX                           | Gearcoleco,<br>MSX.emu **(Standalone)** | Yes          | Single archive or ROM file           |
 | consolearcade         | Console Arcade Systems                         | _Placeholder_                     |                                   |              |                                      |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      |                                      |
 | cps1                  | Capcom Play System I                           | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1 | Depends      |                                      |
@@ -192,10 +245,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | electron              | Acorn Electron                                 | _Placeholder_                     |                                   |              |                                      |
 | emulators             | Emulators                                      | _Placeholder_                     |                                   |              |                                      |
 | epic                  | Epic Games Store                               | _Placeholder_                     |                                   |              |                                      |
-| famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)** | No           | Single archive or ROM file           |
+| famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          |                                |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          |                                      |
-| fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>FCEUmm,<br>NES.emu **(Standalone)** | Yes          | Single archive or ROM file |
+| fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>FCEUmm,<br>NES.emu **(Standalone)**,<br>Nesoid **(Standalone)** | Yes          | Single archive or ROM file |
 | flash                 | Adobe Flash                                    | Ruffle **(Standalone)**           |                                   | No           | Single .swf file                     |
 | fm7                   | Fujitsu FM-7                                   | _Placeholder_                     |                                   |              |                                      |
 | fmtowns               | Fujitsu FM Towns                               | _Placeholder_                     |                                   |              |                                      |
@@ -204,9 +257,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gameandwatch          | Nintendo Game and Watch                        | Multi (MESS)                      | MAME4droid 2024 **(Standalone)**,<br>Handheld Electronic (GW) | No           | Single archive or ROM file           |
 | gamecom               | Tiger Electronics Game.com                     | _Placeholder_                     |                                   |              |                                      |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive | No           | Single archive or ROM file |
-| gb                    | Nintendo Game Boy                              | Gambatte                          | GBC.emu **(Standalone)**,<br>SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M | No           | Single archive or ROM file |
-| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>GBA.emu **(Standalone)**,<br>VBA Next,<br>gpSP | No          | Single archive or ROM file |
-| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | GBC.emu **(Standalone)**,<br>SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M | No           | Single archive or ROM file |
+| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
+| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP,<br>GBA.emu **(Standalone)**,<br>Pizza Boy GBA **(Standalone)** | No          | Single archive or ROM file |
+| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)**          | No           | Disc image file for single-disc games, .m3u playlist for multi-disc games |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | No           | Single archive or ROM file |
 | gmaster               | Hartung Game Master                            | _Placeholder_                     |                                   |              |                                      |
@@ -232,10 +285,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | model2                | Sega Model 2                                   | MAME - Current                    |                                   | Yes          |                                      |
 | model3                | Sega Model 3                                   | _Placeholder_                     |                                   |              |                                      |
 | moto                  | Thomson MO/TO Series                           | Theodore                          |                                   |              |                                      |
-| msx                   | MSX                                            | blueMSX                           | MSX.emu **(Standalone)**,<br>fMSX | Yes          |                                      |
-| msx1                  | MSX1                                           | blueMSX                           | MSX.emu **(Standalone)**,<br>fMSX | Yes          |                                      |
-| msx2                  | MSX2                                           | blueMSX                           | MSX.emu **(Standalone)**,<br>fMSX | Yes          |                                      |
-| msxturbor             | MSX Turbo R                                    | blueMSX                           | MSX.emu **(Standalone)**,<br>fMSX | Yes          |                                      |
+| msx                   | MSX                                            | blueMSX                           | fMSX,<br>MSX.emu **(Standalone)** | Yes          |                                      |
+| msx1                  | MSX1                                           | blueMSX                           | fMSX,<br>MSX.emu **(Standalone)** | Yes          |                                      |
+| msx2                  | MSX2                                           | blueMSX                           | fMSX,<br>MSX.emu **(Standalone)** | Yes          |                                      |
+| msxturbor             | MSX Turbo R                                    | blueMSX                           | fMSX,<br>MSX.emu **(Standalone)** | Yes          |                                      |
 | mugen                 | M.U.G.E.N Game Engine                          | _Placeholder_                     |                                   |              |                                      |
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
@@ -248,7 +301,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive or ROM file |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
-| nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)** | No           | Single archive or ROM file           |
+| nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |
 | ngage                 | Nokia N-Gage                                   | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |
@@ -272,7 +325,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file               |
 | psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           |                                   | Yes          | See the specific _Sony PlayStation Vita_ section in the User guide |
-| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)**,<br>ePSXe **(Standalone)**,<br>FPseNG **(Standalone)**,<br>FPse **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | pv1000                | Casio PV-1000                                  | _Placeholder_                     |                                   |              |                                      |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero] | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | _Placeholder_                     |                                   |              |                                      |
@@ -295,7 +348,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | steam                 | Valve Steam                                    | _Placeholder_                     |                                   |              |                                      |
 | stv                   | Sega Titan Video Game System                   | MAME - Current                    | MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive file                  |
 | sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy |              |                                      |
-| supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE                        |              |                                      |
+| supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | supervision           | Watara Supervision                             | Potator                           |                                   | No           | Single archive or ROM file           |
 | supracan              | Funtech Super A'Can                            | _Placeholder_                     |                                   |              |                                      |
 | switch                | Nintendo Switch                                | Yuzu **(Standalone)**             |                                   | Yes          |                                      |
