@@ -119,6 +119,12 @@
             <entry>com.explusalpha.GbcEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="INES">
+        <!-- Nintendo NES and Famicom emulator iNES -->
+        <rule type="androidpackage">
+            <entry>com.fms.ines.free/com.fms.emulib.TVActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="LYNX-EMU">
         <!-- Atari Lynx emulator Lynx.emu -->
         <rule type="androidpackage">
