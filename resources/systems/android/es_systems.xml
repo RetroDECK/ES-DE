@@ -645,6 +645,7 @@
         <command label="Gearsystem">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearsystem_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="SMS Plus GX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=smsplus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=picodrive_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MasterGear (Standalone)">%EMULATOR_MASTERGEAR% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>gamegear</platform>
         <theme>gamegear</theme>
     </system>
@@ -866,6 +867,7 @@
         <command label="Gearsystem">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearsystem_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=picodrive_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MD.emu (Standalone)">%EMULATOR_MD-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="MasterGear (Standalone)">%EMULATOR_MASTERGEAR% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>mastersystem</platform>
         <theme>mastersystem</theme>
     </system>
@@ -1023,6 +1025,7 @@
         <path>%ROMPATH%/multivision</path>
         <extension>.bin .BIN .gg .GG .rom .ROM .sg .SG .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="Gearsystem">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearsystem_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MasterGear (Standalone)">%EMULATOR_MASTERGEAR% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>sg-1000</platform>
         <theme>multivision</theme>
     </system>
@@ -1542,6 +1545,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=genesis_plus_gx_wide_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Gearsystem">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearsystem_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MasterGear (Standalone)">%EMULATOR_MASTERGEAR% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>sg-1000</platform>
         <theme>sg-1000</theme>
     </system>
