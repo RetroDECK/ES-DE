@@ -504,6 +504,7 @@ void applicationLoop()
 #if defined(__ANDROID__)
                 // Prevent that button presses get registered immediately when entering the
                 // foreground (which most commonly mean we're returning from a game).
+                // Also perform some other tasks on resume such as resetting timers.
                 if (event.type == SDL_APP_WILLENTERFOREGROUND) {
                     blockInput = true;
                     inputBlockTime = 0;
@@ -1075,6 +1076,18 @@ int main(int argc, char* argv[])
                 break;
             }
         }
+
+#if defined(__ANDROID__)
+        if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
+            LOG(LogInfo) << "Creating \"no media\" file \""
+                         << FileData::getROMDirectory() + ".nomedia"
+                         << "\"...";
+            Utils::FileSystem::createEmptyFile(FileData::getROMDirectory() + ".nomedia");
+            if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
+                LOG(LogWarning) << "Couldn't create file, permission problems?";
+            }
+        }
+#endif
 
         // Generate controller events since we're done loading.
         SDL_GameControllerEventState(SDL_ENABLE);
