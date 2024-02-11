@@ -8,13 +8,15 @@ Table of contents:
 
 ## Emulation on Android
 
-In general emulation is not that mature on Android compared to other platforms, and emulator availability on the Google Play store leaves a lot to be desired. Many emulators are not there at all, or they are present but have been crippled or have not been updated for a very long time. As well many emulators simply don't integrate with a frontend application like ES-DE as they offer no way of launching games from an external application. So although it may look like emulator availability is not that bad when browsing the Play store, a lot of those emulators are unfortunately not usable in practice.
+In general emulation is not that mature on Android compared to other platforms, and emulator availability on the Google Play store leaves a lot to be desired. Many emulators are not there at all, or they are present but have been crippled or have not been updated for a very long time. As well many emulators simply don't integrate with a frontend application like ES-DE as they offer no way of launching games from an external application.
 
 Some of the emulators that are supported by ES-DE have to be sideloaded using a manually downloaded APK. But thankfully this is not very difficult to do. The exact producedure for how to install APKs manually is not covered here but there are many resources available online on how to accomplish this.
 
 There is also the [F-Droid](https://f-droid.org/) app store as an alternative to Google Play, and this service contains a couple of emulators that are not present on the Play store, or that are present there but haven't been updated for a very long time.
 
-A number of emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game ROMs on launch. This means that no access permission needs to be setup in the emulator upfront. For those emulators which do not support the FileProvider API, you will generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`. But this is not the case for some emulators like RetroArch which are still using an older storage access method.
+A number of emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game ROMs on launch. This means that no access permission needs to be setup in the emulator upfront. For those emulators which do not support the FileProvider API, you will generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`.
+
+Some emulators like RetroArch are still using an older storage access method and for those emulators this is not something you need to consider.
 
 The following emulators are configured for FileProvider access:
 * 2600.emu
@@ -34,10 +36,10 @@ The following emulators are configured for FileProvider access:
 * Swan.emu
 * Yuzu
 
-Note that some of these emulators still require BIOS files, so not all of them will be completely free from manual configuration.
+Some of these emulators still require BIOS files, so not all of them will be completely free from manual configuration.
 
 The following emulators have partial FileProvider access support but are currently not configured for that in ES-DE:
-* Dolphin (the FileProvider interface is broken on Android 13 and later)
+* Dolphin (the FileProvider interface is broken on some devices)
 * M64Plus FZ (the FileProvider interface doesn't work reliably and game launching randomly fails when using it)
 * PPSSPP (the FileProvider interface doesn't work with .chd files specifically)
 
@@ -47,7 +49,7 @@ There is a strange issue on some specific Android devices where some emulators r
 
 A known problematic device is the Ayn Odin 2 (Android 13) and devices that seem to work correctly are Ayn Odin Lite (Android 11), Google Pixel 4a (Android 13) and Google Pixel Tablet (Android 14).
 
-The issue has been observed with M64Plus FZ, Play!, Saturn.emu, FPse and FPseNG and is working fine with RetroArch, NetherSX2, ePSXe, DuckStation and Yuzu. Note however that this is not a complete list as not all emulators have been tested for this across multiple devices.
+The issue has been observed with M64Plus FZ, Play!, Saturn.emu, FPse and FPseNG and it's working fine with RetroArch, NetherSX2, ePSXe, DuckStation and Yuzu. Note however that this is not a complete list as not all emulators have been tested for this across multiple devices.
 
 If you run into this problem you can use the _folder link_ functionality as an alternative to the _directories interpreted as files_ functionality. How to use folder links is described in the [User guide](USERGUIDE.md).
 
@@ -76,13 +78,15 @@ The RetroArch release in the Play Store is not very good and is therefore not re
 
 https://retroarch.com/
 
-You could alternatively install the release on the F-Droid store.
+You could alternatively install their release on the F-Droid store.
+
+Be aware that you need to manually install every core you want to use from inside the RetroArch user interface, and you also need to install all necessary BIOS files. The Android release of RetroArch is pretty unforgiving and will usually just present a black screen on game launch if the core file or the BIOS file is missing, and it will hang there until Android realizes the app is not responding and displays a popup where you can choose to kill the process.
 
 ### AetherSX2 / NetherSX2
 
 Although the emulator entry is named AetherSX2 the recommended release of this emulator is actually the NetherSX2 patched version as the AetherSX2 release on the Google Play store doesn't work correctly and probably can't be used with ES-DE at all. You'll need to search for this APK online, the filename you'll want is `15210-v1.5-4248-noads.apk`
 
-If you prefer to apply the NetherSX2 patch yourself then you can find all relevant information here:
+If you prefer to apply the NetherSX2 patch yourself (i.e. build the APK) then you can find all relevant information here:
 
 https://github.com/Trixarian/NetherSX2-patch
 
@@ -120,13 +124,13 @@ https://play.google.com/store/apps/details?id=com.dsemu.drastic
 
 ### DuckStation
 
-The Play store version of this emulator is getting frequent updates and is therefore recommended. This is probably the best PlayStation emulator on Android.
+The Play store version of this emulator is getting frequent updates and is therefore recommended.
 
 https://play.google.com/store/apps/details?id=com.github.stenzek.duckstation
 
 ### EKA2L1
 
-This emulator can be downloaded from their GitHub page:
+This emulator can be downloaded from their GitHub site.
 
 https://github.com/EKA2L1/EKA2L1/releases
 
@@ -147,7 +151,7 @@ You can install them via Google Play (as paid apps) or download them from their 
 https://play.google.com/store/apps/developer?id=Robert+Broglia \
 https://github.com/Rakashazi/emu-ex-plus-alpha/actions
 
-There are also some BIOS files and similar that are needed to run these emulators, and which can be downloaded from here:
+There are also some BIOS files and similar that are needed to run these emulators, and which can be downloaded from their website.
 
 https://www.explusalpha.com/
 
@@ -185,7 +189,7 @@ https://play.google.com/store/apps/details?id=com.fms.ines.free
 
 ### MAME4droid 2024 and MAME4droid
 
-This emulator can be installed from the Play store. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a frequent MAME release while the older _MAME4droid_ emulator is using an ancient MAME release.
+These emulators can be installed from the Play store. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a frequent MAME release while the older _MAME4droid_ is using an ancient MAME release.
 
 https://play.google.com/store/apps/details?id=com.seleuco.mame4d2024 \
 https://play.google.com/store/apps/details?id=com.seleuco.mame4droid
@@ -220,21 +224,22 @@ https://play.google.com/store/apps/details?id=com.fastemulator.gbc
 
 Nesoid is not available on the Play store but it can be installed from the F-Droid store, or it can be downloaded from their GitHub site.
 
+https://f-droid.org/en/packages/com.androidemu.nes \
 https://github.com/proninyaroslav/nesoid/releases
 
 ### OpenBOR
 
-Although OpenBOR is working fine on Android it's not possible to properly integrate it with a frontend, you'll instead need to install your game PAKs into the `/sdcard/OpenBOR/Paks` directory and create dummy .openbor files for your games in `ROMs/openbor` and after launching a game from ES-DE you need to manually start it from inside the OpenBOR GUI. You can download the latest APK from here:
+Although OpenBOR is working fine on Android it's not possible to properly integrate it with a frontend, you'll instead need to install your game PAKs into the `/sdcard/OpenBOR/Paks` directory and create dummy .openbor files for your games in `ROMs/openbor` and after launching a game from ES-DE you need to manually start it from inside the OpenBOR GUI. There are more detailed setup instructions in the _OpenBOR_ section of the [User guide](USERGUIDE-DEV.md#openbor).
+
+You can download OpenBOR from their GitHub site, the version named _OpenBOR v3.0 Build 6391_ has for example been proven to work well.
 
 https://github.com/DCurrent/openbor/releases
 
-The version named _OpenBOR v3.0 Build 6391_ has for example been proven to work well.
-
-### Pizza Boy GBA and GBC
+### Pizza Boy GBA and Pizza Boy GBC
 
 The Pizza Boy GBA and Pizza Boy GBC emulators can be installed from the Play store. There are Basic (free) versions and Pro (paid) versions available.
 
-As of writing this, the Basic version of the GBA emulator does not seem to be able to launch games from ES-DE, but the Pro version is working fine. Both the Basic and Pro versions of the GBC emulator are working fine however.
+As of writing this, the Basic version of the GBA emulator does not seem to be able to launch games from ES-DE, but the Pro version is working fine. Both the Basic and Pro versions of the GBC emulator are working correctly.
 
 https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygba \
 https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygbapro \
@@ -243,7 +248,7 @@ https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboypro
 
 ### Play!
 
-This PlayStation 2 emulator can be downloaded from here:
+This PlayStation 2 emulator can be downloaded from their website.
 
 https://www.purei.org/downloads.php
 
@@ -283,7 +288,7 @@ https://play.google.com/store/apps/details?id=com.fms.speccy.deluxe
 
 ### Vita3K
 
-This PlayStation Vita emulator can be downloaded from their GitHub site.
+This PlayStation Vita emulator can be downloaded from their GitHub site. Refer to the User guide for detailed game setup instructions.
 
 https://github.com/Vita3K/Vita3K-Android/releases
 
