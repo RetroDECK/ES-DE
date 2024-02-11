@@ -154,6 +154,12 @@
             <entry>com.fastemulator.gba/.EmulatorActivity</entry>
         </rule>
     </emulator>
+    <emulator name="MY-OLDBOY">
+        <!-- Nintendo Game Boy and Game Boy Color emulator My OldBoy! -->
+        <rule type="androidpackage">
+            <entry>com.fastemulator.gbc/.EmulatorActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="NEO-EMU">
         <!-- SNK Neo Geo emulator NEO.emu -->
         <rule type="androidpackage">
