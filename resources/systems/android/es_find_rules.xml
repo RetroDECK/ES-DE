@@ -148,6 +148,12 @@
             <entry>com.explusalpha.MsxEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="MY-BOY">
+        <!-- Nintendo Game Boy Advance emulator My Boy! -->
+        <rule type="androidpackage">
+            <entry>com.fastemulator.gba/.EmulatorActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="NEO-EMU">
         <!-- SNK Neo Geo emulator NEO.emu -->
         <rule type="androidpackage">
