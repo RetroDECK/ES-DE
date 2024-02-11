@@ -88,6 +88,13 @@
             <entry>com.flycast.emulator/com.reicast.emulator.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="FMSX">
+        <!-- MSX home computer emulator fMSX -->
+        <rule type="androidpackage">
+            <entry>com.fms.fmsx.deluxe/com.fms.emulib.TVActivity</entry>
+            <entry>com.fms.fmsx/com.fms.emulib.TVActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="FPSE">
         <!-- Sony PlayStation 1 emulator FPse -->
         <rule type="androidpackage">

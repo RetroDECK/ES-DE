@@ -967,6 +967,7 @@
         <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fmsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="fMSX (Standalone)">%EMULATOR_FMSX% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <platform>msx</platform>
         <theme>msx</theme>
@@ -978,6 +979,7 @@
         <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fmsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="fMSX (Standalone)">%EMULATOR_FMSX% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <platform>msx</platform>
         <theme>msx1</theme>
@@ -989,6 +991,7 @@
         <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fmsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="fMSX (Standalone)">%EMULATOR_FMSX% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
         <platform>msx2</platform>
         <theme>msx2</theme>
