@@ -43,30 +43,31 @@ The following emulators have partial FileProvider access support but are current
 * M64Plus FZ (the FileProvider interface doesn't work reliably and game launching randomly fails when using it)
 * PPSSPP (the FileProvider interface doesn't work with .chd files specifically)
 
-## Issues with dots in directory names
+## Issues with the Ayn Odin 2
 
-There is a strange issue on some specific Android devices where some emulators refuse to run games that you place inside directories that contain dots in their names. This is quite problematic as the [directories interpreted as files](USERGUIDE.md#directories-interpreted-as-files) functionality depends on the ability to add file extensions to directory names.
+There are two serious issues that seem to be specific to the Ayn Odin 2, although it remains to be seen whether the problem exists also on other devices.
 
-A known problematic device is the Ayn Odin 2 (Android 13) and devices that seem to work correctly are Ayn Odin Lite (Android 11), Google Pixel 4a (Android 13) and Google Pixel Tablet (Android 14).
+The first problem is that some emulators refuse to run games that you place inside directories that contain dots in their names. This is quite problematic as the [directories interpreted as files](USERGUIDE.md#directories-interpreted-as-files) functionality depends on the ability to add file extensions to directory names.
 
-The issue has been observed with M64Plus FZ, Play!, Saturn.emu, FPse and FPseNG and it's working fine with RetroArch, NetherSX2, ePSXe, DuckStation and Yuzu. Note however that this is not a complete list as not all emulators have been tested for this across multiple devices.
+This has been observed with M64Plus FZ, Play!, Saturn.emu, FPse and FPseNG and it's working fine with RetroArch, NetherSX2, ePSXe, DuckStation and Yuzu. Note however that this is not a complete list as not all emulators have been tested for this problem.
 
-If you run into this problem you can use the _folder link_ functionality as an alternative to the _directories interpreted as files_ functionality. How to use folder links is described in the [User guide](USERGUIDE.md).
+If you run into this issue you can use the _folder link_ functionality as an alternative to the _directories interpreted as files_ functionality. How to use folder links is described in the [User guide](USERGUIDE.md).
 
-## Issues with running some emulators on some devices
+The second problem is that a number of emulators can't be launched from ES-DE at all. When attempting to run such an emulator an error popup with the game name followed by "ERROR CODE -1" is displayed. The affected emulators are ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy.
 
-Some devices have issues and can't run a number of emulators. It may be related to the previous topic above, or it may be completely unrelated. But the same pattern emerges here, the Ayn Odin 2 (Android 13) is broken and the Ayn Odin Lite (Android 11), Google Pixel 4a (Android 13) and Google Pixel Tablet (Android 14) are working fine.
+The following devices have been tested and do **not** experience either of these two problems:
 
-When attempting to run such an emulator on a problematic device you'll see an error popup with the game name followed by "ERROR CODE -1". The following emulators are affected
+* Ayn Odin Lite (Android 11)
+* Retroid Pocket 4 Pro (Android 13)
+* Google Pixel 4a (Android 13)
+* Google Pixel Tablet (Android 14)
 
-* ColEm
-* fMSX
-* iNES
-* MasterGear
-* My Boy!
-* My OldBoy!
-* Redream
-* Speccy
+## Known problems
+
+In addition to the issues specific to the Ayn Odin 2 there are a couple of other problems that will hopefully be resolved in the near future:
+
+* Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
+* The Android soft keyboard causes rendering issues when navigating using a controller or physical keyboard, as such the ES-DE built-in keyboard is enabled by default for the time being. For testing purposes the Android soft keyboard can be enabled via the _Enable virtual keyboard_ option in the _UI settings_ menu. If only using touch input the issue is not present. This problem is believed to be caused by a bug in the SDL library so it probably needs to be resolved there.
 
 ## Emulator installation and setup
 
@@ -78,7 +79,9 @@ The RetroArch release in the Play Store is not very good and is therefore not re
 
 https://retroarch.com/
 
-You could alternatively install their release on the F-Droid store.
+Or you could alternatively install their release on the F-Droid store.
+
+https://f-droid.org/en/packages/com.retroarch
 
 Be aware that you need to manually install every core you want to use from inside the RetroArch user interface, and you also need to install all necessary BIOS files. The Android release of RetroArch is pretty unforgiving and will usually just present a black screen on game launch if the core file or the BIOS file is missing, and it will hang there until Android realizes the app is not responding and displays a popup where you can choose to kill the process.
 
@@ -94,8 +97,7 @@ https://github.com/Trixarian/NetherSX2-patch
 
 The version of Citra on the Google Play store is very old and barely works. Instead download either the Canary or Nightly builds from the Citra website or use the Citra MMJ fork:
 
-https://citra-emu.org/download/
-
+https://citra-emu.org/download \
 https://github.com/weihuoya/citra/releases
 
 ### ColEm
@@ -112,6 +114,7 @@ https://play.google.com/store/apps/details?id=com.fms.colem.deluxe
 The Play store version is somehow up to date and could be used, otherwise the F-Droid store version is up to date, or you could download the latest release directly from their website.
 
 https://play.google.com/store/apps/details?id=org.dolphinemu.dolphinemu \
+https://f-droid.org/en/packages/org.dolphinemu.dolphinemu \
 https://dolphin-emu.org/download/
 
 In the past there were multiple unofficial ports, but these are not really recommended any longer as most of them don't seem to have been updated in a long time and are likely to have been surpassed by the official Dolphin release.
