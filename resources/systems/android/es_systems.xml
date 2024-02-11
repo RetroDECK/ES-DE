@@ -333,6 +333,7 @@
         <command label="blueMSX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=bluemsx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Gearcoleco">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gearcoleco_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MSX.emu (Standalone)">%EMULATOR_MSX-EMU% %DATA%=%ROMSAF%</command>
+        <command label="ColEm (Standalone)">%EMULATOR_COLEM% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>colecovision</platform>
         <theme>colecovision</theme>
     </system>
