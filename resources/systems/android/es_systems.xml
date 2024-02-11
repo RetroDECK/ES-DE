@@ -1973,6 +1973,7 @@
         <path>%ROMPATH%/zxspectrum</path>
         <extension>.dsk .DSK .gz .GZ .img .IMG .mgt .MGT .rzx .RZX .scl .SCL .sh .SH .sna .SNA .szx .SZX .tap .TAP .trd .TRD .tzx .TZX .udi .UDI .z80 .Z80 .7z .7Z .zip .ZIP</extension>
         <command label="Fuse">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fuse_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Speccy (Standalone)">%EMULATOR_SPECCY% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>zxspectrum</platform>
         <theme>zxspectrum</theme>
     </system>

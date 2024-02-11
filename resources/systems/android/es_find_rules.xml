@@ -260,6 +260,13 @@
             <entry>com.explusalpha.Snes9xPlus/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SPECCY">
+        <!-- Sinclair ZX Spectrum emulator Speccy -->
+        <rule type="androidpackage">
+            <entry>com.fms.speccy.deluxe/com.fms.emulib.TVActivity</entry>
+            <entry>com.fms.speccy/com.fms.emulib.TVActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SWAN-EMU">
         <!-- Bandai WonderSwan emulator Swan.emu -->
         <rule type="androidpackage">
