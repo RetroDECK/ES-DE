@@ -8,9 +8,9 @@ Table of contents:
 
 ## Emulation on Android
 
-In general emulation is not that mature on Android compared to other platforms, and emulator availability on the Google Play store leaves a lot to be desired. Many emulators are not there at all, or they are present but have been crippled or have not been updated for a very long time. As well many emulators simply don't integrate with a frontend application like ES-DE as they offer no way of launching games from an external application.
+There are some challenges with emulation on Android. Some emulators on the Google Play store have not been updated for a long time, or like in the case with RetroArch they are crippled to comply with Google's rules and policies. And some emulators are not available on the Play store at all. For these reasons you will need to sideload some manually downloaded APKs for a good emulation setup. There is a section later in this document describing the best place to get hold of each supported emulator.
 
-Some of the emulators that are supported by ES-DE have to be sideloaded using a manually downloaded APK. But thankfully this is not very difficult to do. The exact producedure for how to install APKs manually is not covered here but there are many resources available online on how to accomplish this.
+Thankfully sideloading emulators is not very difficult to do, the exact producedure for how to install APKs manually is not covered here but there are many resources available online on how to accomplish this.
 
 There is also the [F-Droid](https://f-droid.org/) app store as an alternative to Google Play, and this service contains a couple of emulators that are not present on the Play store, or that are present there but haven't been updated for a very long time.
 
