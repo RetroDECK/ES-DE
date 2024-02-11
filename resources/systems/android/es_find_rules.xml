@@ -45,6 +45,13 @@
             <entry>org.citra.emu/.ui.EmulationActivity</entry>
         </rule>
     </emulator>
+    <emulator name="COLEM">
+        <!-- Coleco ColecoVision and Adam emulator ColEm -->
+        <rule type="androidpackage">
+            <entry>com.fms.colem.deluxe/com.fms.emulib.TVActivity</entry>
+            <entry>com.fms.colem/com.fms.emulib.TVActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="androidpackage">
