@@ -4167,4 +4167,4 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | zmachine              | Infocom Z-machine                              | Gargoyle **(Standalone)**         |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
 | zxnext                | Sinclair ZX Spectrum Next                      | #CSpect **(Standalone)** [LW],<br>ZEsarUX **(Standalone)** [M] | ZEsarUX **(Standalone)** [LW] | No           | In separate folder interpreted as a file |
-| zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              | Fuse **(Standalone)**             | No           |                                      |
+| zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              | Fuse **(Standalone)**             | No           | Single archive or ROM file           |
