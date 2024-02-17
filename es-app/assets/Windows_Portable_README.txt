@@ -5,7 +5,6 @@ ES-DE release:
 3.0.0
 
 The latest version can be downloaded from https://es-de.org
-Please also consider donating to the project, links for that can be found on the ES-DE website just mentioned.
 
 Instructions:
 
