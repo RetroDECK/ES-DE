@@ -324,26 +324,13 @@ Instructions on how to customize the es_systems.xml file can be found in [INSTAL
 
 In addition to the above it's also possible to customize the find rules via the `es_find_rules.xml` file. The logic is essentially identical to what is described for es_systems.xml, and details regarding this file can be found in [INSTALL-DEV.md](INSTALL-DEV.md#es_find_rulesxml) as well.
 
-## Migrating from other EmulationStation forks
+## Migrating from EmulationStation
 
 **IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!**
 
-ES-DE is designed to be backward compatible to a certain degree. That is, it should be able to read data from other/previous EmulationStation versions such as the RetroPie and Batocera forks. But the opposite is not true and it's a one-way ticket for your gamelist.xml files and your custom collection files when migrating to ES-DE as they will be modified in ways that previous ES versions will see as data loss. For instance ES-DE does not use tags inside the gamelist.xml files to find game media but instead matches the media to the names of the game/ROM files. So it will not save any such tags back to the gamelist files during updates, effectively disabling the game media if the files are opened in another ES fork.
+ES-DE is partially compatible with EmulationStation as both frontends originally shared the same source code. That is, ES-DE should generally be able to read data from EmulationStation. But the opposite is not true and it's a one-way ticket for your gamelist.xml files and your custom collection files when migrating to ES-DE as they will be modified in ways that EmulationStation will see as data loss. For instance ES-DE does not use tags inside the gamelist.xml files to find game media but instead matches the media to the names of the game/ROM files. So it will not save any such tags back to the gamelist files during updates, effectively disabling the game media if the files are opened in EmulationStation.
 
-Due to this, always make backups of at least the following directories before testing ES-DE for the first time:
-
-```
-~/ES-DE/gameslists/
-~/ES-DE/collections/
-```
-
-If you have gamelist.xml files in your ROMs directory tree then ES-DE will ignore those by default, so you need to move them to the ~/ES-DE/gamelists/ tree.
-
-It's also strongly adviced to not rename an old es_settings.cfg file to es_settings.xml for use in ES-DE as it may cause undefined behavior and crashes.
-
-If migrating from Batocera, RetroBat or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for most game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera, RetroBat and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE.
-
-Another potential issue when migrating from another EmulationStation fork is that the path tag requires a leading ./ in ES-DE while that may not be present in other forks. If you don't see any metadata for your games inside ES-DE, then simply add the ./ characters to each path tag and it should hopefully work.
+Another potential issue when migrating gamelist.xml files from EmulationStation is that the path tag requires a leading ./ in ES-DE while that may not be present in files coming from EmulationStation. If you don't see any metadata for your games inside ES-DE, then simply add the ./ characters to each path tag and it should hopefully work.
 
 Example of an unreadable path tag:
 ```
@@ -354,6 +341,11 @@ Example of a correct path tag readable by ES-DE:
 ```
 <path>./Another World.lha</path>
 ```
+
+And if you have gamelist.xml files in your ROMs directory tree then ES-DE will ignore those by default, so you need to move them to the ~/ES-DE/gamelists/ tree.
+
+If migrating from Batocera, RetroBat or Recalbox, be aware that ES-DE does not always use the same system names as those frontends. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera, RetroBat and Recalbox has the _sg1000_ system name, but is _sg-1000_ in ES-DE. See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE.
+
 
 ## Removing orphaned data
 

@@ -2,7 +2,7 @@
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
-If creating themes specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Themes made for ES-DE are not compatible with any other EmulationStation forks (and vice versa) and the -es-de extension makes it clear that it's an ES-DE theme. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting themes from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
+If creating themes for ES-DE, please add `-es-de` to the repository/directory name to clearly indicate that it's a theme for this frontend. Two examples would be `linear-es-de` and `modern-es-de`. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting themes from the _UI Settings_ menu. For example linear-es-de will be listed simply as _Linear_ in this menu.
 
 Before your start, make sure to download the _Theme engine examples_ theme that contains a number of example variants for things like vertical and horizontal carousels, wheel carousels, system view text lists, grids etc:
 

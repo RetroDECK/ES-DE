@@ -38,6 +38,9 @@
         </screenshot>
     </screenshots>
     <releases>
+        <release version="3.0.0" date="2024-02-17">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
         <release version="2.2.1" date="2023-11-12">
             <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>

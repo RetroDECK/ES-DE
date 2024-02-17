@@ -1,10 +1,16 @@
 # ES-DE (EmulationStation Desktop Edition) - Changelog
 
-## Version 3.0.0 (in development)
+## Version 3.0.0
 
-**Release date:** TBD
+**Release date:** 2024-02-17
 
 ### Release overview
+
+The 3.0 release rebrands the application from EmulationStation Desktop Edition to simply ES-DE. And as part of this the application data directory has changed from .emulationstation to ES-DE and its internal structure has been improved. There is also a new default theme named Linear that is bundled with the application.
+
+Support for configurable font sizes has also been added, so assuming the theme supports it, it's now possible to select between these sizes from the _UI settings_ menu.
+
+A number of minor improvements and bug fixes are also part of this release.
 
 ### Detailed list of changes
 
@@ -22,7 +28,7 @@
 * Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir
 * The HTTP error code will now be shown on scraper errors instead of the "File is smaller than 350 bytes" message
 * Removed the ScraperHaltOnInvalidMedia option and corresponding menu entry as it has been superseded by the HTTP error code logic
-* Added a ScraperIgnoreHTTP404Errors option that can be manually set in es_settings.xml to ignore 404 errors (resource not found)
+* Added a ScraperIgnoreHTTP404Errors option that can be manually set in es_settings.xml to ignore 404 errors (i.e. resource not found)
 * Added Mednafen standalone as an alternative emulator for the gb, gba, gbc and supergrafx systems
 * Added Mesen standalone as an alternative emulator for the gamegear, mastersystem and multivision systems on Linux, Unix and Windows
 * Added Mesen standalone as an alternative emulator for the sg-1000 and supergrafx systems on Linux, Unix and Windows
@@ -58,6 +64,8 @@
 * The relevant SDL error message is now printed to the log if a controller could not be added
 * Added rendering workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
 * Added the UTF8-CPP library as a dependency
+* Updated SDL to 2.30.0 on Windows, macOS and the Linux AppImage builds
+* Bundled the December 2023 release of the Mozilla TLS/SSL certificates
 
 ### Bug fixes
 

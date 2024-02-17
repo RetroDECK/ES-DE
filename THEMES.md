@@ -1,6 +1,6 @@
-# ES-DE (EmulationStation Desktop Edition) v2.2 - Themes
+# ES-DE (EmulationStation Desktop Edition) v3.0 - Themes
 
-If creating themes specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Themes made for ES-DE are not compatible with any other EmulationStation forks (and vice versa) and the -es-de extension makes it clear that it's an ES-DE theme. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting themes from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
+If creating themes for ES-DE, please add `-es-de` to the repository/directory name to clearly indicate that it's a theme for this frontend. Two examples would be `linear-es-de` and `modern-es-de`. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting themes from the _UI Settings_ menu. For example linear-es-de will be listed simply as _Linear_ in this menu.
 
 Before your start, make sure to download the _Theme engine examples_ theme that contains a number of example variants for things like vertical and horizontal carousels, wheel carousels, system view text lists, grids etc:
 
@@ -651,6 +651,95 @@ Here's an example configuration:
 </theme>
 ```
 
+## Font sizes
+
+The optional font sizes functionality makes it possible to use a set of predefined size options and connect these to theme variables that can be used to apply different text sizes and related design changes. The font sizes declared for the theme can be selected via the _Theme font size_ setting in the _UI Settings_ menu.
+
+To understand the basics on how to use variables, make sure to read the _Theme variables_ section elsewhere in this document.
+
+To use the font size entries you first need to declare them using `<fontSize>` tag pairs in the `capabilities.xml` file. The following sizes are available:
+
+| capabilities.xml name | UI Settings label |
+| :-------------------- | :---------------  |
+| medium                | medium            |
+| large                 | large             |
+| small                 | small             |
+| x-large               | extra large       |
+| x-small               | extra small       |
+
+The options will always be listed in the above order in the _UI Settings_ menu.
+
+Here's an example of a theme that implements three of these sizes:
+
+```xml
+<!-- Theme capabilities for mytheme-es-de -->
+<themeCapabilities>
+    <themeName>My theme</themeName>
+
+    <fontSize>medium</fontSize>
+    <fontSize>small</fontSize>
+    <fontSize>x-small</fontSize>
+</themeCapabilities>
+```
+
+In the theme configuration you'll also use a `<fontSize>` tag pair combined with a `<variable>` tag pair to define the variables you want to apply per font size.
+
+These `<fontSize>` tag pairs can be placed directly inside the `<theme>` tags, inside the `<variants>` tags or inside the `<aspectRatio>` tags.
+
+The mandatory name attribute is used to specificy which font size to use, and multiple values can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks).
+
+Here's an example configuration:
+
+```xml
+<theme>
+    <fontSize name="medium">
+        <variables>
+            <gameCounterFontSize>0.025</gameCounterFontSize>
+            <gameCounterPos>0.5 0.6437</gameCounterPos>
+            <gameNameFontSize>0.022</gameNameFontSize>
+            <publisherFontSize>0.016</publisherFontSize>
+        </variables>
+    </fontSize>
+    <fontSize name="small">
+        <variables>
+            <gameCounterFontSize>0.015</gameCounterFontSize>
+            <gameCounterPos>0.45 0.6437</gameCounterPos>
+            <gameNameFontSize>0.013</gameNameFontSize>
+        </variables>
+    </fontSize>
+    <fontSize name="x-small">
+        <variables>
+            <gameCounterFontSize>0.008</gameCounterFontSize>
+            <gameCounterPos>0.4 0.6437</gameCounterPos>
+            <gameNameFontSize>0.006</gameNameFontSize>
+        </variables>
+    <fontSize name="small, x-small">
+        <variables>
+            <publisherFontSize>0.011</publisherFontSize>
+        </variables>
+    </fontSize>
+
+    <view name="system">
+        <text name="gameCounter">
+            <pos>${gameCounterPos}</pos>
+            <size>1 0.056</size>
+            <fontSize>${gameCounterFontSize}</fontSize>
+        </text>
+    <view name="gamelist">
+        <text name="gameName">
+            <pos>0.2 0.3412</pos>
+            <size>0.2 0.040</size>
+            <fontSize>${gameNameFontSize}</fontSize>
+        </text>
+        <text name="publisher">
+            <pos>0.33 0.3412</pos>
+            <size>0.18 0.040</size>
+            <fontSize>${publisherFontSize}</fontSize>
+        </text>
+    </view>
+</theme>
+```
+
 ## Aspect ratios
 
 The aspect ratio support works almost identically to the variants and color schemes with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme can still decide which of the aspect ratios to support (or none at all in which case the theme aspect ratio is left undefined) but it can't create entirely new aspect ratio entries.
@@ -876,15 +965,18 @@ The variant, color scheme and transitions names as well as their labels can be s
 
 Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary values, instead they have to use a value from the _horizontal name_ or _vertical name_ columns in the following table:
 
-| Horizontal name  | Vertical name  | Common resolutions                             |
-| :--------------- | :------------- | :--------------------------------------------- |
-| 16:9             | 16:9_vertical  | 1280x720, 1920x1080, 2560x1440, 3840x2160      |
-| 16:10            | 16:10_vertical | 1280x800, 1440x900, 1920x1200                  |
-| 3:2              | 3:2_vertical   | 2160x1440                                      |
-| 4:3              | 4:3_vertical   | 320x240, 640x480, 800x600, 1024x768, 1600x1200 |
-| 5:4              | 5:4_vertical   | 1280x1024                                      |
-| 21:9             | 21:9_vertical  | 2560x1080, 3840x1600, 5120x2160                |
-| 32:9             | 32:9_vertical  | 3840x1080, 5120x1440                           |
+| Horizontal name  | Vertical name   | Common resolutions                             |
+| :--------------- | :-------------- | :--------------------------------------------- |
+| 16:9             | 16:9_vertical   | 1280x720, 1920x1080, 2560x1440, 3840x2160      |
+| 16:10            | 16:10_vertical  | 1280x800, 1440x900, 1920x1200                  |
+| 3:2              | 3:2_vertical    | 2160x1440                                      |
+| 4:3              | 4:3_vertical    | 320x240, 640x480, 800x600, 1024x768, 1600x1200 |
+| 5:4              | 5:4_vertical    | 1280x1024                                      |
+| 19.5:9           | 19.5:9_vertical | 2340x1080, 2532x1170                           |
+| 20:9             | 20:9_vertical   | 2400x1080, 1600x720                            |
+| 21:9             | 21:9_vertical   | 2560x1080, 3840x1600, 5120x2160                |
+| 32:9             | 32:9_vertical   | 3840x1080, 5120x1440                           |
+| 1:1              | 1:1             | Any square resolution                          |
 
 The 21:9 and 32:9 aspect ratios are approximate as monitors of slightly different ratios are collectively marketed using these numbers.
 
@@ -1327,10 +1419,11 @@ It's important to understand how the theme configuration files are parsed in ord
 1) Transitions
 2) Variables
 3) Color schemes
-4) Included files
-5) "General" (non-variant) configuration
-6) Variants
-7) Aspect ratios
+4) Font sizes
+5) Included files
+6) "General" (non-variant) configuration
+7) Variants
+8) Aspect ratios
 
 When including a file using the `<include>` tag (i.e. step 4 above) then all steps listed above are executed for that included file prior to continuing to the next line after the `<include>` tag.
 
@@ -1339,7 +1432,7 @@ For any given step, the configuration is parsed in the exact order that it's def
 ## Property data types
 
 * NORMALIZED_PAIR - two decimal values delimited by a space, for example `0.25 0.5`
-* PATH - path to a resource. If the first character is a tilde (`~`) then it will be expanded to the user's home directory (`$HOME` for Unix and macOS and `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a dot (`.`) then the resource will be searched for relative to the location of the theme file, for example `./myfont.ttf` or `./../core/fonts/myfont.ttf`
+* PATH - path to a resource. If the first character is a tilde (`~`) then it will be expanded to the user's home directory (`$HOME` for Linux, BSD Unix and macOS and `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a dot (`.`) then the resource will be searched for relative to the location of the theme file, for example `./myfont.ttf` or `./../core/fonts/myfont.ttf`
 * BOOLEAN - `true`/`1` or `false`/`0`
 * COLOR - a hexadecimal RGB or RGBA color value consisting of 6 or 8 digits. If a 6 digit value is used then the alpha channel will be set to `FF` (completely opaque)
 * UNSIGNED_INTEGER - an unsigned integer value
@@ -1912,6 +2005,10 @@ Properties:
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the textlist exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
+* `selectorWidth` - type: FLOAT
+    - Width of the selector bar. If an image has been defined using `selectorImagePath` then setting this property to zero will retain the aspect ratio for that image.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is the equivalent value as the width of the overall element.
 * `selectorHeight` - type: FLOAT
     - Height of the selector bar. This is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if making use of this property.
     - Minimum value is `0` and maximum value is `1`
@@ -2073,6 +2170,10 @@ Properties:
     - `always` - Set element as stationary during all transitions.
     - `never` - Don't set element as stationary during any transitions.
     - Default is `never`
+* `renderDuringTransitions` - type: BOOLEAN
+    - This special property which is only usable for slide transitions between the system and gamelist views makes it possible to for example have a background image stay seamlessly in place when transitioning, or being able to use semi-transparent stationary elements without having them render on top of each other during transitions. For this to work correctly only define `stationary` for one view and set `renderDuringTransitions` to false for the corresponding element in the other view. This way the element from the former view will keep rendering until the slide animation has been completed, after which the latter view will "take over" by rendering the element normally.
+    - This property can only be used if slide transitions are used, and only when moving from the system view to the gamelist view, or vice versa.
+    - Default is `true`
 * `flipHorizontal` - type: BOOLEAN
     - Flips the image texture horizontally.
     - Default is `false`
@@ -2643,7 +2744,7 @@ Properties:
     - `sourceSystemName` - The source short system name of the game. For regular systems this value will be identical to `systemName` but for collections it will show the actual system that the game is located in instead of the collection system name.
     - `sourceSystemFullname` - The source full system name of the game. For regular systems this value will be identical to `systemFullname` but for collections it will show the actual system that the game is located in instead of the collection system name.
 * `defaultValue` - type: STRING
-    - This property makes it possible to override the default "unknown" text that is displayed if `metadata` has been set to `developer`, `publisher`, `genre` or `players` and there is no metadata available for the defined type. Any string can be used but you can't set it to a blank value. If you don't want to display anything when there is no metadata available, then set this property to `:space:` in which case a blankspace will be used. This property has no effect on the metadata editor where "unknown" will still be shown for blank values.
+    - This property makes it possible to override the default "unknown" text that is displayed if `metadata` has been set to `developer`, `publisher`, `genre` or `players` and there is no metadata available for the defined type. Any string can be used but you can't set it to a blank value. If you don't want to display anything when there is no metadata available, then set this property to `:space:` in which case a blankspace will be used. This property has no effect on the metadata editor where "unknown" will still be shown for blank values. A secondary use for this property is to set a default value if `metadata` has been set to `systemName`, `systemFullname`, `sourceSystemName` or `sourceSystemFullname` in which case the value will be used if the metadata value is blank. This is useful for defining a specific string at the root of the custom collections system.
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). If `metadata` has been set to `description` then this property will only apply when inside the root of the grouped custom collections system where a summary of available games for the currently selected collection is displayed.
     - Default is `true`
@@ -2924,6 +3025,9 @@ Properties:
     - `always` - Set element as stationary during all transitions.
     - `never` - Don't set element as stationary during any transitions.
     - Default is `never`
+* `hideIfZero` - type: BOOLEAN
+    - If set to true then the element will not get rendered if the rating value is zero.
+    - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
 * `gameselectorEntry` - type: UNSIGNED_INTEGER
@@ -2987,7 +3091,6 @@ Properties:
 #### helpsystem
 
 The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements. It also has to have its name attribute set to `help` or the configuration will not get loaded.
-
 
 It's possible to set this element as right-aligned or center-aligned using a combination of the `pos` and `origin` properties. For example `<pos>1 1</pos>` and `<origin>1 1</origin>` will place it in the lower right corner of the screen.
 

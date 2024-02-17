@@ -1,20 +1,16 @@
 # ES-DE (EmulationStation Desktop Edition) - Frequently Asked Questions
 
-## What is this project and how is it related to other EmulationStation forks?
+## What's the correct name for the application? ES-DE, EmulationStation etc?
 
-This project started in 2020 as a fork of RetroPie EmulationStation and it has been in very active development ever since. Large parts of the application have been rewritten and much functionality has been added, so overall it's a quite different application by now.
-
-## What's the correct name? EmulationStation, ES-DE, Emulation Station, EmuStation etc?
-
-The correct name is EmulationStation Desktop Edition, which is for practical reasons often shortened to EmulationStation-DE or more commonly ES-DE. It's not spelled Emulation Station (i.e. two separate words) in the same manner as you don't write Sony Play Station or Nintendo Game Cube.
+As of the 3.0.0 release the official name for the project and application is ES-DE or sometimes ES-DE Frontend. This stands for EmulationStation Desktop Edition as the project originated from the RetroPie fork of EmulationStation in 2020, and was originally intended for desktop computers. However the application has now changed so much that it would just cause confusion to keep the EmulationStation name. During a transition period EmulationStation Desktop Edition will be included as a subtitle on the splash screen and mentioned in some documentation entries, but long term this will be dropped entirely. The red version of the EmulationStation logo will however remain as it's part of the application legacy.
 
 ## Is this software available for free, and is it open source?
 
-ES-DE is available for free. Voluntary donations to support the project are however very welcome. The application is released under the MIT open source license with the source code readily available to anyone via the project's [GitLab site](https://gitlab.com/es-de/emulationstation-de).
+ES-DE is available for free on Windows, macOS and Linux and it's released under the MIT open source license.
 
 ## Which operating systems are supported?
 
-ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distributions including Ubuntu, Fedora, Arch, Manjaro, SteamOS etc.
+ES-DE runs on Windows, macOS and multiple Linux distributions including Ubuntu, Fedora, Arch, Manjaro, SteamOS etc.
 
 ## What is the relationship between ES-DE and RetroDECK?
 
@@ -22,7 +18,7 @@ ES-DE and [RetroDECK](http://retrodeck.net) are completely separate projects, bu
 
 ## What is the relationship between ES-DE and EmuDeck?
 
-[EmuDeck](http://www.emudeck.com) is an installer that installs ES-DE and a number of emulators. There is no relationship between the two projects apart from this, and it's generally not recommended to use EmuDeck as this will lead to a non-standard installation. There are few tangible benefits to using EmuDeck over a manual installation apart from some convenience for the initial setup. Instead it's recommended to setup your emulators manually which will allow you to configure everything exactly to your liking. That is also a fun and interesting experience.
+EmuDeck is an installer that installs ES-DE and a number of emulators. There is no relationship between the two projects apart from this, and it's not recommended to use EmuDeck as this will lead to a non-standard installation and can cause a lot of other issues as well. Instead it's recommended to setup your emulators manually which will allow you to configure everything exactly to your liking.
 
 ## What game systems/platforms and emulators are supported by ES-DE?
 
@@ -34,7 +30,7 @@ Menus in ES-DE are not lists but grids, sometimes there is only a list but somet
 
 ## Can I change the system sorting to not sort by full system names?
 
-Yes the systems sorting configuration file can be selected via the _Systems sorting_ option in the _UI Settings_ menu. There are four such files bundled with ES-DE to sort by _"Release year", "Manufacturer, release year", "Hardware type, release year"_ and _"Manufacturer, hardware type, release year"_. If you don't want to use any of the bundled files then you can create your own custom sorting file and place it into the ~/.emulationstation/custom_systems/ directory. More details about this setup can be found in the _es_systems_sorting.xml_ section of the [Building and advanced configuration](INSTALL.md#es_systems_sortingxml) document.
+Yes the systems sorting configuration file can be selected via the _Systems sorting_ option in the _UI Settings_ menu. There are four such files bundled with ES-DE to sort by _"Release year", "Manufacturer, release year", "Hardware type, release year"_ and _"Manufacturer, hardware type, release year"_. If you don't want to use any of the bundled files then you can create your own custom sorting file and place it into the ~/ES-DE/custom_systems/ directory. More details about this setup can be found in the _es_systems_sorting.xml_ section of the [Building and advanced configuration](INSTALL.md#es_systems_sortingxml) document.
 
 ## I'm missing some systems like SNES MSU-1 and WiiWare, could those get added to ES-DE?
 
@@ -46,7 +42,7 @@ ES-DE comes preconfigured with support for many alternative emulators, see the [
 
 ## I'm on Windows and ES-DE can't find my emulators, what is wrong?
 
-On Windows ES-DE is shipped as a portable installation and as a regular installer. If you're using the portable installation you need to drop your emulators inside the Emulators directory. Make sure to read the README.txt file directly in the EmulationStation-DE folder for more details. For the regular installer many emulators do not provide a method to inform ES-DE where they are installed, so you will need to add their installation directories to the Path environment variable in Windows. It's strongly recommended to read the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows) before attempting to setup and use ES-DE on Windows.
+On Windows ES-DE is shipped as a portable installation and as a regular installer. If you're using the portable installation you need to drop your emulators inside the Emulators directory. Make sure to read the README.txt file directly in the ES-DE folder for more details. For the regular installer many emulators do not provide a method to inform ES-DE where they are installed, so you will need to add their installation directories to the Path environment variable in Windows. It's strongly recommended to read the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows) before attempting to setup and use ES-DE on Windows.
 
 ## I'm on Windows and ES-DE refuses to start, is the application broken?
 
@@ -54,7 +50,7 @@ You're probably missing the OpenGL drivers required to run ES-DE. Try to downloa
 
 ## I'm on Windows and there is only a black screen shown on startup or when launching a game, is there a way to fix this?
 
-This behavior has been observed for some specific AMD GPUs in the past. In some instances there is only a black screen on startup and in some instances the application starts and runs correctly but launching a game only shows a black screen. The issue is seemingly caused by GPU driver bugs and it only affects Windows as Linux works fine with the same hardware. The workaround is to make ES-DE run in windowed mode. You accomplish this by using the --resolution flag and setting the width to one pixel wider than your screen resolution. So if for instance running at a 1280x800 display resolution, run ES-DE such as this: `EmulationStation.exe --resolution 1281 800`
+This behavior has been observed for some specific AMD GPUs in the past. In some instances there is only a black screen on startup and in some instances the application starts and runs correctly but launching a game only shows a black screen. The issue is seemingly caused by GPU driver bugs and it only affects Windows as Linux works fine with the same hardware. The workaround is to make ES-DE run in windowed mode. You accomplish this by using the --resolution flag and setting the width to one pixel wider than your screen resolution. So if for instance running at a 1280x800 display resolution, run ES-DE such as this: `ES-DE.exe --resolution 1281 800`
 
 ## The emulators don't seem to be properly configured?
 
@@ -84,13 +80,9 @@ See the question above for a possible solution. Another approach would be to hid
 
 No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower opacity. You need to disable the setting _Show hidden games_ from the _Other Settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
 
-## I'm using Linux or macOS and I can't find the .emulationstation directory, where is it located?
-
-The .emulationstation directory is normally located in your home directory, but on these Unix-based operating systems files and directories starting with a dot are hidden by default. So you need to enable hidden files and directories in your file manager. On macOS this is done in Finder using the Shift + Command + . (a dot) keyboard combination. On Linux it depends on which file manager you're using, but in KDE's Dolphin it's accomplished by using the Alt + . (a dot) keyboard combination or via the corresponding entry in the hamburger menu.
-
 ## I can't find a ROM directory setting in the user interface, so how do I relocate my games?
 
-There is no need for such a setting as ES-DE will not start unless it finds at least one game. So you simply need to move your ROM directory to its new location using your operating system's file manager or terminal and then the next time you start ES-DE you will be shown a dialog where you can enter the new directory. Optionally you can manually change the ROMDirectory setting in ~/.emulationstation/es_settings.xml
+There is no need for such a setting as ES-DE will not start unless it finds at least one game. So you simply need to move your ROM directory to its new location using your operating system's file manager or terminal and then the next time you start ES-DE you will be shown a dialog where you can enter the new directory. Optionally you can manually change the ROMDirectory setting in ~/ES-DE/es_settings.xml
 
 ## What are miximages precisely and why don't they get updated when I change my miximage settings?
 
@@ -98,7 +90,7 @@ As the name implies these are images, and more specifically they are generated b
 
 ## Is there a way to customize existing systems, and/or to add more systems than those shipped by default?
 
-Yes it's possible to both customize existing systems that are part of the bundled configuration as well as to add more systems than those shipped with ES-DE. Almost nothing is hardcoded in the application so there is a huge flexibility when it comes to such configuration. How this is done is covered in the _Game system customizations_ section of the [User guide](USERGUIDE.md#game-system-customizations). Just make sure to never modify the es_systems.xml and es_find_rules.xml files included in the application installation directory as these will be overwritten when upgrading ES-DE in the future. Always place your customizations in ~/.emulationstation/custom_systems/ as is also described in the user guide.
+Yes it's possible to both customize existing systems that are part of the bundled configuration as well as to add more systems than those shipped with ES-DE. Almost nothing is hardcoded in the application so there is a huge flexibility when it comes to such configuration. How this is done is covered in the _Game system customizations_ section of the [User guide](USERGUIDE.md#game-system-customizations). Just make sure to never modify the es_systems.xml and es_find_rules.xml files included in the application installation directory as these will be overwritten when upgrading ES-DE in the future. Always place your customizations in ~/ES-DE/custom_systems/ as is also described in the user guide.
 
 ## Can I use the Steam release of RetroArch?
 
@@ -110,7 +102,7 @@ You would normally use the built-in theme downloader to install additional theme
 
 ## I added some EmulationStation themes manually but they don't seem to show up inside ES-DE?
 
-Only themes made specifically for ES-DE can be used. If you want to use a theme from Batocera, Recalbox, RetroBat, RetroPie etc. then it first needs to be ported to the ES-DE theme engine. If you place a non-supported theme in the ~/.emulationtation/themes/ directory then this will be ignored on startup, meaning it will not be selectable from the _UI Settings_ menu.
+EmulationStation themes are not supported by ES-DE. If you want to use a theme from Batocera, Recalbox, RetroBat, RetroPie etc. then it first needs to be ported to the ES-DE theme engine. If you place a non-supported theme in the ES-DE/themes/ directory then this will be ignored on startup, meaning it will not be selectable from the _UI Settings_ menu.
 
 ## I used to be a Batocera/Recalbox user and ES-DE can't seem to find some of my games?
 
@@ -122,15 +114,11 @@ There is a built-in application updater that works with the Linux AppImage relea
 
 ## I can't find any game media links in the gamelist.xml files, where is this data stored?
 
-ES-DE works differently compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are matched against the ROM/game file names which makes for a much simpler, faster and completely portable setup. Migrating game media from other EmulationStation forks (and potentially from other frontends as well) can be accomplished quite easily. See the next question below for more information. Make sure to also read the _Migrating from other EmulationStation forks_ section of the [User guide](USERGUIDE.md#migrating-from-other-emulationstation-forks) to avoid data loss if running ES-DE with existing data from another EmulationStation fork.
+ES-DE works differently compared to EmulationStation when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are matched against the ROM/game file names which makes for a much simpler, faster and completely portable setup. Migrating game media from EmulationStation (and potentially from other frontends as well) can be accomplished quite easily. Make sure to also read the _Migrating from EmulationStation_ section of the [User guide](USERGUIDE.md#migrating-from-emulationstation) to avoid data loss if running ES-DE with existing data from EmulationStation.
 
 ## It seems like gamelist.xml files in the ROM directory tree are not getting loaded?
 
-These files are not loaded by default as of ES-DE 2.0.0, only files placed in .emulationstation/gamelists/ are processed. If you insist on retaining the old logic of also looking for gamelist.xml files in the ROM directory tree then you can enable the LegacyGamelistFileLocation setting in es_settings.xml as explained in the _Settings not configurable via the GUI_ section of the [Building and advanced configuration](INSTALL.md#settings-not-configurable-via-the-gui) document.
-
-## Why do I sometimes get error messages when scraping stating that files are less than 350 bytes in size?
-
-This issue can occur occassionally as the ScreenScraper servers sometimes return invalid responses, in this case simply pressing the _RETRY_ button often works. But there is also a ScreenScraper bug where their cache could include entries that no longer exist. When a media file is removed from the ScreenScraper database, the cached link to that file is retained for some time and will be returned as a valid media file URL to ES-DE. However, when attempting to scrape such a file, it will only contain the text string _NOMEDIA_ which will trigger this error in ES-DE. The cache bug only affects the multi-scraper API call, so a workaround is to manually scrape such games using the single-game scraper (reachable via the metadata editor). The invalid cache entries seem to disappear within 24 hours so waiting for a while and rescraping should also resolve the problem. The issue has been reported to the ScreenScraper team but it's unclear if and when it will be resolved.
+These files are not loaded by default, only files placed in ES-DE/gamelists/ are processed. If you insist on also looking for gamelist.xml files in the ROM directory tree then you can enable the LegacyGamelistFileLocation setting in es_settings.xml as explained in the _Settings not configurable via the GUI_ section of the [Building and advanced configuration](INSTALL.md#settings-not-configurable-via-the-gui) document.
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
