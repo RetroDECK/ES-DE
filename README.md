@@ -1,6 +1,6 @@
 # ES-DE (EmulationStation Desktop Edition)
 
-EmulationStation Desktop Edition is a frontend for browsing and launching games from your multi-platform game collection.
+ES-DE is a frontend for browsing and launching games from your multi-platform game collection.
 
 Website:\
 [https://es-de.org](https://es-de.org)
@@ -8,13 +8,13 @@ Website:\
 Discord:\
 [https://discord.gg/EVVX4DqWAP](https://discord.gg/EVVX4DqWAP)
 
-The goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Windows, macOS and Unix/Linux. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
+The goal of this project is to make a high quality frontend that is easy to use, requires minimal setup and configuration, looks nice, and is available across a wide range of operating systems.
 
 It comes preconfigured for use with [RetroArch](https://www.retroarch.com) and a large selection of standalone emulators. It's also fully customizable so you can easily expand it to include emulators or applications not covered by the bundled configuration.
 
-You can find the complete list of supported systems and emulators [here](USERGUIDE.md#supported-game-systems).
+You can find the complete list of supported systems and emulators in the [User guide](USERGUIDE.md#supported-game-systems).
 
-Two themes (Slate and Modern) are bundled with the application, and additional themes can be found on the [official themes list](https://gitlab.com/es-de/themes/themes-list) or be installed using the built-in theme downloader.
+Three themes (Linear, Modern and Slate) are bundled with the application, and additional themes can be found on the [official themes list](https://gitlab.com/es-de/themes/themes-list) or can be installed using the built-in theme downloader.
 
 ## Download
 
@@ -42,7 +42,7 @@ If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you
 
 ## Some feature highlights
 
-Here are some highlights, displayed using the default Slate theme.
+Here are some highlights, displayed using the default Linear theme.
 
 ![alt text](images/es-de_system_view.png "ES-DE System View")
 _The **System view**, which is the default starting point for the application, it's here that you browse through your game systems._
@@ -69,4 +69,4 @@ _In addition to the scraper there is a fully-featured metadata editor that can b
 _There are four built-in screensavers, including a slideshow and a video screensaver that display random games from your collection._
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_ES-DE is fully themeable, in case you prefer another look than what the default theme Slate offers. The screenshot above shows the Modern theme that is also bundled with the application._
+_ES-DE is fully themeable, in case you prefer another look than what the default theme Linear offers. The screenshot above shows the Slate theme that is also bundled with the application._

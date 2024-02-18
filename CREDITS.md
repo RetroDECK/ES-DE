@@ -125,15 +125,11 @@ https://www.mamedev.org
 CA certificates (for TLS/SSL support on Windows) \
 https://wiki.mozilla.org/CA
 
-# Slate Theme
+# Linear Theme
 
-The Slate theme is based on [recalbox-multi](https://gitlab.com/recalbox/recalbox-themes) by the Recalbox community, prior to their license change in 2018.
+The Linear theme is based on [ESonline](https://github.com/Weestuarty/esonline-es-de) by Weestuarty.
 
-Some graphics from the [Carbon](https://github.com/RetroPie/es-theme-carbon) theme by Rookervik.
-
-Some console and controller vector graphics by Bezza191.
-
-Some logotype graphics by Dan Patrick.
+[Carousel icons](https://github.com/szymon-kulak/es-de-moderntheme-nsoicons) originally made by Szymon Kulak and modified by the ES-DE project.
 
 # Modern Theme
 
@@ -142,6 +138,16 @@ The Modern theme is based on [es-theme-switch](https://github.com/lilbud/es-them
 Default [carousel icons](https://github.com/szymon-kulak/es-de-moderntheme-nsoicons) by Szymon Kulak.
 
 [Nintendo Switch UI Font](https://www.cufonfonts.com/font/nintendo-switch-ui) by MH1.
+
+Some logotype graphics by Dan Patrick.
+
+# Slate Theme
+
+The Slate theme is based on [recalbox-multi](https://gitlab.com/recalbox/recalbox-themes) by the Recalbox community, prior to their license change in 2018.
+
+Some graphics from the [Carbon](https://github.com/RetroPie/es-theme-carbon) theme by Rookervik.
+
+Some console and controller vector graphics by Bezza191.
 
 Some logotype graphics by Dan Patrick.
 
