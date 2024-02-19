@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE)
+# ES-DE (EmulationStation Desktop Edition)
 
 EmulationStation Desktop Edition is a frontend for browsing and launching games from your multi-platform game collection.
 

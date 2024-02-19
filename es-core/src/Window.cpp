@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE Frontend
 //  Window.cpp
 //
 //  Window management, screensaver management, help prompts and splash screen.
@@ -17,6 +17,10 @@
 #include "components/ImageComponent.h"
 #include "guis/GuiInfoPopup.h"
 #include "resources/Font.h"
+
+#if defined(__ANDROID__)
+#include "InputOverlay.h"
+#endif
 
 #include <algorithm>
 #include <iomanip>
@@ -144,6 +148,10 @@ bool Window::init()
         mDefaultFonts.at(1)->buildTextCache("Loading systems...", 0.0f, 0.0f, 0x777777FF));
     mSplashTextReloading = std::unique_ptr<TextCache>(
         mDefaultFonts.at(1)->buildTextCache("Reloading...", 0.0f, 0.0f, 0x777777FF));
+    mSplashTextResourceCopy = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache("Copying resources...", 0.0f, 0.0f, 0x777777FF));
+    mSplashTextDirCreation = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
+        "Creating system directories...", 0.0f, 0.0f, 0x777777FF));
 
     mSplashTextPositions.x =
         (mRenderer->getScreenWidth() - mSplashTextScanning->metrics.size.x) / 2.0f;
@@ -439,6 +447,11 @@ void Window::update(int deltaTime)
 
     if (mScreensaver && mRenderScreensaver)
         mScreensaver->update(deltaTime);
+
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("InputTouchOverlay"))
+        InputOverlay::getInstance().update(deltaTime);
+#endif
 }
 
 bool Window::isBackgroundDimmed()
@@ -658,6 +671,11 @@ void Window::render()
     if (mRenderScreensaver)
         mScreensaver->renderScreensaver();
 
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("InputTouchOverlay"))
+        InputOverlay::getInstance().render(mRenderer->getIdentity());
+#endif
+
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
         mRenderer->setMatrix(mRenderer->getIdentity());
         mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
@@ -698,6 +716,12 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
         textPosX = mSplashTextPositions.w;
         textPosY += mDefaultFonts.at(1)->getLetterHeight();
     }
+    else if (state == SplashScreenState::RESOURCE_COPY) {
+        textPosX = (mRenderer->getScreenWidth() - mSplashTextResourceCopy->metrics.size.x) / 2.0f;
+    }
+    else if (state == SplashScreenState::DIR_CREATION) {
+        textPosX = (mRenderer->getScreenWidth() - mSplashTextDirCreation->metrics.size.x) / 2.0f;
+    }
 
     trans = glm::translate(trans, glm::round(glm::vec3 {textPosX, textPosY, 0.0f}));
     mRenderer->setMatrix(trans);
@@ -708,6 +732,10 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
         mDefaultFonts.at(1)->renderTextCache(mSplashTextPopulating.get());
     else if (state == SplashScreenState::RELOADING)
         mDefaultFonts.at(1)->renderTextCache(mSplashTextReloading.get());
+    else if (state == SplashScreenState::RESOURCE_COPY)
+        mDefaultFonts.at(1)->renderTextCache(mSplashTextResourceCopy.get());
+    else if (state == SplashScreenState::DIR_CREATION)
+        mDefaultFonts.at(1)->renderTextCache(mSplashTextDirCreation.get());
 
     mRenderer->swapBuffers();
 }
@@ -859,6 +887,10 @@ void Window::stopMediaViewer()
 void Window::startPDFViewer(FileData* game)
 {
     if (mPDFViewer) {
+#if defined(ANDROID_LITE_RELEASE)
+        queueInfoPopup("PDF VIEWER ONLY AVAILABLE IN FULL VERSION", 6000);
+        return;
+#endif
         if (mPDFViewer->startPDFViewer(game)) {
             setAllowTextScrolling(false);
             setAllowFileAnimation(false);

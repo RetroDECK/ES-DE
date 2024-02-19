@@ -1,0 +1,84 @@
+#  SPDX-License-Identifier: MIT
+#
+#  ES-DE
+#  org.es_de.frontend.yml
+#
+#  Flatpak manifest file for use with flatpak-builder.
+#
+
+app-id: org.es_de.frontend-de
+sdk: org.freedesktop.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+command: es-de
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --device=all
+  - --filesystem=host:ro
+  - --filesystem=/var/lib/flatpak/exports/bin:ro
+  - --filesystem=home
+  - --filesystem=~/.var/app
+  - --share=network
+  - --talk-name=org.freedesktop.Flatpak
+cleanup:
+  - /include
+  - /share/ffmpeg
+  - /lib/cmake
+  - /lib/pkgconfig
+  - '*.a'
+
+modules:
+  - name: ffmpeg
+    config-opts:
+    - --disable-static
+    - --disable-programs
+    - --disable-doc
+    - --enable-gpl
+    - --enable-shared
+    - --enable-libvorbis
+    - --enable-libopus
+    - --enable-libvpx
+    - --enable-postproc
+    sources:
+    - type: git
+      url: https://github.com/FFmpeg/FFmpeg.git
+      tag: n5.0
+
+  - name: freeimage
+    no-autogen: true
+    build-options:
+        cxxflags: -std=c++14
+        arch:
+            aarch64:
+                # See https://sourceforge.net/p/freeimage/bugs/325/
+                cflags: -fPIC -DPNG_ARM_NEON_OPT=0
+                cxxflags: -fPIC
+    sources:
+    - type: archive
+      url: https://downloads.sourceforge.net/freeimage/FreeImage3180.zip
+      sha256: f41379682f9ada94ea7b34fe86bf9ee00935a3147be41b6569c9605a53e438fd
+    - type: shell
+      commands:
+      - sed -i 's|-o root -g root ||' ./Makefile.gnu
+      - sed -i 's|/usr|/app|' ./Makefile.gnu
+
+  - name: pugixml
+    buildsystem: cmake-ninja
+    config-opts:
+    - -DBUILD_SHARED_LIBS=on
+    sources:
+    - type: archive
+      url: https://github.com/zeux/pugixml/releases/download/v1.11.4/pugixml-1.11.4.tar.gz
+      sha256: 8ddf57b65fb860416979a3f0640c2ad45ddddbbafa82508ef0a0af3ce7061716
+
+  - name: es-de
+    buildsystem: cmake-ninja
+    config-opts:
+    - -DFLATPAK_BUILD=on
+    sources:
+    - type: git
+      url: https://gitlab.com/es-de/emulationstation-de.git
+      commit: cb16b510022e95cc1a8e51a6ab26caaa0b73bb58

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  TextComponent.h
 //
 //  Displays text.
@@ -61,6 +61,8 @@ public:
 
     std::string getHiddenValue() const override { return mHiddenText; }
     void setHiddenValue(const std::string& value) override { setHiddenText(value); }
+
+    const std::string getDefaultValue() const { return mDefaultValue; }
 
     float const getOpacity() const override
     {

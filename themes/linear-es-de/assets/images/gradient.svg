@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="800"
+   height="800"
+   viewBox="0 0 211.66666 211.66666"
+   version="1.1"
+   id="svg5"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient1002">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop998" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop1000" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient1002"
+       id="linearGradient1004"
+       x1="0"
+       y1="105.83334"
+       x2="211.66667"
+       y2="105.83334"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient1002"
+       id="linearGradient1015"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="105.83334"
+       x2="211.66667"
+       y2="105.83334" />
+  </defs>
+  <g
+     id="layer1"
+     style="fill:url(#linearGradient1004);fill-opacity:1;stroke:none"
+     transform="matrix(-1,0,0,1,211.66667,0)">
+    <rect
+       style="fill:url(#linearGradient1015);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.422475;stroke-linecap:square;paint-order:markers stroke fill;stop-color:#000000"
+       id="rect846"
+       width="211.66667"
+       height="211.66667"
+       x="0"
+       y="0" />
+  </g>
+</svg>

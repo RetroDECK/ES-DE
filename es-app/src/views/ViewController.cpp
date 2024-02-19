@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ViewController.cpp
 //
 //  Handles overall system navigation including animations and transitions.
@@ -137,6 +137,41 @@ void ViewController::setMenuColors()
     }
 }
 
+void ViewController::legacyAppDataDialog()
+{
+    const std::string upgradeMessage {
+        "AS OF ES-DE 3.0 THE APPLICATION DATA DIRECTORY HAS CHANGED FROM \".emulationstation\" "
+        "to \"ES-DE\"\nPLEASE RENAME YOUR CURRENT DATA DIRECTORY:\n" +
+        Utils::FileSystem::getAppDataDirectory() + "\nTO THE FOLLOWING:\n" +
+        Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()) + "/ES-DE"};
+
+    mWindow->pushGui(new GuiMsgBox(
+        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
+        true,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.85f :
+             0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
+}
+
+void ViewController::migratedAppDataFilesDialog()
+{
+    const std::string message {"SETTINGS HAVE BEEN MIGRATED FROM A LEGACY APPLICATION DATA "
+                               "DIRECTORY STRUCTURE, YOU NEED TO RESTART ES-DE TO APPLY "
+                               "THE CONFIGURATION"};
+
+    mWindow->pushGui(new GuiMsgBox(
+        HelpStyle(), message.c_str(), "QUIT",
+        [] {
+            SDL_Event quit {};
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
+        },
+        "", nullptr, "", nullptr, nullptr, true, true,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.65f :
+             0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
+}
+
 void ViewController::unsafeUpgradeDialog()
 {
     const std::string upgradeMessage {
@@ -144,8 +179,8 @@ void ViewController::unsafeUpgradeDialog()
         "UNPACKING THE NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE "
         "VARIOUS PROBLEMS, SOME OF WHICH MAY NOT BE APPARENT IMMEDIATELY. "
         "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
-        "README.TXT FILE THAT CAN BE FOUND IN THE EMULATIONSTATION-DE "
-        "DIRECTORY."};
+        "README.TXT FILE THAT CAN BE FOUND IN THE ES-DE DIRECTORY."};
+
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
         true,
@@ -160,13 +195,13 @@ void ViewController::invalidSystemsFileDialog()
                                     "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN "
                                     "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
                                     "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
-                                    "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE "
-                                    "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"};
+                                    "ES-DE INSTALLATION IS BROKEN. SEE THE APPLICATION "
+                                    "LOG FILE es_log.txt FOR ADDITIONAL INFO"};
 
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), errorMessage.c_str(), "QUIT",
         [] {
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
@@ -178,6 +213,14 @@ void ViewController::invalidSystemsFileDialog()
 
 void ViewController::noGamesDialog()
 {
+#if defined(__ANDROID__)
+    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN "
+                           "THE CONFIGURED ROM DIRECTORY. OPTIONALLY THE ROM "
+                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
+                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+                           "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+                           "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+#else
     mNoGamesErrorMessage = "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
                            "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
                            "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM "
@@ -185,6 +228,7 @@ void ViewController::noGamesDialog()
                            "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
                            "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
                            "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+#endif
 
 #if defined(_WIN64)
     mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
@@ -192,10 +236,14 @@ void ViewController::noGamesDialog()
     mRomDirectory = FileData::getROMDirectory();
 #endif
 
+#if defined(__ANDROID__)
+    mNoGamesMessageBox = new GuiMsgBox(
+        HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
+#else
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "QUIT",
         [] {
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
@@ -203,6 +251,7 @@ void ViewController::noGamesDialog()
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
              0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
+#endif
 
     mWindow->pushGui(mNoGamesMessageBox);
 }
@@ -986,7 +1035,10 @@ bool ViewController::input(InputConfig* config, Input input)
     // If we're in this state and then register some input, it means that the user is back in ES-DE.
     // Therefore unset the game launch flag and update all the GUI components. This will re-enable
     // the video player and scrolling of game names and game descriptions as well as letting the
-    // screensaver start on schedule.
+    // screensaver start on schedule. On Android the onResume() method will call the native onResume
+    // function which will perform the same steps as shown below (on Android we always keep running
+    // when launching games).
+#if !defined(__ANDROID__)
     if (mWindow->getGameLaunchedState()) {
         mWindow->setAllowTextScrolling(true);
         mWindow->setAllowFileAnimation(true);
@@ -996,13 +1048,14 @@ bool ViewController::input(InputConfig* config, Input input)
         if (config->isMappedTo("a", input) && input.value != 0)
             return true;
         // Trigger the game-end event.
-        if (mGameEndEventParams.size() == 5) {
-            Scripting::fireEvent(mGameEndEventParams[0], mGameEndEventParams[1],
-                                 mGameEndEventParams[2], mGameEndEventParams[3],
-                                 mGameEndEventParams[4]);
-            mGameEndEventParams.clear();
+        auto& eventParams = mWindow->getGameEndEventParams();
+        if (eventParams.size() == 5) {
+            Scripting::fireEvent(eventParams[0], eventParams[1], eventParams[2], eventParams[3],
+                                 eventParams[4]);
+            eventParams.clear();
         }
     }
+#endif
 
     // Open the main menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&
@@ -1335,7 +1388,7 @@ void ViewController::rescanROMDirectory()
     SystemData::loadConfig();
 
     if (SystemData::sStartupExitSignal) {
-        SDL_Event quit;
+        SDL_Event quit {};
         quit.type = SDL_QUIT;
         SDL_PushEvent(&quit);
         return;
@@ -1350,7 +1403,7 @@ void ViewController::rescanROMDirectory()
     else {
         preload();
         if (SystemData::sStartupExitSignal) {
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
             return;

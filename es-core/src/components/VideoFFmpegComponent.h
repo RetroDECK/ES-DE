@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  VideoFFmpegComponent.h
 //
 //  Video player based on FFmpeg.

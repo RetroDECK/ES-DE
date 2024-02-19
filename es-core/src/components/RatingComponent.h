@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  RatingComponent.h
 //
 //  Game rating icons.
@@ -61,6 +61,7 @@ private:
 
     bool mColorizeChanges;
     bool mOverlay;
+    bool mHideIfZero;
 };
 
 #endif // ES_APP_COMPONENTS_RATING_COMPONENT_H

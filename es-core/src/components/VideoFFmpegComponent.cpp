@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  VideoFFmpegComponent.cpp
 //
 //  Video player based on FFmpeg.
@@ -189,6 +189,11 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             mBlackFrame.render(trans);
         }
 
+        if (mDrawPillarboxes && (mBlackFrameOffset.x != 0.0f || mBlackFrameOffset.y != 0.0f)) {
+            trans =
+                glm::translate(trans, glm::vec3 {mBlackFrameOffset.x, mBlackFrameOffset.y, 0.0f});
+        }
+
         mRenderer->setMatrix(trans);
 
         // This is needed to avoid a slight gap before the video starts playing.
@@ -196,10 +201,10 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             return;
 
         // clang-format off
-        vertices[0] = {{0.0f + mBlackFrameOffset.x,    0.0f + mBlackFrameOffset.y     }, {mTopLeftCrop.x,            1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
-        vertices[1] = {{0.0f + mBlackFrameOffset.x,    mSize.y + mBlackFrameOffset.y  }, {mTopLeftCrop.x,            1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
-        vertices[2] = {{mSize.x + mBlackFrameOffset.x, 0.0f + + mBlackFrameOffset.y   }, {mBottomRightCrop.x * 1.0f, 1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
-        vertices[3] = {{mSize.x + mBlackFrameOffset.x, mSize.y + + mBlackFrameOffset.y}, {mBottomRightCrop.x * 1.0f, 1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
+        vertices[0] = {{0.0f,    0.0f   }, {mTopLeftCrop.x,            1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
+        vertices[1] = {{0.0f,    mSize.y}, {mTopLeftCrop.x,            1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
+        vertices[2] = {{mSize.x, 0.0f   }, {mBottomRightCrop.x * 1.0f, 1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
+        vertices[3] = {{mSize.x, mSize.y}, {mBottomRightCrop.x * 1.0f, 1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
         // clang-format on
 
         vertices[0].color = mColorShift;
@@ -219,12 +224,26 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         vertices->dimming = mDimming;
 
         if (mVideoCornerRadius > 0.0f) {
-            // We don't want to apply anti-aliasing to rounded corners as the black frame is
-            // rendered behind the video and that would generate ugly edge artifacts for any
-            // videos with lighter content.
-            vertices->cornerRadius = mVideoCornerRadius;
-            vertices->shaderFlags =
-                vertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS_NO_AA;
+            // Don't round the corners for the video frame if pillarboxes are enabled.
+            // For extreme roundings it will still get applied though as we don't want the
+            // video content to render outside the black frame.
+            bool renderVideoCorners {true};
+            if (mDrawPillarboxes) {
+                if (mBlackFrame.getSize().x > mSize.x &&
+                    mBlackFrame.getSize().x - mSize.x >= mVideoCornerRadius * 2.0f)
+                    renderVideoCorners = false;
+                else if (mBlackFrame.getSize().y > mSize.y &&
+                         mBlackFrame.getSize().y - mSize.y >= mVideoCornerRadius * 2.0f)
+                    renderVideoCorners = false;
+            }
+            if (renderVideoCorners) {
+                vertices->cornerRadius = mVideoCornerRadius;
+                // We don't want to apply anti-aliasing to rounded corners as the black frame is
+                // rendered behind the video and that would generate ugly edge artifacts for any
+                // videos with lighter content.
+                vertices->shaderFlags =
+                    vertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS_NO_AA;
+            }
         }
 
         std::unique_lock<std::mutex> pictureLock {mPictureMutex};
@@ -291,6 +310,29 @@ void VideoFFmpegComponent::updatePlayer()
     if (mPaused || !mFormatContext)
         return;
 
+    const long double deltaTime {
+        static_cast<long double>(std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                     std::chrono::high_resolution_clock::now() - mTimeReference)
+                                     .count()) /
+        1000000000.0l};
+
+    // If there were more than 1.2 seconds since the last update then it's not a normal delay, for
+    // example the application may have been suspended or the computer may have been resumed from
+    // sleep. In this case don't proceed and instead wait for the next update. This avoids a
+    // massive fast-forward as the frame processing would otherwise have tried to catch up.
+    // The frame queues are emptied as well and the audio stream is cleared in order to
+    // re-synchronize the streams. This is neeeded as some platforms like Android keep processing
+    // the audio buffers before suspending the application (i.e. after rendering has stopped).
+    if (deltaTime > 1.2) {
+        AudioManager::getInstance().clearStream();
+        mTimeReference = std::chrono::high_resolution_clock::now();
+        while (mAudioFrameQueue.size() > 1 && mVideoFrameQueue.size() > 1 &&
+               mAudioFrameQueue.front().pts > mVideoFrameQueue.front().pts) {
+            mVideoFrameQueue.pop();
+        }
+        return;
+    }
+
     // Output any audio that has been added by the processing thread.
     std::unique_lock<std::mutex> audioLock {mAudioMutex};
     if (mOutputAudio.size()) {
@@ -299,14 +341,8 @@ void VideoFFmpegComponent::updatePlayer()
         mOutputAudio.clear();
     }
 
-    if (mIsActuallyPlaying && mStartTimeAccumulation) {
-        mAccumulatedTime =
-            mAccumulatedTime +
-            static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(
-                                    std::chrono::high_resolution_clock::now() - mTimeReference)
-                                    .count()) /
-                1000000000.0l;
-    }
+    if (mIsActuallyPlaying && mStartTimeAccumulation)
+        mAccumulatedTime = mAccumulatedTime + static_cast<double>(deltaTime);
 
     mTimeReference = std::chrono::high_resolution_clock::now();
 

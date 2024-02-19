@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  FileSystemUtil.h
 //
 //  Low-level filesystem functions.
@@ -15,6 +15,12 @@
 #include <list>
 #include <string>
 
+class FileSystemVariables
+{
+public:
+    static inline std::string sAppDataDirectory;
+};
+
 namespace Utils
 {
     namespace FileSystem
@@ -26,6 +32,8 @@ namespace Utils
         StringList getPathList(const std::string& path);
         void setHomePath(const std::string& path);
         std::string getHomePath();
+        std::string getAppDataDirectory();
+        std::string getInternalAppDataDirectory();
         std::string getSystemHomeDirectory();
         std::string getCWDPath();
         std::string getPathToBinary(const std::string& executable);

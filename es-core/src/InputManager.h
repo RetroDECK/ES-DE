@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  InputManager.h
 //
 //  Low-level input handling.
@@ -13,6 +13,10 @@
 
 #include "CECInput.h"
 
+#if defined(__ANDROID__)
+#include "InputOverlay.h"
+#endif
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_joystick.h>
 
@@ -22,7 +26,6 @@
 
 class InputConfig;
 class Window;
-union SDL_Event;
 
 class InputManager
 {
@@ -58,12 +61,16 @@ private:
     bool loadInputConfig(InputConfig* config);
     void loadDefaultKBConfig();
     void loadDefaultControllerConfig(SDL_JoystickID deviceIndex);
+    void loadTouchConfig();
 
     void addControllerByDeviceIndex(Window* window, int deviceIndex);
     void removeControllerByJoystickID(Window* window, SDL_JoystickID joyID);
 
     Window* mWindow;
     CECInput mCECInput;
+#if defined(__ANDROID__)
+    InputOverlay& mInputOverlay;
+#endif
 
     static const int DEADZONE_TRIGGERS = 18000;
     static const int DEADZONE_THUMBSTICKS = 23000;
@@ -74,6 +81,7 @@ private:
     std::map<SDL_JoystickID, std::unique_ptr<InputConfig>> mInputConfigs;
 
     std::unique_ptr<InputConfig> mKeyboardInputConfig;
+    std::unique_ptr<InputConfig> mTouchInputConfig;
     std::unique_ptr<InputConfig> mCECInputConfig;
 
     std::map<std::pair<SDL_JoystickID, int>, int> mPrevAxisValues;

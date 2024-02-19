@@ -25,6 +25,10 @@
     </view>
 
     <view name="gamelist">
+        <textlist name="gamelistTextlist">
+            <selectorWidth>0.0022</selectorWidth>
+            <selectorHorizontalOffset>0.004</selectorHorizontalOffset>
+        </textlist>
         <badges name="badges">
             <lines>2</lines>
             <itemsPerLine>5</itemsPerLine>

@@ -1,0 +1,40 @@
+#include "ApplicationVersion.h"
+
+#include "windows.h"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION RESOURCE_VERSION
+ PRODUCTVERSION RESOURCE_VERSION
+ FILEFLAGSMASK 0x3fL
+#ifdef NDEBUG
+ FILEFLAGS 0x0L
+#else
+ FILEFLAGS 0x1L
+#endif
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+ FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "es-de.org\0"
+            VALUE "FileDescription", "ES-DE\0"
+            VALUE "FileVersion", RESOURCE_VERSION_STRING
+            VALUE "InternalName", "ES-DE.exe\0"
+            VALUE "LegalCopyright", "Copyright (c) 2020-2024 Leon Styhre\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "ES-DE.exe\0"
+            VALUE "ProductName", "ES-DE\0"
+            VALUE "ProductVersion", PROGRAM_VERSION_STRING
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+IDI_ES_LOGO ICON DISCARDABLE "ES-DE.ico"

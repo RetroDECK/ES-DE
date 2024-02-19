@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  VideoComponent.cpp
 //
 //  Base class for playing videos.
@@ -13,8 +13,6 @@
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
-
-#include <SDL2/SDL_timer.h>
 
 #define SCREENSAVER_FADE_IN_TIME 900
 #define MEDIA_VIEWER_FADE_IN_TIME 600

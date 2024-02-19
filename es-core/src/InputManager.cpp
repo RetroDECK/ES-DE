@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  InputManager.cpp
 //
 //  Low-level input handling.
@@ -24,6 +24,10 @@
 #define KEYBOARD_GUID_STRING "-1"
 #define CEC_GUID_STRING "-2"
 
+#if defined(__ANDROID__)
+#define TOUCH_GUID_STRING "-3"
+#endif
+
 namespace
 {
     int SDL_USER_CECBUTTONDOWN {-1};
@@ -32,7 +36,12 @@ namespace
 
 InputManager::InputManager() noexcept
     : mWindow {Window::getInstance()}
+#if defined(__ANDROID__)
+    , mInputOverlay {InputOverlay::getInstance()}
+#endif
     , mKeyboardInputConfig {nullptr}
+    , mTouchInputConfig {nullptr}
+    , mCECInputConfig {nullptr}
 {
 }
 
@@ -81,13 +90,25 @@ void InputManager::init()
         LOG(LogInfo) << "Added keyboard with default configuration";
     }
 
+#if defined(__ANDROID__)
+    mTouchInputConfig = std::make_unique<InputConfig>(DEVICE_TOUCH, "Touch", TOUCH_GUID_STRING);
+    loadTouchConfig();
+#endif
+
     // Load optional controller mappings. Normally the supported controllers should be compiled
     // into SDL as a header file, but if a user has a very rare controller that is not supported,
     // the bundled mapping is incorrect, or the SDL version is a bit older, it makes sense to be
     // able to customize this. If a controller GUID is present in the mappings file that is
     // already present inside SDL, the custom mapping will overwrite the bundled one.
-    std::string mappingsFile {Utils::FileSystem::getHomePath() + "/.emulationstation/" +
-                              "es_controller_mappings.cfg"};
+    std::string mappingsFile;
+
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
+        mappingsFile = Utils::FileSystem::getAppDataDirectory() + "/es_controller_mappings.cfg";
+    }
+    else {
+        mappingsFile =
+            Utils::FileSystem::getAppDataDirectory() + "/controllers/es_controller_mappings.cfg";
+    }
 
     if (!Utils::FileSystem::exists(mappingsFile))
         mappingsFile = ResourceManager::getInstance().getResourcePath(
@@ -103,12 +124,10 @@ void InputManager::init()
     int numJoysticks {SDL_NumJoysticks()};
 
     // Make sure that every joystick is actually supported by the GameController API.
-    for (int i {0}; i < numJoysticks; ++i)
-        if (!SDL_IsGameController(i))
-            --numJoysticks;
-
-    for (int i {0}; i < numJoysticks; ++i)
-        addControllerByDeviceIndex(nullptr, i);
+    for (int i {0}; i < numJoysticks; ++i) {
+        if (SDL_IsGameController(i))
+            addControllerByDeviceIndex(nullptr, i);
+    }
 
     SDL_USER_CECBUTTONDOWN = SDL_RegisterEvents(2);
     SDL_USER_CECBUTTONUP = SDL_USER_CECBUTTONDOWN + 1;
@@ -131,6 +150,7 @@ void InputManager::deinit()
     mInputConfigs.clear();
 
     mKeyboardInputConfig.reset();
+    mTouchInputConfig.reset();
     mCECInputConfig.reset();
 
     SDL_GameControllerEventState(SDL_DISABLE);
@@ -255,16 +275,18 @@ void InputManager::doOnFinish()
 
 std::string InputManager::getConfigPath()
 {
-    std::string path {Utils::FileSystem::getHomePath()};
-    path.append("/.emulationstation/es_input.xml");
-    return path;
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
+        return Utils::FileSystem::getAppDataDirectory() + "/es_input.xml";
+    else
+        return Utils::FileSystem::getAppDataDirectory() + "/settings/es_input.xml";
 }
 
 std::string InputManager::getTemporaryConfigPath()
 {
-    std::string path {Utils::FileSystem::getHomePath()};
-    path.append("/.emulationstation/es_temporaryinput.xml");
-    return path;
+    if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
+        return Utils::FileSystem::getAppDataDirectory() + "/es_temporaryinput.xml";
+    else
+        return Utils::FileSystem::getAppDataDirectory() + "/settings/es_temporaryinput.xml";
 }
 
 int InputManager::getNumConfiguredDevices()
@@ -276,6 +298,11 @@ int InputManager::getNumConfiguredDevices()
 
     if (mKeyboardInputConfig->isConfigured())
         ++num;
+
+#if defined(__ANDROID__)
+    if (mTouchInputConfig->isConfigured())
+        ++num;
+#endif
 
     if (mCECInputConfig->isConfigured())
         ++num;
@@ -306,8 +333,11 @@ std::string InputManager::getDeviceGUIDString(int deviceId)
 {
     if (deviceId == DEVICE_KEYBOARD)
         return KEYBOARD_GUID_STRING;
-
-    if (deviceId == DEVICE_CEC)
+#if defined(__ANDROID__)
+    else if (deviceId == DEVICE_TOUCH)
+        return TOUCH_GUID_STRING;
+#endif
+    else if (deviceId == DEVICE_CEC)
         return CEC_GUID_STRING;
 
     auto it = mJoysticks.find(deviceId);
@@ -326,6 +356,10 @@ InputConfig* InputManager::getInputConfigByDevice(int device)
 {
     if (device == DEVICE_KEYBOARD)
         return mKeyboardInputConfig.get();
+#if defined(__ANDROID__)
+    else if (device == DEVICE_TOUCH)
+        return mTouchInputConfig.get();
+#endif
     else if (device == DEVICE_CEC)
         return mCECInputConfig.get();
     else
@@ -442,17 +476,36 @@ bool InputManager::parseEvent(const SDL_Event& event)
             if (event.key.repeat)
                 return false;
 
+#if defined(__ANDROID__)
+            // Quit application if the back button is pressed.
+            if (event.key.keysym.sym == SDLK_AC_BACK) {
+                SDL_Event quit {};
+                quit.type = SDL_QUIT;
+                SDL_PushEvent(&quit);
+                return false;
+            }
+#endif
             // There is no need to handle the OS-default quit shortcut (Alt + F4 on Windows and
             // Linux and Command + Q on macOS) as that's taken care of by the window manager.
+            // The exception is Android as there are are no default quit shortcuts on this OS.
             std::string quitShortcut {Settings::getInstance()->getString("KeyboardQuitShortcut")};
 #if defined(__APPLE__)
             if (quitShortcut != "CmdQ") {
+#elif defined(__ANDROID__)
+            if (true) {
 #else
             if (quitShortcut != "AltF4") {
 #endif
                 bool quitES {false};
+#if defined(__ANDROID__)
+                if (quitShortcut == "AltF4" && event.key.keysym.sym == SDLK_F4 &&
+                    (event.key.keysym.mod & KMOD_LALT))
+                    quitES = true;
+                else if (quitShortcut == "F4" && event.key.keysym.sym == SDLK_F4 &&
+#else
                 if (quitShortcut == "F4" && event.key.keysym.sym == SDLK_F4 &&
-                    !(event.key.keysym.mod & KMOD_LALT))
+#endif
+                         !(event.key.keysym.mod & KMOD_LALT))
                     quitES = true;
                 else if (quitShortcut == "CtrlQ" && event.key.keysym.sym == SDLK_q &&
                          event.key.keysym.mod & KMOD_CTRL)
@@ -462,7 +515,7 @@ bool InputManager::parseEvent(const SDL_Event& event)
                     quitES = true;
 
                 if (quitES) {
-                    SDL_Event quit;
+                    SDL_Event quit {};
                     quit.type = SDL_QUIT;
                     SDL_PushEvent(&quit);
                     return false;
@@ -484,6 +537,62 @@ bool InputManager::parseEvent(const SDL_Event& event)
                            Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 0, false));
             return true;
         }
+#if defined(__ANDROID__)
+        case SDL_FINGERDOWN: {
+            if (!Settings::getInstance()->getBool("InputTouchOverlay"))
+                return false;
+
+            const int buttonID {mInputOverlay.getButtonId(
+                SDL_FINGERDOWN, event.tfinger.fingerId + 1, event.tfinger.x, event.tfinger.y)};
+            if (buttonID != -2) {
+                mWindow->input(getInputConfigByDevice(DEVICE_TOUCH),
+                               Input(DEVICE_TOUCH, TYPE_TOUCH, buttonID, 1, false));
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        case SDL_FINGERUP: {
+            if (!Settings::getInstance()->getBool("InputTouchOverlay"))
+                return false;
+
+            const int buttonID {mInputOverlay.getButtonId(SDL_FINGERUP, event.tfinger.fingerId + 1,
+                                                          event.tfinger.x, event.tfinger.y)};
+            if (buttonID != -2) {
+                mWindow->input(getInputConfigByDevice(DEVICE_TOUCH),
+                               Input(DEVICE_TOUCH, TYPE_TOUCH, buttonID, 0, false));
+
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        case SDL_FINGERMOTION: {
+            if (!Settings::getInstance()->getBool("InputTouchOverlay"))
+                return false;
+
+            bool releasedButton {false};
+            const int buttonID {
+                mInputOverlay.getButtonId(SDL_FINGERMOTION, event.tfinger.fingerId + 1,
+                                          event.tfinger.x, event.tfinger.y, &releasedButton)};
+
+            if (buttonID == -2)
+                return false;
+
+            if (releasedButton) {
+                mWindow->input(getInputConfigByDevice(DEVICE_TOUCH),
+                               Input(DEVICE_TOUCH, TYPE_TOUCH, buttonID, 0, false));
+                return true;
+            }
+            else {
+                mWindow->input(getInputConfigByDevice(DEVICE_TOUCH),
+                               Input(DEVICE_TOUCH, TYPE_TOUCH, buttonID, 1, false));
+                return true;
+            }
+        }
+#endif
         case SDL_TEXTINPUT: {
             mWindow->textInput(event.text.text);
             break;
@@ -620,13 +729,41 @@ void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
     // clang-format on
 }
 
+void InputManager::loadTouchConfig()
+{
+#if defined(__ANDROID__)
+    InputConfig* cfg {mTouchInputConfig.get()};
+
+    if (cfg->isConfigured())
+        return;
+
+    // clang-format off
+    cfg->mapInput("Up", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_DPAD_UP, 1, true));
+    cfg->mapInput("Down", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_DPAD_DOWN, 1, true));
+    cfg->mapInput("Left", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_DPAD_LEFT, 1, true));
+    cfg->mapInput("Right", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_DPAD_RIGHT, 1, true));
+    cfg->mapInput("Start", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_START, 1, true));
+    cfg->mapInput("Back", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_BACK, 1, true));
+    cfg->mapInput("A", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_A, 1, true));
+    cfg->mapInput("B", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_B, 1, true));
+    cfg->mapInput("X", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_X, 1, true));
+    cfg->mapInput("Y", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_Y, 1, true));
+    cfg->mapInput("LeftShoulder", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_LEFTSHOULDER, 1, true));
+    cfg->mapInput("RightShoulder", Input(DEVICE_TOUCH, TYPE_TOUCH, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, 1, true));
+    cfg->mapInput("LeftTrigger", Input(DEVICE_TOUCH, TYPE_TOUCH, InputOverlay::TriggerButtons::TRIGGER_LEFT, 1, true));
+    cfg->mapInput("RightTrigger", Input(DEVICE_TOUCH, TYPE_TOUCH, InputOverlay::TriggerButtons::TRIGGER_RIGHT, 1, true));
+    // clang-format on
+#endif
+}
+
 void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
 {
     // Open joystick and add it to our list.
     SDL_GameController* controller {SDL_GameControllerOpen(deviceIndex)};
 
     if (controller == nullptr) {
-        LOG(LogError) << "Couldn't add controller with device index " << deviceIndex;
+        LOG(LogError) << "Couldn't add controller with device index " << deviceIndex << " ("
+                      << SDL_GetError() << ")";
         return;
     }
 

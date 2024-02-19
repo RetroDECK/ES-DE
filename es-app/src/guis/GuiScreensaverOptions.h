@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiScreensaverOptions.h
 //
 //  User interface for the screensaver options.

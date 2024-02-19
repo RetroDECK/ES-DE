@@ -24,7 +24,7 @@
 #if defined(VERTEX)
 
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 uniform mat4 MVPMatrix;
@@ -53,7 +53,7 @@ void main()
 #elif defined(FRAGMENT)
 
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 uniform vec2 texSize;
@@ -102,6 +102,7 @@ uniform float OutputGamma;
 // 0x00000010 - Screen rotated 90 or 270 degrees
 // 0x00000020 - Rounded corners
 // 0x00000040 - Rounded corners with no anti-aliasing
+// 0x00000080 - Convert pixel format
 
 void main()
 {

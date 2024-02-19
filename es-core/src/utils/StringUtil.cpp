@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  StringUtil.cpp
 //
 //  Low-level string functions.
@@ -567,6 +567,13 @@ namespace Utils
             }
 
             return line;
+        }
+
+        std::string filterUtf8(const std::string& stringArg)
+        {
+            std::string tempString;
+            utf8::replace_invalid(stringArg.begin(), stringArg.end(), back_inserter(tempString));
+            return tempString;
         }
 
         std::string trim(const std::string& stringArg)

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiApplicationUpdater.cpp
 //
 //  Installs application updates.
@@ -9,7 +9,7 @@
 
 #include "guis/GuiApplicationUpdater.h"
 
-#include "EmulationStation.h"
+#include "ApplicationVersion.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/PlatformUtil.h"

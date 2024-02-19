@@ -24,15 +24,15 @@
             {
                 "name": "macOSApple",
                 "filename": "EmulationStation-DE-2.2.1-arm64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/101581889/download",
-                "md5": "999fa80d231ac00041e321685872b545",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/101732696/download",
+                "md5": "1aec895180c0e19a3d33ce6b6f267c0b",
                 "message": ""
             },
             {
                 "name": "macOSIntel",
                 "filename": "EmulationStation-DE-2.2.1-x64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/101581898/download",
-                "md5": "70eb5456655d8902da79ea08b3efb9da",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/101732724/download",
+                "md5": "9c7f26773402afb3f8fcae79ac16a5fd",
                 "message": ""
             },
             {

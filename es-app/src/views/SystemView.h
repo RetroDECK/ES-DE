@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  SystemView.h
 //
 //  Main system view.
@@ -93,6 +93,11 @@ public:
     {
         for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
             video->muteVideoPlayer();
+    }
+    void resetViewVideosTimer() override
+    {
+        for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
+            video->resetVideoPlayerTimer();
     }
 
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);

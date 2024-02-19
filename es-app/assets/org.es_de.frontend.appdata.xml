@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>org.es_de.frontend</id>
+    <name>ES-DE</name>
+    <summary>Emulator frontend</summary>
+    <description>
+        <p>ES-DE (EmulationStation Desktop Edition) is a frontend for browsing and
+           launching games from your multi-platform game collection.</p>
+    </description>
+    <launchable type="desktop-id">org.es_de.frontend.desktop</launchable>
+    <categories>
+        <category>Game</category>
+        <category>Emulator</category>
+    </categories>
+    <content_rating type="oars-1.0" />
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>MIT</project_license>
+    <url type="homepage">https://es-de.org</url>
+    <url type="bugtracker">https://gitlab.com/es-de/emulationstation-de/-/issues</url>
+    <url type="help">https://gitlab.com/es-de/emulationstation-de/-/blob/master/USERGUIDE.md</url>
+    <url type="donation">https://es-de.org/</url>
+    <screenshots>
+        <screenshot type="default">
+            <caption>ES-DE System View</caption>
+            <image type="source" width="1280" height="720">https://gitlab.com/es-de/emulationstation-de/-/raw/master/images/es-de_system_view.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>ES-DE Gamelist View</caption>
+            <image type="source" width="1280" height="720">https://gitlab.com/es-de/emulationstation-de/-/raw/master/images/es-de_gamelist_view.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>ES-DE Scraper</caption>
+            <image type="source" width="1280" height="720">https://gitlab.com/es-de/emulationstation-de/-/raw/master/images/es-de_scraper_running.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>ES-DE Theme Support</caption>
+            <image type="source" width="1280" height="720">https://gitlab.com/es-de/emulationstation-de/-/raw/master/images/es-de_ui_theme_support.png</image>
+        </screenshot>
+    </screenshots>
+    <releases>
+        <release version="3.0.0" date="2024-02-17">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="2.2.1" date="2023-11-12">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="2.2.0" date="2023-11-02">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="2.1.1" date="2023-07-16">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="2.1.0" date="2023-07-13">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="2.0.1" date="2023-04-23">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="2.0.0" date="2023-03-11">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.2.6" date="2022-08-03">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.2.5" date="2022-06-22">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.2.4" date="2022-05-27">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.2.3" date="2022-05-04">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.2.2" date="2022-04-07">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.2.1" date="2022-03-30">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.2.0" date="2021-12-28">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.1.0" date="2021-08-10">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.0.1" date="2021-05-01">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
+    </releases>
+</component>

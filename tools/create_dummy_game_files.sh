@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  create_dummy_game_files.sh
 #
 # This script generates dummy files for each system in the ROM directory and is intended

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiMsgBox.cpp
 //
 //  Popup message dialog with a notification text and a choice of one,

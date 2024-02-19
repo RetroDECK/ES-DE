@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiMediaViewerOptions.cpp
 //
 //  User interface for the media viewer options.

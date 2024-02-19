@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  FileSystemUtil.cpp
 //
 //  Low-level filesystem functions.
@@ -8,9 +8,9 @@
 //  remove files etc.
 //
 
-#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) &&                       \
-    !defined(__NetBSD__) && !defined(__EMSCRIPTEN__)
-#define _FILE_OFFSET_BITS 64
+#if defined(__ANDROID__)
+#include "utils/PlatformUtilAndroid.h"
+#include <SDL2/SDL_system.h>
 #endif
 
 #if defined(__APPLE__)
@@ -176,6 +176,11 @@ namespace Utils
             if (homePath.length())
                 return homePath;
 
+#if defined(__ANDROID__)
+            homePath = FileSystemVariables::sAppDataDirectory;
+            return homePath;
+#endif
+
 #if defined(_WIN64)
             // On Windows we need to check HOMEDRIVE and HOMEPATH.
             if (!homePath.length()) {
@@ -241,6 +246,36 @@ namespace Utils
             return "";
         }
 
+        std::string getAppDataDirectory()
+        {
+#if defined(__ANDROID__)
+            return getHomePath();
+#else
+            if (FileSystemVariables::sAppDataDirectory.empty()) {
+                if (Utils::FileSystem::exists(getHomePath() + "/ES-DE")) {
+                    FileSystemVariables::sAppDataDirectory = getHomePath() + "/ES-DE";
+                }
+                else if (Utils::FileSystem::exists(getHomePath() + "/.emulationstation")) {
+                    FileSystemVariables::sAppDataDirectory = getHomePath() + "/.emulationstation";
+                }
+                else {
+                    FileSystemVariables::sAppDataDirectory = getHomePath() + "/ES-DE";
+                }
+            }
+
+            return FileSystemVariables::sAppDataDirectory;
+#endif
+        }
+
+        std::string getInternalAppDataDirectory()
+        {
+#if defined(__ANDROID__)
+            return AndroidVariables::sExternalDataDirectory;
+#else
+            return "";
+#endif
+        }
+
         std::string getCWDPath()
         {
             // Return current working directory.
@@ -275,8 +310,8 @@ namespace Utils
 
             // Using a temporary file is the only viable solution I've found to communicate
             // between the sandbox and the outside world.
-            const std::string& tempFile {Utils::FileSystem::getHomePath() + "/.emulationstation/" +
-                                         ".flatpak_emulator_binary_path.tmp"};
+            const std::string& tempFile {Utils::FileSystem::getAppDataDirectory() +
+                                         "/.flatpak_emulator_binary_path.tmp"};
 
             std::string emulatorPath;
 
@@ -365,10 +400,12 @@ namespace Utils
 
         std::string getProgramDataPath()
         {
-#if defined(__unix__)
-            return installPrefix + "/share/emulationstation";
+#if defined(__ANDROID__)
+            return AndroidVariables::sInternalDataDirectory;
+#elif defined(__unix__)
+            return installPrefix + "/share/es-de";
 #else
-            return "";
+    return "";
 #endif
         }
 

@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) - Feature roadmap
+# ES-DE (EmulationStation Desktop Edition) - Feature roadmap
 
 ES-DE is developed using an agile methodology so which features to include per release is reviewed and adjusted continuously. As such this document is basically a list of the main features that are planned to be added eventually.
 

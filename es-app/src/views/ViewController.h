@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ViewController.h
 //
 //  Handles overall system navigation including animations and transitions.
@@ -34,6 +34,8 @@ public:
 
     // These functions are called from main().
     void setMenuColors();
+    void legacyAppDataDialog();
+    void migratedAppDataFilesDialog();
     void unsafeUpgradeDialog();
     void invalidSystemsFileDialog();
     void noGamesDialog();
@@ -83,6 +85,8 @@ public:
     void stopViewVideos() override { mCurrentView->stopViewVideos(); }
     void pauseViewVideos() override { mCurrentView->pauseViewVideos(); }
     void muteViewVideos() override { mCurrentView->muteViewVideos(); }
+    // Needed on Android to reset the static image delay timer on activity resume.
+    void resetViewVideosTimer() override { mCurrentView->resetViewVideosTimer(); }
 
     void onFileChanged(FileData* file, bool reloadGamelist);
     void triggerGameLaunch(FileData* game)
@@ -91,7 +95,6 @@ public:
         mWindow->setBlockInput(true);
     };
     const bool getGameLaunchTriggered() { return (mGameToLaunch != nullptr); }
-    std::vector<std::string>& getGameEndEventParams() { return mGameEndEventParams; }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -182,7 +185,6 @@ private:
     std::shared_ptr<SystemView> mSystemListView;
     ViewTransitionAnimation mLastTransitionAnim;
 
-    std::vector<std::string> mGameEndEventParams;
     FileData* mGameToLaunch;
     State mState;
 

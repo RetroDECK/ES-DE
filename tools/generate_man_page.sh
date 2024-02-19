@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  generate_man_page.sh
 #
 #  Generates the Unix manual page.
@@ -18,25 +18,25 @@ if [ ! -f ../es-app/CMakeLists.txt ]; then
   exit
 fi
 
-ESBINARY=../emulationstation
+ESBINARY=../es-de
 
 TEMPFILE_INPUT=tempfile_input_$(date +%H%M%S)
 TEMPFILE_OUTPUT=tempfile_output_$(date +%H%M%S)
-TARGET_FILENAME=emulationstation.6
+TARGET_FILENAME=es-de.6
 
 MAN_INCLUDE="
 [NAME]
-emulationstation - EmulationStation Desktop Edition
+es-de - ES-DE Frontend (EmulationStation Desktop Edition)
 
 [DESCRIPTION]
-EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and launching games from your multi-platform game collection.
+ES-DE is a frontend for browsing and launching games from your multi-platform game collection.
 
 [AUTHOR]
-Leon Styhre (Desktop Edition) <https://es-de.org/>
+Leon Styhre <https://es-de.org/>
 
-RetroPie community (RetroPie fork)
+RetroPie community (RetroPie EmulationStation fork)
 
-Alec Lofquist (original version)
+Alec Lofquist (original EmulationStation)
 
 [SEE ALSO]
 Full documentation available at: <https://gitlab.com/es-de/emulationstation-de/>
@@ -48,13 +48,13 @@ help2man --section 6 --no-info --include $TEMPFILE_INPUT $ESBINARY > $TEMPFILE_O
 
 # Manual string replacements, these may need to be modified if changes are made to the
 # command line --help output.
-cat $TEMPFILE_OUTPUT | sed s/"EmulationStation Desktop Edition, Emulator Frontend"/""/g | \
+cat $TEMPFILE_OUTPUT | sed s/"ES\\\-DE (ES\\\-DE), Emulator Frontend"/""/g | \
 sed s/"Set to at least"/".br\nSet to at least"/ > $TARGET_FILENAME
 
 gzip -9 $TARGET_FILENAME
 mv ${TARGET_FILENAME}.gz ../es-app/assets/
 
-echo "The man page was generated and saved to ../es-app/assets/emulationstation.6.gz"
+echo "The man page was generated and saved to ../es-app/assets/es-de.6.gz"
 
 rm $TEMPFILE_INPUT
 rm $TEMPFILE_OUTPUT

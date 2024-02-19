@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiComponent.h
 //
 //  Basic GUI component handling such as placement, rotation, Z-order, rendering and animation.
@@ -117,6 +117,7 @@ public:
     void setRotationOrigin(glm::vec2 origin) { setRotationOrigin(origin.x, origin.y); }
 
     const Stationary getStationary() const { return mStationary; }
+    const bool getRenderDuringTransitions() const { return mRenderDuringTransitions; }
 
     virtual glm::vec2 getSize() const { return mSize; }
     void setSize(const glm::vec2& size) { setSize(size.x, size.y); }
@@ -309,6 +310,8 @@ public:
     virtual void stopViewVideos() {}
     virtual void pauseViewVideos() {}
     virtual void muteViewVideos() {}
+    // Needed on Android to reset the static image delay timer on activity resume.
+    virtual void resetViewVideosTimer() {}
 
     // Used to reset various components like text scrolling, animations etc.
     virtual void resetComponent() {}
@@ -400,6 +403,7 @@ protected:
     glm::vec2 mRotationOrigin;
     glm::vec2 mSize;
     Stationary mStationary;
+    bool mRenderDuringTransitions;
 
     float mBrightness;
     float mOpacity;

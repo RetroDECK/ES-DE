@@ -1,4 +1,4 @@
-# Slate for EmulationStation Desktop Edition (slate-es-de)
+# Slate for ES-DE (slate-es-de)
 
 The following options are included:
 
@@ -11,6 +11,11 @@ The following options are included:
 
 - Dark
 - Light
+
+2 font sizes:
+
+- Medium
+- Large
 
 4 aspect ratios:
 

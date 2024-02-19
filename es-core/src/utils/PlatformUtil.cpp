@@ -1,7 +1,7 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
-//  Platform.cpp
+//  ES-DE
+//  PlatformUtil.cpp
 //
 //  Platform utility functions.
 //
@@ -330,7 +330,7 @@ namespace Utils
         {
             sQuitMode = mode;
 
-            SDL_Event quit;
+            SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
             return 0;

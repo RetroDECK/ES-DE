@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Settings.h
 //
 //  Functions to read from and write to the configuration file es_settings.xml.

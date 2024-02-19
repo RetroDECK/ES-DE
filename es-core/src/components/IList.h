@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  IList.h
 //
 //  List base class, used by the system view, gamelist view and menu system.

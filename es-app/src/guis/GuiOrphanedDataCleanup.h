@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE Frontend
 //  GuiOrphanedDataCleanup.h
 //
 //  Removes orphaned game media, gamelist.xml entries and custom collections entries.

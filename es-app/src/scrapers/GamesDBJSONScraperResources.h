@@ -1,12 +1,12 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GamesDBJSONScraperResources.h
 //
 //  Functions specifically for scraping from thegamesdb.net
 //  Called from GamesDBJSONScraper.
 //
-//  Downloads these resource files to ~/.emulationstation/scrapers:
+//  Downloads these resource files to the scrapers folder in the application data directory:
 //  gamesdb_developers.json
 //  gamesdb_genres.json
 //  gamesdb_publishers.json

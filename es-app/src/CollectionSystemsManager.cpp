@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  CollectionSystemsManager.cpp
 //
 //  Manages collections of the following two types:
@@ -634,8 +634,31 @@ void CollectionSystemsManager::setEditMode(const std::string& collectionName, bo
     mEditingCollectionSystemData = sysData;
 
     if (showPopup) {
+        const std::string controllerType {
+            Settings::getInstance()->getString("InputControllerType")};
+        std::string editButton;
+
+        if (controllerType == "ps123" || controllerType == "ps4" || controllerType == "ps5") {
+#if defined(_MSC_VER) // MSVC compiler.
+            if (Settings::getInstance()->getBool("InputSwapButtons"))
+                editButton = Utils::String::wideStringToString(L"\uF04D"); // Square.
+            else
+                editButton = Utils::String::wideStringToString(L"\uF0D8"); // Triangle.
+#else
+            if (Settings::getInstance()->getBool("InputSwapButtons"))
+                editButton = "\uF04D"; // Square.
+            else
+                editButton = "\uF0D8"; // Triangle.
+#endif
+        }
+        else {
+            if (Settings::getInstance()->getBool("InputSwapButtons"))
+                editButton = "'X'";
+            else
+                editButton = "'Y'";
+        }
         mWindow->queueInfoPopup("EDITING '" + Utils::String::toUpper(collectionName) +
-                                    "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'",
+                                    "' COLLECTION, ADD/REMOVE GAMES WITH " + editButton,
                                 10000);
     }
 }
@@ -1437,7 +1460,7 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig()
     std::vector<std::string> configPaths {SystemData::getConfigPath()};
 
     // Here we don't honor the <loadExclusive> tag which may be present in the custom es_systems.xml
-    // file under ~/.emulationstation/custom_systems as we really want to include all the themes
+    // file under <application data>/custom_systems as we really want to include all the themes
     // supported by ES-DE. Otherwise a user may accidentally create a custom collection that
     // corresponds to a supported theme.
     for (auto path : configPaths) {
@@ -1625,6 +1648,6 @@ std::string CollectionSystemsManager::getCustomCollectionConfigPath(
 
 std::string CollectionSystemsManager::getCollectionsFolder()
 {
-    return Utils::FileSystem::getGenericPath(Utils::FileSystem::getHomePath() +
-                                             "/.emulationstation/collections");
+    return Utils::FileSystem::getGenericPath(Utils::FileSystem::getAppDataDirectory() +
+                                             "/collections");
 }

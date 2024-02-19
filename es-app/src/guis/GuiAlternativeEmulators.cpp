@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiAlternativeEmulators.cpp
 //
 //  User interface to select between alternative emulators per system

@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) - Missing slate-es-de theme assets
+# ES-DE - Missing slate-es-de theme assets
 
 * ags: Adventure Game Studio Game Engine - consolegame.svg, controller.svg
 * amigacd32: Amiga CD32 - consolegame.svg, controller.svg

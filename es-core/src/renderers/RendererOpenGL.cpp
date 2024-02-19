@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  RendererOpenGL.cpp
 //
 //  OpenGL / OpenGL ES renderering functions.
@@ -112,7 +112,7 @@ GLenum RendererOpenGL::convertTextureType(const TextureType type)
 #else
         case TextureType::BGRA:  { return GL_BGRA;            } break;
 #endif
-#if defined(__EMSCRIPTEN__)
+#if defined(__EMSCRIPTEN__) || defined(__ANDROID__)
         case TextureType::RED:   { return GL_LUMINANCE;       } break;
 #else
         case TextureType::RED:   { return GL_RED;             } break;
@@ -241,15 +241,13 @@ bool RendererOpenGL::createContext()
 #endif
 
 #if defined(USE_OPENGLES)
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL ES " << mMajorGLVersion << "."
-                 << mMinorGLVersion;
+    LOG(LogInfo) << "Application renderer: OpenGL ES " << mMajorGLVersion << "." << mMinorGLVersion;
 #else
 #if defined(_WIN64)
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL " << mMajorGLVersion << "."
-                 << mMinorGLVersion << " with GLEW";
+    LOG(LogInfo) << "Application renderer: OpenGL " << mMajorGLVersion << "." << mMinorGLVersion
+                 << " with GLEW";
 #else
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL " << mMajorGLVersion << "."
-                 << mMinorGLVersion;
+    LOG(LogInfo) << "Application renderer: OpenGL " << mMajorGLVersion << "." << mMinorGLVersion;
 #endif
 #endif
 
@@ -439,8 +437,16 @@ unsigned int RendererOpenGL::createTexture(const unsigned int texUnit,
                                                    static_cast<GLfloat>(GL_NEAREST)));
 
 #if defined(USE_OPENGLES)
-    GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
-                                GL_UNSIGNED_BYTE, data));
+    if (mipmapping) {
+        // This is required as not all mobile GPUs support mipmapping when using the BGRA
+        // pixel format.
+        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+                                    GL_UNSIGNED_BYTE, data));
+    }
+    else {
+        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
+                                    GL_UNSIGNED_BYTE, data));
+    }
 #else
     GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, textureType,
                                 GL_UNSIGNED_BYTE, data));
@@ -644,6 +650,13 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     vertices->blurStrength = parameters.blurStrength;
     vertices->shaderFlags = ShaderFlags::POST_PROCESSING | ShaderFlags::PREMULTIPLIED;
 
+#if defined(USE_OPENGLES)
+    // This is required as not all mobile GPUs support the glReadPixels() function when using
+    // the BGRA pixel format.
+    if (textureRGBA)
+        vertices->shaderFlags |= ShaderFlags::CONVERT_PIXEL_FORMAT;
+#endif
+
     if (screenRotation == 90 || screenRotation == 270)
         vertices->shaderFlags |= ShaderFlags::ROTATED;
 
@@ -774,10 +787,10 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
 #if defined(USE_OPENGLES)
         if (screenRotation == 0 || screenRotation == 180)
             GL_CHECK_ERROR(
-                glReadPixels(0, 0, width, height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, textureRGBA));
+                glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, textureRGBA));
         else
             GL_CHECK_ERROR(
-                glReadPixels(0, 0, height, width, GL_BGRA_EXT, GL_UNSIGNED_BYTE, textureRGBA));
+                glReadPixels(0, 0, height, width, GL_RGBA, GL_UNSIGNED_BYTE, textureRGBA));
 #else
         if (screenRotation == 0 || screenRotation == 180)
             GL_CHECK_ERROR(

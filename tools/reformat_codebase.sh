@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  reformat_codebase.sh
 #
 #  Automatically reformats the codebase using clang-format.

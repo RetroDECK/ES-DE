@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  MiximageGenerator.cpp
 //
 //  Generates miximages from screenshots, marquees, 3D boxes/covers and physical media images.
@@ -894,6 +894,17 @@ std::string MiximageGenerator::getSavePath() const
 
     if (!Utils::FileSystem::exists(path))
         Utils::FileSystem::createDirectory(path);
+
+#if defined(__ANDROID__)
+    if (!Utils::FileSystem::exists(path + ".nomedia")) {
+        LOG(LogInfo) << "Creating \"no media\" file \"" << path + ".nomedia"
+                     << "\"...";
+        Utils::FileSystem::createEmptyFile(path + ".nomedia");
+        if (!Utils::FileSystem::exists(path + ".nomedia")) {
+            LOG(LogWarning) << "Couldn't create file, permission problems?";
+        }
+    }
+#endif
 
     path += mGame->getSystemName() + "/miximages" + subFolders + "/";
 

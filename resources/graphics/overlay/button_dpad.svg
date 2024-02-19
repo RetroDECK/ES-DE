@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="52"
+   height="40"
+   version="1.1"
+   viewBox="0 0 52 40"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <path
+     id="rect6831"
+     style="opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.745;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000;stop-opacity:1;fill-opacity:0.25"
+     d="M 0.8722719,0.87265904 V 39.127341 H 31.564741 L 50.76394,19.999999 31.564741,0.87265904 Z" />
+  <path
+     id="rect6831-3"
+     style="fill:#ffffff;fill-opacity:0.2;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.745;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
+     d="M 18.987354,11.012434 V 28.987566 H 18.883649 L 9.8625864,20.000459 18.883649,11.012434 Z" />
+</svg>

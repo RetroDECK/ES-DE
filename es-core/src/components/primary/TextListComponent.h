@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  TextListComponent.h
 //
 //  Text list, usable in both the system and gamelist views.
@@ -123,6 +123,7 @@ private:
     bool mGamelistView;
 
     std::shared_ptr<Font> mFont;
+    float mSelectorWidth;
     float mSelectorHeight;
     float mSelectorHorizontalOffset;
     float mSelectorVerticalOffset;
@@ -162,6 +163,7 @@ TextListComponent<T>::TextListComponent()
     , mPreviousScrollVelocity {0}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mFont {Font::get(FONT_SIZE_MEDIUM_FIXED)}
+    , mSelectorWidth {mSize.x}
     , mSelectorHeight {mFont->getSize() * 1.5f}
     , mSelectorHorizontalOffset {0.0f}
     , mSelectorVerticalOffset {0.0f}
@@ -330,7 +332,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             mRenderer->setMatrix(trans);
             mRenderer->drawRect(mSelectorHorizontalOffset,
                                 (mCursor - startEntry) * entrySize + mSelectorVerticalOffset,
-                                mSize.x, mSelectorHeight, mSelectorColor, mSelectorColorEnd,
+                                mSelectorWidth, mSelectorHeight, mSelectorColor, mSelectorColorEnd,
                                 mSelectorColorGradientHorizontal);
         }
     }
@@ -670,12 +672,23 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
+                         mRenderer->getScreenWidth() * 1.0f);
+    mSize.y = glm::clamp(mSize.y, mRenderer->getScreenHeight() * 0.05f,
+                         mRenderer->getScreenHeight() * 1.0f);
+
+    if (elem->has("selectorWidth"))
+        mSelectorWidth =
+            glm::clamp(elem->get<float>("selectorWidth"), 0.0f, 1.0f) * Renderer::getScreenWidth();
+    else
+        mSelectorWidth = mSize.x;
+
     if (elem->has("selectorImagePath")) {
         const std::string& path {elem->get<std::string>("selectorImagePath")};
         bool tile {elem->has("selectorImageTile") && elem->get<bool>("selectorImageTile")};
         mSelectorImage.setImage(path, tile);
-        mSelectorImage.setSize(mSize.x, mSelectorHeight);
-        mSelectorImage.setResize(mSize.x, mSelectorHeight);
+        mSelectorImage.setSize(mSelectorWidth, mSelectorHeight);
+        mSelectorImage.setResize(mSelectorWidth, mSelectorHeight);
         mSelectorImage.setColorShift(mSelectorColor);
         mSelectorImage.setColorShiftEnd(mSelectorColorEnd);
     }
@@ -685,11 +698,6 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("fadeAbovePrimary"))
         mFadeAbovePrimary = elem->get<bool>("fadeAbovePrimary");
-
-    mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
-                         mRenderer->getScreenWidth() * 1.0f);
-    mSize.y = glm::clamp(mSize.y, mRenderer->getScreenHeight() * 0.05f,
-                         mRenderer->getScreenHeight() * 1.0f);
 }
 
 template <typename T> void TextListComponent<T>::onCursorChanged(const CursorState& state)

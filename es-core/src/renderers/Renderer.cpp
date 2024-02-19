@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Renderer.cpp
 //
 //  Generic rendering functions.
@@ -163,7 +163,7 @@ bool Renderer::createWindow()
         sScreenHeight = tempVal;
     }
 
-    if (sScreenHeight > sScreenWidth)
+    if (sScreenHeight >= sScreenWidth)
         sIsVerticalOrientation = true;
     else
         sIsVerticalOrientation = false;
@@ -172,7 +172,7 @@ bool Renderer::createWindow()
     // games or when manually switching windows using the task switcher).
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
-#if defined(__unix__)
+#if defined(__unix__) && !defined(__ANDROID__)
     // Disabling desktop composition can lead to better framerates and a more fluid user
     // interface, but with some drivers it can cause strange behaviors when returning to
     // the desktop.
@@ -221,10 +221,9 @@ bool Renderer::createWindow()
         windowFlags = SDL_WINDOW_OPENGL;
 #endif
 
-    if ((mSDLWindow =
-             SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
-                              SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex), mWindowWidth,
-                              mWindowHeight, windowFlags)) == nullptr) {
+    if ((mSDLWindow = SDL_CreateWindow("ES-DE", SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
+                                       SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex), mWindowWidth,
+                                       mWindowHeight, windowFlags)) == nullptr) {
         LOG(LogError) << "Couldn't create SDL window. " << SDL_GetError();
         return false;
     }
@@ -250,7 +249,7 @@ bool Renderer::createWindow()
                  << std::to_string(displayMode.w * scaleFactor) << "x"
                  << std::to_string(displayMode.h * scaleFactor) << ")";
     LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate) << " Hz";
-    LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(sScreenWidth) << "x"
+    LOG(LogInfo) << "Application resolution: " << std::to_string(sScreenWidth) << "x"
                  << std::to_string(sScreenHeight) << " (physical resolution "
                  << std::to_string(sScreenWidth * scaleFactor) << "x"
                  << std::to_string(sScreenHeight * scaleFactor) << ")";
@@ -268,7 +267,7 @@ bool Renderer::createWindow()
     LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
                  << std::to_string(displayMode.h);
     LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate) << " Hz";
-    LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(sScreenWidth) << "x"
+    LOG(LogInfo) << "Application resolution: " << std::to_string(sScreenWidth) << "x"
                  << std::to_string(sScreenHeight);
 #endif
 
@@ -306,10 +305,12 @@ bool Renderer::createWindow()
     setIcon();
     setSwapInterval();
 
-#if defined(_WIN64)
+#if defined(_WIN64) || defined(__ANDROID__)
     // It seems as if Windows needs this to avoid a brief white screen flash on startup.
     // Possibly this is driver-specific rather than OS-specific. There is additional code
     // in init() to work around the white screen flash issue on all operating systems.
+    // On Android the swap is also necessary to avoid displaying random garbage when
+    // the rendering starts.
     swapBuffers();
 #endif
 

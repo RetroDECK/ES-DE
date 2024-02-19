@@ -1,4 +1,4 @@
-# Modern for EmulationStation Desktop Edition (modern-es-de)
+# Modern for ES-DE (modern-es-de)
 
 The following options are included:
 
@@ -13,6 +13,11 @@ The following options are included:
 
 - Dark
 - Light
+
+2 font sizes:
+
+- Medium
+- Large
 
 4 aspect ratios:
 

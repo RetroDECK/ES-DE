@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ScreenScraper.h
 //
 //  Functions specifically for scraping from screenscraper.fr
@@ -10,7 +10,7 @@
 #ifndef ES_APP_SCRAPERS_SCREEN_SCRAPER_H
 #define ES_APP_SCRAPERS_SCREEN_SCRAPER_H
 
-#include "EmulationStation.h"
+#include "ApplicationVersion.h"
 #include "scrapers/Scraper.h"
 
 namespace pugi
@@ -50,13 +50,15 @@ public:
         const std::string API_DEV_P = {32, 70, 46, 54, 12, 5, 13, 120, 50, 66, 25};
         const std::string API_DEV_KEY = {67, 112, 72, 120, 121, 77, 119, 74,  84,  56,
                                          75, 122, 78, 98,  69,  86, 56,  120, 120, 49};
-        const std::string API_URL_BASE = "https://www.screenscraper.fr/api2";
+        const std::string API_URL_BASE = "https://api.screenscraper.fr/api2";
 #if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
         const std::string platformIdentifier {" B"};
 #elif defined(STEAM_DECK)
         const std::string platformIdentifier {" S"};
 #elif defined(RETRODECK)
         const std::string platformIdentifier {" R"};
+#elif defined(__ANDROID__)
+        const std::string platformIdentifier {" G"};
 #elif defined(APPIMAGE_BUILD)
         const std::string platformIdentifier {" A"};
 #elif defined(__linux__) && defined(RASPBERRY_PI)
@@ -70,9 +72,8 @@ public:
 #else
         const std::string platformIdentifier {" O"};
 #endif
-        const std::string API_SOFT_NAME = "EmulationStation-DE " +
-                                          static_cast<std::string>(PROGRAM_VERSION_STRING) +
-                                          platformIdentifier;
+        const std::string API_SOFT_NAME =
+            "ES-DE " + static_cast<std::string>(PROGRAM_VERSION_STRING) + platformIdentifier;
 
         // Which type of image artwork we need. Possible values (not a comprehensive list):
         // - ss: in-game screenshot
@@ -122,12 +123,12 @@ protected:
                  std::vector<ScraperSearchResult>& results) override;
 
     void processGame(const pugi::xml_document& xmldoc, std::vector<ScraperSearchResult>& results);
-    bool processMedia(ScraperSearchResult& result,
-                      const pugi::xml_node& media_list,
-                      std::string& mediaType,
-                      std::string& fileURL,
-                      std::string& fileFormat,
-                      const std::string& region);
+    int processMedia(ScraperSearchResult& result,
+                     const pugi::xml_node& media_list,
+                     std::string& mediaType,
+                     std::string& fileURL,
+                     std::string& fileFormat,
+                     const std::string& region);
     bool isGameRequest() { return !mRequestQueue; }
 
     std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;

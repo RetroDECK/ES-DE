@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Settings.cpp
 //
 //  Functions to read from and write to the configuration file es_settings.xml.
@@ -46,6 +46,7 @@ namespace
         "DebugGrid",
         "DebugText",
         "DebugImage",
+        "LegacyAppDataDirectory",
         "ScraperFilter",
         "TransitionsSystemToSystem",
         "TransitionsSystemToGamelist",
@@ -77,6 +78,9 @@ Settings::Settings()
 {
     mWasChanged = false;
     setDefaults();
+    if (Utils::FileSystem::getFileName(Utils::FileSystem::getAppDataDirectory()) ==
+        ".emulationstation")
+        mBoolMap["LegacyAppDataDirectory"] = std::make_pair(true, true);
     loadFile();
 }
 
@@ -145,7 +149,7 @@ void Settings::setDefaults()
     mIntMap["ScraperRetryOnErrorTimer"] = {3, 3};
     mIntMap["ScraperSearchFileHashMaxSize"] = {384, 384};
     mBoolMap["ScraperOverwriteData"] = {true, true};
-    mBoolMap["ScraperHaltOnInvalidMedia"] = {true, true};
+    mBoolMap["ScraperIgnoreHTTP404Errors"] = {true, true};
     mBoolMap["ScraperSearchFileHash"] = {true, true};
     mBoolMap["ScraperSearchMetadataName"] = {true, true};
     mBoolMap["ScraperIncludeFolders"] = {true, true};
@@ -158,9 +162,10 @@ void Settings::setDefaults()
     mBoolMap["ScraperRegionFallback"] = {true, true};
 
     // UI settings.
-    mStringMap["Theme"] = {"slate-es-de", "slate-es-de"};
+    mStringMap["Theme"] = {"linear-es-de", "linear-es-de"};
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeColorScheme"] = {"", ""};
+    mStringMap["ThemeFontSize"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
     mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
@@ -199,8 +204,7 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverSlideshowScanlines"] = {false, false};
     mBoolMap["ScreensaverSlideshowCustomImages"] = {false, false};
     mBoolMap["ScreensaverSlideshowRecurse"] = {false, false};
-    mStringMap["ScreensaverSlideshowImageDir"] = {"~/.emulationstation/slideshow/custom_images",
-                                                  "~/.emulationstation/slideshow/custom_images"};
+    mStringMap["ScreensaverSlideshowCustomDir"] = {"", ""};
 
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreensaverSwapVideoTimeout"] = {0, 0};
@@ -235,7 +239,14 @@ void Settings::setDefaults()
 
     // Input device settings.
     mStringMap["InputControllerType"] = {"xbox", "xbox"};
+#if defined(__ANDROID__)
+    mStringMap["InputTouchOverlaySize"] = {"medium", "medium"};
+    mStringMap["InputTouchOverlayOpacity"] = {"normal", "normal"};
+    mIntMap["InputTouchOverlayFadeTime"] = {6, 6};
+    mBoolMap["InputTouchOverlay"] = {true, true};
+#endif
     mBoolMap["InputOnlyFirstController"] = {false, false};
+    mBoolMap["InputSwapButtons"] = {false, false};
     mBoolMap["InputIgnoreKeyboard"] = {false, false};
 
     // Game collection settings.
@@ -271,7 +282,9 @@ void Settings::setDefaults()
 #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = {false, false};
 #endif
+#if !defined(__ANDROID__)
     mBoolMap["RunInBackground"] = {false, false};
+#endif
 #if defined(VIDEO_HW_DECODING)
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
@@ -286,7 +299,7 @@ void Settings::setDefaults()
     mBoolMap["CustomEventScripts"] = {false, false};
     mBoolMap["ParseGamelistOnly"] = {false, false};
     mBoolMap["MAMENameStripExtraInfo"] = {true, true};
-#if defined(__unix__)
+#if defined(__unix__) && !defined(__ANDROID__)
     mBoolMap["DisableComposition"] = {false, false};
 #endif
     mBoolMap["DebugMode"] = {false, false};
@@ -294,7 +307,7 @@ void Settings::setDefaults()
     mBoolMap["EnableMenuKidMode"] = {false, false};
 // macOS requires root privileges to reboot and power off so it doesn't make much
 // sense to enable this setting and menu entry for that operating system.
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(__ANDROID__)
     mBoolMap["ShowQuitMenu"] = {false, false};
 #endif
 
@@ -325,10 +338,15 @@ void Settings::setDefaults()
     mBoolMap["DebugSkipMissingThemeFiles"] = {false, false};
     mBoolMap["DebugSkipMissingThemeFilesCustomCollections"] = {true, true};
     mBoolMap["LegacyGamelistFileLocation"] = {false, false};
+    mBoolMap["CreatePlaceholderSystemDirectories"] = {false, false};
     mStringMap["OpenGLVersion"] = {"", ""};
+#if !defined(__ANDROID__)
     mStringMap["ROMDirectory"] = {"", ""};
+#endif
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
+#if !defined(__ANDROID__)
     mStringMap["UserThemeDirectory"] = {"", ""};
+#endif
     mIntMap["LottieMaxFileCache"] = {150, 150};
     mIntMap["LottieMaxTotalCache"] = {1024, 1024};
     mIntMap["ScraperConnectionTimeout"] = {30, 30};
@@ -345,6 +363,7 @@ void Settings::setDefaults()
     mBoolMap["DebugGrid"] = {false, false};
     mBoolMap["DebugText"] = {false, false};
     mBoolMap["DebugImage"] = {false, false};
+    mBoolMap["LegacyAppDataDirectory"] = {false, false};
     mIntMap["ScraperFilter"] = {0, 0};
     mIntMap["TransitionsSystemToSystem"] = {ViewTransitionAnimation::INSTANT,
                                             ViewTransitionAnimation::INSTANT};
@@ -362,9 +381,13 @@ void Settings::setDefaults()
 
 void Settings::saveFile()
 {
-    LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.xml";
-    const std::string path =
-        Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.xml";
+    std::string path;
+    if (mBoolMap["LegacyAppDataDirectory"].second == true) {
+        path = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
+    }
+    else {
+        path = Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
+    }
 
     pugi::xml_document doc;
 
@@ -394,18 +417,20 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    const std::string configFile {Utils::FileSystem::getHomePath() +
-                                  "/.emulationstation/es_settings.xml"};
+    std::string path;
+    if (mBoolMap["LegacyAppDataDirectory"].second == true)
+        path = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
+    else
+        path = Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
 
-    if (!Utils::FileSystem::exists(configFile))
+    if (!Utils::FileSystem::exists(path))
         return;
 
     pugi::xml_document doc;
 #if defined(_WIN64)
-    pugi::xml_parse_result result {
-        doc.load_file(Utils::String::stringToWideString(configFile).c_str())};
+    pugi::xml_parse_result result {doc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
-    pugi::xml_parse_result result {doc.load_file(configFile.c_str())};
+    pugi::xml_parse_result result {doc.load_file(path.c_str())};
 #endif
     if (!result) {
         LOG(LogError) << "Couldn't parse the es_settings.xml file: " << result.description();

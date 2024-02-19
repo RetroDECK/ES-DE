@@ -1,7 +1,7 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
-//  Platform.h
+//  ES-DE
+//  PlatformUtil.h
 //
 //  Platform utility functions.
 //

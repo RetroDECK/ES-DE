@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  SliderComponent.cpp
 //
 //  Slider to set value in a predefined range.

@@ -1,7 +1,7 @@
 #!/bin/sh
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  macOS_dependencies_setup.sh
 #
 #  Downloads and prepares the external dependencies for building in-tree.
@@ -213,7 +213,7 @@ cat << EOF | patch Makefile.osx -
  CPP_X86_64 = \$(shell xcrun -find clang++)
  MACOSX_DEPLOY = -mmacosx-version-min=\$(MACOSX_DEPLOYMENT_TARGET)
 -COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__
-+COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__ -DHAVE_UNISTD_H -DDISABLE_PERF_MEASUREMENT -DPNG_ARM_NEON_OPT=0
++COMPILERFLAGS = -O2 -DNDEBUG -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__ -DHAVE_UNISTD_H -DDISABLE_PERF_MEASUREMENT -DPNG_ARM_NEON_OPT=0
  COMPILERFLAGS_I386 = -arch i386
 -COMPILERFLAGS_X86_64 = -arch x86_64
 +COMPILERFLAGS_X86_64 = -arch arm64
@@ -232,7 +232,7 @@ cat << EOF | patch Makefile.osx -
  CPP_X86_64 = \$(shell xcrun -find clang++)
  MACOSX_DEPLOY = -mmacosx-version-min=\$(MACOSX_DEPLOYMENT_TARGET)
 -COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__
-+COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__ -DHAVE_UNISTD_H -DDISABLE_PERF_MEASUREMENT
++COMPILERFLAGS = -O2 -DNDEBUG -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__ -DHAVE_UNISTD_H -DDISABLE_PERF_MEASUREMENT
  COMPILERFLAGS_I386 = -arch i386
  COMPILERFLAGS_X86_64 = -arch x86_64
  COMPILERPPFLAGS = -Wno-ctor-dtor-privacy -D__ANSI__ -std=c++11 -stdlib=libc++ -Wc++11-narrowing
@@ -280,7 +280,7 @@ if [ ! -d SDL ]; then
 fi
 
 cd SDL
-git checkout release-2.28.5
+git checkout release-2.30.0
 ln -s include SDL2
 mkdir build
 cd ..

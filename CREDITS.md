@@ -1,11 +1,10 @@
-# EmulationStation Desktop Edition (ES-DE) - Credits
+# ES-DE (EmulationStation Desktop Edition) - Credits
 
 # Programming
 
-**Desktop Edition**\
+**ES-DE**\
 Leon Styhre \
-Sophia Hadash \
-Joseph Geumlek
+Sophia Hadash
 
 **RetroPie fork**\
 RetroPie community
@@ -73,6 +72,9 @@ https://github.com/Samsung/rlottie
 
 SDL \
 https://www.libsdl.org
+
+UTF8-CPP \
+https://github.com/nemtrif/utfcpp
 
 Vorbis \
 https://gitlab.xiph.org/xiph/vorbis

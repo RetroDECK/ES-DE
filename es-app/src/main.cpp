@@ -1,26 +1,21 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition (ES-DE) is a frontend for browsing
-//  and launching games from your multi-platform game collection.
-//
-//  Originally created by Alec Lofquist.
-//  Improved and extended by the RetroPie community.
-//  Desktop Edition fork by Leon Styhre.
+//  ES-DE is a frontend for browsing and launching games from your multi-platform game collection.
 //
 //  The column limit is 100 characters.
 //  All ES-DE C++ source code is formatted using clang-format.
 //
 //  main.cpp
 //
-//  Main program loop. Interprets command-line arguments, checks for the
-//  home folder and es_settings.xml configuration file, sets up the application
-//  environment and starts listening to SDL events.
+//  Main program loop. Interprets command-line arguments, checks for the home folder
+//  and es_settings.xml configuration file, sets up the application environment and
+//  starts listening to SDL events.
 //
 
 #include "ApplicationUpdater.h"
+#include "ApplicationVersion.h"
 #include "AudioManager.h"
 #include "CollectionSystemsManager.h"
-#include "EmulationStation.h"
 #include "InputManager.h"
 #include "Log.h"
 #include "MameNames.h"
@@ -42,6 +37,10 @@
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_timer.h>
 
+#if defined(__ANDROID__)
+#include "utils/PlatformUtilAndroid.h"
+#endif
+
 #if defined(__EMSCRIPTEN__)
 #include <emscripten.h>
 #endif
@@ -62,6 +61,11 @@ namespace
     Renderer* renderer {nullptr};
     Window* window {nullptr};
     int lastTime {0};
+
+#if defined(__ANDROID__)
+    int inputBlockTime {0};
+    bool blockInput {false};
+#endif
 
 #if defined(APPLICATION_UPDATER)
     bool noUpdateCheck {false};
@@ -244,7 +248,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
             const int width {stoi(arguments[i + 1])};
             const int height {stoi(arguments[i + 2])};
             if (width < 224 || height < 224 || width > 7680 || height > 7680 ||
-                height < width / 4 || width < height / 2) {
+                height < width / 4 || width < height / 3) {
                 std::cerr << "Error: Unsupported resolution " << width << "x" << height
                           << " supplied\n";
                 return false;
@@ -386,15 +390,15 @@ bool parseArguments(const std::vector<std::string>& arguments)
             Log::setReportingLevel(LogDebug);
         }
         else if (arguments[i] == "--version" || arguments[i] == "-v") {
-            std::cout << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << " (r"
-                      << PROGRAM_RELEASE_NUMBER << ")\n";
+            std::cout << "ES-DE v" << PROGRAM_VERSION_STRING << " (r" << PROGRAM_RELEASE_NUMBER
+                      << ")\n";
             return false;
         }
         else if (arguments[i] == "--help" || arguments[i] == "-h") {
             std::cout <<
                 // clang-format off
-"Usage: emulationstation [options]\n"
-"EmulationStation Desktop Edition, Emulator Frontend\n\n"
+"Usage: es-de [options]\n"
+"ES-DE (ES-DE), Emulator Frontend\n\n"
 "Options:\n"
 "  --display [1 to 4]                    Display/monitor to use\n"
 "  --resolution [width] [height]         Application resolution\n"
@@ -429,7 +433,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
         else {
             const std::string argUnknown {arguments[i]};
             std::cout << "Unknown option '" << argUnknown << "'.\n";
-            std::cout << "Try 'emulationstation --help' for more information.\n";
+            std::cout << "Try 'es-de --help' for more information.\n";
             return false;
         }
     }
@@ -442,22 +446,27 @@ bool parseArguments(const std::vector<std::string>& arguments)
     return true;
 }
 
-bool checkApplicationHomeDirectory()
+bool checkApplicationDataDirectory()
 {
-    // Check that the application home directory exists, otherwise create it.
-    std::string home {Utils::FileSystem::getHomePath()};
-    std::string applicationHome {home + "/.emulationstation"};
-    if (!Utils::FileSystem::exists(applicationHome)) {
-#if defined(_WIN64)
-        std::cout << "First startup, creating application home directory \""
-                  << Utils::String::replace(applicationHome, "/", "\\") << "\"\n";
+    // Check that the application data directory exists, otherwise create it.
+    const std::string applicationData {Utils::FileSystem::getAppDataDirectory()};
+    if (!Utils::FileSystem::exists(applicationData)) {
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_VERBOSE, ANDROID_APPLICATION_ID,
+                            "First startup, creating application data directory \"%s\"",
+                            applicationData.c_str());
 #else
-        std::cout << "First startup, creating application home directory \"" << applicationHome
+        std::cout << "First startup, creating application data directory \"" << applicationData
                   << "\"\n";
 #endif
-        Utils::FileSystem::createDirectory(applicationHome);
-        if (!Utils::FileSystem::exists(applicationHome)) {
+        Utils::FileSystem::createDirectory(applicationData);
+        if (!Utils::FileSystem::exists(applicationData)) {
+#if defined(__ANDROID__)
+            __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID,
+                                "Error: Couldn't create directory, permission problems?");
+#else
             std::cerr << "Error: Couldn't create directory, permission problems?\n";
+#endif
             return false;
         }
     }
@@ -492,6 +501,18 @@ void applicationLoop()
 #endif
         if (SDL_PollEvent(&event)) {
             do {
+#if defined(__ANDROID__)
+                // Prevent that button presses get registered immediately when entering the
+                // foreground (which most commonly mean we're returning from a game).
+                // Also perform some other tasks on resume such as resetting timers.
+                if (event.type == SDL_APP_WILLENTERFOREGROUND) {
+                    blockInput = true;
+                    inputBlockTime = 0;
+                    window->setBlockInput(true);
+                    Utils::Platform::Android::onResume();
+                    ViewController::getInstance()->resetViewVideosTimer();
+                }
+#endif
                 InputManager::getInstance().parseEvent(event);
 
                 if (event.type == SDL_QUIT)
@@ -511,6 +532,16 @@ void applicationLoop()
         if (deltaTime < 0)
             deltaTime = 1000;
 
+#if defined(__ANDROID__)
+        if (blockInput) {
+            inputBlockTime += deltaTime;
+            if (inputBlockTime > 300) {
+                inputBlockTime = 0;
+                blockInput = false;
+                window->setBlockInput(false);
+            }
+        }
+#endif
         window->update(deltaTime);
         window->render();
 
@@ -532,7 +563,7 @@ int main(int argc, char* argv[])
     // macOS which forces a restore of the previous window state. The problem is that this
     // removes the splash screen on startup and it may have other adverse effects as well.
     std::string saveStateDir {Utils::FileSystem::expandHomePath(
-        "~/Library/Saved Application State/org.es-de.EmulationStation.savedState")};
+        "~/Library/Saved Application State/org.es-de.Frontend.savedState")};
     // Deletion of the state files should normally not be required as there shouldn't be any
     // files to begin with. But maybe the files can still be created for unknown reasons
     // as macOS really really loves to restore windows. Let's therefore include this deletion
@@ -555,6 +586,7 @@ int main(int argc, char* argv[])
     outputToConsole();
 #endif
 
+#if !defined(__ANDROID__)
     {
         std::vector<std::string> arguments;
         for (int i {0}; i < argc; ++i)
@@ -570,6 +602,27 @@ int main(int argc, char* argv[])
         }
 #endif
     }
+#endif
+
+#if defined(__ANDROID__)
+    bool resetTouchOverlay {false};
+
+    if (Utils::Platform::Android::checkConfigurationNeeded()) {
+        Utils::Platform::Android::startConfigurator();
+
+        while (AndroidVariables::sHold)
+            SDL_Delay(20);
+
+        if (Utils::Platform::Android::checkConfigurationNeeded())
+            exit(0);
+
+        // Always enable the touch overlay after running the configurator.
+        resetTouchOverlay = true;
+    }
+
+    Utils::Platform::Android::setDataDirectories();
+    Utils::Platform::Android::setROMDirectory();
+#endif
 
     if (!Settings::getInstance()->getBool("DebugFlag") &&
         Settings::getInstance()->getBool("DebugMode")) {
@@ -582,21 +635,59 @@ int main(int argc, char* argv[])
     FreeImage_Initialise();
 #endif
 
-    // If ~/.emulationstation doesn't exist and cannot be created, bail.
-    if (!checkApplicationHomeDirectory())
+    // If the application data directory doesn't exist and can't be created, then exit.
+    if (!checkApplicationDataDirectory())
         return 1;
+
+    {
+        if (!Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
+            // Create the logs folder in the application data directory.
+            const std::string logsDir {Utils::FileSystem::getAppDataDirectory() + "/logs"};
+            if (!Utils::FileSystem::isDirectory(logsDir)) {
+#if defined(__ANDROID__)
+                __android_log_print(ANDROID_LOG_VERBOSE, ANDROID_APPLICATION_ID,
+                                    "Creating logs directory \"%s\"...", logsDir.c_str());
+#else
+                std::cout << "Creating logs directory \"" << logsDir << "\"..." << std::endl;
+#endif
+                Utils::FileSystem::createDirectory(logsDir);
+                if (!Utils::FileSystem::isDirectory(logsDir)) {
+#if defined(__ANDROID__)
+                    __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID,
+                                        "Couldn't create directory, permission problems?");
+#else
+                    std::cerr << "Couldn't create directory, permission problems?" << std::endl;
+#endif
+                }
+                else {
+                    // Remove any old logs in the root of the directory.
+                    Utils::FileSystem::removeFile(Utils::FileSystem::getAppDataDirectory() +
+                                                  "/es_log.txt");
+                    Utils::FileSystem::removeFile(Utils::FileSystem::getAppDataDirectory() +
+                                                  "/es_log.txt.bak");
+                }
+            }
+        }
+    }
 
     // Start the logger.
     Log::init();
     Log::open();
-    LOG(LogInfo) << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << " (r"
-                 << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
-    if (portableMode) {
-        LOG(LogInfo) << "Running in portable mode";
-        Settings::getInstance()->setBool("PortableMode", true);
-    }
-    else {
-        Settings::getInstance()->setBool("PortableMode", false);
+    {
+#if defined(ANDROID_LITE_RELEASE)
+        const std::string applicationName {"ES-DE Lite"};
+#else
+        const std::string applicationName {"ES-DE"};
+#endif
+        LOG(LogInfo) << applicationName << " v" << PROGRAM_VERSION_STRING << " (r"
+                     << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
+        if (portableMode) {
+            LOG(LogInfo) << "Running in portable mode";
+            Settings::getInstance()->setBool("PortableMode", true);
+        }
+        else {
+            Settings::getInstance()->setBool("PortableMode", false);
+        }
     }
 
     // Always close the log on exit.
@@ -605,7 +696,7 @@ int main(int argc, char* argv[])
     if (createSystemDirectories) {
         if (!SystemData::createSystemDirectories() && !Settings::getInstance()->getBool("Debug"))
             std::cout << "System directories successfully created" << std::endl;
-        LOG(LogInfo) << "EmulationStation cleanly shutting down";
+        LOG(LogInfo) << "ES-DE cleanly shutting down";
 #if defined(_WIN64)
         FreeConsole();
 #endif
@@ -622,93 +713,221 @@ int main(int argc, char* argv[])
     Settings::getInstance()->setInt("ScreenHeight", 720);
 #endif
 
-    // Check if the configuration file exists, and if not, create it.
-    // This should only happen on first application startup.
-    if (!Utils::FileSystem::exists(Utils::FileSystem::getHomePath() +
-                                   "/.emulationstation/es_settings.xml")) {
-        LOG(LogInfo) << "Settings file es_settings.xml does not exist, creating it...";
-        Settings::getInstance()->saveFile();
-    }
-    else if (settingsNeedSaving) {
-        LOG(LogInfo) << "Saving settings that were modified by command line options...";
-        Settings::getInstance()->saveFile();
+    bool migratedSettings {false};
+
+    {
+        if (!Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
+            // Create the settings folder in the application data directory.
+            const std::string settingsDir {Utils::FileSystem::getAppDataDirectory() + "/settings"};
+            if (!Utils::FileSystem::isDirectory(settingsDir)) {
+                LOG(LogInfo) << "Creating settings directory \"" << settingsDir << "\"...";
+                Utils::FileSystem::createDirectory(settingsDir);
+                if (!Utils::FileSystem::isDirectory(settingsDir)) {
+                    LOG(LogError) << "Couldn't create directory, permission problems?";
+                }
+            }
+            std::string settingsPathOld;
+            std::string settingsPathNew;
+            settingsPathOld = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
+            settingsPathNew =
+                Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
+            if (!Utils::FileSystem::exists(settingsPathNew) &&
+                Utils::FileSystem::exists(settingsPathOld)) {
+                Utils::FileSystem::renameFile(settingsPathOld, settingsPathNew, false);
+                Settings::getInstance()->loadFile();
+                migratedSettings = true;
+            }
+            settingsPathOld = Utils::FileSystem::getAppDataDirectory() + "/es_input.xml";
+            settingsPathNew = Utils::FileSystem::getAppDataDirectory() + "/settings/es_input.xml";
+            if (!Utils::FileSystem::exists(settingsPathNew) &&
+                Utils::FileSystem::exists(settingsPathOld)) {
+                Utils::FileSystem::renameFile(settingsPathOld, settingsPathNew, false);
+                migratedSettings = true;
+            }
+        }
     }
 
-    // Check if the application release number has changed, which would normally mean that the
-    // user has upgraded to a new version.
-    int applicationRelease;
-    if ((applicationRelease = Settings::getInstance()->getInt("ApplicationRelease")) !=
-        PROGRAM_RELEASE_NUMBER) {
-        if (applicationRelease != 0) {
-            LOG(LogInfo) << "Application release number changed from previous startup, from \""
-                         << applicationRelease << "\" to \"" << PROGRAM_RELEASE_NUMBER << "\"";
+    {
+        // Check if the es_settings.xml file exists, and if not, create it.
+        std::string settingsPath;
+        if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
+            settingsPath = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
+        else
+            settingsPath = Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
+
+        if (!Utils::FileSystem::exists(settingsPath)) {
+            LOG(LogInfo) << "Settings file es_settings.xml does not exist, creating it...";
+            Settings::getInstance()->saveFile();
         }
-        else {
-            LOG(LogInfo) << "Application release number setting is blank, changing it to \""
-                         << PROGRAM_RELEASE_NUMBER << "\"";
+        else if (settingsNeedSaving) {
+            LOG(LogInfo) << "Saving settings that were modified by command line options...";
+            Settings::getInstance()->saveFile();
         }
-        Settings::getInstance()->setInt("ApplicationRelease", PROGRAM_RELEASE_NUMBER);
-        Settings::getInstance()->saveFile();
     }
 
-    // Create the gamelists directory in the application home folder.
-    const std::string gamelistsDir {Utils::FileSystem::getHomePath() +
-                                    "/.emulationstation/gamelists"};
-    if (!Utils::FileSystem::exists(gamelistsDir)) {
-#if defined(_WIN64)
-        LOG(LogInfo) << "Creating gamelists directory \""
-                     << Utils::String::replace(gamelistsDir, "/", "\\") << "\"...";
-#else
-        LOG(LogInfo) << "Creating gamelists directory \"" << gamelistsDir << "\"...";
+#if defined(__ANDROID__)
+    if (resetTouchOverlay) {
+        Settings::getInstance()->setBool("InputTouchOverlay", true);
+        Settings::getInstance()->saveFile();
+    }
 #endif
-        Utils::FileSystem::createDirectory(gamelistsDir);
+
+    {
+        // Check if the application release number has changed, which would normally mean that the
+        // user has upgraded to a new version.
+        int applicationRelease;
+        if ((applicationRelease = Settings::getInstance()->getInt("ApplicationRelease")) !=
+            PROGRAM_RELEASE_NUMBER) {
+            if (applicationRelease != 0) {
+                LOG(LogInfo) << "Application release number changed from previous startup, from \""
+                             << applicationRelease << "\" to \"" << PROGRAM_RELEASE_NUMBER << "\"";
+            }
+            else {
+                LOG(LogInfo) << "Application release number setting is blank, changing it to \""
+                             << PROGRAM_RELEASE_NUMBER << "\"";
+            }
+            Settings::getInstance()->setInt("ApplicationRelease", PROGRAM_RELEASE_NUMBER);
+            Settings::getInstance()->saveFile();
+        }
+    }
+
+    {
+        // Create the gamelists folder in the application data directory.
+        const std::string gamelistsDir {Utils::FileSystem::getAppDataDirectory() + "/gamelists"};
         if (!Utils::FileSystem::exists(gamelistsDir)) {
-            LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
+            LOG(LogInfo) << "Creating gamelists directory \"" << gamelistsDir << "\"...";
+            Utils::FileSystem::createDirectory(gamelistsDir);
+            if (!Utils::FileSystem::exists(gamelistsDir)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
         }
     }
 
-    // Create the themes directory in the application home directory (or elsewhere if the
-    // UserThemeDirectory setting has been defined).
-    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
-                                           "/.emulationstation/themes"};
-    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
-        Settings::getInstance()->getString("UserThemeDirectory"))};
-#if defined(_WIN64)
-    userThemeDirSetting = Utils::String::replace(userThemeDirSetting, "\\", "/");
-#endif
-    std::string userThemeDirectory;
+    {
+#if defined(__ANDROID__)
+        const std::string themeDir {Utils::FileSystem::getAppDataDirectory() + "/themes"};
+        if (!Utils::FileSystem::exists(themeDir)) {
+            LOG(LogInfo) << "Creating themes directory \"" << themeDir << "\"...";
 
-    if (userThemeDirSetting == "")
-        userThemeDirectory = defaultUserThemeDir;
-    else
-        userThemeDirectory = userThemeDirSetting;
-
-    if (!Utils::FileSystem::exists(userThemeDirectory)) {
-#if defined(_WIN64)
-        LOG(LogInfo) << "Creating user theme directory \""
-                     << Utils::String::replace(userThemeDirectory, "/", "\\") << "\"...";
+            Utils::FileSystem::createDirectory(themeDir);
+            if (!Utils::FileSystem::exists(themeDir)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
+        }
+        if (!Utils::FileSystem::exists(themeDir + "/.nomedia")) {
+            LOG(LogInfo) << "Creating \"no media\" file \"" << themeDir + "/.nomedia"
+                         << "\"...";
+            Utils::FileSystem::createEmptyFile(themeDir + "/.nomedia");
+            if (!Utils::FileSystem::exists(themeDir + "/.nomedia")) {
+                LOG(LogWarning) << "Couldn't create file, permission problems?";
+            }
+        }
 #else
-        LOG(LogInfo) << "Creating themes directory \"" << userThemeDirectory << "\"...";
-#endif
-        Utils::FileSystem::createDirectory(userThemeDirectory);
+        // Create the themes folder in the application data directory (or elsewhere if the
+        // UserThemeDirectory setting has been defined).
+        const std::string defaultUserThemeDir {Utils::FileSystem::getAppDataDirectory() +
+                                               "/themes"};
+        std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
+            Settings::getInstance()->getString("UserThemeDirectory"))};
+        std::string userThemeDirectory;
+
+        if (userThemeDirSetting.empty())
+            userThemeDirectory = defaultUserThemeDir;
+        else
+            userThemeDirectory = userThemeDirSetting;
+
         if (!Utils::FileSystem::exists(userThemeDirectory)) {
-            LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            LOG(LogInfo) << "Creating themes directory \"" << userThemeDirectory << "\"...";
+
+            Utils::FileSystem::createDirectory(userThemeDirectory);
+            if (!Utils::FileSystem::exists(userThemeDirectory)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
+        }
+#endif
+    }
+
+    {
+#if defined(__ANDROID__)
+        const std::string mediaDirectory {FileData::getMediaDirectory()};
+        if (Utils::FileSystem::exists(mediaDirectory))
+            if (!Utils::FileSystem::exists(mediaDirectory + ".nomedia")) {
+                LOG(LogInfo) << "Creating \"no media\" file \"" << mediaDirectory + ".nomedia"
+                             << "\"...";
+                Utils::FileSystem::createEmptyFile(mediaDirectory + ".nomedia");
+                if (!Utils::FileSystem::exists(mediaDirectory + ".nomedia")) {
+                    LOG(LogWarning) << "Couldn't create file, permission problems?";
+                }
+            }
+#endif
+    }
+
+    {
+        // Create the scripts folder in the application data directory. This is only required
+        // for custom event scripts so it's also created as a convenience.
+        const std::string scriptsDir {Utils::FileSystem::getAppDataDirectory() + "/scripts"};
+        if (!Utils::FileSystem::exists(scriptsDir)) {
+            LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir << "\"...";
+            Utils::FileSystem::createDirectory(scriptsDir);
+            if (!Utils::FileSystem::exists(scriptsDir)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
         }
     }
 
-    // Create the scripts directory in the application home folder. This is only required
-    // for custom event scripts so it's also created as a convenience.
-    const std::string scriptsDir {Utils::FileSystem::getHomePath() + "/.emulationstation/scripts"};
-    if (!Utils::FileSystem::exists(scriptsDir)) {
-#if defined(_WIN64)
-        LOG(LogInfo) << "Creating scripts directory \""
-                     << Utils::String::replace(scriptsDir, "/", "\\") << "\"...";
-#else
-        LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir << "\"...";
+    {
+        // Create the screensavers and screensavers/custom_slideshow directories.
+        const std::string screensaversDir {Utils::FileSystem::getAppDataDirectory() +
+                                           "/screensavers"};
+        const std::string slideshowDir {Utils::FileSystem::getAppDataDirectory() +
+                                        "/screensavers/custom_slideshow"};
+        if (!Utils::FileSystem::exists(screensaversDir)) {
+            LOG(LogInfo) << "Creating screensavers directory \"" << screensaversDir << "\"...";
+            Utils::FileSystem::createDirectory(screensaversDir);
+            if (!Utils::FileSystem::exists(screensaversDir)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
+        }
+#if defined(__ANDROID__)
+        if (!Utils::FileSystem::exists(screensaversDir + "/.nomedia")) {
+            LOG(LogInfo) << "Creating \"no media\" file \"" << screensaversDir + "/.nomedia"
+                         << "\"...";
+            Utils::FileSystem::createEmptyFile(screensaversDir + "/.nomedia");
+            if (!Utils::FileSystem::exists(screensaversDir + "/.nomedia")) {
+                LOG(LogWarning) << "Couldn't create file, permission problems?";
+            }
+        }
 #endif
-        Utils::FileSystem::createDirectory(scriptsDir);
-        if (!Utils::FileSystem::exists(scriptsDir)) {
-            LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
+        if (!Utils::FileSystem::exists(slideshowDir)) {
+            LOG(LogInfo) << "Creating custom_slideshow directory \"" << slideshowDir << "\"...";
+            Utils::FileSystem::createDirectory(slideshowDir);
+            if (!Utils::FileSystem::exists(slideshowDir)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
+        }
+    }
+
+    {
+        if (!Settings::getInstance()->getBool("LegacyAppDataDirectory")) {
+            // Create the controllers folder in the application data directory.
+            const std::string controllersDir {Utils::FileSystem::getAppDataDirectory() +
+                                              "/controllers"};
+            if (!Utils::FileSystem::exists(controllersDir)) {
+                LOG(LogInfo) << "Creating controllers directory \"" << controllersDir << "\"...";
+                Utils::FileSystem::createDirectory(controllersDir);
+                if (!Utils::FileSystem::exists(controllersDir)) {
+                    LOG(LogWarning) << "Couldn't create directory, permission problems?";
+                }
+            }
+            std::string configPathOld {Utils::FileSystem::getAppDataDirectory() +
+                                       "/es_controller_mappings.cfg"};
+            std::string configPathNew {Utils::FileSystem::getAppDataDirectory() +
+                                       "/controllers/es_controller_mappings.cfg"};
+            if (!Utils::FileSystem::exists(configPathNew) &&
+                Utils::FileSystem::exists(configPathOld)) {
+                Utils::FileSystem::renameFile(configPathOld, configPathNew, false);
+                migratedSettings = true;
+            }
         }
     }
 
@@ -726,6 +945,49 @@ int main(int argc, char* argv[])
         LOG(LogError) << "Window failed to initialize";
         return 1;
     }
+
+#if defined(__ANDROID__)
+    InputOverlay::getInstance().init();
+
+    LOG(LogDebug) << "Android API level: " << SDL_GetAndroidSDKVersion();
+    Utils::Platform::Android::printDeviceInfo();
+    int storageState {SDL_AndroidGetExternalStorageState()};
+    if (storageState == 0) {
+        LOG(LogError) << "Android external storage state: " << SDL_GetError();
+    }
+    else if (storageState == 1) {
+        LOG(LogWarning) << "Android external storage state: mounted read-only";
+    }
+    else {
+        LOG(LogDebug) << "Android external storage state: mounted read/write";
+    }
+    LOG(LogDebug) << "Android internal directory: " << AndroidVariables::sInternalDataDirectory;
+    LOG(LogDebug) << "Android external directory: " << AndroidVariables::sExternalDataDirectory;
+
+    {
+        std::string buildIdentifier {PROGRAM_VERSION_STRING};
+        buildIdentifier.append(" (r")
+            .append(std::to_string(PROGRAM_RELEASE_NUMBER))
+            .append("), built ")
+            .append(PROGRAM_BUILT_STRING);
+        if (Utils::Platform::Android::checkNeedResourceCopy(buildIdentifier)) {
+            LOG(LogInfo) << "Application has been updated or it's a new installation, copying "
+                            "bundled resources and themes to internal storage...";
+            if (Settings::getInstance()->getBool("SplashScreen"))
+                window->renderSplashScreen(Window::SplashScreenState::RESOURCE_COPY, 0.0f);
+            if (Utils::Platform::Android::setupResources(buildIdentifier)) {
+                LOG(LogError) << "Copying of resources and themes failed";
+                return -1;
+            }
+        }
+    }
+
+    if (Utils::Platform::Android::getCreateSystemDirectories()) {
+        if (Settings::getInstance()->getBool("SplashScreen"))
+            window->renderSplashScreen(Window::SplashScreenState::DIR_CREATION, 0.0f);
+        SystemData::createSystemDirectories();
+    }
+#endif
 
 #if defined(APPLICATION_UPDATER)
     if (!noUpdateCheck)
@@ -759,12 +1021,19 @@ int main(int argc, char* argv[])
     LOG(LogInfo) << "SDL version: " << std::to_string(version.major) << "."
                  << std::to_string(version.minor) << "." << std::to_string(version.patch);
 
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("VirtualKeyboard"))
+        SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "0");
+    else
+        SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "1");
+#else
     if (version.major > 2 || (version.major == 2 && version.minor >= 28)) {
         // This will prevent the popup virtual keyboard of any handheld device from being
         // automatically displayed on top of the ES-DE virtual keyboard.
 #define SDL_HINT_ENABLE_SCREEN_KEYBOARD "SDL_ENABLE_SCREEN_KEYBOARD"
         SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "0");
     }
+#endif
 
     MameNames::getInstance();
     ThemeData::populateThemes();
@@ -808,6 +1077,18 @@ int main(int argc, char* argv[])
             }
         }
 
+#if defined(__ANDROID__)
+        if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
+            LOG(LogInfo) << "Creating \"no media\" file \""
+                         << FileData::getROMDirectory() + ".nomedia"
+                         << "\"...";
+            Utils::FileSystem::createEmptyFile(FileData::getROMDirectory() + ".nomedia");
+            if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
+                LOG(LogWarning) << "Couldn't create file, permission problems?";
+            }
+        }
+#endif
+
         // Generate controller events since we're done loading.
         SDL_GameControllerEventState(SDL_ENABLE);
 
@@ -842,6 +1123,14 @@ int main(int argc, char* argv[])
             }
         }
 #endif
+
+        if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
+            ViewController::getInstance()->legacyAppDataDialog();
+
+        if (migratedSettings) {
+            LOG(LogInfo) << "Migrated settings from a legacy application data directory structure";
+            ViewController::getInstance()->migratedAppDataFilesDialog();
+        }
 
         LOG(LogInfo) << "Application startup time: "
                      << std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -891,7 +1180,7 @@ int main(int argc, char* argv[])
 
     Utils::Platform::processQuitMode();
 
-    LOG(LogInfo) << "EmulationStation cleanly shutting down";
+    LOG(LogInfo) << "ES-DE cleanly shutting down";
 
 #if defined(_WIN64)
     FreeConsole();

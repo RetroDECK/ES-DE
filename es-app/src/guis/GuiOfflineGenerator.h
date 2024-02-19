@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiOfflineGenerator.h
 //
 //  User interface for the miximage offline generator.

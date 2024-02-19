@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Log.h
 //
 //  Log output.
@@ -18,6 +18,10 @@
 #include <map>
 #include <mutex>
 #include <sstream>
+
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
 
 #define LOG(level)                                                                                 \
     if (level > Log::getReportingLevel())                                                          \
@@ -43,7 +47,6 @@ public:
     static void setReportingLevel(LogLevel level);
 
     // These functions are not thread safe.
-    static std::string getLogPath();
     static void init();
     static void open();
 
@@ -62,6 +65,7 @@ private:
     static inline std::ofstream sFile;
     static inline LogLevel sReportingLevel = LogInfo;
     static inline std::mutex sLogMutex;
+    static inline std::string sLogPath;
     LogLevel mMessageLevel;
 };
 

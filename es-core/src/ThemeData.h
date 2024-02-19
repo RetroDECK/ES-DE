@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ThemeData.h
 //
 //  Finds available themes on the file system and loads and parses these.
@@ -184,6 +184,7 @@ public:
         std::string themeName;
         std::vector<ThemeVariant> variants;
         std::vector<ThemeColorScheme> colorSchemes;
+        std::vector<std::string> fontSizes;
         std::vector<std::string> aspectRatios;
         std::vector<ThemeTransitions> transitions;
         std::vector<std::string> suppressedTransitionProfiles;
@@ -222,6 +223,7 @@ public:
     static void populateThemes();
     const static std::map<std::string, Theme, StringComparator>& getThemes() { return sThemes; }
     const static std::string getSystemThemeFile(const std::string& system);
+    const static std::string getFontSizeLabel(const std::string& fontSize);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
     static void setThemeTransitions();
 
@@ -251,6 +253,7 @@ private:
     void parseIncludes(const pugi::xml_node& root);
     void parseVariants(const pugi::xml_node& root);
     void parseColorSchemes(const pugi::xml_node& root);
+    void parseFontSizes(const pugi::xml_node& root);
     void parseAspectRatios(const pugi::xml_node& root);
     void parseTransitions(const pugi::xml_node& root);
     void parseVariables(const pugi::xml_node& root);
@@ -264,6 +267,8 @@ private:
     static std::vector<std::string> sSupportedMediaTypes;
     static std::vector<std::string> sSupportedTransitions;
     static std::vector<std::string> sSupportedTransitionAnimations;
+
+    static std::vector<std::pair<std::string, std::string>> sSupportedFontSizes;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
     static std::map<std::string, float> sAspectRatioMap;
 
@@ -278,9 +283,11 @@ private:
     std::deque<std::string> mPaths;
     std::vector<std::string> mVariants;
     std::vector<std::string> mColorSchemes;
+    std::vector<std::string> mFontSizes;
     std::string mSelectedVariant;
     std::string mOverrideVariant;
     std::string mSelectedColorScheme;
+    std::string mSelectedFontSize;
     static inline std::string sSelectedAspectRatio;
     static inline bool sAspectRatioMatch {false};
     bool mCustomCollection;

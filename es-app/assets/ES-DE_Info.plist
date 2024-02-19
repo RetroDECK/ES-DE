@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>3.0.0</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleDisplayName</key>
+    <string>ES-DE</string>
+    <key>CFBundleExecutable</key>
+    <string>ES-DE</string>
+    <key>CFBundleGetInfoString</key>
+    <string>ES-DE 3.0.0</string>
+    <key>CFBundleIconFile</key>
+    <string>ES-DE.icns</string>
+    <key>CFBundleName</key>
+    <string>ES-DE</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleSignature</key>
+    <string>ESDE</string>
+    <key>CFBundleShortVersionString</key>
+    <string>3.0.0-alpha</string>
+    <key>CFBundleVersion</key>
+    <string>3.0.0-alpha</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.education</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.15.0</string>
+    <key>LSUIPresentationMode</key>
+    <integer>3</integer>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>NSMainNibFile</key>
+    <string>ES-DE</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright (c) 2020-2024 Leon Styhre
+Copyright (c) 2014 Alec Lofquist
+Licensed under the MIT license</string>
+</dict>
+</plist>

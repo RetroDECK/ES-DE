@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  UIModeController.cpp
 //
 //  Handling of application user interface modes (full, kiosk and kid).
@@ -127,13 +127,13 @@ std::string UIModeController::getFormattedPassKeyStr()
         std::string symbolX;
         std::string symbolY;
 
-        if (controllerType == "snes") {
+        if (Settings::getInstance()->getBool("InputSwapButtons") || controllerType == "snes") {
             symbolA = "B";
             symbolB = "A";
             symbolX = "Y";
             symbolY = "X";
         }
-        else if (controllerType == "ps4" || controllerType == "ps5") {
+        else if (controllerType == "ps123" || controllerType == "ps4" || controllerType == "ps5") {
 #if defined(_MSC_VER) // MSVC compiler.
             // These symbols are far from perfect but you can at least understand what
             // they are supposed to depict.

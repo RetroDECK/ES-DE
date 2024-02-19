@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  AsyncHandle.h
 //
 //  Asynchronous operations used by GuiScraperSearch and Scraper.

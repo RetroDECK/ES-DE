@@ -1,12 +1,11 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  MameNames.h
 //
 //  Provides expanded game names based on short MAME name arguments. Also contains
 //  functions to check whether a passed argument is a MAME BIOS or a MAME device.
-//  The data sources are stored in the .emulationstation/resources directory
-//  as the files mamebioses.xml, mamedevices.xml and mamenames.xml.
+//  The data sources are stored as the files mamebioses.xml, mamedevices.xml and mamenames.xml.
 //
 
 #ifndef ES_CORE_MAMENAMES_H

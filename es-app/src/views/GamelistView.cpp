@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GamelistView.cpp
 //
 //  Main gamelist logic.
@@ -416,6 +416,22 @@ void GamelistView::render(const glm::mat4& parentTrans)
     const ViewController::State viewState {ViewController::getInstance()->getState()};
     bool stationaryApplicable {false};
 
+    auto renderChildCondFunc = [this, &viewState](int i, glm::mat4 trans) {
+        bool renderChild {false};
+        if (!ViewController::getInstance()->isCameraMoving())
+            renderChild = true;
+        else if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
+            renderChild = true;
+        else if (viewState.viewing == viewState.previouslyViewed)
+            renderChild = true;
+        else if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+                     "TransitionsGamelistToSystem")) != ViewTransitionAnimation::SLIDE &&
+                 viewState.viewing == ViewController::ViewMode::SYSTEM_SELECT)
+            renderChild = true;
+        if (renderChild)
+            getChild(i)->render(trans);
+    };
+
     // If it's the startup animation, then don't apply stationary properties.
     if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
         stationaryApplicable = false;
@@ -467,11 +483,17 @@ void GamelistView::render(const glm::mat4& parentTrans)
             if (viewState.getSystem() != mRoot->getSystem())
                 continue;
             mRenderer->popClipRect();
-            getChild(i)->render(mRenderer->getIdentity());
+            if (getChild(i)->getRenderDuringTransitions())
+                getChild(i)->render(mRenderer->getIdentity());
+            else
+                renderChildCondFunc(i, mRenderer->getIdentity());
             clipRectFunc();
         }
         else {
-            getChild(i)->render(trans);
+            if (getChild(i)->getRenderDuringTransitions())
+                getChild(i)->render(trans);
+            else
+                renderChildCondFunc(i, trans);
         }
     }
 
@@ -977,7 +999,7 @@ void GamelistView::updateView(const CursorState& state)
                  file->getPath() == file->getSystem()->getName()) &&
                 (metadata == "systemName" || metadata == "systemFullname" ||
                  metadata == "sourceSystemName" || metadata == "sourceSystemFullname")) {
-                text->setValue("");
+                text->setValue(text->getDefaultValue());
                 continue;
             }
 

@@ -1,0 +1,9 @@
+<theme>
+   <variant name="gamelist-grid">
+      <view name="gamelist">
+         <grid name="grid">
+            <imageFit>fit</imageFit>
+         </grid>
+      </view>
+   </variant>
+</theme>

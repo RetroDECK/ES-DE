@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  FileData.h
 //
 //  Provides game file data structures and functions to access and sort this information.
@@ -40,11 +40,7 @@ public:
     const std::string& getName() { return metadata.get("name"); }
     const std::string& getSortName();
     // Returns our best guess at the "real" name for this file.
-    std::string getDisplayName() const
-    {
-        const std::string& stem {Utils::FileSystem::getStem(mPath)};
-        return stem;
-    }
+    std::string getDisplayName() const { return Utils::FileSystem::getStem(mPath); }
     std::string getCleanName() const
     {
         return Utils::String::removeParenthesis(this->getDisplayName());
@@ -112,8 +108,8 @@ public:
                                                    bool excludeRecursively,
                                                    bool respectExclusions) const;
 
-    void addChild(FileData* file); // Error if mType != FOLDER
-    void removeChild(FileData* file); // Error if mType != FOLDER
+    void addChild(FileData* file);
+    void removeChild(FileData* file);
 
     virtual std::string getKey() { return getFileName(); }
     const bool isArcadeAsset() const;
@@ -123,8 +119,16 @@ public:
     virtual FileData* getSourceFileData() { return this; }
     const std::string& getSystemName() const { return mSystemName; }
 
+    enum class findEmulatorResult {
+        FOUND_FILE,
+        FOUND_ANDROID_PACKAGE,
+        NOT_FOUND,
+        NO_RULES
+    };
+
     void launchGame();
-    const std::string findEmulatorPath(std::string& command, const bool preCommand);
+    const std::pair<std::string, FileData::findEmulatorResult> findEmulator(std::string& command,
+                                                                            const bool preCommand);
 
     using ComparisonFunction = bool(const FileData* a, const FileData* b);
     struct SortType {
@@ -167,6 +171,9 @@ private:
     std::vector<FileData*> mChildrenLastPlayed;
     std::vector<FileData*> mChildrenMostPlayed;
     std::function<void()> mUpdateListCallback;
+    static inline std::vector<std::string> sImageExtensions {".png", ".jpg"};
+    static inline std::vector<std::string> sVideoExtensions {".mp4", ".mkv", ".avi",
+                                                             ".mp4", ".wmv", ".mov"};
     // The pair includes all games, and favorite games.
     std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiThemeDownloader.cpp
 //
 //  Theme downloader.
@@ -8,7 +8,7 @@
 
 #include "guis/GuiThemeDownloader.h"
 
-#include "EmulationStation.h"
+#include "ApplicationVersion.h"
 #include "ThemeData.h"
 #include "components/MenuComponent.h"
 #include "resources/ResourceManager.h"
@@ -67,9 +67,9 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mAspectRatiosLabel, glm::ivec2 {3, 0}, false, true, glm::ivec2 {1, 1});
 
-    mFutureUseLabel =
+    mFontSizesLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), mMenuColorTitle, ALIGN_LEFT);
-    mCenterGrid->setEntry(mFutureUseLabel, glm::ivec2 {3, 1}, false, true, glm::ivec2 {1, 1});
+    mCenterGrid->setEntry(mFontSizesLabel, glm::ivec2 {3, 1}, false, true, glm::ivec2 {1, 1});
 
     mCenterGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {5, 0}, false, false,
                           glm::ivec2 {1, 5});
@@ -86,9 +86,9 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
         "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mAspectRatiosCount, glm::ivec2 {4, 0}, false, true, glm::ivec2 {1, 1});
 
-    mFutureUseCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
+    mFontSizesCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
                                                       mMenuColorTitle, ALIGN_LEFT);
-    mCenterGrid->setEntry(mFutureUseCount, glm::ivec2 {4, 1}, false, true, glm::ivec2 {1, 1});
+    mCenterGrid->setEntry(mFontSizesCount, glm::ivec2 {4, 1}, false, true, glm::ivec2 {1, 1});
 
     mDownloadStatus = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
                                                       mMenuColorTitle, ALIGN_LEFT);
@@ -162,20 +162,29 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
 
     git_libgit2_init();
 
+#if defined(__ANDROID__) && defined(USE_BUNDLED_CERTIFICATES)
+    git_libgit2_opts(
+        GIT_OPT_SET_SSL_CERT_LOCATIONS,
+        ResourceManager::getInstance().getResourcePath(":/certificates/curl-ca-bundle.crt").c_str(),
+        nullptr);
+#endif
+
     // The promise/future mechanism is used as signaling for the thread to indicate that
     // repository fetching has been completed.
     std::promise<bool>().swap(mPromise);
     mFuture = mPromise.get_future();
 
-    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
-                                           "/.emulationstation/themes"};
-    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
+#if defined(__ANDROID__)
+    mThemeDirectory = Utils::FileSystem::getInternalAppDataDirectory() + "/themes";
+#else
+    const std::string defaultUserThemeDir {Utils::FileSystem::getAppDataDirectory() + "/themes"};
+    const std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
         Settings::getInstance()->getString("UserThemeDirectory"))};
+
 #if defined(_WIN64)
     mThemeDirectory = Utils::String::replace(mThemeDirectory, "\\", "/");
 #endif
-
-    if (userThemeDirSetting == "") {
+    if (userThemeDirSetting.empty()) {
         mThemeDirectory = defaultUserThemeDir;
     }
     else if (Utils::FileSystem::isDirectory(userThemeDirSetting) ||
@@ -189,6 +198,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
                         << defaultUserThemeDir << "\"";
         mThemeDirectory = defaultUserThemeDir;
     }
+#endif
 
     if (mThemeDirectory.back() != '/')
         mThemeDirectory.append("/");
@@ -470,7 +480,10 @@ void GuiThemeDownloader::resetRepository(git_repository* repository)
 
 void GuiThemeDownloader::makeInventory()
 {
+    const auto totalInventoryTime {std::chrono::system_clock::now()};
+
     for (auto& theme : mThemes) {
+        const auto themeInventoryTime {std::chrono::system_clock::now()};
         const std::string path {mThemeDirectory + theme.reponame};
         theme.invalidRepository = false;
         theme.corruptRepository = false;
@@ -519,8 +532,25 @@ void GuiThemeDownloader::makeInventory()
                 theme.hasLocalChanges = true;
 
             git_repository_free(repository);
+
+            LOG(LogDebug) << "GuiThemeDownloader::makeInventory(): Theme \""
+#if defined(_WIN64)
+                          << Utils::String::replace(path, "/", "\\")
+                          << "\" inventory completed in: "
+#else
+                          << path << "\" inventory completed in: "
+#endif
+                          << std::chrono::duration_cast<std::chrono::milliseconds>(
+                                 std::chrono::system_clock::now() - themeInventoryTime)
+                                 .count()
+                          << " ms";
         }
     }
+    LOG(LogDebug) << "GuiThemeDownloader::makeInventory(): Total theme inventory time: "
+                  << std::chrono::duration_cast<std::chrono::milliseconds>(
+                         std::chrono::system_clock::now() - totalInventoryTime)
+                         .count()
+                  << " ms";
 }
 
 bool GuiThemeDownloader::renameDirectory(const std::string& path, const std::string& extension)
@@ -561,8 +591,7 @@ void GuiThemeDownloader::parseThemesList()
 #if (LOCAL_TESTING_FILE)
     LOG(LogWarning) << "GuiThemeDownloader: Using local \"themes.json\" testing file";
 
-    const std::string themesFile {Utils::FileSystem::getHomePath() +
-                                  "/.emulationstation/themes.json"};
+    const std::string themesFile {Utils::FileSystem::getAppDataDirectory() + "/themes.json"};
 #else
     const std::string themesFile {mThemeDirectory + "themes-list/themes.json"};
 #endif
@@ -606,69 +635,91 @@ void GuiThemeDownloader::parseThemesList()
         }
     }
 
-    if (doc.HasMember("themes") && doc["themes"].IsArray()) {
-        const rapidjson::Value& themes {doc["themes"]};
-        for (int i {0}; i < static_cast<int>(themes.Size()); ++i) {
-            ThemeEntry themeEntry;
-            const rapidjson::Value& theme {themes[i]};
+#if defined(__ANDROID__)
+    const std::vector<std::string> themeKeys {"themes", "themesAndroid"};
+#else
+    const std::vector<std::string> themeKeys {"themes"};
+#endif
 
-            if (theme.HasMember("name") && theme["name"].IsString())
-                themeEntry.name = theme["name"].GetString();
+    for (auto& themeKey : themeKeys) {
+        if (doc.HasMember(themeKey.c_str()) && doc[themeKey.c_str()].IsArray()) {
+            const rapidjson::Value& themes {doc[themeKey.c_str()]};
+            for (int i {0}; i < static_cast<int>(themes.Size()); ++i) {
+                ThemeEntry themeEntry;
+                const rapidjson::Value& theme {themes[i]};
 
-            if (theme.HasMember("reponame") && theme["reponame"].IsString())
-                themeEntry.reponame = theme["reponame"].GetString();
+                if (theme.HasMember("name") && theme["name"].IsString())
+                    themeEntry.name = theme["name"].GetString();
 
-            if (theme.HasMember("url") && theme["url"].IsString())
-                themeEntry.url = theme["url"].GetString();
+                if (theme.HasMember("reponame") && theme["reponame"].IsString())
+                    themeEntry.reponame = theme["reponame"].GetString();
 
-            if (theme.HasMember("author") && theme["author"].IsString())
-                themeEntry.author = theme["author"].GetString();
+                if (theme.HasMember("url") && theme["url"].IsString())
+                    themeEntry.url = theme["url"].GetString();
 
-            if (theme.HasMember("newEntry") && theme["newEntry"].IsBool())
-                themeEntry.newEntry = theme["newEntry"].GetBool();
+                if (theme.HasMember("author") && theme["author"].IsString())
+                    themeEntry.author = theme["author"].GetString();
 
-            if (theme.HasMember("variants") && theme["variants"].IsArray()) {
-                const rapidjson::Value& variants {theme["variants"]};
-                for (int i {0}; i < static_cast<int>(variants.Size()); ++i)
-                    themeEntry.variants.emplace_back(variants[i].GetString());
-            }
+                if (theme.HasMember("newEntry") && theme["newEntry"].IsBool())
+                    themeEntry.newEntry = theme["newEntry"].GetBool();
 
-            if (theme.HasMember("colorSchemes") && theme["colorSchemes"].IsArray()) {
-                const rapidjson::Value& colorSchemes {theme["colorSchemes"]};
-                for (int i {0}; i < static_cast<int>(colorSchemes.Size()); ++i)
-                    themeEntry.colorSchemes.emplace_back(colorSchemes[i].GetString());
-            }
-
-            if (theme.HasMember("aspectRatios") && theme["aspectRatios"].IsArray()) {
-                const rapidjson::Value& aspectRatios {theme["aspectRatios"]};
-                for (int i {0}; i < static_cast<int>(aspectRatios.Size()); ++i)
-                    themeEntry.aspectRatios.emplace_back(aspectRatios[i].GetString());
-            }
-
-            if (theme.HasMember("transitions") && theme["transitions"].IsArray()) {
-                const rapidjson::Value& transitions {theme["transitions"]};
-                for (int i {0}; i < static_cast<int>(transitions.Size()); ++i)
-                    themeEntry.transitions.emplace_back(transitions[i].GetString());
-            }
-
-            if (theme.HasMember("screenshots") && theme["screenshots"].IsArray()) {
-                const rapidjson::Value& screenshots {theme["screenshots"]};
-                for (int i {0}; i < static_cast<int>(screenshots.Size()); ++i) {
-                    Screenshot screenshotEntry;
-                    if (screenshots[i].HasMember("image") && screenshots[i]["image"].IsString())
-                        screenshotEntry.image = screenshots[i]["image"].GetString();
-
-                    if (screenshots[i].HasMember("caption") && screenshots[i]["caption"].IsString())
-                        screenshotEntry.caption = screenshots[i]["caption"].GetString();
-
-                    if (screenshotEntry.image != "" && screenshotEntry.caption != "")
-                        themeEntry.screenshots.emplace_back(screenshotEntry);
+                if (theme.HasMember("variants") && theme["variants"].IsArray()) {
+                    const rapidjson::Value& variants {theme["variants"]};
+                    for (int i {0}; i < static_cast<int>(variants.Size()); ++i)
+                        themeEntry.variants.emplace_back(variants[i].GetString());
                 }
-            }
 
-            mThemes.emplace_back(themeEntry);
+                if (theme.HasMember("colorSchemes") && theme["colorSchemes"].IsArray()) {
+                    const rapidjson::Value& colorSchemes {theme["colorSchemes"]};
+                    for (int i {0}; i < static_cast<int>(colorSchemes.Size()); ++i)
+                        themeEntry.colorSchemes.emplace_back(colorSchemes[i].GetString());
+                }
+
+                if (theme.HasMember("aspectRatios") && theme["aspectRatios"].IsArray()) {
+                    const rapidjson::Value& aspectRatios {theme["aspectRatios"]};
+                    for (int i {0}; i < static_cast<int>(aspectRatios.Size()); ++i)
+                        themeEntry.aspectRatios.emplace_back(aspectRatios[i].GetString());
+                }
+
+                if (theme.HasMember("fontSizes") && theme["fontSizes"].IsArray()) {
+                    const rapidjson::Value& fontSizes {theme["fontSizes"]};
+                    for (int i {0}; i < static_cast<int>(fontSizes.Size()); ++i)
+                        themeEntry.fontSizes.emplace_back(fontSizes[i].GetString());
+                }
+
+                if (theme.HasMember("transitions") && theme["transitions"].IsArray()) {
+                    const rapidjson::Value& transitions {theme["transitions"]};
+                    for (int i {0}; i < static_cast<int>(transitions.Size()); ++i)
+                        themeEntry.transitions.emplace_back(transitions[i].GetString());
+                }
+
+                if (theme.HasMember("screenshots") && theme["screenshots"].IsArray()) {
+                    const rapidjson::Value& screenshots {theme["screenshots"]};
+                    for (int i {0}; i < static_cast<int>(screenshots.Size()); ++i) {
+                        Screenshot screenshotEntry;
+                        if (screenshots[i].HasMember("image") && screenshots[i]["image"].IsString())
+                            screenshotEntry.image = screenshots[i]["image"].GetString();
+
+                        if (screenshots[i].HasMember("caption") &&
+                            screenshots[i]["caption"].IsString())
+                            screenshotEntry.caption = screenshots[i]["caption"].GetString();
+
+                        if (screenshotEntry.image != "" && screenshotEntry.caption != "")
+                            themeEntry.screenshots.emplace_back(screenshotEntry);
+                    }
+                }
+
+                mThemes.emplace_back(themeEntry);
+            }
         }
     }
+
+    std::sort(std::begin(mThemes), std::end(mThemes), [](ThemeEntry a, ThemeEntry b) {
+        if (Utils::String::toUpper(a.name) < Utils::String::toUpper(b.name))
+            return true;
+        else
+            return false;
+    });
 
     LOG(LogDebug) << "GuiThemeDownloader::parseThemesList(): Parsed " << mThemes.size()
                   << " themes";
@@ -826,6 +877,7 @@ void GuiThemeDownloader::populateGUI()
     mVariantsLabel->setText("VARIANTS:");
     mColorSchemesLabel->setText("COLOR SCHEMES:");
     mAspectRatiosLabel->setText("ASPECT RATIOS:");
+    mFontSizesLabel->setText("FONT SIZES:");
 
     updateInfoPane();
     updateHelpPrompts();
@@ -901,6 +953,7 @@ void GuiThemeDownloader::updateInfoPane()
     mVariantCount->setText(std::to_string(mThemes[mList->getCursorId()].variants.size()));
     mColorSchemesCount->setText(std::to_string(mThemes[mList->getCursorId()].colorSchemes.size()));
     mAspectRatiosCount->setText(std::to_string(mThemes[mList->getCursorId()].aspectRatios.size()));
+    mFontSizesCount->setText(std::to_string(mThemes[mList->getCursorId()].fontSizes.size()));
     mAuthor->setText("CREATED BY " + Utils::String::toUpper(mThemes[mList->getCursorId()].author));
 }
 
@@ -1158,10 +1211,16 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
             "LOCAL CUSTOMIZATIONS",
             "PROCEED",
             [this] {
-                const std::filesystem::path themeDirectory {mThemeDirectory +
-                                                            mThemes[mList->getCursorId()].reponame};
-                LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory.string() << "\"";
-                if (!Utils::FileSystem::removeDirectory(themeDirectory.string(), true)) {
+#if defined(_WIN64)
+                const std::string themeDirectory {
+                    Utils::String::replace(mThemeDirectory, "/", "\\") +
+                    mThemes[mList->getCursorId()].reponame};
+#else
+                const std::string themeDirectory {mThemeDirectory +
+                                                  mThemes[mList->getCursorId()].reponame};
+#endif
+                LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory << "\"";
+                if (!Utils::FileSystem::removeDirectory(themeDirectory, true)) {
                     mWindow->pushGui(new GuiMsgBox(
                         getHelpStyle(), "COULDN'T DELETE THEME, PERMISSION PROBLEMS?", "OK",
                         [] { return; }, "", nullptr, "", nullptr, nullptr, true));

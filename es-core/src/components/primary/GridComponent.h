@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GridComponent.h
 //
 //  Grid, usable in both the system and gamelist views.
@@ -675,7 +675,7 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
     int loadedItems {0};
 
     if (currRow > 0) {
-        if (GuiComponent::isAnimationPlaying(0) || mItemSpacing.y < mVerticalMargin) {
+        if (GuiComponent::isAnimationPlaying(0) || mItemSpacing.y <= mVerticalMargin) {
             loadItems += mColumns;
             startPos = (currRow - 1) * mColumns;
         }

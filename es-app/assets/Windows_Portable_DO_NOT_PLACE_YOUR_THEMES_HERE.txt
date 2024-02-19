@@ -1,1 +1,1 @@
-Place manually downloaded or modified themes into .emulationstation\themes\ and not into this directory
+Place manually downloaded or modified themes into ES-DE\ES-DE\themes\ and not into this directory

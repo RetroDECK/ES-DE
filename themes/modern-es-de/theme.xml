@@ -1,5 +1,5 @@
 <!--
-    Modern for EmulationStation Desktop Edition (modern-es-de)
+    Modern for ES-DE (modern-es-de)
     Author: Sophia Hadash
     Email: s.hadash2@protonmail.com
     License: Creative Commons CC-BY-NC-SA
@@ -13,6 +13,55 @@
     <variables>
         <mainFont>./assets/fonts/nswitchui.ttf</mainFont>
     </variables>
+
+    <fontSize name="medium">
+        <variables>
+            <!-- System view -->
+            <gameCounterFontSize>0.032</gameCounterFontSize>
+            <systemNameFontSize>0.04</systemNameFontSize>
+            <!-- Gamelist view -->
+            <gamelistSystemNameFontSize>0.03</gamelistSystemNameFontSize>
+            <gamelistFontSize>0.030</gamelistFontSize>
+            <gamelistLineSpacing>1.9</gamelistLineSpacing>
+            <gamelistInfoFontSize>0.03</gamelistInfoFontSize>
+            <descriptionFontSize>0.03</descriptionFontSize>
+            <descriptionLineSpacing>1.2</descriptionLineSpacing>
+            <metadataLabelFontSize>0.02</metadataLabelFontSize>
+            <metadataValueFontSize>0.03</metadataValueFontSize>
+            <publisherLabelPos>0.70 0.532</publisherLabelPos>
+            <developerLabelPos>0.8453 0.532</developerLabelPos>
+            <releaseDateLabelPos>0.70 0.608</releaseDateLabelPos>
+            <playersLabelPos>0.8453 0.608</playersLabelPos>
+            <genreLabelPos>0.70 0.684</genreLabelPos>
+            <ratingLabelPos>0.70 0.760</ratingLabelPos>
+            <ratingSize>0.04 0.03</ratingSize>
+            <badgesSize>0.1267 0.185</badgesSize>
+        </variables>
+    </fontSize>
+    <fontSize name="large">
+        <variables>
+            <!-- System view -->
+            <gameCounterFontSize>0.036</gameCounterFontSize>
+            <systemNameFontSize>0.045</systemNameFontSize>
+            <!-- Gamelist view -->
+            <gamelistSystemNameFontSize>0.04</gamelistSystemNameFontSize>
+            <gamelistFontSize>0.0368</gamelistFontSize>
+            <gamelistLineSpacing>1.7</gamelistLineSpacing>
+            <gamelistInfoFontSize>0.036</gamelistInfoFontSize>
+            <descriptionFontSize>0.037</descriptionFontSize>
+            <descriptionLineSpacing>1.15</descriptionLineSpacing>
+            <metadataLabelFontSize>0.025</metadataLabelFontSize>
+            <metadataValueFontSize>0.036</metadataValueFontSize>
+            <publisherLabelPos>0.70 0.527</publisherLabelPos>
+            <developerLabelPos>0.8453 0.527</developerLabelPos>
+            <releaseDateLabelPos>0.70 0.602</releaseDateLabelPos>
+            <playersLabelPos>0.8453 0.602</playersLabelPos>
+            <genreLabelPos>0.70 0.679</genreLabelPos>
+            <ratingLabelPos>0.70 0.760</ratingLabelPos>
+            <ratingSize>0 0.035</ratingSize>
+            <badgesSize>0.1267 0.205</badgesSize>
+        </variables>
+    </fontSize>
 
     <variant name="all">
         <aspectRatio name="16:9">
@@ -99,7 +148,7 @@
                 <origin>0.5 0.5</origin>
                 <systemdata>gamecount</systemdata>
                 <fontPath>${mainFont}</fontPath>
-                <fontSize>0.032</fontSize>
+                <fontSize>${gameCounterFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${mainColor}</color>
                 <letterCase>capitalize</letterCase>
@@ -117,7 +166,7 @@
                 <size>0.743 0.035</size>
                 <origin>0 0.5</origin>
                 <fontPath>${mainFont}</fontPath>
-                <fontSize>0.04</fontSize>
+                <fontSize>${systemNameFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <color>${mainColor}</color>
             </text>
@@ -148,19 +197,16 @@
                 <pos>0.04 0.182</pos>
                 <size>0.31 0.68</size>
                 <origin>0 0</origin>
-                <selectorHeight>0.075</selectorHeight>
-                <selectorVerticalOffset>-0.0015</selectorVerticalOffset>
                 <selectorColor>${mainColor}</selectorColor>
-                <selectorImagePath>./assets/selector.png</selectorImagePath>
                 <selectedColor>${mainColor}</selectedColor>
                 <primaryColor>${secondaryColor}</primaryColor>
                 <secondaryColor>${tertiaryColor}</secondaryColor>
                 <fontPath>${mainFont}</fontPath>
-                <fontSize>0.030</fontSize>
+                <fontSize>${gamelistFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <horizontalMargin>0.01</horizontalMargin>
                 <letterCase>none</letterCase>
-                <lineSpacing>1.9</lineSpacing>
+                <lineSpacing>${gamelistLineSpacing}</lineSpacing>
             </textlist>
             <image name="topLine">
                 <pos>0.5 0.13</pos>
@@ -174,7 +220,7 @@
                 <pos>0.034 0.065</pos>
                 <size>0.743 0.031</size>
                 <fontPath>${mainFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${gamelistSystemNameFontSize}</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <color>${secondaryColor}</color>
                 <letterCase>capitalize</letterCase>
@@ -200,10 +246,10 @@
             </text>
             <gamelistinfo name="gamelistInfo">
                 <pos>0.966 0.065</pos>
-                <size>0.2 0.031</size>
+                <size>0.25 0.031</size>
                 <origin>1 0</origin>
                 <fontPath>${mainFont}</fontPath>
-                <fontSize>0.03</fontSize>
+                <fontSize>${gamelistInfoFontSize}</fontSize>
                 <horizontalAlignment>right</horizontalAlignment>
                 <color>${secondaryColor}</color>
             </gamelistinfo>
@@ -244,85 +290,85 @@
                 <containerScrollSpeed>1</containerScrollSpeed>
                 <containerStartDelay>4.5</containerStartDelay>
                 <containerResetDelay>7</containerResetDelay>
-                <fontSize>0.03</fontSize>
-                <lineSpacing>1.2</lineSpacing>
+                <fontSize>${descriptionFontSize}</fontSize>
+                <lineSpacing>${descriptionLineSpacing}</lineSpacing>
             </text>
             <text name="labelPublisher">
-                <pos>0.70 0.532</pos>
+                <pos>${publisherLabelPos}</pos>
                 <size>0.13125 0.02</size>
                 <text>Publisher:</text>
                 <metadataElement>true</metadataElement>
-                <fontSize>0.02</fontSize>
+                <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="publisher">
                 <pos>0.70 0.552</pos>
                 <size>0.13125 0.03</size>
                 <metadata>publisher</metadata>
                 <defaultValue>Unknown</defaultValue>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelDeveloper">
-                <pos>0.8453 0.532</pos>
+                <pos>${developerLabelPos}</pos>
                 <size>0.13125 0.02</size>
                 <text>Developer:</text>
                 <metadataElement>true</metadataElement>
-                <fontSize>0.02</fontSize>
+                <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="developer">
                 <pos>0.8453 0.552</pos>
                 <size>0.13125 0.03</size>
                 <metadata>developer</metadata>
                 <defaultValue>Unknown</defaultValue>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelReleasedate">
-                <pos>0.70 0.608</pos>
+                <pos>${releaseDateLabelPos}</pos>
                 <size>0.13125 0.02</size>
                 <text>Released:</text>
                 <metadataElement>true</metadataElement>
-                <fontSize>0.02</fontSize>
+                <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <datetime name="releasedate">
                 <pos>0.70 0.628</pos>
                 <size>0.13125 0.03</size>
                 <metadata>releasedate</metadata>
                 <defaultValue>Unknown</defaultValue>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataValueFontSize}</fontSize>
             </datetime>
             <text name="labelPlayers">
-                <pos>0.8453 0.608</pos>
+                <pos>${playersLabelPos}</pos>
                 <size>0.13125 0.02</size>
                 <text>Players:</text>
                 <metadataElement>true</metadataElement>
-                <fontSize>0.02</fontSize>
+                <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="players">
                 <pos>0.8453 0.628</pos>
                 <size>0.13125 0.03</size>
                 <metadata>players</metadata>
                 <defaultValue>Unknown</defaultValue>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelGenre">
-                <pos>0.70 0.684</pos>
+                <pos>${genreLabelPos}</pos>
                 <size>0.13125 0.02</size>
                 <text>Genre:</text>
                 <metadataElement>true</metadataElement>
-                <fontSize>0.02</fontSize>
+                <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="genre">
                 <pos>0.70 0.704</pos>
                 <size>0.13125 0.03</size>
                 <metadata>genre</metadata>
                 <defaultValue>Unknown</defaultValue>
-                <fontSize>0.03</fontSize>
+                <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelRating">
-                <pos>0.70 0.760</pos>
+                <pos>${ratingLabelPos}</pos>
                 <size>0.13125 0.02</size>
                 <text>Rating:</text>
                 <metadataElement>true</metadataElement>
-                <fontSize>0.02</fontSize>
+                <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="labelPublisher, labelDeveloper, labelReleasedate, labelPlayers,
                     labelGenre, labelRating">
@@ -336,13 +382,13 @@
             </datetime>
             <rating name="rating">
                 <pos>0.70 0.785</pos>
-                <size>0.04 0.03</size>
+                <size>${ratingSize}</size>
                 <filledPath>./assets/star-filled.svg</filledPath>
                 <unfilledPath>./assets/${colorSchemeName}/star-unfilled.svg</unfilledPath>
             </rating>
             <badges name="badges">
                 <pos>0.8423 0.685</pos>
-                <size>0.1267 0.185</size>
+                <size>${badgesSize}</size>
                 <origin>0 0</origin>
                 <direction>column</direction>
                 <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator, manual</slots>

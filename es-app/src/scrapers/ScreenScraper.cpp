@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ScreenScraper.cpp
 //
 //  Functions specifically for scraping from screenscraper.fr
@@ -26,7 +26,7 @@ using namespace PlatformIds;
 namespace
 {
     // List of systems and their IDs from:
-    // https://www.screenscraper.fr/api/systemesListe.php?devid=xxx&devpassword=yyy&softname=zzz&output=XML
+    // https://api.screenscraper.fr/api/systemesListe.php?devid=xxx&devpassword=yyy&softname=zzz&output=XML
     const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
         {THREEDO, 29},
         {ACORN_ELECTRON, 85},
@@ -397,6 +397,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         // Translate some HTML character codes to UTF-8 characters for the game name.
         gameName = Utils::String::replace(gameName, "&nbsp;", " ");
         gameName = Utils::String::replace(gameName, "&#x26;", "&");
+        gameName = Utils::String::replace(gameName, "&#39;", "‘");
 
         // In some very rare cases game names contain newline characters that we need to remove.
         result.mdl.set("name", Utils::String::replace(gameName, "\n", ""));
@@ -453,6 +454,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             description = Utils::String::replace(description, "&quot;", "\"");
             description = Utils::String::replace(description, "&copy;", "©");
             description = Utils::String::replace(description, "&#039;", "'");
+            description = Utils::String::replace(description, "&#39;", "'");
             result.mdl.set("desc", description);
         }
 
@@ -612,7 +614,6 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 
         // Media super-node.
         pugi::xml_node media_list {game.child("medias")};
-        bool regionFallback {false};
 
         if (media_list) {
             // 3D box.
@@ -628,19 +629,28 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             processMedia(result, media_list, ssConfig.media_fanart, result.fanartUrl,
                          result.fanartFormat, region);
             // Marquee (wheel).
-            regionFallback = processMedia(result, media_list, ssConfig.media_marquee,
-                                          result.marqueeUrl, result.marqueeFormat, region);
-            // Marquee HD (wheel-hd) fallback if no regular wheel image was found or if the
-            // image found was a fallback to another region than the one requested. If it was
-            // a fallback to another region then it will only get replaced with the wheel-hd
-            // image if that is matching the requested region.
-            if (regionFallback || result.marqueeUrl == "") {
-                std::string marqueeUrlTemp {result.marqueeUrl};
-                if (processMedia(result, media_list, ssConfig.media_marquee_hd, result.marqueeUrl,
-                                 result.marqueeFormat, region) &&
-                    marqueeUrlTemp != "") {
-                    result.marqueeUrl = marqueeUrlTemp;
-                }
+            // There are two media types for the marquee named "wheel" and "wheel"-hd that should
+            // be considered equivalent, i.e. the most closely matching region should be considered
+            // across both media types. This is a logical error, but as it's caused by an issue on
+            // the server side this workaround is still required.
+            int regionPosWheel {0};
+            std::string fileURLWheel;
+            std::string fileFormatWheel;
+            regionPosWheel = processMedia(result, media_list, ssConfig.media_marquee, fileURLWheel,
+                                          fileFormatWheel, region);
+            int regionPosWheelHD {0};
+            std::string fileURLWheelHD;
+            std::string fileFormatWheelHD;
+            regionPosWheelHD = processMedia(result, media_list, ssConfig.media_marquee_hd,
+                                            fileURLWheelHD, fileFormatWheelHD, region);
+            if ((regionPosWheelHD != 0 && regionPosWheelHD <= regionPosWheel) ||
+                regionPosWheel == 0) {
+                result.marqueeUrl = fileURLWheelHD;
+                result.marqueeFormat = fileFormatWheelHD;
+            }
+            else {
+                result.marqueeUrl = fileURLWheel;
+                result.marqueeFormat = fileFormatWheel;
             }
             // Physical media.
             processMedia(result, media_list, ssConfig.media_physicalmedia, result.physicalmediaUrl,
@@ -671,15 +681,15 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
     }
 }
 
-bool ScreenScraperRequest::processMedia(ScraperSearchResult& result,
-                                        const pugi::xml_node& media_list,
-                                        std::string& mediaType,
-                                        std::string& fileURL,
-                                        std::string& fileFormat,
-                                        const std::string& region)
+int ScreenScraperRequest::processMedia(ScraperSearchResult& result,
+                                       const pugi::xml_node& media_list,
+                                       std::string& mediaType,
+                                       std::string& fileURL,
+                                       std::string& fileFormat,
+                                       const std::string& region)
 {
     pugi::xml_node art {pugi::xml_node(nullptr)};
-    bool regionFallback {false};
+    int regionPos {0};
 
     // Do an XPath query for media[type='$media_type'], then filter by region.
     // We need to do this because any child of 'medias' has the form
@@ -710,11 +720,11 @@ bool ScreenScraperRequest::processMedia(ScraperSearchResult& result,
                 if (art)
                     break;
 
+                ++regionPos;
+
                 for (auto node : results) {
                     if (node.node().attribute("region").value() == regionEntry) {
                         art = node.node();
-                        if (region != regionEntry)
-                            regionFallback = true;
                         break;
                     }
                 }
@@ -738,7 +748,7 @@ bool ScreenScraperRequest::processMedia(ScraperSearchResult& result,
                       << mediaType << "\"";
     }
 
-    return regionFallback;
+    return regionPos;
 }
 
 std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(const std::string& gameName,

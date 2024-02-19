@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ApplicationUpdater.cpp
 //
 //  Checks for application updates.
@@ -9,7 +9,7 @@
 
 #include "ApplicationUpdater.h"
 
-#include "EmulationStation.h"
+#include "ApplicationVersion.h"
 #include "Log.h"
 #include "Settings.h"
 #include "resources/ResourceManager.h"
@@ -211,8 +211,8 @@ void ApplicationUpdater::parseFile()
 #if (LOCAL_TESTING_FILE)
     LOG(LogWarning) << "ApplicationUpdater: Using local \"latest_release.json\" testing file";
 
-    const std::string localReleaseFile {Utils::FileSystem::getHomePath() +
-                                        "/.emulationstation/latest_release.json"};
+    const std::string localReleaseFile {Utils::FileSystem::getAppDataDirectory() +
+                                        "/latest_release.json"};
 
     if (!Utils::FileSystem::exists(localReleaseFile))
         throw std::runtime_error("Local testing file not found");

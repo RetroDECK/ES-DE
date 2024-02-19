@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  StringUtil.h
 //
 //  Low-level string functions.
@@ -13,6 +13,8 @@
 #include <codecvt>
 #include <string>
 #include <vector>
+
+#include "utf8.h"
 
 namespace Utils
 {
@@ -28,6 +30,7 @@ namespace Utils
         std::string toLower(const std::string& stringArg);
         std::string toUpper(const std::string& stringArg);
         std::string toCapitalized(const std::string& stringArg);
+        std::string filterUtf8(const std::string& stringArg);
         std::string trim(const std::string& stringArg);
         std::string replace(const std::string& stringArg,
                             const std::string& from,

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.
@@ -648,8 +648,10 @@ void Font::rebuildTextures()
                               static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
 
         // Upload to texture.
-        mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
-                                 glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+        if (glyphSize.x > 0 && glyphSize.y > 0) {
+            mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x,
+                                     cursor.y, glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+        }
     }
 }
 
@@ -768,8 +770,10 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     glyph.rows = glyphSize.y;
 
     // Upload glyph bitmap to texture.
-    mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
-                             glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+    if (glyphSize.x > 0 && glyphSize.y > 0) {
+        mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
+                                 glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+    }
 
     return &glyph;
 }

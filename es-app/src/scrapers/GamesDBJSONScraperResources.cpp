@@ -1,12 +1,12 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GamesDBJSONScraperResources.cpp
 //
 //  Functions specifically for scraping from thegamesdb.net
 //  Called from GamesDBJSONScraper.
 //
-//  Downloads these resource files to ~/.emulationstation/scrapers:
+//  Downloads these resource files to the scrapers folder in the application data directory:
 //  gamesdb_developers.json
 //  gamesdb_genres.json
 //  gamesdb_publishers.json
@@ -41,9 +41,9 @@ namespace
     constexpr int MAX_WAIT_ITER {MAX_WAIT_MS / POLL_TIME_MS};
 
     constexpr char SCRAPER_RESOURCES_DIR[] {"scrapers"};
-    constexpr char DEVELOPERS_JSON_FILE[] {"gamesdb_developers.json"};
-    constexpr char PUBLISHERS_JSON_FILE[] {"gamesdb_publishers.json"};
-    constexpr char GENRES_JSON_FILE[] {"gamesdb_genres.json"};
+    constexpr char DEVELOPERS_JSON_FILE[] {"thegamesdb_developers.json"};
+    constexpr char PUBLISHERS_JSON_FILE[] {"thegamesdb_publishers.json"};
+    constexpr char GENRES_JSON_FILE[] {"thegamesdb_genres.json"};
     constexpr char DEVELOPERS_ENDPOINT[] {"/Developers"};
     constexpr char PUBLISHERS_ENDPOINT[] {"/Publishers"};
     constexpr char GENRES_ENDPOINT[] {"/Genres"};
@@ -64,8 +64,7 @@ namespace
 
 std::string getScrapersResouceDir()
 {
-    return Utils::FileSystem::getGenericPath(Utils::FileSystem::getHomePath() +
-                                             "/.emulationstation/" + SCRAPER_RESOURCES_DIR);
+    return Utils::FileSystem::getAppDataDirectory() + "/" + SCRAPER_RESOURCES_DIR;
 }
 
 std::string TheGamesDBJSONRequestResources::getApiKey() const { return GamesDBAPIKey; }

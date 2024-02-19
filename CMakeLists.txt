@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  CMakeLists.txt
 #
 #  Main CMake configuration file.
@@ -11,15 +11,15 @@
 cmake_minimum_required(VERSION 3.13)
 if(APPLE)
     # Set this to the minimum supported macOS version, and also update
-    # es-app/assets/EmulationStation-DE_Info.plist accordingly.
+    # es-app/assets/ES-DE_Info.plist accordingly.
     set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15 CACHE STRING "macOS deployment target")
     # This optional variable is used for code signing the DMG installer.
     set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS code signing certificate identity")
 endif()
-project(emulationstation-de)
+project(es-de)
 
 # Application version, update this when making a new release.
-set(ES_VERSION 2.2.1)
+set(ES_VERSION 3.0.0)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
@@ -114,6 +114,8 @@ set_property(CACHE GLSYSTEM PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     set(OpenGL_GL_PREFERENCE GLVND)
     find_package(OpenGL REQUIRED)
+elseif(ANDROID)
+    find_package(OpenGLES3 REQUIRED)
 elseif(GLES AND NOT EMSCRIPTEN)
     find_package(OpenGLES2 REQUIRED)
 endif()
@@ -125,11 +127,10 @@ if(APPLE)
     endif()
     find_package(CURL REQUIRED)
 elseif(WIN32)
-    if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/libpugixml.dll AND # MinGW
-       NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)       # MSVC
+    if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)
         message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
     endif()
-elseif(NOT EMSCRIPTEN)
+elseif(NOT EMSCRIPTEN AND NOT ANDROID)
     find_package(CURL REQUIRED)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
@@ -155,19 +156,16 @@ endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES Clang)
     message("-- Compiler is Clang/LLVM")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0.0)
-        message(SEND_ERROR "You need at least Clang 5.0.0 to compile EmulationStation-DE")
+        message(SEND_ERROR "You need at least Clang 5.0.0 to compile ES-DE")
     endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     message("-- Compiler is GNU/GCC")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.1)
-        message(SEND_ERROR "You need at least GCC 7.1 to compile EmulationStation-DE")
-    endif()
-    if(WIN32)
-        set(CMAKE_CXX_FLAGS "-mwindows ${CMAKE_CXX_FLAGS}")
+        message(SEND_ERROR "You need at least GCC 7.1 to compile ES-DE")
     endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     message("-- Compiler is MSVC")
-    # If using the MSVC compiler on Windows, disable the built-in min() and max() macros.
+    # Disable the built-in min() and max() macros.
     add_compile_definitions(NOMINMAX)
 endif()
 
@@ -218,12 +216,17 @@ if(APPLE AND CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 15.0.0)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-invalid-utf8")
 endif()
 
+if(ANDROID)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -llog")
+endif()
+
 if(EMSCRIPTEN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2 -pthread")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s INITIAL_MEMORY=33554432 -s ALLOW_MEMORY_GROWTH=1 -s WASM=1 -s ASSERTIONS=1 -s EXIT_RUNTIME=1 -s USE_SDL=2 \
                                 -pthread -s PTHREAD_POOL_SIZE=4 -s DEMANGLE_SUPPORT=1 -s USE_WEBGL2=1 -s FULL_ES3=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s ASYNCIFY \
-                                --preload-file ${PROJECT_SOURCE_DIR}/resources@/home/web_user/.emulationstation/resources/ \
-                                --preload-file ${PROJECT_SOURCE_DIR}/themes/slate-es-de@/home/web_user/.emulationstation/themes/slate-es-de/ \
+                                --preload-file ${PROJECT_SOURCE_DIR}/resources@/home/web_user/ES-DE/resources/ \
+                                --preload-file ${PROJECT_SOURCE_DIR}/themes/slate-es-de@/home/web_user/ES-DE/themes/slate-es-de/ \
                                 --preload-file ${PROJECT_SOURCE_DIR}/ROMs@/home/web_user/ROMs/")
 endif()
 
@@ -275,6 +278,16 @@ endif()
 if(APPLE)
     if(MACOS_CODESIGN_IDENTITY)
         message("-- Code signing certificate identity: " ${MACOS_CODESIGN_IDENTITY})
+    endif()
+endif()
+
+if(ANDROID)
+    set(BUNDLED_CERTS ON)
+    if(ANDROID_LITE_RELEASE)
+        add_compile_definitions(ANDROID_APPLICATION_ID="org.es_de.frontend.lite")
+        add_compile_definitions(ANDROID_LITE_RELEASE)
+    else()
+        add_compile_definitions(ANDROID_APPLICATION_ID="org.es_de.frontend")
     endif()
 endif()
 
@@ -348,7 +361,7 @@ if(VIDEO_HW_DECODING)
     message("-- Building with FFmpeg HW decoding")
 endif()
 
-if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI)
+if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI OR ANDROID)
     set(APPLICATION_UPDATER OFF)
 endif()
 
@@ -379,6 +392,23 @@ if(APPLE)
     endif()
 endif()
 
+if(ANDROID)
+    if(ANDROID_ABI MATCHES arm64-v8a)
+        message("-- Building for Android arm64-v8a on API level ${ANDROID_PLATFORM}")
+        set(ANDROID_CPU_ARCH arm64-v8a)
+    elseif(ANDROID_ABI MATCHES x86_64)
+        message("-- Building for Android x86_64 on API level ${ANDROID_PLATFORM}")
+        set(ANDROID_CPU_ARCH x86_64)
+    else()
+        message(FATAL_ERROR "-- Unsupported Android ABI: " ${ANDROID_ABI})
+    endif()
+    if(ANDROID_LITE_RELEASE)
+        message("-- Building Lite release")
+    else()
+        message("-- Building full release")
+    endif()
+endif()
+
 # Affects the application updater and is used for displaying version info in the main menu.
 if(ES_VERSION MATCHES alpha OR ES_VERSION MATCHES beta OR ES_VERSION MATCHES dev)
     add_compile_definitions(IS_PRERELEASE)
@@ -390,7 +420,7 @@ add_compile_definitions(GLM_FORCE_XYZW_ONLY)
 
 # For Unix systems, assign the installation prefix. If it's not explicitly set,
 # we use /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD.
-if(NOT WIN32 AND NOT APPLE)
+if(NOT WIN32 AND NOT APPLE AND NOT ANDROID)
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         if(CMAKE_SYSTEM_NAME MATCHES Linux)
             set(CMAKE_INSTALL_PREFIX /usr CACHE INTERNAL CMAKE_INSTALL_PREFIX)
@@ -419,7 +449,9 @@ set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/lunasvg/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rlottie/inc
-                        ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
+                        ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
+                        ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src
+                        ${CMAKE_CURRENT_SOURCE_DIR}/es-pdf-converter/src)
 
 if(APPLE)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
@@ -446,6 +478,15 @@ elseif(EMSCRIPTEN)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage-CMake/FreeImage/Source
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src)
+elseif(ANDROID)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-kit/src/ffmpeg
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freeimage/FreeImage/Source
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_Android)
 else()
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${FFMPEG_INCLUDE_DIRS}
@@ -491,44 +532,43 @@ if(APPLE)
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.0.dylib)
 elseif(WIN32)
-    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec.lib
-                             ${PROJECT_SOURCE_DIR}/avfilter.lib
-                             ${PROJECT_SOURCE_DIR}/avformat.lib
-                             ${PROJECT_SOURCE_DIR}/avutil.lib
-                             ${PROJECT_SOURCE_DIR}/swresample.lib
-                             ${PROJECT_SOURCE_DIR}/swscale.lib
-                             ${PROJECT_SOURCE_DIR}/FreeImage.lib
-                             ${PROJECT_SOURCE_DIR}/git2.lib
-                             ${PROJECT_SOURCE_DIR}/glew32.lib
-                             ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
-                             ${PROJECT_SOURCE_DIR}/freetype.lib
-                             ${PROJECT_SOURCE_DIR}/lunasvg.lib
-                             ${PROJECT_SOURCE_DIR}/pugixml.lib
-                             ${PROJECT_SOURCE_DIR}/rlottie.lib
-                             ${PROJECT_SOURCE_DIR}/SDL2main.lib
-                             ${PROJECT_SOURCE_DIR}/SDL2.lib
-                             Winmm.dll)
-    else()
-        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec-60.dll
-                             ${PROJECT_SOURCE_DIR}/avfilter-9.dll
-                             ${PROJECT_SOURCE_DIR}/avformat-60.dll
-                             ${PROJECT_SOURCE_DIR}/avutil-58.dll
-                             ${PROJECT_SOURCE_DIR}/swresample-4.dll
-                             ${PROJECT_SOURCE_DIR}/swscale-7.dll
-                             ${PROJECT_SOURCE_DIR}/FreeImage.dll
-                             ${PROJECT_SOURCE_DIR}/libgit2.dll
-                             ${PROJECT_SOURCE_DIR}/glew32.dll
-                             ${PROJECT_SOURCE_DIR}/libcurl-x64.dll
-                             ${PROJECT_SOURCE_DIR}/libfreetype.dll
-                             ${PROJECT_SOURCE_DIR}/liblunasvg.dll
-                             ${PROJECT_SOURCE_DIR}/libpugixml.dll
-                             ${PROJECT_SOURCE_DIR}/libSDL2main.a
-                             ${PROJECT_SOURCE_DIR}/librlottie.dll
-                             ${PROJECT_SOURCE_DIR}/SDL2.dll
-                             mingw32
-                             Winmm.dll)
-    endif()
+    set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec.lib
+                            ${PROJECT_SOURCE_DIR}/avfilter.lib
+                            ${PROJECT_SOURCE_DIR}/avformat.lib
+                            ${PROJECT_SOURCE_DIR}/avutil.lib
+                            ${PROJECT_SOURCE_DIR}/swresample.lib
+                            ${PROJECT_SOURCE_DIR}/swscale.lib
+                            ${PROJECT_SOURCE_DIR}/FreeImage.lib
+                            ${PROJECT_SOURCE_DIR}/git2.lib
+                            ${PROJECT_SOURCE_DIR}/glew32.lib
+                            ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
+                            ${PROJECT_SOURCE_DIR}/freetype.lib
+                            ${PROJECT_SOURCE_DIR}/lunasvg.lib
+                            ${PROJECT_SOURCE_DIR}/pugixml.lib
+                            ${PROJECT_SOURCE_DIR}/rlottie.lib
+                            ${PROJECT_SOURCE_DIR}/SDL2main.lib
+                            ${PROJECT_SOURCE_DIR}/SDL2.lib
+                            Winmm.dll)
+elseif(ANDROID)
+    set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
+                        # FFmpeg libraries.
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libavcodec.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libavfilter.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libavformat.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libavutil.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libswresample.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libswscale.so
+                        # Other dependencies.
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libcurl.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libcrypto.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreeimage.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreetype.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libgit2.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libjpeg.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libpoppler.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libpugixml.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libSDL2.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libssl.so)
 elseif(EMSCRIPTEN)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                          # FFmpeg core libraries.
@@ -573,16 +613,25 @@ else()
 endif()
 
 if(NOT WIN32)
-    # SVG rendering library LunaSVG.
-    set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/liblunasvg.a)
-    # Lottie animation library rlottie.
-    set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/librlottie.a)
+    # SVG rendering library LunaSVG and Lottie animation library rlottie.
+    if(ANDROID)
+        if(ANDROID_LITE_RELEASE)
+            set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_lite_${ANDROID_ABI}/liblunasvg.a)
+            set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_lite_${ANDROID_ABI}/librlottie.a)
+        else()
+            set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/liblunasvg.a)
+            set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/librlottie.a)
+        endif()
+    else()
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/liblunasvg.a)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/librlottie.a)
+    endif()
 endif()
 
 if(APPLE)
     # See es-app/CMakeLists.txt for an explation for why an extra "Resources" directory
     # has been added to the install prefix.
-    set(CMAKE_INSTALL_PREFIX "/Applications/EmulationStation Desktop Edition.app/Contents/Resources")
+    set(CMAKE_INSTALL_PREFIX "/Applications/ES-DE.app/Contents/Resources")
 
     # Set the same rpath links for the install executable as for the build executable.
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -611,6 +660,8 @@ endif()
 # OpenGL.
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     list(APPEND COMMON_LIBRARIES ${OPENGL_LIBRARIES})
+elseif(GLES AND ANDROID)
+    list(APPEND COMMON_LIBRARIES ${OPENGLES3_LIBRARIES})
 elseif(GLES)
     list(APPEND COMMON_LIBRARIES ${OPENGLES2_LIBRARIES})
 endif()
@@ -631,5 +682,6 @@ add_subdirectory(es-app)
 # Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
 # Also set lottie2gif to not be built.
 add_dependencies(lunasvg es-pdf-convert)
+
 add_dependencies(es-core rlottie)
 set_target_properties(lottie2gif PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)

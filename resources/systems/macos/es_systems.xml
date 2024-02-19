@@ -472,7 +472,7 @@
         <name>daphne</name>
         <fullname>Daphne Arcade LaserDisc Emulator</fullname>
         <path>%ROMPATH%/daphne</path>
-        <extension>.daphne .ogv .OGV .singe .7z .7Z .zip .ZIP</extension>
+        <extension>.daphne .dirksimple .ogv .OGV .singe .7z .7Z .zip .ZIP</extension>
         <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%/%BASENAME%.txt %INJECT%=%BASENAME%.commands</command>
         <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%/%BASENAME%.txt -script %GAMEDIR%/%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib %ROM%</command>
@@ -684,6 +684,7 @@
         <fullname>Nintendo Game and Watch</fullname>
         <path>%ROMPATH%/gameandwatch</path>
         <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib %ROM%</command>
         <command label="MAME Local Artwork (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -artpath %ROMPATH%/gameandwatch/artwork -rompath %GAMEDIR%\;%ROMPATH%/gameandwatch %BASENAME%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/gameandwatch %BASENAME%</command>
         <command label="Handheld Electronic (GW)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gw_libretro.dylib %ROM%</command>
@@ -731,6 +732,7 @@
         <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vbam_libretro.dylib %ROM%</command>
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gb %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy" %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
         <platform>gb</platform>
@@ -747,6 +749,7 @@
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
         <command label="VBA Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vba_next_libretro.dylib %ROM%</command>
         <command label="gpSP">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gpsp_libretro.dylib %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gba %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Advance" %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
         <platform>gba</platform>
@@ -768,6 +771,7 @@
         <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vbam_libretro.dylib %ROM%</command>
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gb %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Color" %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
         <platform>gbc</platform>
@@ -851,7 +855,7 @@
         <name>laserdisc</name>
         <fullname>LaserDisc Games</fullname>
         <path>%ROMPATH%/laserdisc</path>
-        <extension>.daphne .ogv .OGV .singe .7z .7Z .zip .ZIP</extension>
+        <extension>.daphne .dirksimple .ogv .OGV .singe .7z .7Z .zip .ZIP</extension>
         <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%/%BASENAME%.txt %INJECT%=%BASENAME%.commands</command>
         <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%/%BASENAME%.txt -script %GAMEDIR%/%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib %ROM%</command>
@@ -865,6 +869,7 @@
         <fullname>LCD Handheld Games</fullname>
         <path>%ROMPATH%/lcdgames</path>
         <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.dylib %ROM%</command>
         <command label="MAME Local Artwork (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -artpath %ROMPATH%/lcdgames/artwork -rompath %GAMEDIR%\;%ROMPATH%/lcdgames %BASENAME%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/lcdgames %BASENAME%</command>
         <command label="Handheld Electronic (GW)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gw_libretro.dylib %ROM%</command>
@@ -1196,6 +1201,7 @@
         <extension>.app .APP .bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume_libretro.dylib %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.dylib %ROM%</command>
+        <command label="melonDS DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melondsds_libretro.dylib %ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melonds_libretro.dylib %ROM%</command>
         <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
@@ -1443,7 +1449,7 @@
         <name>ps2</name>
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%/ps2</path>
-        <extension>.arcadedef .bin .BIN .chd .CHD .ciso .CISO .cso .CSO .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG</extension>
+        <extension>.arcadedef .bin .BIN .chd .CHD .ciso .CISO .cso .CSO .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG .zso .ZSO</extension>
         <command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% -batch %ROM%</command>
         <command label="PCSX2 Legacy (Standalone)">%EMULATOR_PCSX2% --nogui %ROM%</command>
         <command label="AetherSX2 (Standalone)">%EMULATOR_AETHERSX2% -batch %ROM%</command>
@@ -1772,6 +1778,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .pce .PCE .sgx .SGX .7z .7Z .zip .ZIP</extension>
         <command label="Beetle SuperGrafx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supergrafx_libretro.dylib %ROM%</command>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.dylib %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module pce %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "SuperGrafx" %ROM%</command>
         <platform>supergrafx</platform>
         <theme>supergrafx</theme>
@@ -1962,7 +1969,7 @@
         <fullname>Visual Pinball</fullname>
         <path>%ROMPATH%/vpinball</path>
         <extension>.vpt .VPT .vpx .VPX</extension>
-        <command label="Visual Pinball (Standalone)">PLACEHOLDER %ROM%</command>
+        <command label="Visual Pinball (Standalone)">%EMULATOR_VISUAL-PINBALL% -play %ROM%</command>
         <platform>vpinball</platform>
         <theme>vpinball</theme>
     </system>

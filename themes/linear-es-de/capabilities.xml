@@ -1,0 +1,102 @@
+<!--
+    Theme capabilities for linear-es-de
+-->
+
+<themeCapabilities>
+    <themeName>Linear</themeName>
+
+    <aspectRatio>16:9</aspectRatio>
+    <aspectRatio>16:10</aspectRatio>
+    <aspectRatio>4:3</aspectRatio>
+    <aspectRatio>21:9</aspectRatio>
+
+    <fontSize>medium</fontSize>
+    <fontSize>large</fontSize>
+
+    <colorScheme name="dark">
+        <label>Dark</label>
+    </colorScheme>
+
+    <colorScheme name="light">
+        <label>Light</label>
+    </colorScheme>
+
+    <colorScheme name="nso">
+        <label>NSO</label>
+    </colorScheme>
+
+    <colorScheme name="live">
+        <label>LIVE</label>
+    </colorScheme>
+
+    <colorScheme name="psn">
+        <label>PSN</label>
+    </colorScheme>
+
+    <variant name="textlistWithVideos">
+        <label>Textlist</label>
+        <selectable>true</selectable>
+    </variant>
+
+    <variant name="textlistWithoutVideos">
+        <label>Textlist without videos</label>
+        <selectable>true</selectable>
+    </variant>
+
+    <variant name="simpleTextlistWithVideos">
+        <label>Simple textlist</label>
+        <selectable>true</selectable>
+    </variant>
+
+    <variant name="simpleTextlistWithoutVideos">
+        <label>Simple textlist without videos</label>
+        <selectable>true</selectable>
+    </variant>
+
+    <variant name="carousel">
+        <label>Carousel</label>
+        <selectable>true</selectable>
+    </variant>
+
+    <variant name="simpleCarousel">
+        <label>Simple Carousel</label>
+        <selectable>true</selectable>
+    </variant>
+
+    <transitions name="instantAndSlide">
+        <label>instant and slide</label>
+        <selectable>true</selectable>
+        <systemToSystem>instant</systemToSystem>
+        <systemToGamelist>slide</systemToGamelist>
+        <gamelistToGamelist>instant</gamelistToGamelist>
+        <gamelistToSystem>slide</gamelistToSystem>
+    </transitions>
+
+    <transitions name="instant">
+        <label>instant</label>
+        <selectable>true</selectable>
+        <systemToSystem>instant</systemToSystem>
+        <systemToGamelist>instant</systemToGamelist>
+        <gamelistToGamelist>instant</gamelistToGamelist>
+        <gamelistToSystem>instant</gamelistToSystem>
+        <startupToSystem>slide</startupToSystem>
+        <startupToGamelist>slide</startupToGamelist>
+    </transitions>
+
+    <transitions name="fade">
+        <label>fade</label>
+        <selectable>true</selectable>
+        <systemToSystem>fade</systemToSystem>
+        <systemToGamelist>fade</systemToGamelist>
+        <gamelistToGamelist>fade</gamelistToGamelist>
+        <gamelistToSystem>fade</gamelistToSystem>
+        <startupToSystem>slide</startupToSystem>
+        <startupToGamelist>slide</startupToGamelist>
+    </transitions>
+
+    <suppressTransitionProfiles>
+        <entry>builtin-instant</entry>
+        <entry>builtin-slide</entry>
+        <entry>builtin-fade</entry>
+    </suppressTransitionProfiles>
+</themeCapabilities>

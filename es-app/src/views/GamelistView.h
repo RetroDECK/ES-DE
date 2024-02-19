@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GamelistView.h
 //
 //  Main gamelist logic.
@@ -55,6 +55,13 @@ public:
             video->muteVideoPlayer();
         for (auto& video : mStaticVideoComponents)
             video->muteVideoPlayer();
+    }
+    void resetViewVideosTimer() override
+    {
+        for (auto& video : mVideoComponents)
+            video->resetVideoPlayerTimer();
+        for (auto& video : mStaticVideoComponents)
+            video->resetVideoPlayerTimer();
     }
 
     void stopGamelistFadeAnimations() override

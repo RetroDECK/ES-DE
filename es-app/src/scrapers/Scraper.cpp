@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  Scraper.cpp
 //
 //  Main scraper logic.
@@ -168,6 +168,13 @@ void ScraperHttpRequest::update()
     if (status == HttpReq::REQ_IN_PROGRESS)
         return;
 
+    if (status == HttpReq::REQ_RESOURCE_NOT_FOUND) {
+        LOG(LogDebug) << "ScraperHttpRequest::update(): Server returned HTTP error code 404 "
+                         "(resource not found)";
+        setStatus(ASYNC_DONE);
+        return;
+    }
+
     // Everything else is some sort of error.
     LOG(LogError) << "ScraperHttpRequest network error (status: " << status << ") - "
                   << mReq->getErrorMsg();
@@ -308,34 +315,6 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         // If the image is cached already as the thumbnail, then we don't need
         // to download it again, in this case just save it to disk and resize it.
         if (mResult.thumbnailImageUrl == it->fileURL && mResult.thumbnailImageData.size() > 0) {
-            // This is just a temporary workaround to avoid saving media files to disk that
-            // are actually just containing error messages from the scraper service. The
-            // proper solution is to implement file checksum checks to determine if the
-            // server response contains valid media. As for the current approach, if the
-            // file is less than 350 bytes, we check if FreeImage can actually detect a
-            // valid format, and if not, we present an error message. Black/empty images
-            // are sometimes returned from the scraper service and these can actually be
-            // less than 350 bytes in size.
-            if (Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia") &&
-                mResult.thumbnailImageData.size() < 350) {
-
-                FIMEMORY* memoryStream {
-                    FreeImage_OpenMemory(reinterpret_cast<BYTE*>(&mResult.thumbnailImageData.at(0)),
-                                         static_cast<DWORD>(mResult.thumbnailImageData.size()))};
-
-                FREE_IMAGE_FORMAT imageFormat {FreeImage_GetFileTypeFromMemory(memoryStream, 0)};
-                FreeImage_CloseMemory(memoryStream);
-
-                if (imageFormat == FIF_UNKNOWN) {
-                    setError(
-                        "The file \"" + Utils::FileSystem::getFileName(filePath) +
-                            "\" returned by the scraper seems to be invalid as it's less than " +
-                            "350 bytes in size",
-                        true);
-                    return;
-                }
-            }
-
             // Remove any existing media file before attempting to write a new one.
             // This avoids the problem where there's already a file for this media type
             // with a different format/extension (e.g. game.jpg and we're going to write
@@ -531,35 +510,6 @@ void MediaDownloadHandle::update()
                             << mSavePath << "\"";
 #endif
             setStatus(ASYNC_DONE);
-            return;
-        }
-    }
-
-    // This is just a temporary workaround to avoid saving media files to disk that are
-    // actually just containing error messages from the scraper service. The proper solution
-    // is to implement file checksum checks to determine if the server response contains valid
-    // media. As for the current approach, if the file is less than 350 bytes, we check if
-    // FreeImage can actually detect a valid format, and if not, we present an error message.
-    // Black/empty images are sometimes returned from the scraper service and these can actually
-    // be less than 350 bytes in size.
-    if (Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia") &&
-        mReq->getContent().size() < 350) {
-
-        FREE_IMAGE_FORMAT imageFormat {FIF_UNKNOWN};
-
-        if (mMediaType != "videos") {
-            std::string imageData {mReq->getContent()};
-            FIMEMORY* memoryStream {FreeImage_OpenMemory(reinterpret_cast<BYTE*>(&imageData.at(0)),
-                                                         static_cast<DWORD>(imageData.size()))};
-            imageFormat = FreeImage_GetFileTypeFromMemory(memoryStream, 0);
-            FreeImage_CloseMemory(memoryStream);
-        }
-
-        if (imageFormat == FIF_UNKNOWN) {
-            setError("The " + mMediaType + " file \"" + Utils::FileSystem::getFileName(mSavePath) +
-                         "\" returned by the scraper seems to be invalid as it's less than " +
-                         "350 bytes in size",
-                     true);
             return;
         }
     }
@@ -763,6 +713,17 @@ std::string getSaveAsPath(const ScraperSearchParams& params,
 
     if (!Utils::FileSystem::exists(path))
         Utils::FileSystem::createDirectory(path);
+
+#if defined(__ANDROID__)
+    if (!Utils::FileSystem::exists(path + ".nomedia")) {
+        LOG(LogInfo) << "Creating \"no media\" file \"" << path + ".nomedia"
+                     << "\"...";
+        Utils::FileSystem::createEmptyFile(path + ".nomedia");
+        if (!Utils::FileSystem::exists(path + ".nomedia")) {
+            LOG(LogWarning) << "Couldn't create file, permission problems?";
+        }
+    }
+#endif
 
     path.append(systemsubdirectory)
         .append("/")

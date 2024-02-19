@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiGamelistFilter.cpp
 //
 //  User interface for the gamelist filters.

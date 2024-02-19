@@ -1,4 +1,84 @@
-# EmulationStation Desktop Edition (ES-DE) - Changelog
+# ES-DE (EmulationStation Desktop Edition) - Changelog
+
+## Version 3.0.0
+
+**Release date:** 2024-02-17
+
+### Release overview
+
+The 3.0 release rebrands the application from EmulationStation Desktop Edition to simply ES-DE. And as part of this the application data directory has changed from .emulationstation to ES-DE and its internal structure has been improved. There is also a new default theme named Linear that is bundled with the application.
+
+Support for configurable font sizes has also been added, so assuming the theme supports it, it's now possible to select between these sizes from the _UI settings_ menu.
+
+A number of minor improvements and bug fixes are also part of this release.
+
+### Detailed list of changes
+
+* Renamed the application from EmulationStation Desktop Edition to ES-DE
+* Renamed the application data directory from .emulationstation to ES-DE
+* Updated the splash screen to reflect the new application name
+* Added a new default theme named "Linear"
+* Split the es_find_rules.xml and es_systems.xml files for Linux and BSD Unix into separate directories
+* Added support for defining font sizes from the theme configuration and selecting these from the UI settings menu
+* Added the theme font sizes count to the theme downloader interface
+* Added support for medium and large font sizes to the Slate and Modern themes
+* Added an option to the Input device settings menu to swap the A/B and X/Y buttons
+* Added support for .webp, .svg and unanimated .gif files to the slideshow screensaver when using a custom image directory
+* Changed the default slideshow custom image directory from slideshow/custom_images to screensavers/custom_slideshow
+* Changed the custom slideshow image directory setting from ScreensaverSlideshowImageDir to ScreensaverSlideshowCustomDir
+* The HTTP error code will now be shown on scraper errors instead of the "File is smaller than 350 bytes" message
+* Removed the ScraperHaltOnInvalidMedia option and corresponding menu entry as it has been superseded by the HTTP error code logic
+* Added a ScraperIgnoreHTTP404Errors option that can be manually set in es_settings.xml to ignore 404 errors (i.e. resource not found)
+* Added Mednafen standalone as an alternative emulator for the gb, gba, gbc and supergrafx systems
+* Added Mesen standalone as an alternative emulator for the gamegear, mastersystem and multivision systems on Linux, Unix and Windows
+* Added Mesen standalone as an alternative emulator for the sg-1000 and supergrafx systems on Linux, Unix and Windows
+* Set Mesen standalone to specifically run in Super Game Boy mode for the sgb system on Linux, Unix and Windows
+* Added the DoubleCherryGB RetroArch core as an alternative emulator for the gb and gbc systems on Linux, Unix and Windows
+* Added the MAME - Current RetroArch core as the default emulator for the gameandwatch and lcdgames systems
+* Added the melonDS DS RetroArch core as the default emulator for the nds system
+* (Linux) Added support for the AppImage release of Vita3K
+* (Linux) Added support for the Flatpak release of puNES
+* Added the .zso file extension to the ps2 system
+* Added the .zar file extension to the xbox360 system on Linux and Windows
+* Added the .pk3 and .ipk3 file extensions to the doom system on Linux, Unix and Windows
+* Added the .dirksimple file extension to the daphne and laserdisc systems
+* (Unix) Removed the -Minimized flag from the Visual Pinball launch command
+* (Windows) Updated the find rules for Visual Pinball to match the actual filenames of the official releases
+* (Windows) Added the %RUNINBACKGROUND% variable for the epic system
+* When scraping using ScreenScraper, the wheel and wheel-hd media types are now considered equivalent
+* Added conversion of an additional HTML character code when scraping using ScreenScraper
+* Added a "renderDuringTransitions" property to the image element
+* Added a "selectorWidth" property to the textlist element
+* Added a "hideIfZero" property to the rating element
+* Putting the computer to sleep while a video is playing will no longer result in a massive fast-forward on resume
+* Combining video pillarboxes with rounded corners will no longer round corners for the actual video frame (except for extreme values)
+* Made the text element "defaultValue" property usable with the metadata types systemName, systemFullname, sourceSystemName and sourceSystemFullname
+* Replaced the default d-pad helpsystem images to make them more legible when using smaller screen sizes
+* Placeholder entries in es_systems.xml are now skipped by default when creating the system directories and systeminfo.txt files
+* Added a CreatePlaceholderSystemDirectories option that can be manually set in es_settings.xml to still create placeholder directories
+* Changed the ScreenScraper URL from https://www.screenscraper.fr/api2 to https://api.screenscraper.fr/api2
+* Added support for more extreme vertical resolutions than previously allowed
+* Added support for the 19.5:9, 20:9 and 1:1 display aspect ratios
+* If any legacy theme configuration is encountered the error messages now simply state that the config is unsupported
+* (Windows) Removed support for building the application using MinGW
+* The relevant SDL error message is now printed to the log if a controller could not be added
+* Added rendering workarounds for some mobile GPUs which do not support all OpenGL operations when using the BGRA pixel format
+* Added the UTF8-CPP library as a dependency
+* Updated SDL to 2.30.0 on Windows, macOS and the Linux AppImage builds
+* Bundled the December 2023 release of the Mozilla TLS/SSL certificates
+
+### Bug fixes
+
+* Attempting to create the system directories with invalid entries in es_systems.xml could crash the application
+* Sometimes controllers were not added correctly when there was a mix of supported and unsupported devices present
+* The last grid row would sometimes not render correctly if fractionalRows was set to true
+* Stationary image elements could sometimes glitch out during carousel navigation
+* Videos were sometimes positioned incorrectly if combining pillarboxes with rounded corners while using an origin value higher than 0.5
+* An extra space character was appended to text elements when setting the systemdata property to gamecountGames or gamecountGamesNoText
+* Theme loading debug output would sometimes print incorrect paths when the configuration included files using variables
+* Font textures were sometimes updated with empty glyhps which generated OpenGL errors on some mobile GPUs
+* The custom collection editing popup did not show the correct button name if the controller type was a PlayStation variant
+* The UI mode confirmation dialog did not show the correct button descriptions if the controller type was PlayStation 1/2/3
 
 ## Version 2.2.1
 
@@ -18,6 +98,8 @@ Some improvements were also made to the systems sorting functionality.
 * The Orphaned data cleanup utility will now skip any system where a flatten.txt file is present
 * Changed a number of error messages in the Orphaned data cleanup utility from uppercase to lowercase
 * The application release number is now tracked on startup instead of the application version
+* (macOS) Reclassified the application as a non-game to disable Game Mode on macOS 14 Sonoma
+* (macOS) Added support for the Visual Pinball (vpinball) game system
 * (slate-es-de) Added console graphics for the adam system
 * Changed the systems sorting platform from "Peripheral" to "Console" for the fds, megacd, megacdjp, n64dd, pcenginecd and satellaview systems
 * Changed the systems sorting platform from "Peripheral" to "Console" for the sega32x, sega32xjp, sega32xna, segacd, sgb, sufami and tg-cd systems

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  SystemData.cpp
 //
 //  Provides data structures for the game systems and populates and indexes them based
@@ -42,15 +42,20 @@ FindRules::FindRules()
 void FindRules::loadFindRules()
 {
     std::vector<std::string> paths;
-    std::string filePath {Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems" +
-                          "/es_find_rules.xml"};
-
+    std::string filePath {Utils::FileSystem::getAppDataDirectory() +
+                          "/custom_systems/es_find_rules.xml"};
     if (Utils::FileSystem::exists(filePath)) {
         paths.emplace_back(filePath);
         LOG(LogInfo) << "Found custom find rules configuration file";
     }
 
-#if defined(_WIN64)
+#if defined(__ANDROID__)
+    filePath = ResourceManager::getInstance().getResourcePath(":/systems/android/es_find_rules.xml",
+                                                              false);
+#elif defined(__linux__)
+    filePath =
+        ResourceManager::getInstance().getResourcePath(":/systems/linux/es_find_rules.xml", false);
+#elif defined(_WIN64)
     filePath = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_find_rules.xml",
                                                               false);
 #elif defined(__APPLE__)
@@ -61,12 +66,12 @@ void FindRules::loadFindRules()
         ResourceManager::getInstance().getResourcePath(":/systems/unix/es_find_rules.xml", false);
 #endif
 
-    if (filePath == "" && paths.empty()) {
+    if (filePath.empty() && paths.empty()) {
         LOG(LogWarning) << "No find rules configuration file found";
         return;
     }
 
-    if (filePath != "")
+    if (!filePath.empty())
         paths.emplace_back(filePath);
 
     for (auto& path : paths) {
@@ -84,7 +89,6 @@ void FindRules::loadFindRules()
 #else
         const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
 #endif
-
         if (!res) {
             LOG(LogError) << "Couldn't parse es_find_rules.xml: " << res.description();
             continue;
@@ -126,6 +130,9 @@ void FindRules::loadFindRules()
 #if defined(_WIN64)
                 if (ruleType != "winregistrypath" && ruleType != "winregistryvalue" &&
                     ruleType != "systempath" && ruleType != "staticpath") {
+#elif defined(__ANDROID__)
+                if (ruleType != "androidpackage" && ruleType != "systempath" &&
+                    ruleType != "staticpath") {
 #else
                 if (ruleType != "systempath" && ruleType != "staticpath") {
 #endif
@@ -145,6 +152,9 @@ void FindRules::loadFindRules()
                         emulatorRules.winRegistryPaths.emplace_back(entryValue);
                     else if (ruleType == "winregistryvalue")
                         emulatorRules.winRegistryValues.emplace_back(entryValue);
+#elif defined(__ANDROID__)
+                    else if (ruleType == "androidpackage")
+                        emulatorRules.androidPackages.emplace_back(entryValue);
 #endif
                 }
             }
@@ -154,6 +164,8 @@ void FindRules::loadFindRules()
 #if defined(_WIN64)
             emulatorRules.winRegistryPaths.clear();
             emulatorRules.winRegistryValues.clear();
+#elif defined(__ANDROID__)
+            emulatorRules.androidPackages.clear();
 #endif
         }
 
@@ -838,9 +850,8 @@ bool SystemData::loadConfig()
 void SystemData::loadSortingConfig()
 {
     const std::string sortSetting {Settings::getInstance()->getString("SystemsSorting")};
-    const std::string customFilePath {Utils::FileSystem::getHomePath() +
-                                      "/.emulationstation/custom_systems" +
-                                      "/es_systems_sorting.xml"};
+    const std::string customFilePath {Utils::FileSystem::getAppDataDirectory() +
+                                      "/custom_systems/es_systems_sorting.xml"};
     const bool customFileExists {Utils::FileSystem::exists(customFilePath)};
 
     std::string path;
@@ -875,7 +886,7 @@ void SystemData::loadSortingConfig()
         path = customFilePath;
     }
 
-    if (path == "") {
+    if (path.empty()) {
         LOG(LogDebug) << "No systems sorting file loaded";
         return;
     }
@@ -947,8 +958,8 @@ std::vector<std::string> SystemData::getConfigPath()
 {
     std::vector<std::string> paths;
 
-    const std::string& customSystemsDirectory {Utils::FileSystem::getHomePath() +
-                                               "/.emulationstation/custom_systems"};
+    const std::string customSystemsDirectory {Utils::FileSystem::getAppDataDirectory() +
+                                              "/custom_systems"};
 
     if (!Utils::FileSystem::exists(customSystemsDirectory)) {
         LOG(LogInfo) << "Creating custom systems directory \"" << customSystemsDirectory << "\"...";
@@ -965,7 +976,11 @@ std::vector<std::string> SystemData::getConfigPath()
         paths.emplace_back(path);
     }
 
-#if defined(_WIN64)
+#if defined(__ANDROID__)
+    path = ResourceManager::getInstance().getResourcePath(":/systems/android/es_systems.xml", true);
+#elif defined(__linux__)
+    path = ResourceManager::getInstance().getResourcePath(":/systems/linux/es_systems.xml", true);
+#elif defined(_WIN64)
     path = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_systems.xml", true);
 #elif defined(__APPLE__)
     path = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_systems.xml", true);
@@ -1107,6 +1122,31 @@ bool SystemData::createSystemDirectories()
                     return (std::isspace(character) || character == ',');
                 }) != platform.cend()};
 
+            if (name.empty()) {
+                LOG(LogError)
+                    << "A system in the es_systems.xml file has no name defined, skipping entry";
+                continue;
+            }
+            else if (fullname.empty() || path.empty() || extensions.empty() || commands.empty()) {
+                LOG(LogError) << "System \"" << name
+                              << "\" is missing the fullname, path, "
+                                 "extension, or command tag, skipping entry";
+                continue;
+            }
+
+            if (commands.size() == 1 &&
+                Utils::String::toLower(commands.front()).find("placeholder") != std::string::npos) {
+                if (Settings::getInstance()->getBool("CreatePlaceholderSystemDirectories")) {
+                    LOG(LogInfo) << "System \"" << name
+                                 << "\" is a placeholder but creating directory anyway as "
+                                    "CreatePlaceholderSystemDirectories is set to true";
+                }
+                else {
+                    LOG(LogInfo) << "System \"" << name << "\" is a placeholder, skipping entry";
+                    continue;
+                }
+            }
+
             themeFolder = system.child("theme").text().as_string(name.c_str());
 
             // Check that the %ROMPATH% variable is actually used for the path element.
@@ -1188,7 +1228,10 @@ bool SystemData::createSystemDirectories()
             }
             systemInfoFile << "Platform" << (multiplePlatforms ? "s" : "")
                            << " (for scraping):" << std::endl;
-            systemInfoFile << platform << std::endl << std::endl;
+            if (platform.empty())
+                systemInfoFile << "None defined" << std::endl << std::endl;
+            else
+                systemInfoFile << platform << std::endl << std::endl;
             systemInfoFile << "Theme folder:" << std::endl;
             systemInfoFile << themeFolder << std::endl;
             systemInfoFile.close();
@@ -1296,8 +1339,8 @@ SystemData* SystemData::getPrev() const
 std::string SystemData::getGamelistPath(bool forWrite) const
 {
     std::string filePath {mRootFolder->getPath() + "/gamelist.xml"};
-    const std::string gamelistPath {Utils::FileSystem::getHomePath() +
-                                    "/.emulationstation/gamelists/" + mName};
+    const std::string gamelistPath {Utils::FileSystem::getAppDataDirectory() + "/gamelists/" +
+                                    mName};
 
     if (Utils::FileSystem::exists(filePath)) {
         if (Settings::getInstance()->getBool("LegacyGamelistFileLocation")) {
@@ -1307,8 +1350,7 @@ std::string SystemData::getGamelistPath(bool forWrite) const
 #if defined(_WIN64)
             LOG(LogWarning) << "Found a gamelist.xml file in \""
                             << Utils::String::replace(mRootFolder->getPath(), "/", "\\")
-                            << "\\\" which will not get loaded, move it to \""
-                            << Utils::String::replace(gamelistPath, "/", "\\")
+                            << "\\\" which will not get loaded, move it to \"" << gamelistPath
                             << "\\\" or otherwise delete it";
 #else
             LOG(LogWarning) << "Found a gamelist.xml file in \"" << mRootFolder->getPath()

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  TextureResource.h
 //
 //  Handles textures including loading, unloading and cache management.

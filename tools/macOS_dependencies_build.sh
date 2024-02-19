@@ -1,7 +1,7 @@
 #!/bin/sh
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  macOS_dependencies_build.sh
 #
 #  Builds the external dependencies in-tree.

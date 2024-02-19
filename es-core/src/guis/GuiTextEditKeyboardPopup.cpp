@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiTextEditKeyboardPopup.cpp
 //
 //  Text edit popup with a virtual keyboard.
@@ -378,15 +378,15 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
                 "", nullptr, nullptr, true));
         }
         else {
+            if (mText->isEditing())
+                mText->stopEditing();
             delete this;
             return true;
         }
     }
 
-    if (mText->isEditing() && config->isMappedLike("down", input) && input.value) {
-        mText->stopEditing();
+    if (mText->isEditing() && config->isMappedLike("down", input) && input.value)
         mGrid.setCursorTo(mGrid.getSelectedComponent());
-    }
 
     // Left trigger button outside text editing field toggles Shift key.
     if (!mText->isEditing() && config->isMappedLike("lefttrigger", input) && input.value)

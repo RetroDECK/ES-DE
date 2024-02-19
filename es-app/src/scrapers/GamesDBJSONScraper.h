@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GamesDBJSONScraper.h
 //
 //  Functions specifically for scraping from thegamesdb.net

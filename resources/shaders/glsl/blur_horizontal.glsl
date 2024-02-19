@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  blur_horizontal.glsl
 //
 //  Horizontal gaussian blur.
@@ -24,7 +24,7 @@ void main()
 #elif defined(FRAGMENT)
 
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 uniform uint shaderFlags;
@@ -41,6 +41,7 @@ out vec4 FragColor;
 // 0x00000010 - Screen rotated 90 or 270 degrees
 // 0x00000020 - Rounded corners
 // 0x00000040 - Rounded corners with no anti-aliasing
+// 0x00000080 - Convert pixel format
 
 void main()
 {

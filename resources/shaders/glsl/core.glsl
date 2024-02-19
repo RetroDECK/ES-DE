@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  core.glsl
 //
 //  Core shader functionality.
@@ -30,7 +30,7 @@ void main(void)
 #elif defined(FRAGMENT)
 
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 in vec2 position;
@@ -59,6 +59,7 @@ out vec4 FragColor;
 // 0x00000010 - Screen rotated 90 or 270 degrees
 // 0x00000020 - Rounded corners
 // 0x00000040 - Rounded corners with no anti-aliasing
+// 0x00000080 - Convert pixel format
 
 void main()
 {
@@ -74,7 +75,14 @@ void main()
             discard;
     }
 
-    vec4 sampledColor = texture(textureSampler0, texCoord);
+    vec4 sampledColor;
+
+    // Pixel format conversion is sometimes required as not all mobile GPUs support all
+    // OpenGL operations in BGRA format.
+    if (0x0u != (shaderFlags & 0x80u))
+        sampledColor.bgra = texture(textureSampler0, texCoord);
+    else
+        sampledColor = texture(textureSampler0, texCoord);
 
     // Rounded corners.
     if (0x0u != (shaderFlags & 0x20u) || 0x0u != (shaderFlags & 0x40u)) {

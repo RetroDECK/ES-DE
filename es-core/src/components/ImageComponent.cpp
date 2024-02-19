@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ImageComponent.cpp
 //
 //  Handles images: loading, resizing, cropping, color shifting etc.
@@ -462,6 +462,15 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             }
 
             mVertices->shaderFlags = mVertices->shaderFlags | Renderer::ShaderFlags::PREMULTIPLIED;
+
+#if defined(USE_OPENGLES)
+            // This is required as not all mobile GPUs support mipmapping when using the BGRA
+            // pixel format.
+            if (mMipmapping)
+                mVertices->shaderFlags =
+                    mVertices->shaderFlags | Renderer::ShaderFlags::CONVERT_PIXEL_FORMAT;
+#endif
+
             mRenderer->drawTriangleStrips(&mVertices[0], 4);
         }
         else {
@@ -547,6 +556,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                "\"stationary\" for element \""
                             << element.substr(6) << "\" defined as \"" << stationary << "\"";
     }
+
+    if (elem->has("renderDuringTransitions"))
+        mRenderDuringTransitions = elem->get<bool>("renderDuringTransitions");
 
     // Enable linear interpolation by default if element is arbitrarily rotated.
     if (properties & ThemeFlags::ROTATION && elem->has("rotation")) {

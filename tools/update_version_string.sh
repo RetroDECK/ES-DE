@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  update_version_string.sh
 #
-#  Updates the version string for EmulationStation Desktop Edition.
+#  Updates the version string for ES-DE.
 #  This script takes as arguments the major, minor and patch numbers as well as an optional
 #  alphanumeric suffix and updates all the necessary files to indicate a new software version.
 #  The script has to be run from within the tools directory.
@@ -14,8 +14,8 @@
 #
 #  The following files are updated by this script:
 #  es-app/CMakeLists.txt
-#  es-app/src/EmulationStation.h
-#  es-app/assets/EmulationStation-DE_Info.plist
+#  es-app/src/ApplicationVersion.h
+#  es-app/assets/ES-DE.plist
 #  es-app/assets/Windows_Portable_README.txt
 #
 #  This script is only intended to be used on Linux systems.
@@ -50,9 +50,9 @@ NEWSTRING="set(ES_VERSION ${1}.${2}.${3}${SUFFIX})"
 cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
 mv $TEMPFILE $MODIFYFILE
 
-##### EmulationStation.h
+##### ApplicationVersion.h
 
-MODIFYFILE=../es-app/src/EmulationStation.h
+MODIFYFILE=../es-app/src/ApplicationVersion.h
 
 MODIFYSTRING=$(grep "PROGRAM_VERSION_MAJOR     " $MODIFYFILE)
 NEWSTRING="#define PROGRAM_VERSION_MAJOR        ${1}"
@@ -94,13 +94,13 @@ NEWSTRING=$(grep "PROGRAM_RELEASE_NUMBER" $MODIFYFILE | sed "s/$OLDRELEASE/$NEWR
 cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
 mv $TEMPFILE $MODIFYFILE
 
-##### EmulationStation-DE_Info.plist
+##### ES-DE_Info.plist
 
-MODIFYFILE=../es-app/assets/EmulationStation-DE_Info.plist
-MODIFYSTRING=$(grep "<string>EmulationStation Desktop Edition " $MODIFYFILE)
+MODIFYFILE=../es-app/assets/ES-DE_Info.plist
+MODIFYSTRING=$(grep "<string>ES-DE " $MODIFYFILE)
 OLDVERSION=$(echo $MODIFYSTRING | cut -f4 -d" " | sed s/".........$"//)
 MODIFYSTRING=$(echo $MODIFYSTRING | sed s/".........$"//)
-NEWSTRING="<string>EmulationStation Desktop Edition ${1}.${2}.${3}"
+NEWSTRING="<string>ES-DE ${1}.${2}.${3}"
 
 cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
 mv $TEMPFILE $MODIFYFILE

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  TextComponent.cpp
 //
 //  Displays text.
@@ -691,7 +691,10 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 mThemeMetadata = type;
                 if (elem->has("defaultValue")) {
                     if (mThemeMetadata == "developer" || mThemeMetadata == "publisher" ||
-                        mThemeMetadata == "genre" || mThemeMetadata == "players") {
+                        mThemeMetadata == "genre" || mThemeMetadata == "players" ||
+                        mThemeMetadata == "systemName" || mThemeMetadata == "systemFullname" ||
+                        mThemeMetadata == "sourceSystemName" ||
+                        mThemeMetadata == "sourceSystemFullname") {
                         const std::string& defaultValue {elem->get<std::string>("defaultValue")};
                         if (defaultValue == ":space:")
                             mDefaultValue = " ";

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE Frontend
 //  Window.h
 //
 //  Window management, screensaver management, help prompts and splash screen.
@@ -109,7 +109,9 @@ public:
     enum class SplashScreenState {
         SCANNING,
         POPULATING,
-        RELOADING
+        RELOADING,
+        RESOURCE_COPY,
+        DIR_CREATION
     };
 
     void renderSplashScreen(SplashScreenState state, float progress);
@@ -155,6 +157,7 @@ public:
     void invalidateCachedBackground();
     bool isInvalidatingCachedBackground() { return mInvalidateCacheTimer > 0; }
 
+    std::vector<std::string>& getGameEndEventParams() { return mGameEndEventParams; }
     bool getGameLaunchedState() { return mGameLaunchedState; }
     void setAllowTextScrolling(bool value) { mAllowTextScrolling = value; }
     bool getAllowTextScrolling() { return mAllowTextScrolling; }
@@ -188,6 +191,8 @@ private:
     std::unique_ptr<TextCache> mSplashTextScanning;
     std::unique_ptr<TextCache> mSplashTextPopulating;
     std::unique_ptr<TextCache> mSplashTextReloading;
+    std::unique_ptr<TextCache> mSplashTextResourceCopy;
+    std::unique_ptr<TextCache> mSplashTextDirCreation;
     glm::vec4 mSplashTextPositions;
     std::vector<ProgressBarRectangle> mProgressBarRectangles;
 
@@ -205,6 +210,7 @@ private:
     std::queue<std::pair<std::string, int>> mInfoPopupQueue;
     std::shared_ptr<TextureResource> mPostprocessedBackground;
 
+    std::vector<std::string> mGameEndEventParams;
     std::string mListScrollText;
     std::shared_ptr<Font> mListScrollFont;
     float mListScrollOpacity;
@@ -221,9 +227,9 @@ private:
     bool mRenderMediaViewer;
     bool mRenderLaunchScreen;
     bool mRenderPDFViewer;
-    bool mGameLaunchedState;
-    bool mAllowTextScrolling;
-    bool mAllowFileAnimation;
+    std::atomic<bool> mGameLaunchedState;
+    std::atomic<bool> mAllowTextScrolling;
+    std::atomic<bool> mAllowFileAnimation;
     bool mCachedBackground;
     bool mInvalidatedCachedBackground;
     bool mInitiateCacheTimer;

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GamelistBase.h
 //
 //  Gamelist base class with utility functions and other low-level logic.

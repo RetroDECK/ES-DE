@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE
 #  mame_create_index_files.sh
 #
 #  As input, this script takes the MAME driver information XML file from the official

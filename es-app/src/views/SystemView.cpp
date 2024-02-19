@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  SystemView.cpp
 //
 //  Main system view.
@@ -839,7 +839,7 @@ void SystemView::updateGameCount(SystemData* system)
     else {
         ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ") << "("
            << gameCount.second << " Favorite" << (gameCount.second == 1 ? ")" : "s)");
-        ssGames << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ");
+        ssGames << gameCount.first << " Game" << (gameCount.first == 1 ? "" : "s");
         ssFavorites << gameCount.second << " Favorite" << (gameCount.second == 1 ? "" : "s");
         games = true;
     }
@@ -1434,7 +1434,8 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
     // If it's a gamelist to system transition and these animations are set to slide.
     if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
             "TransitionsGamelistToSystem")) == ViewTransitionAnimation::SLIDE &&
-        viewState.previouslyViewed == ViewController::ViewMode::GAMELIST)
+        viewState.previouslyViewed == ViewController::ViewMode::GAMELIST &&
+        ViewController::getInstance()->isCameraMoving())
         stationaryApplicable = true;
 
     for (int i {renderBefore}; i <= renderAfter; ++i) {
@@ -1475,10 +1476,26 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
             };
 
+            auto renderChildCondFunc = [&viewState](GuiComponent* child, glm::mat4 trans) {
+                bool renderChild {false};
+                if (!ViewController::getInstance()->isCameraMoving())
+                    renderChild = true;
+                else if (viewState.previouslyViewed == ViewController::ViewMode::NOTHING)
+                    renderChild = true;
+                else if (viewState.viewing == viewState.previouslyViewed)
+                    renderChild = true;
+                else if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+                             "TransitionsSystemToGamelist")) != ViewTransitionAnimation::SLIDE &&
+                         viewState.viewing == ViewController::ViewMode::GAMELIST)
+                    renderChild = true;
+                if (renderChild)
+                    child->render(trans);
+            };
+
             clipRectFunc();
 
             if (mSystemElements.size() > static_cast<size_t>(index)) {
-                for (auto child : mSystemElements[index].children) {
+                for (GuiComponent* child : mSystemElements[index].children) {
                     bool renderChild {true};
                     bool childStationary {false};
                     if (stationaryApplicable) {
@@ -1519,11 +1536,17 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         if (renderChild) {
                             if (childStationary) {
                                 mRenderer->popClipRect();
-                                child->render(mRenderer->getIdentity());
+                                if (child->getRenderDuringTransitions())
+                                    child->render(mRenderer->getIdentity());
+                                else
+                                    renderChildCondFunc(child, mRenderer->getIdentity());
                                 clipRectFunc();
                             }
                             else {
-                                child->render(elementTrans);
+                                if (child->getRenderDuringTransitions())
+                                    child->render(elementTrans);
+                                else
+                                    renderChildCondFunc(child, elementTrans);
                             }
                         }
                     }
@@ -1533,11 +1556,17 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         if (renderChild) {
                             if (childStationary) {
                                 mRenderer->popClipRect();
-                                child->render(mRenderer->getIdentity());
+                                if (child->getRenderDuringTransitions())
+                                    child->render(mRenderer->getIdentity());
+                                else
+                                    renderChildCondFunc(child, mRenderer->getIdentity());
                                 clipRectFunc();
                             }
                             else {
-                                child->render(elementTrans);
+                                if (child->getRenderDuringTransitions())
+                                    child->render(elementTrans);
+                                else
+                                    renderChildCondFunc(child, elementTrans);
                             }
                         }
                     }

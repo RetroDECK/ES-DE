@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  ThemeData.cpp
 //
 //  Finds available themes on the file system and loads and parses these.
@@ -51,6 +51,13 @@ std::vector<std::string> ThemeData::sSupportedTransitionAnimations {
     {"builtin-slide"},
     {"builtin-fade"}};
 
+std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedFontSizes {
+    {"medium", "medium"},
+    {"large", "large"},
+    {"small", "small"},
+    {"x-large", "extra large"},
+    {"x-small", "extra small"}};
+
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
     {"automatic", "automatic"},
     {"16:9", "16:9"},
@@ -63,10 +70,15 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRati
     {"4:3_vertical", "4:3 vertical"},
     {"5:4", "5:4"},
     {"5:4_vertical", "5:4 vertical"},
+    {"19.5:9", "19.5:9"},
+    {"19.5:9_vertical", "19.5:9 vertical"},
+    {"20:9", "20:9"},
+    {"20:9_vertical", "20:9 vertical"},
     {"21:9", "21:9"},
     {"21:9_vertical", "21:9 vertical"},
     {"32:9", "32:0"},
-    {"32:9_vertical", "32:9 vertical"}};
+    {"32:9_vertical", "32:9 vertical"},
+    {"1:1", "1:1"}};
 
 std::map<std::string, float> ThemeData::sAspectRatioMap {
     {"16:9", 1.7777f},
@@ -79,10 +91,15 @@ std::map<std::string, float> ThemeData::sAspectRatioMap {
     {"4:3_vertical", 0.75f},
     {"5:4", 1.25f},
     {"5:4_vertical", 0.8f},
+    {"19.5:9", 2.1667f},
+    {"19.5:9_vertical", 0.4615f},
+    {"20:9", 2.2222f},
+    {"20:9_vertical", 0.45f},
     {"21:9", 2.3703f},
     {"21:9_vertical", 0.4219f},
     {"32:9", 3.5555f},
-    {"32:9_vertical", 0.2813f}};
+    {"32:9_vertical", 0.2813f},
+    {"1:1", 1.0f}};
 
 std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
     // The data type is defined by the parent property.
@@ -232,6 +249,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
+       {"selectorWidth", FLOAT},
        {"selectorHeight", FLOAT},
        {"selectorHorizontalOffset", FLOAT},
        {"selectorVerticalOffset", FLOAT},
@@ -273,6 +291,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"stationary", STRING},
+       {"renderDuringTransitions", BOOLEAN},
        {"flipHorizontal", BOOLEAN},
        {"flipVertical", BOOLEAN},
        {"path", PATH},
@@ -470,6 +489,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"stationary", STRING},
+       {"hideIfZero", BOOLEAN},
        {"gameselector", STRING},
        {"gameselectorEntry", UNSIGNED_INTEGER},
        {"interpolation", STRING},
@@ -550,9 +570,9 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     if (!root)
         throw error << ": Missing <theme> tag";
 
-    // Check for legacy theme version.
+    // Check if there's an unsupported theme version tag.
     if (root.child("formatVersion") != nullptr)
-        throw error << ": Legacy <formatVersion> tag found";
+        throw error << ": Unsupported <formatVersion> tag found";
 
     if (sCurrentTheme->second.capabilities.variants.size() > 0) {
         for (auto& variant : sCurrentTheme->second.capabilities.variants)
@@ -583,6 +603,17 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
             mSelectedColorScheme = Settings::getInstance()->getString("ThemeColorScheme");
         else
             mSelectedColorScheme = mColorSchemes.front();
+    }
+
+    if (sCurrentTheme->second.capabilities.fontSizes.size() > 0) {
+        for (auto& fontSize : sCurrentTheme->second.capabilities.fontSizes)
+            mFontSizes.emplace_back(fontSize);
+
+        if (std::find(mFontSizes.cbegin(), mFontSizes.cend(),
+                      Settings::getInstance()->getString("ThemeFontSize")) != mFontSizes.cend())
+            mSelectedFontSize = Settings::getInstance()->getString("ThemeFontSize");
+        else
+            mSelectedFontSize = mFontSizes.front();
     }
 
     sAspectRatioMatch = false;
@@ -622,10 +653,11 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
 
     parseVariables(root);
     parseColorSchemes(root);
+    parseFontSizes(root);
     parseIncludes(root);
     parseViews(root);
     if (root.child("feature") != nullptr)
-        throw error << ": Legacy <feature> tag found";
+        throw error << ": Unsupported <feature> tag found";
     parseVariants(root);
     parseAspectRatios(root);
 }
@@ -667,16 +699,16 @@ void ThemeData::populateThemes()
     // Check for themes first under the user theme directory (which is in the ES-DE home directory
     // by default), then under the data installation directory (Unix only) and last under the ES-DE
     // binary directory.
-    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
-                                           "/.emulationstation/themes"};
-    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
+#if defined(__ANDROID__)
+    const std::string userThemeDirectory {Utils::FileSystem::getInternalAppDataDirectory() +
+                                          "/themes"};
+#else
+    const std::string defaultUserThemeDir {Utils::FileSystem::getAppDataDirectory() + "/themes"};
+    const std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
         Settings::getInstance()->getString("UserThemeDirectory"))};
-#if defined(_WIN64)
-    userThemeDirSetting = Utils::String::replace(userThemeDirSetting, "\\", "/");
-#endif
     std::string userThemeDirectory;
 
-    if (userThemeDirSetting == "") {
+    if (userThemeDirSetting.empty()) {
         userThemeDirectory = defaultUserThemeDir;
     }
     else if (Utils::FileSystem::isDirectory(userThemeDirSetting) ||
@@ -695,31 +727,30 @@ void ThemeData::populateThemes()
                         << defaultUserThemeDir << "\"";
         userThemeDirectory = defaultUserThemeDir;
     }
+#endif
 
-#if defined(__unix__) || defined(__APPLE__)
-#if defined(APPIMAGE_BUILD)
-    static const size_t pathCount {2};
-#else
-    static const size_t pathCount {3};
-#endif
-#else
-    static const size_t pathCount {2};
-#endif
-    std::string paths[pathCount] = {
+#if defined(__ANDROID__)
+    const std::vector<std::string> themePaths {Utils::FileSystem::getProgramDataPath() + "/themes",
+                                               Utils::FileSystem::getAppDataDirectory() + "/themes",
+                                               userThemeDirectory};
+#elif defined(__APPLE__)
+    const std::vector<std::string> themePaths {
         Utils::FileSystem::getExePath() + "/themes",
-#if defined(__APPLE__)
-        Utils::FileSystem::getExePath() + "/../Resources/themes",
-#elif defined(__unix__) && !defined(APPIMAGE_BUILD)
-        Utils::FileSystem::getProgramDataPath() + "/themes",
+        Utils::FileSystem::getExePath() + "/../Resources/themes", userThemeDirectory};
+#elif defined(_WIN64) || defined(APPIMAGE_BUILD)
+    const std::vector<std::string> themePaths {Utils::FileSystem::getExePath() + "/themes",
+                                               userThemeDirectory};
+#else
+    const std::vector<std::string> themePaths {Utils::FileSystem::getExePath() + "/themes",
+                                               Utils::FileSystem::getProgramDataPath() + "/themes",
+                                               userThemeDirectory};
 #endif
-        userThemeDirectory
-    };
 
-    for (size_t i {0}; i < pathCount; ++i) {
-        if (!Utils::FileSystem::isDirectory(paths[i]))
+    for (auto path : themePaths) {
+        if (!Utils::FileSystem::isDirectory(path))
             continue;
 
-        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(paths[i])};
+        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(path)};
 
         for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
@@ -730,22 +761,20 @@ void ThemeData::populateThemes()
                      Utils::String::toLower(themeDirName.substr(themeDirName.length() - 8, 8)) ==
                          "disabled"))
                     continue;
-
 #if defined(_WIN64)
                 LOG(LogDebug) << "Loading theme capabilities for \""
                               << Utils::String::replace(*it, "/", "\\") << "\"...";
 #else
                 LOG(LogDebug) << "Loading theme capabilities for \"" << *it << "\"...";
 #endif
-                ThemeCapability capabilities {parseThemeCapabilities(*it)};
+                ThemeCapability capabilities {parseThemeCapabilities((*it))};
 
                 if (!capabilities.validTheme)
                     continue;
 
                 std::string themeName;
-                if (capabilities.themeName != "") {
+                if (capabilities.themeName != "")
                     themeName.append(" (\"").append(capabilities.themeName).append("\")");
-                }
 
 #if defined(_WIN64)
                 LOG(LogInfo) << "Added theme \"" << Utils::String::replace(*it, "/", "\\") << "\""
@@ -760,6 +789,8 @@ void ThemeData::populateThemes()
                               << " variant" << (capabilities.variants.size() != 1 ? "s" : "")
                               << ", " << capabilities.colorSchemes.size() << " color scheme"
                               << (capabilities.colorSchemes.size() != 1 ? "s" : "") << ", "
+                              << capabilities.fontSizes.size() << " font size"
+                              << (capabilities.fontSizes.size() != 1 ? "s" : "") << ", "
                               << aspectRatios << " aspect ratio" << (aspectRatios != 1 ? "s" : "")
                               << " and " << capabilities.transitions.size() << " transition"
                               << (capabilities.transitions.size() != 1 ? "s" : "");
@@ -789,11 +820,11 @@ const std::string ThemeData::getSystemThemeFile(const std::string& system)
     std::map<std::string, Theme, StringComparator>::const_iterator theme {
         sThemes.find(Settings::getInstance()->getString("Theme"))};
     if (theme == sThemes.cend()) {
-        // Currently configured theme is missing, attempt to load the default theme slate-es-de
+        // Currently configured theme is missing, attempt to load the default theme linear-es-de
         // instead, and if that's also missing then pick the first available one.
         bool defaultSetFound {true};
 
-        theme = sThemes.find("slate-es-de");
+        theme = sThemes.find("linear-es-de");
 
         if (theme == sThemes.cend()) {
             theme = sThemes.cbegin();
@@ -809,6 +840,18 @@ const std::string ThemeData::getSystemThemeFile(const std::string& system)
     }
 
     return theme->second.getThemePath(system);
+}
+
+const std::string ThemeData::getFontSizeLabel(const std::string& fontSize)
+{
+    auto it = std::find_if(sSupportedFontSizes.cbegin(), sSupportedFontSizes.cend(),
+                           [&fontSize](const std::pair<std::string, std::string>& entry) {
+                               return entry.first == fontSize;
+                           });
+    if (it != sSupportedFontSizes.cend())
+        return it->second;
+    else
+        return "invalid font size";
 }
 
 const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
@@ -972,6 +1015,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 {
     ThemeCapability capabilities;
     std::vector<std::string> aspectRatiosTemp;
+    std::vector<std::string> fontSizesTemp;
     bool hasTriggers {false};
 
     const std::string capFile {path + "/capabilities.xml"};
@@ -1022,6 +1066,29 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 }
                 else {
                     aspectRatiosTemp.emplace_back(value);
+                }
+            }
+        }
+
+        for (pugi::xml_node fontSize {themeCapabilities.child("fontSize")}; fontSize;
+             fontSize = fontSize.next_sibling("fontSize")) {
+            const std::string& value {fontSize.text().get()};
+            if (std::find_if(sSupportedFontSizes.cbegin(), sSupportedFontSizes.cend(),
+                             [&value](const std::pair<std::string, std::string>& entry) {
+                                 return entry.first == value;
+                             }) == sSupportedFontSizes.cend()) {
+                LOG(LogWarning) << "Declared font size \"" << value
+                                << "\" is not supported, ignoring entry in \"" << capFile << "\"";
+            }
+            else {
+                if (std::find(fontSizesTemp.cbegin(), fontSizesTemp.cend(), value) !=
+                    fontSizesTemp.cend()) {
+                    LOG(LogWarning)
+                        << "Font size \"" << value
+                        << "\" is declared multiple times, ignoring entry in \"" << capFile << "\"";
+                }
+                else {
+                    fontSizesTemp.emplace_back(value);
                 }
             }
         }
@@ -1403,6 +1470,17 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
         }
     }
 
+    // Add the font sizes in the order they are defined in sSupportedFontSizes so they always
+    // show up in the same order in the UI Settings menu.
+    if (!fontSizesTemp.empty()) {
+        for (auto& fontSize : sSupportedFontSizes) {
+            if (std::find(fontSizesTemp.cbegin(), fontSizesTemp.cend(), fontSize.first) !=
+                fontSizesTemp.cend()) {
+                capabilities.fontSizes.emplace_back(fontSize.first);
+            }
+        }
+    }
+
     if (hasTriggers) {
         for (auto& variant : capabilities.variants) {
             for (auto it = variant.overrides.begin(); it != variant.overrides.end();) {
@@ -1430,15 +1508,15 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 
 void ThemeData::parseIncludes(const pugi::xml_node& root)
 {
-    ThemeException error;
-    error << "ThemeData::parseIncludes(): ";
-    error.setFiles(mPaths);
-
-    // Check for legacy theme version.
-    if (root.child("formatVersion") != nullptr)
-        throw error << ": Legacy <formatVersion> tag found";
-
     for (pugi::xml_node node {root.child("include")}; node; node = node.next_sibling("include")) {
+        ThemeException error;
+        error << "ThemeData::parseIncludes(): ";
+        error.setFiles(mPaths);
+
+        // Check if there's an unsupported theme version tag.
+        if (root.child("formatVersion") != nullptr)
+            throw error << ": Unsupported <formatVersion> tag found";
+
         std::string relPath {resolvePlaceholders(node.text().as_string())};
         std::string path {Utils::FileSystem::resolveRelativePath(relPath, mPaths.back(), true)};
 
@@ -1492,10 +1570,11 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         parseTransitions(theme);
         parseVariables(theme);
         parseColorSchemes(theme);
+        parseFontSizes(theme);
         parseIncludes(theme);
         parseViews(theme);
         if (theme.child("feature") != nullptr)
-            throw error << ": Legacy <feature> tag found";
+            throw error << ": Unsupported <feature> tag found";
         parseVariants(theme);
         parseAspectRatios(theme);
 
@@ -1541,6 +1620,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
                 parseTransitions(node);
                 parseVariables(node);
                 parseColorSchemes(node);
+                parseFontSizes(node);
                 parseIncludes(node);
                 parseViews(node);
                 parseAspectRatios(node);
@@ -1588,6 +1668,43 @@ void ThemeData::parseColorSchemes(const pugi::xml_node& root)
     }
 }
 
+void ThemeData::parseFontSizes(const pugi::xml_node& root)
+{
+    if (sCurrentTheme == sThemes.end())
+        return;
+
+    if (mSelectedFontSize == "")
+        return;
+
+    ThemeException error;
+    error << "ThemeData::parseFontSizes(): ";
+    error.setFiles(mPaths);
+
+    for (pugi::xml_node node {root.child("fontSize")}; node; node = node.next_sibling("fontSize")) {
+        if (!node.attribute("name"))
+            throw error << ": <fontSize> tag missing \"name\" attribute";
+
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
+        std::string viewKey;
+        while (off != std::string::npos || prevOff != std::string::npos) {
+            viewKey = nameAttr.substr(prevOff, off - prevOff);
+            prevOff = nameAttr.find_first_not_of(delim, off);
+            off = nameAttr.find_first_of(delim, prevOff);
+
+            if (std::find(mFontSizes.cbegin(), mFontSizes.cend(), viewKey) == mFontSizes.cend()) {
+                throw error << ": <fontSize> value \"" << viewKey
+                            << "\" is not defined in capabilities.xml";
+            }
+
+            if (mSelectedFontSize == viewKey)
+                parseVariables(node);
+        }
+    }
+}
+
 void ThemeData::parseAspectRatios(const pugi::xml_node& root)
 {
     if (sCurrentTheme == sThemes.end())
@@ -1625,6 +1742,7 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
             if (sSelectedAspectRatio == viewKey) {
                 parseVariables(node);
                 parseColorSchemes(node);
+                parseFontSizes(node);
                 parseIncludes(node);
                 parseViews(node);
             }
@@ -1755,8 +1873,8 @@ void ThemeData::parseElement(const pugi::xml_node& root,
     element.type = root.name();
 
     if (root.attribute("extra") != nullptr)
-        throw error << ": Legacy \"extra\" attribute found for element of type \"" << element.type
-                    << "\"";
+        throw error << ": Unsupported \"extra\" attribute found for element of type \""
+                    << element.type << "\"";
 
     for (pugi::xml_node node {root.first_child()}; node; node = node.next_sibling()) {
         auto typeIt = typeMap.find(node.name());

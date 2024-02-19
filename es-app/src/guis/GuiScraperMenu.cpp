@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiScraperMenu.cpp
 //
 //  Game media scraper, including settings as well as the scraping start button.
@@ -946,20 +946,6 @@ void GuiScraperMenu::openOtherOptions()
             Settings::getInstance()->getBool("ScraperOverwriteData")) {
             Settings::getInstance()->setBool("ScraperOverwriteData",
                                              scraperOverwriteData->getState());
-            s->setNeedsSaving();
-        }
-    });
-
-    // Halt scraping on invalid media files.
-    auto scraperHaltOnInvalidMedia = std::make_shared<SwitchComponent>();
-    scraperHaltOnInvalidMedia->setState(
-        Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia"));
-    s->addWithLabel("HALT ON INVALID MEDIA FILES", scraperHaltOnInvalidMedia);
-    s->addSaveFunc([scraperHaltOnInvalidMedia, s] {
-        if (scraperHaltOnInvalidMedia->getState() !=
-            Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia")) {
-            Settings::getInstance()->setBool("ScraperHaltOnInvalidMedia",
-                                             scraperHaltOnInvalidMedia->getState());
             s->setNeedsSaving();
         }
     });

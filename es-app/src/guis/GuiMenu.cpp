@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition
+//  ES-DE
 //  GuiMenu.cpp
 //
 //  Main menu.
@@ -14,8 +14,8 @@
 #include <winsock2.h>
 #endif
 
+#include "ApplicationVersion.h"
 #include "CollectionSystemsManager.h"
-#include "EmulationStation.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "Scripting.h"
@@ -37,6 +37,10 @@
 #include "guis/GuiTextEditPopup.h"
 #include "guis/GuiThemeDownloader.h"
 #include "utils/PlatformUtil.h"
+
+#if defined(__ANDROID__)
+#include "InputOverlay.h"
+#endif
 
 #include <SDL2/SDL_events.h>
 #include <algorithm>
@@ -164,12 +168,12 @@ void GuiMenu::openUIOptions()
                 Scripting::fireEvent("theme-changed", theme->getSelected(),
                                      Settings::getInstance()->getString("Theme"));
                 // Handle the situation where the previously selected theme has been deleted
-                // using the theme downloader. In this case attempt to fall back to slate-es-de
+                // using the theme downloader. In this case attempt to fall back to linear-es-de
                 // and if this theme doesn't exist then select the first available one.
                 auto themes = ThemeData::getThemes();
                 if (themes.find(theme->getSelected()) == themes.end()) {
-                    if (themes.find("slate-es-de") != themes.end())
-                        Settings::getInstance()->setString("Theme", "slate-es-de");
+                    if (themes.find("linear-es-de") != themes.end())
+                        Settings::getInstance()->setString("Theme", "linear-es-de");
                     else
                         Settings::getInstance()->setString("Theme", themes.begin()->first);
                 }
@@ -287,6 +291,47 @@ void GuiMenu::openUIOptions()
 
     themeColorSchemesFunc(Settings::getInstance()->getString("Theme"),
                           Settings::getInstance()->getString("ThemeColorScheme"));
+
+    // Theme font sizes.
+    auto themeFontSize = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "THEME FONT SIZE", false);
+    s->addWithLabel("THEME FONT SIZE", themeFontSize);
+    s->addSaveFunc([themeFontSize, s] {
+        if (themeFontSize->getSelected() != Settings::getInstance()->getString("ThemeFontSize")) {
+            Settings::getInstance()->setString("ThemeFontSize", themeFontSize->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
+    auto themeFontSizeFunc = [=](const std::string& selectedTheme,
+                                 const std::string& selectedFontSize) {
+        std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+            currentSet {themes.find(selectedTheme)};
+        if (currentSet == themes.cend())
+            return;
+        // We need to recreate the OptionListComponent entries.
+        themeFontSize->clearEntries();
+        if (currentSet->second.capabilities.fontSizes.size() > 0) {
+            for (auto& fontSize : currentSet->second.capabilities.fontSizes)
+                themeFontSize->add(ThemeData::getFontSizeLabel(fontSize), fontSize,
+                                   fontSize == selectedFontSize);
+            if (themeFontSize->getSelectedObjects().size() == 0)
+                themeFontSize->selectEntry(0);
+        }
+        else {
+            themeFontSize->add("None defined", "none", true);
+            themeFontSize->setEnabled(false);
+            themeFontSize->setOpacity(DISABLED_OPACITY);
+            themeFontSize->getParent()
+                ->getChild(themeFontSize->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+    };
+
+    themeFontSizeFunc(Settings::getInstance()->getString("Theme"),
+                      Settings::getInstance()->getString("ThemeFontSize"));
 
     // Theme aspect ratios.
     auto themeAspectRatio = std::make_shared<OptionListComponent<std::string>>(
@@ -845,6 +890,12 @@ void GuiMenu::openUIOptions()
             Settings::getInstance()->setBool("VirtualKeyboard", virtualKeyboard->getState());
             s->setNeedsSaving();
             s->setInvalidateCachedBackground();
+#if defined(__ANDROID__)
+            if (Settings::getInstance()->getBool("VirtualKeyboard"))
+                SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "0");
+            else
+                SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "1");
+#endif
         }
     });
 
@@ -891,6 +942,7 @@ void GuiMenu::openUIOptions()
         if (!firstRun) {
             themeVariantsFunc(themeName, themeVariant->getSelected());
             themeColorSchemesFunc(themeName, themeColorScheme->getSelected());
+            themeFontSizeFunc(themeName, themeFontSize->getSelected());
             themeAspectRatiosFunc(themeName, themeAspectRatio->getSelected());
             themeTransitionsFunc(themeName, themeTransitions->getSelected());
         }
@@ -927,6 +979,20 @@ void GuiMenu::openUIOptions()
                 ->getChild(themeColorScheme->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
+        if (selectedTheme->second.capabilities.fontSizes.size() > 0) {
+            themeFontSize->setEnabled(true);
+            themeFontSize->setOpacity(1.0f);
+            themeFontSize->getParent()
+                ->getChild(themeFontSize->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+        else {
+            themeFontSize->setEnabled(false);
+            themeFontSize->setOpacity(DISABLED_OPACITY);
+            themeFontSize->getParent()
+                ->getChild(themeFontSize->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
         if (selectedTheme->second.capabilities.aspectRatios.size() > 0) {
             themeAspectRatio->setEnabled(true);
             themeAspectRatio->setOpacity(1.0f);
@@ -954,9 +1020,9 @@ void GuiMenu::openSoundOptions()
 {
     auto s = new GuiSettings("SOUND SETTINGS");
 
-// TODO: Hide the volume slider on macOS and BSD Unix until the volume control logic has been
-// implemented for these operating systems.
-#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
+// TODO: Implement system volume support for macOS and Android.
+#if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__) &&                       \
+    !defined(__OpenBSD__) && !defined(__NetBSD__)
     // System volume.
     // The reason to create the VolumeControl object every time instead of making it a singleton
     // is that this is the easiest way to detect new default audio devices or changes to the
@@ -1090,6 +1156,166 @@ void GuiMenu::openInputDeviceOptions()
         }
     });
 
+#if defined(__ANDROID__)
+    // Touch overlay size.
+    auto touchOverlaySize = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "TOUCH OVERLAY SIZE", false);
+    std::string selectedOverlaySize {Settings::getInstance()->getString("InputTouchOverlaySize")};
+    touchOverlaySize->add("MEDIUM", "medium", selectedOverlaySize == "medium");
+    touchOverlaySize->add("LARGE", "large", selectedOverlaySize == "large");
+    touchOverlaySize->add("SMALL", "small", selectedOverlaySize == "small");
+    touchOverlaySize->add("EXTRA SMALL", "x-small", selectedOverlaySize == "x-small");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the overlay size to "medium" in this case.
+    if (touchOverlaySize->getSelectedObjects().size() == 0)
+        touchOverlaySize->selectEntry(0);
+    s->addWithLabel("TOUCH OVERLAY SIZE", touchOverlaySize);
+    s->addSaveFunc([touchOverlaySize, s] {
+        if (touchOverlaySize->getSelected() !=
+            Settings::getInstance()->getString("InputTouchOverlaySize")) {
+            Settings::getInstance()->setString("InputTouchOverlaySize",
+                                               touchOverlaySize->getSelected());
+            s->setNeedsSaving();
+            InputOverlay::getInstance().createButtons();
+        }
+    });
+
+    // Touch overlay opacity.
+    auto touchOverlayOpacity = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "TOUCH OVERLAY OPACITY", false);
+    std::string selectedOverlayOpacity {
+        Settings::getInstance()->getString("InputTouchOverlayOpacity")};
+    touchOverlayOpacity->add("NORMAL", "normal", selectedOverlayOpacity == "normal");
+    touchOverlayOpacity->add("LOW", "low", selectedOverlayOpacity == "low");
+    touchOverlayOpacity->add("VERY LOW", "verylow", selectedOverlayOpacity == "verylow");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the overlay opacity to "normal" in this case.
+    if (touchOverlayOpacity->getSelectedObjects().size() == 0)
+        touchOverlayOpacity->selectEntry(0);
+    s->addWithLabel("TOUCH OVERLAY OPACITY", touchOverlayOpacity);
+    s->addSaveFunc([touchOverlayOpacity, s] {
+        if (touchOverlayOpacity->getSelected() !=
+            Settings::getInstance()->getString("InputTouchOverlayOpacity")) {
+            Settings::getInstance()->setString("InputTouchOverlayOpacity",
+                                               touchOverlayOpacity->getSelected());
+            s->setNeedsSaving();
+            InputOverlay::getInstance().createButtons();
+        }
+    });
+
+    // Touch overlay fade-out timer.
+    auto touchOverlayFadeTime = std::make_shared<SliderComponent>(0.0f, 20.0f, 1.0f, "s");
+    touchOverlayFadeTime->setValue(
+        static_cast<float>(Settings::getInstance()->getInt("InputTouchOverlayFadeTime")));
+    s->addWithLabel("TOUCH OVERLAY FADE-OUT TIME", touchOverlayFadeTime);
+    s->addSaveFunc([touchOverlayFadeTime, s] {
+        if (touchOverlayFadeTime->getValue() !=
+            static_cast<float>(Settings::getInstance()->getInt("InputTouchOverlayFadeTime"))) {
+            Settings::getInstance()->setInt("InputTouchOverlayFadeTime",
+                                            static_cast<int>(touchOverlayFadeTime->getValue()));
+            InputOverlay::getInstance().resetFadeTimer();
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to enable the touch overlay.
+    auto inputTouchOverlay = std::make_shared<SwitchComponent>();
+    inputTouchOverlay->setState(Settings::getInstance()->getBool("InputTouchOverlay"));
+    s->addWithLabel("ENABLE TOUCH OVERLAY", inputTouchOverlay);
+    s->addSaveFunc([inputTouchOverlay, s] {
+        if (Settings::getInstance()->getBool("InputTouchOverlay") !=
+            inputTouchOverlay->getState()) {
+            Settings::getInstance()->setBool("InputTouchOverlay", inputTouchOverlay->getState());
+            if (Settings::getInstance()->getBool("InputTouchOverlay"))
+                InputOverlay::getInstance().createButtons();
+            else
+                InputOverlay::getInstance().clearButtons();
+            s->setNeedsSaving();
+        }
+    });
+
+    if (!Settings::getInstance()->getBool("InputTouchOverlay")) {
+        touchOverlaySize->setEnabled(false);
+        touchOverlaySize->setOpacity(DISABLED_OPACITY);
+        touchOverlaySize->getParent()
+            ->getChild(touchOverlaySize->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+
+        touchOverlayOpacity->setEnabled(false);
+        touchOverlayOpacity->setOpacity(DISABLED_OPACITY);
+        touchOverlayOpacity->getParent()
+            ->getChild(touchOverlayOpacity->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+
+        touchOverlayFadeTime->setEnabled(false);
+        touchOverlayFadeTime->setOpacity(DISABLED_OPACITY);
+        touchOverlayFadeTime->getParent()
+            ->getChild(touchOverlayFadeTime->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
+    auto inputTouchOverlayCallback = [this, inputTouchOverlay, touchOverlaySize,
+                                      touchOverlayOpacity, touchOverlayFadeTime]() {
+        if (!inputTouchOverlay->getState()) {
+            const std::string message {
+                "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU WILL "
+                "LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO TEMPORARILY "
+                "PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, OR YOU "
+                "COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE THE "
+                "CONFIGURATOR TO RUN ON NEXT STARTUP"};
+
+            Window* window {mWindow};
+            window->pushGui(
+                new GuiMsgBox(getHelpStyle(), message, "OK", nullptr, "", nullptr, "", nullptr,
+                              nullptr, true, true,
+                              (mRenderer->getIsVerticalOrientation() ?
+                                   0.84f :
+                                   0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
+        }
+
+        if (touchOverlaySize->getEnabled()) {
+            touchOverlaySize->setEnabled(false);
+            touchOverlaySize->setOpacity(DISABLED_OPACITY);
+            touchOverlaySize->getParent()
+                ->getChild(touchOverlaySize->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+
+            touchOverlayOpacity->setEnabled(false);
+            touchOverlayOpacity->setOpacity(DISABLED_OPACITY);
+            touchOverlayOpacity->getParent()
+                ->getChild(touchOverlayOpacity->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+
+            touchOverlayFadeTime->setEnabled(false);
+            touchOverlayFadeTime->setOpacity(DISABLED_OPACITY);
+            touchOverlayFadeTime->getParent()
+                ->getChild(touchOverlayFadeTime->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            touchOverlaySize->setEnabled(true);
+            touchOverlaySize->setOpacity(1.0f);
+            touchOverlaySize->getParent()
+                ->getChild(touchOverlaySize->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+
+            touchOverlayOpacity->setEnabled(true);
+            touchOverlayOpacity->setOpacity(1.0f);
+            touchOverlayOpacity->getParent()
+                ->getChild(touchOverlayOpacity->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+
+            touchOverlayFadeTime->setEnabled(true);
+            touchOverlayFadeTime->setOpacity(1.0f);
+            touchOverlayFadeTime->getParent()
+                ->getChild(touchOverlayFadeTime->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+    };
+
+    inputTouchOverlay->setCallback(inputTouchOverlayCallback);
+#endif
+
     // Whether to only accept input from the first controller.
     auto inputOnlyFirstController = std::make_shared<SwitchComponent>();
     inputOnlyFirstController->setState(
@@ -1100,6 +1326,17 @@ void GuiMenu::openInputDeviceOptions()
             inputOnlyFirstController->getState()) {
             Settings::getInstance()->setBool("InputOnlyFirstController",
                                              inputOnlyFirstController->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to swap the A/B and X/Y buttons.
+    auto inputSwapButtons = std::make_shared<SwitchComponent>();
+    inputSwapButtons->setState(Settings::getInstance()->getBool("InputSwapButtons"));
+    s->addWithLabel("SWAP THE A/B AND X/Y BUTTONS", inputSwapButtons);
+    s->addSaveFunc([inputSwapButtons, s] {
+        if (Settings::getInstance()->getBool("InputSwapButtons") != inputSwapButtons->getState()) {
+            Settings::getInstance()->setBool("InputSwapButtons", inputSwapButtons->getState());
             s->setNeedsSaving();
         }
     });
@@ -1185,7 +1422,8 @@ void GuiMenu::openOtherOptions()
     rowMediaDir.addElement(bracketMediaDirectory, false);
     std::string titleMediaDir {"ENTER GAME MEDIA DIRECTORY"};
     std::string mediaDirectoryStaticText {"Default directory:"};
-    std::string defaultDirectoryText {"~/.emulationstation/downloaded_media/"};
+    std::string defaultDirectoryText {Utils::FileSystem::getAppDataDirectory() +
+                                      "/downloaded_media"};
     std::string initValueMediaDir {Settings::getInstance()->getString("MediaDirectory")};
     bool multiLineMediaDir {false};
     auto updateValMediaDir = [this](const std::string& newVal) {
@@ -1417,6 +1655,7 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
+#if !defined(__ANDROID__)
     // Run ES in the background when a game has been launched.
     auto runInBackground = std::make_shared<SwitchComponent>();
     runInBackground->setState(Settings::getInstance()->getBool("RunInBackground"));
@@ -1427,6 +1666,7 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
+#endif
 
 #if defined(VIDEO_HW_DECODING)
     // Whether to enable hardware decoding for the FFmpeg video player.
@@ -1538,7 +1778,7 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-#if defined(__unix__)
+#if defined(__unix__) && !defined(__ANDROID__)
     // Whether to disable desktop composition.
     auto disableComposition = std::make_shared<SwitchComponent>();
     disableComposition->setState(Settings::getInstance()->getBool("DisableComposition"));
@@ -1612,7 +1852,7 @@ void GuiMenu::openOtherOptions()
 
 // macOS requires root privileges to reboot and power off so it doesn't make much
 // sense to enable this setting and menu entry for that operating system.
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(__ANDROID__)
     // Whether to show the quit menu with the options to reboot and shutdown the computer.
     auto showQuitMenu = std::make_shared<SwitchComponent>();
     showQuitMenu->setState(Settings::getInstance()->getBool("ShowQuitMenu"));
@@ -1661,12 +1901,23 @@ void GuiMenu::openUtilities()
 
     ComponentListRow row;
 
+#if defined(ANDROID_LITE_RELEASE)
+    auto orphanedDataCleanup =
+        std::make_shared<TextComponent>("ORPHANED DATA CLEANUP (FULL VERSION ONLY)",
+                                        Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+    orphanedDataCleanup->setOpacity(DISABLED_OPACITY);
+    row.addElement(orphanedDataCleanup, true);
+    auto orphanedDataCleanupArrow = mMenu.makeArrow();
+    orphanedDataCleanupArrow->setOpacity(DISABLED_OPACITY);
+    row.addElement(orphanedDataCleanupArrow, false);
+#else
     row.addElement(std::make_shared<TextComponent>("ORPHANED DATA CLEANUP",
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
     row.addElement(mMenu.makeArrow(), false);
     row.makeAcceptInputHandler(std::bind(
         [this] { mWindow->pushGui(new GuiOrphanedDataCleanup([&]() { close(true); })); }));
+#endif
     s->addRow(row);
 
     row.elements.clear();
@@ -1764,7 +2015,11 @@ void GuiMenu::openUtilities()
 
 void GuiMenu::openQuitMenu()
 {
+#if defined(__APPLE__) || defined(__ANDROID__)
+    if (true) {
+#else
     if (!Settings::getInstance()->getBool("ShowQuitMenu")) {
+#endif
         mWindow->pushGui(new GuiMsgBox(
             this->getHelpStyle(), "REALLY QUIT?", "YES",
             [this] {
@@ -1790,8 +2045,8 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        auto quitText = std::make_shared<TextComponent>(
-            "QUIT RETRODECK", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+        auto quitText = std::make_shared<TextComponent>("QUIT RETRODECK", Font::get(FONT_SIZE_MEDIUM),
+                                                        mMenuColorPrimary);
         quitText->setSelectable(true);
         row.addElement(quitText, true);
         s->addRow(row);
@@ -1840,11 +2095,17 @@ void GuiMenu::addVersionInfo()
     mVersion.setFont(Font::get(FONT_SIZE_SMALL));
     mVersion.setColor(mMenuColorTertiary);
 
+#if defined(ANDROID_LITE_RELEASE)
+    const std::string applicationName {"ES-DE LITE"};
+#else
+    const std::string applicationName {"ES-DE"};
+#endif
+
 #if defined(IS_PRERELEASE)
-    mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
+    mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
                      " (Built " + __DATE__ + ")");
 #else
-    mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+    mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 #endif
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
