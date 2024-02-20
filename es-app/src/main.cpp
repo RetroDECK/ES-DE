@@ -677,7 +677,7 @@ int main(int argc, char* argv[])
 #if defined(ANDROID_LITE_RELEASE)
         const std::string applicationName {"ES-DE Lite"};
 #else
-        const std::string applicationName {"ES-DE"};
+        const std::string applicationName {"RetroDECK"};
 #endif
         LOG(LogInfo) << applicationName << " v" << PROGRAM_VERSION_STRING << " (r"
                      << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
