@@ -14,7 +14,7 @@ That is a question for Google. They are have done everything in their power to o
 
 ## Can I set ES-DE as my launcher?
 
-No ES-DE can't be set as your launcher. It's not a native Android application, it's written in C++ and essentially works as a game engine with a game loop that constantly runs. It's not written in a way that integrates well with the Android operating system, except for what is required to provide its basic functionality. ES-DE really has more in common with a game than with a regular Android launcher application that is native to the operating system. You can however install a native launcher and use it with ES-DE, this makes for a nice game console experience. To achieve this the following app is recommended:\
+No ES-DE can't be set as your launcher. It's not a native Android application, it's written in C++ and essentially works as a game engine with a game loop that constantly runs. ES-DE really has more in common with a game than with a regular Android launcher application that is native to the operating system. You can however install a native launcher and use it with ES-DE, this makes for a nice game console experience. To achieve this the following app is recommended:
 https://play.google.com/store/apps/details?id=com.k2.consolelauncher
 
 ## Can I launch Android applications and games from inside ES-DE?
