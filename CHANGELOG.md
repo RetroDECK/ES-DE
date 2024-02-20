@@ -1,12 +1,24 @@
 # ES-DE (EmulationStation Desktop Edition) - Changelog
 
+## Version 3.0.1 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+### Bug fixes
+
+* (linear-es-de) Creating custom collections named "now-playing" or "completed" could lead to them being unthemed
+
 ## Version 3.0.0
 
 **Release date:** 2024-02-17
 
 ### Release overview
 
-The 3.0 release rebrands the application from EmulationStation Desktop Edition to simply ES-DE. And as part of this the application data directory has changed from .emulationstation to ES-DE and its internal structure has been improved. There is also a new default theme named Linear that is bundled with the application.
+The main feature of the 3.0 release is that it adds support for the Android operating system. It also rebrands the application from EmulationStation Desktop Edition to simply ES-DE. As part of this the application data directory has changed from .emulationstation to ES-DE and its internal structure has been improved. There is also a new default theme named Linear that is bundled with the application.
 
 Support for configurable font sizes has also been added, so assuming the theme supports it, it's now possible to select between these sizes from the _UI settings_ menu.
 
@@ -14,6 +26,7 @@ A number of minor improvements and bug fixes are also part of this release.
 
 ### Detailed list of changes
 
+* Added support for the Android operating system
 * Renamed the application from EmulationStation Desktop Edition to ES-DE
 * Renamed the application data directory from .emulationstation to ES-DE
 * Updated the splash screen to reflect the new application name
