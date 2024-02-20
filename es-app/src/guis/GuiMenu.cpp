@@ -2098,13 +2098,20 @@ void GuiMenu::addVersionInfo()
 #if defined(ANDROID_LITE_RELEASE)
     const std::string applicationName {"ES-DE LITE"};
 #else
-    const std::string applicationName {"ES-DE"};
+    const std::string applicationName {"RetroDECK"};
 #endif
 
 #if defined(IS_PRERELEASE)
     mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
                      " (Built " + __DATE__ + ")");
 #else
+    std::ifstream file("/app/retrodeck/version");
+    std::string version;
+    std::getline(file, version);
+    file.close();
+    #undef PROGRAM_VERSION_STRING
+    #define PROGRAM_VERSION_STRING version.c_str()
+    std::cout << PROGRAM_VERSION_STRING << std::endl;
     mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 #endif
 
