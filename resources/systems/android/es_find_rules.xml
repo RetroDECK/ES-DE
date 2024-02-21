@@ -168,6 +168,12 @@
             <entry>me.magnum.melonds/.ui.emulator.EmulatorActivity</entry>
         </rule>
     </emulator>
+    <emulator name="MELONDS-NIGHTLY">
+        <!-- Nintendo DS and DSi emulator melonDS (Nightly build) -->
+        <rule type="androidpackage">
+            <entry>me.magnum.melonds.nightly/me.magnum.melonds.ui.emulator.EmulatorActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="MSX-EMU">
         <!-- MSX home computer and ColecoVision emulator MSX.emu -->
         <rule type="androidpackage">
