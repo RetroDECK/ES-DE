@@ -2,6 +2,8 @@
 
 ES-DE is a frontend for browsing and launching games from your multi-platform game collection.
 
+It's officially supported on Linux, macOS, Windows and Android but can also be used on BSD Unix and the Raspberry Pi if you build it yourself from source code.
+
 Website:\
 [https://es-de.org](https://es-de.org)
 

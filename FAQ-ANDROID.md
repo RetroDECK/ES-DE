@@ -18,7 +18,7 @@ That is a question for Google. They are have done everything in their power to o
 
 ## How do I update ES-DE when there is a new release
 
-You update ES-DE via the Amazon Appstore app. This works as expected, whenever a new release becomes available you can download and install it via this app.
+You update ES-DE via the [Amazon Appstore app](https://www.amazon.com/gp/mas/get-appstore/android). This works as expected, whenever a new release becomes available you can download and install it via this app.
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
@@ -44,6 +44,8 @@ RetroArch on Android is very unforgiving, if you haven't installed the necessary
 ## When I launch a game using a standalone emulator, why does it say the game file could not be opened?
 
 Due to the scoped storage permissions in Android many emulators need to be given access to the specific game system directory where you store your ROMs. For example DuckStation would need access to your ROMs/psx directory. Some emulators support the FileProvider API in which case ES-DE will provide the emulator with the necessary access and it therefore does not need to be setup upfront in the emulator. You can see in the [Android documentation](ANDROID.md#emulation-on-android-in-general) which emulators support the FileProvider API.
+
+Another reason for why it may not work is that the ROMs directories are in the wrong letter case. If you are reusing an old setup from another frontend where the directories are named for instance ROMs/PS2 and ROMs/NES then these will actually get populated inside ES-DE but you won't be able to run any games with some specific emulators. So make sure that your game system directories are in lower case such as ROMs/ps2 and ROMs/nes and it should work fine. If you start with an empty ROMs directory and you let ES-DE generate the game system folders then everything will of course work fine. For this reason it's always recommended to let ES-DE generate your ROMs directory structure.
 
 ## What type of Android devices are supported
 
