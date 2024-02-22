@@ -58,6 +58,12 @@
             <entry>org.dolphinemu.dolphinemu/.ui.main.TvMainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="DOLPHIN-MMJR">
+        <!-- Dolphin MMJR, fork of Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="androidpackage">
+            <entry>org.mm.jr/org.dolphinemu.dolphinemu.ui.main.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="DRASTIC">
         <!-- Nintendo DS emulator DraStic -->
         <rule type="androidpackage">
