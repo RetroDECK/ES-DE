@@ -390,7 +390,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
             Log::setReportingLevel(LogDebug);
         }
         else if (arguments[i] == "--version" || arguments[i] == "-v") {
-            std::cout << "ES-DE v" << PROGRAM_VERSION_STRING << " (r" << PROGRAM_RELEASE_NUMBER
+            std::cout << "ES-DE " << PROGRAM_VERSION_STRING << " (r" << PROGRAM_RELEASE_NUMBER
                       << ")\n";
             return false;
         }
@@ -679,8 +679,14 @@ int main(int argc, char* argv[])
 #else
         const std::string applicationName {"ES-DE"};
 #endif
-        LOG(LogInfo) << applicationName << " v" << PROGRAM_VERSION_STRING << " (r"
+#if defined(__ANDROID__)
+        LOG(LogInfo) << applicationName << " " << PROGRAM_VERSION_STRING << "-"
+                     << ANDROID_VERSION_CODE << " (r" << PROGRAM_RELEASE_NUMBER << "), built "
+                     << PROGRAM_BUILT_STRING;
+#else
+        LOG(LogInfo) << applicationName << " " << PROGRAM_VERSION_STRING << " (r"
                      << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
+#endif
         if (portableMode) {
             LOG(LogInfo) << "Running in portable mode";
             Settings::getInstance()->setBool("PortableMode", true);
@@ -972,7 +978,7 @@ int main(int argc, char* argv[])
             .append(PROGRAM_BUILT_STRING);
         if (Utils::Platform::Android::checkNeedResourceCopy(buildIdentifier)) {
             LOG(LogInfo) << "Application has been updated or it's a new installation, copying "
-                            "bundled resources and themes to internal storage...";
+                            "bundled resources and theme to internal storage...";
             if (Settings::getInstance()->getBool("SplashScreen"))
                 window->renderSplashScreen(Window::SplashScreenState::RESOURCE_COPY, 0.0f);
             if (Utils::Platform::Android::setupResources(buildIdentifier)) {
