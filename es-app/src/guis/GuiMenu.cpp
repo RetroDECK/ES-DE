@@ -2103,7 +2103,12 @@ void GuiMenu::addVersionInfo()
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
                      " (Built " + __DATE__ + ")");
 #else
+#if defined(__ANDROID__)
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
+                     std::to_string(ANDROID_VERSION_CODE));
+#else
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+#endif
 #endif
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
