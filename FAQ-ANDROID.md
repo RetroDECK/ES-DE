@@ -14,7 +14,7 @@ The Android release specifically is not free, it's a paid app available for purc
 
 ## Why is ES-DE not available on the Google Play store?
 
-That is a question for Google. They are have done everything in their power to obstruct the release of ES-DE including constantly rejecting the releases without supplying meaningful explanations why, refusing to respond to tickets and emails and in general being incredibly difficult to deal with. There's a chance that there will be a Play Store release in the future but there's also a chance that it never happens. You could even argue whether the Play store is going to be relevant for emulation apps in the future. With the crippling restrictions and requirements that Google has put in place this store is starting look quite unfeasible. It doens't matter how big a store is or how many users it has, if it doesn't fulfill the basic role of making it possible to publish your apps and getting paid for your work, then none of that really matters.
+That is a question for Google. They are have done everything in their power to obstruct the release of ES-DE including constantly rejecting the releases without supplying meaningful explanations why, refusing to respond to tickets and emails and in general being incredibly difficult to deal with. There's a chance that there will be a Play Store release in the future but there's also a chance that it never happens. You could even argue whether the Play store is going to be relevant for emulation apps in the future. With the crippling restrictions and requirements that Google has put in place this store is starting look quite unfeasible. It doesn't matter how big a store is or how many users it has, if it doesn't fulfill the basic role of making it possible to publish your apps and getting paid for your work, then none of that really matters.
 
 ## How do I update ES-DE when there is a new release
 
@@ -26,7 +26,7 @@ You only need to buy it once, and then you can use it on all your devices, as lo
 
 ## Can I set ES-DE as my launcher?
 
-Kind of, ES-DE can't natively be set as your launcher but you can use a third party app to make this work. It's not necessarily recommended though as ES-DE is not a native Android application, it's written in C++ and essentially works as a game engine with a game loop that constantly runs. For this reason it consumes more resources and battery than a native launcher app. An alternative approach would be to use a native launcher with ES-DE, this makes for a nice game console experience. To achieve this the following app is recommended:
+Kind of, ES-DE can't natively be set as your launcher but you can use a third party app to make this work such as [AnyHome](https://play.google.com/store/apps/details?id=com.draco.anyhome&hl=en_US&gl=US). It's not necessarily recommended though as ES-DE is not a native Android application, it's written in C++ and essentially works as a game engine with a game loop that constantly runs. For this reason it consumes more resources and battery than a native launcher app. An alternative approach would be to use a native launcher with ES-DE, this makes for a nice game console experience. To achieve this the following app is recommended:
 https://play.google.com/store/apps/details?id=com.k2.consolelauncher
 
 ## Can I launch Android applications and games from inside ES-DE?
@@ -49,9 +49,13 @@ Another reason for why it may not work is that the ROMs directories are in the w
 
 There seems to be a third situation as well where some emulators apparently keep some residual configuration even after changing the ROM path, which makes game launching fail. In some cases it's been successful to clear the emulator settings completely and then add access to the ROM directory again. The easiest way to do this is to go into the Android Settings app, choose _Apps_, select the emulator you want to clear the settings for, open _Storage & cache_ and select _Clear storage_. Just make sure that the emulator has not placed savestates and similar data on internal storage, as this might otherwise get lost. Following this open the emulator and give access to the correct ROM/game system directory.
 
-## Some emulators fail to launch with "ERROR CODE -1", what does that mean?
+## Why do some standalone emulators fail to launch with "ERROR CODE -1" or just display a black screen?
 
-This is a general failure mode which could be caused by multiple things. Some emulators react like this when there's a permission issue and they can't access the game file. See the previous question above for how to deal with such permission problems. If you have an Ayn Odin 2 this error will occur for a number of emulators such as Redream and My Boy! due to what seems to be a problem with their Android OS image. See the [Issues with the Ayn Odin 2](ANDROID.md#issues-with-the-ayn-odin-2) section in the Android documentation for more details about the latter.
+ERROR CODE -1 is a general failure mode which could be caused by multiple things. Some emulators react like this when there's a permission issue and they can't access the game file. See the previous question above for how to deal with such permission problems. And some emulators return this error when the file you attempt to launch has an unsupported file extension. For example MD.emu does not support .bin files, but if you rename these to the .gen extension then game launching works as expected.
+
+If you have an Ayn Odin 2 this error will occur for a number of emulators such as Redream and My Boy! due to what seems to be a problem with their Android OS image. See the [Issues with the Ayn Odin 2](ANDROID.md#issues-with-the-ayn-odin-2) section in the Android documentation for more details about the latter.
+
+The black screen on game launch is just a variation of this failure mode, it depends on how the emulator handles errors whether there will be a black screen or whether it will abort and report the launch failure to ES-DE.
 
 ## Sometimes after I return from a game ES-DE is restarting, did it crash?
 
