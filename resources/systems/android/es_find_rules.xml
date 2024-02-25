@@ -291,6 +291,12 @@
             <entry>com.explusalpha.SaturnEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SKYLINE">
+        <!-- Nintendo Switch emulator Skyline -->
+        <rule type="androidpackage">
+            <entry>skyline.emu/emu.skyline.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X-EXPLUS">
         <!-- Super Nintendo emulator Snes9x EX+ -->
         <rule type="androidpackage">
