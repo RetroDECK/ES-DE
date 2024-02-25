@@ -607,6 +607,23 @@ int main(int argc, char* argv[])
 #if defined(__ANDROID__)
     bool resetTouchOverlay {false};
 
+    // If ES-DE is set as the home app/launcher we may be in a situation where we get started
+    // before the external storage has been mounted. If the application data directory or the
+    // ROMs directory have been located on this storage then the configurator will get executed.
+    // To prevent the likelyhood of this happening we wait up to 30 * 100 milliseconds, then
+    // we give up. This is not an airtight solution but it hopefully decreases the risk of
+    // this failure occuring. Under normal circumstances the storage would be mounted when
+    // the application is starting, so no delay would occur.
+    if (SDL_AndroidGetExternalStorageState() == 0) {
+        for (int i {0}; i < 30; ++i) {
+            __android_log_print(ANDROID_LOG_VERBOSE, ANDROID_APPLICATION_ID,
+                                "Storage not mounted, waiting 100 ms until next attempt");
+            SDL_Delay(100);
+            if (SDL_AndroidGetExternalStorageState() != 0)
+                break;
+        }
+    }
+
     if (Utils::Platform::Android::checkConfigurationNeeded()) {
         Utils::Platform::Android::startConfigurator();
 
