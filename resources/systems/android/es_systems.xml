@@ -712,6 +712,7 @@
         <command label="Dolphin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/dolphin_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %CATEGORY%=android.intent.category.LEANBACK_LAUNCHER %EXTRA_AutoStartFile%=%ROMSAF%</command>
         <command label="Dolphin MMJR (Standalone)">%EMULATOR_DOLPHIN-MMJR% %ACTION%=android.intent.action.VIEW %EXTRA_AutoStartFile%=%ROMSAF%</command>
+        <command label="Dolphin MMJR2 (Standalone)">%EMULATOR_DOLPHIN-MMJR2% %ACTION%=android.intent.action.VIEW %EXTRA_AutoStartFile%=%ROMSAF%</command>
         <platform>gc</platform>
         <theme>gc</theme>
     </system>
@@ -1859,6 +1860,7 @@
         <command label="Dolphin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/dolphin_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %CATEGORY%=android.intent.category.LEANBACK_LAUNCHER %EXTRA_AutoStartFile%=%ROMSAF%</command>
         <command label="Dolphin MMJR (Standalone)">%EMULATOR_DOLPHIN-MMJR% %ACTION%=android.intent.action.VIEW %EXTRA_AutoStartFile%=%ROMSAF%</command>
+        <command label="Dolphin MMJR2 (Standalone)">%EMULATOR_DOLPHIN-MMJR2% %ACTION%=android.intent.action.VIEW %EXTRA_AutoStartFile%=%ROMSAF%</command>
         <platform>wii</platform>
         <theme>wii</theme>
     </system>
