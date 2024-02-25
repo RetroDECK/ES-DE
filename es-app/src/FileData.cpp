@@ -1859,8 +1859,8 @@ void FileData::launchGame()
 #elif defined(__ANDROID__)
     returnValue = Utils::Platform::Android::launchGame(
         androidPackage, androidActivity, androidAction, androidCategory, androidMimeType,
-        androidData, romRaw, androidExtrasString, androidExtrasStringArray, androidExtrasBool,
-        androidActivityFlags);
+        androidData, mEnvData->mStartPath, romRaw, androidExtrasString, androidExtrasStringArray,
+        androidExtrasBool, androidActivityFlags);
 #else
 returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
 #endif
