@@ -1612,7 +1612,7 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-#if defined(APPLICATION_UPDATER)
+#if defined(APPLICATION_UPDATER) && !defined(__ANDROID__)
 #if defined(IS_PRERELEASE)
     // Add a dummy entry to indicate that this setting is always enabled when running a prerelease.
     auto applicationUpdaterPrereleases = std::make_shared<SwitchComponent>();
@@ -1864,7 +1864,7 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-#if defined(APPLICATION_UPDATER) && !defined(IS_PRERELEASE)
+#if defined(APPLICATION_UPDATER) && !defined(__ANDROID__) && !defined(IS_PRERELEASE)
     auto applicationUpdaterFrequencyFunc =
         [applicationUpdaterPrereleases](const std::string& frequency) {
             if (frequency == "never") {
@@ -2100,10 +2100,10 @@ void GuiMenu::addVersionInfo()
 #endif
 
 #if defined(IS_PRERELEASE)
-    mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
                      " (Built " + __DATE__ + ")");
 #else
-    mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 #endif
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
