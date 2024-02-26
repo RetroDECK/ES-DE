@@ -10,6 +10,10 @@
 
 #include "utils/StringUtil.h"
 
+#if defined(__ANDROID__)
+#include "Settings.h"
+#endif
+
 #define TEXT_PADDING_HORIZ 12.0f
 #define TEXT_PADDING_VERT 2.0f
 
@@ -205,13 +209,21 @@ bool TextEditComponent::input(InputConfig* config, Input input)
                 }
                 return true;
             }
-#if !defined(__ANDROID__)
+#if defined(__ANDROID__)
+            else if (!Settings::getInstance()->getBool("VirtualKeyboard") &&
+                     input.id == SDLK_BACKSPACE) {
+                return false;
+            }
+            else if (Settings::getInstance()->getBool("VirtualKeyboard") &&
+                     input.id == SDLK_BACKSPACE) {
+                mMaskInput = false;
+#else
             else if (input.id == SDLK_BACKSPACE) {
                 mMaskInput = false;
                 textInput("\b");
+#endif
                 return true;
             }
-#endif
         }
 
         if (cursorLeft || cursorRight) {
