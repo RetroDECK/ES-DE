@@ -8,9 +8,30 @@
 
 ### Detailed list of changes
 
+* Removed the "v" before the version number from the version printout on application startup and from the main menu
+
 ### Bug fixes
 
 * (linear-es-de) Creating custom collections named "now-playing" or "completed" could lead to them being unthemed
+
+## Version 3.0.0-15 (Android intermediate)
+
+**Release date:** TBD
+
+### Detailed list of changes
+
+* Added a version check on startup to present a popup if there is a new release available in the app store
+* Added Skyline standalone as an alternative emulator for the switch system
+* Added melonDS Nightly standalone as an alternative emulator for the nds system
+* Added Dolphin MMJR standalone as an alternative emulator for the gc and wii systems
+* Added Dolphin MMJR2 standalone as an alternative emulator for the gc and wii systems
+* Split the Yuzu emulator entry into Yuzu and Yuzu EA for the switch system
+* Added the %ACTIVITY_CLEAR_TASK% and %ACTIVITY_CLEAR_TOP% flags for AetherSX2, DraStic, Citra, Citra Canary and DuckStation
+
+### Bug fixes
+
+* Having spaces in the ROMs directory name broke game launching for emulators that used SAF URIs
+* Some special characters caused game launching to fail or behave strange for some emulators that used SAF URIs
 
 ## Version 3.0.0
 

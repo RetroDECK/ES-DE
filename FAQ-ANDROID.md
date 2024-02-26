@@ -1,5 +1,7 @@
 # ES-DE (EmulationStation Desktop Edition) - Frequently Asked Questions for Android
 
+In addition to this document it's a good idea to read the [Android documentation](ANDROID.md) and the [User guide](USERGUIDE.md).
+
 ## Is this the same application as the releases for Linux, macOS and Windows?
 
 Yes it's the exact same application, with only some minor differences. This means that it behaves exactly as you're used to from those other platforms, and it means that you can transfer files between your Android device and any other devices where you have ES-DE installed. This for example includes your game ROMs, gamelists, scraped media and custom collections.
@@ -24,7 +26,7 @@ You update ES-DE via the [Amazon Appstore app](https://www.amazon.com/gp/mas/get
 
 You only need to buy it once, and then you can use it on all your devices, as long as you have the Amazon Appstore app installed on all these devices. There are no subscriptions or additional costs, you just buy it once.
 
-## Can I set ES-DE as my launcher?
+## Can I set ES-DE as my home app/launcher?
 
 Kind of, ES-DE can't natively be set as your launcher but you can use a third party app to make this work such as [AnyHome](https://play.google.com/store/apps/details?id=com.draco.anyhome&hl=en_US&gl=US). It's not necessarily recommended though as ES-DE is not a native Android application, it's written in C++ and essentially works as a game engine with a game loop that constantly runs. For this reason it consumes more resources and battery than a native launcher app. An alternative approach would be to use a native launcher with ES-DE, this makes for a nice game console experience. To achieve this the following app is recommended:
 https://play.google.com/store/apps/details?id=com.k2.consolelauncher
@@ -39,7 +41,9 @@ See the _Supported game systems_ section at the bottom of the [Android documenta
 
 ## When I launch a game using RetroArch I just see a black screen, what is wrong?
 
-RetroArch on Android is very unforgiving, if you haven't installed the necessary core or BIOS files it's a high chance that you just see a black screen and it will hang there, possibly until you kill it. And due to the security model in Android it's not possible for ES-DE to check if a core is actually installed prior to attempting to launch RetroArch (on Linux, macOS and Windows a popup is shown if the core file is missing and the game is never actually launched).
+RetroArch on Android is very unforgiving, if you haven't installed the necessary core or BIOS files it's a high chance that you just see a black screen and it will hang there, possibly until you kill it. And due to the security model in Android it's not possible for ES-DE to check if a core is actually installed prior to attempting to launch RetroArch (on Linux, macOS and Windows a popup is shown if the core file is missing and the game is never actually launched in this case).
+
+Also note that the RetroArch release on the Google Play store is not working correctly on some devices, it can be used on its own but game launching fails from ES-DE. These issues have been resolved by a number of people by instead switching to the release from the [RetroArch](https://retroarch.com) website.
 
 ## When I launch a game using a standalone emulator, why does it say the game file could not be opened?
 
