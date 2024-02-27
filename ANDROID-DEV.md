@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) 3.0 - Android documentation
+# ES-DE (EmulationStation Desktop Edition) 3.0 (development version) - Android documentation
 
 This document contains information specific to the Android release, for more general ES-DE documentation refer to the [User guide](USERGUIDE.md) as well as the general [FAQ](FAQ.md).
 

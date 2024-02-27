@@ -126,6 +126,8 @@ Note that the updater will keep whatever filename you had for your running AppIm
 
 On Windows and macOS you can specify to which directory you want to save the downloaded file. The default is `C:\Users\myusername\Downloads` on Windows and `/Users/myusername/Downloads` on macOS.
 
+On Android all updates are made via the app store. Unless you have modifed the option _Check for application updates_ you'll see a popup on application startup whenever there's a new release in the app store.
+
 Regardless of package format and operating system it's a good idea to update the ROM directory tree after upgrading to a new version. It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed. The easiest way to do this is via the _Create/update system directories_ entry in the _Utilities_ menu. Alternatively the _--create-system-dirs_ command line option can be used. Both methods work identically and will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
 
 Likewise it's a good idea to update your themes using the theme downloader after upgrading ES-DE as support for any new systems is likely to have been added.

@@ -8,7 +8,6 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * RetroAchievements.org integration
 * "Time played" counter per game, similar to how it works in Steam
 * Bulk metadata editor
-* Mouse/touch screen support
 * Background music
 * Controller button mappings from inside ES-DE (similar to pad2key in Batocera)
 * Localization/multi-language support

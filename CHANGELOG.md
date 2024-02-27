@@ -16,7 +16,7 @@
 
 ## Version 3.0.0-15 (Android intermediate)
 
-**Release date:** TBD
+**Release date:** 2024-02-27
 
 ### Detailed list of changes
 
