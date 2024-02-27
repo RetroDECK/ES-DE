@@ -3,8 +3,10 @@
 <ruleList>
     <emulator name="RETROARCH">
         <rule type="androidpackage">
+            <!-- 64-bit and 32-bit releases from the retroarch.com website -->
             <entry>com.retroarch.aarch64/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
             <entry>com.retroarch.ra32/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
+            <!-- Amazon Appstore and Google Play releases -->
             <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
         </rule>
     </emulator>
@@ -146,6 +148,7 @@
     <emulator name="M64PLUS-FZ">
         <!-- Nintendo 64 emulator M64Plus FZ -->
         <rule type="androidpackage">
+            <entry>org.mupen64plusae.v3.fzurita.amazon/paulscode.android.mupen64plusae.SplashActivity</entry>
             <entry>org.mupen64plusae.v3.fzurita.pro/paulscode.android.mupen64plusae.SplashActivity</entry>
             <entry>org.mupen64plusae.v3.fzurita/paulscode.android.mupen64plusae.SplashActivity</entry>
         </rule>
@@ -190,6 +193,12 @@
         <!-- MSX home computer and ColecoVision emulator MSX.emu -->
         <rule type="androidpackage">
             <entry>com.explusalpha.MsxEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="MUPEN64PLUS-AE">
+        <!-- Nintendo 64 emulator Mupen64Plus AE -->
+        <rule type="androidpackage">
+            <entry>org.mupen64plusae.v3.alpha/paulscode.android.mupen64plusae.SplashActivity</entry>
         </rule>
     </emulator>
     <emulator name="MY-BOY">
