@@ -12,19 +12,19 @@ First it's branding, it would be very confusing to have different names for the 
 
 ## Is it available for free, and is it open source?
 
-The Android release specifically is not free, it's a paid app available for purchase on the [Amazon Appstore](https://www.amazon.com/dp/B0CVXRHWTT). And although approximately 99% of the app is open source there are some portions of the code that is closed source.
+The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de). And although approximately 99% of the app is open source there are some portions of the code that is closed source.
 
 ## Why is ES-DE not available on the Google Play store?
 
-That is a question for Google. They are have done everything in their power to obstruct the release of ES-DE including constantly rejecting the releases without supplying meaningful explanations why, refusing to respond to tickets and emails and in general being incredibly difficult to deal with. There's a chance that there will be a Play Store release in the future but there's also a chance that it never happens. You could even argue whether the Play store is going to be relevant for emulation apps in the future. With the crippling restrictions and requirements that Google has put in place this store is starting look quite unfeasible. It doesn't matter how big a store is or how many users it has, if it doesn't fulfill the basic role of making it possible to publish your apps and getting paid for your work, then none of that really matters.
+That is a question for Google. They are have done everything in their power to obstruct the release of ES-DE including constantly rejecting the releases without supplying meaningful explanations why, refusing to respond to tickets and emails and in general being incredibly difficult to deal with. So there are no further plans at attempting to publish ES-DE there.
 
 ## How do I update ES-DE when there is a new release
 
-You update ES-DE via the [Amazon Appstore app](https://www.amazon.com/gp/mas/get-appstore/android). This works as expected, whenever a new release becomes available you can download and install it via this app.
+When a new release is available you will be sent a download link to the email address you used to sign up for Patreon. You can use that link to download the latest version, sideload it on your device and then update. We will explore other options to make this easier in the future.
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
-You only need to buy it once, and then you can use it on all your devices, as long as you have the Amazon Appstore app installed on all these devices. There are no subscriptions or additional costs, you just buy it once.
+You only need to buy it once, and then you can use it on all your devices. There are no subscriptions or additional costs, you just buy it once. With that said we do appreciate if you want to support the project by keeping your paid Patreon subscription.
 
 ## Can I set ES-DE as my home app/launcher?
 

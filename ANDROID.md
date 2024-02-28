@@ -4,11 +4,8 @@ This document contains information specific to the Android release, for more gen
 
 It's also generally recommended to read the [Frequently Asked Questions (FAQ) for Android](FAQ-ANDROID.md) document prior to diving into the information in this document.
 
-The official Amazon store listing for ES-DE:\
-https://www.amazon.com/dp/B0CVXRHWTT
-
-Use the Amazon Appstore app to install it on your device:\
-https://www.amazon.com/gp/mas/get-appstore/android
+You can buy the Android APK from our Patreon page: \
+https://www.patreon.com/es_de
 
 Table of contents:
 

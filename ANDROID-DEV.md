@@ -4,11 +4,8 @@ This document contains information specific to the Android release, for more gen
 
 It's also generally recommended to read the [Frequently Asked Questions (FAQ) for Android](FAQ-ANDROID.md) document prior to diving into the information in this document.
 
-The official Amazon store listing for ES-DE:\
-https://www.amazon.com/dp/B0CVXRHWTT
-
-Use the Amazon Appstore app to install it on your device:\
-https://www.amazon.com/gp/mas/get-appstore/android
+You can buy the Android APK from our Patreon page: \
+https://www.patreon.com/es_de
 
 Table of contents:
 
@@ -115,12 +112,10 @@ Below are specific instructions and considerations for all supported emulators.
 
 ### RetroArch
 
-The RetroArch release in the Play store is problematic. It does not contain all emulator cores and a number of people have reported issues launching games from ES-DE (apparently it doesn't work at all on some specific devices). For these reasons it's strongly recommended to use the 64-bit release from the RetroArch website instead.
+The RetroArch release from the Google Play store is problematic. It does not contain all emulator cores and a number of people have reported issues launching games from ES-DE (apparently it doesn't work at all on some devices). For these reasons it's strongly recommended to use the 64-bit release from the RetroArch website instead, or to install it from the Amazon Appstore or the F-Droid store.
 
-https://retroarch.com/
-
-Or you could alternatively install their release on the F-Droid store.
-
+https://retroarch.com \
+https://www.amazon.com/dp/B09753XRVF \
 https://f-droid.org/en/packages/com.retroarch
 
 Be aware that you need to manually install every core you want to use from inside the RetroArch user interface, and you also need to install all necessary BIOS files. The Android release of RetroArch is pretty unforgiving and will usually just present a black screen on game launch if the core file or the BIOS file is missing, and it will hang there until Android realizes the app is not responding and displays a popup where you can choose to kill the process.
@@ -257,10 +252,17 @@ https://play.google.com/store/apps/details?id=me.magnum.melonds
 
 ### M64Plus FZ
 
-This emulator can be installed from the Play store. The Pro version is recommended to avoid annoying ads.
+This emulator can be installed from the Amazon Appstore or the Google Play store. The Pro version is recommended to avoid annoying ads.
 
+https://www.amazon.com/dp/B09L5FB7T4 \
 https://play.google.com/store/apps/details?id=org.mupen64plusae.v3.fzurita.pro \
 https://play.google.com/store/apps/details?id=org.mupen64plusae.v3.fzurita
+
+### Mupen64Plus AE
+
+This emulator is very similar to M64Plus FZ and it can be downloaded from their GitHub automatic build system.
+
+https://github.com/mupen64plus-ae/mupen64plus-ae/actions
 
 ### My Boy! and My OldBoy!
 
@@ -463,8 +465,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)** [Play store version or Nightly],<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)** | No           | Single ROM file       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
-| n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
+| n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive or ROM file |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
