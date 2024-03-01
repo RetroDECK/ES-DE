@@ -14,6 +14,24 @@
 
 * (linear-es-de) Creating custom collections named "now-playing" or "completed" could lead to them being unthemed
 
+## Version 3.0.0-xx (Android intermediate)
+
+**Release date:** TBD
+
+### Detailed list of changes
+
+* Made it possible to use SAF URIs when splitting game systems across multiple storage devices
+* Added a retry loop on startup to check whether the external storage is mounted, to prevent the configurator from showing when set as the home app
+* Added support for the Amazon Appstore release of M64Plus FZ Pro
+* Added Mupen64Plus AE standalone as an alternative emulator for the n64 and n64dd systems
+* Appended the Android version code to the version on the main menu
+
+### Bug fixes
+
+* External storage devices formatted using the NTFS filesystem couldn't be used
+* Plugging in a USB controller would display a permission popup that could cause controller input to break for some emulators
+* Pressing the backspace key twice while editing text using a physical keyboard would close the text input dialog
+
 ## Version 3.0.0-15 (Android intermediate)
 
 **Release date:** 2024-02-27
