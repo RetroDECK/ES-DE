@@ -6,7 +6,7 @@ As of the 3.0.0 release the official name for the project and application is ES-
 
 ## Is this software available for free, and is it open source?
 
-ES-DE is available for free on Windows, macOS and Linux and it's released under the MIT open source license. For Android it's a paid app available on the [Amazon Appstore](https://www.amazon.com/dp/B0CVXRHWTT) and this port is partially closed source.
+ES-DE is available for free on Windows, macOS and Linux and it's released under the MIT open source license. For Android it's a paid app available via [Patreon](https://www.patreon.com/es_de) and this port is partially closed source.
 
 ## Which operating systems are supported?
 

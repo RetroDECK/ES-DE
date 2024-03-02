@@ -8,6 +8,8 @@
 
 ### Detailed list of changes
 
+* Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
+* Added the .neo file extension to the arcade, mame and neogeo systems
 * Removed the "v" before the version number from the version printout on application startup and from the main menu
 
 ### Bug fixes
@@ -24,6 +26,9 @@
 * Added a retry loop on startup to check whether the external storage is mounted, to prevent the configurator from showing when set as the home app
 * Added support for the Amazon Appstore release of M64Plus FZ Pro
 * Added Mupen64Plus AE standalone as an alternative emulator for the n64 and n64dd systems
+* Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
+* Added the .neo file extension to the arcade, mame and neogeo systems
+* Changed the application updater notification message to no longer mention the app store
 * Appended the Android version code to the version on the main menu
 
 ### Bug fixes

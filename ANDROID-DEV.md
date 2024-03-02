@@ -357,6 +357,16 @@ The Play store version of this emulator is getting frequent updates and is there
 https://play.google.com/store/apps/details?id=org.yuzu.yuzu_emu \
 https://play.google.com/store/apps/details?id=org.yuzu.yuzu_emu.ea
 
+## Compatible devices
+
+This is by no means a complete list of compatible devices, but rather devices that we know have been used with ES-DE and for which there is a known status.
+
+| Manufacturer | Model        | Android release | Supported | Known issues        | Comment             |
+| :----------- | :----------- | :-------------- | :-------- | :------------------ | :------------------ |
+| Ayn          | Odin 2       | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues |                     |
+| Google       | Pixel 4a     | 13              | Yes       | None                |                     |
+| Google       | Pixel Tablet | 14              | Yes       | None                |                     |
+
 ## Supported game systems
 
 All emulators are RetroArch cores unless marked as **(Standalone)**
@@ -376,7 +386,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
 | arcadia               | Emerson Arcadia 2001                           | _Placeholder_                     |                                   |              |                                      |
 | archimedes            | Acorn Archimedes                               | _Placeholder_                     |                                   |              |                                      |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
@@ -443,7 +453,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | _Placeholder_                     |                                   |              |                                      |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | _Placeholder_                     |                                   |              |                                      |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   |              |                                      |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
 | megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | Yes          |                                      |
@@ -468,7 +478,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
-| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive or ROM file |
+| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive or ROM file |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |
