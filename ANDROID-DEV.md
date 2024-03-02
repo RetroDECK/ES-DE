@@ -101,8 +101,6 @@ There are also some issues with sound quality on the Odin 2, such as large fluct
 
 In addition to the issues specific to the Ayn Odin 2 there are a couple of other problems that will hopefully be resolved in the near future:
 
-* Plugging in a controller connected via USB will display a popup with the text _Allow ES-DE to access Controller?_ Pressing OK here will cause problems with input in some emulators. Pressing CANCEL will however resolve this issue and the controller will still work correctly in ES-DE.
-* Setting ES-DE as the home app/launcher will sometimes display the configurator after rebooting the device. This happens because Android starts ES-DE before it has mounted the external storage, for example your SD card. Just press/swipe _back_ when the configurator is displayed and ES-DE should start normally.
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
 * The Android soft keyboard causes rendering issues when navigating using a controller or physical keyboard, as such the ES-DE built-in keyboard is enabled by default for the time being. For testing purposes the Android soft keyboard can be enabled via the _Enable virtual keyboard_ option in the _UI settings_ menu. If only using touch input the issue is not present. This problem is believed to be caused by a bug in the SDL library so it probably needs to be resolved there.
 
@@ -366,6 +364,9 @@ This is by no means a complete list of compatible devices, but rather devices th
 | Ayn          | Odin 2       | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues |                     |
 | Google       | Pixel 4a     | 13              | Yes       | None                |                     |
 | Google       | Pixel Tablet | 14              | Yes       | None                |                     |
+| Nvidia       | Shield Pro   | 11 (TV)         | Yes       | None                |                     |
+| Retroid      | Pocket 2s    | 11              | Yes       | None                |                     |
+| Retroid      | Pocket 4 Pro | 13              | Yes       | None                |                     |
 
 ## Supported game systems
 

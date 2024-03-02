@@ -8,6 +8,7 @@
 
 ### Detailed list of changes
 
+* Added a more informative error message than "HTTP error code 430" when exceeding the daily ScreenScraper quota
 * Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
 * Added the .neo file extension to the arcade, mame and neogeo systems
 * Removed the "v" before the version number from the version printout on application startup and from the main menu
@@ -22,6 +23,7 @@
 
 ### Detailed list of changes
 
+* Added support for Android TV devices
 * Made it possible to use SAF URIs when splitting game systems across multiple storage devices
 * Added a retry loop on startup to check whether the external storage is mounted, to prevent the configurator from showing when set as the home app
 * Added support for the Amazon Appstore release of M64Plus FZ Pro
@@ -29,6 +31,7 @@
 * Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
 * Added the .neo file extension to the arcade, mame and neogeo systems
 * Changed the application updater notification message to no longer mention the app store
+* Added a more informative error message than "HTTP error code 430" when exceeding the daily ScreenScraper quota
 * Appended the Android version code to the version on the main menu
 
 ### Bug fixes
