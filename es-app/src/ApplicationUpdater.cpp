@@ -424,7 +424,7 @@ void ApplicationUpdater::compareVersions()
             mLogInfo = "A new ";
             mLogInfo
 #if defined(__ANDROID__)
-                .append("release is available from the app store: ")
+                .append("release is available: ")
 #else
                 .append(releaseType == &mStableRelease ? "stable release" : "prerelease")
                 .append(" is available for download at https://es-de.org: ")
@@ -448,15 +448,11 @@ void ApplicationUpdater::compareVersions()
                 mResults.append("release available: ").append(releaseType->version);
             }
 
-#if defined(__ANDROID__)
-            mResults.append("\nApply update via the app store");
-#else
             if (mPackageType == PackageType::UNKNOWN)
                 mResults.append("\nFor more information visit\n").append("https://es-de.org");
 
             if (mPackage.message != "")
                 mResults.append("\n").append(mPackage.message);
-#endif
 
             mResults = Utils::String::toUpper(mResults);
             break;
