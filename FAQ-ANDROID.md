@@ -20,11 +20,21 @@ That is a question for Google. They are have done everything in their power to o
 
 ## How do I update ES-DE when there is a new release
 
-When a new release is available you will be sent a download link to the email address you used to sign up for Patreon. You can use that link to download the latest version, sideload it on your device and then update. We will explore other options to make this easier in the future.
+When a new release is available you will be sent a download link to the email address you used to sign up for Patreon, and we will post it directly on Patreon as well. You can use that link to download the latest version, sideload it on your device and then update. We will explore other options to make this easier in the future.
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
 You only need to buy it once, and then you can use it on all your devices. There are no subscriptions or additional costs, you just buy it once. With that said we do appreciate if you want to support the project by keeping your paid Patreon subscription.
+
+## ES-DE doesn't work on my device, can I get a refund?
+
+Although the overwhelming majority of people have successfully got ES-DE to run correctly on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 11 or later) there are some devices that have been problematic. These issues have only been observed on mobile phones as far as we know, and is likely due to customizations done by the manufacturers. Unfortunately Android is not really a standardized operating system and different vendors are applying custom patches and such which may prevent ES-DE from working. We will refund everyone that is unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
+
+## Why do I get a "There was a problem parsing the package" error when I attempt to install ES-DE?
+
+There are two possible reasons for this, the first and most common issue is that your device does not fulfill the basic requirements for ES-DE, which is that it has to run a 64-bit version of Android 11 or later. We are investigating whether Android 10 support could be added in a future release but for the time being this is not supported.
+
+The second reason is that the APK is corrupt or not complete. When we make releases we include an MD5 hash value with the download link, and it's recommended to check the hash of the downloaded file before you attempt to install it. This will also ensure that you actually have the real release and not some third party scam or fake app or similar. A recommended app for generating the MD5 checksums is [Hash Checker](https://play.google.com/store/apps/details?id=com.smlnskgmail.jaman.hashchecker) from the Google Play store.
 
 ## Can I set ES-DE as my home app/launcher?
 
@@ -49,7 +59,7 @@ Also note that the RetroArch release on the Google Play store is not working cor
 
 Due to the scoped storage permissions in Android many emulators need to be given access to the specific game system directory where you store your ROMs. For example DuckStation needs access to your ROMs/psx directory and M64Plus FZ needs access to ROMs/n64. Some emulators support the FileProvider API in which case ES-DE will provide the emulator with the necessary access and it therefore does not need to be setup upfront in the emulator. You can see in the [Android documentation](ANDROID.md#emulation-on-android-in-general) which emulators support the FileProvider API.
 
-Another reason for why it may not work is that the ROMs directories are in the wrong letter case. If you are reusing an old setup from another frontend where the directories are named for instance ROMs/PS2 and ROMs/NES then these will actually get populated inside ES-DE but you won't be able to run any games with some specific emulators. So make sure that your game system directories are in lowercase such as ROMs/ps2 and ROMs/nes and it should work fine. After changing a directory from uppercase to lowercase you'll also need to go into the emulator and provide access to the renamed directory. If you start with an empty ROMs directory and you let ES-DE generate the game system folders then all game system directories will be correctly generated in lowercase, so this is the recommended approach.
+Another reason for why it may not work is that the ROMs directories are in the wrong letter case. If you are reusing an old setup from another frontend where the directories are named for instance ROMs/PS2 and ROMs/C64 then these will actually get populated inside ES-DE but you won't be able to run any games with some specific emulators. So make sure that your game system directories are in lowercase such as ROMs/ps2 and ROMs/c64 and it should work fine. After changing a directory from uppercase to lowercase you'll also need to go into the emulator and provide access to the renamed directory. If you start with an empty ROMs directory and you let ES-DE generate the game system folders then all game system directories will be correctly generated in lowercase, so this is the recommended approach. **Note that there appears to be a bug in the Android operating system so that the scoped storage directory picker is not correctly updating the URI if the letter case has changed. For this reason, always "go back" to the root of the storage device when selecting the scoped storage directory inside the emulator, then select the ROMs folder and then the game systems folder, such as ps2 or c64.**
 
 There seems to be a third situation as well where some emulators apparently keep some residual configuration even after changing the ROM path, which makes game launching fail. In some cases it's been successful to clear the emulator settings completely and then add access to the ROM directory again. The easiest way to do this is to go into the Android Settings app, choose _Apps_, select the emulator you want to clear the settings for, open _Storage & cache_ and select _Clear storage_. Just make sure that the emulator has not placed savestates and similar data on internal storage, as this might otherwise get lost. Following this open the emulator and give access to the correct ROM/game system directory.
 

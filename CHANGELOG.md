@@ -23,7 +23,7 @@
 
 ### Detailed list of changes
 
-* Added support for Android TV devices
+* Added support for Android TV devices (Android 11 and above and 64-bit only, such as the Nvidia Shield Pro)
 * Made it possible to use SAF URIs when splitting game systems across multiple storage devices
 * Added a retry loop on startup to check whether the external storage is mounted, to prevent the configurator from showing when set as the home app
 * Added support for the Amazon Appstore release of M64Plus FZ Pro

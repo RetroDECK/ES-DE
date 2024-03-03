@@ -355,18 +355,26 @@ The Play store version of this emulator is getting frequent updates and is there
 https://play.google.com/store/apps/details?id=org.yuzu.yuzu_emu \
 https://play.google.com/store/apps/details?id=org.yuzu.yuzu_emu.ea
 
-## Compatible devices
+## Device compatibility
 
-This is by no means a complete list of compatible devices, but rather devices that we know have been used with ES-DE and for which there is a known status.
+This is clearly not a complete list of Android devices, but rather those we know have been tested with ES-DE and for which there is a known status.
 
-| Manufacturer | Model        | Android release | Supported | Known issues        | Comment             |
-| :----------- | :----------- | :-------------- | :-------- | :------------------ | :------------------ |
-| Ayn          | Odin 2       | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues |                     |
-| Google       | Pixel 4a     | 13              | Yes       | None                |                     |
-| Google       | Pixel Tablet | 14              | Yes       | None                |                     |
-| Nvidia       | Shield Pro   | 11 (TV)         | Yes       | None                |                     |
-| Retroid      | Pocket 2s    | 11              | Yes       | None                |                     |
-| Retroid      | Pocket 4 Pro | 13              | Yes       | None                |                     |
+| Manufacturer | Model            | Android release | Supported | Known issues        | Comment                    |
+| :----------- | :--------------- | :-------------- | :-------- | :------------------ | :------------------------- |
+| Anbernic     | RG556            | 13              | Yes       | None                |                            |
+| Ayn          | Odin             | 10              | No        | N/A                 | Android 10 not supported   |
+| Ayn          | Odin Lite        | 11              | Yes       | None                |                            |
+| Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues | Bugs in the firmware/OS image |
+| Google       | Pixel 4a         | 13              | Yes       | None                |                            |
+| Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
+| Nokia        | 5.4              | 12              | Yes       | None                |                            |
+| Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                |                            |
+| Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
+| Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
+| Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
 
 ## Supported game systems
 
