@@ -17,9 +17,9 @@
 
 * (linear-es-de) Creating custom collections named "now-playing" or "completed" could lead to them being unthemed
 
-## Version 3.0.0-xx (Android intermediate)
+## Version 3.0.0-17 (Android intermediate)
 
-**Release date:** TBD
+**Release date:** 2024-03-04
 
 ### Detailed list of changes
 
@@ -32,7 +32,7 @@
 * Added the .neo file extension to the arcade, mame and neogeo systems
 * Changed the application updater notification message to no longer mention the app store
 * Added a more informative error message than "HTTP error code 430" when exceeding the daily ScreenScraper quota
-* Appended the Android version code to the version on the main menu
+* Appended the Android version code to the version in the main menu
 
 ### Bug fixes
 

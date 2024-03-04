@@ -75,9 +75,14 @@ The black screen on game launch is just a variation of this failure mode, it dep
 
 No Android may stop applications that are not currently focused if it needs to recover the RAM that those applications were using. This is an integral part of the operating system design, there's really no way to prevent this behavior. ES-DE is a complex application that is more akin to a game engine than a regular Android application, and if you are using a demanding theme with lots of game media it can consume quite a lot of memory. If you are using a device with limited RAM, say 4 GB or so, it's almost unavoidable that ES-DE will get stopped if you are running an emulator that also uses a lot of memory. You could switch to a more lightweight theme though, this sometimes prevents these restarts from occuring.
 
+## On game launch RetroArch runs an old game instead of the one I just selected, how do I prevent this?
+
+We have a video on our YouTube channel describing how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
+https://www.youtube.com/watch?v=k5WWacfIn6Y
+
 ## What type of Android devices are supported
 
-ES-DE runs on a wide range on devices, for example handheld consoles like the Ayn Odin 2 and the Retroid Pocket 2s, 3 and 4, on mobile phones and on tablets. It supports a wide range of screen resolutions and aspect ratios. Android 11 or later is required.
+ES-DE runs on a wide range on devices, for example handheld consoles like the Ayn Odin 2 and the Retroid Pocket 2s, 3 and 4, on mobile phones, on tablets and on Android TV devices like the Nvidia Shield Pro. It supports a wide range of screen resolutions and aspect ratios. A 64-bit version of Android 11 or later is required although we will investigate whether Android 10 support can be added in a future release.
 
 ## Will touch gesture support get added?
 

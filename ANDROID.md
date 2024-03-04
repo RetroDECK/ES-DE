@@ -101,8 +101,6 @@ There are also some issues with sound quality on the Odin 2, such as large fluct
 
 In addition to the issues specific to the Ayn Odin 2 there are a couple of other problems that will hopefully be resolved in the near future:
 
-* Plugging in a controller connected via USB will display a popup with the text _Allow ES-DE to access Controller?_ Pressing OK here will cause problems with input in some emulators. Pressing CANCEL will however resolve this issue and the controller will still work correctly in ES-DE.
-* Setting ES-DE as the home app/launcher will sometimes display the configurator after rebooting the device. This happens because Android starts ES-DE before it has mounted the external storage, for example your SD card. Just press/swipe _back_ when the configurator is displayed and ES-DE should start normally.
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
 * The Android soft keyboard causes rendering issues when navigating using a controller or physical keyboard, as such the ES-DE built-in keyboard is enabled by default for the time being. For testing purposes the Android soft keyboard can be enabled via the _Enable virtual keyboard_ option in the _UI settings_ menu. If only using touch input the issue is not present. This problem is believed to be caused by a bug in the SDL library so it probably needs to be resolved there.
 
@@ -112,12 +110,10 @@ Below are specific instructions and considerations for all supported emulators.
 
 ### RetroArch
 
-The RetroArch release in the Play store is problematic. It does not contain all emulator cores and a number of people have reported issues launching games from ES-DE (apparently it doesn't work at all on some specific devices). For these reasons it's strongly recommended to use the 64-bit release from the RetroArch website instead.
+The RetroArch release from the Google Play store is problematic. It does not contain all emulator cores and a number of people have reported issues launching games from ES-DE (apparently it doesn't work at all on some devices). For these reasons it's strongly recommended to use the 64-bit release from the RetroArch website instead, or to install it from the Amazon Appstore or the F-Droid store.
 
-https://retroarch.com/
-
-Or you could alternatively install their release on the F-Droid store.
-
+https://retroarch.com \
+https://www.amazon.com/dp/B09753XRVF \
 https://f-droid.org/en/packages/com.retroarch
 
 Be aware that you need to manually install every core you want to use from inside the RetroArch user interface, and you also need to install all necessary BIOS files. The Android release of RetroArch is pretty unforgiving and will usually just present a black screen on game launch if the core file or the BIOS file is missing, and it will hang there until Android realizes the app is not responding and displays a popup where you can choose to kill the process.
@@ -203,7 +199,7 @@ https://www.explusalpha.com/
 
 ### Fake-08
 
-This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manaully install it. After download you'll need to place it inside's RetroArch's downloads directory and then install it from the RetroArch app. Details on how to accomplish this can be found on the Internet. Fake-08 can be downloaded from their GitHub site.
+This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manually install it. After download you'll need to place the core inside's RetroArch's downloads directory and then install it from the RetroArch app. You must use the 64-bit version with the filename `libfake08-arm64.so`. Details on how to manually install cores in RetroArch can be found on the Internet. Fake-08 can be downloaded from their GitHub site.
 
 https://github.com/jtothebell/fake-08/releases
 
@@ -254,10 +250,17 @@ https://play.google.com/store/apps/details?id=me.magnum.melonds
 
 ### M64Plus FZ
 
-This emulator can be installed from the Play store. The Pro version is recommended to avoid annoying ads.
+This emulator can be installed from the Amazon Appstore or the Google Play store. The Pro version is recommended to avoid annoying ads.
 
+https://www.amazon.com/dp/B09L5FB7T4 \
 https://play.google.com/store/apps/details?id=org.mupen64plusae.v3.fzurita.pro \
 https://play.google.com/store/apps/details?id=org.mupen64plusae.v3.fzurita
+
+### Mupen64Plus AE
+
+This emulator is very similar to M64Plus FZ and it can be downloaded from their GitHub automatic build system.
+
+https://github.com/mupen64plus-ae/mupen64plus-ae/actions
 
 ### My Boy! and My OldBoy!
 
@@ -352,6 +355,29 @@ The Play store version of this emulator is getting frequent updates and is there
 https://play.google.com/store/apps/details?id=org.yuzu.yuzu_emu \
 https://play.google.com/store/apps/details?id=org.yuzu.yuzu_emu.ea
 
+## Device compatibility
+
+This is clearly not a complete list of Android devices, but rather those we know have been tested with ES-DE and for which there is a known status.
+
+| Manufacturer | Model            | Android release | Supported | Known issues        | Comment                    |
+| :----------- | :--------------- | :-------------- | :-------- | :------------------ | :------------------------- |
+| Anbernic     | RG556            | 13              | Yes       | None                |                            |
+| Ayn          | Odin             | 10              | No        | N/A                 | Android 10 not supported   |
+| Ayn          | Odin Lite        | 11              | Yes       | None                |                            |
+| Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues | Bugs in the firmware/OS image |
+| Google       | Pixel 4a         | 13              | Yes       | None                |                            |
+| Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
+| Nokia        | 5.4              | 12              | Yes       | None                |                            |
+| Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
+| Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                |                            |
+| Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
+| Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
+| Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
+
+
 ## Supported game systems
 
 All emulators are RetroArch cores unless marked as **(Standalone)**
@@ -371,7 +397,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
 | arcadia               | Emerson Arcadia 2001                           | _Placeholder_                     |                                   |              |                                      |
 | archimedes            | Acorn Archimedes                               | _Placeholder_                     |                                   |              |                                      |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
@@ -438,7 +464,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | _Placeholder_                     |                                   |              |                                      |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | _Placeholder_                     |                                   |              |                                      |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   |              |                                      |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
 | megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | Yes          |                                      |
@@ -460,10 +486,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)** [Play store version or Nightly],<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)** | No           | Single ROM file       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
-| n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
+| n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
-| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive or ROM file |
+| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive or ROM file |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |

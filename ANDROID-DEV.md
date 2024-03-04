@@ -199,7 +199,7 @@ https://www.explusalpha.com/
 
 ### Fake-08
 
-This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manaully install it. After download you'll need to place it inside's RetroArch's downloads directory and then install it from the RetroArch app. Details on how to accomplish this can be found on the Internet. Fake-08 can be downloaded from their GitHub site.
+This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manually install it. After download you'll need to place the core inside's RetroArch's downloads directory and then install it from the RetroArch app. You must use the 64-bit version with the filename `libfake08-arm64.so`. Details on how to manually install cores in RetroArch can be found on the Internet. Fake-08 can be downloaded from their GitHub site.
 
 https://github.com/jtothebell/fake-08/releases
 
@@ -368,6 +368,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Google       | Pixel 4a         | 13              | Yes       | None                |                            |
 | Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
 | Nokia        | 5.4              | 12              | Yes       | None                |                            |
+| Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
 | Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                |                            |
 | Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
