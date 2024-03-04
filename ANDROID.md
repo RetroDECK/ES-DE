@@ -93,7 +93,7 @@ The way ES-DE works is that you have a defined ROMs directory which corresponds 
 </system>
 ```
 
-Here the path tag is using the %ROMPATH% variable to keep it relative to the base ROMs directory as selected via the onboarding configurator when you first installed ES-DE. If you relocate your ROMs directory to a different storage device, or to another device altogether or if you synchronize your games across Android and Linux, macOS or Windows then everything will still work correctly.
+Here the path tag is using the %ROMPATH% variable to keep it relative to the base ROMs directory as selected via the onboarding configurator when you first installed ES-DE. If you relocate your ROMs directory to a different storage device, or copy it to another device altogether or if you synchronize your games across Android and Linux, macOS or Windows then everything will still work correctly.
 
 Similarly custom collection files contain the %ROMPATH% variable too, such as this:
 ```
@@ -116,14 +116,14 @@ Here's an example of a custom es_systems.xml file that relocates the samcoupe sy
 <?xml version="1.0"?>
 <systemList>
     <system>
-    <name>samcoupe</name>
-    <fullname>MGT SAM Coupé</fullname>
-    <path>/storage/719F-3A7F/ROMs/samcoupe</path>
-    <extension>.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP</extension>
-    <command label="Speccy (Standalone)">%EMULATOR_SPECCY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
-    <platform>samcoupe</platform>
-    <theme>samcoupe</theme>
-</system>
+        <name>samcoupe</name>
+        <fullname>MGT SAM Coupé</fullname>
+        <path>/storage/719F-3A7F/ROMs/samcoupe</path>
+        <extension>.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP</extension>
+        <command label="Speccy (Standalone)">%EMULATOR_SPECCY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
+        <platform>samcoupe</platform>
+        <theme>samcoupe</theme>
+    </system>
 </systemList>
 ```
 
@@ -137,14 +137,14 @@ Here's again an example for the samcoupe system:
 <?xml version="1.0"?>
 <systemList>
     <system>
-    <name>samcoupe</name>
-    <fullname>MGT SAM Coupé</fullname>
-    <path>/storage/emulated/0/ROMs/samcoupe</path>
-    <extension>.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP</extension>
-    <command label="Speccy (Standalone)">%EMULATOR_SPECCY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
-    <platform>samcoupe</platform>
-    <theme>samcoupe</theme>
-</system>
+        <name>samcoupe</name>
+        <fullname>MGT SAM Coupé</fullname>
+        <path>/storage/emulated/0/ROMs/samcoupe</path>
+        <extension>.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP</extension>
+        <command label="Speccy (Standalone)">%EMULATOR_SPECCY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
+        <platform>samcoupe</platform>
+        <theme>samcoupe</theme>
+    </system>
 </systemList>
 ```
 
