@@ -370,10 +370,12 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Nokia        | 5.4              | 12              | Yes       | None                |                            |
 | Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
 | Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                |                            |
+| OnePlus      | 6T               | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
+| Samsung      | Galaxy S10       | 12              | Yes       | None                |                            |
 | Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
 | Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
 
