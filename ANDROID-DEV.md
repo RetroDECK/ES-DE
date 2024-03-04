@@ -76,6 +76,91 @@ The following emulators have partial FileProvider access support but are current
 * M64Plus FZ (the FileProvider interface doesn't work reliably and game launching randomly fails when using it)
 * PPSSPP (the FileProvider interface doesn't work with .chd files specifically)
 
+## Splitting system directories across multiple storage devices (not recommended)
+
+While it's possible to split the game system directories across multiple storage devices this is definitely not recommended. First it's tedious to setup, but more importantly it breaks portability for the installation. For instance you can't easily migrate between the different operating systems that ES-DE support and your custom collections will not be portable at all, as they will instead contain absolute paths to your games.
+
+The way ES-DE works is that you have a defined ROMs directory which corresponds to the %ROMPATH% variable that is used throughout the es_systems.xml file and the custom collections files. For example this is the system configuration for the samcoupe system:
+```xml
+<system>
+    <name>samcoupe</name>
+    <fullname>MGT SAM Coupé</fullname>
+    <path>%ROMPATH%/samcoupe</path>
+    <extension>.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP</extension>
+    <command label="Speccy (Standalone)">%EMULATOR_SPECCY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
+    <platform>samcoupe</platform>
+    <theme>samcoupe</theme>
+</system>
+```
+
+Here the path tag is using the %ROMPATH% variable to keep it relative to the base ROMs directory as selected via the onboarding configurator when you first installed ES-DE. If you relocate your ROMs directory to a different storage device, or to another device altogether or if you synchronize your games across Android and Linux, macOS or Windows then everything will still work correctly.
+
+Similarly custom collection files contain the %ROMPATH% variable too, such as this:
+```
+%ROMPATH%/amiga/OoopsUp.lha
+%ROMPATH%/amiga/PacMania.lha
+%ROMPATH%/samcoupe/Manic Miner.zip
+%ROMPATH%/samcoupe/Prince of Persia.zip
+```
+
+This makes your custom collections portable if you move your ROMs directory and you can also transfer the collections between various devices and operating systems while keeping everything working seamlessly.
+
+If you still insist on relocating some game system directories to another storage device then you need to make custom system configuration entries for them. See the _Game system customization_ section of the [User guide](USERGUIDE.md#game-system-customizations) for details on how this is accomplished. In short you need to create an es_systems.xml file in the ES-DE/custom_systems directory and replace the %ROMPATH% variable with an absolute path for the specific systems you want to relocate.
+
+You can find the bundled es_systems.xml file for Android here (which contains configuration for all supported systems):\
+https://gitlab.com/es-de/emulationstation-de/-/tree/stable-3.0/resources/systems/android
+
+Here's an example of a custom es_systems.xml file that relocates the samcoupe system:
+
+```xml
+<?xml version="1.0"?>
+<systemList>
+    <system>
+    <name>samcoupe</name>
+    <fullname>MGT SAM Coupé</fullname>
+    <path>/storage/719F-3A7F/ROMs/samcoupe</path>
+    <extension>.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP</extension>
+    <command label="Speccy (Standalone)">%EMULATOR_SPECCY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
+    <platform>samcoupe</platform>
+    <theme>samcoupe</theme>
+</system>
+</systemList>
+```
+
+This example points the samcoupe directory to the external storage device /storage/719F-3A7F which may for instance be an SD card.
+
+Note that doing the opposite, i.e. placing your primary ROMs directory on external storage and relocating a specific system to internal storage requires you to use the /storage/emulated/0 path, you can't use /sdcard in the path tag.
+
+Here's again an example for the samcoupe system:
+
+```xml
+<?xml version="1.0"?>
+<systemList>
+    <system>
+    <name>samcoupe</name>
+    <fullname>MGT SAM Coupé</fullname>
+    <path>/storage/emulated/0/ROMs/samcoupe</path>
+    <extension>.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP</extension>
+    <command label="Speccy (Standalone)">%EMULATOR_SPECCY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
+    <platform>samcoupe</platform>
+    <theme>samcoupe</theme>
+</system>
+</systemList>
+```
+
+If going for this configuration, adding samcoupe games to a custom collection would end up with something like the following:
+
+```
+%ROMPATH%/amiga/OoopsUp.lha
+%ROMPATH%/amiga/PacMania.lha
+/storage/emulated/0/ROMs/samcoupe/Manic Miner.zip
+/storage/emulated/0/ROMs/samcoupe/Prince of Persia.zip
+```
+
+This is obviously a non-portable collection.
+
+You can relocate as many systems as you want, you just need to place them all within the systemList tag pairs in ES-DE/custom_systems/es_systems.xml.
+
 ## Issues with the Ayn Odin 2
 
 There are two serious issues that seem to be specific to the Ayn Odin 2, although it remains to be seen whether the problem exists also on other devices.

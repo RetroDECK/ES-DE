@@ -20,7 +20,7 @@ That is a question for Google. They are have done everything in their power to o
 
 ## How do I update ES-DE when there is a new release
 
-When a new release is available you will be sent a download link to the email address you used to sign up for Patreon, and we will post it directly on Patreon as well. You can use that link to download the latest version, sideload it on your device and then update. We will explore other options to make this easier in the future.
+When a new release is available you will be sent a download link to the email address you used to sign up for Patreon, and we will post it directly on Patreon as well. You can use that link to download the latest version, sideload it on your device and then update. All your settings and data will be retained when you apply the update.
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
@@ -48,6 +48,10 @@ Not at the moment. Although there is an _android_ system in ES-DE it's not in us
 ## What game systems/platforms and emulators are supported by ES-DE?
 
 See the _Supported game systems_ section at the bottom of the [Android documentation](ANDROID.md#supported-game-systems) where there's a table listing all supported systems/platforms and emulators.
+
+## Can I split my game system directories across multiple storage devices?
+
+Yes but this is not recommended. It's tedious to setup and not how ES-DE is intended to be used. If you still insist on doing it you can read the _Splitting system directories across multiple storage devices (not recommended)_ section in the [Android documentation](ANDROID.md#splitting-system-directories-across-multiple-storage-devices-not-recommended).
 
 ## When I launch a game using RetroArch I just see a black screen, what is wrong?
 
