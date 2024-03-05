@@ -8,6 +8,7 @@
 
 ### Detailed list of changes
 
+* Removed Yuzu from the switch system
 * Added a more informative error message than "HTTP error code 430" when exceeding the daily ScreenScraper quota
 * Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
 * Added the .neo file extension to the arcade, mame and neogeo systems
@@ -16,6 +17,16 @@
 ### Bug fixes
 
 * (linear-es-de) Creating custom collections named "now-playing" or "completed" could lead to them being unthemed
+
+## Version 3.0.0-xx (Android intermediate)
+
+**Release date:** TBD
+
+### Detailed list of changes
+
+* Removed Yuzu from the switch system
+
+### Bug fixes
 
 ## Version 3.0.0-17 (Android intermediate)
 

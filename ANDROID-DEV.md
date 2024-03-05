@@ -67,7 +67,6 @@ The following emulators are configured for FileProvider access:
 * Ruffle
 * Saturn.emu
 * Swan.emu
-* Yuzu
 
 Some of these emulators still require BIOS files, so not all of them will be completely free from manual configuration.
 
@@ -76,9 +75,9 @@ The following emulators have partial FileProvider access support but are current
 * M64Plus FZ (the FileProvider interface doesn't work reliably and game launching randomly fails when using it)
 * PPSSPP (the FileProvider interface doesn't work with .chd files specifically)
 
-## Splitting system directories across multiple storage devices (not recommended)
+## Splitting system directories across multiple storage devices
 
-While it's possible to split the game system directories across multiple storage devices this is definitely not recommended. First it's tedious to setup, but more importantly it breaks portability for the installation. For instance you can't easily migrate between the different operating systems that ES-DE support and your custom collections will not be portable at all, as they will instead contain absolute paths to your games.
+While it's possible to split the game system directories across multiple storage devices this is not recommended. First it's tedious to setup, but more importantly it breaks portability for the installation. For instance you can't easily migrate between the different operating systems that ES-DE support and your custom collections will not be portable at all, as they will instead contain absolute paths to your games.
 
 The way ES-DE works is that you have a defined ROMs directory which corresponds to the %ROMPATH% variable that is used throughout the es_systems.xml file and the custom collections files. For example this is the system configuration for the samcoupe system:
 ```xml
@@ -167,7 +166,7 @@ There are two serious issues that seem to be specific to the Ayn Odin 2, althoug
 
 The first problem is that some emulators refuse to run games that you place inside directories that contain dots in their names. This is quite problematic as the [directories interpreted as files](USERGUIDE.md#directories-interpreted-as-files) functionality depends on the ability to add file extensions to directory names.
 
-This has been observed with M64Plus FZ, Play!, Saturn.emu, FPse and FPseNG and it's working fine with RetroArch, NetherSX2, ePSXe, DuckStation and Yuzu. Note however that this is not a complete list as not all emulators have been tested for this problem.
+This has been observed with M64Plus FZ, Play!, Saturn.emu, FPse and FPseNG and it's working fine with RetroArch, NetherSX2, ePSXe and DuckStation. Note however that this is not a complete list as not all emulators have been tested for this problem.
 
 If you run into this issue you can use the _folder link_ functionality as an alternative to the _directories interpreted as files_ functionality. How to use folder links is described in the [User guide](USERGUIDE.md).
 
@@ -433,13 +432,6 @@ This PlayStation Vita emulator can be downloaded from their GitHub site. Refer t
 
 https://github.com/Vita3K/Vita3K-Android/releases
 
-### Yuzu
-
-The Play store version of this emulator is getting frequent updates and is therefore recommended. There's an Early Access version as well which is also recommended.
-
-https://play.google.com/store/apps/details?id=org.yuzu.yuzu_emu \
-https://play.google.com/store/apps/details?id=org.yuzu.yuzu_emu.ea
-
 ## Device compatibility
 
 This is clearly not a complete list of Android devices, but rather those we know have been tested with ES-DE and for which there is a known status.
@@ -456,6 +448,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
 | Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                |                            |
 | OnePlus      | 6T               | 11              | Yes       | None                |                            |
+| REDMAGIC     | 8 Pro            | 13              | Yes       | None                |                            |
 | Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
@@ -628,7 +621,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | supervision           | Watara Supervision                             | Potator                           |                                   | No           | Single archive or ROM file           |
 | supracan              | Funtech Super A'Can                            | _Placeholder_                     |                                   |              |                                      |
-| switch                | Nintendo Switch                                | Yuzu **(Standalone)**             | Yuzu EA **(Standalone)**,<br>Skyline **(Standalone)** | Yes          |                                      |
+| switch                | Nintendo Switch                                | Skyline **(Standalone)**          |                                   | Yes          |                                      |
 | symbian               | Symbian                                        | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | tanodragon            | Tano Dragon                                    | _Placeholder_                     |                                   |              |                                      |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |

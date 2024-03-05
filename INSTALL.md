@@ -1177,18 +1177,19 @@ Here's an example es_find_rules.xml file for Linux (this is not the complete fil
             <entry>~/.local/share/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
+    <emulator name="XEMU">
+        <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
-            <entry>yuzu</entry>
-            <entry>org.yuzu_emu.yuzu</entry>
+            <entry>xemu</entry>
+            <entry>app.xemu.xemu</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/yuzu*.AppImage</entry>
-            <entry>~/.local/bin/yuzu*.AppImage</entry>
-            <entry>~/bin/yuzu*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/Applications/xemu*.AppImage</entry>
+            <entry>~/.local/share/applications/xemu*.AppImage</entry>
+            <entry>~/.local/bin/xemu*.AppImage</entry>
+            <entry>~/bin/xemu*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/app.xemu.xemu</entry>
+            <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1221,11 +1222,11 @@ The other rules are probably self-explanatory with `systempath` searching the PA
 ```xml
 <rule type="staticpath">
     <!-- This is supported, first matching file will be selected -->
-    <entry>~/Applications/yuzu*.AppImage</entry>
+    <entry>~/Applications/xemu*.AppImage</entry>
     <!-- This is also supported -->
-    <entry>~/Applications/yuzu*.App*</entry>
+    <entry>~/Applications/xemu*.App*</entry>
     <!-- This is NOT supported -->
-    <entry>~/App*/yuzu*.AppImage</entry>
+    <entry>~/App*/xemu*.AppImage</entry>
 </rule>
 ```
 
@@ -1359,15 +1360,14 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>%ESPATH%\..\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
+    <emulator name="XEMU">
+        <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
-            <entry>yuzu.exe</entry>
+            <entry>xemu.exe</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\..\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\Emulators\xemu\xemu.exe</entry>
+            <entry>%ESPATH%\..\Emulators\xemu\xemu.exe</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1396,11 +1396,11 @@ But instead of changing the sorting directly in the es_systems.xml file it could
 Wildcards are supported for emulator binaries, but not for directories:
 ```xml
 <!-- This is supported, first matching file will be selected -->
-<command>~/Applications/yuzu*.AppImage %ROM%</command>
+<command>~/Applications/xemu*.AppImage %ROM%</command>
 <!-- This is also supported -->
-<command>~/Applications/yuzu*.App* %ROM%</command>
+<command>~/Applications/xemu*.App* %ROM%</command>
 <!-- This is NOT supported -->
-<command>~/App*/yuzu*.AppImage %ROM%</command>
+<command>~/App*/xemu*.AppImage %ROM%</command>
 ```
 
 There is a special case when it comes to file extensions where it's possible to use extensionless files if required. To accomplish this simply add a dot (.) to the list of extensions in the `<extension>` tag. Obviously this makes it impossible to use the _directories interpreted as files_ functionality as there is no file extension, but apart from that everything should work the same as for regular files.
@@ -1710,11 +1710,11 @@ Here's an example es_find_rules.xml file defining two emulators:
             <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
+    <emulator name="COLEM">
+        <!-- Coleco ColecoVision and Adam emulator ColEm -->
         <rule type="androidpackage">
-            <entry>org.yuzu.yuzu_emu.ea/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
-            <entry>org.yuzu.yuzu_emu/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+            <entry>com.fms.colem.deluxe/com.fms.emulib.TVActivity</entry>
+            <entry>com.fms.colem/com.fms.emulib.TVActivity</entry>
         </rule>
     </emulator>
 </ruleList>

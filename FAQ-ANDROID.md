@@ -51,11 +51,11 @@ See the _Supported game systems_ section at the bottom of the [Android documenta
 
 ## Can I split my game system directories across multiple storage devices?
 
-Yes but this is not recommended. It's tedious to setup and not how ES-DE is intended to be used. If you still insist on doing it you can read the _Splitting system directories across multiple storage devices (not recommended)_ section in the [Android documentation](ANDROID.md#splitting-system-directories-across-multiple-storage-devices-not-recommended).
+Yes but this is not recommended. It's tedious to setup and not how ES-DE is intended to be used. If you still insist on doing it you can read the _Splitting system directories across multiple storage devices_ section in the [Android documentation](ANDROID.md#splitting-system-directories-across-multiple-storage-devices).
 
 ## When I launch a game using RetroArch I just see a black screen, what is wrong?
 
-RetroArch on Android is very unforgiving, if you haven't installed the necessary core or BIOS files it's a high chance that you just see a black screen and it will hang there, possibly until you kill it. And due to the security model in Android it's not possible for ES-DE to check if a core is actually installed prior to attempting to launch RetroArch (on Linux, macOS and Windows a popup is shown if the core file is missing and the game is never actually launched in this case).
+RetroArch on Android is very unforgiving, if you haven't installed the necessary core or BIOS files it's a high chance that you just see a black screen and it will hang there, possibly until you kill it. And due to the security model in Android it's not possible for ES-DE to check if a core is actually installed prior to attempting to launch RetroArch (on Linux, macOS and Windows a popup is shown if the core file is missing and the game is never actually launched in this case). Also make sure that the core you have installed in RetroArch is the one you actually use in ES-DE. You can select between different cores and emulators for most systems using the _Alternative emulators_ interface in the _Other settings_ menu.
 
 Also note that the RetroArch release on the Google Play store is not working correctly on some devices, it can be used on its own but game launching fails from ES-DE. These issues have been resolved by a number of people by instead switching to the release from the [RetroArch](https://retroarch.com) website.
 
