@@ -134,5 +134,4 @@ Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
 Emulators\xenia_canary\xenia_canary.exe
 Emulators\xroar\xroar.exe
-Emulators\yuzu\yuzu-windows-msvc\yuzu.exe
 Emulators\ZEsarUX\zesarux.exe

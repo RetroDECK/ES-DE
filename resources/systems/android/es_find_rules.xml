@@ -331,16 +331,4 @@
             <entry>org.vita3k.emulator/.Emulator</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="androidpackage">
-            <entry>org.yuzu.yuzu_emu/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
-        </rule>
-    </emulator>
-    <emulator name="YUZU-EA">
-        <!-- Nintendo Switch emulator Yuzu (Early Access) -->
-        <rule type="androidpackage">
-            <entry>org.yuzu.yuzu_emu.ea/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
-        </rule>
-    </emulator>
 </ruleList>

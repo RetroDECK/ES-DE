@@ -627,12 +627,6 @@
             <entry>~/bin/xroar/xroar</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="systempath">
-            <entry>yuzu</entry>
-        </rule>
-    </emulator>
     <emulator name="ZESARUX">
         <!-- Sinclair ZX Spectrum emulator ZEsarUX -->
         <rule type="systempath">
