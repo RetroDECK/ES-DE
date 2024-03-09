@@ -497,6 +497,16 @@
             <entry>%ESPATH%\..\Emulators\Oricutron\oricutron.exe</entry>
         </rule>
     </emulator>
+    <emulator name="PANDA3DS">
+        <!-- Nintendo 3DS emulator Panda3DS -->
+        <rule type="systempath">
+            <entry>Alber.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Panda3DS\Alber.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Panda3DS\Alber.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">

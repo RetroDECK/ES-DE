@@ -2,7 +2,7 @@ ES-DE (EmulationStation Desktop Edition) - Portable installation on Windows
 ---------------------------------------------------------------------------
 
 ES-DE release:
-3.0.0
+3.0.1
 
 The latest version can be downloaded from https://es-de.org
 
@@ -89,6 +89,7 @@ Emulators\mGBA\mGBA.exe
 Emulators\mupen64plus\mupen64plus-ui-console.exe
 Emulators\openMSX\openmsx.exe
 Emulators\Oricutron\oricutron.exe
+Emulators\Panda3DS\Alber.exe
 Emulators\PCSX2\pcsx2.exe
 Emulators\PCSX2-Qt\pcsx2-qt.exe
 Emulators\PICO-8\pico8.exe

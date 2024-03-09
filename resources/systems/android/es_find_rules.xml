@@ -243,6 +243,12 @@
             <entry>org.openbor.engine/.GameActivity</entry>
         </rule>
     </emulator>
+    <emulator name="PANDA3DS">
+        <!-- Nintendo 3DS emulator Panda3DS -->
+        <rule type="androidpackage">
+            <entry>com.panda3ds.pandroid/.app.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PCE-EMU">
         <!-- NEC PC Engine/TurboGrafx-16 emulator PCE.emu -->
         <rule type="androidpackage">
