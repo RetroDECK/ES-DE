@@ -1303,7 +1303,7 @@
         <fullname>PICO-8 Fantasy Console</fullname>
         <path>%ROMPATH%/pico8</path>
         <extension>.p8 .P8 .png .PNG</extension>
-        <command label="Fake-08">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=libfake08-arm64.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Fake-08">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fake08_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Retro8">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=retro8_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>pico8</platform>
         <theme>pico8</theme>
