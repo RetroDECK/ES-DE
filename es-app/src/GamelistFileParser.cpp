@@ -135,6 +135,12 @@ namespace GamelistFileParser
             return;
         }
 
+        if (Utils::FileSystem::getFileSize(xmlpath) == 0) {
+            LOG(LogWarning) << "GamelistFileParser::parseGamelist(): System \"" << system->getName()
+                            << "\" has an empty gamelist.xml file";
+            return;
+        }
+
 #if defined(_WIN64)
         LOG(LogInfo) << "Parsing gamelist file \"" << Utils::String::replace(xmlpath, "/", "\\")
                      << "\"...";
@@ -340,7 +346,8 @@ namespace GamelistFileParser
         const std::string& xmlReadPath {system->getGamelistPath(false)};
         bool hasAlternativeEmulatorTag {false};
 
-        if (Utils::FileSystem::exists(xmlReadPath)) {
+        if (Utils::FileSystem::exists(xmlReadPath) &&
+            Utils::FileSystem::getFileSize(xmlReadPath) != 0) {
             // Parse an existing file first.
 
 #if defined(_WIN64)
