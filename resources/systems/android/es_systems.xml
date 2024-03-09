@@ -1494,7 +1494,7 @@
         <name>sega32x</name>
         <fullname>Sega Mega Drive 32X</fullname>
         <path>%ROMPATH%/sega32x</path>
-        <extension>.32x .32X .68k .68K .bin .BIN .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=picodrive_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>sega32x</platform>
         <theme>sega32x</theme>
@@ -1503,7 +1503,7 @@
         <name>sega32xjp</name>
         <fullname>Sega Super 32X</fullname>
         <path>%ROMPATH%/sega32xjp</path>
-        <extension>.32x .32X .68k .68K .bin .BIN .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=picodrive_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>sega32x</platform>
         <theme>sega32xjp</theme>
@@ -1512,7 +1512,7 @@
         <name>sega32xna</name>
         <fullname>Sega Genesis 32X</fullname>
         <path>%ROMPATH%/sega32xna</path>
-        <extension>.32x .32X .68k .68K .bin .BIN .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=picodrive_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>sega32x</platform>
         <theme>sega32xna</theme>
