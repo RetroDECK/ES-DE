@@ -1000,6 +1000,11 @@ namespace Utils
 
         bool isSymlink(const std::string& path)
         {
+#if defined(__ANDROID__)
+            // Symlinks are generally not supported on Android due to the Storage Access Framework
+            // and the use of FAT/exFAT and NTFS filesystems.
+            return false;
+#endif
             const std::string& genericPath {getGenericPath(path)};
             try {
 #if defined(_WIN64)
