@@ -887,10 +887,6 @@ void Window::stopMediaViewer()
 void Window::startPDFViewer(FileData* game)
 {
     if (mPDFViewer) {
-#if defined(ANDROID_LITE_RELEASE)
-        queueInfoPopup("PDF VIEWER ONLY AVAILABLE IN FULL VERSION", 6000);
-        return;
-#endif
         if (mPDFViewer->startPDFViewer(game)) {
             setAllowTextScrolling(false);
             setAllowFileAnimation(false);

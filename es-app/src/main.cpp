@@ -691,11 +691,7 @@ int main(int argc, char* argv[])
     Log::init();
     Log::open();
     {
-#if defined(ANDROID_LITE_RELEASE)
-        const std::string applicationName {"ES-DE Lite"};
-#else
         const std::string applicationName {"ES-DE"};
-#endif
 #if defined(__ANDROID__)
         LOG(LogInfo) << applicationName << " " << PROGRAM_VERSION_STRING << "-"
                      << ANDROID_VERSION_CODE << " (r" << PROGRAM_RELEASE_NUMBER << "), built "
