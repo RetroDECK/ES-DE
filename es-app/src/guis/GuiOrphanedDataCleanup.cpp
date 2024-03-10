@@ -249,14 +249,14 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
     // Some additional size adjustments are required for different aspect ratios.
     float multiplierY;
-    if (mRenderer->getScreenAspectRatio() < 1.0f)
+    if (mRenderer->getScreenAspectRatio() <= 1.0f)
         multiplierY = 10.0f;
     else if (mRenderer->getScreenAspectRatio() < 1.6f)
         multiplierY = 8.0f;
     else
         multiplierY = 8.7f;
 
-    const float width {glm::clamp(0.80f * aspectValue, 0.40f,
+    const float width {glm::clamp(0.81f * aspectValue, 0.40f,
                                   (mRenderer->getScreenAspectRatio() < 1.6f ? 0.97f : 0.9f)) *
                        mRenderer->getScreenWidth()};
     setSize(width,
@@ -1081,7 +1081,7 @@ void GuiOrphanedDataCleanup::onSizeChanged()
     float col1Size;
 
     // Some additional size adjustments are required for different aspect ratios.
-    if (mRenderer->getScreenAspectRatio() < 1.0f) {
+    if (mRenderer->getScreenAspectRatio() <= 1.0f) {
         descSizeY = 12.0f;
         col1Size = 0.36f;
     }
@@ -1090,7 +1090,7 @@ void GuiOrphanedDataCleanup::onSizeChanged()
         col1Size = 0.28f;
     }
     else {
-        descSizeY = 8.8f;
+        descSizeY = 8.9f;
         col1Size = 0.25f;
     }
 
