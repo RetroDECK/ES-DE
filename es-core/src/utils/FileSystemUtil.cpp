@@ -252,7 +252,15 @@ namespace Utils
             return getHomePath();
 #else
             if (FileSystemVariables::sAppDataDirectory.empty()) {
+#if !defined(_WIN64)
+                if (getenv("ESDE_APPDATA_DIR") != nullptr) {
+                    const std::string envAppDataDir {getenv("ESDE_APPDATA_DIR")};
+                    FileSystemVariables::sAppDataDirectory = expandHomePath(envAppDataDir);
+                }
+                else if (Utils::FileSystem::exists(getHomePath() + "/ES-DE")) {
+#else
                 if (Utils::FileSystem::exists(getHomePath() + "/ES-DE")) {
+#endif
                     FileSystemVariables::sAppDataDirectory = getHomePath() + "/ES-DE";
                 }
                 else if (Utils::FileSystem::exists(getHomePath() + "/.emulationstation")) {
