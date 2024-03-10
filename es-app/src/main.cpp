@@ -605,6 +605,11 @@ int main(int argc, char* argv[])
 #endif
 
 #if defined(__ANDROID__)
+    // This hint will prevent a popup from being displayed asking for access to the controller.
+    // Pressing OK in that dialog grants exclusive access to the controller which makes it
+    // unusable in any emulator that is launched.
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI, "0");
+
     bool resetTouchOverlay {false};
 
     // If ES-DE is set as the home app/launcher we may be in a situation where we get started
