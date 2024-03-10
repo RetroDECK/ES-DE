@@ -744,10 +744,7 @@ void VideoFFmpegComponent::readFrames()
                                             destFrame->pict_type = mVideoFrame->pict_type;
                                             destFrame->chroma_location =
                                                 mVideoFrame->chroma_location;
-#if LIBAVUTIL_VERSION_MAJOR > 58 || (LIBAVUTIL_VERSION_MAJOR == 58 && LIBAVUTIL_VERSION_MINOR >= 29)
-                                            // TODO: Figure out how this should be done in >= 6.1
-                                            destFrame->pkt_pos = mVideoFrame->pkt_pos;
-#else
+#if LIBAVUTIL_VERSION_MAJOR < 58 || (LIBAVUTIL_VERSION_MAJOR == 58 && LIBAVUTIL_VERSION_MINOR < 29)
                                             destFrame->pkt_pos = mVideoFrame->pkt_pos;
 #endif
 #if LIBAVUTIL_VERSION_MAJOR < 58
@@ -755,10 +752,7 @@ void VideoFFmpegComponent::readFrames()
 #else
                                             destFrame->duration = mVideoFrame->duration;
 #endif
-#if LIBAVUTIL_VERSION_MAJOR > 58 || (LIBAVUTIL_VERSION_MAJOR == 58 && LIBAVUTIL_VERSION_MINOR >= 29)
-                                            // TODO: Figure out how this should be done in >= 6.1
-                                            destFrame->pkt_size = mVideoFrame->pkt_size;
-#else
+#if LIBAVUTIL_VERSION_MAJOR < 58 || (LIBAVUTIL_VERSION_MAJOR == 58 && LIBAVUTIL_VERSION_MINOR < 29)
                                             destFrame->pkt_size = mVideoFrame->pkt_size;
 #endif
                                         }
