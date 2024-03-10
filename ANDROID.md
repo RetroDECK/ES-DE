@@ -212,9 +212,8 @@ https://github.com/Trixarian/NetherSX2-patch
 
 ### Citra
 
-The version of Citra on the Google Play store is very old and barely works. Instead download either the Canary or Nightly builds from the Citra website or use the Citra MMJ fork:
+The Citra emulator is no longer in active development and it's unclear where it can be obtained and whether it will be worked on in the future. The Citra MMJ fork is still available for download from their GitHub site.
 
-https://citra-emu.org/download \
 https://github.com/weihuoya/citra/releases
 
 ### ColEm
@@ -370,14 +369,9 @@ https://github.com/DCurrent/openbor/releases
 
 ### Pizza Boy GBA and Pizza Boy GBC
 
-The Pizza Boy GBA and Pizza Boy GBC emulators can be installed from the Play store. There are Basic (free) versions and Pro (paid) versions available.
+The Pizza Boy GBA and Pizza Boy GBC emulators used to be available on the Play store but have since been taken down. There used to be Basic (free) versions and Pro (paid) versions. It's unclear what the status is for these emulators and if they are still in active development. It's also unclear where they can be downloaded.
 
-As of writing this, the Basic version of the GBA emulator does not seem to be able to launch games from ES-DE, but the Pro version is working fine. Both the Basic and Pro versions of the GBC emulator are working correctly.
-
-https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygba \
-https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygbapro \
-https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboy \
-https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboypro
+As of writing this, the latest available Basic version of the GBA emulator does not seem to be able to launch games from ES-DE, but the Pro version is working fine. Both the Basic and Pro versions of the GBC emulator are working correctly.
 
 ### Play!
 
@@ -391,6 +385,8 @@ The Play store version of this emulator is getting frequent updates and is there
 
 https://play.google.com/store/apps/details?id=org.ppsspp.ppsspp \
 https://play.google.com/store/apps/details?id=org.ppsspp.ppssppgold
+
+Make sure that you press the _Browse_ button in PPSSPP when you're adding scoped storage access to your games directory or you will not be able to launch any games from ES-DE.
 
 ### Ruffle
 
@@ -444,9 +440,10 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues | Bugs in the firmware/OS image |
 | Google       | Pixel 4a         | 13              | Yes       | None                |                            |
 | Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
+| HONOR        | Magic5 Pro       | 13              | Yes       | None                |                            |
 | Nokia        | 5.4              | 12              | Yes       | None                |                            |
 | Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
-| Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                |                            |
+| Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                | Limited RAM capacity on this device makes it unsuitable for demanding themes and large game collections |
 | OnePlus      | 6T               | 11              | Yes       | None                |                            |
 | REDMAGIC     | 8 Pro            | 13              | Yes       | None                |                            |
 | Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
@@ -456,6 +453,8 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Samsung      | Galaxy S10       | 12              | Yes       | None                |                            |
 | Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
 | Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
+| Xiaomi       | Pad 5            | 13              | Yes       | None                |                            |
+| Xiaomi       | Redmi Note 11    | 11              | Yes       | None                |                            |
 
 ## Supported game systems
 

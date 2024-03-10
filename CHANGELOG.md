@@ -1,6 +1,6 @@
 # ES-DE (EmulationStation Desktop Edition) - Changelog
 
-## Version 3.0.1 (in development)
+## Version 3.0.1 / 3.0.1-xx (in development)
 
 **Release date:** TBD
 
@@ -9,24 +9,25 @@
 ### Detailed list of changes
 
 * Removed Yuzu from the switch system
+* Added Panda3DS standalone as an alternative emulator for the n3ds system
+* (Android) Added support for placing the ES-DE and ROMs directories on mounted USB storage (/mnt/media_rw/)
 * Added a more informative error message than "HTTP error code 430" when exceeding the daily ScreenScraper quota
+* Added the Snes9x 2005 Plus RetroArch core as an alternative emulator for the satellaview, sfc, snes, snesna and sufami systems
+* Added the Beetle SuperGrafx RetroArch core as an alternative emulator for the pcengine, pcenginecd, tg16 and tg-cd systems
 * Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
 * Added the .neo file extension to the arcade, mame and neogeo systems
+* Added the .chd file extension to the sega32x, sega32xjp and sega32xna systems
+* (Android) Changed the required filename for the Fake-08 RetroArch core from libfake08-arm64.so to fake08_libretro_android.so
+* (Android) Increased the maximum waiting time for the storage mount retry loop from 3 to 4 seconds
+* Improved resilience to empty gamelist.xml files (they can now be updated instead of generating an error)
+* (Android) Removed symlink support
 * Removed the "v" before the version number from the version printout on application startup and from the main menu
 
 ### Bug fixes
 
+* (Android) The supergrafx system had the Beetle SuperGrafx and Beetle PCE RetroArch cores mixed up
+* (Windows) The MAME standalone emulator entry for the atari7800 system had the wrong machine type defined
 * (linear-es-de) Creating custom collections named "now-playing" or "completed" could lead to them being unthemed
-
-## Version 3.0.0-xx (Android intermediate)
-
-**Release date:** TBD
-
-### Detailed list of changes
-
-* Removed Yuzu from the switch system
-
-### Bug fixes
 
 ## Version 3.0.0-17 (Android intermediate)
 
@@ -70,7 +71,7 @@
 * Having spaces in the ROMs directory name broke game launching for emulators that used SAF URIs
 * Some special characters caused game launching to fail or behave strange for some emulators that used SAF URIs
 
-## Version 3.0.0
+## Version 3.0.0 / 3.0.0-11
 
 **Release date:** 2024-02-17
 

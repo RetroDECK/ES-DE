@@ -67,6 +67,8 @@ Another reason for why it may not work is that the ROMs directories are in the w
 
 There seems to be a third situation as well where some emulators apparently keep some residual configuration even after changing the ROM path, which makes game launching fail. In some cases it's been successful to clear the emulator settings completely and then add access to the ROM directory again. The easiest way to do this is to go into the Android Settings app, choose _Apps_, select the emulator you want to clear the settings for, open _Storage & cache_ and select _Clear storage_. Just make sure that the emulator has not placed savestates and similar data on internal storage, as this might otherwise get lost. Following this open the emulator and give access to the correct ROM/game system directory.
 
+Also be aware that there are some slight variations when it comes to how emulators behave when they can't access the game files. In most cases an explicit error message is displayed that it can't open the file, but some emulators like M64Plus FZ will just display the emulator GUI instead.
+
 ## Why do some standalone emulators fail to launch with "ERROR CODE -1" or just display a black screen?
 
 ERROR CODE -1 is a general failure mode which could be caused by multiple things. Some emulators react like this when there's a permission issue and they can't access the game file. See the previous question above for how to deal with such permission problems. And some emulators return this error when the file you attempt to launch has an unsupported file extension. For example MD.emu does not support .bin files, but if you rename these to the .gen extension then game launching works as expected.
