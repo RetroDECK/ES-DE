@@ -18,15 +18,20 @@
 * Added the .neo file extension to the arcade, mame and neogeo systems
 * Added the .chd file extension to the sega32x, sega32xjp and sega32xna systems
 * (Android) Changed the required filename for the Fake-08 RetroArch core from libfake08-arm64.so to fake08_libretro_android.so
+* Improved the layout for the miximage generator interface for some unusual display resolutions and aspect ratios
 * (Android) Increased the maximum waiting time for the storage mount retry loop from 3 to 4 seconds
 * Improved resilience to empty gamelist.xml files (they can now be updated instead of generating an error)
+* (Linux and Unix) Made it possible to change the application data directory using the ESDE_APPDATA_DIR environment variable
 * (Android) Removed symlink support
 * Removed the "v" before the version number from the version printout on application startup and from the main menu
+* Updated SDL to 2.30.1 on Android, Windows, macOS and the Linux AppImage builds
+* Eliminated some deprecation warnings when building against FFmpeg 6.1 or higher
 
 ### Bug fixes
 
 * (Android) The supergrafx system had the Beetle SuperGrafx and Beetle PCE RetroArch cores mixed up
 * (Windows) The MAME standalone emulator entry for the atari7800 system had the wrong machine type defined
+* The Orphaned data cleanup interface didn't display the complete description text at some unusual display resolutions
 * (linear-es-de) Creating custom collections named "now-playing" or "completed" could lead to them being unthemed
 
 ## Version 3.0.0-17 (Android intermediate)

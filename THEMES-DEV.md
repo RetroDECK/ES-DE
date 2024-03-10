@@ -22,7 +22,7 @@ To test whether your theme includes support for all ES-DE systems, download one 
 [ROMs_ALL_macOS.zip](tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
 [ROMs_ALL_Windows.zip](tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
 
-If you unzip and temporarily replace your ROMs directory with one of these, every system will be enabled on startup.
+If you unzip and temporarily replace your ROMs directory with one of these, every system will be enabled on startup. Just make sure to use 7-Zip if you are using Windows as there is a bug in the built-in compression utility which leads to extensionless files not getting unpacked.
 
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 

@@ -1065,6 +1065,20 @@ As well, passing the option --ignore-gamelist will disable the ParseGamelistOnly
 
 The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show games from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
 
+## Changing the application data directory
+
+On all platforms except Android and Windows it's possible to change the application data directory to something else than ~/ES-DE if you prefer that. This is accomplished using the ESDE_APPDATA_DIR environment variable, for example like the following:
+
+```
+ESDE_APPDATA_DIR=~/.config/ES-DE ./ES-DE_x64.AppImage
+```
+
+Or like this:
+```
+export ESDE_APPDATA_DIR=~/.config/ES-DE
+./ES-DE_x64.AppImage
+```
+
 ## Settings not configurable via the GUI
 
 There are some settings which are not configurable via the GUI as modifying these should normally not be required. To still change these, edit the es_settings.xml file directly.
