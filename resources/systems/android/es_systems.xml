@@ -276,7 +276,7 @@
         <command label="VICE x64 Fast">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vice_x64_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VICE x64 SuperCPU">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vice_xscpu64_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="VICE x128">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=vice_x128_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="C64.emu (Standalone)">%EMULATOR_C64-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="C64.emu (Standalone)">%EMULATOR_C64-EMU% %DATA%=%ROMSAF%</command>
         <platform>c64</platform>
         <theme>c64</theme>
     </system>
@@ -1288,7 +1288,7 @@
         <command label="Beetle PCE">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_fast_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle SuperGrafx">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_supergrafx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="PCE.emu (Standalone)">%EMULATOR_PCE-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="PCE.emu (Standalone)">%EMULATOR_PCE-EMU% %DATA%=%ROMSAF%</command>
         <platform>pcenginecd</platform>
         <theme>pcenginecd</theme>
     </system>
@@ -1347,7 +1347,7 @@
         <path>%ROMPATH%/ps2</path>
         <extension>.bin .BIN .chd .CHD .ciso .CISO .cso .CSO .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG</extension>
         <command label="AetherSX2 (Standalone)">%EMULATOR_AETHERSX2% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.MAIN %EXTRA_bootPath%=%ROMSAF%</command>
-        <command label="Play! (Standalone)">%EMULATOR_PLAY!% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
+        <command label="Play! (Standalone)">%EMULATOR_PLAY!% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>ps2</platform>
         <theme>ps2</theme>
     </system>
@@ -1459,7 +1459,7 @@
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_saturn_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=yabasanshiro_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=yabause_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="Saturn.emu (Standalone)">%EMULATOR_SATURN-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="Saturn.emu (Standalone)">%EMULATOR_SATURN-EMU% %DATA%=%ROMSAF%</command>
         <platform>saturn</platform>
         <theme>saturn</theme>
     </system>
@@ -1471,7 +1471,7 @@
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_saturn_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=yabasanshiro_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=yabause_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="Saturn.emu (Standalone)">%EMULATOR_SATURN-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="Saturn.emu (Standalone)">%EMULATOR_SATURN-EMU% %DATA%=%ROMSAF%</command>
         <platform>saturn</platform>
         <theme>saturnjp</theme>
     </system>
@@ -1736,7 +1736,7 @@
         <command label="Beetle PCE">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_pce_fast_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Beetle SuperGrafx">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_supergrafx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="PCE.emu (Standalone)">%EMULATOR_PCE-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="PCE.emu (Standalone)">%EMULATOR_PCE-EMU% %DATA%=%ROMSAF%</command>
         <platform>pcenginecd</platform>
         <theme>tg-cd</theme>
     </system>
