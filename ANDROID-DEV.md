@@ -47,13 +47,12 @@ Thankfully sideloading emulators is not very difficult to do, the exact produced
 
 There is also the [F-Droid](https://f-droid.org/) app store as an alternative to Google Play, and this service contains a couple of emulators that are not present on the Play store, or that are present there but haven't been updated for a very long time.
 
-A number of emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game ROMs on launch. This means that no access permission needs to be setup in the emulator upfront. For those emulators which do not support the FileProvider API, you will generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`.
+A number of emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game file on launch. This means that no access permission needs to be setup in the emulator upfront. This is however only usable for single files, so for systems that support multi-file games such as disc-based games in .bin/.cue format SAF URIs are used instead. For those emulators you will therefore generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`.
 
 Some emulators like RetroArch are still using an older storage access method and for those emulators this is not something you need to consider.
 
 The following emulators are configured for FileProvider access:
 * 2600.emu
-* C64.emu
 * GBA.emu
 * GBC.emu
 * Lynx.emu
@@ -62,18 +61,20 @@ The following emulators are configured for FileProvider access:
 * MAME4droid
 * NES.emu
 * NGP.emu
-* PCE.emu
-* Play!
+* PCE.emu (pcengine, supergrafx and tg16 systems)
 * Ruffle
-* Saturn.emu
 * Swan.emu
 
 Some of these emulators still require BIOS files, so not all of them will be completely free from manual configuration.
 
 The following emulators have partial FileProvider access support but are currently not configured for that in ES-DE:
-* Dolphin (the FileProvider interface is broken on some devices)
-* M64Plus FZ (the FileProvider interface doesn't work reliably and game launching randomly fails when using it)
-* PPSSPP (the FileProvider interface doesn't work with .chd files specifically)
+* C64.emu - doesn't work with multi-file games
+* Dolphin - doesn't work with multi-file games
+* M64Plus FZ - the FileProvider interface doesn't work reliably and game launching randomly fails when using it
+* PCE.emu - doesn't work with multi-file games for the pcenginecd and tg-cd systems
+* Play! - doesn't work with multi-file games
+* PPSSPP - doesn't work with multi-file games and the FileProvider interface doesn't work with .chd files specifically
+* Saturn.emu - doesn't work with multi-file games
 
 ## Splitting system directories across multiple storage devices
 

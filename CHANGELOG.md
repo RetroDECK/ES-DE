@@ -17,6 +17,7 @@
 * Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
 * Added the .neo file extension to the arcade, mame and neogeo systems
 * Added the .chd file extension to the sega32x, sega32xjp and sega32xna systems
+* (Android) changed from %ROMPROVIDER% to %ROMSAF% for the C64.emu, PCE.emu (pcenginecd and tg-cd), Play! and Saturn.emu emulators
 * (Android) Changed the required filename for the Fake-08 RetroArch core from libfake08-arm64.so to fake08_libretro_android.so
 * Improved the layout for the miximage generator interface for some unusual display resolutions and aspect ratios
 * (Android) Increased the maximum waiting time for the storage mount retry loop from 3 to 4 seconds
