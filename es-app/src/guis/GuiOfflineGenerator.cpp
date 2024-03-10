@@ -185,8 +185,17 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
                                   (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.95f)) *
                        mRenderer->getScreenWidth()};
 
-    setSize(width,
-            mRenderer->getScreenHeight() * (mRenderer->getIsVerticalOrientation() ? 0.52f : 0.75f));
+    float multiplierY;
+    if (mRenderer->getScreenAspectRatio() <= 1.0f)
+        multiplierY = 8.0f;
+    else if (mRenderer->getScreenAspectRatio() < 1.6f)
+        multiplierY = 7.0f;
+    else
+        multiplierY = 7.7f;
+
+    setSize(width, mTitle->getSize().y + (FONT_SIZE_MEDIUM * 1.5f * multiplierY) +
+                       mButtonGrid->getSize().y);
+
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 }
@@ -223,7 +232,7 @@ void GuiOfflineGenerator::onSizeChanged()
 
     // Set column widths.
     mGrid.setColWidthPerc(0, 0.03f);
-    mGrid.setColWidthPerc(1, 0.20f);
+    mGrid.setColWidthPerc(1, 0.21f);
     mGrid.setColWidthPerc(2, 0.145f);
     mGrid.setColWidthPerc(5, 0.03f);
 
