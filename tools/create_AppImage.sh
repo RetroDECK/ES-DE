@@ -13,8 +13,8 @@
 # How many CPU threads to use for the compilation.
 JOBS=4
 
-SDL_RELEASE_TAG=release-2.30.0
-SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.3000.0
+SDL_RELEASE_TAG=release-2.30.1
+SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.3000.1
 
 echo "Building AppImage..."
 
