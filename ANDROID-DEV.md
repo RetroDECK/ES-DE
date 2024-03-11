@@ -41,18 +41,22 @@ Almost all files saved and used by ES-DE are kept in the shared storage on eithe
 
 ## Emulation on Android in general
 
-There are some challenges with emulation on Android. Some emulators on the Google Play store have not been updated for a long time, or like in the case with RetroArch they are crippled to comply with Google's rules and policies. And some emulators are not available on the Play store at all. For these reasons you will need to sideload some manually downloaded APKs for a good emulation setup. There is a section later in this document describing the best place to get hold of each supported emulator.
+There are a few challenges with emulation on Android. Some emulators on the Google Play store have not been updated for a long time, and some emulators are not available on the Play store at all. For these reasons you will need to sideload some manually downloaded APKs for a good emulation setup. There is a section later in this document describing the best place to get hold of each supported emulator.
 
-Thankfully sideloading emulators is not very difficult to do, the exact producedure for how to install APKs manually is not covered here but there are many resources available online on how to accomplish this.
+Thankfully sideloading emulators is easy to do, the exact producedure for how to install APKs manually is not covered here but there are many resources available online on how to accomplish this.
 
 There is also the [F-Droid](https://f-droid.org/) app store as an alternative to Google Play, and this service contains a couple of emulators that are not present on the Play store, or that are present there but haven't been updated for a very long time.
 
-A number of emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game file on launch. This means that no access permission needs to be setup in the emulator upfront. This is however only usable for single files, so for systems that support multi-file games such as disc-based games in .bin/.cue format SAF URIs are used instead. For those emulators you will therefore generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`.
+A number of emulators support the [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider) API which makes it possible for ES-DE to temporarily provide storage access to the game file on launch. This means that most of the time no access permission needs to be setup in the emulator upfront. Access can however only be passed for single files, so for systems that support multi-file games such as disc-based games in .bin/.cue format SAF URIs are often used instead. For those emulators you will therefore generally need to manually provide scoped storage access to each game system directory. Note that it's not supported to give access to the root of the entire ROM directory for emulators that use scoped storage, it has to be for the specific system. For instance `/storage/emulated/0/ROMs/n64` rather than `/storage/emulated/0/ROMs`.
+
+Adding to the FileProvider API confusion is the fact that some emulators will only launch games when using this API even though they need to have scoped storage access setup within the emulator upfront. FPseNG and FPse are two examples of this. So there is unfortunately no definitive rule regarding the use of the FileProvider API, it all depends on how the emulator has implemented the functionality.
 
 Some emulators like RetroArch are still using an older storage access method and for those emulators this is not something you need to consider.
 
 The following emulators are configured for FileProvider access:
 * 2600.emu
+* FPseNG (still needs scoped storage to be setup in emulator)
+* FPse (still needs scoped storage to be setup in emulator)
 * GBA.emu
 * GBC.emu
 * Lynx.emu
@@ -65,16 +69,7 @@ The following emulators are configured for FileProvider access:
 * Ruffle
 * Swan.emu
 
-Some of these emulators still require BIOS files, so not all of them will be completely free from manual configuration.
-
-The following emulators have partial FileProvider access support but are currently not configured for that in ES-DE:
-* C64.emu - doesn't work with multi-file games
-* Dolphin - doesn't work with multi-file games
-* M64Plus FZ - the FileProvider interface doesn't work reliably and game launching randomly fails when using it
-* PCE.emu - doesn't work with multi-file games for the pcenginecd and tg-cd systems
-* Play! - doesn't work with multi-file games
-* PPSSPP - doesn't work with multi-file games and the FileProvider interface doesn't work with .chd files specifically
-* Saturn.emu - doesn't work with multi-file games
+Some of these emulators require BIOS files, so they still need to be configured before they can be used with ES-DE.
 
 ## Splitting system directories across multiple storage devices
 
@@ -461,6 +456,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
 | Samsung      | Galaxy S10       | 12              | Yes       | None                |                            |
+| Samsung      | Galaxy S22 Ultra | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
 | Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
 | Xiaomi       | Pad 5            | 13              | Yes       | None                |                            |

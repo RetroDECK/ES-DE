@@ -38,8 +38,6 @@ If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you
 
 [ROADMAP.md](ROADMAP.md) - List of major features planned to be added in the future
 
-[CONTRIBUTING.md](CONTRIBUTING.md) - Information on how to contribute to the project
-
 [CREDITS.md](CREDITS.md) - An attempt to credit the individuals and projects which made ES-DE possible
 
 ## Some feature highlights

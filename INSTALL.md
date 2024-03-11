@@ -1765,7 +1765,7 @@ There are three approaches to passing game ROMs to emulators by using the follow
 `%ROMSAF%` - Replaced with an Android Storage Access Framework (SAF) document URI which always starts with the _content://com.android.externalstorage.documents/_ string. You can read more about the SAF here:\
 https://developer.android.com/guide/topics/providers/document-provider
 
-`%ROMPROVIDER%` - This is the most modern approach to passing game ROMs to emulators. It uses the _FileProvider_ API to provide permissions to the file. This means that you don't need to setup the emulator upfront to have access to the directory where the game file is stored, access is instead temporarily granted by ES-DE. You can read more about the FileProvider API here:\
+`%ROMPROVIDER%` - This is the most modern approach to passing game ROMs to emulators. It uses the _FileProvider_ API to provide permissions to the file. This means that you generally don't need to setup the emulator upfront to have access to the directory where the game file is stored, access is instead temporarily granted by ES-DE. This will however only work for games that consist of a single file, for multi-file games such as .cue/.bin and similar %ROMSAF% has to be used instead. Adding to the confusion is however the fact that some emulators like FPseNG and FPse can only be launched using %ROMPROVIDER% even though you need to setup scoped storage access in the emulator upfront. So there are unfortunately no definitive rules regarding the use of %ROMPROVIDER%, it all depends on how the emulator has implemented the functionality. You can read more about the FileProvider API here:\
 https://developer.android.com/reference/androidx/core/content/FileProvider
 
 The `%ROM%` and `%ROMSAF%` variables can be used with both the `%DATA%` and `%EXTRA_` variables, but `%ROMPROVIDER%` can only be used with the `%DATA%` variable. For the `%DATA%` variable you'll just assign the ROM variable with an equal sign as there can only be a single _setData()_ API call per Intent. For the `%EXTRA_` variable you need to specify a name of the extra and then define it using an equal sign as an arbitrary amount of _putExtra()_ API calls can be used for an Intent.
@@ -1797,14 +1797,15 @@ Here's an example es_systems.xml file for Android:
 <!-- This is the ES-DE game systems configuration file for Android -->
 <systemList>
     <system>
-        <name>gc</name>
-        <fullname>Nintendo GameCube</fullname>
-        <path>%ROMPATH%/gc</path>
-        <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
-        <command label="Dolphin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/dolphin_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %DATA%=%ROMPROVIDER%</command>
-        <platform>gc</platform>
-        <theme>gc</theme>
+        <name>atari2600</name>
+        <fullname>Atari 2600</fullname>
+        <path>%ROMPATH%/atari2600</path>
+        <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="Stella">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=stella_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Stella 2014">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=stella2014_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="2600.emu (Standalone)">%EMULATOR_2600-EMU% %DATA%=%ROMPROVIDER%</command>
+        <platform>atari2600</platform>
+        <theme>atari2600</theme>
     </system>
     <system>
         <name>n3ds</name>
@@ -1812,8 +1813,10 @@ Here's an example es_systems.xml file for Android:
         <path>%ROMPATH%/n3ds</path>
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
         <command label="Citra">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/citra_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="Citra (Standalone)">%EMULATOR_CITRA% %ACTIVITY_NO_HISTORY% %EXTRA_SelectedGame%=%ROMSAF%</command>
+        <command label="Citra (Standalone)">%EMULATOR_CITRA% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMSAF%</command>
+        <command label="Citra Canary (Standalone)">%EMULATOR_CITRA-CANARY% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMSAF%</command>
         <command label="Citra MMJ (Standalone)">%EMULATOR_CITRA-MMJ% %EXTRA_GamePath%=%ROM%</command>
+        <command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %DATA%=%ROMPROVIDER%</command>
         <platform>n3ds</platform>
         <theme>n3ds</theme>
     </system>
