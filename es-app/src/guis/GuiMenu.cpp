@@ -2088,7 +2088,7 @@ void GuiMenu::addVersionInfo()
 #if defined(IS_PRERELEASE)
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
                      " (Built " + __DATE__ + ")");
-#else
+# else
 #if defined(__ANDROID__)
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
                      std::to_string(ANDROID_VERSION_CODE));
@@ -2101,6 +2101,7 @@ void GuiMenu::addVersionInfo()
     #define PROGRAM_VERSION_STRING version.c_str()
     std::cout << PROGRAM_VERSION_STRING << std::endl;
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+#endif
 #endif
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
