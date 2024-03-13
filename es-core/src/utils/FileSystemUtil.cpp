@@ -252,7 +252,15 @@ namespace Utils
             return getHomePath();
 #else
             if (FileSystemVariables::sAppDataDirectory.empty()) {
+#if !defined(_WIN64)
+                if (getenv("ESDE_APPDATA_DIR") != nullptr) {
+                    const std::string envAppDataDir {getenv("ESDE_APPDATA_DIR")};
+                    FileSystemVariables::sAppDataDirectory = expandHomePath(envAppDataDir);
+                }
+                else if (Utils::FileSystem::exists(getHomePath() + "/ES-DE")) {
+#else
                 if (Utils::FileSystem::exists(getHomePath() + "/ES-DE")) {
+#endif
                     FileSystemVariables::sAppDataDirectory = getHomePath() + "/ES-DE";
                 }
                 else if (Utils::FileSystem::exists(getHomePath() + "/.emulationstation")) {
@@ -1000,6 +1008,11 @@ namespace Utils
 
         bool isSymlink(const std::string& path)
         {
+#if defined(__ANDROID__)
+            // Symlinks are generally not supported on Android due to the Storage Access Framework
+            // and the use of FAT/exFAT and NTFS filesystems.
+            return false;
+#endif
             const std::string& genericPath {getGenericPath(path)};
             try {
 #if defined(_WIN64)

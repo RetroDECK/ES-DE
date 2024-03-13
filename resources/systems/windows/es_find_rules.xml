@@ -497,6 +497,16 @@
             <entry>%ESPATH%\..\Emulators\Oricutron\oricutron.exe</entry>
         </rule>
     </emulator>
+    <emulator name="PANDA3DS">
+        <!-- Nintendo 3DS emulator Panda3DS -->
+        <rule type="systempath">
+            <entry>Alber.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Panda3DS\Alber.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Panda3DS\Alber.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">
@@ -940,17 +950,6 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\xroar\xroar.exe</entry>
             <entry>%ESPATH%\..\Emulators\xroar\xroar.exe</entry>
-        </rule>
-    </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="systempath">
-            <entry>yuzu.exe</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\..\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">

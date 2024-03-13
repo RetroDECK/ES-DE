@@ -390,7 +390,7 @@ bool parseArguments(const std::vector<std::string>& arguments)
             Log::setReportingLevel(LogDebug);
         }
         else if (arguments[i] == "--version" || arguments[i] == "-v") {
-            std::cout << "ES-DE v" << PROGRAM_VERSION_STRING << " (r" << PROGRAM_RELEASE_NUMBER
+            std::cout << "ES-DE " << PROGRAM_VERSION_STRING << " (r" << PROGRAM_RELEASE_NUMBER
                       << ")\n";
             return false;
         }
@@ -605,7 +605,29 @@ int main(int argc, char* argv[])
 #endif
 
 #if defined(__ANDROID__)
+    // This hint will prevent a popup from being displayed asking for access to the controller.
+    // Pressing OK in that dialog grants exclusive access to the controller which makes it
+    // unusable in any emulator that is launched.
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI, "0");
+
     bool resetTouchOverlay {false};
+
+    // If ES-DE is set as the home app/launcher we may be in a situation where we get started
+    // before the external storage has been mounted. If the application data directory or the
+    // ROMs directory have been located on this storage then the configurator will get executed.
+    // To prevent the likelyhood of this happening we wait up to 40 * 100 milliseconds, then
+    // we give up. This is not an airtight solution but it hopefully decreases the risk of
+    // this failure occuring. Under normal circumstances the storage would be mounted when
+    // the application is starting, so no delay would occur.
+    if (SDL_AndroidGetExternalStorageState() == 0) {
+        for (int i {0}; i < 40; ++i) {
+            __android_log_print(ANDROID_LOG_VERBOSE, ANDROID_APPLICATION_ID,
+                                "Storage not mounted, waiting 100 ms until next attempt");
+            SDL_Delay(100);
+            if (SDL_AndroidGetExternalStorageState() != 0)
+                break;
+        }
+    }
 
     if (Utils::Platform::Android::checkConfigurationNeeded()) {
         Utils::Platform::Android::startConfigurator();
@@ -674,13 +696,15 @@ int main(int argc, char* argv[])
     Log::init();
     Log::open();
     {
-#if defined(ANDROID_LITE_RELEASE)
-        const std::string applicationName {"ES-DE Lite"};
-#else
         const std::string applicationName {"RetroDECK"};
-#endif
-        LOG(LogInfo) << applicationName << " v" << PROGRAM_VERSION_STRING << " (r"
+#if defined(__ANDROID__)
+        LOG(LogInfo) << applicationName << " " << PROGRAM_VERSION_STRING << "-"
+                     << ANDROID_VERSION_CODE << " (r" << PROGRAM_RELEASE_NUMBER << "), built "
+                     << PROGRAM_BUILT_STRING;
+#else
+        LOG(LogInfo) << applicationName << " " << PROGRAM_VERSION_STRING << " (r"
                      << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
+#endif
         if (portableMode) {
             LOG(LogInfo) << "Running in portable mode";
             Settings::getInstance()->setBool("PortableMode", true);
@@ -972,7 +996,7 @@ int main(int argc, char* argv[])
             .append(PROGRAM_BUILT_STRING);
         if (Utils::Platform::Android::checkNeedResourceCopy(buildIdentifier)) {
             LOG(LogInfo) << "Application has been updated or it's a new installation, copying "
-                            "bundled resources and themes to internal storage...";
+                            "bundled resources and theme to internal storage...";
             if (Settings::getInstance()->getBool("SplashScreen"))
                 window->renderSplashScreen(Window::SplashScreenState::RESOURCE_COPY, 0.0f);
             if (Utils::Platform::Android::setupResources(buildIdentifier)) {

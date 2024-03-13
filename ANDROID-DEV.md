@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) 3.0 - Android documentation
+# ES-DE (EmulationStation Desktop Edition) 3.0 (development version) - Android documentation
 
 This document contains information specific to the Android release, for more general ES-DE documentation refer to the [User guide](USERGUIDE.md) as well as the general [FAQ](FAQ.md).
 
@@ -57,7 +57,6 @@ The following emulators are configured for FileProvider access:
 * 2600.emu
 * FPseNG (still needs scoped storage to be setup in emulator)
 * FPse (still needs scoped storage to be setup in emulator)
-* C64.emu
 * GBA.emu
 * GBC.emu
 * Lynx.emu
@@ -66,10 +65,8 @@ The following emulators are configured for FileProvider access:
 * MAME4droid
 * NES.emu
 * NGP.emu
-* PCE.emu
-* Play!
+* PCE.emu (pcengine, supergrafx and tg16 systems)
 * Ruffle
-* Saturn.emu
 * Swan.emu
 
 Some of these emulators require BIOS files, so they still need to be configured before they can be used with ES-DE.
@@ -186,6 +183,7 @@ In addition to the issues specific to the Ayn Odin 2 there are a couple of other
 
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
 * The Android soft keyboard causes rendering issues when navigating using a controller or physical keyboard, as such the ES-DE built-in keyboard is enabled by default for the time being. For testing purposes the Android soft keyboard can be enabled via the _Enable virtual keyboard_ option in the _UI settings_ menu. If only using touch input the issue is not present. This problem is believed to be caused by a bug in the SDL library so it probably needs to be resolved there.
+* Using a mounted USB storage device for the ES-DE and/or ROMs directories will lead to the configurator exiting after finishing the setup instead of launching ES-DE. Restarting ES-DE manually will lead to a successful startup. If the option to create the system directories was selected in the configurator then this will have to be executed again from inside ES-DE. Note that using a mounted USB storage device leads to a very crippled setup anyway, as for example RetroArch can't read any games from such devices (i.e. from the /mnt/media_rw/ directory tree). Only emulators supporting scoped storage will be usable in such a setup.
 
 ## Emulator installation and setup
 
@@ -281,7 +279,9 @@ https://www.explusalpha.com/
 
 ### Fake-08
 
-This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manually install it. After download you'll need to place the core inside's RetroArch's downloads directory and then install it from the RetroArch app. You must use the 64-bit version with the filename `libfake08-arm64.so`. Details on how to manually install cores in RetroArch can be found on the Internet. Fake-08 can be downloaded from their GitHub site.
+This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manually install it. After downloading it you'll need to place the core inside's RetroArch's downloads directory and then install it from the RetroArch app.
+
+You must use the 64-bit version with the filename `libfake08-arm64.so` and it has to be renamed to `fake08_libretro_android.so` before you install it into RetroArch. Details on how to manually install cores in RetroArch can be found on the Internet. Fake-08 can be downloaded from their GitHub site.
 
 https://github.com/jtothebell/fake-08/releases
 
@@ -365,6 +365,12 @@ Although OpenBOR is working fine on Android it's not possible to properly integr
 You can download OpenBOR from their GitHub site, the version named _OpenBOR v3.0 Build 6391_ has for example been proven to work well.
 
 https://github.com/DCurrent/openbor/releases
+
+### Panda3DS (pandroid)
+
+This emulator is in early development and there currently seems to be no way to run a game directly from ES-DE. Instead the emulator GUI will be displayed on game launch and you will need to manually select the game from there. Note that the Android build of this emulator is named _pandroid_, but as the overall project name is Panda3DS it will be referred to as such in ES-DE. This emulator can be downloaded from their GitHub site.
+
+https://github.com/wheremyfoodat/Panda3DS/releases
 
 ### Pizza Boy GBA and Pizza Boy GBC
 
@@ -563,7 +569,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
-| n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)** [Play store version or Nightly],<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)** | No           | Single ROM file       |
+| n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
@@ -582,8 +588,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   | Yes          |                                      |
 | pc98                  | NEC PC-9800 Series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
 | pcarcade              | PC Arcade Systems                              | _Placeholder_                     |                                   |              |                                      |                                   |
-| pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
-| pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | Yes          |                                      |
+| pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
+| pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   | Yes          |                                      |
 | pico8                 | PICO-8 Fantasy Console                         | Fake-08                           | Retro8                            | No           | See the specific _PICO-8_ section in the User guide |
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
@@ -598,7 +604,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pv1000                | Casio PV-1000                                  | _Placeholder_                     |                                   |              |                                      |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero] | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | Speccy **(Standalone)**           |                                   | No           | Single archive or ROM file           |
-| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
+| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | YabaSanshiro,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | YabaSanshiro,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | scummvm               | ScummVM Game Engine                            | ScummVM                           |                                   | No           |                                      |
@@ -607,24 +613,24 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file           |
 | sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         |                                   | No           | Single archive or ROM file           |
 | segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | Yes          |                                      |
-| sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust,<br>Mesen-S | No           | Single archive or ROM file |
+| sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust,<br>Mesen-S | No           | Single archive or ROM file |
 | sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>blueMSX,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file           |
 | sgb                   | Nintendo Super Game Boy                        | Mesen-S                           | SameBoy,<br>mGBA                  |              |  Single archive or ROM file |
-| snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust,<br>Mesen-S | No           | Single archive or ROM file |
-| snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust,<br>Mesen-S | No           | Single archive or ROM file |
+| snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust,<br>Mesen-S | No           | Single archive or ROM file |
+| snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust,<br>Mesen-S | No           | Single archive or ROM file |
 | solarus               | Solarus Game Engine                            | _Placeholder_                     |                                   |              |                                      |
 | spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
 | steam                 | Valve Steam                                    | _Placeholder_                     |                                   |              |                                      |
 | stv                   | Sega Titan Video Game System                   | MAME - Current                    | MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive file                  |
-| sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy |              |                                      |
+| sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | supervision           | Watara Supervision                             | Potator                           |                                   | No           | Single archive or ROM file           |
 | supracan              | Funtech Super A'Can                            | _Placeholder_                     |                                   |              |                                      |
 | switch                | Nintendo Switch                                | Skyline **(Standalone)**          |                                   | Yes          |                                      |
 | symbian               | Symbian                                        | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | tanodragon            | Tano Dragon                                    | _Placeholder_                     |                                   |              |                                      |
-| tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
-| tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>PCE.emu **(Standalone)** | Yes          |                                      |
+| tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
+| tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | Yes          |                                      |
 | ti99                  | Texas Instruments TI-99                        | _Placeholder_                     |                                   |              |                                      |
 | tic80                 | TIC-80 Fantasy Computer                        | TIC-80                            |                                   | No           | Single .tic file                     |
 | to8                   | Thomson TO8                                    | Theodore                          |                                   |              |                                      |

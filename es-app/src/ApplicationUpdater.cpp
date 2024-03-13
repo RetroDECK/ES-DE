@@ -229,7 +229,11 @@ void ApplicationUpdater::parseFile()
     if (doc.HasParseError())
         throw std::runtime_error(rapidjson::GetParseError_En(doc.GetParseError()));
 
+#if defined(__ANDROID__)
+    const std::vector<std::string> releaseTypes {"stable"};
+#else
     const std::vector<std::string> releaseTypes {"stable", "prerelease"};
+#endif
 
     for (auto& releaseType : releaseTypes) {
         Release release;
@@ -237,11 +241,19 @@ void ApplicationUpdater::parseFile()
             release.releaseType = releaseType.c_str();
             const rapidjson::Value& releaseTypeEntry {doc[releaseType.c_str()]};
 
+#if defined(__ANDROID__)
+            if (releaseTypeEntry.HasMember("androidVersionName") &&
+                releaseTypeEntry["androidVersionName"].IsString())
+                release.version = releaseTypeEntry["androidVersionName"].GetString();
+            else
+                throw std::runtime_error(
+                    "Invalid file structure, \"androidVersionName\" key missing");
+#else
             if (releaseTypeEntry.HasMember("version") && releaseTypeEntry["version"].IsString())
                 release.version = releaseTypeEntry["version"].GetString();
             else
                 throw std::runtime_error("Invalid file structure, \"version\" key missing");
-
+#endif
             // There may not be a prerelease available.
             if (releaseType == "prerelease" && release.version == "")
                 continue;
@@ -251,11 +263,25 @@ void ApplicationUpdater::parseFile()
             else
                 throw std::runtime_error("Invalid file structure, \"release\" key missing");
 
+#if defined(__ANDROID__)
+            if (releaseTypeEntry.HasMember("androidVersionCode") &&
+                releaseTypeEntry["androidVersionCode"].IsString())
+                release.androidVersionCode = releaseTypeEntry["androidVersionCode"].GetString();
+            else
+                throw std::runtime_error(
+                    "Invalid file structure, \"androidVersionCode\" key missing");
+
+            if (releaseTypeEntry.HasMember("androidDate") &&
+                releaseTypeEntry["androidDate"].IsString())
+                release.date = releaseTypeEntry["androidDate"].GetString();
+            else
+                throw std::runtime_error("Invalid file structure, \"androidDate\" key missing");
+#else
             if (releaseTypeEntry.HasMember("date") && releaseTypeEntry["date"].IsString())
                 release.date = releaseTypeEntry["date"].GetString();
             else
                 throw std::runtime_error("Invalid file structure, \"date\" key missing");
-
+#endif
             if (releaseTypeEntry.HasMember("packages") && releaseTypeEntry["packages"].IsArray()) {
                 const rapidjson::Value& packages {releaseTypeEntry["packages"]};
                 for (int i {0}; i < static_cast<int>(packages.Size()); ++i) {
@@ -341,6 +367,7 @@ void ApplicationUpdater::compareVersions()
 {
     std::deque<Release*> releaseTypes {&mStableRelease};
 
+#if !defined(__ANDROID__)
     if (mPrerelease.releaseNum != "") {
 #if defined(IS_PRERELEASE)
         releaseTypes.emplace_front(&mPrerelease);
@@ -349,6 +376,7 @@ void ApplicationUpdater::compareVersions()
             releaseTypes.emplace_front(&mPrerelease);
 #endif
     }
+#endif
 
     mNewVersion = false;
 
@@ -358,7 +386,15 @@ void ApplicationUpdater::compareVersions()
         if (releaseType->version == "" || releaseType->releaseNum == "" || releaseType->date == "")
             continue;
 
+#if defined(__ANDROID__)
+        // This should hopefully never happen.
+        if (releaseType->androidVersionCode == "")
+            continue;
+
+        mNewVersion = (std::stoi(releaseType->androidVersionCode) > ANDROID_VERSION_CODE);
+#else
         mNewVersion = (std::stoi(releaseType->releaseNum) > PROGRAM_RELEASE_NUMBER);
+#endif
 
         if (mNewVersion) {
             for (auto& package : releaseType->packages) {
@@ -386,8 +422,13 @@ void ApplicationUpdater::compareVersions()
             mPackage.message = mPackage.message.substr(0, 280);
 
             mLogInfo = "A new ";
-            mLogInfo.append(releaseType == &mStableRelease ? "stable release" : "prerelease")
+            mLogInfo
+#if defined(__ANDROID__)
+                .append("release is available: ")
+#else
+                .append(releaseType == &mStableRelease ? "stable release" : "prerelease")
                 .append(" is available for download at https://es-de.org: ")
+#endif
                 .append(releaseType->version)
                 .append(" (r")
                 .append(releaseType->releaseNum)
@@ -450,10 +491,12 @@ bool ApplicationUpdater::getResults()
         LOG(LogInfo) << mLogInfo;
     }
 
+#if !defined(__ANDROID__)
     if (mNewVersion && mPackage.name == "") {
         LOG(LogDebug) << "ApplicationUpdater::getResults(): Couldn't find a package type matching "
                          "current build";
     }
+#endif
 
     return mNewVersion;
 }

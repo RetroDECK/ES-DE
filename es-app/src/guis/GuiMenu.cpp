@@ -1614,7 +1614,7 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-#if defined(APPLICATION_UPDATER)
+#if defined(APPLICATION_UPDATER) && !defined(__ANDROID__)
 #if defined(IS_PRERELEASE)
     // Add a dummy entry to indicate that this setting is always enabled when running a prerelease.
     auto applicationUpdaterPrereleases = std::make_shared<SwitchComponent>();
@@ -1866,7 +1866,7 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-#if defined(APPLICATION_UPDATER) && !defined(IS_PRERELEASE)
+#if defined(APPLICATION_UPDATER) && !defined(__ANDROID__) && !defined(IS_PRERELEASE)
     auto applicationUpdaterFrequencyFunc =
         [applicationUpdaterPrereleases](const std::string& frequency) {
             if (frequency == "never") {
@@ -1900,24 +1900,12 @@ void GuiMenu::openUtilities()
     HelpStyle style {getHelpStyle()};
 
     ComponentListRow row;
-
-#if defined(ANDROID_LITE_RELEASE)
-    auto orphanedDataCleanup =
-        std::make_shared<TextComponent>("ORPHANED DATA CLEANUP (FULL VERSION ONLY)",
-                                        Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
-    orphanedDataCleanup->setOpacity(DISABLED_OPACITY);
-    row.addElement(orphanedDataCleanup, true);
-    auto orphanedDataCleanupArrow = mMenu.makeArrow();
-    orphanedDataCleanupArrow->setOpacity(DISABLED_OPACITY);
-    row.addElement(orphanedDataCleanupArrow, false);
-#else
     row.addElement(std::make_shared<TextComponent>("ORPHANED DATA CLEANUP",
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
     row.addElement(mMenu.makeArrow(), false);
     row.makeAcceptInputHandler(std::bind(
         [this] { mWindow->pushGui(new GuiOrphanedDataCleanup([&]() { close(true); })); }));
-#endif
     s->addRow(row);
 
     row.elements.clear();
@@ -2095,15 +2083,15 @@ void GuiMenu::addVersionInfo()
     mVersion.setFont(Font::get(FONT_SIZE_SMALL));
     mVersion.setColor(mMenuColorTertiary);
 
-#if defined(ANDROID_LITE_RELEASE)
-    const std::string applicationName {"ES-DE LITE"};
-#else
     const std::string applicationName {"RetroDECK"};
-#endif
 
 #if defined(IS_PRERELEASE)
-    mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
                      " (Built " + __DATE__ + ")");
+#else
+#if defined(__ANDROID__)
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
+                     std::to_string(ANDROID_VERSION_CODE));
 #else
     std::ifstream file("/app/retrodeck/version");
     std::string version;
@@ -2112,7 +2100,7 @@ void GuiMenu::addVersionInfo()
     #undef PROGRAM_VERSION_STRING
     #define PROGRAM_VERSION_STRING version.c_str()
     std::cout << PROGRAM_VERSION_STRING << std::endl;
-    mVersion.setText(applicationName + "  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 #endif
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);

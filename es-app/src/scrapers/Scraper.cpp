@@ -35,7 +35,7 @@ namespace
 
 std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParams& params)
 {
-    std::string name = Settings::getInstance()->getString("Scraper");
+    std::string name {Settings::getInstance()->getString("Scraper")};
     // Handle a potentially invalid entry in the configuration file.
     if (name != "screenscraper" && name != "thegamesdb") {
         name = "screenscraper";

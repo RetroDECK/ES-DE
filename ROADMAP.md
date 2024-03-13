@@ -5,10 +5,10 @@ ES-DE is developed using an agile methodology so which features to include per r
 A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards) board, and for previous releases the [Changelog](CHANGELOG.md) contains all relevant details.
 
 **General functionality**
+* (Android) Support for running native Android apps
 * RetroAchievements.org integration
 * "Time played" counter per game, similar to how it works in Steam
 * Bulk metadata editor
-* Mouse/touch screen support
 * Background music
 * Controller button mappings from inside ES-DE (similar to pad2key in Batocera)
 * Localization/multi-language support

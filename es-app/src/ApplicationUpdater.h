@@ -51,6 +51,7 @@ private:
         std::string releaseType;
         std::string version;
         std::string releaseNum;
+        std::string androidVersionCode;
         std::string date;
         std::vector<Package> packages;
     };

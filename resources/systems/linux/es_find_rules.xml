@@ -572,6 +572,18 @@
             <entry>~/bin/oricutron/Oricutron</entry>
         </rule>
     </emulator>
+    <emulator name="PANDA3DS">
+        <!-- Nintendo 3DS emulator Panda3DS -->
+        <rule type="systempath">
+            <entry>panda3ds</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Alber-*.AppImage</entry>
+            <entry>~/.local/share/applications/Alber-*.AppImage</entry>
+            <entry>~/.local/bin/Alber-*.AppImage</entry>
+            <entry>~/bin/Alber-*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">
@@ -1052,21 +1064,6 @@
             <entry>~/.local/share/applications/xroar/xroar</entry>
             <entry>~/.local/bin/xroar/xroar</entry>
             <entry>~/bin/xroar/xroar</entry>
-        </rule>
-    </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="systempath">
-            <entry>yuzu</entry>
-            <entry>org.yuzu_emu.yuzu</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/yuzu*.AppImage</entry>
-            <entry>~/.local/share/applications/yuzu*.AppImage</entry>
-            <entry>~/.local/bin/yuzu*.AppImage</entry>
-            <entry>~/bin/yuzu*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">

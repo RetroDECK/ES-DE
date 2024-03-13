@@ -1207,8 +1207,12 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
         mGrid.getSelectedComponent() == mCenterGrid && mThemes[mList->getCursorId()].isCloned) {
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(),
+#if defined(__ANDROID__)
+            "THIS WILL COMPLETELY DELETE THE THEME",
+#else
             "THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY "
             "LOCAL CUSTOMIZATIONS",
+#endif
             "PROCEED",
             [this] {
 #if defined(_WIN64)

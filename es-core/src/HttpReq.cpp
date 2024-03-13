@@ -263,8 +263,13 @@ HttpReq::Status HttpReq::status()
                     long responseCode;
                     curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &responseCode);
 
-                    if (responseCode == 404 && mScraperRequest &&
-                        Settings::getInstance()->getBool("ScraperIgnoreHTTP404Errors")) {
+                    if (responseCode == 430 &&
+                        Settings::getInstance()->getString("Scraper") == "screenscraper") {
+                        req->mContent << "You have exceeded your daily scrape quota";
+                        req->mStatus = REQ_SUCCESS;
+                    }
+                    else if (responseCode == 404 && mScraperRequest &&
+                             Settings::getInstance()->getBool("ScraperIgnoreHTTP404Errors")) {
                         req->mStatus = REQ_RESOURCE_NOT_FOUND;
                     }
                     else {

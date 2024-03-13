@@ -278,7 +278,9 @@ void Settings::setDefaults()
     mStringMap["SaveGamelistsMode"] = {"always", "always"};
     mStringMap["ApplicationUpdaterFrequency"] = {"always", "always"};
     mStringMap["ApplicationUpdaterDownloadDirectory"] = {"", ""};
+#if !defined(__ANDROID__)
     mBoolMap["ApplicationUpdaterPrereleases"] = {false, false};
+#endif
 #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = {false, false};
 #endif

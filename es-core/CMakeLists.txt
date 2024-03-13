@@ -184,11 +184,6 @@ add_library(es-core STATIC ${CORE_SOURCES} ${CORE_HEADERS})
 target_link_libraries(es-core ${COMMON_LIBRARIES})
 
 if(ANDROID)
-    if(ANDROID_LITE_RELEASE)
-        set_target_properties(es-core PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
-                              ${PROJECT_SOURCE_DIR}/../android_lite_${ANDROID_ABI})
-    else()
-        set_target_properties(es-core PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
-                              ${PROJECT_SOURCE_DIR}/../android_${ANDROID_ABI})
-    endif()
+    set_target_properties(es-core PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                          ${PROJECT_SOURCE_DIR}/../android_${ANDROID_ABI})
 endif()

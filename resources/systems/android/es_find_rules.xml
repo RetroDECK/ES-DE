@@ -3,8 +3,10 @@
 <ruleList>
     <emulator name="RETROARCH">
         <rule type="androidpackage">
+            <!-- 64-bit and 32-bit releases from the retroarch.com website -->
             <entry>com.retroarch.aarch64/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
             <entry>com.retroarch.ra32/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
+            <!-- Amazon Appstore and Google Play releases -->
             <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
         </rule>
     </emulator>
@@ -56,6 +58,18 @@
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="androidpackage">
             <entry>org.dolphinemu.dolphinemu/.ui.main.TvMainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="DOLPHIN-MMJR">
+        <!-- Dolphin MMJR, fork of Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="androidpackage">
+            <entry>org.mm.jr/org.dolphinemu.dolphinemu.ui.main.MainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="DOLPHIN-MMJR2">
+        <!-- Dolphin MMJR2, fork of Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="androidpackage">
+            <entry>org.dolphinemu.mmjr/org.dolphinemu.dolphinemu.ui.main.MainActivity</entry>
         </rule>
     </emulator>
     <emulator name="DRASTIC">
@@ -134,6 +148,7 @@
     <emulator name="M64PLUS-FZ">
         <!-- Nintendo 64 emulator M64Plus FZ -->
         <rule type="androidpackage">
+            <entry>org.mupen64plusae.v3.fzurita.amazon/paulscode.android.mupen64plusae.SplashActivity</entry>
             <entry>org.mupen64plusae.v3.fzurita.pro/paulscode.android.mupen64plusae.SplashActivity</entry>
             <entry>org.mupen64plusae.v3.fzurita/paulscode.android.mupen64plusae.SplashActivity</entry>
         </rule>
@@ -168,10 +183,22 @@
             <entry>me.magnum.melonds/.ui.emulator.EmulatorActivity</entry>
         </rule>
     </emulator>
+    <emulator name="MELONDS-NIGHTLY">
+        <!-- Nintendo DS and DSi emulator melonDS (Nightly build) -->
+        <rule type="androidpackage">
+            <entry>me.magnum.melonds.nightly/me.magnum.melonds.ui.emulator.EmulatorActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="MSX-EMU">
         <!-- MSX home computer and ColecoVision emulator MSX.emu -->
         <rule type="androidpackage">
             <entry>com.explusalpha.MsxEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="MUPEN64PLUS-AE">
+        <!-- Nintendo 64 emulator Mupen64Plus AE -->
+        <rule type="androidpackage">
+            <entry>org.mupen64plusae.v3.alpha/paulscode.android.mupen64plusae.SplashActivity</entry>
         </rule>
     </emulator>
     <emulator name="MY-BOY">
@@ -214,6 +241,12 @@
         <!-- OpenBOR Game Engine -->
         <rule type="androidpackage">
             <entry>org.openbor.engine/.GameActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="PANDA3DS">
+        <!-- Nintendo 3DS emulator Panda3DS -->
+        <rule type="androidpackage">
+            <entry>com.panda3ds.pandroid/.app.MainActivity</entry>
         </rule>
     </emulator>
     <emulator name="PCE-EMU">
@@ -273,6 +306,12 @@
             <entry>com.explusalpha.SaturnEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SKYLINE">
+        <!-- Nintendo Switch emulator Skyline -->
+        <rule type="androidpackage">
+            <entry>skyline.emu/emu.skyline.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X-EXPLUS">
         <!-- Super Nintendo emulator Snes9x EX+ -->
         <rule type="androidpackage">
@@ -296,13 +335,6 @@
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="androidpackage">
             <entry>org.vita3k.emulator/.Emulator</entry>
-        </rule>
-    </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="androidpackage">
-            <entry>org.yuzu.yuzu_emu.ea/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
-            <entry>org.yuzu.yuzu_emu/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
         </rule>
     </emulator>
 </ruleList>

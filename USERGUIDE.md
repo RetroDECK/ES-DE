@@ -126,6 +126,8 @@ Note that the updater will keep whatever filename you had for your running AppIm
 
 On Windows and macOS you can specify to which directory you want to save the downloaded file. The default is `C:\Users\myusername\Downloads` on Windows and `/Users/myusername/Downloads` on macOS.
 
+On Android all updates are made via the app store. Unless you have modifed the option _Check for application updates_ you'll see a popup on application startup whenever there's a new release in the app store.
+
 Regardless of package format and operating system it's a good idea to update the ROM directory tree after upgrading to a new version. It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed. The easiest way to do this is via the _Create/update system directories_ entry in the _Utilities_ menu. Alternatively the _--create-system-dirs_ command line option can be used. Both methods work identically and will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
 
 Likewise it's a good idea to update your themes using the theme downloader after upgrading ES-DE as support for any new systems is likely to have been added.
@@ -310,7 +312,7 @@ In general, 720p works fine with the RPi 4, and 1080p is tolerable but not reall
 
 The game systems configuration file `es_systems.xml` is located in the ES-DE resources directory which is part of the application installation. As such this file is not intended to be modified directly. If system customizations are required, a separate es_systems.xml file should instead be placed in the `custom_systems` folder in the ES-DE home directory.
 
-On Linux this means `/home/<username>/ES-DE/custom_systems/es_systems.xml`, on macOS `/Users/<username>/ES-DE/custom_systems/es_systems.xml` and on Windows `C:\Users\<username>\ES-DE\custom_systems\es_systems.xml` or `ES-DE\ES-DE\custom_systems\es_systems.xml` depending on whether the installer release or the portable release is used.
+On Linux this means `/home/<username>/ES-DE/custom_systems/es_systems.xml`, on macOS `/Users/<username>/ES-DE/custom_systems/es_systems.xml`, on Windows `C:\Users\<username>\ES-DE\custom_systems\es_systems.xml` or `ES-DE\ES-DE\custom_systems\es_systems.xml` depending on whether the installer release or the portable release is used, and on Android it's `ES-DE/custom_systems/es_systems.xml`.
 
 If you're using the AppImage release of ES-DE then the bundled es_systems.xml file is embedded in the AppImage together with the rest of the resources. You can extract it if you need it as a reference when creating your customized entries, or you can find it [here](https://gitlab.com/es-de/emulationstation-de/-/tree/master/resources/systems/linux).
 
@@ -545,25 +547,25 @@ Quits the application. This key combination can be changed to Ctrl + Q, Alt + Q 
 
 ## Themes
 
-ES-DE ships with the Slate and Modern themes and additional ones can be installed using the built-in theme downloader. More themes made specifically for ES-DE can be found on the Internet, and you can customize or create your own ones too.
+ES-DE ships with the Linear, Modern and Slate themes and additional ones can be installed using the built-in theme downloader. More themes made specifically for ES-DE can be found on the Internet, and you can customize or create your own ones too. Note that on Android specifically only the Linear theme is bundled with the application, but Modern and Slate can be installed via the theme downloader.
 
-As of ES-DE 2.2.0 no legacy EmulationStation themes are supported, such as those from RetroPie ES. Only themes made specifically for ES-DE will work.
+ES-DE does not support EmulationStation themes, such as those from RetroPie, Recalbox, RetroBat or Batocera.
 
-There are several user-selectable theme options in the _UI Settings_ menu, most notably _Theme variant_ which is essentially a form of theme profile. This could be anything, like different ways to navigate the themes, different layouts and designs etc. Additionally the _Theme color scheme_ setting makes it possible to select between different color schemes, if supported by the theme. The two remaining options _Theme aspect ratio_ and _Theme transitions_ are also important but you can normally leave them at their default _Automatic_ values, especially the _Theme aspect ratio_ option as it will be automatically detected. Be aware that all these theme settings are optional, it's up to the theme developer whether to add support for them to their themes.
+There are several user-selectable theme options in the _UI Settings_ menu, most notably _Theme variant_ which is essentially a form of theme profile. This could be anything, like different ways to navigate the themes, different layouts and designs etc. Additionally the _Theme color scheme_ setting makes it possible to select between different color schemes, if supported by the theme. You can change the font size too for themes that offer this, via the _Theme font size_ setting. The two remaining options _Theme aspect ratio_ and _Theme transitions_ are also important but you can normally leave them at their default _Automatic_ values, especially the _Theme aspect ratio_ option as it will be automatically detected. Be aware that all these theme settings are optional, it's up to the theme developer whether to add support for them to their themes.
 
-Themes are most easily installed using the built-in theme downloader, but you can also manually add them to your ES-DE home directory, i.e. `~/ES-DE/themes/`. By just adding them there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the ES-DE application data can be found in the root of the ES-DE directory.
+Themes are most easily installed using the built-in theme downloader, but you can also manually add them to your ES-DE home directory, i.e. `ES-DE/themes/`. By just adding them there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the ES-DE application data can be found in the root of the ES-DE directory.
 
-Although you should place additional themes in your ES-DE home directory, the default Slate and Modern themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/es-de/themes/` on Linux, `/Applications/ES-DE.app/Contents/Resources/themes/` on macOS or `C:\Program Files\ES-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the ES-DE directory.
+Although you should place additional themes in your ES-DE application data directory, the Linear, Modern and Slate themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/es-de/themes/` on Linux, `/Applications/ES-DE.app/Contents/Resources/themes/` on macOS or `C:\Program Files\ES-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the ES-DE directory.
 
 Note that if using the AppImage release on Linux, then there is no installation folder as all files are contained inside the AppImage file.
 
-If you would like to customize the Slate or Modern themes, simply make a copy of their directories to `~/ES-DE/themes/` and then those copies will take precedence over the ones in the application installation directory.
+If you would like to customize the Linear, Modern or Slate themes, simply make a copy of their directories to `ES-DE/themes/` and then those copies will take precedence over the ones in the application installation directory.
 
 Refer to the official themes list for a selection of high-quality themes (these are also available via the built-in theme downloader):\
 https://gitlab.com/es-de/themes/themes-list
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_This is a screenshot of the Modern theme that is bundled with ES-DE in addition to the default Slate theme._
+_This is a screenshot of the Slate theme that is bundled with ES-DE in addition to the default Linear theme._
 
 ## Theme downloader
 
@@ -683,7 +685,6 @@ The following emulators are supported in AppImage format when using the bundled 
 | psvita        | Vita3K              | Vita3K*.AppImage               |
 | psx           | DuckStation         | DuckStation*.AppImage          |
 | snes          | Snes9x              | Snes9x*.AppImage               |
-| switch        | Yuzu                | yuzu*.AppImage                 |
 | xbox          | xemu                | xemu*.AppImage                 |
 | wii           | Dolphin             | Dolphin_Emulator*.AppImage     |
 | wiiu          | Cemu                | Cemu*.AppImage                 |
@@ -3129,7 +3130,7 @@ Starts the theme downloader, which is documented in detail elsewhere in this doc
 
 **Theme**
 
-The theme to use. Defaults to Slate which is bundled with the application.
+The theme to use. Defaults to Linear which is bundled with the application.
 
 **Theme variant**
 
@@ -3437,7 +3438,7 @@ This lets you enable or disable your own custom game collections. If there are n
 
 **Create new custom collection from theme** _(Entry only visible if this ability is provided by the theme)_
 
-If the theme in use provides support for discrete custom collection systems, then this entry can be selected. For example, there could be support for systems like _Fighting_ or _Racing_ etc. The bundled Slate and Modern themes do not provide such discrete custom collection systems and in general it's not recommended to use this approach, as is explained [elsewhere](USERGUIDE.md#custom-collections) in this guide.
+If the theme in use provides support for discrete custom collection systems, then this entry can be selected. For example, there could be support for systems like _Fighting_ or _Racing_ etc. The bundled Linear, Modern and Slate themes do not provide such discrete custom collection systems and in general it's not recommended to use this approach, as is explained [elsewhere](USERGUIDE.md#custom-collections) in this guide.
 
 **Create new custom collection**
 
@@ -3863,7 +3864,7 @@ These automatic collections can be individually enabled or disabled by going to 
 
 These are collections that you create yourself. Examples could be grouping in genres like _Shoot 'em up_, _Fighting games_ etc. or perhaps a time period like _1980s_, _1990s_ and so on.
 
-If the theme in use supports it you can create a custom collection directly from a system provided by the theme. However, Slate and Modern do not provide such systems as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme would need to ship with an almost endless amount of collection systems for whatever categories all ES-DE users combined would like to use for their libraries.
+If the theme in use supports it you can create a custom collection directly from a system provided by the theme. However, Linear, Modern and Slate do not provide such systems as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme would need to ship with an almost endless amount of collection systems for whatever categories all ES-DE users combined would like to use for their libraries.
 
 So if you have set the option _Group custom collections_ to _If unthemed_ or _Always_, any collections you add will show up in the special _Collections_ system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list. You can also quick jump to this random game by pressing the _Y_ button.
 
@@ -3957,7 +3958,6 @@ On Windows the following emulators provide a way to inform ES-DE where they have
 * Rosalie's Mupen GUI
 * ScummVM
 * SimCoupé
-* Yuzu
 
 Default emulator/Alternative emulators columns: \
 **[L]**: Linux, **[M]**: macOS, **[W]**: Windows
@@ -4124,7 +4124,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [LW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | supervision           | Watara Supervision                             | Potator                           | MAME - Current,<br>MAME **(Standalone)** | No           | Single archive or ROM file |
 | supracan              | Funtech Super A'Can                            | MAME - Current                    | MAME **(Standalone)**             | Yes/No       | Single archive or ROM file. To make MAME start these games create an empty file named internal_68k.bin and zip it into supracan.zip |
-| switch                | Nintendo Switch                                | Yuzu **(Standalone)** [LW],<br>Ryujinx **(Standalone)** [M] | Ryujinx **(Standalone)** [LW]    | Yes          |                                      |
+| switch                | Nintendo Switch                                | Ryujinx **(Standalone)**          |                                   | Yes          |                                      |
 | symbian               | Symbian                                        | EKA2L1 [Nokia N-Gage] **(Standalone)** | EKA2L1 [Nokia N70] **(Standalone)**,<br>EKA2L1 [Nokia N97] **(Standalone)**,<br>EKA2L1 [Custom device] **(Standalone)** | Yes          | See the specific _Symbian and Nokia N-Gage_ section elsewhere in this guide |
 | tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [LW],<br>ares **(Standalone)** | No           | Single archive or ROM file |

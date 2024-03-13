@@ -1,12 +1,89 @@
 # ES-DE (EmulationStation Desktop Edition) - Changelog
 
-## Version 3.0.0
+## Version 3.0.1 / 3.0.1-xx (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+* Removed Yuzu from the switch system
+* Added Panda3DS standalone as an alternative emulator for the n3ds system
+* (Android) Added support for placing the ES-DE and ROMs directories on mounted USB storage (/mnt/media_rw/)
+* Added a more informative error message than "HTTP error code 430" when exceeding the daily ScreenScraper quota
+* Added the Snes9x 2005 Plus RetroArch core as an alternative emulator for the satellaview, sfc, snes, snesna and sufami systems
+* Added the Beetle SuperGrafx RetroArch core as an alternative emulator for the pcengine, pcenginecd, tg16 and tg-cd systems
+* Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
+* Added the .neo file extension to the arcade, mame and neogeo systems
+* Added the .chd file extension to the sega32x, sega32xjp and sega32xna systems
+* (Android) changed from %ROMPROVIDER% to %ROMSAF% for the C64.emu, PCE.emu (pcenginecd and tg-cd), Play! and Saturn.emu emulators
+* (Android) Changed the required filename for the Fake-08 RetroArch core from libfake08-arm64.so to fake08_libretro_android.so
+* Improved the layout for the miximage generator interface for some unusual display resolutions and aspect ratios
+* (Android) Increased the maximum waiting time for the storage mount retry loop from 3 to 4 seconds
+* Improved resilience to empty gamelist.xml files (they can now be updated instead of generating an error)
+* (Linux and Unix) Made it possible to change the application data directory using the ESDE_APPDATA_DIR environment variable
+* (Android) Removed symlink support
+* Removed the "v" before the version number from the version printout on application startup and from the main menu
+* Updated SDL to 2.30.1 on Android, Windows, macOS and the Linux AppImage builds
+* Eliminated some deprecation warnings when building against FFmpeg 6.1 or higher
+
+### Bug fixes
+
+* (Android) The supergrafx system had the Beetle SuperGrafx and Beetle PCE RetroArch cores mixed up
+* (Windows) The MAME standalone emulator entry for the atari7800 system had the wrong machine type defined
+* The Orphaned data cleanup interface didn't display the complete description text at some unusual display resolutions
+* (linear-es-de) Creating custom collections named "now-playing" or "completed" could lead to them being unthemed
+
+## Version 3.0.0-17 (Android intermediate)
+
+**Release date:** 2024-03-04
+
+### Detailed list of changes
+
+* Added support for Android TV devices (Android 11 and above and 64-bit only, such as the Nvidia Shield Pro)
+* Made it possible to use SAF URIs when splitting game systems across multiple storage devices
+* Added a retry loop on startup to check whether the external storage is mounted, to prevent the configurator from showing when set as the home app
+* Added support for the Amazon Appstore release of M64Plus FZ Pro
+* Added Mupen64Plus AE standalone as an alternative emulator for the n64 and n64dd systems
+* Added the Geolith RetroArch core as an alternative emulator for the arcade, mame and neogeo systems
+* Added the .neo file extension to the arcade, mame and neogeo systems
+* Changed the application updater notification message to no longer mention the app store
+* Added a more informative error message than "HTTP error code 430" when exceeding the daily ScreenScraper quota
+* Appended the Android version code to the version in the main menu
+
+### Bug fixes
+
+* External storage devices formatted using the NTFS filesystem couldn't be used
+* Plugging in a USB controller would display a permission popup that could cause controller input to break for some emulators
+* Pressing the backspace key twice while editing text using a physical keyboard would close the text input dialog
+
+## Version 3.0.0-15 (Android intermediate)
+
+**Release date:** 2024-02-27
+
+### Detailed list of changes
+
+* Added a version check on startup to present a popup if there is a new release available in the app store
+* Added Skyline standalone as an alternative emulator for the switch system
+* Added melonDS Nightly standalone as an alternative emulator for the nds system
+* Added Dolphin MMJR standalone as an alternative emulator for the gc and wii systems
+* Added Dolphin MMJR2 standalone as an alternative emulator for the gc and wii systems
+* Split the Yuzu emulator entry into Yuzu and Yuzu EA for the switch system
+* Added the %ACTIVITY_CLEAR_TASK% and %ACTIVITY_CLEAR_TOP% flags for AetherSX2, DraStic, Citra, Citra Canary and DuckStation
+
+### Bug fixes
+
+* Having spaces in the ROMs directory name broke game launching for emulators that used SAF URIs
+* Some special characters caused game launching to fail or behave strange for some emulators that used SAF URIs
+
+## Version 3.0.0 / 3.0.0-11
 
 **Release date:** 2024-02-17
 
 ### Release overview
 
-The 3.0 release rebrands the application from EmulationStation Desktop Edition to simply ES-DE. And as part of this the application data directory has changed from .emulationstation to ES-DE and its internal structure has been improved. There is also a new default theme named Linear that is bundled with the application.
+The main feature of the 3.0 release is that it adds support for the Android operating system. It also rebrands the application from EmulationStation Desktop Edition to simply ES-DE. As part of this the application data directory has changed from .emulationstation to ES-DE and its internal structure has been improved. There is also a new default theme named Linear that is bundled with the application.
 
 Support for configurable font sizes has also been added, so assuming the theme supports it, it's now possible to select between these sizes from the _UI settings_ menu.
 
@@ -14,6 +91,7 @@ A number of minor improvements and bug fixes are also part of this release.
 
 ### Detailed list of changes
 
+* Added support for the Android operating system
 * Renamed the application from EmulationStation Desktop Edition to ES-DE
 * Renamed the application data directory from .emulationstation to ES-DE
 * Updated the splash screen to reflect the new application name

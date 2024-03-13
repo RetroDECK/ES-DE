@@ -1065,6 +1065,20 @@ As well, passing the option --ignore-gamelist will disable the ParseGamelistOnly
 
 The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show games from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
 
+## Changing the application data directory
+
+On all platforms except Android and Windows it's possible to change the application data directory to something else than ~/ES-DE if you prefer that. This is accomplished using the ESDE_APPDATA_DIR environment variable, for example like the following:
+
+```
+ESDE_APPDATA_DIR=~/.config/ES-DE ./ES-DE_x64.AppImage
+```
+
+Or like this:
+```
+export ESDE_APPDATA_DIR=~/.config/ES-DE
+./ES-DE_x64.AppImage
+```
+
 ## Settings not configurable via the GUI
 
 There are some settings which are not configurable via the GUI as modifying these should normally not be required. To still change these, edit the es_settings.xml file directly.
@@ -1179,18 +1193,19 @@ Here's an example es_find_rules.xml file for Linux (this is not the complete fil
             <entry>~/.local/share/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
+    <emulator name="XEMU">
+        <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
-            <entry>yuzu</entry>
-            <entry>org.yuzu_emu.yuzu</entry>
+            <entry>xemu</entry>
+            <entry>app.xemu.xemu</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/yuzu*.AppImage</entry>
-            <entry>~/.local/bin/yuzu*.AppImage</entry>
-            <entry>~/bin/yuzu*.AppImage</entry>
-            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/Applications/xemu*.AppImage</entry>
+            <entry>~/.local/share/applications/xemu*.AppImage</entry>
+            <entry>~/.local/bin/xemu*.AppImage</entry>
+            <entry>~/bin/xemu*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/app.xemu.xemu</entry>
+            <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1223,11 +1238,11 @@ The other rules are probably self-explanatory with `systempath` searching the PA
 ```xml
 <rule type="staticpath">
     <!-- This is supported, first matching file will be selected -->
-    <entry>~/Applications/yuzu*.AppImage</entry>
+    <entry>~/Applications/xemu*.AppImage</entry>
     <!-- This is also supported -->
-    <entry>~/Applications/yuzu*.App*</entry>
+    <entry>~/Applications/xemu*.App*</entry>
     <!-- This is NOT supported -->
-    <entry>~/App*/yuzu*.AppImage</entry>
+    <entry>~/App*/xemu*.AppImage</entry>
 </rule>
 ```
 
@@ -1361,15 +1376,14 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>%ESPATH%\..\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
+    <emulator name="XEMU">
+        <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
-            <entry>yuzu.exe</entry>
+            <entry>xemu.exe</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\..\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\Emulators\xemu\xemu.exe</entry>
+            <entry>%ESPATH%\..\Emulators\xemu\xemu.exe</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1398,11 +1412,11 @@ But instead of changing the sorting directly in the es_systems.xml file it could
 Wildcards are supported for emulator binaries, but not for directories:
 ```xml
 <!-- This is supported, first matching file will be selected -->
-<command>~/Applications/yuzu*.AppImage %ROM%</command>
+<command>~/Applications/xemu*.AppImage %ROM%</command>
 <!-- This is also supported -->
-<command>~/Applications/yuzu*.App* %ROM%</command>
+<command>~/Applications/xemu*.App* %ROM%</command>
 <!-- This is NOT supported -->
-<command>~/App*/yuzu*.AppImage %ROM%</command>
+<command>~/App*/xemu*.AppImage %ROM%</command>
 ```
 
 There is a special case when it comes to file extensions where it's possible to use extensionless files if required. To accomplish this simply add a dot (.) to the list of extensions in the `<extension>` tag. Obviously this makes it impossible to use the _directories interpreted as files_ functionality as there is no file extension, but apart from that everything should work the same as for regular files.
@@ -1691,7 +1705,10 @@ ES-DE works a bit differently on Android which is also reflected in the es_find_
 To better understand the configuration in this section it could be a good idea to refer the official Android documentation:\
 https://developer.android.com/reference/android/content/Intent
 
-There is a command line tool in Android named _am_ which implements the _Intent_ API and can be used to test emulator launching, but this is not intended to be used by other applications and therefore ES-DE implements direct (albeit partial) support for the Intent API. Testing the modern FileProvider interface using the _am_ utility may also be difficult, or maybe impossible.
+There is a command line tool in Android named _am_ which implements the _Intent_ API and can be used to test emulator launching, but this is not intended to be used by other applications and therefore ES-DE implements direct (albeit partial) support for the Intent API. Testing the modern FileProvider interface using the _am_ utility is unfortunately not really possible as access permission is provided by the calling process, i.e. ES-DE.
+
+The es_find_rules.xml and es_systems.xml files are kept in an Android-internal directory and can't be accessed directly, but you can find them at the following location:\
+https://gitlab.com/es-de/emulationstation-de/-/tree/master/resources/systems/android
 
 **es_find_rules.xml**
 
@@ -1712,11 +1729,11 @@ Here's an example es_find_rules.xml file defining two emulators:
             <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
+    <emulator name="COLEM">
+        <!-- Coleco ColecoVision and Adam emulator ColEm -->
         <rule type="androidpackage">
-            <entry>org.yuzu.yuzu_emu.ea/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
-            <entry>org.yuzu.yuzu_emu/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+            <entry>com.fms.colem.deluxe/com.fms.emulib.TVActivity</entry>
+            <entry>com.fms.colem/com.fms.emulib.TVActivity</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1750,7 +1767,7 @@ There are three approaches to passing game ROMs to emulators by using the follow
 `%ROMSAF%` - Replaced with an Android Storage Access Framework (SAF) document URI which always starts with the _content://com.android.externalstorage.documents/_ string. You can read more about the SAF here:\
 https://developer.android.com/guide/topics/providers/document-provider
 
-`%ROMPROVIDER%` - This is the most modern approach to passing game ROMs to emulators. It uses the _FileProvider_ API to provide permissions to the file. This means that you don't need to setup the emulator upfront to have access to the directory where the game file is stored, access is instead temporarily granted by ES-DE. You can read more about the FileProvider API here:\
+`%ROMPROVIDER%` - This is the most modern approach to passing game ROMs to emulators. It uses the _FileProvider_ API to provide permissions to the file. This means that you generally don't need to setup the emulator upfront to have access to the directory where the game file is stored, access is instead temporarily granted by ES-DE. This will however only work for games that consist of a single file, for multi-file games such as .cue/.bin and similar %ROMSAF% has to be used instead. Adding to the confusion is however the fact that some emulators like FPseNG and FPse can only be launched using %ROMPROVIDER% even though you need to setup scoped storage access in the emulator upfront. So there are unfortunately no definitive rules regarding the use of %ROMPROVIDER%, it all depends on how the emulator has implemented the functionality. You can read more about the FileProvider API here:\
 https://developer.android.com/reference/androidx/core/content/FileProvider
 
 The `%ROM%` and `%ROMSAF%` variables can be used with both the `%DATA%` and `%EXTRA_` variables, but `%ROMPROVIDER%` can only be used with the `%DATA%` variable. For the `%DATA%` variable you'll just assign the ROM variable with an equal sign as there can only be a single _setData()_ API call per Intent. For the `%EXTRA_` variable you need to specify a name of the extra and then define it using an equal sign as an arbitrary amount of _putExtra()_ API calls can be used for an Intent.
@@ -1782,14 +1799,15 @@ Here's an example es_systems.xml file for Android:
 <!-- This is the ES-DE game systems configuration file for Android -->
 <systemList>
     <system>
-        <name>gc</name>
-        <fullname>Nintendo GameCube</fullname>
-        <path>%ROMPATH%/gc</path>
-        <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
-        <command label="Dolphin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/dolphin_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %DATA%=%ROMPROVIDER%</command>
-        <platform>gc</platform>
-        <theme>gc</theme>
+        <name>atari2600</name>
+        <fullname>Atari 2600</fullname>
+        <path>%ROMPATH%/atari2600</path>
+        <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="Stella">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=stella_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Stella 2014">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=stella2014_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="2600.emu (Standalone)">%EMULATOR_2600-EMU% %DATA%=%ROMPROVIDER%</command>
+        <platform>atari2600</platform>
+        <theme>atari2600</theme>
     </system>
     <system>
         <name>n3ds</name>
@@ -1797,8 +1815,10 @@ Here's an example es_systems.xml file for Android:
         <path>%ROMPATH%/n3ds</path>
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
         <command label="Citra">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=/data/data/%ANDROIDPACKAGE%/cores/citra_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="Citra (Standalone)">%EMULATOR_CITRA% %ACTIVITY_NO_HISTORY% %EXTRA_SelectedGame%=%ROMSAF%</command>
+        <command label="Citra (Standalone)">%EMULATOR_CITRA% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMSAF%</command>
+        <command label="Citra Canary (Standalone)">%EMULATOR_CITRA-CANARY% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMSAF%</command>
         <command label="Citra MMJ (Standalone)">%EMULATOR_CITRA-MMJ% %EXTRA_GamePath%=%ROM%</command>
+        <command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %DATA%=%ROMPROVIDER%</command>
         <platform>n3ds</platform>
         <theme>n3ds</theme>
     </system>
