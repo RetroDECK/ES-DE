@@ -434,12 +434,11 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Manufacturer | Model            | Android release | Supported | Known issues        | Comment                    |
 | :----------- | :--------------- | :-------------- | :-------- | :------------------ | :------------------------- |
 | Anbernic     | RG556            | 13              | Yes       | None                |                            |
-| Ayn          | Odin             | 10              | No        | N/A                 | Android 10 not supported   |
 | Ayn          | Odin Lite        | 11              | Yes       | None                |                            |
 | Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues | Bugs in the firmware/OS image |
 | Google       | Pixel 4a         | 13              | Yes       | None                |                            |
 | Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
-| HONOR        | Magic5 Pro       | 13              | Yes       | None                |                            |
+| Honor        | Magic5 Pro       | 13              | Yes       | None                |                            |
 | Nokia        | 5.4              | 12              | Yes       | None                |                            |
 | Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
 | Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                | Limited RAM capacity on this device makes it unsuitable for demanding themes and large game collections |
@@ -450,7 +449,9 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
 | Samsung      | Galaxy S10       | 12              | Yes       | None                |                            |
+| Samsung      | Galaxy S20       | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy S22 Ultra | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S23 Ultra | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
 | Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
 | Xiaomi       | Pad 5            | 13              | Yes       | None                |                            |
