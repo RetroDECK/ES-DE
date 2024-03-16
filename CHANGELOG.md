@@ -1,12 +1,12 @@
 # ES-DE (EmulationStation Desktop Edition) - Changelog
 
-## Version 3.0.1 / 3.0.1-xx (in development)
+## Version 3.0.1 / 3.0.1-19
 
-**Release date:** TBD
+**Release date:** 2024-03-16
 
 ### Release overview
 
-This release adds support for Android 10 devices, removes support for the Yuzu emulator and includes a number of additional minor improvements and bug fixes.
+This release adds support for Android 10, removes support for the Yuzu emulator and includes a number of additional minor improvements and bug fixes.
 
 ### Detailed list of changes
 

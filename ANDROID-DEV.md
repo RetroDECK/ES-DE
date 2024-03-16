@@ -281,7 +281,7 @@ https://www.explusalpha.com/
 
 This RetroArch core is a good port of the official PICO-8 game engine which does not exist on Android. It's not shipped with RetroArch by default though so you need to manually install it. After downloading it you'll need to place the core inside's RetroArch's downloads directory and then install it from the RetroArch app.
 
-You must use the 64-bit version with the filename `libfake08-arm64.so` and it has to be renamed to `fake08_libretro_android.so` before you install it into RetroArch. Details on how to manually install cores in RetroArch can be found on the Internet. Fake-08 can be downloaded from their GitHub site.
+You must use the 64-bit version with the filename `libfake08-arm64.so` and it has to be renamed to `fake08_libretro_android.so` before you install it into RetroArch. Details on how to manually install cores in RetroArch can be found on the Internet, but the short version is to use the _Install or Restore a Core_ entry in the _Load Core_ menu. Fake-08 can be downloaded from their GitHub site.
 
 https://github.com/jtothebell/fake-08/releases
 
@@ -443,7 +443,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Ayn          | Odin             | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite        | 11              | Yes       | None                |                            |
 | Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues | Bugs in the firmware/OS image |
-| Google       | Pixel 4a         | 13              | Yes       | None                |                            |
+| Google       | Pixel 4a         | 13, 14          | Yes       | None                |                            |
 | Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
 | Honor        | 20 lite          | 10              | Yes       | None                |                            |
 | Honor        | Magic5 Pro       | 13              | Yes       | None                |                            |
@@ -463,6 +463,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Samsung      | Galaxy S22 Ultra | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S23 Ultra | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
+| Ulefone      | Note 6P          | 11              | Yes       | None                |                            |
 | Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
 | Xiaomi       | Pad 5            | 13              | Yes       | None                |                            |
 | Xiaomi       | Redmi Note 11    | 11              | Yes       | None                |                            |
