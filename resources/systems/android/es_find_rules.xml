@@ -337,4 +337,11 @@
             <entry>org.vita3k.emulator/.Emulator</entry>
         </rule>
     </emulator>
+    <emulator name="YABASANSHIRO-2">
+        <!-- Sega Saturn emulator Yaba Sanshiro 2 -->
+        <rule type="androidpackage">
+            <entry>org.devmiyax.yabasanshioro2.pro/org.uoyabause.android.Yabause</entry>
+            <entry>org.devmiyax.yabasanshioro2/org.uoyabause.android.Yabause</entry>
+        </rule>
+    </emulator>
 </ruleList>
