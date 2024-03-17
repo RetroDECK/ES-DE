@@ -60,7 +60,7 @@ The following emulators are configured for FileProvider access:
 * GBA.emu
 * GBC.emu
 * Lynx.emu
-* MD.emu
+* MD.emu (genesis, mastersystem, megadrive, megadrivejp)
 * MAME4droid 2024
 * MAME4droid
 * NES.emu
@@ -433,6 +433,13 @@ This PlayStation Vita emulator can be downloaded from their GitHub site. Refer t
 
 https://github.com/Vita3K/Vita3K-Android/releases
 
+### Yaba Sanshiro 2
+
+This emulator can be installed from the Play store, there is a paid Pro version as well. At the time of writing only the Pro version works when launching games from ES-DE.
+
+https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2 \
+https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2.pro
+
 ## Device compatibility
 
 This is clearly not a complete list of Android devices, but rather those we know have been tested with ES-DE and for which there is a known status.
@@ -447,6 +454,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
 | Honor        | 20 lite          | 10              | Yes       | None                |                            |
 | Honor        | Magic5 Pro       | 13              | Yes       | None                |                            |
+| Huawei       | Mate 10 Pro      | 10              | Yes       | None                |                            |
 | Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
 | Nokia        | 5.4              | 12              | Yes       | None                |                            |
 | Nokia        | 7 Plus           | 10              | Yes       | None                |                            |
@@ -463,6 +471,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Samsung      | Galaxy S22 Ultra | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S23 Ultra | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab A7    | 12              | Yes       | None                |                            |
 | Ulefone      | Note 6P          | 11              | Yes       | None                |                            |
 | Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
 | Xiaomi       | Pad 5            | 13              | Yes       | None                |                            |
@@ -611,8 +620,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero] | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | Speccy **(Standalone)**           |                                   | No           | Single archive or ROM file           |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
-| saturn                | Sega Saturn                                    | Beetle Saturn                     | YabaSanshiro,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
-| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | YabaSanshiro,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| saturn                | Sega Saturn                                    | Beetle Saturn                     | YabaSanshiro,<br>Yaba Sanshiro 2 **(Standalone)**,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | YabaSanshiro,<br>Yaba Sanshiro 2 **(Standalone)**,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | scummvm               | ScummVM Game Engine                            | ScummVM                           |                                   | No           |                                      |
 | scv                   | Epoch Super Cassette Vision                    | _Placeholder_                     |                                   |              |                                      |
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file           |

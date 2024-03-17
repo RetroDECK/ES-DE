@@ -1,5 +1,16 @@
 # ES-DE (EmulationStation Desktop Edition) - Changelog
 
+## Version 3.0.1-xx (Android intermediate) (in development)
+
+**Release date:** TBD
+
+### Detailed list of changes
+
+* (Android) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
+* (Android) Changed from %ROMPROVIDER% to %ROMSAF% for MD.emu (only for megacd, megacdjp and segacd)
+
+### Bug fixes
+
 ## Version 3.0.1 / 3.0.1-19
 
 **Release date:** 2024-03-16

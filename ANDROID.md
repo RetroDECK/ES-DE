@@ -447,6 +447,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
 | Honor        | 20 lite          | 10              | Yes       | None                |                            |
 | Honor        | Magic5 Pro       | 13              | Yes       | None                |                            |
+| Huawei       | Mate 10 Pro      | 10              | Yes       | None                |                            |
 | Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
 | Nokia        | 5.4              | 12              | Yes       | None                |                            |
 | Nokia        | 7 Plus           | 10              | Yes       | None                |                            |
@@ -463,6 +464,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Samsung      | Galaxy S22 Ultra | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S23 Ultra | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab A7    | 12              | Yes       | None                |                            |
 | Ulefone      | Note 6P          | 11              | Yes       | None                |                            |
 | Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
 | Xiaomi       | Pad 5            | 13              | Yes       | None                |                            |
