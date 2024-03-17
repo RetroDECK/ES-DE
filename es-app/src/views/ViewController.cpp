@@ -221,13 +221,8 @@ void ViewController::noGamesDialog()
                            "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
                            "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
 #else
-    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
-                           "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
-                           "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM "
-                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
-                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
-                           "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
-                           "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+    mNoGamesErrorMessage = "NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
+                           "THE RETRODECK ROM DIRECTORY LOCATED IN:\n";
 #endif
 
 #if defined(_WIN64)
