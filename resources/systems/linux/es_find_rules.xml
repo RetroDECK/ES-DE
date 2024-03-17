@@ -24,6 +24,7 @@
     </emulator>
     <core name="RETROARCH">
         <rule type="corepath">
+            <entry>/app/share/libretro/cores</entry> <!-- RetroDECK -->
             <!-- Non-portable AppImage and compiled from source -->
             <entry>~/.config/retroarch/cores</entry>
             <!-- Portable AppImage -->
@@ -143,6 +144,7 @@
     <emulator name="CEMU">
         <!-- Nintendo Wii U emulator Cemu -->
         <rule type="systempath">
+            <entry>Cemu-wrapper</entry> <!-- RetroDECK -->
             <entry>cemu</entry>
             <entry>Cemu</entry>
         </rule>
@@ -162,11 +164,13 @@
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="systempath">
+            <entry>citra-qt</entry> <!-- RetroDECK -->
             <entry>citra</entry>
             <entry>citra-emu.citra-nightly</entry>
             <entry>org.citra_emu.citra</entry>
         </rule>
         <rule type="staticpath">
+            <entry>/var/data/ponzu/Citra/bin/citra-qt</entry> <!-- RetroDECK, ponzu -->
             <entry>~/Applications/citra-qt*.AppImage</entry>
             <entry>~/.local/share/applications/citra-qt*.AppImage</entry>
             <entry>~/.local/bin/citra-qt*.AppImage</entry>
@@ -469,6 +473,7 @@
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
+	    <entry>mame-rdwrapper.sh</entry> <!-- RetroDECK -->
             <entry>mame</entry>
             <entry>org.mamedev.MAME</entry>
         </rule>
@@ -760,6 +765,7 @@
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
         <rule type="systempath">
+	    <entry>ryujinx-rdwrapper.sh</entry> <!-- RetroDECK -->
             <entry>Ryujinx</entry>
             <entry>Ryujinx.Ava</entry>
             <entry>org.ryujinx.Ryujinx</entry>
@@ -1064,6 +1070,22 @@
             <entry>~/.local/share/applications/xroar/xroar</entry>
             <entry>~/.local/bin/xroar/xroar</entry>
             <entry>~/bin/xroar/xroar</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU"> <!-- RetroDECK -->
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu</entry>
+            <entry>org.yuzu_emu.yuzu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/data/ponzu/Yuzu/bin/yuzu</entry> <!-- RetroDECK -->
+            <entry>~/Applications/yuzu*.AppImage</entry>
+            <entry>~/.local/share/applications/yuzu*.AppImage</entry>
+            <entry>~/.local/bin/yuzu*.AppImage</entry>
+            <entry>~/bin/yuzu*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">
