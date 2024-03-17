@@ -1,16 +1,20 @@
 # ES-DE (EmulationStation Desktop Edition) - Changelog
 
-## Version 3.0.1 / 3.0.1-xx (in development)
+## Version 3.0.1 / 3.0.1-19
 
-**Release date:** TBD
+**Release date:** 2024-03-16
 
 ### Release overview
 
+This release adds support for Android 10, removes support for the Yuzu emulator and includes a number of additional minor improvements and bug fixes.
+
 ### Detailed list of changes
 
+* Added support for Android 10
 * Removed Yuzu from the switch system
 * Added Panda3DS standalone as an alternative emulator for the n3ds system
 * (Android) Added support for placing the ES-DE and ROMs directories on mounted USB storage (/mnt/media_rw/)
+* (Android) Added support for network mounted storage on the Nvidia Shield Pro (and possibly other devices)
 * Added a more informative error message than "HTTP error code 430" when exceeding the daily ScreenScraper quota
 * Added the Snes9x 2005 Plus RetroArch core as an alternative emulator for the satellaview, sfc, snes, snesna and sufami systems
 * Added the Beetle SuperGrafx RetroArch core as an alternative emulator for the pcengine, pcenginecd, tg16 and tg-cd systems

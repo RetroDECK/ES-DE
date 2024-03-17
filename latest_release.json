@@ -1,55 +1,55 @@
 {
-    "comment": "Latest release of EmulationStation Desktop Edition (ES-DE)",
+    "comment": "Latest release of ES-DE (EmulationStation Desktop Edition)",
     "website": "https://es-de.org/",
     "repository": "https://gitlab.com/es-de/",
     "stable": {
-        "version": "3.0.0",
-        "release": "41",
-        "date": "2024-02-17",
+        "version": "3.0.1",
+        "release": "42",
+        "date": "2024-03-16",
         "androidVersionName": "3.0.0-15",
         "androidVersionCode": "15",
         "androidDate": "2024-02-25",
         "packages": [
             {
                 "name": "WindowsPortable",
-                "filename": "ES-DE_3.0.0-x64_Portable.zip",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/113822782/download",
-                "md5": "d2b773fc52df8118f1b38f5691db5a93",
+                "filename": "ES-DE_3.0.1-x64_Portable.zip",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/117882093/download",
+                "md5": "161a5700a4027183e3b2a994d6020fba",
                 "message": ""
             },
             {
                 "name": "WindowsInstaller",
-                "filename": "ES-DE_3.0.0-x64.exe",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/113822778/download",
-                "md5": "9230a0b75ce47c95a0fefa122b28b920",
+                "filename": "ES-DE_3.0.1-x64.exe",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/117882078/download",
+                "md5": "6b21884508c8ce795320b41c569c77ee",
                 "message": ""
             },
             {
                 "name": "macOSApple",
-                "filename": "ES-DE_3.0.0-arm64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/113822752/download",
-                "md5": "52476d2e3be9b5cac566355fa562c107",
+                "filename": "ES-DE_3.0.1-arm64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/117882005/download",
+                "md5": "1ccb1a3ba1096eeff3b3451acaad2596",
                 "message": ""
             },
             {
                 "name": "macOSIntel",
-                "filename": "ES-DE_3.0.0-x64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/113822763/download",
-                "md5": "7c013fdc1c4ed85cd06e9c021dc093c3",
+                "filename": "ES-DE_3.0.1-x64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/117882072/download",
+                "md5": "ffb7ad08377668016d31afca3d4b762b",
                 "message": ""
             },
             {
                 "name": "LinuxAppImage",
                 "filename": "ES-DE_x64.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/113822792/download",
-                "md5": "b258ced7e37f521ece83b78660d8022e",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/117882100/download",
+                "md5": "bfef621f7f421a1066202620a9494e79",
                 "message": ""
             },
             {
                 "name": "LinuxSteamDeckAppImage",
                 "filename": "ES-DE_x64_SteamDeck.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/113822804/download",
-                "md5": "f8ae7e1097e2ad7593340e9dad9e53a5",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/117882116/download",
+                "md5": "6433f2b350ab6c8318220191aa36eb8e",
                 "message": ""
             }
         ]
