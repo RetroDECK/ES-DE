@@ -11,6 +11,8 @@
 
 ### Bug fixes
 
+* On Android 10 the Orphaned data cleanup utility removed media files which should not have been removed
+
 ## Version 3.0.1 / 3.0.1-19
 
 **Release date:** 2024-03-16
