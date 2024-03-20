@@ -71,11 +71,11 @@ Also be aware that there are some slight variations when it comes to how emulato
 
 ## Why do some standalone emulators fail to launch with "ERROR CODE -1" or just display a black screen?
 
-ERROR CODE -1 is a general failure mode which could be caused by multiple things. Some emulators react like this when there's a permission issue and they can't access the game file. See the previous question above for how to deal with such permission problems. And some emulators return this error when the file you attempt to launch has an unsupported file extension. For example MD.emu does not support .bin files, but if you rename these to the .gen extension then game launching works as expected.
+ERROR CODE -1 is a general failure mode which could be caused by multiple things. Some emulators react like this when there's a permission issue and they can't access the game file. See the previous question above for how to deal with such permission problems. And some emulators return this error when the file you attempt to launch has an unsupported file extension. For example MD.emu does not support .bin files, but if you rename these files to the .gen extension then game launching works as expected.
 
-If you have an Ayn Odin 2 this error will occur for a number of emulators such as Redream and My Boy! due to what seems to be a problem with their Android OS image. See the [Issues with the Ayn Odin 2](ANDROID.md#issues-with-the-ayn-odin-2) section in the Android documentation for more details about the latter.
+If you own an Ayn Odin 2 then this error will also occur when attempting to launch the ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy emulators. This seems to be caused by bugs in their firmware/OS image and needs to be resolved by Ayn.
 
-The black screen on game launch is just a variation of this failure mode, it depends on how the emulator handles errors whether there will be a black screen or whether it will abort and report the launch failure to ES-DE.
+A black screen on game launch is also a possible variation of this failure mode, it depends on how the emulator handles errors whether there will be a black screen or whether it will abort and report the launch failure to ES-DE.
 
 ## Sometimes after I return from a game ES-DE is restarting, did it crash?
 

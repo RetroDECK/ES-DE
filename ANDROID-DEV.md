@@ -158,22 +158,7 @@ You can relocate as many systems as you want, you just need to place them all wi
 
 ## Issues with the Ayn Odin 2
 
-There are two serious issues that seem to be specific to the Ayn Odin 2, although it remains to be seen whether the problem exists also on other devices.
-
-The first problem is that some emulators refuse to run games that you place inside directories that contain dots in their names. This is quite problematic as the [directories interpreted as files](USERGUIDE.md#directories-interpreted-as-files) functionality depends on the ability to add file extensions to directory names.
-
-This has been observed with M64Plus FZ, Play!, Saturn.emu, FPse and FPseNG and it's working fine with RetroArch, NetherSX2, ePSXe and DuckStation. Note however that this is not a complete list as not all emulators have been tested for this problem.
-
-If you run into this issue you can use the _folder link_ functionality as an alternative to the _directories interpreted as files_ functionality. How to use folder links is described in the [User guide](USERGUIDE.md).
-
-The second problem is that a number of emulators can't be launched from ES-DE at all. When attempting to run such an emulator an error popup with the game name followed by "ERROR CODE -1" is displayed. The affected emulators are ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy.
-
-The following devices have been tested and do **not** experience either of these two problems:
-
-* Ayn Odin Lite (Android 11)
-* Retroid Pocket 4 Pro (Android 13)
-* Google Pixel 4a (Android 13)
-* Google Pixel Tablet (Android 14)
+There is one serious issue that seems to be specific to the Ayn Odin 2, and that is that a number of standalone emulators can't be launched. When attempting to run such an emulator an error popup with the game name followed by "ERROR CODE -1" is displayed. The affected emulators are ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy.
 
 There are also some issues with sound quality on the Odin 2, such as large fluctuations in volume where some sounds are quite loud and some are quite silent. There are also some strange aliasing effects when playing samples rapidly.
 
@@ -449,23 +434,27 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG556            | 13              | Yes       | None                |                            |
 | Ayn          | Odin             | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite        | 11              | Yes       | None                |                            |
-| Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues | Bugs in the firmware/OS image |
+| Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Minor audio issues | Bugs in the firmware/OS image |
 | Google       | Pixel 4a         | 13, 14          | Yes       | None                |                            |
 | Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
 | Honor        | 20 lite          | 10              | Yes       | None                |                            |
 | Honor        | Magic5 Pro       | 13              | Yes       | None                |                            |
 | Huawei       | Mate 10 Pro      | 10              | Yes       | None                |                            |
+| Lenovo       | Legion Y700      | 12              | Yes       | None                |                            |
+| Logitech     | G Cloud          | 11              | Yes       | None                |                            |
 | Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
+| Motorola     | Moto G100        | 12              | Yes       | None                |                            |
 | Nokia        | 5.4              | 12              | Yes       | None                |                            |
 | Nokia        | 7 Plus           | 10              | Yes       | None                |                            |
 | Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                | Limited RAM capacity on this device makes it unsuitable for demanding themes and large game collections |
 | OnePlus      | 6T               | 11              | Yes       | None                |                            |
 | Oppo         | A15              | 10              | Yes       | None                |                            |
-| REDMAGIC     | 8 Pro            | 13              | Yes       | None                |                            |
+| RedMagic     | 8 Pro            | 13              | Yes       | None                |                            |
 | Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
+| Samsung      | Galaxy S9+       | 10              | Yes       |                     |                            |
 | Samsung      | Galaxy S10       | 12              | Yes       | None                |                            |
 | Samsung      | Galaxy S20       | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy S22 Ultra | 14              | Yes       | None                |                            |
