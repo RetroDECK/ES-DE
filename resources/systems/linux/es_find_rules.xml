@@ -473,7 +473,7 @@
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
-	    <entry>mame-rdwrapper.sh</entry> <!-- RetroDECK -->
+	        <entry>mame-rdwrapper.sh</entry> <!-- RetroDECK -->
             <entry>mame</entry>
             <entry>org.mamedev.MAME</entry>
         </rule>
