@@ -135,11 +135,11 @@
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame2000_libretro.so %ROM%</command>
         <command label="MAME (Standalone)">%EMULATOR_MAME% -inipath /var/config/mame/ini -rompath %GAMEDIR%\;%ROMPATH%/arcade %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fbneo_libretro.so %ROM%</command>
-        <command label="FinalBurn Neo (Standalone)">%EMULATOR_FINALBURN-NEO% -fullscreen %BASENAME%</command>
+        <!--<command label="FinalBurn Neo (Standalone)">%EMULATOR_FINALBURN-NEO% -fullscreen %BASENAME%</command>-->
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fbalpha2012_libretro.so %ROM%</command>
         <command label="Geolith">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/geolith_libretro.so %ROM%</command>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
-        <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
+        <!--<command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>-->
         <!--<command label="Flycast Dojo (Standalone)">%EMULATOR_FLYCAST-DOJO% %ROM%</command>-->
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/kronos_libretro.so %ROM%</command>
         <!--<command label="Supermodel (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SUPERMODEL% -log-output=%GAMEDIR%/Config/Supermodel.log %INJECT%=%BASENAME%.commands %ROM%</command>-->
@@ -229,7 +229,7 @@
         <path>%ROMPATH%/atari800</path>
         <extension>.a52 .A52 .atr .ATR .atx .ATX .bin .BIN .car .CAR .cas .CAS .cdm .CDM .rom .ROM .xex .XEX .xfd .XFD .7z .7Z .zip .ZIP</extension>
         <command label="Atari800">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/atari800_libretro.so %ROM%</command>
-        <command label="Atari800 (Standalone)">%EMULATOR_ATARI800% %ROM%</command>
+        <!-- <command label="Atari800 (Standalone)">%EMULATOR_ATARI800% %ROM%</command> -->
         <platform>atari800</platform>
         <theme>atari800</theme>
     </system>
@@ -245,6 +245,7 @@
         <platform>atarijaguar</platform>
         <theme>atarijaguar</theme>
     </system>
+<!--
     <system>
         <name>atarijaguarcd</name>
         <fullname>Atari Jaguar CD</fullname>
@@ -255,6 +256,7 @@
         <platform>atarijaguarcd</platform>
         <theme>atarijaguarcd</theme>
     </system>
+-->
     <system>
         <name>atarilynx</name>
         <fullname>Atari Lynx</fullname>
@@ -363,6 +365,7 @@
         <platform>channelf</platform>
         <theme>channelf</theme>
     </system>
+<!-- 
     <system>
         <name>coco</name>
         <fullname>Tandy Color Computer</fullname>
@@ -373,6 +376,7 @@
         <platform>coco</platform>
         <theme>coco</theme>
     </system>
+-->
     <system>
         <name>colecovision</name>
         <fullname>Coleco ColecoVision</fullname>
@@ -537,6 +541,7 @@
         <platform>dos</platform>
         <theme>dos</theme>
     </system>
+<!--
     <system>
         <name>dragon32</name>
         <fullname>Dragon Data Dragon 32</fullname>
@@ -547,6 +552,7 @@
         <platform>dragon32</platform>
         <theme>dragon32</theme>
     </system>
+-->
     <system>
         <name>dreamcast</name>
         <fullname>Sega Dreamcast</fullname>
@@ -981,6 +987,7 @@
         <platform>arcade</platform>
         <theme>mame</theme>
     </system>
+<!--
     <system>
         <name>mame-advmame</name>
         <fullname>AdvanceMAME</fullname>
@@ -990,6 +997,7 @@
         <platform>arcade</platform>
         <theme>mame-advmame</theme>
     </system>
+-->
     <system>
         <name>mastersystem</name>
         <fullname>Sega Master System</fullname>
@@ -1094,15 +1102,17 @@
         <platform>arcade</platform>
         <theme>model2</theme>
     </system>
+<!--
     <system>
         <name>model3</name>
         <fullname>Sega Model 3</fullname>
         <path>%ROMPATH%/model3</path>
         <extension>.7z .7Z .zip .ZIP</extension>
-        <!-- <command label="Supermodel (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SUPERMODEL% -log-output=%GAMEDIR%/Config/Supermodel.log -force-feedback %INJECT%=%BASENAME%.commands %ROM%</command> -->
+        <command label="Supermodel (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SUPERMODEL% -log-output=%GAMEDIR%/Config/Supermodel.log -force-feedback %INJECT%=%BASENAME%.commands %ROM%</command>
         <platform>arcade</platform>
         <theme>model3</theme>
     </system>
+-->
     <system>
         <name>moto</name>
         <fullname>Thomson MO/TO Series</fullname>
@@ -1189,7 +1199,7 @@
         <command label="Citra">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra_libretro.so %ROM%</command>
         <command label="Citra 2018">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra2018_libretro.so %ROM%</command>
         <command label="Citra (via Ponzu)">%EMULATOR_CITRA% %ROM%</command>
-        <command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %ROM%</command>
+        <!-- <command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %ROM%</command> -->
         <platform>n3ds</platform>
         <theme>n3ds</theme>
     </system>
@@ -1200,7 +1210,7 @@
         <extension>.bin .BIN .d64 .D64 .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
         <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mupen64plus_next_libretro.so %ROM%</command>
         <!-- <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% &ndash;&ndash;nogui %ROM%</command> -->
-        <!-- <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.so %ROM%</command> -->
+        <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.so %ROM%</command>
         <!-- <command label="simple64 (Standalone)">%EMULATOR_SIMPLE64% &ndash;&ndash;nogui %ROM%</command> -->
         <!-- <command label="Rosalie's Mupen GUI (Standalone)">%EMULATOR_ROSALIES-MUPEN-GUI% &ndash;&ndash;nogui -q %ROM%</command> -->
         <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Nintendo 64" %ROM%</command> -->
@@ -1260,7 +1270,7 @@
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume_libretro.so %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.so %ROM%</command>
         <!-- <command label="DeSmuME (Standalone)">%EMULATOR_DESMUME% %ROM%</command> -->
-        <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <!-- <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command> -->
         <command label="melonDS DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melondsds_libretro.so %ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melonds_libretro.so %ROM%</command>
         <!-- <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>-->
@@ -1379,6 +1389,7 @@
         <platform>openbor</platform>
         <theme>openbor</theme>
     </system>
+<!--
     <system>
         <name>oric</name>
         <fullname>Tangerine Computer Systems Oric</fullname>
@@ -1388,6 +1399,7 @@
         <platform>oric</platform>
         <theme>oric</theme>
     </system>
+-->
     <system>
         <name>palm</name>
         <fullname>Palm OS</fullname>
@@ -1405,8 +1417,8 @@
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
-        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
-        <command label="DOSBox Staging (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%</command>
+        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command> -->
+        <!-- <command label="DOSBox Staging (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%</command> -->
         <platform>pc</platform>
         <theme>pc</theme>
     </system>
@@ -1435,8 +1447,8 @@
         <fullname>PC Arcade Systems</fullname>
         <path>%ROMPATH%/pcarcade</path>
         <extension>.AppImage .desktop .exe .EXE .sh</extension>
-        <command label="Wine (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_WINE% %ROM%</command>
-        <command label="Proton (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_PROTON% %ROM%</command>
+        <!-- <command label="Wine (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_WINE% %ROM%</command> -->
+        <!-- <command label="Proton (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_PROTON% %ROM%</command> -->
         <command label="AppImage">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>arcade</platform>
@@ -1527,7 +1539,7 @@
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%/ps2</path>
         <extension>.arcadedef .bin .BIN .chd .CHD .ciso .CISO .cso .CSO .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG .zso .ZSO</extension>
-	<command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% -batch %ROM%</command>
+	    <command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% -batch %ROM%</command>
         <command label="LRPS2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx2_libretro.so %ROM%</command>
         <command label="PCSX2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx2_libretro.so %ROM%</command>
         <!-- <command label="PCSX2 Legacy (Standalone)">%EMULATOR_PCSX2-LEGACY% &ndash;&ndash;nogui %ROM%</command>-->
@@ -1614,6 +1626,7 @@
         <platform>pc, pcwindows</platform>
         <theme>quake</theme>
     </system>
+<!--
     <system>
         <name>samcoupe</name>
         <fullname>MGT SAM Coupé</fullname>
@@ -1623,6 +1636,7 @@
         <platform>samcoupe</platform>
         <theme>samcoupe</theme>
     </system>
+-->
     <system>
         <name>satellaview</name>
         <fullname>Nintendo Satellaview</fullname>
@@ -1920,18 +1934,20 @@
         <platform>switch</platform>
         <theme>switch</theme>
     </system>
+<!--
     <system>
         <name>symbian</name>
         <fullname>Symbian</fullname>
         <path>%ROMPATH%/symbian</path>
         <extension>.sis .SIS .sisx .SISX .symbian</extension>
-        <command label="EKA2L1 [Nokia N-Gage] (Standalone)">%EMULATOR_EKA2L1% --fullscreen --device RH-29 --run "%BASENAME%"</command>
-        <command label="EKA2L1 [Nokia N70] (Standalone)">%EMULATOR_EKA2L1% --fullscreen --device RM-84 --run "%BASENAME%"</command>
-        <command label="EKA2L1 [Nokia N97] (Standalone)">%EMULATOR_EKA2L1% --fullscreen --device RM-507 --run "%BASENAME%"</command>
-        <command label="EKA2L1 [Custom device] (Standalone)">%EMULATOR_EKA2L1% --fullscreen --device %INJECT%=%BASENAME%.device --run "%BASENAME%"</command>
+        <command label="EKA2L1 [Nokia N-Gage] (Standalone)">%EMULATOR_EKA2L1% &ndash;&ndash;fullscreen &ndash;&ndash;device RH-29 &ndash;&ndash;run "%BASENAME%"</command>
+        <command label="EKA2L1 [Nokia N70] (Standalone)">%EMULATOR_EKA2L1% &ndash;&ndash;fullscreen &ndash;&ndash;device RM-84 &ndash;&ndash;run "%BASENAME%"</command>
+        <command label="EKA2L1 [Nokia N97] (Standalone)">%EMULATOR_EKA2L1% &ndash;&ndash;fullscreen &ndash;&ndash;device RM-507 &ndash;&ndash;run "%BASENAME%"</command>
+        <command label="EKA2L1 [Custom device] (Standalone)">%EMULATOR_EKA2L1% &ndash;&ndash;fullscreen &ndash;&ndash;device %INJECT%=%BASENAME%.device &ndash;&ndash;run "%BASENAME%"</command>
         <platform>ngage</platform>
         <theme>symbian</theme>
     </system>
+-->
 <!--
     <system>
         <name>tanodragon</name>
@@ -2150,7 +2166,7 @@
         <fullname>Microsoft Windows 3.x</fullname>
         <path>%ROMPATH%/windows3x</path>
         <extension>.AppImage .bat .BAT .desktop .dosz .DOSZ .sh .7z .7Z .zip .ZIP</extension>
-        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
+        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command> -->
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
@@ -2164,7 +2180,7 @@
         <fullname>Microsoft Windows 9x</fullname>
         <path>%ROMPATH%/windows9x</path>
         <extension>.AppImage .bat .BAT .desktop .dosz .DOSZ .sh .7z .7Z .zip .ZIP</extension>
-        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
+        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command> -->
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
