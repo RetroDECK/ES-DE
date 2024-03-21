@@ -1,5 +1,5 @@
-ES-DE (EmulationStation Desktop Edition) - Portable installation on Windows
----------------------------------------------------------------------------
+ES-DE Frontend - Portable installation on Windows
+-------------------------------------------------
 
 ES-DE release:
 3.0.1

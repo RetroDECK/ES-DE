@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) - Frequently Asked Questions for Android
+# ES-DE Frontend - Frequently Asked Questions for Android
 
 In addition to this document it's a good idea to read the [Android documentation](ANDROID.md) and the [User guide](USERGUIDE.md).
 
@@ -83,7 +83,7 @@ No Android may stop applications that are not currently focused if it needs to r
 
 ## On game launch RetroArch runs an old game instead of the one I just selected, how do I prevent this?
 
-We have a video on our YouTube channel describing how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
+There is a video on the official ES-DE YouTube channel on how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
 https://www.youtube.com/watch?v=k5WWacfIn6Y
 
 ## What type of Android devices are supported

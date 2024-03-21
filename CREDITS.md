@@ -1,15 +1,14 @@
-# ES-DE (EmulationStation Desktop Edition) - Credits
+# ES-DE Frontend - Credits
 
 # Programming
 
 **ES-DE**\
-Leon Styhre \
-Sophia Hadash
+Leon Styhre
 
-**RetroPie fork**\
+**RetroPie EmulationStation**\
 RetroPie community
 
-**Original version**\
+**Original EmulationStation**\
 Alec Lofquist
 
 # Original UI Art & Design

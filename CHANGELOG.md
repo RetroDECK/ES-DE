@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) - Changelog
+# ES-DE Frontend - Changelog
 
 ## Version 3.0.1-xx (Android intermediate) (in development)
 

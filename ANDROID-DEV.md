@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) 3.0 (development version) - Android documentation
+# ES-DE Frontend (development version) - Android documentation
 
 This document contains information specific to the Android release, for more general ES-DE documentation refer to the [User guide](USERGUIDE.md) as well as the general [FAQ](FAQ.md).
 
@@ -453,6 +453,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy A20       | 10              | Yes       | No write access to SD card | ROMs folder can be moved to SD card after setup and be used in read-only mode |
 | Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
 | Samsung      | Galaxy S9+       | 10              | Yes       |                     |                            |
 | Samsung      | Galaxy S10       | 12              | Yes       | None                |                            |

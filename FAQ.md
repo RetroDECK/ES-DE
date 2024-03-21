@@ -1,8 +1,8 @@
-# ES-DE (EmulationStation Desktop Edition) - Frequently Asked Questions
+# ES-DE Frontend - Frequently Asked Questions
 
 ## What's the correct name for the application? ES-DE, EmulationStation etc?
 
-As of the 3.0.0 release the official name for the project and application is ES-DE or sometimes ES-DE Frontend. This stands for EmulationStation Desktop Edition as the project originated from the RetroPie fork of EmulationStation in 2020, and was originally intended for desktop computers. However the application has now changed so much that it would just cause confusion to keep the EmulationStation name. During a transition period EmulationStation Desktop Edition will be included as a subtitle on the splash screen and mentioned in some documentation entries, but long term this will be dropped entirely. The red version of the EmulationStation logo will however remain as it's part of the application legacy.
+As of the 3.0.0 release the official name for the project and application is ES-DE Frontend or simply ES-DE. This originally stood for EmulationStation Desktop Edition as the project originated from the RetroPie fork of EmulationStation in 2020, and was originally intended for desktop computers. However the application has now changed so much that it would just cause confusion to keep the EmulationStation name. During a transition period EmulationStation Desktop Edition will be included as a subtitle on the splash screen and mentioned in some documentation entries, but long term this will be dropped entirely. The red version of the EmulationStation logo will however remain as it's part of the application legacy.
 
 ## Is this software available for free, and is it open source?
 

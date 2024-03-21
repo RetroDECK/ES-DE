@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) v3.0 - Building and advanced configuration
+# ES-DE Frontend - Building and advanced configuration
 
 Table of contents:
 

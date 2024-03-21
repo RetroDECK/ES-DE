@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) v3.0 - User guide
+# ES-DE Frontend - User guide
 
 It's generally recommended to read the [Frequently Asked Questions (FAQ)](FAQ.md) document prior to diving into the information in this guide.
 
@@ -2417,7 +2417,8 @@ When using this setup method you need to set the alternative emulator to _RPCS3 
 
 ### Sony PlayStation Vita
 
-Support for the PS Vita is currently experimental due to the early stages of development for the Vita3K emulator. While there's a growing list of games that are playable, integration with ES-DE is a bit rough at the moment. Hopefully this will improve as Vita3K evolves.
+There is also a video on the official ES-DE YouTube channel on how to setup Vita3K:\
+https://www.youtube.com/watch?v=4U8yAUJ9-Tk
 
 On Android and Windows the Vita3K installation is straightforward, but on Linux you may need to place the emulator in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details. If using a Linux distribution that provides Vita3K via the repository (such as the AUR on Arch/Manjaro) then you can skip this step and install the emulator using your OS package manager.
 
@@ -2727,6 +2728,9 @@ With folder flattening in place the .vpx and .vpt files will show up as file ent
 ## Scraping
 
 Scraping means downloading metadata and game media files (images and videos) for the games in your collection.
+
+In addition to this document there is a video on the official ES-DE YouTube channel on how to use the scraper:\
+https://www.youtube.com/watch?v=js_m_jVnX2s
 
 ES-DE supports the two scraper services [ScreenScraper.fr](https://www.screenscraper.fr) and [TheGamesDB.net](https://thegamesdb.net). In general TheGamesDB supports less formats and less systems but in some areas such PC gaming the quality is better and sometimes ScreenScraper is missing some specific information such as release dates where TheGamesDB may be able to fill in the gaps.
 
@@ -3827,6 +3831,9 @@ The following media can be displayed: _video, box cover, box back cover, title s
 The _custom_ image is not scraped, but can be manually added to the downloaded_media directory. This is useful for diagrams of game controller mappings and similar.
 
 If the game has a downloaded PDF manual then you can view it by pressing the _up_ button which will change the media viewer to PDF viewing mode. To get back to displaying videos and images when in this mode, press the _down_ button. Pages are navigated using the _left_ and _right_ buttons, and the trigger buttons can additionally be used to jump to the first and last page. When in PDF viewing mode it's possible to zoom in and out using the shoulder buttons. When zoomed in, the left, right, up and down buttons will pan the view. To re-enable page navigation either zoom out completely or reset the view by pressing the left or right trigger button.
+
+There is also a video on the official ES-DE YouTube channel on how to download and view PDF manuals:\
+https://www.youtube.com/watch?v=AH_gTWv4ZUM
 
 Pressing any other button than those mentioned closes the media viewer.
 
