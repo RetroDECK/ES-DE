@@ -26,15 +26,15 @@ TARGET_FILENAME=es-de.6
 
 MAN_INCLUDE="
 [NAME]
-es-de - ES-DE Frontend (EmulationStation Desktop Edition)
+es-de - ES-DE Frontend
 
 [DESCRIPTION]
-ES-DE is a frontend for browsing and launching games from your multi-platform game collection.
+ES-DE is a frontend for browsing and launching games from your multi-platform collection.
 
 [AUTHOR]
 Leon Styhre <https://es-de.org/>
 
-RetroPie community (RetroPie EmulationStation fork)
+RetroPie community (RetroPie EmulationStation)
 
 Alec Lofquist (original EmulationStation)
 
@@ -48,7 +48,7 @@ help2man --section 6 --no-info --include $TEMPFILE_INPUT $ESBINARY > $TEMPFILE_O
 
 # Manual string replacements, these may need to be modified if changes are made to the
 # command line --help output.
-cat $TEMPFILE_OUTPUT | sed s/"ES\\\-DE (ES\\\-DE), Emulator Frontend"/""/g | \
+cat $TEMPFILE_OUTPUT | sed s/"ES\\\-DE Frontend"/""/g | \
 sed s/"Set to at least"/".br\nSet to at least"/ > $TARGET_FILENAME
 
 gzip -9 $TARGET_FILENAME
