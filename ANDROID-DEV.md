@@ -420,7 +420,7 @@ https://github.com/Vita3K/Vita3K-Android/releases
 
 ### Yaba Sanshiro 2
 
-This emulator can be installed from the Play store, there is a paid Pro version as well. At the time of writing only the Pro version works when launching games from ES-DE.
+This emulator can be installed from the Play store, there is a paid Pro version as well. At the time of writing only the Pro version works when launching games from ES-DE. Also note that .bin/.cue files can't be launched for the time being, only .chd files seem to work. This needs to be fixed in the emulator so nothing can be done in ES-DE to work around that limitation.
 
 https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2 \
 https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2.pro
@@ -429,43 +429,101 @@ https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2.pro
 
 This is clearly not a complete list of Android devices, but rather those we know have been tested with ES-DE and for which there is a known status.
 
-| Manufacturer | Model            | Android release | Supported | Known issues        | Comment                    |
-| :----------- | :--------------- | :-------------- | :-------- | :------------------ | :------------------------- |
-| Anbernic     | RG556            | 13              | Yes       | None                |                            |
-| Ayn          | Odin             | 10              | Yes       | None                |                            |
-| Ayn          | Odin Lite        | 11              | Yes       | None                |                            |
-| Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Minor audio issues | Bugs in the firmware/OS image |
-| Google       | Pixel 4a         | 13, 14          | Yes       | None                |                            |
-| Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
-| Honor        | 20 lite          | 10              | Yes       | None                |                            |
-| Honor        | Magic5 Pro       | 13              | Yes       | None                |                            |
-| Huawei       | Mate 10 Pro      | 10              | Yes       | None                |                            |
-| Lenovo       | Legion Y700      | 12              | Yes       | None                |                            |
-| Logitech     | G Cloud          | 11              | Yes       | None                |                            |
-| Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
-| Motorola     | Moto G100        | 12              | Yes       | None                |                            |
-| Nokia        | 5.4              | 12              | Yes       | None                |                            |
-| Nokia        | 7 Plus           | 10              | Yes       | None                |                            |
-| Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                | Limited RAM capacity on this device makes it unsuitable for demanding themes and large game collections |
-| OnePlus      | 6T               | 11              | Yes       | None                |                            |
-| Oppo         | A15              | 10              | Yes       | None                |                            |
-| RedMagic     | 8 Pro            | 13              | Yes       | None                |                            |
-| Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
-| Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
-| Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
-| Samsung      | Galaxy A20       | 10              | Yes       | No write access to SD card | ROMs folder can be moved to SD card after setup and be used in read-only mode |
-| Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
-| Samsung      | Galaxy S9+       | 10              | Yes       |                     |                            |
-| Samsung      | Galaxy S10       | 12              | Yes       | None                |                            |
-| Samsung      | Galaxy S20       | 13              | Yes       | None                |                            |
-| Samsung      | Galaxy S22 Ultra | 14              | Yes       | None                |                            |
-| Samsung      | Galaxy S23 Ultra | 14              | Yes       | None                |                            |
-| Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
-| Samsung      | Galaxy Tab A7    | 12              | Yes       | None                |                            |
-| Ulefone      | Note 6P          | 11              | Yes       | None                |                            |
-| Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
-| Xiaomi       | Pad 5            | 13              | Yes       | None                |                            |
-| Xiaomi       | Redmi Note 11    | 11              | Yes       | None                |                            |
+| Manufacturer | Model                   | Android release | Supported | Known issues        | Comment                    |
+| :----------- | :---------------------- | :-------------- | :-------- | :------------------ | :------------------------- |
+| Abxylute     | One                     | 12              | Yes       | None                |                            |
+| Anbernic     | RG353V                  | 11              | Yes       | Physical controls don't work | Can still be used with touchscreen input overlay |
+| Anbernic     | RG405M                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG556                   | 13              | Yes       | None                |                            |
+| Ayaneo       | Pocket Air              | 12              | Yes       | None                |                            |
+| Ayn          | Odin                    | 10              | Yes       | None                |                            |
+| Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
+| Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Can't launch some emulators,<br>Minor audio issues | Bugs in the firmware/OS image |
+| Google       | Pixel 4a                | 13              | Yes       | None                |                            |
+| Google       | Pixel 4a 5G             | 14              | Yes       | None                |                            |
+| Google       | Pixel 6                 | 14              | Yes       | None                |                            |
+| Google       | Pixel 6a                | 14              | Yes       | None                |                            |
+| Google       | Pixel 7 Pro             | 13              | Yes       | None                |                            |
+| Google       | Pixel 8 Pro             | 14              | Yes       | None                |                            |
+| Google       | Pixel Fold              | 14              | Yes       | None                |                            |
+| Google       | Pixel Tablet            | 14              | Yes       | None                |                            |
+| Honor        | 20 lite                 | 10              | Yes       | None                |                            |
+| Honor        | Magic5 Pro              | 13              | Yes       | None                |                            |
+| Huawei       | Mate 10 Pro             | 10              | Yes       | None                |                            |
+| Huawei       | MatePad 11 (2021)       | 13              | Yes       | None                |                            |
+| Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
+| Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
+| Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
+| Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |
+| LG           | V60 ThinQ               | 13              | Yes       | None                |                            |
+| Logitech     | G Cloud                 | 11              | Yes       | None                |                            |
+| Meta         | Quest 3                 | 12 ?            | Yes       | None                |                            |
+| Microsoft    | Surface Duo 2           | 12              | Unclear   | Unclear             | Conflicting reports of whether this device works or not |
+| Motorola     | Moto G84                | 13              | Yes       | None                |                            |
+| Motorola     | Moto G100               | 12              | Yes       | None                |                            |
+| Motorola     | Moto G200 5G            | 12              | Yes       | None                |                            |
+| Motorola     | Moto G Pro / G Stylus   | 12              | No        | Fails at configurator/onboarding |                            |
+| Nokia        | 5.4                     | 12              | Yes       | None                |                            |
+| Nokia        | 7 Plus                  | 10              | Yes       | None                |                            |
+| Nvidia       | Shield Pro (2015/2019)  | 11 (TV)         | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| OnePlus      | 6T                      | 11              | Yes       | None                |                            |
+| OnePlus      | 7 Pro                   | 14              | Yes       | None                |                            |
+| OnePlus      | 8 Pro                   | 13              | Yes       | None                |                            |
+| OnePlus      | 12                      | 14              | Yes       | None                |                            |
+| OnePlus      | Nord 2                  | 13              | Yes       | None                |                            |
+| Oppo         | A15                     | 10              | Yes       | None                |                            |
+| Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
+| Razer        | Edge                    | 13              | Yes       | None                |                            |
+| Realme       | GT2                     | 12              | Yes       | None                |                            |
+| Retroid      | Pocket 2+               | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 2s               | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 3                | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 3+               | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 4                | 13              | Yes       | None                |                            |
+| Retroid      | Pocket 4 Pro            | 13              | Yes       | None                |                            |
+| Retroid      | Pocket Flip             | 11              | Yes       | None                |                            |
+| Samsung      | Galaxy A6+              | 10              | No        | Unable to install   | 32-bit operating system    |
+| Samsung      | Galaxy A17              | 11              | Yes       | None                |                            |
+| Samsung      | Galaxy A20              | 10              | Yes       | No write access to SD card | ROMs folder can be moved to SD card after setup and be used in read-only mode |
+| Samsung      | Galaxy A52              | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy A52s 5G          | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy A54              | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy M52 5G           | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 9           | 10              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 20          | 13              | No        | Fails at configurator/onboarding |                            |
+| Samsung      | Galaxy Note 20 Ultra 5G | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy S9+              | 10              | Yes       | None                |                            |
+| Samsung      | Galaxy S10              | 12              | Yes       | None                |                            |
+| Samsung      | Galaxy S20              | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy S20 FE           | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy S22 Ultra        | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S23              | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S23+             | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S23 Ultra        | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S24 Ultra        | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab A 10.5       | 10              | No        | Unable to install   |                            |
+| Samsung      | Galaxy Tab A7           | 12              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S9 5G        | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S7+          | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S9           | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S9+          | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Z Fold 3         | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Z Fold 4         | 14              | Yes       | None                |                            |
+| Sony         | Xperia 1 V              | 14              | Yes       | None                |                            |
+| Ulefone      | Note 6P                 | 11              | Yes       | None                |                            |
+| vivo         | X Fold+                 | 14              | Yes       | None                |                            |
+| Wiko         | Voix                    | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
+| Xiaomi       | Mi 10t                  | 12              | Yes       | None                |                            |
+| Xiaomi       | Mi 11i                  | 13              | Yes       | None                |                            |
+| Xiaomi       | Pad 5                   | 13              | Yes       | None                |                            |
+| Xiaomi       | Poco F3                 | 11              | Yes       | None                |                            |
+| Xiaomi       | Poco X5                 | 12              | Yes       | None                |                            |
+| Xiaomi       | Redmi Note 10 Pro       | 13              | Yes       | None                |                            |
+| Xiaomi       | Redmi Note 11           | 11              | Yes       | None                |                            |
+| ZTE nubia    | RedMagic 7 Pro          | 13              | Yes       | None                |                            |
+| ZTE nubia    | RedMagic 8 Pro          | 13              | Yes       | None                |                            |
+| ZTE nubia    | RedMagic 9 Pro          | 14              | Yes       | None                |                            |
 
 ## Supported game systems
 

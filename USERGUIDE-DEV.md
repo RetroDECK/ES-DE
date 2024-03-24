@@ -1167,8 +1167,7 @@ The second approach to Macintosh emulation is to setup a hard disk image, boot i
 
 Emulation for this system works quite differently than other platforms as ES-DE only acts as a game browser which simply launches the emulator. The game then needs to be manually started from inside Mac OS.
 
-As for how to setup the Basilisk II emulator the following YouTube video is a good resource:
-
+As for how to setup the Basilisk II emulator the following YouTube video is a good resource:\
 https://www.youtube.com/watch?v=QSWWZ4hkvVk
 
 Once the emulator is up and running and you can boot into Mac OS 7 or 8 you need to install your games. These are commonly distributed with the .sit file extension which are compressed archives in the proprietary StuffIt Expander format. You should uncompress these files inside the emulator or otherwise you will very likely run into problems with running your games. This is also covered in the YouTube video.
