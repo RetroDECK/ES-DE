@@ -45,6 +45,7 @@
         <!-- Nintendo 3DS emulator Citra MMJ -->
         <rule type="androidpackage">
             <entry>org.citra.emu/.ui.EmulationActivity</entry>
+            <entry>com.antutu.ABenchMark/org.citra.emu.ui.EmulationActivity</entry>
         </rule>
     </emulator>
     <emulator name="COLEM">
