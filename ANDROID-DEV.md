@@ -516,7 +516,6 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Samsung      | Galaxy S23+             | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S23 Ultra        | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy S24 Ultra        | 14              | Yes       | None                |                            |
-| Samsung      | Galaxy Tab A 10.5       | 10              | No        | Unable to install   |                            |
 | Samsung      | Galaxy Tab A7           | 12              | Yes       | None                |                            |
 | Samsung      | Galaxy Tab S9 5G        | 14              | Yes       | None                |                            |
 | Samsung      | Galaxy Tab S7+          | 13              | Yes       | None                |                            |
