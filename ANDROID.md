@@ -490,7 +490,6 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Retroid      | Pocket 4                | 13              | Yes       | None                |                            |
 | Retroid      | Pocket 4 Pro            | 13              | Yes       | None                |                            |
 | Retroid      | Pocket Flip             | 11              | Yes       | None                |                            |
-| Samsung      | Galaxy A6+              | 10              | No        | Unable to install   | 32-bit operating system    |
 | Samsung      | Galaxy A17              | 11              | Yes       | None                |                            |
 | Samsung      | Galaxy A20              | 10              | Yes       | No write access to SD card | ROMs folder can be moved to SD card after setup and be used in read-only mode |
 | Samsung      | Galaxy A52              | 13              | Yes       | None                |                            |
