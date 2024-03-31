@@ -441,6 +441,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG405V                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG556                   | 13              | Yes       | None                |                            |
+| Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
 | Ayaneo       | Pocket Air              | 12              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
@@ -456,7 +457,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Google       | Pixel 8 Pro             | 14              | Yes       | None                |                            |
 | Google       | Pixel Fold              | 14              | Yes       | None                |                            |
 | Google       | Pixel Tablet            | 14              | Yes       | None                |                            |
-| GPD          | XD Plus                 | 11              | Yes       | None                | LineageOS Android          |
+| GPD          | XD Plus                 | 11              | Yes       | None                | LineageOS                  |
 | Honor        | 20 lite                 | 10              | Yes       | None                |                            |
 | Honor        | Magic5 Pro              | 13              | Yes       | None                |                            |
 | Huawei       | Mate 10 Pro             | 10              | Yes       | None                |                            |
@@ -476,7 +477,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Motorola     | Moto G100               | 12              | Yes       | None                |                            |
 | Motorola     | Moto G200 5G            | 12              | Yes       | None                |                            |
 | Motorola     | Moto G Pro / G Stylus   | 12              | No        | Fails at configurator/onboarding |                            |
-| Nintendo     | Switch                  | 11              | Yes       | None                | Switchroot Android         |
+| Nintendo     | Switch                  | 11              | Yes       | None                | Switchroot                 |
 | Nokia        | 5.4                     | 12              | Yes       | None                |                            |
 | Nokia        | 7 Plus                  | 10              | Yes       | None                |                            |
 | Nvidia       | Shield Pro (2015/2019)  | 11 (TV)         | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |

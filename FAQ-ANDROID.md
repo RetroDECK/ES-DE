@@ -28,7 +28,7 @@ You only need to buy it once, and then you can use it on all your devices. There
 
 ## ES-DE doesn't work on my device, can I get a refund?
 
-Although the overwhelming majority of people have successfully got ES-DE to run correctly on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. These issues have only been observed on mobile phones as far as we know, and is likely due to customizations done by the manufacturers. Unfortunately Android is not really a standardized operating system and different vendors are applying custom patches and such which may prevent ES-DE from working. We will refund everyone that is unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
+Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund everyone up to one month from the purchase date if they are unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
 
 ## Why do I get a "There was a problem parsing the package" error when I attempt to install ES-DE?
 
