@@ -122,7 +122,10 @@ These files are not loaded by default, only files placed in ES-DE/gamelists/ are
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
-Yes to a certain extent this is supported and at least [Skraper](https://www.skraper.net) and [Skyscraper](https://github.com/detain/skyscraper) have been used by some people. Make sure to read the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details of where ES-DE expects game media to be stored.
+Yes you could for example use [Skraper](https://www.skraper.net) or [Skyscraper](https://github.com/detain/skyscraper). Make sure to read the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details of where ES-DE expects game media to be stored.
+
+There is also a video on the official ES-DE YouTube channel on how to use Skraper with ES-DE:\
+https://www.youtube.com/watch?v=23LLH96P7PE
 
 ## My controller isn't working in ES-DE, is there a way to fix this?
 
