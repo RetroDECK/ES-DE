@@ -32,6 +32,9 @@ Menus in ES-DE are not lists but grids, sometimes there is only a list but somet
 
 Yes the systems sorting configuration file can be selected via the _Systems sorting_ option in the _UI Settings_ menu. There are four such files bundled with ES-DE to sort by _"Release year", "Manufacturer, release year", "Hardware type, release year"_ and _"Manufacturer, hardware type, release year"_. If you don't want to use any of the bundled files then you can create your own custom sorting file and place it into the ~/ES-DE/custom_systems/ directory. More details about this setup can be found in the _es_systems_sorting.xml_ section of the [Building and advanced configuration](INSTALL.md#es_systems_sortingxml) document.
 
+There is also a handy custom sorting generator available at this location to help you create the XML file:\
+https://docs.google.com/spreadsheets/d/1aCmCpE08ooFd_Ea0soEjYEyPPpy2pvly7-ZW6xykhFQ/edit#gid=511646442
+
 ## I'm missing some systems like SNES MSU-1 and WiiWare, could those get added to ES-DE?
 
 To keep the system count within reason hack systems and e-shop systems are not included and there are no plans to add them in. This would include things like _PSP Minis, PlayStation Store, WiiWare, SNES MSU-1, Sega Mega Drive MSU-MD, ROM Hacks_ and so on. It's possible to add such games to the regular systems though, for example by placing them inside their own folders if you want to clearly separate them from the rest of the games. You could also create custom collections for these games.
@@ -122,10 +125,12 @@ These files are not loaded by default, only files placed in ES-DE/gamelists/ are
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
-Yes you could for example use [Skraper](https://www.skraper.net) or [Skyscraper](https://github.com/detain/skyscraper). Make sure to read the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details of where ES-DE expects game media to be stored.
+Yes you could for example use [Skyscraper](https://github.com/Gemba/skyscraper), [Skraper](https://www.skraper.net) or [ARRM](http://www.jujuvincebros.fr/wiki/arrm/doku.php?id=arrm_relooked_en:start-en).
 
-There is also a video on the official ES-DE YouTube channel on how to use Skraper with ES-DE:\
+There is a video on the official ES-DE YouTube channel on how to use Skraper with ES-DE:\
 https://www.youtube.com/watch?v=23LLH96P7PE
+
+It's also recommended to read the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details on where ES-DE expects game media to be stored.
 
 ## My controller isn't working in ES-DE, is there a way to fix this?
 
