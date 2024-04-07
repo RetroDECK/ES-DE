@@ -14,13 +14,9 @@ First it's branding, it would be very confusing to have different names for the 
 
 The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de). And although approximately 99% of the app is open source there are some portions of the code that is closed source.
 
-## Why is ES-DE not available on the Google Play store?
+## I bought ES-DE on Patreon, how do I get access to future releases?
 
-That is a question for Google. They are have done everything in their power to obstruct the release of ES-DE including constantly rejecting the releases without supplying meaningful explanations why, refusing to respond to tickets and emails and in general being incredibly difficult to deal with. So there are no further plans at attempting to publish ES-DE there.
-
-## How do I update ES-DE when there is a new release
-
-When a new release is available you will be sent a download link to the email address you used to sign up for Patreon, and we will post it directly on Patreon as well. You can use that link to download the latest version, sideload it on your device and then update. All your settings and data will be retained when you apply the update.
+When a new release is available you will be sent a download link to the email address you used to sign up for Patreon. Note that if you pay once on Patreon and cancel your paid membership you'll get one month of access to all posts and content, and when this month has passed you will no longer have access. This is how the Patreon platform works, and it's the reason why updates are distributed via email. As indicated in the welcome message when you join the ES-DE Patreon it's a good idea to save the download link so you have it available if you need to download the APK again.
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
@@ -29,6 +25,10 @@ You only need to buy it once, and then you can use it on all your devices. There
 ## ES-DE doesn't work on my device, can I get a refund?
 
 Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund everyone up to one month from the purchase date if they are unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
+
+## Will I lose any settings or data when upgrading to a new release?
+
+No, you will not lose any settings or data when you upgrade. Just download the latest version and sideload it on your device to apply the update.
 
 ## Why do I get a "There was a problem parsing the package" error when I attempt to install ES-DE?
 
