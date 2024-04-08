@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE is a frontend for browsing and launching games from your multi-platform game collection.
+//  ES-DE is a frontend for browsing and launching games from your multi-platform collection.
 //
 //  The column limit is 100 characters.
 //  All ES-DE C++ source code is formatted using clang-format.
@@ -1121,6 +1121,8 @@ int main(int argc, char* argv[])
 #if defined(APPLICATION_UPDATER)
         if (ApplicationUpdater::getInstance().getResults())
             ViewController::getInstance()->updateAvailableDialog();
+        else
+            HttpReq::cleanupCurlMulti();
 #endif
 
 #if defined(_WIN64)

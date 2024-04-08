@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  HttpReq.h
 //
 //  HTTP requests using libcurl.
@@ -14,7 +14,10 @@
 
 #include <atomic>
 #include <map>
+#include <mutex>
+#include <queue>
 #include <sstream>
+#include <thread>
 
 class HttpReq
 {
@@ -35,8 +38,7 @@ public:
         // clang-format on
     };
 
-    // Process any received data and return the status afterwards.
-    Status status();
+    Status status() { return mStatus; }
 
     std::string getErrorMsg() { return mErrorMsg; }
     std::string getContent() const;
@@ -44,9 +46,15 @@ public:
     long getDownloadedBytes() { return mDownloadedBytes; }
 
     static std::string urlEncode(const std::string& s);
+
+    // Called explicitly from any object that uses HttpReq.
     static void cleanupCurlMulti()
     {
         if (sMultiHandle != nullptr) {
+            sStopPoll = true;
+            curl_multi_wakeup(sMultiHandle);
+            mPollThread->join();
+            mPollThread.reset();
             curl_multi_cleanup(sMultiHandle);
             sMultiHandle = nullptr;
         }
@@ -60,14 +68,24 @@ private:
 
     void onError(const std::string& msg) { mErrorMsg = msg; }
 
-    static inline std::map<CURL*, HttpReq*> sRequests;
-    static inline CURLM* sMultiHandle;
+    // Poll constantly to maintain network throughput even during VSyncs and other waiting states.
+    void pollCurl();
 
-    Status mStatus;
+    static inline CURLM* sMultiHandle;
+    static inline std::map<CURL*, HttpReq*> sRequests;
+    static inline std::queue<CURL*> sAddHandleQueue;
+    static inline std::queue<CURL*> sRemoveHandleQueue;
+
+    std::atomic<Status> mStatus;
     CURL* mHandle;
+
+    static inline std::unique_ptr<std::thread> mPollThread;
+    static inline std::mutex sHandleMutex;
+    static inline std::mutex sRequestMutex;
 
     std::stringstream mContent;
     std::string mErrorMsg;
+    static inline std::atomic<bool> sStopPoll = false;
     std::atomic<long> mTotalBytes;
     std::atomic<long> mDownloadedBytes;
     bool mScraperRequest;
