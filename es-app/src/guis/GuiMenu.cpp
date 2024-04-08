@@ -1790,6 +1790,19 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
+#if defined(__ANDROID__)
+    // Whether swiping or pressing back should exit the application.
+    auto backEventAppExit = std::make_shared<SwitchComponent>();
+    backEventAppExit->setState(Settings::getInstance()->getBool("BackEventAppExit"));
+    s->addWithLabel("BACK BUTTON/BACK SWIPE EXITS APP", backEventAppExit);
+    s->addSaveFunc([backEventAppExit, s] {
+        if (backEventAppExit->getState() != Settings::getInstance()->getBool("BackEventAppExit")) {
+            Settings::getInstance()->setBool("BackEventAppExit", backEventAppExit->getState());
+            s->setNeedsSaving();
+        }
+    });
+#endif
+
     if (Settings::getInstance()->getBool("DebugFlag")) {
         // If the --debug command line option was passed then create a dummy entry.
         auto debugMode = std::make_shared<SwitchComponent>();

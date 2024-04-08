@@ -477,8 +477,9 @@ bool InputManager::parseEvent(const SDL_Event& event)
                 return false;
 
 #if defined(__ANDROID__)
-            // Quit application if the back button is pressed.
-            if (event.key.keysym.sym == SDLK_AC_BACK) {
+            // Quit application if the back button is pressed or if the back gesture is used.
+            if (event.key.keysym.sym == SDLK_AC_BACK &&
+                Settings::getInstance()->getBool("BackEventAppExit")) {
                 SDL_Event quit {};
                 quit.type = SDL_QUIT;
                 SDL_PushEvent(&quit);
