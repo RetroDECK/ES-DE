@@ -294,8 +294,8 @@ include(InstallRequiredSystemLibraries)
 # General CPack settings.
 
 set(CPACK_PACKAGE_NAME es-de)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Emulator frontend")
-set(CPACK_PACKAGE_DESCRIPTION "ES-DE (EmulationStation Desktop Edition) is a frontend for browsing and launching games from your multi-platform game collection.")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Gaming frontend")
+set(CPACK_PACKAGE_DESCRIPTION "ES-DE is a frontend for browsing and launching games from your multi-platform collection.")
 set(CPACK_PACKAGE_VERSION ${ES_VERSION})
 
 if(APPLE)

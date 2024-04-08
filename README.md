@@ -1,26 +1,35 @@
-# ES-DE (EmulationStation Desktop Edition)
+# ES-DE Frontend
 
-ES-DE is a frontend for browsing and launching games from your multi-platform game collection.
+ES-DE (formerly EmulationStation Desktop Edition) is a frontend for browsing and launching games from your multi-platform collection.
 
 It's officially supported on Linux, macOS, Windows and Android but can also be used on BSD Unix and the Raspberry Pi if you build it yourself from source code.
 
 Website:\
-[https://es-de.org](https://es-de.org)
+https://es-de.org
+
+Patreon:\
+https://www.patreon.com/es_de
+
+YouTube:\
+https://www.youtube.com/@ES-DE_Frontend
 
 Discord:\
-[https://discord.gg/EVVX4DqWAP](https://discord.gg/EVVX4DqWAP)
+https://discord.gg/EVVX4DqWAP
 
 The goal of this project is to make a high quality frontend that is easy to use, requires minimal setup and configuration, looks nice, and is available across a wide range of operating systems.
 
-It comes preconfigured for use with [RetroArch](https://www.retroarch.com) and a large selection of standalone emulators. It's also fully customizable so you can easily expand it to include emulators or applications not covered by the bundled configuration.
+It comes preconfigured for use with a large selection of emulators, game engines, game managers and gaming services. It can also run locally installed games and applications. It's fully customizable, so you can easily expand it with support for additional systems and applications.
 
-You can find the complete list of supported systems and emulators in the [User guide](USERGUIDE.md#supported-game-systems).
+You can find the complete list of supported game systems in the [User guide](USERGUIDE.md#supported-game-systems).
 
-Three themes (Linear, Modern and Slate) are bundled with the application, and additional themes can be found on the [official themes list](https://gitlab.com/es-de/themes/themes-list) or can be installed using the built-in theme downloader.
+There are many high-quality themes that can be installed using the built-in theme downloader. You can also find the web version of the themes list here: \
+https://gitlab.com/es-de/themes/themes-list
 
 ## Download
 
-Visit https://es-de.org/ to download the latest ES-DE release or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find most previous releases.
+Visit https://es-de.org to download the latest ES-DE release or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find most previous releases.
+
+The Android port of ES-DE is a paid app, which you can get on [Patreon](https://www.patreon.com/es_de).
 
 If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you need to compile from source code as no prebuilt packages are provided for these platforms. A detailed build guide is available in [INSTALL.md](INSTALL.md).
 

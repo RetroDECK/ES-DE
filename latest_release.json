@@ -6,9 +6,9 @@
         "version": "3.0.1",
         "release": "42",
         "date": "2024-03-16",
-        "androidVersionName": "3.0.0-15",
-        "androidVersionCode": "15",
-        "androidDate": "2024-02-25",
+        "androidVersionName": "3.0.1-19",
+        "androidVersionCode": "19",
+        "androidDate": "2024-03-16",
         "packages": [
             {
                 "name": "WindowsPortable",

@@ -1,4 +1,33 @@
-# ES-DE (EmulationStation Desktop Edition) - Changelog
+# ES-DE Frontend - Changelog
+
+## Version 3.1.0 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+* Added the MAME 2003 RetroArch core as an alternative emulator for the arcade, cps, cps1, cps2, cps3 and mame systems
+* (Linux/Unix) Changed the application summary from "Emulator Frontend" to "Gaming Frontend"
+* Changed the application description to "ES-DE Frontend" for the -h/--help command line option
+
+### Detailed list of changes
+
+### Bug fixes
+
+## Version 3.0.1-xx (Android intermediate) (in development)
+
+**Release date:** TBD
+
+### Detailed list of changes
+
+* (Android) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
+* (Android) Changed from %ROMPROVIDER% to %ROMSAF% for MD.emu (only for megacd, megacdjp and segacd)
+* (Android) Added support for the Antutu build of Citra MMJ
+* Added the MAME 2003 RetroArch core as an alternative emulator for the arcade, cps, cps1, cps2, cps3 and mame systems
+
+### Bug fixes
+
+* On Android 10 the Orphaned data cleanup utility removed media files which should not have been removed
 
 ## Version 3.0.1 / 3.0.1-19
 

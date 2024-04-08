@@ -1,8 +1,8 @@
-# ES-DE (EmulationStation Desktop Edition) - Frequently Asked Questions
+# ES-DE Frontend - Frequently Asked Questions
 
 ## What's the correct name for the application? ES-DE, EmulationStation etc?
 
-As of the 3.0.0 release the official name for the project and application is ES-DE or sometimes ES-DE Frontend. This stands for EmulationStation Desktop Edition as the project originated from the RetroPie fork of EmulationStation in 2020, and was originally intended for desktop computers. However the application has now changed so much that it would just cause confusion to keep the EmulationStation name. During a transition period EmulationStation Desktop Edition will be included as a subtitle on the splash screen and mentioned in some documentation entries, but long term this will be dropped entirely. The red version of the EmulationStation logo will however remain as it's part of the application legacy.
+As of the 3.0.0 release the official name for the project and application is ES-DE Frontend or simply ES-DE. This originally stood for EmulationStation Desktop Edition as the project originated from the RetroPie fork of EmulationStation in 2020, and was originally intended for desktop computers. However the application has now changed so much that it would just cause confusion to keep the EmulationStation name. During a transition period EmulationStation Desktop Edition will be included as a subtitle on the splash screen and mentioned in some documentation entries, but long term this will be dropped entirely. The red version of the EmulationStation logo will however remain as it's part of the application legacy.
 
 ## Is this software available for free, and is it open source?
 
@@ -31,6 +31,9 @@ Menus in ES-DE are not lists but grids, sometimes there is only a list but somet
 ## Can I change the system sorting to not sort by full system names?
 
 Yes the systems sorting configuration file can be selected via the _Systems sorting_ option in the _UI Settings_ menu. There are four such files bundled with ES-DE to sort by _"Release year", "Manufacturer, release year", "Hardware type, release year"_ and _"Manufacturer, hardware type, release year"_. If you don't want to use any of the bundled files then you can create your own custom sorting file and place it into the ~/ES-DE/custom_systems/ directory. More details about this setup can be found in the _es_systems_sorting.xml_ section of the [Building and advanced configuration](INSTALL.md#es_systems_sortingxml) document.
+
+There is also a handy custom sorting generator available at this location to help you create the XML file:\
+https://docs.google.com/spreadsheets/d/1aCmCpE08ooFd_Ea0soEjYEyPPpy2pvly7-ZW6xykhFQ/edit#gid=511646442
 
 ## I'm missing some systems like SNES MSU-1 and WiiWare, could those get added to ES-DE?
 
@@ -122,7 +125,12 @@ These files are not loaded by default, only files placed in ES-DE/gamelists/ are
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
-Yes to a certain extent this is supported and at least [Skraper](https://www.skraper.net) and [Skyscraper](https://github.com/detain/skyscraper) have been used by some people. Make sure to read the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details of where ES-DE expects game media to be stored.
+Yes you could for example use [Skyscraper](https://github.com/Gemba/skyscraper), [Skraper](https://www.skraper.net) or [ARRM](http://www.jujuvincebros.fr/wiki/arrm/doku.php?id=arrm_relooked_en:start-en).
+
+There is a video on the official ES-DE YouTube channel on how to use Skraper with ES-DE:\
+https://www.youtube.com/watch?v=23LLH96P7PE
+
+It's also recommended to read the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details on where ES-DE expects game media to be stored.
 
 ## My controller isn't working in ES-DE, is there a way to fix this?
 

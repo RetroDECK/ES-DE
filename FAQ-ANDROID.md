@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) - Frequently Asked Questions for Android
+# ES-DE Frontend - Frequently Asked Questions for Android
 
 In addition to this document it's a good idea to read the [Android documentation](ANDROID.md) and the [User guide](USERGUIDE.md).
 
@@ -14,13 +14,9 @@ First it's branding, it would be very confusing to have different names for the 
 
 The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de). And although approximately 99% of the app is open source there are some portions of the code that is closed source.
 
-## Why is ES-DE not available on the Google Play store?
+## I bought ES-DE on Patreon, how do I get access to future releases?
 
-That is a question for Google. They are have done everything in their power to obstruct the release of ES-DE including constantly rejecting the releases without supplying meaningful explanations why, refusing to respond to tickets and emails and in general being incredibly difficult to deal with. So there are no further plans at attempting to publish ES-DE there.
-
-## How do I update ES-DE when there is a new release
-
-When a new release is available you will be sent a download link to the email address you used to sign up for Patreon, and we will post it directly on Patreon as well. You can use that link to download the latest version, sideload it on your device and then update. All your settings and data will be retained when you apply the update.
+When a new release is available you will be sent a download link to the email address you used to sign up for Patreon. Note that if you pay once on Patreon and cancel your paid membership you'll get one month of access to all posts and content, and when this month has passed you will no longer have access. This is how the Patreon platform works, and it's the reason why updates are distributed via email. As indicated in the welcome message when you join the ES-DE Patreon it's a good idea to save the download link so you have it available if you need to download the APK again.
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
@@ -28,11 +24,15 @@ You only need to buy it once, and then you can use it on all your devices. There
 
 ## ES-DE doesn't work on my device, can I get a refund?
 
-Although the overwhelming majority of people have successfully got ES-DE to run correctly on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 11 or later) there are some devices that have been problematic. These issues have only been observed on mobile phones as far as we know, and is likely due to customizations done by the manufacturers. Unfortunately Android is not really a standardized operating system and different vendors are applying custom patches and such which may prevent ES-DE from working. We will refund everyone that is unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
+Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund everyone up to one month from the purchase date if they are unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
+
+## Will I lose any settings or data when upgrading to a new release?
+
+No, you will not lose any settings or data when you upgrade. Just download the latest version and sideload it on your device to apply the update.
 
 ## Why do I get a "There was a problem parsing the package" error when I attempt to install ES-DE?
 
-There are two possible reasons for this, the first and most common issue is that your device does not fulfill the basic requirements for ES-DE, which is that it has to run a 64-bit version of Android 11 or later. We are investigating whether Android 10 support could be added in a future release but for the time being this is not supported.
+There are two possible reasons for this, the first and most common issue is that your device does not fulfill the basic requirements for ES-DE, which is that it has to run a 64-bit version of Android 10 or later.
 
 The second reason is that the APK is corrupt or not complete. When we make releases we include an MD5 hash value with the download link, and it's recommended to check the hash of the downloaded file before you attempt to install it. This will also ensure that you actually have the real release and not some third party scam or fake app or similar. A recommended app for generating the MD5 checksums is [Hash Checker](https://play.google.com/store/apps/details?id=com.smlnskgmail.jaman.hashchecker) from the Google Play store.
 
@@ -71,24 +71,28 @@ Also be aware that there are some slight variations when it comes to how emulato
 
 ## Why do some standalone emulators fail to launch with "ERROR CODE -1" or just display a black screen?
 
-ERROR CODE -1 is a general failure mode which could be caused by multiple things. Some emulators react like this when there's a permission issue and they can't access the game file. See the previous question above for how to deal with such permission problems. And some emulators return this error when the file you attempt to launch has an unsupported file extension. For example MD.emu does not support .bin files, but if you rename these to the .gen extension then game launching works as expected.
+ERROR CODE -1 is a general failure mode which could be caused by multiple things. Some emulators react like this when there's a permission issue and they can't access the game file. See the previous question above for how to deal with such permission problems. And some emulators return this error when the file you attempt to launch has an unsupported file extension. For example MD.emu does not support .bin files, but if you rename these files to the .gen extension then game launching works as expected.
 
-If you have an Ayn Odin 2 this error will occur for a number of emulators such as Redream and My Boy! due to what seems to be a problem with their Android OS image. See the [Issues with the Ayn Odin 2](ANDROID.md#issues-with-the-ayn-odin-2) section in the Android documentation for more details about the latter.
+If you own an Ayn Odin 2 then this error will also occur when attempting to launch the ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy emulators. This seems to be caused by bugs in their firmware/OS image and needs to be resolved by Ayn.
 
-The black screen on game launch is just a variation of this failure mode, it depends on how the emulator handles errors whether there will be a black screen or whether it will abort and report the launch failure to ES-DE.
+A black screen on game launch is also a possible variation of this failure mode, it depends on how the emulator handles errors whether there will be a black screen or whether it will abort and report the launch failure to ES-DE.
 
 ## Sometimes after I return from a game ES-DE is restarting, did it crash?
 
 No Android may stop applications that are not currently focused if it needs to recover the RAM that those applications were using. This is an integral part of the operating system design, there's really no way to prevent this behavior. ES-DE is a complex application that is more akin to a game engine than a regular Android application, and if you are using a demanding theme with lots of game media it can consume quite a lot of memory. If you are using a device with limited RAM, say 4 GB or so, it's almost unavoidable that ES-DE will get stopped if you are running an emulator that also uses a lot of memory. You could switch to a more lightweight theme though, this sometimes prevents these restarts from occuring.
 
+## ES-DE takes a very long time to start, is there a way to improve this?
+
+Unfortunately disk I/O performance on Android leaves a lot to be desired compared to desktop operating systems. Google has repeatedly prioritized other things over performance which leads to disk speed being poor on this operating system. The biggest offender is the choice of FAT filesystems such as exFAT for external storage which offer abysmal performance for some file operations on which ES-DE relies heavily. Generally speaking a small to medium ROM collection can normally be placed on a FAT-formatted device such as an SD card but the ES-DE directory and more importantly the _downloaded_media_ directory should always be placed on internal storage. For large game collections ES-DE could turn borderline unusable if the ES-DE directory is placed on an SD card or USB memory stick. It's also possible to enable the _Only show games from gamelist.xml files_ option in the _Other settings_ menu to skip checking for game files on startup, but this has multiple implications such as what's displayed inside ES-DE not necessarily reflecting reality any longer. And obviously you'll need gamelist.xml entries for all games you want to show up inside ES-DE. So this option is really a last resort and is generally only recommended for testing purposes. In summary huge game collections are discouraged on Android due to limitations in the operating system itself. Setting up a collection of tens of thousands of games is for sure achievable with ES-DE on Linux, macOS or Windows but it's not really feasible on Android.
+
 ## On game launch RetroArch runs an old game instead of the one I just selected, how do I prevent this?
 
-We have a video on our YouTube channel describing how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
+There is a video on the official ES-DE YouTube channel on how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
 https://www.youtube.com/watch?v=k5WWacfIn6Y
 
 ## What type of Android devices are supported
 
-ES-DE runs on a wide range on devices, for example handheld consoles like the Ayn Odin 2 and the Retroid Pocket 2s, 3 and 4, on mobile phones, on tablets and on Android TV devices like the Nvidia Shield Pro. It supports a wide range of screen resolutions and aspect ratios. A 64-bit version of Android 11 or later is required although we will investigate whether Android 10 support can be added in a future release.
+ES-DE runs on a wide range on devices, for example handheld consoles like the Ayn Odin and the Retroid Pocket models, on mobile phones, on tablets and on Android TV devices like the Nvidia Shield Pro. It supports a wide range of screen resolutions and aspect ratios. A 64-bit version of Android 10 or later is required.
 
 ## Will touch gesture support get added?
 

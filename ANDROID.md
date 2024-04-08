@@ -1,4 +1,4 @@
-# ES-DE (EmulationStation Desktop Edition) 3.0 - Android documentation
+# ES-DE Frontend - Android documentation
 
 This document contains information specific to the Android release, for more general ES-DE documentation refer to the [User guide](USERGUIDE.md) as well as the general [FAQ](FAQ.md).
 
@@ -158,22 +158,7 @@ You can relocate as many systems as you want, you just need to place them all wi
 
 ## Issues with the Ayn Odin 2
 
-There are two serious issues that seem to be specific to the Ayn Odin 2, although it remains to be seen whether the problem exists also on other devices.
-
-The first problem is that some emulators refuse to run games that you place inside directories that contain dots in their names. This is quite problematic as the [directories interpreted as files](USERGUIDE.md#directories-interpreted-as-files) functionality depends on the ability to add file extensions to directory names.
-
-This has been observed with M64Plus FZ, Play!, Saturn.emu, FPse and FPseNG and it's working fine with RetroArch, NetherSX2, ePSXe and DuckStation. Note however that this is not a complete list as not all emulators have been tested for this problem.
-
-If you run into this issue you can use the _folder link_ functionality as an alternative to the _directories interpreted as files_ functionality. How to use folder links is described in the [User guide](USERGUIDE.md).
-
-The second problem is that a number of emulators can't be launched from ES-DE at all. When attempting to run such an emulator an error popup with the game name followed by "ERROR CODE -1" is displayed. The affected emulators are ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy.
-
-The following devices have been tested and do **not** experience either of these two problems:
-
-* Ayn Odin Lite (Android 11)
-* Retroid Pocket 4 Pro (Android 13)
-* Google Pixel 4a (Android 13)
-* Google Pixel Tablet (Android 14)
+There is one serious issue that seems to be specific to the Ayn Odin 2, and that is that a number of standalone emulators can't be launched. When attempting to run such an emulator an error popup with the game name followed by "ERROR CODE -1" is displayed. The affected emulators are ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy.
 
 There are also some issues with sound quality on the Odin 2, such as large fluctuations in volume where some sounds are quite loud and some are quite silent. There are also some strange aliasing effects when playing samples rapidly.
 
@@ -388,10 +373,10 @@ https://www.purei.org/downloads.php
 
 The Play store version of this emulator is getting frequent updates and is therefore recommended. There is a paid Gold version as well which is functionally identical to the free version.
 
+Make sure that you press the _Browse_ button in PPSSPP when you're adding scoped storage access to your games directory or you will not be able to launch any games from ES-DE.
+
 https://play.google.com/store/apps/details?id=org.ppsspp.ppsspp \
 https://play.google.com/store/apps/details?id=org.ppsspp.ppssppgold
-
-Make sure that you press the _Browse_ button in PPSSPP when you're adding scoped storage access to your games directory or you will not be able to launch any games from ES-DE.
 
 ### Ruffle
 
@@ -401,7 +386,11 @@ https://github.com/torokati44/ruffle-android/releases
 
 ### Real3DOPlayer
 
-This 3DO Interactive Multiplayer emulator can be downloaded from their website.
+This 3DO Interactive Multiplayer emulator can be downloaded from their website. Just be aware that it's very old and has not been updated for modern Android releases, so it may be finicky on some devices or it may not work at all.
+
+You need to place the BIOS file in the game system directory, i.e. in the ROMs/3do folder. The file panafz10.bin with MD5 checksum 51f2f43ae2f3508a14d9f56597e2d3ce has been proven to work.
+
+After installing the emulator, open it and go to the settings tab, then choose "Select ISO and BIOS directory" and navigate to the ROMs/3do folder. It seems like you also need to start the game from inside the emulator before you can run it from ES-DE. Starting a game will create a savestate file. If you now exit the emulator and run the game from ES-DE you'll see a list of savestate files, just select the correct one to start the game.
 
 http://www.arts-union.ru/node/23
 
@@ -437,36 +426,112 @@ https://github.com/Vita3K/Vita3K-Android/releases
 
 This is clearly not a complete list of Android devices, but rather those we know have been tested with ES-DE and for which there is a known status.
 
-| Manufacturer | Model            | Android release | Supported | Known issues        | Comment                    |
-| :----------- | :--------------- | :-------------- | :-------- | :------------------ | :------------------------- |
-| Anbernic     | RG556            | 13              | Yes       | None                |                            |
-| Ayn          | Odin             | 10              | Yes       | None                |                            |
-| Ayn          | Odin Lite        | 11              | Yes       | None                |                            |
-| Ayn          | Odin 2           | 13              | Yes       | Can't launch some emulators,<br>Can't have dots in directory names,<br>Minor audio issues | Bugs in the firmware/OS image |
-| Google       | Pixel 4a         | 13, 14          | Yes       | None                |                            |
-| Google       | Pixel Tablet     | 14              | Yes       | None                |                            |
-| Honor        | 20 lite          | 10              | Yes       | None                |                            |
-| Honor        | Magic5 Pro       | 13              | Yes       | None                |                            |
-| Meta         | Quest 3          | 12 ?            | Yes       | None                |                            |
-| Nokia        | 5.4              | 12              | Yes       | None                |                            |
-| Nokia        | 7 Plus           | 10              | Yes       | None                |                            |
-| Nvidia       | Shield Pro       | 11 (TV)         | Yes       | None                | Limited RAM capacity on this device makes it unsuitable for demanding themes and large game collections |
-| OnePlus      | 6T               | 11              | Yes       | None                |                            |
-| Oppo         | A15              | 10              | Yes       | None                |                            |
-| REDMAGIC     | 8 Pro            | 13              | Yes       | None                |                            |
-| Retroid      | Pocket 2s        | 11              | Yes       | None                |                            |
-| Retroid      | Pocket 3+        | 11              | Yes       | None                |                            |
-| Retroid      | Pocket 4 Pro     | 13              | Yes       | None                |                            |
-| Samsung      | Galaxy Note 20   | 13              | No        | Fails at configurator/onboarding | Has a non-standard app permission screen, possibly this breaks the configurator |
-| Samsung      | Galaxy S10       | 12              | Yes       | None                |                            |
-| Samsung      | Galaxy S20       | 13              | Yes       | None                |                            |
-| Samsung      | Galaxy S22 Ultra | 14              | Yes       | None                |                            |
-| Samsung      | Galaxy S23 Ultra | 14              | Yes       | None                |                            |
-| Samsung      | Galaxy S24 Ultra | 14              | Yes       | None                |                            |
-| Ulefone      | Note 6P          | 11              | Yes       | None                |                            |
-| Wiko         | Voix             | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
-| Xiaomi       | Pad 5            | 13              | Yes       | None                |                            |
-| Xiaomi       | Redmi Note 11    | 11              | Yes       | None                |                            |
+| Manufacturer | Model                   | Android release | Supported | Known issues        | Comment                    |
+| :----------- | :---------------------- | :-------------- | :-------- | :------------------ | :------------------------- |
+| Abxylute     | One                     | 12              | Yes       | None                |                            |
+| Anbernic     | RG353V                  | 11              | Yes       | None                |                            |
+| Anbernic     | RG405M                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG405V                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG556                   | 13              | Yes       | None                |                            |
+| Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
+| Ayaneo       | Pocket Air              | 12              | Yes       | None                |                            |
+| Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
+| Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
+| Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Can't launch some emulators,<br>Minor audio issues | Bugs in the firmware/OS image |
+| Google       | Pixel 2 XL              | 11              | Yes       | None                |                            |
+| Google       | Pixel 3 XL              | 12              | Yes       | None                |                            |
+| Google       | Pixel 4a                | 13              | Yes       | None                |                            |
+| Google       | Pixel 4a 5G             | 14              | Yes       | None                |                            |
+| Google       | Pixel 6                 | 14              | Yes       | None                |                            |
+| Google       | Pixel 6 Pro             | 14              | Yes       | None                |                            |
+| Google       | Pixel 6a                | 14              | Yes       | None                |                            |
+| Google       | Pixel 7 Pro             | 13              | Yes       | None                |                            |
+| Google       | Pixel 8 Pro             | 14              | Yes       | None                |                            |
+| Google       | Pixel Fold              | 14              | Yes       | None                |                            |
+| Google       | Pixel Tablet            | 14              | Yes       | None                |                            |
+| GPD          | XD Plus                 | 11              | Yes       | None                | LineageOS                  |
+| Honor        | 20 lite                 | 10              | Yes       | None                |                            |
+| Honor        | Magic5 Pro              | 13              | Yes       | None                |                            |
+| Huawei       | Mate 10 Pro             | 10              | Yes       | None                |                            |
+| Huawei       | Mate 20 Pro             | 10              | Yes       | None                |                            |
+| Huawei       | MatePad 11 (2021)       | 13              | Yes       | None                |                            |
+| Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
+| Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
+| Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
+| Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |
+| Lenovo       | Xiaoxin Pad Pro 2021    | 11              | Yes       | None                |                            |
+| LG           | V60 ThinQ               | 13              | Yes       | None                |                            |
+| Logitech     | G Cloud                 | 11              | Yes       | None                |                            |
+| Meta         | Quest 3                 | 12 ?            | Yes       | None                |                            |
+| Microsoft    | Surface Duo 2           | 12              | Unclear   | Unclear             | Conflicting reports of whether this device works or not |
+| Motorola     | Moto G60                | 12              | Yes       | None                |                            |
+| Motorola     | Moto G84                | 13              | Yes       | None                |                            |
+| Motorola     | Moto G100               | 12              | Yes       | None                |                            |
+| Motorola     | Moto G200 5G            | 12              | Yes       | None                |                            |
+| Motorola     | Moto G Pro / G Stylus   | 12              | No        | Fails at configurator/onboarding |                            |
+| Nintendo     | Switch                  | 11              | Yes       | None                | Switchroot                 |
+| Nokia        | 5.4                     | 12              | Yes       | None                |                            |
+| Nokia        | 7 Plus                  | 10              | Yes       | None                |                            |
+| Nvidia       | Shield Pro (2015/2019)  | 11 (TV)         | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| OnePlus      | 6T                      | 11              | Yes       | None                |                            |
+| OnePlus      | 7 Pro                   | 14              | Yes       | None                |                            |
+| OnePlus      | 8 Pro                   | 13              | Yes       | None                |                            |
+| OnePlus      | 12                      | 14              | Yes       | None                |                            |
+| OnePlus      | Nord 2                  | 13              | Yes       | None                |                            |
+| OnePlus      | Open                    | 14              | Yes       | None                |                            |
+| Oppo         | A15                     | 10              | Yes       | None                |                            |
+| Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
+| Razer        | Edge                    | 13              | Yes       | None                |                            |
+| Realme       | GT2                     | 12              | Yes       | None                |                            |
+| Retroid      | Pocket 2+               | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 2s               | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 3                | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 3+               | 11              | Yes       | None                |                            |
+| Retroid      | Pocket 4                | 13              | Yes       | None                |                            |
+| Retroid      | Pocket 4 Pro            | 13              | Yes       | None                |                            |
+| Retroid      | Pocket Flip             | 11              | Yes       | None                |                            |
+| Samsung      | Galaxy A17              | 11              | Yes       | None                |                            |
+| Samsung      | Galaxy A20              | 10              | Yes       | No write access to SD card | ROMs folder can be moved to SD card after setup and be used in read-only mode |
+| Samsung      | Galaxy A52              | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy A52s 5G          | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy A54              | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy A71 5G           | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy M52 5G           | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 9           | 10              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 20          | 13              | No        | Fails at configurator/onboarding |                            |
+| Samsung      | Galaxy Note 20 Ultra 5G | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy S9+              | 10              | Yes       | None                |                            |
+| Samsung      | Galaxy S10              | 12              | Yes       | None                |                            |
+| Samsung      | Galaxy S20              | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy S20 FE           | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy S22 Ultra        | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S23              | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S23+             | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S23 Ultra        | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy S24 Ultra        | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab A7           | 12              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S9 5G        | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S7+          | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S7 FE        | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S9           | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Tab S9+          | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Z Fold 3         | 14              | Yes       | None                |                            |
+| Samsung      | Galaxy Z Fold 4         | 14              | Yes       | None                |                            |
+| Sony         | Xperia 1 V              | 14              | Yes       | None                |                            |
+| Ulefone      | Note 6P                 | 11              | Yes       | None                |                            |
+| vivo         | X Fold+                 | 14              | Yes       | None                |                            |
+| Wiko         | Voix                    | 12              | No        | Fails at configurator/onboarding | Probably a bug in the firmware/OS image as a libc system call fails |
+| Xiaomi       | Mi 10t                  | 12              | Yes       | None                |                            |
+| Xiaomi       | Mi 11i                  | 13              | Yes       | None                |                            |
+| Xiaomi       | Pad 5                   | 13              | Yes       | None                |                            |
+| Xiaomi       | Poco F3                 | 11              | Yes       | None                |                            |
+| Xiaomi       | Poco X5                 | 12              | Yes       | None                |                            |
+| Xiaomi       | Redmi Note 10 Pro       | 13              | Yes       | None                |                            |
+| Xiaomi       | Redmi Note 11           | 11              | Yes       | None                |                            |
+| ZTE nubia    | RedMagic 7 Pro          | 13              | Yes       | None                |                            |
+| ZTE nubia    | RedMagic 8 Pro          | 13              | Yes       | None                |                            |
+| ZTE nubia    | RedMagic 9 Pro          | 14              | Yes       | None                |                            |
 
 ## Supported game systems
 

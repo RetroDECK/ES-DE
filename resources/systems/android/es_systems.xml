@@ -114,6 +114,7 @@
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME 2003">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
@@ -355,6 +356,7 @@
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME 2003">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
@@ -374,6 +376,7 @@
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME 2003">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
@@ -391,6 +394,7 @@
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME 2003">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
@@ -408,6 +412,7 @@
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME 2003">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
@@ -839,6 +844,7 @@
         <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2010_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME 2003">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2003_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
@@ -883,7 +889,7 @@
         <command label="Genesis Plus GX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=genesis_plus_gx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=genesis_plus_gx_wide_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=picodrive_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="MD.emu (Standalone)">%EMULATOR_MD-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="MD.emu (Standalone)">%EMULATOR_MD-EMU% %DATA%=%ROMSAF%</command>
         <platform>segacd</platform>
         <theme>megacd</theme>
     </system>
@@ -895,7 +901,7 @@
         <command label="Genesis Plus GX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=genesis_plus_gx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=genesis_plus_gx_wide_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=picodrive_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="MD.emu (Standalone)">%EMULATOR_MD-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="MD.emu (Standalone)">%EMULATOR_MD-EMU% %DATA%=%ROMSAF%</command>
         <platform>segacd</platform>
         <theme>megacdjp</theme>
     </system>
@@ -1458,6 +1464,7 @@
         <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .m3u .M3U .mds .MDS .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_saturn_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=yabasanshiro_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Yaba Sanshiro 2 (Standalone)">%EMULATOR_YABASANSHIRO-2% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %EXTRA_org.uoyabause.android.FileNameUri%=%ROMSAF%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=yabause_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Saturn.emu (Standalone)">%EMULATOR_SATURN-EMU% %DATA%=%ROMSAF%</command>
         <platform>saturn</platform>
@@ -1470,6 +1477,7 @@
         <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .m3u .M3U .mds .MDS .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_saturn_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=yabasanshiro_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Yaba Sanshiro 2 (Standalone)">%EMULATOR_YABASANSHIRO-2% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %EXTRA_org.uoyabause.android.FileNameUri%=%ROMSAF%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=yabause_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Saturn.emu (Standalone)">%EMULATOR_SATURN-EMU% %DATA%=%ROMSAF%</command>
         <platform>saturn</platform>
@@ -1528,7 +1536,7 @@
         <command label="Genesis Plus GX">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=genesis_plus_gx_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=genesis_plus_gx_wide_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=picodrive_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="MD.emu (Standalone)">%EMULATOR_MD-EMU% %DATA%=%ROMPROVIDER%</command>
+        <command label="MD.emu (Standalone)">%EMULATOR_MD-EMU% %DATA%=%ROMSAF%</command>
         <platform>segacd</platform>
         <theme>segacd</theme>
     </system>
