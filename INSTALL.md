@@ -53,8 +53,10 @@ sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 libg
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
+sudo apt-get install clang-format cmake libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
 ```
+
+For a 64-bit build it's very important that you include libraspberrypi-dev because if this package is not installed then the file /usr/include/bcm_host.h is not present on the filesystem. This leads to CMake not detecting that it's indeed a Raspberry Pi and it will attempt to make a regular Linux build instead.
 
 To build with CEC support you also need to install these packages:
 ```
