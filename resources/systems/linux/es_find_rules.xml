@@ -764,7 +764,7 @@
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
         <rule type="systempath">
-            <entry>Ryujinx</entry>
+            <entry>Ryujinx.sh</entry>
             <entry>Ryujinx.Ava</entry>
             <entry>org.ryujinx.Ryujinx</entry>
         </rule>
