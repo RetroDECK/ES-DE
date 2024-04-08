@@ -764,7 +764,6 @@
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
         <rule type="systempath">
-	    <entry>ryujinx-rdwrapper.sh</entry> <!-- RetroDECK -->
             <entry>Ryujinx</entry>
             <entry>Ryujinx.Ava</entry>
             <entry>org.ryujinx.Ryujinx</entry>
