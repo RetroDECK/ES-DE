@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  InputManager.cpp
 //
 //  Low-level input handling.
@@ -792,9 +792,15 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
         std::make_unique<InputConfig>(joyID, SDL_GameControllerName(mControllers[joyID]), guid);
 
     bool customConfig {loadInputConfig(mInputConfigs[joyID].get())};
+
+#if SDL_MAJOR_VERSION > 2 || (SDL_MAJOR_VERSION == 2 && SDL_MINOR_VERSION > 0) ||                  \
+    (SDL_MAJOR_VERSION == 2 && SDL_MINOR_VERSION == 0 && SDL_PATCHLEVEL >= 14)
     const std::string serialNumber {SDL_GameControllerGetSerial(controller) == nullptr ?
                                         "" :
                                         SDL_GameControllerGetSerial(controller)};
+#else
+    const std::string serialNumber;
+#endif
 
     if (customConfig) {
         LOG(LogInfo) << "Added controller with custom configuration: \""
@@ -844,9 +850,14 @@ void InputManager::removeControllerByJoystickID(Window* window, SDL_JoystickID j
         return;
     }
 
+#if SDL_MAJOR_VERSION > 2 || (SDL_MAJOR_VERSION == 2 && SDL_MINOR_VERSION > 0) ||                  \
+    (SDL_MAJOR_VERSION == 2 && SDL_MINOR_VERSION == 0 && SDL_PATCHLEVEL >= 14)
     const std::string serialNumber {SDL_GameControllerGetSerial(mControllers[joyID]) == nullptr ?
                                         "" :
                                         SDL_GameControllerGetSerial(mControllers[joyID])};
+#else
+    const std::string serialNumber;
+#endif
 
     LOG(LogInfo) << "Removed controller \"" << SDL_GameControllerName(mControllers[joyID])
                  << "\" (GUID: " << guid
