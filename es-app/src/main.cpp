@@ -872,6 +872,18 @@ int main(int argc, char* argv[])
     }
 
     {
+        // Create the game media folder.
+        const std::string mediaDirectory {FileData::getMediaDirectory()};
+        if (!Utils::FileSystem::exists(mediaDirectory)) {
+            LOG(LogInfo) << "Creating game media directory \"" << mediaDirectory << "\"...";
+            Utils::FileSystem::createDirectory(mediaDirectory);
+            if (!Utils::FileSystem::exists(mediaDirectory)) {
+                LOG(LogWarning) << "Couldn't create directory, permission problems?";
+            }
+        }
+    }
+
+    {
 #if defined(__ANDROID__)
         const std::string mediaDirectory {FileData::getMediaDirectory()};
         if (Utils::FileSystem::exists(mediaDirectory))
