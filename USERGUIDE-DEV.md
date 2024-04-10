@@ -3550,6 +3550,10 @@ MAME software list names for all arcade systems are automatically expanded to th
 
 The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphics cards and when running at higher resolution. As such the desktop compositor can be disabled when running ES-DE, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that enabling this setting can cause problems with some graphics drivers so if you experience strange flickering and similar, then make sure to keep this setting disabled. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option). This setting has no effect if using Wayland, it only applies to X11/Xorg.
 
+**Back button/back swipe exits app** _(Android only)_
+
+Whether to exit the application when swiping back or pressing the back button.
+
 **Debug mode**
 
 Enabling this option will output detailed debug messages to es_log.txt and it also makes it possible to use the debug overlays and shortcuts which are documented in more depth in [INSTALL-DEV.md](INSTALL-DEV.md#debug-mode). Enabling this setting is equivalent to passing the --debug command line option. Make sure to only enable this setting when you really need it as it will slow down the application and cause the es_log.txt file to grow substantially. When passing the --debug command line option this setting will be grayed out in the menu.

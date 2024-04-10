@@ -13,7 +13,10 @@
 * (Android) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Android) Changed from %ROMPROVIDER% to %ROMSAF% for MD.emu (only for megacd, megacdjp and segacd)
 * (Android) Added support for the Antutu build of Citra MMJ
+* (Android) Added a "Back button/back swipe exits app" menu option
+* The game media directory is now created on application startup instead of when first starting the scraper
 * (Linux/Unix) Changed the application summary from "Emulator Frontend" to "Gaming Frontend"
+* (Windows) Changed some log entries to use backslashes instead of forward slashes as directory separators
 * Changed the application description to "ES-DE Frontend" for the -h/--help command line option
 
 ### Detailed list of changes
