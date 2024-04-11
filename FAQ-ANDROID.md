@@ -73,8 +73,6 @@ Also be aware that there are some slight variations when it comes to how emulato
 
 ERROR CODE -1 is a general failure mode which could be caused by multiple things. Some emulators react like this when there's a permission issue and they can't access the game file. See the previous question above for how to deal with such permission problems. And some emulators return this error when the file you attempt to launch has an unsupported file extension. For example MD.emu does not support .bin files, but if you rename these files to the .gen extension then game launching works as expected.
 
-If you own an Ayn Odin 2 then this error will also occur when attempting to launch the ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy emulators. This seems to be caused by bugs in their firmware/OS image and needs to be resolved by Ayn.
-
 A black screen on game launch is also a possible variation of this failure mode, it depends on how the emulator handles errors whether there will be a black screen or whether it will abort and report the launch failure to ES-DE.
 
 ## Sometimes after I return from a game ES-DE is restarting, did it crash?

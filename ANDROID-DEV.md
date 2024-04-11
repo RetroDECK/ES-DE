@@ -156,15 +156,7 @@ This is obviously a non-portable collection.
 
 You can relocate as many systems as you want, you just need to place them all within the systemList tag pairs in ES-DE/custom_systems/es_systems.xml.
 
-## Issues with the Ayn Odin 2
-
-There is one serious issue that seems to be specific to the Ayn Odin 2, and that is that a number of standalone emulators can't be launched. When attempting to run such an emulator an error popup with the game name followed by "ERROR CODE -1" is displayed. The affected emulators are ColEm, fMSX, iNES, MasterGear, My Boy!, My OldBoy!, Redream and Speccy.
-
-There are also some issues with sound quality on the Odin 2, such as large fluctuations in volume where some sounds are quite loud and some are quite silent. There are also some strange aliasing effects when playing samples rapidly.
-
 ## Known ES-DE problems
-
-In addition to the issues specific to the Ayn Odin 2 there are a couple of other problems that will hopefully be resolved in the near future:
 
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
 * The Android soft keyboard causes rendering issues when navigating using a controller or physical keyboard, as such the ES-DE built-in keyboard is enabled by default for the time being. For testing purposes the Android soft keyboard can be enabled via the _Enable virtual keyboard_ option in the _UI settings_ menu. If only using touch input the issue is not present. This problem is believed to be caused by a bug in the SDL library so it probably needs to be resolved there.
@@ -445,7 +437,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Ayaneo       | Pocket Air              | 12              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
-| Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Can't launch some emulators,<br>Minor audio issues | Bugs in the firmware/OS image |
+| Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Minor audio issues  |                            |
 | Google       | Pixel 2 XL              | 11              | Yes       | None                |                            |
 | Google       | Pixel 3 XL              | 12              | Yes       | None                |                            |
 | Google       | Pixel 4a                | 13              | Yes       | None                |                            |
