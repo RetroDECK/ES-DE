@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiThemeDownloader.h
 //
 //  Theme downloader.
@@ -68,6 +68,7 @@ private:
         std::vector<std::string> transitions;
         std::vector<Screenshot> screenshots;
         bool newEntry;
+        bool deprecated;
         bool invalidRepository;
         bool corruptRepository;
         bool shallowRepository;
@@ -76,6 +77,7 @@ private:
         bool isCloned;
         ThemeEntry()
             : newEntry {false}
+            , deprecated {false}
             , invalidRepository {false}
             , corruptRepository {false}
             , shallowRepository {false}
