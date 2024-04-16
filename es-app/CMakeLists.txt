@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  CMakeLists.txt (es-app)
 #
 #  CMake configuration for es-app
@@ -11,7 +11,6 @@ project(es-de)
 
 set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationUpdater.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationVersion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h

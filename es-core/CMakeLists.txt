@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  CMakeLists.txt (es-core)
 #
 #  CMake configuration for es-core
@@ -9,6 +9,7 @@
 project(core)
 
 set(CORE_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationVersion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/AsyncHandle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/AudioManager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CECInput.h
