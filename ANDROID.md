@@ -186,8 +186,9 @@ https://github.com/Trixarian/NetherSX2-patch
 
 ### Citra
 
-The Citra emulator is no longer in active development and it's unclear where it can be obtained and whether it will be worked on in the future. The Citra MMJ fork is still available for download from their GitHub site.
+The original Citra emulator project is no longer alive, but there is a fork that should work as a drop-in replacement. The Citra MMJ fork is also a viable alternative. Both of these emulators are available for download from their GitHub sites.
 
+https://github.com/PabloMK7/citra/releases \
 https://github.com/weihuoya/citra/releases
 
 ### ColEm

@@ -18,8 +18,8 @@
 * (Linux/Unix) Changed the application summary from "Emulator Frontend" to "Gaming Frontend"
 * (Windows) Changed some log entries to use backslashes instead of forward slashes as directory separators
 * Changed the application description to "ES-DE Frontend" for the -h/--help command line option
-
-### Detailed list of changes
+* Added support for marking themes as deprecated in the theme downloader
+* Added a User-Agent string when making non-scraper HTTP requests
 
 ### Bug fixes
 
