@@ -9,6 +9,7 @@
 
 #include "HttpReq.h"
 
+#include "ApplicationVersion.h"
 #include "Log.h"
 #include "Settings.h"
 #include "resources/ResourceManager.h"
@@ -78,6 +79,32 @@ HttpReq::HttpReq(const std::string& url, bool scraperRequest)
         mStatus = REQ_IO_ERROR;
         onError(curl_easy_strerror(err));
         return;
+    }
+
+    if (!mScraperRequest) {
+        // Set User-Agent.
+        std::string userAgent {"ES-DE Frontend/"};
+        userAgent.append(PROGRAM_VERSION_STRING).append(" (");
+#if defined(__ANDROID__)
+        userAgent.append("Android");
+#elif defined(_WIN64)
+        userAgent.append("Windows");
+#elif defined(__APPLE__)
+        userAgent.append("macOS");
+#elif defined(__linux__)
+        userAgent.append("Linux");
+#elif defined(__unix__)
+        userAgent.append("Unix");
+#else
+        userAgent.append("Unknown");
+#endif
+        userAgent.append(")");
+        CURLcode err {curl_easy_setopt(mHandle, CURLOPT_USERAGENT, userAgent.c_str())};
+        if (err != CURLE_OK) {
+            mStatus = REQ_IO_ERROR;
+            onError(curl_easy_strerror(err));
+            return;
+        }
     }
 
     long connectionTimeout;
