@@ -20,6 +20,8 @@
 * Changed the application description to "ES-DE Frontend" for the -h/--help command line option
 * Added support for marking themes as deprecated in the theme downloader
 * Added a User-Agent string when making non-scraper HTTP requests
+* Updated SDL to 2.30.2 on Android, Windows, macOS and the Linux AppImage builds
+* (Windows) Updated OpenSSL to 3.3.0
 
 ### Bug fixes
 
