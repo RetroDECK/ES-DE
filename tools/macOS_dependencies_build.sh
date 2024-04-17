@@ -1,7 +1,7 @@
 #!/bin/sh
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  macOS_dependencies_build.sh
 #
 #  Builds the external dependencies in-tree.
