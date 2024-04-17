@@ -1,6 +1,6 @@
 ::  SPDX-License-Identifier: MIT
 ::
-::  ES-DE
+::  ES-DE Frontend
 ::  Windows_dependencies_setup.bat
 ::
 ::  Downloads and prepares the external dependencies for building in-tree using MSVC.
@@ -309,18 +309,18 @@ if exist fWin64OpenSSL_Light-1_1_1m.exe (
   del Win64OpenSSL_Light-1_1_1m.exe
 )
 
-if not exist "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll" (
-  curl -O https://slproweb.com/download/Win64OpenSSL_Light-1_1_1m.exe
+if not exist "C:\Program Files\OpenSSL-Win64\libcrypto-3-x64.dll" (
+  curl -O https://slproweb.com/download/Win64OpenSSL_Light-3_3_0.exe
   :: Run the installer.
-  .\Win64OpenSSL_Light-1_1_1m.exe
+  .\Win64OpenSSL_Light-3_3_0.exe
 )
 
 :: Return to the root of the repository.
 cd ..
 
-if exist "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll" (
-  copy /Y "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll"
-  copy /Y "C:\Program Files\OpenSSL-Win64\libssl-1_1-x64.dll"
+if exist "C:\Program Files\OpenSSL-Win64\libcrypto-3-x64.dll" (
+  copy /Y "C:\Program Files\OpenSSL-Win64\libcrypto-3-x64.dll"
+  copy /Y "C:\Program Files\OpenSSL-Win64\libssl-3-x64.dll"
 )
 
 echo:

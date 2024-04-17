@@ -161,9 +161,9 @@ if(WIN32)
                   ../freetype.dll
                   ../git2.dll
                   ../glew32.dll
-                  ../libcrypto-1_1-x64.dll
+                  ../libcrypto-3-x64.dll
                   ../libcurl-x64.dll
-                  ../libssl-1_1-x64.dll
+                  ../libssl-3-x64.dll
                   ../lunasvg.dll
                   ../pugixml.dll
                   ../rlottie.dll
