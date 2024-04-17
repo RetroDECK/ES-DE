@@ -10,7 +10,7 @@
 #  The script has to be run from within the tools directory.
 #
 #  Example use:
-#  ./update_version_string.sh 2 1 0 beta
+#  ./update_version_string.sh 3 0 2 beta
 #
 #  The following files are updated by this script:
 #  es-app/CMakeLists.txt
@@ -29,7 +29,7 @@ fi
 if [ $# -ne 3 ] && [ $# -ne 4 ]; then
   echo "Usage: ./update_version_string.sh <major version> <minor version> <patch version> [<suffix>]"
   echo "For example:"
-  echo "./update_version_string.sh 2 0 0 beta"
+  echo "./update_version_string.sh 3 0 2 beta"
   exit
 fi
 
