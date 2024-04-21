@@ -123,7 +123,7 @@
                 <pos>0 0.3</pos>
                 <size>1 0.4</size>
                 <type>horizontal</type>
-                <staticImage>./${artDirectory}/${system.theme}.jpg</staticImage>
+                <staticImage>./${artDirectory}/${system.theme}.webp</staticImage>
                 <itemScale>1</itemScale>
                 <itemVerticalAlignment>center</itemVerticalAlignment>
                 <unfocusedItemOpacity>1</unfocusedItemOpacity>
