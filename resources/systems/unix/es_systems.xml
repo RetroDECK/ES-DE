@@ -101,6 +101,24 @@
         <theme>android</theme>
     </system>
     <system>
+        <name>androidapps</name>
+        <fullname>Android Apps</fullname>
+        <path>%ROMPATH%/androidapps</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>android</platform>
+        <theme>androidapps</theme>
+    </system>
+    <system>
+        <name>androidgames</name>
+        <fullname>Android Games</fullname>
+        <path>%ROMPATH%/androidgames</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>android</platform>
+        <theme>androidgames</theme>
+    </system>
+    <system>
         <name>apple2</name>
         <fullname>Apple II</fullname>
         <path>%ROMPATH%/apple2</path>
