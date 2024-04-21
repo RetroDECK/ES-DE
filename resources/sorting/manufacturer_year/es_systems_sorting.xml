@@ -38,6 +38,14 @@
         <systemsortname>Google - 2008</systemsortname>
     </system>
     <system>
+        <name>androidapps</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
+        <name>androidgames</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
         <name>apple2</name>
         <systemsortname>Apple - 1977</systemsortname>
     </system>

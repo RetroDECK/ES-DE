@@ -38,6 +38,14 @@
         <systemsortname>2008</systemsortname>
     </system>
     <system>
+        <name>androidapps</name>
+        <systemsortname>0000</systemsortname>
+    </system>
+    <system>
+        <name>androidgames</name>
+        <systemsortname>0000</systemsortname>
+    </system>
+    <system>
         <name>apple2</name>
         <systemsortname>1977</systemsortname>
     </system>
