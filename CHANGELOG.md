@@ -19,6 +19,8 @@
 * (Windows) Changed some log entries to use backslashes instead of forward slashes as directory separators
 * Changed the application description to "ES-DE Frontend" for the -h/--help command line option
 * Added support for marking themes as deprecated in the theme downloader
+* Added support for the androidapps and androidgames systems to the Linear, Modern and Slate themes
+* (modern-es-de) Converted all carousel icons from JPG to WebP format
 * Added a User-Agent string when making non-scraper HTTP requests
 * Updated SDL to 2.30.2 on Android, Windows, macOS and the Linux AppImage builds
 * (Windows) Updated OpenSSL to 3.3.0

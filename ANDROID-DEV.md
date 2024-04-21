@@ -458,6 +458,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Huawei       | MatePad 11 (2021)       | 13              | Yes       | None                |                            |
 | Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
 | Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
+| Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | Fails at configurator/onboarding | Seems to run a custom 64-bit Android TV OS |
 | Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |
 | Lenovo       | Xiaoxin Pad Pro 2021    | 11              | Yes       | None                |                            |
@@ -550,6 +551,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           | No           | Single archive or disk file          |
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
+| androidapps           | Android Apps                                   | _Placeholder_                     |                                   |              |                                      |
+| androidgames          | Android Games                                  | _Placeholder_                     |                                   |              |                                      |
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |

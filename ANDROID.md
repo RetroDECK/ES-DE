@@ -451,6 +451,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Huawei       | MatePad 11 (2021)       | 13              | Yes       | None                |                            |
 | Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
 | Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
+| Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | Fails at configurator/onboarding | Seems to run a custom 64-bit Android TV OS |
 | Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |
 | Lenovo       | Xiaoxin Pad Pro 2021    | 11              | Yes       | None                |                            |
