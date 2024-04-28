@@ -262,7 +262,7 @@
         <name>atarixe</name>
         <fullname>Atari XE</fullname>
         <path>%ROMPATH%/atarixe</path>
-        <extension>.a52 .A52 .atr .ATR .atx .ATX .bin .BIN .cas .CAS .cdm .CDM .xex .XEX .xfd .XFD .7z .7Z .zip .ZIP</extension>
+        <extension>.a52 .A52 .atr .ATR .atx .ATX .bin .BIN .car .CAR .cas .CAS .cdm .CDM .xex .XEX .xfd .XFD .7z .7Z .zip .ZIP</extension>
         <command label="Atari800">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=atari800_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>atarixe</platform>
         <theme>atarixe</theme>
