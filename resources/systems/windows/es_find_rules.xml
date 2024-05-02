@@ -402,6 +402,16 @@
             <entry>%ESPATH%\..\Emulators\KEmulator\KEmulator.exe</entry>
         </rule>
     </emulator>
+    <emulator name="LIME3DS">
+        <!-- Nintendo 3DS emulator Lime3DS -->
+        <rule type="systempath">
+            <entry>lime-qt.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\lime-qt\lime-qt.exe</entry>
+            <entry>%ESPATH%\..\Emulators\lime-qt\lime-qt.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="M2EMULATOR">
         <!-- Sega Model 2 Emulator -->
         <rule type="systempath">

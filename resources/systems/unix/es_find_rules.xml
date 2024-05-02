@@ -251,6 +251,12 @@
             <entry>~/bin/lightspark/lightspark</entry>
         </rule>
     </emulator>
+    <emulator name="LIME3DS">
+        <!-- Nintendo 3DS emulator Lime3DS -->
+        <rule type="systempath">
+            <entry>lime-qt</entry>
+        </rule>
+    </emulator>
     <emulator name="LINAPPLE">
         <!-- Apple II emulator LinApple -->
         <rule type="systempath">

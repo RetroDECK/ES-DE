@@ -140,6 +140,12 @@
             <entry>com.fms.ines.free/com.fms.emulib.TVActivity</entry>
         </rule>
     </emulator>
+    <emulator name="LIME3DS">
+        <!-- Nintendo 3DS emulator Lime3DS -->
+        <rule type="androidpackage">
+            <entry>io.github.lime3ds.android/.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="LYNX-EMU">
         <!-- Atari Lynx emulator Lynx.emu -->
         <rule type="androidpackage">

@@ -160,6 +160,12 @@
             <entry>hypseus.bin</entry>
         </rule>
     </emulator>
+    <emulator name="LIME3DS">
+        <!-- Nintendo 3DS emulator Lime3DS -->
+        <rule type="staticpath">
+            <entry>/Applications/lime-qt.app/Contents/MacOS/lime-qt</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="staticpath">
