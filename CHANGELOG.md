@@ -14,6 +14,8 @@
 * (Android) Changed from %ROMPROVIDER% to %ROMSAF% for MD.emu (only for megacd, megacdjp and segacd)
 * (Android) Added support for the Antutu build of Citra MMJ
 * (Android) Added a "Back button/back swipe exits app" menu option
+* Changed the supported file extensions for the cdtv system to be the same as for the amiga systems
+* Added the .car file extension to the atarixe system
 * The game media directory is now created on application startup instead of when first starting the scraper
 * (Linux/Unix) Changed the application summary from "Emulator Frontend" to "Gaming Frontend"
 * (Windows) Changed some log entries to use backslashes instead of forward slashes as directory separators

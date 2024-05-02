@@ -92,6 +92,10 @@ https://www.youtube.com/watch?v=k5WWacfIn6Y
 
 ES-DE runs on a wide range on devices, for example handheld consoles like the Ayn Odin and the Retroid Pocket models, on mobile phones, on tablets and on Android TV devices like the Nvidia Shield Pro. It supports a wide range of screen resolutions and aspect ratios. A 64-bit version of Android 10 or later is required.
 
+## Can I use the Android soft keyboard to enter text using touch and swiping
+
+Yes this is somehow possible, by disabling the _Enable virtual keyboard_ setting in the _UI settings_ menu the soft keyboard built into Android can be used. There is however a bug in the SDL library that causes rendering issues in ES-DE when combining this with controller input. More specifically a green border is shown around the screen and the bottom portion of the screen is not getting rendered at all. If this happens you need to restart ES-DE, and for this reason the ES-DE built-in virtual keyboard is enabled by default. If you are however only using touch input with ES-DE then using the Android soft keyboard should work fine.
+
 ## Will touch gesture support get added?
 
 ES-DE is not a good match for gesture navigation, there are a lot of contextual navigation and quite a number of possible actions at any given time. So it would probably get quite confusing to attempt to learn gestures for all these actions. For this reason it was decided to instead implement a touch overlay with virtual buttons. This is also what most emulators use for their input so ES-DE will match the emulators in this regard. However, if you are using a controller with ES-DE then none of this applies and you can go ahead and disable the touch overlay from the _Input device settings_ menu.
