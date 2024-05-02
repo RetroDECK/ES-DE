@@ -9,6 +9,7 @@
 ### Detailed list of changes
 
 * Improved multithreading for the network code which significantly increases scraping speed under some circumstances
+* Added Lime3DS standalone as an alternative emulator for the n3ds system
 * Added the MAME 2003 RetroArch core as an alternative emulator for the arcade, cps, cps1, cps2, cps3 and mame systems
 * (Android) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Android) Changed from %ROMPROVIDER% to %ROMSAF% for MD.emu (only for megacd, megacdjp and segacd)
