@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0258.xml -->
+<!-- Last updated with information from MAME driver file mame0265.xml -->
 <device>22vp931</device>
 <device>3c505</device>
 <device>3xtwin</device>
@@ -74,6 +74,7 @@
 <device>a2ulttrm</device>
 <device>a2uniprint</device>
 <device>a2vidtrm</device>
+<device>a2vistaa800</device>
 <device>a2vtc1</device>
 <device>a2vtc2</device>
 <device>a2vulcan</device>
@@ -153,6 +154,7 @@
 <device>aha1542</device>
 <device>aha1740</device>
 <device>aha1742a</device>
+<device>aha2940au</device>
 <device>alice_mcx128</device>
 <device>alto2_cpu</device>
 <device>altos2_kbd</device>
@@ -197,6 +199,7 @@
 <device>arc_midimax</device>
 <device>arc_nexus_a500</device>
 <device>arc_rom_aka05</device>
+<device>arc_rom_r225</device>
 <device>arc_rs423</device>
 <device>arc_scan256</device>
 <device>arc_scanjunior3</device>
@@ -225,6 +228,7 @@
 <device>atom_discpack</device>
 <device>ax208</device>
 <device>ax208p</device>
+<device>banshee_x86</device>
 <device>basf7100_kbd</device>
 <device>bbc_24bbc</device>
 <device>bbc_2ndserial</device>
@@ -260,6 +264,7 @@
 <device>bbc_opus8272</device>
 <device>bbc_opusa</device>
 <device>bbc_pdram</device>
+<device>bbc_pms64k</device>
 <device>bbc_ramdisc</device>
 <device>bbc_raven20</device>
 <device>bbc_stl1770_1</device>
@@ -280,6 +285,7 @@
 <device>bbc_tube_65c102</device>
 <device>bbc_tube_80186</device>
 <device>bbc_tube_80286</device>
+<device>bbc_tube_a500d</device>
 <device>bbc_tube_a500</device>
 <device>bbc_tube_arm7</device>
 <device>bbc_tube_arm</device>
@@ -387,6 +393,7 @@
 <device>cit101_kbd</device>
 <device>cit220p_kbd</device>
 <device>clgd542x</device>
+<device>clgd5446_pci</device>
 <device>clgd5465_laguna</device>
 <device>cmdhd</device>
 <device>cmdrc2</device>
@@ -443,10 +450,13 @@
 <device>cuda302</device>
 <device>cuda</device>
 <device>cudalite</device>
+<device>cv8lc</device>
 <device>cw7501</device>
 <device>d2fdc</device>
 <device>d9060</device>
 <device>d9090</device>
+<device>db50xg</device>
+<device>db60xg</device>
 <device>dc320b</device>
 <device>dc320e</device>
 <device>dc820b</device>
@@ -518,6 +528,7 @@
 <device>electron_sidewndr</device>
 <device>electron_voxbox</device>
 <device>enh2000</device>
+<device>enp10</device>
 <device>ep64_exdos</device>
 <device>epson_pf10</device>
 <device>epson_qx_option_multifont</device>
@@ -529,6 +540,7 @@
 <device>ev346</device>
 <device>ex1280</device>
 <device>ex800</device>
+<device>executive10_102_kbd</device>
 <device>exorterm155_device</device>
 <device>f4431_kbd</device>
 <device>fccpu20</device>
@@ -552,6 +564,8 @@
 <device>fsd1</device>
 <device>fsd2</device>
 <device>g80_1500</device>
+<device>geforce256ddr</device>
+<device>geforce256</device>
 <device>gfxultra</device>
 <device>gfxultrap</device>
 <device>gfxultrp</device>
@@ -561,16 +575,25 @@
 <device>hardbox</device>
 <device>hcpu30</device>
 <device>hd44780_a00</device>
+<device>hd44780</device>
+<device>hd44780u</device>
 <device>hd61830</device>
 <device>hd63484</device>
 <device>hdc</device>
 <device>hdc_ec1841</device>
 <device>he191_3425</device>
 <device>heath_gp19_tlb</device>
+<device>heath_igc_super19_tlb_device</device>
+<device>heath_igc_tlb_device</device>
+<device>heath_igc_ultra_tlb_device</device>
+<device>heath_igc_watz_tlb_device</device>
+<device>heath_imaginator_tlb</device>
 <device>heath_super19_tlb</device>
+<device>heath_superset_tlb</device>
 <device>heath_tlb</device>
 <device>heath_ultra_tlb</device>
 <device>heath_watz_tlb</device>
+<device>hk68v10</device>
 <device>hp82900</device>
 <device>hp82937</device>
 <device>hp82939</device>
@@ -587,6 +610,7 @@
 <device>i8245</device>
 <device>ibm_mfc</device>
 <device>ibm_vga</device>
+<device>idpart_video</device>
 <device>ie15_device</device>
 <device>ie15kbd</device>
 <device>ie15_keyboard</device>
@@ -645,6 +669,7 @@
 <device>keytronic_pc3270_at</device>
 <device>keytronic_pc3270</device>
 <device>km035</device>
+<device>ks0066</device>
 <device>ks0066_f00</device>
 <device>ks0066_f05</device>
 <device>labtam_3232</device>
@@ -742,16 +767,19 @@
 <device>mtx_cfx</device>
 <device>mtx_sdxbas</device>
 <device>mtx_sdxcpm</device>
+<device>mu5lcd</device>
 <device>mulcd</device>
 <device>mvme120</device>
 <device>mvme121</device>
 <device>mvme122</device>
 <device>mvme123</device>
+<device>mvme147</device>
 <device>mvme180</device>
 <device>mvme181</device>
 <device>mvme187</device>
 <device>mvme327a</device>
 <device>mvme350</device>
+<device>mzr8105</device>
 <device>nabupc_keyboard</device>
 <device>namco50</device>
 <device>namco51</device>
@@ -789,6 +817,7 @@
 <device>nb_rtpd</device>
 <device>nb_sp8s3</device>
 <device>nb_spdq</device>
+<device>nb_thungx</device>
 <device>nb_vikbw</device>
 <device>nb_wspt</device>
 <device>neogs</device>
@@ -801,7 +830,9 @@
 <device>np600a3</device>
 <device>nsmdsad</device>
 <device>nsmdsa</device>
+<device>nss_tvinterface</device>
 <device>o2_voice</device>
+<device>omniwave</device>
 <device>omti8621isa</device>
 <device>oric_jasmin</device>
 <device>oric_microdisc</device>
@@ -809,11 +840,13 @@
 <device>osa_maestroa</device>
 <device>osa_maestro</device>
 <device>osa_sparc</device>
+<device>oti64111_pci</device>
 <device>p1_fdc</device>
 <device>p1_hdc</device>
 <device>p1_rom</device>
 <device>p72</device>
 <device>pa7246</device>
+<device>partner_gdp</device>
 <device>pc1512kb</device>
 <device>pc1640_iga</device>
 <device>pc80s31</device>
@@ -834,12 +867,17 @@
 <device>pd3_lviw</device>
 <device>pd3_mclr</device>
 <device>pd3_pc16</device>
+<device>pdc20262</device>
 <device>pdc</device>
+<device>pds30_emac</device>
 <device>pds_hyper</device>
+<device>pdslc_macconlc</device>
 <device>pds_sefp</device>
 <device>pet_softbox</device>
 <device>pet_superpet</device>
 <device>pg200</device>
+<device>plg100_vl</device>
+<device>plg150_ap</device>
 <device>plus4_sid</device>
 <device>polyvti</device>
 <device>pr8210</device>
@@ -848,6 +886,7 @@
 <device>profighterqb</device>
 <device>profighterq</device>
 <device>profighterx</device>
+<device>promotion3210</device>
 <device>ps2_keybc</device>
 <device>psion_3fax</device>
 <device>psion_3link_ser</device>
@@ -856,6 +895,7 @@
 <device>pvga1a</device>
 <device>pvga1a_jk</device>
 <device>px320a</device>
+<device>qg640</device>
 <device>ql_cumanafdi</device>
 <device>ql_gold</device>
 <device>ql_kdi</device>
@@ -880,6 +920,7 @@
 <device>qsound</device>
 <device>qsound_hle</device>
 <device>qts1</device>
+<device>quadro</device>
 <device>qx10_keyboard_ascii</device>
 <device>qx10_keyboard</device>
 <device>qx10_keyboard_hasci</device>
@@ -895,6 +936,8 @@
 <device>rivatnt2_m64</device>
 <device>rivatnt2_ultra</device>
 <device>rivatnt</device>
+<device>robotron_k7070</device>
+<device>robotron_k7071</device>
 <device>rolm_pdc</device>
 <device>rolm_smioc</device>
 <device>rtpc_kbd</device>
@@ -929,6 +972,7 @@
 <device>sbus_hme</device>
 <device>sbus_sunpc</device>
 <device>sc119</device>
+<device>scorpion_ic</device>
 <device>sdtandy_fdc</device>
 <device>sed1200da</device>
 <device>sed1200db</device>
@@ -936,8 +980,10 @@
 <device>sed1200fa</device>
 <device>sed1200fb</device>
 <device>sed1278_0b</device>
+<device>sed1278</device>
 <device>sed1330</device>
 <device>sega837_14438</device>
+<device>segaai_soundbox</device>
 <device>segabill</device>
 <device>segadimm</device>
 <device>seganetw</device>
@@ -948,10 +994,12 @@
 <device>seta11leg</device>
 <device>sfd10001</device>
 <device>sfd1001</device>
+<device>sgi_ip4</device>
 <device>sgi_kbd</device>
 <device>side116</device>
 <device>simutrek</device>
 <device>sis630_gui</device>
+<device>sis6326_agp</device>
 <device>sis900_eth</device>
 <device>slutprov</device>
 <device>smoc501</device>
@@ -1011,6 +1059,7 @@
 <device>spectrum_swiftdisc</device>
 <device>spectrum_usource</device>
 <device>spectrum_uspeech</device>
+<device>spectrum_vtx5000</device>
 <device>spectrum_wafa</device>
 <device>s_smp</device>
 <device>stereo_fx</device>
@@ -1018,17 +1067,38 @@
 <device>st_kbd</device>
 <device>sv603</device>
 <device>sv806</device>
+<device>sw1000xg</device>
 <device>swtpc8212_device</device>
 <device>sx1541</device>
+<device>sys68k_cpu1</device>
+<device>sys68k_cpu20</device>
+<device>sys68k_cpu21a</device>
+<device>sys68k_cpu21b</device>
+<device>sys68k_cpu21</device>
+<device>sys68k_cpu21s</device>
+<device>sys68k_cpu21ya</device>
+<device>sys68k_cpu21yb</device>
+<device>sys68k_cpu30be</device>
+<device>sys68k_cpu30</device>
+<device>sys68k_cpu30lite</device>
+<device>sys68k_cpu30xa</device>
+<device>sys68k_cpu30x</device>
+<device>sys68k_cpu30za</device>
+<device>sys68k_cpu33</device>
+<device>sys68k_iscsi1</device>
+<device>sys68k_isio1</device>
 <device>t5182</device>
 <device>tanbus_ra32k</device>
 <device>tanbus_ra32krom</device>
 <device>tanbus_tandos</device>
 <device>tanbus_tanex</device>
 <device>tanbus_vid8082</device>
+<device>tandberg_tdv2100_disp_logic</device>
+<device>tandberg_tdv2100_keyboard</device>
 <device>tandy2kb</device>
 <device>technica</device>
 <device>tek410x_kbd</device>
+<device>tek_msu_fdc</device>
 <device>tetriskr_cga</device>
 <device>tgui9680</device>
 <device>ti99_bwg</device>
@@ -1071,6 +1141,7 @@
 <device>uts_extw</device>
 <device>v102_kbd</device>
 <device>v1050kb</device>
+<device>v50_kbd</device>
 <device>v550_kbd</device>
 <device>vanta</device>
 <device>vector4_kbd</device>
@@ -1083,6 +1154,9 @@
 <device>victor9k_kb</device>
 <device>virgedx_pci</device>
 <device>virge_pci</device>
+<device>vision864</device>
+<device>vision964</device>
+<device>vision968</device>
 <device>voicebox</device>
 <device>votrax</device>
 <device>votrsc01a</device>
@@ -1110,7 +1184,9 @@
 <device>wd90c31_lr</device>
 <device>wd90c33_zz</device>
 <device>wd90c90_jk</device>
+<device>wd9710_pci</device>
 <device>wdxt_gen</device>
+<device>wg130</device>
 <device>wordpro</device>
 <device>wyse700</device>
 <device>x68k_cz6bs1</device>
@@ -1123,6 +1199,7 @@
 <device>ymf281</device>
 <device>z8671</device>
 <device>z8682</device>
+<device>zip100_ide</device>
 <device>zorba_kbd</device>
 <device>zorro_a2091</device>
 <device>zorro_a590</device>
@@ -1130,3 +1207,4 @@
 <device>zorro_ar2</device>
 <device>zorro_ar3</device>
 <device>zorro_buddha</device>
+<device>zxbus_neogs</device>
