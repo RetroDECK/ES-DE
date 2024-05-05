@@ -109,6 +109,18 @@
             <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
         </rule>
     </emulator>
+    <emulator name="BIGPEMU">
+        <!-- Atari Jaguar emulator BigPEmu -->
+        <rule type="systempath">
+            <entry>bigpemu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/bigpemu/bigpemu</entry>
+            <entry>~/.local/share/applications/bigpemu/bigpemu</entry>
+            <entry>~/.local/bin/bigpemu/bigpemu</entry>
+            <entry>~/bin/bigpemu/bigpemu</entry>
+        </rule>
+    </emulator>
     <emulator name="BIGPEMU-WINDOWS">
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="staticpath">
