@@ -395,7 +395,9 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
         LOG(LogError) << "GuiThemeDownloader: " << runtimeError.what() << gitError->message;
         mRepositoryError = RepositoryError::FETCH_ERROR;
         mMessage = gitError->message;
+#if LIBGIT2_VER_MAJOR < 2 && LIBGIT2_VER_MINOR < 8
         git_error_clear();
+#endif
         git_remote_free(gitRemote);
         git_repository_free(repository);
         mPromise.set_value(true);
@@ -1441,7 +1443,9 @@ bool GuiThemeDownloader::cloneRepository(const std::string& repositoryName, cons
                       << gitError->message << "\"";
         mRepositoryError = RepositoryError::CLONE_ERROR;
         mMessage = gitError->message;
+#if LIBGIT2_VER_MAJOR < 2 && LIBGIT2_VER_MINOR < 8
         git_error_clear();
+#endif
         mPromise.set_value(true);
         return true;
     }
