@@ -144,7 +144,7 @@ The second reason for double input is buggy controller drivers. This seems to on
 
 ## I'm missing a feature, how can I make a request to have it added?
 
-First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and search for the functionality you would like to see added. Chances are there is already a card on the board describing what you intended to request. You can also check the [Roadmap](ROADMAP.md) document which contains a list of planned major features. If you can't find the feature you're looking for, then you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server.
+First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and search for the functionality you would like to see added. Chances are there is already a card on the board describing what you intended to request. You can also check the [Roadmap](ROADMAP.md) document which contains a list of planned major features. If you can't find the feature you're looking for, then you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/42jqqNcHf9) server.
 
 ## I want to setup a gaming appliance based on a single-board computer, can I use ES-DE for this?
 

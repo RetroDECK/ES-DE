@@ -14,7 +14,7 @@ YouTube:\
 https://www.youtube.com/@ES-DE_Frontend
 
 Discord:\
-https://discord.gg/EVVX4DqWAP
+https://discord.gg/42jqqNcHf9
 
 The goal of this project is to make a high quality frontend that is easy to use, requires minimal setup and configuration, looks nice, and is available across a wide range of operating systems.
 

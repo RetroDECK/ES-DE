@@ -1,6 +1,6 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.0.2 (in development)
+## Version 3.0.2 / 3.0.2-xx (in development)
 
 **Release date:** TBD
 
@@ -17,6 +17,7 @@
 * (Android) Changed from %ROMPROVIDER% to %ROMSAF% for MD.emu (only for megacd, megacdjp and segacd)
 * (Android) Added support for the Antutu build of Citra MMJ
 * (Android) Added a "Back button/back swipe exits app" menu option
+* (Android) Increased the maximum waiting time for the storage mount retry loop from 4 to 4.5 seconds
 * Changed the supported file extensions for the cdtv system to be the same as for the amiga systems
 * Added the .car file extension to the atarixe system
 * The game media directory is now created on application startup instead of when first starting the scraper
