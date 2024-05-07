@@ -1278,7 +1278,7 @@
         <!-- <command label="DeSmuME (Standalone)">%EMULATOR_DESMUME% %ROM%</command> -->
         <!-- <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command> -->
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melonds_libretro.so %ROM%</command>
-        <!-- <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>-->
+        <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>
