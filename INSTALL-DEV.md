@@ -1784,6 +1784,20 @@ Here are some examples to clarify how this works:
 %EXTRABOOL_resumeState%=false
 ```
 
+`%ANDROIDAPP%` - This is a special variable that is used to launch native Android apps and games. It must be defined as a pair separated by an equal sign. Most commonly it will be combined with the `%FILEINJECT%` variable which will inject the content of the game file, but it's also possible to define an explicit package name after the equal sign. Additionally you can specify which activity to use by adding it after a forward slash character. If no activity is defined then the default for the package will be used. The content of the inject file should look identical to an explicit entry, i.e. it can be just the package name or the package name and the activity.
+
+Here are some examples to clarify how this works:
+```
+%ANDROIDAPP%=%FILEINJECT%
+%ANDROIDAPP%=org.ppsspp.ppssppgold
+%ANDROIDAPP%=org.ppsspp.ppssppgold/org.ppsspp.ppsspp.PpssppActivity
+```
+
+The content of an inject file could look simply like the following:
+```
+org.ppsspp.ppssppgold
+```
+
 There is also support for a couple of activity flags that affect the emulator/game launch behavior, you can read more about these flags here:\
 https://developer.android.com/reference/android/content/Intent
 

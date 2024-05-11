@@ -156,6 +156,21 @@ This is obviously a non-portable collection.
 
 You can relocate as many systems as you want, you just need to place them all within the systemList tag pairs in ES-DE/custom_systems/es_systems.xml.
 
+## Launching native Android apps and games
+
+As of ES-DE 3.0.2 there is experimental support for launching native Android apps and games from inside ES-DE. For the time being it does however require that you use a separate app to import your apps and games into ES-DE. But following this initial setup launching native apps and games works just like launching games for any other system.
+
+First head to this GitHub repository and download the ES Applauncher APK:\
+https://github.com/schattenphoenix/es_applauncher/releases
+
+After installing the APK on your device and giving it the necessary permissions you'll see a list of your apps and you can classify the ones you want as games, and you can disable the ones you want to skip via the _Game_ and _Disable_ checkboxes on the right side of the screen. You can also choose to extract the icons for these apps and store them into one of the media folders inside the ES-DE/downloaded_media directory. The _Media dir_ dropdown at the top of the screen let's you select the media type. It's generally recommended to use _screenshots_ or _covers_ or you can skip this step altogether as most of these icons are pretty low resolution anyway.
+
+To populate the _androidapps_ and _androidgames_ system directories press the save icon in the upper right corner of the screen and select your ROMs directory from the selector interface. For example this could be _ROMs_ directly on internal storage, or on your SD card. Just press the _Use this folder_ button and the directories and files will be generated for you. Now you can start ES-DE and launch these apps and games directly.
+
+It's also possible to scrape Android apps and games using ScreenScraper, but at the time of writing the amount of entries in their database is somehow limited. It's therefore encouraged to participate in improving this situation by contributing metadata and media to their database, this will benefit everyone in the long run.
+
+A built-in import tool for native Android apps and games is also planned for a future ES-DE release.
+
 ## Known ES-DE problems
 
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
@@ -441,7 +456,8 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG556                   | 13              | Yes       | None                |                            |
 | Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
-| Ayaneo       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
 | Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Minor audio issues  |                            |
@@ -557,8 +573,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           | No           | Single archive or disk file          |
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
-| androidapps           | Android Apps                                   | _Placeholder_                     |                                   |              |                                      |
-| androidgames          | Android Games                                  | _Placeholder_                     |                                   |              |                                      |
+| androidapps           | Android Apps                                   | _Native support_                  |                                   |              |                                      |
+| androidgames          | Android Games                                  | _Native support_                  |                                   |              |                                      |
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |

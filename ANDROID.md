@@ -428,7 +428,8 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG556                   | 13              | Yes       | None                |                            |
 | Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
-| Ayaneo       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
 | Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Minor audio issues  |                            |
