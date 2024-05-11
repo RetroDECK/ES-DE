@@ -93,7 +93,7 @@
         <fullname>Android Apps</fullname>
         <path>%ROMPATH%/androidapps</path>
         <extension>.app .APP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <command label="Android App">%ANDROIDAPP%=%FILEINJECT%</command>
         <platform>android</platform>
         <theme>androidapps</theme>
     </system>
@@ -102,7 +102,7 @@
         <fullname>Android Games</fullname>
         <path>%ROMPATH%/androidgames</path>
         <extension>.app .APP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <command label="Android Game">%ANDROIDAPP%=%FILEINJECT%</command>
         <platform>android</platform>
         <theme>androidgames</theme>
     </system>
