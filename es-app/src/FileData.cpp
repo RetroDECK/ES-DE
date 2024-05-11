@@ -1591,8 +1591,11 @@ void FileData::launchGame()
                 std::string arguments;
                 std::ifstream injectFileStream;
                 injectFileStream.open(injectFile);
-                for (std::string line; getline(injectFileStream, line);)
+                for (std::string line; getline(injectFileStream, line);) {
                     arguments += line;
+                    if (arguments.size() > 4096)
+                        break;
+                }
                 injectFileStream.close();
 
                 if (arguments.empty()) {
@@ -1602,8 +1605,7 @@ void FileData::launchGame()
                 }
                 else if (arguments.size() > 4096) {
                     LOG(LogWarning) << "FileData::launchGame(): Injection file exceeding maximum "
-                                       "allowed size of "
-                                       "4096 bytes, skipping \""
+                                       "allowed size of 4096 bytes, skipping \""
                                     << injectFile << "\"";
                 }
                 else {
