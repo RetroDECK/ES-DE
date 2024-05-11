@@ -968,6 +968,7 @@ void FileData::launchGame()
     size_t coreFilePos {0};
     bool foundCoreFile {false};
     std::vector<std::string> emulatorCorePaths;
+    bool isAndroidApp {false};
 
 #if defined(__ANDROID__)
     std::string androidPackage;
@@ -1085,8 +1086,77 @@ void FileData::launchGame()
     }
 
     // Check that the emulator actually exists, and if so, get its path.
-    const std::pair<std::string, FileData::findEmulatorResult> emulator {
-        findEmulator(command, false)};
+    std::pair<std::string, FileData::findEmulatorResult> emulator;
+
+#if defined(__ANDROID__)
+    // Native Android apps and games.
+    if (command.find("%ANDROIDAPP%=") != std::string::npos) {
+        std::string packageName;
+        size_t startPos {command.find("%ANDROIDAPP%=")};
+        size_t endPos {command.find(" ", startPos)};
+        if (endPos == std::string::npos)
+            endPos = command.length();
+
+        packageName = command.substr(startPos + 13, endPos - startPos - 13);
+        isAndroidApp = true;
+
+        if (packageName == "%FILEINJECT%") {
+            LOG(LogDebug) << "Injecting app info from file \"" + fileName + "\"";
+            std::string appString;
+            std::ifstream injectFileStream;
+
+            injectFileStream.open(romRaw);
+            for (std::string line; getline(injectFileStream, line);) {
+                appString += line;
+                if (appString.size() > 4096)
+                    break;
+            }
+            injectFileStream.close();
+
+            if (appString.empty()) {
+                LOG(LogDebug) << "FileData::launchGame(): File empty or insufficient permissions, "
+                                 "nothing to inject";
+                packageName = "";
+            }
+            else if (appString.size() > 4096) {
+                LOG(LogWarning) << "FileData::launchGame(): Injection file exceeding maximum "
+                                   "allowed size of 4096 bytes, skipping \""
+                                << fileName << "\"";
+                packageName = "";
+            }
+            else {
+                packageName = appString;
+            }
+        }
+
+        if (packageName != "" && packageName != "%FILEINJECT%") {
+            LOG(LogInfo) << "Game entry is an Android app: " << packageName;
+
+            size_t separatorPos {packageName.find('/')};
+
+            if (separatorPos != std::string::npos) {
+                androidActivity = packageName.substr(separatorPos + 1);
+                packageName = packageName.substr(0, separatorPos);
+            }
+
+            if (Utils::Platform::Android::checkEmulatorInstalled(packageName, androidActivity)) {
+                emulator = std::make_pair(packageName,
+                                          FileData::findEmulatorResult::FOUND_ANDROID_PACKAGE);
+            }
+            else {
+                emulator = std::make_pair(packageName, FileData::findEmulatorResult::NOT_FOUND);
+            }
+        }
+        else {
+            emulator = std::make_pair(packageName, FileData::findEmulatorResult::NOT_FOUND);
+        }
+    }
+    else {
+        emulator = findEmulator(command, false);
+    }
+#else
+    emulator = findEmulator(command, false);
+#endif
 
     // Show an error message if there was no matching emulator entry in es_find_rules.xml.
     if (emulator.second == FileData::findEmulatorResult::NO_RULES) {
@@ -1102,7 +1172,12 @@ void FileData::launchGame()
         return;
     }
     else if (emulator.second == FileData::findEmulatorResult::NOT_FOUND) {
-        LOG(LogError) << "Couldn't launch game, emulator not found";
+        if (isAndroidApp) {
+            LOG(LogError) << "Couldn't launch app as it does not seem to be installed";
+        }
+        else {
+            LOG(LogError) << "Couldn't launch game, emulator not found";
+        }
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
@@ -1115,14 +1190,37 @@ void FileData::launchGame()
             if (endPos != std::string::npos)
                 emulatorName = command.substr(startPos + 10, endPos - startPos - 10);
         }
+#if defined(__ANDROID__)
+        else if ((startPos = command.find("%ANDROIDAPP%=")) != std::string::npos) {
+            endPos = command.find(" ", startPos);
+            if (endPos == std::string::npos)
+                endPos = command.length();
 
-        if (emulatorName == "")
-            window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?",
-                                   6000);
-        else
-            window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR '" + emulatorName +
-                                       "', HAS IT BEEN PROPERLY INSTALLED?",
-                                   6000);
+            emulatorName = command.substr(startPos + 13, endPos - startPos - 13);
+        }
+#endif
+        if (isAndroidApp) {
+            if (emulatorName == "" || emulatorName == "%FILEINJECT%") {
+                window->queueInfoPopup("ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?",
+                                       6000);
+            }
+            else {
+                window->queueInfoPopup("ERROR: COULDN'T FIND APP '" + emulatorName +
+                                           "', HAS IT BEEN PROPERLY INSTALLED?",
+                                       6000);
+            }
+        }
+        else {
+            if (emulatorName == "") {
+                window->queueInfoPopup(
+                    "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?", 6000);
+            }
+            else {
+                window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR '" + emulatorName +
+                                           "', HAS IT BEEN PROPERLY INSTALLED?",
+                                       6000);
+            }
+        }
 
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
