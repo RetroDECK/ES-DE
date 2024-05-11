@@ -163,9 +163,13 @@ As of ES-DE 3.0.2 there is experimental support for launching native Android app
 First head to this GitHub repository and download the ES Applauncher APK:\
 https://github.com/schattenphoenix/es_applauncher/releases
 
-After installing the APK on your device and giving it the necessary permissions you'll see a list of your apps and you can classify the ones you want as games, and you can disable the ones you want to skip via the _Game_ and _Disable_ checkboxes on the right side of the screen. You can also choose to extract the icons for these apps and store them into one of the media folders inside the ES-DE/downloaded_media directory. The _Media dir_ dropdown at the top of the screen let's you select the media type. It's generally recommended to use _screenshots_ or _covers_ or you can skip this step altogether as most of these icons are pretty low resolution anyway.
+Many thanks to Alex Pferdmenges for developing this app!
+
+After installing the APK on your device and giving it the necessary permissions you'll see a list of your apps and you can classify the ones you want as games, and you can disable the ones you want to skip via the _Game_ and _Disable_ checkboxes on the right side of the screen. You can also choose to extract the icons for these apps and store them into one of the media folders inside the ES-DE/downloaded_media directory. The _Media dir_ dropdown at the top of the screen lets you select the media type. It's generally recommended to use _screenshots_ or _covers_ or you can skip this step altogether as most of these icons are pretty low resolution anyway.
 
 To populate the _androidapps_ and _androidgames_ system directories press the save icon in the upper right corner of the screen and select your ROMs directory from the selector interface. For example this could be _ROMs_ directly on internal storage, or on your SD card. Just press the _Use this folder_ button and the directories and files will be generated for you. Now you can start ES-DE and launch these apps and games directly.
+
+Note that it seems like ES Applauncher has issues working correctly on some Android 10 devices.
 
 It's also possible to scrape Android apps and games using ScreenScraper, but at the time of writing the amount of entries in their database is somehow limited. It's therefore encouraged to participate in improving this situation by contributing metadata and media to their database, this will benefit everyone in the long run.
 

@@ -6,9 +6,12 @@
 
 ### Release overview
 
+This release improves scraping speed under some circumstances, adds experimental support on Android for launching native apps and games, adds support for a couple of new emulators and implements a number of additional minor improvements.
+
 ### Detailed list of changes
 
 * Improved multithreading for the network code which significantly increases scraping speed under some circumstances
+* (Android) Added experimental support for launching native apps and games
 * Added Lime3DS standalone as an alternative emulator for the n3ds system
 * (Linux) Added the native release of BigPEmu standalone as an alternative emulator for the atarijaguar system
 * (Linux) Added the native release of BigPEmu standalone as the default emulator for the atarijaguarcd system
@@ -23,6 +26,7 @@
 * The game media directory is now created on application startup instead of when first starting the scraper
 * (Linux/Unix) Changed the application summary from "Emulator Frontend" to "Gaming Frontend"
 * (Windows) Changed some log entries to use backslashes instead of forward slashes as directory separators
+* Windows carriage return characters are now filtered out when reading custom collection files and inject files
 * Changed the application description to "ES-DE Frontend" for the -h/--help command line option
 * Added support for marking themes as deprecated in the theme downloader
 * Added support for the androidapps and androidgames systems to the Linear, Modern and Slate themes
