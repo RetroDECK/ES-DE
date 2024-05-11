@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  CollectionSystemsManager.h
 //
 //  Manages collections of the following two types:

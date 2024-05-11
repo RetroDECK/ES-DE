@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  FileData.cpp
 //
 //  Provides game file data structures and functions to access and sort this information.
@@ -1107,6 +1107,8 @@ void FileData::launchGame()
 
             injectFileStream.open(romRaw);
             for (std::string line; getline(injectFileStream, line);) {
+                // Remove Windows carriage return characters.
+                line = Utils::String::replace(line, "\r", "");
                 appString += line;
                 if (appString.size() > 4096)
                     break;
@@ -1592,6 +1594,8 @@ void FileData::launchGame()
                 std::ifstream injectFileStream;
                 injectFileStream.open(injectFile);
                 for (std::string line; getline(injectFileStream, line);) {
+                    // Remove Windows carriage return characters.
+                    line = Utils::String::replace(line, "\r", "");
                     arguments += line;
                     if (arguments.size() > 4096)
                         break;
