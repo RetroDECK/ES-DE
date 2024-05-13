@@ -156,6 +156,25 @@ This is obviously a non-portable collection.
 
 You can relocate as many systems as you want, you just need to place them all within the systemList tag pairs in ES-DE/custom_systems/es_systems.xml.
 
+## Launching native Android apps and games
+
+As of ES-DE 3.0.2 there is experimental support for launching native Android apps and games from inside ES-DE. For the time being it does however require that you use a separate app to import your apps and games into ES-DE. But following this initial setup launching native apps and games works just like launching games for any other system.
+
+First head to this GitHub repository and download the ES Applauncher APK:\
+https://github.com/schattenphoenix/es_applauncher/releases
+
+Many thanks to Alex Pferdmenges for developing this app!
+
+After installing the APK on your device and giving it the necessary permissions you'll see a list of your apps and you can classify the ones you want as games, and you can disable the ones you want to skip via the _Game_ and _Disable_ checkboxes on the right side of the screen. You can also choose to extract the icons for these apps and store them into one of the media folders inside the ES-DE/downloaded_media directory. The _Media dir_ dropdown at the top of the screen lets you select the media type. It's generally recommended to use _screenshots_ or _covers_ or you can skip this step altogether as most of these icons are pretty low resolution anyway.
+
+To populate the _androidapps_ and _androidgames_ system directories press the save icon in the upper right corner of the screen and select your ROMs directory from the selector interface. For example this could be _ROMs_ directly on internal storage, or on your SD card. Just press the _Use this folder_ button and the directories and files will be generated for you. Now you can start ES-DE and launch these apps and games directly.
+
+Note that it seems like ES Applauncher has issues working correctly on some Android 10 devices.
+
+It's also possible to scrape Android apps and games using ScreenScraper, but at the time of writing the amount of entries in their database is somehow limited. It's therefore encouraged to participate in improving this situation by contributing metadata and media to their database, this will benefit everyone in the long run.
+
+A built-in import tool for native Android apps and games is also planned for a future ES-DE release.
+
 ## Known ES-DE problems
 
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
@@ -288,6 +307,12 @@ https://play.google.com/store/apps/details?id=com.emulator.fpse
 This emulator can be installed from the Play store.
 
 https://play.google.com/store/apps/details?id=com.fms.ines.free
+
+### Lime3DS
+
+This emulator which is forked from Citra can be downloaded from their GitHub site.
+
+https://github.com/Lime3DS/Lime3DS/releases
 
 ### MAME4droid 2024 and MAME4droid
 
@@ -545,9 +570,11 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           | No           | Single archive or disk file          |
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
+| androidapps           | Android Apps                                   | _Native support_                  |                                   |              |                                      |
+| androidgames          | Android Games                                  | _Native support_                  |                                   |              |                                      |
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
 | arcadia               | Emerson Arcadia 2001                           | _Placeholder_                     |                                   |              |                                      |
 | archimedes            | Acorn Archimedes                               | _Placeholder_                     |                                   |              |                                      |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
@@ -571,10 +598,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | coco                  | Tandy Color Computer                           | _Placeholder_                     |                                   |              |                                      |
 | colecovision          | Coleco ColecoVision                            | blueMSX                           | Gearcoleco,<br>MSX.emu **(Standalone)**,<br>ColEm **(Standalone)** | Yes          | Single archive or ROM file           |
 | consolearcade         | Console Arcade Systems                         | _Placeholder_                     |                                   |              |                                      |
-| cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      |                                      |
-| cps1                  | Capcom Play System I                           | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1 | Depends      |                                      |
-| cps2                  | Capcom Play System II                          | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-2 | Depends      |                                      |
-| cps3                  | Capcom Play System III                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-3 | Depends      |                                      |
+| cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      |                                      |
+| cps1                  | Capcom Play System I                           | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1 | Depends      |                                      |
+| cps2                  | Capcom Play System II                          | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-2 | Depends      |                                      |
+| cps3                  | Capcom Play System III                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-3 | Depends      |                                      |
 | crvision              | VTech CreatiVision                             | _Placeholder_                     |                                   |              |                                      |
 | daphne                | Daphne Arcade LaserDisc Emulator               | DirkSimple                        |                                   | No           |                                      |
 | desktop               | Desktop Applications                           | _Placeholder_                     |                                   |              |                                      |
@@ -614,7 +641,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | _Placeholder_                     |                                   |              |                                      |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | _Placeholder_                     |                                   |              |                                      |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   |              |                                      |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
 | megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | Yes          |                                      |
@@ -635,7 +662,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
-| n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
+| n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
@@ -671,8 +698,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero] | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | Speccy **(Standalone)**           |                                   | No           | Single archive or ROM file           |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
-| saturn                | Sega Saturn                                    | Beetle Saturn                     | YabaSanshiro,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
-| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | YabaSanshiro,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| saturn                | Sega Saturn                                    | Beetle Saturn                     | YabaSanshiro,<br>Yaba Sanshiro 2 **(Standalone)**,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | YabaSanshiro,<br>Yaba Sanshiro 2 **(Standalone)**,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | scummvm               | ScummVM Game Engine                            | ScummVM                           |                                   | No           |                                      |
 | scv                   | Epoch Super Cassette Vision                    | _Placeholder_                     |                                   |              |                                      |
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file           |

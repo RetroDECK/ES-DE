@@ -1,12 +1,12 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.0.2 / 3.0.2-xx (in development)
+## Version 3.0.2 / 3.0.2-21
 
-**Release date:** TBD
+**Release date:** 2024-05-13
 
 ### Release overview
 
-This release improves scraping speed under some circumstances, adds experimental support on Android for launching native apps and games, adds support for a couple of new emulators and implements a number of additional minor improvements.
+This release improves scraping speed under some circumstances, adds experimental support on Android for launching native apps and games, adds support for a couple of new emulators and brings a number of additional minor improvements.
 
 ### Detailed list of changes
 

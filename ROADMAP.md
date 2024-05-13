@@ -5,14 +5,13 @@ ES-DE is developed using an agile methodology so which features to include per r
 A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards) board, and for previous releases the [Changelog](CHANGELOG.md) contains all relevant details.
 
 **General functionality**
-* (Android) Support for running native Android apps
 * RetroAchievements.org integration
 * "Time played" counter per game, similar to how it works in Steam
 * Bulk metadata editor
 * Background music
 * Controller button mappings from inside ES-DE (similar to pad2key in Batocera)
 * Localization/multi-language support
-* Auto-import tools for Steam, Lutris etc.
+* Auto-import tools for Android apps, Steam, Lutris etc.
 
 **User interface**
 
@@ -36,6 +35,4 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * Proper audio mixer
 * Improved multi-threading
 * Reduced amount of gamelist reloading to retain cached textures and improve overall performance
-* Replace the built-in Unicode functions and lookup tables with those of the ICU library
-* Text shaping support using the HarfBuzz library
 * Replacement for the abandoned FreeImage library

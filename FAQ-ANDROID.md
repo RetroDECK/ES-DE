@@ -41,9 +41,9 @@ The second reason is that the APK is corrupt or not complete. When we make relea
 Kind of, ES-DE can't natively be set as your launcher but you can use a third party app to make this work such as [AnyHome](https://play.google.com/store/apps/details?id=com.draco.anyhome&hl=en_US&gl=US). It's not necessarily recommended though as ES-DE is not a native Android application, it's written in C++ and essentially works as a game engine with a game loop that constantly runs. For this reason it consumes more resources and battery than a native launcher app. An alternative approach would be to use a native launcher with ES-DE, this makes for a nice game console experience. To achieve this the following app is recommended:
 https://play.google.com/store/apps/details?id=com.k2.consolelauncher
 
-## Can I launch Android applications and games from inside ES-DE?
+## Can I launch Android apps and games from inside ES-DE?
 
-Not at the moment. Although there is an _android_ system in ES-DE it's not in use at the moment, but this functionality is planned for a future release.
+Yes, as of ES-DE 3.0.2 there is experimental support for launching native Android apps and games. Read the _Launching native Android apps and games_ section of the [Android documentation](ANDROID.md#launching-native-android-apps-and-games) to see how this is accomplished. As you can read there a separate app is needed to import your games into ES-DE, but this functionality will be built into ES-DE itself in a future release.
 
 ## What game systems/platforms and emulators are supported by ES-DE?
 
