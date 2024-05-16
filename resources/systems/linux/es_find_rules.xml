@@ -472,6 +472,8 @@
             <entry>~/.local/share/applications/lime-qt*.AppImage</entry>
             <entry>~/.local/bin/lime-qt*.AppImage</entry>
             <entry>~/bin/lime-qt*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
         </rule>
     </emulator>
     <emulator name="LINAPPLE">
