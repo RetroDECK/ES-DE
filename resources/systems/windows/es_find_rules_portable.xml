@@ -270,6 +270,8 @@
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\lime3ds\lime3ds-gui.exe</entry>
+            <entry>%ESPATH%\..\Emulators\lime3ds\lime3ds-gui.exe</entry>
             <entry>%ESPATH%\Emulators\lime-qt\lime-qt.exe</entry>
             <entry>%ESPATH%\..\Emulators\lime-qt\lime-qt.exe</entry>
         </rule>

@@ -163,6 +163,7 @@
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="staticpath">
+            <entry>/Applications/lime3ds-gui.app/Contents/MacOS/lime3ds-gui</entry>
             <entry>/Applications/lime-qt.app/Contents/MacOS/lime-qt</entry>
         </rule>
     </emulator>
