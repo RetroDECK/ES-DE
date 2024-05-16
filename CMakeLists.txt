@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  CMakeLists.txt
 #
 #  Main CMake configuration file.
@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 3.13)
 if(APPLE)
     # Set this to the minimum supported macOS version, and also update
     # es-app/assets/ES-DE_Info.plist accordingly.
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15 CACHE STRING "macOS deployment target")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 11.0 CACHE STRING "macOS deployment target")
     # This optional variable is used for code signing the DMG installer.
     set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS code signing certificate identity")
 endif()

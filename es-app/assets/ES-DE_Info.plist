@@ -29,7 +29,7 @@
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.education</string>
     <key>LSMinimumSystemVersion</key>
-    <string>10.15.0</string>
+    <string>11.0.0</string>
     <key>LSUIPresentationMode</key>
     <integer>3</integer>
     <key>NSHighResolutionCapable</key>
