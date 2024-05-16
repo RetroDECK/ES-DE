@@ -679,7 +679,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | macintosh     | Basilisk II         | BasiliskII*.AppImage           |
 | macintosh     | SheepShaver         | SheepShaver*.AppImage          |
 | n3ds          | Citra               | citra-qt*.AppImage             |
-| n3ds          | Lime3DS             | lime-qt*.AppImage              |
+| n3ds          | Lime3DS             | lime3ds-gui*.AppImage          |
 | n3ds          | Panda3DS            | Alber-*.AppImage               |
 | n64/n64dd     | Rosalie's Mupen GUI | RMG*.AppImage                  |
 | ngage/symbian | EKA2L1              | EKA2L1*.AppImage               |

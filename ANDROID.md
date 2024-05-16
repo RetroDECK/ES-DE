@@ -60,7 +60,7 @@ The following emulators are configured for FileProvider access:
 * GBA.emu
 * GBC.emu
 * Lynx.emu
-* MD.emu
+* MD.emu (genesis, mastersystem, megadrive, megadrivejp)
 * MAME4droid 2024
 * MAME4droid
 * NES.emu
@@ -439,6 +439,13 @@ https://play.google.com/store/apps/details?id=com.fms.speccy.deluxe
 This PlayStation Vita emulator can be downloaded from their GitHub site. Refer to the User guide for detailed game setup instructions.
 
 https://github.com/Vita3K/Vita3K-Android/releases
+
+### Yaba Sanshiro 2
+
+This emulator can be installed from the Play store, there is a paid Pro version as well. At the time of writing only the Pro version works when launching games from ES-DE. Also note that .bin/.cue files can't be launched for the time being, only .chd files seem to work. This needs to be fixed in the emulator so nothing can be done in ES-DE to work around that limitation.
+
+https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2 \
+https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2.pro
 
 ## Device compatibility
 

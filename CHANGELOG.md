@@ -1,5 +1,19 @@
 # ES-DE Frontend - Changelog
 
+## Version 3.0.3 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+* (Linux, macOS and Windows) Added support for the new Lime3DS binary names
+* (Linux) Added support for the Flatpak release of Lime3DS
+* (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
+
+### Bug fixes
+
 ## Version 3.0.2 / 3.0.2-21
 
 **Release date:** 2024-05-13
