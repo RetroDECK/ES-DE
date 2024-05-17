@@ -932,6 +932,16 @@
             <entry>%ESPATH%\..\Emulators\Vita3K\Vita3K.exe</entry>
         </rule>
     </emulator>
+    <emulator name="WINARCADIA">
+        <!-- Emerson Arcadia 2001 emulator WinArcadia -->
+        <rule type="systempath">
+            <entry>WinArcadia.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\WinArcadia\WinArcadia.exe</entry>
+            <entry>%ESPATH%\..\Emulators\WinArcadia\WinArcadia.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">

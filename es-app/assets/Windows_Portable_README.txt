@@ -132,6 +132,7 @@ Emulators\VICE\bin\xvic.exe
 Emulators\VPinballX\VPinballX_GL64.exe
 Emulators\VPinballX\VPinballX64.exe
 Emulators\Vita3K\Vita3K.exe
+Emulators\WinArcadia\WinArcadia.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
 Emulators\xenia_canary\xenia_canary.exe
