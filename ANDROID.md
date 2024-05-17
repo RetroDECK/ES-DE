@@ -55,6 +55,7 @@ Some emulators like RetroArch are still using an older storage access method and
 
 The following emulators are configured for FileProvider access:
 * 2600.emu
+* DroidArcadia
 * FPseNG (still needs scoped storage to be setup in emulator)
 * FPse (still needs scoped storage to be setup in emulator)
 * GBA.emu
@@ -225,7 +226,7 @@ The Play store version is somehow up to date and could be used, otherwise the F-
 
 https://play.google.com/store/apps/details?id=org.dolphinemu.dolphinemu \
 https://f-droid.org/en/packages/org.dolphinemu.dolphinemu \
-https://dolphin-emu.org/download/
+https://dolphin-emu.org/download
 
 ### Dolphin MMJR and MMJR2
 
@@ -454,6 +455,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Manufacturer | Model                   | Android release | Supported | Known issues        | Comment                    |
 | :----------- | :---------------------- | :-------------- | :-------- | :------------------ | :------------------------- |
 | Abxylute     | One                     | 12              | Yes       | None                |                            |
+| Alldocube    | iPlay50 mini Pro        | 13              | Yes       | None                |                            |
 | Anbernic     | RG353V                  | 11              | Yes       | None                |                            |
 | Anbernic     | RG405M                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG405V                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |

@@ -55,6 +55,7 @@ Some emulators like RetroArch are still using an older storage access method and
 
 The following emulators are configured for FileProvider access:
 * 2600.emu
+* DroidArcadia
 * FPseNG (still needs scoped storage to be setup in emulator)
 * FPse (still needs scoped storage to be setup in emulator)
 * GBA.emu
@@ -240,6 +241,12 @@ https://archive.org/details/dolphin-and-citra-fork-backup
 This emulator can be installed from the Play store as a paid app. Note that it does not support launching of zipped game files.
 
 https://play.google.com/store/apps/details?id=com.dsemu.drastic
+
+### DroidArcadia
+
+This emulator can be downloaded directly from their website.
+
+http://amigan.1emu.net/releases
 
 ### DuckStation
 
@@ -454,6 +461,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Manufacturer | Model                   | Android release | Supported | Known issues        | Comment                    |
 | :----------- | :---------------------- | :-------------- | :-------- | :------------------ | :------------------------- |
 | Abxylute     | One                     | 12              | Yes       | None                |                            |
+| Alldocube    | iPlay50 mini Pro        | 13              | Yes       | None                |                            |
 | Anbernic     | RG353V                  | 11              | Yes       | None                |                            |
 | Anbernic     | RG405M                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG405V                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
@@ -582,7 +590,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
-| arcadia               | Emerson Arcadia 2001                           | _Placeholder_                     |                                   |              |                                      |
+| arcadia               | Emerson Arcadia 2001                           | DroidArcadia **(Standalone**)     |                                   |              | Single archive or ROM file           |
 | archimedes            | Acorn Archimedes                               | _Placeholder_                     |                                   |              |                                      |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
 | astrocde              | Bally Astrocade                                | _Placeholder_                     |                                   |              |                                      |

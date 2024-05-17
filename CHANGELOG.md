@@ -10,6 +10,8 @@
 
 * (Linux, macOS and Windows) Added support for the new Lime3DS binary names
 * (Linux) Added support for the Flatpak release of Lime3DS
+* (Android) Added support for the Emerson Arcadia 2001 (arcadia) game system
+* (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes
