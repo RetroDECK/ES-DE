@@ -73,6 +73,12 @@
             <entry>org.dolphinemu.mmjr/org.dolphinemu.dolphinemu.ui.main.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="DROIDARCADIA">
+        <!-- Emerson Arcadia 2001 emulator DroidArcadia -->
+        <rule type="androidpackage">
+            <entry>com.amigan.droidarcadia/.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="DRASTIC">
         <!-- Nintendo DS emulator DraStic -->
         <rule type="androidpackage">
