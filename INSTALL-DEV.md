@@ -67,7 +67,7 @@ sudo apt-get install libcec-dev libp8-platform-dev
 
 The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible.
 
-Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required. Likewise a display server (Xorg or Wayland) is required, direct framebuffer access is not supported.
+Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required. By default a display server (Xorg or Wayland) is also required but by using the DEINIT_ON_LAUNCH build option as explained later in this document KMS/direct framebuffer access can be used.
 
 Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by default.
 
@@ -135,13 +135,13 @@ make
 
 Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or BSD Unix.
 
-On Linux specifically you can build with the DEINIT_ON_LAUNCH option which will deinit the renderer, application window and audio support when an emulator is launched. This makes it possible to use ES-DE with KMS/direct framebuffer access to for example make ES-DE a drop-in replacement for RetroPie Emulationstation:
+On Linux specifically you can build with the DEINIT_ON_LAUNCH option which will deinit the renderer, application window and audio when an emulator is launched. This makes it possible to use ES-DE with KMS/direct framebuffer access to for example make ES-DE a drop-in replacement for RetroPie EmulationStation:
 ```
 cmake -DDEINIT_ON_LAUNCH=on .
 make
 ```
 
-When this flag is enabled the menu option _Run in background (while game is launched)_ in the Other settings menu is removed and all functionality related to running ES-DE in the background is also disabled.
+When this flag is enabled the menu option _Run in background (while game is launched)_ in the Other settings menu is disabled and all functionality related to running ES-DE in the background is also disabled.
 
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
