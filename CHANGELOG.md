@@ -1,6 +1,6 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.0.3 (in development)
+## Version 3.0.3 / 3.0.3-xx (in development)
 
 **Release date:** TBD
 
@@ -8,6 +8,7 @@
 
 ### Detailed list of changes
 
+* (Linux) Added a DEINIT_ON_LAUNCH build flag to support KMS/direct framebuffer access
 * (Linux, macOS and Windows) Added support for the new Lime3DS binary names
 * (Linux) Added support for the Flatpak release of Lime3DS
 * (Android) Added support for the Emerson Arcadia 2001 (arcadia) game system

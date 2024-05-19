@@ -135,6 +135,14 @@ make
 
 Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or BSD Unix.
 
+On Linux specifically you can build with the DEINIT_ON_LAUNCH option which will deinit the renderer, application window and audio support when an emulator is launched. This makes it possible to use ES-DE with KMS/direct framebuffer access to for example make ES-DE a drop-in replacement for RetroPie Emulationstation:
+```
+cmake -DDEINIT_ON_LAUNCH=on .
+make
+```
+
+When this flag is enabled the menu option _Run in background (while game is launched)_ in the Other settings menu is removed and all functionality related to running ES-DE in the background is also disabled.
+
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
 ```
