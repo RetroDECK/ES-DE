@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  AudioManager.h
 //
 //  Low-level audio functions (using SDL2).
@@ -49,10 +49,10 @@ private:
 
     static void mixAudio(void* unused, Uint8* stream, int len);
 
-    static inline SDL_AudioStream* sConversionStream;
+    static inline SDL_AudioStream* sConversionStream {nullptr};
     static inline std::vector<std::shared_ptr<Sound>> sSoundVector;
-    static inline std::atomic<bool> sMuteStream = false;
-    static inline bool sHasAudioDevice = true;
+    static inline std::atomic<bool> sMuteStream {false};
+    static inline bool sHasAudioDevice {true};
 };
 
 #endif // ES_CORE_AUDIO_MANAGER_H
