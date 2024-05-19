@@ -10,6 +10,7 @@
 
 #include "FileData.h"
 
+#include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
@@ -1895,6 +1896,10 @@ void FileData::launchGame()
     // Trim any leading and trailing whitespace characters as they could cause launch issues.
     command = Utils::String::trim(command);
 
+#if defined(DEINIT_ON_LAUNCH)
+    runInBackground = false;
+#endif
+
     // swapBuffers() is called here to turn the screen black to eliminate some potential
     // flickering and to avoid showing the game launch message briefly when returning
     // from the game.
@@ -1966,7 +1971,18 @@ void FileData::launchGame()
         androidData, mEnvData->mStartPath, romRaw, androidExtrasString, androidExtrasStringArray,
         androidExtrasBool, androidActivityFlags);
 #else
+
+#if defined(DEINIT_ON_LAUNCH)
+// Deinit both the AudioManager and the window which allows emulators to launch in KMS mode.
+AudioManager::getInstance().deinit();
+window->deinit();
+returnValue = Utils::Platform::launchGameUnix(command, startDirectory, false);
+AudioManager::getInstance().init();
+window->init();
+#else
 returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
+#endif
+
 #endif
     // Notify the user in case of a failed game launch using a popup window.
     if (returnValue != 0) {

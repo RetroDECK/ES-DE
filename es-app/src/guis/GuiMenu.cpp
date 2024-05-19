@@ -1653,7 +1653,7 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(DEINIT_ON_LAUNCH)
     // Run ES in the background when a game has been launched.
     auto runInBackground = std::make_shared<SwitchComponent>();
     runInBackground->setState(Settings::getInstance()->getBool("RunInBackground"));
