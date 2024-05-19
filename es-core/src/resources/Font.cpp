@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.
@@ -639,18 +639,16 @@ void Font::rebuildTextures()
         // Load the glyph bitmap through FT.
         FT_Load_Char(face, it->first, FT_LOAD_RENDER);
 
-        FontTexture* tex {it->second.texture};
+        const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
+        const glm::ivec2 cursor {
+            static_cast<int>(it->second.texPos.x * it->second.texture->textureSize.x),
+            static_cast<int>(it->second.texPos.y * it->second.texture->textureSize.y)};
 
-        // Find the position/size.
-        glm::ivec2 cursor {static_cast<int>(it->second.texPos.x * tex->textureSize.x),
-                           static_cast<int>(it->second.texPos.y * tex->textureSize.y)};
-        glm::ivec2 glyphSize {static_cast<int>(it->second.texSize.x * tex->textureSize.x),
-                              static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
-
-        // Upload to texture.
+        // Upload glyph bitmap to texture.
         if (glyphSize.x > 0 && glyphSize.y > 0) {
-            mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x,
-                                     cursor.y, glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+            mRenderer->updateTexture(it->second.texture->textureId, 0, Renderer::TextureType::RED,
+                                     cursor.x, cursor.y, glyphSize.x, glyphSize.y,
+                                     glyphSlot->bitmap.buffer);
         }
     }
 }
