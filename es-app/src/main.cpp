@@ -610,8 +610,6 @@ int main(int argc, char* argv[])
     // unusable in any emulator that is launched.
     SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI, "0");
 
-    bool resetTouchOverlay {false};
-
     // If ES-DE is set as the home app/launcher we may be in a situation where we get started
     // before the external storage has been mounted. If the application data directory or the
     // ROMs directory have been located on this storage then the configurator will get executed.
@@ -637,9 +635,6 @@ int main(int argc, char* argv[])
 
         if (Utils::Platform::Android::checkConfigurationNeeded())
             exit(0);
-
-        // Always enable the touch overlay after running the configurator.
-        resetTouchOverlay = true;
     }
 
     Utils::Platform::Android::setDataDirectories();
@@ -803,7 +798,8 @@ int main(int argc, char* argv[])
     }
 
 #if defined(__ANDROID__)
-    if (resetTouchOverlay) {
+    // Reset the touch overlay if at least the second screen of the configurator was reached.
+    if (AndroidVariables::sResetTouchOverlay) {
         Settings::getInstance()->setBool("InputTouchOverlay", true);
         Settings::getInstance()->saveFile();
     }
