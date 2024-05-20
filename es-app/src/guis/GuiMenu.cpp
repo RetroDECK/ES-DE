@@ -40,6 +40,7 @@
 
 #if defined(__ANDROID__)
 #include "InputOverlay.h"
+#include "utils/PlatformUtilAndroid.h"
 #endif
 
 #include <SDL2/SDL_events.h>
@@ -76,8 +77,11 @@ GuiMenu::GuiMenu()
 
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
-#if defined(__APPLE__) || defined(__ANDROID__)
+#if defined(__APPLE__)
         addEntry("QUIT ES-DE", mMenuColorPrimary, false, [this] { openQuitMenu(); });
+#elif defined(__ANDROID__)
+        if (!AndroidVariables::sIsHomeApp)
+            addEntry("QUIT ES-DE", mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #else
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
             addEntry("QUIT", mMenuColorPrimary, true, [this] { openQuitMenu(); });
@@ -1791,16 +1795,31 @@ void GuiMenu::openOtherOptions()
 #endif
 
 #if defined(__ANDROID__)
-    // Whether swiping or pressing back should exit the application.
-    auto backEventAppExit = std::make_shared<SwitchComponent>();
-    backEventAppExit->setState(Settings::getInstance()->getBool("BackEventAppExit"));
-    s->addWithLabel("BACK BUTTON/BACK SWIPE EXITS APP", backEventAppExit);
-    s->addSaveFunc([backEventAppExit, s] {
-        if (backEventAppExit->getState() != Settings::getInstance()->getBool("BackEventAppExit")) {
-            Settings::getInstance()->setBool("BackEventAppExit", backEventAppExit->getState());
-            s->setNeedsSaving();
-        }
-    });
+    if (!AndroidVariables::sIsHomeApp) {
+        // Whether swiping or pressing back should exit the application.
+        auto backEventAppExit = std::make_shared<SwitchComponent>();
+        backEventAppExit->setState(Settings::getInstance()->getBool("BackEventAppExit"));
+        s->addWithLabel("BACK BUTTON/BACK SWIPE EXITS APP", backEventAppExit);
+        s->addSaveFunc([backEventAppExit, s] {
+            if (backEventAppExit->getState() !=
+                Settings::getInstance()->getBool("BackEventAppExit")) {
+                Settings::getInstance()->setBool("BackEventAppExit", backEventAppExit->getState());
+                s->setNeedsSaving();
+            }
+        });
+    }
+    else {
+        // If we're running as the Android home app then we don't allow the application to quit,
+        // so simply add a disabled dummy switch in this case.
+        auto backEventAppExit = std::make_shared<SwitchComponent>();
+        s->addWithLabel("BACK BUTTON/BACK SWIPE EXITS APP", backEventAppExit);
+        backEventAppExit->setEnabled(false);
+        backEventAppExit->setState(false);
+        backEventAppExit->setOpacity(DISABLED_OPACITY);
+        backEventAppExit->getParent()
+            ->getChild(backEventAppExit->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
 #endif
 
     if (Settings::getInstance()->getBool("DebugFlag")) {

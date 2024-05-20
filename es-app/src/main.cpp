@@ -701,6 +701,14 @@ int main(int argc, char* argv[])
         LOG(LogInfo) << applicationName << " " << PROGRAM_VERSION_STRING << "-"
                      << ANDROID_VERSION_CODE << " (r" << PROGRAM_RELEASE_NUMBER << "), built "
                      << PROGRAM_BUILT_STRING;
+
+        if (AndroidVariables::sIsHomeApp) {
+            LOG(LogInfo) << "Running as the Android home app";
+        }
+        else {
+            LOG(LogInfo) << "Running as a regular Android app";
+        }
+
 #else
         LOG(LogInfo) << applicationName << " " << PROGRAM_VERSION_STRING << " (r"
                      << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;

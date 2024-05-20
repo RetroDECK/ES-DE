@@ -26,6 +26,7 @@
 
 #if defined(__ANDROID__)
 #define TOUCH_GUID_STRING "-3"
+#include "utils/PlatformUtilAndroid.h"
 #endif
 
 namespace
@@ -477,9 +478,11 @@ bool InputManager::parseEvent(const SDL_Event& event)
                 return false;
 
 #if defined(__ANDROID__)
-            // Quit application if the back button is pressed or if the back gesture is used.
+            // Quit application if the back button is pressed or if the back gesture is used,
+            // unless we're set as the Android home app.
             if (event.key.keysym.sym == SDLK_AC_BACK &&
-                Settings::getInstance()->getBool("BackEventAppExit")) {
+                Settings::getInstance()->getBool("BackEventAppExit") &&
+                !AndroidVariables::sIsHomeApp) {
                 SDL_Event quit {};
                 quit.type = SDL_QUIT;
                 SDL_PushEvent(&quit);
@@ -493,7 +496,7 @@ bool InputManager::parseEvent(const SDL_Event& event)
 #if defined(__APPLE__)
             if (quitShortcut != "CmdQ") {
 #elif defined(__ANDROID__)
-            if (true) {
+            if (!AndroidVariables::sIsHomeApp) {
 #else
             if (quitShortcut != "AltF4") {
 #endif
