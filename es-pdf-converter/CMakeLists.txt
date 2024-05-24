@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  EmulationStation Desktop Edition
+#  ES-DE Frontend
 #  CMakeLists.txt (es-pdf-converter)
 #
 #  CMake configuration for es-pdf-convert
