@@ -6,7 +6,7 @@
             <!-- 64-bit and 32-bit releases from the retroarch.com website -->
             <entry>com.retroarch.aarch64/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
             <entry>com.retroarch.ra32/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
-            <!-- Amazon Appstore and Google Play releases -->
+            <!-- Samsung Galaxy Store, Amazon Appstore and Google Play releases -->
             <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
         </rule>
     </emulator>
