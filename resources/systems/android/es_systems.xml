@@ -226,6 +226,7 @@
         <path>%ROMPATH%/atarijaguar</path>
         <extension>.abs .ABS .bin .BIN .cdi .CDI .cof .COF .cue .CUE .j64 .J64 .jag .JAG .prg .PRG .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="Virtual Jaguar">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=virtualjaguar_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="IrataJaguar (Standalone)">%EMULATOR_IRATAJAGUAR% %DATA%=%ROMSAF%</command>
         <platform>atarijaguar</platform>
         <theme>atarijaguar</theme>
     </system>

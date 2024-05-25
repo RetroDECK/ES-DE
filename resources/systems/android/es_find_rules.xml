@@ -146,6 +146,12 @@
             <entry>com.fms.ines.free/com.fms.emulib.TVActivity</entry>
         </rule>
     </emulator>
+    <emulator name="IRATAJAGUAR">
+        <!-- Atari Jaguar emulator IrataJaguar -->
+        <rule type="androidpackage">
+            <entry>ru.vastness.altmer.iratajaguar/.EmulatorActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="androidpackage">
