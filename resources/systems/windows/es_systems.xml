@@ -19,6 +19,7 @@
         <command label="MAME [Tape] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam -cass1 %ROM%</command>
         <command label="MAME [Cartridge] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam -cart1 %ROM%</command>
         <command label="MAME [Software list] (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\adam adam %BASENAME%</command>
+        <command label="ColEm (Standalone)">%EMULATOR_COLEM% %INJECT%=%BASENAME%.commands -adam %ROM%</command>
         <platform>adam</platform>
         <theme>adam</theme>
     </system>
@@ -400,6 +401,7 @@
         <command label="Gearcoleco">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gearcoleco_libretro.dll %ROM%</command>
         <command label="openMSX (Standalone)">%EMULATOR_OPENMSX% -machine ColecoVision_SGM %INJECT%=%BASENAME%.commands -cart %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "ColecoVision" %ROM%</command>
+        <command label="ColEm (Standalone)">%EMULATOR_COLEM% %INJECT%=%BASENAME%.commands -cv %ROM%</command>
         <platform>colecovision</platform>
         <theme>colecovision</theme>
     </system>

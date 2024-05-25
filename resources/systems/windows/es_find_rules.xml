@@ -179,6 +179,16 @@
             <entry>%ESPATH%\..\Emulators\Citra\canary-mingw\citra-qt.exe</entry>
         </rule>
     </emulator>
+    <emulator name="COLEM">
+        <!-- Coleco ColecoVision and Adam emulator ColEm -->
+        <rule type="systempath">
+            <entry>ColEm.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\ColEm\ColEm.exe</entry>
+            <entry>%ESPATH%\..\Emulators\ColEm\ColEm.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="CPCEMU">
         <!-- Amstrad CPC emulator CPCemu -->
         <rule type="winregistryvalue">

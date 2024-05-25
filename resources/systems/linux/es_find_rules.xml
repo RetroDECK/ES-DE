@@ -201,6 +201,18 @@
             <entry>~/.local/share/flatpak/exports/bin/org.citra_emu.citra</entry>
         </rule>
     </emulator>
+    <emulator name="COLEM">
+        <!-- Coleco ColecoVision and Adam emulator ColEm -->
+        <rule type="systempath">
+            <entry>colem</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/colem/colem</entry>
+            <entry>~/.local/share/applications/colem/colem</entry>
+            <entry>~/.local/bin/colem/colem</entry>
+            <entry>~/bin/colem/colem</entry>
+        </rule>
+    </emulator>
     <emulator name="CPCEMU">
         <!-- Amstrad CPC emulator CPCemu -->
         <rule type="systempath">

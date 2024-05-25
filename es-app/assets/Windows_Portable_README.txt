@@ -56,6 +56,7 @@ Emulators\bsnes\bsnes.exe
 Emulators\cemu\Cemu.exe
 Emulators\Citra\canary-mingw\citra-qt.exe
 Emulators\Citra\nightly-mingw\citra-qt.exe
+Emulators\ColEm\ColEm.exe
 Emulators\cpcemu\cpcemu.exe
 Emulators\CSpect\CSpect.exe
 Emulators\Cxbx-Reloaded\cxbx.exe
