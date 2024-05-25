@@ -52,6 +52,16 @@
             <entry>%ESPATH%\..\Emulators\3dSen\3dSen.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ACE-DL">
+        <!-- Amstrad CPC emulator ACE-DL -->
+        <rule type="systempath">
+            <entry>AceDL.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\AceDL\AceDL.exe</entry>
+            <entry>%ESPATH%\..\Emulators\AceDL\AceDL.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ADVANCEMAME">
         <!-- Arcade emulator AdvanceMAME -->
         <rule type="systempath">

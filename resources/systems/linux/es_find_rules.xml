@@ -52,6 +52,18 @@
             <entry>~/bin/3dSen/3dSen.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ACE-DL">
+        <!-- Amstrad CPC emulator ACE-DL -->
+        <rule type="systempath">
+            <entry>AceDL</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/AceDL/AceDL</entry>
+            <entry>~/.local/share/applications/AceDL/AceDL</entry>
+            <entry>~/.local/bin/AceDL/AceDL</entry>
+            <entry>~/bin/AceDL/AceDL</entry>
+        </rule>
+    </emulator>
     <emulator name="ADVANCEMAME">
         <!-- Arcade emulator AdvanceMAME -->
         <rule type="systempath">
