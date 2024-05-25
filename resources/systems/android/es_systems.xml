@@ -530,9 +530,9 @@
         <name>emulators</name>
         <fullname>Emulators</fullname>
         <path>%ROMPATH%/emulators</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
-        <platform>pcwindows</platform>
+        <extension>.app .APP</extension>
+        <command label="Android Emulators">%ANDROIDAPP%=%FILEINJECT%</command>
+        <platform>android</platform>
         <theme>emulators</theme>
     </system>
     <system>
