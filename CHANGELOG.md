@@ -8,14 +8,26 @@
 
 ### Detailed list of changes
 
-* (Linux) Added a DEINIT_ON_LAUNCH build flag to support KMS/direct framebuffer access
-* (Linux, macOS and Windows) Added support for the new Lime3DS binary names
+* (Android) Added experimental support for running ES-DE as the home app
+* (Android) The touch overlay is no longer reset by the onboarding configurator unless the "Begin setup" button was pressed
+* (Linux) Added a DEINIT_ON_LAUNCH CMake build flag to support KMS/direct framebuffer access
+* Added support for the new Lime3DS binary names on Linux, macOS and Windows
 * (Linux) Added support for the Flatpak release of Lime3DS
 * (Android) Added support for the Emerson Arcadia 2001 (arcadia) game system
+* (Android) Added support for the Infocom Z-machine (zmachine) game system
+* (Android) Added support for the Emulators (emulators) game system
+* (Android) Added IrataJaguar standalone as an alternative emulator for the atarijaguar system
+* (Android) Added the melonDS RetroArch core as an alternative emulator for the nds system
+* Added the MojoZork RetroArch core as the default emulator for the zmachine system on Linux, macOS and Windows
+* Added ACE-DL standalone as an alternative emulator for the amstradcpc system on Linux, macOS and Windows
+* Added ColEm standalone as an alternative emulator for the adam and colecovision systems on Linux and Windows
 * (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
+* Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes
+
+* Adding trailing directory separators to the MediaDirectory setting could make the Orphaned data cleanup utility remove too many files
 
 ## Version 3.0.2 / 3.0.2-21
 

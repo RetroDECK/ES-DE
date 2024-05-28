@@ -31,7 +31,7 @@ If you need to re-run the configurator for some reason then the easiest way is t
 
 By default the touch input overlay will be enabled which makes it possible to use ES-DE without a controller or physical keyboard by overlaying virtual buttons on top of the ES-DE interface. If you are using a device which has a built-in controller you may however want to disable this feature. That is done via the _Enable touch overlay_ option in the _Input device settings_ menu on the main menu. Just be aware that disabling this option on a device where you have no other input method than touch will lock you out of the application.
 
-If you accidentally disable the touch overlay you can force the configurator to run as explained in the previous section above, this will always reset the touch overlay setting. Another option would of course be to temporarily plug in a controller or keyboard to enable the setting via its menu entry. A third option would be to manually edit the es_settings.xml file in the ES-DE application data directory. The setting you are after is named _InputTouchOverlay_ which should be changed from _false_ to _true_.
+If you accidentally disable the touch overlay you can force the configurator to run as explained in the previous section above, this will reset the touch overlay setting as long as you have at least pressed the _Begin setup_ button. Another option would of course be to temporarily plug in a controller or keyboard to enable the setting via its menu entry. A third option would be to manually edit the es_settings.xml file in the ES-DE application data directory. The setting you are after is named _InputTouchOverlay_ which should be changed from _false_ to _true_.
 
 Apart from this there are numerous options for the touch overlay, like the ability to change its size, opacity and fade-out time. Setting the fade-out to zero will make it permanently visible. See the [User guide](USERGUIDE-DEV.md) for a complete reference of all app settings and features.
 
@@ -176,6 +176,16 @@ It's also possible to scrape Android apps and games using ScreenScraper, but at 
 
 A built-in import tool for native Android apps and games is also planned for a future ES-DE release.
 
+## Running ES-DE as the Android home app
+
+To run ES-DE as the home app (launcher) you'll select it accordingly from the Apps section of the Android Settings app. When in this mode the ability to quit the app is completely disabled as it doesn't make sense to exit the home app. Therefore the _Quit ES-DE_ entry on the main menu is removed and the _Back button/back swipe exits app_ option in the _Other settings_ menu and its corresponding functionality is disabled.
+
+Apart from this it works as you'd expect, ES-DE will start automatically when rebooting the device and pressing the home button will return to ES-DE regardless of which app you have running.
+
+If the operating system runs out of memory when a game is running it will kill ES-DE even if it's set as home app. If this happens ES-DE will reload whenever you return from the game or if you press the home button. This is simply how Android works.
+
+It's generally a very good idea to import your native Android apps into ES-DE prior to setting it as the home app, this way you can easily access things like the Settings app. Note however that even if you somehow lock yourself out of the system by setting ES-DE as the home app and not having any native apps added you can still always access the Settings app via the Android notification shade. On most devices you access this by swiping down from the top of the screen. After swiping down, just select the cogwheel icon to start the Settings app. From there you can change the home app to something else than ES-DE, should you need to.
+
 ## Known ES-DE problems
 
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
@@ -188,9 +198,10 @@ Below are specific instructions and considerations for all supported emulators.
 
 ### RetroArch
 
-The RetroArch release from the Google Play store is problematic. It does not contain all emulator cores and a number of people have reported issues launching games from ES-DE (apparently it doesn't work at all on some devices). For these reasons it's strongly recommended to use the 64-bit release from the RetroArch website instead, or to install it from the Amazon Appstore or the F-Droid store.
+The RetroArch release from the Google Play store is problematic. It does not contain all emulator cores and a number of people have reported issues launching games from ES-DE (apparently it doesn't work at all on some devices). For these reasons it's strongly recommended to use the 64-bit release from the RetroArch website instead, or to install it from the Samsung Galaxy Store, Amazon Appstore or the F-Droid store.
 
 https://retroarch.com \
+https://galaxystore.samsung.com/detail/com.retroarch \
 https://www.amazon.com/dp/B09753XRVF \
 https://f-droid.org/en/packages/com.retroarch
 
@@ -314,6 +325,14 @@ https://play.google.com/store/apps/details?id=com.emulator.fpse
 This emulator can be installed from the Play store.
 
 https://play.google.com/store/apps/details?id=com.fms.ines.free
+
+### IrataJaguar
+
+This Atari Jaguar emulator can be downloaded from their website. Just be aware that it's very old and has not been updated for modern Android releases, so it may be finicky on some devices or it may not work at all.
+
+After installing the emulator, open it and go to the settings tab, then choose "Select ISO and BIOS directory" and navigate to the ROMs/atarijaguar folder. It seems like you also need to start the game from inside the emulator before you can run it from ES-DE. Starting a game will create a savestate file. If you now exit the emulator and run the game from ES-DE you'll see a list of savestate files, just select the correct one to start the game.
+
+http://www.arts-union.ru/node/23
 
 ### Lime3DS
 
@@ -585,8 +604,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           | No           | Single archive or disk file          |
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
-| androidapps           | Android Apps                                   | _Native support_                  |                                   |              |                                      |
-| androidgames          | Android Games                                  | _Native support_                  |                                   |              |                                      |
+| androidapps           | Android Apps                                   | _Native apps_                     |                                   |              |                                      |
+| androidgames          | Android Games                                  | _Native apps_                     |                                   |              |                                      |
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      |                                      |
@@ -598,7 +617,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atari5200             | Atari 5200                                     | a5200                             | Atari800                          | Yes          | Single archive or ROM file           |
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         |                                   | Yes          | Single archive or ROM file           |
 | atari800              | Atari 800                                      | Atari800                          |                                   | Yes          |                                      |
-| atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    |                                   | No           |                                      |
+| atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | IrataJaguar **(Standalone)**      | No           |                                      |
 | atarijaguarcd         | Atari Jaguar CD                                | _Placeholder_                     |                                   |              |                                      |
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Lynx.emu **(Standalone)** | No           | Single archive or ROM file           |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            |                                   | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
@@ -626,7 +645,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)**,<br>Redream **(Standalone)** | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           |                                   | No           |                                      |
 | electron              | Acorn Electron                                 | _Placeholder_                     |                                   |              |                                      |
-| emulators             | Emulators                                      | _Placeholder_                     |                                   |              |                                      |
+| emulators             | Emulators                                      | _Native apps_                     |                                   |              |                                      |
 | epic                  | Epic Games Store                               | _Placeholder_                     |                                   |              |                                      |
 | famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          |                                |
@@ -680,7 +699,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
-| nds                   | Nintendo DS                                    | melonDS DS                        | melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
+| nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive or ROM file |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo                     | Yes          |                                      |
@@ -764,7 +783,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | x68000                | Sharp X68000                                   | PX68k                             |                                   | Yes          |                                      |
 | xbox                  | Microsoft Xbox                                 | _Placeholder_                     |                                   |              |                                      |
 | xbox360               | Microsoft Xbox 360                             | _Placeholder_                     |                                   |              |                                      |
-| zmachine              | Infocom Z-machine                              | _Placeholder_                     |                                   |              |                                      |
+| zmachine              | Infocom Z-machine                              | MojoZork                          |                                   |              |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
 | zxnext                | Sinclair ZX Spectrum Next                      | _Placeholder_                     |                                   |              |                                      |
 | zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              | Speccy **(Standalone)**           | No           | Single archive or ROM file           |
