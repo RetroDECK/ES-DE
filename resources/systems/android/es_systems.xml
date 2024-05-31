@@ -237,6 +237,7 @@
         <extension>.abs .ABS .bin .BIN .cdi .CDI .cof .COF .cue .CUE .j64 .J64 .jag .JAG .prg .PRG .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="Virtual Jaguar">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=virtualjaguar_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="IrataJaguar (Standalone)">%EMULATOR_IRATAJAGUAR% %DATA%=%ROMSAF%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/atarijaguar' -cart '%ROMRAW%'" %DATA%=jaguar</command>
         <platform>atarijaguar</platform>
         <theme>atarijaguar</theme>
     </system>
