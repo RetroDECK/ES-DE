@@ -16,6 +16,10 @@
         <fullname>Coleco Adam</fullname>
         <path>%ROMPATH%/adam</path>
         <extension>.1dd .1DD .bin .BIN .col .COL .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .ddp .DDP .dfi .DFI .dsk .DSK .hfe .HFE .imd .IMD .mfi .MFI .mfm .MFM .rom .ROM .td0 .TD0 .wav .WAV .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 [Diskette] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam' -flop1 '%ROMRAW%'" %DATA%=adam</command>
+        <command label="MAME4droid 2024 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam' -cass1 '%ROMRAW%'" %DATA%=adam</command>
+        <command label="MAME4droid 2024 [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam' -cart1 '%ROMRAW%'" %DATA%=adam</command>
+        <command label="MAME4droid 2024 [Software list] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam'" %DATA%=%ROMPROVIDER%</command>
         <command label="ColEm (Standalone)">%EMULATOR_COLEM% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>adam</platform>
         <theme>adam</theme>
