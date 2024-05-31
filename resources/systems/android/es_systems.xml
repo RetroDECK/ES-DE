@@ -643,8 +643,8 @@
         <name>fmtowns</name>
         <fullname>Fujitsu FM Towns</fullname>
         <path>%ROMPATH%/fmtowns</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cdr .CDR .chd .CHD .cue .CUE .gdi .GDI .iso .ISO</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fmtowns' -cdrom '%ROMRAW%'" %DATA%=fmtownshr</command>
         <platform>fmtowns</platform>
         <theme>fmtowns</theme>
     </system>
