@@ -154,8 +154,9 @@
         <name>arcadia</name>
         <fullname>Emerson Arcadia 2001</fullname>
         <path>%ROMPATH%/arcadia</path>
-        <extension>.bin .BIN .zip .ZIP</extension>
-        <command label="DROIDARCADIA">%EMULATOR_DROIDARCADIA% %MIMETYPE%=application/zip %DATA%=%ROMPROVIDER%</command>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="DroidArcadia">%EMULATOR_DROIDARCADIA% %MIMETYPE%=application/zip %DATA%=%ROMPROVIDER%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/arcadia' -cart '%ROMRAW%'" %DATA%=arcadia</command>
         <platform>arcadia</platform>
         <theme>arcadia</theme>
     </system>
