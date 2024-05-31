@@ -317,6 +317,7 @@
         <path>%ROMPATH%/cdimono1</path>
         <extension>.chd .CHD .cue .CUE .iso .ISO</extension>
         <command label="SAME CDi">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=same_cdi_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/cdimono1' -cdrom '%ROMRAW%'" %DATA%=cdimono1</command>
         <platform>cdimono1</platform>
         <theme>cdimono1</theme>
     </system>
