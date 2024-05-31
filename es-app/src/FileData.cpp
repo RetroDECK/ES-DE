@@ -1739,6 +1739,10 @@ void FileData::launchGame()
                                      Utils::FileSystem::getEscapedPath(getROMDirectory()));
 #else
     command = Utils::String::replace(command, "%ANDROIDPACKAGE%", androidPackage);
+    // Escaped quotation marks should only be used for Extras on Android so it should be safe to
+    // just change them to temporary variables and convert them back to the escaped quotation
+    // marks when parsing the Extras.
+    command = Utils::String::replace(command, "\\\"", "%QUOTATION%");
 
     const std::vector<std::string> androidVariabels {
         "%ACTION%=", "%CATEGORY%=", "%MIMETYPE%=", "%DATA%="};
@@ -1846,6 +1850,21 @@ void FileData::launchGame()
                     }
 
                     if (extraName != "" && extraValue != "") {
+                        // Expand the unescaped game directory path and ROM directory as well as
+                        // the raw path to the game file if the corresponding variables have been
+                        // used in the Extra definition. We also change back any temporary quotation
+                        // mark variables to actual escaped quotation marks so they can be passed
+                        // in the Intent.
+                        extraValue = Utils::String::replace(extraValue, "%QUOTATION%", "\\\"");
+                        extraValue =
+                            Utils::String::replace(extraValue, "%GAMEDIRRAW%",
+                                                   Utils::FileSystem::getParent(
+                                                       Utils::String::replace(romPath, "\\", "")));
+                        extraValue =
+                            Utils::String::replace(extraValue, "%ROMPATHRAW%", getROMDirectory());
+                        extraValue = Utils::String::replace(extraValue, "%ROMRAW%", romRaw);
+                        extraValue = Utils::String::replace(extraValue, "//", "/");
+
                         if (variable == "%EXTRA_")
                             androidExtrasString[extraName] = extraValue;
                         else if (variable == "%EXTRAARRAY_")
