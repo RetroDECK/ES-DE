@@ -115,8 +115,8 @@
         <name>apple2</name>
         <fullname>Apple II</fullname>
         <path>%ROMPATH%/apple2</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.do .DO .dsk .DSK .nib .NIB .po .PO</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/apple2' -flop1 '%ROMRAW%'" %DATA%=apple2e</command>
         <platform>apple2</platform>
         <theme>apple2</theme>
     </system>
