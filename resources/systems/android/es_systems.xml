@@ -164,8 +164,11 @@
         <name>archimedes</name>
         <fullname>Acorn Archimedes</fullname>
         <path>%ROMPATH%/archimedes</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.1dd .1DD .360 .adf .ADF .adl .ADL .adm .ADM .ads .ADS .apd .APD .bbc .BBC .chd .CHD .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .dfi .DFI .dsd .DSD .dsk .DSK .hfe .HFE .ima .IMA .imd .IMD .img .IMG .ipf .IPF .jfd .JFD .mfi .MFI .mfm .MFM .msa .MSA .ssd .SSD .st .ST .td0 .TD0 .ufi .UFI .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 [Model A440/1] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/archimedes' -flop1 '%ROMRAW%'" %DATA%=aa4401</command>
+        <command label="MAME4droid 2024 [Model A3000] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/archimedes' -flop1 '%ROMRAW%'" %DATA%=aa3000</command>
+        <command label="MAME4droid 2024 [Model A310] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/archimedes' -flop1 '%ROMRAW%'" %DATA%=aa310</command>
+        <command label="MAME4droid 2024 [Model A540] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/archimedes' -flop1 '%ROMRAW%'" %DATA%=aa540</command>
         <platform>archimedes</platform>
         <theme>archimedes</theme>
     </system>
