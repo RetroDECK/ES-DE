@@ -463,8 +463,8 @@
         <name>crvision</name>
         <fullname>VTech CreatiVision</fullname>
         <path>%ROMPATH%/crvision</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.bin .BIN .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/crvision' -cart '%ROMRAW%'" %DATA%=crvision</command>
         <platform>crvision</platform>
         <theme>crvision</theme>
     </system>
