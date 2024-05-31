@@ -661,8 +661,8 @@
         <name>gamate</name>
         <fullname>Bit Corporation Gamate</fullname>
         <path>%ROMPATH%/gamate</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/gamate' -cart '%ROMRAW%'" %DATA%=gamate</command>
         <platform>gamate</platform>
         <theme>gamate</theme>
     </system>
