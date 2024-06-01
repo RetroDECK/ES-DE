@@ -2011,6 +2011,8 @@
         <path>%ROMPATH%/x1</path>
         <extension>.2d .2D .2hd .2HD .88d .88D .cmd .CMD .d88 .D88 .dup .DUP .dx1 .DX1 .hdm .HDM .tap .TAP .tfd .TFD .xdf .XDF .7z .7Z .zip .ZIP</extension>
         <command label="X Millennium">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=x1_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 [Diskette] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/x1' -flop1 '%ROMRAW%'" %DATA%=x1</command>
+        <command label="MAME4droid 2024 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/x1' -cass1 '%ROMRAW%'" %DATA%=x1</command>
         <platform>x1</platform>
         <theme>x1</theme>
     </system>
