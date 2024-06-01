@@ -988,6 +988,7 @@
         <path>%ROMPATH%/megaduck</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="SameDuck">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=sameduck_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/megaduck' -cart '%ROMRAW%'" %DATA%=megaduck</command>
         <platform>megaduck</platform>
         <theme>megaduck</theme>
     </system>
