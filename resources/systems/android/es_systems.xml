@@ -1556,8 +1556,8 @@
         <name>scv</name>
         <fullname>Epoch Super Cassette Vision</fullname>
         <path>%ROMPATH%/scv</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.0 .bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/scv' -cart '%ROMRAW%'" %DATA%=scv</command>
         <platform>scv</platform>
         <theme>scv</theme>
     </system>
