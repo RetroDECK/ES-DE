@@ -1474,8 +1474,8 @@
         <name>pv1000</name>
         <fullname>Casio PV-1000</fullname>
         <path>%ROMPATH%/pv1000</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/pv1000' -cart '%ROMRAW%'" %DATA%=pv1000</command>
         <platform>pv1000</platform>
         <theme>pv1000</theme>
     </system>
