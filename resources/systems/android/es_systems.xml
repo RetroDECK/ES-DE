@@ -1813,8 +1813,8 @@
         <name>ti99</name>
         <fullname>Texas Instruments TI-99</fullname>
         <path>%ROMPATH%/ti99</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.rpk .RPK .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/ti99' -ioport peb -ioport:peb:slot3 speech -cart '%ROMRAW%'" %DATA%=ti99_4a</command>
         <platform>ti99</platform>
         <theme>ti99</theme>
     </system>
