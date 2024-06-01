@@ -62,8 +62,6 @@ The following emulators are configured for FileProvider access:
 * GBC.emu
 * Lynx.emu
 * MD.emu (genesis, mastersystem, megadrive, megadrivejp)
-* MAME4droid 2024
-* MAME4droid
 * NES.emu
 * NGP.emu
 * PCE.emu (pcengine, supergrafx and tg16 systems)

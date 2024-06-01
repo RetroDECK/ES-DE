@@ -13,16 +13,44 @@
 * (Linux) Added a DEINIT_ON_LAUNCH CMake build flag to support KMS/direct framebuffer access
 * Added support for the new Lime3DS binary names on Linux, macOS and Windows
 * (Linux) Added support for the Flatpak release of Lime3DS
+* (Android) Added support for the Apple II (apple2) game system
+* (Android) Added support for the Apple IIGS (apple2gs) game system
 * (Android) Added support for the Emerson Arcadia 2001 (arcadia) game system
-* (Android) Added support for the Infocom Z-machine (zmachine) game system
+* (Android) Added support for the Acorn Archimedes (archimedes) game system
+* (Android) Added support for the Bally Astrocade (astrocde) game system
+* (Android) Added support for the Acorn Computers BBC Micro (bbcmicro) game system
+* (Android) Added support for the Console Arcade Systems (consolearcade) game system
+* (Android) Added support for the VTech CreatiVision (crvision) game system
+* (Android) Added support for the Acorn Electron (electron) game system
 * (Android) Added support for the Emulators (emulators) game system
+* (Android) Added support for the Fujitsu FM-7 (fm7) game system
+* (Android) Added support for the Fujitsu FM Towns (fmtowns) game system
+* (Android) Added support for the Bit Corporation Gamate (gamate) game system
+* (Android) Added support for the Tiger Electronics Game.com (gamecom) game system
+* (Android) Added support for the Hartung Game Master (gmaster) game system
+* (Android) Added support for the Apple Macintosh (macintosh) game system
+* (Android) Added support for the Casio PV-1000 (pv1000) game system
+* (Android) Added support for the Epoch Super Cassette Vision (scv) game system
+* (Android) Added support for the Funtech Super A'Can (supracan) game system
+* (Android) Added support for the Texas Instruments TI-99 (ti99) game system
+* (Android) Added support for the VTech V.Smile (vsmile) game system
+* (Android) Added support for the Infocom Z-machine (zmachine) game system
+* (Android) Added MAME4droid 2024 standalone as the default emulator for the adam, daphne and laserdisc systems
+* (Android) Added MAME4droid 2024 standalone as an alternative emulator for the amstradcpc, atari7800, atarijaguar and cdimono1 systems
+* (Android) Added MAME4droid 2024 standalone as an alternative emulator for the channelf, gx4000, intellivision and megaduck systems
+* (Android) Added MAME4droid 2024 standalone as an alternative emulator for the model2, neogeocd, neogeocdjp and odyssey2 systems
+* (Android) Added MAME4droid 2024 standalone as an alternative emulator for the supervision, vectrex, videopac and x68000 systems
+* (Android) Added MAME4droid 2024 Local Artwork standalone as an alternative emulator for the gameandwatch and lcdgames systems
+* (Android) Added MAME4droid 2024 [Diskette] standalone and MAME4droid 2024 [Tape] standalone as alternative emulators for the x1 system
+* (Android) Defined explicit ROM paths for MAME4droid 2024 for the arcade, cps, cps1, cps2, cps3, mame, neogeo and stv systems
 * (Android) Added IrataJaguar standalone as an alternative emulator for the atarijaguar system
 * (Android) Added the melonDS RetroArch core as an alternative emulator for the nds system
-* Added the MojoZork RetroArch core as the default emulator for the zmachine system on Linux, macOS and Windows
+* Added the MojoZork RetroArch core as the default emulator for the zmachine system
 * Added ACE-DL standalone as an alternative emulator for the amstradcpc system on Linux, macOS and Windows
 * Added ColEm standalone as an alternative emulator for the adam and colecovision systems on Linux and Windows
 * (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
 * Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
+* (Android) Added %GAMEDIRRAW%, %ROMPATHRAW% and %ROMRAW% variables that can be used with the %EXTRA% and %EXTRAARRAY% variables
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes

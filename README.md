@@ -1,6 +1,6 @@
 # ES-DE Frontend
 
-ES-DE (formerly EmulationStation Desktop Edition) is a frontend for browsing and launching games from your multi-platform collection.
+ES-DE (EmulationStation Desktop Edition) is a frontend for browsing and launching games from your multi-platform collection.
 
 It's officially supported on Linux, macOS, Windows and Android but can also be used on BSD Unix and the Raspberry Pi if you build it yourself from source code.
 
@@ -29,7 +29,7 @@ https://gitlab.com/es-de/themes/themes-list
 
 Visit https://es-de.org to download the latest ES-DE release or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find most previous releases.
 
-The Android port of ES-DE is a paid app, which you can get on [Patreon](https://www.patreon.com/es_de).
+The Android port of ES-DE is a paid app, which you can get on [Patreon](https://www.patreon.com/es_de) or on the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy).
 
 If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you need to compile from source code as no prebuilt packages are provided for these platforms. A detailed build guide is available in [INSTALL.md](INSTALL.md).
 
