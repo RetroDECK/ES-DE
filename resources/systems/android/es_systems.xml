@@ -784,8 +784,8 @@
         <name>gmaster</name>
         <fullname>Hartung Game Master</fullname>
         <path>%ROMPATH%/gmaster</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/gmaster' -cart '%ROMRAW%'" %DATA%=gmaster</command>
         <platform>gmaster</platform>
         <theme>gmaster</theme>
     </system>
