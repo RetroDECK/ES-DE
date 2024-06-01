@@ -1923,8 +1923,8 @@
         <name>vsmile</name>
         <fullname>VTech V.Smile</fullname>
         <path>%ROMPATH%/vsmile</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/vsmile' -cart '%ROMRAW%'" %DATA%=vsmile</command>
         <platform>vsmile</platform>
         <theme>vsmile</theme>
     </system>
