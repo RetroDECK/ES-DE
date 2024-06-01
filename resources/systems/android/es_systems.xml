@@ -881,8 +881,11 @@
         <name>macintosh</name>
         <fullname>Apple Macintosh</fullname>
         <path>%ROMPATH%/macintosh</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.dsk .DSK</extension>
+        <command label="MAME4droid 2024 Mac SE Bootable (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/macintosh' -flop1 '%ROMRAW%'" %DATA%=macse</command>
+        <command label="MAME4droid 2024 Mac SE Boot Disk (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/macintosh' -flop1 %GAMEDIRRAW%/boot.dsk -flop2 '%ROMRAW%'" %DATA%=macse</command>
+        <command label="MAME4droid 2024 Mac Plus Bootable (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/macintosh' -flop1 '%ROMRAW%'" %DATA%=macplus</command>
+        <command label="MAME4droid 2024 Mac Plus Boot Disk (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/macintosh' -flop1 %GAMEDIRRAW%/boot.dsk -flop2 '%ROMRAW%'" %DATA%=macplus</command>
         <platform>macintosh</platform>
         <theme>macintosh</theme>
     </system>
