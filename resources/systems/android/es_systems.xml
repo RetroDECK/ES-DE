@@ -682,8 +682,8 @@
         <name>gamecom</name>
         <fullname>Tiger Electronics Game.com</fullname>
         <path>%ROMPATH%/gamecom</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.tgc .TGC .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/gamecom' -cartridge1 '%ROMRAW%'" %DATA%=gamecom</command>
         <platform>gamecom</platform>
         <theme>gamecom</theme>
     </system>
