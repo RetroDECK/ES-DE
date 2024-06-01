@@ -806,6 +806,7 @@
         <path>%ROMPATH%/intellivision</path>
         <extension>.bin .BIN .int .INT .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="FreeIntv">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=freeintv_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/intellivision' -cart '%ROMRAW%'" %DATA%=intv</command>
         <platform>intellivision</platform>
         <theme>intellivision</theme>
     </system>
