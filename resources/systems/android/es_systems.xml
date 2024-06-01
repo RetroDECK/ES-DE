@@ -1753,8 +1753,8 @@
         <name>supracan</name>
         <fullname>Funtech Super A'Can</fullname>
         <path>%ROMPATH%/supracan</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/supracan' -cart '%ROMRAW%'" %DATA%=supracan</command>
         <platform>supracan</platform>
         <theme>supracan</theme>
     </system>
