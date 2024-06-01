@@ -1208,6 +1208,7 @@
         <extension>.chd .CHD .cue .CUE</extension>
         <command label="NeoCD">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=neocd_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/neogeocdjp' -cdrm '%ROMRAW%'" %DATA%=neocdz</command>
         <platform>neogeocd</platform>
         <theme>neogeocdjp</theme>
     </system>
