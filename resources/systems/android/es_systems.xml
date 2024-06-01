@@ -2022,6 +2022,7 @@
         <path>%ROMPATH%/x68000</path>
         <extension>.2hd .2HD .88d .88D .cmd .CMD .d88 .D88 .dim .DIM .dup .DUP .hdf .HDF .hdm .HDM .img .IMG .m3u .M3U .xdf .XDF .7z .7Z .zip .ZIP</extension>
         <command label="PX68k">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=px68k_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/x68000' -flop1 '%ROMRAW%'" %DATA%=x68000</command>
         <platform>x68000</platform>
         <theme>x68000</theme>
     </system>
