@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ThemeData.cpp
 //
 //  Finds available themes on the file system and loads and parses these.
@@ -438,6 +438,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"verticalAlignment", STRING},
        {"color", COLOR},
        {"backgroundColor", COLOR},
+       {"backgroundMargins", NORMALIZED_PAIR},
        {"letterCase", STRING},
        {"lineSpacing", FLOAT},
        {"opacity", FLOAT},

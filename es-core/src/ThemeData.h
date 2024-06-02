@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ThemeData.h
 //
 //  Finds available themes on the file system and loads and parses these.

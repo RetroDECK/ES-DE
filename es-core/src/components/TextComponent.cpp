@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  TextComponent.cpp
 //
 //  Displays text.
@@ -18,6 +18,7 @@ TextComponent::TextComponent()
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
+    , mBackgroundMargins {0.0f, 0.0f}
     , mColorOpacity {1.0f}
     , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
@@ -63,6 +64,7 @@ TextComponent::TextComponent(const std::string& text,
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
+    , mBackgroundMargins {0.0f, 0.0f}
     , mColorOpacity {1.0f}
     , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
@@ -249,8 +251,9 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
     auto renderFunc = [this](glm::mat4 trans, bool secondPass) {
         if (mRenderBackground && !secondPass)
-            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
-                                mOpacity * mThemeOpacity, mDimming);
+            mRenderer->drawRect(-mBackgroundMargins.x, 0.0f,
+                                mSize.x + mBackgroundMargins.x + mBackgroundMargins.y, mSize.y,
+                                mBgColor, mBgColor, false, mOpacity * mThemeOpacity, mDimming);
         if (mTextCache) {
             const float textHeight {mTextCache->metrics.size.y};
             float yOff {0.0f};
@@ -764,6 +767,12 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
+
+    if (elem->has("backgroundMargins")) {
+        const glm::vec2 backgroundMargins {
+            glm::clamp(elem->get<glm::vec2>("backgroundMargins"), 0.0f, 0.5f)};
+        mBackgroundMargins = backgroundMargins * Renderer::getScreenWidth();
+    }
 
     setFont(Font::getFromTheme(elem, properties, mFont, maxHeight));
 
