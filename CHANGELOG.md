@@ -52,11 +52,14 @@
 * Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
 * (Android) Added %GAMEDIRRAW%, %ROMPATHRAW% and %ROMRAW% variables that can be used with the %EXTRA% and %EXTRAARRAY% variables
 * Added a "selectedItemOffset" property to the carousel element
+* Added a "selectedBackgroundMargins" property to the textlist element
+* Added a "backgroundMargins" property to the text element
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes
 
 * Adding trailing directory separators to the MediaDirectory setting could make the Orphaned data cleanup utility remove too many files
+* There could be minor textlist selector clipping issues if the selector had a text background color set
 
 ## Version 3.0.2 / 3.0.2-21
 

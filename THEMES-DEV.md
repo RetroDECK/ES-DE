@@ -1527,7 +1527,7 @@ Properties:
     - Default is `0 0`
     - This property can only be used when `type` is `horizontal` or `vertical`
 * `selectedItemOffset` - type: NORMALIZED_PAIR
-    - Offsets the selected item. The first value in the pair is the horizontal offset and the second value is the vertical offset. Applied after all other positioning calculations.
+    - Offsets the selected item. The first value of the pair is the horizontal offset and the second value is the vertical offset. Applied after all other positioning calculations.
     - Minimum value per axis is `-1` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used when `type` is `horizontal` or `vertical`
@@ -2061,6 +2061,11 @@ Properties:
 * `selectedSecondaryBackgroundColor` - type: COLOR
     - Background color of the highlighted entry for the secondary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
     - Default is the same value as `selectedBackgroundColor`
+* `selectedBackgroundMargins` - type: NORMALIZED_PAIR
+    - Adds margins to the selected text background, assuming it has a color set. The first value of the pair is the left margin and the second value is the right margin, which means it's possible to set these margins completely independently. Margins are applied after all other positioning and sizing calculations and they are rendered outside the text debug rectangle boundaries.
+    - Minimum value per axis is `0` and maximum value per axis is `0.5`
+    - Default is `0 0`
+    - This property can only be used if `selectedBackgroundColor` or `selectedSecondaryBackgroundColor` has a value defined.
 * `textHorizontalScrolling` - type: BOOLEAN
     - If this property is enabled then text that does not fit within the element width (minus margins) will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...). Using this property will automatically convert all line breaks to spaces so that a single line of text is always displayed.
     - Valid values are `vertical` or `horizontal`
@@ -2820,6 +2825,11 @@ Properties:
     - Default is `000000FF`
 * `backgroundColor` - type: COLOR
     - Default is `00000000`
+* `backgroundMargins` - type: NORMALIZED_PAIR
+    - Adds margins to the text background, assuming it has a color set. The first value of the pair is the left margin and the second value is the right margin, which means it's possible to set these margins completely independently. Margins are applied after all other positioning and sizing calculations and they are rendered outside the text debug rectangle boundaries.
+    - Minimum value per axis is `0` and maximum value per axis is `0.5`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)

@@ -1598,9 +1598,7 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 
 ### LaserDisc Games
 
-Note that on Android the Hypseus Singe emulator is not available. However the setup for MAME (using MAME4droid 2024) and DirkSimple still applies.
-
-If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+Note that on Android the Hypseus Singe emulator is not available. However the setup for MAME (using MAME4droid 2024) and DirkSimple still applies. If using Android also make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
 
 There are three ways to run LaserDisc games in ES-DE, via MAME, via Hypseus Singe or via the DirkSimple RetroArch core. There are also two separate systems available, _daphne_ and _laserdisc_. The latter is recommended as the _daphne_ system is mostly existing for legacy reasons and may be removed in a future ES-DE release. The configuration for these two systems is identical as they are essentially clones.
 
