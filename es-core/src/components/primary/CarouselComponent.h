@@ -159,6 +159,7 @@ private:
     int mItemsAfterCenter;
     ItemStacking mItemStacking;
     glm::vec2 mSelectedItemMargins;
+    glm::vec2 mSelectedItemOffset;
     glm::vec2 mItemSize;
     float mItemScale;
     float mItemRotation;
@@ -234,6 +235,7 @@ CarouselComponent<T>::CarouselComponent()
     , mItemsAfterCenter {8}
     , mItemStacking {ItemStacking::CENTERED}
     , mSelectedItemMargins {0.0f, 0.0f}
+    , mSelectedItemOffset {0.0f, 0.0f}
     , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.25f,
                             Renderer::getScreenHeight() * 0.155f}}
     , mItemScale {1.2f}
@@ -512,7 +514,7 @@ template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
             itemInclusion += 1;
         }
 
-        for (int i = center - itemInclusion - itemInclusionBefore;
+        for (int i {center - itemInclusion - itemInclusionBefore};
              i < center + itemInclusion + itemInclusionAfter; ++i) {
             int cursor {i};
 
@@ -918,13 +920,25 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
                 selectedItemMargins *= std::fabs(distance);
         }
 
+        float itemHorizontalOffset {0.0f};
+        float itemVerticallOffset {0.0f};
+
+        if ((mSelectedItemOffset.x != 0.0f || mSelectedItemOffset.y != 0.0f) &&
+            std::fabs(distance) < 1.0f) {
+            itemHorizontalOffset = (1.0f - std::fabs(distance)) * mSelectedItemOffset.x;
+            itemVerticallOffset = (1.0f - std::fabs(distance)) * mSelectedItemOffset.y;
+        }
+
         glm::mat4 itemTrans {carouselTrans};
         if (singleEntry)
             itemTrans = glm::translate(carouselTrans, glm::vec3 {xOff, yOff, 0.0f});
         else
             itemTrans = glm::translate(
-                itemTrans, glm::vec3 {(i * itemSpacing.x) + xOff + selectedItemMargins.x,
-                                      (i * itemSpacing.y) + yOff + selectedItemMargins.y, 0.0f});
+                itemTrans,
+                glm::vec3 {(i * itemSpacing.x) + xOff + itemHorizontalOffset +
+                               selectedItemMargins.x,
+                           (i * itemSpacing.y) + yOff + itemVerticallOffset + selectedItemMargins.y,
+                           0.0f});
 
         if (mType == CarouselType::HORIZONTAL_WHEEL)
             itemTrans = glm::rotate(itemTrans, glm::radians(-90.0f), glm::vec3 {0.0f, 0.0f, 1.0f});
@@ -1376,6 +1390,14 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 mSelectedItemMargins = selectedItemMargins * Renderer::getScreenWidth();
             else
                 mSelectedItemMargins = selectedItemMargins * Renderer::getScreenHeight();
+        }
+        if (elem->has("selectedItemOffset")) {
+            const glm::vec2 selectedItemOffset {
+                glm::clamp(elem->get<glm::vec2>("selectedItemOffset"), -1.0f, 1.0f)};
+            if (mType == CarouselType::HORIZONTAL)
+                mSelectedItemOffset = selectedItemOffset * Renderer::getScreenWidth();
+            else
+                mSelectedItemOffset = selectedItemOffset * Renderer::getScreenHeight();
         }
     }
 
