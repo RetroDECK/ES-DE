@@ -1521,7 +1521,7 @@ Properties:
     - This property can only be used when `type` is `horizontal` or `vertical`
 * `selectedItemMargins` - type: NORMALIZED_PAIR
     - By default items are evenly spaced across the carousel area, but this property makes it possible to define margins (extra space or less space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation.
-    - Minimum value per margin is `-1` and maximum value per margin is `1`
+    - Minimum value per axis is `-1` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used when `type` is `horizontal` or `vertical`
 * `itemSize` - type: NORMALIZED_PAIR

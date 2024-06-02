@@ -12,7 +12,7 @@ First it's branding, it would be very confusing to have different names for the 
 
 ## Is it available for free, and is it open source?
 
-The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de). And although approximately 99% of the app is open source there are some portions of the code that is closed source.
+The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de) or the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy). And although approximately 99% of the app is open source there are some portions of the code that is closed source.
 
 ## I bought ES-DE on Patreon, how do I get access to future releases?
 

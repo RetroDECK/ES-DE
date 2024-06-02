@@ -51,6 +51,7 @@
 * (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
 * Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
 * (Android) Added %GAMEDIRRAW%, %ROMPATHRAW% and %ROMRAW% variables that can be used with the %EXTRA% and %EXTRAARRAY% variables
+* Added a "selectedItemOffset" property to the carousel element
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes
