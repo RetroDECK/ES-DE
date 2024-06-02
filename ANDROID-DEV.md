@@ -375,7 +375,7 @@ https://github.com/mupen64plus-ae/mupen64plus-ae/actions
 
 ### My Boy! and My OldBoy!
 
-These emulators can be installed from the Play store as paid apps. There are also free/Lite versions availble for these emulators but they have not been updated in years and don't run on modern devices. As such they are not supported by ES-DE.
+These emulators can be installed from the Play store as paid apps. There are also free/Lite versions available for these emulators but they have not been updated in years and don't run on modern devices. As such they are not supported by ES-DE.
 
 https://play.google.com/store/apps/details?id=com.fastemulator.gba \
 https://play.google.com/store/apps/details?id=com.fastemulator.gbc
@@ -403,9 +403,13 @@ https://github.com/wheremyfoodat/Panda3DS/releases
 
 ### Pizza Boy GBA and Pizza Boy GBC
 
-The Pizza Boy GBA and Pizza Boy GBC emulators used to be available on the Play store but have since been taken down. There used to be Basic (free) versions and Pro (paid) versions. It's unclear what the status is for these emulators and if they are still in active development. It's also unclear where they can be downloaded.
+The Pizza Boy GBA and Pizza Boy GBC emulators can be installed from the Play store. There are Basic (free) versions and Pro (paid) versions available.
+As of writing this, the Basic version of the GBA emulator does not seem to be able to launch games from ES-DE, but the Pro version is working fine. Both the Basic and Pro versions of the GBC emulator are working correctly.
 
-As of writing this, the latest available Basic version of the GBA emulator does not seem to be able to launch games from ES-DE, but the Pro version is working fine. Both the Basic and Pro versions of the GBC emulator are working correctly.
+https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygba \
+https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygbapro \
+https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboy \
+https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboypro
 
 ### Play!
 
