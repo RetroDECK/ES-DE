@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Renderer.h
 //
 //  Generic rendering functions.
@@ -174,10 +174,11 @@ public:
                   const unsigned int color,
                   const unsigned int colorEnd,
                   const bool horizontalGradient = false,
-                  const float opacity = 1.0,
-                  const float dimming = 1.0,
+                  const float opacity = 1.0f,
+                  const float dimming = 1.0f,
                   const BlendFactor srcBlendFactor = BlendFactor::SRC_ALPHA,
-                  const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA);
+                  const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA,
+                  const float cornerRadius = 0.0f);
 
     const glm::mat4& getProjectionMatrix() { return mProjectionMatrix; }
     const glm::mat4& getProjectionMatrixNormal() { return mProjectionMatrixNormal; }

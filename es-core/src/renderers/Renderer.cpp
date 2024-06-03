@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Renderer.cpp
 //
 //  Generic rendering functions.
@@ -466,7 +466,8 @@ void Renderer::drawRect(const float x,
                         const float opacity,
                         const float dimming,
                         const BlendFactor srcBlendFactor,
-                        const BlendFactor dstBlendFactor)
+                        const BlendFactor dstBlendFactor,
+                        const float cornerRadius)
 {
     Vertex vertices[4];
 
@@ -493,6 +494,11 @@ void Renderer::drawRect(const float x,
 
     vertices->opacity = opacity;
     vertices->dimming = dimming;
+
+    if (cornerRadius > 0.0f) {
+        vertices->shaderFlags = vertices->shaderFlags | Renderer::ShaderFlags::ROUNDED_CORNERS;
+        vertices->cornerRadius = cornerRadius;
+    }
 
     bindTexture(0, 0);
     drawTriangleStrips(vertices, 4, srcBlendFactor, dstBlendFactor);

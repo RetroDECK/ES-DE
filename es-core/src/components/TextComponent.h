@@ -156,6 +156,7 @@ private:
     unsigned int mColor;
     unsigned int mBgColor;
     glm::vec2 mBackgroundMargins;
+    float mBackgroundCornerRadius;
     float mColorOpacity;
     float mBgColorOpacity;
     bool mRenderBackground;

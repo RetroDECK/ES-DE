@@ -440,6 +440,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"color", COLOR},
        {"backgroundColor", COLOR},
        {"backgroundMargins", NORMALIZED_PAIR},
+       {"backgroundCornerRadius", FLOAT},
        {"letterCase", STRING},
        {"lineSpacing", FLOAT},
        {"opacity", FLOAT},
