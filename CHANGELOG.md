@@ -43,6 +43,7 @@
 * (Android) Added MAME4droid 2024 Local Artwork standalone as an alternative emulator for the gameandwatch and lcdgames systems
 * (Android) Added MAME4droid 2024 [Diskette] standalone and MAME4droid 2024 [Tape] standalone as alternative emulators for the x1 system
 * (Android) Defined explicit ROM paths for MAME4droid 2024 for the arcade, cps, cps1, cps2, cps3, mame, neogeo and stv systems
+* (Android) Added ScummVM standalone as an alternative emulator for the scummvm system
 * (Android) Added IrataJaguar standalone as an alternative emulator for the atarijaguar system
 * (Android) Added the melonDS RetroArch core as an alternative emulator for the nds system
 * Added the MojoZork RetroArch core as the default emulator for the zmachine system
@@ -50,6 +51,7 @@
 * Added ColEm standalone as an alternative emulator for the adam and colecovision systems on Linux and Windows
 * (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
 * Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
+* Added support for combining a %ROM% variable with the %INJECT% variable
 * (Android) Added %GAMEDIRRAW%, %ROMPATHRAW% and %ROMRAW% variables that can be used with the %EXTRA% and %EXTRAARRAY% variables
 * (linear-es-de) Added startup slide animations to the default transitions animation profile
 * (linear-es-de) Changed system to system transitions from fade to instant for the fade animation profile
@@ -63,6 +65,7 @@
 ### Bug fixes
 
 * Adding trailing directory separators to the MediaDirectory setting could make the Orphaned data cleanup utility remove too many files
+* (Windows) Filenames containing multi-byte Unicode characters could not be used with the %INJECT% variable
 * Transition animations could sometimes partially play when switching themes with a system selected for the gamelist on startup setting
 * There could be minor textlist selector clipping issues if the selector had a text background color set
 

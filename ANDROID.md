@@ -446,9 +446,8 @@ https://github.com/Vita3K/Vita3K-Android/releases
 
 ### Yaba Sanshiro 2
 
-This emulator can be installed from the Play store, there is a paid Pro version as well. At the time of writing only the Pro version works when launching games from ES-DE. Also note that .bin/.cue files can't be launched for the time being, only .chd files seem to work. This needs to be fixed in the emulator so nothing can be done in ES-DE to work around that limitation.
+This emulator can be installed from the Play store. Note that only the paid Pro version supports game launching from ES-DE. Also note that .bin/.cue files can't be launched for the time being, only .chd files seem to work. This needs to be fixed in the emulator so nothing can be done in ES-DE to work around that limitation.
 
-https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2 \
 https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2.pro
 
 ## Device compatibility

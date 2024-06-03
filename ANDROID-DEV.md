@@ -448,6 +448,11 @@ This emulator can be installed for free from the Play store and can later be upg
 
 https://play.google.com/store/apps/details?id=io.recompiled.redream
 
+### ScummVM
+
+This emulator can be installed from the Play store.
+
+https://play.google.com/store/apps/details?id=org.scummvm.scummvm
 
 ### Skyline
 
@@ -472,9 +477,8 @@ https://github.com/Vita3K/Vita3K-Android/releases
 
 ### Yaba Sanshiro 2
 
-This emulator can be installed from the Play store, there is a paid Pro version as well. At the time of writing only the Pro version works when launching games from ES-DE. Also note that .bin/.cue files can't be launched for the time being, only .chd files seem to work. This needs to be fixed in the emulator so nothing can be done in ES-DE to work around that limitation.
+This emulator can be installed from the Play store. Note that only the paid Pro version supports game launching from ES-DE. Also note that .bin/.cue files can't be launched for the time being, only .chd files seem to work. This needs to be fixed in the emulator so nothing can be done in ES-DE to work around that limitation.
 
-https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2 \
 https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2.pro
 
 ## Device compatibility
@@ -738,7 +742,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | YabaSanshiro,<br>Yaba Sanshiro 2 **(Standalone)**,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | YabaSanshiro,<br>Yaba Sanshiro 2 **(Standalone)**,<br>Yabause,<br>Saturn.emu **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
-| scummvm               | ScummVM Game Engine                            | ScummVM                           |                                   | No           |                                      |
+| scummvm               | ScummVM Game Engine                            | ScummVM                           | ScummVM **(Standalone)**          | No           | See the specific _ScummVM_ section in the user guide |
 | scv                   | Epoch Super Cassette Vision                    | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file           |
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file           |

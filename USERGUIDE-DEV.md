@@ -2356,6 +2356,8 @@ On Linux it's also possible to launch AppImages directly without having to call 
 
 ### ScummVM
 
+Note that the Android release of ScummVM standalone differs from the releases for desktop operating systems in that all games need to be installed in the app before they can be launched from ES-DE. There are some very specific configuration steps that need to be followed to get this to work, but they are thoroughly described in the ScummVM user interface the first time you launch the app, and there is also a built-in help system that you can peruse. Apart from that the setup is identical to the other platforms.
+
 ScummVM overlaps a bit with DOS when it comes to the logic of setting it up. It's recommended to keep games in separate folders, so if you have a game distributed as a ZIP file, uncompress it to its own directory.
 
 Although ScummVM supports launching of .exe files, ES-DE is currently not configured as such and it's instead recommended to create a .scummvm file in each game directory and launch that. This makes for a cleaner setup as you don't need to run game configuration utilities like INSTALL.EXE or SETUP.EXE directly as you would with DOSBox. Rather the game configuration is done within the ScummVM emulator.
