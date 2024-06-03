@@ -1582,6 +1582,7 @@ void FileData::launchGame()
 #else
             injectFile = Utils::String::replace(injectFile, "%BASENAME%",
                                                 Utils::String::replace(baseName, "\\", ""));
+            injectFile = Utils::String::replace(injectFile, "%ROM%", romRaw);
             if (injectFile.front() != '/')
                 injectFile =
                     Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")) + "/" +
