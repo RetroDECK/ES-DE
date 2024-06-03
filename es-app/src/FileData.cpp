@@ -1605,7 +1605,11 @@ void FileData::launchGame()
                               << "\"";
                 std::string arguments;
                 std::ifstream injectFileStream;
+#if defined(_WIN64)
+                injectFileStream.open(Utils::String::stringToWideString(injectFile));
+#else
                 injectFileStream.open(injectFile);
+#endif
                 for (std::string line; getline(injectFileStream, line);) {
                     // Remove Windows carriage return characters.
                     line = Utils::String::replace(line, "\r", "");
