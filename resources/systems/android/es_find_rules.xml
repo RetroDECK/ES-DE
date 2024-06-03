@@ -325,6 +325,13 @@
             <entry>com.explusalpha.SaturnEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SCUMMVM">
+        <!-- ScummVM game engine -->
+        <rule type="androidpackage">
+            <entry>org.scummvm.scummvm.debug/org.scummvm.scummvm.SplashActivity</entry>
+            <entry>org.scummvm.scummvm/org.scummvm.scummvm.SplashActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SKYLINE">
         <!-- Nintendo Switch emulator Skyline -->
         <rule type="androidpackage">

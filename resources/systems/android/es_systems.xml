@@ -1549,6 +1549,7 @@
         <path>%ROMPATH%/scummvm</path>
         <extension>.scummvm .SCUMMVM .svm .SVM</extension>
         <command label="ScummVM">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=scummvm_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="ScummVM (Standalone)">%EMULATOR_SCUMMVM% %ACTION%=android.intent.action.MAIN %CATEGORY%=android.intent.action.MAIN %DATA%=%INJECT%=%ROM%</command>
         <platform>scummvm</platform>
         <theme>scummvm</theme>
     </system>
