@@ -1574,19 +1574,30 @@ void FileData::launchGame()
             injectFile = Utils::String::replace(injectFile, "\\", "/");
             injectFile = Utils::String::replace(injectFile, "%BASENAME%",
                                                 Utils::String::replace(baseName, "\"", ""));
-            if (injectFile.size() < 3 || !(injectFile[1] == ':' && injectFile[2] == '/'))
-                injectFile =
-                    Utils::FileSystem::getParent(Utils::String::replace(romPath, "\"", "")) + "/" +
-                    injectFile;
+            if (injectFile == "%ROM%") {
+                injectFile = Utils::String::replace(injectFile, "%ROM%",
+                                                    Utils::String::replace(romRaw, "\"", ""));
+            }
+            else {
+                if (injectFile.size() < 3 || !(injectFile[1] == ':' && injectFile[2] == '/'))
+                    injectFile =
+                        Utils::FileSystem::getParent(Utils::String::replace(romPath, "\"", "")) +
+                        "/" + injectFile;
+            }
             injectFile = Utils::String::replace(injectFile, "/", "\\");
 #else
             injectFile = Utils::String::replace(injectFile, "%BASENAME%",
                                                 Utils::String::replace(baseName, "\\", ""));
-            injectFile = Utils::String::replace(injectFile, "%ROM%", romRaw);
-            if (injectFile.front() != '/')
-                injectFile =
-                    Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")) + "/" +
-                    injectFile;
+            if (injectFile == "%ROM%") {
+                injectFile = Utils::String::replace(injectFile, "%ROM%",
+                                                    Utils::String::replace(romRaw, "\\", ""));
+            }
+            else {
+                if (injectFile.front() != '/')
+                    injectFile =
+                        Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")) +
+                        "/" + injectFile;
+            }
 #endif
             if (Utils::FileSystem::isRegularFile(injectFile) ||
                 Utils::FileSystem::isSymlink(injectFile)) {
