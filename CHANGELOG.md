@@ -51,14 +51,19 @@
 * (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
 * Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
 * (Android) Added %GAMEDIRRAW%, %ROMPATHRAW% and %ROMRAW% variables that can be used with the %EXTRA% and %EXTRAARRAY% variables
+* (linear-es-de) Added startup slide animations to the default transitions animation profile
+* (linear-es-de) Changed system to system transitions from fade to instant for the fade animation profile
 * Added a "selectedItemOffset" property to the carousel element
 * Added a "selectedBackgroundMargins" property to the textlist element
+* Added a "selectedBackgroundCornerRadius" property to the textlist element
 * Added a "backgroundMargins" property to the text element
+* Added a "backgroundCornerRadius" property to the text element
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes
 
 * Adding trailing directory separators to the MediaDirectory setting could make the Orphaned data cleanup utility remove too many files
+* Transition animations could sometimes partially play when switching themes with a system selected for the gamelist on startup setting
 * There could be minor textlist selector clipping issues if the selector had a text background color set
 
 ## Version 3.0.2 / 3.0.2-21
