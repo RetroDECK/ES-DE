@@ -70,6 +70,8 @@
         <systemToGamelist>slide</systemToGamelist>
         <gamelistToGamelist>instant</gamelistToGamelist>
         <gamelistToSystem>slide</gamelistToSystem>
+        <startupToSystem>slide</startupToSystem>
+        <startupToGamelist>slide</startupToGamelist>
     </transitions>
 
     <transitions name="instant">
