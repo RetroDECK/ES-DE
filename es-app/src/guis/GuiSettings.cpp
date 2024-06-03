@@ -112,7 +112,7 @@ void GuiSettings::save()
         ViewController::getInstance()->reloadAll();
 
     if (mNeedsGoToStart)
-        ViewController::getInstance()->goToStart(true);
+        ViewController::getInstance()->goToStart(false);
 
     // Special case from GuiCollectionSystemsOptions where we didn't yet know whether a matching
     // theme existed when creating a new custom collection.
