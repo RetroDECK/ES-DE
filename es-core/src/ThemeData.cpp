@@ -266,6 +266,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"selectedBackgroundColor", COLOR},
        {"selectedSecondaryBackgroundColor", COLOR},
        {"selectedBackgroundMargins", NORMALIZED_PAIR},
+       {"selectedBackgroundCornerRadius", FLOAT},
        {"textHorizontalScrolling", BOOLEAN},
        {"textHorizontalScrollSpeed", FLOAT},
        {"textHorizontalScrollDelay", FLOAT},
