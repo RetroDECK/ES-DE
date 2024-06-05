@@ -135,6 +135,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemAxisHorizontal", BOOLEAN},
        {"itemAxisRotation", FLOAT},
        {"imageFit", STRING},
+       {"imageCropPos", NORMALIZED_PAIR},
        {"imageInterpolation", STRING},
        {"imageCornerRadius", FLOAT},
        {"imageColor", COLOR},

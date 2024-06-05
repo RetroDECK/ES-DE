@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  CarouselComponent.h
 //
 //  Carousel, usable in both the system and gamelist views.
@@ -193,6 +193,7 @@ private:
     bool mHasUnfocusedItemSaturation;
     float mUnfocusedItemDimming;
     ImageFit mImagefit;
+    glm::vec2 mImageCropPos;
     unsigned int mCarouselColor;
     unsigned int mCarouselColorEnd;
     bool mColorGradientHorizontal;
@@ -270,6 +271,7 @@ CarouselComponent<T>::CarouselComponent()
     , mHasUnfocusedItemSaturation {false}
     , mUnfocusedItemDimming {1.0f}
     , mImagefit {ImageFit::CONTAIN}
+    , mImageCropPos {0.5f, 0.5f}
     , mCarouselColor {0}
     , mCarouselColorEnd {0}
     , mColorGradientHorizontal {true}
@@ -307,12 +309,16 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         auto item = std::make_shared<ImageComponent>(false, dynamic);
         item->setLinearInterpolation(mLinearInterpolation);
         item->setMipmapping(true);
-        if (mImagefit == ImageFit::CONTAIN)
+        if (mImagefit == ImageFit::CONTAIN) {
             item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-        else if (mImagefit == ImageFit::FILL)
+        }
+        else if (mImagefit == ImageFit::FILL) {
             item->setResize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-        else if (mImagefit == ImageFit::COVER)
+        }
+        else if (mImagefit == ImageFit::COVER) {
+            item->setCropPos(mImageCropPos);
             item->setCroppedSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+        }
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         if (mImageBrightness != 0.0)
@@ -334,15 +340,19 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             mDefaultImage = std::make_shared<ImageComponent>(false, dynamic);
             mDefaultImage->setLinearInterpolation(mLinearInterpolation);
             mDefaultImage->setMipmapping(true);
-            if (mImagefit == ImageFit::CONTAIN)
+            if (mImagefit == ImageFit::CONTAIN) {
                 mDefaultImage->setMaxSize(
                     glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-            else if (mImagefit == ImageFit::FILL)
+            }
+            else if (mImagefit == ImageFit::FILL) {
                 mDefaultImage->setResize(
                     glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-            else if (mImagefit == ImageFit::COVER)
+            }
+            else if (mImagefit == ImageFit::COVER) {
+                mDefaultImage->setCropPos(mImageCropPos);
                 mDefaultImage->setCroppedSize(
                     glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+            }
             mDefaultImage->setCornerRadius(mImageCornerRadius);
             mDefaultImage->setImage(entry.data.defaultImagePath);
             if (mImageBrightness != 0.0)
@@ -411,12 +421,16 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(mLinearInterpolation);
         item->setMipmapping(true);
-        if (mImagefit == ImageFit::CONTAIN)
+        if (mImagefit == ImageFit::CONTAIN) {
             item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-        else if (mImagefit == ImageFit::FILL)
+        }
+        else if (mImagefit == ImageFit::FILL) {
             item->setResize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-        else if (mImagefit == ImageFit::COVER)
+        }
+        else if (mImagefit == ImageFit::COVER) {
+            item->setCropPos(mImageCropPos);
             item->setCroppedSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+        }
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         if (mImageBrightness != 0.0)
@@ -1444,6 +1458,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else if (imageFit == "cover") {
             mImagefit = ImageFit::COVER;
+            if (elem->has("imageCropPos"))
+                mImageCropPos = glm::clamp(elem->get<glm::vec2>("imageCropPos"), 0.0f, 1.0f);
         }
         else {
             mImagefit = ImageFit::CONTAIN;
