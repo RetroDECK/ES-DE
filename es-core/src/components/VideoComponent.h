@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  VideoComponent.h
 //
 //  Base class for playing videos.
@@ -115,6 +115,8 @@ protected:
     float mVideoCornerRadius;
     bool mColorGradientHorizontal;
     glm::vec2 mTargetSize;
+    glm::vec2 mCropPos;
+    glm::vec2 mCropOffset;
     glm::vec2 mVideoAreaPos;
     glm::vec2 mVideoAreaSize;
     glm::vec2 mTopLeftCrop;

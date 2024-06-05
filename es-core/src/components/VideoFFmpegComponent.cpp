@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  VideoFFmpegComponent.cpp
 //
 //  Video player based on FFmpeg.
@@ -88,6 +88,7 @@ void VideoFFmpegComponent::setCroppedSize(const glm::vec2& size)
     mTargetSize = size;
     mTargetIsMax = false;
     mTargetIsCrop = true;
+    mStaticImage.setCropPos(mCropPos);
     mStaticImage.setCroppedSize(size);
     resize();
 }
@@ -122,6 +123,9 @@ void VideoFFmpegComponent::resize()
         // Size texture to allow for cropped video to fill the entire area.
         const float cropFactor {
             std::max(mTargetSize.x / textureSize.x, mTargetSize.y / textureSize.y)};
+        mTopLeftCrop = {0.0f, 0.0f};
+        mBottomRightCrop = {1.0f, 1.0f};
+        mCropOffset = {0.0f, 0.0f};
         mSize = textureSize * cropFactor;
 
         if (std::round(mSize.y) > std::round(mTargetSize.y)) {
@@ -129,12 +133,20 @@ void VideoFFmpegComponent::resize()
             mTopLeftCrop.y = cropSize / 2.0f;
             mBottomRightCrop.y = 1.0f - (cropSize / 2.0f);
             mSize.y = mSize.y - (mSize.y * cropSize);
+            if (mCropPos.y != 0.5f) {
+                const float cropPosY {mCropPos.y + 0.5f};
+                mCropOffset.y = (cropSize * cropPosY) - cropSize;
+            }
         }
         else {
             const float cropSize {1.0f - (mTargetSize.x / std::round(mSize.x))};
             mTopLeftCrop.x = cropSize / 2.0f;
             mBottomRightCrop.x = 1.0f - (cropSize / 2.0f);
             mSize.x = mSize.x - (mSize.x * cropSize);
+            if (mCropPos.x != 0.5f) {
+                const float cropPosX {mCropPos.x + 0.5f};
+                mCropOffset.x = cropSize - (cropSize * cropPosX);
+            }
         }
     }
     else {
@@ -201,10 +213,10 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             return;
 
         // clang-format off
-        vertices[0] = {{0.0f,    0.0f   }, {mTopLeftCrop.x,            1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
-        vertices[1] = {{0.0f,    mSize.y}, {mTopLeftCrop.x,            1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
-        vertices[2] = {{mSize.x, 0.0f   }, {mBottomRightCrop.x * 1.0f, 1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
-        vertices[3] = {{mSize.x, mSize.y}, {mBottomRightCrop.x * 1.0f, 1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
+        vertices[0] = {{0.0f,    0.0f   }, {mTopLeftCrop.x - mCropOffset.x,              1.0f - mBottomRightCrop.y + mCropOffset.y}, 0xFFFFFFFF};
+        vertices[1] = {{0.0f,    mSize.y}, {mTopLeftCrop.x - mCropOffset.x,              1.0f - mTopLeftCrop.y + mCropOffset.y    }, 0xFFFFFFFF};
+        vertices[2] = {{mSize.x, 0.0f   }, {(mBottomRightCrop.x * 1.0f) - mCropOffset.x, 1.0f - mBottomRightCrop.y + mCropOffset.y}, 0xFFFFFFFF};
+        vertices[3] = {{mSize.x, mSize.y}, {(mBottomRightCrop.x * 1.0f) - mCropOffset.x, 1.0f - mTopLeftCrop.y + mCropOffset.y    }, 0xFFFFFFFF};
         // clang-format on
 
         vertices[0].color = mColorShift;
