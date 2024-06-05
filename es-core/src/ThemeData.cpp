@@ -203,6 +203,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"unfocusedItemSaturation", FLOAT},
        {"unfocusedItemDimming", FLOAT},
        {"imageFit", STRING},
+       {"imageCropPos", NORMALIZED_PAIR},
        {"imageInterpolation", STRING},
        {"imageRelativeScale", FLOAT},
        {"imageCornerRadius", FLOAT},
