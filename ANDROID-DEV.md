@@ -450,7 +450,7 @@ https://play.google.com/store/apps/details?id=io.recompiled.redream
 
 ### ScummVM
 
-This emulator can be installed from the Play store.
+ScummVM can be installed from the Play store.
 
 https://play.google.com/store/apps/details?id=org.scummvm.scummvm
 

@@ -60,12 +60,15 @@
 * Added a "selectedBackgroundCornerRadius" property to the textlist element
 * Added a "backgroundMargins" property to the text element
 * Added a "backgroundCornerRadius" property to the text element
+* Added a "cropPos" property to the image element
+* Added a "cropPos" property to the video element
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes
 
 * Adding trailing directory separators to the MediaDirectory setting could make the Orphaned data cleanup utility remove too many files
 * (Windows) Filenames containing multi-byte Unicode characters could not be used with the %INJECT% variable
+* The texture size was sometimes calculated incorrectly for the video element when using the cropSize property
 * Transition animations could sometimes partially play when switching themes with a system selected for the gamelist on startup setting
 * There could be minor textlist selector clipping issues if the selector had a text background color set
 

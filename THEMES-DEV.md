@@ -2167,8 +2167,13 @@ Properties:
     - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis. This property takes precedence over `cropSize` if that has also been defined.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`
 * `cropSize` - type: NORMALIZED_PAIR
-    - The image will be resized and cropped to the exact size defined by this property while maintaining its aspect ratio. The crop is always applied centered.
+    - The image will be resized and cropped to the exact size defined by this property while maintaining its aspect ratio. The crop is always applied centered unless `cropPos` has been set.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`
+* `cropPos` - type: NORMALIZED_PAIR
+    - If the image has been cropped using `cropSize` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `cropSize` is used.
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2301,8 +2306,13 @@ Properties:
     - The static image and video will be resized as large as possible so that they fit within this size while maintaining their aspect ratios. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis. This property takes precedence over `cropSize` if that has also been defined.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`
 * `cropSize` - type: NORMALIZED_PAIR
-    - The static image and video will be resized and cropped to the exact size defined by this property while maintaining their aspect ratios. The crop is always applied centered. Can't be combined with the `scanlines` property.
+    - The static image and video will be resized and cropped to the exact size defined by this property while maintaining their aspect ratios. The crop is always applied centered unless `cropPos` has been set. Can't be combined with the `scanlines` property.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`
+* `cropPos` - type: NORMALIZED_PAIR
+    - If the static image and video has been cropped using `cropSize` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `cropSize` is used.
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
