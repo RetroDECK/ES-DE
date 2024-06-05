@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ImageComponent.h
 //
 //  Handles images: loading, resizing, cropping, color shifting etc.
@@ -74,6 +74,9 @@ public:
     // cover image type (as the name may seem to imply).
     void coverFitCrop();
 
+    // Texture position when using cover fit (cropping).
+    void setCropPos(const glm::vec2 cropPos) { mCropPos = cropPos; }
+
     // This crops any entirely transparent areas around the actual image.
     // The arguments restrict how much the end result is allowed to be scaled.
     void cropTransparentPadding(const float maxSizeX, const float maxSizeY);
@@ -129,6 +132,8 @@ private:
     bool mTargetIsMax;
     bool mTargetIsCrop;
 
+    glm::vec2 mCropPos;
+    glm::vec2 mCropOffset;
     float mTileWidth;
     float mTileHeight;
 
