@@ -1559,6 +1559,11 @@ Properties:
     - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
+* `imageCropPos` - type: NORMALIZED_PAIR
+    - If the image has been cropped by setting `imageFit` to `cover` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `imageFit` has been set to `cover`
 * `imageInterpolation` - type: STRING
     - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
@@ -1833,6 +1838,11 @@ Properties:
     - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
+* `imageCropPos` - type: NORMALIZED_PAIR
+    - If the image has been cropped by setting `imageFit` to `cover` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `imageFit` has been set to `cover`
 * `imageInterpolation` - type: STRING
     - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`

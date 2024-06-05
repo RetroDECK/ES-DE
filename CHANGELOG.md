@@ -60,6 +60,8 @@
 * Added a "selectedBackgroundCornerRadius" property to the textlist element
 * Added a "backgroundMargins" property to the text element
 * Added a "backgroundCornerRadius" property to the text element
+* Added an "imageCropPos" property to the carousel element
+* Added an "imageCropPos" property to the grid element
 * Added a "cropPos" property to the image element
 * Added a "cropPos" property to the video element
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
