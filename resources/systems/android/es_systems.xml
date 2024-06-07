@@ -125,7 +125,7 @@
         <fullname>Apple IIGS</fullname>
         <path>%ROMPATH%/apple2gs</path>
         <extension>.2mg .2MG .7z .7z .zip .ZIP</extension>
-        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/apple2gs' -flop3 '%ROMRAW%'" %DATA%=apple2gs</command>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/apple2gs' -gameio joy -flop3 '%ROMRAW%'" %DATA%=apple2gs</command>
         <platform>apple2gs</platform>
         <theme>apple2gs</theme>
     </system>
