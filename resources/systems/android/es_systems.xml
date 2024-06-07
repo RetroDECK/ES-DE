@@ -1281,8 +1281,8 @@
         <name>oric</name>
         <fullname>Tangerine Computer Systems Oric</fullname>
         <path>%ROMPATH%/oric</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.dsk .DSK .ort .ORT .tap .TAP .wav .WAV</extension>
+        <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/oric' -autoboot_delay '4' -autoboot_command 'cload\"\"\n' -cass '%ROMRAW%'" %DATA%=oric1</command>
         <platform>oric</platform>
         <theme>oric</theme>
     </system>
