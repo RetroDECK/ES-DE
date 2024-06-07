@@ -1344,8 +1344,8 @@
         <fullname>Tangerine Computer Systems Oric</fullname>
         <path>%ROMPATH%/oric</path>
         <extension>.dsk .DSK .ort .ORT .tap .TAP .wav .WAV</extension>
-        <command label="Oricutron (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ORICUTRON% %ROM%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/oric oric1 -autoboot_delay "4" -autoboot_command "cload\"\"\n" -cass %ROM%</command>
+        <command label="Oricutron (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ORICUTRON% %ROM%</command>
         <platform>oric</platform>
         <theme>oric</theme>
     </system>
