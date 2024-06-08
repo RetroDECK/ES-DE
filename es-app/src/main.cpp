@@ -558,6 +558,8 @@ int main(int argc, char* argv[])
 
     std::locale::global(std::locale("C"));
 
+    SDL_SetHint(SDL_HINT_APP_NAME, "ES-DE");
+
 #if defined(__APPLE__)
     // This is a workaround to disable the incredibly annoying save state functionality in
     // macOS which forces a restore of the previous window state. The problem is that this
