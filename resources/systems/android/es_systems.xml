@@ -354,8 +354,9 @@
         <name>coco</name>
         <fullname>Tandy Color Computer</fullname>
         <path>%ROMPATH%/coco</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM</extension>
+        <command label="MAME4droid 2024 [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/coco' -cart '%ROMRAW%'" %DATA%=coco</command>
+        <command label="MAME4droid 2024 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/coco' -autoboot_delay '2' -autoboot_command 'cloadm:exec\n' -cass '%ROMRAW%'" %DATA%=coco</command>
         <platform>coco</platform>
         <theme>coco</theme>
     </system>
