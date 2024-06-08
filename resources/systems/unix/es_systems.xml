@@ -383,6 +383,8 @@
         <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM</extension>
         <command label="XRoar CoCo 2 NTSC (Standalone)">%EMULATOR_XROAR% -fs -default-machine coco2bus %ROM%</command>
         <command label="XRoar CoCo 2 PAL (Standalone)">%EMULATOR_XROAR% -fs -default-machine coco2b %ROM%</command>
+        <command label="MAME [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/coco coco -cart %ROM%</command>
+        <command label="MAME [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/coco coco -autoboot_delay "2" -autoboot_command "cloadm:exec\n" -cass %ROM%</command>
         <platform>coco</platform>
         <theme>coco</theme>
     </system>
