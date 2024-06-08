@@ -357,6 +357,12 @@
             <entry>com.explusalpha.SwanEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="VISUAL-PINBALL">
+        <!-- Pinball simulator Visual Pinball -->
+        <rule type="androidpackage">
+            <entry>org.vpinball.app/.VpxLauncherActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="androidpackage">

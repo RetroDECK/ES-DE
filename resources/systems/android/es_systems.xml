@@ -1916,8 +1916,8 @@
         <name>vpinball</name>
         <fullname>Visual Pinball</fullname>
         <path>%ROMPATH%/vpinball</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.vpinball .VPINBALL .vpt .VPT .vpx .VPX</extension>
+        <command label="Visual Pinball (Standalone)">%EMULATOR_VISUAL-PINBALL% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMSAF%</command>
         <platform>vpinball</platform>
         <theme>vpinball</theme>
     </system>
