@@ -469,6 +469,14 @@ Although this emulator supports both the Sinclar ZX Spectrum and MGT SAM Coupé 
 https://play.google.com/store/apps/details?id=com.fms.speccy \
 https://play.google.com/store/apps/details?id=com.fms.speccy.deluxe
 
+### Visual Pinball
+
+Although Visual Pinball is working fine on Android it's not possible to properly integrate it with a frontend, you'll instead need to install your tables inside the app and create dummy .vpinball files for your games in ROMs/vpinball and after launching a table from ES-DE you need to manually start it from inside the Visual Pinball GUI. There are more detailed setup instructions in the Visual Pinball section of the User guide.
+
+You can download Visual Pinball from their GitHub automatic build system.
+
+https://github.com/vpinball/vpinball/actions
+
 ### Vita3K
 
 This PlayStation Vita emulator can be downloaded from their GitHub site. Refer to the User guide for detailed game setup instructions.
@@ -637,7 +645,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          | MAME4droid 2024 **(Standalone)**  | Yes          | Single archive or ROM file           |
-| coco                  | Tandy Color Computer                           | _Placeholder_                     |                                   |              |                                      |
+| coco                  | Tandy Color Computer                           | MAME4droid 2024 [Cartridge] **(Standalone)** | MAME4droid 2024 [Tape] **(Standalone)** | Yes          | See the specific _Tandy Color Computer_ section in the user guide |
 | colecovision          | Coleco ColecoVision                            | blueMSX                           | Gearcoleco,<br>MSX.emu **(Standalone)**,<br>ColEm **(Standalone)** | Yes          | Single archive or ROM file           |
 | consolearcade         | Console Arcade Systems                         | MAME - Current                    | MAME4droid 2024 **(Standalone)**,<br>Flycast,<br>Flycast **(Standalone)**,<br>Play! **(Standalone)** | Depends      | See the specific _Console Arcade Systems_ section in the user guide |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      |                                      |
@@ -717,7 +725,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |
 | odyssey2              | Magnavox Odyssey 2                             | O2EM                              | MAME4droid 2024 **(Standalone)**  | Yes          | Single archive or ROM file           |
 | openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)**          |                                   | No           | See the specific _OpenBOR_ section in the User guide |
-| oric                  | Tangerine Computer Systems Oric                | _Placeholder_                     |                                   |              |                                      |
+| oric                  | Tangerine Computer Systems Oric                | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | See the specific _Tangerine Computer Systems Oric_ section in the user guide |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
 | pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN        | No           |                                      |
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   | Yes          |                                      |
@@ -760,7 +768,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | supervision           | Watara Supervision                             | Potator                           | MAME4droid 2024 **(Standalone)**  | No           | Single archive or ROM file           |
-| supracan              | Funtech Super A'Can                            | MAME4droid 2024 **(Standalone)**  |                                   | Yes/No       | Single archive or ROM file. To make MAME4droid 2024 start these games create an empty file named internal_68k.bin and zip it into supracan.zip |
+| supracan              | Funtech Super A'Can                            | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file. You need a supracan.zip archive that contains a valid internal_68k.bin file and an empty file named umc6650.bin |
 | switch                | Nintendo Switch                                | Skyline **(Standalone)**          |                                   | Yes          |                                      |
 | symbian               | Symbian                                        | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | tanodragon            | Tano Dragon                                    | _Placeholder_                     |                                   |              |                                      |
@@ -777,7 +785,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   | No           | Single archive or tape, cartridge or diskette image file |
 | videopac              | Philips Videopac G7000                         | O2EM                              | MAME4droid 2024 **(Standalone)**  | Yes          | Single archive or ROM file           |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         |                                   | No           |                                      |
-| vpinball              | Visual Pinball                                 | _Placeholder_                     |                                   |              |                                      |
+| vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | See the specific _Visual Pinball_ section in the user guide |
 | vsmile                | VTech V.Smile                                  | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |

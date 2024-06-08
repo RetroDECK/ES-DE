@@ -19,6 +19,7 @@
 * (Android) Added support for the Acorn Archimedes (archimedes) game system
 * (Android) Added support for the Bally Astrocade (astrocde) game system
 * (Android) Added support for the Acorn Computers BBC Micro (bbcmicro) game system
+* (Android) Added support for the Tandy Color Computer (coco) game system
 * (Android) Added support for the Console Arcade Systems (consolearcade) game system
 * (Android) Added support for the VTech CreatiVision (crvision) game system
 * (Android) Added support for the Acorn Electron (electron) game system
@@ -29,10 +30,12 @@
 * (Android) Added support for the Tiger Electronics Game.com (gamecom) game system
 * (Android) Added support for the Hartung Game Master (gmaster) game system
 * (Android) Added support for the Apple Macintosh (macintosh) game system
+* (Android) Added support for the Tangerine Computer Systems Oric (oric) game system
 * (Android) Added support for the Casio PV-1000 (pv1000) game system
 * (Android) Added support for the Epoch Super Cassette Vision (scv) game system
 * (Android) Added support for the Funtech Super A'Can (supracan) game system
 * (Android) Added support for the Texas Instruments TI-99 (ti99) game system
+* (Android) Added support for the Visual Pinball (vpinball) game system
 * (Android) Added support for the VTech V.Smile (vsmile) game system
 * (Android) Added support for the Infocom Z-machine (zmachine) game system
 * (Android) Added MAME4droid 2024 standalone as the default emulator for the adam, daphne and laserdisc systems
@@ -47,9 +50,13 @@
 * (Android) Added IrataJaguar standalone as an alternative emulator for the atarijaguar system
 * (Android) Added the melonDS RetroArch core as an alternative emulator for the nds system
 * Added the MojoZork RetroArch core as the default emulator for the zmachine system
+* Added MAME standalone as the default emulator for the oric system on Linux, macOS and Windows
+* Added MAME [Cartridge] standalone and MAME [Tape] standalone as alternative emulator entries for the coco system
 * Added ACE-DL standalone as an alternative emulator for the amstradcpc system on Linux, macOS and Windows
 * Added ColEm standalone as an alternative emulator for the adam and colecovision systems on Linux and Windows
 * (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
+* Added the "-gameio joy" option to the MAME and MAME standalone alternative emulator entries for the apple2 and apple2gs systems
+* Added the "-analogue acornjoy" option to the MAME standalone emulator entry for the bbcmicro system
 * Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
 * Added support for combining a %ROM% variable with the %INJECT% variable
 * (Android) Added %GAMEDIRRAW%, %ROMPATHRAW% and %ROMRAW% variables that can be used with the %EXTRA% and %EXTRAARRAY% variables

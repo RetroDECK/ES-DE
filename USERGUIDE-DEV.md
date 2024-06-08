@@ -2590,7 +2590,15 @@ Finally there's an emulator entry named _EKA2L1 [Custom device] (Standalone)_ wh
 
 ### Tandy Color Computer
 
-This computer (which is confusingly also known as _TRS-80 Color Computer_ even though it's a completely different machine than the _TRS-80_) is emulated using the [XRoar](http://www.6809.org.uk/xroar) emulator.
+This computer (which is confusingly also known as _TRS-80 Color Computer_ even though it's a completely different machine than the _TRS-80_) is emulated using MAME standalone or the [XRoar](http://www.6809.org.uk/xroar) emulator.
+
+**MAME**
+
+To use MAME you simply need the `coco.zip` and `coco_fdc.zip` BIOS files in the ROMs/coco directory and your games should work. Note however that only cartridge and tape files can be used with MAME (via two separate emulator entries), and not diskettes.
+
+When running tape files there is quite some loading time involved, so it's recommended to fast-forward through the loading process. How this is done differs per platform but usually it's via the page down key on Linux and via the insert key on Windows. For this to work you may first need to disable UI controls in MAME via the scroll lock key. For MAME4droid 2024 you can hold the Start and A buttons to fast-forward. For additional details about this functionality refer to the MAME documentation.
+
+**XRoar**
 
 This emulator is available for Linux, macOS and Windows, although on Linux you may need to build it from source code depending on which distribution you're using. Refer to the XRoar website for more information. If you manually download or build the emulator yourself then see the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details on where you need to install it.
 
@@ -2639,11 +2647,17 @@ Here's what a complete setup could look like:
 
 ### Tangerine Computer Systems Oric
 
-These games are executed using the Oricutron emulator which is readily available on Windows but quite problematic to get hold on for Linux and macOS.
+These games can be run using either MAME standalone or the Oricutron emulator. The latter is readily available on Windows but quite problematic to get hold on for Linux and macOS. It's also not available for Android at all.
 
-Although there is a macOS build available at the Oricutron [download page](http://www.petergordon.org.uk/oricutron/) this seems to not work properly, or it's unclear how it should be used. As such this system is unsupported on macOS, but the configuration entries still exist in the bundled es_find_rules.xml and es_systems.xml files so if you manage to get the emulator to run, ES-DE should work with these games.
+**MAME**
 
-Likewise on Linux there seems to be no binaries available for download so you need to build the emulator yourself. As multiple files like images and roms are needed to run this emulator, it's easiest to download and extract the Windows version which contains all this data and then build from source code and simply copy over the `Oricutron` binary (example below using Ubuntu):
+To use MAME you simply need the `oric1.zip` BIOS file in the ROMs/oric directory and your games should work. Note however that only tape files can be used with MAME, and not diskettes. To run diskette files you will need to use Oricutron instead.
+
+When running tape files there is quite some loading time involved, so it's recommended to fast-forward through the loading process. How this is done differs per platform but usually it's via the page down key on Linux and via the insert key on Windows. For this to work you may first need to disable UI controls in MAME via the scroll lock key. For MAME4droid 2024 you can hold the Start and A buttons to fast-forward. For additional details about this functionality refer to the MAME documentation.
+
+**Oricutron**
+
+Although there is a macOS build available at the Oricutron [download page](http://www.petergordon.org.uk/oricutron/) this seems to not work properly, or it's unclear how it should be used. Likewise on Linux there seems to be no binaries available for download so you need to build the emulator yourself. As multiple files like images and roms are needed to run this emulator, it's easiest to download and extract the Windows version which contains all this data and then build from source code and simply copy over the `Oricutron` binary (example below using Ubuntu):
 
 ```
 mkdir -p ~/Applications/oricutron
@@ -2676,6 +2690,19 @@ https://docs.mamedev.org/usingmame/defaultkeys.html
 Scraping can also be a bit challenging as MAME software list names are used and neither ScreenScraper nor TheGamesDB can parse these names. So it's recommended to run the scraper in interactive mode and refine the searches for all games that are not properly identified.
 
 ### Visual Pinball
+
+**Android**
+
+Unfortunately there does not seem to be a way to launch individual Visual Pinball tables from ES-DE on Android, instead the Visual Pinball user interface will open on game launch and you need to manually start your table from there. This means tables need to be installed upfront in Visual Pinball and .vpinball dummy files should be added to the `ROMs/vpinball` directory. These will then appear as individual games inside ES-DE and you can add metadata to them, scrape them etc.
+
+Here's an example setup:
+
+```
+/storage/emulated/0/ROMs/vpinball/Apollo 13.vpinball
+/storage/emulated/0/ROMs/vpinball/Judge Dredd.vpinball
+```
+
+**Linux, macOS and Windows**
 
 The pinball simulator Visual Pinball can be a bit tricky to setup as it supports a wide range of tables. Some of these require [PinMAME](https://github.com/vpinball/pinmame) and some don't. Some simulated tables are older electromechnical design and some are of more modern solid state designs. Some are recreations of real physical games and some are purely virtual and don't exist in physical form. In many cases there is not a definitive release for a table and you may need to assemble various files to get to a fully working game.
 
@@ -4034,7 +4061,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [LM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          | MAME - Current,<br>MAME **(Standalone)** | Yes          | Single archive or ROM file           |
-| coco                  | Tandy Color Computer                           | XRoar CoCo 2 NTSC **(Standalone)** | XRoar CoCo 2 PAL **(Standalone)** | Yes           | See the specific _Tandy Color Computer_ section elsewhere in this guide |
+| coco                  | Tandy Color Computer                           | XRoar CoCo 2 NTSC **(Standalone)** | XRoar CoCo 2 PAL **(Standalone)**,<br>MAME [Cartridge] **(Standalone)**,<br>MAME [Tape] **(Standalone)** | Yes           | See the specific _Tandy Color Computer_ section elsewhere in this guide |
 | colecovision          | Coleco ColecoVision                            | blueMSX                           | Gearcoleco,<br>openMSX **(Standalone)**,<br>ares **(Standalone)**,<br>ColEm **(Standalone)** [LW] | Yes          | Single archive or ROM file |
 | consolearcade         | Console Arcade Systems                         | MAME - Current                    | MAME **(Standalone)**,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Kronos [LW],<br>Mednafen [Sega Saturn] **(Standalone)**,<br>Play! **(Standalone)**,<br>RPCS3 Shortcut **(Standalone)**,<br>Triforce **(Standalone)** [LW],<br>xemu **(Standalone)**,<br>Cxbx-Reloaded **(Standalone)** [W],<br> _Shortcut or script_ | Depends      | See the specific _Console Arcade Systems_ section elsewhere in this guide |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [LW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
@@ -4114,7 +4141,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file           |
 | odyssey2              | Magnavox Odyssey 2                             | O2EM                              | MAME - Current,<br>MAME **(Standalone)** | Yes          | Single archive or ROM file |
 | openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)** [LW]     |                                   | No           | See the specific _OpenBOR_ section elsewhere in this guide |
-| oric                  | Tangerine Computer Systems Oric                | Oricutron **(Standalone)** [LW]   |                                   |              | See the specific _Tangerine Computer Systems Oric_ section elsewhere in this guide |
+| oric                  | Tangerine Computer Systems Oric                | MAME **(Standalone)**             | Oricutron **(Standalone)**        | Yes          | See the specific _Tangerine Computer Systems Oric_ section elsewhere in this guide |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
 | pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** | No           | See the specific _DOS / PC_ section elsewhere in this guide |
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           | QUASI88 **(Standalone)**          | Yes          |                                      |
@@ -4157,7 +4184,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [LW],<br>ares **(Standalone)** |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [LW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | supervision           | Watara Supervision                             | Potator                           | MAME - Current,<br>MAME **(Standalone)** | No           | Single archive or ROM file |
-| supracan              | Funtech Super A'Can                            | MAME - Current                    | MAME **(Standalone)**             | Yes/No       | Single archive or ROM file. To make MAME start these games create an empty file named internal_68k.bin and zip it into supracan.zip |
+| supracan              | Funtech Super A'Can                            | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file. You need a supracan.zip archive that contains a valid internal_68k.bin file and an empty file named umc6650.bin |
 | switch                | Nintendo Switch                                | Ryujinx **(Standalone)**          |                                   | Yes          |                                      |
 | symbian               | Symbian                                        | EKA2L1 [Nokia N-Gage] **(Standalone)** | EKA2L1 [Nokia N70] **(Standalone)**,<br>EKA2L1 [Nokia N97] **(Standalone)**,<br>EKA2L1 [Custom device] **(Standalone)** | Yes          | See the specific _Symbian and Nokia N-Gage_ section elsewhere in this guide |
 | tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
