@@ -2239,6 +2239,8 @@
         <extension>.2hd .2HD .88d .88D .cmd .CMD .d88 .D88 .dim .DIM .dup .DUP .hdf .HDF .hdm .HDM .img .IMG .m3u .M3U .xdf .XDF .7z .7Z .zip .ZIP</extension>
         <command label="PX68k">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/px68k_libretro.so %ROM%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/x68000 x68000 -flop1 %ROM%</command>
+        <command label="XM6 Pro-68k (Wine)">%STARTDIR%=%GAMEDIR% %PRECOMMAND_WINE% %EMULATOR_XM6PRO68K-WINDOWS% "%FILENAME%"</command>
+        <command label="XM6 Pro-68k (Proton)">%STARTDIR%=%GAMEDIR% %PRECOMMAND_PROTON% %EMULATOR_XM6PRO68K-WINDOWS% "%FILENAME%"</command>
         <platform>x68000</platform>
         <theme>x68000</theme>
     </system>
