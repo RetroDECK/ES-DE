@@ -19,7 +19,7 @@ endif()
 project(es-de)
 
 # Application version, update this when making a new release.
-set(ES_VERSION 3.0.2)
+set(ES_VERSION 3.0.3)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
