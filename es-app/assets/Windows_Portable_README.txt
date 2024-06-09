@@ -138,5 +138,6 @@ Emulators\WinArcadia\WinArcadia.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
 Emulators\xenia_canary\xenia_canary.exe
+Emulators\XM6 Pro-68k\XM6.exe
 Emulators\xroar\xroar.exe
 Emulators\ZEsarUX\zesarux.exe

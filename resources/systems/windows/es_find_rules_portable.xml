@@ -660,6 +660,13 @@
             <entry>%ESPATH%\..\Emulators\xenia_canary\xenia_canary.exe</entry>
         </rule>
     </emulator>
+    <emulator name="XM6PRO68K">
+        <!-- Sharp X68000 emulator XM6 Pro-68k -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\XM6 Pro-68k\XM6.exe</entry>
+            <entry>%ESPATH%\..\Emulators\XM6 Pro-68k\XM6.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="XROAR">
         <!-- Dragon and Tandy 8-bit computer emulator XRoar -->
         <rule type="staticpath">
