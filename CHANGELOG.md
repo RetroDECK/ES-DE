@@ -6,6 +6,8 @@
 
 ### Release overview
 
+This release adds support for a lot of systems on Android which brings this platform much closer to the desktop ports as far as system support is concerned. It also brings experimental support for setting ES-DE as the Android home app. Outside of Android a number of new features have been added to the theme engine, ES-DE can be now be built for KMS/direct framebuffer access on Linux and several new emulators have been added. A couple of bugs have been fixed as well, in addition to some other minor improvements.
+
 ### Detailed list of changes
 
 * (Android) Added experimental support for running ES-DE as the home app
@@ -55,6 +57,8 @@
 * Added ACE-DL standalone as an alternative emulator for the amstradcpc system on Linux, macOS and Windows
 * Added ColEm standalone as an alternative emulator for the adam and colecovision systems on Linux and Windows
 * (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
+* (Windows) Added XM6 Pro-68k standalone as an alternative emulator for the x68000 system
+* (Linux) Added XM6 Pro-68k Wine and XM6 Pro-68k Proton as alternative emulators for the x68000 system
 * Added the "-gameio joy" option to the MAME and MAME standalone alternative emulator entries for the apple2 and apple2gs systems
 * Added the "-analogue acornjoy" option to the MAME standalone emulator entry for the bbcmicro system
 * Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
@@ -71,6 +75,7 @@
 * Added an "imageCropPos" property to the grid element
 * Added a "cropPos" property to the image element
 * Added a "cropPos" property to the video element
+* SDL_HINT_APP_NAME is now explicitly set to "ES-DE" to display the correct name in the OS sound settings interface and similar
 * (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes

@@ -883,6 +883,7 @@ The following Windows emulators are supported, and the setup for most of these i
 | atarijaguar/atarijaguarcd | BigPEmu          | BigPEmu/BigPEmu.exe     |
 | famicom/nes               | 3dSen            | 3dSen/3dSen.exe         |
 | model2                    | Model 2 Emulator | m2emulator/EMULATOR.EXE |
+| x68000                    | XM6 Pro-68k      | XM6 Pro-68k/XM6.exe     |
 | xbox360                   | xenia            | xenia/xenia.exe         |
 | xbox360                   | xenia            | xenia/xenia_canary.exe  |
 
@@ -4212,7 +4213,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares [Benesse Pocket Challenge V2] **(Standalone)** | No           | Single archive or ROM file    |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file    |
 | x1                    | Sharp X1                                       | X Millennium                      | MAME [Diskette] **(Standalone)**,<br>MAME [Tape] **(Standalone)** | Yes for MAME | Single archive or diskette/tape file |
-| x68000                | Sharp X68000                                   | PX68k                             | MAME **(Standalone)**             | Yes          |                                      |
+| x68000                | Sharp X68000                                   | PX68k                             | MAME **(Standalone)**,<br>XM6 Pro-68k **(Standalone)** [W],<br>XM6 Pro-68k **(Wine)** [L],<br>XM6 Pro-68k **(Proton)** [L] | Yes except for XM6 Pro-68k |                                      |
 | xbox                  | Microsoft Xbox                                 | xemu **(Standalone)**             | Cxbx-Reloaded **(Standalone)** [W] | Yes for xemu | Single .iso file for xemu or unpacked .iso directory for Cxbx-Reloaded |
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W],<br>xenia **(Wine)** [L] | xenia **(Proton)** [L],<br> _Shortcut or script_ [L]          | No           | See the specific _Microsoft Xbox 360_ section elsewhere in this guide |
 | zmachine              | Infocom Z-machine                              | MojoZork                          | Gargoyle **(Standalone)**         | No           |                                      |
