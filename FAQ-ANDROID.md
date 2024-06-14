@@ -38,8 +38,7 @@ The second reason is that the APK is corrupt or not complete. When we make relea
 
 ## Can I set ES-DE as my home app/launcher?
 
-Kind of, ES-DE can't natively be set as your launcher but you can use a third party app to make this work such as [AnyHome](https://play.google.com/store/apps/details?id=com.draco.anyhome&hl=en_US&gl=US). It's not necessarily recommended though as ES-DE is not a native Android application, it's written in C++ and essentially works as a game engine with a game loop that constantly runs. For this reason it consumes more resources and battery than a native launcher app. An alternative approach would be to use a native launcher with ES-DE, this makes for a nice game console experience. To achieve this the following app is recommended:
-https://play.google.com/store/apps/details?id=com.k2.consolelauncher
+Yes, as of version 3.0.3 there is experimental support for setting ES-DE as the home app. Read the _Running ES-DE as the Android home app_ section of the [Android documentation](ANDROID.md#running-es-de-as-the-android-home-app) for more information about this functionality. There are currently some minor glitches like sometimes needing to start ES-DE twice after switching between regular mode and home app mode, but apart from that it should hopefully work fine.
 
 ## Can I launch Android apps and games from inside ES-DE?
 

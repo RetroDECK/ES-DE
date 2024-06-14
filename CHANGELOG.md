@@ -1,12 +1,12 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.0.3 / 3.0.3-xx (in development)
+## Version 3.0.3 / 3.0.3-26
 
-**Release date:** TBD
+**Release date:** 2024-06-14
 
 ### Release overview
 
-This release adds support for a lot of systems on Android which brings this platform much closer to the desktop ports as far as system support is concerned. It also brings experimental support for setting ES-DE as the Android home app. Outside of Android a number of new features have been added to the theme engine, ES-DE can be now be built for KMS/direct framebuffer access on Linux and several new emulators have been added. A couple of bugs have been fixed as well, in addition to some other minor improvements.
+This release enables a lot of new systems on Android which brings this platform much closer to the desktop ports as far as system support is concerned. It also brings experimental support for setting ES-DE as the Android home app. Outside of Android a number of new features have been added to the theme engine, ES-DE can be now be built for KMS/direct framebuffer access on Linux and several new emulators have been added. A couple of bugs have been fixed as well, in addition to some other minor improvements.
 
 ### Detailed list of changes
 

@@ -1,6 +1,6 @@
 # ES-DE Frontend (development version) - Android documentation
 
-This document contains information specific to the Android release, for more general ES-DE documentation refer to the [User guide](USERGUIDE.md) as well as the general [FAQ](FAQ.md).
+This document contains information specific to the Android release, for more general ES-DE documentation refer to the [User guide](USERGUIDE-DEV.md) as well as the general [FAQ](FAQ.md).
 
 It's also generally recommended to read the [Frequently Asked Questions (FAQ) for Android](FAQ-ANDROID.md) document prior to diving into the information in this document.
 
@@ -235,7 +235,7 @@ The Play store version is somehow up to date and could be used, otherwise the F-
 
 https://play.google.com/store/apps/details?id=org.dolphinemu.dolphinemu \
 https://f-droid.org/en/packages/org.dolphinemu.dolphinemu \
-https://dolphin-emu.org/download/
+https://dolphin-emu.org/download
 
 ### Dolphin MMJR and MMJR2
 

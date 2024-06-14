@@ -1105,7 +1105,7 @@ Not all systems are as simple to setup as what was described in the previous sec
 
 ### Apple II
 
-On Android only MAME4droid 2024 is supported for the apple2 system. Make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+On Android only MAME4droid 2024 is supported for the apple2 system. Make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
 
 On Linux the default emulator for the apple2 system is [LinApple](http://linapple.sourceforge.net) and on Windows it's [AppleWin](https://github.com/AppleWin/AppleWin). Additionally the alternative emulators [Mednafen](https://mednafen.github.io) and [MAME](https://www.mamedev.org) standalone are supported. On macOS there is a port of AppleWin available named [Mariani](https://github.com/sh95014/AppleWin) but it appears broken at the moment as it does not accept any command line parameters. So instead only Mednafen and MAME are supported on macOS.
 
@@ -1130,7 +1130,7 @@ https://docs.mamedev.org/usingmame/defaultkeys.html
 
 The Apple IIGS computer is emulated using MAME. On desktop operating systems there is a dedicated emulator available for this system named [GSplus](https://apple2.gs/plus) but it appears to not be able to parse command line parameters correctly so disk images can't be supplied to it. As such it's currently unsupported.
 
-If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
 
 In order to run Apple IIGS games in MAME, you need to place the following ROM file in the ~/ROMs/apple2gs directory:
 ```
@@ -1142,7 +1142,7 @@ https://docs.mamedev.org/usingmame/defaultkeys.html
 
 ### Apple Macintosh
 
-On Android only MAME4droid 2024 is supported for the macintosh system. Make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+On Android only MAME4droid 2024 is supported for the macintosh system. Make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
 
 There are two approaches to emulating these computers, the first is using games booted from diskettes and the second is to setup an entire OS installation as a hard disk image and run the games from there (this latter approach is not supported on Android). The first approach is only applicable for older models like the Macintosh SE and Macintosh Plus (i.e. the era prior to hard drives becoming prevalent), and the second approach can be used for more modern models.
 
@@ -1204,7 +1204,7 @@ Note that scraper support is currently very poor for this system, so you may nee
 
 ### Arcade and Neo Geo
 
-If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
 
 **General**
 
@@ -1528,7 +1528,7 @@ Setup for the standalone EasyRPG Player is identical with the exception that run
 
 This system is emulated using MAME or Tsugaru on desktop operating systems and MAME4droid 2024 on Android.
 
-If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
 
 **MAME**
 
@@ -1599,7 +1599,7 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 
 ### LaserDisc Games
 
-Note that on Android the Hypseus Singe emulator is not available. However the setup for MAME (using MAME4droid 2024) and DirkSimple still applies. If using Android also make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+Note that on Android the Hypseus Singe emulator is not available. However the setup for MAME (using MAME4droid 2024) and DirkSimple still applies. If using Android also make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
 
 There are three ways to run LaserDisc games in ES-DE, via MAME, via Hypseus Singe or via the DirkSimple RetroArch core. There are also two separate systems available, _daphne_ and _laserdisc_. The latter is recommended as the _daphne_ system is mostly existing for legacy reasons and may be removed in a future ES-DE release. The configuration for these two systems is identical as they are essentially clones.
 
@@ -2679,7 +2679,7 @@ Once the emulator is up and running there is not really much else to consider, s
 
 The TI-99 is emulated via MAME, and only the standalone release of this emulator is supported. Unfortunately it seems as if the Homebrew build on macOS is broken as no TI-99 games can be launched. As such this system is unsupported on macOS, but the configuration entries still exist in the bundled es_find_rules.xml and es_systems.xml files so if you manage to get the emulator to run, ES-DE should work with these games.
 
-If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+If using Android then make sure you've read the _MAME4droid 2024 and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-2024-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
 
 Emulating the TI-99 can be quite confusing as games are available in various incompatible formats, and most emulators are particular when it comes to what file types they support. In ES-DE only cartridge-based games are supported, so you can't for instance play games distributed as floppy disk images. And only games packaged for MAME using the MAME software list name standard can be used. This includes .7z and .zip files as well as .rpk cartridge images. It's strongly recommended to go for the MAME TI-99 ROM set that consists only of .zip files as these have the highest chance of working correctly.
 

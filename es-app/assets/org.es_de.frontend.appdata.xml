@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
     <id>org.es_de.frontend</id>
-    <name>ES-DE</name>
+    <name>ES-DE Frontend</name>
     <summary>Gaming frontend</summary>
     <description>
         <p>ES-DE is a frontend for browsing and launching games from your
@@ -38,6 +38,9 @@
         </screenshot>
     </screenshots>
     <releases>
+        <release version="3.0.3" date="2024-06-14">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
         <release version="3.0.2" date="2024-05-13">
             <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>
