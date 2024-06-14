@@ -450,9 +450,10 @@ https://play.google.com/store/apps/details?id=io.recompiled.redream
 
 ### ScummVM
 
-ScummVM can be installed from the Play store.
+ScummVM can be installed from the Play store. There are also daily builds available on their GitHub site. Such a build may be required to be able to launch games from ES-DE until the Play store version has been updated.
 
-https://play.google.com/store/apps/details?id=org.scummvm.scummvm
+https://play.google.com/store/apps/details?id=org.scummvm.scummvm\
+https://buildbot.scummvm.org/#/dailybuilds
 
 ### Skyline
 
