@@ -26,6 +26,10 @@ You only need to buy it once, and then you can use it on all your devices. There
 
 Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund everyone up to one month from the purchase date if they are unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
 
+## I received an update email to my Gmail account but the APK download link doesn't seem to work?
+
+There seems to be an issue with the web version of Gmail that a few people have run into. Clicking on some external download links will result in extremely slow downloads or the download failing completely. The solution is to copy the download link from the email and paste it into the address bar of the web browser, i.e. outside of the Gmail web interface. That should resolve the issue and the APK should download correctly.
+
 ## Will I lose any settings or data when upgrading to a new release?
 
 No, you will not lose any settings or data when you upgrade. Just download the latest version and sideload it on your device to apply the update.
