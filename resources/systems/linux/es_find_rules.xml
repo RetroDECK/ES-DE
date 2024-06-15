@@ -53,6 +53,18 @@
             <entry>~/bin/3dSen/3dSen.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ACE-DL">
+        <!-- Amstrad CPC emulator ACE-DL -->
+        <rule type="systempath">
+            <entry>AceDL</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/AceDL/AceDL</entry>
+            <entry>~/.local/share/applications/AceDL/AceDL</entry>
+            <entry>~/.local/bin/AceDL/AceDL</entry>
+            <entry>~/bin/AceDL/AceDL</entry>
+        </rule>
+    </emulator>
     <emulator name="ADVANCEMAME">
         <!-- Arcade emulator AdvanceMAME -->
         <rule type="systempath">
@@ -108,6 +120,18 @@
             <entry>~/bin/BasiliskII*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/net.cebix.basilisk</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
+        </rule>
+    </emulator>
+    <emulator name="BIGPEMU">
+        <!-- Atari Jaguar emulator BigPEmu -->
+        <rule type="systempath">
+            <entry>bigpemu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/bigpemu/bigpemu</entry>
+            <entry>~/.local/share/applications/bigpemu/bigpemu</entry>
+            <entry>~/.local/bin/bigpemu/bigpemu</entry>
+            <entry>~/bin/bigpemu/bigpemu</entry>
         </rule>
     </emulator>
     <emulator name="BIGPEMU-WINDOWS">
@@ -179,6 +203,18 @@
             <entry>~/.citra/nightly/citra-qt.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.citra_emu.citra</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.citra_emu.citra</entry>
+        </rule>
+    </emulator>
+    <emulator name="COLEM">
+        <!-- Coleco ColecoVision and Adam emulator ColEm -->
+        <rule type="systempath">
+            <entry>colem</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/colem/colem</entry>
+            <entry>~/.local/share/applications/colem/colem</entry>
+            <entry>~/.local/bin/colem/colem</entry>
+            <entry>~/bin/colem/colem</entry>
         </rule>
     </emulator>
     <emulator name="CPCEMU">
@@ -447,6 +483,25 @@
             <entry>~/.local/share/applications/lightspark/lightspark</entry>
             <entry>~/.local/bin/lightspark/lightspark</entry>
             <entry>~/bin/lightspark/lightspark</entry>
+        </rule>
+    </emulator>
+    <emulator name="LIME3DS">
+        <!-- Nintendo 3DS emulator Lime3DS -->
+        <rule type="systempath">
+            <entry>lime3ds-gui</entry>
+            <entry>lime-qt</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/lime3ds-gui*.AppImage</entry>
+            <entry>~/.local/share/applications/lime3ds-gui*.AppImage</entry>
+            <entry>~/.local/bin/lime3ds-gui*.AppImage</entry>
+            <entry>~/bin/lime3ds-gui*.AppImage</entry>
+            <entry>~/Applications/lime-qt*.AppImage</entry>
+            <entry>~/.local/share/applications/lime-qt*.AppImage</entry>
+            <entry>~/.local/bin/lime-qt*.AppImage</entry>
+            <entry>~/bin/lime-qt*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
         </rule>
     </emulator>
     <emulator name="LINAPPLE">
@@ -1056,6 +1111,15 @@
             <entry>~/.local/share/applications/xenia/xenia_canary.exe</entry>
             <entry>~/.local/bin/xenia/xenia_canary.exe</entry>
             <entry>~/bin/xenia/xenia_canary.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="XM6PRO68K-WINDOWS">
+        <!-- Sharp X68000 emulator XM6 Pro-68k -->
+        <rule type="staticpath">
+            <entry>~/Applications/XM6 Pro-68k/XM6.exe</entry>
+            <entry>~/.local/share/applications/XM6 Pro-68k/XM6.exe</entry>
+            <entry>~/.local/bin/XM6 Pro-68k/XM6.exe</entry>
+            <entry>~/bin/XM6 Pro-68k/XM6.exe</entry>
         </rule>
     </emulator>
     <emulator name="XROAR">

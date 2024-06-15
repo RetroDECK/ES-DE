@@ -1,7 +1,7 @@
 #!/bin/sh
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  macOS_dependencies_build.sh
 #
 #  Builds the external dependencies in-tree.
@@ -12,7 +12,7 @@
 #  This script needs to run from the root of the repository.
 #
 
-export MACOSX_DEPLOYMENT_TARGET=10.15
+export MACOSX_DEPLOYMENT_TARGET=11.0
 
 # How many CPU threads to use for the compilation.
 JOBS=4

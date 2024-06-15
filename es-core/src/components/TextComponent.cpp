@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  TextComponent.cpp
 //
 //  Displays text.
@@ -18,6 +18,8 @@ TextComponent::TextComponent()
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
+    , mBackgroundMargins {0.0f, 0.0f}
+    , mBackgroundCornerRadius {0.0f}
     , mColorOpacity {1.0f}
     , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
@@ -63,6 +65,8 @@ TextComponent::TextComponent(const std::string& text,
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
+    , mBackgroundMargins {0.0f, 0.0f}
+    , mBackgroundCornerRadius {0.0f}
     , mColorOpacity {1.0f}
     , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
@@ -249,8 +253,21 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
     auto renderFunc = [this](glm::mat4 trans, bool secondPass) {
         if (mRenderBackground && !secondPass)
-            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
-                                mOpacity * mThemeOpacity, mDimming);
+            if (mBackgroundMargins.x > 0.0f) {
+                trans = glm::translate(trans, glm::vec3 {-mBackgroundMargins.x, 0.0f, 0.0f});
+                mRenderer->setMatrix(trans);
+            }
+
+        mRenderer->drawRect(0.0f, 0.0f, mSize.x + mBackgroundMargins.x + mBackgroundMargins.y,
+                            mSize.y, mBgColor, mBgColor, false, mOpacity * mThemeOpacity, mDimming,
+                            Renderer::BlendFactor::SRC_ALPHA,
+                            Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA, mBackgroundCornerRadius);
+
+        if (mBackgroundMargins.x > 0.0f) {
+            trans = glm::translate(trans, glm::vec3 {mBackgroundMargins.x, 0.0f, 0.0f});
+            mRenderer->setMatrix(trans);
+        }
+
         if (mTextCache) {
             const float textHeight {mTextCache->metrics.size.y};
             float yOff {0.0f};
@@ -716,6 +733,18 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                              "\"metadata\" for element \""
                           << element.substr(5) << "\" defined as \"" << metadata << "\"";
         }
+    }
+
+    if (elem->has("backgroundMargins")) {
+        const glm::vec2 backgroundMargins {
+            glm::clamp(elem->get<glm::vec2>("backgroundMargins"), 0.0f, 0.5f)};
+        mBackgroundMargins = backgroundMargins * Renderer::getScreenWidth();
+    }
+
+    if (elem->has("backgroundCornerRadius")) {
+        mBackgroundCornerRadius =
+            glm::clamp(elem->get<float>("backgroundCornerRadius"), 0.0f, 0.5f) *
+            mRenderer->getScreenWidth();
     }
 
     if (properties & LETTER_CASE && elem->has("letterCaseSystemNameSuffix")) {

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  TextComponent.h
 //
 //  Displays text.
@@ -155,6 +155,8 @@ private:
     std::string mDefaultValue;
     unsigned int mColor;
     unsigned int mBgColor;
+    glm::vec2 mBackgroundMargins;
+    float mBackgroundCornerRadius;
     float mColorOpacity;
     float mBgColorOpacity;
     bool mRenderBackground;

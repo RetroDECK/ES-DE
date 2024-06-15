@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  VideoComponent.cpp
 //
 //  Base class for playing videos.
@@ -26,6 +26,8 @@ VideoComponent::VideoComponent()
     , mVideoCornerRadius {0.0f}
     , mColorGradientHorizontal {true}
     , mTargetSize {0.0f, 0.0f}
+    , mCropPos {0.5f, 0.5f}
+    , mCropOffset {0.0f, 0.0f}
     , mVideoAreaPos {0.0f, 0.0f}
     , mVideoAreaSize {0.0f, 0.0f}
     , mTopLeftCrop {0.0f, 0.0f}
@@ -161,6 +163,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             glm::vec2 videoCropSize {elem->get<glm::vec2>("cropSize")};
             videoCropSize.x = glm::clamp(videoCropSize.x, 0.01f, 2.0f);
             videoCropSize.y = glm::clamp(videoCropSize.y, 0.01f, 2.0f);
+            if (elem->has("cropPos"))
+                mCropPos = glm::clamp(elem->get<glm::vec2>("cropPos"), 0.0f, 1.0f);
             setCroppedSize(videoCropSize * scale);
             mVideoAreaSize = videoCropSize * scale;
         }

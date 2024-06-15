@@ -28,6 +28,13 @@
             <entry>%ESPATH%\..\Emulators\3dSen\3dSen.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ACE-DL">
+        <!-- Amstrad CPC emulator ACE-DL -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\AceDL\AceDL.exe</entry>
+            <entry>%ESPATH%\..\Emulators\AceDL\AceDL.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ADVANCEMAME">
         <!-- Arcade emulator AdvanceMAME -->
         <rule type="staticpath">
@@ -107,6 +114,13 @@
             <entry>%ESPATH%\Emulators\Citra\canary-mingw\citra-qt.exe</entry>
             <entry>%ESPATH%\..\Emulators\Citra\nightly-mingw\citra-qt.exe</entry>
             <entry>%ESPATH%\..\Emulators\Citra\canary-mingw\citra-qt.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="COLEM">
+        <!-- Coleco ColecoVision and Adam emulator ColEm -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\ColEm\ColEm.exe</entry>
+            <entry>%ESPATH%\..\Emulators\ColEm\ColEm.exe</entry>
         </rule>
     </emulator>
     <emulator name="CPCEMU">
@@ -265,6 +279,15 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\KEmulator\KEmulator.exe</entry>
             <entry>%ESPATH%\..\Emulators\KEmulator\KEmulator.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="LIME3DS">
+        <!-- Nintendo 3DS emulator Lime3DS -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\lime3ds\lime3ds-gui.exe</entry>
+            <entry>%ESPATH%\..\Emulators\lime3ds\lime3ds-gui.exe</entry>
+            <entry>%ESPATH%\Emulators\lime-qt\lime-qt.exe</entry>
+            <entry>%ESPATH%\..\Emulators\lime-qt\lime-qt.exe</entry>
         </rule>
     </emulator>
     <emulator name="M2EMULATOR">
@@ -614,6 +637,13 @@
             <entry>%ESPATH%\..\Emulators\Vita3K\Vita3K.exe</entry>
         </rule>
     </emulator>
+    <emulator name="WINARCADIA">
+        <!-- Emerson Arcadia 2001 emulator WinArcadia -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\WinArcadia\WinArcadia.exe</entry>
+            <entry>%ESPATH%\..\Emulators\WinArcadia\WinArcadia.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="staticpath">
@@ -628,6 +658,13 @@
             <entry>%ESPATH%\..\Emulators\xenia\xenia.exe</entry>
             <entry>%ESPATH%\Emulators\xenia_canary\xenia_canary.exe</entry>
             <entry>%ESPATH%\..\Emulators\xenia_canary\xenia_canary.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="XM6PRO68K">
+        <!-- Sharp X68000 emulator XM6 Pro-68k -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\XM6 Pro-68k\XM6.exe</entry>
+            <entry>%ESPATH%\..\Emulators\XM6 Pro-68k\XM6.exe</entry>
         </rule>
     </emulator>
     <emulator name="XROAR">

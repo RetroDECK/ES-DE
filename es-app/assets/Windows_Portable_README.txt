@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.0.1
+3.0.3
 
 The latest version can be downloaded from https://es-de.org
 
@@ -42,6 +42,7 @@ Preconfigured emulator locations:
 Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
 Emulators\3dSen\3dSen.exe
+Emulators\AceDL\AceDL.exe
 Emulators\AdvanceMAME\advmame.exe
 Emulators\Altirra\Altirra64.exe
 Emulators\Altirra\Altirra.exe
@@ -55,6 +56,7 @@ Emulators\bsnes\bsnes.exe
 Emulators\cemu\Cemu.exe
 Emulators\Citra\canary-mingw\citra-qt.exe
 Emulators\Citra\nightly-mingw\citra-qt.exe
+Emulators\ColEm\ColEm.exe
 Emulators\cpcemu\cpcemu.exe
 Emulators\CSpect\CSpect.exe
 Emulators\Cxbx-Reloaded\cxbx.exe
@@ -80,6 +82,7 @@ Emulators\gopher2600\gopher2600_windows_amd64.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\KEmulator\KEmulator.exe
+Emulators\lime3ds\lime3ds-gui.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
 Emulators\mednafen\mednafen.exe
@@ -131,8 +134,10 @@ Emulators\VICE\bin\xvic.exe
 Emulators\VPinballX\VPinballX_GL64.exe
 Emulators\VPinballX\VPinballX64.exe
 Emulators\Vita3K\Vita3K.exe
+Emulators\WinArcadia\WinArcadia.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
 Emulators\xenia_canary\xenia_canary.exe
+Emulators\XM6 Pro-68k\XM6.exe
 Emulators\xroar\xroar.exe
 Emulators\ZEsarUX\zesarux.exe

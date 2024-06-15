@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiThemeDownloader.cpp
 //
 //  Theme downloader.
@@ -395,7 +395,9 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
         LOG(LogError) << "GuiThemeDownloader: " << runtimeError.what() << gitError->message;
         mRepositoryError = RepositoryError::FETCH_ERROR;
         mMessage = gitError->message;
+#if LIBGIT2_VER_MAJOR < 2 && LIBGIT2_VER_MINOR < 8
         git_error_clear();
+#endif
         git_remote_free(gitRemote);
         git_repository_free(repository);
         mPromise.set_value(true);
@@ -663,6 +665,9 @@ void GuiThemeDownloader::parseThemesList()
                 if (theme.HasMember("newEntry") && theme["newEntry"].IsBool())
                     themeEntry.newEntry = theme["newEntry"].GetBool();
 
+                if (theme.HasMember("deprecated") && theme["deprecated"].IsBool())
+                    themeEntry.deprecated = theme["deprecated"].GetBool();
+
                 if (theme.HasMember("variants") && theme["variants"].IsArray()) {
                     const rapidjson::Value& variants {theme["variants"]};
                     for (int i {0}; i < static_cast<int>(variants.Size()); ++i)
@@ -745,6 +750,11 @@ void GuiThemeDownloader::populateGUI()
         ComponentListRow row;
         std::shared_ptr<TextComponent> themeNameElement {std::make_shared<TextComponent>(
             themeName, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
+
+        if (theme.deprecated)
+            themeNameElement->setOpacity(0.4f);
+        else
+            themeNameElement->setOpacity(1.0f);
 
         ThemeGUIEntry guiEntry;
         guiEntry.themeName = themeNameElement;
@@ -907,11 +917,21 @@ void GuiThemeDownloader::updateGUI()
 void GuiThemeDownloader::updateInfoPane()
 {
     assert(static_cast<size_t>(mList->size()) == mThemes.size());
-    if (!mThemes[mList->getCursorId()].screenshots.empty())
+    if (!mThemes[mList->getCursorId()].screenshots.empty()) {
         mScreenshot->setImage(mThemeDirectory + "themes-list/" +
                               mThemes[mList->getCursorId()].screenshots.front().image);
-    else
+        if (mThemes[mList->getCursorId()].deprecated) {
+            mScreenshot->setSaturation(0.0f);
+            mScreenshot->setBrightness(-0.2f);
+        }
+        else {
+            mScreenshot->setSaturation(1.0f);
+            mScreenshot->setBrightness(0.0f);
+        }
+    }
+    else {
         mScreenshot->setImage("");
+    }
 
     if (mThemes[mList->getCursorId()].isCloned) {
         mDownloadStatus->setText(ViewController::TICKMARK_CHAR + " INSTALLED");
@@ -954,7 +974,11 @@ void GuiThemeDownloader::updateInfoPane()
     mColorSchemesCount->setText(std::to_string(mThemes[mList->getCursorId()].colorSchemes.size()));
     mAspectRatiosCount->setText(std::to_string(mThemes[mList->getCursorId()].aspectRatios.size()));
     mFontSizesCount->setText(std::to_string(mThemes[mList->getCursorId()].fontSizes.size()));
-    mAuthor->setText("CREATED BY " + Utils::String::toUpper(mThemes[mList->getCursorId()].author));
+    if (mThemes[mList->getCursorId()].deprecated)
+        mAuthor->setText("THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE");
+    else
+        mAuthor->setText("CREATED BY " +
+                         Utils::String::toUpper(mThemes[mList->getCursorId()].author));
 }
 
 void GuiThemeDownloader::setupFullscreenViewer()
@@ -1419,7 +1443,9 @@ bool GuiThemeDownloader::cloneRepository(const std::string& repositoryName, cons
                       << gitError->message << "\"";
         mRepositoryError = RepositoryError::CLONE_ERROR;
         mMessage = gitError->message;
+#if LIBGIT2_VER_MAJOR < 2 && LIBGIT2_VER_MINOR < 8
         git_error_clear();
+#endif
         mPromise.set_value(true);
         return true;
     }

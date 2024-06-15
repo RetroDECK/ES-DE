@@ -1,6 +1,6 @@
 ::  SPDX-License-Identifier: MIT
 ::
-::  ES-DE
+::  ES-DE Frontend
 ::  Windows_dependencies_build.bat
 ::
 ::  Builds the external dependencies in-tree using MSVC.

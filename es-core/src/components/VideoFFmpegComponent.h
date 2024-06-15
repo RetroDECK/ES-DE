@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  VideoFFmpegComponent.h
 //
 //  Video player based on FFmpeg.

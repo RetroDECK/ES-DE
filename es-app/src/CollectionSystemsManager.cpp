@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  CollectionSystemsManager.cpp
 //
 //  Manages collections of the following two types:
@@ -160,6 +160,8 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
         configFileIn.open(getCustomCollectionConfigPath(name));
 #endif
         for (std::string gameEntry; getline(configFileIn, gameEntry);) {
+            // Remove Windows carriage return characters.
+            gameEntry = Utils::String::replace(gameEntry, "\r", "");
             std::string gamePath {Utils::String::replace(gameEntry, "%ROMPATH%", rompath)};
             gamePath = Utils::String::replace(gamePath, "//", "/");
             // Only add the entry if it doesn't exist, i.e. only add missing files.
@@ -1064,6 +1066,8 @@ void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
             std::ifstream input {path};
 #endif
             for (std::string gameKey; getline(input, gameKey);) {
+                // Remove Windows carriage return characters.
+                gameKey = Utils::String::replace(gameKey, "\r", "");
                 if (gameKey == gamePath) {
                     setEditMode(it->first, false);
                     toggleGameInCollection(game);
@@ -1331,7 +1335,8 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
         // it's possible to use either absolute ROM paths in the collection files or using
         // the path variable. The absolute ROM paths are only used for backward compatibility
         // with old custom collections. All custom collections saved by ES-DE will use the
-        // %ROMPATH% variable instead.
+        // %ROMPATH% variable instead. Also remove Windows carriage return characters.
+        gameKey = Utils::String::replace(gameKey, "\r", "");
         gameKey = Utils::String::replace(gameKey, "%ROMPATH%", rompath);
         gameKey = Utils::String::replace(gameKey, "//", "/");
 

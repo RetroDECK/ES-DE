@@ -1,33 +1,133 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.1.0 (in development)
+## Version 3.0.3 / 3.0.3-26
 
-**Release date:** TBD
+**Release date:** 2024-06-14
 
 ### Release overview
 
-* Added the MAME 2003 RetroArch core as an alternative emulator for the arcade, cps, cps1, cps2, cps3 and mame systems
-* (Linux/Unix) Changed the application summary from "Emulator Frontend" to "Gaming Frontend"
-* Changed the application description to "ES-DE Frontend" for the -h/--help command line option
+This release enables a lot of new systems on Android which brings this platform much closer to the desktop ports as far as system support is concerned. It also brings experimental support for setting ES-DE as the Android home app. Outside of Android a number of new features have been added to the theme engine, ES-DE can now be built for KMS/direct framebuffer access on Linux and several new emulators have been added. A couple of bugs have been fixed as well, in addition to some other minor improvements.
 
 ### Detailed list of changes
+
+* (Android) Added experimental support for running ES-DE as the home app
+* (Android) The touch overlay is no longer reset by the onboarding configurator unless the "Begin setup" button was pressed
+* (Linux) Added a DEINIT_ON_LAUNCH CMake build flag to support KMS/direct framebuffer access
+* Added support for the new Lime3DS binary names on Linux, macOS and Windows
+* (Linux) Added support for the Flatpak release of Lime3DS
+* (Android) Added support for the Apple II (apple2) game system
+* (Android) Added support for the Apple IIGS (apple2gs) game system
+* (Android) Added support for the Emerson Arcadia 2001 (arcadia) game system
+* (Android) Added support for the Acorn Archimedes (archimedes) game system
+* (Android) Added support for the Bally Astrocade (astrocde) game system
+* (Android) Added support for the Acorn Computers BBC Micro (bbcmicro) game system
+* (Android) Added support for the Tandy Color Computer (coco) game system
+* (Android) Added support for the Console Arcade Systems (consolearcade) game system
+* (Android) Added support for the VTech CreatiVision (crvision) game system
+* (Android) Added support for the Acorn Electron (electron) game system
+* (Android) Added support for the Emulators (emulators) game system
+* (Android) Added support for the Fujitsu FM-7 (fm7) game system
+* (Android) Added support for the Fujitsu FM Towns (fmtowns) game system
+* (Android) Added support for the Bit Corporation Gamate (gamate) game system
+* (Android) Added support for the Tiger Electronics Game.com (gamecom) game system
+* (Android) Added support for the Hartung Game Master (gmaster) game system
+* (Android) Added support for the Apple Macintosh (macintosh) game system
+* (Android) Added support for the Tangerine Computer Systems Oric (oric) game system
+* (Android) Added support for the Casio PV-1000 (pv1000) game system
+* (Android) Added support for the Epoch Super Cassette Vision (scv) game system
+* (Android) Added support for the Funtech Super A'Can (supracan) game system
+* (Android) Added support for the Texas Instruments TI-99 (ti99) game system
+* (Android) Added support for the Visual Pinball (vpinball) game system
+* (Android) Added support for the VTech V.Smile (vsmile) game system
+* (Android) Added support for the Infocom Z-machine (zmachine) game system
+* (Android) Added MAME4droid 2024 standalone as the default emulator for the adam, daphne and laserdisc systems
+* (Android) Added MAME4droid 2024 standalone as an alternative emulator for the amstradcpc, atari7800, atarijaguar and cdimono1 systems
+* (Android) Added MAME4droid 2024 standalone as an alternative emulator for the channelf, gx4000, intellivision and megaduck systems
+* (Android) Added MAME4droid 2024 standalone as an alternative emulator for the model2, neogeocd, neogeocdjp and odyssey2 systems
+* (Android) Added MAME4droid 2024 standalone as an alternative emulator for the supervision, vectrex, videopac and x68000 systems
+* (Android) Added MAME4droid 2024 Local Artwork standalone as an alternative emulator for the gameandwatch and lcdgames systems
+* (Android) Added MAME4droid 2024 [Diskette] standalone and MAME4droid 2024 [Tape] standalone as alternative emulators for the x1 system
+* (Android) Defined explicit ROM paths for MAME4droid 2024 for the arcade, cps, cps1, cps2, cps3, mame, neogeo and stv systems
+* (Android) Added ScummVM standalone as an alternative emulator for the scummvm system
+* (Android) Added IrataJaguar standalone as an alternative emulator for the atarijaguar system
+* (Android) Added the melonDS RetroArch core as an alternative emulator for the nds system
+* Added the MojoZork RetroArch core as the default emulator for the zmachine system
+* Added MAME standalone as the default emulator for the oric system on Linux, macOS and Windows
+* Added MAME [Cartridge] standalone and MAME [Tape] standalone as alternative emulator entries for the coco system
+* Added ACE-DL standalone as an alternative emulator for the amstradcpc system on Linux, macOS and Windows
+* Added ColEm standalone as an alternative emulator for the adam and colecovision systems on Linux and Windows
+* (Windows) Added WinArcadia standalone as an alternative emulator for the arcadia system
+* (Windows) Added XM6 Pro-68k standalone as an alternative emulator for the x68000 system
+* (Linux) Added XM6 Pro-68k Wine and XM6 Pro-68k Proton as alternative emulators for the x68000 system
+* Added the "-gameio joy" option to the MAME and MAME standalone alternative emulator entries for the apple2 and apple2gs systems
+* Added the "-analogue acornjoy" option to the MAME standalone emulator entry for the bbcmicro system
+* Added the .elf, .tmd and .wuhb file extensions to the wiiu system on Linux, macOS and Windows
+* Added support for combining a %ROM% variable with the %INJECT% variable
+* (Android) Added %GAMEDIRRAW%, %ROMPATHRAW% and %ROMRAW% variables that can be used with the %EXTRA% and %EXTRAARRAY% variables
+* (linear-es-de) Added startup slide animations to the default transitions animation profile
+* (linear-es-de) Changed system to system transitions from fade to instant for the fade animation profile
+* Added a "selectedItemOffset" property to the carousel element
+* Added a "selectedBackgroundMargins" property to the textlist element
+* Added a "selectedBackgroundCornerRadius" property to the textlist element
+* Added a "backgroundMargins" property to the text element
+* Added a "backgroundCornerRadius" property to the text element
+* Added an "imageCropPos" property to the carousel element
+* Added an "imageCropPos" property to the grid element
+* Added a "cropPos" property to the image element
+* Added a "cropPos" property to the video element
+* SDL_HINT_APP_NAME is now explicitly set to "ES-DE" to display the correct name in the OS sound settings interface and similar
+* (macOS) Changed the minimum required OS version from 10.15 "Catalina" to 11 "Big Sur"
 
 ### Bug fixes
 
-## Version 3.0.1-xx (Android intermediate) (in development)
+* Adding trailing directory separators to the MediaDirectory setting could make the Orphaned data cleanup utility remove too many files
+* (Windows) Filenames containing multi-byte Unicode characters could not be used with the %INJECT% variable
+* The texture size was sometimes calculated incorrectly for the video element when using the cropSize property
+* Transition animations could sometimes partially play when switching themes with a system selected for the gamelist on startup setting
+* There could be minor textlist selector clipping issues if the selector had a text background color set
 
-**Release date:** TBD
+## Version 3.0.2 / 3.0.2-21
+
+**Release date:** 2024-05-13
+
+### Release overview
+
+This release improves scraping speed under some circumstances, adds experimental support on Android for launching native apps and games, adds support for a couple of new emulators and brings a number of additional minor improvements.
 
 ### Detailed list of changes
 
+* Improved multithreading for the network code which significantly increases scraping speed under some circumstances
+* (Android) Added experimental support for launching native apps and games
+* Added Lime3DS standalone as an alternative emulator for the n3ds system
+* (Linux) Added the native release of BigPEmu standalone as an alternative emulator for the atarijaguar system
+* (Linux) Added the native release of BigPEmu standalone as the default emulator for the atarijaguarcd system
+* Added the MAME 2003 RetroArch core as an alternative emulator for the arcade, cps, cps1, cps2, cps3 and mame systems
 * (Android) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Android) Changed from %ROMPROVIDER% to %ROMSAF% for MD.emu (only for megacd, megacdjp and segacd)
 * (Android) Added support for the Antutu build of Citra MMJ
-* Added the MAME 2003 RetroArch core as an alternative emulator for the arcade, cps, cps1, cps2, cps3 and mame systems
+* (Android) Added a "Back button/back swipe exits app" menu option
+* (Android) Increased the maximum waiting time for the storage mount retry loop from 4 to 4.5 seconds
+* Changed the supported file extensions for the cdtv system to be the same as for the amiga systems
+* Added the .car file extension to the atarixe system
+* The game media directory is now created on application startup instead of when first starting the scraper
+* (Linux/Unix) Changed the application summary from "Emulator Frontend" to "Gaming Frontend"
+* (Windows) Changed some log entries to use backslashes instead of forward slashes as directory separators
+* Windows carriage return characters are now filtered out when reading custom collection files and inject files
+* Changed the application description to "ES-DE Frontend" for the -h/--help command line option
+* Added support for marking themes as deprecated in the theme downloader
+* Added support for the androidapps and androidgames systems to the Linear, Modern and Slate themes
+* (modern-es-de) Converted all carousel icons from JPG to WebP format
+* Added a User-Agent string when making non-scraper HTTP requests
+* Added support for building against libgit2 v1.8.0 and later
+* Updated SDL to 2.30.2 on Android, Windows, macOS and the Linux AppImage builds
+* (Windows) Updated OpenSSL to 3.3.0
+* Updated the MAME index files to include ROMs up to MAME version 0.265
+* Bundled the March 2024 release of the Mozilla TLS/SSL certificates
 
 ### Bug fixes
 
 * On Android 10 the Orphaned data cleanup utility removed media files which should not have been removed
+* The application couldn't be built with an older SDL release than 2.0.14
 
 ## Version 3.0.1 / 3.0.1-19
 

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  AudioManager.cpp
 //
 //  Low-level audio functions (using SDL2).
@@ -113,6 +113,9 @@ void AudioManager::init()
 
 void AudioManager::deinit()
 {
+    if (sAudioDevice == 0)
+        return;
+
     SDL_LockAudioDevice(sAudioDevice);
     SDL_FreeAudioStream(sConversionStream);
     SDL_UnlockAudioDevice(sAudioDevice);
@@ -120,6 +123,7 @@ void AudioManager::deinit()
     SDL_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
+    sConversionStream = nullptr;
     sAudioDevice = 0;
 }
 
@@ -132,7 +136,7 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
     SDL_memset(stream, 0, len);
 
     // Iterate through all our samples.
-    std::vector<std::shared_ptr<Sound>>::const_iterator soundIt = sSoundVector.cbegin();
+    std::vector<std::shared_ptr<Sound>>::const_iterator soundIt {sSoundVector.cbegin()};
     while (soundIt != sSoundVector.cend()) {
         std::shared_ptr<Sound> sound {*soundIt};
         if (sound->isPlaying()) {

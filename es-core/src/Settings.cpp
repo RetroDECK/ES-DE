@@ -304,6 +304,9 @@ void Settings::setDefaults()
 #if defined(__unix__) && !defined(__ANDROID__)
     mBoolMap["DisableComposition"] = {false, false};
 #endif
+#if defined(__ANDROID__)
+    mBoolMap["BackEventAppExit"] = {true, true};
+#endif
     mBoolMap["DebugMode"] = {false, false};
     mBoolMap["DisplayGPUStatistics"] = {false, false};
     mBoolMap["EnableMenuKidMode"] = {false, false};

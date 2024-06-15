@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  FileData.cpp
 //
 //  Provides game file data structures and functions to access and sort this information.
@@ -10,6 +10,7 @@
 
 #include "FileData.h"
 
+#include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
@@ -968,6 +969,7 @@ void FileData::launchGame()
     size_t coreFilePos {0};
     bool foundCoreFile {false};
     std::vector<std::string> emulatorCorePaths;
+    bool isAndroidApp {false};
 
 #if defined(__ANDROID__)
     std::string androidPackage;
@@ -1085,8 +1087,79 @@ void FileData::launchGame()
     }
 
     // Check that the emulator actually exists, and if so, get its path.
-    const std::pair<std::string, FileData::findEmulatorResult> emulator {
-        findEmulator(command, false)};
+    std::pair<std::string, FileData::findEmulatorResult> emulator;
+
+#if defined(__ANDROID__)
+    // Native Android apps and games.
+    if (command.find("%ANDROIDAPP%=") != std::string::npos) {
+        std::string packageName;
+        size_t startPos {command.find("%ANDROIDAPP%=")};
+        size_t endPos {command.find(" ", startPos)};
+        if (endPos == std::string::npos)
+            endPos = command.length();
+
+        packageName = command.substr(startPos + 13, endPos - startPos - 13);
+        isAndroidApp = true;
+
+        if (packageName == "%FILEINJECT%") {
+            LOG(LogDebug) << "Injecting app info from file \"" + fileName + "\"";
+            std::string appString;
+            std::ifstream injectFileStream;
+
+            injectFileStream.open(romRaw);
+            for (std::string line; getline(injectFileStream, line);) {
+                // Remove Windows carriage return characters.
+                line = Utils::String::replace(line, "\r", "");
+                appString += line;
+                if (appString.size() > 4096)
+                    break;
+            }
+            injectFileStream.close();
+
+            if (appString.empty()) {
+                LOG(LogDebug) << "FileData::launchGame(): File empty or insufficient permissions, "
+                                 "nothing to inject";
+                packageName = "";
+            }
+            else if (appString.size() > 4096) {
+                LOG(LogWarning) << "FileData::launchGame(): Injection file exceeding maximum "
+                                   "allowed size of 4096 bytes, skipping \""
+                                << fileName << "\"";
+                packageName = "";
+            }
+            else {
+                packageName = appString;
+            }
+        }
+
+        if (packageName != "" && packageName != "%FILEINJECT%") {
+            LOG(LogInfo) << "Game entry is an Android app: " << packageName;
+
+            size_t separatorPos {packageName.find('/')};
+
+            if (separatorPos != std::string::npos) {
+                androidActivity = packageName.substr(separatorPos + 1);
+                packageName = packageName.substr(0, separatorPos);
+            }
+
+            if (Utils::Platform::Android::checkEmulatorInstalled(packageName, androidActivity)) {
+                emulator = std::make_pair(packageName,
+                                          FileData::findEmulatorResult::FOUND_ANDROID_PACKAGE);
+            }
+            else {
+                emulator = std::make_pair(packageName, FileData::findEmulatorResult::NOT_FOUND);
+            }
+        }
+        else {
+            emulator = std::make_pair(packageName, FileData::findEmulatorResult::NOT_FOUND);
+        }
+    }
+    else {
+        emulator = findEmulator(command, false);
+    }
+#else
+    emulator = findEmulator(command, false);
+#endif
 
     // Show an error message if there was no matching emulator entry in es_find_rules.xml.
     if (emulator.second == FileData::findEmulatorResult::NO_RULES) {
@@ -1102,7 +1175,12 @@ void FileData::launchGame()
         return;
     }
     else if (emulator.second == FileData::findEmulatorResult::NOT_FOUND) {
-        LOG(LogError) << "Couldn't launch game, emulator not found";
+        if (isAndroidApp) {
+            LOG(LogError) << "Couldn't launch app as it does not seem to be installed";
+        }
+        else {
+            LOG(LogError) << "Couldn't launch game, emulator not found";
+        }
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
@@ -1115,14 +1193,37 @@ void FileData::launchGame()
             if (endPos != std::string::npos)
                 emulatorName = command.substr(startPos + 10, endPos - startPos - 10);
         }
+#if defined(__ANDROID__)
+        else if ((startPos = command.find("%ANDROIDAPP%=")) != std::string::npos) {
+            endPos = command.find(" ", startPos);
+            if (endPos == std::string::npos)
+                endPos = command.length();
 
-        if (emulatorName == "")
-            window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?",
-                                   6000);
-        else
-            window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR '" + emulatorName +
-                                       "', HAS IT BEEN PROPERLY INSTALLED?",
-                                   6000);
+            emulatorName = command.substr(startPos + 13, endPos - startPos - 13);
+        }
+#endif
+        if (isAndroidApp) {
+            if (emulatorName == "" || emulatorName == "%FILEINJECT%") {
+                window->queueInfoPopup("ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?",
+                                       6000);
+            }
+            else {
+                window->queueInfoPopup("ERROR: COULDN'T FIND APP '" + emulatorName +
+                                           "', HAS IT BEEN PROPERLY INSTALLED?",
+                                       6000);
+            }
+        }
+        else {
+            if (emulatorName == "") {
+                window->queueInfoPopup(
+                    "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?", 6000);
+            }
+            else {
+                window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR '" + emulatorName +
+                                           "', HAS IT BEEN PROPERLY INSTALLED?",
+                                       6000);
+            }
+        }
 
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
@@ -1473,18 +1574,30 @@ void FileData::launchGame()
             injectFile = Utils::String::replace(injectFile, "\\", "/");
             injectFile = Utils::String::replace(injectFile, "%BASENAME%",
                                                 Utils::String::replace(baseName, "\"", ""));
-            if (injectFile.size() < 3 || !(injectFile[1] == ':' && injectFile[2] == '/'))
-                injectFile =
-                    Utils::FileSystem::getParent(Utils::String::replace(romPath, "\"", "")) + "/" +
-                    injectFile;
+            if (injectFile == "%ROM%") {
+                injectFile = Utils::String::replace(injectFile, "%ROM%",
+                                                    Utils::String::replace(romRaw, "\"", ""));
+            }
+            else {
+                if (injectFile.size() < 3 || !(injectFile[1] == ':' && injectFile[2] == '/'))
+                    injectFile =
+                        Utils::FileSystem::getParent(Utils::String::replace(romPath, "\"", "")) +
+                        "/" + injectFile;
+            }
             injectFile = Utils::String::replace(injectFile, "/", "\\");
 #else
             injectFile = Utils::String::replace(injectFile, "%BASENAME%",
                                                 Utils::String::replace(baseName, "\\", ""));
-            if (injectFile.front() != '/')
-                injectFile =
-                    Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")) + "/" +
-                    injectFile;
+            if (injectFile == "%ROM%") {
+                injectFile = Utils::String::replace(injectFile, "%ROM%",
+                                                    Utils::String::replace(romRaw, "\\", ""));
+            }
+            else {
+                if (injectFile.front() != '/')
+                    injectFile =
+                        Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")) +
+                        "/" + injectFile;
+            }
 #endif
             if (Utils::FileSystem::isRegularFile(injectFile) ||
                 Utils::FileSystem::isSymlink(injectFile)) {
@@ -1492,9 +1605,18 @@ void FileData::launchGame()
                               << "\"";
                 std::string arguments;
                 std::ifstream injectFileStream;
+#if defined(_WIN64)
+                injectFileStream.open(Utils::String::stringToWideString(injectFile));
+#else
                 injectFileStream.open(injectFile);
-                for (std::string line; getline(injectFileStream, line);)
+#endif
+                for (std::string line; getline(injectFileStream, line);) {
+                    // Remove Windows carriage return characters.
+                    line = Utils::String::replace(line, "\r", "");
                     arguments += line;
+                    if (arguments.size() > 4096)
+                        break;
+                }
                 injectFileStream.close();
 
                 if (arguments.empty()) {
@@ -1504,8 +1626,7 @@ void FileData::launchGame()
                 }
                 else if (arguments.size() > 4096) {
                     LOG(LogWarning) << "FileData::launchGame(): Injection file exceeding maximum "
-                                       "allowed size of "
-                                       "4096 bytes, skipping \""
+                                       "allowed size of 4096 bytes, skipping \""
                                     << injectFile << "\"";
                 }
                 else {
@@ -1634,6 +1755,10 @@ void FileData::launchGame()
                                      Utils::FileSystem::getEscapedPath(getROMDirectory()));
 #else
     command = Utils::String::replace(command, "%ANDROIDPACKAGE%", androidPackage);
+    // Escaped quotation marks should only be used for Extras on Android so it should be safe to
+    // just change them to temporary variables and convert them back to the escaped quotation
+    // marks when parsing the Extras.
+    command = Utils::String::replace(command, "\\\"", "%QUOTATION%");
 
     const std::vector<std::string> androidVariabels {
         "%ACTION%=", "%CATEGORY%=", "%MIMETYPE%=", "%DATA%="};
@@ -1741,6 +1866,21 @@ void FileData::launchGame()
                     }
 
                     if (extraName != "" && extraValue != "") {
+                        // Expand the unescaped game directory path and ROM directory as well as
+                        // the raw path to the game file if the corresponding variables have been
+                        // used in the Extra definition. We also change back any temporary quotation
+                        // mark variables to actual escaped quotation marks so they can be passed
+                        // in the Intent.
+                        extraValue = Utils::String::replace(extraValue, "%QUOTATION%", "\\\"");
+                        extraValue =
+                            Utils::String::replace(extraValue, "%GAMEDIRRAW%",
+                                                   Utils::FileSystem::getParent(
+                                                       Utils::String::replace(romPath, "\\", "")));
+                        extraValue =
+                            Utils::String::replace(extraValue, "%ROMPATHRAW%", getROMDirectory());
+                        extraValue = Utils::String::replace(extraValue, "%ROMRAW%", romRaw);
+                        extraValue = Utils::String::replace(extraValue, "//", "/");
+
                         if (variable == "%EXTRA_")
                             androidExtrasString[extraName] = extraValue;
                         else if (variable == "%EXTRAARRAY_")
@@ -1790,6 +1930,10 @@ void FileData::launchGame()
 
     // Trim any leading and trailing whitespace characters as they could cause launch issues.
     command = Utils::String::trim(command);
+
+#if defined(DEINIT_ON_LAUNCH)
+    runInBackground = false;
+#endif
 
     // swapBuffers() is called here to turn the screen black to eliminate some potential
     // flickering and to avoid showing the game launch message briefly when returning
@@ -1862,7 +2006,18 @@ void FileData::launchGame()
         androidData, mEnvData->mStartPath, romRaw, androidExtrasString, androidExtrasStringArray,
         androidExtrasBool, androidActivityFlags);
 #else
+
+#if defined(DEINIT_ON_LAUNCH)
+// Deinit both the AudioManager and the window which allows emulators to launch in KMS mode.
+AudioManager::getInstance().deinit();
+window->deinit();
+returnValue = Utils::Platform::launchGameUnix(command, startDirectory, false);
+AudioManager::getInstance().init();
+window->init();
+#else
 returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
+#endif
+
 #endif
     // Notify the user in case of a failed game launch using a popup window.
     if (returnValue != 0) {

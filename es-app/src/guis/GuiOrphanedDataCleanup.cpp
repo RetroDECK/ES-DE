@@ -22,7 +22,6 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     , mGrid {glm::ivec2 {4, 11}}
     , mReloadCallback {reloadCallback}
     , mCursorPos {0}
-    , mMediaDirectory {FileData::getMediaDirectory()}
     , mMediaTypes {"3dboxes",     "backcovers",   "covers",    "fanart",
                    "manuals",     "marquees",     "miximages", "physicalmedia",
                    "screenshots", "titlescreens", "videos"}
@@ -36,6 +35,23 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     , mCaseSensitiveFilesystem {true}
     , mCleanupType {CleanupType::MEDIA}
 {
+    // Make sure we always have a single trailing directory separator for the media directory.
+    mMediaDirectory = FileData::getMediaDirectory();
+    mMediaDirectory.erase(std::find_if(mMediaDirectory.rbegin(), mMediaDirectory.rend(),
+                                       [](char c) { return c != '/'; })
+                              .base(),
+                          mMediaDirectory.end());
+
+    mMediaDirectory.erase(std::find_if(mMediaDirectory.rbegin(), mMediaDirectory.rend(),
+                                       [](char c) { return c != '\\'; })
+                              .base(),
+                          mMediaDirectory.end());
+#if defined(_WIN64)
+    mMediaDirectory.append("\\");
+#else
+    mMediaDirectory.append("/");
+#endif
+
     addChild(&mBackground);
     addChild(&mGrid);
 

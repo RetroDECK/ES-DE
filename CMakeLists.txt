@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  CMakeLists.txt
 #
 #  Main CMake configuration file.
@@ -12,14 +12,14 @@ cmake_minimum_required(VERSION 3.13)
 if(APPLE)
     # Set this to the minimum supported macOS version, and also update
     # es-app/assets/ES-DE_Info.plist accordingly.
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15 CACHE STRING "macOS deployment target")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 11.0 CACHE STRING "macOS deployment target")
     # This optional variable is used for code signing the DMG installer.
     set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS code signing certificate identity")
 endif()
 project(es-de)
 
 # Application version, update this when making a new release.
-set(ES_VERSION 3.0.1)
+set(ES_VERSION 3.0.3)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
@@ -44,6 +44,7 @@ option(RPI "Set to ON to enable a Raspberry Pi specific build" OFF)
 option(BUNDLED_CERTS "Set to ON to use bundled TLS/SSL certificates" OFF)
 option(CEC "Set to ON to enable CEC" OFF)
 option(VIDEO_HW_DECODING "Set to ON to enable FFmpeg HW decoding" OFF)
+option(DEINIT_ON_LAUNCH "Set to ON to deinitialize on game launch" OFF)
 option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" OFF)
 option(ASAN "Set to ON to build with AddressSanitizer" OFF)
 option(TSAN "Set to ON to build with ThreadSanitizer" OFF)
@@ -355,6 +356,15 @@ endif()
 if(VIDEO_HW_DECODING)
     add_compile_definitions(VIDEO_HW_DECODING)
     message("-- Building with FFmpeg HW decoding")
+endif()
+
+if(DEINIT_ON_LAUNCH)
+    if(CMAKE_SYSTEM_NAME MATCHES Linux)
+        add_compile_definitions(DEINIT_ON_LAUNCH)
+        message("-- Building with deinitialization on game launch")
+    else()
+        message(FATAL_ERROR "-- Deinitialization on game launch can only be used on Linux")
+    endif()
 endif()
 
 if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI)

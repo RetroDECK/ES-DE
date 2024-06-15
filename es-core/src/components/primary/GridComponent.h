@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GridComponent.h
 //
 //  Grid, usable in both the system and gamelist views.
@@ -161,6 +161,7 @@ private:
     bool mHasUnfocusedItemSaturation;
     float mUnfocusedItemDimming;
     ImageFit mImagefit;
+    glm::vec2 mImageCropPos;
     bool mImageLinearInterpolation;
     float mImageRelativeScale;
     float mImageCornerRadius;
@@ -239,6 +240,7 @@ GridComponent<T>::GridComponent()
     , mHasUnfocusedItemSaturation {false}
     , mUnfocusedItemDimming {1.0f}
     , mImagefit {ImageFit::CONTAIN}
+    , mImageCropPos {0.5f, 0.5f}
     , mImageLinearInterpolation {true}
     , mImageRelativeScale {1.0f}
     , mImageCornerRadius {0.0f}
@@ -304,12 +306,16 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
         auto item = std::make_shared<ImageComponent>(false, dynamic);
         item->setLinearInterpolation(mImageLinearInterpolation);
         item->setMipmapping(true);
-        if (mImagefit == ImageFit::CONTAIN)
+        if (mImagefit == ImageFit::CONTAIN) {
             item->setMaxSize(glm::round(mItemSize * mImageRelativeScale));
-        else if (mImagefit == ImageFit::FILL)
+        }
+        else if (mImagefit == ImageFit::FILL) {
             item->setResize(glm::round(mItemSize * mImageRelativeScale));
-        else if (mImagefit == ImageFit::COVER)
+        }
+        else if (mImagefit == ImageFit::COVER) {
+            item->setCropPos(mImageCropPos);
             item->setCroppedSize(glm::round(mItemSize * mImageRelativeScale));
+        }
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         if (mImageBrightness != 0.0)
@@ -336,12 +342,16 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             mDefaultImage = std::make_shared<ImageComponent>(false, dynamic);
             mDefaultImage->setLinearInterpolation(mImageLinearInterpolation);
             mDefaultImage->setMipmapping(true);
-            if (mImagefit == ImageFit::CONTAIN)
+            if (mImagefit == ImageFit::CONTAIN) {
                 mDefaultImage->setMaxSize(glm::round(mItemSize * mImageRelativeScale));
-            else if (mImagefit == ImageFit::FILL)
+            }
+            else if (mImagefit == ImageFit::FILL) {
                 mDefaultImage->setResize(glm::round(mItemSize * mImageRelativeScale));
-            else if (mImagefit == ImageFit::COVER)
+            }
+            else if (mImagefit == ImageFit::COVER) {
+                mDefaultImage->setCropPos(mImageCropPos);
                 mDefaultImage->setCroppedSize(glm::round(mItemSize * mImageRelativeScale));
+            }
             mDefaultImage->setCornerRadius(mImageCornerRadius);
             mDefaultImage->setImage(entry.data.defaultImagePath);
             if (mImageBrightness != 0.0)
@@ -393,12 +403,16 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(mImageLinearInterpolation);
         item->setMipmapping(true);
-        if (mImagefit == ImageFit::CONTAIN)
+        if (mImagefit == ImageFit::CONTAIN) {
             item->setMaxSize(glm::round(mItemSize * mImageRelativeScale));
-        else if (mImagefit == ImageFit::FILL)
+        }
+        else if (mImagefit == ImageFit::FILL) {
             item->setResize(glm::round(mItemSize * mImageRelativeScale));
-        else if (mImagefit == ImageFit::COVER)
+        }
+        else if (mImagefit == ImageFit::COVER) {
+            item->setCropPos(mImageCropPos);
             item->setCroppedSize(glm::round(mItemSize * mImageRelativeScale));
+        }
         item->setCornerRadius(mImageCornerRadius);
         item->setImage(entry.data.imagePath);
         if (mImageBrightness != 0.0)
@@ -1042,6 +1056,8 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else if (imageFit == "cover") {
             mImagefit = ImageFit::COVER;
+            if (elem->has("imageCropPos"))
+                mImageCropPos = glm::clamp(elem->get<glm::vec2>("imageCropPos"), 0.0f, 1.0f);
         }
         else {
             mImagefit = ImageFit::CONTAIN;

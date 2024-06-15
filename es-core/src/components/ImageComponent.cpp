@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ImageComponent.cpp
 //
 //  Handles images: loading, resizing, cropping, color shifting etc.
@@ -23,6 +23,8 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mFlipY {false}
     , mTargetIsMax {false}
     , mTargetIsCrop {false}
+    , mCropPos {0.5f, 0.5f}
+    , mCropOffset {0.0f, 0.0f}
     , mTileWidth {0.0f}
     , mTileHeight {0.0f}
     , mColorShift {0xFFFFFFFF}
@@ -231,18 +233,27 @@ void ImageComponent::coverFitCrop()
 
     mTopLeftCrop = {0.0f, 0.0f};
     mBottomRightCrop = {1.0f, 1.0f};
+    mCropOffset = {0.0f, 0.0f};
 
     if (std::round(mSize.y) > std::round(mTargetSize.y)) {
         const float cropSize {1.0f - (std::round(mTargetSize.y) / std::round(mSize.y))};
         cropTop(cropSize / 2.0f);
         cropBottom(cropSize / 2.0f);
         mSize.y = mSize.y - (mSize.y * cropSize);
+        if (mCropPos.y != 0.5f) {
+            const float cropPosY {mCropPos.y + 0.5f};
+            mCropOffset.y = (cropSize * cropPosY) - cropSize;
+        }
     }
     else {
         const float cropSize {1.0f - (std::round(mTargetSize.x) / std::round(mSize.x))};
         cropLeft(cropSize / 2.0f);
         cropRight(cropSize / 2.0f);
         mSize.x = mSize.x - (mSize.x * cropSize);
+        if (mCropPos.x != 0.5f) {
+            const float cropPosX {mCropPos.x + 0.5f};
+            mCropOffset.x = (cropSize * cropPosX) - cropSize;
+        }
     }
 }
 
@@ -537,6 +548,8 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             glm::vec2 imageCropSize {elem->get<glm::vec2>("cropSize")};
             imageCropSize.x = glm::clamp(imageCropSize.x, 0.001f, 3.0f);
             imageCropSize.y = glm::clamp(imageCropSize.y, 0.001f, 3.0f);
+            if (elem->has("cropPos"))
+                mCropPos = glm::clamp(elem->get<glm::vec2>("cropPos"), 0.0f, 1.0f);
             setCroppedSize(imageCropSize * scale);
         }
     }
@@ -840,10 +853,10 @@ void ImageComponent::updateVertices()
 
     if (mTileHeight == 0.0f) {
         // clang-format off
-        mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
-        mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
-        mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
-        mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
+        mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x + mCropOffset.x,            py   - mTopLeftCrop.y - mCropOffset.y    }, 0};
+        mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x + mCropOffset.x,            1.0f - mBottomRightCrop.y - mCropOffset.y}, 0};
+        mVertices[2] = {{bottomRight.x, topLeft.y    }, {(mBottomRightCrop.x * px) + mCropOffset.x, py   - mTopLeftCrop.y - mCropOffset.y    }, 0};
+        mVertices[3] = {{bottomRight.x, bottomRight.y}, {(mBottomRightCrop.x * px) + mCropOffset.x, 1.0f - mBottomRightCrop.y - mCropOffset.y}, 0};
         // clang-format on
     }
     else {

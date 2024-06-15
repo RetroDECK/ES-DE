@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0258.xml -->
+<!-- Last updated with information from MAME driver file mame0265.xml -->
 <bios>3dobios</bios>
 <bios>airlbios</bios>
 <bios>aleck64</bios>
@@ -8,6 +8,7 @@
 <bios>ar_bios</bios>
 <bios>aristmk5</bios>
 <bios>aristmk6</bios>
+<bios>aristmk7</bios>
 <bios>atarisy1</bios>
 <bios>atluspsx</bios>
 <bios>atpsx</bios>

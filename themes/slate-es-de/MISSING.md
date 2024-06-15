@@ -4,6 +4,8 @@
 * amigacd32: Amiga CD32 - consolegame.svg, controller.svg
 * amstradcpc - Amstrad CPC - controller.svg
 * android: Google Android - consolegame.svg, controller.svg
+* androidapps: Android Apps - consolegame.svg, controller.svg
+* androidgames: Android Games - consolegame.svg, controller.svg
 * apple2gs: Apple IIGS - consolegame.svg, controller.svg
 * arcadia: Emerson Arcadia 2001 - consolegame.svg, controller.svg
 * archimedes: Acorn Archimedes - consolegame.svg, controller.svg

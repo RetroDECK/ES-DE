@@ -1,6 +1,6 @@
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  CMakeLists.txt (es-app)
 #
 #  CMake configuration for es-app
@@ -11,7 +11,6 @@ project(es-de)
 
 set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationUpdater.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationVersion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h
@@ -162,9 +161,9 @@ if(WIN32)
                   ../freetype.dll
                   ../git2.dll
                   ../glew32.dll
-                  ../libcrypto-1_1-x64.dll
+                  ../libcrypto-3-x64.dll
                   ../libcurl-x64.dll
-                  ../libssl-1_1-x64.dll
+                  ../libssl-3-x64.dll
                   ../lunasvg.dll
                   ../pugixml.dll
                   ../rlottie.dll

@@ -1,6 +1,6 @@
 ::  SPDX-License-Identifier: MIT
 ::
-::  ES-DE
+::  ES-DE Frontend
 ::  Windows_dependencies_setup.bat
 ::
 ::  Downloads and prepares the external dependencies for building in-tree using MSVC.
@@ -230,29 +230,29 @@ cd ..
 echo:
 echo Setting up SDL
 
-if exist SDL2-2.30.1\ (
-  rmdir /S /Q SDL2-2.30.1
+if exist SDL2-2.30.2\ (
+  rmdir /S /Q SDL2-2.30.2
 )
 
 if exist SDL2\ (
   rmdir /S /Q SDL2
 )
 
-if exist SDL2-devel-2.30.1-VC.zip (
-  del SDL2-devel-2.30.1-VC.zip
+if exist SDL2-devel-2.30.2-VC.zip (
+  del SDL2-devel-2.30.2-VC.zip
 )
 
-curl -LO https://libsdl.org/release/SDL2-devel-2.30.1-VC.zip
+curl -LO https://libsdl.org/release/SDL2-devel-2.30.2-VC.zip
 
-7z x SDL2-devel-2.30.1-VC.zip
+7z x SDL2-devel-2.30.2-VC.zip
 
-if not exist SDL2-2.30.1\ (
+if not exist SDL2-2.30.2\ (
   echo SDL directory is missing, aborting.
   cd ..
   goto end
 )
 
-rename SDL2-2.30.1 SDL2
+rename SDL2-2.30.2 SDL2
 
 cd SDL2
 rename include SDL2
@@ -309,18 +309,18 @@ if exist fWin64OpenSSL_Light-1_1_1m.exe (
   del Win64OpenSSL_Light-1_1_1m.exe
 )
 
-if not exist "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll" (
-  curl -O https://slproweb.com/download/Win64OpenSSL_Light-1_1_1m.exe
+if not exist "C:\Program Files\OpenSSL-Win64\libcrypto-3-x64.dll" (
+  curl -O https://slproweb.com/download/Win64OpenSSL_Light-3_3_0.exe
   :: Run the installer.
-  .\Win64OpenSSL_Light-1_1_1m.exe
+  .\Win64OpenSSL_Light-3_3_0.exe
 )
 
 :: Return to the root of the repository.
 cd ..
 
-if exist "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll" (
-  copy /Y "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll"
-  copy /Y "C:\Program Files\OpenSSL-Win64\libssl-1_1-x64.dll"
+if exist "C:\Program Files\OpenSSL-Win64\libcrypto-3-x64.dll" (
+  copy /Y "C:\Program Files\OpenSSL-Win64\libcrypto-3-x64.dll"
+  copy /Y "C:\Program Files\OpenSSL-Win64\libssl-3-x64.dll"
 )
 
 echo:

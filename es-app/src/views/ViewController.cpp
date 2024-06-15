@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ViewController.cpp
 //
 //  Handles overall system navigation including animations and transitions.
@@ -139,11 +139,22 @@ void ViewController::setMenuColors()
 
 void ViewController::legacyAppDataDialog()
 {
-    const std::string upgradeMessage {
+    const std::string upgradeMessage
+    {
         "AS OF ES-DE 3.0 THE APPLICATION DATA DIRECTORY HAS CHANGED FROM \".emulationstation\" "
         "to \"ES-DE\"\nPLEASE RENAME YOUR CURRENT DATA DIRECTORY:\n" +
-        Utils::FileSystem::getAppDataDirectory() + "\nTO THE FOLLOWING:\n" +
-        Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()) + "/ES-DE"};
+#if defined(_WIN64)
+            Utils::String::replace(Utils::FileSystem::getAppDataDirectory(), "/", "\\") +
+            "\nTO THE FOLLOWING:\n" +
+            Utils::String::replace(
+                Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()), "/", "\\") +
+            "\\ES-DE"
+    };
+#else
+            Utils::FileSystem::getAppDataDirectory() + "\nTO THE FOLLOWING:\n" +
+            Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()) + "/ES-DE"
+    };
+#endif
 
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
@@ -317,7 +328,12 @@ void ViewController::updateAvailableDialog()
                              0.535f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
-            "CANCEL", [] { return; }, "", nullptr, nullptr, true, true,
+            "CANCEL",
+            [] {
+                HttpReq::cleanupCurlMulti();
+                return;
+            },
+            "", nullptr, nullptr, true, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.70f :
                  0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));

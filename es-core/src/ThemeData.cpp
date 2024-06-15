@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ThemeData.cpp
 //
 //  Finds available themes on the file system and loads and parses these.
@@ -127,6 +127,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemsAfterCenter", UNSIGNED_INTEGER},
        {"itemStacking", STRING},
        {"selectedItemMargins", NORMALIZED_PAIR},
+       {"selectedItemOffset", NORMALIZED_PAIR},
        {"itemSize", NORMALIZED_PAIR},
        {"itemScale", FLOAT},
        {"itemRotation", FLOAT},
@@ -134,6 +135,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemAxisHorizontal", BOOLEAN},
        {"itemAxisRotation", FLOAT},
        {"imageFit", STRING},
+       {"imageCropPos", NORMALIZED_PAIR},
        {"imageInterpolation", STRING},
        {"imageCornerRadius", FLOAT},
        {"imageColor", COLOR},
@@ -201,6 +203,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"unfocusedItemSaturation", FLOAT},
        {"unfocusedItemDimming", FLOAT},
        {"imageFit", STRING},
+       {"imageCropPos", NORMALIZED_PAIR},
        {"imageInterpolation", STRING},
        {"imageRelativeScale", FLOAT},
        {"imageCornerRadius", FLOAT},
@@ -264,6 +267,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"selectedSecondaryColor", COLOR},
        {"selectedBackgroundColor", COLOR},
        {"selectedSecondaryBackgroundColor", COLOR},
+       {"selectedBackgroundMargins", NORMALIZED_PAIR},
+       {"selectedBackgroundCornerRadius", FLOAT},
        {"textHorizontalScrolling", BOOLEAN},
        {"textHorizontalScrollSpeed", FLOAT},
        {"textHorizontalScrollDelay", FLOAT},
@@ -285,8 +290,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
      {"image",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
-       {"cropSize", NORMALIZED_PAIR},
        {"maxSize", NORMALIZED_PAIR},
+       {"cropSize", NORMALIZED_PAIR},
+       {"cropPos", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
@@ -319,8 +325,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
      {"video",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
-       {"cropSize", NORMALIZED_PAIR},
        {"maxSize", NORMALIZED_PAIR},
+       {"cropSize", NORMALIZED_PAIR},
+       {"cropPos", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
@@ -437,6 +444,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"verticalAlignment", STRING},
        {"color", COLOR},
        {"backgroundColor", COLOR},
+       {"backgroundMargins", NORMALIZED_PAIR},
+       {"backgroundCornerRadius", FLOAT},
        {"letterCase", STRING},
        {"lineSpacing", FLOAT},
        {"opacity", FLOAT},

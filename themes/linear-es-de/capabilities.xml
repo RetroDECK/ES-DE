@@ -70,6 +70,8 @@
         <systemToGamelist>slide</systemToGamelist>
         <gamelistToGamelist>instant</gamelistToGamelist>
         <gamelistToSystem>slide</gamelistToSystem>
+        <startupToSystem>slide</startupToSystem>
+        <startupToGamelist>slide</startupToGamelist>
     </transitions>
 
     <transitions name="instant">
@@ -86,7 +88,7 @@
     <transitions name="fade">
         <label>fade</label>
         <selectable>true</selectable>
-        <systemToSystem>fade</systemToSystem>
+        <systemToSystem>instant</systemToSystem>
         <systemToGamelist>fade</systemToGamelist>
         <gamelistToGamelist>fade</gamelistToGamelist>
         <gamelistToSystem>fade</gamelistToSystem>

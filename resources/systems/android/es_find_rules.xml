@@ -6,7 +6,7 @@
             <!-- 64-bit and 32-bit releases from the retroarch.com website -->
             <entry>com.retroarch.aarch64/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
             <entry>com.retroarch.ra32/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
-            <!-- Amazon Appstore and Google Play releases -->
+            <!-- Samsung Galaxy Store, Amazon Appstore and Google Play releases -->
             <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
         </rule>
     </emulator>
@@ -71,6 +71,12 @@
         <!-- Dolphin MMJR2, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="androidpackage">
             <entry>org.dolphinemu.mmjr/org.dolphinemu.dolphinemu.ui.main.MainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="DROIDARCADIA">
+        <!-- Emerson Arcadia 2001 emulator DroidArcadia -->
+        <rule type="androidpackage">
+            <entry>com.amigan.droidarcadia/.MainActivity</entry>
         </rule>
     </emulator>
     <emulator name="DRASTIC">
@@ -138,6 +144,18 @@
         <!-- Nintendo NES and Famicom emulator iNES -->
         <rule type="androidpackage">
             <entry>com.fms.ines.free/com.fms.emulib.TVActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="IRATAJAGUAR">
+        <!-- Atari Jaguar emulator IrataJaguar -->
+        <rule type="androidpackage">
+            <entry>ru.vastness.altmer.iratajaguar/.EmulatorActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="LIME3DS">
+        <!-- Nintendo 3DS emulator Lime3DS -->
+        <rule type="androidpackage">
+            <entry>io.github.lime3ds.android/.activities.EmulationActivity</entry>
         </rule>
     </emulator>
     <emulator name="LYNX-EMU">
@@ -307,6 +325,13 @@
             <entry>com.explusalpha.SaturnEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SCUMMVM">
+        <!-- ScummVM game engine -->
+        <rule type="androidpackage">
+            <entry>org.scummvm.scummvm.debug/org.scummvm.scummvm.SplashActivity</entry>
+            <entry>org.scummvm.scummvm/org.scummvm.scummvm.SplashActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SKYLINE">
         <!-- Nintendo Switch emulator Skyline -->
         <rule type="androidpackage">
@@ -330,6 +355,12 @@
         <!-- Bandai WonderSwan emulator Swan.emu -->
         <rule type="androidpackage">
             <entry>com.explusalpha.SwanEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="VISUAL-PINBALL">
+        <!-- Pinball simulator Visual Pinball -->
+        <rule type="androidpackage">
+            <entry>org.vpinball.app/.VpxLauncherActivity</entry>
         </rule>
     </emulator>
     <emulator name="VITA3K">

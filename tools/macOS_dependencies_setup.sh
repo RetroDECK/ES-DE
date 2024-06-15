@@ -1,7 +1,7 @@
 #!/bin/sh
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  macOS_dependencies_setup.sh
 #
 #  Downloads and prepares the external dependencies for building in-tree.
@@ -280,7 +280,7 @@ if [ ! -d SDL ]; then
 fi
 
 cd SDL
-git checkout release-2.30.1
+git checkout release-2.30.2
 ln -s include SDL2
 mkdir build
 cd ..

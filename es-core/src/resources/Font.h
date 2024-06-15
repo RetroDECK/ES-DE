@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.

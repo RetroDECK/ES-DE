@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #  SPDX-License-Identifier: MIT
 #
-#  ES-DE
+#  ES-DE Frontend
 #  create_AppImage_SteamDeck.sh
 #
 #  Runs the complete process of building a Linux AppImage specific to the Valve Steam Deck.
@@ -13,8 +13,8 @@
 # How many CPU threads to use for the compilation.
 JOBS=4
 
-SDL_RELEASE_TAG=release-2.30.1
-SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.3000.1
+SDL_RELEASE_TAG=release-2.30.2
+SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.3000.2
 
 echo "Building Steam Deck AppImage..."
 

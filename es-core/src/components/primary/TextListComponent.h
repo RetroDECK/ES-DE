@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  TextListComponent.h
 //
 //  Text list, usable in both the system and gamelist views.
@@ -137,6 +137,8 @@ private:
     unsigned int mSelectedSecondaryColor;
     unsigned int mSelectedBackgroundColor;
     unsigned int mSelectedSecondaryBackgroundColor;
+    glm::vec2 mSelectedBackgroundMargins;
+    float mSelectedBackgroundCornerRadius;
     bool mHorizontalScrolling;
     float mHorizontalScrollSpeed;
     float mHorizontalScrollDelay;
@@ -176,6 +178,8 @@ TextListComponent<T>::TextListComponent()
     , mSelectedSecondaryColor {0x00FF00FF}
     , mSelectedBackgroundColor {0x00000000}
     , mSelectedSecondaryBackgroundColor {0x00000000}
+    , mSelectedBackgroundMargins {0.0f, 0.0f}
+    , mSelectedBackgroundCornerRadius {0.0f}
     , mHorizontalScrolling {true}
     , mHorizontalScrollSpeed {1.0f}
     , mHorizontalScrollDelay {3000.0f}
@@ -349,10 +353,19 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
+    float horizontalOffset {0.0f};
+    if (mAlignment == PrimaryAlignment::ALIGN_LEFT && mSelectorHorizontalOffset < 0.0f)
+        horizontalOffset = mSelectorHorizontalOffset;
+    else if (mAlignment == PrimaryAlignment::ALIGN_RIGHT && mSelectorHorizontalOffset > 0.0f)
+        horizontalOffset = mSelectorHorizontalOffset;
+
     mRenderer->pushClipRect(
-        glm::ivec2 {static_cast<int>(std::round(trans[3].x + mHorizontalMargin)),
+        glm::ivec2 {static_cast<int>(std::round(trans[3].x + horizontalOffset + mHorizontalMargin +
+                                                -mSelectedBackgroundMargins.x)),
                     static_cast<int>(std::round(trans[3].y))},
-        glm::ivec2 {static_cast<int>(std::round(dim.x - mHorizontalMargin * 2.0f)),
+        glm::ivec2 {static_cast<int>(std::round((dim.x - mHorizontalMargin * 2.0f) +
+                                                mSelectedBackgroundMargins.x +
+                                                mSelectedBackgroundMargins.y)),
                     static_cast<int>(std::round(dim.y))});
 
     for (int i {startEntry}; i < listCutoff; ++i) {
@@ -409,9 +422,27 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         mRenderer->setMatrix(drawTrans);
 
         if (i == mCursor && backgroundColor != 0x00000000) {
-            mRenderer->drawRect(mSelectorHorizontalOffset, mSelectorVerticalOffset,
-                                entry.data.entryName->getSize().x, mSelectorHeight, backgroundColor,
-                                backgroundColor);
+            if (mSelectorHorizontalOffset != 0.0f || mSelectedBackgroundMargins.x != 0.0f) {
+                drawTrans = glm::translate(
+                    drawTrans, glm::vec3 {mSelectorHorizontalOffset - mSelectedBackgroundMargins.x,
+                                          0.0f, 0.0f});
+                mRenderer->setMatrix(drawTrans);
+            }
+
+            mRenderer->drawRect(0.0f, mSelectorVerticalOffset,
+                                entry.data.entryName->getSize().x + mSelectedBackgroundMargins.x +
+                                    mSelectedBackgroundMargins.y,
+                                mSelectorHeight, backgroundColor, backgroundColor, false, 1.0f,
+                                1.0f, Renderer::BlendFactor::SRC_ALPHA,
+                                Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA,
+                                mSelectedBackgroundCornerRadius);
+
+            if (mSelectorHorizontalOffset != 0.0f || mSelectedBackgroundMargins.x != 0.0f) {
+                drawTrans = glm::translate(
+                    drawTrans, glm::vec3 {-mSelectorHorizontalOffset + mSelectedBackgroundMargins.x,
+                                          0.0f, 0.0f});
+                mRenderer->setMatrix(drawTrans);
+            }
         }
 
         entry.data.entryName->render(drawTrans);
@@ -485,6 +516,18 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 elem->get<unsigned int>("selectedSecondaryBackgroundColor");
         else
             mSelectedSecondaryBackgroundColor = mSelectedBackgroundColor;
+    }
+
+    if (elem->has("selectedBackgroundMargins")) {
+        const glm::vec2 selectedBackgroundMargins {
+            glm::clamp(elem->get<glm::vec2>("selectedBackgroundMargins"), 0.0f, 0.5f)};
+        mSelectedBackgroundMargins = selectedBackgroundMargins * Renderer::getScreenWidth();
+    }
+
+    if (elem->has("selectedBackgroundCornerRadius")) {
+        mSelectedBackgroundCornerRadius =
+            glm::clamp(elem->get<float>("selectedBackgroundCornerRadius"), 0.0f, 0.5f) *
+            mRenderer->getScreenWidth();
     }
 
     if (elem->has("textHorizontalScrolling"))

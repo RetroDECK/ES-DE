@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  InputManager.cpp
 //
 //  Low-level input handling.
@@ -26,6 +26,7 @@
 
 #if defined(__ANDROID__)
 #define TOUCH_GUID_STRING "-3"
+#include "utils/PlatformUtilAndroid.h"
 #endif
 
 namespace
@@ -477,8 +478,11 @@ bool InputManager::parseEvent(const SDL_Event& event)
                 return false;
 
 #if defined(__ANDROID__)
-            // Quit application if the back button is pressed.
-            if (event.key.keysym.sym == SDLK_AC_BACK) {
+            // Quit application if the back button is pressed or if the back gesture is used,
+            // unless we're set as the Android home app.
+            if (event.key.keysym.sym == SDLK_AC_BACK &&
+                Settings::getInstance()->getBool("BackEventAppExit") &&
+                !AndroidVariables::sIsHomeApp) {
                 SDL_Event quit {};
                 quit.type = SDL_QUIT;
                 SDL_PushEvent(&quit);
@@ -492,7 +496,7 @@ bool InputManager::parseEvent(const SDL_Event& event)
 #if defined(__APPLE__)
             if (quitShortcut != "CmdQ") {
 #elif defined(__ANDROID__)
-            if (true) {
+            if (!AndroidVariables::sIsHomeApp) {
 #else
             if (quitShortcut != "AltF4") {
 #endif
@@ -792,9 +796,15 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
         std::make_unique<InputConfig>(joyID, SDL_GameControllerName(mControllers[joyID]), guid);
 
     bool customConfig {loadInputConfig(mInputConfigs[joyID].get())};
+
+#if SDL_MAJOR_VERSION > 2 || (SDL_MAJOR_VERSION == 2 && SDL_MINOR_VERSION > 0) ||                  \
+    (SDL_MAJOR_VERSION == 2 && SDL_MINOR_VERSION == 0 && SDL_PATCHLEVEL >= 14)
     const std::string serialNumber {SDL_GameControllerGetSerial(controller) == nullptr ?
                                         "" :
                                         SDL_GameControllerGetSerial(controller)};
+#else
+    const std::string serialNumber;
+#endif
 
     if (customConfig) {
         LOG(LogInfo) << "Added controller with custom configuration: \""
@@ -844,9 +854,14 @@ void InputManager::removeControllerByJoystickID(Window* window, SDL_JoystickID j
         return;
     }
 
+#if SDL_MAJOR_VERSION > 2 || (SDL_MAJOR_VERSION == 2 && SDL_MINOR_VERSION > 0) ||                  \
+    (SDL_MAJOR_VERSION == 2 && SDL_MINOR_VERSION == 0 && SDL_PATCHLEVEL >= 14)
     const std::string serialNumber {SDL_GameControllerGetSerial(mControllers[joyID]) == nullptr ?
                                         "" :
                                         SDL_GameControllerGetSerial(mControllers[joyID])};
+#else
+    const std::string serialNumber;
+#endif
 
     LOG(LogInfo) << "Removed controller \"" << SDL_GameControllerName(mControllers[joyID])
                  << "\" (GUID: " << guid

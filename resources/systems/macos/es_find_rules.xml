@@ -21,6 +21,12 @@
             <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
         </rule>
     </core>
+    <emulator name="ACE-DL">
+        <!-- Amstrad CPC emulator ACE-DL -->
+        <rule type="staticpath">
+            <entry>/Applications/AceDL.app/Contents/MacOS/AceDL</entry>
+        </rule>
+    </emulator>
     <emulator name="AETHERSX2">
         <!-- Sony PlayStation 2 emulator AetherSX2 -->
         <rule type="staticpath">
@@ -158,6 +164,13 @@
         <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
         <rule type="systempath">
             <entry>hypseus.bin</entry>
+        </rule>
+    </emulator>
+    <emulator name="LIME3DS">
+        <!-- Nintendo 3DS emulator Lime3DS -->
+        <rule type="staticpath">
+            <entry>/Applications/lime3ds-gui.app/Contents/MacOS/lime3ds-gui</entry>
+            <entry>/Applications/lime-qt.app/Contents/MacOS/lime-qt</entry>
         </rule>
     </emulator>
     <emulator name="MAME">

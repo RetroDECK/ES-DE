@@ -53,8 +53,10 @@ sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 libg
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
+sudo apt-get install clang-format cmake libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
 ```
+
+For a 64-bit build it's very important that you include libraspberrypi-dev because if this package is not installed then the file /usr/include/bcm_host.h is not present on the filesystem. This leads to CMake not detecting that it's indeed a Raspberry Pi and it will attempt to make a regular Linux build instead.
 
 To build with CEC support you also need to install these packages:
 ```
@@ -63,7 +65,7 @@ sudo apt-get install libcec-dev libp8-platform-dev
 
 The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible.
 
-Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required. Likewise a display server (Xorg or Wayland) is required, direct framebuffer access is not supported.
+Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required. By default a display server (Xorg or Wayland) is also required but by using the DEINIT_ON_LAUNCH build option as explained later in this document KMS/direct framebuffer access can be used.
 
 Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by default.
 
@@ -130,6 +132,14 @@ make
 ```
 
 Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or BSD Unix.
+
+On Linux specifically you can build with the DEINIT_ON_LAUNCH option which will deinit the renderer, application window and audio when an emulator is launched. This makes it possible to use ES-DE with KMS/direct framebuffer access to for example make ES-DE a drop-in replacement for RetroPie EmulationStation:
+```
+cmake -DDEINIT_ON_LAUNCH=on .
+make
+```
+
+When this flag is enabled the menu option _Run in background (while game is launched)_ in the Other settings menu is disabled and all functionality related to running ES-DE in the background is also disabled.
 
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
@@ -1559,7 +1569,7 @@ The following variables are expanded for the `command` tag:
 
 `%STARTDIR%` - The directory to start in when launching the emulator. Must be defined as a pair separated by an equal sign. This is normally not required, but some emulators and game engines like standalone MAME and OpenBOR will not work properly unless you're in the correct directory when launching a game. Either an absolute path can be used, such as `%STARTDIR%=C:\Games\mame` or some variables are available that provide various functions. The `%EMUDIR%` variable can be used to start in the directory where the emulator binary is located, i.e. `%STARTDIR%=%EMUDIR%`, the `%GAMEDIR%` variable can be used to start in the directory where the game file is located, i.e. `%STARTDIR%=%GAMEDIR%` and the `%GAMEENTRYDIR%` variable can be used which works identically to `%GAMEDIR%` with the exception that it will interpret the actual game entry as the start directory. This is useful in very rare situations like for the EasyRPG Player where the game directories are interpreted as files but where the game engine must still be started from inside the game directory. If an absolute path is set that contains blankspaces, then it must be surrounded by quotation marks, for example `%STARTDIR%="C:\Retro games\mame"`. If the directory defined by this variable does not exist, it will be created on game launch. The variable can be placed anywhere in the launch command if the %EMULATOR_ variable is used, otherwise it has to be placed after the emulator binary.
 
-`%INJECT%` - This allows the injection of launch arguments or environment variables stored in a text file on the filesystem. The %INJECT% variable must be defined as a pair separated by an equal sign, for example `%INJECT%=game.commands`. The `%BASENAME%` variable can also be used in conjunction with this variable, such as `%INJECT%=%BASENAME%.commands`. By default a path relative to the game file will be assumed but it's also possible to use an absolute path or the ~ (tilde) symbol which will expand to the home directory. If a path contains spaces it needs to be surrounded by quotation marks, such as `%INJECT%="C:\My games\ROMs\daphne\%BASENAME%.daphne\%BASENAME%.commands"`. The variable can be placed anywhere in the launch command and the file contents will be injected at that position. It's also possible to have multiple injections by defining the variable more than once at different locations in the launch command string. The specified file is optional, if it does not exist, is empty, or if there are insufficient permissions to read the file, then it will simply be skipped. For safety reasons the injection file can only have a maximum size of 4096 bytes and if it's larger than this it will be skipped and a warning will be written to es_log.txt.
+`%INJECT%` - This allows the injection of launch arguments or environment variables stored in a text file on the filesystem. The %INJECT% variable must be defined as a pair separated by an equal sign, for example `%INJECT%=game.commands`. The `%BASENAME%` variable can also be used in conjunction with this variable, such as `%INJECT%=%BASENAME%.commands` and the `%ROM%` variable is another possibility, such as `%INJECT%=%ROM%`. The latter will expand to the absolute path of the game file and inject its file contents, and this also works when combined with the directories interpreted as files functionality. By default a path relative to the game file will be assumed but it's also possible to use an absolute path or the ~ (tilde) symbol which will expand to the home directory. If a path contains spaces it needs to be surrounded by quotation marks, such as `%INJECT%="C:\My games\ROMs\daphne\%BASENAME%.daphne\%BASENAME%.commands"`. The variable can be placed anywhere in the launch command and the file contents will be injected at that position. It's also possible to have multiple injections by defining the variable more than once at different locations in the launch command string. The specified file is optional, if it does not exist, is empty, or if there are insufficient permissions to read the file, then it will simply be skipped. For safety reasons the injection file can only have a maximum size of 4096 bytes and if it's larger than this it will be skipped and a warning will be written to es_log.txt.
 
 `%EMUPATH%` - Replaced with the path to the emulator binary. This variable is used for manually specifying emulator core locations, and a check for the existence of the core file will be done on game launch and an error displayed if it can't be found. Normally %EMUPATH% should not be used as the %CORE_ variable is the recommended method for defining core locations.
 
@@ -1750,13 +1760,13 @@ The es_systems.xml file on Android utilizes variables heavily to implement the _
 There are two main ways to pass options to emulators, using _extras_ or using the _data_ URI. There can only be a single data URI but there can be an arbitrary amount of extras. To understand more about the way this works, you can read about the _putExtra()_ and and _setData()_ functions here:\
 https://developer.android.com/reference/android/content/Intent
 
-`%EXTRA_` - This passes an _extra_ which contains any additional information that the emulator may support. This is provided as a key/value pair where you define the key name following the literal %EXTRA_ string and terminate it with a % sign and then assign the value using an equal sign. For example %EXTRA_LIBRETRO%=puae_libretro_android.so will pass the extra named _LIBRETRO_ with its value set to _puae_libretro_android.so_. You can pass an unlimited number of extras and you can also use various ROM variables in combination with this as described below.
+`%EXTRA_` - This passes an _extra_ which contains any additional information that the emulator may support. This is provided as a key/value pair where you define the key name following the literal %EXTRA_ string and terminate it with a % sign and then assign the value using an equal sign. For example %EXTRA_LIBRETRO%=puae_libretro_android.so will pass the extra named _LIBRETRO_ with its value set to _puae_libretro_android.so_. You can pass an unlimited number of extras and you can also use various ROM variables in combination with this as described below. It's also possible to use the `%GAMEDIRRAW%`, `%ROMPATHRAW%` and `%ROMRAW%` variables inside an `%EXTRA_` variable definition, which will expand to the the directory of the game file, the ROM directory and the path to the game file respectively.
 
-`%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_.
+`%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_. It's also possible to use the `%GAMEDIRRAW%`, `%ROMPATHRAW%` and `%ROMRAW%` variables inside an `%EXTRAARRAY_` variable definition, which will expand to the the directory of the game file, the ROM directory and the path to the game file respectively.
 
 `%EXTRABOOL_` - Sets an extra with a boolean value, i.e. true/1 or false/0.
 
-`%DATA%` - Sets the data URI value for the intent using an equal sign. This is normally combined with one of the ROM variables.
+`%DATA%` - Sets the data URI value for the intent using an equal sign. This is normally combined with one of the ROM variables but it's also possible to define an explicit value or to inject the content of a file and pass that to the variable. This can for instance be accomplished with `%DATA%=%INJECT%=%ROM%` which will expand to the absolute path of the game file and inject its file content. This also works when combined with the directories interpreted as files functionality. Alternatively the `%BASENAME%` variable can be used instead, as in `%DATA%=%BASENAME%` or `%DATA%=%BASENAME%.extension` but this can't be combined with the directories interpreted as files functionality.
 
 There are three approaches to passing game ROMs to emulators by using the following variables:
 
@@ -1778,6 +1788,20 @@ Here are some examples to clarify how this works:
 %EXTRA_ROM%=%ROM%
 %EXTRA_bootPath%=%ROMSAF%
 %EXTRABOOL_resumeState%=false
+```
+
+`%ANDROIDAPP%` - This is a special variable that is used to launch native Android apps and games. It must be defined as a pair separated by an equal sign. Most commonly it will be combined with the `%FILEINJECT%` variable which will inject the content of the game file, but it's also possible to define an explicit package name after the equal sign. Additionally you can specify which activity to use by adding it after a forward slash character. If no activity is defined then the default for the package will be used. The content of the inject file should look identical to an explicit entry, i.e. it can be just the package name or the package name and the activity.
+
+Here are some examples to clarify how this works:
+```
+%ANDROIDAPP%=%FILEINJECT%
+%ANDROIDAPP%=org.ppsspp.ppssppgold
+%ANDROIDAPP%=org.ppsspp.ppssppgold/org.ppsspp.ppsspp.PpssppActivity
+```
+
+The content of an inject file could look simply like the following:
+```
+org.ppsspp.ppssppgold
 ```
 
 There is also support for a couple of activity flags that affect the emulator/game launch behavior, you can read more about these flags here:\

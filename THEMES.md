@@ -1521,7 +1521,12 @@ Properties:
     - This property can only be used when `type` is `horizontal` or `vertical`
 * `selectedItemMargins` - type: NORMALIZED_PAIR
     - By default items are evenly spaced across the carousel area, but this property makes it possible to define margins (extra space or less space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation.
-    - Minimum value per margin is `-1` and maximum value per margin is `1`
+    - Minimum value per axis is `-1` and maximum value per axis is `1`
+    - Default is `0 0`
+    - This property can only be used when `type` is `horizontal` or `vertical`
+* `selectedItemOffset` - type: NORMALIZED_PAIR
+    - Offsets the selected item. The first value of the pair is the horizontal offset and the second value is the vertical offset. Applied after all other positioning calculations.
+    - Minimum value per axis is `-1` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used when `type` is `horizontal` or `vertical`
 * `itemSize` - type: NORMALIZED_PAIR
@@ -1552,6 +1557,11 @@ Properties:
     - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
+* `imageCropPos` - type: NORMALIZED_PAIR
+    - If the image has been cropped by setting `imageFit` to `cover` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `imageFit` has been set to `cover`
 * `imageInterpolation` - type: STRING
     - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
@@ -1826,6 +1836,11 @@ Properties:
     - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
+* `imageCropPos` - type: NORMALIZED_PAIR
+    - If the image has been cropped by setting `imageFit` to `cover` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `imageFit` has been set to `cover`
 * `imageInterpolation` - type: STRING
     - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`
@@ -2054,6 +2069,16 @@ Properties:
 * `selectedSecondaryBackgroundColor` - type: COLOR
     - Background color of the highlighted entry for the secondary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
     - Default is the same value as `selectedBackgroundColor`
+* `selectedBackgroundMargins` - type: NORMALIZED_PAIR
+    - Adds margins to the selected text background, assuming it has a color set. The first value of the pair is the left margin and the second value is the right margin, which means it's possible to set these margins completely independently. Margins are applied after all other positioning and sizing calculations and they are rendered outside the text debug rectangle boundaries.
+    - Minimum value per axis is `0` and maximum value per axis is `0.5`
+    - Default is `0 0`
+    - This property can only be used if `selectedBackgroundColor` or `selectedSecondaryBackgroundColor` has a value defined.
+* `selectedBackgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the text background, assuming it has a color set. The radius is a percentage of the screen width. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the text background height. It means that setting this property sufficiently high will produce perfectly rounded sides for the text background. You normally want to combine this property with `selectedBackgroundMargins` to add some extra margins.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+    - This property can only be used if `selectedBackgroundColor` or `selectedSecondaryBackgroundColor` has a value defined.
 * `textHorizontalScrolling` - type: BOOLEAN
     - If this property is enabled then text that does not fit within the element width (minus margins) will scroll horizontally. If the property is disabled, the text will instead be truncated with an ellipsis (...). Using this property will automatically convert all line breaks to spaces so that a single line of text is always displayed.
     - Valid values are `vertical` or `horizontal`
@@ -2150,8 +2175,13 @@ Properties:
     - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis. This property takes precedence over `cropSize` if that has also been defined.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`
 * `cropSize` - type: NORMALIZED_PAIR
-    - The image will be resized and cropped to the exact size defined by this property while maintaining its aspect ratio. The crop is always applied centered.
+    - The image will be resized and cropped to the exact size defined by this property while maintaining its aspect ratio. The crop is always applied centered unless `cropPos` has been set.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`
+* `cropPos` - type: NORMALIZED_PAIR
+    - If the image has been cropped using `cropSize` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `cropSize` is used.
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2284,8 +2314,13 @@ Properties:
     - The static image and video will be resized as large as possible so that they fit within this size while maintaining their aspect ratios. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis. This property takes precedence over `cropSize` if that has also been defined.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`
 * `cropSize` - type: NORMALIZED_PAIR
-    - The static image and video will be resized and cropped to the exact size defined by this property while maintaining their aspect ratios. The crop is always applied centered. Can't be combined with the `scanlines` property.
+    - The static image and video will be resized and cropped to the exact size defined by this property while maintaining their aspect ratios. The crop is always applied centered unless `cropPos` has been set. Can't be combined with the `scanlines` property.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`
+* `cropPos` - type: NORMALIZED_PAIR
+    - If the static image and video has been cropped using `cropSize` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `cropSize` is used.
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2813,6 +2848,16 @@ Properties:
     - Default is `000000FF`
 * `backgroundColor` - type: COLOR
     - Default is `00000000`
+* `backgroundMargins` - type: NORMALIZED_PAIR
+    - Adds margins to the text background, assuming it has a color set. The first value of the pair is the left margin and the second value is the right margin, which means it's possible to set these margins completely independently. Margins are applied after all other positioning and sizing calculations and they are rendered outside the text debug rectangle boundaries.
+    - Minimum value per axis is `0` and maximum value per axis is `0.5`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
+* `backgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the text background, assuming it has a color set. The radius is a percentage of the screen width. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the text background height. It means that setting this property sufficiently high will produce perfectly rounded sides for the text background. You normally want to combine this property with `backgroundMargins` to add some extra margins.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+    - This property can only be used if `backgroundColor` has a value defined.
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
