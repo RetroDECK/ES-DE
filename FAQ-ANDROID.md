@@ -28,7 +28,7 @@ Although the overwhelming majority of people have successfully got ES-DE to run 
 
 ## I received an update email to my Gmail account but the APK download link doesn't seem to work?
 
-There seems to be an issue with the web version of Gmail that a few people have run into. Clicking on some external download links will result in extremely slow downloads or the download failing completely. The solution is to copy the download link from the email and paste it into the address bar of the web browser, i.e. outside of the Gmail web interface. That should resolve the issue and the APK should download correctly.
+There seems to be an issue with Gmail (both web version and app) that a few people have run into. Clicking on some external download links will result in extremely slow downloads or the download failing completely. The solution is to copy the download link from the email and paste it into the address bar of a web browser, i.e. outside of the Gmail web interface or outside the Gmail app. That should resolve the issue and the APK should download correctly.
 
 ## Will I lose any settings or data when upgrading to a new release?
 
