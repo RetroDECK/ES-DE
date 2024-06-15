@@ -52,6 +52,10 @@ Yes, as of ES-DE 3.0.2 there is experimental support for launching native Androi
 
 If you have set ES-DE as your home app then for some devices the onboarding configurator is displayed after booting your device. This happens because of an issue in the Android operating system where apps are started before the SD card has been mounted. When ES-DE starts it will obviously try to access the ES-DE and ROMs directories that it needs to function, but if either of these have been placed on an SD card that is not available, then the application assumes that the storage has been permanently removed and runs the onboarding process again. This is normal and intended behavior. On app startup ES-DE will however check if the SD card has been mounted, and it will wait up to 4.5 seconds for the storage to become available before it gives up and displays the configurator. For the overwhelming amount of cases this time is enough to handle reboots without issues, but some SD cards of larger sizes apparently need more time than this to get mounted, which triggers the failure mode. Note that you don't need to run through the entire onboarding process if this happens, it's enough to just press B or the back button, just make sure to wait a sufficient amount of time for the SD card to first get mounted. Unfortunately this issues is impossible to resolve on the application layer, it's an operating system defect and it needs to be fixed by Google. Setting a higher retry time than 4.5 seconds will make Android report ES-DE as non-responding, so that's unfortunately not a viable solution either.
 
+## Can I use ES-DE with Samsung DeX?
+
+While ES-DE would in theory work fine with DeX this is unfortunately not supported as Samsung has a policy to not allow apps that can be set as home apps/launchers to run via DeX. This is a Samsung limitation that they would need to resolve.
+
 ## What game systems/platforms and emulators are supported by ES-DE?
 
 See the _Supported game systems_ section at the bottom of the [Android documentation](ANDROID.md#supported-game-systems) where there's a table listing all supported systems/platforms and emulators.
