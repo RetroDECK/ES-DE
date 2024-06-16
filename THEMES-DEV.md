@@ -2943,6 +2943,16 @@ Properties:
     - Default is `center`
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
+* `backgroundMargins` - type: NORMALIZED_PAIR
+    - Adds margins to the text background, assuming it has a color set. The first value of the pair is the left margin and the second value is the right margin, which means it's possible to set these margins completely independently. Margins are applied after all other positioning and sizing calculations and they are rendered outside the text debug rectangle boundaries.
+    - Minimum value per axis is `0` and maximum value per axis is `0.5`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
+* `backgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the text background, assuming it has a color set. The radius is a percentage of the screen width. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the text background height. It means that setting this property sufficiently high will produce perfectly rounded sides for the text background. You normally want to combine this property with `backgroundMargins` to add some extra margins.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+    - This property can only be used if `backgroundColor` has a value defined.
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)

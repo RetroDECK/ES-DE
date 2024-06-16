@@ -1,5 +1,18 @@
 # ES-DE Frontend - Changelog
 
+## Version 3.1.0 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+* Added a "backgroundMargins" property to the datetime element
+* Added a "backgroundCornerRadius" property to the datetime element
+
+### Bug fixes
+
 ## Version 3.0.3 / 3.0.3-26
 
 **Release date:** 2024-06-14
