@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  DateTimeComponent.h
 //
 //  Provides the date and time, in absolute (actual date) or relative
@@ -48,6 +48,7 @@ protected:
 private:
     std::string getDisplayString() const;
 
+    Renderer* mRenderer;
     std::string mDefaultValue;
     Utils::Time::DateTime mTime;
     std::string mFormat;

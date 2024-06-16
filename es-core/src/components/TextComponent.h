@@ -52,6 +52,8 @@ public:
     void setNoTopMargin(bool margin);
     void setBackgroundColor(unsigned int color) override;
     void setRenderBackground(bool render) { mRenderBackground = render; }
+    void setBackgroundMargins(const glm::vec2 margins) { mBackgroundMargins = margins; }
+    void setBackgroundCornerRadius(const float radius) { mBackgroundCornerRadius = radius; }
 
     void render(const glm::mat4& parentTrans) override;
     void onFocusLost() override { resetComponent(); }

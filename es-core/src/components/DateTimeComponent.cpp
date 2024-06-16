@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  DateTimeComponent.cpp
 //
 //  Provides the date and time, in absolute (actual date) or relative
@@ -29,6 +29,7 @@ DateTimeComponent::DateTimeComponent(const std::string& text,
                                      glm::vec2 size,
                                      unsigned int bgcolor)
     : TextComponent {text, font, color, horizontalAlignment, ALIGN_CENTER, pos, size, bgcolor}
+    , mRenderer {Renderer::getInstance()}
     , mDisplayRelative {false}
 {
     // ISO 8601 date format.
@@ -151,6 +152,17 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & COLOR && elem->has("backgroundColor")) {
         setBackgroundColor(elem->get<unsigned int>("backgroundColor"));
         setRenderBackground(true);
+    }
+
+    if (elem->has("backgroundMargins")) {
+        setBackgroundMargins(glm::clamp(elem->get<glm::vec2>("backgroundMargins"), 0.0f, 0.5f) *
+                             mRenderer->getScreenWidth());
+    }
+
+    if (elem->has("backgroundCornerRadius")) {
+        setBackgroundCornerRadius(
+            glm::clamp(elem->get<float>("backgroundCornerRadius"), 0.0f, 0.5f) *
+            mRenderer->getScreenWidth());
     }
 
     if (properties & ALIGNMENT && elem->has("horizontalAlignment")) {

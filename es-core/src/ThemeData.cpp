@@ -468,6 +468,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"verticalAlignment", STRING},
        {"color", COLOR},
        {"backgroundColor", COLOR},
+       {"backgroundMargins", NORMALIZED_PAIR},
+       {"backgroundCornerRadius", FLOAT},
        {"letterCase", STRING},
        {"lineSpacing", FLOAT},
        {"format", STRING},
