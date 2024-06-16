@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiMenu.cpp
 //
 //  Main menu.
@@ -2116,8 +2116,13 @@ void GuiMenu::addVersionInfo()
     const std::string applicationName {"ES-DE"};
 
 #if defined(IS_PRERELEASE)
+#if defined(__ANDROID__)
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
+                     std::to_string(ANDROID_VERSION_CODE) + " (Built " + __DATE__ + ")");
+#else
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
                      " (Built " + __DATE__ + ")");
+#endif
 #else
 #if defined(__ANDROID__)
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
