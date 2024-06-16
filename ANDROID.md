@@ -347,6 +347,14 @@ Note that for MAME4droid 2024 there's an exception when it comes to setting up t
 https://play.google.com/store/apps/details?id=com.seleuco.mame4d2024 \
 https://play.google.com/store/apps/details?id=com.seleuco.mame4droid
 
+Be aware that MAME4droid 2024 requires specific input configuration for some systems. For instance to navigate the mouse cursor when using touch input you'll need to got into the _Settings_ menu, then _Input_, then _Touch controller_ and change _Mode_ to _Analog Stick_.
+
+If using a physical controller for mouse input (via the thumbstick) then you will need to map the mouse buttons to physical controller buttons. You do this via the MAME input settings. Bring up the MAME menu by pressing both thumbsticks, or by pressing the _Start_ and _Coin_ buttons on the touch overlay. Go into _Input Settings_ then _Input Assignments (this system)_ where you can assign physical buttons to the mouse buttons.
+
+For some systems you will need to explictly set the _Start_ and _Select_ buttons in the same fashion as when configuring the mouse buttons. Otherwise you'll not be able to start any games.
+
+There are a few more things that you may need to configure for some systems, but that's beyond the scope of this document and should be covered by the MAME emulator documentation.
+
 ### MasterGear
 
 This emulator can be installed from the Play store as a paid app.
