@@ -359,6 +359,7 @@
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="systempath">
+            <entry>ppsspp</entry>
             <entry>ppsspp-emu.ppsspp-sdl</entry>
             <entry>PPSSPPSDL</entry>
             <entry>PPSSPPQt</entry>
