@@ -775,16 +775,14 @@ const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                     mAutoCollectionSystemsData["favorites"].system);
         }
         if (adding) {
-            mWindow->queueInfoPopup(
-                "ADDED '" + Utils::String::toUpper(Utils::String::removeParenthesis(name)) +
-                    "' TO '" + Utils::String::toUpper(sysName) + "'",
-                4000);
+            mWindow->queueInfoPopup("ADDED '" + Utils::String::toUpper(name) + "' TO '" +
+                                        Utils::String::toUpper(sysName) + "'",
+                                    4000);
         }
         else {
-            mWindow->queueInfoPopup(
-                "REMOVED '" + Utils::String::toUpper(Utils::String::removeParenthesis(name)) +
-                    "' FROM '" + Utils::String::toUpper(sysName) + "'",
-                4000);
+            mWindow->queueInfoPopup("REMOVED '" + Utils::String::toUpper(name) + "' FROM '" +
+                                        Utils::String::toUpper(sysName) + "'",
+                                    4000);
         }
         return true;
     }
