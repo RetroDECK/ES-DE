@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- This is the ES-DE game systems configuration file for Android -->
+<!-- This is the ES-DE Frontend game systems configuration file for Android -->
 <systemList>
     <system>
         <name>3do</name>
@@ -512,8 +512,11 @@
         <name>dragon32</name>
         <fullname>Dragon Data Dragon 32</fullname>
         <path>%ROMPATH%/dragon32</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 Dragon 32 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -autoboot_delay '4' -autoboot_command 'cloadm\"\"\n' -cass '%ROMRAW%'" %DATA%=dragon32</command>
+        <command label="MAME4droid 2024 Dragon 32 [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -cart '%ROMRAW%'" %DATA%=dragon32</command>
+        <command label="MAME4droid 2024 Dragon 64 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -autoboot_delay '4' -autoboot_command 'cloadm\"\"\n' -cass '%ROMRAW%'" %DATA%=dragon64</command>
+        <command label="MAME4droid 2024 Dragon 64 [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -cart '%ROMRAW%'" %DATA%=dragon64</command>
         <platform>dragon32</platform>
         <theme>dragon32</theme>
     </system>
@@ -1782,8 +1785,9 @@
         <name>tanodragon</name>
         <fullname>Tano Dragon</fullname>
         <path>%ROMPATH%/tanodragon</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -autoboot_delay '4' -autoboot_command 'cloadm\"\"\n' -cass '%ROMRAW%'" %DATA%=tanodr64</command>
+        <command label="MAME4droid 2024 [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -cart '%ROMRAW%'" %DATA%=tanodr64</command>
         <platform>dragon32</platform>
         <theme>tanodragon</theme>
     </system>
