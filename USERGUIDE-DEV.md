@@ -1492,7 +1492,15 @@ Regardless of game setup method, per-game settings can be applied. If using the 
 
 ### Dragon 32 and Tano Dragon
 
-These computers as well as the Dragon 64 are slight varations of the Tandy Color Computer and as these machines are largely compatible with each other they're all emulated using the [XRoar](http://www.6809.org.uk/xroar) emulator.
+The Dragon 32, Dragon 64 and Tano Dragon are all slight variations of the Tandy Color Computer, so these machines are largely compatible with each other. They're all emulated using MAME standalone (MAME4droid 2024 on Android) or the [XRoar](http://www.6809.org.uk/xroar) emulator.
+
+**MAME**
+
+To use MAME you need the `dragon32.zip` and `dragon_fdc.zip` BIOS files in the ROMs/dragon32 directory and you need the `tanodr64.zip` BIOS file in ROMs/tanodragon.
+
+For the dragon32 system there are four MAME emulator entries for tape and cartridge for the Dragon 32 and Dragon 64 models respectively and for the tanodragon system there are two entries for tape and cartridge.
+
+**XRoar**
 
 This emulator is available for Linux, macOS and Windows, although on Linux you may need to build it from source code depending on which distribution you're using. Refer to the XRoar website for more information. If you manually download or build the emulator yourself then see the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details on where you need to install it.
 
@@ -4074,7 +4082,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_,<br> _AppImage (Suspend ES-DE)_ [L],<br> _AppImage (Keep ES-DE running)_ [L] | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | doom                  | Doom                                           | PrBoom                            | PrBoom+ **(Standalone)**,<br>Boom 3 [LW],<br>Boom 3 xp [LW],<br> _Shortcut or script_ | No           |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** | No           | See the specific _DOS / PC_ section elsewhere in this guide |
-| dragon32              | Dragon Data Dragon 32                          | XRoar Dragon 32 **(Standalone)**  | XRoar Dragon 64 **(Standalone)**  | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
+| dragon32              | Dragon Data Dragon 32                          | MAME Dragon 32 [Tape] **(Standalone)** | MAME Dragon 32 [Cartridge] **(Standalone)**,<br>MAME Dragon 64 [Tape] **(Standalone)**,<br>MAME Dragon 64 [Cartridge] **(Standalone)**,<br>XRoar Dragon 32 **(Standalone)**,<br>XRoar Dragon 64 **(Standalone)** | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Redream **(Standalone)**,<br>Demul **(Standalone)** [W] | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | electron              | Acorn Electron                                 | MAME [Tape] **(Standalone)**      | MAME [Diskette DFS] **(Standalone)**,<br>MAME [Diskette ADFS] **(Standalone)** | Yes          | Single archive, or single tape or diskette image file |
@@ -4188,7 +4196,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | supracan              | Funtech Super A'Can                            | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file. You need a supracan.zip archive that contains a valid internal_68k.bin file and an empty file named umc6650.bin |
 | switch                | Nintendo Switch                                | Ryujinx **(Standalone)**          |                                   | Yes          |                                      |
 | symbian               | Symbian                                        | EKA2L1 [Nokia N-Gage] **(Standalone)** | EKA2L1 [Nokia N70] **(Standalone)**,<br>EKA2L1 [Nokia N97] **(Standalone)**,<br>EKA2L1 [Custom device] **(Standalone)** | Yes          | See the specific _Symbian and Nokia N-Gage_ section elsewhere in this guide |
-| tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
+| tanodragon            | Tano Dragon                                    | MAME [Tape] **(Standalone)**      | MAME [Cartridge] **(Standalone)**,<br>XRoar **(Standalone)** | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [LW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [LW],<br>ares **(Standalone)** | Yes          |                                      |
 | ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)**             |                                   | Yes          | See the specific _Texas Instruments TI-99_ section elsewhere in this guide |
