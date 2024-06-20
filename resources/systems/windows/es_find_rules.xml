@@ -510,6 +510,16 @@
             <entry>%ESPATH%\..\Emulators\mupen64plus\mupen64plus-ui-console.exe</entry>
         </rule>
     </emulator>
+    <emulator name="NOODS">
+        <!-- Nintendo DS and Game Boy Advance emulator NooDS -->
+        <rule type="systempath">
+            <entry>noods.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\noods\noods.exe</entry>
+            <entry>%ESPATH%\..\Emulators\noods\noods.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="OPENMSX">
         <!-- MSX home computer emulator openMSX -->
         <rule type="systempath">

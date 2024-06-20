@@ -814,6 +814,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gba %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Advance" %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <command label="NooDS (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_NOODS% %ROM%</command>
         <platform>gba</platform>
         <theme>gba</theme>
     </system>
@@ -1293,6 +1294,7 @@
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\desmume_libretro.dll %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\desmume2015_libretro.dll %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <command label="NooDS (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_NOODS% %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>

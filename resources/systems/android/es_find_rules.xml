@@ -256,6 +256,12 @@
             <entry>com.explusalpha.NgpEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="NOODS">
+        <!-- Nintendo DS and Game Boy Advance emulator NooDS -->
+        <rule type="androidpackage">
+            <entry>com.hydra.noods/.FileBrowser</entry>
+        </rule>
+    </emulator>
     <emulator name="OPENBOR">
         <!-- OpenBOR Game Engine -->
         <rule type="androidpackage">

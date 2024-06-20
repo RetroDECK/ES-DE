@@ -803,6 +803,7 @@
         <command label="gpSP">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gpsp_libretro.so %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Advance" %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <command label="NooDS (Standalone)">%EMULATOR_NOODS% %ROM%</command>
         <platform>gba</platform>
         <theme>gba</theme>
     </system>
@@ -1277,6 +1278,7 @@
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.so %ROM%</command>
         <command label="DeSmuME (Standalone)">%EMULATOR_DESMUME% %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <command label="NooDS (Standalone)">%EMULATOR_NOODS% %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>
