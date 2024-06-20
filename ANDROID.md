@@ -536,7 +536,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Huawei       | MatePad 11 (2021)       | 13              | Yes       | None                |                            |
 | Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
 | Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
-| Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | Fails at configurator/onboarding | Seems to run a custom 64-bit Android TV OS |
+| Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | None                | Custom 64-bit Android TV OS |
 | Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |
 | Lenovo       | Xiaoxin Pad Pro 2021    | 11              | Yes       | None                |                            |
@@ -561,6 +561,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | OnePlus      | Open                    | 14              | Yes       | None                |                            |
 | Oppo         | A15                     | 10              | Yes       | None                |                            |
 | Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
+| Raspberry    | Pi 4/400                | 13, 14          | Yes       | None                | Low-power GPU so ES-DE may run a bit sluggish |
 | Razer        | Edge                    | 13              | Yes       | None                |                            |
 | Realme       | GT2                     | 12              | Yes       | None                |                            |
 | Retroid      | Pocket 2+               | 11              | Yes       | None                |                            |

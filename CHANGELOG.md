@@ -10,8 +10,11 @@
 
 * (Android) Added support for the Dragon Data Dragon 32 (dragon32) game system
 * (Android) Added support for the Tano Dragon (tanodragon) game system
+* (Android) Changed the find rule for Ruffle to make game launching work again after a code change in the emulator
+* Added NooDS standalone as an alternative emulator for the gba and nds systems on Android, Linux and Windows
 * Added MAME standalone as the default emulator for the dragon32 and tanodragon systems on Linux, macOS and Windows
 * Added the .7z and .zip file extensions to the dragon32 and tanodragon systems
+* (Linux) Added a systempath find rule for the ppsspp binary name for the PPSSPP emulator
 * Text within parantheses is no longer stripped out from the game name popup when adding or removing games from custom collections
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element

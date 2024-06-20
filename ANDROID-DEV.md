@@ -395,6 +395,12 @@ Nesoid is not available on the Play store but it can be installed from the F-Dro
 https://f-droid.org/en/packages/com.androidemu.nes \
 https://github.com/proninyaroslav/nesoid/releases
 
+### NooDS
+
+Although NooDS is available via the Play store that version does not allow game launching from ES-DE. To get that to work instead use the version from their GitHub site. Also note that this emulator does not support launching of zipped game files.
+
+https://github.com/Hydr8gon/NooDS/releases
+
 ### OpenBOR
 
 Although OpenBOR is working fine on Android it's not possible to properly integrate it with a frontend, you'll instead need to install your game PAKs into the `/sdcard/OpenBOR/Paks` directory and create dummy .openbor files for your games in `ROMs/openbor` and after launching a game from ES-DE you need to manually start it from inside the OpenBOR GUI. There are more detailed setup instructions in the _OpenBOR_ section of the [User guide](USERGUIDE-DEV.md#openbor).
@@ -536,7 +542,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Huawei       | MatePad 11 (2021)       | 13              | Yes       | None                |                            |
 | Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
 | Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
-| Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | Fails at configurator/onboarding | Seems to run a custom 64-bit Android TV OS |
+| Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | None                | Custom 64-bit Android TV OS |
 | Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |
 | Lenovo       | Xiaoxin Pad Pro 2021    | 11              | Yes       | None                |                            |
@@ -561,6 +567,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | OnePlus      | Open                    | 14              | Yes       | None                |                            |
 | Oppo         | A15                     | 10              | Yes       | None                |                            |
 | Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
+| Raspberry    | Pi 4/400                | 13, 14          | Yes       | None                | Low-power GPU so ES-DE may run a bit sluggish |
 | Razer        | Edge                    | 13              | Yes       | None                |                            |
 | Realme       | GT2                     | 12              | Yes       | None                |                            |
 | Retroid      | Pocket 2+               | 11              | Yes       | None                |                            |
@@ -685,7 +692,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gamecom               | Tiger Electronics Game.com                     | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
-| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP,<br>GBA.emu **(Standalone)**,<br>My Boy! **(Standalone)**,<br>Pizza Boy GBA **(Standalone)** | No          | Single archive or ROM file |
+| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP,<br>GBA.emu **(Standalone)**,<br>My Boy! **(Standalone)**,<br>NooDS **(Standalone)**,<br>Pizza Boy GBA **(Standalone)** | No          | Single archive or ROM file |
 | gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           | Disc image file for single-disc games, .m3u playlist for multi-disc games |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | No           | Single archive or ROM file |
@@ -724,7 +731,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
-| nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
+| nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)**,<br>NooDS **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>MAME4droid 2024 **(Standalone)** | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>MAME4droid 2024 **(Standalone)** | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |

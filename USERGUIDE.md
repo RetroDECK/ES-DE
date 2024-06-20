@@ -300,13 +300,16 @@ The Android port of ES-DE is quite different than the other versions, so it has 
 
 ## Specific notes for Raspberry Pi
 
-By default ES-DE on the Raspberry Pi requires a desktop environment to run, or more specifically a window manager and a sound server (like PulseAudio or PipeWire). It is however possible to use KMS/direct framebuffer access if the DEINIT_ON_LAUNCH flag is used when building ES-DE, as documented in the _Building on Unix_ section of the [INSTALL.md](INSTALL.md#building-on-unix) document.
+For the best experience with the Raspberry Pi it's adviced to run Android on it. There are custom OS builds available here: \
+https://konstakang.com/
 
-Note that there are no prebuilt packages for the Raspberry Pi, so you will need to compile ES-DE yourself. Fortunately this is easy to do and the process is documented [here](INSTALL.md#building-on-unix).
+If instead going for regular Linux, then by default ES-DE on the Raspberry Pi requires a desktop environment to run, or more specifically a window manager and a sound server (like PulseAudio or PipeWire). It is however possible to use KMS/direct framebuffer access if the DEINIT_ON_LAUNCH flag is used when building ES-DE, as documented in the _Building on Unix_ section of the [INSTALL.md](INSTALL.md#building-on-unix) document.
+
+Note that there are no prebuilt Linux packages for the Raspberry Pi, so you will need to compile ES-DE yourself.
 
 The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested.
 
-In general, 720p works fine with the RPi 4, and 1080p is tolerable but not really a nice and smooth experience. Due to the relative weakness of the Rasperry Pi GPU, the video scanline rendering options for the screensaver and media viewer have been disabled. These options can be re-enabled via the menu if you don't mind lower video framerates.
+In general, 720p works fine with the RPi 4, and 1080p is tolerable but not really a nice and smooth experience. Due to the relative weakness of the Rasperry Pi GPU, the video scanline rendering options for the screensaver and media viewer have been disabled (only for Linux and not for Android). These options can be re-enabled via the menu if you don't mind lower video framerates.
 
 ## Game system customizations
 
