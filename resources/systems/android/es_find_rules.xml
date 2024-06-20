@@ -316,7 +316,7 @@
     <emulator name="RUFFLE">
         <!-- Adobe Flash player Ruffle -->
         <rule type="androidpackage">
-            <entry>rs.ruffle/.MainActivity</entry>
+            <entry>rs.ruffle/.PlayerActivity</entry>
         </rule>
     </emulator>
     <emulator name="SATURN-EMU">
