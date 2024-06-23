@@ -269,6 +269,11 @@ if(UBSAN)
     endif()
 endif()
 
+if(ASAN OR UBSAN)
+    # Add some extra checks when building with AddressSanitizer or UndefinedBehaviorSanitizer.
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_ASSERTIONS -D_FORTIFY_SOURCE=3")
+endif()
+
 # The following removes half of the ranlib warnings on macOS regarding no symbols for files
 # that are #ifdef'ed away. There must be a way to remove the other half as well?
 if(APPLE)
