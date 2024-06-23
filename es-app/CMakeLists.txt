@@ -306,7 +306,7 @@ elseif(WIN32)
 else()
     set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 endif()
-set(CPACK_PACKAGE_VENDOR "Leon Styhre")
+set(CPACK_PACKAGE_VENDOR "Northwestern Software AB")
 
 # Use the shorter x64 descriptor for the x86_64/AMD64 architecture.
 if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64 OR CMAKE_SYSTEM_PROCESSOR MATCHES AMD64)
