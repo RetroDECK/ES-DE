@@ -518,6 +518,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG556                   | 13              | Yes       | None                |                            |
 | Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
+| Anbernic     | RG Cube                 | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
 | AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
@@ -567,6 +568,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | OnePlus      | Open                    | 14              | Yes       | None                |                            |
 | Oppo         | A15                     | 10              | Yes       | None                |                            |
 | Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
+| Oppo         | Reno5                   | 12              | Yes       | None                |                            |
 | Raspberry    | Pi 4/400                | 13, 14          | Yes       | None                | Low-power GPU so ES-DE may run a bit sluggish |
 | Razer        | Edge                    | 13              | Yes       | None                |                            |
 | Realme       | GT2                     | 12              | Yes       | None                |                            |

@@ -2862,6 +2862,11 @@ This directory can however be changed using the _Game media directory_ setting i
 
 See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for a list of all system names.
 
+An example on Android:
+```
+/storage/emulated/0/ES-DE/downloaded_media/c64/screenshots/
+```
+
 An example on Linux:
 ```
 /home/myusername/ES-DE/downloaded_media/c64/screenshots/
