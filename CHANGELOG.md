@@ -18,6 +18,8 @@
 * Text within parantheses is no longer stripped out from the game name popup when adding or removing games from custom collections
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element
+* Game files with only an extension and no filename will now get skipped on application startup
+* Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 
 ### Bug fixes
 
