@@ -349,6 +349,12 @@ bool SystemData::populateFolder(FileData* folder)
             !(isDirectory && extension == ".")) {
             FileData* newGame {new FileData(GAME, filePath, mEnvData, this)};
 
+            if (newGame->metadata.get("name") == "") {
+                LOG(LogWarning) << "Skipped \"" << filePath << "\" as it has no filename";
+                delete newGame;
+                continue;
+            }
+
             // If adding a configured file extension to a directory it will get interpreted as
             // a regular file. This is useful for displaying multi-file/multi-disc games as single
             // entries or for emulators that can get directories passed to them as command line
