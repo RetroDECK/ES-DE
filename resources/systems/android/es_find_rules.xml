@@ -263,7 +263,7 @@
         </rule>
     </emulator>
     <emulator name="OPENBOR">
-        <!-- OpenBOR Game Engine -->
+        <!-- OpenBOR game engine -->
         <rule type="androidpackage">
             <entry>org.openbor.engine/.GameActivity</entry>
         </rule>
