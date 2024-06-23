@@ -39,7 +39,8 @@
     <key>NSMainNibFile</key>
     <string>ES-DE</string>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright (c) 2020-2024 Leon Styhre
+    <string>Copyright (c) 2024 Northwestern Software AB
+Copyright (c) 2020-2024 Leon Styhre
 Copyright (c) 2014 Alec Lofquist
 Licensed under the MIT license</string>
 </dict>
