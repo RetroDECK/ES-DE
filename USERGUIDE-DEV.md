@@ -2507,15 +2507,19 @@ As the Nokia N-Gage was running Symbian it may seem like the _ngage_ and _symbia
 
 **Android**
 
-Unfortunately there does not seem to be a way to launch individual games from ES-DE on Android specifically, so instead the EKA2L1 user interface will open on game launch and you need to manually start your game from inside the emulator. As games need to be installed upfront in the emulator as described below it's probably a good idea to just setup dummy game files with the .symbian or .ngage file extensions inside the ES-DE ROMs directory tree. These will then appear as indvidual games inside ES-DE and you can add metadata to them, scrape them etc.
+For the symbian system it's possible to launch individual games directly from ES-DE, but for the ngage system this is unfortunately not possible. Instead the EKA2L1 user interface will open on game launch and you need to manually start your game from inside the emulator. For both the symbian and ngage systems all games need to be installed upfront in EKA2L1.
+
+For N-Gage games it's a good idea to just create empty dummy files with the .ngage file extensions inside the ROMs/ngage directory. These will then appear as indvidual games inside ES-DE and you can add metadata to them, scrape them etc.
+
+For Symbian games you can export JSON launch files from EKA2L1 that can be run directly from ES-DE. Just open EKA2L1, long press the game icon and select _Create launch file_ from the popup list. Then just select the ROMs/symbian directory and the file will be saved there and game launching from ES-DE will work as expected.
 
 Here's an example setup:
 ```
 /storage/emulated/0/ROMs/ngage/Asphalt 2.ngage
 /storage/emulated/0/ROMs/ngage/Bomberman.ngage
 /storage/emulated/0/ROMs/ngage/CallofDuty.ngage
-/storage/emulated/0/ROMs/symbian/Animal Farm.symbian
-/storage/emulated/0/ROMs/symbian/AnotherWorld.symbian
+/storage/emulated/0/ROMs/symbian/Animal Farm.json
+/storage/emulated/0/ROMs/symbian/AnotherWorld.json
 ```
 
 **General setup**
