@@ -1238,7 +1238,7 @@
         <fullname>Nokia N-Gage</fullname>
         <path>%ROMPATH%/ngage</path>
         <extension>.ngage .zip .ZIP</extension>
-        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1%</command>
+        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1-GUI% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP%</command>
         <platform>ngage</platform>
         <theme>ngage</theme>
     </system>
@@ -1778,8 +1778,8 @@
         <name>symbian</name>
         <fullname>Symbian</fullname>
         <path>%ROMPATH%/symbian</path>
-        <extension>.sis .SIS .sisx .SISX .symbian</extension>
-        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1%</command>
+        <extension>.json .JSON</extension>
+        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>ngage</platform>
         <theme>symbian</theme>
     </system>
