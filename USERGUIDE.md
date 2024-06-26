@@ -1121,7 +1121,8 @@ If you want to use MAME standalone then you need to place the following ROM file
 a2diskiing.zip
 apple2e.zip
 d2fdc.zip
-votrax.zip
+votrsc01.zip
+votrsc01a.zip
 ```
 
 Note that you will need to enable UI controls in MAME to be able to exit the emulator via the normal exit key. The following page documents the default keys for exiting and toggling UI mode:\
