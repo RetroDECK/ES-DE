@@ -1421,7 +1421,8 @@ void VideoFFmpegComponent::startVideoStream()
         mFrameProcessingThread = nullptr;
         mVideoWidth = 0;
         mVideoHeight = 0;
-        mAccumulatedTime = 0;
+        mLinePaddingComp = 0.0f;
+        mAccumulatedTime = 0.0;
         mStartTimeAccumulation = false;
         mSWDecoder = true;
         mDecodedFrame = false;
