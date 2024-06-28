@@ -810,6 +810,7 @@
             <entry>ruffle</entry>
         </rule>
         <rule type="staticpath">
+            <entry>/app/bin/ruffle</entry>
             <entry>~/Applications/ruffle/ruffle</entry>
             <entry>~/.local/share/applications/ruffle/ruffle</entry>
             <entry>~/.local/bin/ruffle/ruffle</entry>
