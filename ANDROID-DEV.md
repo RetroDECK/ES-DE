@@ -182,6 +182,8 @@ Apart from this it works as you'd expect, ES-DE will start automatically when re
 
 If the operating system runs out of memory when a game is running it will kill ES-DE even if it's set as home app. If this happens ES-DE will reload whenever you return from the game or if you press the home button. This is simply how Android works.
 
+Also be aware that the version check that runs on app startup may not be able to complete successfully when ES-DE is set as the home app, as the device may not have network connectivity enabled yet just after rebooting.
+
 It's generally a very good idea to import your native Android apps into ES-DE prior to setting it as the home app, this way you can easily access things like the Settings app. Note however that even if you somehow lock yourself out of the system by setting ES-DE as the home app and not having any native apps added you can still always access the Settings app via the Android notification shade. On most devices you access this by swiping down from the top of the screen. After swiping down, just select the cogwheel icon to start the Settings app. From there you can change the home app to something else than ES-DE, should you need to.
 
 ## Known ES-DE problems

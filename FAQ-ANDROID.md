@@ -12,7 +12,7 @@ First it's branding, it would be very confusing to have different names for the 
 
 ## Is it available for free, and is it open source?
 
-The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de) or the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy). And although approximately 99% of the app is open source there are some portions of the code that is closed source.
+The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de), the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy) and [Huawei AppGallery](https://appgallery.huawei.com/#/app/C111315115). And although the majority of the code is open source there is some Android-specific code that is copyrighted and closed source.
 
 ## I bought ES-DE on Patreon, how do I get access to future releases?
 
@@ -20,11 +20,11 @@ When a new release is available you will be sent a download link to the email ad
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
-You only need to buy it once, and then you can use it on all your devices. There are no subscriptions or additional costs, you just buy it once. With that said we do appreciate if you want to support the project by keeping your paid Patreon subscription.
+You only need to buy the Patreon release once, and then you can use it on all your devices. There are no subscriptions or additional costs, you just buy it once. With that said we do appreciate if you want to support the project by keeping your paid Patreon subscription. The Samsung Galaxy Store and Huawei AppGallery releases may not be available on all your devices, but that is not an ES-DE restriction but rather governed by the availability of these app stores on your different Android devices.
 
 ## ES-DE doesn't work on my device, can I get a refund?
 
-Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund everyone up to one month from the purchase date if they are unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
+Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund anyone that bought ES-DE on Patreon within one month from the purchase date if they are unable to get ES-DE to run on their device. Just send a DM on Patreon and we will issue a refund as soon as possible. We are however unfortunately not able to refund purchases on the Samsung Galaxy Store and Huawei AppGallery.
 
 ## I received an update email to my Gmail account but the APK download link doesn't seem to work?
 
@@ -42,7 +42,7 @@ The second reason is that the APK is corrupt or not complete. When we make relea
 
 ## Can I set ES-DE as my home app/launcher?
 
-Yes, as of version 3.0.3 there is experimental support for setting ES-DE as the home app. Read the _Running ES-DE as the Android home app_ section of the [Android documentation](ANDROID.md#running-es-de-as-the-android-home-app) for more information about this functionality. There are currently some minor glitches like sometimes needing to start ES-DE twice after switching between regular mode and home app mode, but apart from that it should hopefully work fine.
+Yes, read the _Running ES-DE as the Android home app_ section of the [Android documentation](ANDROID.md#running-es-de-as-the-android-home-app) for more information about this functionality.
 
 ## Can I launch Android apps and games from inside ES-DE?
 
