@@ -171,6 +171,7 @@ private:
     int mVideoFrameReadCount;
     int mVideoFrameDroppedCount;
 
+    std::atomic<float> mLinePaddingComp;
     std::atomic<double> mAccumulatedTime;
     std::atomic<bool> mStartTimeAccumulation;
     std::atomic<bool> mDecodedFrame;
