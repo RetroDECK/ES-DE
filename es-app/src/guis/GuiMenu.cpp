@@ -36,6 +36,7 @@
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "guis/GuiThemeDownloader.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/PlatformUtil.h"
 
 #if defined(__ANDROID__)
@@ -48,7 +49,7 @@
 
 GuiMenu::GuiMenu()
     : mRenderer {Renderer::getInstance()}
-    , mMenu {"MAIN MENU"}
+    , mMenu {_("MAIN MENU")}
     , mThemeDownloaderReloadCounter {0}
 {
     const bool isFullUI {UIModeController::getInstance()->isUIModeFull()};

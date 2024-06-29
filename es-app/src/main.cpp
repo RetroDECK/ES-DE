@@ -29,6 +29,7 @@
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiLaunchScreen.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
@@ -732,6 +733,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
+    Utils::Localization::setLanguage(Utils::Localization::getLocale());
     Scripting::fireEvent("startup");
 
 #if defined(__EMSCRIPTEN__)
