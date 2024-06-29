@@ -24,6 +24,8 @@
 
 ### Bug fixes
 
+* (Windows) Video textures were sometimes not sized and aligned correctly horizontally
+
 ## Version 3.0.3 / 3.0.3-26
 
 **Release date:** 2024-06-14
