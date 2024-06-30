@@ -40,10 +40,9 @@ namespace Utils
             locale.erase(locale.find('\0'));
 
             return locale;
-#elif defined(__APPLE__)
-            // The SDL locale function does not seem to always return the correct result
-            // (at least not on Windows) but for macOS it's very annoying to use the OS-supplied
-            // locale facilities, so here we still use the SDL method.
+#else
+            // SDL_GetPreferredLocales() does not seem to always return accurate results
+            // on Windows but for all other operating systems we use it.
             SDL_Locale* preferredLocales {SDL_GetPreferredLocales()};
 
             if (preferredLocales == nullptr)
@@ -55,30 +54,6 @@ namespace Utils
 
             SDL_free(preferredLocales);
             return primaryLocale;
-#else
-            std::string language;
-
-            // The LANGUAGE environment variable takes precedence over LANG.
-            if (getenv("LANGUAGE") != nullptr)
-                language = getenv("LANGUAGE");
-
-            const std::vector<std::string> languageValues {
-                Utils::String::delimitedStringToVector(language, ":")};
-
-            for (auto value : languageValues) {
-                if (std::find(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(), value) !=
-                    sSupportedLanguages.cend()) {
-                    return value;
-                }
-            }
-
-            if (getenv("LANG") != nullptr)
-                language = getenv("LANG");
-
-            if (language.empty())
-                return "en_US";
-
-            return language.substr(0, language.find("."));
 #endif
         }
 
@@ -120,10 +95,8 @@ namespace Utils
             const LCID localeID {LocaleNameToLCID(Utils::String::stringToWideString(locale).c_str(),
                                                   LOCALE_ALLOW_NEUTRAL_NAMES)};
             SetThreadLocale(localeID);
-#elif defined(__APPLE__)
-            // This is seemingly needed specifically on macOS but not on Linux.
-            setenv("LANGUAGE", locale.c_str(), 1);
 #else
+            setenv("LANGUAGE", locale.c_str(), 1);
             setlocale(LC_MESSAGES, std::string {locale + ".UTF-8"}.c_str());
 #endif
             textdomain(locale.c_str());
