@@ -21,6 +21,19 @@ cd external
 rm -rf local_install
 mkdir local_install
 
+echo "Setting up libiconv"
+rm -rf libiconv*
+curl -LO https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz
+tar xvzf libiconv-1.17.tar.gz
+
+if [ ! -d libiconv-1.17 ]; then
+  echo "libiconv directory is missing, aborting."
+  exit
+fi
+
+mv libiconv-1.17 libiconv
+rm libiconv-1.17.tar.gz
+
 echo "Setting up gettext"
 rm -rf gettext*
 curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-0.22.5.tar.gz

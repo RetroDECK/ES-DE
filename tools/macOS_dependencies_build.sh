@@ -33,6 +33,21 @@ echo "Building all dependencies in the ./external directory...\n"
 
 export PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig
 
+echo "Building libiconv"
+
+if [ ! -d libiconv ]; then
+  echo "libiconv directory is missing, aborting."
+  exit
+fi
+
+cd libiconv
+
+./configure --enable-static=yes --enable-shared=no --prefix=$(pwd)/../local_install
+make clean
+make -j${JOBS}
+make install
+cd ..
+
 echo "Building gettext"
 
 if [ ! -d gettext ]; then
@@ -42,7 +57,7 @@ fi
 
 cd gettext
 
-./configure --prefix=$(pwd)/../local_install
+./configure --with-libiconv-prefix=$(pwd)/../local_install --prefix=$(pwd)/../local_install
 make clean
 make -j${JOBS}
 
