@@ -33,6 +33,26 @@ echo "Building all dependencies in the ./external directory...\n"
 
 export PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig
 
+echo "Building gettext"
+
+if [ ! -d gettext ]; then
+  echo "gettext directory is missing, aborting."
+  exit
+fi
+
+cd gettext
+
+./configure --prefix=$(pwd)/../local_install
+make clean
+make -j${JOBS}
+
+cd gettext-runtime/intl/.libs
+install_name_tool -id "@rpath/libintl.8.dylib" libintl.8.dylib
+cp libintl.8.dylib ../../../../../
+cd ../../../
+make install
+cd ..
+
 echo "Building libpng"
 
 if [ ! -d libpng ]; then

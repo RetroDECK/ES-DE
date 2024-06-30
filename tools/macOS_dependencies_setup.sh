@@ -21,6 +21,19 @@ cd external
 rm -rf local_install
 mkdir local_install
 
+echo "Setting up gettext"
+rm -rf gettext*
+curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-0.22.5.tar.gz
+tar xvzf gettext-0.22.5.tar.gz
+
+if [ ! -d gettext-0.22.5 ]; then
+  echo "gettext directory is missing, aborting."
+  exit
+fi
+
+mv gettext-0.22.5 gettext
+rm gettext-0.22.5.tar.gz
+
 echo "Setting up libpng"
 rm -rf libpng code
 git clone https://git.code.sf.net/p/libpng/code.git

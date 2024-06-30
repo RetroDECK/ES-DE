@@ -8,7 +8,11 @@
 
 add_custom_target(locale ALL COMMENT "Compiling localization message catalogs")
 
-find_program(MSGFMT_BINARY msgfmt)
+if(APPLE)
+    set(MSGFMT_BINARY ${PROJECT_SOURCE_DIR}/external/local_install/bin/msgfmt)
+else()
+    find_program(MSGFMT_BINARY msgfmt)
+endif()
 
 if(NOT MSGFMT_BINARY)
     message (FATAL_ERROR "Couldn't find msgfmt binary")
