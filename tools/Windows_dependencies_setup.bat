@@ -33,6 +33,40 @@ echo:
 
 cd external
 
+echo Setting up gettext
+
+if exist gettext\ (
+  rmdir /S /Q gettext
+)
+
+mkdir gettext
+cd gettext
+
+curl -LO https://github.com/vslavik/gettext-tools-windows/releases/download/v0.22.5/gettext-tools-windows-0.22.5.zip
+7z x gettext-tools-windows-0.22.5.zip
+
+if not exist bin\msgfmt.exe (
+  echo msgfmt.exe is missing, aborting.
+  cd ..\..
+  goto end
+)
+
+mkdir include
+copy ..\..\es-app\assets\libintl_Windows.h include\libintl.h
+
+cd bin
+
+dumpbin /exports libintl-8.dll > exports.txt
+echo LIBRARY libintl-8 > libintl-8.def
+echo EXPORTS >> libintl-8.def
+for /f "skip=90 tokens=4" %%A in (exports.txt) do echo %%A >> libintl-8.def
+echo DllMain >> libintl-8.def
+lib /def:libintl-8.def /out:libintl-8.lib /machine:x64
+
+copy /Y libintl-8.dll ..\..\..
+copy /Y libintl-8.lib ..\..\..
+cd ..\..
+
 echo Setting up curl
 
 if exist curl-8.2.1_11-win64-mingw\ (

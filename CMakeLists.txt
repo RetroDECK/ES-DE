@@ -481,6 +481,7 @@ elseif(WIN32)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/gettext/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2)
@@ -556,6 +557,7 @@ elseif(WIN32)
                             ${PROJECT_SOURCE_DIR}/git2.lib
                             ${PROJECT_SOURCE_DIR}/glew32.lib
                             ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
+                            ${PROJECT_SOURCE_DIR}/libintl-8.lib
                             ${PROJECT_SOURCE_DIR}/freetype.lib
                             ${PROJECT_SOURCE_DIR}/lunasvg.lib
                             ${PROJECT_SOURCE_DIR}/pugixml.lib
@@ -696,7 +698,7 @@ add_subdirectory(es-app)
 add_dependencies(lunasvg es-pdf-convert)
 
 if (COMPILE_LOCALIZATIONS)
-    add_dependencies(es-pdf-convert locale)
+    add_dependencies(es-pdf-convert localization)
 endif()
 
 add_dependencies(es-core rlottie)
