@@ -16,12 +16,29 @@
 #include <algorithm>
 #include <iostream>
 
+#if defined(_WIN64)
+#include <Windows.h>
+#endif
+
 namespace Utils
 {
     namespace Localization
     {
         std::string getLocale()
         {
+#if defined(_WIN64)
+            std::wstring localeName(LOCALE_NAME_MAX_LENGTH, '\0');
+            if (GetUserDefaultLocaleName(&localeName[0], LOCALE_NAME_MAX_LENGTH) == 0)
+                return "en_US";
+
+            // Of course Windows doesn't follow standards and names locales with dashes instead
+            // of underscores, such as "sv-SE" instead of "sv_SE".
+            std::string locale {
+                Utils::String::replace(Utils::String::wideStringToString(localeName), "-", "_")};
+            locale.erase(locale.find('\0'));
+
+            return locale;
+#else
             std::string language;
 
             // The LANGUAGE environment variable takes precedence over LANG.
@@ -45,6 +62,7 @@ namespace Utils
                 return "en_US";
 
             return language.substr(0, language.find("."));
+#endif
         }
 
         void setLanguage(const std::string& locale)
@@ -80,8 +98,14 @@ namespace Utils
             if (objectPath.length() > localePath.length())
                 objectPath = objectPath.substr(0, objectPath.length() - localePath.length());
 
-            setenv("LANGUAGE", locale.c_str(), 1);
-            setlocale(LC_MESSAGES, "");
+#if defined(_WIN64)
+            _configthreadlocale(_DISABLE_PER_THREAD_LOCALE);
+            const LCID localeID {LocaleNameToLCID(Utils::String::stringToWideString(locale).c_str(),
+                                                  LOCALE_ALLOW_NEUTRAL_NAMES)};
+            SetThreadLocale(localeID);
+#else
+            setlocale(LC_MESSAGES, std::string {locale + ".UTF-8"}.c_str());
+#endif
             textdomain(locale.c_str());
             bindtextdomain(locale.c_str(), objectPath.c_str());
             bind_textdomain_codeset(locale.c_str(), "UTF-8");
