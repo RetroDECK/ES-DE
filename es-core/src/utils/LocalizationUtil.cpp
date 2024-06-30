@@ -13,6 +13,8 @@
 #include "resources/ResourceManager.h"
 #include "utils/StringUtil.h"
 
+#include <SDL2/SDL_locale.h>
+
 #include <algorithm>
 #include <iostream>
 
@@ -38,6 +40,21 @@ namespace Utils
             locale.erase(locale.find('\0'));
 
             return locale;
+#elif defined(__APPLE__)
+            // The SDL locale function does not seem to always return the correct result
+            // (at least not on Windows) but for macOS it's very annoying to use the OS-supplied
+            // locale facilities, so here we still use the SDL method.
+            SDL_Locale* preferredLocales {SDL_GetPreferredLocales()};
+
+            if (preferredLocales == nullptr)
+                return "en_US";
+
+            std::string primaryLocale {preferredLocales->language};
+            if (preferredLocales->country != nullptr)
+                primaryLocale.append("_").append(preferredLocales->country);
+
+            SDL_free(preferredLocales);
+            return primaryLocale;
 #else
             std::string language;
 
@@ -103,6 +120,9 @@ namespace Utils
             const LCID localeID {LocaleNameToLCID(Utils::String::stringToWideString(locale).c_str(),
                                                   LOCALE_ALLOW_NEUTRAL_NAMES)};
             SetThreadLocale(localeID);
+#elif defined(__APPLE__)
+            // This is seemingly needed specifically on macOS but not on Linux.
+            setenv("LANGUAGE", locale.c_str(), 1);
 #else
             setlocale(LC_MESSAGES, std::string {locale + ".UTF-8"}.c_str());
 #endif
