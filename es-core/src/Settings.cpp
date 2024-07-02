@@ -43,6 +43,7 @@ namespace
 
         // These options are only used internally during the application session:
         "PortableMode",
+        "DetectedLocale",
         "DebugGrid",
         "DebugText",
         "DebugImage",
@@ -168,6 +169,7 @@ void Settings::setDefaults()
     mStringMap["ThemeFontSize"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
     mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
+    mStringMap["ApplicationLanguage"] = {"automatic", "automatic"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
     mStringMap["SystemsSorting"] = {"default", "default"};
@@ -363,6 +365,7 @@ void Settings::setDefaults()
 
     mIntMap["ApplicationRelease"] = {0, 0};
     mStringMap["ApplicationUpdaterLastCheck"] = {"", ""};
+    mStringMap["DetectedLocale"] = {"", ""};
     mBoolMap["PortableMode"] = {false, false};
     mBoolMap["DebugFlag"] = {false, false};
     mBoolMap["DebugGrid"] = {false, false};

@@ -10,6 +10,7 @@
 #include "utils/LocalizationUtil.h"
 
 #include "Log.h"
+#include "Settings.h"
 #include "resources/ResourceManager.h"
 #include "utils/StringUtil.h"
 
@@ -72,8 +73,35 @@ namespace Utils
 #endif
         }
 
-        void setLocale(const std::pair<std::string, std::string>& localePair)
+        void setLocale()
         {
+            // Only detect locale once (on application startup).
+            if (Settings::getInstance()->getString("DetectedLocale") == "") {
+                const std::pair<std::string, std::string> detectedLocale {getLocale()};
+                if (detectedLocale.second == "")
+                    Settings::getInstance()->setString("DetectedLocale", detectedLocale.first);
+                else {
+                    Settings::getInstance()->setString(
+                        "DetectedLocale", detectedLocale.first + "_" + detectedLocale.second);
+                }
+            }
+
+            std::string languageSetting {Settings::getInstance()->getString("ApplicationLanguage")};
+            std::vector<std::string> localeVector;
+            std::pair<std::string, std::string> localePair;
+
+            if (languageSetting == "automatic") {
+                localeVector = Utils::String::delimitedStringToVector(
+                    Settings::getInstance()->getString("DetectedLocale"), "_");
+            }
+            else {
+                localeVector = Utils::String::delimitedStringToVector(languageSetting, "_");
+            }
+            if (localeVector.size() == 1)
+                localePair = std::make_pair(localeVector[0], "");
+            else
+                localePair = std::make_pair(localeVector[0], localeVector[1]);
+
             std::string locale;
             std::string localePairCombined;
 

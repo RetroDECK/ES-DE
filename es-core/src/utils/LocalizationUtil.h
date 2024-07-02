@@ -24,7 +24,7 @@ namespace Utils
             {{"en"}, {"US"}}, {{"sv"}, {"SE"}}};
 
         std::pair<std::string, std::string> getLocale();
-        void setLocale(const std::pair<std::string, std::string>& localePair);
+        void setLocale();
 
     } // namespace Localization
 

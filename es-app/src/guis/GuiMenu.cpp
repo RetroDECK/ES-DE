@@ -473,6 +473,31 @@ void GuiMenu::openUIOptions()
     themeTransitionsFunc(Settings::getInstance()->getString("Theme"),
                          Settings::getInstance()->getString("ThemeTransitions"));
 
+    // Application language.
+    auto applicationLanguage = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "APPLICATION LANGUAGE", false);
+    std::string selectedApplicationLanguage {
+        Settings::getInstance()->getString("ApplicationLanguage")};
+    applicationLanguage->add("AUTOMATIC", "automatic", selectedApplicationLanguage == "automatic");
+    applicationLanguage->add("ENGLISH (AMERICAN)", "en_US", selectedApplicationLanguage == "en_US");
+    applicationLanguage->add("SWEDISH", "sv_SE", selectedApplicationLanguage == "sv_SE");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the application langauge to "automatic" in this case.
+    if (applicationLanguage->getSelectedObjects().size() == 0)
+        applicationLanguage->selectEntry(0);
+    s->addWithLabel("APPLICATION LANGUAGE", applicationLanguage);
+    s->addSaveFunc([this, applicationLanguage, s] {
+        if (applicationLanguage->getSelected() !=
+            Settings::getInstance()->getString("ApplicationLanguage")) {
+            Settings::getInstance()->setString("ApplicationLanguage",
+                                               applicationLanguage->getSelected());
+            Utils::Localization::setLocale();
+            s->setNeedsSaving();
+            s->setNeedsCloseMenu([this] { delete this; });
+            s->setNeedsRescanROMDirectory();
+        }
+    });
+
     // Quick system select (navigate between systems in the gamelist view).
     auto quickSystemSelect = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "QUICK SYSTEM SELECT", false);
