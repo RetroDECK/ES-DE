@@ -36,6 +36,10 @@ namespace Utils
             std::string localeName {Utils::String::wideStringToString(localeNameWide)};
             localeName.erase(localeName.find('\0'));
 
+            // This should never happen, but who knows with Windows.
+            if (localeName.empty())
+                return std::make_pair("en", "US");
+
             std::vector<std::string> localeVector;
 
             // Of course Windows doesn't follow standards and names locales with dashes
