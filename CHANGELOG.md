@@ -20,6 +20,7 @@
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element
 * Game files with only an extension and no filename will now get skipped on application startup
+* Added the libintl library as a dependency
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 
 ### Bug fixes

@@ -45,6 +45,9 @@ https://github.com/g-truc/glm
 libgit2 \
 https://libgit2.org
 
+libintl (gettext) \
+https://www.gnu.org/software/gettext
+
 libvpx \
 https://github.com/webmproject/libvpx
 
