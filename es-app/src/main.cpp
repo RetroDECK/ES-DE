@@ -733,7 +733,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    Utils::Localization::setLanguage(Utils::Localization::getLocale());
+    Utils::Localization::setLocale(Utils::Localization::getLocale());
     Scripting::fireEvent("startup");
 
 #if defined(__EMSCRIPTEN__)

@@ -26,54 +26,93 @@ namespace Utils
 {
     namespace Localization
     {
-        std::string getLocale()
+        std::pair<std::string, std::string> getLocale()
         {
 #if defined(_WIN64)
-            std::wstring localeName(LOCALE_NAME_MAX_LENGTH, '\0');
-            if (GetUserDefaultLocaleName(&localeName[0], LOCALE_NAME_MAX_LENGTH) == 0)
-                return "en_US";
+            std::wstring localeNameWide(LOCALE_NAME_MAX_LENGTH, '\0');
+            if (GetUserDefaultLocaleName(&localeNameWide[0], LOCALE_NAME_MAX_LENGTH) == 0)
+                return std::make_pair("en", "US");
 
-            // Of course Windows doesn't follow standards and names locales with dashes instead
-            // of underscores, such as "sv-SE" instead of "sv_SE".
-            std::string locale {
-                Utils::String::replace(Utils::String::wideStringToString(localeName), "-", "_")};
-            locale.erase(locale.find('\0'));
+            std::string localeName {Utils::String::wideStringToString(localeNameWide)};
+            localeName.erase(localeName.find('\0'));
 
-            return locale;
+            std::vector<std::string> localeVector;
+
+            // Of course Windows doesn't follow standards and names locales with dashes
+            // instead of underscores, such as "sv-SE" instead of "sv_SE". But who knows
+            // if this is consistent, so we check for underscores as an extra precaution.
+            if (localeName.find("_") != std::string::npos)
+                localeVector = Utils::String::delimitedStringToVector(localeName, "_");
+            else
+                localeVector = Utils::String::delimitedStringToVector(localeName, "-");
+
+            if (localeVector.size() == 1)
+                return std::make_pair(localeVector[0], "");
+            else
+                return std::make_pair(localeVector[0], localeVector[1]);
 #else
             // SDL_GetPreferredLocales() does not seem to always return accurate results
             // on Windows but for all other operating systems we use it.
             SDL_Locale* preferredLocales {SDL_GetPreferredLocales()};
 
             if (preferredLocales == nullptr)
-                return "en_US";
+                return std::make_pair("en", "US");
 
-            std::string primaryLocale {preferredLocales->language};
+            std::string language {preferredLocales->language};
+            std::string country;
             if (preferredLocales->country != nullptr)
-                primaryLocale.append("_").append(preferredLocales->country);
+                country = preferredLocales->country;
 
             SDL_free(preferredLocales);
-            return primaryLocale;
+            return std::make_pair(language, country);
 #endif
         }
 
-        void setLanguage(const std::string& locale)
+        void setLocale(const std::pair<std::string, std::string>& localePair)
         {
-            if (std::find(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(), locale) ==
-                sSupportedLanguages.cend()) {
-                LOG(LogInfo) << "No support for language \"" << locale
-                             << "\", reverting to default language \"en_US\"";
-                return;
+            std::string locale;
+            std::string localePairCombined;
+
+            if (localePair.second == "")
+                localePairCombined = localePair.first;
+            else
+                localePairCombined = localePair.first + "_" + localePair.second;
+
+            if (std::find(sSupportedLocales.cbegin(), sSupportedLocales.cend(), localePair) !=
+                sSupportedLocales.cend()) {
+                locale = localePairCombined;
+                LOG(LogInfo) << "Setting application locale to \"" << locale << "\"";
             }
             else {
-                LOG(LogInfo) << "Setting application language to \"" << locale << "\"";
+                for (auto& localeEntry : sSupportedLocales) {
+                    if (localeEntry.first == localePair.first) {
+                        LOG(LogInfo) << "No support for locale \"" << localePairCombined
+                                     << "\", falling back to closest match \""
+                                     << localeEntry.first + "_" + localeEntry.second << "\"";
+                        locale = localeEntry.first + "_" + localeEntry.second;
+                        break;
+                    }
+                }
+            }
+
+            if (locale == "") {
+                LOG(LogInfo) << "No support for locale \"" << localePairCombined
+                             << "\", falling back to default \"en_US\"";
+                locale = "en_US";
             }
 
             // No need to perform translations if we're using the default language.
             if (locale == "en_US") {
+#if defined(_WIN64)
+                _configthreadlocale(_DISABLE_PER_THREAD_LOCALE);
+                const LCID localeID {LocaleNameToLCID(
+                    Utils::String::stringToWideString(locale).c_str(), LOCALE_ALLOW_NEUTRAL_NAMES)};
+                SetThreadLocale(localeID);
+#else
                 setenv("LANGUAGE", locale.c_str(), 1);
                 setenv("LANG", locale.c_str(), 1);
                 setlocale(LC_MESSAGES, std::string {locale + ".UTF-8"}.c_str());
+#endif
                 textdomain(locale.c_str());
                 return;
             }

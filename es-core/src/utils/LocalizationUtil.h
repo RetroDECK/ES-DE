@@ -20,10 +20,11 @@ namespace Utils
 {
     namespace Localization
     {
-        static inline std::vector<std::string> sSupportedLanguages {"en_US", "sv_SE"};
+        static inline std::vector<std::pair<std::string, std::string>> sSupportedLocales {
+            {{"en"}, {"US"}}, {{"sv"}, {"SE"}}};
 
-        std::string getLocale();
-        void setLanguage(const std::string& locale);
+        std::pair<std::string, std::string> getLocale();
+        void setLocale(const std::pair<std::string, std::string>& localePair);
 
     } // namespace Localization
 
