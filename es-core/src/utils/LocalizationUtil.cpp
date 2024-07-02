@@ -70,8 +70,13 @@ namespace Utils
             }
 
             // No need to perform translations if we're using the default language.
-            if (locale == "en_US")
+            if (locale == "en_US") {
+                setenv("LANGUAGE", locale.c_str(), 1);
+                setenv("LANG", locale.c_str(), 1);
+                setlocale(LC_MESSAGES, std::string {locale + ".UTF-8"}.c_str());
+                textdomain(locale.c_str());
                 return;
+            }
 
             std::string localePath;
             localePath.append("/")
@@ -97,6 +102,7 @@ namespace Utils
             SetThreadLocale(localeID);
 #else
             setenv("LANGUAGE", locale.c_str(), 1);
+            setenv("LANG", locale.c_str(), 1);
             setlocale(LC_MESSAGES, std::string {locale + ".UTF-8"}.c_str());
 #endif
             textdomain(locale.c_str());
