@@ -1,5 +1,5 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024-present Northwestern Software AB
+# Copyright (c) 2024 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
 # Northwestern Software <info@es-de.org>, 2024.
 #
