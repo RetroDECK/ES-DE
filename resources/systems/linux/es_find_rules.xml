@@ -810,11 +810,11 @@
             <entry>ruffle</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/app/bin/ruffle</entry>
+            <entry>/app/bin/ruffle-wrapper.sh</entry>   <!-- RetroDECK -->
             <entry>~/Applications/ruffle/ruffle</entry>
             <entry>~/.local/share/applications/ruffle/ruffle</entry>
             <entry>~/.local/bin/ruffle/ruffle</entry>
-            <entry>~/bin/ruffle/ruffle</entry>  <!-- RetroDECK -->
+            <entry>~/bin/ruffle/ruffle</entry>
         </rule>
     </emulator>
     <emulator name="RYUJINX">
