@@ -348,9 +348,9 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         }
         else {
             LOG(LogDebug)
-                << "ScreenScraperRequest::processGame(): The configured account '"
+                << "ScreenScraperRequest::processGame(): The configured account \""
                 << Settings::getInstance()->getString("ScraperUsernameScreenScraper")
-                << "' was not included in the scraper response, wrong username or password?";
+                << "\" was not included in the scraper response, wrong username or password?";
         }
     }
 
