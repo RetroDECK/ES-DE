@@ -133,22 +133,6 @@ namespace Utils
                 locale = "en_US";
             }
 
-            // No need to perform translations if we're using the default language.
-            if (locale == "en_US") {
-#if defined(_WIN64)
-                _configthreadlocale(_DISABLE_PER_THREAD_LOCALE);
-                const LCID localeID {LocaleNameToLCID(
-                    Utils::String::stringToWideString(locale).c_str(), LOCALE_ALLOW_NEUTRAL_NAMES)};
-                SetThreadLocale(localeID);
-#else
-                setenv("LANGUAGE", locale.c_str(), 1);
-                setenv("LANG", locale.c_str(), 1);
-                setlocale(LC_MESSAGES, std::string {locale + ".UTF-8"}.c_str());
-#endif
-                textdomain(locale.c_str());
-                return;
-            }
-
             std::string localePath;
             localePath.append("/")
                 .append(locale)
