@@ -36,6 +36,6 @@ for language in $(cat ../locale/languages); do
   msgmerge ../locale/po/${language}.po ../locale/es-de.pot -o ../locale/po/${language}.po
   echo Compiling message catalog for locale $language
   mkdir -p ../resources/locale/${language}/LC_MESSAGES
-  msgfmt -o ../resources/locale/${language}/LC_MESSAGES/${language}.mo ../locale/po/${language}.po
+  msgfmt -c --statistics -o ../resources/locale/${language}/LC_MESSAGES/${language}.mo ../locale/po/${language}.po
   echo
 done
