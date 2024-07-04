@@ -291,6 +291,7 @@ endif()
 
 if(ANDROID)
     set(BUNDLED_CERTS ON)
+    set(COMPILE_LOCALIZATIONS OFF)
     add_compile_definitions(ANDROID_VERSION_CODE=${ANDROID_VERSION_CODE})
     add_compile_definitions(ANDROID_APPLICATION_ID="org.es_de.frontend")
 endif()
