@@ -20,8 +20,8 @@ namespace Utils
 {
     namespace Localization
     {
-        static inline std::vector<std::pair<std::string, std::string>> sSupportedLocales {
-            {{"en"}, {"US"}}, {{"sv"}, {"SE"}}};
+        extern const std::vector<std::pair<std::string, std::string>> sSupportedLocales;
+        extern float sMenuScaleFactor;
 
         std::pair<std::string, std::string> getLocale();
         void setLocale();
