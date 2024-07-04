@@ -419,7 +419,8 @@ void GuiMenu::openUIOptions()
                 label = currentSet->second.capabilities.transitions.front().label;
             const std::string transitions {
                 currentSet->second.capabilities.transitions.front().name};
-            themeTransitions->add(label, transitions, transitions == selectedThemeTransitions);
+            themeTransitions->add(Utils::String::toUpper(label), transitions,
+                                  transitions == selectedThemeTransitions);
         }
         else {
             for (size_t i {0}; i < currentSet->second.capabilities.transitions.size(); ++i) {
@@ -431,7 +432,8 @@ void GuiMenu::openUIOptions()
                 else
                     label = currentSet->second.capabilities.transitions[i].label;
                 const std::string transitions {currentSet->second.capabilities.transitions[i].name};
-                themeTransitions->add(label, transitions, transitions == selectedThemeTransitions);
+                themeTransitions->add(Utils::String::toUpper(label), transitions,
+                                      transitions == selectedThemeTransitions);
             }
         }
         if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
@@ -669,7 +671,7 @@ void GuiMenu::openUIOptions()
 
     // Launch screen duration.
     auto launchScreenDuration = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("LAUNCH SCREEN DURATION [SHORT]"), false);
+        getHelpStyle(), _("LAUNCH SCREEN DURATION"), false);
     std::string selectedDuration {Settings::getInstance()->getString("LaunchScreenDuration")};
     launchScreenDuration->add(_("NORMAL"), "normal", selectedDuration == "normal");
     launchScreenDuration->add(_("BRIEF"), "brief", selectedDuration == "brief");
@@ -781,7 +783,7 @@ void GuiMenu::openUIOptions()
 
     // Random entry button.
     auto randomEntryButton = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("RANDOM ENTRY BUTTON [SHORT]"), false);
+        getHelpStyle(), _("RANDOM ENTRY BUTTON"), false);
     const std::string selectedRandomEntryButton {
         Settings::getInstance()->getString("RandomEntryButton")};
     randomEntryButton->add(_("GAMES ONLY"), "games", selectedRandomEntryButton == "games");
