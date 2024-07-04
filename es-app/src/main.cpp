@@ -733,7 +733,6 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    Utils::Localization::setLocale();
     Scripting::fireEvent("startup");
 
 #if defined(__EMSCRIPTEN__)
@@ -1013,6 +1012,12 @@ int main(int argc, char* argv[])
             }
         }
     }
+
+#if defined(__ANDROID__)
+    Utils::Platform::Android::setupLocalizationFiles();
+#endif
+
+    Utils::Localization::setLocale();
 
     renderer = Renderer::getInstance();
     window = Window::getInstance();
