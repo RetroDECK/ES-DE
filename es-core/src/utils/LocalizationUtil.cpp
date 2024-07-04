@@ -29,7 +29,7 @@ namespace Utils
     {
         const std::vector<std::pair<std::string, std::string>> sSupportedLocales {{{"en"}, {"US"}},
                                                                                   {{"sv"}, {"SE"}}};
-        float sMenuScaleFactor {1.0f};
+        float sMenuTitleScaleFactor {1.0f};
 
         std::pair<std::string, std::string> getLocale()
         {
@@ -90,7 +90,7 @@ namespace Utils
                 }
             }
 
-            sMenuScaleFactor = 1.0f;
+            sMenuTitleScaleFactor = 1.0f;
             std::string languageSetting {Settings::getInstance()->getString("ApplicationLanguage")};
             std::vector<std::string> localeVector;
             std::pair<std::string, std::string> localePair;
@@ -138,9 +138,9 @@ namespace Utils
                 locale = "en_US";
             }
 
-            // Language-specific menu scale factor.
+            // Language-specific menu title scale factor.
             if (localePair.first == "sv")
-                sMenuScaleFactor = 1.02f;
+                sMenuTitleScaleFactor = 0.86f;
 
             std::string localePath;
             localePath.append("/")

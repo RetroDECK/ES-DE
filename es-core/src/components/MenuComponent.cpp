@@ -10,7 +10,6 @@
 
 #include "Settings.h"
 #include "components/ButtonComponent.h"
-#include "utils/LocalizationUtil.h"
 
 #define BUTTON_GRID_VERT_PADDING Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.915f
 #define BUTTON_GRID_HORIZ_PADDING Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.283f
@@ -114,11 +113,9 @@ void MenuComponent::updateSize()
         }
     }
 
-    float width {std::min(
-        mRenderer->getScreenHeight() * 1.05f * Utils::Localization::sMenuScaleFactor,
-        mRenderer->getScreenWidth() * (mRenderer->getIsVerticalOrientation() ?
-                                           0.94f * Utils::Localization::sMenuScaleFactor :
-                                           0.90f * Utils::Localization::sMenuScaleFactor))};
+    float width {std::min(mRenderer->getScreenHeight() * 1.05f,
+                          mRenderer->getScreenWidth() *
+                              (mRenderer->getIsVerticalOrientation() ? 0.94f : 0.90f))};
 
     setSize(width, height);
 }

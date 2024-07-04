@@ -21,7 +21,7 @@ namespace Utils
     namespace Localization
     {
         extern const std::vector<std::pair<std::string, std::string>> sSupportedLocales;
-        extern float sMenuScaleFactor;
+        extern float sMenuTitleScaleFactor;
 
         std::pair<std::string, std::string> getLocale();
         void setLocale();

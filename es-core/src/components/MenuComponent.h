@@ -16,6 +16,7 @@
 #include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"
 #include "components/TextComponent.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #include <cmath>
@@ -24,7 +25,8 @@ class MenuComponent : public GuiComponent
 {
 public:
     MenuComponent(std::string title,
-                  const std::shared_ptr<Font>& titleFont = Font::get(FONT_SIZE_LARGE));
+                  const std::shared_ptr<Font>& titleFont =
+                      Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor));
     virtual ~MenuComponent();
 
     void save();
