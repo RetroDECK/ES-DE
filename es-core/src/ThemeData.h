@@ -263,6 +263,9 @@ private:
                       const std::map<std::string, ElementPropertyType>& typeMap,
                       ThemeElement& element);
 
+    // This is just to get gettext msgid entries added to the PO message catalog files.
+    void gettextMessageCatalogEntries();
+
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sSupportedMediaTypes;
     static std::vector<std::string> sSupportedTransitions;

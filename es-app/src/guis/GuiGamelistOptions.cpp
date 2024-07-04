@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiGamelistOptions.cpp
 //
 //  Gamelist options menu for the 'Jump to...' quick selector,
@@ -27,12 +27,13 @@
 #include "UIModeController.h"
 #include "guis/GuiGamelistFilter.h"
 #include "scrapers/Scraper.h"
+#include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
 
 #include <SDL2/SDL.h>
 
 GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
-    : mMenu {"GAMELIST OPTIONS"}
+    : mMenu {_("GAMELIST OPTIONS")}
     , mSystem {system}
     , mFiltersChanged {false}
     , mCancelled {false}
@@ -102,7 +103,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
                 mCurrentFirstCharacter = Utils::String::getFirstCharacter(file->getSortName());
         }
 
-        mJumpToLetterList = std::make_shared<LetterList>(getHelpStyle(), "JUMP TO...", false);
+        mJumpToLetterList = std::make_shared<LetterList>(getHelpStyle(), _("JUMP TO.."), false);
 
         // Enable key repeat so that the left or right button can be held to cycle through
         // the letters.
@@ -116,12 +117,12 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         }
 
         if (system->getName() != "recent")
-            mMenu.addWithLabel("JUMP TO..", mJumpToLetterList);
+            mMenu.addWithLabel(_("JUMP TO.."), mJumpToLetterList);
 
         // Add the sorting entry, unless this is the grouped custom collections list.
         if (!mIsCustomCollectionGroup) {
             // Sort list by selected sort type (persistent throughout the program session).
-            mListSort = std::make_shared<SortList>(getHelpStyle(), "SORT GAMES BY", false);
+            mListSort = std::make_shared<SortList>(getHelpStyle(), _("SORT GAMES BY"), false);
             FileData* root {nullptr};
             if (mIsCustomCollection)
                 root = getGamelist()->getCursor()->getSystem()->getRootFolder();
@@ -137,9 +138,11 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
             for (unsigned int i {0}; i < numSortTypes; ++i) {
                 const FileData::SortType& sort {FileSorts::SortTypes.at(i)};
                 if (sort.description == sortType)
-                    mListSort->add(sort.description, &sort, true);
+                    mListSort->add(Utils::String::toUpper(_(sort.description.c_str())), &sort,
+                                   true);
                 else
-                    mListSort->add(sort.description, &sort, false);
+                    mListSort->add(Utils::String::toUpper(_(sort.description.c_str())), &sort,
+                                   false);
             }
 
             // Enable key repeat so that the left or right button can be held to cycle through
@@ -148,7 +151,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
 
             // Don't show the sort type option if the gamelist type is recent/last played.
             if (system->getName() != "recent")
-                mMenu.addWithLabel("SORT GAMES BY", mListSort);
+                mMenu.addWithLabel(_("SORT GAMES BY"), mListSort);
         }
     }
 
@@ -157,8 +160,9 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     if (!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() > 0) {
         if (system->getName() != "recent" && Settings::getInstance()->getBool("GamelistFilters")) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>(
-                               "FILTER GAMELIST", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+            row.addElement(std::make_shared<TextComponent>(_("FILTER GAMELIST"),
+                                                           Font::get(FONT_SIZE_MEDIUM),
+                                                           mMenuColorPrimary),
                            true);
             row.addElement(mMenu.makeArrow(), false);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openGamelistFilter, this));
@@ -210,7 +214,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         if (UIModeController::getInstance()->isUIModeFull() && !mFromPlaceholder &&
             !(mSystem->isCollection() && file->getType() == FOLDER)) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>("EDIT THIS FOLDER'S METADATA",
+            row.addElement(std::make_shared<TextComponent>(_("EDIT THIS FOLDER'S METADATA"),
                                                            Font::get(FONT_SIZE_MEDIUM),
                                                            mMenuColorPrimary),
                            true);
@@ -223,7 +227,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         if (UIModeController::getInstance()->isUIModeFull() && !mFromPlaceholder &&
             !(mSystem->isCollection() && file->getType() == FOLDER)) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>("EDIT THIS GAME'S METADATA",
+            row.addElement(std::make_shared<TextComponent>(_("EDIT THIS GAME'S METADATA"),
                                                            Font::get(FONT_SIZE_MEDIUM),
                                                            mMenuColorPrimary),
                            true);
@@ -256,8 +260,8 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         });
     }
     else {
-        mMenu.addButton("APPLY", "apply", [&] { delete this; });
-        mMenu.addButton("CANCEL", "cancel", [&] {
+        mMenu.addButton(_("APPLY"), _("APPLY"), [&] { delete this; });
+        mMenu.addButton(_("CANCEL"), _("CANCEL"), [&] {
             mCancelled = true;
             delete this;
         });

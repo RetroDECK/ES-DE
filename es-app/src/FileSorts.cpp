@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  FileSorts.cpp
 //
 //  Gamelist sorting functions.
@@ -10,6 +10,7 @@
 #include "FileSorts.h"
 
 #include "SystemData.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #include <algorithm>
@@ -272,6 +273,30 @@ namespace FileSorts
         std::string system1 = Utils::String::toUpper(file1->getSystemName());
         std::string system2 = Utils::String::toUpper(file2->getSystemName());
         return system1.compare(system2) > 0;
+    }
+
+    void gettextMessageCatalogEntries()
+    {
+        _("name, ascending");
+        _("name, descending");
+        _("rating, ascending");
+        _("rating, descending");
+        _("release date, ascending");
+        _("release date, descending");
+        _("developer, ascending");
+        _("developer, descending");
+        _("publisher, ascending");
+        _("publisher, descending");
+        _("genre, ascending");
+        _("genre, descending");
+        _("players, ascending");
+        _("players, descending");
+        _("last played, ascending");
+        _("last played, descending");
+        _("times played, ascending");
+        _("times played, descending");
+        _("system, ascending");
+        _("system, descending");
     }
 
 } // namespace FileSorts

@@ -15,6 +15,7 @@
 #include "components/ImageComponent.h"
 #include "components/TextComponent.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #include <algorithm>
@@ -2060,4 +2061,26 @@ void ThemeData::parseElement(const pugi::xml_node& root,
             }
         }
     }
+}
+
+void ThemeData::gettextMessageCatalogEntries()
+{
+    // sSupportedFontSizes
+    _("medium");
+    _("large");
+    _("small");
+    _("extra small");
+    _("extra large");
+
+    // sSupportedAspectRatios
+    _("automatic");
+    _("16:9 vertical");
+    _("16:10 vertical");
+    _("3:2 vertical");
+    _("4:3 vertical");
+    _("5:4 vertical");
+    _("19.5:9 vertical");
+    _("20:9 vertical");
+    _("21:9 vertical");
+    _("32:9 vertical");
 }

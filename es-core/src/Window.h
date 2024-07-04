@@ -114,6 +114,7 @@ public:
         DIR_CREATION
     };
 
+    void updateSplashScreenText();
     void renderSplashScreen(SplashScreenState state, float progress);
     // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
     void renderListScrollOverlay(const float opacity, const std::string& text);

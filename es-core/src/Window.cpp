@@ -17,6 +17,7 @@
 #include "components/ImageComponent.h"
 #include "guis/GuiInfoPopup.h"
 #include "resources/Font.h"
+#include "utils/LocalizationUtil.h"
 
 #if defined(__ANDROID__)
 #include "InputOverlay.h"
@@ -142,25 +143,7 @@ bool Window::init()
     mSplash->setPosition((mRenderer->getScreenWidth() - mSplash->getSize().x) / 2.0f,
                          (mRenderer->getScreenHeight() - mSplash->getSize().y) / 2.0f * 0.6f);
 
-    mSplashTextScanning = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache("Searching for games...", 0.0f, 0.0f, 0x777777FF));
-    mSplashTextPopulating = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache("Loading systems...", 0.0f, 0.0f, 0x777777FF));
-    mSplashTextReloading = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache("Reloading...", 0.0f, 0.0f, 0x777777FF));
-    mSplashTextResourceCopy = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache("Copying resources...", 0.0f, 0.0f, 0x777777FF));
-    mSplashTextDirCreation = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
-        "Creating system directories...", 0.0f, 0.0f, 0x777777FF));
-
-    mSplashTextPositions.x =
-        (mRenderer->getScreenWidth() - mSplashTextScanning->metrics.size.x) / 2.0f;
-    mSplashTextPositions.z =
-        (mRenderer->getScreenWidth() - mSplashTextPopulating->metrics.size.x) / 2.0f;
-    mSplashTextPositions.w =
-        (mRenderer->getScreenWidth() - mSplashTextReloading->metrics.size.x) / 2.0f;
-    mSplashTextPositions.y =
-        mRenderer->getScreenHeight() * (mRenderer->getIsVerticalOrientation() ? 0.620f : 0.745f);
+    updateSplashScreenText();
 
     ProgressBarRectangle progressBarRect;
     if (mRenderer->getIsVerticalOrientation())
@@ -682,6 +665,29 @@ void Window::render()
     }
 }
 
+void Window::updateSplashScreenText()
+{
+    mSplashTextScanning = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache(_("Searching for games..."), 0.0f, 0.0f, 0x777777FF));
+    mSplashTextPopulating = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache(_("Loading systems..."), 0.0f, 0.0f, 0x777777FF));
+    mSplashTextReloading = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache(_("Reloading..."), 0.0f, 0.0f, 0x777777FF));
+    mSplashTextResourceCopy = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache(_("Copying resources..."), 0.0f, 0.0f, 0x777777FF));
+    mSplashTextDirCreation = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
+        _("Creating system directories..."), 0.0f, 0.0f, 0x777777FF));
+
+    mSplashTextPositions.x =
+        (mRenderer->getScreenWidth() - mSplashTextScanning->metrics.size.x) / 2.0f;
+    mSplashTextPositions.z =
+        (mRenderer->getScreenWidth() - mSplashTextPopulating->metrics.size.x) / 2.0f;
+    mSplashTextPositions.w =
+        (mRenderer->getScreenWidth() - mSplashTextReloading->metrics.size.x) / 2.0f;
+    mSplashTextPositions.y =
+        mRenderer->getScreenHeight() * (mRenderer->getIsVerticalOrientation() ? 0.620f : 0.745f);
+}
+
 void Window::renderSplashScreen(SplashScreenState state, float progress)
 {
     glm::mat4 trans {mRenderer->getIdentity()};
@@ -894,7 +900,7 @@ void Window::startPDFViewer(FileData* game)
             mRenderPDFViewer = true;
         }
         else {
-            queueInfoPopup("ERROR: COULDN'T RENDER PDF FILE", 4000);
+            queueInfoPopup(_("ERROR: COULDN'T RENDER PDF FILE"), 4000);
         }
     }
 }
