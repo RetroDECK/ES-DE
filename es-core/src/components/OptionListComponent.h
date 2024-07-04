@@ -342,16 +342,14 @@ private:
             for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
                 if (it->selected) {
                     if (it->maxNameLength > 0.0f &&
-                        Font::get(FONT_SIZE_MEDIUM)->sizeText(Utils::String::toUpper(it->name)).x >
-                            it->maxNameLength) {
+                        Font::get(FONT_SIZE_MEDIUM)->sizeText(it->name).x > it->maxNameLength) {
                         // A maximum length parameter has been passed and the "name" size surpasses
                         // this value, so abbreviate the string inside the arrows.
                         auto font = Font::get(FONT_SIZE_MEDIUM);
-                        mText.setText(Utils::String::toUpper(
-                            font->wrapText(Utils::String::toUpper(it->name), it->maxNameLength)));
+                        mText.setText(font->wrapText(it->name, it->maxNameLength));
                     }
                     else {
-                        mText.setText(Utils::String::toUpper(it->name));
+                        mText.setText(it->name);
                     }
 
                     mText.setSize(0.0f, mText.getSize().y);
@@ -433,8 +431,8 @@ private:
 
             for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); ++it) {
                 row.elements.clear();
-                auto textComponent = std::make_shared<TextComponent>(
-                    Utils::String::toUpper(it->name), font, mMenuColorPrimary);
+                auto textComponent =
+                    std::make_shared<TextComponent>(it->name, font, mMenuColorPrimary);
                 row.addElement(textComponent, true);
 
                 if (mParent->mMultiExclusiveSelect && hasSelectedRow && !(*it).selected) {

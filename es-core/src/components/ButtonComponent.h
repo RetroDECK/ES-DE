@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ButtonComponent.h
 //
 //  Basic on/off button.
@@ -20,7 +20,7 @@ public:
     ButtonComponent(const std::string& text = "",
                     const std::string& helpText = "",
                     const std::function<void()>& func = nullptr,
-                    bool upperCase = true,
+                    bool upperCase = false,
                     bool flatStyle = false);
 
     void onSizeChanged() override;

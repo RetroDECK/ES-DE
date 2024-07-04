@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MenuComponent.h
 //
 //  Basic component for building a menu.
@@ -45,10 +45,9 @@ public:
                       bool invert_when_selected = true)
     {
         ComponentListRow row;
-        row.addElement(std::make_shared<TextComponent>(Utils::String::toUpper(label),
-                                                       Font::get(FONT_SIZE_MEDIUM),
-                                                       mMenuColorPrimary),
-                       true);
+        row.addElement(
+            std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+            true);
         row.addElement(comp, false, invert_when_selected);
         addRow(row, setCursorHere);
     }
