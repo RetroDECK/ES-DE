@@ -77,7 +77,7 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRati
     {"20:9_vertical", "20:9 vertical"},
     {"21:9", "21:9"},
     {"21:9_vertical", "21:9 vertical"},
-    {"32:9", "32:0"},
+    {"32:9", "32:9"},
     {"32:9_vertical", "32:9 vertical"},
     {"1:1", "1:1"}};
 
