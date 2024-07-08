@@ -16,7 +16,9 @@
 * Added MAME standalone as the default emulator for the dragon32 and tanodragon systems on Linux, macOS and Windows
 * Added the .7z and .zip file extensions to the dragon32 and tanodragon systems
 * (Linux) Added a systempath find rule for the ppsspp binary name for the PPSSPP emulator
+* Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper
 * Text within parantheses is no longer stripped out from the game name popup when adding or removing games from custom collections
+* Renamed the "Menu opening effect" setting in the UI settings menu to "Menu opening animation"
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element
 * Game files with only an extension and no filename will now get skipped on application startup
@@ -26,6 +28,7 @@
 ### Bug fixes
 
 * (Windows) Video textures were sometimes not sized and aligned correctly horizontally
+* There was a typo where the 32:9 aspect ratio was referred to as 32:0
 
 ## Version 3.0.3 / 3.0.3-26
 

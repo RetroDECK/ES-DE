@@ -3250,7 +3250,7 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 Provides a selection between a _Dark_ and a _Light_ color scheme. This will affect the entire menu system as well as the game launch screen.
 
-**Menu opening effect**
+**Menu opening animation**
 
 Animation to play when opening the main menu or the gamelist options menu. Also sets the animation for the game launch screen. Can be set to _Scale-up_ or _None_.
 
