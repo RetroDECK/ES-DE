@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Scraper.cpp
 //
 //  Main scraper logic.
@@ -116,7 +116,7 @@ void ScraperSearchHandle::update()
 
         if (status == ASYNC_ERROR) {
             // Propagate error.
-            setError(req.getStatusString(), req.getRetry());
+            setError(req.getStatusString(), req.getRetry(), req.getFatalError());
 
             // Empty our queue.
             while (!mRequestQueue.empty())

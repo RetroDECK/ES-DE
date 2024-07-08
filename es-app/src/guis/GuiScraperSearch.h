@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiScraperSearch.h
 //
 //  User interface for the scraper where the user is able to see an overview
@@ -109,6 +109,7 @@ private:
 
     void onSearchError(const std::string& error,
                        const bool retry,
+                       const bool fatalError,
                        HttpReq::Status status = HttpReq::REQ_UNDEFINED_ERROR);
     void onSearchDone(std::vector<ScraperSearchResult>& results);
 

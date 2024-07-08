@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ScreenScraper.h
 //
 //  Functions specifically for scraping from screenscraper.fr

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiScraperSearch.cpp
 //
 //  User interface for the scraper where the user is able to see an overview
@@ -552,8 +552,16 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
 
 void GuiScraperSearch::onSearchError(const std::string& error,
                                      const bool retry,
+                                     const bool fatalError,
                                      HttpReq::Status status)
 {
+    if (fatalError) {
+        LOG(LogWarning) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
+        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), "OK",
+                                       mCancelCallback, "", nullptr, "", nullptr, nullptr, true));
+        return;
+    }
+
     const int retries {
         glm::clamp(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"), 0, 10)};
     if (retry && mSearchType != MANUAL_MODE && retries > 0 && mRetryCount < retries) {
@@ -798,6 +806,7 @@ void GuiScraperSearch::update(int deltaTime)
         mScraperResults = mSearchHandle->getResults();
         const std::string statusString {mSearchHandle->getStatusString()};
         const bool retryFlag {mSearchHandle->getRetry()};
+        const bool fatalErrorFlag {mSearchHandle->getFatalError()};
 
         // We reset here because onSearchDone in auto mode can call mSkipCallback() which
         // can call another search() which will set our mSearchHandle to something important.
@@ -821,7 +830,7 @@ void GuiScraperSearch::update(int deltaTime)
             }
         }
         else if (status == ASYNC_ERROR) {
-            onSearchError(statusString, retryFlag);
+            onSearchError(statusString, retryFlag, fatalErrorFlag);
         }
     }
 
@@ -855,7 +864,7 @@ void GuiScraperSearch::update(int deltaTime)
         }
         else if (mMDRetrieveURLsHandle->status() == ASYNC_ERROR) {
             onSearchError(mMDRetrieveURLsHandle->getStatusString(),
-                          mMDRetrieveURLsHandle->getRetry());
+                          mMDRetrieveURLsHandle->getRetry(), mSearchHandle->getFatalError());
             mMDRetrieveURLsHandle.reset();
         }
     }
@@ -912,7 +921,8 @@ void GuiScraperSearch::update(int deltaTime)
             }
         }
         else if (mMDResolveHandle->status() == ASYNC_ERROR) {
-            onSearchError(mMDResolveHandle->getStatusString(), mMDResolveHandle->getRetry());
+            onSearchError(mMDResolveHandle->getStatusString(), mMDResolveHandle->getRetry(),
+                          mSearchHandle->getFatalError());
             mMDResolveHandle.reset();
         }
     }
@@ -941,7 +951,7 @@ void GuiScraperSearch::updateThumbnail()
     else {
         mResultThumbnail->setImage("");
         onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg(), true,
-                      it->second->status());
+                      mSearchHandle->getFatalError(), it->second->status());
     }
 
     mThumbnailReqMap.erase(it);
