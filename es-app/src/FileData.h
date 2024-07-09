@@ -154,6 +154,10 @@ public:
     const std::string& getSortTypeString() const { return mSortTypeString; }
     const FileData::SortType& getSortTypeFromString(const std::string& desc) const;
 
+    static inline std::vector<std::string> sImageExtensions {".png", ".jpg"};
+    static inline std::vector<std::string> sVideoExtensions {".mp4", ".mkv", ".avi",
+                                                             ".mp4", ".wmv", ".mov"};
+
 protected:
     FileData* mSourceFileData;
     FileData* mParent;
@@ -171,9 +175,7 @@ private:
     std::vector<FileData*> mChildrenLastPlayed;
     std::vector<FileData*> mChildrenMostPlayed;
     std::function<void()> mUpdateListCallback;
-    static inline std::vector<std::string> sImageExtensions {".png", ".jpg"};
-    static inline std::vector<std::string> sVideoExtensions {".mp4", ".mkv", ".avi",
-                                                             ".mp4", ".wmv", ".mov"};
+
     // The pair includes all games, and favorite games.
     std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;

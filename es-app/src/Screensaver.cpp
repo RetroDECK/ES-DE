@@ -418,6 +418,32 @@ void Screensaver::generateImageList()
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
+        // This method of building an inventory of all image files isn't pretty, but to use the
+        // FileData::getImagePath() function leads to unacceptable performance issues on some
+        // platforms like Android that offer very poor disk I/O performance. To instead list
+        // all files recursively is much faster as this avoids stat() function calls which are
+        // very expensive on such problematic platforms.
+        const std::string mediaDirMiximages {
+            FileData::getMediaDirectory() + (*it)->getRootFolder()->getSystemName() + "/miximages"};
+        const std::string mediaDirScreenshots {FileData::getMediaDirectory() +
+                                               (*it)->getRootFolder()->getSystemName() +
+                                               "/screenshots"};
+        const std::string mediaDirTitlescreens {FileData::getMediaDirectory() +
+                                                (*it)->getRootFolder()->getSystemName() +
+                                                "/titlescreens"};
+        const std::string mediaDirCovers {FileData::getMediaDirectory() +
+                                          (*it)->getRootFolder()->getSystemName() + "/covers"};
+        const Utils::FileSystem::StringList dirContentMiximages {
+            Utils::FileSystem::getDirContent(mediaDirMiximages, true)};
+        const Utils::FileSystem::StringList dirContentScreenshots {
+            Utils::FileSystem::getDirContent(mediaDirScreenshots, true)};
+        const Utils::FileSystem::StringList dirContentTitlescreens {
+            Utils::FileSystem::getDirContent(mediaDirTitlescreens, true)};
+        const Utils::FileSystem::StringList dirContentCovers {
+            Utils::FileSystem::getDirContent(mediaDirCovers, true)};
+
+        std::string subFolders;
+
         std::vector<FileData*> allFiles {(*it)->getRootFolder()->getFilesRecursive(GAME, true)};
         for (auto it2 = allFiles.cbegin(); it2 != allFiles.cend(); ++it2) {
             // Only include games suitable for children if we're in Kid UI mode.
@@ -426,9 +452,36 @@ void Screensaver::generateImageList()
                 continue;
             if (favoritesOnly && (*it2)->metadata.get("favorite") != "true")
                 continue;
-            std::string imagePath {(*it2)->getImagePath()};
-            if (imagePath != "")
-                mImageFiles.push_back((*it2));
+
+            subFolders = Utils::String::replace(Utils::FileSystem::getParent((*it2)->getPath()),
+                                                (*it)->getStartPath(), "");
+            const std::string gamePath {subFolders + "/" + (*it2)->getDisplayName()};
+
+            for (auto& extension : FileData::sImageExtensions) {
+                if (std::find(dirContentMiximages.cbegin(), dirContentMiximages.cend(),
+                              mediaDirMiximages + gamePath + extension) !=
+                    dirContentMiximages.cend()) {
+                    mImageFiles.push_back((*it2));
+                    break;
+                }
+                if (std::find(dirContentScreenshots.cbegin(), dirContentScreenshots.cend(),
+                              mediaDirScreenshots + gamePath + extension) !=
+                    dirContentScreenshots.cend()) {
+                    mImageFiles.push_back((*it2));
+                    break;
+                }
+                if (std::find(dirContentTitlescreens.cbegin(), dirContentTitlescreens.cend(),
+                              mediaDirTitlescreens + gamePath + extension) !=
+                    dirContentTitlescreens.cend()) {
+                    mImageFiles.push_back((*it2));
+                    break;
+                }
+                if (std::find(dirContentCovers.cbegin(), dirContentCovers.cend(),
+                              mediaDirCovers + gamePath + extension) != dirContentCovers.cend()) {
+                    mImageFiles.push_back((*it2));
+                    break;
+                }
+            }
         }
     }
 
@@ -445,6 +498,18 @@ void Screensaver::generateVideoList()
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
+        // This method of building an inventory of all video files isn't pretty, but to use the
+        // FileData::getVideoPath() function leads to unacceptable performance issues on some
+        // platforms like Android that offer very poor disk I/O performance. To instead list
+        // all files recursively is much faster as this avoids stat() function calls which are
+        // very expensive on such problematic platforms.
+        const std::string mediaDir {FileData::getMediaDirectory() +
+                                    (*it)->getRootFolder()->getSystemName() + "/videos"};
+        const Utils::FileSystem::StringList dirContent {
+            Utils::FileSystem::getDirContent(mediaDir, true)};
+
+        std::string subFolders;
+
         std::vector<FileData*> allFiles {(*it)->getRootFolder()->getFilesRecursive(GAME, true)};
         for (auto it2 = allFiles.cbegin(); it2 != allFiles.cend(); ++it2) {
             // Only include games suitable for children if we're in Kid UI mode.
@@ -453,9 +518,18 @@ void Screensaver::generateVideoList()
                 continue;
             if (favoritesOnly && (*it2)->metadata.get("favorite") != "true")
                 continue;
-            std::string videoPath {(*it2)->getVideoPath()};
-            if (videoPath != "")
-                mVideoFiles.push_back((*it2));
+
+            subFolders = Utils::String::replace(Utils::FileSystem::getParent((*it2)->getPath()),
+                                                (*it)->getStartPath(), "");
+            const std::string gamePath {subFolders + "/" + (*it2)->getDisplayName()};
+
+            for (auto& extension : FileData::sVideoExtensions) {
+                if (std::find(dirContent.cbegin(), dirContent.cend(),
+                              mediaDir + gamePath + extension) != dirContent.cend()) {
+                    mVideoFiles.push_back((*it2));
+                    break;
+                }
+            }
         }
     }
 
