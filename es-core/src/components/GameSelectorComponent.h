@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GameSelectorComponent.h
 //
 //  Makes a selection of games based on theme-controlled criteria.

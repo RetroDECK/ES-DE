@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  AnimatedImageComponent.h
 //
 //  Creates animation from multiple images files.

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiInfoPopup.cpp
 //
 //  Popup window used for user notifications.

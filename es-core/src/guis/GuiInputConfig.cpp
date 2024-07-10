@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiInputConfig.cpp
 //
 //  Input device configuration GUI (for keyboards, joysticks and gamepads).

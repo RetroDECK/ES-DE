@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MetaData.cpp
 //
 //  Static data for default metadata values as well as functions

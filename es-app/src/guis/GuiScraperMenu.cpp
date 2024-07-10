@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiScraperMenu.cpp
 //
 //  Game media scraper, including settings as well as the scraping start button.

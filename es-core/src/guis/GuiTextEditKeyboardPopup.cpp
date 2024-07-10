@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiTextEditKeyboardPopup.cpp
 //
 //  Text edit popup with a virtual keyboard.

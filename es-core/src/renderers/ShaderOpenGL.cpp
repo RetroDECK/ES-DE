@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ShaderOpenGL.cpp
 //
 //  OpenGL / OpenGL ES shader functions.

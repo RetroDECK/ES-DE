@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  TextEditComponent.cpp
 //
 //  Component for editing text fields in menus.

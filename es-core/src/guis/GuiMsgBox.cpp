@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiMsgBox.cpp
 //
 //  Popup message dialog with a notification text and a choice of one,

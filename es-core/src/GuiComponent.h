@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiComponent.h
 //
 //  Basic GUI component handling such as placement, rotation, Z-order, rendering and animation.

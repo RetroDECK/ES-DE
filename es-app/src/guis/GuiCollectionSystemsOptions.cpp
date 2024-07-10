@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiCollectionSystemsOptions.cpp
 //
 //  User interface for the game collection settings.

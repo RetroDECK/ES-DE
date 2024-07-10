@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  SwitchComponent.cpp
 //
 //  Basic on/off switch used in menus.

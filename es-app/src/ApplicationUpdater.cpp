@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ApplicationUpdater.cpp
 //
 //  Checks for application updates.

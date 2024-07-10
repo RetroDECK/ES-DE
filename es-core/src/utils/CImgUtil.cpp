@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  CImgUtil.cpp
 //
 //  Utility functions using the CImg image processing library.

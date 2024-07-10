@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Screensaver.cpp
 //
 //  Screensaver, supporting the following types:

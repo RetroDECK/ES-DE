@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  SliderComponent.h
 //
 //  Slider to set value in a predefined range.

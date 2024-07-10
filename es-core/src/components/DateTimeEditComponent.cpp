@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  DateTimeEditComponent.cpp
 //
 //  Date and time edit component.

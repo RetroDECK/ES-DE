@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GamelistBase.h
 //
 //  Gamelist base class with utility functions and other low-level logic.

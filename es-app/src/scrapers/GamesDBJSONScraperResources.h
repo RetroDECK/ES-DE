@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GamesDBJSONScraperResources.h
 //
 //  Functions specifically for scraping from thegamesdb.net

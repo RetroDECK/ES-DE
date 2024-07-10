@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ScrollableContainer.cpp
 //
 //  Component containing scrollable information, used for the game

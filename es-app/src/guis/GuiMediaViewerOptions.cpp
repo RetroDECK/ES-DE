@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiMediaViewerOptions.cpp
 //
 //  User interface for the media viewer options.

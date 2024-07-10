@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  HelpStyle.h
 //
 //  Style (colors, position, icons etc.) for the help system.

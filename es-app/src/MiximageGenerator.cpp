@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MiximageGenerator.cpp
 //
 //  Generates miximages from screenshots, marquees, 3D boxes/covers and physical media images.

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  NinePatchComponent.h
 //
 //  Breaks up an image into 3x3 patches to accomodate resizing without distortions.

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MameNames.cpp
 //
 //  Provides expanded game names based on short MAME name arguments. Also contains

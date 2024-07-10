@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ComponentList.h
 //
 //  Used to lay out and navigate lists in GUI menus.
