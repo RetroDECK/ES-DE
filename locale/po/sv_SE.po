@@ -35,7 +35,7 @@ msgstr "LJUDINSTÄLLNINGAR"
 
 #: ../es-app/src/guis/GuiMenu.cpp:66 ../es-app/src/guis/GuiMenu.cpp:1170
 msgid "INPUT DEVICE SETTINGS"
-msgstr "ENHETSINSTÄLLNINGAR"
+msgstr "INPUTINSTÄLLNINGAR"
 
 #: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2205
 msgid "GAME COLLECTION SETTINGS"
