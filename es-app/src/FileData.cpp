@@ -1879,6 +1879,7 @@ void FileData::launchGame()
                         extraValue =
                             Utils::String::replace(extraValue, "%ROMPATHRAW%", getROMDirectory());
                         extraValue = Utils::String::replace(extraValue, "%ROMRAW%", romRaw);
+                        extraValue = Utils::String::replace(extraValue, "%BASENAME%", baseName);
                         extraValue = Utils::String::replace(extraValue, "//", "/");
 
                         if (variable == "%EXTRA_")
