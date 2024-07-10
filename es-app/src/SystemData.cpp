@@ -418,6 +418,15 @@ bool SystemData::populateFolder(FileData* folder)
                 }
             }
 
+            if (Utils::FileSystem::exists(filePath + "/noload.txt")) {
+                LOG(LogInfo) << "Skipped folder \"" << filePath
+                             << "\" as a noload.txt file is present";
+                FileData* newFolder {new FileData(FOLDER, filePath, mEnvData, this)};
+                newFolder->setNoLoad(true);
+                folder->addChild(newFolder);
+                continue;
+            }
+
             FileData* newFolder {new FileData(FOLDER, filePath, mEnvData, this)};
             populateFolder(newFolder);
 

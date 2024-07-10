@@ -59,6 +59,9 @@ namespace GamelistFileParser
             if (found)
                 treeNode = children.at(key);
 
+            if (treeNode->getNoLoad())
+                return nullptr;
+
             // This is the end.
             if (path_it == --pathList.end()) {
                 if (found)
@@ -132,12 +135,21 @@ namespace GamelistFileParser
         if (!Utils::FileSystem::exists(xmlpath)) {
             LOG(LogDebug) << "GamelistFileParser::parseGamelist(): System \"" << system->getName()
                           << "\" does not have a gamelist.xml file";
+            // Get rid of any orphaned noload.txt folder entries.
+            for (auto child : system->getRootFolder()->getChildrenRecursive()) {
+                if (child->getNoLoad())
+                    delete child;
+            }
             return;
         }
 
         if (Utils::FileSystem::getFileSize(xmlpath) == 0) {
             LOG(LogWarning) << "GamelistFileParser::parseGamelist(): System \"" << system->getName()
                             << "\" has an empty gamelist.xml file";
+            for (auto child : system->getRootFolder()->getChildrenRecursive()) {
+                if (child->getNoLoad())
+                    delete child;
+            }
             return;
         }
 
@@ -295,6 +307,11 @@ namespace GamelistFileParser
                         delete file;
                     }
                 }
+            }
+            // Get rid of any orphaned noload.txt folder entries.
+            for (auto child : system->getRootFolder()->getChildrenRecursive()) {
+                if (child->getNoLoad())
+                    delete child;
             }
         }
     }

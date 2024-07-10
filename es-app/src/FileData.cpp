@@ -49,6 +49,7 @@ FileData::FileData(FileType type,
     , mUpdateChildrenLastPlayed {false}
     , mUpdateChildrenMostPlayed {false}
     , mDeletionFlag {false}
+    , mNoLoad {false}
 {
     // Metadata needs at least a name field (since that's what getName() will return).
     if ((system->hasPlatformId(PlatformIds::ARCADE) ||

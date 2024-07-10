@@ -97,6 +97,8 @@ public:
 
     const bool getDeletionFlag() const { return mDeletionFlag; }
     void setDeletionFlag(bool setting) { mDeletionFlag = setting; }
+    const bool getNoLoad() const { return mNoLoad; }
+    void setNoLoad(bool state) { mNoLoad = state; }
     const bool isPlaceHolder() const { return mType == PLACEHOLDER; }
     void refreshMetadata() { metadata = mSourceFileData->metadata; }
 
@@ -184,6 +186,7 @@ private:
     bool mUpdateChildrenMostPlayed;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;
+    bool mNoLoad;
 };
 
 class CollectionFileData : public FileData
