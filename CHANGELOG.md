@@ -8,6 +8,8 @@
 
 ### Detailed list of changes
 
+* Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
+* Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper
 * (Android) Added support for the Dragon Data Dragon 32 (dragon32) game system
 * (Android) Added support for the Tano Dragon (tanodragon) game system
 * (Android) Changed the find rule for Ruffle to make game launching work again after a code change in the emulator
@@ -15,14 +17,17 @@
 * Added NooDS standalone as an alternative emulator for the gba and nds systems on Android, Linux and Windows
 * Added MAME standalone as the default emulator for the dragon32 and tanodragon systems on Linux, macOS and Windows
 * Added the .7z and .zip file extensions to the dragon32 and tanodragon systems
+* Added the Ardens RetroArch core as an alternative emulator for the arduboy system
+* Added the .arduboy file extension to the arduboy system
 * (Linux) Added a systempath find rule for the ppsspp binary name for the PPSSPP emulator
-* Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper
+* (Android) Added support for using the %BASENAME% variable with the %EXTRA% and %EXTRAARRAY% variables
 * Text within parantheses is no longer stripped out from the game name popup when adding or removing games from custom collections
 * Renamed the "Menu opening effect" setting in the UI settings menu to "Menu opening animation"
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element
 * Game files with only an extension and no filename will now get skipped on application startup
 * Added the libintl library as a dependency
+* Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 
 ### Bug fixes
