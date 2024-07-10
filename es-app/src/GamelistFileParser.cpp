@@ -60,7 +60,7 @@ namespace GamelistFileParser
                 treeNode = children.at(key);
 
             if (treeNode->getNoLoad())
-                return nullptr;
+                return treeNode;
 
             // This is the end.
             if (path_it == --pathList.end()) {
@@ -68,9 +68,11 @@ namespace GamelistFileParser
                     return treeNode;
 
                 if (type == FOLDER) {
-                    LOG(LogWarning) << "A folder defined in gamelist.xml does not exist or "
-                                       "contains no valid games: \""
-                                    << path << "\"";
+                    if (!Utils::FileSystem::exists(path + "/noload.txt")) {
+                        LOG(LogWarning) << "A folder defined in gamelist.xml does not exist or "
+                                           "contains no valid games: \""
+                                        << path << "\"";
+                    }
                     return nullptr;
                 }
 
@@ -243,6 +245,9 @@ namespace GamelistFileParser
 
                 FileData* file {findOrCreateFile(system, path, type)};
 
+                if (file != nullptr && file->getNoLoad())
+                    continue;
+
                 // Don't load entries with the wrong type. This should very rarely (if ever) happen.
                 if (file != nullptr && ((tag == "game" && file->getType() == FOLDER) ||
                                         (tag == "folder" && file->getType() == GAME))) {
@@ -252,13 +257,15 @@ namespace GamelistFileParser
                 }
 
                 if (!file) {
+                    if (!Utils::FileSystem::exists(path + "/noload.txt")) {
 #if defined(_WIN64)
-                    LOG(LogWarning)
-                        << "Couldn't process \"" << Utils::String::replace(path, "/", "\\")
-                        << "\", skipping entry";
+                        LOG(LogWarning)
+                            << "Couldn't process \"" << Utils::String::replace(path, "/", "\\")
+                            << "\", skipping entry";
 #else
-                    LOG(LogWarning) << "Couldn't process \"" << path << "\", skipping entry";
+                        LOG(LogWarning) << "Couldn't process \"" << path << "\", skipping entry";
 #endif
+                    }
                     continue;
                 }
                 else if (!file->isArcadeAsset()) {
