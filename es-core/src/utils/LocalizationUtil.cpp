@@ -27,8 +27,11 @@ namespace Utils
 {
     namespace Localization
     {
-        const std::vector<std::pair<std::string, std::string>> sSupportedLocales {
-            {{"en"}, {"US"}}, {{"sv"}, {"SE"}}, {{"zh"}, {"rCN"}}};
+        // clang-format off
+        const std::vector<std::pair<std::string, std::string>> sSupportedLocales {{{"en"}, {"US"}},
+                                                                                  {{"sv"}, {"SE"}},
+                                                                                  {{"zh"}, {"CN"}}};
+        // clang-format on
         float sMenuTitleScaleFactor {1.0f};
 
         std::pair<std::string, std::string> getLocale()
