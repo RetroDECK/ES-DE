@@ -830,7 +830,7 @@ void GuiMenu::openUIOptions()
     // Enable theme variant triggers.
     auto themeVariantTriggers = std::make_shared<SwitchComponent>();
     themeVariantTriggers->setState(Settings::getInstance()->getBool("ThemeVariantTriggers"));
-    s->addWithLabel("ENABLE THEME VARIANT TRIGGERS", themeVariantTriggers);
+    s->addWithLabel(_("ENABLE THEME VARIANT TRIGGERS"), themeVariantTriggers);
     s->addSaveFunc([themeVariantTriggers, s] {
         if (themeVariantTriggers->getState() !=
             Settings::getInstance()->getBool("ThemeVariantTriggers")) {
@@ -847,7 +847,7 @@ void GuiMenu::openUIOptions()
     if (mRenderer->getScreenRotation() == 90 || mRenderer->getScreenRotation() == 270) {
         // TODO: Add support for non-blurred background when rotating screen 90 or 270 degrees.
         menuBlurBackground->setState(true);
-        s->addWithLabel("BLUR BACKGROUND WHEN MENU IS OPEN", menuBlurBackground);
+        s->addWithLabel(_("BLUR BACKGROUND WHEN MENU IS OPEN"), menuBlurBackground);
         menuBlurBackground->setEnabled(false);
         menuBlurBackground->setOpacity(DISABLED_OPACITY);
         menuBlurBackground->getParent()
@@ -856,7 +856,7 @@ void GuiMenu::openUIOptions()
     }
     else {
         menuBlurBackground->setState(Settings::getInstance()->getBool("MenuBlurBackground"));
-        s->addWithLabel("BLUR BACKGROUND WHEN MENU IS OPEN", menuBlurBackground);
+        s->addWithLabel(_("BLUR BACKGROUND WHEN MENU IS OPEN"), menuBlurBackground);
         s->addSaveFunc([menuBlurBackground, s] {
             if (menuBlurBackground->getState() !=
                 Settings::getInstance()->getBool("MenuBlurBackground")) {
@@ -871,7 +871,7 @@ void GuiMenu::openUIOptions()
     // Sort folders on top of the gamelists.
     auto foldersOnTop = std::make_shared<SwitchComponent>();
     foldersOnTop->setState(Settings::getInstance()->getBool("FoldersOnTop"));
-    s->addWithLabel("SORT FOLDERS ON TOP OF GAMELISTS", foldersOnTop);
+    s->addWithLabel(_("SORT FOLDERS ON TOP OF GAMELISTS"), foldersOnTop);
     s->addSaveFunc([foldersOnTop, s] {
         if (foldersOnTop->getState() != Settings::getInstance()->getBool("FoldersOnTop")) {
             Settings::getInstance()->setBool("FoldersOnTop", foldersOnTop->getState());
@@ -884,7 +884,7 @@ void GuiMenu::openUIOptions()
     // Sort favorites on top of non-favorites in the gamelists.
     auto favoritesFirst = std::make_shared<SwitchComponent>();
     favoritesFirst->setState(Settings::getInstance()->getBool("FavoritesFirst"));
-    s->addWithLabel("SORT FAVORITE GAMES ABOVE NON-FAVORITES", favoritesFirst);
+    s->addWithLabel(_("SORT FAVORITE GAMES ABOVE NON-FAVORITES"), favoritesFirst);
     s->addSaveFunc([favoritesFirst, s] {
         if (favoritesFirst->getState() != Settings::getInstance()->getBool("FavoritesFirst")) {
             Settings::getInstance()->setBool("FavoritesFirst", favoritesFirst->getState());
@@ -898,7 +898,7 @@ void GuiMenu::openUIOptions()
     // Enable gamelist star markings for favorite games.
     auto favoritesStar = std::make_shared<SwitchComponent>();
     favoritesStar->setState(Settings::getInstance()->getBool("FavoritesStar"));
-    s->addWithLabel("ADD STAR MARKINGS TO FAVORITE GAMES", favoritesStar);
+    s->addWithLabel(_("ADD STAR MARKINGS TO FAVORITE GAMES"), favoritesStar);
     s->addSaveFunc([favoritesStar, s] {
         if (favoritesStar->getState() != Settings::getInstance()->getBool("FavoritesStar")) {
             Settings::getInstance()->setBool("FavoritesStar", favoritesStar->getState());
@@ -911,7 +911,7 @@ void GuiMenu::openUIOptions()
     // Enable quick list scrolling overlay.
     auto listScrollOverlay = std::make_shared<SwitchComponent>();
     listScrollOverlay->setState(Settings::getInstance()->getBool("ListScrollOverlay"));
-    s->addWithLabel("ENABLE TEXTLIST QUICK SCROLLING OVERLAY", listScrollOverlay);
+    s->addWithLabel(_("ENABLE TEXTLIST QUICK SCROLLING OVERLAY"), listScrollOverlay);
     s->addSaveFunc([listScrollOverlay, s] {
         if (listScrollOverlay->getState() !=
             Settings::getInstance()->getBool("ListScrollOverlay")) {
@@ -923,7 +923,7 @@ void GuiMenu::openUIOptions()
     // Enable virtual (on-screen) keyboard.
     auto virtualKeyboard = std::make_shared<SwitchComponent>();
     virtualKeyboard->setState(Settings::getInstance()->getBool("VirtualKeyboard"));
-    s->addWithLabel("ENABLE VIRTUAL KEYBOARD", virtualKeyboard);
+    s->addWithLabel(_("ENABLE VIRTUAL KEYBOARD"), virtualKeyboard);
     s->addSaveFunc([virtualKeyboard, s] {
         if (virtualKeyboard->getState() != Settings::getInstance()->getBool("VirtualKeyboard")) {
             Settings::getInstance()->setBool("VirtualKeyboard", virtualKeyboard->getState());
@@ -941,7 +941,7 @@ void GuiMenu::openUIOptions()
     // Enable the 'Y' button for tagging games as favorites.
     auto favoritesAddButton = std::make_shared<SwitchComponent>();
     favoritesAddButton->setState(Settings::getInstance()->getBool("FavoritesAddButton"));
-    s->addWithLabel("ENABLE TOGGLE FAVORITES BUTTON", favoritesAddButton);
+    s->addWithLabel(_("ENABLE TOGGLE FAVORITES BUTTON"), favoritesAddButton);
     s->addSaveFunc([favoritesAddButton, s] {
         if (Settings::getInstance()->getBool("FavoritesAddButton") !=
             favoritesAddButton->getState()) {
@@ -953,7 +953,7 @@ void GuiMenu::openUIOptions()
     // Gamelist filters.
     auto gamelistFilters = std::make_shared<SwitchComponent>();
     gamelistFilters->setState(Settings::getInstance()->getBool("GamelistFilters"));
-    s->addWithLabel("ENABLE GAMELIST FILTERS", gamelistFilters);
+    s->addWithLabel(_("ENABLE GAMELIST FILTERS"), gamelistFilters);
     s->addSaveFunc([gamelistFilters, s] {
         if (Settings::getInstance()->getBool("GamelistFilters") != gamelistFilters->getState()) {
             Settings::getInstance()->setBool("GamelistFilters", gamelistFilters->getState());
@@ -965,7 +965,7 @@ void GuiMenu::openUIOptions()
     // On-screen help prompts.
     auto showHelpPrompts = std::make_shared<SwitchComponent>();
     showHelpPrompts->setState(Settings::getInstance()->getBool("ShowHelpPrompts"));
-    s->addWithLabel("DISPLAY ON-SCREEN HELP", showHelpPrompts);
+    s->addWithLabel(_("DISPLAY ON-SCREEN HELP"), showHelpPrompts);
     s->addSaveFunc([showHelpPrompts, s] {
         if (Settings::getInstance()->getBool("ShowHelpPrompts") != showHelpPrompts->getState()) {
             Settings::getInstance()->setBool("ShowHelpPrompts", showHelpPrompts->getState());
@@ -1072,7 +1072,7 @@ void GuiMenu::openSoundOptions()
 
     auto systemVolume = std::make_shared<SliderComponent>(0.0f, 100.0f, 1.0f, "%");
     systemVolume->setValue(static_cast<float>(currentVolume));
-    s->addWithLabel("SYSTEM VOLUME", systemVolume);
+    s->addWithLabel(_("SYSTEM VOLUME"), systemVolume);
     s->addSaveFunc([systemVolume, currentVolume] {
         // No need to create the VolumeControl object unless the volume has actually been changed.
         if (static_cast<int>(systemVolume->getValue()) != currentVolume) {
@@ -1086,7 +1086,7 @@ void GuiMenu::openSoundOptions()
     auto soundVolumeNavigation = std::make_shared<SliderComponent>(0.0f, 100.0f, 1.0f, "%");
     soundVolumeNavigation->setValue(
         static_cast<float>(Settings::getInstance()->getInt("SoundVolumeNavigation")));
-    s->addWithLabel("NAVIGATION SOUNDS VOLUME", soundVolumeNavigation);
+    s->addWithLabel(_("NAVIGATION SOUNDS VOLUME"), soundVolumeNavigation);
     s->addSaveFunc([soundVolumeNavigation, s] {
         if (soundVolumeNavigation->getValue() !=
             static_cast<float>(Settings::getInstance()->getInt("SoundVolumeNavigation"))) {
@@ -1100,7 +1100,7 @@ void GuiMenu::openSoundOptions()
     auto soundVolumeVideos = std::make_shared<SliderComponent>(0.0f, 100.0f, 1.0f, "%");
     soundVolumeVideos->setValue(
         static_cast<float>(Settings::getInstance()->getInt("SoundVolumeVideos")));
-    s->addWithLabel("VIDEO PLAYER VOLUME", soundVolumeVideos);
+    s->addWithLabel(_("VIDEO PLAYER VOLUME"), soundVolumeVideos);
     s->addSaveFunc([soundVolumeVideos, s] {
         if (soundVolumeVideos->getValue() !=
             static_cast<float>(Settings::getInstance()->getInt("SoundVolumeVideos"))) {
@@ -1114,7 +1114,7 @@ void GuiMenu::openSoundOptions()
         // Play audio for gamelist videos.
         auto viewsVideoAudio = std::make_shared<SwitchComponent>();
         viewsVideoAudio->setState(Settings::getInstance()->getBool("ViewsVideoAudio"));
-        s->addWithLabel("PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS", viewsVideoAudio);
+        s->addWithLabel(_("PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"), viewsVideoAudio);
         s->addSaveFunc([viewsVideoAudio, s] {
             if (viewsVideoAudio->getState() !=
                 Settings::getInstance()->getBool("ViewsVideoAudio")) {
@@ -1126,7 +1126,7 @@ void GuiMenu::openSoundOptions()
         // Play audio for media viewer videos.
         auto mediaViewerVideoAudio = std::make_shared<SwitchComponent>();
         mediaViewerVideoAudio->setState(Settings::getInstance()->getBool("MediaViewerVideoAudio"));
-        s->addWithLabel("PLAY AUDIO FOR MEDIA VIEWER VIDEOS", mediaViewerVideoAudio);
+        s->addWithLabel(_("PLAY AUDIO FOR MEDIA VIEWER VIDEOS"), mediaViewerVideoAudio);
         s->addSaveFunc([mediaViewerVideoAudio, s] {
             if (mediaViewerVideoAudio->getState() !=
                 Settings::getInstance()->getBool("MediaViewerVideoAudio")) {
@@ -1139,7 +1139,7 @@ void GuiMenu::openSoundOptions()
         // Play audio for screensaver videos.
         auto screensaverVideoAudio = std::make_shared<SwitchComponent>();
         screensaverVideoAudio->setState(Settings::getInstance()->getBool("ScreensaverVideoAudio"));
-        s->addWithLabel("PLAY AUDIO FOR SCREENSAVER VIDEOS", screensaverVideoAudio);
+        s->addWithLabel(_("PLAY AUDIO FOR SCREENSAVER VIDEOS"), screensaverVideoAudio);
         s->addSaveFunc([screensaverVideoAudio, s] {
             if (screensaverVideoAudio->getState() !=
                 Settings::getInstance()->getBool("ScreensaverVideoAudio")) {
@@ -1152,7 +1152,7 @@ void GuiMenu::openSoundOptions()
         // Navigation sounds.
         auto navigationSounds = std::make_shared<SwitchComponent>();
         navigationSounds->setState(Settings::getInstance()->getBool("NavigationSounds"));
-        s->addWithLabel("ENABLE NAVIGATION SOUNDS", navigationSounds);
+        s->addWithLabel(_("ENABLE NAVIGATION SOUNDS"), navigationSounds);
         s->addSaveFunc([navigationSounds, s] {
             if (navigationSounds->getState() !=
                 Settings::getInstance()->getBool("NavigationSounds")) {
@@ -1172,7 +1172,7 @@ void GuiMenu::openInputDeviceOptions()
 
     // Controller type.
     auto inputControllerType = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "CONTROLLER TYPE", false);
+        getHelpStyle(), _("CONTROLLER TYPE"), false);
     std::string selectedPlayer {Settings::getInstance()->getString("InputControllerType")};
     inputControllerType->add("XBOX", "xbox", selectedPlayer == "xbox");
     inputControllerType->add("XBOX 360", "xbox360", selectedPlayer == "xbox360");
@@ -1185,7 +1185,7 @@ void GuiMenu::openInputDeviceOptions()
     // configuration file. Simply set the controller type to "xbox" in this case.
     if (inputControllerType->getSelectedObjects().size() == 0)
         inputControllerType->selectEntry(0);
-    s->addWithLabel("CONTROLLER TYPE", inputControllerType);
+    s->addWithLabel(_("CONTROLLER TYPE"), inputControllerType);
     s->addSaveFunc([inputControllerType, s] {
         if (inputControllerType->getSelected() !=
             Settings::getInstance()->getString("InputControllerType")) {
@@ -1198,17 +1198,17 @@ void GuiMenu::openInputDeviceOptions()
 #if defined(__ANDROID__)
     // Touch overlay size.
     auto touchOverlaySize = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "TOUCH OVERLAY SIZE", false);
+        getHelpStyle(), _("TOUCH OVERLAY SIZE"), false);
     std::string selectedOverlaySize {Settings::getInstance()->getString("InputTouchOverlaySize")};
-    touchOverlaySize->add("MEDIUM", "medium", selectedOverlaySize == "medium");
-    touchOverlaySize->add("LARGE", "large", selectedOverlaySize == "large");
-    touchOverlaySize->add("SMALL", "small", selectedOverlaySize == "small");
-    touchOverlaySize->add("EXTRA SMALL", "x-small", selectedOverlaySize == "x-small");
+    touchOverlaySize->add(_("MEDIUM"), "medium", selectedOverlaySize == "medium");
+    touchOverlaySize->add(_("LARGE"), "large", selectedOverlaySize == "large");
+    touchOverlaySize->add(_("SMALL"), "small", selectedOverlaySize == "small");
+    touchOverlaySize->add(_("EXTRA SMALL"), "x-small", selectedOverlaySize == "x-small");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the overlay size to "medium" in this case.
     if (touchOverlaySize->getSelectedObjects().size() == 0)
         touchOverlaySize->selectEntry(0);
-    s->addWithLabel("TOUCH OVERLAY SIZE", touchOverlaySize);
+    s->addWithLabel(_("TOUCH OVERLAY SIZE"), touchOverlaySize);
     s->addSaveFunc([touchOverlaySize, s] {
         if (touchOverlaySize->getSelected() !=
             Settings::getInstance()->getString("InputTouchOverlaySize")) {
@@ -1221,12 +1221,12 @@ void GuiMenu::openInputDeviceOptions()
 
     // Touch overlay opacity.
     auto touchOverlayOpacity = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "TOUCH OVERLAY OPACITY", false);
+        getHelpStyle(), _("TOUCH OVERLAY OPACITY"), false);
     std::string selectedOverlayOpacity {
         Settings::getInstance()->getString("InputTouchOverlayOpacity")};
-    touchOverlayOpacity->add("NORMAL", "normal", selectedOverlayOpacity == "normal");
-    touchOverlayOpacity->add("LOW", "low", selectedOverlayOpacity == "low");
-    touchOverlayOpacity->add("VERY LOW", "verylow", selectedOverlayOpacity == "verylow");
+    touchOverlayOpacity->add(_("NORMAL"), "normal", selectedOverlayOpacity == "normal");
+    touchOverlayOpacity->add(_("LOW"), "low", selectedOverlayOpacity == "low");
+    touchOverlayOpacity->add(_("VERY LOW"), "verylow", selectedOverlayOpacity == "verylow");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the overlay opacity to "normal" in this case.
     if (touchOverlayOpacity->getSelectedObjects().size() == 0)
@@ -1246,7 +1246,7 @@ void GuiMenu::openInputDeviceOptions()
     auto touchOverlayFadeTime = std::make_shared<SliderComponent>(0.0f, 20.0f, 1.0f, "s");
     touchOverlayFadeTime->setValue(
         static_cast<float>(Settings::getInstance()->getInt("InputTouchOverlayFadeTime")));
-    s->addWithLabel("TOUCH OVERLAY FADE-OUT TIME", touchOverlayFadeTime);
+    s->addWithLabel(_("TOUCH OVERLAY FADE-OUT TIME"), touchOverlayFadeTime);
     s->addSaveFunc([touchOverlayFadeTime, s] {
         if (touchOverlayFadeTime->getValue() !=
             static_cast<float>(Settings::getInstance()->getInt("InputTouchOverlayFadeTime"))) {
@@ -1260,7 +1260,7 @@ void GuiMenu::openInputDeviceOptions()
     // Whether to enable the touch overlay.
     auto inputTouchOverlay = std::make_shared<SwitchComponent>();
     inputTouchOverlay->setState(Settings::getInstance()->getBool("InputTouchOverlay"));
-    s->addWithLabel("ENABLE TOUCH OVERLAY", inputTouchOverlay);
+    s->addWithLabel(_("ENABLE TOUCH OVERLAY"), inputTouchOverlay);
     s->addSaveFunc([inputTouchOverlay, s] {
         if (Settings::getInstance()->getBool("InputTouchOverlay") !=
             inputTouchOverlay->getState()) {
@@ -1297,11 +1297,11 @@ void GuiMenu::openInputDeviceOptions()
                                       touchOverlayOpacity, touchOverlayFadeTime]() {
         if (!inputTouchOverlay->getState()) {
             const std::string message {
-                "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU WILL "
-                "LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO TEMPORARILY "
-                "PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, OR YOU "
-                "COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE THE "
-                "CONFIGURATOR TO RUN ON NEXT STARTUP"};
+                _("DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU WILL "
+                  "LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO TEMPORARILY "
+                  "PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, OR YOU "
+                  "COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE THE "
+                  "CONFIGURATOR TO RUN ON NEXT STARTUP")};
 
             Window* window {mWindow};
             window->pushGui(
@@ -1359,7 +1359,7 @@ void GuiMenu::openInputDeviceOptions()
     auto inputOnlyFirstController = std::make_shared<SwitchComponent>();
     inputOnlyFirstController->setState(
         Settings::getInstance()->getBool("InputOnlyFirstController"));
-    s->addWithLabel("ONLY ACCEPT INPUT FROM FIRST CONTROLLER", inputOnlyFirstController);
+    s->addWithLabel(_("ONLY ACCEPT INPUT FROM FIRST CONTROLLER"), inputOnlyFirstController);
     s->addSaveFunc([inputOnlyFirstController, s] {
         if (Settings::getInstance()->getBool("InputOnlyFirstController") !=
             inputOnlyFirstController->getState()) {
@@ -1372,7 +1372,7 @@ void GuiMenu::openInputDeviceOptions()
     // Whether to swap the A/B and X/Y buttons.
     auto inputSwapButtons = std::make_shared<SwitchComponent>();
     inputSwapButtons->setState(Settings::getInstance()->getBool("InputSwapButtons"));
-    s->addWithLabel("SWAP THE A/B AND X/Y BUTTONS", inputSwapButtons);
+    s->addWithLabel(_("SWAP THE A/B AND X/Y BUTTONS"), inputSwapButtons);
     s->addSaveFunc([inputSwapButtons, s] {
         if (Settings::getInstance()->getBool("InputSwapButtons") != inputSwapButtons->getState()) {
             Settings::getInstance()->setBool("InputSwapButtons", inputSwapButtons->getState());
@@ -1383,7 +1383,7 @@ void GuiMenu::openInputDeviceOptions()
     // Whether to ignore keyboard input (except the quit shortcut).
     auto inputIgnoreKeyboard = std::make_shared<SwitchComponent>();
     inputIgnoreKeyboard->setState(Settings::getInstance()->getBool("InputIgnoreKeyboard"));
-    s->addWithLabel("IGNORE KEYBOARD INPUT", inputIgnoreKeyboard);
+    s->addWithLabel(_("IGNORE KEYBOARD INPUT"), inputIgnoreKeyboard);
     s->addSaveFunc([inputIgnoreKeyboard, s] {
         if (Settings::getInstance()->getBool("InputIgnoreKeyboard") !=
             inputIgnoreKeyboard->getState()) {
@@ -1397,7 +1397,7 @@ void GuiMenu::openInputDeviceOptions()
     ComponentListRow configureInputRow;
     configureInputRow.elements.clear();
     configureInputRow.addElement(
-        std::make_shared<TextComponent>("CONFIGURE KEYBOARD AND CONTROLLERS",
+        std::make_shared<TextComponent>(_("CONFIGURE KEYBOARD AND CONTROLLERS"),
                                         Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
         true);
     configureInputRow.addElement(mMenu.makeArrow(), false);
@@ -1418,14 +1418,14 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
     settings->setNeedsSaving(false);
 
     std::string message {
-        "THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
-        "CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT "
-        "AFFECT THE HELP PROMPTS)"};
+        _("THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+          "CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT "
+          "AFFECT THE HELP PROMPTS)")};
 
     Window* window {mWindow};
     window->pushGui(new GuiMsgBox(
-        getHelpStyle(), message, "PROCEED",
-        [window] { window->pushGui(new GuiDetectDevice(false, false, nullptr)); }, "CANCEL",
+        getHelpStyle(), message, _("PROCEED"),
+        [window] { window->pushGui(new GuiDetectDevice(false, false, nullptr)); }, _("CANCEL"),
         nullptr, "", nullptr, nullptr, false, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.84f :
