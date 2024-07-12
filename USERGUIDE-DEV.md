@@ -189,7 +189,19 @@ For very specific situations such as when the ROM directory tree is shared with 
 ~/ROMs/nes/noload.txt
 ```
 
-Note that if the setting _Only show games from gamelist.xml files_ has been enabled then the noload.txt logic is completely bypassed as this option will make ES-DE load anything present in the gamelist.xml files, regardless of whether the files and directories actually exist. But this option (or the equivalent --gamelist-only command line option) is only intended for troubleshooting and debugging purposes and should not be enabled during normal application usage.
+Note that if the setting _Only show games from gamelist.xml files_ has been enabled then the noload.txt logic is completely bypassed as this option will make ES-DE load anything present in the gamelist.xml files, regardless of whether the files and directories actually exist.
+
+## Skip loading of individual subdirectories
+
+Sometimes you need to place things inside the ROMs directory tree that will not be visible inside ES-DE, such as texture packs and similar. But as ES-DE always scans all files to determine which ones are valid game files this can add significantly to the application startup time. However loading of such subdirectories can be skipped by placing a `noload.txt` file in the root of the directory, in the same manner as documented in the previous section above regarding disabling of game systems. For example:
+
+```
+~/ROMs/psx/textures/noload.txt
+```
+
+Just note that you can't clean out stale entries from the gamelist.xml files for any directories that have been hidden in this way. So to get rid of any gamelist.xml entries for such files temporarily remove the noload.txt file, restart or reload ES-DE, run the _Orphaned data cleanup_ utility, then create a new noload.txt file and finally reload or restart ES-DE again.
+
+Note that if the setting _Only show games from gamelist.xml files_ has been enabled then the noload.txt logic is completely bypassed as this option will make ES-DE load anything present in the gamelist.xml files.
 
 ## Placing games and other resources on network shares
 

@@ -9,6 +9,7 @@
 ### Detailed list of changes
 
 * Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
+* Added support for skipping the scanning of game system subdirectories (by using noload.txt files)
 * Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper
 * (Android) Added support for the Dragon Data Dragon 32 (dragon32) game system
 * (Android) Added support for the Tano Dragon (tanodragon) game system
