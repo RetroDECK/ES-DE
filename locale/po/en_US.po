@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-13 19:24+0200\n"
-"PO-Revision-Date: 2024-07-13 19:13+0200\n"
+"POT-Creation-Date: 2024-07-13 22:09+0200\n"
+"PO-Revision-Date: 2024-07-13 21:48+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.4\n"
+
+msgid "No Entries Found"
+msgstr "No Entries Found"
 
 msgid "NAME"
 msgstr "NAME"
@@ -652,11 +655,161 @@ msgstr "select"
 msgid "close menu"
 msgstr "close menu"
 
-msgid "back"
-msgstr "back"
+msgid "HELP PROMPTS"
+msgstr "HELP PROMPTS"
+
+msgid "TOP"
+msgstr "TOP"
+
+msgid "BOTTOM"
+msgstr "BOTTOM"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "DISPLAY MEDIA TYPES"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "STRETCH VIDEOS TO SCREEN RESOLUTION"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "RENDER SCANLINES FOR VIDEOS"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "RENDER BLUR FOR VIDEOS"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+
+msgid "SELECT COLLECTIONS"
+msgstr "SELECT COLLECTIONS"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "AUTOMATIC GAME COLLECTIONS"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "CUSTOM GAME COLLECTIONS"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "CREATE NEW CUSTOM COLLECTION FROM THEME"
+
+msgid "SELECT THEME FOLDER"
+msgstr "SELECT THEME FOLDER"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "CREATE NEW CUSTOM COLLECTION"
+
+msgid "NEW COLLECTION NAME"
+msgstr "NEW COLLECTION NAME"
+
+msgid "CREATE"
+msgstr "CREATE"
+
+msgid "CREATE COLLECTION?"
+msgstr "CREATE COLLECTION?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "DELETE CUSTOM COLLECTION"
+
+msgid "COLLECTION TO DELETE"
+msgstr "COLLECTION TO DELETE"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "GROUP CUSTOM COLLECTIONS"
+
+msgid "IF UNTHEMED"
+msgstr "IF UNTHEMED"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr "START SCREENSAVER AFTER (MINUTES)"
+
+msgid "SCREENSAVER TYPE"
+msgstr "SCREENSAVER TYPE"
+
+msgid "DIM"
+msgstr "DIM"
+
+msgid "BLACK"
+msgstr "BLACK"
+
+msgid "SLIDESHOW"
+msgstr "SLIDESHOW"
+
+msgid "VIDEO"
+msgstr "VIDEO"
+
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr "ENABLE SCREENSAVER CONTROLS"
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr "SLIDESHOW SCREENSAVER SETTINGS"
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr "VIDEO SCREENSAVER SETTINGS"
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr "SLIDESHOW SCREENSAVER"
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr "SWAP IMAGES AFTER (SECONDS)"
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr "ONLY INCLUDE FAVORITE GAMES"
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr "STRETCH IMAGES TO SCREEN RESOLUTION"
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr "DISPLAY GAME INFO OVERLAY"
+
+msgid "RENDER SCANLINES"
+msgstr "RENDER SCANLINES"
+
+msgid "USE CUSTOM IMAGES"
+msgstr "USE CUSTOM IMAGES"
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr "CUSTOM IMAGE DIRECTORY"
+
+msgid "VIDEO SCREENSAVER"
+msgstr "VIDEO SCREENSAVER"
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr "SWAP VIDEOS AFTER (SECONDS)"
+
+msgid "RENDER BLUR"
+msgstr "RENDER BLUR"
+
+msgid "FILTER GAMELIST"
+msgstr "FILTER GAMELIST"
+
+msgid "RESET ALL FILTERS"
+msgstr "RESET ALL FILTERS"
 
 msgid "BACK"
 msgstr "BACK"
+
+msgid "back"
+msgstr "back"
+
+msgid "GAME NAME"
+msgstr "GAME NAME"
+
+msgid "APPLY CHANGES?"
+msgstr "APPLY CHANGES?"
+
+msgid "NOTHING TO FILTER"
+msgstr "NOTHING TO FILTER"
 
 msgid "GAMELIST OPTIONS"
 msgstr "GAMELIST OPTIONS"
@@ -667,14 +820,14 @@ msgstr "JUMP TO.."
 msgid "SORT GAMES BY"
 msgstr "SORT GAMES BY"
 
-msgid "FILTER GAMELIST"
-msgstr "FILTER GAMELIST"
-
 msgid "EDIT THIS FOLDER'S METADATA"
 msgstr "EDIT THIS FOLDER'S METADATA"
 
 msgid "EDIT THIS GAME'S METADATA"
 msgstr "EDIT THIS GAME'S METADATA"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "ENTER FOLDER (OVERRIDE FOLDER LINK)"
 
 msgid "APPLY"
 msgstr "APPLY"
@@ -687,6 +840,9 @@ msgstr "close (cancel)"
 
 msgid "close"
 msgstr "close"
+
+msgid "INVALID ENTRY"
+msgstr "INVALID ENTRY"
 
 msgid "EDIT METADATA"
 msgstr "EDIT METADATA"
@@ -702,9 +858,6 @@ msgstr "CLEAR INVALID ENTRY"
 
 msgid "SYSTEM-WIDE"
 msgstr "SYSTEM-WIDE"
-
-msgid "APPLY CHANGES?"
-msgstr "APPLY CHANGES?"
 
 msgid "SCRAPE"
 msgstr "SCRAPE"
@@ -751,6 +904,15 @@ msgstr "DELETE"
 
 msgid "delete game"
 msgstr "delete game"
+
+msgid "ALL GAMES"
+msgstr "ALL GAMES"
+
+msgid "FAVORITES"
+msgstr "FAVORITES"
+
+msgid "COLLECTIONS"
+msgstr "COLLECTIONS"
 
 msgid "name, ascending"
 msgstr "name, ascending"
@@ -812,6 +974,12 @@ msgstr "system, ascending"
 msgid "system, descending"
 msgstr "system, descending"
 
+msgid "random"
+msgstr "random"
+
+msgid "screensaver"
+msgstr "screensaver"
+
 msgid "system"
 msgstr "system"
 
@@ -821,11 +989,37 @@ msgstr "view media"
 msgid "options"
 msgstr "options"
 
-msgid "random"
-msgstr "random"
-
 msgid "jump to game"
 msgstr "jump to game"
+
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+
+msgid "menu"
+msgstr "menu"
+
+msgid "BROKEN"
+msgstr "BROKEN"
+
+msgid "FALSE"
+msgstr "FALSE"
+
+msgid "TRUE"
+msgstr "TRUE"
+
+msgid "UNKNOWN"
+msgstr "UNKNOWN"
+
+msgid "NONE SELECTED"
+msgstr "NONE SELECTED"
 
 msgid "Searching for games..."
 msgstr "Searching for games..."
@@ -958,6 +1152,9 @@ msgstr "LOAD DEFAULT"
 
 msgid "DISCARD CHANGES"
 msgstr "DISCARD CHANGES"
+
+msgid "LOAD"
+msgstr "LOAD"
 
 msgid "discard changes"
 msgstr "discard changes"

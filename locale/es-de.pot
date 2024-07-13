@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-13 19:24+0200\n"
+"POT-Creation-Date: 2024-07-13 22:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -16,6 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "No Entries Found"
+msgstr ""
 
 msgid "NAME"
 msgstr ""
@@ -634,10 +637,160 @@ msgstr ""
 msgid "close menu"
 msgstr ""
 
-msgid "back"
+msgid "HELP PROMPTS"
+msgstr ""
+
+msgid "TOP"
+msgstr ""
+
+msgid "BOTTOM"
+msgstr ""
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr ""
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr ""
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr ""
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr ""
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr ""
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr ""
+
+msgid "SELECT COLLECTIONS"
+msgstr ""
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr ""
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr ""
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr ""
+
+msgid "SELECT THEME FOLDER"
+msgstr ""
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr ""
+
+msgid "NEW COLLECTION NAME"
+msgstr ""
+
+msgid "CREATE"
+msgstr ""
+
+msgid "CREATE COLLECTION?"
+msgstr ""
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr ""
+
+msgid "COLLECTION TO DELETE"
+msgstr ""
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr ""
+
+msgid "IF UNTHEMED"
+msgstr ""
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr ""
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr ""
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr ""
+
+msgid "SCREENSAVER TYPE"
+msgstr ""
+
+msgid "DIM"
+msgstr ""
+
+msgid "BLACK"
+msgstr ""
+
+msgid "SLIDESHOW"
+msgstr ""
+
+msgid "VIDEO"
+msgstr ""
+
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr ""
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr ""
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr ""
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr ""
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr ""
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr ""
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr ""
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr ""
+
+msgid "RENDER SCANLINES"
+msgstr ""
+
+msgid "USE CUSTOM IMAGES"
+msgstr ""
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr ""
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr ""
+
+msgid "VIDEO SCREENSAVER"
+msgstr ""
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr ""
+
+msgid "RENDER BLUR"
+msgstr ""
+
+msgid "FILTER GAMELIST"
+msgstr ""
+
+msgid "RESET ALL FILTERS"
 msgstr ""
 
 msgid "BACK"
+msgstr ""
+
+msgid "back"
+msgstr ""
+
+msgid "GAME NAME"
+msgstr ""
+
+msgid "APPLY CHANGES?"
+msgstr ""
+
+msgid "NOTHING TO FILTER"
 msgstr ""
 
 msgid "GAMELIST OPTIONS"
@@ -649,13 +802,13 @@ msgstr ""
 msgid "SORT GAMES BY"
 msgstr ""
 
-msgid "FILTER GAMELIST"
-msgstr ""
-
 msgid "EDIT THIS FOLDER'S METADATA"
 msgstr ""
 
 msgid "EDIT THIS GAME'S METADATA"
+msgstr ""
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
 msgstr ""
 
 msgid "APPLY"
@@ -668,6 +821,9 @@ msgid "close (cancel)"
 msgstr ""
 
 msgid "close"
+msgstr ""
+
+msgid "INVALID ENTRY"
 msgstr ""
 
 msgid "EDIT METADATA"
@@ -683,9 +839,6 @@ msgid "CLEAR INVALID ENTRY"
 msgstr ""
 
 msgid "SYSTEM-WIDE"
-msgstr ""
-
-msgid "APPLY CHANGES?"
 msgstr ""
 
 msgid "SCRAPE"
@@ -727,6 +880,15 @@ msgid "DELETE"
 msgstr ""
 
 msgid "delete game"
+msgstr ""
+
+msgid "ALL GAMES"
+msgstr ""
+
+msgid "FAVORITES"
+msgstr ""
+
+msgid "COLLECTIONS"
 msgstr ""
 
 msgid "name, ascending"
@@ -789,6 +951,12 @@ msgstr ""
 msgid "system, descending"
 msgstr ""
 
+msgid "random"
+msgstr ""
+
+msgid "screensaver"
+msgstr ""
+
 msgid "system"
 msgstr ""
 
@@ -798,10 +966,32 @@ msgstr ""
 msgid "options"
 msgstr ""
 
-msgid "random"
+msgid "jump to game"
 msgstr ""
 
-msgid "jump to game"
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+
+msgid "menu"
+msgstr ""
+
+msgid "BROKEN"
+msgstr ""
+
+msgid "FALSE"
+msgstr ""
+
+msgid "TRUE"
+msgstr ""
+
+msgid "UNKNOWN"
+msgstr ""
+
+msgid "NONE SELECTED"
 msgstr ""
 
 msgid "Searching for games..."
@@ -934,6 +1124,9 @@ msgid "LOAD DEFAULT"
 msgstr ""
 
 msgid "DISCARD CHANGES"
+msgstr ""
+
+msgid "LOAD"
 msgstr ""
 
 msgid "discard changes"
