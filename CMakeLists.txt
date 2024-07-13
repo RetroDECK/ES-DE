@@ -629,6 +629,11 @@ else()
                          ${GIT2_LIBRARY}
                          ${PUGIXML_LIBRARIES}
                          ${SDL2_LIBRARY})
+    if(Intl_LIBRARY)
+        # On Unix systems where the gettext functions are not part of the C standard library
+        # we need to explicitly link with the libintl library.
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${Intl_LIBRARY})
+    endif()
 endif()
 
 if(NOT WIN32)
