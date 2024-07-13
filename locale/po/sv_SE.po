@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-13 19:24+0200\n"
-"PO-Revision-Date: 2024-07-13 15:38+0200\n"
+"POT-Creation-Date: 2024-07-13 22:09+0200\n"
+"PO-Revision-Date: 2024-07-13 21:30+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.4\n"
+
+msgid "No Entries Found"
+msgstr "Inga Poster Hittade"
 
 msgid "NAME"
 msgstr "NAMN"
@@ -79,7 +82,7 @@ msgid "FAVORITE"
 msgstr "FAVORIT"
 
 msgid "COMPLETED"
-msgstr "AVSLUTAT"
+msgstr "GENOMSPELAT"
 
 msgid "KIDGAME"
 msgstr "BARNSPEL"
@@ -91,7 +94,7 @@ msgid "HIDDEN"
 msgstr "DOLD"
 
 msgid "BROKEN/NOT WORKING"
-msgstr "SÖNDRIG/FUNGERAR INTE"
+msgstr "TRASIGT/FUNGERAR INTE"
 
 msgid "EXCLUDE FROM GAME COUNTER"
 msgstr "EXKLUDERA FRÅN SPELRÄKNAREN"
@@ -456,7 +459,7 @@ msgid "SAVE CHANGES?"
 msgstr "SPARA ÄNDRINGARNA?"
 
 msgid "load default directory"
-msgstr "ladda standardkatalog"
+msgstr "läs in standardkatalog"
 
 msgid "VRAM LIMIT"
 msgstr "VRAM MAXVÄRDE"
@@ -653,11 +656,161 @@ msgstr "välj"
 msgid "close menu"
 msgstr "stäng menyn"
 
-msgid "back"
-msgstr "tillbaka"
+msgid "HELP PROMPTS"
+msgstr "HJÄLPPROMPTER"
+
+msgid "TOP"
+msgstr "HÖGST UPP"
+
+msgid "BOTTOM"
+msgstr "LÄNGST NER"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "VISA MEDIATYPER"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "FORTSÄTT SPELA VIDEOR NÄR BILDER VISAS"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "STRÄCK UT VIDEOR TILL SKÄRMENS UPPLÖSNING"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "RENDERA SCANLINES FÖR VIDEOR"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "RENDERA OSKÄRPA FÖR VIDEOR"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "RENDERA SCANLINES FÖR SCREENSHOTS OCH TITLES"
+
+msgid "SELECT COLLECTIONS"
+msgstr "VÄLJ SPELSAMLINGAR"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "AUTOMATISKA SPELSAMLINGAR"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "ANPASSADE SPELSAMLINGAR"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "SKAPA NY ANPASSAD SPELSAMLING FRÅN TEMAT"
+
+msgid "SELECT THEME FOLDER"
+msgstr "VÄLJ TEMAMAPP"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "SKAPA NY ANPASSAD SPELSAMLING"
+
+msgid "NEW COLLECTION NAME"
+msgstr "NAMN PÅ NY SPELSAMLING"
+
+msgid "CREATE"
+msgstr "SKAPA"
+
+msgid "CREATE COLLECTION?"
+msgstr "SKAPA SPELSAMLING?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "RADERA ANPASSAD SPELSAMLING"
+
+msgid "COLLECTION TO DELETE"
+msgstr "SPELSAMLING ATT RADERA"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "GRUPPERA ANPASSADE SAMLINGAR"
+
+msgid "IF UNTHEMED"
+msgstr "EJ TEMASTÖD"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "FAVORITER LÄNGST UPP FÖR ANPASSADE SAMLINGAR"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "VISA STJÄRNSYMBOL FÖR ANPASSADE SAMLINGAR"
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr "STARTA SKÄRMSLÄCKAREN EFTER (MINUTER)"
+
+msgid "SCREENSAVER TYPE"
+msgstr "TYP AV SKÄRMSLÄCKARE"
+
+msgid "DIM"
+msgstr "DUNKEL"
+
+msgid "BLACK"
+msgstr "SVART"
+
+msgid "SLIDESHOW"
+msgstr "BILDSPEL"
+
+msgid "VIDEO"
+msgstr "VIDEO"
+
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr "AKTIVERA SKÄRMSLÄCKARKONTROLLER"
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr "INSTÄLLNINGAR FÖR BILDSPEL"
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr "INSTÄLLNINGAR FÖR VIDEO"
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr "BILDSPEL SKÄRMSLÄCKARE"
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr "BYT BILDER EFTER (SEKUNDER)"
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr "INKLUDERA ENDAST FAVORITSPEL"
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr "STRÄCK UT BILDERNA TILL SKÄRMENS UPPLÖSNING"
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr "VISA SPELINFO OVERLAY"
+
+msgid "RENDER SCANLINES"
+msgstr "RENDERA SCANLINES"
+
+msgid "USE CUSTOM IMAGES"
+msgstr "ANVÄND ANPASSADE BILDER"
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr "REKURSIV SÖKNING EFTER ANPASSADE BILDER"
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr "KATALOG FÖR ANPASSADE BILDER"
+
+msgid "VIDEO SCREENSAVER"
+msgstr "VIDEO SKÄRMSLÄCKARE"
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr "BYT VIDEOR EFTER (SEKUNDER)"
+
+msgid "RENDER BLUR"
+msgstr "RENDERA OSKÄRPA"
+
+msgid "FILTER GAMELIST"
+msgstr "FILTRERA SPELLISTA"
+
+msgid "RESET ALL FILTERS"
+msgstr "NOLLSTÄLL ALLA FILTER"
 
 msgid "BACK"
 msgstr "TILLBAKA"
+
+msgid "back"
+msgstr "tillbaka"
+
+msgid "GAME NAME"
+msgstr "SPELNAMN"
+
+msgid "APPLY CHANGES?"
+msgstr "TILLÄMPA ÄNDRINGARNA?"
+
+msgid "NOTHING TO FILTER"
+msgstr "INGET ATT FILTRERA"
 
 msgid "GAMELIST OPTIONS"
 msgstr "ALTERNATIV FÖR SPELLISTA"
@@ -668,14 +821,14 @@ msgstr "HOPPA TILL.."
 msgid "SORT GAMES BY"
 msgstr "SORTERA SPEL EFTER"
 
-msgid "FILTER GAMELIST"
-msgstr "FILTRERA SPELLISTA"
-
 msgid "EDIT THIS FOLDER'S METADATA"
 msgstr "REDIGERA DEN HÄR MAPPENS METADATA"
 
 msgid "EDIT THIS GAME'S METADATA"
 msgstr "REDIGERA DET HÄR SPELETS METADATA"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "GÅ IN I MAPP (OVERRIDE AV MAPPLÄNK)"
 
 msgid "APPLY"
 msgstr "TILLÄMPA"
@@ -689,6 +842,9 @@ msgstr "stäng (avbryt)"
 msgid "close"
 msgstr "stäng"
 
+msgid "INVALID ENTRY"
+msgstr "OGILTIGT VÄRDE"
+
 msgid "EDIT METADATA"
 msgstr "REDIGERA METADATA"
 
@@ -699,13 +855,10 @@ msgid "SELECT EMULATOR"
 msgstr "VÄLJ EMULATOR"
 
 msgid "CLEAR INVALID ENTRY"
-msgstr "RENSA OGILTIG POST"
+msgstr "RENSA OGILTIGT VÄRDE"
 
 msgid "SYSTEM-WIDE"
 msgstr "SYSTEMOMFATTANDE"
-
-msgid "APPLY CHANGES?"
-msgstr "TILLÄMPA ÄNDRINGARNA?"
 
 msgid "SCRAPE"
 msgstr "SCRAPE"
@@ -752,6 +905,15 @@ msgstr "RADERA"
 
 msgid "delete game"
 msgstr "radera spel"
+
+msgid "ALL GAMES"
+msgstr "ALLA SPEL"
+
+msgid "FAVORITES"
+msgstr "FAVORITER"
+
+msgid "COLLECTIONS"
+msgstr "SPELSAMLINGAR"
 
 msgid "name, ascending"
 msgstr "namn, stigande"
@@ -813,6 +975,12 @@ msgstr "system, stigande"
 msgid "system, descending"
 msgstr "system, fallande"
 
+msgid "random"
+msgstr "slumpmässig"
+
+msgid "screensaver"
+msgstr "skärmsläckare"
+
 msgid "system"
 msgstr "system"
 
@@ -822,11 +990,37 @@ msgstr "visa media"
 msgid "options"
 msgstr "alternativ"
 
-msgid "random"
-msgstr "slumpmässig"
-
 msgid "jump to game"
 msgstr "hoppa till spel"
+
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+"ÅTMINSTONE ETT AV DINA SYSTEM HAR EN OGILTIG ALTERNATIV EMULATOR "
+"KONFIGURERAD SOM SAKNAR EN MATCHANDE POST I SYSTEM-KONFIGURATIONSFILEN, "
+"VÄNLIGEN SE ÖVER DIN KONFIGURATION MED HJÄLP AV 'ALTERNATIVA EMULATORER' "
+"INTERFACET I 'ANDRA INSTÄLLNINGAR' MENYN"
+
+msgid "menu"
+msgstr "meny"
+
+msgid "BROKEN"
+msgstr "TRASIG"
+
+msgid "FALSE"
+msgstr "FALSKT"
+
+msgid "TRUE"
+msgstr "SANT"
+
+msgid "UNKNOWN"
+msgstr "OKÄND"
+
+msgid "NONE SELECTED"
+msgstr "INGEN VALD"
 
 msgid "Searching for games..."
 msgstr "Söker efter spel..."
@@ -959,6 +1153,9 @@ msgstr "LADDA STANDARDVÄRDEN"
 
 msgid "DISCARD CHANGES"
 msgstr "KASSERA ÄNDRINGARNA"
+
+msgid "LOAD"
+msgstr "LÄS IN"
 
 msgid "discard changes"
 msgstr "kassera ändringarna"
