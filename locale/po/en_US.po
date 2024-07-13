@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-04 19:27+0200\n"
-"PO-Revision-Date: 2024-07-04 17:14+0200\n"
+"POT-Creation-Date: 2024-07-13 12:28+0200\n"
+"PO-Revision-Date: 2024-07-13 12:08+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: ../es-app/src/guis/GuiMenu.cpp:52
 msgid "MAIN MENU"
@@ -29,23 +30,23 @@ msgstr "SCRAPER"
 msgid "UI SETTINGS"
 msgstr "UI SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:63 ../es-app/src/guis/GuiMenu.cpp:1059
+#: ../es-app/src/guis/GuiMenu.cpp:63 ../es-app/src/guis/GuiMenu.cpp:1060
 msgid "SOUND SETTINGS"
 msgstr "SOUND SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:66 ../es-app/src/guis/GuiMenu.cpp:1170
+#: ../es-app/src/guis/GuiMenu.cpp:66 ../es-app/src/guis/GuiMenu.cpp:1171
 msgid "INPUT DEVICE SETTINGS"
 msgstr "INPUT DEVICE SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2205
+#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2209
 msgid "GAME COLLECTION SETTINGS"
 msgstr "GAME COLLECTION SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:74 ../es-app/src/guis/GuiMenu.cpp:1436
+#: ../es-app/src/guis/GuiMenu.cpp:74 ../es-app/src/guis/GuiMenu.cpp:1437
 msgid "OTHER SETTINGS"
 msgstr "OTHER SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:77 ../es-app/src/guis/GuiMenu.cpp:1964
+#: ../es-app/src/guis/GuiMenu.cpp:77 ../es-app/src/guis/GuiMenu.cpp:1968
 msgid "UTILITIES"
 msgstr "UTILITIES"
 
@@ -54,7 +55,7 @@ msgstr "UTILITIES"
 msgid "QUIT ES-DE"
 msgstr "QUIT ES-DE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2086
+#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2090
 msgid "QUIT"
 msgstr "QUIT"
 
@@ -112,158 +113,526 @@ msgstr "SLIDE (BUILT-IN)"
 msgid "FADE (BUILT-IN)"
 msgstr "FADE (BUILT-IN)"
 
-#: ../es-app/src/guis/GuiMenu.cpp:484 ../es-app/src/guis/GuiMenu.cpp:495
+#: ../es-app/src/guis/GuiMenu.cpp:484 ../es-app/src/guis/GuiMenu.cpp:496
 msgid "APPLICATION LANGUAGE"
 msgstr "APPLICATION LANGUAGE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:511 ../es-app/src/guis/GuiMenu.cpp:525
+#: ../es-app/src/guis/GuiMenu.cpp:512 ../es-app/src/guis/GuiMenu.cpp:526
 msgid "QUICK SYSTEM SELECT"
 msgstr "QUICK SYSTEM SELECT"
 
-#: ../es-app/src/guis/GuiMenu.cpp:513
+#: ../es-app/src/guis/GuiMenu.cpp:514
 msgid "LEFT/RIGHT OR SHOULDERS"
 msgstr "LEFT/RIGHT OR SHOULDERS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:515
+#: ../es-app/src/guis/GuiMenu.cpp:516
 msgid "LEFT/RIGHT OR TRIGGERS"
 msgstr "LEFT/RIGHT OR TRIGGERS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:517
+#: ../es-app/src/guis/GuiMenu.cpp:518
 msgid "SHOULDERS"
 msgstr "SHOULDERS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:518
+#: ../es-app/src/guis/GuiMenu.cpp:519
 msgid "TRIGGERS"
 msgstr "TRIGGERS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:519
+#: ../es-app/src/guis/GuiMenu.cpp:520
 msgid "LEFT/RIGHT"
 msgstr "LEFT/RIGHT"
 
-#: ../es-app/src/guis/GuiMenu.cpp:520 ../es-app/src/guis/GuiMenu.cpp:679
-#: ../es-app/src/guis/GuiMenu.cpp:792
+#: ../es-app/src/guis/GuiMenu.cpp:521 ../es-app/src/guis/GuiMenu.cpp:680
+#: ../es-app/src/guis/GuiMenu.cpp:793 ../es-app/src/guis/GuiMenu.cpp:1511
+#: ../es-app/src/guis/GuiMenu.cpp:1555
 msgid "DISABLED"
 msgstr "DISABLED"
 
-#: ../es-app/src/guis/GuiMenu.cpp:537 ../es-app/src/guis/GuiMenu.cpp:551
+#: ../es-app/src/guis/GuiMenu.cpp:538 ../es-app/src/guis/GuiMenu.cpp:552
 msgid "GAMELIST ON STARTUP"
 msgstr "GAMELIST ON STARTUP"
 
-#: ../es-app/src/guis/GuiMenu.cpp:538 ../es-app/src/guis/GuiMenu.cpp:657
+#: ../es-app/src/guis/GuiMenu.cpp:539 ../es-app/src/guis/GuiMenu.cpp:658
 msgid "NONE"
 msgstr "NONE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:561 ../es-app/src/guis/GuiMenu.cpp:575
+#: ../es-app/src/guis/GuiMenu.cpp:562 ../es-app/src/guis/GuiMenu.cpp:576
 msgid "SYSTEMS SORTING"
 msgstr "SYSTEMS SORTING"
 
-#: ../es-app/src/guis/GuiMenu.cpp:563
+#: ../es-app/src/guis/GuiMenu.cpp:564
 msgid "FULL NAMES OR CUSTOM"
 msgstr "FULL NAMES OR CUSTOM"
 
-#: ../es-app/src/guis/GuiMenu.cpp:564
+#: ../es-app/src/guis/GuiMenu.cpp:565
 msgid "RELEASE YEAR"
 msgstr "RELEASE YEAR"
 
-#: ../es-app/src/guis/GuiMenu.cpp:565
+#: ../es-app/src/guis/GuiMenu.cpp:566
 msgid "MANUFACTURER, RELEASE YEAR"
 msgstr "MANUFACTURER, RELEASE YEAR"
 
-#: ../es-app/src/guis/GuiMenu.cpp:567
+#: ../es-app/src/guis/GuiMenu.cpp:568
 msgid "HW TYPE, RELEASE YEAR"
 msgstr "HW TYPE, RELEASE YEAR"
 
-#: ../es-app/src/guis/GuiMenu.cpp:569
+#: ../es-app/src/guis/GuiMenu.cpp:570
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr "MANUFACTURER, HW TYPE, REL. YEAR"
 
-#: ../es-app/src/guis/GuiMenu.cpp:591
+#: ../es-app/src/guis/GuiMenu.cpp:592
 msgid "GAMES DEFAULT SORT ORDER [SHORT]"
 msgstr "DEFAULT SORT ORDER"
 
-#: ../es-app/src/guis/GuiMenu.cpp:616
+#: ../es-app/src/guis/GuiMenu.cpp:617
 msgid "GAMES DEFAULT SORT ORDER"
 msgstr "GAMES DEFAULT SORT ORDER"
 
-#: ../es-app/src/guis/GuiMenu.cpp:630 ../es-app/src/guis/GuiMenu.cpp:638
+#: ../es-app/src/guis/GuiMenu.cpp:631 ../es-app/src/guis/GuiMenu.cpp:639
 msgid "MENU COLOR SCHEME"
 msgstr "MENU COLOR SCHEME"
 
-#: ../es-app/src/guis/GuiMenu.cpp:632
+#: ../es-app/src/guis/GuiMenu.cpp:633
 msgid "DARK"
 msgstr "DARK"
 
-#: ../es-app/src/guis/GuiMenu.cpp:633
+#: ../es-app/src/guis/GuiMenu.cpp:634
 msgid "LIGHT"
 msgstr "LIGHT"
 
-#: ../es-app/src/guis/GuiMenu.cpp:654 ../es-app/src/guis/GuiMenu.cpp:662
+#: ../es-app/src/guis/GuiMenu.cpp:655 ../es-app/src/guis/GuiMenu.cpp:663
 msgid "MENU OPENING ANIMATION"
 msgstr "MENU OPENING ANIMATION"
 
-#: ../es-app/src/guis/GuiMenu.cpp:656
+#: ../es-app/src/guis/GuiMenu.cpp:657
 msgid "SCALE-UP"
 msgstr "SCALE-UP"
 
-#: ../es-app/src/guis/GuiMenu.cpp:674 ../es-app/src/guis/GuiMenu.cpp:684
+#: ../es-app/src/guis/GuiMenu.cpp:675 ../es-app/src/guis/GuiMenu.cpp:685
 msgid "LAUNCH SCREEN DURATION"
 msgstr "LAUNCH SCREEN DURATION"
 
-#: ../es-app/src/guis/GuiMenu.cpp:676
+#: ../es-app/src/guis/GuiMenu.cpp:677 ../es-app/src/guis/GuiMenu.cpp:1227
 msgid "NORMAL"
 msgstr "NORMAL"
 
-#: ../es-app/src/guis/GuiMenu.cpp:677
+#: ../es-app/src/guis/GuiMenu.cpp:678
 msgid "BRIEF"
 msgstr "BRIEF"
 
-#: ../es-app/src/guis/GuiMenu.cpp:678
+#: ../es-app/src/guis/GuiMenu.cpp:679
 msgid "LONG"
 msgstr "LONG"
 
-#: ../es-app/src/guis/GuiMenu.cpp:696 ../es-app/src/guis/GuiMenu.cpp:711
+#: ../es-app/src/guis/GuiMenu.cpp:697 ../es-app/src/guis/GuiMenu.cpp:712
 msgid "UI MODE"
 msgstr "UI MODE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:704
+#: ../es-app/src/guis/GuiMenu.cpp:705
 msgid "FULL"
 msgstr "FULL"
 
-#: ../es-app/src/guis/GuiMenu.cpp:705
+#: ../es-app/src/guis/GuiMenu.cpp:706
 msgid "KIOSK"
 msgstr "KIOSK"
 
-#: ../es-app/src/guis/GuiMenu.cpp:706
+#: ../es-app/src/guis/GuiMenu.cpp:707
 msgid "KID"
 msgstr "KID"
 
-#: ../es-app/src/guis/GuiMenu.cpp:786 ../es-app/src/guis/GuiMenu.cpp:797
+#: ../es-app/src/guis/GuiMenu.cpp:787 ../es-app/src/guis/GuiMenu.cpp:798
 msgid "RANDOM ENTRY BUTTON"
 msgstr "RANDOM ENTRY BUTTON"
 
-#: ../es-app/src/guis/GuiMenu.cpp:789
+#: ../es-app/src/guis/GuiMenu.cpp:790
 msgid "GAMES ONLY"
 msgstr "GAMES ONLY"
 
-#: ../es-app/src/guis/GuiMenu.cpp:790
+#: ../es-app/src/guis/GuiMenu.cpp:791
 msgid "GAMES AND SYSTEMS"
 msgstr "GAMES AND SYSTEMS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:810
+#: ../es-app/src/guis/GuiMenu.cpp:811
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "MEDIA VIEWER SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:821
+#: ../es-app/src/guis/GuiMenu.cpp:822
 msgid "SCREENSAVER SETTINGS"
 msgstr "SCREENSAVER SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2195
+#: ../es-app/src/guis/GuiMenu.cpp:833
+msgid "ENABLE THEME VARIANT TRIGGERS"
+msgstr "ENABLE THEME VARIANT TRIGGERS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:850 ../es-app/src/guis/GuiMenu.cpp:859
+msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
+msgstr "BLUR BACKGROUND WHEN MENU IS OPEN"
+
+#: ../es-app/src/guis/GuiMenu.cpp:874
+msgid "SORT FOLDERS ON TOP OF GAMELISTS"
+msgstr "SORT FOLDERS ON TOP OF GAMELISTS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:887
+msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+msgstr "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:901
+msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
+msgstr "ADD STAR MARKINGS TO FAVORITE GAMES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:914
+msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+msgstr "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:926
+msgid "ENABLE VIRTUAL KEYBOARD"
+msgstr "ENABLE VIRTUAL KEYBOARD"
+
+#: ../es-app/src/guis/GuiMenu.cpp:944
+msgid "ENABLE TOGGLE FAVORITES BUTTON"
+msgstr "ENABLE TOGGLE FAVORITES BUTTON"
+
+#: ../es-app/src/guis/GuiMenu.cpp:956
+msgid "ENABLE GAMELIST FILTERS"
+msgstr "ENABLE GAMELIST FILTERS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:968
+msgid "DISPLAY ON-SCREEN HELP"
+msgstr "DISPLAY ON-SCREEN HELP"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1075
+msgid "SYSTEM VOLUME"
+msgstr "SYSTEM VOLUME"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1089
+msgid "NAVIGATION SOUNDS VOLUME"
+msgstr "NAVIGATION SOUNDS VOLUME"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1103
+msgid "VIDEO PLAYER VOLUME"
+msgstr "VIDEO PLAYER VOLUME"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1117
+msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+msgstr "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1129
+msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+msgstr "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1142
+msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+msgstr "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1155
+msgid "ENABLE NAVIGATION SOUNDS"
+msgstr "ENABLE NAVIGATION SOUNDS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1175 ../es-app/src/guis/GuiMenu.cpp:1188
+msgid "CONTROLLER TYPE"
+msgstr "CONTROLLER TYPE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1201 ../es-app/src/guis/GuiMenu.cpp:1211
+msgid "TOUCH OVERLAY SIZE"
+msgstr "TOUCH OVERLAY SIZE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1203
+msgid "MEDIUM"
+msgstr "MEDIUM"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1204
+msgid "LARGE"
+msgstr "LARGE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1205
+msgid "SMALL"
+msgstr "SMALL"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1206
+msgid "EXTRA SMALL"
+msgstr "EXTRA SMALL"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1224 ../es-app/src/guis/GuiMenu.cpp:1234
+msgid "TOUCH OVERLAY OPACITY"
+msgstr "TOUCH OVERLAY OPACITY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1228
+msgid "LOW"
+msgstr "LOW"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1229
+msgid "VERY LOW"
+msgstr "VERY LOW"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1249
+msgid "TOUCH OVERLAY FADE-OUT TIME"
+msgstr "TOUCH OVERLAY FADE-OUT TIME"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1263
+msgid "ENABLE TOUCH OVERLAY"
+msgstr "ENABLE TOUCH OVERLAY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1300
+msgid ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+msgstr ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1308 ../es-app/src/guis/GuiMenu.cpp:2002
+#: ../es-app/src/guis/GuiMenu.cpp:2023
+msgid "OK"
+msgstr "OK"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1362
+msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+msgstr "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1375
+msgid "SWAP THE A/B AND X/Y BUTTONS"
+msgstr "SWAP THE A/B AND X/Y BUTTONS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1386
+msgid "IGNORE KEYBOARD INPUT"
+msgstr "IGNORE KEYBOARD INPUT"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1400
+msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
+msgstr "CONFIGURE KEYBOARD AND CONTROLLERS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1421
+msgid ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL "
+"NOT AFFECT THE HELP PROMPTS)"
+msgstr ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL "
+"NOT AFFECT THE HELP PROMPTS)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1427
+msgid "PROCEED"
+msgstr "PROCEED"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1428
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:264
+msgid "CANCEL"
+msgstr "CANCEL"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1442
+msgid "ALTERNATIVE EMULATORS"
+msgstr "ALTERNATIVE EMULATORS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1454
+msgid "GAME MEDIA DIRECTORY"
+msgstr "GAME MEDIA DIRECTORY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1462
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr "ENTER GAME MEDIA DIRECTORY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1463
+msgid "Default directory:"
+msgstr "Default directory:"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1481 ../es-app/src/guis/GuiMenu.cpp:1487
+#: ../es-app/src/guis/GuiSettings.cpp:242
+#: ../es-app/src/guis/GuiSettings.cpp:246
+#: ../es-app/src/guis/GuiSettings.cpp:253
+#: ../es-app/src/guis/GuiSettings.cpp:256
+msgid "SAVE"
+msgstr "SAVE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1481 ../es-app/src/guis/GuiMenu.cpp:1487
+#: ../es-app/src/guis/GuiSettings.cpp:242
+#: ../es-app/src/guis/GuiSettings.cpp:246
+#: ../es-app/src/guis/GuiSettings.cpp:253
+#: ../es-app/src/guis/GuiSettings.cpp:257
+msgid "SAVE CHANGES?"
+msgstr "SAVE CHANGES?"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1482 ../es-app/src/guis/GuiMenu.cpp:1488
+msgid "load default directory"
+msgstr "load default directory"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1496
+msgid "VRAM LIMIT"
+msgstr "VRAM LIMIT"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1508
+msgid "ANTI-ALIASING (MSAA)"
+msgstr "ANTI-ALIASING (MSAA)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1512
+msgid "2X"
+msgstr "2X"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1513
+msgid "4X"
+msgstr "4X"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1518
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1531
+msgid "DISPLAY/MONITOR INDEX"
+msgstr "DISPLAY/MONITOR INDEX"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1540
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1552
+msgid "ROTATE SCREEN"
+msgstr "ROTATE SCREEN"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1556
+msgid "90 DEGREES"
+msgstr "90 DEGREES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1557
+msgid "180 DEGREES"
+msgstr "180 DEGREES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1558
+msgid "270 DEGREES"
+msgstr "270 DEGREES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1563
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr "ROTATE SCREEN (REQUIRES RESTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1575 ../es-app/src/guis/GuiMenu.cpp:1592
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr "KEYBOARD QUIT SHORTCUT"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1604
+msgid "WHEN TO SAVE GAME METADATA [SHORT]"
+msgstr "WHEN TO SAVE METADATA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1605 ../es-app/src/guis/GuiMenu.cpp:1638
+msgid "ALWAYS"
+msgstr "ALWAYS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1607
+msgid "ON EXIT"
+msgstr "ON EXIT"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1609 ../es-app/src/guis/GuiMenu.cpp:1643
+msgid "NEVER"
+msgstr "NEVER"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1615
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "WHEN TO SAVE GAME METADATA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1635
+msgid "APPLICATION UPDATES"
+msgstr "APPLICATION UPDATES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1639
+msgid "DAILY"
+msgstr "DAILY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1640
+msgid "WEEKLY"
+msgstr "WEEKLY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1641
+msgid "MONTHLY"
+msgstr "MONTHLY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1648
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "CHECK FOR APPLICATION UPDATES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1664 ../es-app/src/guis/GuiMenu.cpp:1675
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr "INCLUDE PRERELEASES IN UPDATE CHECKS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1691
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr "HIDE TASKBAR (REQUIRES RESTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1704
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1717
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1731
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1746
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr "ENABLE ALTERNATIVE EMULATORS PER GAME"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1761
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr "SHOW HIDDEN FILES AND FOLDERS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1774
+msgid "SHOW HIDDEN GAMES"
+msgstr "SHOW HIDDEN GAMES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1787
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "ENABLE CUSTOM EVENT SCRIPTS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1799
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1813
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1827
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1842 ../es-app/src/guis/GuiMenu.cpp:1855
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr "BACK BUTTON/BACK SWIPE EXITS APP"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1869 ../es-app/src/guis/GuiMenu.cpp:1880
+msgid "DEBUG MODE"
+msgstr "DEBUG MODE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1901
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr "DISPLAY GPU STATISTICS OVERLAY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1914
+msgid "ENABLE MENU IN KID MODE"
+msgstr "ENABLE MENU IN KID MODE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1929
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2199
 msgid "MEDIA VIEWER SETTINGS [SHORT]"
 msgstr "MEDIA VIEWER SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2200
+#: ../es-app/src/guis/GuiMenu.cpp:2204
 msgid "SCREENSAVER SETTINGS [SHORT]"
 msgstr "SCREENSAVER SETTINGS"
+
+#: ../es-app/src/guis/GuiSettings.cpp:42
+#: ../es-core/src/components/OptionListComponent.h:516
+msgid "BACK"
+msgstr "BACK"
 
 #: ../es-app/src/guis/GuiGamelistOptions.cpp:36
 msgid "GAMELIST OPTIONS"
@@ -294,10 +663,6 @@ msgstr "EDIT THIS GAME'S METADATA"
 #: ../es-app/src/guis/GuiGamelistOptions.cpp:263
 msgid "APPLY"
 msgstr "APPLY"
-
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:264
-msgid "CANCEL"
-msgstr "CANCEL"
 
 #: ../es-app/src/FileSorts.cpp:280
 msgid "name, ascending"
@@ -462,3 +827,14 @@ msgstr "21:9 vertical"
 #: ../es-core/src/ThemeData.cpp:2085
 msgid "32:9 vertical"
 msgstr "32:9 vertical"
+
+#: ../es-core/src/components/OptionListComponent.h:520
+msgid "SELECT ALL"
+msgstr "SELECT ALL"
+
+#: ../es-core/src/components/OptionListComponent.h:529
+msgid "SELECT NONE"
+msgstr "SELECT NONE"
+
+#~ msgid "left/right"
+#~ msgstr "left/right"
