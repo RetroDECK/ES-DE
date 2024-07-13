@@ -215,10 +215,10 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
     prompts.push_back(HelpPrompt("a", _("select")));
 
     if (Settings::getInstance()->getString("RandomEntryButton") == "gamessystems")
-        prompts.push_back(HelpPrompt("thumbstickclick", "random"));
+        prompts.push_back(HelpPrompt("thumbstickclick", _("random")));
 
     if (Settings::getInstance()->getBool("ScreensaverControls"))
-        prompts.push_back(HelpPrompt("x", "screensaver"));
+        prompts.push_back(HelpPrompt("x", _("screensaver")));
 
     return prompts;
 }

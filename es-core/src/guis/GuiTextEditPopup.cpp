@@ -45,8 +45,8 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(
-        Utils::String::toUpper(title), Font::get(FONT_SIZE_MEDIUM), mMenuColorTitle, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(title, Font::get(FONT_SIZE_MEDIUM), mMenuColorTitle,
+                                             ALIGN_CENTER);
 
     if (mComplexMode) {
         mInfoString = std::make_shared<TextComponent>(infoString, Font::get(FONT_SIZE_SMALL),
@@ -66,7 +66,7 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
         }));
     if (mComplexMode) {
         buttons.push_back(
-            std::make_shared<ButtonComponent>("load", loadBtnHelpText, [this, defaultValue] {
+            std::make_shared<ButtonComponent>(_("LOAD"), loadBtnHelpText, [this, defaultValue] {
                 mText->setValue(defaultValue);
                 mText->setCursor(0);
                 mText->setCursor(defaultValue.size());

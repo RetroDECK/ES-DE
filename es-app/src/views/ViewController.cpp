@@ -366,13 +366,16 @@ void ViewController::invalidAlternativeEmulatorDialog()
 {
     cancelViewTransitions();
     mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
-                                   "AT LEAST ONE OF YOUR SYSTEMS HAS AN\n"
-                                   "INVALID ALTERNATIVE EMULATOR CONFIGURED\n"
-                                   "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
-                                   "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
-                                   "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
-                                   "INTERFACE IN THE 'OTHER SETTINGS' MENU",
-                                   "OK", nullptr, "", nullptr, "", nullptr, nullptr, true, true));
+                                   _("AT LEAST ONE OF YOUR SYSTEMS HAS AN "
+                                     "INVALID ALTERNATIVE EMULATOR CONFIGURED "
+                                     "WITH NO MATCHING ENTRY IN THE SYSTEMS "
+                                     "CONFIGURATION FILE, PLEASE REVIEW YOUR "
+                                     "SETUP USING THE 'ALTERNATIVE EMULATORS' "
+                                     "INTERFACE IN THE 'OTHER SETTINGS' MENU"),
+                                   _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                                   (mRenderer->getIsVerticalOrientation() ?
+                                        0.70f :
+                                        0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
 }
 
 void ViewController::updateAvailableDialog()
@@ -1533,7 +1536,7 @@ std::vector<HelpPrompt> ViewController::getHelpPrompts()
     prompts = mCurrentView->getHelpPrompts();
     if (!(UIModeController::getInstance()->isUIModeKid() &&
           !Settings::getInstance()->getBool("EnableMenuKidMode")))
-        prompts.push_back(HelpPrompt("start", "menu"));
+        prompts.push_back(HelpPrompt("start", _("menu")));
     return prompts;
 }
 

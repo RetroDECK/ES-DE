@@ -239,7 +239,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
 
     if (file->getType() == FOLDER && file->metadata.get("folderlink") != "") {
         row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>("ENTER FOLDER (OVERRIDE FOLDER LINK)",
+        row.addElement(std::make_shared<TextComponent>(_("ENTER FOLDER (OVERRIDE FOLDER LINK)"),
                                                        Font::get(FONT_SIZE_MEDIUM),
                                                        mMenuColorPrimary),
                        true);

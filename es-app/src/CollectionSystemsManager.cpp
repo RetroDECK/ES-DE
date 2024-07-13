@@ -30,6 +30,7 @@
 #include "UIModeController.h"
 #include "Window.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "views/GamelistView.h"
@@ -46,11 +47,11 @@ CollectionSystemsManager::CollectionSystemsManager() noexcept
 {
     // clang-format off
     CollectionSystemDecl systemDecls[] {
-    //  Type                 Name                Long name       Theme folder           isCustom
-        {AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false},
-        {AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false},
-        {AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false},
-        {CUSTOM_COLLECTION,  myCollectionsName,  "collections",  "custom-collections",  true }
+    //  Type                 Name                Long name          Theme folder           isCustom
+        {AUTO_ALL_GAMES,     "all",              _("ALL GAMES"),    "auto-allgames",       false},
+        {AUTO_LAST_PLAYED,   "recent",           _("LAST PLAYED"),  "auto-lastplayed",     false},
+        {AUTO_FAVORITES,     "favorites",        _("FAVORITES"),    "auto-favorites",      false},
+        {CUSTOM_COLLECTION,  myCollectionsName,  _("COLLECTIONS"),  "custom-collections",  true }
     };
     // clang-format on
 

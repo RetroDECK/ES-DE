@@ -12,6 +12,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "UIModeController.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 
@@ -40,23 +41,29 @@ FileFilterIndex::FileFilterIndex()
     // clang-format off
     FilterDataDecl filterDecls[] = {
         //type               //allKeys                  //filteredBy           //filteredKeys                  //primaryKey    //hasSecondaryKey   //secondaryKey  //menuLabel
-        {RATINGS_FILTER,     &mRatingsIndexAllKeys,     &mFilterByRatings,     &mRatingsIndexFilteredKeys,     "rating",       false,              "",             "RATING"},
-        {DEVELOPER_FILTER,   &mDeveloperIndexAllKeys,   &mFilterByDeveloper,   &mDeveloperIndexFilteredKeys,   "developer",    false,              "",             "DEVELOPER"},
-        {PUBLISHER_FILTER,   &mPublisherIndexAllKeys,   &mFilterByPublisher,   &mPublisherIndexFilteredKeys,   "publisher",    false,              "",             "PUBLISHER"},
-        {GENRE_FILTER,       &mGenreIndexAllKeys,       &mFilterByGenre,       &mGenreIndexFilteredKeys,       "genre",        true,               "genre",        "GENRE"},
-        {PLAYER_FILTER,      &mPlayersIndexAllKeys,     &mFilterByPlayers,     &mPlayersIndexFilteredKeys,     "players",      false,              "",             "PLAYERS"},
-        {FAVORITES_FILTER,   &mFavoritesIndexAllKeys,   &mFilterByFavorites,   &mFavoritesIndexFilteredKeys,   "favorite",     false,              "",             "FAVORITE"},
-        {COMPLETED_FILTER,   &mCompletedIndexAllKeys,   &mFilterByCompleted,   &mCompletedIndexFilteredKeys,   "completed",    false,              "",             "COMPLETED"},
-        {KIDGAME_FILTER,     &mKidGameIndexAllKeys,     &mFilterByKidGame,     &mKidGameIndexFilteredKeys,     "kidgame",      false,              "",             "KIDGAME"},
-        {HIDDEN_FILTER,      &mHiddenIndexAllKeys,      &mFilterByHidden,      &mHiddenIndexFilteredKeys,      "hidden",       false,              "",             "HIDDEN"},
-        {BROKEN_FILTER,      &mBrokenIndexAllKeys,      &mFilterByBroken,      &mBrokenIndexFilteredKeys,      "broken",       false,              "",             "BROKEN"},
-        {CONTROLLER_FILTER,  &mControllerIndexAllKeys,  &mFilterByController,  &mControllerIndexFilteredKeys,  "controller",   false,              "",             "CONTROLLER"},
-        {ALTEMULATOR_FILTER, &mAltemulatorIndexAllKeys, &mFilterByAltemulator, &mAltemulatorIndexFilteredKeys, "altemulator",  false,              "",             "ALTERNATIVE EMULATOR"}
+        {RATINGS_FILTER,     &mRatingsIndexAllKeys,     &mFilterByRatings,     &mRatingsIndexFilteredKeys,     "rating",       false,              "",             _("RATING")},
+        {DEVELOPER_FILTER,   &mDeveloperIndexAllKeys,   &mFilterByDeveloper,   &mDeveloperIndexFilteredKeys,   "developer",    false,              "",             _("DEVELOPER")},
+        {PUBLISHER_FILTER,   &mPublisherIndexAllKeys,   &mFilterByPublisher,   &mPublisherIndexFilteredKeys,   "publisher",    false,              "",             _("PUBLISHER")},
+        {GENRE_FILTER,       &mGenreIndexAllKeys,       &mFilterByGenre,       &mGenreIndexFilteredKeys,       "genre",        true,               "genre",        _("GENRE")},
+        {PLAYER_FILTER,      &mPlayersIndexAllKeys,     &mFilterByPlayers,     &mPlayersIndexFilteredKeys,     "players",      false,              "",             _("PLAYERS")},
+        {FAVORITES_FILTER,   &mFavoritesIndexAllKeys,   &mFilterByFavorites,   &mFavoritesIndexFilteredKeys,   "favorite",     false,              "",             _("FAVORITE")},
+        {COMPLETED_FILTER,   &mCompletedIndexAllKeys,   &mFilterByCompleted,   &mCompletedIndexFilteredKeys,   "completed",    false,              "",             _("COMPLETED")},
+        {KIDGAME_FILTER,     &mKidGameIndexAllKeys,     &mFilterByKidGame,     &mKidGameIndexFilteredKeys,     "kidgame",      false,              "",             _("KIDGAME")},
+        {HIDDEN_FILTER,      &mHiddenIndexAllKeys,      &mFilterByHidden,      &mHiddenIndexFilteredKeys,      "hidden",       false,              "",             _("HIDDEN")},
+        {BROKEN_FILTER,      &mBrokenIndexAllKeys,      &mFilterByBroken,      &mBrokenIndexFilteredKeys,      "broken",       false,              "",             _("BROKEN")},
+        {CONTROLLER_FILTER,  &mControllerIndexAllKeys,  &mFilterByController,  &mControllerIndexFilteredKeys,  "controller",   false,              "",             _("CONTROLLER")},
+        {ALTEMULATOR_FILTER, &mAltemulatorIndexAllKeys, &mFilterByAltemulator, &mAltemulatorIndexFilteredKeys, "altemulator",  false,              "",             _("ALTERNATIVE EMULATOR")}
     };
     // clang-format on
 
     filterDataDecl = std::vector<FilterDataDecl>(
         filterDecls, filterDecls + sizeof(filterDecls) / sizeof(filterDecls[0]));
+
+#if defined(GETTEXT_DUMMY_ENTRIES)
+    // This is just to get gettext msgid entries added to the PO message catalog files.
+    _("FALSE");
+    _("TRUE");
+#endif
 }
 
 FileFilterIndex::~FileFilterIndex()
@@ -148,10 +155,10 @@ std::string FileFilterIndex::getIndexableKey(FileData* game,
                             ratingNumber = 0;
 
                         if (ratingNumber == 5)
-                            key = "5 STARS";
+                            key = "5";
                         else
                             key = std::to_string(ratingNumber) + " - " +
-                                  std::to_string(ratingNumber) + ".5 STARS";
+                                  std::to_string(ratingNumber) + ".5";
                     }
                     catch (int e) {
                         LOG(LogError) << "Error parsing Rating (invalid value, exception nr.): "
@@ -239,10 +246,10 @@ std::string FileFilterIndex::getIndexableKey(FileData* game,
     if ((type == GENRE_FILTER || type == PLAYER_FILTER || type == DEVELOPER_FILTER ||
          type == PUBLISHER_FILTER) &&
         Utils::String::toUpper(key) == UNKNOWN_LABEL)
-        key = ViewController::CROSSEDCIRCLE_CHAR + " UNKNOWN";
+        key = ViewController::CROSSEDCIRCLE_CHAR + " " + _("UNKNOWN");
     else if ((type == CONTROLLER_FILTER || type == ALTEMULATOR_FILTER) && key.empty())
-        key = ViewController::CROSSEDCIRCLE_CHAR + " NONE SELECTED";
-    else if (key.empty() || (type == RATINGS_FILTER && key == "0 STARS"))
+        key = ViewController::CROSSEDCIRCLE_CHAR + " " + _("NONE SELECTED");
+    else if (key.empty() || (type == RATINGS_FILTER && key == "0"))
         key = UNKNOWN_LABEL;
 
     return key;

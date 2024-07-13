@@ -65,7 +65,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
         bool invalidEntry {false};
 
         if (label.empty()) {
-            label = ViewController::EXCLAMATION_CHAR + " INVALID ENTRY";
+            label = ViewController::EXCLAMATION_CHAR + " " + _("INVALID ENTRY");
             invalidEntry = true;
         }
 

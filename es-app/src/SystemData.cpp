@@ -22,6 +22,7 @@
 #include "UIModeController.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
@@ -260,7 +261,8 @@ SystemData::SystemData(const std::string& name,
     }
 
     // This placeholder can be used later in the gamelist view.
-    mPlaceholder = new FileData(PLACEHOLDER, "<No Entries Found>", getSystemEnvData(), this);
+    mPlaceholder =
+        new FileData(PLACEHOLDER, "<" + _("No Entries Found") + ">", getSystemEnvData(), this);
 
     setIsGameSystemStatus();
     loadTheme(ThemeTriggers::TriggerType::NONE);
