@@ -1970,7 +1970,7 @@ void GuiMenu::openUtilities()
     HelpStyle style {getHelpStyle()};
 
     ComponentListRow row;
-    row.addElement(std::make_shared<TextComponent>("ORPHANED DATA CLEANUP",
+    row.addElement(std::make_shared<TextComponent>(_("ORPHANED DATA CLEANUP"),
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
     row.addElement(mMenu.makeArrow(), false);
@@ -1979,7 +1979,7 @@ void GuiMenu::openUtilities()
     s->addRow(row);
 
     row.elements.clear();
-    row.addElement(std::make_shared<TextComponent>("CREATE/UPDATE SYSTEM DIRECTORIES",
+    row.addElement(std::make_shared<TextComponent>(_("CREATE/UPDATE SYSTEM DIRECTORIES"),
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
 
@@ -1991,15 +1991,16 @@ void GuiMenu::openUtilities()
     row.makeAcceptInputHandler([this] {
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(),
-            "THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT WILL ALSO "
-            "UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT WILL NOT DELETE OR "
-            "MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP TIMES IT'S RECOMMENDED TO "
-            "DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER RUNNING THIS UTILITY",
-            "PROCEED",
+            _("THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT WILL "
+              "ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT WILL NOT DELETE "
+              "OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP TIMES IT'S RECOMMENDED "
+              "TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER RUNNING THIS UTILITY"),
+            _("PROCEED"),
             [this] {
                 if (!SystemData::createSystemDirectories()) {
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(), "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED", _("OK"),
+                        getHelpStyle(), _("THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"),
+                        _("OK"),
                         [this] {
                             if (CollectionSystemsManager::getInstance()->isEditing())
                                 CollectionSystemsManager::getInstance()->exitEditMode();
@@ -2018,15 +2019,15 @@ void GuiMenu::openUtilities()
                 else {
                     mWindow->pushGui(new GuiMsgBox(
                         getHelpStyle(),
-                        "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
-                        "DISK FULL?\nSEE THE LOG FILE FOR MORE DETAILS",
+                        _("ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
+                          "DISK FULL? SEE THE LOG FILE FOR MORE DETAILS"),
                         _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
                         (mRenderer->getIsVerticalOrientation() ?
                              0.70f :
                              0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
-            "CANCEL", nullptr, "", nullptr, nullptr, false, true,
+            _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.80f :
                  0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -2035,7 +2036,7 @@ void GuiMenu::openUtilities()
     s->addRow(row);
 
     row.elements.clear();
-    row.addElement(std::make_shared<TextComponent>("RESCAN ROM DIRECTORY",
+    row.addElement(std::make_shared<TextComponent>(_("RESCAN ROM DIRECTORY"),
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
 
@@ -2045,9 +2046,9 @@ void GuiMenu::openUtilities()
     row.makeAcceptInputHandler([this] {
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(),
-            "THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED GAMES AND "
-            "SYSTEMS",
-            "PROCEED",
+            _("THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED GAMES AND "
+              "SYSTEMS"),
+            _("PROCEED"),
             [this] {
                 if (CollectionSystemsManager::getInstance()->isEditing())
                     CollectionSystemsManager::getInstance()->exitEditMode();
@@ -2060,7 +2061,7 @@ void GuiMenu::openUtilities()
                 }
                 ViewController::getInstance()->rescanROMDirectory();
             },
-            "CANCEL", nullptr, "", nullptr, nullptr, false, true,
+            _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.76f :
                  0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -2079,12 +2080,12 @@ void GuiMenu::openQuitMenu()
     if (!Settings::getInstance()->getBool("ShowQuitMenu")) {
 #endif
         mWindow->pushGui(new GuiMsgBox(
-            this->getHelpStyle(), "REALLY QUIT?", "YES",
+            this->getHelpStyle(), _("REALLY QUIT?"), _("YES"),
             [this] {
                 close(true);
                 Utils::Platform::quitES();
             },
-            "NO", nullptr));
+            _("NO"), nullptr));
     }
     else {
         auto s = new GuiSettings(_("QUIT"));
@@ -2096,15 +2097,15 @@ void GuiMenu::openQuitMenu()
 
         row.makeAcceptInputHandler([window, this] {
             window->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), "REALLY QUIT?", "YES",
+                this->getHelpStyle(), _("REALLY QUIT?"), _("YES"),
                 [this] {
                     close(true);
                     Utils::Platform::quitES();
                 },
-                "NO", nullptr));
+                _("NO"), nullptr));
         });
-        auto quitText = std::make_shared<TextComponent>("QUIT ES-DE", Font::get(FONT_SIZE_MEDIUM),
-                                                        mMenuColorPrimary);
+        auto quitText = std::make_shared<TextComponent>(
+            _("QUIT ES-DE"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         quitText->setSelectable(true);
         row.addElement(quitText, true);
         s->addRow(row);
@@ -2112,16 +2113,16 @@ void GuiMenu::openQuitMenu()
         row.elements.clear();
         row.makeAcceptInputHandler([window, this] {
             window->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), "REALLY REBOOT?", "YES",
+                this->getHelpStyle(), _("REALLY REBOOT?"), _("YES"),
                 [] {
                     if (Utils::Platform::quitES(Utils::Platform::QuitMode::REBOOT) != 0) {
                         LOG(LogWarning) << "Reboot terminated with non-zero result!";
                     }
                 },
-                "NO", nullptr));
+                _("NO"), nullptr));
         });
         auto rebootText = std::make_shared<TextComponent>(
-            "REBOOT SYSTEM", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+            _("REBOOT SYSTEM"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         rebootText->setSelectable(true);
         row.addElement(rebootText, true);
         s->addRow(row);
@@ -2129,16 +2130,16 @@ void GuiMenu::openQuitMenu()
         row.elements.clear();
         row.makeAcceptInputHandler([window, this] {
             window->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), "REALLY POWER OFF?", "YES",
+                this->getHelpStyle(), _("REALLY POWER OFF?"), _("YES"),
                 [] {
                     if (Utils::Platform::quitES(Utils::Platform::QuitMode::POWEROFF) != 0) {
                         LOG(LogWarning) << "Power off terminated with non-zero result!";
                     }
                 },
-                "NO", nullptr));
+                _("NO"), nullptr));
         });
         auto powerOffText = std::make_shared<TextComponent>(
-            "POWER OFF SYSTEM", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+            _("POWER OFF SYSTEM"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         powerOffText->setSelectable(true);
         row.addElement(powerOffText, true);
         s->addRow(row);
@@ -2268,9 +2269,9 @@ bool GuiMenu::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
-    prompts.push_back(HelpPrompt("up/down", "choose"));
-    prompts.push_back(HelpPrompt("a", "select"));
-    prompts.push_back(HelpPrompt("b", "close menu"));
-    prompts.push_back(HelpPrompt("start", "close menu"));
+    prompts.push_back(HelpPrompt("up/down", _("choose")));
+    prompts.push_back(HelpPrompt("a", _("select")));
+    prompts.push_back(HelpPrompt("b", _("close menu")));
+    prompts.push_back(HelpPrompt("start", _("close menu")));
     return prompts;
 }

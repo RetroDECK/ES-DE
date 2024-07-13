@@ -364,13 +364,13 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
-                mHelpStyle, mSaveConfirmationText, "YES",
+                mHelpStyle, mSaveConfirmationText, _("YES"),
                 [this] {
                     this->mOkCallback(mText->getValue());
                     delete this;
                     return true;
                 },
-                "NO",
+                _("NO"),
                 [this] {
                     delete this;
                     return true;
@@ -498,19 +498,19 @@ std::vector<HelpPrompt> GuiTextEditKeyboardPopup::getHelpPrompts()
     std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
 
     if (!mText->isEditing()) {
-        prompts.push_back(HelpPrompt("lt", "shift"));
-        prompts.push_back(HelpPrompt("rt", "alt"));
+        prompts.push_back(HelpPrompt("lt", _("shift")));
+        prompts.push_back(HelpPrompt("rt", _("alt")));
     }
     else if (mMultiLine) {
-        prompts.push_back(HelpPrompt("a", "newline"));
+        prompts.push_back(HelpPrompt("a", _("newline")));
     }
     else {
         prompts.push_back(HelpPrompt("a", mAcceptBtnHelpText));
     }
 
-    prompts.push_back(HelpPrompt("l", "backspace"));
-    prompts.push_back(HelpPrompt("r", "space"));
-    prompts.push_back(HelpPrompt("b", "back"));
+    prompts.push_back(HelpPrompt("l", _("backspace")));
+    prompts.push_back(HelpPrompt("r", _("space")));
+    prompts.push_back(HelpPrompt("b", _("back")));
 
     if (prompts.size() > 0 && prompts.front().second == OK_SYMBOL)
         prompts.front().second = mAcceptBtnHelpText;

@@ -11,6 +11,7 @@
 #include "CollectionSystemsManager.h"
 #include "UIModeController.h"
 #include "animations/LambdaAnimation.h"
+#include "utils/LocalizationUtil.h"
 
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 325
@@ -506,33 +507,33 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 
     if (Settings::getInstance()->getString("QuickSystemSelect") != "disabled") {
         if (getQuickSystemSelectLeftButton() == "leftshoulder")
-            prompts.push_back(HelpPrompt("lr", "system"));
+            prompts.push_back(HelpPrompt("lr", _("system")));
         else if (getQuickSystemSelectLeftButton() == "lefttrigger")
-            prompts.push_back(HelpPrompt("ltrt", "system"));
+            prompts.push_back(HelpPrompt("ltrt", _("system")));
         else if (getQuickSystemSelectLeftButton() == "left")
-            prompts.push_back(HelpPrompt("left/right", "system"));
+            prompts.push_back(HelpPrompt("left/right", _("system")));
     }
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::ViewMode::GAMELIST)
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
     else
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
 
-    prompts.push_back(HelpPrompt("b", "back"));
-    prompts.push_back(HelpPrompt("x", "view media"));
+    prompts.push_back(HelpPrompt("b", _("back")));
+    prompts.push_back(HelpPrompt("x", _("view media")));
 
     if (!UIModeController::getInstance()->isUIModeKid())
-        prompts.push_back(HelpPrompt("back", "options"));
+        prompts.push_back(HelpPrompt("back", _("options")));
     if (mRoot->getSystem()->isGameSystem() &&
         (Settings::getInstance()->getString("RandomEntryButton") == "games" ||
          Settings::getInstance()->getString("RandomEntryButton") == "gamessystems"))
-        prompts.push_back(HelpPrompt("thumbstickclick", "random"));
+        prompts.push_back(HelpPrompt("thumbstickclick", _("random")));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
         !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::ViewMode::GAMELIST) {
-        prompts.push_back(HelpPrompt("y", "jump to game"));
+        prompts.push_back(HelpPrompt("y", _("jump to game")));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
              (mRoot->getSystem()->getThemeFolder() != "custom-collections" ||

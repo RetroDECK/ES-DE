@@ -29,6 +29,7 @@
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #define TITLE_HEIGHT                                                                               \
@@ -70,7 +71,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>("EDIT METADATA", Font::get(FONT_SIZE_LARGE),
+    mTitle = std::make_shared<TextComponent>(_("EDIT METADATA"), Font::get(FONT_SIZE_LARGE),
                                              mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
@@ -147,7 +148,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         // entry instead of for instance the spacer. That is so because ComponentList
         // always looks for the help prompt at the back of the element stack.
         ComponentListRow row;
-        auto lbl = std::make_shared<TextComponent>(Utils::String::toUpper(it->displayName),
+        auto lbl = std::make_shared<TextComponent>(_(it->displayName.c_str()),
                                                    Font::get(FONT_SIZE_SMALL), mMenuColorPrimary);
         row.addElement(lbl, true); // Label.
 
@@ -207,7 +208,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
-                const std::string title {it->displayPrompt};
+                const std::string title {_(it->displayPrompt.c_str())};
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [ed, originalValue](const std::string& newVal) {
@@ -251,7 +252,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     if (ed->getValue() != "") {
                         ComponentListRow row;
                         std::shared_ptr<TextComponent> clearText {std::make_shared<TextComponent>(
-                            ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
+                            ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEAR ENTRY"),
                             Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
                         clearText->setSelectable(true);
                         row.addElement(clearText, true);
@@ -293,8 +294,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
-                const std::string title {mRenderer->getIsVerticalOrientation() ? "select emulator" :
-                                                                                 it->displayPrompt};
+                const std::string title {mRenderer->getIsVerticalOrientation() ?
+                                             _("SELECT EMULATOR") :
+                                             _(it->displayPrompt.c_str())};
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [this, ed, originalValue](const std::string& newVal) {
@@ -334,7 +336,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         GuiSettings* s {nullptr};
 
                         if (mInvalidEmulatorEntry && singleEntry)
-                            s = new GuiSettings("CLEAR INVALID ENTRY");
+                            s = new GuiSettings(_("CLEAR INVALID ENTRY"));
                         else
                             s = new GuiSettings(title);
 
@@ -346,7 +348,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                                 "", ViewController::EXCLAMATION_CHAR + " " + originalValue));
                         else if (ed->getValue() != "")
                             launchCommands.push_back(std::make_pair(
-                                "", ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY"));
+                                "", ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEAR ENTRY")));
 
                         for (auto entry : launchCommands) {
                             if (mInvalidEmulatorEntry && singleEntry &&
@@ -372,10 +374,16 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                                 scraperParams.system->getSystemEnvData()
                                         ->mLaunchCommands.front()
                                         .second == label)
-                                labelText->setValue(labelText->getValue().append(" [SYSTEM-WIDE]"));
+                                labelText->setValue(labelText->getValue()
+                                                        .append(" [")
+                                                        .append(_("SYSTEM-WIDE"))
+                                                        .append("]"));
 
                             if (scraperParams.system->getAlternativeEmulator() == label)
-                                labelText->setValue(labelText->getValue().append(" [SYSTEM-WIDE]"));
+                                labelText->setValue(labelText->getValue()
+                                                        .append(" [")
+                                                        .append(_("SYSTEM-WIDE"))
+                                                        .append("]"));
 
                             row.addElement(labelText, true);
                             row.makeAcceptInputHandler(
@@ -433,7 +441,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
-                const std::string title {it->displayPrompt};
+                const std::string title {_(it->displayPrompt.c_str())};
 
                 std::vector<FileData*> children;
                 if (originalValue != "")
@@ -510,7 +518,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     if (ed->getValue() != "") {
                         ComponentListRow row;
                         std::shared_ptr<TextComponent> clearText {std::make_shared<TextComponent>(
-                            ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
+                            ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEAR ENTRY"),
                             Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
                         clearText->setSelectable(true);
                         row.addElement(clearText, true);
@@ -554,7 +562,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(bracket, false);
 
                 bool multiLine {it->type == MD_MULTILINE_STRING};
-                const std::string title {it->displayPrompt};
+                const std::string title {_(it->displayPrompt.c_str())};
 
                 gamePath = Utils::FileSystem::getStem(scraperParams.game->getPath());
 
@@ -606,14 +614,14 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                             mRenderer->getIsVerticalOrientation() ? mPosition.y : 0.0f};
                         mWindow->pushGui(new GuiTextEditKeyboardPopup(
                             getHelpStyle(), verticalPosition, title, ed->getValue(), updateVal,
-                            multiLine, "apply", "APPLY CHANGES?", "", ""));
+                            multiLine, _("APPLY"), _("APPLY CHANGES?"), "", ""));
                     });
                 }
                 else {
                     row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
                         mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), title, ed->getValue(),
-                                                              updateVal, multiLine, "APPLY",
-                                                              "APPLY CHANGES?"));
+                                                              updateVal, multiLine, _("APPLY"),
+                                                              _("APPLY CHANGES?")));
                     });
                 }
                 break;
@@ -647,14 +655,14 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
     if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
         buttons.push_back(std::make_shared<ButtonComponent>(
-            "SCRAPE", "scrape", std::bind(&GuiMetaDataEd::fetch, this)));
+            _("SCRAPE"), _("scrape"), std::bind(&GuiMetaDataEd::fetch, this)));
 
-    buttons.push_back(std::make_shared<ButtonComponent>("SAVE", "save metadata", [&] {
+    buttons.push_back(std::make_shared<ButtonComponent>(_("SAVE"), _("save metadata"), [&] {
         save();
         delete this;
     }));
     buttons.push_back(
-        std::make_shared<ButtonComponent>("CANCEL", "cancel changes", [&] { delete this; }));
+        std::make_shared<ButtonComponent>(_("CANCEL"), _("cancel changes"), [&] { delete this; }));
     if (scraperParams.game->getType() == FOLDER) {
         if (mClearGameFunc) {
             auto clearSelf = [&] {
@@ -662,16 +670,20 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 delete this;
             };
             auto clearSelfBtnFunc = [this, clearSelf] {
-                mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
-                                               "THIS WILL DELETE ANY MEDIA FILES AND\n"
-                                               "THE GAMELIST.XML ENTRY FOR THIS FOLDER,\n"
-                                               "BUT NEITHER THE FOLDER ITSELF OR ANY\n"
-                                               "CONTENT INSIDE IT WILL BE REMOVED\n"
-                                               "ARE YOU SURE?",
-                                               "YES", clearSelf, "NO", nullptr));
+                mWindow->pushGui(
+                    new GuiMsgBox(getHelpStyle(),
+                                  _("THIS WILL DELETE ANY MEDIA FILES AND "
+                                    "THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+                                    "BUT NEITHER THE DIRECTORY ITSELF OR ANY "
+                                    "CONTENT INSIDE IT WILL BE REMOVED"),
+                                  _("PROCEED"), clearSelf, _("CANCEL"), nullptr, "", nullptr,
+                                  nullptr, false, true,
+                                  (mRenderer->getIsVerticalOrientation() ?
+                                       0.70f :
+                                       0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
             };
             buttons.push_back(
-                std::make_shared<ButtonComponent>("CLEAR", "clear folder", clearSelfBtnFunc));
+                std::make_shared<ButtonComponent>(_("CLEAR"), _("clear folder"), clearSelfBtnFunc));
         }
     }
     else {
@@ -681,16 +693,20 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 delete this;
             };
             auto clearSelfBtnFunc = [this, clearSelf] {
-                mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
-                                               "THIS WILL DELETE ANY MEDIA FILES\n"
-                                               "AND THE GAMELIST.XML ENTRY FOR\n"
-                                               "THIS GAME, BUT THE GAME FILE\n"
-                                               "ITSELF WILL NOT BE REMOVED\n"
-                                               "ARE YOU SURE?",
-                                               "YES", clearSelf, "NO", nullptr));
+                mWindow->pushGui(
+                    new GuiMsgBox(getHelpStyle(),
+                                  _("THIS WILL DELETE ANY MEDIA FILES "
+                                    "AND THE GAMELIST.XML ENTRY FOR "
+                                    "THIS GAME, BUT THE GAME FILE "
+                                    "ITSELF WILL NOT BE REMOVED"),
+                                  _("PROCEED"), clearSelf, _("CANCEL"), nullptr, "", nullptr,
+                                  nullptr, false, true,
+                                  (mRenderer->getIsVerticalOrientation() ?
+                                       0.70f :
+                                       0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
             };
             buttons.push_back(
-                std::make_shared<ButtonComponent>("CLEAR", "clear file", clearSelfBtnFunc));
+                std::make_shared<ButtonComponent>(_("CLEAR"), _("clear file"), clearSelfBtnFunc));
         }
 
         // For the special case where a directory has a supported file extension and is therefore
@@ -701,15 +717,19 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 delete this;
             };
             auto deleteGameBtnFunc = [this, deleteFilesAndSelf] {
-                mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
-                                               "THIS WILL DELETE THE GAME\n"
-                                               "FILE, ANY MEDIA FILES AND\n"
-                                               "THE GAMELIST.XML ENTRY\n"
-                                               "ARE YOU SURE?",
-                                               "YES", deleteFilesAndSelf, "NO", nullptr));
+                mWindow->pushGui(
+                    new GuiMsgBox(getHelpStyle(),
+                                  _("THIS WILL DELETE THE GAME "
+                                    "FILE, ANY MEDIA FILES AND "
+                                    "THE GAMELIST.XML ENTRY"),
+                                  _("PROCEED"), deleteFilesAndSelf, _("CANCEL"), nullptr, "",
+                                  nullptr, nullptr, false, true,
+                                  (mRenderer->getIsVerticalOrientation() ?
+                                       0.70f :
+                                       0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
             };
-            buttons.push_back(
-                std::make_shared<ButtonComponent>("DELETE", "delete game", deleteGameBtnFunc));
+            buttons.push_back(std::make_shared<ButtonComponent>(_("DELETE"), _("delete game"),
+                                                                deleteGameBtnFunc));
         }
     }
 
@@ -992,12 +1012,12 @@ void GuiMetaDataEd::close()
     if (metadataUpdated) {
         // Changes were made, ask if the user wants to save them.
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(), "SAVE CHANGES?", "YES",
+            getHelpStyle(), _("SAVE CHANGES?"), _("YES"),
             [this, closeFunc] {
                 save();
                 closeFunc();
             },
-            "NO", closeFunc, "", nullptr, nullptr, true));
+            _("NO"), closeFunc, "", nullptr, nullptr, true));
     }
     else {
         // Always save if the media files have been changed (i.e. newly scraped images).
@@ -1028,7 +1048,7 @@ bool GuiMetaDataEd::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiMetaDataEd::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("y", "scrape"));
-    prompts.push_back(HelpPrompt("b", "back"));
+    prompts.push_back(HelpPrompt("y", _("scrape")));
+    prompts.push_back(HelpPrompt("b", _("back")));
     return prompts;
 }

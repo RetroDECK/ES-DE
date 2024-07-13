@@ -263,8 +263,10 @@ private:
                       const std::map<std::string, ElementPropertyType>& typeMap,
                       ThemeElement& element);
 
+#if defined(GETTEXT_DUMMY_ENTRIES)
     // This is just to get gettext msgid entries added to the PO message catalog files.
     void gettextMessageCatalogEntries();
+#endif
 
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sSupportedMediaTypes;

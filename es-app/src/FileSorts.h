@@ -37,8 +37,10 @@ namespace FileSorts
     bool compareSystem(const FileData* file1, const FileData* file2);
     bool compareSystemDescending(const FileData* file1, const FileData* file2);
 
+#if defined(GETTEXT_DUMMY_ENTRIES)
     // This is just to get gettext msgid entries added to the PO message catalog files.
     void gettextMessageCatalogEntries();
+#endif
 
     extern const std::vector<FileData::SortType> SortTypes;
 } // namespace FileSorts

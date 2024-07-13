@@ -13,6 +13,7 @@
 
 #include "Settings.h"
 #include "resources/Font.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 DateTimeEditComponent::DateTimeEditComponent(bool alignRight, DisplayMode dispMode)
@@ -235,13 +236,13 @@ std::vector<HelpPrompt> DateTimeEditComponent::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
     if (!mEditing) {
-        prompts.push_back(HelpPrompt("a", "edit date"));
+        prompts.push_back(HelpPrompt("a", _("edit date")));
     }
     else {
-        prompts.push_back(HelpPrompt("b", "cancel"));
-        prompts.push_back(HelpPrompt("a", "apply"));
-        prompts.push_back(HelpPrompt("left/right", "Y-M-D"));
-        prompts.push_back(HelpPrompt("up/down", "modify"));
+        prompts.push_back(HelpPrompt("b", _("cancel")));
+        prompts.push_back(HelpPrompt("a", _("apply")));
+        prompts.push_back(HelpPrompt("left/right", _("Y-M-D")));
+        prompts.push_back(HelpPrompt("up/down", _("modify")));
     }
     return prompts;
 }

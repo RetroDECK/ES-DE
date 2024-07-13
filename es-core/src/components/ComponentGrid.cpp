@@ -9,6 +9,7 @@
 #include "components/ComponentGrid.h"
 
 #include "Settings.h"
+#include "utils/LocalizationUtil.h"
 
 using namespace GridFlags;
 
@@ -515,12 +516,12 @@ std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
 
     // Check existing capabilities as indicated by the help prompts, and if the prompts should
     // be combined into "up/down/left/right" then also remove the single-axis prompts.
-    if (!prompts.empty() && prompts.back() == HelpPrompt("up/down", "choose")) {
+    if (!prompts.empty() && prompts.back() == HelpPrompt("up/down", _("choose"))) {
         canScrollVert = true;
         if (canScrollHoriz && canScrollVert)
             prompts.pop_back();
     }
-    else if (!prompts.empty() && prompts.back() == HelpPrompt("left/right", "choose")) {
+    else if (!prompts.empty() && prompts.back() == HelpPrompt("left/right", _("choose"))) {
         canScrollHoriz = true;
         if (canScrollHoriz && canScrollVert)
             prompts.pop_back();
@@ -528,11 +529,11 @@ std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
 
     // Any duplicates will be removed in Window::setHelpPrompts()
     if (canScrollHoriz && canScrollVert)
-        prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
+        prompts.push_back(HelpPrompt("up/down/left/right", _("choose")));
     else if (canScrollHoriz)
-        prompts.push_back(HelpPrompt("left/right", "choose"));
+        prompts.push_back(HelpPrompt("left/right", _("choose")));
     else if (canScrollVert)
-        prompts.push_back(HelpPrompt("up/down", "choose"));
+        prompts.push_back(HelpPrompt("up/down", _("choose")));
 
     return prompts;
 }

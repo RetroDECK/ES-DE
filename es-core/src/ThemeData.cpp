@@ -2063,6 +2063,7 @@ void ThemeData::parseElement(const pugi::xml_node& root,
     }
 }
 
+#if defined(GETTEXT_DUMMY_ENTRIES)
 void ThemeData::gettextMessageCatalogEntries()
 {
     // sSupportedFontSizes
@@ -2084,3 +2085,4 @@ void ThemeData::gettextMessageCatalogEntries()
     _("21:9 vertical");
     _("32:9 vertical");
 }
+#endif

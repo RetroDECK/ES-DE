@@ -275,6 +275,7 @@ namespace FileSorts
         return system1.compare(system2) > 0;
     }
 
+#if defined(GETTEXT_DUMMY_ENTRIES)
     void gettextMessageCatalogEntries()
     {
         _("name, ascending");
@@ -298,5 +299,6 @@ namespace FileSorts
         _("system, ascending");
         _("system, descending");
     }
+#endif
 
 } // namespace FileSorts

@@ -95,6 +95,11 @@ private:
     std::map<std::string, std::string> mMap;
     std::string mNoResult = "";
     bool mWasChanged;
+
+#if defined(GETTEXT_DUMMY_ENTRIES)
+    // This is just to get gettext msgid entries added to the PO message catalog files.
+    void gettextMessageCatalogEntries();
+#endif
 };
 
 #endif // ES_APP_META_DATA_H

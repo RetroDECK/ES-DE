@@ -15,6 +15,7 @@
 #include "components/ComponentGrid.h"
 #include "components/TextComponent.h"
 #include "components/TextEditComponent.h"
+#include "utils/LocalizationUtil.h"
 
 class GuiTextEditKeyboardPopup : public GuiComponent
 {
@@ -25,13 +26,13 @@ public:
                              const std::string& initValue,
                              const std::function<void(const std::string&)>& okCallback,
                              bool multiLine,
-                             const std::string& acceptBtnHelpText = "OK",
-                             const std::string& saveConfirmationText = "SAVE CHANGES?",
+                             const std::string& acceptBtnHelpText = _("OK"),
+                             const std::string& saveConfirmationText = _("SAVE CHANGES?"),
                              const std::string& infoString = "",
                              const std::string& defaultValue = "",
-                             const std::string& loadBtnHelpText = "LOAD DEFAULT",
-                             const std::string& clearBtnHelpText = "CLEAR",
-                             const std::string& cancelBtnHelpText = "DISCARD CHANGES");
+                             const std::string& loadBtnHelpText = _("LOAD DEFAULT"),
+                             const std::string& clearBtnHelpText = _("CLEAR"),
+                             const std::string& cancelBtnHelpText = _("DISCARD CHANGES"));
 
     void onSizeChanged() override;
     bool input(InputConfig* config, Input input) override;

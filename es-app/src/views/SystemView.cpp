@@ -15,6 +15,7 @@
 #include "Window.h"
 #include "animations/LambdaAnimation.h"
 #include "guis/GuiMsgBox.h"
+#include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
 
 #if defined(_WIN64)
@@ -200,18 +201,18 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
     if (mCarousel != nullptr) {
         if (mCarousel->getType() == CarouselComponent<SystemData*>::CarouselType::VERTICAL ||
             mCarousel->getType() == CarouselComponent<SystemData*>::CarouselType::VERTICAL_WHEEL)
-            prompts.push_back(HelpPrompt("up/down", "choose"));
+            prompts.push_back(HelpPrompt("up/down", _("choose")));
         else
-            prompts.push_back(HelpPrompt("left/right", "choose"));
+            prompts.push_back(HelpPrompt("left/right", _("choose")));
     }
     else if (mGrid != nullptr) {
-        prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
+        prompts.push_back(HelpPrompt("up/down/left/right", _("choose")));
     }
     else if (mTextList != nullptr) {
-        prompts.push_back(HelpPrompt("up/down", "choose"));
+        prompts.push_back(HelpPrompt("up/down", _("choose")));
     }
 
-    prompts.push_back(HelpPrompt("a", "select"));
+    prompts.push_back(HelpPrompt("a", _("select")));
 
     if (Settings::getInstance()->getString("RandomEntryButton") == "gamessystems")
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));

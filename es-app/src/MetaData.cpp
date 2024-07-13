@@ -11,6 +11,7 @@
 
 #include "Log.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 
 #include <pugixml.hpp>
 
@@ -21,50 +22,50 @@ namespace
     // saving the values in GuiMetaDataEd.
     MetaDataDecl gameDecls[] {
     // Key                 Type                 Default value      Statistic  Name in GuiMetaDataEd          Prompt in GuiMetaDataEd             Scrape
-    {"name",               MD_STRING,           "",                false,     "name",                        "enter name",                       true},
-    {"sortname",           MD_STRING,           "",                false,     "sortname",                    "enter sortname",                   false},
-    {"collectionsortname", MD_STRING,           "",                false,     "custom collections sortname", "enter collections sortname",       false},
-    {"desc",               MD_MULTILINE_STRING, "",                false,     "description",                 "enter description",                true},
-    {"rating",             MD_RATING,           "0",               false,     "rating",                      "enter rating",                     true},
-    {"releasedate",        MD_DATE,             "19700101T000000", false,     "release date",                "enter release date",               true},
-    {"developer",          MD_STRING,           "unknown",         false,     "developer",                   "enter developer",                  true},
-    {"publisher",          MD_STRING,           "unknown",         false,     "publisher",                   "enter publisher",                  true},
-    {"genre",              MD_STRING,           "unknown",         false,     "genre",                       "enter genre",                      true},
-    {"players",            MD_STRING,           "unknown",         false,     "players",                     "enter number of players",          true},
-    {"favorite",           MD_BOOL,             "false",           false,     "favorite",                    "enter favorite off/on",            false},
-    {"completed",          MD_BOOL,             "false",           false,     "completed",                   "enter completed off/on",           false},
-    {"kidgame",            MD_BOOL,             "false",           false,     "kidgame",                     "enter kidgame off/on",             false},
-    {"hidden",             MD_BOOL,             "false",           false,     "hidden",                      "enter hidden off/on",              false},
-    {"broken",             MD_BOOL,             "false",           false,     "broken/not working",          "enter broken off/on",              false},
-    {"nogamecount",        MD_BOOL,             "false",           false,     "exclude from game counter",   "enter don't count as game off/on", false},
-    {"nomultiscrape",      MD_BOOL,             "false",           false,     "exclude from multi-scraper",  "enter no multi-scrape off/on",     false},
-    {"hidemetadata",       MD_BOOL,             "false",           false,     "hide metadata fields",        "enter hide metadata off/on",       false},
-    {"playcount",          MD_INT,              "0",               false,     "times played",                "enter number of times played",     false},
-    {"controller",         MD_CONTROLLER,       "",                false,     "controller",                  "select controller",                true},
-    {"altemulator",        MD_ALT_EMULATOR,     "",                false,     "alternative emulator",        "select alternative emulator",      false},
-    {"lastplayed",         MD_TIME,             "0",               true,      "last played",                 "enter last played date",           false}
+    {"name",               MD_STRING,           "",                false,     "NAME",                        "ENTER NAME",                       true},
+    {"sortname",           MD_STRING,           "",                false,     "SORTNAME",                    "ENTER SORTNAME",                   false},
+    {"collectionsortname", MD_STRING,           "",                false,     "CUSTOM COLLECTIONS SORTNAME", "ENTER COLLECTIONS SORTNAME",       false},
+    {"desc",               MD_MULTILINE_STRING, "",                false,     "DESCRIPTION",                 "ENTER DESCRIPTION",                true},
+    {"rating",             MD_RATING,           "0",               false,     "RATING",                      "ENTER RATING",                     true},
+    {"releasedate",        MD_DATE,             "19700101T000000", false,     "RELEASE DATE",                "ENTER RELEASE DATE",               true},
+    {"developer",          MD_STRING,           "unknown",         false,     "DEVELOPER",                   "ENTER DEVELOPER",                  true},
+    {"publisher",          MD_STRING,           "unknown",         false,     "PUBLISHER",                   "ENTER PUBLISHER",                  true},
+    {"genre",              MD_STRING,           "unknown",         false,     "GENRE",                       "ENTER GENRE",                      true},
+    {"players",            MD_STRING,           "unknown",         false,     "PLAYERS",                     "ENTER NUMBER OF PLAYERS",          true},
+    {"favorite",           MD_BOOL,             "false",           false,     "FAVORITE",                    "ENTER FAVORITE OFF/ON",            false},
+    {"completed",          MD_BOOL,             "false",           false,     "COMPLETED",                   "ENTER COMPLETED OFF/ON",           false},
+    {"kidgame",            MD_BOOL,             "false",           false,     "KIDGAME",                     "ENTER KIDGAME OFF/ON",             false},
+    {"hidden",             MD_BOOL,             "false",           false,     "HIDDEN",                      "ENTER HIDDEN OFF/ON",              false},
+    {"broken",             MD_BOOL,             "false",           false,     "BROKEN/NOT WORKING",          "ENTER BROKEN OFF/ON",              false},
+    {"nogamecount",        MD_BOOL,             "false",           false,     "EXCLUDE FROM GAME COUNTER",   "ENTER DON'T COUNT AS GAME OFF/ON", false},
+    {"nomultiscrape",      MD_BOOL,             "false",           false,     "EXCLUDE FROM MULTI-SCRAPER",  "ENTER NO MULTI-SCRAPE OFF/ON",     false},
+    {"hidemetadata",       MD_BOOL,             "false",           false,     "HIDE METADATA FIELDS",        "ENTER HIDE METADATA OFF/ON",       false},
+    {"playcount",          MD_INT,              "0",               false,     "TIMES PLAYED",                "ENTER NUMBER OF TIMES PLAYED",     false},
+    {"controller",         MD_CONTROLLER,       "",                false,     "CONTROLLER",                  "SELECT CONTROLLER",                true},
+    {"altemulator",        MD_ALT_EMULATOR,     "",                false,     "ALTERNATIVE EMULATOR",        "SELECT ALTERNATIVE EMULATOR",      false},
+    {"lastplayed",         MD_TIME,             "0",               true,      "LAST PLAYED",                 "ENTER LAST PLAYED DATE",           false}
     };
 
     MetaDataDecl folderDecls[] {
     // Key            Type                 Default value      Statistic  Name in GuiMetaDataEd            Prompt in GuiMetaDataEd             Scrape
-    {"name",          MD_STRING,           "",                false,     "name",                          "enter name",                       true},
-    {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                   "enter description",                true},
-    {"rating",        MD_RATING,           "0",               false,     "rating",                        "enter rating",                     true},
-    {"releasedate",   MD_DATE,             "19700101T000000", false,     "release date",                  "enter release date",               true},
-    {"developer",     MD_STRING,           "unknown",         false,     "developer",                     "enter developer",                  true},
-    {"publisher",     MD_STRING,           "unknown",         false,     "publisher",                     "enter publisher",                  true},
-    {"genre",         MD_STRING,           "unknown",         false,     "genre",                         "enter genre",                      true},
-    {"players",       MD_STRING,           "unknown",         false,     "players",                       "enter number of players",          true},
-    {"favorite",      MD_BOOL,             "false",           false,     "favorite",                      "enter favorite off/on",            false},
-    {"completed",     MD_BOOL,             "false",           false,     "completed",                     "enter completed off/on",           false},
-    {"kidgame",       MD_BOOL,             "false",           false,     "kidgame (only affects badges)", "enter kidgame off/on",             false},
-    {"hidden",        MD_BOOL,             "false",           false,     "hidden",                        "enter hidden off/on",              false},
-    {"broken",        MD_BOOL,             "false",           false,     "broken/not working",            "enter broken off/on",              false},
-    {"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper",    "enter no multi-scrape off/on",     false},
-    {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",          "enter hide metadata off/on",       false},
-    {"controller",    MD_CONTROLLER,       "",                false,     "controller",                    "select controller",                true},
-    {"folderlink",    MD_FOLDER_LINK,      "",                false,     "folder link",                   "select folder link",               false},
-    {"lastplayed",    MD_TIME,             "0",               true,      "last played",                   "enter last played date",           false}
+    {"name",          MD_STRING,           "",                false,     "NAME",                          "ENTER NAME",                       true},
+    {"desc",          MD_MULTILINE_STRING, "",                false,     "DESCRIPTION",                   "ENTER DESCRIPTION",                true},
+    {"rating",        MD_RATING,           "0",               false,     "RATING",                        "ENTER RATING",                     true},
+    {"releasedate",   MD_DATE,             "19700101T000000", false,     "RELEASE DATE",                  "ENTER RELEASE DATE",               true},
+    {"developer",     MD_STRING,           "unknown",         false,     "DEVELOPER",                     "ENTER DEVELOPER",                  true},
+    {"publisher",     MD_STRING,           "unknown",         false,     "PUBLISHER",                     "ENTER PUBLISHER",                  true},
+    {"genre",         MD_STRING,           "unknown",         false,     "GENRE",                         "ENTER GENRE",                      true},
+    {"players",       MD_STRING,           "unknown",         false,     "PLAYERS",                       "ENTER NUMBER OF PLAYERS",          true},
+    {"favorite",      MD_BOOL,             "false",           false,     "FAVORITE",                      "ENTER FAVORITE OFF/ON",            false},
+    {"completed",     MD_BOOL,             "false",           false,     "COMPLETED",                     "ENTER COMPLETED OFF/ON",           false},
+    {"kidgame",       MD_BOOL,             "false",           false,     "KIDGAME (ONLY AFFECTS BADGES)", "ENTER KIDGAME OFF/ON",             false},
+    {"hidden",        MD_BOOL,             "false",           false,     "HIDDEN",                        "ENTER HIDDEN OFF/ON",              false},
+    {"broken",        MD_BOOL,             "false",           false,     "BROKEN/NOT WORKING",            "ENTER BROKEN OFF/ON",              false},
+    {"nomultiscrape", MD_BOOL,             "false",           false,     "EXCLUDE FROM MULTI-SCRAPER",    "ENTER NO MULTI-SCRAPE OFF/ON",     false},
+    {"hidemetadata",  MD_BOOL,             "false",           false,     "HIDE METADATA FIELDS",          "ENTER HIDE METADATA OFF/ON",       false},
+    {"controller",    MD_CONTROLLER,       "",                false,     "CONTROLLER",                    "SELECT CONTROLLER",                true},
+    {"folderlink",    MD_FOLDER_LINK,      "",                false,     "FOLDER LINK",                   "SELECT FOLDER LINK",               false},
+    {"lastplayed",    MD_TIME,             "0",               true,      "LAST PLAYED",                   "ENTER LAST PLAYED DATE",           false}
     };
     // clang-format on
 
@@ -184,3 +185,47 @@ void MetaDataList::resetChangedFlag()
     // Reset the change flag.
     mWasChanged = false;
 }
+
+#if defined(GETTEXT_DUMMY_ENTRIES)
+void gettextMessageCatalogEntries()
+{
+    _("NAME");
+    _("ENTER NAME");
+    _("SORTNAME");
+    _("ENTER SORTNAME");
+    _("CUSTOM COLLECTIONS SORTNAME");
+    _("ENTER COLLECTIONS SORTNAME");
+    _("DESCRIPTION");
+    _("ENTER DESCRIPTION");
+    _("RATING");
+    _("RELEASE DATE");
+    _("ENTER RELEASE DATE");
+    _("DEVELOPER");
+    _("ENTER DEVELOPER");
+    _("PUBLISHER");
+    _("ENTER PUBLISHER");
+    _("GENRE");
+    _("ENTER GENRE");
+    _("PLAYERS");
+    _("ENTER NUMBER OF PLAYERS");
+    _("FAVORITE");
+    _("COMPLETED");
+    _("KIDGAME");
+    _("KIDGAME (ONLY AFFECTS BADGES)");
+    _("HIDDEN");
+    _("BROKEN/NOT WORKING");
+    _("EXCLUDE FROM GAME COUNTER");
+    _("EXCLUDE FROM MULTI-SCRAPER");
+    _("HIDE METADATA FIELDS");
+    _("TIMES PLAYED");
+    _("ENTER NUMBER OF TIMES PLAYED");
+    _("CONTROLLER");
+    _("SELECT CONTROLLER");
+    _("ALTERNATIVE EMULATOR");
+    _("SELECT ALTERNATIVE EMULATOR");
+    _("FOLDER LINK");
+    _("SELECT FOLDER LINK");
+    _("LAST PLAYED");
+    _("ENTER LAST PLAYED DATE");
+}
+#endif

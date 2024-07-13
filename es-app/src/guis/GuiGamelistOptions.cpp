@@ -600,14 +600,14 @@ std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
     auto prompts = mMenu.getHelpPrompts();
     if (mSystem->getRootFolder()->getChildren().size() > 0 || mIsCustomCollectionGroup ||
         mIsCustomCollection || CollectionSystemsManager::getInstance()->isEditing())
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
     if (mSystem->getRootFolder()->getChildren().size() > 0 && mSystem->getName() != "recent") {
-        prompts.push_back(HelpPrompt("b", "close (apply)"));
-        prompts.push_back(HelpPrompt("back", "close (cancel)"));
+        prompts.push_back(HelpPrompt("b", _("close (apply)")));
+        prompts.push_back(HelpPrompt("back", _("close (cancel)")));
     }
     else {
-        prompts.push_back(HelpPrompt("b", "close"));
-        prompts.push_back(HelpPrompt("back", "close"));
+        prompts.push_back(HelpPrompt("b", _("close")));
+        prompts.push_back(HelpPrompt("back", _("close")));
     }
     return prompts;
 }

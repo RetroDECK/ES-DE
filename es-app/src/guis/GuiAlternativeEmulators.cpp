@@ -11,14 +11,15 @@
 
 #include "GamelistFileParser.h"
 #include "SystemData.h"
+#include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
 
 GuiAlternativeEmulators::GuiAlternativeEmulators()
-    : mMenu {"ALTERNATIVE EMULATORS"}
+    : mMenu {_("ALTERNATIVE EMULATORS")}
     , mHasSystems {false}
 {
     addChild(&mMenu);
-    mMenu.addButton("BACK", "back", [this] { delete this; });
+    mMenu.addButton(_("BACK"), _("back"), [this] { delete this; });
 
     // Horizontal sizes for the system and label entries.
     float systemSizeX {mMenu.getSize().x / 3.27f};
@@ -256,8 +257,8 @@ bool GuiAlternativeEmulators::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiAlternativeEmulators::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "back"));
+    prompts.push_back(HelpPrompt("b", _("back")));
     if (mHasSystems)
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
     return prompts;
 }

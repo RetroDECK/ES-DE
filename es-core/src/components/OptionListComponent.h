@@ -373,9 +373,9 @@ private:
     {
         std::vector<HelpPrompt> prompts;
         if (!mMultiSelect)
-            prompts.push_back(HelpPrompt("left/right", "change value"));
+            prompts.push_back(HelpPrompt("left/right", _("change value")));
 
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
         return prompts;
     }
 
@@ -513,11 +513,11 @@ private:
                 mMenu.addRow(row, (!mParent->mMultiSelect && it->selected), false);
             }
 
-            mMenu.addButton(_("BACK"), "back", [this] { delete this; });
+            mMenu.addButton(_("BACK"), _("back"), [this] { delete this; });
 
             if (mParent->mMultiSelect) {
                 if (!mParent->mMultiExclusiveSelect) {
-                    mMenu.addButton(_("SELECT ALL"), "select all", [this, checkBoxes] {
+                    mMenu.addButton(_("SELECT ALL"), _("select all"), [this, checkBoxes] {
                         for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
                             mParent->mEntries.at(i).selected = true;
                             checkBoxes.at(i)->setImage(CHECKED_PATH);
@@ -526,18 +526,19 @@ private:
                     });
                 }
 
-                mMenu.addButton(_("SELECT NONE"), "select none", [this, checkBoxes, textEntries] {
-                    for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
-                        mParent->mEntries.at(i).selected = false;
-                        checkBoxes.at(i)->setImage(UNCHECKED_PATH);
-                        if (mParent->mMultiExclusiveSelect) {
-                            checkBoxes.at(i)->setOpacity(1.0f);
-                            textEntries.at(i)->setOpacity(1.0f);
-                            textEntries.at(i)->setEnabled(true);
-                        }
-                    }
-                    mParent->onSelectedChanged();
-                });
+                mMenu.addButton(_("SELECT NONE"), _("select none"),
+                                [this, checkBoxes, textEntries] {
+                                    for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
+                                        mParent->mEntries.at(i).selected = false;
+                                        checkBoxes.at(i)->setImage(UNCHECKED_PATH);
+                                        if (mParent->mMultiExclusiveSelect) {
+                                            checkBoxes.at(i)->setOpacity(1.0f);
+                                            textEntries.at(i)->setOpacity(1.0f);
+                                            textEntries.at(i)->setEnabled(true);
+                                        }
+                                    }
+                                    mParent->onSelectedChanged();
+                                });
             }
 
             mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x) / 2.0f,
@@ -558,8 +559,8 @@ private:
         std::vector<HelpPrompt> getHelpPrompts() override
         {
             auto prompts = mMenu.getHelpPrompts();
-            prompts.push_back(HelpPrompt("a", "select"));
-            prompts.push_back(HelpPrompt("b", "back"));
+            prompts.push_back(HelpPrompt("a", _("select")));
+            prompts.push_back(HelpPrompt("b", _("back")));
             return prompts;
         }
 

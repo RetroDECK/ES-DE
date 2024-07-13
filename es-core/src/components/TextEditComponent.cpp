@@ -8,6 +8,7 @@
 
 #include "components/TextEditComponent.h"
 
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #if defined(__ANDROID__)
@@ -402,13 +403,13 @@ std::vector<HelpPrompt> TextEditComponent::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
     if (mEditing) {
-        prompts.push_back(HelpPrompt("lt", "first"));
-        prompts.push_back(HelpPrompt("rt", "last"));
-        prompts.push_back(HelpPrompt("left/right", "move cursor"));
-        prompts.push_back(HelpPrompt("b", "back"));
+        prompts.push_back(HelpPrompt("lt", _("first")));
+        prompts.push_back(HelpPrompt("rt", _("last")));
+        prompts.push_back(HelpPrompt("left/right", _("move cursor")));
+        prompts.push_back(HelpPrompt("b", _("back")));
     }
     else {
-        prompts.push_back(HelpPrompt("a", "edit"));
+        prompts.push_back(HelpPrompt("a", _("edit")));
     }
     return prompts;
 }

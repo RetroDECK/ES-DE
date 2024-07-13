@@ -9,6 +9,7 @@
 #include "components/ComponentList.h"
 
 #include "resources/Font.h"
+#include "utils/LocalizationUtil.h"
 
 #define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
@@ -412,7 +413,7 @@ std::vector<HelpPrompt> ComponentList::getHelpPrompts()
             }
         }
         if (addMovePrompt)
-            prompts.push_back(HelpPrompt("up/down", "choose"));
+            prompts.push_back(HelpPrompt("up/down", _("choose")));
     }
 
     return prompts;

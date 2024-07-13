@@ -16,6 +16,7 @@
 #include "components/OptionListComponent.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 GuiGamelistFilter::GuiGamelistFilter(SystemData* system,
@@ -245,7 +246,7 @@ bool GuiGamelistFilter::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiGamelistFilter::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "back"));
-    prompts.push_back(HelpPrompt("a", "select"));
+    prompts.push_back(HelpPrompt("b", _("back")));
+    prompts.push_back(HelpPrompt("a", _("select")));
     return prompts;
 }

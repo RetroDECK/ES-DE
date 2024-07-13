@@ -11,6 +11,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "Window.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 TextComponent::TextComponent()
@@ -559,7 +560,7 @@ std::vector<HelpPrompt> TextComponent::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
     if (mSelectable)
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
     return prompts;
 }
 

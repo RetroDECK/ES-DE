@@ -73,11 +73,11 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
             }));
     }
 
-    buttons.push_back(std::make_shared<ButtonComponent>("clear", clearBtnHelpText,
+    buttons.push_back(std::make_shared<ButtonComponent>(_("CLEAR"), clearBtnHelpText,
                                                         [this] { mText->setValue(""); }));
 
-    buttons.push_back(
-        std::make_shared<ButtonComponent>("CANCEL", "discard changes", [this] { delete this; }));
+    buttons.push_back(std::make_shared<ButtonComponent>(_("CANCEL"), _("discard changes"),
+                                                        [this] { delete this; }));
 
     mButtonGrid = MenuComponent::makeButtonGrid(buttons);
 
@@ -191,13 +191,13 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
-                mHelpStyle, mSaveConfirmationText, "YES",
+                mHelpStyle, mSaveConfirmationText, _("YES"),
                 [this] {
                     this->mOkCallback(mText->getValue());
                     delete this;
                     return true;
                 },
-                "NO",
+                _("NO"),
                 [this] {
                     delete this;
                     return true;
@@ -272,14 +272,14 @@ std::vector<HelpPrompt> GuiTextEditPopup::getHelpPrompts()
 
     if (mText->isEditing()) {
         if (mMultiLine)
-            prompts.push_back(HelpPrompt("a", "newline"));
+            prompts.push_back(HelpPrompt("a", _("newline")));
         else
             prompts.push_back(HelpPrompt("a", mAcceptBtnText));
     }
 
-    prompts.push_back(HelpPrompt("l", "backspace"));
-    prompts.push_back(HelpPrompt("r", "space"));
-    prompts.push_back(HelpPrompt("b", "back"));
+    prompts.push_back(HelpPrompt("l", _("backspace")));
+    prompts.push_back(HelpPrompt("r", _("space")));
+    prompts.push_back(HelpPrompt("b", _("back")));
     return prompts;
 }
 

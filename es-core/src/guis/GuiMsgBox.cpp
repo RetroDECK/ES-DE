@@ -172,7 +172,7 @@ std::vector<HelpPrompt> GuiMsgBox::getHelpPrompts()
     std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
 
     if (!mDisableBackButton)
-        prompts.push_back(HelpPrompt("b", "Back"));
+        prompts.push_back(HelpPrompt("b", _("back")));
 
     return prompts;
 }
