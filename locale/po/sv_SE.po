@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-12 22:42+0200\n"
-"PO-Revision-Date: 2024-07-12 23:00+0200\n"
+"POT-Creation-Date: 2024-07-13 12:28+0200\n"
+"PO-Revision-Date: 2024-07-13 12:04+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -38,7 +38,7 @@ msgstr "LJUDINSTÄLLNINGAR"
 msgid "INPUT DEVICE SETTINGS"
 msgstr "INPUTINSTÄLLNINGAR"
 
-#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2206
+#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2209
 msgid "GAME COLLECTION SETTINGS"
 msgstr "SPELSAMLINGSINSTÄLLNINGAR"
 
@@ -46,7 +46,7 @@ msgstr "SPELSAMLINGSINSTÄLLNINGAR"
 msgid "OTHER SETTINGS"
 msgstr "ANDRA INSTÄLLNINGAR"
 
-#: ../es-app/src/guis/GuiMenu.cpp:77 ../es-app/src/guis/GuiMenu.cpp:1965
+#: ../es-app/src/guis/GuiMenu.cpp:77 ../es-app/src/guis/GuiMenu.cpp:1968
 msgid "UTILITIES"
 msgstr "VERKTYG"
 
@@ -55,7 +55,7 @@ msgstr "VERKTYG"
 msgid "QUIT ES-DE"
 msgstr "AVSLUTA ES-DE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2087
+#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2090
 msgid "QUIT"
 msgstr "AVSLUTA"
 
@@ -142,7 +142,8 @@ msgid "LEFT/RIGHT"
 msgstr "VÄNSTER/HÖGER"
 
 #: ../es-app/src/guis/GuiMenu.cpp:521 ../es-app/src/guis/GuiMenu.cpp:680
-#: ../es-app/src/guis/GuiMenu.cpp:793
+#: ../es-app/src/guis/GuiMenu.cpp:793 ../es-app/src/guis/GuiMenu.cpp:1511
+#: ../es-app/src/guis/GuiMenu.cpp:1555
 msgid "DISABLED"
 msgstr "INAKTIVERAD"
 
@@ -350,7 +351,7 @@ msgstr "LITEN"
 msgid "EXTRA SMALL"
 msgstr "EXTRA LITEN"
 
-#: ../es-app/src/guis/GuiMenu.cpp:1224
+#: ../es-app/src/guis/GuiMenu.cpp:1224 ../es-app/src/guis/GuiMenu.cpp:1234
 msgid "TOUCH OVERLAY OPACITY"
 msgstr "TOUCH OVERLAY OPACITET"
 
@@ -378,12 +379,17 @@ msgid ""
 "OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
 "THE CONFIGURATOR TO RUN ON NEXT STARTUP"
 msgstr ""
-"DEAKTIVERA INTE TOUCH OVERLAY SÅVIDA DU INTE ANVÄNDER EN HANDKONTROLL, FÖR "
+"DEAKTIVERA INTE TOUCH OVERLAY SÅVIDA DU INTE ANVÄNDER EN HANDKONTROLL FÖR "
 "ANNARS LÅSER DU DIG UTE FRÅN APPEN. OM DETTA HÄNDER SÅ MÅSTE DU TEMPORÄRT "
-"KOPPLA IN EN HANDKONTROLL ELLER TANGENTBORD FÖR ATT AKTIVERA DENNA "
+"KOPPLA IN EN HANDKONTROLL ELLER ETT TANGENTBORD FÖR ATT AKTIVERA DENNA "
 "INSTÄLLNING IGEN, ELLER SÅ KAN DU RENSA LAGRINGSUTRYMMET FÖR ES-DE I "
 "ANDROIDS APPINSTÄLLNINGAR FÖR ATT TVINGA KONFIGURATORN ATT KÖRAS VID NÄSTA "
 "UPPSTART"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1308 ../es-app/src/guis/GuiMenu.cpp:2002
+#: ../es-app/src/guis/GuiMenu.cpp:2023
+msgid "OK"
+msgstr "OK"
 
 #: ../es-app/src/guis/GuiMenu.cpp:1362
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
@@ -420,13 +426,214 @@ msgstr "FORTSÄTT"
 msgid "CANCEL"
 msgstr "AVBRYT"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2196
+#: ../es-app/src/guis/GuiMenu.cpp:1442
+msgid "ALTERNATIVE EMULATORS"
+msgstr "ALTERNATIVA EMULATORER"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1454
+msgid "GAME MEDIA DIRECTORY"
+msgstr "KATALOG FÖR SPELMEDIA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1462
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr "VÄLJ KATALOG FÖR SPELMEDIA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1463
+msgid "Default directory:"
+msgstr "Standardkatalog:"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1481 ../es-app/src/guis/GuiMenu.cpp:1487
+#: ../es-app/src/guis/GuiSettings.cpp:242
+#: ../es-app/src/guis/GuiSettings.cpp:246
+#: ../es-app/src/guis/GuiSettings.cpp:253
+#: ../es-app/src/guis/GuiSettings.cpp:256
+msgid "SAVE"
+msgstr "SPARA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1481 ../es-app/src/guis/GuiMenu.cpp:1487
+#: ../es-app/src/guis/GuiSettings.cpp:242
+#: ../es-app/src/guis/GuiSettings.cpp:246
+#: ../es-app/src/guis/GuiSettings.cpp:253
+#: ../es-app/src/guis/GuiSettings.cpp:257
+msgid "SAVE CHANGES?"
+msgstr "SPARA ÄNDRINGARNA?"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1482 ../es-app/src/guis/GuiMenu.cpp:1488
+msgid "load default directory"
+msgstr "ladda standardkatalog"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1496
+msgid "VRAM LIMIT"
+msgstr "VRAM MAXVÄRDE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1508
+msgid "ANTI-ALIASING (MSAA)"
+msgstr "ANTI-ALIASING (MSAA)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1512
+msgid "2X"
+msgstr "2X"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1513
+msgid "4X"
+msgstr "4X"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1518
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr "ANTI-ALIASING (MSAA) (KRÄVER OMSTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1531
+msgid "DISPLAY/MONITOR INDEX"
+msgstr "DISPLAY/SKÄRM INDEX"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1540
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr "DISPLAY/SKÄRM INDEX (KRÄVER OMSTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1552
+msgid "ROTATE SCREEN"
+msgstr "ROTERA SKÄRMEN"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1556
+msgid "90 DEGREES"
+msgstr "90 GRADER"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1557
+msgid "180 DEGREES"
+msgstr "180 GRADER"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1558
+msgid "270 DEGREES"
+msgstr "270 GRADER"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1563
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr "ROTERA SKÄRMEN (KRÄVER OMSTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1575 ../es-app/src/guis/GuiMenu.cpp:1592
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr "TANGENTBORDSGENVÄG FÖR ATT STÄNGA NER"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1604
+msgid "WHEN TO SAVE GAME METADATA [SHORT]"
+msgstr "NÄR SPEL-METADATA SKA SPARAS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1605 ../es-app/src/guis/GuiMenu.cpp:1638
+msgid "ALWAYS"
+msgstr "ALLTID"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1607
+msgid "ON EXIT"
+msgstr "VID AVSLUT"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1609 ../es-app/src/guis/GuiMenu.cpp:1643
+msgid "NEVER"
+msgstr "ALDRIG"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1615
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "NÄR SPEL-METADATA SKA SPARAS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1635
+msgid "APPLICATION UPDATES"
+msgstr "APPLIKATIONSUPPDATERINGAR"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1639
+msgid "DAILY"
+msgstr "DAGLIGEN"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1640
+msgid "WEEKLY"
+msgstr "VECKOVIS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1641
+msgid "MONTHLY"
+msgstr "MÅNADSVIS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1648
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "SÖK EFTER APPLIKATIONSUPPDATERINGAR"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1664 ../es-app/src/guis/GuiMenu.cpp:1675
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr "INKLUDERA FÖRHANDSUTGÅVOR VID UPPDATERING"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1691
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr "DÖLJ VERKTYGSFÄLT (KRÄVER OMSTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1704
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr "KÖR I BAKGRUNDEN (NÄR SPEL ÄR STARTAT)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1717
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr "VIDEO HÅRDVARUAVKODNING (EXPERIMENTELLT)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1731
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr "UPPSKALNING AV VIDEO FRAME RATE TILL 60 FPS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1746
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr "AKTIVERA ALTERNATIVA EMULATORER PER SPEL"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1761
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr "VISA DOLDA FILER OCH KATALOGER"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1774
+msgid "SHOW HIDDEN GAMES"
+msgstr "VISA DOLDA SPEL"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1787
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "AKTIVERA ANPASSADE EVENT-SCRIPT"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1799
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr "VISA BARA SPEL FRÅN GAMELIST.XML FILERNA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1813
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr "TA BORT EXTRA MAME NAMNINFO (KRÄVER OMSTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1827
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr "INAKTIVERA DESKTOP COMPOSITION (KRÄVER OMSTART)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1842 ../es-app/src/guis/GuiMenu.cpp:1855
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr "BAKÅTKNAPPEN/SVEPA BAKÅT AVSLUTAR APPLIKATIONEN"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1869 ../es-app/src/guis/GuiMenu.cpp:1880
+msgid "DEBUG MODE"
+msgstr "DEBUG LÄGE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1901
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr "VISA GPU STATISTIK-OVERLAY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1914
+msgid "ENABLE MENU IN KID MODE"
+msgstr "VISA MENYN I BARNLÄGE"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1929
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr "VISA AVSLUTA-MENYN (OMSTART OCH STÄNG AV POSTER)"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2199
 msgid "MEDIA VIEWER SETTINGS [SHORT]"
 msgstr "INSTÄLLNINGAR MEDIAVISARE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2201
+#: ../es-app/src/guis/GuiMenu.cpp:2204
 msgid "SCREENSAVER SETTINGS [SHORT]"
 msgstr "INSTÄLLNINGAR SKÄRMSLÄCKARE"
+
+#: ../es-app/src/guis/GuiSettings.cpp:42
+#: ../es-core/src/components/OptionListComponent.h:516
+msgid "BACK"
+msgstr "TILLBAKA"
 
 #: ../es-app/src/guis/GuiGamelistOptions.cpp:36
 msgid "GAMELIST OPTIONS"
@@ -621,3 +828,17 @@ msgstr "21:9 vertikal"
 #: ../es-core/src/ThemeData.cpp:2085
 msgid "32:9 vertical"
 msgstr "32:9 vertikal"
+
+#: ../es-core/src/components/OptionListComponent.h:520
+msgid "SELECT ALL"
+msgstr "VÄLJ ALLA"
+
+#: ../es-core/src/components/OptionListComponent.h:529
+msgid "SELECT NONE"
+msgstr "VÄLJ INGA"
+
+#~ msgid "left/right"
+#~ msgstr "vä/hö"
+
+#~ msgid "WHEN TO SAVE METADATA"
+#~ msgstr "NÄR METADATA SKA SPARAS"
