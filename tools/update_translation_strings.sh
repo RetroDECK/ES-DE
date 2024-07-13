@@ -23,7 +23,7 @@ if [ ! $(which xgettext 2>/dev/null) ]; then
   exit
 fi
 
-find ../es-app/src/ ../es-core/src -name '*.cpp' -o -name '*.h' | xgettext -f - -o ../locale/es-de.pot -k_ \
+find ../es-app/src/ ../es-core/src -name '*.cpp' -o -name '*.h' | xgettext -f - -o ../locale/es-de.pot -k_ --no-location \
 --copyright-holder="Northwestern Software AB" --package-name="ES-DE Frontend" --msgid-bugs-address "info@es-de.org"
 
 sed -i "1s/.*/# ES-DE Frontend translation strings./" ../locale/es-de.pot

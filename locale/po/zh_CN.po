@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-04 19:27+0200\n"
+"POT-Creation-Date: 2024-07-13 19:24+0200\n"
 "PO-Revision-Date: 2024-07-04 17:14+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
@@ -17,448 +17,951 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../es-app/src/guis/GuiMenu.cpp:52
+msgid "NAME"
+msgstr ""
+
+msgid "ENTER NAME"
+msgstr ""
+
+#, fuzzy
+msgid "SORTNAME"
+msgstr "对游戏进行排序"
+
+msgid "ENTER SORTNAME"
+msgstr ""
+
+#, fuzzy
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "游戏收藏设置"
+
+#, fuzzy
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "游戏收藏设置"
+
+msgid "DESCRIPTION"
+msgstr ""
+
+msgid "ENTER DESCRIPTION"
+msgstr ""
+
+msgid "RATING"
+msgstr ""
+
+#, fuzzy
+msgid "RELEASE DATE"
+msgstr "发行年份"
+
+#, fuzzy
+msgid "ENTER RELEASE DATE"
+msgstr "制造商，发行年份"
+
+msgid "DEVELOPER"
+msgstr ""
+
+msgid "ENTER DEVELOPER"
+msgstr ""
+
+msgid "PUBLISHER"
+msgstr ""
+
+msgid "ENTER PUBLISHER"
+msgstr ""
+
+msgid "GENRE"
+msgstr ""
+
+msgid "ENTER GENRE"
+msgstr ""
+
+msgid "PLAYERS"
+msgstr ""
+
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr ""
+
+msgid "FAVORITE"
+msgstr ""
+
+msgid "COMPLETED"
+msgstr ""
+
+msgid "KIDGAME"
+msgstr ""
+
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr ""
+
+msgid "HIDDEN"
+msgstr ""
+
+msgid "BROKEN/NOT WORKING"
+msgstr ""
+
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr ""
+
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr ""
+
+msgid "HIDE METADATA FIELDS"
+msgstr ""
+
+msgid "TIMES PLAYED"
+msgstr ""
+
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr ""
+
+msgid "CONTROLLER"
+msgstr ""
+
+msgid "SELECT CONTROLLER"
+msgstr ""
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr ""
+
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr ""
+
+msgid "FOLDER LINK"
+msgstr ""
+
+msgid "SELECT FOLDER LINK"
+msgstr ""
+
+msgid "LAST PLAYED"
+msgstr ""
+
+msgid "ENTER LAST PLAYED DATE"
+msgstr ""
+
 msgid "MAIN MENU"
 msgstr "主菜单"
 
-#: ../es-app/src/guis/GuiMenu.cpp:58 ../es-app/src/guis/GuiMenu.cpp:116
 msgid "SCRAPER"
 msgstr "平台刮削"
 
-#: ../es-app/src/guis/GuiMenu.cpp:61 ../es-app/src/guis/GuiMenu.cpp:121
 msgid "UI SETTINGS"
 msgstr "UI设置"
 
-#: ../es-app/src/guis/GuiMenu.cpp:63 ../es-app/src/guis/GuiMenu.cpp:1059
 msgid "SOUND SETTINGS"
 msgstr "声音设置"
 
-#: ../es-app/src/guis/GuiMenu.cpp:66 ../es-app/src/guis/GuiMenu.cpp:1170
 msgid "INPUT DEVICE SETTINGS"
 msgstr "输入设备设置"
 
-#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2205
 msgid "GAME COLLECTION SETTINGS"
 msgstr "游戏收藏设置"
 
-#: ../es-app/src/guis/GuiMenu.cpp:74 ../es-app/src/guis/GuiMenu.cpp:1436
 msgid "OTHER SETTINGS"
 msgstr "其他设置"
 
-#: ../es-app/src/guis/GuiMenu.cpp:77 ../es-app/src/guis/GuiMenu.cpp:1964
 msgid "UTILITIES"
 msgstr "工具"
 
-#: ../es-app/src/guis/GuiMenu.cpp:82 ../es-app/src/guis/GuiMenu.cpp:85
-#: ../es-app/src/guis/GuiMenu.cpp:90
 msgid "QUIT ES-DE"
 msgstr "退出ES-DE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2086
 msgid "QUIT"
 msgstr "退出"
 
-#: ../es-app/src/guis/GuiMenu.cpp:131 ../es-app/src/guis/GuiMenu.cpp:169
 msgid "THEME"
 msgstr "主题"
 
-#: ../es-app/src/guis/GuiMenu.cpp:135
 msgid "THEME DOWNLOADER"
 msgstr "主题下载器"
 
-#: ../es-app/src/guis/GuiMenu.cpp:203 ../es-app/src/guis/GuiMenu.cpp:204
 msgid "THEME VARIANT"
 msgstr "主题变体"
 
-#: ../es-app/src/guis/GuiMenu.cpp:241 ../es-app/src/guis/GuiMenu.cpp:287
-#: ../es-app/src/guis/GuiMenu.cpp:329 ../es-app/src/guis/GuiMenu.cpp:373
 msgid "NONE DEFINED"
 msgstr "未定义"
 
-#: ../es-app/src/guis/GuiMenu.cpp:255 ../es-app/src/guis/GuiMenu.cpp:256
 msgid "THEME COLOR SCHEME"
 msgstr "主题配色方案"
 
-#: ../es-app/src/guis/GuiMenu.cpp:301 ../es-app/src/guis/GuiMenu.cpp:302
 msgid "THEME FONT SIZE"
 msgstr "主题字体大小"
 
-#: ../es-app/src/guis/GuiMenu.cpp:343 ../es-app/src/guis/GuiMenu.cpp:344
 msgid "THEME ASPECT RATIO"
 msgstr "主题宽高比"
 
-#: ../es-app/src/guis/GuiMenu.cpp:387 ../es-app/src/guis/GuiMenu.cpp:394
 msgid "THEME TRANSITIONS"
 msgstr "主题过渡"
 
-#: ../es-app/src/guis/GuiMenu.cpp:389 ../es-app/src/guis/GuiMenu.cpp:412
-#: ../es-app/src/guis/GuiMenu.cpp:487
 msgid "AUTOMATIC"
 msgstr "自动"
 
-#: ../es-app/src/guis/GuiMenu.cpp:417 ../es-app/src/guis/GuiMenu.cpp:431
 msgid "THEME PROFILE"
 msgstr "主题配置"
 
-#: ../es-app/src/guis/GuiMenu.cpp:443
 msgid "INSTANT (BUILT-IN)"
 msgstr "即时（内置）"
 
-#: ../es-app/src/guis/GuiMenu.cpp:450
 msgid "SLIDE (BUILT-IN)"
 msgstr "滑动（内置）"
 
-#: ../es-app/src/guis/GuiMenu.cpp:457
 msgid "FADE (BUILT-IN)"
 msgstr "淡入淡出（内置）"
 
-#: ../es-app/src/guis/GuiMenu.cpp:484 ../es-app/src/guis/GuiMenu.cpp:495
 msgid "APPLICATION LANGUAGE"
 msgstr "应用程序语言"
 
-#: ../es-app/src/guis/GuiMenu.cpp:511 ../es-app/src/guis/GuiMenu.cpp:525
 msgid "QUICK SYSTEM SELECT"
 msgstr "平台快速切换"
 
-#: ../es-app/src/guis/GuiMenu.cpp:513
 msgid "LEFT/RIGHT OR SHOULDERS"
 msgstr "左/右肩键"
 
-#: ../es-app/src/guis/GuiMenu.cpp:515
 msgid "LEFT/RIGHT OR TRIGGERS"
 msgstr "左/右扳机键"
 
-#: ../es-app/src/guis/GuiMenu.cpp:517
 msgid "SHOULDERS"
 msgstr "肩键"
 
-#: ../es-app/src/guis/GuiMenu.cpp:518
 msgid "TRIGGERS"
 msgstr "扳机键"
 
-#: ../es-app/src/guis/GuiMenu.cpp:519
 msgid "LEFT/RIGHT"
 msgstr "左/右键"
 
-#: ../es-app/src/guis/GuiMenu.cpp:520 ../es-app/src/guis/GuiMenu.cpp:679
-#: ../es-app/src/guis/GuiMenu.cpp:792
 msgid "DISABLED"
 msgstr "禁用"
 
-#: ../es-app/src/guis/GuiMenu.cpp:537 ../es-app/src/guis/GuiMenu.cpp:551
 msgid "GAMELIST ON STARTUP"
 msgstr "启动时显示游戏列表"
 
-#: ../es-app/src/guis/GuiMenu.cpp:538 ../es-app/src/guis/GuiMenu.cpp:657
 msgid "NONE"
 msgstr "无"
 
-#: ../es-app/src/guis/GuiMenu.cpp:561 ../es-app/src/guis/GuiMenu.cpp:575
 msgid "SYSTEMS SORTING"
 msgstr "平台分类"
 
-#: ../es-app/src/guis/GuiMenu.cpp:563
 msgid "FULL NAMES OR CUSTOM"
 msgstr "完整名称或自定义"
 
-#: ../es-app/src/guis/GuiMenu.cpp:564
 msgid "RELEASE YEAR"
 msgstr "发行年份"
 
-#: ../es-app/src/guis/GuiMenu.cpp:565
 msgid "MANUFACTURER, RELEASE YEAR"
 msgstr "制造商，发行年份"
 
-#: ../es-app/src/guis/GuiMenu.cpp:567
 msgid "HW TYPE, RELEASE YEAR"
 msgstr "设备类型，发布年份"
 
-#: ../es-app/src/guis/GuiMenu.cpp:569
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr "制造商，设备类型，发行年份"
 
-#: ../es-app/src/guis/GuiMenu.cpp:591
 msgid "GAMES DEFAULT SORT ORDER [SHORT]"
 msgstr "默认排序顺序"
 
-#: ../es-app/src/guis/GuiMenu.cpp:616
 msgid "GAMES DEFAULT SORT ORDER"
 msgstr "游戏默认排序方式"
 
-#: ../es-app/src/guis/GuiMenu.cpp:630 ../es-app/src/guis/GuiMenu.cpp:638
 msgid "MENU COLOR SCHEME"
 msgstr "菜单配色方案"
 
-#: ../es-app/src/guis/GuiMenu.cpp:632
 msgid "DARK"
 msgstr "暗黑"
 
-#: ../es-app/src/guis/GuiMenu.cpp:633
 msgid "LIGHT"
 msgstr "明亮"
 
-#: ../es-app/src/guis/GuiMenu.cpp:654 ../es-app/src/guis/GuiMenu.cpp:662
 msgid "MENU OPENING ANIMATION"
 msgstr "菜单展开动画"
 
-#: ../es-app/src/guis/GuiMenu.cpp:656
 msgid "SCALE-UP"
 msgstr "放大"
 
-#: ../es-app/src/guis/GuiMenu.cpp:674 ../es-app/src/guis/GuiMenu.cpp:684
 msgid "LAUNCH SCREEN DURATION"
 msgstr "启动画面时长"
 
-#: ../es-app/src/guis/GuiMenu.cpp:676
 msgid "NORMAL"
 msgstr "正常"
 
-#: ../es-app/src/guis/GuiMenu.cpp:677
 msgid "BRIEF"
 msgstr "短"
 
-#: ../es-app/src/guis/GuiMenu.cpp:678
 msgid "LONG"
 msgstr "长"
 
-#: ../es-app/src/guis/GuiMenu.cpp:696 ../es-app/src/guis/GuiMenu.cpp:711
 msgid "UI MODE"
 msgstr "界面显示模式"
 
-#: ../es-app/src/guis/GuiMenu.cpp:704
 msgid "FULL"
 msgstr "完整模式"
 
-#: ../es-app/src/guis/GuiMenu.cpp:705
 msgid "KIOSK"
 msgstr "安全模式"
 
-#: ../es-app/src/guis/GuiMenu.cpp:706
 msgid "KID"
 msgstr "儿童模式"
 
-#: ../es-app/src/guis/GuiMenu.cpp:786 ../es-app/src/guis/GuiMenu.cpp:797
 msgid "RANDOM ENTRY BUTTON"
 msgstr "随机选择按键"
 
-#: ../es-app/src/guis/GuiMenu.cpp:789
 msgid "GAMES ONLY"
 msgstr "仅游戏"
 
-#: ../es-app/src/guis/GuiMenu.cpp:790
 msgid "GAMES AND SYSTEMS"
 msgstr "游戏和平台"
 
-#: ../es-app/src/guis/GuiMenu.cpp:810
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "媒体播放器设置"
 
-#: ../es-app/src/guis/GuiMenu.cpp:821
 msgid "SCREENSAVER SETTINGS"
 msgstr "屏保设置"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2195
-msgid "MEDIA VIEWER SETTINGS [SHORT]"
-msgstr "媒体播放器设置"
+#, fuzzy
+msgid "ENABLE THEME VARIANT TRIGGERS"
+msgstr "主题变体"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2200
-msgid "SCREENSAVER SETTINGS [SHORT]"
-msgstr "屏保设置"
+msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
+msgstr ""
 
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:36
-msgid "GAMELIST OPTIONS"
-msgstr "游戏列表设置"
+msgid "SORT FOLDERS ON TOP OF GAMELISTS"
+msgstr ""
 
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:106
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:120
-msgid "JUMP TO.."
-msgstr "跳转到……"
+msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+msgstr ""
 
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:125
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:154
-msgid "SORT GAMES BY"
-msgstr "对游戏进行排序"
+msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
+msgstr ""
 
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:163
-msgid "FILTER GAMELIST"
-msgstr "筛选游戏列表"
+msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+msgstr ""
 
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:217
-msgid "EDIT THIS FOLDER'S METADATA"
-msgstr "编辑此文件夹的元数据"
+msgid "ENABLE VIRTUAL KEYBOARD"
+msgstr ""
 
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:230
-msgid "EDIT THIS GAME'S METADATA"
-msgstr "编辑此游戏的元数据"
+msgid "ENABLE TOGGLE FAVORITES BUTTON"
+msgstr ""
 
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:263
-msgid "APPLY"
-msgstr "应用"
+msgid "ENABLE GAMELIST FILTERS"
+msgstr ""
 
-#: ../es-app/src/guis/GuiGamelistOptions.cpp:264
+msgid "DISPLAY ON-SCREEN HELP"
+msgstr ""
+
+msgid "SYSTEM VOLUME"
+msgstr ""
+
+msgid "NAVIGATION SOUNDS VOLUME"
+msgstr ""
+
+msgid "VIDEO PLAYER VOLUME"
+msgstr ""
+
+msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+msgstr ""
+
+msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+msgstr ""
+
+msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+msgstr ""
+
+msgid "ENABLE NAVIGATION SOUNDS"
+msgstr ""
+
+msgid "CONTROLLER TYPE"
+msgstr ""
+
+msgid "TOUCH OVERLAY SIZE"
+msgstr ""
+
+msgid "MEDIUM"
+msgstr ""
+
+msgid "LARGE"
+msgstr ""
+
+msgid "SMALL"
+msgstr ""
+
+msgid "EXTRA SMALL"
+msgstr ""
+
+msgid "TOUCH OVERLAY OPACITY"
+msgstr ""
+
+msgid "LOW"
+msgstr ""
+
+msgid "VERY LOW"
+msgstr ""
+
+msgid "TOUCH OVERLAY FADE-OUT TIME"
+msgstr ""
+
+msgid "ENABLE TOUCH OVERLAY"
+msgstr ""
+
+msgid ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+msgstr ""
+
+msgid "SWAP THE A/B AND X/Y BUTTONS"
+msgstr ""
+
+msgid "IGNORE KEYBOARD INPUT"
+msgstr ""
+
+msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
+msgstr ""
+
+msgid ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL "
+"NOT AFFECT THE HELP PROMPTS)"
+msgstr ""
+
+msgid "PROCEED"
+msgstr ""
+
 msgid "CANCEL"
 msgstr "取消"
 
-#: ../es-app/src/FileSorts.cpp:280
+msgid "ALTERNATIVE EMULATORS"
+msgstr ""
+
+msgid "GAME MEDIA DIRECTORY"
+msgstr ""
+
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr ""
+
+msgid "Default directory:"
+msgstr ""
+
+msgid "SAVE"
+msgstr ""
+
+msgid "SAVE CHANGES?"
+msgstr ""
+
+msgid "load default directory"
+msgstr ""
+
+msgid "VRAM LIMIT"
+msgstr ""
+
+msgid "ANTI-ALIASING (MSAA)"
+msgstr ""
+
+msgid "2X"
+msgstr ""
+
+msgid "4X"
+msgstr ""
+
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr ""
+
+msgid "DISPLAY/MONITOR INDEX"
+msgstr ""
+
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr ""
+
+msgid "ROTATE SCREEN"
+msgstr ""
+
+msgid "90 DEGREES"
+msgstr ""
+
+msgid "180 DEGREES"
+msgstr ""
+
+msgid "270 DEGREES"
+msgstr ""
+
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr ""
+
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr ""
+
+#, fuzzy
+msgid "WHEN TO SAVE GAME METADATA [SHORT]"
+msgstr "编辑此游戏的元数据"
+
+msgid "ALWAYS"
+msgstr ""
+
+msgid "ON EXIT"
+msgstr ""
+
+msgid "NEVER"
+msgstr ""
+
+#, fuzzy
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "编辑此游戏的元数据"
+
+#, fuzzy
+msgid "APPLICATION UPDATES"
+msgstr "应用程序语言"
+
+msgid "DAILY"
+msgstr ""
+
+msgid "WEEKLY"
+msgstr ""
+
+msgid "MONTHLY"
+msgstr ""
+
+#, fuzzy
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "应用程序语言"
+
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr ""
+
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr ""
+
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr ""
+
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr ""
+
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr ""
+
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr ""
+
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr ""
+
+msgid "SHOW HIDDEN GAMES"
+msgstr ""
+
+#, fuzzy
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "主题变体"
+
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr ""
+
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr ""
+
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr ""
+
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr ""
+
+#, fuzzy
+msgid "DEBUG MODE"
+msgstr "界面显示模式"
+
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr ""
+
+msgid "ENABLE MENU IN KID MODE"
+msgstr ""
+
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr ""
+
+msgid "ORPHANED DATA CLEANUP"
+msgstr ""
+
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr ""
+
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr ""
+
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+
+msgid "RESCAN ROM DIRECTORY"
+msgstr ""
+
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr ""
+
+msgid "REALLY QUIT?"
+msgstr ""
+
+msgid "YES"
+msgstr ""
+
+#, fuzzy
+msgid "NO"
+msgstr "无"
+
+msgid "REALLY REBOOT?"
+msgstr ""
+
+msgid "REBOOT SYSTEM"
+msgstr ""
+
+msgid "REALLY POWER OFF?"
+msgstr ""
+
+msgid "POWER OFF SYSTEM"
+msgstr ""
+
+msgid "MEDIA VIEWER SETTINGS [SHORT]"
+msgstr "媒体播放器设置"
+
+msgid "SCREENSAVER SETTINGS [SHORT]"
+msgstr "屏保设置"
+
+msgid "choose"
+msgstr ""
+
+msgid "select"
+msgstr ""
+
+msgid "close menu"
+msgstr ""
+
+msgid "back"
+msgstr ""
+
+msgid "BACK"
+msgstr ""
+
+msgid "GAMELIST OPTIONS"
+msgstr "游戏列表设置"
+
+msgid "JUMP TO.."
+msgstr "跳转到……"
+
+msgid "SORT GAMES BY"
+msgstr "对游戏进行排序"
+
+msgid "FILTER GAMELIST"
+msgstr "筛选游戏列表"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "编辑此文件夹的元数据"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "编辑此游戏的元数据"
+
+msgid "APPLY"
+msgstr "应用"
+
+msgid "close (apply)"
+msgstr ""
+
+msgid "close (cancel)"
+msgstr ""
+
+msgid "close"
+msgstr ""
+
+#, fuzzy
+msgid "EDIT METADATA"
+msgstr "编辑此游戏的元数据"
+
+msgid "CLEAR ENTRY"
+msgstr ""
+
+msgid "SELECT EMULATOR"
+msgstr ""
+
+msgid "CLEAR INVALID ENTRY"
+msgstr ""
+
+msgid "SYSTEM-WIDE"
+msgstr ""
+
+msgid "APPLY CHANGES?"
+msgstr ""
+
+#, fuzzy
+msgid "SCRAPE"
+msgstr "平台刮削"
+
+msgid "scrape"
+msgstr ""
+
+msgid "save metadata"
+msgstr ""
+
+msgid "cancel changes"
+msgstr ""
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED"
+msgstr ""
+
+msgid "CLEAR"
+msgstr ""
+
+msgid "clear folder"
+msgstr ""
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED"
+msgstr ""
+
+msgid "clear file"
+msgstr ""
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY"
+msgstr ""
+
+msgid "DELETE"
+msgstr ""
+
+msgid "delete game"
+msgstr ""
+
 msgid "name, ascending"
 msgstr "名称，升序"
 
-#: ../es-app/src/FileSorts.cpp:281
 msgid "name, descending"
 msgstr "名称，降序"
 
-#: ../es-app/src/FileSorts.cpp:282
 msgid "rating, ascending"
 msgstr "评分, 升序"
 
-#: ../es-app/src/FileSorts.cpp:283
 msgid "rating, descending"
 msgstr "评分, 降序"
 
-#: ../es-app/src/FileSorts.cpp:284
 msgid "release date, ascending"
 msgstr "发行日期, 升序"
 
-#: ../es-app/src/FileSorts.cpp:285
 msgid "release date, descending"
 msgstr "发行日期, 降序"
 
-#: ../es-app/src/FileSorts.cpp:286
 msgid "developer, ascending"
 msgstr "开发商, 升序"
 
-#: ../es-app/src/FileSorts.cpp:287
 msgid "developer, descending"
 msgstr "开发商, 降序"
 
-#: ../es-app/src/FileSorts.cpp:288
 msgid "publisher, ascending"
 msgstr "发行商, 升序"
 
-#: ../es-app/src/FileSorts.cpp:289
 msgid "publisher, descending"
 msgstr "发行商, 降序"
 
-#: ../es-app/src/FileSorts.cpp:290
 msgid "genre, ascending"
 msgstr "类型, 升序"
 
-#: ../es-app/src/FileSorts.cpp:291
 msgid "genre, descending"
 msgstr "类型, 降序"
 
-#: ../es-app/src/FileSorts.cpp:292
 msgid "players, ascending"
 msgstr "玩家, 升序"
 
-#: ../es-app/src/FileSorts.cpp:293
 msgid "players, descending"
 msgstr "玩家, 降序"
 
-#: ../es-app/src/FileSorts.cpp:294
 msgid "last played, ascending"
 msgstr "最后游玩, 升序"
 
-#: ../es-app/src/FileSorts.cpp:295
 msgid "last played, descending"
 msgstr "最后游玩, 降序"
 
-#: ../es-app/src/FileSorts.cpp:296
 msgid "times played, ascending"
 msgstr "游玩次数, 升序"
 
-#: ../es-app/src/FileSorts.cpp:297
 msgid "times played, descending"
 msgstr "游玩次数, 降序"
 
-#: ../es-app/src/FileSorts.cpp:298
 msgid "system, ascending"
 msgstr "平台, 升序"
 
-#: ../es-app/src/FileSorts.cpp:299
 msgid "system, descending"
 msgstr "平台, 降序"
 
-#: ../es-core/src/Window.cpp:671
+msgid "system"
+msgstr ""
+
+msgid "view media"
+msgstr ""
+
+msgid "options"
+msgstr ""
+
+msgid "random"
+msgstr ""
+
+msgid "jump to game"
+msgstr ""
+
 msgid "Searching for games..."
 msgstr "正在搜索游戏……"
 
-#: ../es-core/src/Window.cpp:673
 msgid "Loading systems..."
 msgstr "正在加载平台……"
 
-#: ../es-core/src/Window.cpp:675
 msgid "Reloading..."
 msgstr "正在重新加载……"
 
-#: ../es-core/src/Window.cpp:677
 msgid "Copying resources..."
 msgstr "正在复制资源……"
 
-#: ../es-core/src/Window.cpp:679
 msgid "Creating system directories..."
 msgstr "正在创建平台目录……"
 
-#: ../es-core/src/Window.cpp:903
 msgid "ERROR: COULDN'T RENDER PDF FILE"
 msgstr "错误：无法渲染PDF文件"
 
-#: ../es-core/src/ThemeData.cpp:2069
 msgid "medium"
 msgstr "正常"
 
-#: ../es-core/src/ThemeData.cpp:2070
 msgid "large"
 msgstr "大"
 
-#: ../es-core/src/ThemeData.cpp:2071
 msgid "small"
 msgstr "小"
 
-#: ../es-core/src/ThemeData.cpp:2072
 msgid "extra small"
 msgstr "极小"
 
-#: ../es-core/src/ThemeData.cpp:2073
 msgid "extra large"
 msgstr "极大"
 
-#: ../es-core/src/ThemeData.cpp:2076
 msgid "automatic"
 msgstr "自动"
 
-#: ../es-core/src/ThemeData.cpp:2077
 msgid "16:9 vertical"
 msgstr "垂直方向 16:9"
 
-#: ../es-core/src/ThemeData.cpp:2078
 msgid "16:10 vertical"
 msgstr "垂直方向 16:10"
 
-#: ../es-core/src/ThemeData.cpp:2079
 msgid "3:2 vertical"
 msgstr "垂直方向 3:2"
 
-#: ../es-core/src/ThemeData.cpp:2080
 msgid "4:3 vertical"
 msgstr "垂直方向 4:3"
 
-#: ../es-core/src/ThemeData.cpp:2081
 msgid "5:4 vertical"
 msgstr "垂直方向 5:4"
 
-#: ../es-core/src/ThemeData.cpp:2082
 msgid "19.5:9 vertical"
 msgstr "垂直方向 19.5:9"
 
-#: ../es-core/src/ThemeData.cpp:2083
 msgid "20:9 vertical"
 msgstr "垂直方向 20:9"
 
-#: ../es-core/src/ThemeData.cpp:2084
 msgid "21:9 vertical"
 msgstr "垂直方向 21:9"
 
-#: ../es-core/src/ThemeData.cpp:2085
 msgid "32:9 vertical"
 msgstr "垂直方向 32:9"
+
+msgid "edit date"
+msgstr ""
+
+msgid "cancel"
+msgstr ""
+
+msgid "apply"
+msgstr ""
+
+msgid "Y-M-D"
+msgstr ""
+
+msgid "modify"
+msgstr ""
+
+msgid "change value"
+msgstr ""
+
+msgid "SELECT ALL"
+msgstr ""
+
+msgid "select all"
+msgstr ""
+
+msgid "SELECT NONE"
+msgstr ""
+
+msgid "select none"
+msgstr ""
+
+msgid "first"
+msgstr ""
+
+msgid "last"
+msgstr ""
+
+msgid "move cursor"
+msgstr ""
+
+msgid "edit"
+msgstr ""
+
+msgid "toggle"
+msgstr ""
+
+msgid "add half star"
+msgstr ""
+
+msgid "shift"
+msgstr ""
+
+msgid "alt"
+msgstr ""
+
+msgid "newline"
+msgstr ""
+
+msgid "backspace"
+msgstr ""
+
+msgid "space"
+msgstr ""
+
+msgid "LOAD DEFAULT"
+msgstr ""
+
+msgid "DISCARD CHANGES"
+msgstr ""
+
+msgid "discard changes"
+msgstr ""
+
+#, fuzzy
+#~ msgid "ENTER RATING"
+#~ msgstr "其他设置"
+
+#, fuzzy
+#~ msgid "ENTER HIDE METADATA OFF/ON"
+#~ msgstr "编辑此文件夹的元数据"
+
+#, fuzzy
+#~ msgid "WHEN TO SAVE METADATA"
+#~ msgstr "编辑此游戏的元数据"
