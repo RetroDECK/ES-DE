@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-13 12:28+0200\n"
-"PO-Revision-Date: 2024-07-13 12:04+0200\n"
+"POT-Creation-Date: 2024-07-13 19:08+0200\n"
+"PO-Revision-Date: 2024-07-13 15:38+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -17,6 +17,158 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.4\n"
+
+#: ../es-app/src/MetaData.cpp:192
+msgid "NAME"
+msgstr "NAMN"
+
+#: ../es-app/src/MetaData.cpp:193
+msgid "ENTER NAME"
+msgstr "SKRIV IN NAMN"
+
+#: ../es-app/src/MetaData.cpp:194
+msgid "SORTNAME"
+msgstr "SORTERINGSNAMN"
+
+#: ../es-app/src/MetaData.cpp:195
+msgid "ENTER SORTNAME"
+msgstr "SKRIV IN SORTERINGSNAMN"
+
+#: ../es-app/src/MetaData.cpp:196
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "SPELSAMLINGAR SORTERINGSNAMN"
+
+#: ../es-app/src/MetaData.cpp:197
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "SKRIV IN SORTERINGSNAMN"
+
+#: ../es-app/src/MetaData.cpp:198
+msgid "DESCRIPTION"
+msgstr "BESKRIVNING"
+
+#: ../es-app/src/MetaData.cpp:199
+msgid "ENTER DESCRIPTION"
+msgstr "SKRIV IN BESKRIVNING"
+
+#: ../es-app/src/MetaData.cpp:200
+msgid "RATING"
+msgstr "BETYG"
+
+#: ../es-app/src/MetaData.cpp:201
+msgid "RELEASE DATE"
+msgstr "UTGIVNINGSDATUM"
+
+#: ../es-app/src/MetaData.cpp:202
+msgid "ENTER RELEASE DATE"
+msgstr "VÄLJ UTGIVNINGSDATUM"
+
+#: ../es-app/src/MetaData.cpp:203
+msgid "DEVELOPER"
+msgstr "UTVECKLARE"
+
+#: ../es-app/src/MetaData.cpp:204
+msgid "ENTER DEVELOPER"
+msgstr "SKRIV IN UTVECKLARE"
+
+#: ../es-app/src/MetaData.cpp:205
+msgid "PUBLISHER"
+msgstr "UTGIVARE"
+
+#: ../es-app/src/MetaData.cpp:206
+msgid "ENTER PUBLISHER"
+msgstr "SKRIV IN UTGIVARE"
+
+#: ../es-app/src/MetaData.cpp:207
+msgid "GENRE"
+msgstr "GENRE"
+
+#: ../es-app/src/MetaData.cpp:208
+msgid "ENTER GENRE"
+msgstr "SKRIV IN GENRE"
+
+#: ../es-app/src/MetaData.cpp:209
+msgid "PLAYERS"
+msgstr "SPELARE"
+
+#: ../es-app/src/MetaData.cpp:210
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "SKRIV IN SPELARE"
+
+#: ../es-app/src/MetaData.cpp:211
+msgid "FAVORITE"
+msgstr "FAVORIT"
+
+#: ../es-app/src/MetaData.cpp:212
+msgid "COMPLETED"
+msgstr "AVSLUTAT"
+
+#: ../es-app/src/MetaData.cpp:213
+msgid "KIDGAME"
+msgstr "BARNSPEL"
+
+#: ../es-app/src/MetaData.cpp:214
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "BARNSPEL (PÅVERKAR ENDAST EMBLEM)"
+
+#: ../es-app/src/MetaData.cpp:215
+msgid "HIDDEN"
+msgstr "DOLD"
+
+#: ../es-app/src/MetaData.cpp:216
+msgid "BROKEN/NOT WORKING"
+msgstr "SÖNDRIG/FUNGERAR INTE"
+
+#: ../es-app/src/MetaData.cpp:217
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "EXKLUDERA FRÅN SPELRÄKNAREN"
+
+#: ../es-app/src/MetaData.cpp:218
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "EXKLUDERA FRÅN MULTI-SCRAPER"
+
+#: ../es-app/src/MetaData.cpp:219
+msgid "HIDE METADATA FIELDS"
+msgstr "DÖLJ METADATAFÄLT"
+
+#: ../es-app/src/MetaData.cpp:220
+msgid "TIMES PLAYED"
+msgstr "ANTAL GÅNGER SPELAT"
+
+#: ../es-app/src/MetaData.cpp:221
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "SKRIV IN ANTAL GÅNGER SPELAT"
+
+#: ../es-app/src/MetaData.cpp:222
+msgid "CONTROLLER"
+msgstr "HANDKONTROLL"
+
+#: ../es-app/src/MetaData.cpp:223
+msgid "SELECT CONTROLLER"
+msgstr "VÄLJ HANDKONTROLL"
+
+#: ../es-app/src/MetaData.cpp:224
+msgid "ALTERNATIVE EMULATOR"
+msgstr "ALTERNATIV EMULATOR"
+
+#: ../es-app/src/MetaData.cpp:225
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "VÄLJ ALTERNATIV EMULATOR"
+
+#: ../es-app/src/MetaData.cpp:226
+msgid "FOLDER LINK"
+msgstr "MAPPLÄNK"
+
+#: ../es-app/src/MetaData.cpp:227
+msgid "SELECT FOLDER LINK"
+msgstr "VÄLJ MAPPLÄNK"
+
+#: ../es-app/src/MetaData.cpp:228
+msgid "LAST PLAYED"
+msgstr "SENAST SPELAT"
+
+#: ../es-app/src/MetaData.cpp:229
+msgid "ENTER LAST PLAYED DATE"
+msgstr "VÄLJ SENAST SPELAT DATUM"
 
 #: ../es-app/src/guis/GuiMenu.cpp:52
 msgid "MAIN MENU"
@@ -38,7 +190,7 @@ msgstr "LJUDINSTÄLLNINGAR"
 msgid "INPUT DEVICE SETTINGS"
 msgstr "INPUTINSTÄLLNINGAR"
 
-#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2209
+#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2210
 msgid "GAME COLLECTION SETTINGS"
 msgstr "SPELSAMLINGSINSTÄLLNINGAR"
 
@@ -51,11 +203,11 @@ msgid "UTILITIES"
 msgstr "VERKTYG"
 
 #: ../es-app/src/guis/GuiMenu.cpp:82 ../es-app/src/guis/GuiMenu.cpp:85
-#: ../es-app/src/guis/GuiMenu.cpp:90
+#: ../es-app/src/guis/GuiMenu.cpp:90 ../es-app/src/guis/GuiMenu.cpp:2108
 msgid "QUIT ES-DE"
 msgstr "AVSLUTA ES-DE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2090
+#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2091
 msgid "QUIT"
 msgstr "AVSLUTA"
 
@@ -386,8 +538,10 @@ msgstr ""
 "ANDROIDS APPINSTÄLLNINGAR FÖR ATT TVINGA KONFIGURATORN ATT KÖRAS VID NÄSTA "
 "UPPSTART"
 
-#: ../es-app/src/guis/GuiMenu.cpp:1308 ../es-app/src/guis/GuiMenu.cpp:2002
-#: ../es-app/src/guis/GuiMenu.cpp:2023
+#: ../es-app/src/guis/GuiMenu.cpp:1308 ../es-app/src/guis/GuiMenu.cpp:2003
+#: ../es-app/src/guis/GuiMenu.cpp:2024
+#: ../es-core/src/guis/GuiTextEditPopup.h:28
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:29
 msgid "OK"
 msgstr "OK"
 
@@ -417,16 +571,26 @@ msgstr ""
 "KONFIGURATIONSVERKTYGET SÅ KAN DU GÖRA OVERRIDES PÅ STANDARDMAPPNINGARNA FÖR "
 "ALLA KNAPPAR (DETTA PÅVERKAR INTE HJÄLPPROMPTERNA)"
 
-#: ../es-app/src/guis/GuiMenu.cpp:1427
+#: ../es-app/src/guis/GuiMenu.cpp:1427 ../es-app/src/guis/GuiMenu.cpp:1998
+#: ../es-app/src/guis/GuiMenu.cpp:2051 ../es-app/src/guis/GuiMetaDataEd.cpp:679
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:702
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:725
 msgid "PROCEED"
 msgstr "FORTSÄTT"
 
-#: ../es-app/src/guis/GuiMenu.cpp:1428
+#: ../es-app/src/guis/GuiMenu.cpp:1428 ../es-app/src/guis/GuiMenu.cpp:2030
+#: ../es-app/src/guis/GuiMenu.cpp:2064
 #: ../es-app/src/guis/GuiGamelistOptions.cpp:264
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:665
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:679
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:702
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:725
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:79
 msgid "CANCEL"
 msgstr "AVBRYT"
 
 #: ../es-app/src/guis/GuiMenu.cpp:1442
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:18
 msgid "ALTERNATIVE EMULATORS"
 msgstr "ALTERNATIVA EMULATORER"
 
@@ -447,6 +611,7 @@ msgstr "Standardkatalog:"
 #: ../es-app/src/guis/GuiSettings.cpp:246
 #: ../es-app/src/guis/GuiSettings.cpp:253
 #: ../es-app/src/guis/GuiSettings.cpp:256
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:660
 msgid "SAVE"
 msgstr "SPARA"
 
@@ -455,6 +620,9 @@ msgstr "SPARA"
 #: ../es-app/src/guis/GuiSettings.cpp:246
 #: ../es-app/src/guis/GuiSettings.cpp:253
 #: ../es-app/src/guis/GuiSettings.cpp:257
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1015
+#: ../es-core/src/guis/GuiTextEditPopup.h:29
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:30
 msgid "SAVE CHANGES?"
 msgstr "SPARA ÄNDRINGARNA?"
 
@@ -622,15 +790,145 @@ msgstr "VISA MENYN I BARNLÄGE"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "VISA AVSLUTA-MENYN (OMSTART OCH STÄNG AV POSTER)"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2199
+#: ../es-app/src/guis/GuiMenu.cpp:1973
+msgid "ORPHANED DATA CLEANUP"
+msgstr "UPPRENSNING AV FÖRÄLDRALÖS DATA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1982
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr "SKAPA/UPPDATERA SYSTEMKATALOGERNA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1994
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+"DET HÄR SKAPAR ALLA SYSTEMKATALOGERNA I DIN ROM MAPP OCH DET UPPDATERAR ÄVEN "
+"SYSTEMINFO.TXT FILERNA. DETTA ÄR EN SÄKER OPERATION SOM INTE KOMMER RADERA "
+"ELLER MODIFIERA DINA SPELFILER. FÖR ATT MINSKA UPPSTARTSTIDEN FÖR "
+"APPLIKATIONEN SÅ ÄR DET REKOMMENDERAT ATT RADERA DE SYSTEMKATALOGER DU INTE "
+"BEHÖVER EFTER ATT DU KÖRT DETTA VERKTYG"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2002
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr "SYSTEMKATALOGERNA SKAPADES UTAN PROBLEM"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2022
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+"KUNDE INTE SKAPA SYSTEMKATALOGERNA, PROBLEM MED ÅTKOMST ELLER ÄR DISKEN "
+"FULL? SE LOGGFILEN FÖR MER INFORMATION"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2039
+msgid "RESCAN ROM DIRECTORY"
+msgstr "SKANNA OM ROM KATALOGEN"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2049
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr ""
+"DET HÄR SKANNAR OM DIN ROM KATALOG FÖR ÄNDRINGAR SÅSOM TILLAGDA ELLER "
+"BORTTAGNA SPEL OCH SYSTEM"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2083 ../es-app/src/guis/GuiMenu.cpp:2100
+msgid "REALLY QUIT?"
+msgstr "VERKLIGEN AVSLUTA?"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2083 ../es-app/src/guis/GuiMenu.cpp:2100
+#: ../es-app/src/guis/GuiMenu.cpp:2116 ../es-app/src/guis/GuiMenu.cpp:2133
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1015
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:367
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:194
+msgid "YES"
+msgstr "JA"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2088 ../es-app/src/guis/GuiMenu.cpp:2105
+#: ../es-app/src/guis/GuiMenu.cpp:2122 ../es-app/src/guis/GuiMenu.cpp:2139
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1020
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:373
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:200
+msgid "NO"
+msgstr "NEJ"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2116
+msgid "REALLY REBOOT?"
+msgstr "VERKLIGEN STARTA OM?"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2125
+msgid "REBOOT SYSTEM"
+msgstr "STARTA OM SYSTEMET"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2133
+msgid "REALLY POWER OFF?"
+msgstr "VERKLIGEN STÄNGA AV?"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2142
+msgid "POWER OFF SYSTEM"
+msgstr "STÄNG AV SYSTEMET"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2200
 msgid "MEDIA VIEWER SETTINGS [SHORT]"
 msgstr "INSTÄLLNINGAR MEDIAVISARE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2204
+#: ../es-app/src/guis/GuiMenu.cpp:2205
 msgid "SCREENSAVER SETTINGS [SHORT]"
 msgstr "INSTÄLLNINGAR SKÄRMSLÄCKARE"
 
+#: ../es-app/src/guis/GuiMenu.cpp:2272 ../es-app/src/views/SystemView.cpp:204
+#: ../es-app/src/views/SystemView.cpp:206
+#: ../es-app/src/views/SystemView.cpp:209
+#: ../es-app/src/views/SystemView.cpp:212
+#: ../es-core/src/components/ComponentList.cpp:416
+#: ../es-core/src/components/ComponentGrid.cpp:519
+#: ../es-core/src/components/ComponentGrid.cpp:524
+#: ../es-core/src/components/ComponentGrid.cpp:532
+#: ../es-core/src/components/ComponentGrid.cpp:534
+#: ../es-core/src/components/ComponentGrid.cpp:536
+msgid "choose"
+msgstr "navigera"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2273
+#: ../es-app/src/guis/GuiGamelistFilter.cpp:250
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:603
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:262
+#: ../es-app/src/views/SystemView.cpp:215
+#: ../es-app/src/views/GamelistView.cpp:519
+#: ../es-app/src/views/GamelistView.cpp:521
+#: ../es-core/src/components/OptionListComponent.h:378
+#: ../es-core/src/components/OptionListComponent.h:562
+#: ../es-core/src/components/ImageComponent.cpp:763
+#: ../es-core/src/components/TextComponent.cpp:563
+#: ../es-core/src/components/VideoComponent.cpp:396
+msgid "select"
+msgstr "välj"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2274 ../es-app/src/guis/GuiMenu.cpp:2275
+msgid "close menu"
+msgstr "stäng menyn"
+
+#: ../es-app/src/guis/GuiGamelistFilter.cpp:249
+#: ../es-app/src/guis/GuiSettings.cpp:280
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:22
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:260
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1052
+#: ../es-app/src/views/GamelistView.cpp:523
+#: ../es-core/src/components/OptionListComponent.h:516
+#: ../es-core/src/components/OptionListComponent.h:563
+#: ../es-core/src/components/TextEditComponent.cpp:409
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:513
+#: ../es-core/src/guis/GuiMsgBox.cpp:175
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:282
+msgid "back"
+msgstr "tillbaka"
+
 #: ../es-app/src/guis/GuiSettings.cpp:42
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:22
 #: ../es-core/src/components/OptionListComponent.h:516
 msgid "BACK"
 msgstr "TILLBAKA"
@@ -662,88 +960,216 @@ msgid "EDIT THIS GAME'S METADATA"
 msgstr "REDIGERA DET HÄR SPELETS METADATA"
 
 #: ../es-app/src/guis/GuiGamelistOptions.cpp:263
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:617
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:623
 msgid "APPLY"
 msgstr "TILLÄMPA"
 
-#: ../es-app/src/FileSorts.cpp:280
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:605
+msgid "close (apply)"
+msgstr "stäng (tillämpa)"
+
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:606
+msgid "close (cancel)"
+msgstr "stäng (avbryt)"
+
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:609
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:610
+msgid "close"
+msgstr "stäng"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:74
+msgid "EDIT METADATA"
+msgstr "REDIGERA METADATA"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:255
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:351
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:521
+msgid "CLEAR ENTRY"
+msgstr "RENSA POST"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:298
+msgid "SELECT EMULATOR"
+msgstr "VÄLJ EMULATOR"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:339
+msgid "CLEAR INVALID ENTRY"
+msgstr "RENSA OGILTIG POST"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:379
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:385
+msgid "SYSTEM-WIDE"
+msgstr "SYSTEMOMFATTANDE"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:617
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:624
+msgid "APPLY CHANGES?"
+msgstr "TILLÄMPA ÄNDRINGARNA?"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:658
+msgid "SCRAPE"
+msgstr "SCRAPE"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:658
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1051
+msgid "scrape"
+msgstr "scrape"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:660
+msgid "save metadata"
+msgstr "spara metadata"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:665
+msgid "cancel changes"
+msgstr "avbryt ändringarna"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:675
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED"
+msgstr ""
+"DET HÄR RADERAR ALLA MEDIAFILER OCH GAMELIST.XML POSTEN FÖR MAPPEN, MEN "
+"VARKEN SJÄLVA KATALOGEN ELLER NÅGOT AV DESS INNEHÅLL KOMMER ATT TAS BORT"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:686
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:709
+#: ../es-core/src/guis/GuiTextEditPopup.h:33
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:76
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:34
+msgid "CLEAR"
+msgstr "RENSA"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:686
+msgid "clear folder"
+msgstr "rensa mapp"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:698
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED"
+msgstr ""
+"DET HÄR RADERAR ALLA MEDIAFILER OCH GAMELIST.XML POSTEN FÖR SPELET, MEN "
+"SJÄLVA SPELFILEN KOMMER INTE TAS BORT"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:709
+msgid "clear file"
+msgstr "rensa fil"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:722
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY"
+msgstr ""
+"DET HÄR RADERAR SPELFILEN, ALLA DESS MEDIAFILER SAMT GAMELIST.XML POSTEN"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:731
+msgid "DELETE"
+msgstr "RADERA"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:731
+msgid "delete game"
+msgstr "radera spel"
+
+#: ../es-app/src/FileSorts.cpp:281
 msgid "name, ascending"
 msgstr "namn, stigande"
 
-#: ../es-app/src/FileSorts.cpp:281
+#: ../es-app/src/FileSorts.cpp:282
 msgid "name, descending"
 msgstr "namn, fallande"
 
-#: ../es-app/src/FileSorts.cpp:282
+#: ../es-app/src/FileSorts.cpp:283
 msgid "rating, ascending"
 msgstr "betyg, stigande"
 
-#: ../es-app/src/FileSorts.cpp:283
+#: ../es-app/src/FileSorts.cpp:284
 msgid "rating, descending"
 msgstr "betyg, fallande"
 
-#: ../es-app/src/FileSorts.cpp:284
+#: ../es-app/src/FileSorts.cpp:285
 msgid "release date, ascending"
 msgstr "utgivningsdatum, stigande"
 
-#: ../es-app/src/FileSorts.cpp:285
+#: ../es-app/src/FileSorts.cpp:286
 msgid "release date, descending"
 msgstr "utgivningsdatum, fallande"
 
-#: ../es-app/src/FileSorts.cpp:286
+#: ../es-app/src/FileSorts.cpp:287
 msgid "developer, ascending"
 msgstr "utvecklare, stigande"
 
-#: ../es-app/src/FileSorts.cpp:287
+#: ../es-app/src/FileSorts.cpp:288
 msgid "developer, descending"
 msgstr "utvecklare, fallande"
 
-#: ../es-app/src/FileSorts.cpp:288
+#: ../es-app/src/FileSorts.cpp:289
 msgid "publisher, ascending"
 msgstr "utgivare, stigande"
 
-#: ../es-app/src/FileSorts.cpp:289
+#: ../es-app/src/FileSorts.cpp:290
 msgid "publisher, descending"
 msgstr "utgivare, fallande"
 
-#: ../es-app/src/FileSorts.cpp:290
+#: ../es-app/src/FileSorts.cpp:291
 msgid "genre, ascending"
 msgstr "genre, stigande"
 
-#: ../es-app/src/FileSorts.cpp:291
+#: ../es-app/src/FileSorts.cpp:292
 msgid "genre, descending"
 msgstr "genre, fallande"
 
-#: ../es-app/src/FileSorts.cpp:292
+#: ../es-app/src/FileSorts.cpp:293
 msgid "players, ascending"
 msgstr "spelare, stigande"
 
-#: ../es-app/src/FileSorts.cpp:293
+#: ../es-app/src/FileSorts.cpp:294
 msgid "players, descending"
 msgstr "spelare, fallande"
 
-#: ../es-app/src/FileSorts.cpp:294
+#: ../es-app/src/FileSorts.cpp:295
 msgid "last played, ascending"
 msgstr "senast spelat, stigande"
 
-#: ../es-app/src/FileSorts.cpp:295
+#: ../es-app/src/FileSorts.cpp:296
 msgid "last played, descending"
 msgstr "senast spelat, fallande"
 
-#: ../es-app/src/FileSorts.cpp:296
+#: ../es-app/src/FileSorts.cpp:297
 msgid "times played, ascending"
 msgstr "antal gånger spelat, stigande"
 
-#: ../es-app/src/FileSorts.cpp:297
+#: ../es-app/src/FileSorts.cpp:298
 msgid "times played, descending"
 msgstr "antal gånger spelat, fallande"
 
-#: ../es-app/src/FileSorts.cpp:298
+#: ../es-app/src/FileSorts.cpp:299
 msgid "system, ascending"
 msgstr "system, stigande"
 
-#: ../es-app/src/FileSorts.cpp:299
+#: ../es-app/src/FileSorts.cpp:300
 msgid "system, descending"
 msgstr "system, fallande"
+
+#: ../es-app/src/views/GamelistView.cpp:510
+#: ../es-app/src/views/GamelistView.cpp:512
+#: ../es-app/src/views/GamelistView.cpp:514
+msgid "system"
+msgstr "system"
+
+#: ../es-app/src/views/GamelistView.cpp:524
+msgid "view media"
+msgstr "visa media"
+
+#: ../es-app/src/views/GamelistView.cpp:527
+msgid "options"
+msgstr "alternativ"
+
+#: ../es-app/src/views/GamelistView.cpp:531
+msgid "random"
+msgstr "slumpmässig"
+
+#: ../es-app/src/views/GamelistView.cpp:536
+msgid "jump to game"
+msgstr "hoppa till spel"
 
 #: ../es-core/src/Window.cpp:671
 msgid "Searching for games..."
@@ -769,76 +1195,163 @@ msgstr "Skapar systemkataloger..."
 msgid "ERROR: COULDN'T RENDER PDF FILE"
 msgstr "FEL: KUNDE INTE RENDERA PDF FIL"
 
-#: ../es-core/src/ThemeData.cpp:2069
+#: ../es-core/src/ThemeData.cpp:2070
 msgid "medium"
 msgstr "medium"
 
-#: ../es-core/src/ThemeData.cpp:2070
+#: ../es-core/src/ThemeData.cpp:2071
 msgid "large"
 msgstr "stor"
 
-#: ../es-core/src/ThemeData.cpp:2071
+#: ../es-core/src/ThemeData.cpp:2072
 msgid "small"
 msgstr "liten"
 
-#: ../es-core/src/ThemeData.cpp:2072
+#: ../es-core/src/ThemeData.cpp:2073
 msgid "extra small"
 msgstr "extra liten"
 
-#: ../es-core/src/ThemeData.cpp:2073
+#: ../es-core/src/ThemeData.cpp:2074
 msgid "extra large"
 msgstr "extra stor"
 
-#: ../es-core/src/ThemeData.cpp:2076
+#: ../es-core/src/ThemeData.cpp:2077
 msgid "automatic"
 msgstr "automatiskt"
 
-#: ../es-core/src/ThemeData.cpp:2077
+#: ../es-core/src/ThemeData.cpp:2078
 msgid "16:9 vertical"
 msgstr "16:9 vertikal"
 
-#: ../es-core/src/ThemeData.cpp:2078
+#: ../es-core/src/ThemeData.cpp:2079
 msgid "16:10 vertical"
 msgstr "16:10 vertikal"
 
-#: ../es-core/src/ThemeData.cpp:2079
+#: ../es-core/src/ThemeData.cpp:2080
 msgid "3:2 vertical"
 msgstr "3:2 vertikal"
 
-#: ../es-core/src/ThemeData.cpp:2080
+#: ../es-core/src/ThemeData.cpp:2081
 msgid "4:3 vertical"
 msgstr "4:3 vertikal"
 
-#: ../es-core/src/ThemeData.cpp:2081
+#: ../es-core/src/ThemeData.cpp:2082
 msgid "5:4 vertical"
 msgstr "5:4 vertikal"
 
-#: ../es-core/src/ThemeData.cpp:2082
+#: ../es-core/src/ThemeData.cpp:2083
 msgid "19.5:9 vertical"
 msgstr "19.5:9 vertikal"
 
-#: ../es-core/src/ThemeData.cpp:2083
+#: ../es-core/src/ThemeData.cpp:2084
 msgid "20:9 vertical"
 msgstr "20:9 vertikal"
 
-#: ../es-core/src/ThemeData.cpp:2084
+#: ../es-core/src/ThemeData.cpp:2085
 msgid "21:9 vertical"
 msgstr "21:9 vertikal"
 
-#: ../es-core/src/ThemeData.cpp:2085
+#: ../es-core/src/ThemeData.cpp:2086
 msgid "32:9 vertical"
 msgstr "32:9 vertikal"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:239
+msgid "edit date"
+msgstr "redigera datum"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:242
+msgid "cancel"
+msgstr "avbryt"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:243
+msgid "apply"
+msgstr "tillämpa"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:244
+msgid "Y-M-D"
+msgstr "Å-M-D"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:245
+msgid "modify"
+msgstr "modifiera"
+
+#: ../es-core/src/components/OptionListComponent.h:376
+msgid "change value"
+msgstr "ändra värde"
 
 #: ../es-core/src/components/OptionListComponent.h:520
 msgid "SELECT ALL"
 msgstr "VÄLJ ALLA"
 
+#: ../es-core/src/components/OptionListComponent.h:520
+msgid "select all"
+msgstr "välj alla"
+
 #: ../es-core/src/components/OptionListComponent.h:529
 msgid "SELECT NONE"
 msgstr "VÄLJ INGA"
 
-#~ msgid "left/right"
-#~ msgstr "vä/hö"
+#: ../es-core/src/components/OptionListComponent.h:529
+msgid "select none"
+msgstr "välj inga"
 
-#~ msgid "WHEN TO SAVE METADATA"
-#~ msgstr "NÄR METADATA SKA SPARAS"
+#: ../es-core/src/components/TextEditComponent.cpp:406
+msgid "first"
+msgstr "första"
+
+#: ../es-core/src/components/TextEditComponent.cpp:407
+msgid "last"
+msgstr "sista"
+
+#: ../es-core/src/components/TextEditComponent.cpp:408
+msgid "move cursor"
+msgstr "flytta markör"
+
+#: ../es-core/src/components/TextEditComponent.cpp:412
+msgid "edit"
+msgstr "redigera"
+
+#: ../es-core/src/components/SwitchComponent.cpp:92
+msgid "toggle"
+msgstr "växla"
+
+#: ../es-core/src/components/RatingComponent.cpp:312
+msgid "add half star"
+msgstr "addera halv stjärna"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:501
+msgid "shift"
+msgstr "shift"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:502
+msgid "alt"
+msgstr "alt"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:505
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:275
+msgid "newline"
+msgstr "radbrytning"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:511
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:280
+msgid "backspace"
+msgstr "backsteg"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:512
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:281
+msgid "space"
+msgstr "blanksteg"
+
+#: ../es-core/src/guis/GuiTextEditPopup.h:32
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:33
+msgid "LOAD DEFAULT"
+msgstr "LADDA STANDARDVÄRDEN"
+
+#: ../es-core/src/guis/GuiTextEditPopup.h:34
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:35
+msgid "DISCARD CHANGES"
+msgstr "KASSERA ÄNDRINGARNA"
+
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:79
+msgid "discard changes"
+msgstr "kassera ändringarna"
