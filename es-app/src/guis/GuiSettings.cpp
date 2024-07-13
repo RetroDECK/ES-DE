@@ -39,7 +39,7 @@ GuiSettings::GuiSettings(std::string title)
     , mInvalidateCachedBackground {false}
 {
     addChild(&mMenu);
-    mMenu.addButton("BACK", "back", [this] { delete this; });
+    mMenu.addButton(_("BACK"), "back", [this] { delete this; });
 
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     mMenu.setPosition((mSize.x - mMenu.getSize().x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
@@ -237,23 +237,24 @@ void GuiSettings::addEditableTextComponent(const std::string label,
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             // Never display the value if it's a password, instead set it to blank.
             if (isPassword)
-                mWindow->pushGui(
-                    new GuiTextEditKeyboardPopup(getHelpStyle(), getMenu().getPosition().y, label,
-                                                 "", updateVal, false, "SAVE", "SAVE CHANGES?"));
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    getHelpStyle(), getMenu().getPosition().y, label, "", updateVal, false,
+                    _("SAVE"), _("SAVE CHANGES?")));
             else
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
                     getHelpStyle(), getMenu().getPosition().y, label, ed->getValue(), updateVal,
-                    false, "SAVE", "SAVE CHANGES?"));
+                    false, _("SAVE"), _("SAVE CHANGES?")));
         });
     }
     else {
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             if (isPassword)
                 mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), label, "", updateVal, false,
-                                                      "SAVE", "SAVE CHANGES?"));
+                                                      _("SAVE"), _("SAVE CHANGES?")));
             else
                 mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), label, ed->getValue(),
-                                                      updateVal, false, "SAVE", "SAVE CHANGES?"));
+                                                      updateVal, false, _("SAVE"),
+                                                      _("SAVE CHANGES?")));
         });
     }
 

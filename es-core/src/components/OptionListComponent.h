@@ -513,11 +513,11 @@ private:
                 mMenu.addRow(row, (!mParent->mMultiSelect && it->selected), false);
             }
 
-            mMenu.addButton("BACK", "back", [this] { delete this; });
+            mMenu.addButton(_("BACK"), "back", [this] { delete this; });
 
             if (mParent->mMultiSelect) {
                 if (!mParent->mMultiExclusiveSelect) {
-                    mMenu.addButton("SELECT ALL", "select all", [this, checkBoxes] {
+                    mMenu.addButton(_("SELECT ALL"), "select all", [this, checkBoxes] {
                         for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
                             mParent->mEntries.at(i).selected = true;
                             checkBoxes.at(i)->setImage(CHECKED_PATH);
@@ -526,7 +526,7 @@ private:
                     });
                 }
 
-                mMenu.addButton("SELECT NONE", "select none", [this, checkBoxes, textEntries] {
+                mMenu.addButton(_("SELECT NONE"), "select none", [this, checkBoxes, textEntries] {
                     for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
                         mParent->mEntries.at(i).selected = false;
                         checkBoxes.at(i)->setImage(UNCHECKED_PATH);

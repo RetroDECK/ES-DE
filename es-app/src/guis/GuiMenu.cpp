@@ -488,7 +488,7 @@ void GuiMenu::openUIOptions()
                              selectedApplicationLanguage == "automatic");
     applicationLanguage->add("ENGLISH (AMERICAN)", "en_US", selectedApplicationLanguage == "en_US");
     applicationLanguage->add("SVENSKA", "sv_SE", selectedApplicationLanguage == "sv_SE");
-    applicationLanguage->add("简体中文", "zh_rCN", selectedApplicationLanguage == "zh_rCN");
+    applicationLanguage->add("简体中文", "zh_CN", selectedApplicationLanguage == "zh_CN");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the application langauge to "automatic" in this case.
     if (applicationLanguage->getSelectedObjects().size() == 0)
@@ -1231,7 +1231,7 @@ void GuiMenu::openInputDeviceOptions()
     // configuration file. Simply set the overlay opacity to "normal" in this case.
     if (touchOverlayOpacity->getSelectedObjects().size() == 0)
         touchOverlayOpacity->selectEntry(0);
-    s->addWithLabel("TOUCH OVERLAY OPACITY", touchOverlayOpacity);
+    s->addWithLabel(_("TOUCH OVERLAY OPACITY"), touchOverlayOpacity);
     s->addSaveFunc([touchOverlayOpacity, s] {
         if (touchOverlayOpacity->getSelected() !=
             Settings::getInstance()->getString("InputTouchOverlayOpacity")) {
@@ -1305,7 +1305,7 @@ void GuiMenu::openInputDeviceOptions()
 
             Window* window {mWindow};
             window->pushGui(
-                new GuiMsgBox(getHelpStyle(), message, "OK", nullptr, "", nullptr, "", nullptr,
+                new GuiMsgBox(getHelpStyle(), message, _("OK"), nullptr, "", nullptr, "", nullptr,
                               nullptr, true, true,
                               (mRenderer->getIsVerticalOrientation() ?
                                    0.84f :
@@ -1439,7 +1439,7 @@ void GuiMenu::openOtherOptions()
     // Alternative emulators GUI.
     ComponentListRow alternativeEmulatorsRow;
     alternativeEmulatorsRow.elements.clear();
-    alternativeEmulatorsRow.addElement(std::make_shared<TextComponent>("ALTERNATIVE EMULATORS",
+    alternativeEmulatorsRow.addElement(std::make_shared<TextComponent>(_("ALTERNATIVE EMULATORS"),
                                                                        Font::get(FONT_SIZE_MEDIUM),
                                                                        mMenuColorPrimary),
                                        true);
@@ -1451,7 +1451,7 @@ void GuiMenu::openOtherOptions()
     // Game media directory.
     ComponentListRow rowMediaDir;
     auto mediaDirectory = std::make_shared<TextComponent>(
-        "GAME MEDIA DIRECTORY", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+        _("GAME MEDIA DIRECTORY"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
     auto bracketMediaDirectory = std::make_shared<ImageComponent>();
     bracketMediaDirectory->setResize(
         glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
@@ -1459,8 +1459,8 @@ void GuiMenu::openOtherOptions()
     bracketMediaDirectory->setColorShift(mMenuColorPrimary);
     rowMediaDir.addElement(mediaDirectory, true);
     rowMediaDir.addElement(bracketMediaDirectory, false);
-    std::string titleMediaDir {"ENTER GAME MEDIA DIRECTORY"};
-    std::string mediaDirectoryStaticText {"Default directory:"};
+    std::string titleMediaDir {_("ENTER GAME MEDIA DIRECTORY")};
+    std::string mediaDirectoryStaticText {_("Default directory:")};
     std::string defaultDirectoryText {Utils::FileSystem::getAppDataDirectory() +
                                       "/downloaded_media"};
     std::string initValueMediaDir {Settings::getInstance()->getString("MediaDirectory")};
@@ -1478,14 +1478,14 @@ void GuiMenu::openOtherOptions()
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
                 getHelpStyle(), s->getMenu().getPosition().y, titleMediaDir,
                 Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
-                multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
-                defaultDirectoryText, "load default directory"));
+                multiLineMediaDir, _("SAVE"), _("SAVE CHANGES?"), mediaDirectoryStaticText,
+                defaultDirectoryText, _("load default directory")));
         }
         else {
             mWindow->pushGui(new GuiTextEditPopup(
                 getHelpStyle(), titleMediaDir, Settings::getInstance()->getString("MediaDirectory"),
-                updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
-                mediaDirectoryStaticText, defaultDirectoryText, "load default directory"));
+                updateValMediaDir, multiLineMediaDir, _("SAVE"), _("SAVE CHANGES?"),
+                mediaDirectoryStaticText, defaultDirectoryText, _("load default directory")));
         }
     });
     s->addRow(rowMediaDir);
@@ -1493,7 +1493,7 @@ void GuiMenu::openOtherOptions()
     // Maximum VRAM.
     auto maxVram = std::make_shared<SliderComponent>(128.0f, 2048.0f, 16.0f, "MiB");
     maxVram->setValue(static_cast<float>(Settings::getInstance()->getInt("MaxVRAM")));
-    s->addWithLabel("VRAM LIMIT", maxVram);
+    s->addWithLabel(_("VRAM LIMIT"), maxVram);
     s->addSaveFunc([maxVram, s] {
         if (maxVram->getValue() != Settings::getInstance()->getInt("MaxVRAM")) {
             Settings::getInstance()->setInt("MaxVRAM",
@@ -1505,17 +1505,17 @@ void GuiMenu::openOtherOptions()
 #if !defined(USE_OPENGLES)
     // Anti-aliasing (MSAA).
     auto antiAliasing = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "ANTI-ALIASING (MSAA)", false);
+        getHelpStyle(), _("ANTI-ALIASING (MSAA)"), false);
     const std::string& selectedAntiAliasing {
         std::to_string(Settings::getInstance()->getInt("AntiAliasing"))};
-    antiAliasing->add("DISABLED", "0", selectedAntiAliasing == "0");
-    antiAliasing->add("2X", "2", selectedAntiAliasing == "2");
-    antiAliasing->add("4X", "4", selectedAntiAliasing == "4");
+    antiAliasing->add(_("DISABLED"), "0", selectedAntiAliasing == "0");
+    antiAliasing->add(_("2X"), "2", selectedAntiAliasing == "2");
+    antiAliasing->add(_("4X"), "4", selectedAntiAliasing == "4");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set anti-aliasing to "0" in this case.
     if (antiAliasing->getSelectedObjects().size() == 0)
         antiAliasing->selectEntry(0);
-    s->addWithLabel("ANTI-ALIASING (MSAA) (REQUIRES RESTART)", antiAliasing);
+    s->addWithLabel(_("ANTI-ALIASING (MSAA) (REQUIRES RESTART)"), antiAliasing);
     s->addSaveFunc([antiAliasing, s] {
         if (antiAliasing->getSelected() !=
             std::to_string(Settings::getInstance()->getInt("AntiAliasing"))) {
@@ -1528,7 +1528,7 @@ void GuiMenu::openOtherOptions()
 
     // Display/monitor.
     auto displayIndex = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "DISPLAY/MONITOR INDEX", false);
+        getHelpStyle(), _("DISPLAY/MONITOR INDEX"), false);
     std::vector<std::string> displayIndexEntry;
     displayIndexEntry.push_back("1");
     displayIndexEntry.push_back("2");
@@ -1537,7 +1537,7 @@ void GuiMenu::openOtherOptions()
     for (auto it = displayIndexEntry.cbegin(); it != displayIndexEntry.cend(); ++it)
         displayIndex->add(*it, *it,
                           Settings::getInstance()->getInt("DisplayIndex") == atoi((*it).c_str()));
-    s->addWithLabel("DISPLAY/MONITOR INDEX (REQUIRES RESTART)", displayIndex);
+    s->addWithLabel(_("DISPLAY/MONITOR INDEX (REQUIRES RESTART)"), displayIndex);
     s->addSaveFunc([displayIndex, s] {
         if (atoi(displayIndex->getSelected().c_str()) !=
             Settings::getInstance()->getInt("DisplayIndex")) {
@@ -1548,19 +1548,19 @@ void GuiMenu::openOtherOptions()
     });
 
     // Screen contents rotation.
-    auto screenRotate =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "ROTATE SCREEN", false);
+    auto screenRotate = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), _("ROTATE SCREEN"), false);
     const std::string& selectedScreenRotate {
         std::to_string(Settings::getInstance()->getInt("ScreenRotate"))};
-    screenRotate->add("DISABLED", "0", selectedScreenRotate == "0");
-    screenRotate->add("90 DEGREES", "90", selectedScreenRotate == "90");
-    screenRotate->add("180 DEGREES", "180", selectedScreenRotate == "180");
-    screenRotate->add("270 DEGREES", "270", selectedScreenRotate == "270");
+    screenRotate->add(_("DISABLED"), "0", selectedScreenRotate == "0");
+    screenRotate->add(_("90 DEGREES"), "90", selectedScreenRotate == "90");
+    screenRotate->add(_("180 DEGREES"), "180", selectedScreenRotate == "180");
+    screenRotate->add(_("270 DEGREES"), "270", selectedScreenRotate == "270");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set screen rotation to "0" in this case.
     if (screenRotate->getSelectedObjects().size() == 0)
         screenRotate->selectEntry(0);
-    s->addWithLabel("ROTATE SCREEN (REQUIRES RESTART)", screenRotate);
+    s->addWithLabel(_("ROTATE SCREEN (REQUIRES RESTART)"), screenRotate);
     s->addSaveFunc([screenRotate, s] {
         if (screenRotate->getSelected() !=
             std::to_string(Settings::getInstance()->getInt("ScreenRotate"))) {
@@ -1572,24 +1572,24 @@ void GuiMenu::openOtherOptions()
 
     // Keyboard quit shortcut.
     auto keyboardQuitShortcut = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "KEYBOARD QUIT SHORTCUT", false);
+        getHelpStyle(), _("KEYBOARD QUIT SHORTCUT"), false);
     std::string selectedShortcut {Settings::getInstance()->getString("KeyboardQuitShortcut")};
 #if defined(_WIN64) || defined(__unix__)
-    keyboardQuitShortcut->add("Alt + F4", "AltF4", selectedShortcut == "AltF4");
-    keyboardQuitShortcut->add("Ctrl + Q", "CtrlQ", selectedShortcut == "CtrlQ");
-    keyboardQuitShortcut->add("Alt + Q", "AltQ", selectedShortcut == "AltQ");
+    keyboardQuitShortcut->add("ALT + F4", "AltF4", selectedShortcut == "AltF4");
+    keyboardQuitShortcut->add("CTRL + Q", "CtrlQ", selectedShortcut == "CtrlQ");
+    keyboardQuitShortcut->add("ALT + Q", "AltQ", selectedShortcut == "AltQ");
 #endif
 #if defined(__APPLE__)
     keyboardQuitShortcut->add("\u2318 + Q", "CmdQ", selectedShortcut == "CmdQ");
-    keyboardQuitShortcut->add("Ctrl + Q", "CtrlQ", selectedShortcut == "CtrlQ");
-    keyboardQuitShortcut->add("Alt + Q", "AltQ", selectedShortcut == "AltQ");
+    keyboardQuitShortcut->add("CTRL + Q", "CtrlQ", selectedShortcut == "CtrlQ");
+    keyboardQuitShortcut->add("ALT + Q", "AltQ", selectedShortcut == "AltQ");
 #endif
     keyboardQuitShortcut->add("F4", "F4", selectedShortcut == "F4");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the keyboard quit shortcut to the first entry in this case.
     if (keyboardQuitShortcut->getSelectedObjects().size() == 0)
         keyboardQuitShortcut->selectEntry(0);
-    s->addWithLabel("KEYBOARD QUIT SHORTCUT", keyboardQuitShortcut);
+    s->addWithLabel(_("KEYBOARD QUIT SHORTCUT"), keyboardQuitShortcut);
     s->addSaveFunc([keyboardQuitShortcut, s] {
         if (keyboardQuitShortcut->getSelected() !=
             Settings::getInstance()->getString("KeyboardQuitShortcut")) {
@@ -1601,16 +1601,18 @@ void GuiMenu::openOtherOptions()
 
     // When to save game metadata.
     auto saveGamelistsMode = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "WHEN TO SAVE METADATA", false);
-    std::vector<std::string> saveModes;
-    saveModes.push_back("on exit");
-    saveModes.push_back("always");
-    saveModes.push_back("never");
-    for (auto it = saveModes.cbegin(); it != saveModes.cend(); ++it) {
-        saveGamelistsMode->add(*it, *it,
-                               Settings::getInstance()->getString("SaveGamelistsMode") == *it);
-    }
-    s->addWithLabel("WHEN TO SAVE GAME METADATA", saveGamelistsMode);
+        getHelpStyle(), _("WHEN TO SAVE GAME METADATA [SHORT]"), false);
+    saveGamelistsMode->add(_("ALWAYS"), "always",
+                           Settings::getInstance()->getString("SaveGamelistsMode") == "always");
+    saveGamelistsMode->add(_("ON EXIT"), "on exit",
+                           Settings::getInstance()->getString("SaveGamelistsMode") == "on exit");
+    saveGamelistsMode->add(_("NEVER"), "never",
+                           Settings::getInstance()->getString("SaveGamelistsMode") == "never");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set save game metadata to "always" in this case.
+    if (antiAliasing->getSelectedObjects().size() == 0)
+        antiAliasing->selectEntry(0);
+    s->addWithLabel(_("WHEN TO SAVE GAME METADATA"), saveGamelistsMode);
     s->addSaveFunc([saveGamelistsMode, s] {
         if (saveGamelistsMode->getSelected() !=
             Settings::getInstance()->getString("SaveGamelistsMode")) {
@@ -1630,19 +1632,20 @@ void GuiMenu::openOtherOptions()
 #if defined(APPLICATION_UPDATER)
     // Application updater frequency.
     auto applicationUpdaterFrequency = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "APPLICATION UPDATES", false);
+        getHelpStyle(), _("APPLICATION UPDATES"), false);
     const std::string& selectedUpdaterFrequency {
         Settings::getInstance()->getString("ApplicationUpdaterFrequency")};
-    applicationUpdaterFrequency->add("ALWAYS", "always", selectedUpdaterFrequency == "always");
-    applicationUpdaterFrequency->add("DAILY", "daily", selectedUpdaterFrequency == "daily");
-    applicationUpdaterFrequency->add("WEEKLY", "weekly", selectedUpdaterFrequency == "weekly");
-    applicationUpdaterFrequency->add("MONTHLY", "monthly", selectedUpdaterFrequency == "monthly");
-    applicationUpdaterFrequency->add("NEVER", "never", selectedUpdaterFrequency == "never");
+    applicationUpdaterFrequency->add(_("ALWAYS"), "always", selectedUpdaterFrequency == "always");
+    applicationUpdaterFrequency->add(_("DAILY"), "daily", selectedUpdaterFrequency == "daily");
+    applicationUpdaterFrequency->add(_("WEEKLY"), "weekly", selectedUpdaterFrequency == "weekly");
+    applicationUpdaterFrequency->add(_("MONTHLY"), "monthly",
+                                     selectedUpdaterFrequency == "monthly");
+    applicationUpdaterFrequency->add(_("NEVER"), "never", selectedUpdaterFrequency == "never");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set updater frequency to "always" in this case.
     if (applicationUpdaterFrequency->getSelectedObjects().size() == 0)
         applicationUpdaterFrequency->selectEntry(0);
-    s->addWithLabel("CHECK FOR APPLICATION UPDATES", applicationUpdaterFrequency);
+    s->addWithLabel(_("CHECK FOR APPLICATION UPDATES"), applicationUpdaterFrequency);
     s->addSaveFunc([applicationUpdaterFrequency, s] {
         if (applicationUpdaterFrequency->getSelected() !=
             Settings::getInstance()->getString("ApplicationUpdaterFrequency")) {
@@ -1658,7 +1661,7 @@ void GuiMenu::openOtherOptions()
     // Add a dummy entry to indicate that this setting is always enabled when running a prerelease.
     auto applicationUpdaterPrereleases = std::make_shared<SwitchComponent>();
     applicationUpdaterPrereleases->setState(true);
-    s->addWithLabel("INCLUDE PRERELEASES IN UPDATE CHECKS", applicationUpdaterPrereleases);
+    s->addWithLabel(_("INCLUDE PRERELEASES IN UPDATE CHECKS"), applicationUpdaterPrereleases);
     applicationUpdaterPrereleases->setEnabled(false);
     applicationUpdaterPrereleases->setOpacity(DISABLED_OPACITY);
     applicationUpdaterPrereleases->getParent()
@@ -1669,7 +1672,7 @@ void GuiMenu::openOtherOptions()
     auto applicationUpdaterPrereleases = std::make_shared<SwitchComponent>();
     applicationUpdaterPrereleases->setState(
         Settings::getInstance()->getBool("ApplicationUpdaterPrereleases"));
-    s->addWithLabel("INCLUDE PRERELEASES IN UPDATE CHECKS", applicationUpdaterPrereleases);
+    s->addWithLabel(_("INCLUDE PRERELEASES IN UPDATE CHECKS"), applicationUpdaterPrereleases);
     s->addSaveFunc([applicationUpdaterPrereleases, s] {
         if (applicationUpdaterPrereleases->getState() !=
             Settings::getInstance()->getBool("ApplicationUpdaterPrereleases")) {
@@ -1685,7 +1688,7 @@ void GuiMenu::openOtherOptions()
     // Hide taskbar during the program session.
     auto hide_taskbar = std::make_shared<SwitchComponent>();
     hide_taskbar->setState(Settings::getInstance()->getBool("HideTaskbar"));
-    s->addWithLabel("HIDE TASKBAR (REQUIRES RESTART)", hide_taskbar);
+    s->addWithLabel(_("HIDE TASKBAR (REQUIRES RESTART)"), hide_taskbar);
     s->addSaveFunc([hide_taskbar, s] {
         if (hide_taskbar->getState() != Settings::getInstance()->getBool("HideTaskbar")) {
             Settings::getInstance()->setBool("HideTaskbar", hide_taskbar->getState());
@@ -1698,7 +1701,7 @@ void GuiMenu::openOtherOptions()
     // Run ES in the background when a game has been launched.
     auto runInBackground = std::make_shared<SwitchComponent>();
     runInBackground->setState(Settings::getInstance()->getBool("RunInBackground"));
-    s->addWithLabel("RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)", runInBackground);
+    s->addWithLabel(_("RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"), runInBackground);
     s->addSaveFunc([runInBackground, s] {
         if (runInBackground->getState() != Settings::getInstance()->getBool("RunInBackground")) {
             Settings::getInstance()->setBool("RunInBackground", runInBackground->getState());
@@ -1711,7 +1714,7 @@ void GuiMenu::openOtherOptions()
     // Whether to enable hardware decoding for the FFmpeg video player.
     auto videoHardwareDecoding = std::make_shared<SwitchComponent>();
     videoHardwareDecoding->setState(Settings::getInstance()->getBool("VideoHardwareDecoding"));
-    s->addWithLabel("VIDEO HARDWARE DECODING (EXPERIMENTAL)", videoHardwareDecoding);
+    s->addWithLabel(_("VIDEO HARDWARE DECODING (EXPERIMENTAL)"), videoHardwareDecoding);
     s->addSaveFunc([videoHardwareDecoding, s] {
         if (videoHardwareDecoding->getState() !=
             Settings::getInstance()->getBool("VideoHardwareDecoding")) {
@@ -1725,7 +1728,7 @@ void GuiMenu::openOtherOptions()
     // Whether to upscale the video frame rate to 60 FPS.
     auto videoUpscaleFrameRate = std::make_shared<SwitchComponent>();
     videoUpscaleFrameRate->setState(Settings::getInstance()->getBool("VideoUpscaleFrameRate"));
-    s->addWithLabel("UPSCALE VIDEO FRAME RATE TO 60 FPS", videoUpscaleFrameRate);
+    s->addWithLabel(_("UPSCALE VIDEO FRAME RATE TO 60 FPS"), videoUpscaleFrameRate);
     s->addSaveFunc([videoUpscaleFrameRate, s] {
         if (videoUpscaleFrameRate->getState() !=
             Settings::getInstance()->getBool("VideoUpscaleFrameRate")) {
@@ -1740,7 +1743,7 @@ void GuiMenu::openOtherOptions()
     auto alternativeEmulatorPerGame = std::make_shared<SwitchComponent>();
     alternativeEmulatorPerGame->setState(
         Settings::getInstance()->getBool("AlternativeEmulatorPerGame"));
-    s->addWithLabel("ENABLE ALTERNATIVE EMULATORS PER GAME", alternativeEmulatorPerGame);
+    s->addWithLabel(_("ENABLE ALTERNATIVE EMULATORS PER GAME"), alternativeEmulatorPerGame);
     s->addSaveFunc([alternativeEmulatorPerGame, s] {
         if (alternativeEmulatorPerGame->getState() !=
             Settings::getInstance()->getBool("AlternativeEmulatorPerGame")) {
@@ -1755,7 +1758,7 @@ void GuiMenu::openOtherOptions()
     // Show hidden files.
     auto showHiddenFiles = std::make_shared<SwitchComponent>();
     showHiddenFiles->setState(Settings::getInstance()->getBool("ShowHiddenFiles"));
-    s->addWithLabel("SHOW HIDDEN FILES AND FOLDERS", showHiddenFiles);
+    s->addWithLabel(_("SHOW HIDDEN FILES AND FOLDERS"), showHiddenFiles);
     s->addSaveFunc([this, showHiddenFiles, s] {
         if (showHiddenFiles->getState() != Settings::getInstance()->getBool("ShowHiddenFiles")) {
             Settings::getInstance()->setBool("ShowHiddenFiles", showHiddenFiles->getState());
@@ -1768,7 +1771,7 @@ void GuiMenu::openOtherOptions()
     // Show hidden games.
     auto showHiddenGames = std::make_shared<SwitchComponent>();
     showHiddenGames->setState(Settings::getInstance()->getBool("ShowHiddenGames"));
-    s->addWithLabel("SHOW HIDDEN GAMES", showHiddenGames);
+    s->addWithLabel(_("SHOW HIDDEN GAMES"), showHiddenGames);
     s->addSaveFunc([this, showHiddenGames, s] {
         if (showHiddenGames->getState() != Settings::getInstance()->getBool("ShowHiddenGames")) {
             Settings::getInstance()->setBool("ShowHiddenGames", showHiddenGames->getState());
@@ -1781,7 +1784,7 @@ void GuiMenu::openOtherOptions()
     // Custom event scripts, fired using Scripting::fireEvent().
     auto customEventScripts = std::make_shared<SwitchComponent>();
     customEventScripts->setState(Settings::getInstance()->getBool("CustomEventScripts"));
-    s->addWithLabel("ENABLE CUSTOM EVENT SCRIPTS", customEventScripts);
+    s->addWithLabel(_("ENABLE CUSTOM EVENT SCRIPTS"), customEventScripts);
     s->addSaveFunc([customEventScripts, s] {
         if (customEventScripts->getState() !=
             Settings::getInstance()->getBool("CustomEventScripts")) {
@@ -1793,7 +1796,7 @@ void GuiMenu::openOtherOptions()
     // Only show games included in the gamelist.xml files.
     auto parseGamelistOnly = std::make_shared<SwitchComponent>();
     parseGamelistOnly->setState(Settings::getInstance()->getBool("ParseGamelistOnly"));
-    s->addWithLabel("ONLY SHOW GAMES FROM GAMELIST.XML FILES", parseGamelistOnly);
+    s->addWithLabel(_("ONLY SHOW GAMES FROM GAMELIST.XML FILES"), parseGamelistOnly);
     s->addSaveFunc([this, parseGamelistOnly, s] {
         if (parseGamelistOnly->getState() !=
             Settings::getInstance()->getBool("ParseGamelistOnly")) {
@@ -1807,7 +1810,7 @@ void GuiMenu::openOtherOptions()
     // Strip extra MAME name info.
     auto mameNameStripExtraInfo = std::make_shared<SwitchComponent>();
     mameNameStripExtraInfo->setState(Settings::getInstance()->getBool("MAMENameStripExtraInfo"));
-    s->addWithLabel("STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)", mameNameStripExtraInfo);
+    s->addWithLabel(_("STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"), mameNameStripExtraInfo);
     s->addSaveFunc([mameNameStripExtraInfo, s] {
         if (Settings::getInstance()->getBool("MAMENameStripExtraInfo") !=
             mameNameStripExtraInfo->getState()) {
@@ -1821,7 +1824,7 @@ void GuiMenu::openOtherOptions()
     // Whether to disable desktop composition.
     auto disableComposition = std::make_shared<SwitchComponent>();
     disableComposition->setState(Settings::getInstance()->getBool("DisableComposition"));
-    s->addWithLabel("DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)", disableComposition);
+    s->addWithLabel(_("DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"), disableComposition);
     s->addSaveFunc([disableComposition, s] {
         if (disableComposition->getState() !=
             Settings::getInstance()->getBool("DisableComposition")) {
@@ -1836,7 +1839,7 @@ void GuiMenu::openOtherOptions()
         // Whether swiping or pressing back should exit the application.
         auto backEventAppExit = std::make_shared<SwitchComponent>();
         backEventAppExit->setState(Settings::getInstance()->getBool("BackEventAppExit"));
-        s->addWithLabel("BACK BUTTON/BACK SWIPE EXITS APP", backEventAppExit);
+        s->addWithLabel(_("BACK BUTTON/BACK SWIPE EXITS APP"), backEventAppExit);
         s->addSaveFunc([backEventAppExit, s] {
             if (backEventAppExit->getState() !=
                 Settings::getInstance()->getBool("BackEventAppExit")) {
@@ -1849,7 +1852,7 @@ void GuiMenu::openOtherOptions()
         // If we're running as the Android home app then we don't allow the application to quit,
         // so simply add a disabled dummy switch in this case.
         auto backEventAppExit = std::make_shared<SwitchComponent>();
-        s->addWithLabel("BACK BUTTON/BACK SWIPE EXITS APP", backEventAppExit);
+        s->addWithLabel(_("BACK BUTTON/BACK SWIPE EXITS APP"), backEventAppExit);
         backEventAppExit->setEnabled(false);
         backEventAppExit->setState(false);
         backEventAppExit->setOpacity(DISABLED_OPACITY);
@@ -1863,7 +1866,7 @@ void GuiMenu::openOtherOptions()
         // If the --debug command line option was passed then create a dummy entry.
         auto debugMode = std::make_shared<SwitchComponent>();
         debugMode->setState(true);
-        s->addWithLabel("DEBUG MODE", debugMode);
+        s->addWithLabel(_("DEBUG MODE"), debugMode);
         debugMode->setEnabled(false);
         debugMode->setOpacity(DISABLED_OPACITY);
         debugMode->getParent()
@@ -1874,7 +1877,7 @@ void GuiMenu::openOtherOptions()
         // Debug mode.
         auto debugMode = std::make_shared<SwitchComponent>();
         debugMode->setState(Settings::getInstance()->getBool("DebugMode"));
-        s->addWithLabel("DEBUG MODE", debugMode);
+        s->addWithLabel(_("DEBUG MODE"), debugMode);
         s->addSaveFunc([debugMode, s] {
             if (debugMode->getState() != Settings::getInstance()->getBool("DebugMode")) {
                 if (!Settings::getInstance()->getBool("DebugMode")) {
@@ -1895,7 +1898,7 @@ void GuiMenu::openOtherOptions()
     // GPU statistics overlay.
     auto displayGpuStatistics = std::make_shared<SwitchComponent>();
     displayGpuStatistics->setState(Settings::getInstance()->getBool("DisplayGPUStatistics"));
-    s->addWithLabel("DISPLAY GPU STATISTICS OVERLAY", displayGpuStatistics);
+    s->addWithLabel(_("DISPLAY GPU STATISTICS OVERLAY"), displayGpuStatistics);
     s->addSaveFunc([displayGpuStatistics, s] {
         if (displayGpuStatistics->getState() !=
             Settings::getInstance()->getBool("DisplayGPUStatistics")) {
@@ -1908,7 +1911,7 @@ void GuiMenu::openOtherOptions()
     // Whether to enable the menu in Kid mode.
     auto enableMenuKidMode = std::make_shared<SwitchComponent>();
     enableMenuKidMode->setState(Settings::getInstance()->getBool("EnableMenuKidMode"));
-    s->addWithLabel("ENABLE MENU IN KID MODE", enableMenuKidMode);
+    s->addWithLabel(_("ENABLE MENU IN KID MODE"), enableMenuKidMode);
     s->addSaveFunc([enableMenuKidMode, s] {
         if (Settings::getInstance()->getBool("EnableMenuKidMode") !=
             enableMenuKidMode->getState()) {
@@ -1923,7 +1926,7 @@ void GuiMenu::openOtherOptions()
     // Whether to show the quit menu with the options to reboot and shutdown the computer.
     auto showQuitMenu = std::make_shared<SwitchComponent>();
     showQuitMenu->setState(Settings::getInstance()->getBool("ShowQuitMenu"));
-    s->addWithLabel("SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)", showQuitMenu);
+    s->addWithLabel(_("SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"), showQuitMenu);
     s->addSaveFunc([this, showQuitMenu, s] {
         if (showQuitMenu->getState() != Settings::getInstance()->getBool("ShowQuitMenu")) {
             Settings::getInstance()->setBool("ShowQuitMenu", showQuitMenu->getState());
@@ -1996,7 +1999,7 @@ void GuiMenu::openUtilities()
             [this] {
                 if (!SystemData::createSystemDirectories()) {
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(), "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED", "OK",
+                        getHelpStyle(), "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED", _("OK"),
                         [this] {
                             if (CollectionSystemsManager::getInstance()->isEditing())
                                 CollectionSystemsManager::getInstance()->exitEditMode();
@@ -2013,14 +2016,14 @@ void GuiMenu::openUtilities()
                         "", nullptr, "", nullptr, nullptr, true));
                 }
                 else {
-                    mWindow->pushGui(
-                        new GuiMsgBox(getHelpStyle(),
-                                      "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
-                                      "DISK FULL?\nSEE THE LOG FILE FOR MORE DETAILS",
-                                      "OK", nullptr, "", nullptr, "", nullptr, nullptr, true, true,
-                                      (mRenderer->getIsVerticalOrientation() ?
-                                           0.70f :
-                                           0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                    mWindow->pushGui(new GuiMsgBox(
+                        getHelpStyle(),
+                        "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
+                        "DISK FULL?\nSEE THE LOG FILE FOR MORE DETAILS",
+                        _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                        (mRenderer->getIsVerticalOrientation() ?
+                             0.70f :
+                             0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
             "CANCEL", nullptr, "", nullptr, nullptr, false, true,
