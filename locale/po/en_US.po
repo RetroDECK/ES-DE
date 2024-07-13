@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-13 12:28+0200\n"
-"PO-Revision-Date: 2024-07-13 12:08+0200\n"
+"POT-Creation-Date: 2024-07-13 19:08+0200\n"
+"PO-Revision-Date: 2024-07-13 19:13+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -17,6 +17,158 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.4\n"
+
+#: ../es-app/src/MetaData.cpp:192
+msgid "NAME"
+msgstr "NAME"
+
+#: ../es-app/src/MetaData.cpp:193
+msgid "ENTER NAME"
+msgstr "ENTER NAME"
+
+#: ../es-app/src/MetaData.cpp:194
+msgid "SORTNAME"
+msgstr "SORTNAME"
+
+#: ../es-app/src/MetaData.cpp:195
+msgid "ENTER SORTNAME"
+msgstr "ENTER SORTNAME"
+
+#: ../es-app/src/MetaData.cpp:196
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "CUSTOM COLLECTIONS SORTNAME"
+
+#: ../es-app/src/MetaData.cpp:197
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "ENTER COLLECTIONS SORTNAME"
+
+#: ../es-app/src/MetaData.cpp:198
+msgid "DESCRIPTION"
+msgstr "DESCRIPTION"
+
+#: ../es-app/src/MetaData.cpp:199
+msgid "ENTER DESCRIPTION"
+msgstr "ENTER DESCRIPTION"
+
+#: ../es-app/src/MetaData.cpp:200
+msgid "RATING"
+msgstr "RATING"
+
+#: ../es-app/src/MetaData.cpp:201
+msgid "RELEASE DATE"
+msgstr "RELEASE DATE"
+
+#: ../es-app/src/MetaData.cpp:202
+msgid "ENTER RELEASE DATE"
+msgstr "ENTER RELEASE DATE"
+
+#: ../es-app/src/MetaData.cpp:203
+msgid "DEVELOPER"
+msgstr "DEVELOPER"
+
+#: ../es-app/src/MetaData.cpp:204
+msgid "ENTER DEVELOPER"
+msgstr "ENTER DEVELOPER"
+
+#: ../es-app/src/MetaData.cpp:205
+msgid "PUBLISHER"
+msgstr "PUBLISHER"
+
+#: ../es-app/src/MetaData.cpp:206
+msgid "ENTER PUBLISHER"
+msgstr "ENTER PUBLISHER"
+
+#: ../es-app/src/MetaData.cpp:207
+msgid "GENRE"
+msgstr "GENRE"
+
+#: ../es-app/src/MetaData.cpp:208
+msgid "ENTER GENRE"
+msgstr "ENTER GENRE"
+
+#: ../es-app/src/MetaData.cpp:209
+msgid "PLAYERS"
+msgstr "PLAYERS"
+
+#: ../es-app/src/MetaData.cpp:210
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "ENTER NUMBER OF PLAYERS"
+
+#: ../es-app/src/MetaData.cpp:211
+msgid "FAVORITE"
+msgstr "FAVORITE"
+
+#: ../es-app/src/MetaData.cpp:212
+msgid "COMPLETED"
+msgstr "COMPLETED"
+
+#: ../es-app/src/MetaData.cpp:213
+msgid "KIDGAME"
+msgstr "KIDGAME"
+
+#: ../es-app/src/MetaData.cpp:214
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "KIDGAME (ONLY AFFECTS BADGES)"
+
+#: ../es-app/src/MetaData.cpp:215
+msgid "HIDDEN"
+msgstr "HIDDEN"
+
+#: ../es-app/src/MetaData.cpp:216
+msgid "BROKEN/NOT WORKING"
+msgstr "BROKEN/NOT WORKING"
+
+#: ../es-app/src/MetaData.cpp:217
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "EXCLUDE FROM GAME COUNTER"
+
+#: ../es-app/src/MetaData.cpp:218
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "EXCLUDE FROM MULTI-SCRAPER"
+
+#: ../es-app/src/MetaData.cpp:219
+msgid "HIDE METADATA FIELDS"
+msgstr "HIDE METADATA FIELDS"
+
+#: ../es-app/src/MetaData.cpp:220
+msgid "TIMES PLAYED"
+msgstr "TIMES PLAYED"
+
+#: ../es-app/src/MetaData.cpp:221
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "ENTER NUMBER OF TIMES PLAYED"
+
+#: ../es-app/src/MetaData.cpp:222
+msgid "CONTROLLER"
+msgstr "CONTROLLER"
+
+#: ../es-app/src/MetaData.cpp:223
+msgid "SELECT CONTROLLER"
+msgstr "SELECT CONTROLLER"
+
+#: ../es-app/src/MetaData.cpp:224
+msgid "ALTERNATIVE EMULATOR"
+msgstr "ALTERNATIVE EMULATOR"
+
+#: ../es-app/src/MetaData.cpp:225
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "SELECT ALTERNATIVE EMULATOR"
+
+#: ../es-app/src/MetaData.cpp:226
+msgid "FOLDER LINK"
+msgstr "FOLDER LINK"
+
+#: ../es-app/src/MetaData.cpp:227
+msgid "SELECT FOLDER LINK"
+msgstr "SELECT FOLDER LINK"
+
+#: ../es-app/src/MetaData.cpp:228
+msgid "LAST PLAYED"
+msgstr "LAST PLAYED"
+
+#: ../es-app/src/MetaData.cpp:229
+msgid "ENTER LAST PLAYED DATE"
+msgstr "ENTER LAST PLAYED DATE"
 
 #: ../es-app/src/guis/GuiMenu.cpp:52
 msgid "MAIN MENU"
@@ -38,7 +190,7 @@ msgstr "SOUND SETTINGS"
 msgid "INPUT DEVICE SETTINGS"
 msgstr "INPUT DEVICE SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2209
+#: ../es-app/src/guis/GuiMenu.cpp:70 ../es-app/src/guis/GuiMenu.cpp:2210
 msgid "GAME COLLECTION SETTINGS"
 msgstr "GAME COLLECTION SETTINGS"
 
@@ -51,11 +203,11 @@ msgid "UTILITIES"
 msgstr "UTILITIES"
 
 #: ../es-app/src/guis/GuiMenu.cpp:82 ../es-app/src/guis/GuiMenu.cpp:85
-#: ../es-app/src/guis/GuiMenu.cpp:90
+#: ../es-app/src/guis/GuiMenu.cpp:90 ../es-app/src/guis/GuiMenu.cpp:2108
 msgid "QUIT ES-DE"
 msgstr "QUIT ES-DE"
 
-#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2090
+#: ../es-app/src/guis/GuiMenu.cpp:88 ../es-app/src/guis/GuiMenu.cpp:2091
 msgid "QUIT"
 msgstr "QUIT"
 
@@ -385,8 +537,10 @@ msgstr ""
 "OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
 "THE CONFIGURATOR TO RUN ON NEXT STARTUP"
 
-#: ../es-app/src/guis/GuiMenu.cpp:1308 ../es-app/src/guis/GuiMenu.cpp:2002
-#: ../es-app/src/guis/GuiMenu.cpp:2023
+#: ../es-app/src/guis/GuiMenu.cpp:1308 ../es-app/src/guis/GuiMenu.cpp:2003
+#: ../es-app/src/guis/GuiMenu.cpp:2024
+#: ../es-core/src/guis/GuiTextEditPopup.h:28
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:29
 msgid "OK"
 msgstr "OK"
 
@@ -416,16 +570,26 @@ msgstr ""
 "CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL "
 "NOT AFFECT THE HELP PROMPTS)"
 
-#: ../es-app/src/guis/GuiMenu.cpp:1427
+#: ../es-app/src/guis/GuiMenu.cpp:1427 ../es-app/src/guis/GuiMenu.cpp:1998
+#: ../es-app/src/guis/GuiMenu.cpp:2051 ../es-app/src/guis/GuiMetaDataEd.cpp:679
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:702
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:725
 msgid "PROCEED"
 msgstr "PROCEED"
 
-#: ../es-app/src/guis/GuiMenu.cpp:1428
+#: ../es-app/src/guis/GuiMenu.cpp:1428 ../es-app/src/guis/GuiMenu.cpp:2030
+#: ../es-app/src/guis/GuiMenu.cpp:2064
 #: ../es-app/src/guis/GuiGamelistOptions.cpp:264
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:665
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:679
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:702
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:725
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:79
 msgid "CANCEL"
 msgstr "CANCEL"
 
 #: ../es-app/src/guis/GuiMenu.cpp:1442
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:18
 msgid "ALTERNATIVE EMULATORS"
 msgstr "ALTERNATIVE EMULATORS"
 
@@ -446,6 +610,7 @@ msgstr "Default directory:"
 #: ../es-app/src/guis/GuiSettings.cpp:246
 #: ../es-app/src/guis/GuiSettings.cpp:253
 #: ../es-app/src/guis/GuiSettings.cpp:256
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:660
 msgid "SAVE"
 msgstr "SAVE"
 
@@ -454,6 +619,9 @@ msgstr "SAVE"
 #: ../es-app/src/guis/GuiSettings.cpp:246
 #: ../es-app/src/guis/GuiSettings.cpp:253
 #: ../es-app/src/guis/GuiSettings.cpp:257
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1015
+#: ../es-core/src/guis/GuiTextEditPopup.h:29
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:30
 msgid "SAVE CHANGES?"
 msgstr "SAVE CHANGES?"
 
@@ -621,15 +789,145 @@ msgstr "ENABLE MENU IN KID MODE"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2199
+#: ../es-app/src/guis/GuiMenu.cpp:1973
+msgid "ORPHANED DATA CLEANUP"
+msgstr "ORPHANED DATA CLEANUP"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1982
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr "CREATE/UPDATE SYSTEM DIRECTORIES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:1994
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2002
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2022
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2039
+msgid "RESCAN ROM DIRECTORY"
+msgstr "RESCAN ROM DIRECTORY"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2049
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2083 ../es-app/src/guis/GuiMenu.cpp:2100
+msgid "REALLY QUIT?"
+msgstr "REALLY QUIT?"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2083 ../es-app/src/guis/GuiMenu.cpp:2100
+#: ../es-app/src/guis/GuiMenu.cpp:2116 ../es-app/src/guis/GuiMenu.cpp:2133
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1015
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:367
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:194
+msgid "YES"
+msgstr "YES"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2088 ../es-app/src/guis/GuiMenu.cpp:2105
+#: ../es-app/src/guis/GuiMenu.cpp:2122 ../es-app/src/guis/GuiMenu.cpp:2139
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1020
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:373
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:200
+msgid "NO"
+msgstr "NO"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2116
+msgid "REALLY REBOOT?"
+msgstr "REALLY REBOOT?"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2125
+msgid "REBOOT SYSTEM"
+msgstr "REBOOT SYSTEM"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2133
+msgid "REALLY POWER OFF?"
+msgstr "REALLY POWER OFF?"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2142
+msgid "POWER OFF SYSTEM"
+msgstr "POWER OFF SYSTEM"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2200
 msgid "MEDIA VIEWER SETTINGS [SHORT]"
 msgstr "MEDIA VIEWER SETTINGS"
 
-#: ../es-app/src/guis/GuiMenu.cpp:2204
+#: ../es-app/src/guis/GuiMenu.cpp:2205
 msgid "SCREENSAVER SETTINGS [SHORT]"
 msgstr "SCREENSAVER SETTINGS"
 
+#: ../es-app/src/guis/GuiMenu.cpp:2272 ../es-app/src/views/SystemView.cpp:204
+#: ../es-app/src/views/SystemView.cpp:206
+#: ../es-app/src/views/SystemView.cpp:209
+#: ../es-app/src/views/SystemView.cpp:212
+#: ../es-core/src/components/ComponentList.cpp:416
+#: ../es-core/src/components/ComponentGrid.cpp:519
+#: ../es-core/src/components/ComponentGrid.cpp:524
+#: ../es-core/src/components/ComponentGrid.cpp:532
+#: ../es-core/src/components/ComponentGrid.cpp:534
+#: ../es-core/src/components/ComponentGrid.cpp:536
+msgid "choose"
+msgstr "choose"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2273
+#: ../es-app/src/guis/GuiGamelistFilter.cpp:250
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:603
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:262
+#: ../es-app/src/views/SystemView.cpp:215
+#: ../es-app/src/views/GamelistView.cpp:519
+#: ../es-app/src/views/GamelistView.cpp:521
+#: ../es-core/src/components/OptionListComponent.h:378
+#: ../es-core/src/components/OptionListComponent.h:562
+#: ../es-core/src/components/ImageComponent.cpp:763
+#: ../es-core/src/components/TextComponent.cpp:563
+#: ../es-core/src/components/VideoComponent.cpp:396
+msgid "select"
+msgstr "select"
+
+#: ../es-app/src/guis/GuiMenu.cpp:2274 ../es-app/src/guis/GuiMenu.cpp:2275
+msgid "close menu"
+msgstr "close menu"
+
+#: ../es-app/src/guis/GuiGamelistFilter.cpp:249
+#: ../es-app/src/guis/GuiSettings.cpp:280
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:22
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:260
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1052
+#: ../es-app/src/views/GamelistView.cpp:523
+#: ../es-core/src/components/OptionListComponent.h:516
+#: ../es-core/src/components/OptionListComponent.h:563
+#: ../es-core/src/components/TextEditComponent.cpp:409
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:513
+#: ../es-core/src/guis/GuiMsgBox.cpp:175
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:282
+msgid "back"
+msgstr "back"
+
 #: ../es-app/src/guis/GuiSettings.cpp:42
+#: ../es-app/src/guis/GuiAlternativeEmulators.cpp:22
 #: ../es-core/src/components/OptionListComponent.h:516
 msgid "BACK"
 msgstr "BACK"
@@ -661,88 +959,216 @@ msgid "EDIT THIS GAME'S METADATA"
 msgstr "EDIT THIS GAME'S METADATA"
 
 #: ../es-app/src/guis/GuiGamelistOptions.cpp:263
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:617
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:623
 msgid "APPLY"
 msgstr "APPLY"
 
-#: ../es-app/src/FileSorts.cpp:280
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:605
+msgid "close (apply)"
+msgstr "close (apply)"
+
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:606
+msgid "close (cancel)"
+msgstr "close (cancel)"
+
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:609
+#: ../es-app/src/guis/GuiGamelistOptions.cpp:610
+msgid "close"
+msgstr "close"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:74
+msgid "EDIT METADATA"
+msgstr "EDIT METADATA"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:255
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:351
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:521
+msgid "CLEAR ENTRY"
+msgstr "CLEAR ENTRY"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:298
+msgid "SELECT EMULATOR"
+msgstr "SELECT EMULATOR"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:339
+msgid "CLEAR INVALID ENTRY"
+msgstr "CLEAR INVALID ENTRY"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:379
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:385
+msgid "SYSTEM-WIDE"
+msgstr "SYSTEM-WIDE"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:617
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:624
+msgid "APPLY CHANGES?"
+msgstr "APPLY CHANGES?"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:658
+msgid "SCRAPE"
+msgstr "SCRAPE"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:658
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:1051
+msgid "scrape"
+msgstr "scrape"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:660
+msgid "save metadata"
+msgstr "save metadata"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:665
+msgid "cancel changes"
+msgstr "cancel changes"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:675
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED"
+msgstr ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:686
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:709
+#: ../es-core/src/guis/GuiTextEditPopup.h:33
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:76
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:34
+msgid "CLEAR"
+msgstr "CLEAR"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:686
+msgid "clear folder"
+msgstr "clear folder"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:698
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED"
+msgstr ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:709
+msgid "clear file"
+msgstr "clear file"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:722
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY"
+msgstr ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:731
+msgid "DELETE"
+msgstr "DELETE"
+
+#: ../es-app/src/guis/GuiMetaDataEd.cpp:731
+msgid "delete game"
+msgstr "delete game"
+
+#: ../es-app/src/FileSorts.cpp:281
 msgid "name, ascending"
 msgstr "name, ascending"
 
-#: ../es-app/src/FileSorts.cpp:281
+#: ../es-app/src/FileSorts.cpp:282
 msgid "name, descending"
 msgstr "name, descending"
 
-#: ../es-app/src/FileSorts.cpp:282
+#: ../es-app/src/FileSorts.cpp:283
 msgid "rating, ascending"
 msgstr "rating, ascending"
 
-#: ../es-app/src/FileSorts.cpp:283
+#: ../es-app/src/FileSorts.cpp:284
 msgid "rating, descending"
 msgstr "rating, descending"
 
-#: ../es-app/src/FileSorts.cpp:284
+#: ../es-app/src/FileSorts.cpp:285
 msgid "release date, ascending"
 msgstr "release date, ascending"
 
-#: ../es-app/src/FileSorts.cpp:285
+#: ../es-app/src/FileSorts.cpp:286
 msgid "release date, descending"
 msgstr "release date, descending"
 
-#: ../es-app/src/FileSorts.cpp:286
+#: ../es-app/src/FileSorts.cpp:287
 msgid "developer, ascending"
 msgstr "developer, ascending"
 
-#: ../es-app/src/FileSorts.cpp:287
+#: ../es-app/src/FileSorts.cpp:288
 msgid "developer, descending"
 msgstr "developer, descending"
 
-#: ../es-app/src/FileSorts.cpp:288
+#: ../es-app/src/FileSorts.cpp:289
 msgid "publisher, ascending"
 msgstr "publisher, ascending"
 
-#: ../es-app/src/FileSorts.cpp:289
+#: ../es-app/src/FileSorts.cpp:290
 msgid "publisher, descending"
 msgstr "publisher, descending"
 
-#: ../es-app/src/FileSorts.cpp:290
+#: ../es-app/src/FileSorts.cpp:291
 msgid "genre, ascending"
 msgstr "genre, ascending"
 
-#: ../es-app/src/FileSorts.cpp:291
+#: ../es-app/src/FileSorts.cpp:292
 msgid "genre, descending"
 msgstr "genre, descending"
 
-#: ../es-app/src/FileSorts.cpp:292
+#: ../es-app/src/FileSorts.cpp:293
 msgid "players, ascending"
 msgstr "players, ascending"
 
-#: ../es-app/src/FileSorts.cpp:293
+#: ../es-app/src/FileSorts.cpp:294
 msgid "players, descending"
 msgstr "players, descending"
 
-#: ../es-app/src/FileSorts.cpp:294
+#: ../es-app/src/FileSorts.cpp:295
 msgid "last played, ascending"
 msgstr "last played, ascending"
 
-#: ../es-app/src/FileSorts.cpp:295
+#: ../es-app/src/FileSorts.cpp:296
 msgid "last played, descending"
 msgstr "last played, descending"
 
-#: ../es-app/src/FileSorts.cpp:296
+#: ../es-app/src/FileSorts.cpp:297
 msgid "times played, ascending"
 msgstr "times played, ascending"
 
-#: ../es-app/src/FileSorts.cpp:297
+#: ../es-app/src/FileSorts.cpp:298
 msgid "times played, descending"
 msgstr "times played, descending"
 
-#: ../es-app/src/FileSorts.cpp:298
+#: ../es-app/src/FileSorts.cpp:299
 msgid "system, ascending"
 msgstr "system, ascending"
 
-#: ../es-app/src/FileSorts.cpp:299
+#: ../es-app/src/FileSorts.cpp:300
 msgid "system, descending"
 msgstr "system, descending"
+
+#: ../es-app/src/views/GamelistView.cpp:510
+#: ../es-app/src/views/GamelistView.cpp:512
+#: ../es-app/src/views/GamelistView.cpp:514
+msgid "system"
+msgstr "system"
+
+#: ../es-app/src/views/GamelistView.cpp:524
+msgid "view media"
+msgstr "view media"
+
+#: ../es-app/src/views/GamelistView.cpp:527
+msgid "options"
+msgstr "options"
+
+#: ../es-app/src/views/GamelistView.cpp:531
+msgid "random"
+msgstr "random"
+
+#: ../es-app/src/views/GamelistView.cpp:536
+msgid "jump to game"
+msgstr "jump to game"
 
 #: ../es-core/src/Window.cpp:671
 msgid "Searching for games..."
@@ -768,73 +1194,163 @@ msgstr "Creating system directories..."
 msgid "ERROR: COULDN'T RENDER PDF FILE"
 msgstr "ERROR: COULDN'T RENDER PDF FILE"
 
-#: ../es-core/src/ThemeData.cpp:2069
+#: ../es-core/src/ThemeData.cpp:2070
 msgid "medium"
 msgstr "medium"
 
-#: ../es-core/src/ThemeData.cpp:2070
+#: ../es-core/src/ThemeData.cpp:2071
 msgid "large"
 msgstr "large"
 
-#: ../es-core/src/ThemeData.cpp:2071
+#: ../es-core/src/ThemeData.cpp:2072
 msgid "small"
 msgstr "small"
 
-#: ../es-core/src/ThemeData.cpp:2072
+#: ../es-core/src/ThemeData.cpp:2073
 msgid "extra small"
 msgstr "extra small"
 
-#: ../es-core/src/ThemeData.cpp:2073
+#: ../es-core/src/ThemeData.cpp:2074
 msgid "extra large"
 msgstr "extra large"
 
-#: ../es-core/src/ThemeData.cpp:2076
+#: ../es-core/src/ThemeData.cpp:2077
 msgid "automatic"
 msgstr "automatic"
 
-#: ../es-core/src/ThemeData.cpp:2077
+#: ../es-core/src/ThemeData.cpp:2078
 msgid "16:9 vertical"
 msgstr "16:9 vertical"
 
-#: ../es-core/src/ThemeData.cpp:2078
+#: ../es-core/src/ThemeData.cpp:2079
 msgid "16:10 vertical"
 msgstr "16:10 vertical"
 
-#: ../es-core/src/ThemeData.cpp:2079
+#: ../es-core/src/ThemeData.cpp:2080
 msgid "3:2 vertical"
 msgstr "3:2 vertical"
 
-#: ../es-core/src/ThemeData.cpp:2080
+#: ../es-core/src/ThemeData.cpp:2081
 msgid "4:3 vertical"
 msgstr "4:3 vertical"
 
-#: ../es-core/src/ThemeData.cpp:2081
+#: ../es-core/src/ThemeData.cpp:2082
 msgid "5:4 vertical"
 msgstr "5:4 vertical"
 
-#: ../es-core/src/ThemeData.cpp:2082
+#: ../es-core/src/ThemeData.cpp:2083
 msgid "19.5:9 vertical"
 msgstr "19.5:9 vertical"
 
-#: ../es-core/src/ThemeData.cpp:2083
+#: ../es-core/src/ThemeData.cpp:2084
 msgid "20:9 vertical"
 msgstr "20:9 vertical"
 
-#: ../es-core/src/ThemeData.cpp:2084
+#: ../es-core/src/ThemeData.cpp:2085
 msgid "21:9 vertical"
 msgstr "21:9 vertical"
 
-#: ../es-core/src/ThemeData.cpp:2085
+#: ../es-core/src/ThemeData.cpp:2086
 msgid "32:9 vertical"
 msgstr "32:9 vertical"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:239
+msgid "edit date"
+msgstr "edit date"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:242
+msgid "cancel"
+msgstr "cancel"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:243
+msgid "apply"
+msgstr "apply"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:244
+msgid "Y-M-D"
+msgstr "Y-M-D"
+
+#: ../es-core/src/components/DateTimeEditComponent.cpp:245
+msgid "modify"
+msgstr "modify"
+
+#: ../es-core/src/components/OptionListComponent.h:376
+msgid "change value"
+msgstr "change value"
 
 #: ../es-core/src/components/OptionListComponent.h:520
 msgid "SELECT ALL"
 msgstr "SELECT ALL"
 
+#: ../es-core/src/components/OptionListComponent.h:520
+msgid "select all"
+msgstr "select all"
+
 #: ../es-core/src/components/OptionListComponent.h:529
 msgid "SELECT NONE"
 msgstr "SELECT NONE"
 
-#~ msgid "left/right"
-#~ msgstr "left/right"
+#: ../es-core/src/components/OptionListComponent.h:529
+msgid "select none"
+msgstr "select none"
+
+#: ../es-core/src/components/TextEditComponent.cpp:406
+msgid "first"
+msgstr "first"
+
+#: ../es-core/src/components/TextEditComponent.cpp:407
+msgid "last"
+msgstr "last"
+
+#: ../es-core/src/components/TextEditComponent.cpp:408
+msgid "move cursor"
+msgstr "move cursor"
+
+#: ../es-core/src/components/TextEditComponent.cpp:412
+msgid "edit"
+msgstr "edit"
+
+#: ../es-core/src/components/SwitchComponent.cpp:92
+msgid "toggle"
+msgstr "toggle"
+
+#: ../es-core/src/components/RatingComponent.cpp:312
+msgid "add half star"
+msgstr "add half star"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:501
+msgid "shift"
+msgstr "shift"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:502
+msgid "alt"
+msgstr "alt"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:505
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:275
+msgid "newline"
+msgstr "newline"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:511
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:280
+msgid "backspace"
+msgstr "backspace"
+
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.cpp:512
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:281
+msgid "space"
+msgstr "space"
+
+#: ../es-core/src/guis/GuiTextEditPopup.h:32
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:33
+msgid "LOAD DEFAULT"
+msgstr "LOAD DEFAULT"
+
+#: ../es-core/src/guis/GuiTextEditPopup.h:34
+#: ../es-core/src/guis/GuiTextEditKeyboardPopup.h:35
+msgid "DISCARD CHANGES"
+msgstr "DISCARD CHANGES"
+
+#: ../es-core/src/guis/GuiTextEditPopup.cpp:79
+msgid "discard changes"
+msgstr "discard changes"
