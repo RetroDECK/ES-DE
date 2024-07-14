@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-14 12:20+0200\n"
+"POT-Creation-Date: 2024-07-14 13:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -637,6 +637,275 @@ msgstr ""
 msgid "close menu"
 msgstr ""
 
+msgid "SCRAPE FROM"
+msgstr ""
+
+msgid "SCRAPE THESE GAMES"
+msgstr ""
+
+msgid "ALL GAMES"
+msgstr ""
+
+msgid "FAVORITE GAMES"
+msgstr ""
+
+msgid "NO METADATA"
+msgstr ""
+
+msgid "NO GAME IMAGE"
+msgstr ""
+
+msgid "NO GAME VIDEO"
+msgstr ""
+
+msgid "FOLDERS ONLY"
+msgstr ""
+
+msgid "SCRAPE THESE SYSTEMS"
+msgstr ""
+
+msgid "ACCOUNT SETTINGS"
+msgstr ""
+
+msgid "CONTENT SETTINGS"
+msgstr ""
+
+msgid "MIXIMAGE SETTINGS"
+msgstr ""
+
+msgid "START"
+msgstr ""
+
+msgid "start scraper"
+msgstr ""
+
+msgid "BACK"
+msgstr ""
+
+msgid "back"
+msgstr ""
+
+msgid "SCREENSCRAPER USERNAME"
+msgstr ""
+
+msgid "SCREENSCRAPER PASSWORD"
+msgstr ""
+
+msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
+msgstr ""
+
+msgid "GAME NAMES"
+msgstr ""
+
+msgid "RATINGS"
+msgstr ""
+
+msgid "OTHER METADATA"
+msgstr ""
+
+msgid "VIDEOS"
+msgstr ""
+
+msgid "SCREENSHOT IMAGES"
+msgstr ""
+
+msgid "TITLE SCREEN IMAGES"
+msgstr ""
+
+msgid "BOX COVER IMAGES"
+msgstr ""
+
+msgid "BOX BACK COVER IMAGES"
+msgstr ""
+
+msgid "MARQUEE (WHEEL) IMAGES"
+msgstr ""
+
+msgid "3D BOX IMAGES"
+msgstr ""
+
+msgid "PHYSICAL MEDIA IMAGES"
+msgstr ""
+
+msgid "FAN ART IMAGES"
+msgstr ""
+
+msgid "GAME MANUALS"
+msgstr ""
+
+msgid "MIXIMAGE RESOLUTION"
+msgstr ""
+
+msgid "HORIZONTAL SCREENSHOT FIT [SHORT]"
+msgstr ""
+
+msgid "CONTAIN"
+msgstr ""
+
+msgid "CROP"
+msgstr ""
+
+msgid "STRETCH"
+msgstr ""
+
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr ""
+
+msgid "VERTICAL SCREENSHOT FIT [SHORT]"
+msgstr ""
+
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr ""
+
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"
+msgstr ""
+
+msgid "HIGH"
+msgstr ""
+
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr ""
+
+msgid "BLANK AREAS FILL COLOR"
+msgstr ""
+
+msgid "BLACK"
+msgstr ""
+
+msgid "FRAME"
+msgstr ""
+
+msgid "SCREENSHOT SCALING METHOD [SHORT]"
+msgstr ""
+
+msgid "SHARP"
+msgstr ""
+
+msgid "SMOOTH"
+msgstr ""
+
+msgid "SCREENSHOT SCALING METHOD"
+msgstr ""
+
+msgid "BOX SIZE"
+msgstr ""
+
+msgid "PHYSICAL MEDIA SIZE"
+msgstr ""
+
+msgid "GENERATE MIXIMAGES WHEN SCRAPING"
+msgstr ""
+
+msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
+msgstr ""
+
+msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
+msgstr ""
+
+msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
+msgstr ""
+
+msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
+msgstr ""
+
+msgid "INCLUDE MARQUEE IMAGE"
+msgstr ""
+
+msgid "INCLUDE BOX IMAGE"
+msgstr ""
+
+msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
+msgstr ""
+
+msgid "INCLUDE PHYSICAL MEDIA IMAGE"
+msgstr ""
+
+msgid "OFFLINE GENERATOR"
+msgstr ""
+
+msgid ""
+"THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
+"PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
+msgstr ""
+
+msgid "EUROPE"
+msgstr ""
+
+msgid "JAPAN"
+msgstr ""
+
+msgid "USA"
+msgstr ""
+
+msgid "WORLD"
+msgstr ""
+
+msgid "REGION"
+msgstr ""
+
+msgid "PREFERRED LANGUAGE"
+msgstr ""
+
+msgid "AUTOMATIC RETRIES ON ERROR"
+msgstr ""
+
+msgid "RETRY ATTEMPT TIMER"
+msgstr ""
+
+msgid "HASH SEARCHES MAX FILE SIZE"
+msgstr ""
+
+msgid "OVERWRITE FILES AND DATA"
+msgstr ""
+
+msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
+msgstr ""
+
+msgid "SEARCH USING METADATA NAMES"
+msgstr ""
+
+msgid "SCRAPE ACTUAL FOLDERS"
+msgstr ""
+
+msgid "INTERACTIVE MODE"
+msgstr ""
+
+msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
+msgstr ""
+
+msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
+msgstr ""
+
+msgid "EXCLUDE FOLDERS RECURSIVELY"
+msgstr ""
+
+msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
+msgstr ""
+
+msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
+msgstr ""
+
+msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
+msgstr ""
+
+msgid ""
+"THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
+msgstr ""
+
+msgid ""
+"AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
+"MAY BE INACCURATE"
+msgstr ""
+
+msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
+msgstr ""
+
+msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
+msgstr ""
+
+msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
+msgstr ""
+
 msgid "HELP PROMPTS"
 msgstr ""
 
@@ -718,9 +987,6 @@ msgstr ""
 msgid "DIM"
 msgstr ""
 
-msgid "BLACK"
-msgstr ""
-
 msgid "SLIDESHOW"
 msgstr ""
 
@@ -776,12 +1042,6 @@ msgid "FILTER GAMELIST"
 msgstr ""
 
 msgid "RESET ALL FILTERS"
-msgstr ""
-
-msgid "BACK"
-msgstr ""
-
-msgid "back"
 msgstr ""
 
 msgid "GAME NAME"
@@ -1018,9 +1278,6 @@ msgid "DELETE"
 msgstr ""
 
 msgid "delete game"
-msgstr ""
-
-msgid "ALL GAMES"
 msgstr ""
 
 msgid "FAVORITES"
