@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-14 17:58+0200\n"
+"POT-Creation-Date: 2024-07-14 23:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -420,8 +420,8 @@ msgstr ""
 
 msgid ""
 "THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
-"CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL "
-"NOT AFFECT THE HELP PROMPTS)"
+"TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
+"HELP PROMPTS)"
 msgstr ""
 
 msgid "PROCEED"
@@ -1767,6 +1767,30 @@ msgstr ""
 msgid "space"
 msgstr ""
 
+msgid "WELCOME"
+msgstr ""
+
+msgid "CONFIGURE INPUT DEVICE"
+msgstr ""
+
+msgid "NO GAMEPADS DETECTED"
+msgstr ""
+
+msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
+msgstr ""
+
+msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
+msgstr ""
+
+msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
+msgstr ""
+
+msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
+msgstr ""
+
+msgid "PRESS ESC TO CANCEL"
+msgstr ""
+
 msgid "LOAD DEFAULT"
 msgstr ""
 
@@ -1777,4 +1801,109 @@ msgid "LOAD"
 msgstr ""
 
 msgid "discard changes"
+msgstr ""
+
+msgid "CONFIGURING"
+msgstr ""
+
+msgid "KEYBOARD"
+msgstr ""
+
+msgid "GAMEPAD"
+msgstr ""
+
+msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
+msgstr ""
+
+msgid "NOT DEFINED"
+msgstr ""
+
+msgid "ok"
+msgstr ""
+
+msgid "D-PAD UP"
+msgstr ""
+
+msgid "D-PAD DOWN"
+msgstr ""
+
+msgid "D-PAD LEFT"
+msgstr ""
+
+msgid "D-PAD RIGHT"
+msgstr ""
+
+msgid "MINUS"
+msgstr ""
+
+msgid "PLUS"
+msgstr ""
+
+msgid "CROSS"
+msgstr ""
+
+msgid "CIRCLE"
+msgstr ""
+
+msgid "SQUARE"
+msgstr ""
+
+msgid "TRIANGLE"
+msgstr ""
+
+msgid "OPTIONS"
+msgstr ""
+
+msgid "VIEW"
+msgstr ""
+
+msgid "MENU"
+msgstr ""
+
+msgid "LEFT SHOULDER"
+msgstr ""
+
+msgid "RIGHT SHOULDER"
+msgstr ""
+
+msgid "LEFT TRIGGER"
+msgstr ""
+
+msgid "RIGHT TRIGGER"
+msgstr ""
+
+msgid "LEFT THUMBSTICK UP"
+msgstr ""
+
+msgid "LEFT THUMBSTICK DOWN"
+msgstr ""
+
+msgid "LEFT THUMBSTICK LEFT"
+msgstr ""
+
+msgid "LEFT THUMBSTICK RIGHT"
+msgstr ""
+
+msgid "LEFT THUMBSTICK CLICK"
+msgstr ""
+
+msgid "RIGHT THUMBSTICK UP"
+msgstr ""
+
+msgid "RIGHT THUMBSTICK DOWN"
+msgstr ""
+
+msgid "RIGHT THUMBSTICK LEFT"
+msgstr ""
+
+msgid "RIGHT THUMBSTICK RIGHT"
+msgstr ""
+
+msgid "RIGHT THUMBSTICK CLICK"
+msgstr ""
+
+msgid "ALREADY TAKEN"
+msgstr ""
+
+msgid "PRESS ANYTHING"
 msgstr ""
