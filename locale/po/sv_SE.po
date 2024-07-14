@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-14 13:48+0200\n"
-"PO-Revision-Date: 2024-07-14 13:56+0200\n"
+"POT-Creation-Date: 2024-07-14 14:26+0200\n"
+"PO-Revision-Date: 2024-07-14 14:27+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -582,7 +582,7 @@ msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "VISA AVSLUTA-MENYN (OMSTART OCH STÄNG AV POSTER)"
 
 msgid "ORPHANED DATA CLEANUP"
-msgstr "UPPRENSNING AV FÖRÄLDRALÖS DATA"
+msgstr "UPPRENSNING AV ORPHANED DATA"
 
 msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
 msgstr "SKAPA/UPPDATERA SYSTEMKATALOGERNA"
@@ -655,6 +655,18 @@ msgstr "välj"
 
 msgid "close menu"
 msgstr "stäng menyn"
+
+msgid "REFINE SEARCH"
+msgstr "FÖRFINA SÖKNING"
+
+msgid "refine search"
+msgstr "förfina sökning"
+
+msgid "cancel"
+msgstr "avbryt"
+
+msgid "back (cancel)"
+msgstr "tillbaka (avbryt)"
 
 msgid "SCRAPE FROM"
 msgstr "SCRAPING FRÅN"
@@ -846,8 +858,8 @@ msgid ""
 "THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
 "PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
 msgstr ""
-"OFFLINE GENERATORN ANVÄNDER SAMMA SYSTEMKONFIGURATION SOM SCRAPERN, SÅ "
-"VÄNLIGEN VÄLJ ÅTMINSTONE ETT SYSTEM ATT GENERERA BILDER FÖR"
+"OFFLINE GENERATORN ANVÄNDER SAMMA SYSTEMKONFIGURATION SOM SCRAPERN, SÅ VÄLJ "
+"MINST ETT SYSTEM ATT GENERERA BILDER FÖR"
 
 msgid "EUROPE"
 msgstr "EUROPA"
@@ -923,13 +935,13 @@ msgstr ""
 "INEXAKT"
 
 msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
-msgstr "VÄNLIGEN VÄLJ ÅTMINSTONE EN PLATTFORM FÖR SCRAPING"
+msgstr "VÄLJ MINST ETT SYSTEM FÖR SCRAPING"
 
 msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
-msgstr "VÄNLIGEN VÄLJ MINST EN TYP AV INNEHÅLL FÖR SCRAPING"
+msgstr "VÄLJ MINST EN TYP AV INNEHÅLL FÖR SCRAPING"
 
 msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
-msgstr "ALLA SPEL ÄR FILTRERADE, DET FINNS INGEN SCRAPING ATT UTFÖRA"
+msgstr "ALLA SPEL ÄR FILTRERADE, DET FINNS INGET ATT UTFÖRA"
 
 msgid "HELP PROMPTS"
 msgstr "HJÄLPPROMPTER"
@@ -1104,9 +1116,8 @@ msgid ""
 "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
 "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
 msgstr ""
-"DET VERKAR SOM ATT DU INTE KÖR DEN SENASTE VERSIONEN AV ES-DE, VÄNLIGEN "
-"UPPGRADERA INNAN DU FORTSÄTTER DÅ DESSA TEMAN KANSKE INTE ÄR KOMPATIBLA MED "
-"DIN VERSION"
+"DET VERKAR SOM ATT DU INTE KÖR DEN SENASTE VERSIONEN AV ES-DE, UPPGRADERA "
+"INNAN DU FORTSÄTTER DÅ DESSA TEMAN KANSKE INTE ÄR KOMPATIBLA MED DIN VERSION"
 
 msgid "and"
 msgstr "och"
@@ -1226,6 +1237,63 @@ msgstr ""
 "FILER HÄMTAS. DETSAMMA ÄR FALLET FÖR DE TEMAN DU LADDAR NER. NOTERA ATT DU "
 "INTE KAN AVBRYTA EN PÅGÅENDE NEDLADDNING DÅ DETTA SKULLE KUNNA LEDA TILL "
 "DATAKORRUPTION."
+
+msgid "RATING:"
+msgstr "BETYG:"
+
+msgid "RELEASED:"
+msgstr "UTGIVET:"
+
+msgid "DEVELOPER:"
+msgstr "UTVECKLARE:"
+
+msgid "PUBLISHER:"
+msgstr "UTGIVARE:"
+
+msgid "GENRE:"
+msgstr "GENRE:"
+
+msgid "PLAYERS:"
+msgstr "SPELARE:"
+
+msgid "NO GAMES FOUND"
+msgstr "INGA SPEL HITTADES"
+
+msgid "RETRY"
+msgstr "FÖRSÖK IGEN"
+
+msgid "SKIP"
+msgstr "HOPPA ÖVER"
+
+msgid "SEARCH"
+msgstr "SÖK"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "SÖK MED FÖRFINAT NAMN?"
+
+msgid "skip"
+msgstr "hoppa över"
+
+msgid "accept result"
+msgstr "acceptera resultatet"
+
+msgid "SCRAPING IN PROGRESS"
+msgstr "SCRAPING PÅGÅR"
+
+msgid "SYSTEM"
+msgstr "SYSTEM"
+
+msgid "skip game"
+msgstr "hoppa över spel"
+
+msgid "STOP"
+msgstr "STOPPA"
+
+msgid "stop"
+msgstr "stoppa"
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr "INGA SPEL HANTERADES"
 
 msgid "GAMELIST OPTIONS"
 msgstr "ALTERNATIV FÖR SPELLISTA"
@@ -1418,7 +1486,7 @@ msgid ""
 "MENU"
 msgstr ""
 "MINST ETT AV DINA SYSTEM HAR EN OGILTIG ALTERNATIV EMULATOR KONFIGURERAD SOM "
-"SAKNAR EN MATCHANDE POST I SYSTEM-KONFIGURATIONSFILEN, VÄNLIGEN SE ÖVER DIN "
+"SAKNAR EN MATCHANDE POST I SYSTEM-KONFIGURATIONSFILEN, SE ÖVER DIN "
 "KONFIGURATION MED HJÄLP AV 'ALTERNATIVA EMULATORER' INTERFACET I 'ANDRA "
 "INSTÄLLNINGAR' MENYN"
 
@@ -1506,9 +1574,6 @@ msgstr "32:9 vertikal"
 msgid "edit date"
 msgstr "redigera datum"
 
-msgid "cancel"
-msgstr "avbryt"
-
 msgid "apply"
 msgstr "tillämpa"
 
@@ -1544,6 +1609,9 @@ msgstr "flytta markör"
 
 msgid "edit"
 msgstr "redigera"
+
+msgid "WORKING..."
+msgstr "ARBETAR..."
 
 msgid "toggle"
 msgstr "växla"
