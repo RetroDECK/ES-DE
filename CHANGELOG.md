@@ -14,6 +14,8 @@
 * (Android) Added support for the Dragon Data Dragon 32 (dragon32) game system
 * (Android) Added support for the Tano Dragon (tanodragon) game system
 * (Android) Changed the find rule for Ruffle to make game launching work again after a code change in the emulator
+* (Android) Added J2ME Loader standalone as the default emulator for the j2me system
+* (Android) Added JL-Mod standalone as an alternative emulator for the j2me system
 * (Android) Added support for launching individual games directly with EKA2L1 for the symbian system
 * Added NooDS standalone as an alternative emulator for the gba and nds systems on Android, Linux and Windows
 * Added MAME standalone as the default emulator for the dragon32 and tanodragon systems on Linux, macOS and Windows

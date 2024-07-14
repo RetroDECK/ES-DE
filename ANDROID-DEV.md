@@ -334,6 +334,20 @@ After installing the emulator, open it and go to the settings tab, then choose "
 
 http://www.arts-union.ru/node/23
 
+### J2ME Loader
+
+This emulator can be installed from the Play store or the F-Droid store, or it can be downloaded from their GitHub site.
+
+https://play.google.com/store/apps/details?id=ru.playsoftware.j2meloader \
+https://f-droid.org/en/packages/ru.playsoftware.j2meloader \
+https://github.com/nikita36078/J2ME-Loader/releases
+
+### JL-Mod
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/woesss/JL-Mod/releases
+
 ### Lime3DS
 
 This emulator which is forked from Citra can be downloaded from their GitHub site.
@@ -703,7 +717,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gmaster               | Hartung Game Master                            | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | gx4000                | Amstrad GX4000                                 | Caprice32                         | CrocoDS,<br>MAME4droid 2024 **(Standalone)** | No           | Single archive or ROM file           |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          | MAME4droid 2024 **(Standalone)**  | Yes          | Single archive or ROM file           |
-| j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | No           | Single .jar file                     |
+| j2me                  | Java 2 Micro Edition (J2ME)                    | J2ME Loader **(Standalone)**      | JL-Mod **(Standalone)**,<br>SquirrelJME | No           | Single .jar file                     |
 | kodi                  | Kodi Home Theatre Software                     | _Placeholder_                     |                                   |              |                                      |
 | laserdisc             | LaserDisc Games                                | MAME4droid 2024 **(Standalone)**  |  DirkSimple                       | Depends      | See the specific _LaserDisc Games_ section in the user guide |
 | lcdgames              | LCD Handheld Games                             | Multi (MESS)                      | MAME4droid 2024 Local Artwork **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section in the user guide |
