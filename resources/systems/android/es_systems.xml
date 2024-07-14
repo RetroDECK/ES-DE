@@ -822,6 +822,7 @@
         <path>%ROMPATH%/j2me</path>
         <extension>.jar .JAR .7z .7Z .zip .ZIP</extension>
         <command label="J2ME Loader (Standalone)">%EMULATOR_J2ME-LOADER% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMPROVIDER%</command>
+        <command label="JL-Mod (Standalone)">%EMULATOR_JL-MOD% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMPROVIDER%</command>
         <command label="SquirrelJME">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=squirreljme_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>android</platform>
         <theme>j2me</theme>

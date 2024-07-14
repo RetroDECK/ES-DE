@@ -164,6 +164,12 @@
             <entry>ru.playsoftware.j2meloader/.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="JL-MOD">
+        <!-- Java 2 Micro Edition emulator JL-Mod -->
+        <rule type="androidpackage">
+            <entry>ru.woesss.j2meloader/ru.playsoftware.j2meloader.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="androidpackage">
