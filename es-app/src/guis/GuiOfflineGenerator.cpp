@@ -11,6 +11,7 @@
 
 #include "SystemData.h"
 #include "components/MenuComponent.h"
+#include "utils/LocalizationUtil.h"
 
 GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     : mGameQueue {gameQueue}
@@ -36,10 +37,10 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
 
     // Header.
     mTitle = std::make_shared<TextComponent>(
-        "MIXIMAGE OFFLINE GENERATOR", Font::get(FONT_SIZE_LARGE), mMenuColorTitle, ALIGN_CENTER);
+        _("MIXIMAGE OFFLINE GENERATOR"), Font::get(FONT_SIZE_LARGE), mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {6, 1});
 
-    mStatus = std::make_shared<TextComponent>("NOT STARTED", Font::get(FONT_SIZE_MEDIUM),
+    mStatus = std::make_shared<TextComponent>(_("NOT STARTED"), Font::get(FONT_SIZE_MEDIUM),
                                               mMenuColorPrimary, ALIGN_CENTER);
     mGrid.setEntry(mStatus, glm::ivec2 {0, 1}, false, true, glm::ivec2 {6, 1});
 
@@ -58,7 +59,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
                    glm::ivec2 {1, 7});
 
     // Generated label.
-    mGeneratedLbl = std::make_shared<TextComponent>("Generated:", Font::get(FONT_SIZE_SMALL),
+    mGeneratedLbl = std::make_shared<TextComponent>(_("Generated:"), Font::get(FONT_SIZE_SMALL),
                                                     mMenuColorSecondary, ALIGN_LEFT);
     mGrid.setEntry(mGeneratedLbl, glm::ivec2 {1, 4}, false, true, glm::ivec2 {1, 1});
 
@@ -69,7 +70,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     mGrid.setEntry(mGeneratedVal, glm::ivec2 {2, 4}, false, true, glm::ivec2 {1, 1});
 
     // Overwritten label.
-    mOverwrittenLbl = std::make_shared<TextComponent>("Overwritten:", Font::get(FONT_SIZE_SMALL),
+    mOverwrittenLbl = std::make_shared<TextComponent>(_("Overwritten:"), Font::get(FONT_SIZE_SMALL),
                                                       mMenuColorSecondary, ALIGN_LEFT);
     mGrid.setEntry(mOverwrittenLbl, glm::ivec2 {1, 5}, false, true, glm::ivec2 {1, 1});
 
@@ -80,8 +81,8 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     mGrid.setEntry(mOverwrittenVal, glm::ivec2 {2, 5}, false, true, glm::ivec2 {1, 1});
 
     // Skipping label.
-    const std::string skipLabel {mRenderer->getIsVerticalOrientation() ? "Skipped:" :
-                                                                         "Skipped (existing):"};
+    const std::string skipLabel {mRenderer->getIsVerticalOrientation() ? _("Skipped:") :
+                                                                         _("Skipped (existing):")};
     mSkippedLbl = std::make_shared<TextComponent>(skipLabel, Font::get(FONT_SIZE_SMALL),
                                                   mMenuColorSecondary, ALIGN_LEFT);
     mGrid.setEntry(mSkippedLbl, glm::ivec2 {1, 6}, false, true, glm::ivec2 {1, 1});
@@ -92,7 +93,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     mGrid.setEntry(mSkippedVal, glm::ivec2 {2, 6}, false, true, glm::ivec2 {1, 1});
 
     // Failed label.
-    mFailedLbl = std::make_shared<TextComponent>("Failed:", Font::get(FONT_SIZE_SMALL),
+    mFailedLbl = std::make_shared<TextComponent>(_("Failed:"), Font::get(FONT_SIZE_SMALL),
                                                  mMenuColorSecondary, ALIGN_LEFT);
     mGrid.setEntry(mFailedLbl, glm::ivec2 {1, 7}, false, true, glm::ivec2 {1, 1});
 
@@ -102,7 +103,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     mGrid.setEntry(mFailedVal, glm::ivec2 {2, 7}, false, true, glm::ivec2 {1, 1});
 
     // Processing label.
-    mProcessingLbl = std::make_shared<TextComponent>("Processing: ", Font::get(FONT_SIZE_SMALL),
+    mProcessingLbl = std::make_shared<TextComponent>(_("Processing:"), Font::get(FONT_SIZE_SMALL),
                                                      mMenuColorSecondary, ALIGN_LEFT);
     mGrid.setEntry(mProcessingLbl, glm::ivec2 {3, 4}, false, true, glm::ivec2 {1, 1});
 
@@ -117,7 +118,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
 
     // Last error message label.
     mLastErrorLbl = std::make_shared<TextComponent>(
-        "Last error message:", Font::get(FONT_SIZE_SMALL), mMenuColorSecondary, ALIGN_LEFT);
+        _("Last error message:"), Font::get(FONT_SIZE_SMALL), mMenuColorSecondary, ALIGN_LEFT);
     mGrid.setEntry(mLastErrorLbl, glm::ivec2 {1, 9}, false, true, glm::ivec2 {4, 1});
 
     // Last error message value.
@@ -136,32 +137,33 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     // Buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-    mStartPauseButton = std::make_shared<ButtonComponent>("START", "start processing", [this]() {
-        if (!mProcessing) {
-            mProcessing = true;
-            mPaused = false;
-            mStartPauseButton->setText("PAUSE", "pause processing");
-            mCloseButton->setText("CLOSE", "close (abort processing)");
-            mStatus->setText("RUNNING...");
-            if (mGamesProcessed == 0) {
-                LOG(LogInfo) << "GuiOfflineGenerator: Processing " << mTotalGames << " games";
+    mStartPauseButton =
+        std::make_shared<ButtonComponent>(_("START"), _("start processing"), [this]() {
+            if (!mProcessing) {
+                mProcessing = true;
+                mPaused = false;
+                mStartPauseButton->setText(_("PAUSE"), _("pause processing"));
+                mCloseButton->setText(_("CLOSE"), _("close (abort processing)"));
+                mStatus->setText(_("RUNNING..."));
+                if (mGamesProcessed == 0) {
+                    LOG(LogInfo) << "GuiOfflineGenerator: Processing " << mTotalGames << " games";
+                }
             }
-        }
-        else {
-            if (mMiximageGeneratorThread.joinable())
-                mMiximageGeneratorThread.join();
-            mPaused = true;
-            update(1);
-            mProcessing = false;
-            this->mStartPauseButton->setText("START", "start processing");
-            this->mCloseButton->setText("CLOSE", "close (abort processing)");
-            mStatus->setText("PAUSED");
-        }
-    });
+            else {
+                if (mMiximageGeneratorThread.joinable())
+                    mMiximageGeneratorThread.join();
+                mPaused = true;
+                update(1);
+                mProcessing = false;
+                this->mStartPauseButton->setText(_("START"), _("start processing"));
+                this->mCloseButton->setText(_("CLOSE"), _("close (abort processing)"));
+                mStatus->setText(_("PAUSED"));
+            }
+        });
 
     buttons.push_back(mStartPauseButton);
 
-    mCloseButton = std::make_shared<ButtonComponent>("CLOSE", "close", [this]() {
+    mCloseButton = std::make_shared<ButtonComponent>(_("CLOSE"), _("close"), [this]() {
         if (mGamesProcessed != 0 && mGamesProcessed != mTotalGames) {
             LOG(LogInfo) << "GuiOfflineGenerator: Aborted after processing " << mGamesProcessed
                          << (mGamesProcessed == 1 ? " game (" : " games (") << mImagesGenerated
@@ -318,7 +320,7 @@ void GuiOfflineGenerator::update(int deltaTime)
     }
 
     // Update the statistics.
-    mStatus->setText("RUNNING");
+    mStatus->setText(_("RUNNING"));
     mGameCounter->setText(std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
                           (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED");
 
@@ -327,10 +329,10 @@ void GuiOfflineGenerator::update(int deltaTime)
     mOverwrittenVal->setText(std::to_string(mImagesOverwritten));
 
     if (mGamesProcessed == mTotalGames) {
-        mStatus->setText("COMPLETED");
-        mStartPauseButton->setText("DONE", "done (close)");
+        mStatus->setText(_("COMPLETED"));
+        mStartPauseButton->setText(_("DONE"), _("done (close)"));
         mStartPauseButton->setPressedFunc([this]() { delete this; });
-        mCloseButton->setText("CLOSE", "close");
+        mCloseButton->setText(_("CLOSE"), _("close"));
         mProcessingVal->setText("");
         LOG(LogInfo) << "GuiOfflineGenerator: Completed processing (" << mImagesGenerated
                      << (mImagesGenerated == 1 ? " image " : " images ") << "generated, "

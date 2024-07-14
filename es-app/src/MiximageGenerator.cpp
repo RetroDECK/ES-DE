@@ -12,6 +12,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #include <chrono>
@@ -45,7 +46,7 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
     if ((mScreenshotPath = mGame->getScreenshotPath()) == "") {
         LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): "
                          "No screenshot image found, aborting";
-        mResultMessage = "No screenshot image found, couldn't generate miximage";
+        mResultMessage = _("No screenshot image found, couldn't generate miximage");
         mMiximagePromise->set_value(true);
         return;
     }

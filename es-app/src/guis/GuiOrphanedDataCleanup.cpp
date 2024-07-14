@@ -10,6 +10,7 @@
 
 #include "CollectionSystemsManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/PlatformUtil.h"
 #include "views/ViewController.h"
 
@@ -62,22 +63,22 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
 #endif
 
     mMediaDescription =
-        "THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
-        "THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
-        "DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
-        "LONGER NEEDED.";
+        _("THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+          "THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+          "DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+          "LONGER NEEDED.");
 
-    mGamelistDescription =
+    mGamelistDescription = _(
         "THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
         "GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A CLEANUP FOLDER "
         "INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE "
-        "IT'S NO LONGER NEEDED.";
+        "IT'S NO LONGER NEEDED.");
 
-    mCollectionsDescription =
+    mCollectionsDescription = _(
         "THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION FILES WHERE NO "
         "MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
         "CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. ONLY CURRENTLY ENABLED COLLECTIONS WILL "
-        "BE PROCESSED.";
+        "BE PROCESSED.");
 
     // Stop any ongoing custom collections editing.
     if (CollectionSystemsManager::getInstance()->isEditing())
@@ -89,12 +90,12 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     }
 
     // Set up grid.
-    mTitle = std::make_shared<TextComponent>("ORPHANED DATA CLEANUP", Font::get(FONT_SIZE_LARGE),
+    mTitle = std::make_shared<TextComponent>(_("ORPHANED DATA CLEANUP"), Font::get(FONT_SIZE_LARGE),
                                              mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {4, 1},
                    GridFlags::BORDER_NONE);
 
-    mStatus = std::make_shared<TextComponent>("NOT STARTED", Font::get(FONT_SIZE_MEDIUM),
+    mStatus = std::make_shared<TextComponent>(_("NOT STARTED"), Font::get(FONT_SIZE_MEDIUM),
                                               mMenuColorPrimary, ALIGN_CENTER);
     mGrid.setEntry(mStatus, glm::ivec2 {0, 1}, false, true, glm::ivec2 {4, 1},
                    GridFlags::BORDER_NONE);
@@ -103,8 +104,8 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 2}, false, false,
                    glm::ivec2 {4, 1}, GridFlags::BORDER_BOTTOM);
 
-    mDescriptionHeader = std::make_shared<TextComponent>("DESCRIPTION:", Font::get(FONT_SIZE_MINI),
-                                                         mMenuColorPrimary, ALIGN_LEFT);
+    mDescriptionHeader = std::make_shared<TextComponent>(
+        _("DESCRIPTION:"), Font::get(FONT_SIZE_MINI), mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mDescriptionHeader, glm::ivec2 {1, 3}, false, true, glm::ivec2 {2, 1});
 
     mDescription = std::make_shared<TextComponent>(
@@ -114,7 +115,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     mGrid.setEntry(mDescription, glm::ivec2 {1, 4}, false, true, glm::ivec2 {2, 1});
 
     mEntryCountHeader = std::make_shared<TextComponent>(
-        "TOTAL ENTRIES REMOVED:", Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);
+        _("TOTAL ENTRIES REMOVED:"), Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mEntryCountHeader, glm::ivec2 {1, 6}, false, true, glm::ivec2 {1, 1});
 
     mEntryCount = std::make_shared<TextComponent>("0", Font::get(FONT_SIZE_SMALL),
@@ -122,7 +123,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     mGrid.setEntry(mEntryCount, glm::ivec2 {2, 6}, false, true, glm::ivec2 {1, 1});
 
     mSystemProcessingHeader = std::make_shared<TextComponent>(
-        "LAST PROCESSED SYSTEM:", Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);
+        _("LAST PROCESSED SYSTEM:"), Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mSystemProcessingHeader, glm::ivec2 {1, 7}, false, true, glm::ivec2 {1, 1});
 
     mSystemProcessing = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL),
@@ -130,7 +131,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     mGrid.setEntry(mSystemProcessing, glm::ivec2 {2, 7}, false, true, glm::ivec2 {1, 1});
 
     mErrorHeader = std::make_shared<TextComponent>(
-        "LAST ERROR MESSAGE:", Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);
+        _("LAST ERROR MESSAGE:"), Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mErrorHeader, glm::ivec2 {1, 8}, false, true, glm::ivec2 {1, 1});
 
     mError =
@@ -144,7 +145,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     // Buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-    mButton1 = std::make_shared<ButtonComponent>("MEDIA", "start processing", [this]() {
+    mButton1 = std::make_shared<ButtonComponent>(_("MEDIA"), _("start processing"), [this]() {
         if (mIsProcessing && mStopProcessing)
             return;
         if (mIsProcessing) {
@@ -165,14 +166,14 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mErrorMessage = "";
         mError->setValue("");
         mEntryCount->setValue("0");
-        mStatus->setValue("RUNNING MEDIA CLEANUP");
-        mButton1->setText("STOP", "stop processing", true, false);
+        mStatus->setValue(_("RUNNING MEDIA CLEANUP"));
+        mButton1->setText(_("STOP"), _("stop processing"), true, false);
         mThread = std::make_unique<std::thread>(&GuiOrphanedDataCleanup::cleanupMediaFiles, this);
     });
 
     buttons.push_back(mButton1);
 
-    mButton2 = std::make_shared<ButtonComponent>("GAMELISTS", "start processing", [this]() {
+    mButton2 = std::make_shared<ButtonComponent>(_("GAMELISTS"), _("start processing"), [this]() {
         if (mIsProcessing && mStopProcessing)
             return;
         if (mIsProcessing) {
@@ -193,8 +194,8 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mErrorMessage = "";
         mError->setValue("");
         mEntryCount->setValue("0");
-        mStatus->setValue("RUNNING GAMELISTS CLEANUP");
-        mButton2->setText("STOP", "stop processing", true, false);
+        mStatus->setValue(_("RUNNING GAMELISTS CLEANUP"));
+        mButton2->setText(_("STOP"), _("stop processing"), true, false);
         // Write any gamelist.xml changes before proceeding with the cleanup.
         if (Settings::getInstance()->getString("SaveGamelistsMode") == "on exit") {
             for (auto system : SystemData::sSystemVector)
@@ -204,7 +205,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     });
     buttons.push_back(mButton2);
 
-    mButton3 = std::make_shared<ButtonComponent>("COLLECTIONS", "start processing", [this]() {
+    mButton3 = std::make_shared<ButtonComponent>(_("COLLECTIONS"), _("start processing"), [this]() {
         if (mIsProcessing && mStopProcessing)
             return;
         if (mIsProcessing) {
@@ -212,8 +213,8 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
             return;
         }
         if (!mHasCustomCollections) {
-            mStatus->setValue("COLLECTIONS CLEANUP FAILED");
-            mError->setValue("There are no enabled custom collections");
+            mStatus->setValue(_("COLLECTIONS CLEANUP FAILED"));
+            mError->setValue(_("There are no enabled custom collections"));
             mEntryCount->setValue("0");
             mSystemProcessing->setValue("");
             return;
@@ -232,13 +233,13 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mErrorMessage = "";
         mError->setValue("");
         mEntryCount->setValue("0");
-        mStatus->setValue("RUNNING COLLECTIONS CLEANUP");
-        mButton3->setText("STOP", "stop processing", true, false);
+        mStatus->setValue(_("RUNNING COLLECTIONS CLEANUP"));
+        mButton3->setText(_("STOP"), _("stop processing"), true, false);
         mThread = std::make_unique<std::thread>(&GuiOrphanedDataCleanup::cleanupCollections, this);
     });
     buttons.push_back(mButton3);
 
-    mButton4 = std::make_shared<ButtonComponent>("CLOSE", "close", [this]() {
+    mButton4 = std::make_shared<ButtonComponent>(_("CLOSE"), _("close"), [this]() {
         if (mIsProcessing) {
             mStopProcessing = true;
             if (mThread) {
@@ -285,7 +286,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
                 std::round(mRenderer->getScreenHeight() * 0.1f));
 
     mBusyAnim.setSize(mSize);
-    mBusyAnim.setText("PROCESSING");
+    mBusyAnim.setText(_("PROCESSING"));
     mBusyAnim.onSizeChanged();
 }
 
@@ -421,7 +422,7 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                     LOG(LogError) << "Couldn't create target directory \"" << fileDirectory << "\"";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "Couldn't create target directory, permission problems?";
+                        mErrorMessage = _("Couldn't create target directory, permission problems?");
                     }
                     mFailed = true;
                     mIsProcessing = false;
@@ -431,7 +432,7 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                     LOG(LogError) << "Couldn't move file \"" << file << "\"";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "Couldn't move media file, permission problems?";
+                        mErrorMessage = _("Couldn't move media file, permission problems?");
                     }
                     mFailed = true;
                     mIsProcessing = false;
@@ -589,7 +590,8 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                 LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
-                    mErrorMessage = "Couldn't delete temporary gamelist file, permission problems?";
+                    mErrorMessage =
+                        _("Couldn't delete temporary gamelist file, permission problems?");
                 }
                 mFailed = true;
                 mIsProcessing = false;
@@ -621,7 +623,8 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             LOG(LogError) << "Couldn't write to temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "Couldn't write to temporary gamelist file, permission problems?";
+                mErrorMessage =
+                    _("Couldn't write to temporary gamelist file, permission problems?");
             }
             // If we couldn't write to the file this will probably fail as well.
             Utils::FileSystem::removeFile(tempFile);
@@ -697,7 +700,8 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             LOG(LogError) << "Couldn't write to temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "Couldn't write to temporary gamelist file, permission problems?";
+                mErrorMessage =
+                    _("Couldn't write to temporary gamelist file, permission problems?");
             }
             Utils::FileSystem::removeFile(tempFile);
             mFailed = true;
@@ -725,7 +729,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                 LOG(LogError) << "Couldn't create backup directory \"" << targetDirectory << "\"";
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
-                    mErrorMessage = "Couldn't create backup directory, permission problems?";
+                    mErrorMessage = _("Couldn't create backup directory, permission problems?");
                 }
                 mFailed = true;
             }
@@ -742,7 +746,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                     LOG(LogError) << "Couldn't move file \"" << gamelistFile << "\"";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "Couldn't move old gamelist file, permission problems?";
+                        mErrorMessage = _("Couldn't move old gamelist file, permission problems?");
                     }
                     mFailed = true;
                 }
@@ -751,7 +755,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
                         mErrorMessage =
-                            "Couldn't move temporary gamelist file, permission problems?";
+                            _("Couldn't move temporary gamelist file, permission problems?");
                     }
                     mFailed = true;
                     // Attempt to move back the old gamelist.xml file.
@@ -773,7 +777,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "Couldn't delete temporary gamelist file, permission problems?";
+                mErrorMessage = _("Couldn't delete temporary gamelist file, permission problems?");
             }
             mFailed = true;
         }
@@ -832,7 +836,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                           << collectionFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "Couldn't find custom collection configuration file";
+                mErrorMessage = _("Couldn't find custom collection configuration file");
             }
             mFailed = true;
             mIsProcessing = false;
@@ -860,7 +864,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                           << collectionFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "Couldn't open custom collection configuration file";
+                mErrorMessage = _("Couldn't open custom collection configuration file");
             }
             mFailed = true;
             mIsProcessing = false;
@@ -897,7 +901,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
                     mErrorMessage =
-                        "Couldn't delete temporary collection file, permission problems?";
+                        _("Couldn't delete temporary collection file, permission problems?");
                 }
                 mFailed = true;
                 mIsProcessing = false;
@@ -922,7 +926,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                 LOG(LogError) << "Couldn't create backup directory \"" << targetDirectory << "\"";
                 {
                     std::unique_lock<std::mutex> lock {mMutex};
-                    mErrorMessage = "Couldn't create backup directory, permission problems?";
+                    mErrorMessage = _("Couldn't create backup directory, permission problems?");
                 }
                 mFailed = true;
                 mIsProcessing = false;
@@ -941,7 +945,8 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                                   << tempFile << "\"";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "Couldn't write to temporary collection configuration file";
+                        mErrorMessage =
+                            _("Couldn't write to temporary collection configuration file");
                     }
                     mFailed = true;
                     mIsProcessing = false;
@@ -970,7 +975,8 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                                   << "\" to backup directory";
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
-                        mErrorMessage = "Couldn't move old collection file, permission problems?";
+                        mErrorMessage =
+                            _("Couldn't move old collection file, permission problems?");
                     }
                     // Attempt to move back the old collection file.
                     Utils::FileSystem::renameFile(
@@ -983,7 +989,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
                     {
                         std::unique_lock<std::mutex> lock {mMutex};
                         mErrorMessage =
-                            "Couldn't move temporary collection file, permission problems?";
+                            _("Couldn't move temporary collection file, permission problems?");
                     }
                     // Attempt to move back the old collection file.
                     Utils::FileSystem::renameFile(
@@ -1006,7 +1012,8 @@ void GuiOrphanedDataCleanup::cleanupCollections()
             LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "Couldn't delete temporary collection file, permission problems?";
+                mErrorMessage =
+                    _("Couldn't delete temporary collection file, permission problems?");
             }
             mFailed = true;
         }
@@ -1038,20 +1045,28 @@ void GuiOrphanedDataCleanup::update(int deltaTime)
             mError->setValue(mErrorMessage);
     }
     else if (mCompleted) {
-        std::string message {mStopProcessing ? "ABORTED" : "COMPLETED"};
+        std::string message;
         if (mCleanupType == CleanupType::MEDIA) {
-            mButton1->setText("MEDIA", "start processing");
-            message.append(" MEDIA ");
+            mButton1->setText(_("MEDIA"), _("start processing"));
+            if (mStopProcessing)
+                message = _("ABORTED MEDIA CLEANUP");
+            else
+                message = _("COMPLETED MEDIA CLEANUP");
         }
         else if (mCleanupType == CleanupType::GAMELISTS) {
-            mButton2->setText("GAMELISTS", "start processing");
-            message.append(" GAMELISTS ");
+            mButton2->setText(_("GAMELISTS"), _("start processing"));
+            if (mStopProcessing)
+                message = _("ABORTED GAMELIST CLEANUP");
+            else
+                message = _("COMPLETED GAMELIST CLEANUP");
         }
         else {
-            mButton3->setText("COLLECTIONS", "start processing");
-            message.append(" COLLECTIONS ");
+            mButton3->setText(_("COLLECTIONS"), _("start processing"));
+            if (mStopProcessing)
+                message = _("ABORTED COLLECTIONS CLEANUP");
+            else
+                message = _("COMPLETED COLLECTIONS CLEANUP");
         }
-        message.append("CLEANUP");
         mStatus->setValue(message);
         if (mError->getValue() != mErrorMessage)
             mError->setValue(mErrorMessage);
@@ -1060,16 +1075,16 @@ void GuiOrphanedDataCleanup::update(int deltaTime)
     else if (mFailed) {
         std::string message;
         if (mCleanupType == CleanupType::MEDIA) {
-            mButton1->setText("MEDIA", "start processing");
-            message.append("MEDIA CLEANUP FAILED");
+            mButton1->setText(_("MEDIA"), _("start processing"));
+            message.append(_("MEDIA CLEANUP FAILED"));
         }
         else if (mCleanupType == CleanupType::GAMELISTS) {
-            mButton2->setText("GAMELISTS", "start processing");
-            message.append("GAMELISTS CLEANUP FAILED");
+            mButton2->setText(_("GAMELISTS"), _("start processing"));
+            message.append(_("GAMELISTS CLEANUP FAILED"));
         }
         else {
-            mButton3->setText("COLLECTIONS", "start processing");
-            message.append("COLLECTIONS CLEANUP FAILED");
+            mButton3->setText(_("COLLECTIONS"), _("start processing"));
+            message.append(_("COLLECTIONS CLEANUP FAILED"));
         }
         mStatus->setValue(message);
         {
@@ -1167,7 +1182,7 @@ bool GuiOrphanedDataCleanup::input(InputConfig* config, Input input)
             }
             else if (mCursorPos == 3) {
                 mDescription->setValue(
-                    mNeedsReloading ? "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY." :
+                    mNeedsReloading ? _("THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY.") :
                                       "");
             }
         }
