@@ -1419,8 +1419,8 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
 
     std::string message {
         _("THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
-          "CONFIGURATION TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT "
-          "AFFECT THE HELP PROMPTS)")};
+          "TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE HELP "
+          "PROMPTS)")};
 
     Window* window {mWindow};
     window->pushGui(new GuiMsgBox(
