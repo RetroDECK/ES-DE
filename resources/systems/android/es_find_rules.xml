@@ -158,6 +158,12 @@
             <entry>ru.vastness.altmer.iratajaguar/.EmulatorActivity</entry>
         </rule>
     </emulator>
+    <emulator name="J2ME-LOADER">
+        <!-- Java 2 Micro Edition emulator J2ME Loader -->
+        <rule type="androidpackage">
+            <entry>ru.playsoftware.j2meloader/.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="androidpackage">
