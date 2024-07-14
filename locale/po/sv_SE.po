@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-14 14:26+0200\n"
-"PO-Revision-Date: 2024-07-14 14:27+0200\n"
+"POT-Creation-Date: 2024-07-14 17:58+0200\n"
+"PO-Revision-Date: 2024-07-14 17:57+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -582,7 +582,7 @@ msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "VISA AVSLUTA-MENYN (OMSTART OCH STÄNG AV POSTER)"
 
 msgid "ORPHANED DATA CLEANUP"
-msgstr "UPPRENSNING AV ORPHANED DATA"
+msgstr "UPPRENSNING AV AVSKUREN DATA"
 
 msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
 msgstr "SKAPA/UPPDATERA SYSTEMKATALOGERNA"
@@ -1322,6 +1322,153 @@ msgstr "stäng (tillämpa)"
 msgid "close (cancel)"
 msgstr "stäng (avbryt)"
 
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"DET HÄR TAR BORT ALLA MEDIAFILER DÄR DET INTE FINNS NÅGRA MATCHANDE "
+"SPELFILER. FILERNA FLYTTAS TILL EN CLEANUP MAPP INUTI DIN SPELMEDIA KATALOG. "
+"DU KAN MANUELLT TA BORT DENNA MAPP NÄR DU ÄR SÄKER PÅ ATT DU INTE LÄNGRE "
+"BEHÖVER DEN."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"DET HÄR TAR BORT ALLA POSTER FRÅN DINA GAMELIST.XML FILER DÄR DET INTE FINNS "
+"NÅGRA MATCHANDE SPELFILER. BACKUPER AV ORIGINALFILERNA SPARAS TILL EN "
+"CLEANUP MAPP INUTI DIN GAMELISTS KATALOG. DU KAN MANUELLT TA BORT DENNA MAPP "
+"NÄR DU ÄR SÄKER PÅ ATT DU INTE LÄNGRE BEHÖVER DEN."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"DET HÄR TAR BORT ALLA POSTER FRÅN DINA ANPASSADE SAMLINGAR DÄR DET INTE "
+"FINNS NÅGRA MATCHANDE SPELFILER. BACKUPER AV ORIGINALFILERNA SPARAS TILL EN "
+"CLEANUP MAPP INUTI DIN COLLECTIONS KATALOG. BARA SAMLINGAR SOM FÖR "
+"NÄRVARANDE ÄR AKTIVERADE KOMMER ATT HANTERAS."
+
+msgid "NOT STARTED"
+msgstr "INTE STARTAD"
+
+msgid "DESCRIPTION:"
+msgstr "BESKRIVNING:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "ANTAL BORTTAGNA POSTER:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "SENASTE SYSTEM:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "SENASTE FELMEDDELANDE:"
+
+msgid "MEDIA"
+msgstr "MEDIA"
+
+msgid "start processing"
+msgstr "påbörja processning"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "KÖR UPPRENSNING AV MEDIA"
+
+msgid "stop processing"
+msgstr "stoppa processning"
+
+msgid "GAMELISTS"
+msgstr "SPELLISTOR"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "KÖR UPPRENSNING AV SPELLISTOR"
+
+msgid "COLLECTIONS"
+msgstr "SPELSAMLINGAR"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "UPPRENSNING AV SPELSAMLINGAR MISSLYCKADES"
+
+msgid "There are no enabled custom collections"
+msgstr "Det finns inga aktiverade anpassade samlingar"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "KÖR UPPRENSNING AV SPELSAMLINGAR"
+
+msgid "PROCESSING"
+msgstr "PROCESSAR"
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "Kunde inte skapa målkatalog, åtkomstproblem?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "Kunde inte flytta mediafil, åtkomstproblem?"
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr "Kunde inte radera temporär spellist-fil, åtkomstproblem?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr "Kunde inte skriva till temporär spellist-fil, åtkomstproblem?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr "Kunde inte skapa backupkatalog, åtkomstproblem?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "Kunde inte flytta den gamla spellist-filen, åtkomstproblem?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr "Kunde inte flytta den temporära spellist-filen, åtkomstproblem?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "Kunde inte hitta konfigurationsfilen för den anpassade spelsamlingen"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "Kunde inte öppna konfigurationsfilen för den anpassade spelsamlingen"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr "Kunde inte radera den temporära spelsamlings-filen, åtkomstproblem?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "Kunde inte skriva till den temporära spelsamlings-filen"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr "Kunde inte flytta den gamla spelsamlings-filen, åtkomstproblem?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr "Kunde inte flytta den temporära spelsamlings-filen, åtkomstproblem?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "AVBRÖT UPPRENSNING AV MEDIA"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "AVSLUTADE UPPRENSNING AV MEDIA"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "AVBRÖT UPPRENSNING AV SPELLISTOR"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "AVSLUTADE UPPRENSNING AV SPELLISTOR"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "AVBRÖT UPPRENSNING AV SPELSAMLINGAR"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "AVSLUTADE UPPRENSNING AV SPELSAMLINGAR"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "UPPRENSNING AV MEDIA MISSLYCKADES"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "UPPRENSNING AV SPELLISTOR MISSLYCKADES"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "APPLIKATIONEN KOMMER LADDAS OM NÄR DETTA VERKTYG STÄNGS."
+
 msgid "INVALID ENTRY"
 msgstr "OGILTIGT VÄRDE"
 
@@ -1395,11 +1542,56 @@ msgstr "RADERA"
 msgid "delete game"
 msgstr "radera spel"
 
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "MIXIMAGE OFFLINE GENERATOR"
+
+msgid "Generated:"
+msgstr "Genererade:"
+
+msgid "Overwritten:"
+msgstr "Överskrivna:"
+
+msgid "Skipped:"
+msgstr "Hoppat över:"
+
+msgid "Skipped (existing):"
+msgstr "Hoppat över (exist.):"
+
+msgid "Failed:"
+msgstr "Misslyckade:"
+
+msgid "Processing:"
+msgstr "Bearbetar:"
+
+msgid "Last error message:"
+msgstr "Senaste felmeddelandet:"
+
+msgid "PAUSE"
+msgstr "PAUSA"
+
+msgid "pause processing"
+msgstr "pausa bearbetning"
+
+msgid "close (abort processing)"
+msgstr "stäng (avbryt bearbetning)"
+
+msgid "RUNNING..."
+msgstr "KÖR..."
+
+msgid "PAUSED"
+msgstr "PAUSAD"
+
+msgid "RUNNING"
+msgstr "KÖR"
+
+msgid "DONE"
+msgstr "KLAR"
+
+msgid "done (close)"
+msgstr "klar(stäng)"
+
 msgid "FAVORITES"
 msgstr "FAVORITER"
-
-msgid "COLLECTIONS"
-msgstr "SPELSAMLINGAR"
 
 msgid "name, ascending"
 msgstr "namn, stigande"
@@ -1507,6 +1699,9 @@ msgstr "OKÄND"
 
 msgid "NONE SELECTED"
 msgstr "INGEN VALD"
+
+msgid "No screenshot image found, couldn't generate miximage"
+msgstr "Ingen screenshot bild hittades, kunde inte generera miximage"
 
 msgid "Searching for games..."
 msgstr "Söker efter spel..."
