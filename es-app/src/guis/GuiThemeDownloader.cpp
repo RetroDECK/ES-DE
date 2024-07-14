@@ -12,6 +12,7 @@
 #include "ThemeData.h"
 #include "components/MenuComponent.h"
 #include "resources/ResourceManager.h"
+#include "utils/LocalizationUtil.h"
 
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
@@ -44,7 +45,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
                                                                        FONT_SIZE_SMALL};
 
     // Set up main grid.
-    mTitle = std::make_shared<TextComponent>("THEME DOWNLOADER", Font::get(FONT_SIZE_LARGE),
+    mTitle = std::make_shared<TextComponent>(_("THEME DOWNLOADER"), Font::get(FONT_SIZE_LARGE),
                                              mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2},
                    GridFlags::BORDER_BOTTOM);
@@ -128,7 +129,8 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     mGrid.setEntry(mScrollDown, glm::ivec2 {1, 1}, false, false, glm::ivec2 {1, 1});
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
-    buttons.push_back(std::make_shared<ButtonComponent>("CLOSE", "CLOSE", [&] { delete this; }));
+    buttons.push_back(
+        std::make_shared<ButtonComponent>(_("CLOSE"), _("CLOSE"), [&] { delete this; }));
     mButtons = MenuComponent::makeButtonGrid(buttons);
     mGrid.setEntry(mButtons, glm::ivec2 {0, 3}, true, false, glm::ivec2 {2, 1},
                    GridFlags::BORDER_TOP);
@@ -144,7 +146,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
     mBusyAnim.setSize(mSize);
-    mBusyAnim.setText("DOWNLOADING THEMES LIST 100%");
+    mBusyAnim.setText(_("DOWNLOADING THEMES LIST 100%"));
     mBusyAnim.onSizeChanged();
 
     mList->setCursorChangedCallback([this](CursorState state) {
@@ -343,7 +345,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
             LOG(LogInfo) << "GuiThemeDownloader: Repository \"" << repositoryName
                          << "\" already up to date";
             if (repositoryName != "themes-list")
-                mMessage = "THEME ALREADY UP TO DATE";
+                mMessage = _("THEME ALREADY UP TO DATE");
             git_annotated_commit_free(annotated);
             git_object_free(object);
             git_remote_free(gitRemote);
@@ -405,7 +407,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
     }
 
     if (repositoryName != "themes-list") {
-        mMessage = "THEME HAS BEEN UPDATED";
+        mMessage = _("THEME HAS BEEN UPDATED");
         mHasThemeUpdates = true;
     }
 
@@ -580,7 +582,7 @@ bool GuiThemeDownloader::renameDirectory(const std::string& path, const std::str
     if (renameStatus) {
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(), "COULDN'T RENAME DIRECTORY \"" + path + "\", PERMISSION PROBLEMS?",
-            "OK", [] { return; }, "", nullptr, "", nullptr, nullptr, true));
+            _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
         return true;
     }
     else {
@@ -601,7 +603,7 @@ void GuiThemeDownloader::parseThemesList()
     if (!Utils::FileSystem::exists(themesFile)) {
         LOG(LogError) << "GuiThemeDownloader: No themes.json file found";
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(), "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE", "OK",
+            getHelpStyle(), _("COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"), _("OK"),
             [] { return; }, "", nullptr, "", nullptr, nullptr, true));
         mGrid.removeEntry(mCenterGrid);
         mGrid.setCursorTo(mButtons);
@@ -616,9 +618,9 @@ void GuiThemeDownloader::parseThemesList()
         LOG(LogError) << "GuiThemeDownloader: Couldn't parse the themes.json file";
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(),
-            "COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL REPOSITORY IS "
-            "CORRUPT?",
-            "OK", [] { return; }, "", nullptr, "", nullptr, nullptr, true));
+            _("COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL REPOSITORY IS "
+              "CORRUPT?"),
+            _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
         mGrid.removeEntry(mCenterGrid);
         mGrid.setCursorTo(mButtons);
         return;
@@ -631,9 +633,9 @@ void GuiThemeDownloader::parseThemesList()
                                "downloading is not recommended";
             mWindow->pushGui(new GuiMsgBox(
                 getHelpStyle(),
-                "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE BEFORE "
-                "PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION",
-                "OK", [] { return; }, "", nullptr, "", nullptr, nullptr, true));
+                _("IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+                  "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"),
+                _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
         }
     }
 
@@ -659,8 +661,13 @@ void GuiThemeDownloader::parseThemesList()
                 if (theme.HasMember("url") && theme["url"].IsString())
                     themeEntry.url = theme["url"].GetString();
 
-                if (theme.HasMember("author") && theme["author"].IsString())
+                if (theme.HasMember("author") && theme["author"].IsString()) {
                     themeEntry.author = theme["author"].GetString();
+                    if (themeEntry.author.find(" and ") != std::string::npos) {
+                        themeEntry.author = Utils::String::replace(themeEntry.author, " and ",
+                                                                   " " + _("and") + " ");
+                    }
+                }
 
                 if (theme.HasMember("newEntry") && theme["newEntry"].IsBool())
                     themeEntry.newEntry = theme["newEntry"].GetBool();
@@ -771,7 +778,7 @@ void GuiThemeDownloader::populateGUI()
                     "DIRECTORY \"" +
                         theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
                         theme.reponame + theme.manualExtension + "_DISABLED\"",
-                    "PROCEED",
+                    _("PROCEED"),
                     [this, theme] {
                         if (renameDirectory(mThemeDirectory + theme.reponame +
                                                 theme.manualExtension,
@@ -783,9 +790,9 @@ void GuiThemeDownloader::populateGUI()
                         mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
                                                    theme.reponame, theme.url);
                         mStatusType = StatusType::STATUS_DOWNLOADING;
-                        mStatusText = "DOWNLOADING THEME";
+                        mStatusText = _("DOWNLOADING THEME");
                     },
-                    "CANCEL", [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -799,7 +806,7 @@ void GuiThemeDownloader::populateGUI()
                     "\"" +
                         theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
                         theme.reponame + theme.manualExtension + "_CORRUPT_DISABLED\"",
-                    "PROCEED",
+                    _("PROCEED"),
                     [this, theme] {
                         if (renameDirectory(mThemeDirectory + theme.reponame +
                                                 theme.manualExtension,
@@ -811,9 +818,9 @@ void GuiThemeDownloader::populateGUI()
                         mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
                                                    theme.reponame, theme.url);
                         mStatusType = StatusType::STATUS_DOWNLOADING;
-                        mStatusText = "DOWNLOADING THEME";
+                        mStatusText = _("DOWNLOADING THEME");
                     },
-                    "CANCEL", [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -826,7 +833,7 @@ void GuiThemeDownloader::populateGUI()
                     "IS REQUIRED AND THE OLD THEME DIRECTORY \"" +
                         theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
                         theme.reponame + theme.manualExtension + "_DISABLED\"",
-                    "PROCEED",
+                    _("PROCEED"),
                     [this, theme] {
                         if (renameDirectory(mThemeDirectory + theme.reponame +
                                                 theme.manualExtension,
@@ -838,9 +845,9 @@ void GuiThemeDownloader::populateGUI()
                         mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
                                                    theme.reponame, theme.url);
                         mStatusType = StatusType::STATUS_DOWNLOADING;
-                        mStatusText = "DOWNLOADING THEME";
+                        mStatusText = _("DOWNLOADING THEME");
                     },
-                    "CANCEL", [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -851,16 +858,16 @@ void GuiThemeDownloader::populateGUI()
                     "THEME REPOSITORY \"" + theme.reponame +
                         "\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR CHANGES "
                         "OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME",
-                    "PROCEED",
+                    _("PROCEED"),
                     [this, theme] {
                         std::promise<bool>().swap(mPromise);
                         mFuture = mPromise.get_future();
                         mFetchThread = std::thread(&GuiThemeDownloader::fetchRepository, this,
                                                    theme.reponame, true);
                         mStatusType = StatusType::STATUS_UPDATING;
-                        mStatusText = "UPDATING THEME";
+                        mStatusText = _("UPDATING THEME");
                     },
-                    "CANCEL", [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -870,24 +877,24 @@ void GuiThemeDownloader::populateGUI()
                 mFetchThread =
                     std::thread(&GuiThemeDownloader::fetchRepository, this, theme.reponame, false);
                 mStatusType = StatusType::STATUS_UPDATING;
-                mStatusText = "UPDATING THEME";
+                mStatusText = _("UPDATING THEME");
             }
             else {
                 mFuture = mPromise.get_future();
                 mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
                                            theme.reponame, theme.url);
                 mStatusType = StatusType::STATUS_DOWNLOADING;
-                mStatusText = "DOWNLOADING THEME";
+                mStatusText = _("DOWNLOADING THEME");
             }
             mWindow->stopInfoPopup();
         });
         mList->addRow(row);
     }
 
-    mVariantsLabel->setText("VARIANTS:");
-    mColorSchemesLabel->setText("COLOR SCHEMES:");
-    mAspectRatiosLabel->setText("ASPECT RATIOS:");
-    mFontSizesLabel->setText("FONT SIZES:");
+    mVariantsLabel->setText(_("VARIANTS:"));
+    mColorSchemesLabel->setText(_("COLOR SCHEMES:"));
+    mAspectRatiosLabel->setText(_("ASPECT RATIOS:"));
+    mFontSizesLabel->setText(_("FONT SIZES:"));
 
     updateInfoPane();
     updateHelpPrompts();
@@ -934,36 +941,36 @@ void GuiThemeDownloader::updateInfoPane()
     }
 
     if (mThemes[mList->getCursorId()].isCloned) {
-        mDownloadStatus->setText(ViewController::TICKMARK_CHAR + " INSTALLED");
+        mDownloadStatus->setText(ViewController::TICKMARK_CHAR + " " + _("INSTALLED"));
         mDownloadStatus->setColor(mMenuColorGreen);
         mDownloadStatus->setOpacity(1.0f);
     }
     else if (mThemes[mList->getCursorId()].invalidRepository ||
              mThemes[mList->getCursorId()].manuallyDownloaded) {
-        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " MANUAL DOWNLOAD");
+        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " " + _("MANUAL DOWNLOAD"));
         mDownloadStatus->setColor(mMenuColorRed);
         mDownloadStatus->setOpacity(1.0f);
     }
     else if (mThemes[mList->getCursorId()].corruptRepository) {
-        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " CORRUPT");
+        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " " + _("CORRUPT"));
         mDownloadStatus->setColor(mMenuColorRed);
         mDownloadStatus->setOpacity(1.0f);
     }
     else if (mThemes[mList->getCursorId()].shallowRepository) {
-        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " SHALLOW");
+        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " " + _("SHALLOW"));
         mDownloadStatus->setColor(mMenuColorRed);
         mDownloadStatus->setOpacity(1.0f);
     }
     else {
         if (mThemes[mList->getCursorId()].newEntry)
-            mDownloadStatus->setText("NOT INSTALLED (NEW)");
+            mDownloadStatus->setText(_("NOT INSTALLED (NEW)"));
         else
-            mDownloadStatus->setText("NOT INSTALLED");
+            mDownloadStatus->setText(_("NOT INSTALLED"));
         mDownloadStatus->setColor(mMenuColorPrimary);
         mDownloadStatus->setOpacity(0.7f);
     }
     if (mThemes[mList->getCursorId()].hasLocalChanges) {
-        mLocalChanges->setText(ViewController::EXCLAMATION_CHAR + " LOCAL CHANGES");
+        mLocalChanges->setText(ViewController::EXCLAMATION_CHAR + " " + _("LOCAL CHANGES"));
         mLocalChanges->setColor(mMenuColorRed);
     }
     else {
@@ -975,9 +982,9 @@ void GuiThemeDownloader::updateInfoPane()
     mAspectRatiosCount->setText(std::to_string(mThemes[mList->getCursorId()].aspectRatios.size()));
     mFontSizesCount->setText(std::to_string(mThemes[mList->getCursorId()].fontSizes.size()));
     if (mThemes[mList->getCursorId()].deprecated)
-        mAuthor->setText("THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE");
+        mAuthor->setText(_("THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"));
     else
-        mAuthor->setText("CREATED BY " +
+        mAuthor->setText(_("CREATED BY") + " " +
                          Utils::String::toUpper(mThemes[mList->getCursorId()].author));
 }
 
@@ -1046,15 +1053,16 @@ void GuiThemeDownloader::update(int deltaTime)
                 mFetchThread.join();
                 mFetching = false;
                 if (mRepositoryError != RepositoryError::NO_REPO_ERROR) {
-                    std::string errorMessage {"ERROR: "};
+                    std::string errorMessage {_("ERROR:")};
                     if (mThemes.empty()) {
-                        errorMessage.append("COULDN'T DOWNLOAD THEMES LIST, ");
+                        errorMessage.append(" ").append(
+                            _("COULDN'T DOWNLOAD THEMES LIST").append(","));
                         mGrid.removeEntry(mCenterGrid);
                         mGrid.setCursorTo(mButtons);
                     }
-                    errorMessage.append(Utils::String::toUpper(mMessage));
+                    errorMessage.append(" ").append(Utils::String::toUpper(mMessage));
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(), errorMessage, "OK", [] { return; }, "", nullptr, "",
+                        getHelpStyle(), errorMessage, _("OK"), [] { return; }, "", nullptr, "",
                         nullptr, nullptr, true));
                     mMessage = "";
                     getHelpPrompts();
@@ -1085,7 +1093,7 @@ void GuiThemeDownloader::update(int deltaTime)
         if (mReceivedObjectsProgress != 1.0f) {
             progress = static_cast<int>(
                 std::round(glm::mix(0.0f, 100.0f, static_cast<float>(mReceivedObjectsProgress))));
-            if (mStatusText.substr(0, 11) == "DOWNLOADING")
+            if (mStatusText.substr(0, std::string {_("DOWNLOADING")}.length()) == _("DOWNLOADING"))
                 mBusyAnim.setText(mStatusText + " " + std::to_string(progress) + "%");
             else
                 mBusyAnim.setText(mStatusText);
@@ -1093,7 +1101,7 @@ void GuiThemeDownloader::update(int deltaTime)
         else if (mReceivedObjectsProgress != 0.0f) {
             progress = static_cast<int>(
                 std::round(glm::mix(0.0f, 100.0f, static_cast<float>(mResolveDeltaProgress))));
-            if (mStatusText.substr(0, 11) == "DOWNLOADING")
+            if (mStatusText.substr(0, std::string {_("DOWNLOADING")}.length()) == _("DOWNLOADING"))
                 mBusyAnim.setText(mStatusText + " " + std::to_string(progress) + "%");
             else
                 mBusyAnim.setText(mStatusText);
@@ -1232,12 +1240,11 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(),
 #if defined(__ANDROID__)
-            "THIS WILL COMPLETELY DELETE THE THEME",
+            _("THIS WILL COMPLETELY DELETE THE THEME"),
 #else
-            "THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY "
-            "LOCAL CUSTOMIZATIONS",
+            _("THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"),
 #endif
-            "PROCEED",
+            _("PROCEED"),
             [this] {
 #if defined(_WIN64)
                 const std::string themeDirectory {
@@ -1250,17 +1257,17 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
                 LOG(LogInfo) << "Deleting theme directory \"" << themeDirectory << "\"";
                 if (!Utils::FileSystem::removeDirectory(themeDirectory, true)) {
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(), "COULDN'T DELETE THEME, PERMISSION PROBLEMS?", "OK",
+                        getHelpStyle(), _("COULDN'T DELETE THEME, PERMISSION PROBLEMS?"), _("OK"),
                         [] { return; }, "", nullptr, "", nullptr, nullptr, true));
                 }
                 else {
-                    mMessage = "THEME WAS DELETED";
+                    mMessage = _("THEME WAS DELETED");
                 }
                 mHasThemeUpdates = true;
                 makeInventory();
                 updateGUI();
             },
-            "CANCEL", nullptr, "", nullptr, nullptr, false, true,
+            _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.70f :
                  0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1276,22 +1283,22 @@ std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
 
     if (mList->size() > 0) {
         prompts = mGrid.getHelpPrompts();
-        prompts.push_back(HelpPrompt("b", "close"));
+        prompts.push_back(HelpPrompt("b", _("close")));
 
         if (mGrid.getSelectedComponent() == mCenterGrid)
-            prompts.push_back(HelpPrompt("x", "view screenshots"));
+            prompts.push_back(HelpPrompt("x", _("view screenshots")));
 
         if (mThemes[mList->getCursorId()].isCloned) {
-            prompts.push_back(HelpPrompt("a", "fetch updates"));
+            prompts.push_back(HelpPrompt("a", _("fetch updates")));
             if (mGrid.getSelectedComponent() == mCenterGrid)
-                prompts.push_back(HelpPrompt("y", "delete"));
+                prompts.push_back(HelpPrompt("y", _("delete")));
         }
         else {
-            prompts.push_back(HelpPrompt("a", "download"));
+            prompts.push_back(HelpPrompt("a", _("download")));
         }
     }
     else {
-        prompts.push_back(HelpPrompt("b", "close"));
+        prompts.push_back(HelpPrompt("b", _("close")));
     }
 
     return prompts;
@@ -1310,11 +1317,11 @@ bool GuiThemeDownloader::fetchThemesList()
         if (errorCode != 0 || checkCorruptRepository(repository)) {
             mWindow->pushGui(new GuiMsgBox(
                 getHelpStyle(),
-                "IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
-                "CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF THE "
-                "ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD DIRECTORY "
-                "\"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\"",
-                "PROCEED",
+                _("IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+                  "CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF THE "
+                  "ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD DIRECTORY "
+                  "\"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""),
+                _("PROCEED"),
                 [this, repositoryName, url] {
                     if (renameDirectory(mThemeDirectory + "themes-list", "_CORRUPT_DISABLED")) {
                         mGrid.removeEntry(mCenterGrid);
@@ -1326,10 +1333,10 @@ bool GuiThemeDownloader::fetchThemesList()
                     mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
                                                repositoryName, url);
                     mStatusType = StatusType::STATUS_DOWNLOADING;
-                    mStatusText = "DOWNLOADING THEMES LIST";
+                    mStatusText = _("DOWNLOADING THEMES LIST");
                     return false;
                 },
-                "CANCEL",
+                _("CANCEL"),
                 [&] {
                     delete this;
                     return false;
@@ -1346,28 +1353,28 @@ bool GuiThemeDownloader::fetchThemesList()
             mFetchThread =
                 std::thread(&GuiThemeDownloader::fetchRepository, this, repositoryName, false);
             mStatusType = StatusType::STATUS_UPDATING;
-            mStatusText = "UPDATING THEMES LIST";
+            mStatusText = _("UPDATING THEMES LIST");
         }
         git_repository_free(repository);
     }
     else {
         mWindow->pushGui(new GuiMsgBox(
             getHelpStyle(),
-            "IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. "
-            "AS SUCH THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
-            "WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED FILES "
-            "WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE THAT YOU CAN'T "
-            "ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA CORRUPTION.",
-            "PROCEED",
+            _("IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. "
+              "AS SUCH THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+              "WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED FILES "
+              "WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE THAT YOU CAN'T "
+              "ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA CORRUPTION."),
+            _("PROCEED"),
             [this, repositoryName, url] {
                 LOG(LogInfo) << "GuiThemeDownloader: Creating initial themes list repository clone";
                 mFetchThread =
                     std::thread(&GuiThemeDownloader::cloneRepository, this, repositoryName, url);
                 mStatusType = StatusType::STATUS_DOWNLOADING;
-                mStatusText = "DOWNLOADING THEMES LIST";
+                mStatusText = _("DOWNLOADING THEMES LIST");
                 return false;
             },
-            "CANCEL",
+            _("CANCEL"),
             [&] {
                 delete this;
                 return false;

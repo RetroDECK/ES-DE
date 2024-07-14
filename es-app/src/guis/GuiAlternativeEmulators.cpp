@@ -98,7 +98,8 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
             *std::find(SystemData::sSystemVector.cbegin(), SystemData::sSystemVector.cend(), *it)};
 
         row.makeAcceptInputHandler([this, systemEntry, labelText] {
-            if (labelText->getValue() == ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY")
+            if (labelText->getValue() ==
+                ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEARED ENTRY"))
                 return;
             selectorWindow(systemEntry);
         });
@@ -112,7 +113,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
     if (!mHasSystems) {
         ComponentListRow row;
         std::shared_ptr<TextComponent> systemText {std::make_shared<TextComponent>(
-            ViewController::EXCLAMATION_CHAR + " NO ALTERNATIVE EMULATORS DEFINED",
+            ViewController::EXCLAMATION_CHAR + " " + _("NO ALTERNATIVE EMULATORS DEFINED"),
             Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_CENTER)};
         row.addElement(systemText, true);
         mMenu.addRow(row);
@@ -151,7 +152,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
         ComponentListRow row;
 
         if (entry.second == "")
-            label = ViewController::CROSSEDCIRCLE_CHAR + " CLEAR INVALID ENTRY";
+            label = ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEAR INVALID ENTRY");
         else
             label = entry.second;
 
@@ -160,7 +161,8 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
         labelText->setSelectable(true);
 
         if (system->getSystemEnvData()->mLaunchCommands.front().second == label)
-            labelText->setValue(labelText->getValue().append(" [DEFAULT]"));
+            labelText->setValue(
+                labelText->getValue().append(" [").append(_("DEFAULT")).append("]"));
 
         row.addElement(labelText, true);
         row.makeAcceptInputHandler([this, s, system, labelText, entry, selectedLabel] {
@@ -174,7 +176,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
                 if (entry.second == system->getSystemEnvData()->mLaunchCommands.front().second) {
                     if (system->getSystemEnvData()->mLaunchCommands.front().second == "") {
                         updateMenu(system->getName(),
-                                   ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY",
+                                   ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEARED ENTRY"),
                                    (entry.second ==
                                     system->getSystemEnvData()->mLaunchCommands.front().second));
                     }
