@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-14 13:48+0200\n"
+"POT-Creation-Date: 2024-07-14 14:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -637,6 +637,18 @@ msgstr ""
 msgid "close menu"
 msgstr ""
 
+msgid "REFINE SEARCH"
+msgstr ""
+
+msgid "refine search"
+msgstr ""
+
+msgid "cancel"
+msgstr ""
+
+msgid "back (cancel)"
+msgstr ""
+
 msgid "SCRAPE FROM"
 msgstr ""
 
@@ -1185,6 +1197,63 @@ msgid ""
 "CORRUPTION."
 msgstr ""
 
+msgid "RATING:"
+msgstr ""
+
+msgid "RELEASED:"
+msgstr ""
+
+msgid "DEVELOPER:"
+msgstr ""
+
+msgid "PUBLISHER:"
+msgstr ""
+
+msgid "GENRE:"
+msgstr ""
+
+msgid "PLAYERS:"
+msgstr ""
+
+msgid "NO GAMES FOUND"
+msgstr ""
+
+msgid "RETRY"
+msgstr ""
+
+msgid "SKIP"
+msgstr ""
+
+msgid "SEARCH"
+msgstr ""
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr ""
+
+msgid "skip"
+msgstr ""
+
+msgid "accept result"
+msgstr ""
+
+msgid "SCRAPING IN PROGRESS"
+msgstr ""
+
+msgid "SYSTEM"
+msgstr ""
+
+msgid "skip game"
+msgstr ""
+
+msgid "STOP"
+msgstr ""
+
+msgid "stop"
+msgstr ""
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr ""
+
 msgid "GAMELIST OPTIONS"
 msgstr ""
 
@@ -1455,9 +1524,6 @@ msgstr ""
 msgid "edit date"
 msgstr ""
 
-msgid "cancel"
-msgstr ""
-
 msgid "apply"
 msgstr ""
 
@@ -1492,6 +1558,9 @@ msgid "move cursor"
 msgstr ""
 
 msgid "edit"
+msgstr ""
+
+msgid "WORKING..."
 msgstr ""
 
 msgid "toggle"

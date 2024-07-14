@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-14 13:48+0200\n"
-"PO-Revision-Date: 2024-07-14 13:51+0200\n"
+"POT-Creation-Date: 2024-07-14 14:26+0200\n"
+"PO-Revision-Date: 2024-07-14 14:27+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -655,6 +655,18 @@ msgstr "select"
 msgid "close menu"
 msgstr "close menu"
 
+msgid "REFINE SEARCH"
+msgstr "REFINE SEARCH"
+
+msgid "refine search"
+msgstr "refine search"
+
+msgid "cancel"
+msgstr "cancel"
+
+msgid "back (cancel)"
+msgstr "back (cancel)"
+
 msgid "SCRAPE FROM"
 msgstr "SCRAPE FROM"
 
@@ -1223,6 +1235,63 @@ msgstr ""
 "THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
 "CORRUPTION."
 
+msgid "RATING:"
+msgstr "RATING:"
+
+msgid "RELEASED:"
+msgstr "RELEASED:"
+
+msgid "DEVELOPER:"
+msgstr "DEVELOPER:"
+
+msgid "PUBLISHER:"
+msgstr "PUBLISHER:"
+
+msgid "GENRE:"
+msgstr "GENRE:"
+
+msgid "PLAYERS:"
+msgstr "PLAYERS:"
+
+msgid "NO GAMES FOUND"
+msgstr "NO GAMES FOUND"
+
+msgid "RETRY"
+msgstr "RETRY"
+
+msgid "SKIP"
+msgstr "SKIP"
+
+msgid "SEARCH"
+msgstr "SEARCH"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "SEARCH USING REFINED NAME?"
+
+msgid "skip"
+msgstr "skip"
+
+msgid "accept result"
+msgstr "accept result"
+
+msgid "SCRAPING IN PROGRESS"
+msgstr "SCRAPING IN PROGRESS"
+
+msgid "SYSTEM"
+msgstr "SYSTEM"
+
+msgid "skip game"
+msgstr "skip game"
+
+msgid "STOP"
+msgstr "STOP"
+
+msgid "stop"
+msgstr "stop"
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr "NO GAMES WERE SCRAPED"
+
 msgid "GAMELIST OPTIONS"
 msgstr "GAMELIST OPTIONS"
 
@@ -1502,9 +1571,6 @@ msgstr "32:9 vertical"
 msgid "edit date"
 msgstr "edit date"
 
-msgid "cancel"
-msgstr "cancel"
-
 msgid "apply"
 msgstr "apply"
 
@@ -1540,6 +1606,9 @@ msgstr "move cursor"
 
 msgid "edit"
 msgstr "edit"
+
+msgid "WORKING..."
+msgstr "WORKING..."
 
 msgid "toggle"
 msgstr "toggle"
