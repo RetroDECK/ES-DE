@@ -16,6 +16,7 @@
 #include "components/ButtonComponent.h"
 #include "components/MenuComponent.h"
 #include "components/TextComponent.h"
+#include "utils/LocalizationUtil.h"
 
 GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
                                    std::function<void(const ScraperSearchResult&)> doneFunc,
@@ -84,17 +85,18 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
     // Buttons
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-    buttons.push_back(std::make_shared<ButtonComponent>("REFINE SEARCH", "refine search", [&] {
-        // Refine the search, unless the result has already been accepted.
-        if (!mSearch->getAcceptedResult()) {
-            // Copy any search refine that may have been previously entered by opening
-            // the input screen using the "Y" button shortcut.
-            mSearchParams.nameOverride = mSearch->getNameOverride();
-            mSearch->openInputScreen(mSearchParams);
-            mGrid.resetCursor();
-        }
-    }));
-    buttons.push_back(std::make_shared<ButtonComponent>("CANCEL", "cancel", [&] {
+    buttons.push_back(
+        std::make_shared<ButtonComponent>(_("REFINE SEARCH"), _("refine search"), [&] {
+            // Refine the search, unless the result has already been accepted.
+            if (!mSearch->getAcceptedResult()) {
+                // Copy any search refine that may have been previously entered by opening
+                // the input screen using the "Y" button shortcut.
+                mSearchParams.nameOverride = mSearch->getNameOverride();
+                mSearch->openInputScreen(mSearchParams);
+                mGrid.resetCursor();
+            }
+        }));
+    buttons.push_back(std::make_shared<ButtonComponent>(_("CANCEL"), _("cancel"), [&] {
         if (mSearch->getSavedNewMedia()) {
             // If the user aborted the scraping but there was still some media downloaded,
             // then flag to GuiMetaDataEd that the image and marquee textures need to be
@@ -194,7 +196,7 @@ void GuiScraperSingle::update(int deltaTime)
 std::vector<HelpPrompt> GuiScraperSingle::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "back (cancel)"));
+    prompts.push_back(HelpPrompt("b", _("back (cancel)")));
 
     return prompts;
 }

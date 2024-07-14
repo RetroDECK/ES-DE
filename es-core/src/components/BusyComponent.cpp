@@ -10,13 +10,14 @@
 
 #include "components/AnimatedImageComponent.h"
 #include "components/ImageComponent.h"
+#include "utils/LocalizationUtil.h"
 
 BusyComponent::BusyComponent()
     : mBackground {":/graphics/frame.png"}
     , mGrid {glm::ivec2 {5, 3}}
 {
     mAnimation = std::make_shared<AnimatedImageComponent>();
-    mText = std::make_shared<TextComponent>("WORKING...", Font::get(FONT_SIZE_MEDIUM),
+    mText = std::make_shared<TextComponent>(_("WORKING..."), Font::get(FONT_SIZE_MEDIUM),
                                             mMenuColorPrimary);
 
     // Col 0 = animation, col 1 = spacer, col 2 = text.

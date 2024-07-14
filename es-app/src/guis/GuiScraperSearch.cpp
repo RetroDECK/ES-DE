@@ -32,6 +32,7 @@
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, int rowCount)
@@ -103,18 +104,18 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, in
 
     if (mScrapeRatings)
         mMD_Pairs.push_back(MetaDataPair(
-            std::make_shared<TextComponent>("RATING:", font, mdLblColor), mMD_Rating, false));
+            std::make_shared<TextComponent>(_("RATING:"), font, mdLblColor), mMD_Rating, false));
 
-    mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>("RELEASED:", font, mdLblColor),
-                                     mMD_ReleaseDate));
     mMD_Pairs.push_back(MetaDataPair(
-        std::make_shared<TextComponent>("DEVELOPER:", font, mdLblColor), mMD_Developer));
+        std::make_shared<TextComponent>(_("RELEASED:"), font, mdLblColor), mMD_ReleaseDate));
     mMD_Pairs.push_back(MetaDataPair(
-        std::make_shared<TextComponent>("PUBLISHER:", font, mdLblColor), mMD_Publisher));
+        std::make_shared<TextComponent>(_("DEVELOPER:"), font, mdLblColor), mMD_Developer));
+    mMD_Pairs.push_back(MetaDataPair(
+        std::make_shared<TextComponent>(_("PUBLISHER:"), font, mdLblColor), mMD_Publisher));
     mMD_Pairs.push_back(
-        MetaDataPair(std::make_shared<TextComponent>("GENRE:", font, mdLblColor), mMD_Genre));
-    mMD_Pairs.push_back(
-        MetaDataPair(std::make_shared<TextComponent>("PLAYERS:", font, mdLblColor), mMD_Players));
+        MetaDataPair(std::make_shared<TextComponent>(_("GENRE:"), font, mdLblColor), mMD_Genre));
+    mMD_Pairs.push_back(MetaDataPair(
+        std::make_shared<TextComponent>(_("PLAYERS:"), font, mdLblColor), mMD_Players));
 
     // If no rating is being scraped, add a filler to make sure that the fonts keep the same
     // size so the GUI looks consistent.
@@ -428,7 +429,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
 
             mFoundGame = false;
             ComponentListRow row;
-            row.addElement(std::make_shared<TextComponent>("NO GAMES FOUND", font, color), true);
+            row.addElement(std::make_shared<TextComponent>(_("NO GAMES FOUND"), font, color), true);
 
             if (mSkipCallback)
                 row.makeAcceptInputHandler(mSkipCallback);
@@ -578,16 +579,16 @@ void GuiScraperSearch::onSearchError(const std::string& error,
 
     if (mScrapeCount > 1) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), "RETRY",
+        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), _("RETRY"),
                                        std::bind(&GuiScraperSearch::search, this, mLastSearch),
-                                       "SKIP", mSkipCallback, "CANCEL", mCancelCallback, nullptr,
-                                       true));
+                                       _("SKIP"), mSkipCallback, _("CANCEL"), mCancelCallback,
+                                       nullptr, true));
     }
     else {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), "RETRY",
+        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), _("RETRY"),
                                        std::bind(&GuiScraperSearch::search, this, mLastSearch),
-                                       "CANCEL", mCancelCallback, "", nullptr, nullptr, true));
+                                       _("CANCEL"), mCancelCallback, "", nullptr, nullptr, true));
     }
 }
 
@@ -1028,14 +1029,14 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         searchString = Utils::String::replace(searchString, "_", " ");
 
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
-        mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), 0.0f, "REFINE SEARCH",
-                                                      searchString, searchForFunc, false, "SEARCH",
-                                                      "SEARCH USING REFINED NAME?"));
+        mWindow->pushGui(new GuiTextEditKeyboardPopup(
+            getHelpStyle(), 0.0f, _("REFINE SEARCH"), searchString, searchForFunc, false,
+            _("SEARCH"), _("SEARCH USING REFINED NAME?")));
     }
     else {
-        mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), "REFINE SEARCH", searchString,
-                                              searchForFunc, false, "SEARCH",
-                                              "SEARCH USING REFINED NAME?"));
+        mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), _("REFINE SEARCH"), searchString,
+                                              searchForFunc, false, _("SEARCH"),
+                                              _("SEARCH USING REFINED NAME?")));
     }
 }
 
@@ -1126,15 +1127,15 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
 
-    prompts.push_back(HelpPrompt("y", "refine search"));
+    prompts.push_back(HelpPrompt("y", _("refine search")));
 
     // Only show the skip prompt during multi-scraping.
     if (mSkipCallback != nullptr)
-        prompts.push_back(HelpPrompt("x", "skip"));
+        prompts.push_back(HelpPrompt("x", _("skip")));
 
     if (mFoundGame && (mRefinedSearch || mSearchType != SEMIAUTOMATIC_MODE ||
                        (mSearchType == SEMIAUTOMATIC_MODE && mScraperResults.size() > 1)))
-        prompts.push_back(HelpPrompt("a", "accept result"));
+        prompts.push_back(HelpPrompt("a", _("accept result")));
 
     return prompts;
 }

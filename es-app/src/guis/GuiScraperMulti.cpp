@@ -22,6 +22,7 @@
 #include "components/TextComponent.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperSearch.h"
+#include "utils/LocalizationUtil.h"
 
 GuiScraperMulti::GuiScraperMulti(
     const std::pair<std::queue<ScraperSearchParams>, std::map<SystemData*, int>>& searches,
@@ -48,11 +49,11 @@ GuiScraperMulti::GuiScraperMulti(
         mQueueCountPerSystem[(*it).first] = std::make_pair(0, (*it).second);
 
     // Set up grid.
-    mTitle = std::make_shared<TextComponent>("SCRAPING IN PROGRESS", Font::get(FONT_SIZE_LARGE),
+    mTitle = std::make_shared<TextComponent>(_("SCRAPING IN PROGRESS"), Font::get(FONT_SIZE_LARGE),
                                              mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
-    mSystem = std::make_shared<TextComponent>("SYSTEM", Font::get(FONT_SIZE_MEDIUM),
+    mSystem = std::make_shared<TextComponent>(_("SYSTEM"), Font::get(FONT_SIZE_MEDIUM),
                                               mMenuColorPrimary, ALIGN_CENTER);
     mGrid.setEntry(mSystem, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
@@ -105,38 +106,39 @@ GuiScraperMulti::GuiScraperMulti(
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
     if (mApproveResults) {
-        buttons.push_back(std::make_shared<ButtonComponent>("REFINE SEARCH", "refine search", [&] {
-            // Check whether we should allow a refine of the game name.
-            if (!mSearchComp->getAcceptedResult()) {
-                bool allowRefine = false;
+        buttons.push_back(
+            std::make_shared<ButtonComponent>(_("REFINE SEARCH"), _("refine search"), [&] {
+                // Check whether we should allow a refine of the game name.
+                if (!mSearchComp->getAcceptedResult()) {
+                    bool allowRefine = false;
 
-                // Previously refined.
-                if (mSearchComp->getRefinedSearch())
-                    allowRefine = true;
-                // Interactive mode and "Auto-accept single game matches" not enabled.
-                else if (mSearchComp->getSearchType() != GuiScraperSearch::SEMIAUTOMATIC_MODE)
-                    allowRefine = true;
-                // Interactive mode with "Auto-accept single game matches" enabled and more
-                // than one result.
-                else if (mSearchComp->getSearchType() == GuiScraperSearch::SEMIAUTOMATIC_MODE &&
-                         mSearchComp->getScraperResultsSize() > 1)
-                    allowRefine = true;
-                // Dito but there were no games found, or the search has not been completed.
-                else if (mSearchComp->getSearchType() == GuiScraperSearch::SEMIAUTOMATIC_MODE &&
-                         !mSearchComp->getFoundGame())
-                    allowRefine = true;
+                    // Previously refined.
+                    if (mSearchComp->getRefinedSearch())
+                        allowRefine = true;
+                    // Interactive mode and "Auto-accept single game matches" not enabled.
+                    else if (mSearchComp->getSearchType() != GuiScraperSearch::SEMIAUTOMATIC_MODE)
+                        allowRefine = true;
+                    // Interactive mode with "Auto-accept single game matches" enabled and more
+                    // than one result.
+                    else if (mSearchComp->getSearchType() == GuiScraperSearch::SEMIAUTOMATIC_MODE &&
+                             mSearchComp->getScraperResultsSize() > 1)
+                        allowRefine = true;
+                    // Dito but there were no games found, or the search has not been completed.
+                    else if (mSearchComp->getSearchType() == GuiScraperSearch::SEMIAUTOMATIC_MODE &&
+                             !mSearchComp->getFoundGame())
+                        allowRefine = true;
 
-                if (allowRefine) {
-                    // Copy any search refine that may have been previously entered by opening
-                    // the input screen using the "Y" button shortcut.
-                    mSearchQueue.front().nameOverride = mSearchComp->getNameOverride();
-                    mSearchComp->openInputScreen(mSearchQueue.front());
-                    mGrid.resetCursor();
+                    if (allowRefine) {
+                        // Copy any search refine that may have been previously entered by opening
+                        // the input screen using the "Y" button shortcut.
+                        mSearchQueue.front().nameOverride = mSearchComp->getNameOverride();
+                        mSearchComp->openInputScreen(mSearchQueue.front());
+                        mGrid.resetCursor();
+                    }
                 }
-            }
-        }));
+            }));
 
-        buttons.push_back(std::make_shared<ButtonComponent>("SKIP", "skip game", [&] {
+        buttons.push_back(std::make_shared<ButtonComponent>(_("SKIP"), _("skip game"), [&] {
             // Skip game, unless the result has already been accepted.
             if (!mSearchComp->getAcceptedResult()) {
                 skip();
@@ -145,7 +147,7 @@ GuiScraperMulti::GuiScraperMulti(
         }));
     }
 
-    buttons.push_back(std::make_shared<ButtonComponent>("STOP", "stop",
+    buttons.push_back(std::make_shared<ButtonComponent>(_("STOP"), _("stop"),
                                                         std::bind(&GuiScraperMulti::finish, this)));
 
     mButtonGrid = MenuComponent::makeButtonGrid(buttons);
@@ -308,7 +310,7 @@ void GuiScraperMulti::finish()
 {
     std::stringstream ss;
     if (mTotalSuccessful == 0) {
-        ss << "NO GAMES WERE SCRAPED";
+        ss << _("NO GAMES WERE SCRAPED");
     }
     else {
         ss << mTotalSuccessful << " GAME" << ((mTotalSuccessful > 1) ? "S" : "")
@@ -321,7 +323,7 @@ void GuiScraperMulti::finish()
 
     // Pressing either OK or using the back button should delete us.
     mWindow->pushGui(new GuiMsgBox(
-        getHelpStyle(), ss.str(), "OK",
+        getHelpStyle(), ss.str(), _("OK"),
         [&] {
             mIsProcessing = false;
             delete this;

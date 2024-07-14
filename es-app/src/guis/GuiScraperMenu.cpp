@@ -768,8 +768,8 @@ void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
                                        _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, false,
                                        true,
                                        (mRenderer->getIsVerticalOrientation() ?
-                                            0.78f :
-                                            0.48f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                                            0.80f :
+                                            0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
 
         return;
     }
