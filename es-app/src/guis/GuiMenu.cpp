@@ -1610,8 +1610,8 @@ void GuiMenu::openOtherOptions()
                            Settings::getInstance()->getString("SaveGamelistsMode") == "never");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set save game metadata to "always" in this case.
-    if (antiAliasing->getSelectedObjects().size() == 0)
-        antiAliasing->selectEntry(0);
+    if (saveGamelistsMode->getSelectedObjects().size() == 0)
+        saveGamelistsMode->selectEntry(0);
     s->addWithLabel(_("WHEN TO SAVE GAME METADATA"), saveGamelistsMode);
     s->addSaveFunc([saveGamelistsMode, s] {
         if (saveGamelistsMode->getSelected() !=
