@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-13 22:09+0200\n"
+"POT-Creation-Date: 2024-07-14 12:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -793,6 +793,138 @@ msgstr ""
 msgid "NOTHING TO FILTER"
 msgstr ""
 
+msgid "CLOSE"
+msgstr ""
+
+msgid "DOWNLOADING THEMES LIST 100%"
+msgstr ""
+
+msgid "THEME ALREADY UP TO DATE"
+msgstr ""
+
+msgid "THEME HAS BEEN UPDATED"
+msgstr ""
+
+msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
+msgstr ""
+
+msgid ""
+"COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
+"REPOSITORY IS CORRUPT?"
+msgstr ""
+
+msgid ""
+"IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+"BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
+msgstr ""
+
+msgid "and"
+msgstr ""
+
+msgid "DOWNLOADING THEME"
+msgstr ""
+
+msgid "UPDATING THEME"
+msgstr ""
+
+msgid "VARIANTS:"
+msgstr ""
+
+msgid "COLOR SCHEMES:"
+msgstr ""
+
+msgid "ASPECT RATIOS:"
+msgstr ""
+
+msgid "FONT SIZES:"
+msgstr ""
+
+msgid "INSTALLED"
+msgstr ""
+
+msgid "MANUAL DOWNLOAD"
+msgstr ""
+
+msgid "CORRUPT"
+msgstr ""
+
+msgid "SHALLOW"
+msgstr ""
+
+msgid "NOT INSTALLED (NEW)"
+msgstr ""
+
+msgid "NOT INSTALLED"
+msgstr ""
+
+msgid "LOCAL CHANGES"
+msgstr ""
+
+msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
+msgstr ""
+
+msgid "CREATED BY"
+msgstr ""
+
+msgid "ERROR:"
+msgstr ""
+
+msgid "COULDN'T DOWNLOAD THEMES LIST"
+msgstr ""
+
+msgid "DOWNLOADING"
+msgstr ""
+
+msgid "THIS WILL COMPLETELY DELETE THE THEME"
+msgstr ""
+
+msgid ""
+"THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
+msgstr ""
+
+msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
+msgstr ""
+
+msgid "THEME WAS DELETED"
+msgstr ""
+
+msgid "close"
+msgstr ""
+
+msgid "view screenshots"
+msgstr ""
+
+msgid "fetch updates"
+msgstr ""
+
+msgid "delete"
+msgstr ""
+
+msgid "download"
+msgstr ""
+
+msgid ""
+"IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
+"DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
+msgstr ""
+
+msgid "DOWNLOADING THEMES LIST"
+msgstr ""
+
+msgid "UPDATING THEMES LIST"
+msgstr ""
+
+msgid ""
+"IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
+"THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+"WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED "
+"FILES WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE "
+"THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
+"CORRUPTION."
+msgstr ""
+
 msgid "GAMELIST OPTIONS"
 msgstr ""
 
@@ -820,10 +952,19 @@ msgstr ""
 msgid "close (cancel)"
 msgstr ""
 
-msgid "close"
+msgid "INVALID ENTRY"
 msgstr ""
 
-msgid "INVALID ENTRY"
+msgid "CLEARED ENTRY"
+msgstr ""
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr ""
+
+msgid "CLEAR INVALID ENTRY"
+msgstr ""
+
+msgid "DEFAULT"
 msgstr ""
 
 msgid "EDIT METADATA"
@@ -833,9 +974,6 @@ msgid "CLEAR ENTRY"
 msgstr ""
 
 msgid "SELECT EMULATOR"
-msgstr ""
-
-msgid "CLEAR INVALID ENTRY"
 msgstr ""
 
 msgid "SYSTEM-WIDE"
