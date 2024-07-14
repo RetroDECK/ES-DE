@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-14 14:26+0200\n"
-"PO-Revision-Date: 2024-07-14 14:27+0200\n"
+"POT-Creation-Date: 2024-07-14 17:58+0200\n"
+"PO-Revision-Date: 2024-07-14 17:58+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -1319,6 +1319,153 @@ msgstr "close (apply)"
 msgid "close (cancel)"
 msgstr "close (cancel)"
 
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+
+msgid "NOT STARTED"
+msgstr "NOT STARTED"
+
+msgid "DESCRIPTION:"
+msgstr "DESCRIPTION:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "TOTAL ENTRIES REMOVED:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "LAST PROCESSED SYSTEM:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "LAST ERROR MESSAGE:"
+
+msgid "MEDIA"
+msgstr "MEDIA"
+
+msgid "start processing"
+msgstr "start processing"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "RUNNING MEDIA CLEANUP"
+
+msgid "stop processing"
+msgstr "stop processing"
+
+msgid "GAMELISTS"
+msgstr "GAMELISTS"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "RUNNING GAMELISTS CLEANUP"
+
+msgid "COLLECTIONS"
+msgstr "COLLECTIONS"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "COLLECTIONS CLEANUP FAILED"
+
+msgid "There are no enabled custom collections"
+msgstr "There are no enabled custom collections"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "RUNNING COLLECTIONS CLEANUP"
+
+msgid "PROCESSING"
+msgstr "PROCESSING"
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "Couldn't create target directory, permission problems?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "Couldn't move media file, permission problems?"
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr "Couldn't delete temporary gamelist file, permission problems?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr "Couldn't write to temporary gamelist file, permission problems?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr "Couldn't create backup directory, permission problems?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "Couldn't move old gamelist file, permission problems?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr "Couldn't move temporary gamelist file, permission problems?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "Couldn't find custom collection configuration file"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "Couldn't open custom collection configuration file"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr "Couldn't delete temporary collection file, permission problems?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "Couldn't write to temporary collection configuration file"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr "Couldn't move old collection file, permission problems?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr "Couldn't move temporary collection file, permission problems?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "ABORTED MEDIA CLEANUP"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "COMPLETED MEDIA CLEANUP"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "ABORTED GAMELIST CLEANUP"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "COMPLETED GAMELIST CLEANUP"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "ABORTED COLLECTIONS CLEANUP"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "COMPLETED COLLECTIONS CLEANUP"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "MEDIA CLEANUP FAILED"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "GAMELISTS CLEANUP FAILED"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+
 msgid "INVALID ENTRY"
 msgstr "INVALID ENTRY"
 
@@ -1392,11 +1539,56 @@ msgstr "DELETE"
 msgid "delete game"
 msgstr "delete game"
 
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "MIXIMAGE OFFLINE GENERATOR"
+
+msgid "Generated:"
+msgstr "Generated:"
+
+msgid "Overwritten:"
+msgstr "Overwritten:"
+
+msgid "Skipped:"
+msgstr "Skipped:"
+
+msgid "Skipped (existing):"
+msgstr "Skipped (existing):"
+
+msgid "Failed:"
+msgstr "Failed:"
+
+msgid "Processing:"
+msgstr "Processing:"
+
+msgid "Last error message:"
+msgstr "Last error message:"
+
+msgid "PAUSE"
+msgstr "PAUSE"
+
+msgid "pause processing"
+msgstr "pause processing"
+
+msgid "close (abort processing)"
+msgstr "close (abort processing)"
+
+msgid "RUNNING..."
+msgstr "RUNNING..."
+
+msgid "PAUSED"
+msgstr "PAUSED"
+
+msgid "RUNNING"
+msgstr "RUNNING"
+
+msgid "DONE"
+msgstr "DONE"
+
+msgid "done (close)"
+msgstr "done (close)"
+
 msgid "FAVORITES"
 msgstr "FAVORITES"
-
-msgid "COLLECTIONS"
-msgstr "COLLECTIONS"
 
 msgid "name, ascending"
 msgstr "name, ascending"
@@ -1504,6 +1696,9 @@ msgstr "UNKNOWN"
 
 msgid "NONE SELECTED"
 msgstr "NONE SELECTED"
+
+msgid "No screenshot image found, couldn't generate miximage"
+msgstr "No screenshot image found, couldn't generate miximage"
 
 msgid "Searching for games..."
 msgstr "Searching for games..."
