@@ -31,6 +31,7 @@
 #include "guis/GuiMenu.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "utils/LocalizationUtil.h"
 #include "views/GamelistView.h"
 #include "views/SystemView.h"
 
@@ -186,15 +187,15 @@ void ViewController::migratedAppDataFilesDialog()
 void ViewController::unsafeUpgradeDialog()
 {
     const std::string upgradeMessage {
-        "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY "
-        "UNPACKING THE NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE "
-        "VARIOUS PROBLEMS, SOME OF WHICH MAY NOT BE APPARENT IMMEDIATELY. "
-        "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
-        "README.TXT FILE THAT CAN BE FOUND IN THE ES-DE DIRECTORY."};
+        _("IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY "
+          "UNPACKING THE NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE "
+          "VARIOUS PROBLEMS, SOME OF WHICH MAY NOT BE APPARENT IMMEDIATELY. "
+          "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
+          "README.TXT FILE THAT CAN BE FOUND IN THE ES-DE DIRECTORY.")};
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
-        true,
+        HelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr,
+        true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -202,15 +203,15 @@ void ViewController::unsafeUpgradeDialog()
 
 void ViewController::invalidSystemsFileDialog()
 {
-    const std::string errorMessage {"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. "
-                                    "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN "
-                                    "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
-                                    "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
-                                    "ES-DE INSTALLATION IS BROKEN. SEE THE APPLICATION "
-                                    "LOG FILE es_log.txt FOR ADDITIONAL INFO"};
+    const std::string errorMessage {_("COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. "
+                                      "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN "
+                                      "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
+                                      "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
+                                      "ES-DE INSTALLATION IS BROKEN. SEE THE APPLICATION "
+                                      "LOG FILE es_log.txt FOR ADDITIONAL INFO")};
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), errorMessage.c_str(), "QUIT",
+        HelpStyle(), errorMessage.c_str(), _("QUIT"),
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
@@ -225,20 +226,20 @@ void ViewController::invalidSystemsFileDialog()
 void ViewController::noGamesDialog()
 {
 #if defined(__ANDROID__)
-    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN "
-                           "THE CONFIGURED ROM DIRECTORY. OPTIONALLY THE ROM "
-                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
-                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
-                           "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
-                           "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN "
+                             "THE CONFIGURED ROM DIRECTORY. OPTIONALLY THE ROM "
+                             "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
+                             "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+                             "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+                             "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n");
 #else
-    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
-                           "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
-                           "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM "
-                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
-                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
-                           "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
-                           "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
+                             "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
+                             "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM "
+                             "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
+                             "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+                             "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+                             "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n");
 #endif
 
 #if defined(_WIN64)
@@ -252,7 +253,7 @@ void ViewController::noGamesDialog()
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
 #else
     mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "CHANGE ROM DIRECTORY",
+        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, _("CHANGE ROM DIRECTORY"),
         [this] {
             std::string currentROMDirectory;
 #if defined(_WIN64)
@@ -262,7 +263,7 @@ void ViewController::noGamesDialog()
 #endif
             if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    HelpStyle(), 0.0f, "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    HelpStyle(), 0.0f, _("ENTER ROM DIRECTORY PATH"), currentROMDirectory,
                     [this, currentROMDirectory](const std::string& newROMDirectory) {
                         if (currentROMDirectory != newROMDirectory) {
                             Settings::getInstance()->setString(
@@ -275,20 +276,23 @@ void ViewController::noGamesDialog()
                             mRomDirectory = FileData::getROMDirectory();
 #endif
                             mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                            mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                           "ROM DIRECTORY SETTING SAVED, RESTART\n"
-                                                           "THE APPLICATION TO RESCAN THE SYSTEMS",
-                                                           "OK", nullptr, "", nullptr, "", nullptr,
-                                                           nullptr, true, true));
+                            mWindow->pushGui(new GuiMsgBox(
+                                HelpStyle(),
+                                _("ROM DIRECTORY SETTING SAVED, RESTART "
+                                  "THE APPLICATION TO RESCAN THE SYSTEMS"),
+                                _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                                (mRenderer->getIsVerticalOrientation() ?
+                                     0.66f :
+                                     0.42f * (1.778f / mRenderer->getScreenAspectRatio()))));
                         }
                     },
-                    false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
-                    currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
-                    "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
+                    false, _("SAVE"), _("SAVE CHANGES?"), _("Currently configured path:"),
+                    currentROMDirectory, _("LOAD CURRENTLY CONFIGURED PATH"),
+                    _("CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)")));
             }
             else {
                 mWindow->pushGui(new GuiTextEditPopup(
-                    HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    HelpStyle(), _("ENTER ROM DIRECTORY PATH"), currentROMDirectory,
                     [this](const std::string& newROMDirectory) {
                         Settings::getInstance()->setString("ROMDirectory",
                                                            Utils::String::trim(newROMDirectory));
@@ -300,48 +304,60 @@ void ViewController::noGamesDialog()
                         mRomDirectory = FileData::getROMDirectory();
 #endif
                         mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                       "ROM DIRECTORY SETTING SAVED, RESTART\n"
-                                                       "THE APPLICATION TO RESCAN THE SYSTEMS",
-                                                       "OK", nullptr, "", nullptr, "", nullptr,
-                                                       nullptr, true));
+                        mWindow->pushGui(new GuiMsgBox(
+                            HelpStyle(),
+                            _("ROM DIRECTORY SETTING SAVED, RESTART "
+                              "THE APPLICATION TO RESCAN THE SYSTEMS"),
+                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            (mRenderer->getIsVerticalOrientation() ?
+                                 0.66f :
+                                 0.42f * (1.778f / mRenderer->getScreenAspectRatio()))));
                     },
-                    false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
-                    currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
-                    "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
+                    false, _("SAVE"), _("SAVE CHANGES?"), _("Currently configured path:"),
+                    currentROMDirectory, _("LOAD CURRENTLY CONFIGURED PATH"),
+                    _("CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)")));
             }
         },
 #endif // __ANDROID__
-        "CREATE DIRECTORIES",
+        _("CREATE DIRECTORIES"),
         [this] {
             mWindow->pushGui(new GuiMsgBox(
                 HelpStyle(),
-                "THIS WILL CREATE DIRECTORIES FOR ALL THE\n"
-                "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
-                "THIS MAY CREATE A LOT OF FOLDERS SO IT'S\n"
-                "ADVICED TO REMOVE THE ONES YOU DON'T NEED",
-                "PROCEED",
+                _("THIS WILL CREATE DIRECTORIES FOR ALL THE "
+                  "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
+                  "THIS MAY CREATE A LOT OF FOLDERS SO IT'S "
+                  "ADVICED TO REMOVE THE ONES YOU DON'T NEED"),
+                _("PROCEED"),
                 [this] {
                     if (!SystemData::createSystemDirectories()) {
-                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                       "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY\n"
-                                                       "GENERATED, EXIT THE APPLICATION AND PLACE\n"
-                                                       "YOUR GAMES IN THE NEWLY CREATED FOLDERS",
-                                                       "OK", nullptr, "", nullptr, "", nullptr,
-                                                       nullptr, true));
+                        mWindow->pushGui(new GuiMsgBox(
+                            HelpStyle(),
+                            _("THE SYSTEM DIRECTORIES WERE SUCCESSFULLY "
+                              "GENERATED, EXIT THE APPLICATION AND PLACE "
+                              "YOUR GAMES IN THE NEW FOLDERS"),
+                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            (mRenderer->getIsVerticalOrientation() ?
+                                 0.74f :
+                                 0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
                     }
                     else {
-                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                       "ERROR CREATING THE SYSTEM DIRECTORIES,\n"
-                                                       "PERMISSION PROBLEMS OR DISK FULL?\n\n"
-                                                       "SEE THE LOG FILE FOR MORE DETAILS",
-                                                       "OK", nullptr, "", nullptr, "", nullptr,
-                                                       nullptr, true));
+                        mWindow->pushGui(new GuiMsgBox(
+                            HelpStyle(),
+                            _("ERROR CREATING THE SYSTEM DIRECTORIES, "
+                              "PERMISSION PROBLEMS OR DISK FULL?\n\n"
+                              "SEE THE LOG FILE FOR MORE DETAILS"),
+                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            (mRenderer->getIsVerticalOrientation() ?
+                                 0.75f :
+                                 0.47f * (1.778f / mRenderer->getScreenAspectRatio()))));
                     }
                 },
-                "CANCEL", nullptr, "", nullptr, nullptr, false));
+                _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
+                (mRenderer->getIsVerticalOrientation() ?
+                     0.78f :
+                     0.50 * (1.778f / mRenderer->getScreenAspectRatio()))));
         },
-        "QUIT",
+        _("QUIT"),
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
@@ -394,7 +410,7 @@ void ViewController::updateAvailableDialog()
                       << "\"";
 
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(), results, "UPDATE",
+            getHelpStyle(), results, _("UPDATE"),
             [this, package] {
                 mWindow->pushGui(new GuiApplicationUpdater());
 
@@ -402,36 +418,36 @@ void ViewController::updateAvailableDialog()
                     std::string upgradeMessage;
                     if (package.name == "WindowsPortable") {
                         upgradeMessage =
-                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS "
-                            "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. "
-                            "SEE THE README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR "
-                            "INSTRUCTIONS ON HOW THIS IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN "
-                            "THAT DOCUMENT, NEVER UNPACK A NEW RELEASE ON TOP OF AN OLD "
-                            "INSTALLATION AS THAT MAY COMPLETELY BREAK THE APPLICATION.";
+                            _("THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS "
+                              "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. "
+                              "SEE THE README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR "
+                              "INSTRUCTIONS ON HOW THIS IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN "
+                              "THAT DOCUMENT, NEVER UNPACK A NEW RELEASE ON TOP OF AN OLD "
+                              "INSTALLATION AS THAT MAY BREAK THE APPLICATION.");
                     }
                     else if (package.name == "WindowsInstaller") {
                         upgradeMessage =
-                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER "
-                            "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM "
-                            "THE UPGRADE. WHEN DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE "
-                            "QUESTION OF WHETHER TO UNINSTALL THE OLD VERSION, OR YOU MAY "
-                            "END UP WITH A BROKEN SETUP.";
+                            _("THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER "
+                              "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM "
+                              "THE UPGRADE. WHEN DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE "
+                              "QUESTION OF WHETHER TO UNINSTALL THE OLD VERSION, OR YOU MAY "
+                              "END UP WITH A BROKEN SETUP.");
                     }
                     else if (package.name == "macOSApple" || package.name == "macOSIntel") {
                         upgradeMessage =
-                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR "
-                            "YOU, BUT YOU WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM "
-                            "THE UPGRADE.";
+                            _("THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR "
+                              "YOU, BUT YOU WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM "
+                              "THE UPGRADE.");
                     }
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "",
+                        getHelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "",
                         nullptr, nullptr, true, true,
                         (mRenderer->getIsVerticalOrientation() ?
                              0.85f :
                              0.535f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
-            "CANCEL",
+            _("CANCEL"),
             [] {
                 HttpReq::cleanupCurlMulti();
                 return;
@@ -442,7 +458,7 @@ void ViewController::updateAvailableDialog()
                  0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
     }
     else {
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, "OK", nullptr, "", nullptr, "",
+        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, _("OK"), nullptr, "", nullptr, "",
                                        nullptr, nullptr, true, true,
                                        (mRenderer->getIsVerticalOrientation() ?
                                             0.70f :

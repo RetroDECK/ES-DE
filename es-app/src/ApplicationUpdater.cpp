@@ -13,6 +13,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "resources/ResourceManager.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 
@@ -198,8 +199,11 @@ void ApplicationUpdater::update()
         return;
 
     // Everything else is some sort of error.
-    std::string errorMessage {"Network error (status: "};
-    errorMessage.append(std::to_string(reqStatus)).append(") - ").append(mRequest->getErrorMsg());
+    std::string errorMessage {_("Network error (status:")};
+    errorMessage.append(" ")
+        .append(std::to_string(reqStatus))
+        .append(") - ")
+        .append(mRequest->getErrorMsg());
     throw std::runtime_error(errorMessage);
 }
 
@@ -435,21 +439,25 @@ void ApplicationUpdater::compareVersions()
                 .append("), release date: ")
                 .append(releaseType->date);
 
-            mResults.append("New ");
-
             if (releaseType == &mPrerelease) {
-                mResults.append("prerelease available:\n")
+                mResults.append(_("New prerelease available:"))
+                    .append("\n")
                     .append(releaseType->version)
                     .append(" (")
                     .append(releaseType->date)
                     .append(")");
             }
             else {
-                mResults.append("release available: ").append(releaseType->version);
+                mResults.append(_("New release available:"))
+                    .append(" ")
+                    .append(releaseType->version);
             }
 
             if (mPackageType == PackageType::UNKNOWN)
-                mResults.append("\nFor more information visit\n").append("https://es-de.org");
+                mResults.append("\n")
+                    .append(_("For more information visit"))
+                    .append("\n")
+                    .append("https://es-de.org");
 
             if (mPackage.message != "")
                 mResults.append("\n").append(mPackage.message);
