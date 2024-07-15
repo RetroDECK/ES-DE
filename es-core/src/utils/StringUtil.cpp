@@ -19,6 +19,7 @@
 #include "utils/PlatformUtil.h"
 
 #include <algorithm>
+#include <cstdarg>
 #include <locale>
 
 namespace Utils
@@ -624,6 +625,29 @@ namespace Utils
                     break;
             }
             return result;
+        }
+
+        std::string format(const std::string stringArg, ...)
+        {
+            if (stringArg.empty())
+                return "";
+
+            // Extract all the variadic function arguments.
+            va_list args;
+            va_list copy;
+
+            va_start(args, stringArg);
+            va_copy(copy, args);
+
+            const int length {vsnprintf(nullptr, 0, &stringArg[0], copy)};
+            std::string buffer(length, '\0');
+
+            vsnprintf(&buffer[0], length + 1, &stringArg[0], copy);
+
+            va_end(copy);
+            va_end(args);
+
+            return buffer;
         }
 
         std::wstring stringToWideString(const std::string& stringArg)

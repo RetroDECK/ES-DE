@@ -35,6 +35,7 @@ namespace Utils
         std::string replace(const std::string& stringArg,
                             const std::string& from,
                             const std::string& to);
+        std::string format(const std::string stringArg, ...);
         std::wstring stringToWideString(const std::string& stringArg);
         std::string wideStringToString(const std::wstring& stringArg);
         bool startsWith(const std::string& stringArg, const std::string& start);
