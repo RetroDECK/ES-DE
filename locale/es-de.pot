@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-14 23:44+0200\n"
+"POT-Creation-Date: 2024-07-15 18:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -16,6 +16,18 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "Network error (status:"
+msgstr ""
+
+msgid "New prerelease available:"
+msgstr ""
+
+msgid "New release available:"
+msgstr ""
+
+msgid "For more information visit"
+msgstr ""
 
 msgid "No Entries Found"
 msgstr ""
@@ -1532,6 +1544,104 @@ msgstr ""
 msgid "done (close)"
 msgstr ""
 
+msgid "APPLICATION UPDATER"
+msgstr ""
+
+msgid "INSTALLATION STEPS:"
+msgstr ""
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr ""
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr ""
+
+msgid "INSTALL PACKAGE"
+msgstr ""
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr ""
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr ""
+
+msgid "STATUS MESSAGE:"
+msgstr ""
+
+msgid "DOWNLOAD"
+msgstr ""
+
+msgid "download new release"
+msgstr ""
+
+msgid "Download directory does not exist"
+msgstr ""
+
+msgid "CHANGE DIRECTORY"
+msgstr ""
+
+msgid "change download directory"
+msgstr ""
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr ""
+
+msgid "DOWNLOAD ABORTED"
+msgstr ""
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr ""
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr ""
+
+msgid "DOWNLOADING 100%"
+msgstr ""
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr ""
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr ""
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr ""
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr ""
+
+#, c-format
+msgid "Downloaded %s"
+msgstr ""
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr ""
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr ""
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr ""
+
+msgid "INSTALL"
+msgstr ""
+
+msgid "install package"
+msgstr ""
+
+msgid "Find the detailed changelog at"
+msgstr ""
+
+msgid "quit application"
+msgstr ""
+
 msgid "FAVORITES"
 msgstr ""
 
@@ -1614,10 +1724,106 @@ msgid "jump to game"
 msgstr ""
 
 msgid ""
+"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
+"NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE VARIOUS PROBLEMS, SOME OF "
+"WHICH MAY NOT BE APPARENT IMMEDIATELY. MAKE SURE TO ALWAYS FOLLOW THE "
+"UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
+"DIRECTORY."
+msgstr ""
+
+msgid ""
+"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
+"es_systems.xml FILE, THEN SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. IF "
+"YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
+"SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
+msgstr ""
+
+msgid ""
+"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
+"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
+"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
+"THE SUPPORTED FILE EXTENSIONS.\n"
+"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
+"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
+"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
+"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
+"FILE EXTENSIONS.\n"
+"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+
+msgid "CHANGE ROM DIRECTORY"
+msgstr ""
+
+msgid "ENTER ROM DIRECTORY PATH"
+msgstr ""
+
+msgid ""
+"ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
+msgstr ""
+
+msgid "Currently configured path:"
+msgstr ""
+
+msgid "LOAD CURRENTLY CONFIGURED PATH"
+msgstr ""
+
+msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
+msgstr ""
+
+msgid "CREATE DIRECTORIES"
+msgstr ""
+
+msgid ""
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
+"xml\n"
+"\n"
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"DON'T NEED"
+msgstr ""
+
+msgid ""
+"THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
+"PLACE YOUR GAMES IN THE NEW FOLDERS"
+msgstr ""
+
+msgid ""
+"ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
+"\n"
+"SEE THE LOG FILE FOR MORE DETAILS"
+msgstr ""
+
+msgid ""
 "AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
 "WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
 "SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
 "MENU"
+msgstr ""
+
+msgid "UPDATE"
+msgstr ""
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
+"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
+"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
+msgstr ""
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM THE UPGRADE. WHEN "
+"DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
+"UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
+msgstr ""
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
+"WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
 msgstr ""
 
 msgid "menu"
