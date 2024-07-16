@@ -329,12 +329,14 @@ private:
                 const std::string numString {Utils::String::format(
                     _("%i (OF %i)"), getSelectedObjects().size(), mEntries.size())};
                 ss << Utils::String::format(
-                    _n("%s SELECTED", "%s SELECTED", getSelectedObjects().size()),
+                    _n("%s SELECTED", "%s SELECTED",
+                       static_cast<unsigned long>(getSelectedObjects().size())),
                     numString.c_str());
             }
             else {
                 ss << Utils::String::format(
-                    _n("%i SELECTED", "%i SELECTED", getSelectedObjects().size()),
+                    _n("%i SELECTED", "%i SELECTED",
+                       static_cast<unsigned long>(getSelectedObjects().size())),
                     getSelectedObjects().size());
             }
 

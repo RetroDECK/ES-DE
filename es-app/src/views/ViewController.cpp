@@ -355,7 +355,7 @@ void ViewController::noGamesDialog()
                 _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
                 (mRenderer->getIsVerticalOrientation() ?
                      0.78f :
-                     0.50 * (1.778f / mRenderer->getScreenAspectRatio()))));
+                     0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
         },
         _("QUIT"),
         [] {
