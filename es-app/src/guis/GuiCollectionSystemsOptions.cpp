@@ -29,14 +29,13 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     // Finish editing custom collection.
     if (CollectionSystemsManager::getInstance()->isEditing()) {
         ComponentListRow row;
-        row.addElement(
-            std::make_shared<TextComponent>(
-                "FINISH EDITING '" +
-                    Utils::String::toUpper(
-                        CollectionSystemsManager::getInstance()->getEditingCollection()) +
-                    "' COLLECTION",
-                Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
-            true);
+        const std::string editingText {Utils::String::format(
+            _("FINISH EDITING '%s' COLLECTION"),
+            Utils::String::toUpper(CollectionSystemsManager::getInstance()->getEditingCollection())
+                .c_str())};
+        row.addElement(std::make_shared<TextComponent>(editingText, Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary),
+                       true);
         row.makeAcceptInputHandler([this] {
             CollectionSystemsManager::getInstance()->exitEditMode();
             mWindow->invalidateCachedBackground();
@@ -261,11 +260,9 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             std::function<void()> deleteCollectionCall = [this, name] {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
-                    "THIS WILL PERMANENTLY\nDELETE THE COLLECTION\n'" +
-                        Utils::String::toUpper(name) +
-                        "'\n"
-                        "ARE YOU SURE?",
-                    "YES",
+                    Utils::String::format(_("THIS WILL PERMANENTLY DELETE THE COLLECTION\n'%s'"),
+                                          Utils::String::toUpper(name).c_str()),
+                    _("PROCEED"),
                     [this, name] {
                         if (CollectionSystemsManager::getInstance()->isEditing())
                             CollectionSystemsManager::getInstance()->exitEditMode();
@@ -300,7 +297,10 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                         CollectionSystemsManager::getInstance()->deleteCustomCollection(name);
                         return true;
                     },
-                    "NO", [] { return false; }));
+                    _("CANCEL"), [] { return false; }, "", nullptr, nullptr, false, true,
+                    (mRenderer->getIsVerticalOrientation() ?
+                         0.43f :
+                         0.28f * (1.778f / mRenderer->getScreenAspectRatio()))));
             };
             row.makeAcceptInputHandler(deleteCollectionCall);
             auto customCollection = std::make_shared<TextComponent>(

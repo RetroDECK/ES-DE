@@ -174,7 +174,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
              mSystem->getRootFolder()->getChildren().size() == 0 && !mIsCustomCollectionGroup &&
              !mIsCustomCollection) {
         row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>("THIS SYSTEM HAS NO GAMES",
+        row.addElement(std::make_shared<TextComponent>(_("THIS SYSTEM HAS NO GAMES"),
                                                        Font::get(FONT_SIZE_MEDIUM),
                                                        mMenuColorPrimary),
                        true);
@@ -186,7 +186,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         if (CollectionSystemsManager::getInstance()->getEditingCollection() !=
             getGamelist()->getCursor()->getSystem()->getName()) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>("ADD/REMOVE GAMES TO THIS COLLECTION",
+            row.addElement(std::make_shared<TextComponent>(_("ADD/REMOVE GAMES TO THIS COLLECTION"),
                                                            Font::get(FONT_SIZE_MEDIUM),
                                                            mMenuColorPrimary),
                            true);
@@ -197,15 +197,14 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
 
     if (UIModeController::getInstance()->isUIModeFull() &&
         CollectionSystemsManager::getInstance()->isEditing()) {
+        const std::string editingText {Utils::String::format(
+            _("FINISH EDITING '%s' COLLECTION"),
+            Utils::String::toUpper(CollectionSystemsManager::getInstance()->getEditingCollection())
+                .c_str())};
         row.elements.clear();
-        row.addElement(
-            std::make_shared<TextComponent>(
-                "FINISH EDITING '" +
-                    Utils::String::toUpper(
-                        CollectionSystemsManager::getInstance()->getEditingCollection()) +
-                    "' COLLECTION",
-                Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
-            true);
+        row.addElement(std::make_shared<TextComponent>(editingText, Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary),
+                       true);
         row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::exitEditMode, this));
         mMenu.addRow(row);
     }
@@ -254,7 +253,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     // Buttons. The logic to apply or cancel settings are handled by the destructor.
     if ((!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() == 0) ||
         system->getName() == "recent") {
-        mMenu.addButton("CLOSE", "close", [&] {
+        mMenu.addButton(_("CLOSE"), _("close"), [&] {
             mCancelled = true;
             delete this;
         });

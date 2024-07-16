@@ -581,7 +581,9 @@ bool GuiThemeDownloader::renameDirectory(const std::string& path, const std::str
 
     if (renameStatus) {
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(), "COULDN'T RENAME DIRECTORY \"" + path + "\", PERMISSION PROBLEMS?",
+            getHelpStyle(),
+            Utils::String::format(_("COULDN'T RENAME DIRECTORY \"%s\"\nPERMISSION PROBLEMS?"),
+                                  path.c_str()),
             _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
         return true;
     }
@@ -773,11 +775,12 @@ void GuiThemeDownloader::populateGUI()
             if (theme.manuallyDownloaded || theme.invalidRepository) {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
-                    "IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA "
-                    "THIS THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
-                    "DIRECTORY \"" +
-                        theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
-                        theme.reponame + theme.manualExtension + "_DISABLED\"",
+                    Utils::String::format(
+                        _("IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA "
+                          "THIS THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
+                          "DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_DISABLED\""),
+                        std::string {theme.reponame + theme.manualExtension}.c_str(),
+                        std::string {theme.reponame + theme.manualExtension}.c_str()),
                     _("PROCEED"),
                     [this, theme] {
                         if (renameDirectory(mThemeDirectory + theme.reponame +
@@ -800,12 +803,13 @@ void GuiThemeDownloader::populateGUI()
             else if (theme.corruptRepository) {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
-                    "IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN CAUSED "
-                    "BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF THE ES-DE "
-                    "PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
-                    "\"" +
-                        theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
-                        theme.reponame + theme.manualExtension + "_CORRUPT_DISABLED\"",
+                    Utils::String::format(
+                        _("IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+                          "CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE "
+                          "IF THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE "
+                          "OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""),
+                        std::string {theme.reponame + theme.manualExtension}.c_str(),
+                        std::string {theme.reponame + theme.manualExtension}.c_str()),
                     _("PROCEED"),
                     [this, theme] {
                         if (renameDirectory(mThemeDirectory + theme.reponame +
@@ -828,11 +832,13 @@ void GuiThemeDownloader::populateGUI()
             else if (theme.shallowRepository) {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
-                    "IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
-                    "DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH DOWNLOAD "
-                    "IS REQUIRED AND THE OLD THEME DIRECTORY \"" +
-                        theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
-                        theme.reponame + theme.manualExtension + "_DISABLED\"",
+                    Utils::String::format(
+                        _("IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS "
+                          "BEEN DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A "
+                          "FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+                          "RENAMED TO \"%s_DISABLED\""),
+                        std::string {theme.reponame + theme.manualExtension}.c_str(),
+                        std::string {theme.reponame + theme.manualExtension}.c_str()),
                     _("PROCEED"),
                     [this, theme] {
                         if (renameDirectory(mThemeDirectory + theme.reponame +
@@ -855,9 +861,10 @@ void GuiThemeDownloader::populateGUI()
             else if (theme.hasLocalChanges) {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
-                    "THEME REPOSITORY \"" + theme.reponame +
-                        "\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR CHANGES "
-                        "OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME",
+                    Utils::String::format(
+                        _("THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE "
+                          "YOUR CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"),
+                        std::string {theme.reponame}.c_str()),
                     _("PROCEED"),
                     [this, theme] {
                         std::promise<bool>().swap(mPromise);

@@ -668,18 +668,21 @@ void CollectionSystemsManager::setEditMode(const std::string& collectionName, bo
             else
                 editButton = "'Y'";
         }
-        mWindow->queueInfoPopup("EDITING '" + Utils::String::toUpper(collectionName) +
-                                    "' COLLECTION, ADD/REMOVE GAMES WITH " + editButton,
-                                10000);
+        mWindow->queueInfoPopup(
+            Utils::String::format(_("EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"),
+                                  Utils::String::toUpper(collectionName).c_str(),
+                                  editButton.c_str()),
+            10000);
     }
 }
 
 void CollectionSystemsManager::exitEditMode(bool showPopup)
 {
     if (showPopup) {
-        mWindow->queueInfoPopup("FINISHED EDITING '" + Utils::String::toUpper(mEditingCollection) +
-                                    "' COLLECTION",
-                                4000);
+        mWindow->queueInfoPopup(
+            Utils::String::format(_("FINISHED EDITING '%s' COLLECTION"),
+                                  Utils::String::toUpper(mEditingCollection).c_str()),
+            4000);
     }
 
     mIsEditingCustom = false;
@@ -1037,7 +1040,9 @@ void CollectionSystemsManager::deleteCustomCollection(const std::string& collect
                       << configFile << "\"";
 #endif
         mWindow->queueInfoPopup(
-            "DELETED COLLECTION '" + Utils::String::toUpper(collectionName) + "'", 5000);
+            Utils::String::format(_("DELETED COLLECTION '%s'"),
+                                  Utils::String::toUpper(collectionName).c_str()),
+            5000);
     }
     else {
         LOG(LogError) << "Attempted to delete custom collection \"" + collectionName + "\" " +
