@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-16 12:11+0200\n"
+"POT-Creation-Date: 2024-07-16 13:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -958,6 +958,10 @@ msgstr ""
 msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
 msgstr ""
 
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr ""
+
 msgid "SELECT COLLECTIONS"
 msgstr ""
 
@@ -989,6 +993,12 @@ msgid "DELETE CUSTOM COLLECTION"
 msgstr ""
 
 msgid "COLLECTION TO DELETE"
+msgstr ""
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'"
 msgstr ""
 
 msgid "GROUP CUSTOM COLLECTIONS"
@@ -1090,6 +1100,12 @@ msgstr ""
 msgid "THEME HAS BEEN UPDATED"
 msgstr ""
 
+#, c-format
+msgid ""
+"COULDN'T RENAME DIRECTORY \"%s\"\n"
+"PERMISSION PROBLEMS?"
+msgstr ""
+
 msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
 msgstr ""
 
@@ -1106,7 +1122,36 @@ msgstr ""
 msgid "and"
 msgstr ""
 
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA THIS "
+"THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+"\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
+msgstr ""
+
 msgid "DOWNLOADING THEME"
+msgstr ""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
+"DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
+msgstr ""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
+"DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH "
+"DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
+"\"%s_DISABLED\""
+msgstr ""
+
+#, c-format
+msgid ""
+"THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
+"CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
 msgstr ""
 
 msgid "UPDATING THEME"
@@ -1295,6 +1340,12 @@ msgid "JUMP TO.."
 msgstr ""
 
 msgid "SORT GAMES BY"
+msgstr ""
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr ""
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
 msgstr ""
 
 msgid "EDIT THIS FOLDER'S METADATA"
@@ -1697,6 +1748,18 @@ msgstr ""
 msgid "collections"
 msgstr ""
 
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr ""
+
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr ""
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr ""
+
 msgid "name, ascending"
 msgstr ""
 
@@ -1915,6 +1978,14 @@ msgid "Creating system directories..."
 msgstr ""
 
 msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr ""
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr ""
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
 msgstr ""
 
 msgid "medium"
