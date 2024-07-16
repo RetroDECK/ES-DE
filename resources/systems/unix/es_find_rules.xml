@@ -448,6 +448,7 @@
         <rule type="systempath">
             <entry>Ryujinx</entry>
             <entry>Ryujinx.Ava</entry>
+            <entry>ryujinx</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/publish/Ryujinx</entry>
