@@ -569,7 +569,8 @@ namespace Utils
                     stringCapitalized += chr;
                 }
 
-                if (chr == " " || chr == "-" || chr == "\n" || chr == "\r" || chr == "\t")
+                if (chr == " " || chr == "-" || chr == "\n" || chr == "\r" || chr == "\t" ||
+                    chr == "(" || chr == "[")
                     capitalize = true;
             }
 
