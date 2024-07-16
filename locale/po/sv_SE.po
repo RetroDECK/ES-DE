@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-16 13:49+0200\n"
-"PO-Revision-Date: 2024-07-16 13:52+0200\n"
+"POT-Creation-Date: 2024-07-16 16:48+0200\n"
+"PO-Revision-Date: 2024-07-16 16:45+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -308,6 +308,52 @@ msgstr "KIOSK"
 
 msgid "KID"
 msgstr "BARN"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"DET HÄR ÄNDRAR GRÄNSSNITTET TILL DET BEGRÄNSADE LÄGET\n"
+"'KIOSK'\n"
+"DETTA DÖLJER DE FLESTA MENYALTERNATIVEN\n"
+"FÖR ATT LÅSA UPP OCH ÅTERGÅ TILL DET FULLA GRÄNSSNITTET, SKRIV IN DEN HÄR "
+"KODEN:\n"
+"%s\n"
+"\n"
+"VILL DU FORTSÄTTA?"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"DET HÄR ÄNDRAR GRÄNSSNITTET TILL DET BEGRÄNSADE LÄGET\n"
+"'BARN'\n"
+"DETTA AKTIVERAR ENBART SPEL SOM HAR FLAGGATS SOM\n"
+"PASSANDE FÖR BARN\n"
+"FÖR ATT LÅSA UPP OCH ÅTERGÅ TILL DET FULLA GRÄNSSNITTET, SKRIV IN DEN HÄR "
+"KODEN:\n"
+"%s\n"
+"\n"
+"VILL DU FORTSÄTTA?"
+
+msgid "YES"
+msgstr "JA"
+
+msgid "NO"
+msgstr "NEJ"
 
 msgid "RANDOM ENTRY BUTTON"
 msgstr "KNAPP FÖR SLUMPMÄSSIG POST"
@@ -634,12 +680,6 @@ msgstr ""
 
 msgid "REALLY QUIT?"
 msgstr "VERKLIGEN AVSLUTA?"
-
-msgid "YES"
-msgstr "JA"
-
-msgid "NO"
-msgstr "NEJ"
 
 msgid "REALLY REBOOT?"
 msgstr "VERKLIGEN STARTA OM?"
@@ -2103,11 +2143,11 @@ msgstr "FEL: KUNDE INTE RENDERA PDF FIL"
 
 #, c-format
 msgid "ADDED INPUT DEVICE '%s'"
-msgstr "LADE TILL ENHET '%s'"
+msgstr "LADE TILL INPUT ENHET '%s'"
 
 #, c-format
 msgid "REMOVED INPUT DEVICE '%s'"
-msgstr "TOG BORT ENHET '%s'"
+msgstr "TOG BORT INPUT ENHET '%s'"
 
 msgid "medium"
 msgstr "medium"
@@ -2166,6 +2206,22 @@ msgstr "Å-M-D"
 msgid "modify"
 msgstr "modifiera"
 
+#, c-format
+msgid "%i (OF %i)"
+msgstr "%i (AV %i)"
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] "%s VALD"
+msgstr[1] "%s VALDA"
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] "%i VALD"
+msgstr[1] "%i VALDA"
+
 msgid "change value"
 msgstr "ändra värde"
 
@@ -2201,6 +2257,12 @@ msgstr "växla"
 
 msgid "add half star"
 msgstr "addera halv stjärna"
+
+msgid "SPACE"
+msgstr "BLANKSTEG"
+
+msgid "LOAD"
+msgstr "LÄS IN"
 
 msgid "shift"
 msgstr "shift"
@@ -2254,9 +2316,6 @@ msgstr "LADDA STANDARDVÄRDEN"
 
 msgid "DISCARD CHANGES"
 msgstr "KASSERA ÄNDRINGARNA"
-
-msgid "LOAD"
-msgstr "LÄS IN"
 
 msgid "discard changes"
 msgstr "kassera ändringarna"
