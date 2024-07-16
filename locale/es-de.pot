@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-16 11:23+0200\n"
+"POT-Creation-Date: 2024-07-16 12:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -1685,7 +1685,16 @@ msgstr ""
 msgid "quit application"
 msgstr ""
 
-msgid "FAVORITES"
+msgid "all games"
+msgstr ""
+
+msgid "last played"
+msgstr ""
+
+msgid "favorites"
+msgstr ""
+
+msgid "collections"
 msgstr ""
 
 msgid "name, ascending"

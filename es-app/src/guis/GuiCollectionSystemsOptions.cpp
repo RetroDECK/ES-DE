@@ -54,8 +54,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
              autoSystems.cbegin();
          it != autoSystems.cend(); ++it)
-        mCollectionSystemsAuto->add(it->second.decl.fullName, it->second.decl.name,
-                                    it->second.isEnabled);
+        mCollectionSystemsAuto->add(Utils::String::toUpper(_(it->second.decl.fullName.c_str())),
+                                    it->second.decl.name, it->second.isEnabled);
     addWithLabel(_("AUTOMATIC GAME COLLECTIONS"), mCollectionSystemsAuto);
     addSaveFunc([this, autoSystems] {
         std::string autoSystemsSelected {Utils::String::vectorToDelimitedString(

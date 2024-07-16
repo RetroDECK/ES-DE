@@ -47,13 +47,21 @@ CollectionSystemsManager::CollectionSystemsManager() noexcept
 {
     // clang-format off
     CollectionSystemDecl systemDecls[] {
-    //  Type                 Name                Long name          Theme folder           isCustom
-        {AUTO_ALL_GAMES,     "all",              _("ALL GAMES"),    "auto-allgames",       false},
-        {AUTO_LAST_PLAYED,   "recent",           _("LAST PLAYED"),  "auto-lastplayed",     false},
-        {AUTO_FAVORITES,     "favorites",        _("FAVORITES"),    "auto-favorites",      false},
-        {CUSTOM_COLLECTION,  myCollectionsName,  _("COLLECTIONS"),  "custom-collections",  true }
+    //  Type                 Name                Long name       Theme folder           isCustom
+        {AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false},
+        {AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false},
+        {AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false},
+        {CUSTOM_COLLECTION,  myCollectionsName,  "collections",  "custom-collections",  true }
     };
     // clang-format on
+
+#if defined(GETTEXT_DUMMY_ENTRIES)
+    // This is just to get gettext msgid entries added to the PO message catalog files.
+    _("all games");
+    _("last played");
+    _("favorites");
+    _("collections");
+#endif
 
     // Create a map of the collections.
     std::vector<CollectionSystemDecl> tempSystemDecl {std::vector<CollectionSystemDecl>(
