@@ -322,12 +322,21 @@ private:
             std::stringstream ss;
 
             // For special situations, allow the "selected" text to be overridden to a custom value.
-            if (mOverrideMultiText != "")
+            if (mOverrideMultiText != "") {
                 ss << mOverrideMultiText;
-            else if (mMultiShowTotal)
-                ss << getSelectedObjects().size() << " (OF " << mEntries.size() << ") SELECTED";
-            else
-                ss << getSelectedObjects().size() << " SELECTED";
+            }
+            else if (mMultiShowTotal) {
+                const std::string numString {Utils::String::format(
+                    _("%i (OF %i)"), getSelectedObjects().size(), mEntries.size())};
+                ss << Utils::String::format(
+                    _n("%s SELECTED", "%s SELECTED", getSelectedObjects().size()),
+                    numString.c_str());
+            }
+            else {
+                ss << Utils::String::format(
+                    _n("%i SELECTED", "%i SELECTED", getSelectedObjects().size()),
+                    getSelectedObjects().size());
+            }
 
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y);

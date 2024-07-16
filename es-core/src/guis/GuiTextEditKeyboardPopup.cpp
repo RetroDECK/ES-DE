@@ -40,41 +40,6 @@
 #include "guis/GuiMsgBox.h"
 #include "utils/StringUtil.h"
 
-// clang-format off
-std::vector<std::vector<std::string>> kbBaseUS {
-    {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "DEL"},
-    {"!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "DEL"},
-    {"¡", "²", "³", "¤", "€", "¼", "½", "¾", "‘", "’", "¥", "×", "DEL"},
-    {"¹", "",  "",  "£", "",  "",  "",  "",  "",  "",  "",  "÷", "DEL"},
-
-    {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "OK"},
-    {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "OK"},
-    {"ä", "å", "é", "®", "þ", "ü", "ú", "í", "ó", "ö", "«", "»", "OK"},
-    {"Ä", "Å", "É", "",  "Þ", "Ü", "Ú", "Í", "Ó", "Ö", "",  "",  "OK"},
-
-    {"a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\", "-rowspan-"},
-    {"A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "|", "-rowspan-"},
-    {"á", "ß", "ð", "",  "",  "",  "",  "",  "ø", "¶", "´",  "¬", "-rowspan-"},
-    {"Á", "§", "Ð", "",  "",  "",  "",  "",  "Ø", "°", "¨",  "¦", "-rowspan-"},
-
-    {"`", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "ALT", "-colspan-"},
-    {"~", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", "ALT", "-colspan-"},
-    {"",  "æ", "",  "©", "",  "",  "ñ", "µ", "ç", "",  "¿", "ALT", "-colspan-"},
-    {"",  "Æ", "",  "¢", "",  "",  "Ñ", "Μ", "Ç", "",  "",  "ALT", "-colspan-"}};
-
-std::vector<std::vector<std::string>> kbLastRowNormal {
-    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"}};
-
-std::vector<std::vector<std::string>> kbLastRowLoad {
-    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"}};
-// clang-format on
-
 GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     const HelpStyle& helpstyle,
     const float verticalPosition,
@@ -111,6 +76,41 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     , mNavigationRepeatDirX {0}
     , mNavigationRepeatDirY {0}
 {
+    // clang-format off
+    std::vector<std::vector<std::string>> kbBaseUS {
+        {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "DEL"},
+        {"!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "DEL"},
+        {"¡", "²", "³", "¤", "€", "¼", "½", "¾", "‘", "’", "¥", "×", "DEL"},
+        {"¹", "",  "",  "£", "",  "",  "",  "",  "",  "",  "",  "÷", "DEL"},
+
+        {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "OK"},
+        {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "OK"},
+        {"ä", "å", "é", "®", "þ", "ü", "ú", "í", "ó", "ö", "«", "»", "OK"},
+        {"Ä", "Å", "É", "",  "Þ", "Ü", "Ú", "Í", "Ó", "Ö", "",  "",  "OK"},
+
+        {"a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\", "-rowspan-"},
+        {"A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "|", "-rowspan-"},
+        {"á", "ß", "ð", "",  "",  "",  "",  "",  "ø", "¶", "´",  "¬", "-rowspan-"},
+        {"Á", "§", "Ð", "",  "",  "",  "",  "",  "Ø", "°", "¨",  "¦", "-rowspan-"},
+
+        {"`", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "ALT", "-colspan-"},
+        {"~", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", "ALT", "-colspan-"},
+        {"",  "æ", "",  "©", "",  "",  "ñ", "µ", "ç", "",  "¿", "ALT", "-colspan-"},
+        {"",  "Æ", "",  "¢", "",  "",  "Ñ", "Μ", "Ç", "",  "",  "ALT", "-colspan-"}};
+
+    std::vector<std::vector<std::string>> kbLastRowNormal {
+        {"SHIFT", "-colspan-", _("SPACE"), "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", _("CLEAR"), "-colspan-", _("CANCEL"), "-colspan-"},
+        {"SHIFT", "-colspan-", _("SPACE"), "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", _("CLEAR"), "-colspan-", _("CANCEL"), "-colspan-"},
+        {"SHIFT", "-colspan-", _("SPACE"), "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", _("CLEAR"), "-colspan-", _("CANCEL"), "-colspan-"},
+        {"SHIFT", "-colspan-", _("SPACE"), "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", _("CLEAR"), "-colspan-", _("CANCEL"), "-colspan-"}};
+
+    std::vector<std::vector<std::string>> kbLastRowLoad {
+        {"SHIFT", "-colspan-", _("SPACE"), "-colspan-", "-colspan-", "-colspan-", "-colspan-", _("LOAD"), "-colspan-", _("CLEAR"), "-colspan-", _("CANCEL"), "-colspan-"},
+        {"SHIFT", "-colspan-", _("SPACE"), "-colspan-", "-colspan-", "-colspan-", "-colspan-", _("LOAD"), "-colspan-", _("CLEAR"), "-colspan-", _("CANCEL"), "-colspan-"},
+        {"SHIFT", "-colspan-", _("SPACE"), "-colspan-", "-colspan-", "-colspan-", "-colspan-", _("LOAD"), "-colspan-", _("CLEAR"), "-colspan-", _("CANCEL"), "-colspan-"},
+        {"SHIFT", "-colspan-", _("SPACE"), "-colspan-", "-colspan-", "-colspan-", "-colspan-", _("LOAD"), "-colspan-", _("CLEAR"), "-colspan-", _("CANCEL"), "-colspan-"}};
+    // clang-format on
+
     addChild(&mBackground);
     addChild(&mGrid);
 
@@ -185,7 +185,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
                 alted = OK_SYMBOL;
                 altshifted = OK_SYMBOL;
             }
-            else if (lower == "SPACE") {
+            else if (lower == _("SPACE")) {
                 lower = " ";
                 upper = " ";
                 alted = " ";
@@ -515,12 +515,12 @@ std::vector<HelpPrompt> GuiTextEditKeyboardPopup::getHelpPrompts()
     if (prompts.size() > 0 && prompts.front().second == OK_SYMBOL)
         prompts.front().second = mAcceptBtnHelpText;
     else if (prompts.size() > 0 && prompts.front().second == " ")
-        prompts.front().second = "SPACE";
-    else if (prompts.size() > 0 && prompts.front().second == "CLEAR")
+        prompts.front().second = _("SPACE");
+    else if (prompts.size() > 0 && prompts.front().second == _("CLEAR"))
         prompts.front().second = mClearBtnHelpText;
-    else if (prompts.size() > 0 && prompts.front().second == "LOAD")
+    else if (prompts.size() > 0 && prompts.front().second == _("LOAD"))
         prompts.front().second = mLoadBtnHelpText;
-    else if (prompts.size() > 0 && prompts.front().second == "CANCEL")
+    else if (prompts.size() > 0 && prompts.front().second == _("CANCEL"))
         prompts.front().second = mCancelBtnHelpText;
 
     // If a prompt has no value set, then remove it.
@@ -677,22 +677,22 @@ std::shared_ptr<ButtonComponent> GuiTextEditKeyboardPopup::makeButton(
                 mText->stopEditing();
                 return;
             }
-            else if (key == "SPACE" || key == " ") {
+            else if (key == _("SPACE") || key == " ") {
                 mText->startEditing();
                 mText->textInput(" ");
                 mText->stopEditing();
                 return;
             }
-            else if (key == "LOAD") {
+            else if (key == _("LOAD")) {
                 mText->setValue(mDefaultValue->getValue());
                 mText->setCursor(mDefaultValue->getValue().size());
                 return;
             }
-            else if (key == "CLEAR") {
+            else if (key == _("CLEAR")) {
                 mText->setValue("");
                 return;
             }
-            else if (key == "CANCEL") {
+            else if (key == _("CANCEL")) {
                 delete this;
                 return;
             }

@@ -720,22 +720,26 @@ void GuiMenu::openUIOptions()
             return;
         }
         else if (selectedMode != "full") {
-            std::string msg {"YOU ARE CHANGING THE UI TO THE RESTRICTED MODE\n'" +
-                             Utils::String::toUpper(selectedMode) + "'\n"};
+            std::string msg;
             if (selectedMode == "kiosk") {
-                msg.append("THIS WILL HIDE MOST MENU OPTIONS TO PREVENT\n");
-                msg.append("CHANGES TO THE SYSTEM\n");
+                msg = Utils::String::format(
+                    _("THIS CHANGES THE UI TO THE RESTRICTED MODE\n'KIOSK'\n"
+                      "THIS WILL HIDE MOST MENU OPTIONS\n"
+                      "TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n%s\n\n"
+                      "DO YOU WANT TO PROCEED?"),
+                    UIModeController::getInstance()->getFormattedPassKeyStr().c_str());
             }
             else {
-                msg.append("THIS WILL LIMIT THE AVAILABLE GAMES TO THE ONES\n");
-                msg.append("FLAGGED SUITABLE FOR CHILDREN\n");
+                msg = Utils::String::format(
+                    _("THIS CHANGES THE UI TO THE RESTRICTED MODE\n'KID'\n"
+                      "THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+                      "AS SUITABLE FOR CHILDREN\n"
+                      "TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n%s\n\n"
+                      "DO YOU WANT TO PROCEED?"),
+                    UIModeController::getInstance()->getFormattedPassKeyStr().c_str());
             }
-            msg.append("TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE: \n")
-                .append(UIModeController::getInstance()->getFormattedPassKeyStr())
-                .append("\n\n")
-                .append("DO YOU WANT TO PROCEED?");
             mWindow->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), msg, "YES",
+                this->getHelpStyle(), msg, _("YES"),
                 [this, selectedMode] {
                     LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '"
                                   << selectedMode << "'.";
@@ -762,7 +766,7 @@ void GuiMenu::openUIOptions()
                                                               false);
                     mWindow->invalidateCachedBackground();
                 },
-                "NO", nullptr, "", nullptr, nullptr, true));
+                _("NO"), nullptr, "", nullptr, nullptr, true));
         }
         else {
             LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '" << selectedMode
