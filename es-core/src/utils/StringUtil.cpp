@@ -570,7 +570,7 @@ namespace Utils
                 }
 
                 if (chr == " " || chr == "-" || chr == "\n" || chr == "\r" || chr == "\t" ||
-                    chr == "(" || chr == "[" || chr == "'" || chr == "\"")
+                    chr == "(" || chr == "[" || chr == "\"")
                     capitalize = true;
             }
 
