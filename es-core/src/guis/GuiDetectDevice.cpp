@@ -45,10 +45,13 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
     std::stringstream deviceInfo;
     int numDevices {InputManager::getInstance().getNumJoysticks()};
 
-    if (numDevices > 0)
-        deviceInfo << numDevices << " GAMEPAD" << (numDevices > 1 ? "S" : "") << " DETECTED";
-    else
+    if (numDevices > 0) {
+        deviceInfo << Utils::String::format(
+            _n("%i GAMEPAD DETECTED", "%i GAMEPADS DETECTED", numDevices), numDevices);
+    }
+    else {
         deviceInfo << _("NO GAMEPADS DETECTED");
+    }
 
     if (numDevices > 1 && Settings::getInstance()->getBool("InputOnlyFirstController"))
         deviceInfo << " " << _("(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)");

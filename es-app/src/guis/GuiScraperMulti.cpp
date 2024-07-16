@@ -223,11 +223,10 @@ void GuiScraperMulti::doNextSearch()
     std::stringstream ss;
 
     if (mQueueCountPerSystem.size() > 1) {
-        // const int gameCount {++mQueueCountPerSystem[mSearchQueue.front().system].first};
         const int totalGameCount {mQueueCountPerSystem[mSearchQueue.front().system].second};
+        const std::string gameCountText {_n("GAME", "GAMES", totalGameCount)};
         mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()) + " [" +
-                         std::to_string(totalGameCount) + " GAME" +
-                         (totalGameCount == 1 ? "]" : "S]"));
+                         std::to_string(totalGameCount) + " " + gameCountText + "]");
     }
     else {
         mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()));
@@ -269,8 +268,9 @@ void GuiScraperMulti::doNextSearch()
 
     // Update subtitle.
     ss.str("");
-    ss << "GAME " << (mCurrentGame + 1) << " OF " << mTotalGames << " - " << folderPath
-       << scrapeName
+    const std::string gameCounterText {
+        Utils::String::format(_("GAME %i OF %i"), mCurrentGame + 1, mTotalGames)};
+    ss << gameCounterText << " - " << folderPath << scrapeName
        << ((mSearchQueue.front().game->getType() == FOLDER) ? "  " + ViewController::FOLDER_CHAR :
                                                               "");
     mSubtitle->setText(ss.str());
@@ -313,12 +313,14 @@ void GuiScraperMulti::finish()
         ss << _("NO GAMES WERE SCRAPED");
     }
     else {
-        ss << mTotalSuccessful << " GAME" << ((mTotalSuccessful > 1) ? "S" : "")
-           << " SUCCESSFULLY SCRAPED";
+        ss << Utils::String::format(
+            _n("%i GAME SUCCESSFULLY SCRAPED", "%i GAMES SUCCESSFULLY SCRAPED", mTotalSuccessful),
+            mTotalSuccessful);
 
         if (mTotalSkipped > 0)
             ss << "\n"
-               << mTotalSkipped << " GAME" << ((mTotalSkipped > 1) ? "S" : "") << " SKIPPED";
+               << Utils::String::format(_n("%i GAME SKIPPED", "%i GAMES SKIPPED", mTotalSkipped),
+                                        mTotalSkipped);
     }
 
     // Pressing either OK or using the back button should delete us.

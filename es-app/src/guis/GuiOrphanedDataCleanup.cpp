@@ -329,7 +329,8 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                           << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "A flatten.txt file was found, skipping \"" + currentSystem + "\"";
+                mErrorMessage = Utils::String::format(
+                    _("A flatten.txt file was found, skipping \"%s\""), currentSystem.c_str());
             }
             continue;
         }
@@ -522,7 +523,8 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                           << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage = "A flatten.txt file was found, skipping \"" + currentSystem + "\"";
+                mErrorMessage = Utils::String::format(
+                    _("A flatten.txt file was found, skipping \"%s\""), currentSystem.c_str());
             }
             continue;
         }
@@ -549,8 +551,8 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             LOG(LogError) << "Couldn't parse file \"" << gamelistFile << "\"";
             {
                 std::unique_lock<std::mutex> lock {mMutex};
-                mErrorMessage =
-                    "Couldn't parse gamelist.xml file for \"" + system->getName() + "\"";
+                mErrorMessage = Utils::String::format(
+                    _("Couldn't parse gamelist.xml file for \"%s\""), system->getName().c_str());
             }
             SDL_Delay(500);
             continue;
@@ -575,7 +577,8 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             {
                 std::unique_lock<std::mutex> lock {mMutex};
                 mErrorMessage =
-                    "Couldn't find a gamelist tag in file for system \"" + system->getName() + "\"";
+                    Utils::String::format(_("Couldn't find a gamelist tag in file for \"%s\""),
+                                          system->getName().c_str());
             }
             SDL_Delay(500);
             continue;

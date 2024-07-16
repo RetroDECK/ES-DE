@@ -44,10 +44,12 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
                                               mMenuColorPrimary, ALIGN_CENTER);
     mGrid.setEntry(mStatus, glm::ivec2 {0, 1}, false, true, glm::ivec2 {6, 1});
 
-    mGameCounter = std::make_shared<TextComponent>(
-        std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
-            (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED",
-        Font::get(FONT_SIZE_SMALL), mMenuColorSecondary, ALIGN_CENTER);
+    const std::string gameProcessText {Utils::String::format(
+        _n("%i OF %i GAME PROCESSED", "%i OF %i GAMES PROCESSED", mTotalGames), mGamesProcessed,
+        mTotalGames)};
+
+    mGameCounter = std::make_shared<TextComponent>(gameProcessText, Font::get(FONT_SIZE_SMALL),
+                                                   mMenuColorSecondary, ALIGN_CENTER);
     mGrid.setEntry(mGameCounter, glm::ivec2 {0, 2}, false, true, glm::ivec2 {6, 1});
 
     // Spacer row with top border.
@@ -321,15 +323,16 @@ void GuiOfflineGenerator::update(int deltaTime)
 
     // Update the statistics.
     mStatus->setText(_("RUNNING"));
-    mGameCounter->setText(std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
-                          (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED");
+    mGameCounter->setText(Utils::String::format(
+        _n("%i OF %i GAME PROCESSED", "%i OF %i GAMES PROCESSED", mTotalGames), mGamesProcessed,
+        mTotalGames));
 
     mGeneratedVal->setText(std::to_string(mImagesGenerated));
     mFailedVal->setText(std::to_string(mGamesFailed));
     mOverwrittenVal->setText(std::to_string(mImagesOverwritten));
 
     if (mGamesProcessed == mTotalGames) {
-        mStatus->setText(_("COMPLETED"));
+        mStatus->setText(_("COMPLETED [MIXIMAGE GENERATOR]"));
         mStartPauseButton->setText(_("DONE"), _("done (close)"));
         mStartPauseButton->setPressedFunc([this]() { delete this; });
         mCloseButton->setText(_("CLOSE"), _("close"));
