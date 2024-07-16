@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-16 13:49+0200\n"
-"PO-Revision-Date: 2024-07-16 13:51+0200\n"
+"POT-Creation-Date: 2024-07-16 16:48+0200\n"
+"PO-Revision-Date: 2024-07-16 16:45+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -308,6 +308,50 @@ msgstr "KIOSK"
 
 msgid "KID"
 msgstr "KID"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+
+msgid "YES"
+msgstr "YES"
+
+msgid "NO"
+msgstr "NO"
 
 msgid "RANDOM ENTRY BUTTON"
 msgstr "RANDOM ENTRY BUTTON"
@@ -633,12 +677,6 @@ msgstr ""
 
 msgid "REALLY QUIT?"
 msgstr "REALLY QUIT?"
-
-msgid "YES"
-msgstr "YES"
-
-msgid "NO"
-msgstr "NO"
 
 msgid "REALLY REBOOT?"
 msgstr "REALLY REBOOT?"
@@ -2162,6 +2200,22 @@ msgstr "Y-M-D"
 msgid "modify"
 msgstr "modify"
 
+#, c-format
+msgid "%i (OF %i)"
+msgstr "%i (OF %i)"
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] "%s SELECTED"
+msgstr[1] "%s SELECTED"
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] "%i SELECTED"
+msgstr[1] "%i SELECTED"
+
 msgid "change value"
 msgstr "change value"
 
@@ -2197,6 +2251,12 @@ msgstr "toggle"
 
 msgid "add half star"
 msgstr "add half star"
+
+msgid "SPACE"
+msgstr "SPACE"
+
+msgid "LOAD"
+msgstr "LOAD"
 
 msgid "shift"
 msgstr "shift"
@@ -2248,9 +2308,6 @@ msgstr "LOAD DEFAULT"
 
 msgid "DISCARD CHANGES"
 msgstr "DISCARD CHANGES"
-
-msgid "LOAD"
-msgstr "LOAD"
 
 msgid "discard changes"
 msgstr "discard changes"

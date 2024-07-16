@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-16 13:49+0200\n"
+"POT-Creation-Date: 2024-07-16 16:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -307,6 +307,35 @@ msgid "KIOSK"
 msgstr ""
 
 msgid "KID"
+msgstr ""
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+
+msgid "YES"
+msgstr ""
+
+msgid "NO"
 msgstr ""
 
 msgid "RANDOM ENTRY BUTTON"
@@ -615,12 +644,6 @@ msgid ""
 msgstr ""
 
 msgid "REALLY QUIT?"
-msgstr ""
-
-msgid "YES"
-msgstr ""
-
-msgid "NO"
 msgstr ""
 
 msgid "REALLY REBOOT?"
@@ -2045,6 +2068,22 @@ msgstr ""
 msgid "modify"
 msgstr ""
 
+#, c-format
+msgid "%i (OF %i)"
+msgstr ""
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "change value"
 msgstr ""
 
@@ -2079,6 +2118,12 @@ msgid "toggle"
 msgstr ""
 
 msgid "add half star"
+msgstr ""
+
+msgid "SPACE"
+msgstr ""
+
+msgid "LOAD"
 msgstr ""
 
 msgid "shift"
@@ -2130,9 +2175,6 @@ msgid "LOAD DEFAULT"
 msgstr ""
 
 msgid "DISCARD CHANGES"
-msgstr ""
-
-msgid "LOAD"
 msgstr ""
 
 msgid "discard changes"
