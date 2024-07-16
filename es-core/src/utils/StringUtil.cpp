@@ -302,8 +302,8 @@ namespace Utils
 
         unsigned int chars2Unicode(const std::string& stringArg, size_t& cursor)
         {
-            unsigned const char checkCharType = stringArg[cursor];
-            unsigned int result = '?';
+            unsigned const char checkCharType {static_cast<unsigned char>(stringArg[cursor])};
+            unsigned int result {'?'};
 
             // 0xxxxxxx, one byte character.
             if (checkCharType <= 0x7F) {
@@ -376,7 +376,7 @@ namespace Utils
         std::string getFirstCharacter(const std::string& stringArg, bool toUpper)
         {
             std::string firstChar;
-            unsigned const char checkCharType = stringArg.front();
+            unsigned const char checkCharType {static_cast<unsigned char>(stringArg.front())};
 
             // Normal UTF-8 ASCII character.
             if (checkCharType <= 0x7F)
@@ -396,7 +396,7 @@ namespace Utils
 
         size_t nextCursor(const std::string& stringArg, const size_t cursor)
         {
-            size_t result = cursor;
+            size_t result {cursor};
 
             while (result < stringArg.length()) {
                 ++result;
@@ -411,7 +411,7 @@ namespace Utils
 
         size_t prevCursor(const std::string& stringArg, const size_t cursor)
         {
-            size_t result = cursor;
+            size_t result {cursor};
 
             while (result > 0) {
                 --result;
@@ -426,14 +426,14 @@ namespace Utils
 
         size_t moveCursor(const std::string& stringArg, const size_t cursor, const int amount)
         {
-            size_t result = cursor;
+            size_t result {cursor};
 
             if (amount > 0) {
-                for (int i = 0; i < amount; ++i)
+                for (int i {0}; i < amount; ++i)
                     result = nextCursor(stringArg, result);
             }
             else if (amount < 0) {
-                for (int i = amount; i < 0; ++i)
+                for (int i {amount}; i < 0; ++i)
                     result = prevCursor(stringArg, result);
             }
 
@@ -445,7 +445,7 @@ namespace Utils
             std::string stringLower;
             unsigned char checkCharType;
 
-            for (size_t i = 0; i < stringArg.length();) {
+            for (size_t i {0}; i < stringArg.length();) {
                 checkCharType = stringArg[i];
                 // Normal UTF-8 ASCII character.
                 if (checkCharType <= 0x7F) {
@@ -470,10 +470,10 @@ namespace Utils
                     wchar_t unicodeChar = firstChar | secondChar;
 
                     // Try to find an entry for the character in the Unicode uppercase table.
-                    wchar_t* charIndex = std::wcschr(unicodeUppercase, unicodeChar);
+                    wchar_t* charIndex {std::wcschr(unicodeUppercase, unicodeChar)};
 
                     if (charIndex != nullptr) {
-                        wchar_t lowerChar = *(unicodeLowercase + (charIndex - unicodeUppercase));
+                        wchar_t lowerChar {*(unicodeLowercase + (charIndex - unicodeUppercase))};
                         // Convert back to string format.
                         std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> byteConverter;
 
@@ -497,7 +497,7 @@ namespace Utils
             std::string stringUpper;
             unsigned char checkCharType;
 
-            for (size_t i = 0; i < stringArg.length();) {
+            for (size_t i {0}; i < stringArg.length();) {
                 checkCharType = stringArg[i];
                 // Normal UTF-8 ASCII character.
                 if (checkCharType <= 0x7F) {
@@ -522,10 +522,10 @@ namespace Utils
                     wchar_t unicodeChar = firstChar | secondChar;
 
                     // Try to find an entry for the character in the Unicode lowercase table.
-                    wchar_t* charIndex = std::wcschr(unicodeLowercase, unicodeChar);
+                    wchar_t* charIndex {std::wcschr(unicodeLowercase, unicodeChar)};
 
                     if (charIndex != nullptr) {
-                        wchar_t upperChar = *(unicodeUppercase + (charIndex - unicodeLowercase));
+                        wchar_t upperChar {*(unicodeUppercase + (charIndex - unicodeLowercase))};
                         // Convert back to string format.
                         std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> byteConverter;
 
@@ -549,25 +549,31 @@ namespace Utils
             if (stringArg == "")
                 return stringArg;
 
-            std::string line {stringArg};
-            bool active {true};
+            // This is a bit tricky as Unicode characters can be up to four bytes in length,
+            // so we need to figure out how many bytes each cursor move corresponds to and
+            // extract and case convert the string content accordingly.
+            const std::string stringLower {Utils::String::toLower(stringArg)};
+            std::string stringCapitalized;
 
-            for (auto& chr : line) {
-                if (std::isalnum(static_cast<unsigned char>(chr))) {
-                    if (active) {
-                        chr = std::toupper(chr);
-                        active = false;
-                    }
-                    else {
-                        chr = std::tolower(chr);
-                    }
+            size_t charLength {0};
+            bool capitalize {true};
+
+            for (size_t i {0}; i < stringLower.length(); i += charLength) {
+                charLength = moveCursor(stringLower, i, 1) - i;
+                const std::string chr {stringLower.substr(i, charLength)};
+                if (capitalize) {
+                    stringCapitalized += Utils::String::toUpper(chr);
+                    capitalize = false;
                 }
-                else if (chr == ' ' || chr == '-' || chr == '\n' || chr == '\r' || chr == '\t') {
-                    active = true;
+                else {
+                    stringCapitalized += chr;
                 }
+
+                if (chr == " " || chr == "-" || chr == "\n" || chr == "\r" || chr == "\t")
+                    capitalize = true;
             }
 
-            return line;
+            return stringCapitalized;
         }
 
         std::string filterUtf8(const std::string& stringArg)
@@ -579,7 +585,7 @@ namespace Utils
 
         std::string trim(const std::string& stringArg)
         {
-            std::string trimString = stringArg;
+            std::string trimString {stringArg};
 
             // Trim leading and trailing whitespaces.
             trimString.erase(trimString.begin(),
@@ -691,16 +697,16 @@ namespace Utils
 
         std::string removeParenthesis(const std::string& stringArg)
         {
-            static std::vector<char> remove = {'(', ')', '[', ']'};
-            std::string stringRemove = stringArg;
+            static std::vector<char> remove {'(', ')', '[', ']'};
+            std::string stringRemove {stringArg};
             size_t start;
             size_t end;
-            bool done = false;
+            bool done {false};
 
             while (!done) {
                 done = true;
 
-                for (size_t i = 0; i < remove.size(); i += 2) {
+                for (size_t i {0}; i < remove.size(); i += 2) {
                     end = stringRemove.find_first_of(remove[i + 1]);
                     start = stringRemove.find_last_of(remove[i + 0], end);
 
@@ -720,8 +726,8 @@ namespace Utils
                                                          bool caseInsensitive)
         {
             std::vector<std::string> vectorResult;
-            size_t start = 0;
-            size_t delimPos = stringArg.find(delimiter);
+            size_t start {0};
+            size_t delimPos {stringArg.find(delimiter)};
 
             while (delimPos != std::string::npos) {
                 vectorResult.push_back(stringArg.substr(start, delimPos - start));
@@ -772,9 +778,9 @@ namespace Utils
 
         std::string scramble(const std::string& input, const std::string& key)
         {
-            std::string buffer = input;
+            std::string buffer {input};
 
-            for (size_t i = 0; i < input.size(); ++i)
+            for (size_t i {0}; i < input.size(); ++i)
                 buffer[i] = input[i] ^ key[i];
 
             return buffer;
