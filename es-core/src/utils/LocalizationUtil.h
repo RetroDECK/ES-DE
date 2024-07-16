@@ -15,6 +15,7 @@
 #include <vector>
 
 #define _(STR) std::string(gettext(STR))
+#define _n(STR1, STR2, NUM) std::string(ngettext(STR1, STR2, NUM))
 
 namespace Utils
 {
