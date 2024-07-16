@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-15 18:33+0200\n"
-"PO-Revision-Date: 2024-07-15 18:33+0200\n"
+"POT-Creation-Date: 2024-07-16 11:23+0200\n"
+"PO-Revision-Date: 2024-07-16 11:23+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -1301,8 +1301,29 @@ msgstr "STOP"
 msgid "stop"
 msgstr "stop"
 
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "GAME"
+msgstr[1] "GAMES"
+
+#, c-format
+msgid "GAME %i OF %i"
+msgstr "GAME %i OF %i"
+
 msgid "NO GAMES WERE SCRAPED"
 msgstr "NO GAMES WERE SCRAPED"
+
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i GAME SUCCESSFULLY SCRAPED"
+msgstr[1] "%i GAMES SUCCESSFULLY SCRAPED"
+
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i GAME SKIPPED"
+msgstr[1] "%i GAMES SKIPPED"
 
 msgid "GAMELIST OPTIONS"
 msgstr "GAMELIST OPTIONS"
@@ -1412,11 +1433,23 @@ msgstr "RUNNING COLLECTIONS CLEANUP"
 msgid "PROCESSING"
 msgstr "PROCESSING"
 
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "A flatten.txt file was found, skipping \"%s\""
+
 msgid "Couldn't create target directory, permission problems?"
 msgstr "Couldn't create target directory, permission problems?"
 
 msgid "Couldn't move media file, permission problems?"
 msgstr "Couldn't move media file, permission problems?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "Couldn't parse gamelist.xml file for \"%s\""
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "Couldn't find a gamelist tag in file for \"%s\""
 
 msgid "Couldn't delete temporary gamelist file, permission problems?"
 msgstr "Couldn't delete temporary gamelist file, permission problems?"
@@ -1554,6 +1587,12 @@ msgstr "delete game"
 msgid "MIXIMAGE OFFLINE GENERATOR"
 msgstr "MIXIMAGE OFFLINE GENERATOR"
 
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i OF %i GAME PROCESSED"
+msgstr[1] "%i OF %i GAMES PROCESSED"
+
 msgid "Generated:"
 msgstr "Generated:"
 
@@ -1592,6 +1631,9 @@ msgstr "PAUSED"
 
 msgid "RUNNING"
 msgstr "RUNNING"
+
+msgid "COMPLETED [MIXIMAGE GENERATOR]"
+msgstr "COMPLETED"
 
 msgid "DONE"
 msgstr "DONE"
@@ -2079,6 +2121,12 @@ msgstr "WELCOME"
 
 msgid "CONFIGURE INPUT DEVICE"
 msgstr "CONFIGURE INPUT DEVICE"
+
+#, c-format
+msgid "%i GAMEPAD DETECTED"
+msgid_plural "%i GAMEPADS DETECTED"
+msgstr[0] "%i GAMEPAD DETECTED"
+msgstr[1] "%i GAMEPADS DETECTED"
 
 msgid "NO GAMEPADS DETECTED"
 msgstr "NO GAMEPADS DETECTED"
