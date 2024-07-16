@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-15 18:33+0200\n"
-"PO-Revision-Date: 2024-07-15 18:33+0200\n"
+"POT-Creation-Date: 2024-07-16 11:23+0200\n"
+"PO-Revision-Date: 2024-07-16 11:23+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -31,7 +31,7 @@ msgid "For more information visit"
 msgstr "För mer information besök"
 
 msgid "No Entries Found"
-msgstr "Inga Poster Hittade"
+msgstr "Inga Poster"
 
 msgid "NAME"
 msgstr "NAMN"
@@ -1304,8 +1304,29 @@ msgstr "STOPPA"
 msgid "stop"
 msgstr "stoppa"
 
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "SPEL"
+msgstr[1] "SPEL"
+
+#, c-format
+msgid "GAME %i OF %i"
+msgstr "SPEL %i AV %i"
+
 msgid "NO GAMES WERE SCRAPED"
 msgstr "INGA SPEL HANTERADES"
+
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i SPEL HANTERADES"
+msgstr[1] "%i SPEL HANTERADES"
+
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i SPEL HOPPADES ÖVER"
+msgstr[1] "%i SPEL HOPPADES ÖVER"
 
 msgid "GAMELIST OPTIONS"
 msgstr "ALTERNATIV FÖR SPELLISTA"
@@ -1415,11 +1436,23 @@ msgstr "KÖR UPPRENSNING AV SPELSAMLINGAR"
 msgid "PROCESSING"
 msgstr "PROCESSAR"
 
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "En flatten.txt fil hittades, hoppar över \"%s\""
+
 msgid "Couldn't create target directory, permission problems?"
 msgstr "Kunde inte skapa målkatalog, åtkomstproblem?"
 
 msgid "Couldn't move media file, permission problems?"
 msgstr "Kunde inte flytta mediafil, åtkomstproblem?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "Kunde inte tolka gamelist.xml filen för \"%s\""
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "Kunde inte hitta en gamelist tagg i filen för \"%s\""
 
 msgid "Couldn't delete temporary gamelist file, permission problems?"
 msgstr "Kunde inte radera temporär spellist-fil, åtkomstproblem?"
@@ -1557,6 +1590,12 @@ msgstr "radera spel"
 msgid "MIXIMAGE OFFLINE GENERATOR"
 msgstr "MIXIMAGE OFFLINE GENERATOR"
 
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i AV %i SPEL PROCESSAT"
+msgstr[1] "%i AV %i SPEL PROCESSADE"
+
 msgid "Generated:"
 msgstr "Genererade:"
 
@@ -1595,6 +1634,9 @@ msgstr "PAUSAD"
 
 msgid "RUNNING"
 msgstr "KÖR"
+
+msgid "COMPLETED [MIXIMAGE GENERATOR]"
+msgstr "AVSLUTAD"
 
 msgid "DONE"
 msgstr "KLAR"
@@ -2083,6 +2125,12 @@ msgstr "VÄLKOMMEN"
 
 msgid "CONFIGURE INPUT DEVICE"
 msgstr "KONFIGURERA INPUTENHET"
+
+#, c-format
+msgid "%i GAMEPAD DETECTED"
+msgid_plural "%i GAMEPADS DETECTED"
+msgstr[0] "%i HANDKONTROLL DETEKTERAD"
+msgstr[1] "%i HANDKONTROLLER DETEKTERADE"
 
 msgid "NO GAMEPADS DETECTED"
 msgstr "INGA HANDKONTROLLER DETEKTERADE"
