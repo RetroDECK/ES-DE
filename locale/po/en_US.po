@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-16 16:48+0200\n"
-"PO-Revision-Date: 2024-07-16 16:45+0200\n"
+"POT-Creation-Date: 2024-07-17 14:11+0200\n"
+"PO-Revision-Date: 2024-07-17 14:00+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -32,6 +32,30 @@ msgstr "For more information visit"
 
 msgid "No Entries Found"
 msgstr "No Entries Found"
+
+msgid "ScreenScraper error:"
+msgstr "ScreenScraper error:"
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: Wrong username or password"
+
+msgid "Network error:"
+msgstr "Network error:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "Media directory does not exist and can't be created."
+
+msgid "Permission problems?"
+msgstr "Permission problems?"
+
+msgid "Failed to open path for writing media file."
+msgstr "Failed to open path for writing media file."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr "Couldn't save media file, permission problems or is the disk full?"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr "Couldn't save resized image, permission problems or is the disk full?"
 
 msgid "NAME"
 msgstr "NAME"
@@ -1150,6 +1174,9 @@ msgstr "APPLY CHANGES?"
 msgid "NOTHING TO FILTER"
 msgstr "NOTHING TO FILTER"
 
+msgid "LAUNCHING GAME"
+msgstr "LAUNCHING GAME"
+
 msgid "CLOSE"
 msgstr "CLOSE"
 
@@ -1373,6 +1400,9 @@ msgstr "RETRY"
 
 msgid "SKIP"
 msgstr "SKIP"
+
+msgid "Error downloading thumbnail:"
+msgstr "Error downloading thumbnail:"
 
 msgid "SEARCH"
 msgstr "SEARCH"
@@ -2099,6 +2129,31 @@ msgstr ""
 msgid "menu"
 msgstr "menu"
 
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr "PAGE %s OF %s"
+
+msgid "pan"
+msgstr "pan"
+
+msgid "reset"
+msgstr "reset"
+
+msgid "browse"
+msgstr "browse"
+
+msgid "game media"
+msgstr "game media"
+
+msgid "first"
+msgstr "first"
+
+msgid "last"
+msgstr "last"
+
+msgid "zoom"
+msgstr "zoom"
+
 msgid "BROKEN"
 msgstr "BROKEN"
 
@@ -2114,8 +2169,53 @@ msgstr "UNKNOWN"
 msgid "NONE SELECTED"
 msgstr "NONE SELECTED"
 
-msgid "No screenshot image found, couldn't generate miximage"
-msgstr "No screenshot image found, couldn't generate miximage"
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "No screenshot found, couldn't generate miximage"
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr "Screenshot in unknown format, couldn't generate miximage"
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr "Screenshot in unsupported format, couldn't generate miximage"
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "Error loading screenshot, couldn't generate miximage"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Error loading marquee image, corrupt file?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Error loading 3d box image, corrupt file?"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "Error loading box cover image, corrupt file?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "Error loading physical media image, corrupt file?"
+
+msgid "pdf manual"
+msgstr "pdf manual"
+
+msgid "SCREENSHOT"
+msgstr "SCREENSHOT"
+
+msgid "BOX COVER"
+msgstr "BOX COVER"
+
+msgid "BOX BACK COVER"
+msgstr "BOX BACK COVER"
+
+msgid "TITLE SCREEN"
+msgstr "TITLE SCREEN"
+
+msgid "FAN ART"
+msgstr "FAN ART"
+
+msgid "MIXIMAGE"
+msgstr "MIXIMAGE"
+
+msgid "CUSTOM"
+msgstr "CUSTOM"
 
 msgid "Searching for games..."
 msgstr "Searching for games..."
@@ -2230,12 +2330,6 @@ msgstr "SELECT NONE"
 
 msgid "select none"
 msgstr "select none"
-
-msgid "first"
-msgstr "first"
-
-msgid "last"
-msgstr "last"
 
 msgid "move cursor"
 msgstr "move cursor"
@@ -2416,3 +2510,10 @@ msgstr "ALREADY TAKEN"
 
 msgid "PRESS ANYTHING"
 msgstr "PRESS ANYTHING"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "You have exceeded your daily scrape quota"
+
+#, c-format
+msgid "Server returned HTTP error code %s"
+msgstr "Server returned HTTP error code %s"

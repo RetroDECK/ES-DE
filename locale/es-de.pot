@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-16 16:48+0200\n"
+"POT-Creation-Date: 2024-07-17 14:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -31,6 +31,30 @@ msgid "For more information visit"
 msgstr ""
 
 msgid "No Entries Found"
+msgstr ""
+
+msgid "ScreenScraper error:"
+msgstr ""
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr ""
+
+msgid "Network error:"
+msgstr ""
+
+msgid "Media directory does not exist and can't be created."
+msgstr ""
+
+msgid "Permission problems?"
+msgstr ""
+
+msgid "Failed to open path for writing media file."
+msgstr ""
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr ""
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
 
 msgid "NAME"
@@ -1111,6 +1135,9 @@ msgstr ""
 msgid "NOTHING TO FILTER"
 msgstr ""
 
+msgid "LAUNCHING GAME"
+msgstr ""
+
 msgid "CLOSE"
 msgstr ""
 
@@ -1303,6 +1330,9 @@ msgid "RETRY"
 msgstr ""
 
 msgid "SKIP"
+msgstr ""
+
+msgid "Error downloading thumbnail:"
 msgstr ""
 
 msgid "SEARCH"
@@ -1967,6 +1997,31 @@ msgstr ""
 msgid "menu"
 msgstr ""
 
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr ""
+
+msgid "pan"
+msgstr ""
+
+msgid "reset"
+msgstr ""
+
+msgid "browse"
+msgstr ""
+
+msgid "game media"
+msgstr ""
+
+msgid "first"
+msgstr ""
+
+msgid "last"
+msgstr ""
+
+msgid "zoom"
+msgstr ""
+
 msgid "BROKEN"
 msgstr ""
 
@@ -1982,7 +2037,52 @@ msgstr ""
 msgid "NONE SELECTED"
 msgstr ""
 
-msgid "No screenshot image found, couldn't generate miximage"
+msgid "No screenshot found, couldn't generate miximage"
+msgstr ""
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr ""
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr ""
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr ""
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr ""
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr ""
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr ""
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr ""
+
+msgid "pdf manual"
+msgstr ""
+
+msgid "SCREENSHOT"
+msgstr ""
+
+msgid "BOX COVER"
+msgstr ""
+
+msgid "BOX BACK COVER"
+msgstr ""
+
+msgid "TITLE SCREEN"
+msgstr ""
+
+msgid "FAN ART"
+msgstr ""
+
+msgid "MIXIMAGE"
+msgstr ""
+
+msgid "CUSTOM"
 msgstr ""
 
 msgid "Searching for games..."
@@ -2097,12 +2197,6 @@ msgid "SELECT NONE"
 msgstr ""
 
 msgid "select none"
-msgstr ""
-
-msgid "first"
-msgstr ""
-
-msgid "last"
 msgstr ""
 
 msgid "move cursor"
@@ -2283,4 +2377,11 @@ msgid "ALREADY TAKEN"
 msgstr ""
 
 msgid "PRESS ANYTHING"
+msgstr ""
+
+msgid "You have exceeded your daily scrape quota"
+msgstr ""
+
+#, c-format
+msgid "Server returned HTTP error code %s"
 msgstr ""
