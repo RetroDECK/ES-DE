@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-17 14:11+0200\n"
+"POT-Creation-Date: 2024-07-17 19:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -1593,6 +1593,9 @@ msgstr ""
 msgid "SYSTEM-WIDE"
 msgstr ""
 
+msgid "unknown"
+msgstr ""
+
 msgid "SCRAPE"
 msgstr ""
 
@@ -1802,11 +1805,29 @@ msgid "collections"
 msgstr ""
 
 #, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr ""
+
+#, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
 msgstr ""
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr ""
+
+msgid "Favorites"
+msgstr ""
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr ""
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr ""
+
+msgid "This collection is empty"
 msgstr ""
 
 #, c-format
@@ -1871,6 +1892,26 @@ msgid "system, ascending"
 msgstr ""
 
 msgid "system, descending"
+msgstr ""
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr ""
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr ""
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr ""
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr ""
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr ""
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr ""
 
 msgid "random"

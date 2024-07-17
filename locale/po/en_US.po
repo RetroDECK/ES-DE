@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-17 14:11+0200\n"
-"PO-Revision-Date: 2024-07-17 14:00+0200\n"
+"POT-Creation-Date: 2024-07-17 19:47+0200\n"
+"PO-Revision-Date: 2024-07-17 18:36+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -1674,6 +1674,9 @@ msgstr "SELECT EMULATOR"
 msgid "SYSTEM-WIDE"
 msgstr "SYSTEM-WIDE"
 
+msgid "unknown"
+msgstr "unknown"
+
 msgid "SCRAPE"
 msgstr "SCRAPE"
 
@@ -1888,12 +1891,30 @@ msgid "collections"
 msgstr "collections"
 
 #, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "DISABLED '%s' IN '%s'"
+
+#, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
 msgstr "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
 msgstr "FINISHED EDITING '%s' COLLECTION"
+
+msgid "Favorites"
+msgstr "Favorites"
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "ADDED '%s' TO '%s'"
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "REMOVED '%s' FROM '%s'"
+
+msgid "This collection is empty"
+msgstr "This collection is empty"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -1958,6 +1979,26 @@ msgstr "system, ascending"
 
 msgid "system, descending"
 msgstr "system, descending"
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr "MARKED FOLDER '%s' AS FAVORITE"
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
+msgstr "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 
 msgid "random"
 msgstr "random"
