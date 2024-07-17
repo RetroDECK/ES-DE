@@ -865,7 +865,8 @@ void GuiScraperSearch::update(int deltaTime)
         }
         else if (mMDRetrieveURLsHandle->status() == ASYNC_ERROR) {
             onSearchError(mMDRetrieveURLsHandle->getStatusString(),
-                          mMDRetrieveURLsHandle->getRetry(), mSearchHandle->getFatalError());
+                          mMDRetrieveURLsHandle->getRetry(),
+                          (mSearchHandle != nullptr ? mSearchHandle->getFatalError() : false));
             mMDRetrieveURLsHandle.reset();
         }
     }
@@ -923,7 +924,7 @@ void GuiScraperSearch::update(int deltaTime)
         }
         else if (mMDResolveHandle->status() == ASYNC_ERROR) {
             onSearchError(mMDResolveHandle->getStatusString(), mMDResolveHandle->getRetry(),
-                          mSearchHandle->getFatalError());
+                          (mSearchHandle != nullptr ? mSearchHandle->getFatalError() : false));
             mMDResolveHandle.reset();
         }
     }
@@ -952,7 +953,8 @@ void GuiScraperSearch::updateThumbnail()
     else {
         mResultThumbnail->setImage("");
         onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg(), true,
-                      mSearchHandle->getFatalError(), it->second->status());
+                      (mSearchHandle != nullptr ? mSearchHandle->getFatalError() : false),
+                      it->second->status());
     }
 
     mThumbnailReqMap.erase(it);
