@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-16 16:48+0200\n"
-"PO-Revision-Date: 2024-07-16 16:45+0200\n"
+"POT-Creation-Date: 2024-07-17 14:11+0200\n"
+"PO-Revision-Date: 2024-07-17 13:53+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 
 msgid "Network error (status:"
-msgstr "Nätverksfel (status:"
+msgstr "Network error (status:"
 
 msgid "New prerelease available:"
 msgstr "Ny prerelease tillgänglig:"
@@ -32,6 +32,30 @@ msgstr "För mer information besök"
 
 msgid "No Entries Found"
 msgstr "Inga Poster"
+
+msgid "ScreenScraper error:"
+msgstr "ScreenScraper fel:"
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: Fel användarnamn eller lösenord"
+
+msgid "Network error:"
+msgstr "Nätverksfel:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "Mediakatalogen existerar inte och kunde inte skapas."
+
+msgid "Permission problems?"
+msgstr "Åtkomstproblem?"
+
+msgid "Failed to open path for writing media file."
+msgstr "Kunde inte öppna sökvägen för skrivning av mediafilen."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr "Kunde inte spara mediafil, åtkomstproblem eller är disken full?"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr "Kunde inte spara skalad bild, åtkomstproblem eller är disken full?"
 
 msgid "NAME"
 msgstr "NAMN"
@@ -754,7 +778,7 @@ msgid "CONTENT SETTINGS"
 msgstr "INNEHÅLLSINSTÄLLNINGAR"
 
 msgid "MIXIMAGE SETTINGS"
-msgstr "MIXIMAGEINSTÄLLNINGAR"
+msgstr "MIXBILDINSTÄLLNINGAR"
 
 msgid "START"
 msgstr "STARTA"
@@ -790,7 +814,7 @@ msgid "VIDEOS"
 msgstr "VIDEOR"
 
 msgid "SCREENSHOT IMAGES"
-msgstr "SCREENSHOT BILDER"
+msgstr "SKÄRMDUMP BILDER"
 
 msgid "TITLE SCREEN IMAGES"
 msgstr "TITELSKÄRM BILDER"
@@ -817,7 +841,7 @@ msgid "GAME MANUALS"
 msgstr "SPELMANUALER"
 
 msgid "MIXIMAGE RESOLUTION"
-msgstr "MIXIMAGE UPPLÖSNING"
+msgstr "MIXBILD UPPLÖSNING"
 
 msgid "HORIZONTAL SCREENSHOT FIT [SHORT]"
 msgstr "HORISONTELL INPASSNING"
@@ -832,13 +856,13 @@ msgid "STRETCH"
 msgstr "STRÄCK UT"
 
 msgid "HORIZONTAL SCREENSHOT FIT"
-msgstr "HORISONTELL SCREENSHOT INPASSNING"
+msgstr "HORISONTELL SKÄRMPDUMP INPASSNING"
 
 msgid "VERTICAL SCREENSHOT FIT [SHORT]"
 msgstr "VERTIKAL INPASSNING"
 
 msgid "VERTICAL SCREENSHOT FIT"
-msgstr "VERTIKAL SCREENSHOT INPASSNING"
+msgstr "VERTIKAL SKÄRMDUMP INPASSNING"
 
 msgid "SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"
 msgstr "BILDFÖRHÅLLANDE TRÖSKELVÄRDE"
@@ -847,7 +871,7 @@ msgid "HIGH"
 msgstr "HÖG"
 
 msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
-msgstr "SCREENSHOT BILDFÖRHÅLLANDE TRÖSKELVÄRDE"
+msgstr "SKÄRMDUMP BILDFÖRHÅLLANDE TRÖSKELVÄRDE"
 
 msgid "BLANK AREAS FILL COLOR"
 msgstr "FYLLNADSFÄRG FÖR TOMMA YTOR"
@@ -859,7 +883,7 @@ msgid "FRAME"
 msgstr "RAM"
 
 msgid "SCREENSHOT SCALING METHOD [SHORT]"
-msgstr "SCREENSHOT SKALNINGSMETOD"
+msgstr "SKÄRMDUMP SKALNINGSMETOD"
 
 msgid "SHARP"
 msgstr "SKARP"
@@ -868,7 +892,7 @@ msgid "SMOOTH"
 msgstr "JÄMN"
 
 msgid "SCREENSHOT SCALING METHOD"
-msgstr "SCREENSHOT SKALNINGSMETOD"
+msgstr "SKÄRMDUMP SKALNINGSMETOD"
 
 msgid "BOX SIZE"
 msgstr "STORLEK FÖR LÅDA"
@@ -877,16 +901,16 @@ msgid "PHYSICAL MEDIA SIZE"
 msgstr "STORLEK FÖR FYSISK MEDIA"
 
 msgid "GENERATE MIXIMAGES WHEN SCRAPING"
-msgstr "GENERERA MIXIMAGES VID SCRAPING"
+msgstr "GENERERA MIXBILDER VID SCRAPING"
 
 msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
-msgstr "SKRIV ÖVER MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
+msgstr "SKRIV ÖVER MIXBILDER (SCRAPER/OFFLINEGENERATOR)"
 
 msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
-msgstr "TA BORT LETTERBOXES FRÅN SCREENSHOTS"
+msgstr "TA BORT LETTERBOXES FRÅN SKÄRMDUMPAR"
 
 msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
-msgstr "TA BORT PILLARBOXES FRÅN SCREENSHOTS"
+msgstr "TA BORT PILLARBOXES FRÅN SKÄRMDUMPAR"
 
 msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
 msgstr "ROTERA HORISONTELLT ORIENTERADE LÅDOR"
@@ -904,13 +928,13 @@ msgid "INCLUDE PHYSICAL MEDIA IMAGE"
 msgstr "INKLUDERA BILD PÅ FYSISKT MEDIA"
 
 msgid "OFFLINE GENERATOR"
-msgstr "OFFLINE GENERATOR"
+msgstr "OFFLINEGENERATOR"
 
 msgid ""
 "THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
 "PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
 msgstr ""
-"OFFLINE GENERATORN ANVÄNDER SAMMA SYSTEMKONFIGURATION SOM SCRAPERN, SÅ VÄLJ "
+"OFFLINEGENERATORN ANVÄNDER SAMMA SYSTEMKONFIGURATION SOM SCRAPERN, SÅ VÄLJ "
 "MINST ETT SYSTEM ATT GENERERA BILDER FÖR"
 
 msgid "EUROPE"
@@ -1020,7 +1044,7 @@ msgid "RENDER BLUR FOR VIDEOS"
 msgstr "RENDERA OSKÄRPA FÖR VIDEOR"
 
 msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
-msgstr "RENDERA SCANLINES FÖR SCREENSHOTS OCH TITLES"
+msgstr "RENDERA SCANLINES FÖR SKÄRMDUMPAR OCH TITLAR"
 
 #, c-format
 msgid "FINISH EDITING '%s' COLLECTION"
@@ -1153,6 +1177,9 @@ msgstr "TILLÄMPA ÄNDRINGARNA?"
 
 msgid "NOTHING TO FILTER"
 msgstr "INGET ATT FILTRERA"
+
+msgid "LAUNCHING GAME"
+msgstr "STARTAR SPEL"
 
 msgid "CLOSE"
 msgstr "STÄNG"
@@ -1309,7 +1336,7 @@ msgid "close"
 msgstr "stäng"
 
 msgid "view screenshots"
-msgstr "se screenshots"
+msgstr "se skärmdumpar"
 
 msgid "fetch updates"
 msgstr "hämta uppdateringar"
@@ -1378,6 +1405,9 @@ msgstr "FÖRSÖK IGEN"
 
 msgid "SKIP"
 msgstr "HOPPA ÖVER"
+
+msgid "Error downloading thumbnail:"
+msgstr "Fel vid nedladdning av miniatyrbild:"
 
 msgid "SEARCH"
 msgstr "SÖK"
@@ -1696,7 +1726,7 @@ msgid "delete game"
 msgstr "radera spel"
 
 msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr "MIXIMAGE OFFLINE GENERATOR"
+msgstr "MIXBILD OFFLINEGENERATOR"
 
 #, c-format
 msgid "%i OF %i GAME PROCESSED"
@@ -2105,6 +2135,31 @@ msgstr ""
 msgid "menu"
 msgstr "meny"
 
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr "SIDA %s AV %s"
+
+msgid "pan"
+msgstr "panorera"
+
+msgid "reset"
+msgstr "nollställ"
+
+msgid "browse"
+msgstr "bläddra"
+
+msgid "game media"
+msgstr "spelmedia"
+
+msgid "first"
+msgstr "första"
+
+msgid "last"
+msgstr "sista"
+
+msgid "zoom"
+msgstr "zooma"
+
 msgid "BROKEN"
 msgstr "TRASIG"
 
@@ -2120,8 +2175,53 @@ msgstr "OKÄND"
 msgid "NONE SELECTED"
 msgstr "INGEN VALD"
 
-msgid "No screenshot image found, couldn't generate miximage"
-msgstr "Ingen screenshot bild hittades, kunde inte generera miximage"
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "Ingen skärmdump hittades, kunde inte generera mixbild"
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr "Skärmdump i okänt format, kunde inte generera mixbild"
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr "Skärmdump i icke supportat format, kunde inte generera mixbild"
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "Fel vid läsning av skärmdump, kunde inte generera mixbild"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Fel vid läsning av marquee bild, korrupt fil?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Fel vid läsning av 3D låda bild, korrupt fil?"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "Fel vid läsning av låda omslag bild, korrupt fil?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "Fel vid läsning av fysiskt media bild, korrupt fil?"
+
+msgid "pdf manual"
+msgstr "pdf manual"
+
+msgid "SCREENSHOT"
+msgstr "SKÄRMDUMP"
+
+msgid "BOX COVER"
+msgstr "LÅDA OMSLAG"
+
+msgid "BOX BACK COVER"
+msgstr "LÅDA BAKSIDA"
+
+msgid "TITLE SCREEN"
+msgstr "TITELSKÄRM"
+
+msgid "FAN ART"
+msgstr "FAN-SKAPAT"
+
+msgid "MIXIMAGE"
+msgstr "MIXBILD"
+
+msgid "CUSTOM"
+msgstr "ANPASSAD"
 
 msgid "Searching for games..."
 msgstr "Söker efter spel..."
@@ -2236,12 +2336,6 @@ msgstr "VÄLJ INGA"
 
 msgid "select none"
 msgstr "välj inga"
-
-msgid "first"
-msgstr "första"
-
-msgid "last"
-msgstr "sista"
 
 msgid "move cursor"
 msgstr "flytta markör"
@@ -2424,3 +2518,10 @@ msgstr "REDAN TAGEN"
 
 msgid "PRESS ANYTHING"
 msgstr "TRYCK VALFRI KNAPP"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Du har överskridit din dagliga scraping kvot"
+
+#, c-format
+msgid "Server returned HTTP error code %s"
+msgstr "Servern returnerade HTTP felkod %s"
