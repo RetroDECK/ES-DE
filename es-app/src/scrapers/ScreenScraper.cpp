@@ -14,6 +14,7 @@
 #include "PlatformId.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 
@@ -291,7 +292,7 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
         std::string content {req->getContent()};
         if (content.length() > maxErrorLength)
             content = content.substr(0, maxErrorLength) + "...";
-        setError("ScreenScraper error: \n" + content, true);
+        setError(_("ScreenScraper error:") + " \n" + content, true);
 
         return;
     }
@@ -357,7 +358,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                               << Settings::getInstance()->getString("ScraperUsernameScreenScraper")
                               << "\", wrong username or password?";
 
-                setError("ScreenScraper: Wrong username or password", false, true);
+                setError(_("ScreenScraper: Wrong username or password"), false, true);
                 return;
             }
         }

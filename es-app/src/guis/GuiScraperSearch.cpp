@@ -952,7 +952,7 @@ void GuiScraperSearch::updateThumbnail()
     }
     else {
         mResultThumbnail->setImage("");
-        onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg(), true,
+        onSearchError(_("Error downloading thumbnail:") + " \n" + it->second->getErrorMsg(), true,
                       (mSearchHandle != nullptr ? mSearchHandle->getFatalError() : false),
                       it->second->status());
     }

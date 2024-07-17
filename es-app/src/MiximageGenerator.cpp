@@ -46,7 +46,7 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
     if ((mScreenshotPath = mGame->getScreenshotPath()) == "") {
         LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): "
                          "No screenshot image found, aborting";
-        mResultMessage = _("No screenshot image found, couldn't generate miximage");
+        mResultMessage = _("No screenshot found, couldn't generate miximage");
         mMiximagePromise->set_value(true);
         return;
     }
@@ -137,7 +137,7 @@ bool MiximageGenerator::generateImage()
 
     if (fileFormat == FIF_UNKNOWN) {
         LOG(LogError) << "Screenshot image in unknown image format, aborting";
-        mMessage = "Screenshot image in unknown format, couldn't generate miximage";
+        mMessage = _("Screenshot in unknown format, couldn't generate miximage");
         return true;
     }
 
@@ -152,13 +152,13 @@ bool MiximageGenerator::generateImage()
     }
     else {
         LOG(LogError) << "Screenshot file format not supported";
-        mMessage = "Screenshot image in unsupported format, couldn't generate miximage";
+        mMessage = _("Screenshot in unsupported format, couldn't generate miximage");
         return true;
     }
 
     if (!screenshotFile) {
         LOG(LogError) << "Error loading screenshot image, corrupt file?";
-        mMessage = "Error loading screenshot image, couldn't generate miximage";
+        mMessage = _("Error loading screenshot, couldn't generate miximage");
         return true;
     }
 
@@ -196,7 +196,7 @@ bool MiximageGenerator::generateImage()
 #endif
             if (!marqueeFile) {
                 LOG(LogError) << "Couldn't load marquee image, corrupt file?";
-                mMessage = "Error loading marquee image, corrupt file?";
+                mMessage = _("Error loading marquee image, corrupt file?");
                 mMarquee = false;
             }
         }
@@ -235,7 +235,7 @@ bool MiximageGenerator::generateImage()
 #endif
             if (!boxFile) {
                 LOG(LogError) << "Couldn't load 3D box image, corrupt file?";
-                mMessage = "Error loading 3d box image, corrupt file?";
+                mMessage = _("Error loading 3d box image, corrupt file?");
                 mBox3D = false;
             }
         }
@@ -273,7 +273,7 @@ bool MiximageGenerator::generateImage()
 #endif
             if (!boxFile) {
                 LOG(LogError) << "Couldn't load box cover image, corrupt file?";
-                mMessage = "Error loading box cover image, corrupt file?";
+                mMessage = _("Error loading box cover image, corrupt file?");
                 mCover = false;
             }
         }
@@ -313,7 +313,7 @@ bool MiximageGenerator::generateImage()
 #endif
             if (!physicalMediaFile) {
                 LOG(LogError) << "Couldn't load physical media image, corrupt file?";
-                mMessage = "Error loading physical media image, corrupt file?";
+                mMessage = _("Error loading physical media image, corrupt file?");
                 mPhysicalMedia = false;
             }
         }

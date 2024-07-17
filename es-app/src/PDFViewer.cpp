@@ -11,6 +11,7 @@
 #include "Log.h"
 #include "Sound.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 
@@ -185,7 +186,8 @@ bool PDFViewer::startPDFViewer(FileData* game)
     mEntryCount = std::to_string(mPages.size());
 
     mEntryNumText = std::make_unique<TextComponent>(
-        "PAGE 1 OF " + mEntryCount, Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
+        Utils::String::format(_("PAGE %s OF %s"), "1", mEntryCount.c_str()),
+        Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
     mEntryNumText->setOrigin(0.0f, 0.5f);
 
     if (mHelpInfoPosition == HelpInfoPosition::TOP) {
@@ -706,17 +708,17 @@ std::vector<HelpPrompt> PDFViewer::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
     if (mZoom > 1.0f) {
-        prompts.push_back(HelpPrompt("up/down/left/right", "pan"));
-        prompts.push_back(HelpPrompt("ltrt", "reset"));
+        prompts.push_back(HelpPrompt("up/down/left/right", _("pan")));
+        prompts.push_back(HelpPrompt("ltrt", _("reset")));
     }
     else {
-        prompts.push_back(HelpPrompt("left/right", "browse"));
-        prompts.push_back(HelpPrompt("down", "game media"));
-        prompts.push_back(HelpPrompt("lt", "first"));
-        prompts.push_back(HelpPrompt("rt", "last"));
+        prompts.push_back(HelpPrompt("left/right", _("browse")));
+        prompts.push_back(HelpPrompt("down", _("game media")));
+        prompts.push_back(HelpPrompt("lt", _("first")));
+        prompts.push_back(HelpPrompt("rt", _("last")));
     }
 
-    prompts.push_back(HelpPrompt("lr", "zoom"));
+    prompts.push_back(HelpPrompt("lr", _("zoom")));
 
     return prompts;
 }
@@ -728,7 +730,8 @@ void PDFViewer::showNextPage()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     ++mCurrentPage;
-    mEntryNumText->setText("PAGE " + std::to_string(mCurrentPage) + " OF " + mEntryCount);
+    mEntryNumText->setText(Utils::String::format(
+        _("PAGE %s OF %s"), std::to_string(mCurrentPage).c_str(), mEntryCount.c_str()));
     convertPage(mCurrentPage);
 }
 
@@ -739,7 +742,8 @@ void PDFViewer::showPreviousPage()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     --mCurrentPage;
-    mEntryNumText->setText("PAGE " + std::to_string(mCurrentPage) + " OF " + mEntryCount);
+    mEntryNumText->setText(Utils::String::format(
+        _("PAGE %s OF %s"), std::to_string(mCurrentPage).c_str(), mEntryCount.c_str()));
     convertPage(mCurrentPage);
 }
 
@@ -828,7 +832,8 @@ void PDFViewer::navigateLeftTrigger()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     mCurrentPage = 1;
-    mEntryNumText->setText("PAGE " + std::to_string(mCurrentPage) + " OF " + mEntryCount);
+    mEntryNumText->setText(Utils::String::format(
+        _("PAGE %s OF %s"), std::to_string(mCurrentPage).c_str(), mEntryCount.c_str()));
     convertPage(mCurrentPage);
 }
 
@@ -849,6 +854,7 @@ void PDFViewer::navigateRightTrigger()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     mCurrentPage = mPageCount;
-    mEntryNumText->setText("PAGE " + std::to_string(mCurrentPage) + " OF " + mEntryCount);
+    mEntryNumText->setText(Utils::String::format(
+        _("PAGE %s OF %s"), std::to_string(mCurrentPage).c_str(), mEntryCount.c_str()));
     convertPage(mCurrentPage);
 }
