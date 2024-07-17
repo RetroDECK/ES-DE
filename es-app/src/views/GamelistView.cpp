@@ -543,6 +543,8 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
              (Settings::getInstance()->getBool("FavoritesAddButton") ||
               CollectionSystemsManager::getInstance()->isEditing())) {
         std::string prompt {CollectionSystemsManager::getInstance()->getEditingCollection()};
+        if (prompt == "Favorites")
+            prompt = _("Favorites");
         if (prompt.length() > 24)
             prompt = prompt.substr(0, 22) + "...";
         prompts.push_back(HelpPrompt("y", prompt));

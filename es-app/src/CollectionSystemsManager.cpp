@@ -397,10 +397,12 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                                                parentRootFolder->getSortTypeString()),
                                            favoritesSorting);
                     mWindow->queueInfoPopup(
-                        "DISABLED '" +
+                        Utils::String::format(
+                            _("DISABLED '%s' IN '%s'"),
                             Utils::String::toUpper(
-                                Utils::String::removeParenthesis(file->getName())) +
-                            "' IN '" + Utils::String::toUpper(sysData.system->getName()) + "'",
+                                Utils::String::removeParenthesis(file->getName()))
+                                .c_str(),
+                            Utils::String::toUpper(sysData.system->getName()).c_str()),
                         4000);
                 }
                 else {
@@ -786,14 +788,19 @@ const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 ViewController::getInstance()->reloadGamelistView(
                     mAutoCollectionSystemsData["favorites"].system);
         }
+        std::string sysTemp {sysName};
+        if (sysTemp == "Favorites")
+            sysTemp = _("Favorites");
         if (adding) {
-            mWindow->queueInfoPopup("ADDED '" + Utils::String::toUpper(name) + "' TO '" +
-                                        Utils::String::toUpper(sysName) + "'",
+            mWindow->queueInfoPopup(Utils::String::format(_("ADDED '%s' TO '%s'"),
+                                                          Utils::String::toUpper(name).c_str(),
+                                                          Utils::String::toUpper(sysTemp).c_str()),
                                     4000);
         }
         else {
-            mWindow->queueInfoPopup("REMOVED '" + Utils::String::toUpper(name) + "' FROM '" +
-                                        Utils::String::toUpper(sysName) + "'",
+            mWindow->queueInfoPopup(Utils::String::format(_("REMOVED '%s' FROM '%s'"),
+                                                          Utils::String::toUpper(name).c_str(),
+                                                          Utils::String::toUpper(sysTemp).c_str()),
                                     4000);
         }
         return true;
@@ -825,7 +832,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
 
     FileData* rootFolder {sys->getRootFolder()};
     FileFilterIndex* idx {rootFolder->getSystem()->getIndex()};
-    std::string desc {"This collection is empty"};
+    std::string desc {_("This collection is empty")};
     std::vector<FileData*> gamesList;
     std::vector<FileData*> gamesListRandom;
 

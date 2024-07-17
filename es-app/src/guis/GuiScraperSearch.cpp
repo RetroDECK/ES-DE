@@ -648,10 +648,27 @@ void GuiScraperSearch::updateInfoPane()
             mMD_Rating->setOpacity(1.0f);
         }
         mMD_ReleaseDate->setValue(Utils::String::toUpper(res.mdl.get("releasedate")));
-        mMD_Developer->setText(Utils::String::toUpper(res.mdl.get("developer")));
-        mMD_Publisher->setText(Utils::String::toUpper(res.mdl.get("publisher")));
-        mMD_Genre->setText(Utils::String::toUpper(res.mdl.get("genre")));
-        mMD_Players->setText(Utils::String::toUpper(res.mdl.get("players")));
+
+        if (res.mdl.get("developer") == "unknown")
+            mMD_Developer->setText(Utils::String::toUpper(_(res.mdl.get("developer").c_str())));
+        else
+            mMD_Developer->setText(Utils::String::toUpper(res.mdl.get("developer")));
+
+        if (res.mdl.get("publisher") == "unknown")
+            mMD_Publisher->setText(Utils::String::toUpper(_(res.mdl.get("publisher").c_str())));
+        else
+            mMD_Publisher->setText(Utils::String::toUpper(res.mdl.get("publisher")));
+
+        if (res.mdl.get("genre") == "unknown")
+            mMD_Genre->setText(Utils::String::toUpper(_(res.mdl.get("genre").c_str())));
+        else
+            mMD_Genre->setText(Utils::String::toUpper(res.mdl.get("genre")));
+
+        if (res.mdl.get("players") == "unknown")
+            mMD_Players->setText(Utils::String::toUpper(_(res.mdl.get("players").c_str())));
+        else
+            mMD_Players->setText(Utils::String::toUpper(res.mdl.get("players")));
+
         mGrid.onSizeChanged();
     }
     else {

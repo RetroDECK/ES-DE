@@ -593,7 +593,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     else if (newVal == "" &&
                              (currentKey == "developer" || currentKey == "publisher" ||
                               currentKey == "genre" || currentKey == "players")) {
-                        ed->setValue("unknown");
+                        ed->setValue(_("unknown"));
                         if (originalValue == "unknown")
                             ed->setColor(mMenuColorPrimary);
                         else
@@ -601,10 +601,17 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     }
                     else {
                         ed->setValue(newVal);
-                        if (newVal == originalValue)
+                        if ((currentKey == "developer" || currentKey == "publisher" ||
+                             currentKey == "genre" || currentKey == "players") &&
+                            newVal == _("unknown") && newVal == _(originalValue.c_str())) {
                             ed->setColor(mMenuColorPrimary);
-                        else
-                            ed->setColor(mMenuColorBlue);
+                        }
+                        else {
+                            if (newVal == originalValue)
+                                ed->setColor(mMenuColorPrimary);
+                            else
+                                ed->setColor(mMenuColorBlue);
+                        }
                     }
                 };
 
@@ -645,7 +652,12 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 ed->setValue(ViewController::EXCLAMATION_CHAR + " " + mMetaData->get(it->key));
         }
         else {
-            ed->setValue(mMetaData->get(it->key));
+            if ((currentKey == "developer" || currentKey == "publisher" || currentKey == "genre" ||
+                 currentKey == "players") &&
+                mMetaData->get(it->key) == "unknown")
+                ed->setValue(_(mMetaData->get(it->key).c_str()));
+            else
+                ed->setValue(mMetaData->get(it->key));
         }
 
         mEditors.push_back(ed);
@@ -784,7 +796,7 @@ void GuiMetaDataEd::save()
     bool setGameAsCounted {false};
     int offset {0};
 
-    for (unsigned int i = 0; i < mEditors.size(); ++i) {
+    for (unsigned int i {0}; i < mEditors.size(); ++i) {
         // The offset is needed to make the editor and metadata fields match up if we're
         // skipping the custom collections sortname field (which we do if not editing the
         // game from within a custom collection gamelist).
@@ -803,7 +815,7 @@ void GuiMetaDataEd::save()
             continue;
 
         if (key == "controller" && mEditors.at(i)->getValue() != "") {
-            std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());
+            std::string shortName {BadgeComponent::getShortName(mEditors.at(i)->getValue())};
             if (shortName != "unknown")
                 mMetaData->set(key, shortName);
             continue;
@@ -819,7 +831,13 @@ void GuiMetaDataEd::save()
             setGameAsCounted = true;
         }
 
-        mMetaData->set(key, mEditors.at(i)->getValue());
+        if ((key == "developer" || key == "publisher" || key == "genre" || key == "players") &&
+            mEditors.at(i)->getValue() == _("unknown")) {
+            mMetaData->set(key, "unknown");
+        }
+        else {
+            mMetaData->set(key, mEditors.at(i)->getValue());
+        }
     }
 
     // If hidden games are not shown and the hide flag was set for the entry, then write the
@@ -979,6 +997,11 @@ void GuiMetaDataEd::close()
 
         std::string mMetaDataValue {mMetaData->get(key)};
         std::string mEditorsValue {mEditors.at(i)->getValue()};
+
+        if ((key == "developer" || key == "publisher" || key == "genre" || key == "players") &&
+            mEditorsValue == _("unknown")) {
+            mEditorsValue = "unknown";
+        }
 
         if (key == "controller" && mEditors.at(i)->getValue() != "") {
             std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());
