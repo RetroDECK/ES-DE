@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-17 14:11+0200\n"
-"PO-Revision-Date: 2024-07-17 13:53+0200\n"
+"POT-Creation-Date: 2024-07-17 19:47+0200\n"
+"PO-Revision-Date: 2024-07-17 18:36+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -1679,6 +1679,9 @@ msgstr "VÄLJ EMULATOR"
 msgid "SYSTEM-WIDE"
 msgstr "SYSTEMOMFATTANDE"
 
+msgid "unknown"
+msgstr "okänd"
+
 msgid "SCRAPE"
 msgstr "SCRAPE"
 
@@ -1893,12 +1896,30 @@ msgid "collections"
 msgstr "spelsamlingar"
 
 #, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "DEAKTIVERADE '%s' I '%s'"
+
+#, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
 msgstr "REDIGERAR '%s' SAMLINGEN, LÄGG TILL/TA BORT SPEL MED %s"
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
 msgstr "AVSLUTADE REDIGERINGEN AV '%s' SAMLINGEN"
+
+msgid "Favorites"
+msgstr "Favoriter"
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "LADE TILL '%s' TILL '%s'"
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "TOG BORT '%s' FRÅN '%s'"
+
+msgid "This collection is empty"
+msgstr "Den här samlingen är tom"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -1963,6 +1984,27 @@ msgstr "system, stigande"
 
 msgid "system, descending"
 msgstr "system, fallande"
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr "KAN INTE LÄGGA TILL ANPASSADE SAMLINGAR TILL ANPASSADE SAMLINGAR"
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr "KAN INTE LÄGGA TILL PLATSHÅLLARE TILL ANPASSADE SAMLINGAR"
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr "KAN INTE LÄGGA TILL MAPPAR TILL ANPASSADE SAMLINGAR"
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr "MARKERADE MAPP '%s' SOM FAVORIT"
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr "TOG BORT FAVORITMARKERING FÖR MAPP '%s'"
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
+msgstr ""
+"KAN INTE LÄGGA TILL POSTER SOM INTE RÄKNAS SOM SPEL TILL ANPASSADE SAMLINGAR"
 
 msgid "random"
 msgstr "slumpmässig"
