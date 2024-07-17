@@ -16,14 +16,12 @@
 #include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
-DateTimeEditComponent::DateTimeEditComponent(bool alignRight, DisplayMode dispMode)
+DateTimeEditComponent::DateTimeEditComponent(bool alignRight)
     : mRenderer {Renderer::getInstance()}
     , mEditing {false}
     , mEditIndex {0}
-    , mDisplayMode {dispMode}
     , mKeyRepeatDir {0}
     , mKeyRepeatTimer {0}
-    , mRelativeUpdateAccumulator {0}
     , mColor {mMenuColorPrimary}
     , mFont {Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT)}
     , mAlignRight {alignRight}
@@ -43,15 +41,15 @@ void DateTimeEditComponent::setValue(const std::string& val)
 {
     mTime = val;
     mOriginalValue = val;
+    if (mAlignRight)
+        mAutoSize = true;
     updateTextCache();
 }
 
 bool DateTimeEditComponent::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("a", input) && input.value) {
-        if (mDisplayMode != DISP_RELATIVE_TO_NOW) // Don't allow editing for relative times.
-            mEditing = !mEditing;
-
+        mEditing = !mEditing;
         mKeyRepeatDir = 0;
 
         // Change the color of the text to reflect the changes.
@@ -67,6 +65,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
             // Initialize to the arbitrary value 1999-01-01 if unset.
             if (mTime == 0) {
                 mTime = Utils::Time::stringToTime("19990101T000000");
+                mAutoSize = true;
                 updateTextCache();
             }
         }
@@ -76,7 +75,6 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
     }
 
     if (mEditing) {
-
         if ((config->isMappedLike("lefttrigger", input) ||
              config->isMappedLike("righttrigger", input))) {
             mKeyRepeatDir = 0;
@@ -95,6 +93,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
             mEditing = false;
             mTime = mTimeBeforeEdit;
             mKeyRepeatDir = 0;
+            mAutoSize = true;
             updateTextCache();
             updateHelpPrompts();
             return true;
@@ -154,14 +153,6 @@ void DateTimeEditComponent::update(int deltaTime)
         }
     }
 
-    if (mDisplayMode == DISP_RELATIVE_TO_NOW) {
-        mRelativeUpdateAccumulator += deltaTime;
-        if (mRelativeUpdateAccumulator > 1000) {
-            mRelativeUpdateAccumulator = 0;
-            updateTextCache();
-        }
-    }
-
     GuiComponent::update(deltaTime);
 }
 
@@ -171,18 +162,11 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 
     if (mTextCache) {
         std::shared_ptr<Font> font {getFont()};
-        float referenceSize {0.0f};
 
-        if (mAlignRight)
-            referenceSize = std::round(mParent->getSize().x * 0.1045f);
-
-        // Vertically center.
+        // Center vertically.
         glm::vec3 off {0.0f, (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
 
-        if (mAlignRight)
-            off.x += referenceSize - mTextCache->metrics.size.x;
         trans = glm::translate(trans, glm::round(off));
-
         mRenderer->setMatrix(trans);
 
         if (Settings::getInstance()->getBool("DebugText")) {
@@ -205,12 +189,6 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
                                     mMenuColorDateTimeEditMarker, mMenuColorDateTimeEditMarker);
         }
     }
-}
-
-void DateTimeEditComponent::setDisplayMode(DisplayMode mode)
-{
-    mDisplayMode = mode;
-    updateTextCache();
 }
 
 void DateTimeEditComponent::setColor(unsigned int color)
@@ -255,51 +233,13 @@ std::shared_ptr<Font> DateTimeEditComponent::getFont() const
     return Font::get(FONT_SIZE_MEDIUM);
 }
 
-std::string DateTimeEditComponent::getDisplayString(DisplayMode mode) const
+std::string DateTimeEditComponent::getDisplayString() const
 {
     // ISO 8601 date format.
     std::string fmt;
-    switch (mode) {
-        case DISP_DATE: {
-            if (mTime.getTime() == 0)
-                return "unknown";
-            fmt = "%Y-%m-%d";
-            break;
-        }
-        case DISP_DATE_TIME: {
-            if (mTime.getTime() == 0)
-                return "unknown";
-            fmt = "%Y-%m-%d %H:%M:%S";
-            break;
-        }
-        case DISP_RELATIVE_TO_NOW: {
-            // Relative time.
-            if (mTime.getTime() == 0)
-                return "never";
-
-            Utils::Time::DateTime now {Utils::Time::now()};
-            Utils::Time::Duration dur {now.getTime() - mTime.getTime()};
-
-            std::string buf;
-
-            if (dur.getDays() > 0)
-                buf = std::to_string(dur.getDays()) + // Line break.
-                      " day" + (dur.getDays() > 1 ? "s" : "") + " ago";
-            else if (dur.getHours() > 0)
-                buf = std::to_string(dur.getHours()) + // Line break.
-                      " hour" + (dur.getHours() > 1 ? "s" : "") + " ago";
-            else if (dur.getMinutes() > 0)
-                buf = std::to_string(dur.getMinutes()) + // Line break.
-                      " minute" + (dur.getMinutes() > 1 ? "s" : "") + " ago";
-            else
-                buf = std::to_string(dur.getSeconds()) + // Line break.
-                      " second" + (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") +
-                      " ago";
-
-            return buf;
-            break;
-        }
-    }
+    if (mTime.getTime() == 0)
+        return _("unknown");
+    fmt = "%Y-%m-%d";
 
     return Utils::Time::timeToString(mTime, fmt);
 }
@@ -351,13 +291,12 @@ void DateTimeEditComponent::changeDate()
     else
         mTime = new_tm;
 
+    mAutoSize = true;
     updateTextCache();
 }
 
 void DateTimeEditComponent::updateTextCache()
 {
-    DisplayMode mode {getCurrentDisplayMode()};
-
     std::string dispString;
 
     // Hack to set date string to blank instead of 'unknown'.
@@ -366,13 +305,15 @@ void DateTimeEditComponent::updateTextCache()
         dispString = "";
     }
     else {
-        dispString =
-            mUppercase ? Utils::String::toUpper(getDisplayString(mode)) : getDisplayString(mode);
+        dispString = mUppercase ? Utils::String::toUpper(getDisplayString()) : getDisplayString();
     }
-    std::shared_ptr<Font> font = getFont();
+    std::shared_ptr<Font> font {getFont()};
     // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
     font->loadGlyphs(dispString + "\n");
     mTextCache = std::unique_ptr<TextCache>(font->buildTextCache(dispString, 0, 0, mColor));
+
+    if (mAlignRight)
+        mSize = mTextCache->metrics.size;
 
     if (mAutoSize) {
         mSize = mTextCache->metrics.size;
@@ -382,14 +323,12 @@ void DateTimeEditComponent::updateTextCache()
             getParent()->onSizeChanged();
     }
 
-    if (dispString == "unknown   " || dispString == "")
+    mCursorBoxes.clear();
+
+    if (dispString.empty() || dispString == _("unknown"))
         return;
 
     // Set up cursor positions.
-    mCursorBoxes.clear();
-
-    if (dispString.empty() || mode == DISP_RELATIVE_TO_NOW)
-        return;
 
     // Year.
     glm::vec2 start {0.0f, 0.0f};
@@ -408,7 +347,4 @@ void DateTimeEditComponent::updateTextCache()
     end = font->sizeText(dispString.substr(0, 10));
     diff = end - start;
     mCursorBoxes.push_back(glm::vec4 {start[0], start[1], diff[0], diff[1]});
-
-    // The logic for handling time for 'mode = DISP_DATE_TIME' is missing, but
-    // nobody will use it anyway so it's not worthwhile implementing.
 }
