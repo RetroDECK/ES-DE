@@ -158,8 +158,8 @@ void ViewController::legacyAppDataDialog()
 #endif
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
-        true,
+        HelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr,
+        true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -981,7 +981,9 @@ void ViewController::launch(FileData* game)
         // If the game launch screen has been set as disabled, show a simple info popup
         // notification instead.
         mWindow->queueInfoPopup(
-            "LAUNCHING GAME '" + Utils::String::toUpper(game->metadata.get("name") + "'"), 10000);
+            Utils::String::format(_("LAUNCHING GAME '%s'"),
+                                  Utils::String::toUpper(game->metadata.get("name")).c_str()),
+            10000);
         duration = 1700;
     }
     else if (durationString == "brief") {

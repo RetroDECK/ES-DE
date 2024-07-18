@@ -541,7 +541,12 @@ void GuiMenu::openUIOptions()
          it != SystemData::sSystemVector.cend(); ++it) {
         // If required, abbreviate the system name so it doesn't overlap the setting name.
         float maxNameLength {mSize.x * 0.51f};
-        startupSystem->add(Utils::String::toUpper((*it)->getFullName()), (*it)->getName(),
+        std::string sysName {(*it)->getFullName()};
+        if ((*it)->isCollection() && (sysName == "collections" || sysName == "all games" ||
+                                      sysName == "favorites" || sysName == "last played")) {
+            sysName = _(sysName.c_str());
+        }
+        startupSystem->add(Utils::String::toUpper(sysName), (*it)->getName(),
                            Settings::getInstance()->getString("StartupSystem") == (*it)->getName(),
                            maxNameLength);
     }

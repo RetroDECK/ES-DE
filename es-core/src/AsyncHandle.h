@@ -53,7 +53,7 @@ public:
             case ASYNC_DONE:
                 return "done";
             default:
-                return "something impossible has occured; row, row, fight the power";
+                return "something impossible has occured";
         }
     }
 

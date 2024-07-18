@@ -1047,9 +1047,11 @@ void FileData::launchGame()
             LOG(LogError) << "Raw emulator launch command:";
             LOG(LogError) << commandRaw;
 
-            window->queueInfoPopup("ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '" +
-                                       preCommand.first + "'",
-                                   6000);
+            window->queueInfoPopup(
+                Utils::String::format(
+                    _("ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"),
+                    preCommand.first.c_str()),
+                6000);
             window->setAllowTextScrolling(true);
             window->setAllowFileAnimation(true);
             return;
@@ -1071,11 +1073,13 @@ void FileData::launchGame()
 
             if (emulatorName == "")
                 window->queueInfoPopup(
-                    "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?", 6000);
+                    _("ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"), 6000);
             else
-                window->queueInfoPopup("ERROR: COULDN'T FIND PRE-COMMAND '" + emulatorName +
-                                           "', HAS IT BEEN PROPERLY INSTALLED?",
-                                       6000);
+                window->queueInfoPopup(
+                    Utils::String::format(
+                        _("ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"),
+                        emulatorName.c_str()),
+                    6000);
 
             window->setAllowTextScrolling(true);
             window->setAllowFileAnimation(true);
@@ -1170,7 +1174,9 @@ void FileData::launchGame()
         LOG(LogError) << commandRaw;
 
         window->queueInfoPopup(
-            "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '" + emulator.first + "'", 6000);
+            Utils::String::format(_("ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"),
+                                  emulator.first.c_str()),
+            6000);
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
         return;
@@ -1205,24 +1211,28 @@ void FileData::launchGame()
 #endif
         if (isAndroidApp) {
             if (emulatorName == "" || emulatorName == "%FILEINJECT%") {
-                window->queueInfoPopup("ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?",
-                                       6000);
+                window->queueInfoPopup(
+                    _("ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"), 6000);
             }
             else {
-                window->queueInfoPopup("ERROR: COULDN'T FIND APP '" + emulatorName +
-                                           "', HAS IT BEEN PROPERLY INSTALLED?",
-                                       6000);
+                window->queueInfoPopup(
+                    Utils::String::format(
+                        _("ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"),
+                        emulatorName.c_str()),
+                    6000);
             }
         }
         else {
             if (emulatorName == "") {
                 window->queueInfoPopup(
-                    "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?", 6000);
+                    _("ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"), 6000);
             }
             else {
-                window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR '" + emulatorName +
-                                           "', HAS IT BEEN PROPERLY INSTALLED?",
-                                       6000);
+                window->queueInfoPopup(
+                    Utils::String::format(
+                        _("ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"),
+                        emulatorName.c_str()),
+                    6000);
             }
         }
 
@@ -1295,8 +1305,9 @@ void FileData::launchGame()
                 LOG(LogError) << commandRaw;
 
                 window->queueInfoPopup(
-                    "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
-                        Utils::String::toUpper(Utils::FileSystem::getFileName(coreFile)) + "'",
+                    Utils::String::format(
+                        _("ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"),
+                        Utils::String::toUpper(Utils::FileSystem::getFileName(coreFile)).c_str()),
                     6000);
                 window->setAllowTextScrolling(true);
                 window->setAllowFileAnimation(true);
@@ -1317,7 +1328,7 @@ void FileData::launchGame()
             LOG(LogError) << "Raw emulator launch command:";
             LOG(LogError) << commandRaw;
 
-            window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
+            window->queueInfoPopup(_("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"), 6000);
             window->setAllowTextScrolling(true);
             window->setAllowFileAnimation(true);
             return;
@@ -1331,7 +1342,10 @@ void FileData::launchGame()
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
-        window->queueInfoPopup("ERROR: MISSING CORE CONFIGURATION FOR '" + coreEntry + "'", 6000);
+        window->queueInfoPopup(
+            Utils::String::format(_("ERROR: MISSING CORE CONFIGURATION FOR '%s'"),
+                                  coreEntry.c_str()),
+            6000);
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
         return;
@@ -1400,7 +1414,7 @@ void FileData::launchGame()
             LOG(LogError) << "Raw emulator launch command:";
             LOG(LogError) << commandRaw;
 
-            window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
+            window->queueInfoPopup(_("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"), 6000);
             window->setAllowTextScrolling(true);
             window->setAllowFileAnimation(true);
             return;
@@ -1416,8 +1430,9 @@ void FileData::launchGame()
         LOG(LogError) << Utils::String::vectorToDelimitedString(emulatorCorePaths, ", ");
 
         window->queueInfoPopup(
-            "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
-                Utils::String::toUpper(coreName.substr(0, coreName.size()) + "'"),
+            Utils::String::format(
+                _("ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"),
+                Utils::String::toUpper(coreName.substr(0, coreName.size())).c_str()),
             6000);
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
@@ -1464,7 +1479,8 @@ void FileData::launchGame()
             LOG(LogError) << "Raw emulator launch command:";
             LOG(LogError) << commandRaw;
 
-            window->queueInfoPopup("ERROR: INVALID %STARTDIR% VARIABLE ENTRY", 6000);
+            window->queueInfoPopup(
+                Utils::String::format(_("ERROR: INVALID %s VARIABLE ENTRY"), "%STARTDIR%"), 6000);
             window->setAllowTextScrolling(true);
             window->setAllowFileAnimation(true);
             return;
@@ -1505,9 +1521,11 @@ void FileData::launchGame()
                     LOG(LogError) << "Raw emulator launch command:";
                     LOG(LogError) << commandRaw;
 
-                    window->queueInfoPopup("ERROR: DIRECTORY DEFINED BY %STARTDIR% COULD NOT BE "
-                                           "CREATED, PERMISSION PROBLEMS?",
-                                           6000);
+                    window->queueInfoPopup(
+                        Utils::String::format(_("ERROR: DIRECTORY DEFINED BY %s COULD NOT BE "
+                                                "CREATED, PERMISSION PROBLEMS?"),
+                                              "%STARTDIR%"),
+                        6000);
                     window->setAllowTextScrolling(true);
                     window->setAllowFileAnimation(true);
                     return;
@@ -1563,7 +1581,8 @@ void FileData::launchGame()
                 LOG(LogError) << "Raw emulator launch command:";
                 LOG(LogError) << commandRaw;
 
-                window->queueInfoPopup("ERROR: INVALID %INJECT% VARIABLE ENTRY", 6000);
+                window->queueInfoPopup(
+                    Utils::String::format(_("ERROR: INVALID %s VARIABLE ENTRY"), "%INJECT%"), 6000);
                 window->setAllowTextScrolling(true);
                 window->setAllowFileAnimation(true);
                 return;
@@ -1675,7 +1694,8 @@ void FileData::launchGame()
         else {
             LOG(LogError) << "App or alias file \"" << romPath
                           << "\" doesn't exist or is unreadable";
-            window->queueInfoPopup("ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE", 6000);
+            window->queueInfoPopup(_("ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"),
+                                   6000);
             window->setAllowTextScrolling(true);
             window->setAllowFileAnimation(true);
             return;
@@ -1729,7 +1749,7 @@ void FileData::launchGame()
             desktopFileStream.close();
             if (!validFile || !execEntry) {
                 LOG(LogError) << "File is invalid or unreadable";
-                window->queueInfoPopup("ERROR: DESKTOP FILE IS INVALID OR UNREADABLE", 6000);
+                window->queueInfoPopup(_("ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"), 6000);
                 window->setAllowTextScrolling(true);
                 window->setAllowFileAnimation(true);
                 return;
@@ -1737,7 +1757,7 @@ void FileData::launchGame()
         }
         else {
             LOG(LogError) << "Desktop file \"" << romPath << "\" doesn't exist or is unreadable";
-            window->queueInfoPopup("ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE", 6000);
+            window->queueInfoPopup(_("ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"), 6000);
             window->setAllowTextScrolling(true);
             window->setAllowFileAnimation(true);
             return;
@@ -1795,7 +1815,8 @@ void FileData::launchGame()
                 LOG(LogError) << "Raw emulator launch command:";
                 LOG(LogError) << commandRaw;
 
-                window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
+                window->queueInfoPopup(_("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"),
+                                       6000);
                 window->setAllowTextScrolling(true);
                 window->setAllowFileAnimation(true);
                 return;
@@ -1859,8 +1880,8 @@ void FileData::launchGame()
                         LOG(LogError) << "Raw emulator launch command:";
                         LOG(LogError) << commandRaw;
 
-                        window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE",
-                                               6000);
+                        window->queueInfoPopup(
+                            _("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"), 6000);
                         window->setAllowTextScrolling(true);
                         window->setAllowFileAnimation(true);
                         return;
@@ -2025,10 +2046,11 @@ returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBack
     if (returnValue != 0) {
         LOG(LogWarning) << "Launch terminated with nonzero return value " << returnValue;
 
-        window->queueInfoPopup("ERROR LAUNCHING GAME '" +
-                                   Utils::String::toUpper(metadata.get("name")) + "' (ERROR CODE " +
-                                   Utils::String::toUpper(std::to_string(returnValue) + ")"),
-                               6000);
+        window->queueInfoPopup(
+            Utils::String::format(_("ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"),
+                                  Utils::String::toUpper(metadata.get("name")).c_str(),
+                                  returnValue),
+            6000);
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
     }

@@ -558,7 +558,7 @@ void GuiScraperSearch::onSearchError(const std::string& error,
 {
     if (fatalError) {
         LOG(LogWarning) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), "OK",
+        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), _("OK"),
                                        mCancelCallback, "", nullptr, "", nullptr, nullptr, true));
         return;
     }

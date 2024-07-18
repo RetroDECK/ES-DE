@@ -130,7 +130,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(
-        std::make_shared<ButtonComponent>(_("CLOSE"), _("CLOSE"), [&] { delete this; }));
+        std::make_shared<ButtonComponent>(_("CLOSE"), _("close"), [&] { delete this; }));
     mButtons = MenuComponent::makeButtonGrid(buttons);
     mGrid.setEntry(mButtons, glm::ivec2 {0, 3}, true, false, glm::ivec2 {2, 1},
                    GridFlags::BORDER_TOP);

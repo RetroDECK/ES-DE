@@ -884,48 +884,51 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
             };
             switch (gameCount) {
                 case 1: {
-                    desc = "This collection contains 1 game: '";
-                    desc.append(gamesList[0]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
-                        .append("]'");
+                    desc = Utils::String::format(
+                        _("This collection contains 1 game: '%s [%s]'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
+                            .c_str());
                     break;
                 }
                 case 2: {
-                    desc = "This collection contains 2 games: '";
-                    desc.append(gamesList[0]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
-                        .append("]' and '")
-                        .append(gamesList[1]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[1]->getSourceFileData()->getSystem()->getName()))
-                        .append("]'");
+                    desc = Utils::String::format(
+                        _("This collection contains 2 games: '%s [%s]' and '%s [%s]'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[1]->getSourceFileData()->getSystem()->getName())
+                            .c_str());
+                    break;
+                }
+                case 3: {
+                    desc = Utils::String::format(
+                        _("This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[1]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[2]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[2]->getSourceFileData()->getSystem()->getName())
+                            .c_str());
                     break;
                 }
                 default: {
-                    desc = "This collection contains ";
-                    desc.append(std::to_string(gameCount))
-                        .append(" games: '")
-                        .append(gamesList[0]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
-                        .append("]', '")
-                        .append(gamesList[1]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[1]->getSourceFileData()->getSystem()->getName()))
-                        .append("]' and '")
-                        .append(gamesList[2]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[2]->getSourceFileData()->getSystem()->getName()))
-                        .append("]'");
-                    desc.append(gameCount == 3 ? "" : ", among others");
+                    desc = Utils::String::format(
+                        _("This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', "
+                          "among others"),
+                        gameCount, gamesList[0]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[1]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[2]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[2]->getSourceFileData()->getSystem()->getName())
+                            .c_str());
                     break;
                 }
             }
@@ -933,29 +936,31 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
         else {
             switch (gameCount) {
                 case 1: {
-                    desc = "This collection contains 1 game: '";
-                    desc.append(gamesList[0]->metadata.get("name")).append("'");
+                    desc = Utils::String::format(_("This collection contains 1 game: '%s'"),
+                                                 gamesList[0]->metadata.get("name").c_str());
                     break;
                 }
                 case 2: {
-                    desc = "This collection contains 2 games: '";
-                    desc.append(gamesList[0]->metadata.get("name"))
-                        .append("' and '")
-                        .append(gamesList[1]->metadata.get("name"))
-                        .append("'");
+                    desc =
+                        Utils::String::format(_("This collection contains 2 games: '%s' and '%s'"),
+                                              gamesList[0]->metadata.get("name").c_str(),
+                                              gamesList[1]->metadata.get("name").c_str());
+                    break;
+                }
+                case 3: {
+                    desc = Utils::String::format(
+                        _("This collection contains 3 games: '%s', '%s' and '%s'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        gamesList[2]->metadata.get("name").c_str());
                     break;
                 }
                 default: {
-                    desc = "This collection contains ";
-                    desc.append(std::to_string(gameCount))
-                        .append(" games: '")
-                        .append(gamesList[0]->metadata.get("name"))
-                        .append("', '")
-                        .append(gamesList[1]->metadata.get("name"))
-                        .append("' and '")
-                        .append(gamesList[2]->metadata.get("name"))
-                        .append("'");
-                    desc.append(gameCount == 3 ? "" : ", among others");
+                    desc = Utils::String::format(
+                        _("This collection contains %i games: '%s', '%s' and '%s', among others"),
+                        gameCount, gamesList[0]->metadata.get("name").c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        gamesList[2]->metadata.get("name").c_str());
                     break;
                 }
             }

@@ -259,8 +259,8 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         });
     }
     else {
-        mMenu.addButton(_("APPLY"), _("APPLY"), [&] { delete this; });
-        mMenu.addButton(_("CANCEL"), _("CANCEL"), [&] {
+        mMenu.addButton(_("APPLY"), _("apply"), [&] { delete this; });
+        mMenu.addButton(_("CANCEL"), _("cancel"), [&] {
             mCancelled = true;
             delete this;
         });
