@@ -8,6 +8,8 @@
 
 ### Detailed list of changes
 
+* Added localization support to the application
+* Added Swedish translations
 * Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
 * Added support for skipping the scanning of game system subdirectories (by using noload.txt files)
 * Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper
@@ -23,18 +25,22 @@
 * Added the Ardens RetroArch core as an alternative emulator for the arduboy system
 * Added the .arduboy file extension to the arduboy system
 * (Linux) Added a systempath find rule for the ppsspp binary name for the PPSSPP emulator
+* (Linux) Added a systempath find rule for the ryujinx binary name for the Ryujinx emulator
 * (Android) Added support for using the %BASENAME% variable with the %EXTRA% and %EXTRAARRAY% variables
 * Text within parantheses is no longer stripped out from the game name popup when adding or removing games from custom collections
 * Renamed the "Menu opening effect" setting in the UI settings menu to "Menu opening animation"
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element
 * Game files with only an extension and no filename will now get skipped on application startup
+* StringUtil::toCapitalized() will now capitalize characters following the ([" characters
+* Removed some obsolete code from DateTimeEditComponent
 * Added the libintl library as a dependency
 * Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 
 ### Bug fixes
 
+* The StringUtil::toCapitalized() function didn't correctly capitalize multi-byte Unicode characters
 * (Windows) Video textures were sometimes not sized and aligned correctly horizontally
 * There was a typo where the 32:9 aspect ratio was referred to as 32:0
 
