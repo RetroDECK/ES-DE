@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-17 19:47+0200\n"
-"PO-Revision-Date: 2024-07-17 18:36+0200\n"
+"POT-Creation-Date: 2024-07-18 15:08+0200\n"
+"PO-Revision-Date: 2024-07-18 15:09+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -70,7 +70,7 @@ msgid "ENTER SORTNAME"
 msgstr "SKRIV IN SORTERINGSNAMN"
 
 msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "SPELSAMLINGAR SORTERINGSNAMN"
+msgstr "SORTERING ANPASSADE SAMLINGAR"
 
 msgid "ENTER COLLECTIONS SORTNAME"
 msgstr "SKRIV IN SORTERINGSNAMN"
@@ -1051,7 +1051,7 @@ msgid "FINISH EDITING '%s' COLLECTION"
 msgstr "AVSLUTA REDIGERING AV '%s' SAMLINGEN"
 
 msgid "SELECT COLLECTIONS"
-msgstr "VÄLJ SPELSAMLINGAR"
+msgstr "VÄLJ SAMLINGAR"
 
 msgid "AUTOMATIC GAME COLLECTIONS"
 msgstr "AUTOMATISKA SPELSAMLINGAR"
@@ -1060,28 +1060,28 @@ msgid "CUSTOM GAME COLLECTIONS"
 msgstr "ANPASSADE SPELSAMLINGAR"
 
 msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr "SKAPA NY ANPASSAD SPELSAMLING FRÅN TEMAT"
+msgstr "SKAPA NY ANPASSAD SAMLING FRÅN TEMAT"
 
 msgid "SELECT THEME FOLDER"
 msgstr "VÄLJ TEMAMAPP"
 
 msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr "SKAPA NY ANPASSAD SPELSAMLING"
+msgstr "SKAPA NY ANPASSAD SAMLING"
 
 msgid "NEW COLLECTION NAME"
-msgstr "NAMN PÅ NY SPELSAMLING"
+msgstr "NAMN PÅ NY SAMLING"
 
 msgid "CREATE"
 msgstr "SKAPA"
 
 msgid "CREATE COLLECTION?"
-msgstr "SKAPA SPELSAMLING?"
+msgstr "SKAPA SAMLING?"
 
 msgid "DELETE CUSTOM COLLECTION"
-msgstr "RADERA ANPASSAD SPELSAMLING"
+msgstr "RADERA ANPASSAD SAMLING"
 
 msgid "COLLECTION TO DELETE"
-msgstr "SPELSAMLING ATT RADERA"
+msgstr "SAMLING ATT RADERA"
 
 #, c-format
 msgid ""
@@ -1183,6 +1183,9 @@ msgstr "STARTAR SPEL"
 
 msgid "CLOSE"
 msgstr "STÄNG"
+
+msgid "close"
+msgstr "stäng"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "LADDAR NER TEMALISTAN 100%"
@@ -1331,9 +1334,6 @@ msgstr "KUNDE INTE RADERA TEMAT, PROBLEM MED ÅTKOMST?"
 
 msgid "THEME WAS DELETED"
 msgstr "TEMAT RADERADES"
-
-msgid "close"
-msgstr "stäng"
 
 msgid "view screenshots"
 msgstr "se skärmdumpar"
@@ -1487,6 +1487,9 @@ msgstr "GÅ IN I MAPP (OVERRIDE AV MAPPLÄNK)"
 msgid "APPLY"
 msgstr "TILLÄMPA"
 
+msgid "apply"
+msgstr "tillämpa"
+
 msgid "close (apply)"
 msgstr "stäng (tillämpa)"
 
@@ -1560,16 +1563,16 @@ msgid "RUNNING GAMELISTS CLEANUP"
 msgstr "KÖR UPPRENSNING AV SPELLISTOR"
 
 msgid "COLLECTIONS"
-msgstr "SPELSAMLINGAR"
+msgstr "SAMLINGAR"
 
 msgid "COLLECTIONS CLEANUP FAILED"
-msgstr "UPPRENSNING AV SPELSAMLINGAR MISSLYCKADES"
+msgstr "UPPRENSNING AV SAMLINGAR MISSLYCKADES"
 
 msgid "There are no enabled custom collections"
 msgstr "Det finns inga aktiverade anpassade samlingar"
 
 msgid "RUNNING COLLECTIONS CLEANUP"
-msgstr "KÖR UPPRENSNING AV SPELSAMLINGAR"
+msgstr "KÖR UPPRENSNING AV SAMLINGAR"
 
 msgid "PROCESSING"
 msgstr "PROCESSAR"
@@ -1608,22 +1611,22 @@ msgid "Couldn't move temporary gamelist file, permission problems?"
 msgstr "Kunde inte flytta den temporära spellist-filen, åtkomstproblem?"
 
 msgid "Couldn't find custom collection configuration file"
-msgstr "Kunde inte hitta konfigurationsfilen för den anpassade spelsamlingen"
+msgstr "Kunde inte hitta konfigurationsfilen för den anpassade samlingen"
 
 msgid "Couldn't open custom collection configuration file"
-msgstr "Kunde inte öppna konfigurationsfilen för den anpassade spelsamlingen"
+msgstr "Kunde inte öppna konfigurationsfilen för den anpassade samlingen"
 
 msgid "Couldn't delete temporary collection file, permission problems?"
-msgstr "Kunde inte radera den temporära spelsamlings-filen, åtkomstproblem?"
+msgstr "Kunde inte radera den temporära samlings-filen, åtkomstproblem?"
 
 msgid "Couldn't write to temporary collection configuration file"
-msgstr "Kunde inte skriva till den temporära spelsamlings-filen"
+msgstr "Kunde inte skriva till den temporära samlings-filen"
 
 msgid "Couldn't move old collection file, permission problems?"
-msgstr "Kunde inte flytta den gamla spelsamlings-filen, åtkomstproblem?"
+msgstr "Kunde inte flytta den gamla samlings-filen, åtkomstproblem?"
 
 msgid "Couldn't move temporary collection file, permission problems?"
-msgstr "Kunde inte flytta den temporära spelsamlings-filen, åtkomstproblem?"
+msgstr "Kunde inte flytta den temporära samlings-filen, åtkomstproblem?"
 
 msgid "ABORTED MEDIA CLEANUP"
 msgstr "AVBRÖT UPPRENSNING AV MEDIA"
@@ -1638,10 +1641,10 @@ msgid "COMPLETED GAMELIST CLEANUP"
 msgstr "AVSLUTADE UPPRENSNING AV SPELLISTOR"
 
 msgid "ABORTED COLLECTIONS CLEANUP"
-msgstr "AVBRÖT UPPRENSNING AV SPELSAMLINGAR"
+msgstr "AVBRÖT UPPRENSNING AV SAMLINGAR"
 
 msgid "COMPLETED COLLECTIONS CLEANUP"
-msgstr "AVSLUTADE UPPRENSNING AV SPELSAMLINGAR"
+msgstr "AVSLUTADE UPPRENSNING AV SAMLINGAR"
 
 msgid "MEDIA CLEANUP FAILED"
 msgstr "UPPRENSNING AV MEDIA MISSLYCKADES"
@@ -1893,7 +1896,7 @@ msgid "favorites"
 msgstr "favoriter"
 
 msgid "collections"
-msgstr "spelsamlingar"
+msgstr "samlingar"
 
 #, c-format
 msgid "DISABLED '%s' IN '%s'"
@@ -1920,6 +1923,43 @@ msgstr "TOG BORT '%s' FRÅN '%s'"
 
 msgid "This collection is empty"
 msgstr "Den här samlingen är tom"
+
+#, c-format
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "Den här samlingen innehåller 1 spel: '%s [%s]'"
+
+#, c-format
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "Den här samlingen innehåller 2 spel: '%s [%s]' och '%s [%s]'"
+
+#, c-format
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr ""
+"Den här samlingen innehåller 3 spel: '%s [%s]', '%s [%s]' och '%s [%s]'"
+
+#, c-format
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr ""
+"Den här samlingen innehåller %i spel: '%s [%s]', '%s [%s]' och '%s [%s]', "
+"bland andra"
+
+#, c-format
+msgid "This collection contains 1 game: '%s'"
+msgstr "Den här samlingen innehåller 1 spel: '%s'"
+
+#, c-format
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "Den här samlingen innehåller 2 spel: '%s' och '%s'"
+
+#, c-format
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "Den här samlingen innehåller 3 spel: '%s', '%s' och '%s'"
+
+#, c-format
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr "Den här samlingen innehåller %i spel: '%s', '%s' och '%s', bland andra"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -1984,6 +2024,71 @@ msgstr "system, stigande"
 
 msgid "system, descending"
 msgstr "system, fallande"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "FEL: SAKNAR PRE-COMMAND SÖKREGELKONFIGURATION FÖR '%s'"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FEL: KUNDE INTE HITTA PRE-COMMAND, HAR DET BLIVIT KORREKT INSTALLERAT?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"FEL: KUNDE INTE HITTA PRE-COMMAND '%s', HAR DET BLIVIT KORREKT INSTALLERAT?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "FEL: SAKNAR SÖKREGELKONFIGURATION FÖR EMULATORN '%s'"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FEL: KUNDE INTE HITTA APPEN, HAR DEN BLIVIT KORREKT INSTALLERAD?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FEL: KUNDE INTE HITTA APPEN '%s', HAR DEN BLIVIT KORREKT INSTALLERAD?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FEL: KUNDE INTE HITTA EMULATORN, HAR DEN BLIVIT KORREKT INSTALLERAD?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"FEL: KUNDE INTE HITTA EMULATORN '%s', HAR DEN BLIVIT KORREKT INSTALLERAD?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "FEL: KUNDE INTE HITTA EMULATORNS KÄRNFIL '%s'"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "FEL: OGILTIG POST I SYSTEM-KONFIGURATIONSFILEN"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "FEL: SAKNAR KÄRN-KONFIGURATION FÖR '%s'"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "FEL: OGILTIG %s VARIABELPOST"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr ""
+"FEL: KATALOGEN SOM DEFINIERATS VIA %s KUNDE INTE SKAPAS, ÅTKOMSTPROBLEM?"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "FEL: APP- ELLER ALIASFIL EXISTERAR INTE ELLER ÄR OLÄSBAR"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "FEL: DESKTOP FILEN ÄR OGILTIG ELLER OLÄSBAR"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "FEL: DESKTOP FILEN EXISTERAR INTE ELLER ÄR OLÄSBAR"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "KUNDE INTE STARTA SPELET '%s' (FELKOD %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr "KAN INTE LÄGGA TILL ANPASSADE SAMLINGAR TILL ANPASSADE SAMLINGAR"
@@ -2174,6 +2279,10 @@ msgstr ""
 "APPLIKATIONSUPPDATERAREN KOMMER LADDA NER DEN SENASTE VERSIONEN ÅT DIG, MEN "
 "DU MÅSTE INSTALLERA DMG FILEN MANUELLT FÖR ATT GENOMFÖRA UPPGRADERINGEN."
 
+#, c-format
+msgid "LAUNCHING GAME '%s'"
+msgstr "STARTAR SPELET '%s'"
+
 msgid "menu"
 msgstr "meny"
 
@@ -2338,9 +2447,6 @@ msgstr "32:9 vertikal"
 
 msgid "edit date"
 msgstr "redigera datum"
-
-msgid "apply"
-msgstr "tillämpa"
 
 msgid "Y-M-D"
 msgstr "Å-M-D"
