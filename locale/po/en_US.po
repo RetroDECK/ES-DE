@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-17 19:47+0200\n"
-"PO-Revision-Date: 2024-07-17 18:36+0200\n"
+"POT-Creation-Date: 2024-07-18 15:08+0200\n"
+"PO-Revision-Date: 2024-07-18 15:09+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
 "Language: en_US\n"
@@ -1180,6 +1180,9 @@ msgstr "LAUNCHING GAME"
 msgid "CLOSE"
 msgstr "CLOSE"
 
+msgid "close"
+msgstr "close"
+
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DOWNLOADING THEMES LIST 100%"
 
@@ -1326,9 +1329,6 @@ msgstr "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
 
 msgid "THEME WAS DELETED"
 msgstr "THEME WAS DELETED"
-
-msgid "close"
-msgstr "close"
 
 msgid "view screenshots"
 msgstr "view screenshots"
@@ -1481,6 +1481,9 @@ msgstr "ENTER FOLDER (OVERRIDE FOLDER LINK)"
 
 msgid "APPLY"
 msgstr "APPLY"
+
+msgid "apply"
+msgstr "apply"
 
 msgid "close (apply)"
 msgstr "close (apply)"
@@ -1917,6 +1920,42 @@ msgid "This collection is empty"
 msgstr "This collection is empty"
 
 #, c-format
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "This collection contains 1 game: '%s [%s]'"
+
+#, c-format
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+
+#, c-format
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+
+#, c-format
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+
+#, c-format
+msgid "This collection contains 1 game: '%s'"
+msgstr "This collection contains 1 game: '%s'"
+
+#, c-format
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "This collection contains 2 games: '%s' and '%s'"
+
+#, c-format
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "This collection contains 3 games: '%s', '%s' and '%s'"
+
+#, c-format
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr "This collection contains %i games: '%s', '%s' and '%s', among others"
+
+#, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "DELETED COLLECTION '%s'"
 
@@ -1979,6 +2018,69 @@ msgstr "system, ascending"
 
 msgid "system, descending"
 msgstr "system, descending"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "ERROR: INVALID %s VARIABLE ENTRY"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
@@ -2167,6 +2269,10 @@ msgstr ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
 "WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
 
+#, c-format
+msgid "LAUNCHING GAME '%s'"
+msgstr "LAUNCHING GAME '%s'"
+
 msgid "menu"
 msgstr "menu"
 
@@ -2331,9 +2437,6 @@ msgstr "32:9 vertical"
 
 msgid "edit date"
 msgstr "edit date"
-
-msgid "apply"
-msgstr "apply"
 
 msgid "Y-M-D"
 msgstr "Y-M-D"
