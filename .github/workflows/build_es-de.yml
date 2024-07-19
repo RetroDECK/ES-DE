@@ -98,6 +98,7 @@ jobs:
         with: 
           github_token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
           message: '[AUTOMATED] Updating ES-DE after build [skip ci]'
+          branch: retrodeck-main
         continue-on-error: true # TODO: would be good to update the manifest but it's broken
             
 
