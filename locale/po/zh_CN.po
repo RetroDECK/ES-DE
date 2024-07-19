@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-18 15:08+0200\n"
+"POT-Creation-Date: 2024-07-19 10:37+0200\n"
 "PO-Revision-Date: 2024-07-04 17:14+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
@@ -121,7 +121,7 @@ msgstr ""
 msgid "FAVORITE"
 msgstr ""
 
-msgid "COMPLETED"
+msgid "COMPLETED [metadata]"
 msgstr ""
 
 msgid "KIDGAME"
@@ -292,7 +292,7 @@ msgstr "设备类型，发布年份"
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr "制造商，设备类型，发行年份"
 
-msgid "GAMES DEFAULT SORT ORDER [SHORT]"
+msgid "GAMES DEFAULT SORT ORDER [short]"
 msgstr "默认排序顺序"
 
 msgid "GAMES DEFAULT SORT ORDER"
@@ -563,7 +563,7 @@ msgid "KEYBOARD QUIT SHORTCUT"
 msgstr ""
 
 #, fuzzy
-msgid "WHEN TO SAVE GAME METADATA [SHORT]"
+msgid "WHEN TO SAVE GAME METADATA [short]"
 msgstr "编辑此游戏的元数据"
 
 msgid "ALWAYS"
@@ -694,10 +694,10 @@ msgstr ""
 msgid "POWER OFF SYSTEM"
 msgstr ""
 
-msgid "MEDIA VIEWER SETTINGS [SHORT]"
+msgid "MEDIA VIEWER SETTINGS [short]"
 msgstr "媒体播放器设置"
 
-msgid "SCREENSAVER SETTINGS [SHORT]"
+msgid "SCREENSAVER SETTINGS [short]"
 msgstr "屏保设置"
 
 msgid "choose"
@@ -834,7 +834,7 @@ msgstr "仅游戏"
 msgid "MIXIMAGE RESOLUTION"
 msgstr ""
 
-msgid "HORIZONTAL SCREENSHOT FIT [SHORT]"
+msgid "HORIZONTAL SCREENSHOT FIT [short]"
 msgstr ""
 
 msgid "CONTAIN"
@@ -849,14 +849,14 @@ msgstr ""
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr ""
 
-msgid "VERTICAL SCREENSHOT FIT [SHORT]"
+msgid "VERTICAL SCREENSHOT FIT [short]"
 msgstr ""
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr ""
 
 #, fuzzy
-msgid "SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
 msgstr "主题宽高比"
 
 msgid "HIGH"
@@ -875,7 +875,7 @@ msgid "FRAME"
 msgstr ""
 
 #, fuzzy
-msgid "SCREENSHOT SCALING METHOD [SHORT]"
+msgid "SCREENSHOT SCALING METHOD [short]"
 msgstr "主题宽高比"
 
 msgid "SHARP"
@@ -1757,7 +1757,7 @@ msgstr ""
 msgid "RUNNING"
 msgstr ""
 
-msgid "COMPLETED [MIXIMAGE GENERATOR]"
+msgid "COMPLETED"
 msgstr ""
 
 msgid "DONE"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-18 15:08+0200\n"
+"POT-Creation-Date: 2024-07-19 10:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -117,7 +117,7 @@ msgstr ""
 msgid "FAVORITE"
 msgstr ""
 
-msgid "COMPLETED"
+msgid "COMPLETED [metadata]"
 msgstr ""
 
 msgid "KIDGAME"
@@ -288,7 +288,7 @@ msgstr ""
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr ""
 
-msgid "GAMES DEFAULT SORT ORDER [SHORT]"
+msgid "GAMES DEFAULT SORT ORDER [short]"
 msgstr ""
 
 msgid "GAMES DEFAULT SORT ORDER"
@@ -556,7 +556,7 @@ msgstr ""
 msgid "KEYBOARD QUIT SHORTCUT"
 msgstr ""
 
-msgid "WHEN TO SAVE GAME METADATA [SHORT]"
+msgid "WHEN TO SAVE GAME METADATA [short]"
 msgstr ""
 
 msgid "ALWAYS"
@@ -682,10 +682,10 @@ msgstr ""
 msgid "POWER OFF SYSTEM"
 msgstr ""
 
-msgid "MEDIA VIEWER SETTINGS [SHORT]"
+msgid "MEDIA VIEWER SETTINGS [short]"
 msgstr ""
 
-msgid "SCREENSAVER SETTINGS [SHORT]"
+msgid "SCREENSAVER SETTINGS [short]"
 msgstr ""
 
 msgid "choose"
@@ -808,7 +808,7 @@ msgstr ""
 msgid "MIXIMAGE RESOLUTION"
 msgstr ""
 
-msgid "HORIZONTAL SCREENSHOT FIT [SHORT]"
+msgid "HORIZONTAL SCREENSHOT FIT [short]"
 msgstr ""
 
 msgid "CONTAIN"
@@ -823,13 +823,13 @@ msgstr ""
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr ""
 
-msgid "VERTICAL SCREENSHOT FIT [SHORT]"
+msgid "VERTICAL SCREENSHOT FIT [short]"
 msgstr ""
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr ""
 
-msgid "SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
 msgstr ""
 
 msgid "HIGH"
@@ -847,7 +847,7 @@ msgstr ""
 msgid "FRAME"
 msgstr ""
 
-msgid "SCREENSHOT SCALING METHOD [SHORT]"
+msgid "SCREENSHOT SCALING METHOD [short]"
 msgstr ""
 
 msgid "SHARP"
@@ -1688,7 +1688,7 @@ msgstr ""
 msgid "RUNNING"
 msgstr ""
 
-msgid "COMPLETED [MIXIMAGE GENERATOR]"
+msgid "COMPLETED"
 msgstr ""
 
 msgid "DONE"

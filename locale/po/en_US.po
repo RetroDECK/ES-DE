@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-18 15:08+0200\n"
+"POT-Creation-Date: 2024-07-19 10:37+0200\n"
 "PO-Revision-Date: 2024-07-18 15:09+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English <info@es-de.org>\n"
@@ -117,7 +117,7 @@ msgstr "ENTER NUMBER OF PLAYERS"
 msgid "FAVORITE"
 msgstr "FAVORITE"
 
-msgid "COMPLETED"
+msgid "COMPLETED [metadata]"
 msgstr "COMPLETED"
 
 msgid "KIDGAME"
@@ -288,7 +288,7 @@ msgstr "HW TYPE, RELEASE YEAR"
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr "MANUFACTURER, HW TYPE, REL. YEAR"
 
-msgid "GAMES DEFAULT SORT ORDER [SHORT]"
+msgid "GAMES DEFAULT SORT ORDER [short]"
 msgstr "DEFAULT SORT ORDER"
 
 msgid "GAMES DEFAULT SORT ORDER"
@@ -579,7 +579,7 @@ msgstr "ROTATE SCREEN (REQUIRES RESTART)"
 msgid "KEYBOARD QUIT SHORTCUT"
 msgstr "KEYBOARD QUIT SHORTCUT"
 
-msgid "WHEN TO SAVE GAME METADATA [SHORT]"
+msgid "WHEN TO SAVE GAME METADATA [short]"
 msgstr "WHEN TO SAVE METADATA"
 
 msgid "ALWAYS"
@@ -714,10 +714,10 @@ msgstr "REALLY POWER OFF?"
 msgid "POWER OFF SYSTEM"
 msgstr "POWER OFF SYSTEM"
 
-msgid "MEDIA VIEWER SETTINGS [SHORT]"
+msgid "MEDIA VIEWER SETTINGS [short]"
 msgstr "MEDIA VIEWER SETTINGS"
 
-msgid "SCREENSAVER SETTINGS [SHORT]"
+msgid "SCREENSAVER SETTINGS [short]"
 msgstr "SCREENSAVER SETTINGS"
 
 msgid "choose"
@@ -840,7 +840,7 @@ msgstr "GAME MANUALS"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "MIXIMAGE RESOLUTION"
 
-msgid "HORIZONTAL SCREENSHOT FIT [SHORT]"
+msgid "HORIZONTAL SCREENSHOT FIT [short]"
 msgstr "HORIZONTAL SCREENSHOT FIT"
 
 msgid "CONTAIN"
@@ -855,13 +855,13 @@ msgstr "STRETCH"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "HORIZONTAL SCREENSHOT FIT"
 
-msgid "VERTICAL SCREENSHOT FIT [SHORT]"
+msgid "VERTICAL SCREENSHOT FIT [short]"
 msgstr "VERTICAL SCREENSHOT FIT"
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr "VERTICAL SCREENSHOT FIT"
 
-msgid "SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
 msgstr "ASPECT RATIO THRESHOLD"
 
 msgid "HIGH"
@@ -879,7 +879,7 @@ msgstr "BLACK"
 msgid "FRAME"
 msgstr "FRAME"
 
-msgid "SCREENSHOT SCALING METHOD [SHORT]"
+msgid "SCREENSHOT SCALING METHOD [short]"
 msgstr "SCREENSHOT SCALING"
 
 msgid "SHARP"
@@ -1774,7 +1774,7 @@ msgstr "PAUSED"
 msgid "RUNNING"
 msgstr "RUNNING"
 
-msgid "COMPLETED [MIXIMAGE GENERATOR]"
+msgid "COMPLETED"
 msgstr "COMPLETED"
 
 msgid "DONE"
