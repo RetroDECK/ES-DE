@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Commodore International</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1992</text>
+        </text>
+        <text name="info3">
+            <text>OS:  AmigaOS 2.05</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  16/32-bit Motorola 68000 @ 7.09 MHz (PAL) / 7.16 MHz (NTSC)</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  1 MB (expandable to 6 MB)</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  512 KB Kickstart 2.05</text>
+        </text>
+        <text name="info7">
+            <text>Chipset:  Enhanced Chip Set (ECS)</text>
+        </text>
+        <text name="info8">
+            <text>Graphics:  HiRes Denise, 320×200 to 1280×512 pixels</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Paula, 4 channels, 8-bit stereo PCM</text>
+        </text>
+    </view>
+</theme>

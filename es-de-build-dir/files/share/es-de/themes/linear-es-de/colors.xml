@@ -1,0 +1,92 @@
+<theme>
+    <colorScheme name="dark">
+        <variables>
+            <!-- Both system and gamelist views -->
+            <helpsystemPanelColor>000000</helpsystemPanelColor>
+            <backgroundColor>373737</backgroundColor>
+            <primaryColor>FAFAFA</primaryColor>
+            <secondaryColor>C2C2C2</secondaryColor>
+            <tertiaryColor>C2C2C2</tertiaryColor>
+
+            <!-- Gamelist view -->
+            <gamelistTextlistSelectorColor>FFFFFF</gamelistTextlistSelectorColor>
+            <gamelistTextlistPrimaryColor>777777</gamelistTextlistPrimaryColor>
+            <gamelistTextlistSecondaryColor>BBBBBB</gamelistTextlistSecondaryColor>
+            <gamelistMetadataPanelColor>303030</gamelistMetadataPanelColor>
+            <gamelistMetadataLabelColor>ABABAB</gamelistMetadataLabelColor>
+            <gamelistWatermarkLogoColor>545454</gamelistWatermarkLogoColor>
+        </variables>
+    </colorScheme>
+    <colorScheme name="light">
+        <variables>
+            <!-- Both system and gamelist views -->
+            <helpsystemPanelColor>000000</helpsystemPanelColor>
+            <backgroundColor>838383</backgroundColor>
+            <primaryColor>FFFFFF</primaryColor>
+            <secondaryColor>D2D2D2</secondaryColor>
+            <tertiaryColor>FAFAFA</tertiaryColor>
+
+            <!-- Gamelist view -->
+            <gamelistTextlistSelectorColor>FFFFFF</gamelistTextlistSelectorColor>
+            <gamelistTextlistPrimaryColor>545454</gamelistTextlistPrimaryColor>
+            <gamelistTextlistSecondaryColor>BBBBBB</gamelistTextlistSecondaryColor>
+            <gamelistMetadataPanelColor>787878</gamelistMetadataPanelColor>
+            <gamelistMetadataLabelColor>3B3B3B</gamelistMetadataLabelColor>
+            <gamelistWatermarkLogoColor>707070</gamelistWatermarkLogoColor>
+        </variables>
+    </colorScheme>
+    <colorScheme name="nso">
+        <variables>
+            <!-- Both system and gamelist views -->
+            <helpsystemPanelColor>000000</helpsystemPanelColor>
+            <backgroundColor>E4000F</backgroundColor>
+            <primaryColor>FFFFFF</primaryColor>
+            <secondaryColor>FFFFFF</secondaryColor>
+            <tertiaryColor>FFFFFF</tertiaryColor>
+
+            <!-- Gamelist view -->
+            <gamelistTextlistSelectorColor>FFFFFF</gamelistTextlistSelectorColor>
+            <gamelistTextlistPrimaryColor>111111</gamelistTextlistPrimaryColor>
+            <gamelistTextlistSecondaryColor>68000F</gamelistTextlistSecondaryColor>
+            <gamelistMetadataPanelColor>D0000F</gamelistMetadataPanelColor>
+            <gamelistMetadataLabelColor>000000</gamelistMetadataLabelColor>
+            <gamelistWatermarkLogoColor>B0000F</gamelistWatermarkLogoColor>
+        </variables>
+    </colorScheme>
+    <colorScheme name="live">
+        <variables>
+            <!-- Both system and gamelist views -->
+            <helpsystemPanelColor>000000</helpsystemPanelColor>
+            <backgroundColor>0E7A0D</backgroundColor>
+            <primaryColor>FAF9F6</primaryColor>
+            <secondaryColor>FFFFFF</secondaryColor>
+            <tertiaryColor>FFFFFF</tertiaryColor>
+
+            <!-- Gamelist view -->
+            <gamelistTextlistSelectorColor>FFFFFF</gamelistTextlistSelectorColor>
+            <gamelistTextlistPrimaryColor>111111</gamelistTextlistPrimaryColor>
+            <gamelistTextlistSecondaryColor>00460F</gamelistTextlistSecondaryColor>
+            <gamelistMetadataPanelColor>00700F</gamelistMetadataPanelColor>
+            <gamelistMetadataLabelColor>000000</gamelistMetadataLabelColor>
+            <gamelistWatermarkLogoColor>00660F</gamelistWatermarkLogoColor>
+        </variables>
+    </colorScheme>
+    <colorScheme name="psn">
+        <variables>
+            <!-- Both system and gamelist views -->
+            <helpsystemPanelColor>000000</helpsystemPanelColor>
+            <backgroundColor>00338F</backgroundColor>
+            <primaryColor>EAE9E6</primaryColor>
+            <secondaryColor>FFFFFF</secondaryColor>
+            <tertiaryColor>FFFFFF</tertiaryColor>
+
+            <!-- Gamelist view -->
+            <gamelistTextlistSelectorColor>EAE9E6</gamelistTextlistSelectorColor>
+            <gamelistTextlistPrimaryColor>000000</gamelistTextlistPrimaryColor>
+            <gamelistTextlistSecondaryColor>000072</gamelistTextlistSecondaryColor>
+            <gamelistMetadataPanelColor>0039AF</gamelistMetadataPanelColor>
+            <gamelistMetadataLabelColor>000000</gamelistMetadataLabelColor>
+            <gamelistWatermarkLogoColor>1B4DC0</gamelistWatermarkLogoColor>
+        </variables>
+    </colorScheme>
+</theme>

@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Capcom</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1993</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Capcom DL-1525 @ 16 MHz + Kabuki DL-030P or Zilog Z80</text>
+        </text>
+        <text name="info4">
+            <text>Graphics:  CPS-A &amp; CPS-B @ 16 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  1 MB FPM DRAM + 304 KB SRAM</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  Lucent DL-1425 Q1 QSound DSP16A Processor @ 4 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  384×224 (standard) or 512×262 (overscan)</text>
+        </text>
+        <text name="info8">
+            <text>Colors:  4096 on screen (16.77 million color palette)</text>
+        </text>
+        <text name="info9">
+            <text>Media:  ROM board</text>
+        </text>
+    </view>
+</theme>

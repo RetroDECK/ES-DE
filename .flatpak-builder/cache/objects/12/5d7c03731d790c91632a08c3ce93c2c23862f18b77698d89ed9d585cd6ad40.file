@@ -1,0 +1,16 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Future Pinball is a pinball development and simulation</text>
+        </text>
+        <text name="info2">
+            <text>system with advanced physics support. There are many</text>
+        </text>
+        <text name="info3">
+            <text>tables available, both original designs as well as</text>
+        </text>
+        <text name="info4">
+            <text>recreations of physical machines.</text>
+        </text>
+    </view>
+</theme>

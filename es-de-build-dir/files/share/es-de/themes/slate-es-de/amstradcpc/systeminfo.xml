@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Amstrad</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1984</text>
+        </text>
+        <text name="info3">
+            <text>OS:  AMSDOS with Locomotive BASIC</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit Zilog Z80A @ 4 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB</text>
+        </text>
+        <text name="info6">
+            <text>Graphics:  Motorola 6845 or compatible + custom gate array</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  General Instrument AY-3-8910</text>
+        </text>
+    </view>
+</theme>

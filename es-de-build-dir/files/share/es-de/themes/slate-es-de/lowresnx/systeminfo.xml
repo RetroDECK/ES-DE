@@ -1,0 +1,16 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>LowRes NX is an open source fantasy console for creating</text>
+        </text>
+        <text name="info2">
+            <text>tiny games. It's inspired by real 8-bit and 16-bit systems,</text>
+        </text>
+        <text name="info3">
+            <text>and games are written in structured BASIC. It supports a</text>
+        </text>
+        <text name="info4">
+            <text>D-pad, two action buttons and keyboard for input.</text>
+        </text>
+    </view>
+</theme>

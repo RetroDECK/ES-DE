@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Developer:  Tandy Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Manufacturer:  Motorola</text>
+        </text>
+        <text name="info3">
+            <text>Released:  1980</text>
+        </text>
+        <text name="info4">
+            <text>OS:  Color BASIC 1.0/2.0, OS-9</text>
+        </text>
+        <text name="info5">
+            <text>Units sold:  Millions</text>
+        </text>
+        <text name="info6">
+            <text>CPU:  Motorola 6809E @ 0.895 or 1.79 MHz</text>
+        </text>
+        <text name="info7">
+            <text>RAM:  4 to 512 KB depending on model</text>
+        </text>
+        <text name="info8">
+            <text>Graphics:  Motorola 6847 or GIME</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  6-bit DAC</text>
+        </text>
+    </view>
+</theme>

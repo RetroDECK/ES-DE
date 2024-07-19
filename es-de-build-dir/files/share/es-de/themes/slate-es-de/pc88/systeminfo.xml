@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  NEC Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1981</text>
+        </text>
+        <text name="info3">
+            <text>OS:  N88-BASIC, N-BASIC (PC8001 MODE)</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit µPD780c-1 (Z80A-compatible) @ 4 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB (expandable to 576 KB) / VRAM:  48 KB</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  3 FM channels + 3 SSG + 6 rhythms + 1 ADPCM</text>
+        </text>
+    </view>
+</theme>

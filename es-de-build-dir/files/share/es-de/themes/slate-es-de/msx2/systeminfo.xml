@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Various</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1985</text>
+        </text>
+        <text name="info3">
+            <text>OS:  MSX BASIC V3.0 (16 KB)</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit Zilog Z80 compatible @ 3.58 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB / VRAM:  128 KB</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  64 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  Yamaha V9958 (aka MSX-Video)</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  256×212 pixels, 19268 colors</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Yamaha YM2149 (PSG)</text>
+        </text>
+    </view>
+</theme>

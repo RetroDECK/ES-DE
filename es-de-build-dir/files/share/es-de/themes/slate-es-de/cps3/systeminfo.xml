@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Capcom</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1996</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Hitachi HD6417099 (SH-2) @ 25 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  Variable</text>
+        </text>
+        <text name="info5">
+            <text>Resolution:  384×224 (standard) or 496×224 (widescreen)</text>
+        </text>
+        <text name="info6">
+            <text>Colors:  32,768 on screen</text>
+        </text>
+        <text name="info7">
+            <text>Media:  ROM board + CD-ROM</text>
+        </text>
+    </view>
+</theme>

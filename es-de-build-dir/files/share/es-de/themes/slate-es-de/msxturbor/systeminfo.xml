@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Panasonic</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1990</text>
+        </text>
+        <text name="info3">
+            <text>OS:  MSX BASIC V4.0 (32 KB)</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  R800 (DAR800-X0G) @ 28.64 MHz + Z80A @ 3.58 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  256 KB (FS-A1ST) or 512 KB (FS-A1GT) / VRAM:  128 KB</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  96 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  Yamaha V9958</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  512×212 pixels, 4 or 16 colors / 256×212 pixels, 16 to 19268 colors</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  PSG (AY-3-8910 compatible), MSX-MUSIC, PCM, MSX-MIDI</text>
+        </text>
+    </view>
+</theme>

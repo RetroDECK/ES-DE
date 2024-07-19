@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sony Electronics, Foxconn, Asus</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2006</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  87.4 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Grand Theft Auto V</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  Cell Broadband Engine @ 3.2 GHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  256 MB XDR @ 3.2 GHz / VRAM:  256 MB GDDR3 @ 700 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  Sony/Nvidia RSX "Reality Synthesizer" @ 500 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  480i, 480p, 720p, 1080i, 1080p</text>
+        </text>
+        <text name="info9">
+            <text>Media:  Blu-ray, DVD, CD-ROM, digital distribution</text>
+        </text>
+    </view>
+</theme>

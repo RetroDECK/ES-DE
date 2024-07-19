@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Various</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1983</text>
+        </text>
+        <text name="info3">
+            <text>OS:  MSX BASIC V1.0 (16 KB)</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit Zilog Z80A @ 3.58 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  8 to 128 KB / VRAM:  16 KB</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  32 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  Texas Instruments TMS9918 family</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  256×192 pixels, 16 colors</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  General Instrument AY-3-8910 (PSG)</text>
+        </text>
+    </view>
+</theme>

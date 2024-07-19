@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Epoch Co.</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1984</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  300,000</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit NEC µPD7801G microcontroller @ 4 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  128 bytes / VRAM:  4 + 2 KB</text>
+        </text>
+        <text name="info5">
+            <text>ROM:  4 KB (internal to CPU)</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  309×246 pixels, 16 colors</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  NEC µPD1771C @ 6 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Media:  Cartridge</text>
+        </text>
+    </view>
+</theme>

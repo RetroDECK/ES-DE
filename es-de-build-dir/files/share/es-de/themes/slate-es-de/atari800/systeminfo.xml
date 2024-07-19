@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Atari, Inc., Atari Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1979</text>
+        </text>
+        <text name="info3">
+            <text>OS:  Atari OS</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit MOS Technology 6502B @ 1.8 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  8 KB base, 48 KB max.</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  8 KB (Atari BASIC)</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  320×192 pixels, monochrome / 160×96 pixels, 128 colors</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  4 x oscillators with noise mixing</text>
+        </text>
+    </view>
+</theme>

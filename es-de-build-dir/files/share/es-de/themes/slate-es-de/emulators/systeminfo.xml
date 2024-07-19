@@ -1,0 +1,7 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Here you can launch your emulators directly.</text>
+        </text>
+    </view>
+</theme>

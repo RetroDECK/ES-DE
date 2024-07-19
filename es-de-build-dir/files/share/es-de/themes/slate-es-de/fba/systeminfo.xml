@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>FinalBurn Alpha, or FB Alpha as it's also known is an arcade</text>
+        </text>
+        <text name="info2">
+            <text>system emulator that is based on a fork of MAME.</text>
+        </text>
+        <text name="info3">
+            <text>It supports boards such as Capcom CPS, Neo Geo MVS and</text>
+        </text>
+        <text name="info4">
+            <text>numerous systems from Sega, Konami, Irem and others.</text>
+        </text>
+        <text name="info5">
+            <text>This emulator is no longer in active development and has</text>
+        </text>
+        <text name="info6">
+            <text>been superseded by FinalBurn Neo.</text>
+        </text>
+    </view>
+</theme>

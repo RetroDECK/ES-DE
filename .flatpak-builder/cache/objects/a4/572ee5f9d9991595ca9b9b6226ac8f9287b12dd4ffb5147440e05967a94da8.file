@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sony Electronics, Foxconn</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2013</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  106 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  God of War</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  AMD Jaguar @ 1.6 GHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  8 GB GDDR5</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  AMD GCN Radeon @ 800 MHz or 911 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Media:  Blu-ray, DVD, digital distribution</text>
+        </text>
+    </view>
+</theme>

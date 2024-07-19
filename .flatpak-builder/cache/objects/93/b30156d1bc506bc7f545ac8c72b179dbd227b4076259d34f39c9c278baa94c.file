@@ -1,0 +1,7 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Find your own custom collections here.</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  SNK</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1990</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  980,000</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  The King of Fighters '95</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  16-bit Motorola 68000 @ 12 MHz + 8-bit Zilog Z80A @ 4 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  64 KB / VRAM:  84 KB / Sound RAM:  2 KB</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  320×224 pixels, 4096 colors (65,536 color palette)</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  Yamaha YM2610</text>
+        </text>
+    </view>
+</theme>

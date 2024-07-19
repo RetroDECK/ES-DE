@@ -1,0 +1,13 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>ChaiLove is an open source cross-platform game</text>
+        </text>
+        <text name="info2">
+            <text>engine for developing 2D video games using the</text>
+        </text>
+        <text name="info3">
+            <text>ChaiScript and Lua scripting languages.</text>
+        </text>
+    </view>
+</theme>

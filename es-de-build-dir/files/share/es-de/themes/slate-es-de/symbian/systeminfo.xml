@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>The Symbian operating system was the dominant</text>
+        </text>
+        <text name="info2">
+            <text>platform for early mobile devices, including</text>
+        </text>
+        <text name="info3">
+            <text>smartphones of the era. It was used by brands</text>
+        </text>
+        <text name="info4">
+            <text>such as Nokia, Sony Ericsson, Samsung and Motorola.</text>
+        </text>
+        <text name="info5">
+            <text>Initially released by Symbian Ltd. in 1997, it was later</text>
+        </text>
+        <text name="info6">
+            <text>acquired by Nokia in 2008 as part of their disastrous</text>
+        </text>
+        <text name="info7">
+            <text>decision to keep pushing for Symbian for their devices</text>
+        </text>
+        <text name="info8">
+            <text>instead of moving on to using Android.</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,16 @@
+<theme>
+    <view name="system, gamelist">
+        <image name="band1">
+            <color>F6564A</color>
+        </image>
+        <image name="band2">
+            <color>F2CE2E</color>
+        </image>
+        <image name="band3">
+            <color>FFFFFF</color>
+        </image>
+        <image name="band4">
+            <color>019ADE</color>
+        </image>
+    </view>
+</theme>

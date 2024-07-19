@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo, Foxconn</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2011</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  75.94 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Mario Kart 7</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  Dual-core ARM11 MPCore @ 268 MHz + single-core ARM9</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  128 MB FCRAM / VRAM:  6 MB</text>
+        </text>
+        <text name="info7">
+            <text>Screen:  Reflective TFT color LCD</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  800×240 pixels, 16.7 million colors</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Stereo speakers w/virtual surround, headphones</text>
+        </text>
+    </view>
+</theme>

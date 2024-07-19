@@ -1,0 +1,13 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>The Epic Games Store is a digital video game storefront</text>
+        </text>
+        <text name="info2">
+            <text>launched in 2018. It has native clients for Microsoft</text>
+        </text>
+        <text name="info3">
+            <text>Windows and macOS but can also be used on Linux.</text>
+        </text>
+    </view>
+</theme>

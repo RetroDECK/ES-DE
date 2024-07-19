@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Atari, Inc.</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1977</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  30 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Pac-Man</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  8-bit MOS 6507 @ 1.19 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  128 bytes</text>
+        </text>
+        <text name="info7">
+            <text>Audio/Video Processor:  TIA</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  160×192 pixels, 4 colors per line (128 color palette)</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  2 channels of 1-bit monaural sound with 4-bit volume control</text>
+        </text>
+        <text name="info10">
+            <text>Cart size:  2 to 32 KB</text>
+        </text>
+    </view>
+</theme>

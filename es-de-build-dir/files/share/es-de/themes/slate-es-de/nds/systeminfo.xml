@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2004</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  154.02 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  New Super Mario Bros.</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  ARM9 @ 66 MHz + ARM7 @ 33 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  4 MB / VRAM:  656 KB</text>
+        </text>
+        <text name="info7">
+            <text>Screen:  Reflective TFT color LCD</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  256×192 pixels, 260,000 colors</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Stereo speakers w/virtual surround, headphones</text>
+        </text>
+    </view>
+</theme>

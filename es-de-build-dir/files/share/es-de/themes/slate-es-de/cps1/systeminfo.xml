@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Capcom</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1988</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Motorola 68000 @ 10 MHz + Zilog Z80 @ 3.579 MHz</text>
+        </text>
+        <text name="info4">
+            <text>Graphics:  CPS-A &amp; CPS-B</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB + 2 KB / VRAM:  192 KB</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  Yamaha YM2151 @ 3.579 MHz + Oki OKI6295 @ 1 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:   384×224 pixels, 65,536 colors</text>
+        </text>
+        <text name="info8">
+            <text>Media:  ROM board</text>
+        </text>
+    </view>
+</theme>

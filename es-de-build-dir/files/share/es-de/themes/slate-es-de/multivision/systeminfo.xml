@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Tsukuda Original</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1983</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  8-bit Zilog Z80 @ 3.58 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  1 KB / VRAM:  16 KB</text>
+        </text>
+        <text name="info5">
+            <text>Graphics:  Texas Instruments TMS9918</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  256×192 pixels, 16 colors (21 color palette)</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  Texas Instruments SN76489 PSG</text>
+        </text>
+    </view>
+</theme>

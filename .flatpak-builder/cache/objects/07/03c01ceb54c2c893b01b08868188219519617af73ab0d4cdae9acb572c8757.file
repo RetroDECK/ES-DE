@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Funtech</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1995</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Motorola 68000 @ 10.74 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  256 KB / VRAM:  128 KB</text>
+        </text>
+        <text name="info5">
+            <text>Graphics:  UMC UM6618</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  320×240 pixels, 256 colors (32,768 color palette)</text>
+        </text>
+    </view>
+</theme>

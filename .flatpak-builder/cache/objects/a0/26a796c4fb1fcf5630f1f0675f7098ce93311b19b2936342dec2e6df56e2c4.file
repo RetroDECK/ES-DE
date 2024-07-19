@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2001</text>
+        </text>
+        <text name="info3">
+            <text>Best-selling game:  Pokémon Party mini</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit Epson S1C88 @ 4 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  4 KB (shared with video subsystem)</text>
+        </text>
+        <text name="info6">
+            <text>Display:  96×64 pixels monochrome LCD</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  Single channel PWM with three volume levels</text>
+        </text>
+        <text name="info8">
+            <text>Cart size:  512 KB</text>
+        </text>
+    </view>
+</theme>

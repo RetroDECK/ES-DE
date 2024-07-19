@@ -1,0 +1,19 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>LCD handheld games were in their heyday from the</text>
+        </text>
+        <text name="info2">
+            <text>early 1980s to the mid 1990s, although they are still</text>
+        </text>
+        <text name="info3">
+            <text>being produced to this day.</text>
+        </text>
+        <text name="info5">
+            <text>Notable manufacturers of these devices were Nintendo,</text>
+        </text>
+        <text name="info6">
+            <text>Tiger Electronics and Konami, among others.</text>
+        </text>
+    </view>
+</theme>

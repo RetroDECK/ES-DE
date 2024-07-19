@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Philips and others</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1990</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  1 million</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  Philips SCC68070 (Motorola 68000-based) @ 15.5 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  1 MB</text>
+        </text>
+        <text name="info6">
+            <text>Graphics:  SCC66470, later MCD 212</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  384×280 to 768×560 pixels</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  MCD 221, 16-bit stereo</text>
+        </text>
+    </view>
+</theme>

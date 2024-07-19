@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Developer:  Belogic Software</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2008</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Amtel ATmega644 @ 28.6 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  4 KB</text>
+        </text>
+        <text name="info5">
+            <text>Program Memory:  64 KB</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  Max. 360×224 pixels in tiles-only mode, 256 colors in 3:3:2 color space</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  5 channels, wavetable synthesis, 8-bit mono</text>
+        </text>
+        <text name="info8">
+            <text>Media:  SD memory card</text>
+        </text>
+    </view>
+</theme>

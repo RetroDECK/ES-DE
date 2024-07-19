@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Texas Instruments</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1979 (TI-99/4), 1981 (TI-99/4A)</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  2.8 million</text>
+        </text>
+        <text name="info4">
+            <text>OS:  TI BASIC</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  16-bit TMS9900 @ 3 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  256 bytes / VRAM:  16 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  TMS9918A VDP</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  256×192 pixels, 16 colors</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  TMS9919 or SN94624, 3 voices + 1 noise channel</text>
+        </text>
+        <text name="info10">
+            <text>Media:  Cartridge, cassette, floppy disk</text>
+        </text>
+    </view>
+</theme>

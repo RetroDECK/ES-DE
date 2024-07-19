@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  NEC Home Electronics</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1988</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  1.92 million (CD-ROM² add-on)</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit HuC6280 @ 7.16 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  8 KB / VRAM:  64 KB</text>
+        </text>
+        <text name="info6">
+            <text>Graphics:  HuC6270A Video Display Controller</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  PSG @ 3.58 MHz, 5 to 10-bit stereo PCM</text>
+        </text>
+        <text name="info8">
+            <text>Media:  CD-ROM, HuCard</text>
+        </text>
+    </view>
+</theme>

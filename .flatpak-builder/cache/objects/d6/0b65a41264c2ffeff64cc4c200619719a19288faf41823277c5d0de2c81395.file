@@ -1,0 +1,81 @@
+<theme>
+    <!-- Default band colors (used if a system is unthemed) -->
+    <view name="system, gamelist">
+        <image name="band1">
+            <color>F6DD08</color>
+        </image>
+        <image name="band2">
+            <color>800000</color>
+        </image>
+        <image name="band3">
+            <color>FF0000</color>
+        </image>
+        <image name="band4">
+            <color>303030</color>
+        </image>
+    </view>
+
+    <colorScheme name="dark">
+        <variables>
+            <!-- Both system and gamelist views -->
+            <backgroundColor>404040</backgroundColor>
+
+            <!-- System view -->
+            <systemCarouselColor>747474D8</systemCarouselColor>
+            <systemCarouselTextColor>F0F0F0</systemCarouselTextColor>
+            <systemGameCounterColor>C6C6C6</systemGameCounterColor>
+            <systemGameCounterBackgroundColor>555555D8</systemGameCounterBackgroundColor>
+
+            <systemInfoTextColor>B6B6B6</systemInfoTextColor>
+            <systemHelpColor>A6A6A6</systemHelpColor>
+            <systemHelpColorDimmed>969696</systemHelpColorDimmed>
+
+            <!-- Gamelist view -->
+            <gamelistBackFrameColor>6F6F6F</gamelistBackFrameColor>
+            <gamelistTextlistSelectorColor>161616</gamelistTextlistSelectorColor>
+            <gamelistTextlistSelectedColor>AFAFAF</gamelistTextlistSelectedColor>
+            <gamelistTextlistPrimaryColor>000000</gamelistTextlistPrimaryColor>
+            <gamelistTextlistSecondaryColor>333333</gamelistTextlistSecondaryColor>
+            <gamelistCollectionsHeaderColor>C6C6C6</gamelistCollectionsHeaderColor>
+
+            <gamelistDefaultTextColor>000000</gamelistDefaultTextColor>
+            <gamelistInfoColor>303030</gamelistInfoColor>
+            <gamelistRatingColor>606060</gamelistRatingColor>
+
+            <gamelistHelpColor>A6A6A6</gamelistHelpColor>
+            <gamelistHelpColorDimmed>969696</gamelistHelpColorDimmed>
+        </variables>
+    </colorScheme>
+
+    <colorScheme name="light">
+        <variables>
+            <!-- Both system and gamelist views -->
+            <backgroundColor>707070</backgroundColor>
+
+            <!-- System view -->
+            <systemCarouselColor>FFFFFFD8</systemCarouselColor>
+            <systemCarouselTextColor>262626</systemCarouselTextColor>
+            <systemGameCounterColor>202020</systemGameCounterColor>
+            <systemGameCounterBackgroundColor>DDDDDDD8</systemGameCounterBackgroundColor>
+
+            <systemInfoTextColor>262626</systemInfoTextColor>
+            <systemHelpColor>C6C6C6</systemHelpColor>
+            <systemHelpColorDimmed>B6B6B6</systemHelpColorDimmed>
+
+            <!-- Gamelist view -->
+            <gamelistBackFrameColor>9F9F9F</gamelistBackFrameColor>
+            <gamelistTextlistSelectorColor>262626</gamelistTextlistSelectorColor>
+            <gamelistTextlistSelectedColor>9F9F9F</gamelistTextlistSelectedColor>
+            <gamelistTextlistPrimaryColor>262626</gamelistTextlistPrimaryColor>
+            <gamelistTextlistSecondaryColor>4D4D4D</gamelistTextlistSecondaryColor>
+            <gamelistCollectionsHeaderColor>202020</gamelistCollectionsHeaderColor>
+
+            <gamelistDefaultTextColor>262626</gamelistDefaultTextColor>
+            <gamelistInfoColor>505050</gamelistInfoColor>
+            <gamelistRatingColor>FFFFFF</gamelistRatingColor>
+
+            <gamelistHelpColor>262626</gamelistHelpColor>
+            <gamelistHelpColorDimmed>B6B6B6</gamelistHelpColorDimmed>
+        </variables>
+    </colorScheme>
+</theme>

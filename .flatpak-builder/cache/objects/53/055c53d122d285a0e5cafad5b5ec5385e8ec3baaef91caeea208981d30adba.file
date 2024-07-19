@@ -1,0 +1,38 @@
+<theme>
+    <view name="system, gamelist">
+        <helpsystem name="help">
+            <pos>0.96 0.935</pos>
+            <fontSize>0.032</fontSize>
+            <entrySpacing>0.022</entrySpacing>
+            <iconTextSpacing>0.00516</iconTextSpacing>
+        </helpsystem>
+        <image name="bottomLine">
+            <pos>0.5 0.9</pos>
+        </image>
+    </view>
+
+    <view name="system">
+        <carousel name="systemCarousel">
+            <maxItemCount>4</maxItemCount>
+            <itemSize>0.224 0.396</itemSize>
+        </carousel>
+        <image name="arrowBlock">
+            <size>0.023 0.047</size>
+        </image>
+        <image name="selectionBox">
+            <size>0.2314 0</size>
+        </image>
+    </view>
+
+    <view name="gamelist">
+        <textlist name="gamelistTextlist">
+            <selectorWidth>0.0035</selectorWidth>
+            <selectorHorizontalOffset>0.003</selectorHorizontalOffset>
+        </textlist>
+        <badges name="badges">
+            <lines>2</lines>
+            <itemsPerLine>5</itemsPerLine>
+            <itemMargin>0.0028125 0.005</itemMargin>
+        </badges>
+    </view>
+</theme>

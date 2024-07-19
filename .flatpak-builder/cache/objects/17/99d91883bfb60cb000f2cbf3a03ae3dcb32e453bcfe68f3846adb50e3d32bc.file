@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sega</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1998</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  9.13 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Sonic Adventure</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  32-bit Hitachi SH-4 @ 200 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  16 MB / VRAM:  8 MB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  NEC/VideoLogic PowerVR2 @ 100 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  640×480 pixels</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Yamaha AICA @ 67 MHz</text>
+        </text>
+        <text name="info10">
+            <text>Media:  1 GB GD-ROM, CD-ROM, Mini-CD</text>
+        </text>
+    </view>
+</theme>

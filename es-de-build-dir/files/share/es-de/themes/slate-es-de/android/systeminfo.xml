@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>The Android operating system, developed by</text>
+        </text>
+        <text name="info2">
+            <text>Android Inc. and later acquired by Google is by</text>
+        </text>
+        <text name="info3">
+            <text>far the most popular mobile OS in the world.</text>
+        </text>
+        <text name="info5">
+            <text>Due to the power of modern mobile devices and</text>
+        </text>
+        <text name="info6">
+            <text>the popularity of the platform there is a rich</text>
+        </text>
+        <text name="info7">
+            <text>library of games available, some even rivalling</text>
+        </text>
+        <text name="info8">
+            <text>those on dedicated game consoles.</text>
+        </text>
+    </view>
+</theme>

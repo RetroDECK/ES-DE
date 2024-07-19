@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sega</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1993</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Intel i960-KB @ 25 MHz</text>
+        </text>
+        <text name="info4">
+            <text>Graphics:  Fujitsu TGP MB86234</text>
+        </text>
+        <text name="info5">
+            <text>Resolution:  496×384 pixels</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  2 x custom 28 channel PCM chips</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>While arcade boards have traditionally been custom</text>
+        </text>
+        <text name="info2">
+            <text>designs, there have been a number of systems that</text>
+        </text>
+        <text name="info3">
+            <text>were instead based on home console platforms.</text>
+        </text>
+        <text name="info4">
+            <text>The first such board was the Nintendo VS. System,</text>
+        </text>
+        <text name="info5">
+            <text>based on the Famicom and released in 1984. The last</text>
+        </text>
+        <text name="info6">
+            <text>console-based board was Namco System 369 which was</text>
+        </text>
+        <text name="info7">
+            <text>released in 2011 and based on the Sony PlayStation 3.</text>
+        </text>
+    </view>
+</theme>

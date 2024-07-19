@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Commodore International</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1992</text>
+        </text>
+        <text name="info3">
+            <text>OS:  AmigaOS 3.0/3.1</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  32-bit Motorola 68EC020 @ 14.18 MHz (PAL) / 14.32 MHz (NTSC)</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  2 MB</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  512 KB Kickstart 3.0/3.1 ROM</text>
+        </text>
+        <text name="info7">
+            <text>Chipset:  Advanced Graphics Architecture (AGA)</text>
+        </text>
+        <text name="info8">
+            <text>Graphics:  Lisa, 320×200 to 1504×484 pixels</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Paula, 4 channels, 8-bit stereo PCM</text>
+        </text>
+    </view>
+</theme>

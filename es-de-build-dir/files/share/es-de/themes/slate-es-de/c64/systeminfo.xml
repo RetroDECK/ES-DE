@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Commodore Business Machines</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1982</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  17 million</text>
+        </text>
+        <text name="info4">
+            <text>OS:  Commodore KERNAL / Commodore BASIC 2.0</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  MOS 6510/8500 @ 0.985 MHz (PAL) / 1.023 MHz (NTSC)</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  64 KB</text>
+        </text>
+        <text name="info7">
+            <text>ROM:  20 KB</text>
+        </text>
+        <text name="info8">
+            <text>Graphics:  MOS Technology VIC-II</text>
+        </text>
+        <text name="info9">
+            <text>Resolution:  320×200 pixels, 16 colors</text>
+        </text>
+        <text name="info10">
+            <text>Sound:  MOS Technology 6581/8850 SID</text>
+        </text>
+    </view>
+</theme>

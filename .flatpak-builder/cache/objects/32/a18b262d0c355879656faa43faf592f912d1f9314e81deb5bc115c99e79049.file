@@ -1,0 +1,24 @@
+<theme>
+   <variables>
+      <systemName>Famicom</systemName>
+      <systemDescription>The Family Computer (ファミリーコンピュータ) or Famicom (ファミコン) hit the Japanese gaming market in 1983. The brainchild of Masayuki Uemura, Famicom was Nintendo’s first cartridge-based home video game console. It became an instant hit, with game titles like legendary designer Shigeru Miyamoto’s arcade classic Donkey Kong fueling sales.
+
+The Famicom began life as the “GameCom” before system designer Masayuki Uemura’s wife suggested the moniker we know and love today. During development several ideas were bandied about, including the concept of creating a powerful home computer complete with a keyboard and disk drive, but ultimately the console became the diminutive red-and-white wonder that has become so iconic over the years; the colour scheme was apparently chosen by Nintendo president Hiroshi Yamauchi after he spotted a billboard advertisement which used the same hues.
+
+The Famicom was designed to be both cheap and impressive. Nintendo aimed to be thrifty where possible but did not want to sacrifice performance. The aim was for their console to be unsurpassed in terms of quality and cost-effectiveness by their competitors for at least a year, if not longer. The console was purposefully designed to look like a toy – with a design scheme similar to the Game and Watch series of portable games they had released a couple of years prior to the Famicom.
+
+The only direct competition to the Famicom was Sega’s SG-1000, which the Famicom was easily outselling. Within two years the Famicom had already sold 2.5 million units in Japan. This success emboldened Nintendo, who started to look towards international markets. Overall Nintendo sold more than 10 million units in Japan.</systemDescription>
+      <systemDescriptionSource>https://www.museumofplay.org/blog/first-there-was-famicom/, https://retrogaming.tech.blog/2016/12/03/a-history-of-the-nintendo-famicom/, https://www.nintendolife.com/news/2013/07/feature_the_history_of_the_famicom_the_console_that_changed_nintendos_fortunes</systemDescriptionSource>
+      <systemManufacturer>Nintendo</systemManufacturer>
+      <systemReleaseYear>1983</systemReleaseYear>
+      <systemReleaseDate>1983-07-15</systemReleaseDate>
+      <systemReleaseDateFormated>July 15, 1983</systemReleaseDateFormated>
+      <systemHardwareType>Console</systemHardwareType>
+      <systemCoverSize>4-3</systemCoverSize>
+      <systemColor>B93041</systemColor>
+      <systemColorPalette1>EA2C27</systemColorPalette1>
+      <systemColorPalette2>E6E7E8</systemColorPalette2>
+      <systemColorPalette3>C0A987</systemColorPalette3>
+      <systemColorPalette4>AA1A41</systemColorPalette4>
+   </variables>
+</theme>

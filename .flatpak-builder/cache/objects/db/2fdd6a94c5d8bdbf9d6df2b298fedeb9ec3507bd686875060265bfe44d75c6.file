@@ -1,0 +1,26 @@
+<theme>
+    <include>./../theme.xml</include>
+
+    <variant name="all">
+        <view name="gamelist">
+            <text name="systemName">
+                <text>Custom Collections</text>
+                <letterCase>capitalize</letterCase>
+            </text>
+            <text name="system-label">
+                <metadata>systemFullname</metadata>
+                <defaultValue>Your Collections</defaultValue>
+            </text>
+        </view>
+    </variant>
+
+    <variant name="simpleTextlistWithVideos, simpleTextlistWithoutVideos,
+                   carousel, simpleCarousel">
+        <view name="gamelist">
+            <text name="customCollectionName">
+                <metadata>systemFullname</metadata>
+                <defaultValue>Your Collections</defaultValue>
+            </text>
+        </view>
+    </variant>
+</theme>

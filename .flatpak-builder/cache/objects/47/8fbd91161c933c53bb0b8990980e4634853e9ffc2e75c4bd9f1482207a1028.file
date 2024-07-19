@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Windows 3.0 was released by Microsoft in 1990 and</text>
+        </text>
+        <text name="info2">
+            <text>featured a graphical user interface running on top of</text>
+        </text>
+        <text name="info3">
+            <text>MS-DOS. It introduced advanced memory management</text>
+        </text>
+        <text name="info4">
+            <text>and functionality like clickable icons. Later updates</text>
+        </text>
+        <text name="info5">
+            <text>added multimedia support and the ability to access</text>
+        </text>
+        <text name="info6">
+            <text>CD-ROMs for storage, among many other things.</text>
+        </text>
+    </view>
+</theme>

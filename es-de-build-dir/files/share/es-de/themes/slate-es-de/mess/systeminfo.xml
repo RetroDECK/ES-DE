@@ -1,0 +1,19 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Multi Emulator Super System (or MESS) is an emulator for</text>
+        </text>
+        <text name="info2">
+            <text>various consoles and computer systems that used to be a</text>
+        </text>
+        <text name="info3">
+            <text>standalone application but is now a part of MAME.</text>
+        </text>
+        <text name="info5">
+            <text>The version available here is the standalone legacy</text>
+        </text>
+        <text name="info6">
+            <text>release from around 2015.</text>
+        </text>
+    </view>
+</theme>

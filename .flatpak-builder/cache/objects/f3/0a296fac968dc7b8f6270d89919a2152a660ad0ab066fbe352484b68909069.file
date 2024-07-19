@@ -1,0 +1,776 @@
+<?xml version="1.0"?>
+<!-- ES-DE game systems sorting configuration file, by manufacturer, release year -->
+<systemList>
+    <system>
+        <name>3do</name>
+        <systemsortname>Panasonic - 1993</systemsortname>
+    </system>
+    <system>
+        <name>adam</name>
+        <systemsortname>Coleco - 1983</systemsortname>
+    </system>
+    <system>
+        <name>ags</name>
+        <systemsortname>Chris Jones - 1997</systemsortname>
+    </system>
+    <system>
+        <name>amiga</name>
+        <systemsortname>Commodore - 1985</systemsortname>
+    </system>
+    <system>
+        <name>amiga1200</name>
+        <systemsortname>Commodore - 1992</systemsortname>
+    </system>
+    <system>
+        <name>amiga600</name>
+        <systemsortname>Commodore - 1992</systemsortname>
+    </system>
+    <system>
+        <name>amigacd32</name>
+        <systemsortname>Commodore - 1993</systemsortname>
+    </system>
+    <system>
+        <name>amstradcpc</name>
+        <systemsortname>Amstrad - 1984</systemsortname>
+    </system>
+    <system>
+        <name>android</name>
+        <systemsortname>Google - 2008</systemsortname>
+    </system>
+    <system>
+        <name>androidapps</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
+        <name>androidgames</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
+        <name>apple2</name>
+        <systemsortname>Apple - 1977</systemsortname>
+    </system>
+    <system>
+        <name>apple2gs</name>
+        <systemsortname>Apple - 1986</systemsortname>
+    </system>
+    <system>
+        <name>arcade</name>
+        <systemsortname>Arcade - 0000</systemsortname>
+    </system>
+    <system>
+        <name>arcadia</name>
+        <systemsortname>Emerson - 1982</systemsortname>
+    </system>
+    <system>
+        <name>archimedes</name>
+        <systemsortname>Acorn Computers - 1987</systemsortname>
+    </system>
+    <system>
+        <name>arduboy</name>
+        <systemsortname>Kevin Bates - 2015</systemsortname>
+    </system>
+    <system>
+        <name>astrocde</name>
+        <systemsortname>Bally - 1978</systemsortname>
+    </system>
+    <system>
+        <name>atari2600</name>
+        <systemsortname>Atari - 1977</systemsortname>
+    </system>
+    <system>
+        <name>atari5200</name>
+        <systemsortname>Atari - 1982</systemsortname>
+    </system>
+    <system>
+        <name>atari7800</name>
+        <systemsortname>Atari - 1986</systemsortname>
+    </system>
+    <system>
+        <name>atari800</name>
+        <systemsortname>Atari - 1979</systemsortname>
+    </system>
+    <system>
+        <name>atarijaguar</name>
+        <systemsortname>Atari - 1993</systemsortname>
+    </system>
+    <system>
+        <name>atarijaguarcd</name>
+        <systemsortname>Atari - 1995</systemsortname>
+    </system>
+    <system>
+        <name>atarilynx</name>
+        <systemsortname>Atari - 1989</systemsortname>
+    </system>
+    <system>
+        <name>atarist</name>
+        <systemsortname>Atari - 1985</systemsortname>
+    </system>
+    <system>
+        <name>atarixe</name>
+        <systemsortname>Atari - 1987</systemsortname>
+    </system>
+    <system>
+        <name>atomiswave</name>
+        <systemsortname>Sammy - 2003</systemsortname>
+    </system>
+    <system>
+        <name>bbcmicro</name>
+        <systemsortname>Acorn Computers - 1981</systemsortname>
+    </system>
+    <system>
+        <name>c64</name>
+        <systemsortname>Commodore - 1982</systemsortname>
+    </system>
+    <system>
+        <name>cdimono1</name>
+        <systemsortname>Philips - 1991</systemsortname>
+    </system>
+    <system>
+        <name>cdtv</name>
+        <systemsortname>Commodore - 1991</systemsortname>
+    </system>
+    <system>
+        <name>chailove</name>
+        <systemsortname>ChaiLove Team - 2017</systemsortname>
+    </system>
+    <system>
+        <name>channelf</name>
+        <systemsortname>Fairchild - 1976</systemsortname>
+    </system>
+    <system>
+        <name>coco</name>
+        <systemsortname>Tandy - 1980</systemsortname>
+    </system>
+    <system>
+        <name>colecovision</name>
+        <systemsortname>Coleco - 1982</systemsortname>
+    </system>
+    <system>
+        <name>consolearcade</name>
+        <systemsortname>Arcade - 1984</systemsortname>
+    </system>
+    <system>
+        <name>cps</name>
+        <systemsortname>Capcom - 1988</systemsortname>
+    </system>
+    <system>
+        <name>cps1</name>
+        <systemsortname>Capcom - 1988</systemsortname>
+    </system>
+    <system>
+        <name>cps2</name>
+        <systemsortname>Capcom - 1993</systemsortname>
+    </system>
+    <system>
+        <name>cps3</name>
+        <systemsortname>Capcom - 1996</systemsortname>
+    </system>
+    <system>
+        <name>crvision</name>
+        <systemsortname>VTech - 1982</systemsortname>
+    </system>
+    <system>
+        <name>daphne</name>
+        <systemsortname>Matt Ownby - 2007</systemsortname>
+    </system>
+    <system>
+        <name>desktop</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
+        <name>doom</name>
+        <systemsortname>id Software - 1993</systemsortname>
+    </system>
+    <system>
+        <name>dos</name>
+        <systemsortname>Microsoft - 1981</systemsortname>
+    </system>
+    <system>
+        <name>dragon32</name>
+        <systemsortname>Dragon Data, Ltd. - 1982</systemsortname>
+    </system>
+    <system>
+        <name>dreamcast</name>
+        <systemsortname>Sega - 1998</systemsortname>
+    </system>
+    <system>
+        <name>easyrpg</name>
+        <systemsortname>EasyRPG Team - 2007</systemsortname>
+    </system>
+    <system>
+        <name>electron</name>
+        <systemsortname>Acorn Computers - 1983</systemsortname>
+    </system>
+    <system>
+        <name>emulators</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
+        <name>epic</name>
+        <systemsortname>Epic - 2018</systemsortname>
+    </system>
+    <system>
+        <name>famicom</name>
+        <systemsortname>Nintendo - 1983</systemsortname>
+    </system>
+    <system>
+        <name>fba</name>
+        <systemsortname>Arcade - 2000</systemsortname>
+    </system>
+    <system>
+        <name>fbneo</name>
+        <systemsortname>Arcade - 2002</systemsortname>
+    </system>
+    <system>
+        <name>fds</name>
+        <systemsortname>Nintendo - 1986</systemsortname>
+    </system>
+    <system>
+        <name>flash</name>
+        <systemsortname>Adobe - 1996</systemsortname>
+    </system>
+    <system>
+        <name>fm7</name>
+        <systemsortname>Fujitsu - 1982</systemsortname>
+    </system>
+    <system>
+        <name>fmtowns</name>
+        <systemsortname>Fujitsu - 1989</systemsortname>
+    </system>
+    <system>
+        <name>fpinball</name>
+        <systemsortname>Christopher Leathley - 2005</systemsortname>
+    </system>
+    <system>
+        <name>gamate</name>
+        <systemsortname>Bit Corporation - 1990</systemsortname>
+    </system>
+    <system>
+        <name>gameandwatch</name>
+        <systemsortname>Nintendo - 1980</systemsortname>
+    </system>
+    <system>
+        <name>gamecom</name>
+        <systemsortname>Tiger - 1997</systemsortname>
+    </system>
+    <system>
+        <name>gamegear</name>
+        <systemsortname>Sega - 1990</systemsortname>
+    </system>
+    <system>
+        <name>gb</name>
+        <systemsortname>Nintendo - 1989</systemsortname>
+    </system>
+    <system>
+        <name>gba</name>
+        <systemsortname>Nintendo - 2001</systemsortname>
+    </system>
+    <system>
+        <name>gbc</name>
+        <systemsortname>Nintendo - 1998</systemsortname>
+    </system>
+    <system>
+        <name>gc</name>
+        <systemsortname>Nintendo - 2001</systemsortname>
+    </system>
+    <system>
+        <name>genesis</name>
+        <systemsortname>Sega - 1989</systemsortname>
+    </system>
+    <system>
+        <name>gmaster</name>
+        <systemsortname>Hartung - 1990</systemsortname>
+    </system>
+    <system>
+        <name>gx4000</name>
+        <systemsortname>Amstrad - 1990</systemsortname>
+    </system>
+    <system>
+        <name>intellivision</name>
+        <systemsortname>Mattel - 1979</systemsortname>
+    </system>
+    <system>
+        <name>j2me</name>
+        <systemsortname>Oracle - 1998</systemsortname>
+    </system>
+    <system>
+        <name>kodi</name>
+        <systemsortname>XBMC Foundation - 2002</systemsortname>
+    </system>
+    <system>
+        <name>laserdisc</name>
+        <systemsortname>Arcade - 1983</systemsortname>
+    </system>
+    <system>
+        <name>lcdgames</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
+        <name>lowresnx</name>
+        <systemsortname>Timo Kloss - 2016</systemsortname>
+    </system>
+    <system>
+        <name>lutris</name>
+        <systemsortname>Mathieu Comandon - 2010</systemsortname>
+    </system>
+    <system>
+        <name>lutro</name>
+        <systemsortname>libretro - 2015</systemsortname>
+    </system>
+    <system>
+        <name>macintosh</name>
+        <systemsortname>Apple - 1984</systemsortname>
+    </system>
+    <system>
+        <name>mame</name>
+        <systemsortname>MAME Team - 1997</systemsortname>
+    </system>
+    <system>
+        <name>mame-advmame</name>
+        <systemsortname>AdvanceMAME - 1998</systemsortname>
+    </system>
+    <system>
+        <name>mastersystem</name>
+        <systemsortname>Sega - 1986</systemsortname>
+    </system>
+    <system>
+        <name>megacd</name>
+        <systemsortname>Sega - 1993</systemsortname>
+    </system>
+    <system>
+        <name>megacdjp</name>
+        <systemsortname>Sega - 1991</systemsortname>
+    </system>
+    <system>
+        <name>megadrive</name>
+        <systemsortname>Sega - 1990</systemsortname>
+    </system>
+    <system>
+        <name>megadrivejp</name>
+        <systemsortname>Sega - 1988</systemsortname>
+    </system>
+    <system>
+        <name>megaduck</name>
+        <systemsortname>Creatronic - 1993</systemsortname>
+    </system>
+    <system>
+        <name>mess</name>
+        <systemsortname>MESS Team - 1998</systemsortname>
+    </system>
+    <system>
+        <name>model2</name>
+        <systemsortname>Sega - 1993</systemsortname>
+    </system>
+    <system>
+        <name>model3</name>
+        <systemsortname>Sega - 1996</systemsortname>
+    </system>
+    <system>
+        <name>moto</name>
+        <systemsortname>Thomson SA - 1984</systemsortname>
+    </system>
+    <system>
+        <name>msx</name>
+        <systemsortname>Microsoft - 1983</systemsortname>
+    </system>
+    <system>
+        <name>msx1</name>
+        <systemsortname>Microsoft - 1983</systemsortname>
+    </system>
+    <system>
+        <name>msx2</name>
+        <systemsortname>Microsoft - 1985</systemsortname>
+    </system>
+    <system>
+        <name>msxturbor</name>
+        <systemsortname>Microsoft - 1991</systemsortname>
+    </system>
+    <system>
+        <name>mugen</name>
+        <systemsortname>Elecbyte - 1999</systemsortname>
+    </system>
+    <system>
+        <name>multivision</name>
+        <systemsortname>Tsukuda Original - 1983</systemsortname>
+    </system>
+    <system>
+        <name>n3ds</name>
+        <systemsortname>Nintendo - 2011</systemsortname>
+    </system>
+    <system>
+        <name>n64</name>
+        <systemsortname>Nintendo - 1996</systemsortname>
+    </system>
+    <system>
+        <name>n64dd</name>
+        <systemsortname>Nintendo - 1999</systemsortname>
+    </system>
+    <system>
+        <name>naomi</name>
+        <systemsortname>Sega - 1998</systemsortname>
+    </system>
+    <system>
+        <name>naomi2</name>
+        <systemsortname>Sega - 2000</systemsortname>
+    </system>
+    <system>
+        <name>naomigd</name>
+        <systemsortname>Sega - 1998</systemsortname>
+    </system>
+    <system>
+        <name>nds</name>
+        <systemsortname>Nintendo - 2004</systemsortname>
+    </system>
+    <system>
+        <name>neogeo</name>
+        <systemsortname>SNK - 1990</systemsortname>
+    </system>
+    <system>
+        <name>neogeocd</name>
+        <systemsortname>SNK - 1994</systemsortname>
+    </system>
+    <system>
+        <name>neogeocdjp</name>
+        <systemsortname>SNK - 1994</systemsortname>
+    </system>
+    <system>
+        <name>nes</name>
+        <systemsortname>Nintendo - 1985</systemsortname>
+    </system>
+    <system>
+        <name>ngage</name>
+        <systemsortname>Nokia - 2003</systemsortname>
+    </system>
+    <system>
+        <name>ngp</name>
+        <systemsortname>SNK - 1998</systemsortname>
+    </system>
+    <system>
+        <name>ngpc</name>
+        <systemsortname>SNK - 1999</systemsortname>
+    </system>
+    <system>
+        <name>odyssey2</name>
+        <systemsortname>Magnavox - 1978</systemsortname>
+    </system>
+    <system>
+        <name>openbor</name>
+        <systemsortname>Senile Team - 2003</systemsortname>
+    </system>
+    <system>
+        <name>oric</name>
+        <systemsortname>Tangerine Computer Systems - 1982</systemsortname>
+    </system>
+    <system>
+        <name>palm</name>
+        <systemsortname>Palm - 1997</systemsortname>
+    </system>
+    <system>
+        <name>pc</name>
+        <systemsortname>IBM - 1981</systemsortname>
+    </system>
+    <system>
+        <name>pc88</name>
+        <systemsortname>NEC - 1981</systemsortname>
+    </system>
+    <system>
+        <name>pc98</name>
+        <systemsortname>NEC - 1982</systemsortname>
+    </system>
+    <system>
+        <name>pcarcade</name>
+        <systemsortname>Arcade - 2003</systemsortname>
+    </system>
+    <system>
+        <name>pcengine</name>
+        <systemsortname>NEC - 1987</systemsortname>
+    </system>
+    <system>
+        <name>pcenginecd</name>
+        <systemsortname>NEC - 1988</systemsortname>
+    </system>
+    <system>
+        <name>pcfx</name>
+        <systemsortname>NEC - 1994</systemsortname>
+    </system>
+    <system>
+        <name>pico8</name>
+        <systemsortname>Lexaloffle - 2015</systemsortname>
+    </system>
+    <system>
+        <name>plus4</name>
+        <systemsortname>Commodore - 1984</systemsortname>
+    </system>
+    <system>
+        <name>pokemini</name>
+        <systemsortname>Nintendo - 2001</systemsortname>
+    </system>
+    <system>
+        <name>ports</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
+        <name>ps2</name>
+        <systemsortname>Sony - 2000</systemsortname>
+    </system>
+    <system>
+        <name>ps3</name>
+        <systemsortname>Sony - 2006</systemsortname>
+    </system>
+    <system>
+        <name>ps4</name>
+        <systemsortname>Sony - 2013</systemsortname>
+    </system>
+    <system>
+        <name>psp</name>
+        <systemsortname>Sony - 2004</systemsortname>
+    </system>
+    <system>
+        <name>psvita</name>
+        <systemsortname>Sony - 2011</systemsortname>
+    </system>
+    <system>
+        <name>psx</name>
+        <systemsortname>Sony - 1994</systemsortname>
+    </system>
+    <system>
+        <name>pv1000</name>
+        <systemsortname>Casio - 1983</systemsortname>
+    </system>
+    <system>
+        <name>quake</name>
+        <systemsortname>id Software - 1996</systemsortname>
+    </system>
+    <system>
+        <name>samcoupe</name>
+        <systemsortname>MGT - 1989</systemsortname>
+    </system>
+    <system>
+        <name>satellaview</name>
+        <systemsortname>Nintendo - 1995</systemsortname>
+    </system>
+    <system>
+        <name>saturn</name>
+        <systemsortname>Sega - 1995</systemsortname>
+    </system>
+    <system>
+        <name>saturnjp</name>
+        <systemsortname>Sega - 1994</systemsortname>
+    </system>
+    <system>
+        <name>scummvm</name>
+        <systemsortname>ScummVM - 2001</systemsortname>
+    </system>
+    <system>
+        <name>scv</name>
+        <systemsortname>Epoch - 1984</systemsortname>
+    </system>
+    <system>
+        <name>sega32x</name>
+        <systemsortname>Sega - 1994</systemsortname>
+    </system>
+    <system>
+        <name>sega32xjp</name>
+        <systemsortname>Sega - 1994</systemsortname>
+    </system>
+    <system>
+        <name>sega32xna</name>
+        <systemsortname>Sega - 1994</systemsortname>
+    </system>
+    <system>
+        <name>segacd</name>
+        <systemsortname>Sega - 1992</systemsortname>
+    </system>
+    <system>
+        <name>sfc</name>
+        <systemsortname>Nintendo - 1990</systemsortname>
+    </system>
+    <system>
+        <name>sg-1000</name>
+        <systemsortname>Sega - 1983</systemsortname>
+    </system>
+    <system>
+        <name>sgb</name>
+        <systemsortname>Nintendo - 1994</systemsortname>
+    </system>
+    <system>
+        <name>snes</name>
+        <systemsortname>Nintendo - 1992</systemsortname>
+    </system>
+    <system>
+        <name>snesna</name>
+        <systemsortname>Nintendo - 1991</systemsortname>
+    </system>
+    <system>
+        <name>solarus</name>
+        <systemsortname>Christopho - 2002</systemsortname>
+    </system>
+    <system>
+        <name>spectravideo</name>
+        <systemsortname>Spectravideo - 1983</systemsortname>
+    </system>
+    <system>
+        <name>steam</name>
+        <systemsortname>Valve - 2003</systemsortname>
+    </system>
+    <system>
+        <name>stv</name>
+        <systemsortname>Sega - 1994</systemsortname>
+    </system>
+    <system>
+        <name>sufami</name>
+        <systemsortname>Bandai - 1996</systemsortname>
+    </system>
+    <system>
+        <name>supergrafx</name>
+        <systemsortname>NEC - 1989</systemsortname>
+    </system>
+    <system>
+        <name>supervision</name>
+        <systemsortname>Watara - 1992</systemsortname>
+    </system>
+    <system>
+        <name>supracan</name>
+        <systemsortname>Funtech - 1995</systemsortname>
+    </system>
+    <system>
+        <name>switch</name>
+        <systemsortname>Nintendo - 2017</systemsortname>
+    </system>
+    <system>
+        <name>symbian</name>
+        <systemsortname>Symbian Ltd. - 1997</systemsortname>
+    </system>
+    <system>
+        <name>tanodragon</name>
+        <systemsortname>Tano - 1984</systemsortname>
+    </system>
+    <system>
+        <name>tg-cd</name>
+        <systemsortname>NEC - 1989</systemsortname>
+    </system>
+    <system>
+        <name>tg16</name>
+        <systemsortname>NEC - 1989</systemsortname>
+    </system>
+    <system>
+        <name>ti99</name>
+        <systemsortname>Texas Instruments - 1981</systemsortname>
+    </system>
+    <system>
+        <name>tic80</name>
+        <systemsortname>Vadim Grigoruk - 2017</systemsortname>
+    </system>
+    <system>
+        <name>to8</name>
+        <systemsortname>Thomson - 1986</systemsortname>
+    </system>
+    <system>
+        <name>tools</name>
+        <systemsortname>Various - 0000</systemsortname>
+    </system>
+    <system>
+        <name>triforce</name>
+        <systemsortname>Namco-Sega-Nintendo - 2002</systemsortname>
+    </system>
+    <system>
+        <name>trs-80</name>
+        <systemsortname>Tandy - 1977</systemsortname>
+    </system>
+    <system>
+        <name>type-x</name>
+        <systemsortname>Arcade - 2004</systemsortname>
+    </system>
+    <system>
+        <name>uzebox</name>
+        <systemsortname>Belogic Software - 2008</systemsortname>
+    </system>
+    <system>
+        <name>vectrex</name>
+        <systemsortname>GCE - 1982</systemsortname>
+    </system>
+    <system>
+        <name>vic20</name>
+        <systemsortname>Commodore - 1980</systemsortname>
+    </system>
+    <system>
+        <name>videopac</name>
+        <systemsortname>Philips - 1978</systemsortname>
+    </system>
+    <system>
+        <name>virtualboy</name>
+        <systemsortname>Nintendo - 1995</systemsortname>
+    </system>
+    <system>
+        <name>vpinball</name>
+        <systemsortname>Visual Pinball Team - 2000</systemsortname>
+    </system>
+    <system>
+        <name>vsmile</name>
+        <systemsortname>VTech - 2004</systemsortname>
+    </system>
+    <system>
+        <name>wasm4</name>
+        <systemsortname>Bruno Garcia - 2022</systemsortname>
+    </system>
+    <system>
+        <name>wii</name>
+        <systemsortname>Nintendo - 2006</systemsortname>
+    </system>
+    <system>
+        <name>wiiu</name>
+        <systemsortname>Nintendo - 2012</systemsortname>
+    </system>
+    <system>
+        <name>windows</name>
+        <systemsortname>Microsoft - 1985</systemsortname>
+    </system>
+    <system>
+        <name>windows3x</name>
+        <systemsortname>Microsoft - 1990</systemsortname>
+    </system>
+    <system>
+        <name>windows9x</name>
+        <systemsortname>Microsoft - 1995</systemsortname>
+    </system>
+    <system>
+        <name>wonderswan</name>
+        <systemsortname>Bandai - 1999</systemsortname>
+    </system>
+    <system>
+        <name>wonderswancolor</name>
+        <systemsortname>Bandai - 2000</systemsortname>
+    </system>
+    <system>
+        <name>x1</name>
+        <systemsortname>Sharp - 1982</systemsortname>
+    </system>
+    <system>
+        <name>x68000</name>
+        <systemsortname>Sharp - 1987</systemsortname>
+    </system>
+    <system>
+        <name>xbox</name>
+        <systemsortname>Microsoft - 2001</systemsortname>
+    </system>
+    <system>
+        <name>xbox360</name>
+        <systemsortname>Microsoft - 2005</systemsortname>
+    </system>
+    <system>
+        <name>zmachine</name>
+        <systemsortname>Infocom - 1979</systemsortname>
+    </system>
+    <system>
+        <name>zx81</name>
+        <systemsortname>Sinclair - 1981</systemsortname>
+    </system>
+    <system>
+        <name>zxnext</name>
+        <systemsortname>Sinclair - 2017</systemsortname>
+    </system>
+    <system>
+        <name>zxspectrum</name>
+        <systemsortname>Sinclair - 1982</systemsortname>
+    </system>
+</systemList>

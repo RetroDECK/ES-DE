@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2001</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  81.51 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Pokémon Ruby</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  32-bit RISC-CPU @ 16 MHz + 8-bit CISC-CPU</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  32 KB internal + 256 KB external / VRAM:  96 KB</text>
+        </text>
+        <text name="info7">
+            <text>Screen:  Reflective TFT color LCD</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  240×160 pixels, 32,000 colors</text>
+        </text>
+    </view>
+</theme>

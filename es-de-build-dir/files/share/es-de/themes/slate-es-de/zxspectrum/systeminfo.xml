@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Developer:  Sinclair Research</text>
+        </text>
+        <text name="info2">
+            <text>Manufacturer:  Timex Corporation</text>
+        </text>
+        <text name="info3">
+            <text>Released:  1982</text>
+        </text>
+        <text name="info4">
+            <text>Units sold:  5 million</text>
+        </text>
+        <text name="info5">
+            <text>OS:  Sinclair BASIC</text>
+        </text>
+        <text name="info6">
+            <text>CPU:  8-bit Zilog Z80 (or equivalent) @ 3.5 MHz</text>
+        </text>
+        <text name="info7">
+            <text>RAM:  16, 48 or 128 KB depending on model</text>
+        </text>
+        <text name="info8">
+            <text>Media:  Cartridge, cassette, 3-inch floppy disk (on Spectrum +3)</text>
+        </text>
+    </view>
+</theme>

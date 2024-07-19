@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Windows 95 was released by Microsoft in 1995 and</text>
+        </text>
+        <text name="info2">
+            <text>while still running on top of MS-DOS it offered a</text>
+        </text>
+        <text name="info3">
+            <text>greatly modernized user interface. It introduced the</text>
+        </text>
+        <text name="info4">
+            <text>iconic Start menu as well as the taskbar paradigm that</text>
+        </text>
+        <text name="info5">
+            <text>is still in use on current Windows releases. Internet</text>
+        </text>
+        <text name="info6">
+            <text>connectivity was another major feature for the 9x series</text>
+        </text>
+        <text name="info7">
+            <text>with the introduction of the Internet Explorer browser.</text>
+        </text>
+    </view>
+</theme>

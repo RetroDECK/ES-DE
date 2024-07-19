@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Microsoft</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2001</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  24 million</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  Custom 32-bit Intel Pentium III @ 733 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 MB unified DDR SDRAM @ 200 MHz</text>
+        </text>
+        <text name="info6">
+            <text>Graphics:  Nvidia GeForce 3-based NV2A GPU @ 233 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Resolution: 480i, 480p, 720p, 1080i</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  Nvidia MCPX/SoundStorm</text>
+        </text>
+        <text name="info9">
+            <text>Media:  DVD, CD-ROM, digital distribution</text>
+        </text>
+    </view>
+</theme>

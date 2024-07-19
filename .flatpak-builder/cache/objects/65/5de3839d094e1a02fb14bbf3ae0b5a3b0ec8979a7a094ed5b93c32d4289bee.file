@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Tandy Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1977</text>
+        </text>
+        <text name="info3">
+            <text>OS:  TRSDOS, LDOS, NewDos/80</text>
+        </text>
+        <text name="info4">
+            <text>Units sold:  2.4 million</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  8-bit Zilog Z80 @ 1.774 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  4 to 48 KB depending on model</text>
+        </text>
+    </view>
+</theme>

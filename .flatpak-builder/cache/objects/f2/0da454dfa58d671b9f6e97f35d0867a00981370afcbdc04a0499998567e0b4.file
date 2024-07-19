@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="52"
+   height="52"
+   version="1.1"
+   viewBox="0 0 52 52"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <circle
+     style="fill:#ffffff;fill-opacity:0.25;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.735;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill;stop-color:#000000"
+     id="path949"
+     cx="26"
+     cy="26"
+     r="25.13261" />
+  <path
+     id="rect852"
+     style="fill:#ffffff;fill-opacity:0.25;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.735;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
+     d="M 21.761353,11.664063 14.67151,40.335937 h 6.855469 L 23.10901,33.34375 h 5.761719 l 1.582031,6.992187 h 6.874997 L 30.218385,11.664063 Z m 4.238282,8.749999 1.699218,7.519531 h -3.359374 c 0.898437,-4.010417 1.451823,-6.516925 1.660156,-7.519531 z" />
+</svg>

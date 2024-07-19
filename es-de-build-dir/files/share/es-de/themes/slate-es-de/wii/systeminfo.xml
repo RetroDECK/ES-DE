@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Foxconn</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2006</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  101.63 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Wii Sports</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  IBM PowerPC "Broadway" @ 729 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  88 MB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  ATI "Hollywood" @ 243 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  480i @ 60 Hz, 480p @ 60 Hz, 576i @ 50 Hz</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  16-bit Dolby Pro Logic II</text>
+        </text>
+        <text name="info10">
+            <text>Media:  4.7/8.54 GB Wii Optical Disc, digital distribution</text>
+        </text>
+    </view>
+</theme>

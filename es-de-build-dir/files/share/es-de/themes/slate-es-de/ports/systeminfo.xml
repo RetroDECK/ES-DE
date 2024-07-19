@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Ports, or Source Ports are game engines for</text>
+        </text>
+        <text name="info2">
+            <text>classic games that have been updated or</text>
+        </text>
+        <text name="info3">
+            <text>rewritten to support additional features or</text>
+        </text>
+        <text name="info4">
+            <text>to simply be able to run on modern hardware.</text>
+        </text>
+        <text name="info5">
+            <text>Some ports try to recreate the original feel of the</text>
+        </text>
+        <text name="info6">
+            <text>game and others aim for a complete overhaul such</text>
+        </text>
+        <text name="info7">
+            <text>as adding 3D accelerated graphics, network gaming</text>
+        </text>
+        <text name="info8">
+            <text>support and other features that were never a part</text>
+        </text>
+        <text name="info9">
+            <text>of the original game.</text>
+        </text>
+    </view>
+</theme>

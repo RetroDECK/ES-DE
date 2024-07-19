@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1986</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  4.44 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Super Mario Bros. 2</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  8-bit Ricoh 2A03 @ 1.66 MHz (PAL) / 1.79 MHz (NTSC)</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  32 KB</text>
+        </text>
+        <text name="info7">
+            <text>Audio/Video processor:  Uses Famicom hardware</text>
+        </text>
+        <text name="info8">
+            <text>Ports:  Uses Famicom hardware</text>
+        </text>
+        <text name="info9">
+            <text>Media:  Proprietary floppy disk with 112 KB capacity</text>
+        </text>
+    </view>
+</theme>

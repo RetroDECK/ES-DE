@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Bit Corporation, United Microelectronics</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1990</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  UMC UA6588F or NCR 81489 (6502-based)</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  16 KB</text>
+        </text>
+        <text name="info5">
+            <text>ROM:  2 KB</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  160×150 pixels, 4 shades of gray</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  AY-3-8910A, 3-voice square wave + 1 noise</text>
+        </text>
+    </view>
+</theme>

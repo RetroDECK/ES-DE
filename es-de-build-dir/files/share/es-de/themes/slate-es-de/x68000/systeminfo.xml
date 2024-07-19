@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sharp Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1987</text>
+        </text>
+        <text name="info3">
+            <text>OS:  Human68k</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  16/32-bit Motorola 68000 @ 10 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  1 to 4 MB (expandable to 12 MB) / VRAM:  1056 KB</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  1 MB (128 KB BIOS, 768 KB character generator)</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  Custom Sharp/Hudson chipset</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  512×512 pixels, 65536 colors</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Yamaha YM2151</text>
+        </text>
+    </view>
+</theme>

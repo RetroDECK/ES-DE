@@ -1,0 +1,241 @@
+<theme>
+    <fontSize name="medium">
+        <variables>
+            <helpsystemFontSize>0.035</helpsystemFontSize>
+            <systemInfoSize>0.40 0.03</systemInfoSize>
+            <systemInfoFontSize>0.021</systemInfoFontSize>
+            <systemInfoPos1>0.38 0.695</systemInfoPos1>
+            <systemInfoPos2>0.38 0.716</systemInfoPos2>
+            <systemInfoPos3>0.38 0.737</systemInfoPos3>
+            <systemInfoPos4>0.38 0.758</systemInfoPos4>
+            <systemInfoPos5>0.38 0.800</systemInfoPos5>
+            <systemInfoPos6>0.38 0.821</systemInfoPos6>
+            <systemInfoPos7>0.38 0.842</systemInfoPos7>
+            <systemInfoPos8>0.38 0.863</systemInfoPos8>
+            <systemInfoPos9>0.38 0.884</systemInfoPos9>
+            <systemInfoPos10>0.38 0.905</systemInfoPos10>
+            <gamelistFontSize>0.025</gamelistFontSize>
+            <gamelistInfoFontSize>0.025</gamelistInfoFontSize>
+            <descriptionFontSize>0.0195</descriptionFontSize>
+            <metadataFontSize>0.0195</metadataFontSize>
+            <ratingSize>0 0.03</ratingSize>
+            <badgesSize>0.13 0.235</badgesSize>
+        </variables>
+    </fontSize>
+    <fontSize name="large">
+        <variables>
+            <helpsystemFontSize>0.035</helpsystemFontSize>
+            <systemInfoSize>0.416 0.03</systemInfoSize>
+            <systemInfoFontSize>0.024</systemInfoFontSize>
+            <systemInfoPos1>0.38 0.680</systemInfoPos1>
+            <systemInfoPos2>0.38 0.705</systemInfoPos2>
+            <systemInfoPos3>0.38 0.730</systemInfoPos3>
+            <systemInfoPos4>0.38 0.755</systemInfoPos4>
+            <systemInfoPos5>0.38 0.795</systemInfoPos5>
+            <systemInfoPos6>0.38 0.820</systemInfoPos6>
+            <systemInfoPos7>0.38 0.845</systemInfoPos7>
+            <systemInfoPos8>0.38 0.870</systemInfoPos8>
+            <systemInfoPos9>0.38 0.895</systemInfoPos9>
+            <systemInfoPos10>0.38 0.920</systemInfoPos10>
+            <gamelistFontSize>0.0296</gamelistFontSize>
+            <gamelistInfoFontSize>0.028</gamelistInfoFontSize>
+            <descriptionFontSize>0.025</descriptionFontSize>
+            <metadataFontSize>0.0235</metadataFontSize>
+            <ratingSize>0 0.03</ratingSize>
+            <badgesSize>0.13 0.235</badgesSize>
+        </variables>
+    </fontSize>
+
+    <variant name="withVideos, withoutVideos, noGameMedia">
+        <view name="system, gamelist">
+            <helpsystem name="help">
+                <pos>0.012 0.955</pos>
+                <fontSize>${helpsystemFontSize}</fontSize>
+            </helpsystem>
+        </view>
+
+        <view name="system">
+            <text name="gameCounter">
+                <pos>0.5 0.6437</pos>
+                <size>1 0.056</size>
+                <fontSize>0.035</fontSize>
+            </text>
+        </view>
+
+        <view name="gamelist">
+            <textlist name="gamelistTextlist">
+                <fontSize>${gamelistFontSize}</fontSize>
+            </textlist>
+            <image name="consolegame">
+                <maxSize>0.4 0.15</maxSize>
+            </image>
+            <image name="logo">
+                <maxSize>0.32 0.13</maxSize>
+            </image>
+        </view>
+    </variant>
+
+    <variant name="withVideos, withoutVideos">
+        <view name="system">
+            <carousel name="systemCarousel">
+                <pos>0 0.383796</pos>
+                <size>1 0.232407</size>
+                <maxItemCount>3</maxItemCount>
+                <itemSize>0.25 0.125</itemSize>
+                <itemScale>1.23</itemScale>
+                <fontSize>0.055</fontSize>
+            </carousel>
+            <image name="consolegame">
+                <pos>0.02 0.327</pos>
+                <maxSize>0.4 0.28</maxSize>
+            </image>
+            <image name="controller">
+                <pos>0.78 0.327</pos>
+                <maxSize>0.12 0.28</maxSize>
+            </image>
+            <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+                <size>${systemInfoSize}</size>
+                <fontSize>${systemInfoFontSize}</fontSize>
+            </text>
+            <text name="info1">
+                <pos>${systemInfoPos1}</pos>
+            </text>
+            <text name="info2">
+                <pos>${systemInfoPos2}</pos>
+            </text>
+            <text name="info3">
+                <pos>${systemInfoPos3}</pos>
+            </text>
+            <text name="info4">
+                <pos>${systemInfoPos4}</pos>
+            </text>
+            <text name="info5">
+                <pos>${systemInfoPos5}</pos>
+            </text>
+            <text name="info6">
+                <pos>${systemInfoPos6}</pos>
+            </text>
+            <text name="info7">
+                <pos>${systemInfoPos7}</pos>
+            </text>
+            <text name="info8">
+                <pos>${systemInfoPos8}</pos>
+            </text>
+            <text name="info9">
+                <pos>${systemInfoPos9}</pos>
+            </text>
+            <text name="info10">
+                <pos>${systemInfoPos10}</pos>
+            </text>
+        </view>
+
+        <view name="gamelist">
+            <text name="collectionsSystemName">
+                <size>0.214 0.025</size>
+            </text>
+            <text name="customCollectionsSystemName">
+                <pos>0.42 0.128</pos>
+                <size>0.182 0.025</size>
+            </text>
+            <text name="customCollectionsHeader">
+                <pos>0.42 0.174</pos>
+                <size>0.214 0.05</size>
+                <fontSize>0.05</fontSize>
+            </text>
+            <text name="labelReleasedate, labelDeveloper, labelPublisher, labelGenre,
+                        labelPlayers, labelLastplayed, developer, publisher, genre, players">
+                <size>0.14 0.02</size>
+                <fontSize>${metadataFontSize}</fontSize>
+            </text>
+            <text name="labelReleasedate">
+                <pos>0.815 0.2755</pos>
+            </text>
+            <datetime name="releasedate">
+                <pos>0.83 0.3005</pos>
+                <size>0.14 0.02</size>
+                <fontSize>${metadataFontSize}</fontSize>
+            </datetime>
+            <text name="labelDeveloper">
+                <pos>0.815 0.3355</pos>
+            </text>
+            <text name="developer">
+                <pos>0.83 0.3605</pos>
+            </text>
+            <text name="labelPublisher">
+                <pos>0.815 0.3955</pos>
+            </text>
+            <text name="publisher">
+                <pos>0.83 0.4205</pos>
+            </text>
+            <text name="labelGenre">
+                <pos>0.815 0.4555</pos>
+            </text>
+            <text name="genre">
+                <pos>0.83 0.4805</pos>
+            </text>
+            <text name="labelPlayers">
+                <pos>0.815 0.5155</pos>
+            </text>
+            <text name="players">
+                <pos>0.83 0.5405</pos>
+            </text>
+            <text name="labelLastplayed">
+                <pos>0.815 0.5755</pos>
+            </text>
+            <datetime name="lastplayed">
+                <pos>0.83 0.6005</pos>
+                <size>0.14 0.02</size>
+                <fontSize>${metadataFontSize}</fontSize>
+            </datetime>
+            <text name="description">
+                <pos>0.454 0.675</pos>
+                <size>0.346 0.242</size>
+                <fontSize>${descriptionFontSize}</fontSize>
+            </text>
+            <rating name="rating">
+                <size>${ratingSize}</size>
+            </rating>
+            <gamelistinfo name="gamelistInfo">
+                <pos>0.773 0.192</pos>
+                <size>0.2 0.042</size>
+                <fontSize>${gamelistInfoFontSize}</fontSize>
+            </gamelistinfo>
+            <badges name="badges">
+                <pos>0.815 0.675</pos>
+                <size>${badgesSize}</size>
+                <origin>0 0</origin>
+                <lines>3</lines>
+                <itemsPerLine>3</itemsPerLine>
+            </badges>
+        </view>
+    </variant>
+
+    <variant name="withVideos">
+        <view name="gamelist">
+            <video name="gameVideo">
+                <pos>0.63 0.45</pos>
+                <maxSize>0.356 0.424</maxSize>
+            </video>
+        </view>
+    </variant>
+
+    <variant name="withoutVideos">
+        <view name="gamelist">
+            <image name="gameImage">
+                <pos>0.63 0.45</pos>
+                <maxSize>0.360 0.424</maxSize>
+            </image>
+        </view>
+    </variant>
+
+    <variant name="noGameMedia">
+        <view name="gamelist">
+            <text name="customCollectionsHeaderNoMedia">
+                <pos>0.78 0.105</pos>
+                <size>0.214 0.05</size>
+                <fontSize>0.05</fontSize>
+                <visible>true</visible>
+            </text>
+        </view>
+    </variant>
+</theme>

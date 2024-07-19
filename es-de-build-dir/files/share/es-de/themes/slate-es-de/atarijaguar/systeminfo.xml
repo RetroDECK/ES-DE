@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Atari Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1993</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  Less than 150,000</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  Motorola 68000 @ 13.295 MHz + Tom and Jerry custom chips</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  2 MB</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  Max. 800×576 pixels, 24-bit "true" color</text>
+        </text>
+        <text name="info7">
+            <text>Media:  Cartridge</text>
+        </text>
+    </view>
+</theme>

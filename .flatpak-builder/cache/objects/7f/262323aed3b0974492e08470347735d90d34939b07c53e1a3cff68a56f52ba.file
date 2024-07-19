@@ -1,0 +1,13 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>A lightweight, free and open-source game engine for Action-RPGs.</text>
+        </text>
+        <text name="info2">
+            <text>A 2D game engine written in C++, and executing games made in Lua.</text>
+        </text>
+        <text name="info3">
+            <text>Specifically designed with 16-bit classic Action-RPGs in mind.</text>
+        </text>
+    </view>
+</theme>
