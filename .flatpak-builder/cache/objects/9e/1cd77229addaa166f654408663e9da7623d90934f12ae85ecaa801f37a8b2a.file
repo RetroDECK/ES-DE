@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Atari Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1989</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  1 million</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit with 16-bit address space</text>
+        </text>
+        <text name="info5">
+            <text>Coprocessors:  Mikey and Suzy 2 x 16-bit</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  64 KB</text>
+        </text>
+        <text name="info7">
+            <text>ROM:  512 bytes</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  160×102 pixels</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  4 channels, 8-bit DAC</text>
+        </text>
+    </view>
+</theme>

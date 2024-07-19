@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Bally Manufacturing</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1978</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  8-bit Zilog Z80 @ 1.789 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  4 to 64 KB (with expansion modules)</text>
+        </text>
+        <text name="info5">
+            <text>ROM:  8 KB</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  160×102 or 320×204 pixels, 4 or 8 colors</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  3 x oscillators with noise mixing</text>
+        </text>
+    </view>
+</theme>

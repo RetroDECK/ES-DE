@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sega</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2002</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  32-bit IBM PowerPC "Gekko" @ 486 MHz</text>
+        </text>
+        <text name="info4">
+            <text>Graphics:  ArtX/ATI "Flipper" @ 162 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  48 MB (main) + 512 or 1024 MB</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  Custom Macronix 16-bit DSP @ 81 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Media:  GD-ROM</text>
+        </text>
+    </view>
+</theme>

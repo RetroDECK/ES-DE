@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Acorn Computers</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1987</text>
+        </text>
+        <text name="info3">
+            <text>Models:  A305, A310, A3000, A440, A440/1, A540 et al.</text>
+        </text>
+        <text name="info4">
+            <text>OS:  RISC OS</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  Acorn ARM2 @ 8 MHz to ARM3 @ 33 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  512 KB to 16 MB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  Acorn VIDC1</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  Acorn VIDC1, 8 channels, 8-bit stereo</text>
+        </text>
+    </view>
+</theme>

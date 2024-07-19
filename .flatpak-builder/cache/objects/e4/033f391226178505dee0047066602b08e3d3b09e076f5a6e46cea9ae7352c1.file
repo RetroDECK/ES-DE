@@ -1,0 +1,7 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Find all your favorite games in a single list.</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>The Java 2 Platform, Micro Edition (J2ME) is a</text>
+        </text>
+        <text name="info2">
+            <text>platform for portable code on embedded and</text>
+        </text>
+        <text name="info3">
+            <text>mobile devices.</text>
+        </text>
+        <text name="info5">
+            <text>It was popular for game development on early</text>
+        </text>
+        <text name="info6">
+            <text>mobile phones running Symbian, such as those</text>
+        </text>
+        <text name="info7">
+            <text>sold by Nokia, Motorola and Sony Ericsson.</text>
+        </text>
+    </view>
+</theme>

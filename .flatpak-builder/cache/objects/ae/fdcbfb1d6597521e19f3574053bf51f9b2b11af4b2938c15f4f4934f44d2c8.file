@@ -1,0 +1,29 @@
+<theme>
+    <colorScheme name="dark">
+        <variables>
+            <colorSchemeName>dark</colorSchemeName>
+            <backgroundColor>323232</backgroundColor>
+            <backgroundColor2>2d2d2d</backgroundColor2>
+            <mainColor>0afdca</mainColor>
+            <highlightColor>82f0ff</highlightColor>
+            <secondaryColor>f4f4f4</secondaryColor>
+            <tertiaryColor>858585</tertiaryColor>
+            <systemColor>3aa5ab</systemColor>
+            <placeholderColor>505050</placeholderColor>
+        </variables>
+    </colorScheme>
+
+    <colorScheme name="light">
+        <variables>
+            <colorSchemeName>light</colorSchemeName>
+            <backgroundColor>d9d9d9</backgroundColor>
+            <backgroundColor2>e2e2e2</backgroundColor2>
+            <mainColor>334ff0</mainColor>
+            <highlightColor>23caca</highlightColor>
+            <secondaryColor>222222</secondaryColor>
+            <tertiaryColor>555555</tertiaryColor>
+            <systemColor>3aa5ab</systemColor>
+            <placeholderColor>ffffff</placeholderColor>
+        </variables>
+    </colorScheme>
+</theme>

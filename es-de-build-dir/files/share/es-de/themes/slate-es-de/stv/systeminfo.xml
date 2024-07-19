@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sega</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1994</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  2 x 32-bit Hitachi SH-2 @ 28.64 MHz</text>
+        </text>
+        <text name="info4">
+            <text>Graphics:  2 x 32-bit Video Display Processors</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  2 MB / VRAM:  1.54 MB</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  Yamaha YMF292-F SCSP @ 22.58 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  352×224 pixels</text>
+        </text>
+    </view>
+</theme>

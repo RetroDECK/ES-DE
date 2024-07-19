@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sony Electronics</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2004</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  80+ million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  GTA Liberty City Stories</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  32-bit MIPS R4000 @ 333 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  32 or 64 MB</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  480×272 pixels</text>
+        </text>
+        <text name="info8">
+            <text>Size:  170×74×23 mm</text>
+        </text>
+        <text name="info9">
+            <text>Media:  Universal Media Disc (UMD)</text>
+        </text>
+    </view>
+</theme>

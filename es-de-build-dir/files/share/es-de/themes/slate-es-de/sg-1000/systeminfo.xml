@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sega</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1983</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  2 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Flicky</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  8-bit Zilog Z80 @ 3.58 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  1 KB / VRAM:  2 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  TI TMS9918</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  256×192 pixels, 16 colors (21 color palette)</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  TI SN76489 PSG</text>
+        </text>
+        <text name="info10">
+            <text>Cart size:  8 to 48 KB</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sony Electronics</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2011</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  16 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Uncharted: Golden Abyss</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  Quad-core ARM Cortex-A9 MPCore</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  512 MB / VRAM:  128 MB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  Quad-core PowerVR SGX543MP4+</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  960×544 pixels</text>
+        </text>
+        <text name="info9">
+            <text>Media:  PS Vita Card, digital distribution</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sega</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1998</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  32-bit Hitachi SH-4 @ 200 MHz (360 MIPS / 1.4 GFLOPS)</text>
+        </text>
+        <text name="info4">
+            <text>Graphics:  NEC/VideoLogic PowerVR (PVR2DC/CLX2) @ 100 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  56 MB</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  ARM7 Yamaha AICA @ 45 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Media:  ROM board (max. size of 168 MB)</text>
+        </text>
+    </view>
+</theme>

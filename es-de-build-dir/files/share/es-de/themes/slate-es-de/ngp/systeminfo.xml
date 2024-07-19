@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  SNK</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1999</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  2 million (incl. color version)</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  Toshiba TLCS900H @ 6.144 MHz + Zilog Z80 @ 3.072 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  12 KB for 900H + 4 KB for Z80</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  64 KB</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  160×152 pixels</text>
+        </text>
+        <text name="info8">
+            <text>Media:  Cartridge, 4 MB max.</text>
+        </text>
+    </view>
+</theme>

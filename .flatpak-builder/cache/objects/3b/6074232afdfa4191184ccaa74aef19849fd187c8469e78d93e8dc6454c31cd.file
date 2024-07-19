@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Atari, Inc., Atari Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1986</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  3.77 million</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit Atari SALLY 6502 ("6502C") @ 1.19 to 1.79 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  4 KB</text>
+        </text>
+        <text name="info6">
+            <text>Cartridge ROM:  48 KB</text>
+        </text>
+        <text name="info7">
+            <text>Audio/Video processor:  TIA/MARIA custom graphics controller</text>
+        </text>
+        <text name="info8">
+            <text>Ports:  2 joystick ports, 1 cartridge port, 1 expansion connector, power in, RF output</text>
+        </text>
+    </view>
+</theme>

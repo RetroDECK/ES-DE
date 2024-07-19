@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Bandai</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1999</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  3.5 million</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  16-bit NEC V30 MZ @ 3.072 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB shared WRAM/VRAM</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  224×144 pixels</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  4 PCM channels, 32 samples 4-bit per channel</text>
+        </text>
+    </view>
+</theme>

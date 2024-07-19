@@ -1,0 +1,77 @@
+<theme>
+    <fontSize name="medium">
+        <variables>
+            <helpsystemFontSize>0.029</helpsystemFontSize>
+            <helpsystemPanelSize>1 0.054</helpsystemPanelSize>
+        </variables>
+    </fontSize>
+    <fontSize name="large">
+        <variables>
+            <helpsystemFontSize>0.030</helpsystemFontSize>
+            <helpsystemPanelSize>1 0.056</helpsystemPanelSize>
+        </variables>
+    </fontSize>
+
+    <variant name="all">
+        <view name="system, gamelist">
+            <image name="helpsystemPanel">
+                <size>${helpsystemPanelSize}</size>
+            </image>
+            <helpsystem name="help">
+                <fontSize>${helpsystemFontSize}</fontSize>
+            </helpsystem>
+        </view>
+    </variant>
+
+    <variant name="textlistWithVideos, textlistWithoutVideos">
+        <view name="gamelist">
+            <text name="description">
+                <pos>0.405 0.64</pos>
+            </text>
+        </view>
+    </variant>
+
+    <variant name="simpleTextlistWithVideos, simpleTextlistWithoutVideos">
+        <view name="gamelist">
+            <text name="customCollectionName">
+                <pos>0.03 0.058</pos>
+            </text>
+        </view>
+    </variant>
+
+    <variant name="textlistWithVideos">
+        <view name="gamelist">
+            <video name="gameVideo">
+                <pos>0.592 0.417</pos>
+                <maxSize>0.377 0.415</maxSize>
+            </video>
+        </view>
+    </variant>
+
+    <variant name="textlistWithoutVideos">
+        <view name="gamelist">
+            <image name="gameImage">
+                <pos>0.592 0.417</pos>
+                <maxSize>0.377 0.415</maxSize>
+            </image>
+        </view>
+    </variant>
+
+    <variant name="simpleTextlistWithVideos">
+        <view name="gamelist">
+            <video name="gameVideo">
+                <pos>0.655 0.25</pos>
+                <maxSize>0.5 0.52</maxSize>
+            </video>
+        </view>
+    </variant>
+
+    <variant name="simpleTextlistWithoutVideos">
+        <view name="gamelist">
+            <image name="gameImage">
+                <pos>0.655 0.25</pos>
+                <maxSize>0.5 0.52</maxSize>
+            </image>
+        </view>
+    </variant>
+</theme>

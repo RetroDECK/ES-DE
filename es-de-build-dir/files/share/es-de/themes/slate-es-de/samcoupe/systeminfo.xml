@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Developer:  Miles Gordon Technology</text>
+        </text>
+        <text name="info2">
+            <text>Manufacturer:  Miles Gordon Technology</text>
+        </text>
+        <text name="info3">
+            <text>OS:  SAM BASIC</text>
+        </text>
+        <text name="info4">
+            <text>Released:  1989</text>
+        </text>
+        <text name="info5">
+            <text>Units sold:  12,000</text>
+        </text>
+        <text name="info6">
+            <text>CPU:  8-bit Zilog Z80B @ 6 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Memory:  256 KB / 512 KB (4.5 MB max.)</text>
+        </text>
+        <text name="info8">
+            <text>Graphics:  4 modes (256×192 / 512×192 pixels), 128 colour palette</text>
+        </text>
+        <text name="info9">
+            <text>Media:  Cassette, 3½-inch floppy disk</text>
+        </text>
+    </view>
+</theme>

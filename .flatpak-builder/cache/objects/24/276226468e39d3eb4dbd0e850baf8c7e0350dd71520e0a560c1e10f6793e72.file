@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1989</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  118.69 million (all models)</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Tetris</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  8-bit Zilog Z80 @ 4.194304 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  8 KB / VRAM:  8 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  PPU (embedded in CPU)</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  160×144 pixels, 4 shades of "gray"</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  4 channels, stereo</text>
+        </text>
+        <text name="info10">
+            <text>Cart size:  32 KB to 1 MB</text>
+        </text>
+    </view>
+</theme>

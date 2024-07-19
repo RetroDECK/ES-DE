@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Microsoft</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2005</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  84 million</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  Tri-core PowerPC "Xenon" @ 3.2 GHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  512 MB unified GDDR3 @ 700 MHz + 10 MB eDRAM cache</text>
+        </text>
+        <text name="info6">
+            <text>Graphics:  ATI/AMD "Xenos" @ 500 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Resolution: 480i, 480p, 720p, 1080i, 1080p</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  Stereo LPCM, Dolby Digital 5.1</text>
+        </text>
+        <text name="info9">
+            <text>Media:  DVD, CD-ROM, digital distribution</text>
+        </text>
+    </view>
+</theme>

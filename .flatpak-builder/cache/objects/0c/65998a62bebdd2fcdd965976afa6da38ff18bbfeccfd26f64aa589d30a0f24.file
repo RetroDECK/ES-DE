@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1999</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  15,000+</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  64-bit NEC VR4300 (MIPS R4300i) @ 93.75 MHz</text>
+        </text>
+        <text name="info5">
+            <text>64DD-CPU:  32-bit coprocessor for reading/transferring disk data</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  8 MB Rambus RDRAM</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  SGI "Reality Coprocessor" @ 62.5 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  16-bit, 48 or 44.1 kHz stereo</text>
+        </text>
+    </view>
+</theme>

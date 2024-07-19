@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Hartung</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1990</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  NEC upd7810 @ 6 MHz</text>
+        </text>
+        <text name="info4">
+            <text>Resolution:  64×64 pixels, monochrome</text>
+        </text>
+        <text name="info5">
+            <text>Sound:  1-bit DAC</text>
+        </text>
+        <text name="info6">
+            <text>Media:  Cartridge</text>
+        </text>
+    </view>
+</theme>

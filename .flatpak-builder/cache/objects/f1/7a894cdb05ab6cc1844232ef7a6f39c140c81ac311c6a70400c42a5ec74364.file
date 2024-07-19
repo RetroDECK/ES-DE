@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2001</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  21.74 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Super Smash Bros. Melee</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  32-bit IBM PowerPC "Gekko" @ 486 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  43 MB total non-unified RAM</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  ArtX/ATI "Flipper" @ 162 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  480i @ 60 Hz, 480p @ 60 Hz, 576i @ 50 Hz</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  16-bit Dolby Pro Logic II</text>
+        </text>
+        <text name="info10">
+            <text>Media:  1.46 GB GameCube Game Disc</text>
+        </text>
+    </view>
+</theme>

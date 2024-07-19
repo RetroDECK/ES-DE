@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sega</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1996</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  32-bit RISC PowerPC 603 @ 66 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  8 MB / Graphic ROM:  max 64 MB / Audio:  1 MB</text>
+        </text>
+        <text name="info5">
+            <text>Graphics:  2 x Lockheed Martin Real3D/PRO-1000</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  496×384 pixels</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  Motorola 68EC000 @ 11.3 MHz </text>
+        </text>
+    </view>
+</theme>

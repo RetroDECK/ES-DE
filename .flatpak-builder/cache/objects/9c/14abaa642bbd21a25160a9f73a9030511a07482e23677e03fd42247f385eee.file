@@ -1,0 +1,11 @@
+prefix=/app
+exec_prefix=${prefix}
+includedir=/app/include
+libdir=/app/lib
+
+Name: pugixml
+Description: Light-weight, simple and fast XML parser for C++ with XPath support.
+URL: https://pugixml.org/
+Version: 1.14
+Cflags: -I${includedir}
+Libs: -L${libdir} -lpugixml

@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Casio</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1983</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Zilog Z80 @ 3.579 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  2 KB</text>
+        </text>
+        <text name="info5">
+            <text>Graphics:  Texas Instruments TMS9918</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  256×192 pixels, 8 colors</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  NEC D65010G031 (3 square wave voices)</text>
+        </text>
+        <text name="info8">
+            <text>Media:  Cartridge</text>
+        </text>
+    </view>
+</theme>

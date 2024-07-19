@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Developer:  SpecNext Ltd.</text>
+        </text>
+        <text name="info2">
+            <text>Manufacturer:  SpecNext Ltd.</text>
+        </text>
+        <text name="info3">
+            <text>Released:  2017</text>
+        </text>
+        <text name="info4">
+            <text>Units sold:  10000+</text>
+        </text>
+        <text name="info5">
+            <text>OS:  NextZXOS</text>
+        </text>
+        <text name="info6">
+            <text>CPU:  8-bit Zilog Z80 @ 3.5 to 28 MHz</text>
+        </text>
+        <text name="info7">
+            <text>RAM:  1 to 2 MB</text>
+        </text>
+        <text name="info8">
+            <text>Media:  SD card, cartridge, cassette, floppy disk, microdrive</text>
+        </text>
+    </view>
+</theme>

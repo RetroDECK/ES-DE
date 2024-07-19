@@ -1,0 +1,16 @@
+<theme>
+   <view name="system,gamelist">
+      <text name="system-label">
+         <text>${systemHardwareType}</text>
+      </text>
+   </view>
+<!--
+   <variant name="gamelist-grid">
+      <view name="gamelist">
+         <grid name="grid">
+            <imageFit>cover</imageFit>
+         </grid>
+      </view>
+   </variant>
+-->
+</theme>

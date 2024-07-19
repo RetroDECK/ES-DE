@@ -1,0 +1,27 @@
+[Application]
+name=net.retrodeck.es-de
+runtime=org.kde.Platform/x86_64/6.7
+sdk=org.kde.Sdk/x86_64/6.7
+command=/app/bin/es-de
+
+[Context]
+shared=network;ipc;
+sockets=x11;wayland;pulseaudio;
+devices=all;
+features=multiarch;bluetooth;
+filesystems=xdg-data/Steam;~/.var/app/com.valvesoftware.Steam;xdg-run/app/com.discordapp.Discord:create;xdg-config/gtk-3.0:ro;xdg-run/gamescope-0:ro;host;xdg-config/kdeglobals:ro;~/.steam;
+unset-environment=QEMU_AUDIO_DRV;
+
+[Session Bus Policy]
+com.canonical.AppMenu.Registrar=talk
+org.kde.kconfig.notify=talk
+org.kde.KGlobalSettings=talk
+org.freedesktop.PowerManagement.Inhibit=talk
+org.freedesktop.ScreenSaver=talk
+org.freedesktop.login1.Manager=talk
+
+[Environment]
+SDL_VIDEO_X11_WMCLASS=net.retrodeck.es-de
+QT_QPA_PLATFORM=wayland;wayland-egl;xcb
+SDL_VIDEO_WAYLAND_WMCLASS=net.retrodeck.es-de
+QEMU_AUDIO_DRV=

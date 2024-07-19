@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo, Foxconn, Mitsumi</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2012</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  13.56 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Mario Kart 8</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  Tri-core IBM PowerPC "Espresso" @ 1.24 GHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  2 GB DDR3</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  AMD Radeon-based "Latte" @ 550 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  480i, 480p, 720p, 1080i, 1080p</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Dedicated 120 MHz audio processor</text>
+        </text>
+        <text name="info10">
+            <text>Media:  25 GB Wii U Optical Disc, digital distribution</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Developers:  Senile Team, OpenBOR Team and the Community</text>
+        </text>
+        <text name="info2">
+            <text>Initial release:  2004</text>
+        </text>
+        <text name="info3">
+            <text>Website:  http://www.chronocrash.com/</text>
+        </text>
+        <text name="info4">
+            <text>Written in:  C, C++</text>
+        </text>
+        <text name="info5">
+            <text>OpenBOR is a continuation of the Beats Of Rage 2D</text>
+        </text>
+        <text name="info6">
+            <text>game engine, which was originally created by the</text>
+        </text>
+        <text name="info7">
+            <text>wonderful folks over at Senile Team.</text>
+        </text>
+    </view>
+</theme>

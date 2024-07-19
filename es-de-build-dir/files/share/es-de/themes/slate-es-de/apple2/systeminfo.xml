@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Apple Computer, Inc.</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1977</text>
+        </text>
+        <text name="info3">
+            <text>OS:  Integer BASIC, Apple DOS</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit MOS Technology 6502 @ 1 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  4 to 64 KB</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  8 KB</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  40×48, 16 colors (Lo-res) / 280×192, 6 colors (Hi-res)</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  1-bit speaker (built-in)</text>
+        </text>
+    </view>
+</theme>

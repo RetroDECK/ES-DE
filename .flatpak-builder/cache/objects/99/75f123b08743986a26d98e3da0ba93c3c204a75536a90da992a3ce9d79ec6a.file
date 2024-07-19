@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Kodi (formerly XBMC) is a free and open source media player application developed</text>
+        </text>
+        <text name="info2">
+            <text>by the XBMC/Kodi Foundation, a non-profit technology consortium. Kodi is available for</text>
+        </text>
+        <text name="info3">
+            <text>multiple operating-systems and hardware platforms, featuring a 10-foot user interface</text>
+        </text>
+        <text name="info4">
+            <text>for use with televisions and remote controls.</text>
+        </text>
+        <text name="info5">
+            <text>It allows users to play and view most videos, music, podcasts, and other digital media</text>
+        </text>
+        <text name="info6">
+            <text>from local and network storage media and the internet.</text>
+        </text>
+        <text name="info7">
+            <text>Kodi has a gigantic catalog of community add-ons available for you to customize</text>
+        </text>
+        <text name="info8">
+            <text>and tweak your perfect entertainment setup.</text>
+        </text>
+    </view>
+</theme>

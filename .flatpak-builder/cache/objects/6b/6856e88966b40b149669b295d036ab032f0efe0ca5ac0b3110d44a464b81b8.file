@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  NEC Home Electronics</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1989</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  7.5 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Ghouls 'n Ghosts</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  8-bit HuC6280 @ 7.16 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  32 KB / VRAM:  128 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  2 x HuC6270A Video Display Controllers</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  PSG @ 3.58 MHz, 5 to 10-bit stereo PCM</text>
+        </text>
+        <text name="info9">
+            <text>Media:  HuCard, Super HuCard, CD-ROM (with CD-ROM² add-on)</text>
+        </text>
+    </view>
+</theme>

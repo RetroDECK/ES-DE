@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Taito Type X is a series of arcade systems originally</text>
+        </text>
+        <text name="info2">
+            <text>released by Taito in 2004. In contrast to earlier arcade</text>
+        </text>
+        <text name="info3">
+            <text>boards which were custom designs, the Type X is built</text>
+        </text>
+        <text name="info4">
+            <text>on the standard PC architecture.</text>
+        </text>
+        <text name="info5">
+            <text>They run various versions of Windows Embedded</text>
+        </text>
+        <text name="info6">
+            <text>and the hardware specifications span from rather</text>
+        </text>
+        <text name="info7">
+            <text>low-powered mobile processors and GPUs to more</text>
+        </text>
+        <text name="info8">
+            <text>powerful desktop processors and graphics cards.</text>
+        </text>
+    </view>
+</theme>

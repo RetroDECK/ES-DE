@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Foxconn, Hosiden</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2017</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  92.87 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Mario Kart 8 Deluxe</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  ARM 4 Cortex-A57 cores @ 1.02 GHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  4 GB LPDDR4 @ 1331/1600 MHz</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  256 Maxwell-based CUDA cores @ 307.2 to 768 MHz</text>
+        </text>
+        <text name="info8">
+            <text>Screen (original version):  6.2-inch, 1280×720 LCD (237 ppi)</text>
+        </text>
+        <text name="info9">
+            <text>Screen (OLED version):  7-inch, 1280×720 OLED (209.8 ppi)</text>
+        </text>
+    </view>
+</theme>

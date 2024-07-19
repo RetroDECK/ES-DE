@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Commodore International</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1985</text>
+        </text>
+        <text name="info3">
+            <text>Models:  A1000, A2000, A500, A3000, A500+, A600, A1200, A4000</text>
+        </text>
+        <text name="info4">
+            <text>Units sold:  4.85 million</text>
+        </text>
+        <text name="info5">
+            <text>OS:  AmigaOS, Kickstart firmware</text>
+        </text>
+        <text name="info6">
+            <text>CPU:  16/32-bit Motorola 680x0 @ 7.09 MHz and higher</text>
+        </text>
+        <text name="info7">
+            <text>RAM:  256 KB and higher, expandable</text>
+        </text>
+        <text name="info8">
+            <text>Graphics:  Denise (OCS) / HiRes Denise (ECS) / Lisa (AGA)</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  Paula, 4 channels, 8-bit stereo PCM</text>
+        </text>
+    </view>
+</theme>

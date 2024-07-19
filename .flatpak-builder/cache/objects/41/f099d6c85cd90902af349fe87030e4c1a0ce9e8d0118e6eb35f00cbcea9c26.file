@@ -1,0 +1,7 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>View and play your favorite Android games</text>
+        </text>
+    </view>
+</theme>

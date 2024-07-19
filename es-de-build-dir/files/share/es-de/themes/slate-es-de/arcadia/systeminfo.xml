@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Emerson Radio</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1982</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Signetics 2650 @ 1.2 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  1 KB</text>
+        </text>
+        <text name="info5">
+            <text>Graphics:  Signetics 2637 UVI</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  128×208 pixels, 8 colors</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  Single channel beeper</text>
+        </text>
+        <text name="info8">
+            <text>Media:  Cartridge</text>
+        </text>
+    </view>
+</theme>

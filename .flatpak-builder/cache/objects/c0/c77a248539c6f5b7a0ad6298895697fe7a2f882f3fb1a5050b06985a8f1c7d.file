@@ -1,0 +1,20 @@
+<theme>
+   <variables>
+      <systemName>Famicom Disk System</systemName>
+      <systemDescription>The Family Computer Disk System, commonly shortened to the Famicom Disk System or just Disk System, is a peripheral for Nintendo's Family Computer home video game console, released only in Japan on February 21, 1986. It uses proprietary floppy disks called "Disk Cards" for cheaper data storage and it adds a new high-fidelity sound channel for supporting Disk System games.
+
+Fundamentally, the Disk System serves simply to enhance some aspects already inherent to the base Famicom system, with better sound and cheaper games—though with the disadvantages of high initial price, slow speed, and lower reliability. However, this boost to the market of affordable and writable mass storage temporarily served as an enabling technology for the creation of new types of video games. This includes the vast, open world, progress-saving adventures of the best-selling The Legend of Zelda (1986) and Metroid (1986), games with a cost-effective and swift release such as the best-selling Super Mario Bros. 2, and nationwide leaderboards and contests via the in-store Disk Fax kiosks, which are considered to be forerunners of today's online achievement and distribution systems.</systemDescription>
+      <systemDescriptionSource>https://en.wikipedia.org/wiki/Famicom_Disk_System</systemDescriptionSource>
+      <systemManufacturer>Nintendo</systemManufacturer>
+      <systemReleaseYear>1986</systemReleaseYear>
+      <systemReleaseDate>1986-11</systemReleaseDate>
+      <systemReleaseDateFormated>February 21, 1986</systemReleaseDateFormated>
+      <systemHardwareType>Peripheral</systemHardwareType>
+      <systemCoverSize>1-1</systemCoverSize>
+      <systemColor>B93041</systemColor>
+      <systemColorPalette1>A71636</systemColorPalette1>
+      <systemColorPalette2>C7AF89</systemColorPalette2>
+      <systemColorPalette3>3C3C3B</systemColorPalette3>
+      <systemColorPalette4>F4B600</systemColorPalette4>
+   </variables>
+</theme>

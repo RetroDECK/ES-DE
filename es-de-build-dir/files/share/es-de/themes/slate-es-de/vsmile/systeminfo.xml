@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  VTech</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2004</text>
+        </text>
+        <text name="info3">
+            <text>Marketing target:  Children age 3 to 7</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  Sunplus SPG2xx</text>
+        </text>
+        <text name="info5">
+            <text>Resolution:  320×240 pixels</text>
+        </text>
+        <text name="info6">
+            <text>Media:  Flash ROM cartridge</text>
+        </text>
+    </view>
+</theme>

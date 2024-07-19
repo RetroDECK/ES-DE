@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  IBM</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1981</text>
+        </text>
+        <text name="info3">
+            <text>The IBM Personal Computer, or IBM PC, is the original version and</text>
+        </text>
+        <text name="info4">
+            <text>progenitor of the PC compatible hardware platform.</text>
+        </text>
+        <text name="info5">
+            <text>The initial release was on August 12, 1981 with the IBM model 5150.</text>
+        </text>
+        <text name="info6">
+            <text>It was created by a team of engineers and designers under the direction</text>
+        </text>
+        <text name="info7">
+            <text>of Don Estridge of the IBM Entry Systems Division in Boca Raton, Florida.</text>
+        </text>
+    </view>
+</theme>

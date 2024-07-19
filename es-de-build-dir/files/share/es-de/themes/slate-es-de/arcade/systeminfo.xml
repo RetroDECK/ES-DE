@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>An arcade game or coin-op game is a coin-operated entertainment</text>
+        </text>
+        <text name="info2">
+            <text>machine. Most arcade games are video games, pinball machines,</text>
+        </text>
+        <text name="info3">
+            <text>electro-mechanical games, redemption games or merchandisers.</text>
+        </text>
+        <text name="info4">
+            <text>While exact dates are debated, the golden age of arcade video games</text>
+        </text>
+        <text name="info5">
+            <text>is usually defined as a period beginning sometime in the late 1970s and</text>
+        </text>
+        <text name="info6">
+            <text>ending sometime in the mid-1980s. Excluding a brief resurgence in the</text>
+        </text>
+        <text name="info7">
+            <text>early 1990s, the arcade industry subsequently declined in the</text>
+        </text>
+        <text name="info8">
+            <text>Western hemisphere as competing home video game consoles increased</text>
+        </text>
+        <text name="info9">
+            <text>in their graphics and game-play capability and decreased in cost.</text>
+        </text>
+    </view>
+</theme>

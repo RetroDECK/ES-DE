@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  NEC Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1982</text>
+        </text>
+        <text name="info3">
+            <text>OS:  CP/M-86, MS-DOS, OS/2, Windows</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  16-bit 8086 @ 5 MHz and higher</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  128 KB and higher</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  Internal beeper, FM Sound, PCM</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  VTech</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1982</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Rockwell 6502 @ 2 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  1 KB / VRAM:  16 KB</text>
+        </text>
+        <text name="info5">
+            <text>Graphics:  Texas Instruments TMS9918/9929</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  256×192 pixels, 16 colors</text>
+        </text>
+        <text name="info7">
+            <text>Media:  Cartridge, cassette</text>
+        </text>
+    </view>
+</theme>

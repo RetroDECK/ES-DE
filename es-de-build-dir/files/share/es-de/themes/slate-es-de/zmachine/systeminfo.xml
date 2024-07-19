@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>The Z-machine is a virtual machine developed by Infocom in</text>
+        </text>
+        <text name="info2">
+            <text>1979 for use with its text adventure games. The "Z" stands</text>
+        </text>
+        <text name="info3">
+            <text>for Zork which was Infocom's first adventure game.</text>
+        </text>
+        <text name="info5">
+            <text>Support for a target platform was implemented by writing</text>
+        </text>
+        <text name="info6">
+            <text>a Z-machine interpreter. This was an important advantage</text>
+        </text>
+        <text name="info7">
+            <text>over having to write each games in native code for every</text>
+        </text>
+        <text name="info8">
+            <text>architecture due to the abundance of incompatible home</text>
+        </text>
+        <text name="info9">
+            <text>computers during this time period.</text>
+        </text>
+    </view>
+</theme>

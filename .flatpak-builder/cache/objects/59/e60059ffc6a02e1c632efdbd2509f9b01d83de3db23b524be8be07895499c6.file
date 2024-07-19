@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Magnavox, Philips</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1978</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  2 million</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  Intel 8048 microcontroller</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 bytes</text>
+        </text>
+        <text name="info6">
+            <text>Audio/Video RAM:  128 bytes</text>
+        </text>
+        <text name="info7">
+            <text>ROM:  1 KB</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  160×200 pixels, 16 color fixed palette</text>
+        </text>
+    </view>
+</theme>

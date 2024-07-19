@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1998</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  118.69 million (all models)</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Pokemon Gold and Silver</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  8-bit Zilog Z80 @ 8.33 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  32 KB / VRAM:  26 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  PPU (embedded in CPU)</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  160×144 pixels, 56 colors (32768 color palette)</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  4 channels, stereo</text>
+        </text>
+        <text name="info10">
+            <text>Cart size:  256 KB to 8 MB</text>
+        </text>
+    </view>
+</theme>

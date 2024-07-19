@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Atari Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1985</text>
+        </text>
+        <text name="info3">
+            <text>OS:  Atari BASIC, XL OS</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit MOS Technology 6502C @ 1.8 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB (65XE) / 128 KB (130XE)</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  24 KB</text>
+        </text>
+        <text name="info7">
+            <text>Resolution:  320×192 pixels, 256 colors</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  4 channels</text>
+        </text>
+    </view>
+</theme>

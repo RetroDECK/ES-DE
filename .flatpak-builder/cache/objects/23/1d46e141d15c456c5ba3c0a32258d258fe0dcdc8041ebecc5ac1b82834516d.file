@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Bandai</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2000</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  740,727</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  16-bit NEC V30 MZ @ 3.072 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB shared WRAM/VRAM</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  224×144 pixels</text>
+        </text>
+        <text name="info7">
+            <text>Display:  FSTN reflective LCD, 2.8 in (71 mm), 241 colors</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  One mono speaker, optional headphones</text>
+        </text>
+    </view>
+</theme>

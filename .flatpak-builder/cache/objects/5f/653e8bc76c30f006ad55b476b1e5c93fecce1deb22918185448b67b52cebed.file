@@ -1,0 +1,28 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1980</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  43.4 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Donkey Kong</text>
+        </text>
+        <text name="info5">
+            <text>Created by game designer Gunpei Yokoi, Game & Watch derived</text>
+        </text>
+        <text name="info6">
+            <text>its name from its featuring a single game as well as a clock on an</text>
+        </text>
+        <text name="info7">
+            <text>LCD screen. It was the earliest Nintendo video game product to</text>
+        </text>
+        <text name="info8">
+            <text>gain major worldwide success.</text>
+        </text>
+    </view>
+</theme>

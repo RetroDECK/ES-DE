@@ -1,0 +1,25 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Developer:  Kevin Bates</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2014</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  Amtel ATMega32u4 microcontroller</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  2.5 KB / EEPROM:  1 KB</text>
+        </text>
+        <text name="info5">
+            <text>Program Memory:  32 KB</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  128×64 pixels, 2 colors (1 bit)</text>
+        </text>
+        <text name="info7">
+            <text>Sound:  4 channels, piezo speaker</text>
+        </text>
+    </view>
+</theme>

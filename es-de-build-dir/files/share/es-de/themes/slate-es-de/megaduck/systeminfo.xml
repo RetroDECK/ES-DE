@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Welback Holdings</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1993</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  8-bit Sharp LR35902 @ 4.194304 MHz</text>
+        </text>
+        <text name="info4">
+            <text>RAM:  16 KB</text>
+        </text>
+        <text name="info5">
+            <text>Screen:  2.7 inch (69 mm)</text>
+        </text>
+        <text name="info6">
+            <text>Resolution:  160×144 pixels, 4 shades of gray</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Sharp Corporation</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1982</text>
+        </text>
+        <text name="info3">
+            <text>OS:  CP/M</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-bit Sharp Z80A @ 4 MHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  64 KB / VRAM:  4 to 48 KB</text>
+        </text>
+        <text name="info6">
+            <text>ROM:  6 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  Custom Sharp/Hudson chipset</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  320×200 or 640×200 pixels, 8 colors</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  General Instrument AY-3-8910 or Yamaha YM2149</text>
+        </text>
+    </view>
+</theme>
