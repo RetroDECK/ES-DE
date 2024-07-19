@@ -1,0 +1,7 @@
+
+[submodule "external/rapidjson/thirdparty/gtest"]
+        path = external/rapidjson/thirdparty/gtest
+        url = https://github.com/google/googletest.git
+[submodule "external/utfcpp/extern/ftest"]
+        path = external/utfcpp/extern/ftest
+        url = https://github.com/nemtrif/ftest
