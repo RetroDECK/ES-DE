@@ -1,4 +1,39 @@
 modules:
+
+  # dependency of: CEMU, ES-DE
+  - name: pugixml
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_SHARED_LIBS=ON
+    cleanup:
+      - /include
+      - /lib/cmake
+      - /lib/pkgconfig
+    sources:
+      - type: archive
+        url: https://github.com/zeux/pugixml/releases/download/v1.14/pugixml-1.14.tar.gz
+        sha256: 2f10e276870c64b1db6809050a75e11a897a8d7456c4be5c6b2e35a11168a015
+        x-checker-data:
+          type: anitya
+          project-id: 3728
+          url-template: https://github.com/zeux/pugixml/releases/download/v$version/pugixml-$version.tar.gz
+
+  # Needed from ES-DE 2.1.0+
+  - name: libpoppler-glib
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DENABLE_BOOST=OFF
+    sources:
+      - type: archive
+        # original link not working, found a mirror
+        url: https://poppler.freedesktop.org/poppler-22.11.0.tar.xz
+        #url: https://gitlab.freedesktop.org/poppler/poppler/-/archive/poppler-22.11.0/poppler-poppler-22.11.0.tar.bz2
+        sha256: 093ba9844ed774285517361c15e21a31ba4df278a499263d4403cca74f2da828
+    cleanup:
+      - /lib/pkgconfig
+      - /include
+      - '*.a'
+      - '*.la'
   
   # ES-DE - START
   # https://gitlab.com/es-de/emulationstation-de
