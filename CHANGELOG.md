@@ -8,7 +8,7 @@
 
 ### Detailed list of changes
 
-* Added localization support to the application
+* Added localization support
 * Added Swedish translations
 * Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
 * Added support for skipping the scanning of game system subdirectories (by using noload.txt files)
