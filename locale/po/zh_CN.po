@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-18 15:08+0200\n"
+"POT-Creation-Date: 2024-07-19 10:57+0200\n"
 "PO-Revision-Date: 2024-07-19 16:47+0800\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
@@ -117,7 +117,8 @@ msgstr "请输入玩家人数"
 msgid "FAVORITE"
 msgstr "收藏"
 
-msgid "COMPLETED"
+#, fuzzy
+msgid "COMPLETED [metadata]"
 msgstr "已完成"
 
 msgid "KIDGAME"
@@ -288,8 +289,9 @@ msgstr "设备类型，发布年份"
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr "制造商，设备类型，发行年份"
 
-msgid "GAMES DEFAULT SORT ORDER [SHORT]"
-msgstr "默认排序顺序"
+#, fuzzy
+msgid "GAMES DEFAULT SORT ORDER [short]"
+msgstr "游戏默认排序方式"
 
 msgid "GAMES DEFAULT SORT ORDER"
 msgstr "游戏默认排序方式"
@@ -575,8 +577,9 @@ msgstr "屏幕旋转（需要重新启动）"
 msgid "KEYBOARD QUIT SHORTCUT"
 msgstr "键盘退出快捷键"
 
-msgid "WHEN TO SAVE GAME METADATA [SHORT]"
-msgstr "何时保存游戏元数据 [简短]"
+#, fuzzy
+msgid "WHEN TO SAVE GAME METADATA [short]"
+msgstr "何时保存游戏元数据"
 
 msgid "ALWAYS"
 msgstr "总是"
@@ -706,10 +709,12 @@ msgstr "真的要关机吗？"
 msgid "POWER OFF SYSTEM"
 msgstr "断电系统"
 
-msgid "MEDIA VIEWER SETTINGS [SHORT]"
+#, fuzzy
+msgid "MEDIA VIEWER SETTINGS [short]"
 msgstr "媒体播放器设置"
 
-msgid "SCREENSAVER SETTINGS [SHORT]"
+#, fuzzy
+msgid "SCREENSAVER SETTINGS [short]"
 msgstr "屏保设置"
 
 msgid "choose"
@@ -832,8 +837,9 @@ msgstr "游戏手册"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "混合图像分辨率"
 
-msgid "HORIZONTAL SCREENSHOT FIT [SHORT]"
-msgstr "水平截图适配[简短]"
+#, fuzzy
+msgid "HORIZONTAL SCREENSHOT FIT [short]"
+msgstr "水平截图适配"
 
 msgid "CONTAIN"
 msgstr "适应"
@@ -847,14 +853,16 @@ msgstr "拉伸"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "水平截图适配"
 
-msgid "VERTICAL SCREENSHOT FIT [SHORT]"
-msgstr "垂直截图适配[简短]"
+#, fuzzy
+msgid "VERTICAL SCREENSHOT FIT [short]"
+msgstr "垂直截图适配"
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr "垂直截图适配"
 
-msgid "SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"
-msgstr "屏幕截图宽高比阈值 [简短]"
+#, fuzzy
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
+msgstr "屏幕截图宽高比阈值"
 
 msgid "HIGH"
 msgstr "高"
@@ -871,8 +879,9 @@ msgstr "黑色"
 msgid "FRAME"
 msgstr "带框"
 
-msgid "SCREENSHOT SCALING METHOD [SHORT]"
-msgstr "截图缩放方式[简短]"
+#, fuzzy
+msgid "SCREENSHOT SCALING METHOD [short]"
+msgstr "截图缩放方式"
 
 msgid "SHARP"
 msgstr "锐利"
@@ -1740,8 +1749,8 @@ msgstr "已暂停"
 msgid "RUNNING"
 msgstr "正在运行"
 
-msgid "COMPLETED [MIXIMAGE GENERATOR]"
-msgstr "已完成 [混合图像生成器]"
+msgid "COMPLETED"
+msgstr "已完成"
 
 msgid "DONE"
 msgstr "完成"
@@ -2607,6 +2616,33 @@ msgstr "您已超出每日抓取配额"
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "服务器返回 HTTP 错误代码 %s"
+
+#~ msgid "GAMES DEFAULT SORT ORDER [SHORT]"
+#~ msgstr "默认排序顺序"
+
+#~ msgid "WHEN TO SAVE GAME METADATA [SHORT]"
+#~ msgstr "何时保存游戏元数据 [简短]"
+
+#~ msgid "MEDIA VIEWER SETTINGS [SHORT]"
+#~ msgstr "媒体播放器设置"
+
+#~ msgid "SCREENSAVER SETTINGS [SHORT]"
+#~ msgstr "屏保设置"
+
+#~ msgid "HORIZONTAL SCREENSHOT FIT [SHORT]"
+#~ msgstr "水平截图适配[简短]"
+
+#~ msgid "VERTICAL SCREENSHOT FIT [SHORT]"
+#~ msgstr "垂直截图适配[简短]"
+
+#~ msgid "SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"
+#~ msgstr "屏幕截图宽高比阈值 [简短]"
+
+#~ msgid "SCREENSHOT SCALING METHOD [SHORT]"
+#~ msgstr "截图缩放方式[简短]"
+
+#~ msgid "COMPLETED [MIXIMAGE GENERATOR]"
+#~ msgstr "已完成 [混合图像生成器]"
 
 #, fuzzy
 #~ msgid "ENTER HIDE METADATA OFF/ON"
