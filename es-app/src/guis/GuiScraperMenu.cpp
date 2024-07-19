@@ -480,7 +480,7 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Horizontally oriented screenshots fit.
     auto miximageHorizontalFit = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("HORIZONTAL SCREENSHOT FIT [SHORT]"), false);
+        getHelpStyle(), _("HORIZONTAL SCREENSHOT FIT [short]"), false);
     const std::string selectedHorizontalFit {
         Settings::getInstance()->getString("MiximageScreenshotHorizontalFit")};
     miximageHorizontalFit->add(_("CONTAIN"), "contain", selectedHorizontalFit == "contain");
@@ -502,7 +502,7 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Vertically oriented screenshots fit.
     auto miximageVerticalFit = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("VERTICAL SCREENSHOT FIT [SHORT]"), false);
+        getHelpStyle(), _("VERTICAL SCREENSHOT FIT [short]"), false);
     const std::string selectedVerticalFit {
         Settings::getInstance()->getString("MiximageScreenshotVerticalFit")};
     miximageVerticalFit->add(_("CONTAIN"), "contain", selectedVerticalFit == "contain");
@@ -524,7 +524,7 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Screenshots aspect ratio threshold.
     auto miximageAspectThreshold = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"), false);
+        getHelpStyle(), _("SCREENSHOT ASPECT RATIO THRESHOLD [short]"), false);
     const std::string selectedAspectThreshold {
         Settings::getInstance()->getString("MiximageScreenshotAspectThreshold")};
     miximageAspectThreshold->add(_("HIGH"), "high", selectedAspectThreshold == "high");
@@ -566,7 +566,7 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Screenshot scaling method.
     auto miximageScaling = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("SCREENSHOT SCALING METHOD [SHORT]"), false);
+        getHelpStyle(), _("SCREENSHOT SCALING METHOD [short]"), false);
     std::string selectedScaling {Settings::getInstance()->getString("MiximageScreenshotScaling")};
     miximageScaling->add(_("SHARP"), "sharp", selectedScaling == "sharp");
     miximageScaling->add(_("SMOOTH"), "smooth", selectedScaling == "smooth");

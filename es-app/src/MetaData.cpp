@@ -33,7 +33,7 @@ namespace
     {"genre",              MD_STRING,           "unknown",         false,     "GENRE",                       "ENTER GENRE",                      true},
     {"players",            MD_STRING,           "unknown",         false,     "PLAYERS",                     "ENTER NUMBER OF PLAYERS",          true},
     {"favorite",           MD_BOOL,             "false",           false,     "FAVORITE",                    "ENTER FAVORITE OFF/ON",            false},
-    {"completed",          MD_BOOL,             "false",           false,     "COMPLETED",                   "ENTER COMPLETED OFF/ON",           false},
+    {"completed",          MD_BOOL,             "false",           false,     "COMPLETED [metadata]",        "ENTER COMPLETED OFF/ON",           false},
     {"kidgame",            MD_BOOL,             "false",           false,     "KIDGAME",                     "ENTER KIDGAME OFF/ON",             false},
     {"hidden",             MD_BOOL,             "false",           false,     "HIDDEN",                      "ENTER HIDDEN OFF/ON",              false},
     {"broken",             MD_BOOL,             "false",           false,     "BROKEN/NOT WORKING",          "ENTER BROKEN OFF/ON",              false},
@@ -57,7 +57,7 @@ namespace
     {"genre",         MD_STRING,           "unknown",         false,     "GENRE",                         "ENTER GENRE",                      true},
     {"players",       MD_STRING,           "unknown",         false,     "PLAYERS",                       "ENTER NUMBER OF PLAYERS",          true},
     {"favorite",      MD_BOOL,             "false",           false,     "FAVORITE",                      "ENTER FAVORITE OFF/ON",            false},
-    {"completed",     MD_BOOL,             "false",           false,     "COMPLETED",                     "ENTER COMPLETED OFF/ON",           false},
+    {"completed",     MD_BOOL,             "false",           false,     "COMPLETED [metadata]",          "ENTER COMPLETED OFF/ON",           false},
     {"kidgame",       MD_BOOL,             "false",           false,     "KIDGAME (ONLY AFFECTS BADGES)", "ENTER KIDGAME OFF/ON",             false},
     {"hidden",        MD_BOOL,             "false",           false,     "HIDDEN",                        "ENTER HIDDEN OFF/ON",              false},
     {"broken",        MD_BOOL,             "false",           false,     "BROKEN/NOT WORKING",            "ENTER BROKEN OFF/ON",              false},
@@ -209,7 +209,7 @@ void gettextMessageCatalogEntries()
     _("PLAYERS");
     _("ENTER NUMBER OF PLAYERS");
     _("FAVORITE");
-    _("COMPLETED");
+    _("COMPLETED [metadata]");
     _("KIDGAME");
     _("KIDGAME (ONLY AFFECTS BADGES)");
     _("HIDDEN");

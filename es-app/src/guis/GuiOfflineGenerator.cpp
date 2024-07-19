@@ -332,7 +332,7 @@ void GuiOfflineGenerator::update(int deltaTime)
     mOverwrittenVal->setText(std::to_string(mImagesOverwritten));
 
     if (mGamesProcessed == mTotalGames) {
-        mStatus->setText(_("COMPLETED [MIXIMAGE GENERATOR]"));
+        mStatus->setText(_("COMPLETED"));
         mStartPauseButton->setText(_("DONE"), _("done (close)"));
         mStartPauseButton->setPressedFunc([this]() { delete this; });
         mCloseButton->setText(_("CLOSE"), _("close"));
