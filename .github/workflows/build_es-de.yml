@@ -36,6 +36,7 @@ jobs:
       - name: "Build flatpak"
         id: "flatpak-download"
         run: |
+          git config protocol.file.allow always
           flatpak-builder --user --force-clean \
             --install-deps-from=flathub \
             --install-deps-from=flathub-beta \
