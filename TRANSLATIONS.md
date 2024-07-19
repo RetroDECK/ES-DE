@@ -131,6 +131,32 @@ msgstr "DEFAULT SORT ORDER"
 
 The short version of this string was required as it would otherwise not fit inside the menu header. Note that short strings may only be required for some specific languages, so again you need to test it to see whether you actaully need to provide a short translation or not.
 
+## Fuzzy entries
+
+Sometimes when changes are made to translation strings this will cause _fuzzy_ entries to get added to the .po file. This means that gettext detected something has changed but is not sure what to do. In these cases the translator needs to make an explicit decision on how to handle the change. Using Poedit makes the whole process simple as each fuzzy entry is clearly indicated with a _Needs Work_ flag in its user interface.
+
+Say there was the following string in ES-DE:
+
+```
+msgid "THEME ASPECT RATIOS"
+msgstr "TEMA BILDFÖRHÅLLANDE"
+```
+
+And then it was decided that this should change to _THEME ASPECT RATIO_ instead. When the corresponding code change was done, new .po files were also automatically generated for all languages and committed to the ES-DE repository. However as the string was changed slightly gettext marked it as fuzzy in the .po files, like so:
+```
+#, fuzzy
+msgid "THEME ASPECT RATIO"
+msgstr "TEMA BILDFÖRHÅLLANDE"
+```
+
+When an entry is marked as fuzzy it's excluded when compiling the .po file, or in other words it's not getting translated at all.
+
+In this case a new translation was not required so it simply needed to be marked as OK in Poedit. But other times a translation change may indeed be required. When marking a translation as OK in Poedit or when updating it, the fuzzy flag is removed and the end result would be something like the following:
+```
+msgid "THEME ASPECT RATIO"
+msgstr "TEMA BILDFÖRHÅLLANDE"
+```
+
 ## Testing your translations
 
 You can have Poedit compile the binary .mo file whenever you save a .po file. The .mo file (for _Machine Object_) is what ES-DE actually uses to load the translations, i.e. the source .po file is not used when running the application. If not enabled for your setup then you can find this setting inside the Poedit Preferences screen, where it's named _Automatically compile MO file when saving_.
