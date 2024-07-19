@@ -1,0 +1,104 @@
+name: "Build ES-DE"
+
+on:
+  push:
+    branches:
+     - retrodeck-main
+  workflow_dispatch:
+
+
+jobs:
+
+  Building_RetroDECK-ES-DE:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Circumventing this bug: https://github.com/flatpak/flatpak-builder/issues/317
+      # - name: Remove stuck mounts
+      #   run: sudo umount -f /home/ubuntu/es-de-runner/_work/RetroDECK-ES-DE/RetroDECK-ES-DE/.flatpak-builder/rofiles/*
+      #   continue-on-error: true
+    
+      - name: Clone repo
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+          token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+
+      - name: "Install dependencies"
+        run: "automation_tools/install_dependencies.sh"
+
+      - name: "Creating ES-DE manifest"
+        run: "/bin/bash ${GITHUB_WORKSPACE}/automation_tools/update_es-de_manifest.sh"
+
+      - name: "[DEBUG] Outputting manifest"
+        run: cat net.retrodeck.es-de.yml
+
+      - name: "Build flatpak"
+        id: "flatpak-download"
+        run: |
+          flatpak-builder --user --force-clean \
+            --install-deps-from=flathub \
+            --install-deps-from=flathub-beta \
+            --repo=${GITHUB_WORKSPACE}/es-de-repo \
+            "${GITHUB_WORKSPACE}"/es-de-build-dir \
+            net.retrodeck.es-de.yml
+
+      - name: "Exporting dir tree"
+        id: tree
+        run: tree -H ./ > ${GITHUB_WORKSPACE}/tree.html
+
+      - name: Create Artifact for RetroDECK
+        run: | 
+          tar -czf ${GITHUB_WORKSPACE}/RetroDECK-ES-DE-Artifact.tar.gz -C ${GITHUB_WORKSPACE}/es-de-build-dir .
+          hash=($(sha256sum ${GITHUB_WORKSPACE}/RetroDECK-ES-DE-Artifact.tar.gz))
+          echo $hash > ${GITHUB_WORKSPACE}/RetroDECK-Artifact-cooker.sha
+          mv -f RetroDECK-Artifact-cooker.* ${{ secrets.ARTIFACT_REPO }}
+        continue-on-error: true
+        timeout-minutes: 1440
+
+      - name: Set environment variable with current branch name
+        run: echo "GITHUB_REF_SLUG=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+
+      - name: Get branch name
+        id: branch_name
+        run: echo "BRANCH_NAME=$(echo $GITHUB_REF | sed 's|refs/heads/||')" >> $GITHUB_ENV
+
+      - name: Get date
+        id: date
+        run: echo "DATE=$(date +'%d%m%y.%S')" >> $GITHUB_ENV
+
+      - name: Publish the artifacts in a release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{env.BRANCH_NAME}}-${{env.DATE}}"
+          body: |
+            # Release Notes
+            These are the artifact of RetroDECK ES-DE, commit: ${{ github.event.repository.full_name }}@${{github.sha}}.
+            On branch [${{env.BRANCH_NAME}}](https://github.com/XargonWan/RetroDECK-ES-DE/tree/${{env.BRANCH_NAME}}).
+
+          artifacts: "RetroDECK-ES-DE-Artifact.tar.gz, tree.html"
+          allowUpdates: true
+          makeLatest: true
+          token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+        continue-on-error: true
+
+      # - name: "Committing changes"
+      #   with: 
+      #     github_token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+      #   run: |
+      #     git config user.name "GitHub Actions"
+      #     git config user.email "actions@github.com"
+      #     git add * net.retrodeck.es-de.yml
+      #     git commit -m '[AUTOMATED] Updating ES-DE after build [skip ci]'
+      #     git push origin main
+      #   continue-on-error: true # TODO: would be good to update the manifest but it's broken
+
+      - name: GitHub Commit & Push
+        uses: actions-js/push@v1.4
+        with: 
+          github_token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          message: '[AUTOMATED] Updating ES-DE after build [skip ci]'
+        continue-on-error: true # TODO: would be good to update the manifest but it's broken
+            
+
+
