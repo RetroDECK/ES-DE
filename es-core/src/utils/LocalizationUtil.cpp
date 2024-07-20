@@ -174,6 +174,12 @@ namespace Utils
 #else
             setenv("LANGUAGE", locale.c_str(), 1);
             setenv("LANG", locale.c_str(), 1);
+            // For some bizarre reason we need to first set the locale to en_US.UTF-8 before
+            // we set it to the requested locale as some specific locales like pt_BR and zh_CN
+            // otherwise won't work consistently. This must be some kind of library or OS bug as
+            // it only happens on regular Linux, and not on macOS, Windows, Android or FreeBSD.
+            setlocale(LC_MESSAGES, std::string {"en_US.UTF-8"}.c_str());
+
             setlocale(LC_MESSAGES, std::string {locale + ".UTF-8"}.c_str());
 #endif
             textdomain(locale.c_str());
