@@ -647,8 +647,10 @@ namespace Utils
             va_copy(copy, args);
 
             const int length {vsnprintf(nullptr, 0, &stringArg[0], copy)};
+            va_end(copy);
             std::string buffer(length, '\0');
 
+            va_copy(copy, args);
             vsnprintf(&buffer[0], length + 1, &stringArg[0], copy);
 
             va_end(copy);
