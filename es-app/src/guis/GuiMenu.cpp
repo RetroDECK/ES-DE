@@ -490,6 +490,7 @@ void GuiMenu::openUIOptions()
                              selectedApplicationLanguage == "en_US");
     applicationLanguage->add("ENGLISH (UNITED KINGDOM)", "en_GB",
                              selectedApplicationLanguage == "en_GB");
+    applicationLanguage->add("ITALIANO", "it_IT", selectedApplicationLanguage == "it_IT");
     applicationLanguage->add("SVENSKA", "sv_SE", selectedApplicationLanguage == "sv_SE");
     applicationLanguage->add("简体中文", "zh_CN", selectedApplicationLanguage == "zh_CN");
     // If there are no objects returned, then there must be a manually modified entry in the
