@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-19 10:57+0200\n"
-"PO-Revision-Date: 2024-07-19 16:47+0800\n"
+"POT-Creation-Date: 2024-07-20 11:45+0200\n"
+"PO-Revision-Date: 2024-07-20 14:43+0800\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.4.4\n"
 
 msgid "Network error (status:"
@@ -43,10 +43,10 @@ msgid "Network error:"
 msgstr "网络错误："
 
 msgid "Media directory does not exist and can't be created."
-msgstr "媒体目录不存在，无法创建."
+msgstr "媒体目录不存在，无法创建。"
 
 msgid "Permission problems?"
-msgstr "权限问题？"
+msgstr "可能是权限问题？"
 
 msgid "Failed to open path for writing media file."
 msgstr "无法打开用于写入媒体文件的路径。"
@@ -112,7 +112,7 @@ msgid "PLAYERS"
 msgstr "玩家数"
 
 msgid "ENTER NUMBER OF PLAYERS"
-msgstr "请输入玩家人数"
+msgstr "请输入玩家数"
 
 msgid "FAVORITE"
 msgstr "收藏"
@@ -155,10 +155,10 @@ msgid "SELECT CONTROLLER"
 msgstr "选择控制器"
 
 msgid "ALTERNATIVE EMULATOR"
-msgstr "替代模拟器"
+msgstr "备用模拟器"
 
 msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr "请选择替代模拟器"
+msgstr "请选择备用模拟器"
 
 msgid "FOLDER LINK"
 msgstr "文件夹链接"
@@ -346,7 +346,7 @@ msgid ""
 "DO YOU WANT TO PROCEED?"
 msgstr ""
 "这将更改用户界面为限制模式\n"
-"'KIOSK'\n"
+"'安全'\n"
 "这样会隐藏大多数菜单选项\n"
 "要解锁并返回到完整的用户界面，请输入此代码：\n"
 "%s\n"
@@ -365,7 +365,7 @@ msgid ""
 "DO YOU WANT TO PROCEED?"
 msgstr ""
 "这将更改用户界面为限制模式\n"
-"'KID'\n"
+"'儿童'\n"
 "这仅启用已被标记为适合儿童的游戏\n"
 "要解锁并返回到完整的用户界面，请输入此代码：\n"
 "%s\n"
@@ -415,7 +415,7 @@ msgid "ENABLE VIRTUAL KEYBOARD"
 msgstr "启用虚拟键盘"
 
 msgid "ENABLE TOGGLE FAVORITES BUTTON"
-msgstr "启用切换收藏夹按钮"
+msgstr "启用切换收藏夹按键"
 
 msgid "ENABLE GAMELIST FILTERS"
 msgstr "启用游戏列表过滤器"
@@ -508,7 +508,7 @@ msgid ""
 "TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
 "HELP PROMPTS)"
 msgstr ""
-"键盘和控制器是自动配置的，但使用此工具您可以覆盖默认的按钮映射（这不会影响帮"
+"键盘和控制器是自动配置的，但使用此工具您可以覆盖默认的按键映射（这不会影响帮"
 "助提示）"
 
 msgid "PROCEED"
@@ -518,7 +518,7 @@ msgid "CANCEL"
 msgstr "取消"
 
 msgid "ALTERNATIVE EMULATORS"
-msgstr "替代模拟器"
+msgstr "备用模拟器"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "游戏媒体目录"
@@ -545,10 +545,10 @@ msgid "ANTI-ALIASING (MSAA)"
 msgstr "抗锯齿 (MSAA)"
 
 msgid "2X"
-msgstr ""
+msgstr "2倍"
 
 msgid "4X"
-msgstr ""
+msgstr "4倍"
 
 msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
 msgstr "抗锯齿 (MSAA)（需要重启）"
@@ -624,7 +624,7 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "将视频帧率提升至 60 FPS"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
-msgstr "为每个游戏启用替代模拟器"
+msgstr "为每个游戏启用备用模拟器"
 
 msgid "SHOW HIDDEN FILES AND FOLDERS"
 msgstr "显示隐藏文件和文件夹"
@@ -645,7 +645,7 @@ msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
 msgstr "禁用桌面组合（需要重启）"
 
 msgid "BACK BUTTON/BACK SWIPE EXITS APP"
-msgstr "返回按钮/向后滑动即可退出应用程序"
+msgstr "返回键/向后滑动退出应用程序"
 
 msgid "DEBUG MODE"
 msgstr "调试模式"
@@ -787,19 +787,19 @@ msgid "back"
 msgstr "返回"
 
 msgid "SCREENSCRAPER USERNAME"
-msgstr "SCREENSCRAPER用户名"
+msgstr "ScreenScraper用户名"
 
 msgid "SCREENSCRAPER PASSWORD"
-msgstr "SCREENSCRAPER密码"
+msgstr "ScreenScraper密码"
 
 msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
-msgstr "使用此帐户进行屏幕抓取"
+msgstr "使用此帐户进行抓取"
 
 msgid "GAME NAMES"
 msgstr "游戏名称"
 
 msgid "RATINGS"
-msgstr "评级"
+msgstr "评分"
 
 msgid "OTHER METADATA"
 msgstr "其他元数据"
@@ -920,7 +920,7 @@ msgid "INCLUDE BOX IMAGE"
 msgstr "包含框形图像"
 
 msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
-msgstr "如果 3D 盒子封面缺失，请使用封面图片"
+msgstr "如果 3D 盒装封面缺失，请使用封面图片"
 
 msgid "INCLUDE PHYSICAL MEDIA IMAGE"
 msgstr "包括物理媒体图像"
@@ -959,13 +959,13 @@ msgid "RETRY ATTEMPT TIMER"
 msgstr "重试尝试定时器"
 
 msgid "HASH SEARCHES MAX FILE SIZE"
-msgstr "重试哈希搜索的最大文件大小"
+msgstr "重试哈希值搜索的最大文件大小"
 
 msgid "OVERWRITE FILES AND DATA"
 msgstr "覆盖文件和数据"
 
 msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
-msgstr "使用文件哈希搜索（非交互模式）"
+msgstr "使用文件哈希值搜索（非交互模式）"
 
 msgid "SEARCH USING METADATA NAMES"
 msgstr "使用元数据名称搜索"
@@ -1095,10 +1095,10 @@ msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "显示定制收藏的星形标记"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
-msgstr "屏幕保护程序启动时间（分钟）"
+msgstr "屏保启动时间（分钟）"
 
 msgid "SCREENSAVER TYPE"
-msgstr "屏幕保护程序类型"
+msgstr "屏保类型"
 
 msgid "DIM"
 msgstr "暗淡"
@@ -1110,19 +1110,19 @@ msgid "VIDEO"
 msgstr "视频"
 
 msgid "ENABLE SCREENSAVER CONTROLS"
-msgstr "启用屏幕保护程序控制"
+msgstr "启用屏保控制"
 
 msgid "SLIDESHOW SCREENSAVER SETTINGS"
-msgstr "幻灯片屏幕保护程序设置"
+msgstr "幻灯片屏保设置"
 
 msgid "VIDEO SCREENSAVER SETTINGS"
 msgstr "视频屏保设置"
 
 msgid "SLIDESHOW SCREENSAVER"
-msgstr "幻灯片屏幕保护程序"
+msgstr "幻灯片屏保"
 
 msgid "SWAP IMAGES AFTER (SECONDS)"
-msgstr "几秒后交换图像"
+msgstr "几秒后更换图像"
 
 msgid "ONLY INCLUDE FAVORITE GAMES"
 msgstr "仅包含喜爱的游戏"
@@ -1149,7 +1149,7 @@ msgid "VIDEO SCREENSAVER"
 msgstr "视频屏保"
 
 msgid "SWAP VIDEOS AFTER (SECONDS)"
-msgstr "几秒后交换视频"
+msgstr "几秒后更换视频"
 
 msgid "RENDER BLUR"
 msgstr "渲染模糊"
@@ -1164,7 +1164,7 @@ msgid "GAME NAME"
 msgstr "游戏名称"
 
 msgid "APPLY CHANGES?"
-msgstr "应用更改？"
+msgstr "真的要应用更改吗？"
 
 msgid "NOTHING TO FILTER"
 msgstr "无需过滤"
@@ -1220,7 +1220,7 @@ msgid ""
 "\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
 msgstr ""
 "似乎该主题是手动下载的，而不是通过此主题下载器下载的。需要重新下载，旧主题目"
-"录“%s”将重命名为“%s_DISABLED”"
+"录\"%s\"将重命名为\"%s_DISABLED\""
 
 msgid "DOWNLOADING THEME"
 msgstr "正在下载主题"
@@ -1233,7 +1233,7 @@ msgid ""
 "DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
 msgstr ""
 "似乎该主题存储库已损坏，这可能是由于上次下载或更新中断造成的，例如 ES-DE 进程"
-"被终止。需要重新下载，旧主题目录“%s”将重命名为“%s_CORRUPT_DISABLED”"
+"被终止。需要重新下载，旧主题目录\"%s\"将重命名为\"%s_CORRUPT_DISABLED\""
 
 #, c-format
 msgid ""
@@ -1243,14 +1243,14 @@ msgid ""
 "\"%s_DISABLED\""
 msgstr ""
 "这似乎是一个浅层存储库，这意味着它是使用此主题下载器以外的其他工具下载的。需"
-"要重新下载，旧主题目录“%s”将重命名为“%s_DISABLED”"
+"要重新下载，旧主题目录\"%s\"将重命名为\"%s_DISABLED\""
 
 #, c-format
 msgid ""
 "THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
 "CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
 msgstr ""
-"主题存储库“%s”包含本地更改。继续覆盖您的更改或取消以跳过此主题的所有更新"
+"主题存储库\"%s\"包含本地更改。继续覆盖您的更改或取消以跳过此主题的所有更新"
 
 msgid "UPDATING THEME"
 msgstr "正在更新主题"
@@ -1335,8 +1335,8 @@ msgid ""
 "DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
 msgstr ""
 "主题列表存储库似乎已损坏，这可能是由于上次下载或更新中断造成的，例如 ES-DE 进"
-"程被终止。需要重新下载，旧目录“themes-list”将重命名为“themes-"
-"list_CORRUPT_DISABLED”"
+"程被终止。需要重新下载，旧目录\"themes-list\"将重命名为\"themes-"
+"list_CORRUPT_DISABLED\""
 
 msgid "DOWNLOADING THEMES LIST"
 msgstr "正在下载主题列表"
@@ -1352,9 +1352,9 @@ msgid ""
 "THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
 "CORRUPTION."
 msgstr ""
-"看起来您是第一次使用主题下载器。因此，将下载主题列表存储库，这将需要一些时"
-"间。但是，后续运行将快得多，因为只会获取新文件或修改过的文件。对于您下载的任"
-"何主题也是如此。请注意，您无法中止正在进行的下载，因为这可能会导致数据损坏。"
+"看起来您是第一次使用主题下载器。因此将下载主题列表存储库，这将需要一些时间。"
+"但是，后续运行将快得多，因为只会获取新文件或修改过的文件。对于您下载的任何主"
+"题也是如此。请注意，您无法中止正在进行的下载，因为这可能会导致数据损坏。"
 
 msgid "RATING:"
 msgstr "评分："
@@ -1416,11 +1416,10 @@ msgstr "停止"
 msgid "GAME"
 msgid_plural "GAMES"
 msgstr[0] "游戏"
-msgstr[1] "仅游戏"
 
 #, c-format
 msgid "GAME %i OF %i"
-msgstr "第 %i 个，共 %i 个"
+msgstr "第 %i 个，共 %i 个游戏"
 
 msgid "NO GAMES WERE SCRAPED"
 msgstr "没有游戏被删除"
@@ -1428,14 +1427,12 @@ msgstr "没有游戏被删除"
 #, c-format
 msgid "%i GAME SUCCESSFULLY SCRAPED"
 msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] "%i 个游戏已成功被抓取"
-msgstr[1] "%i 个游戏已成功被抓取"
+msgstr[0] "已成功抓取 %i 个游戏"
 
 #, c-format
 msgid "%i GAME SKIPPED"
 msgid_plural "%i GAMES SKIPPED"
 msgstr[0] "已跳过 %i 个游戏"
-msgstr[1] "已跳过 %i 个游戏"
 
 msgid "GAMELIST OPTIONS"
 msgstr "游戏列表设置"
@@ -1479,8 +1476,8 @@ msgid ""
 "DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
 "LONGER NEEDED."
 msgstr ""
-"这将删除所有找不到匹配游戏文件的媒体文件。这些文件将被移动到游戏媒体目录内的"
-"清理文件夹中。当您确定不再需要此文件夹时，您可以手动删除它。"
+"这将删除所有找不到匹配游戏文件的媒体文件。这些文件将被移动到游戏媒体目录内的 "
+"cleanup 文件夹中。当您确定不再需要此文件夹时，您可以手动删除它。"
 
 msgid ""
 "THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
@@ -1488,9 +1485,9 @@ msgid ""
 "CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
 "FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
 msgstr ""
-"这将从您的 GAMELIST XML 文件中删除所有找不到匹配游戏文件的条目。原始文件的备"
-"份将保存到 GAMELISTS 目录内的清理文件夹中。当您确定不再需要此文件夹时，您可以"
-"手动删除它。"
+"这将从您的 gamelist.xml 文件中删除所有找不到匹配游戏文件的条目。原始文件的备"
+"份将保存到 gamelists 目录内的 cleanup 文件夹中。当您确定不再需要此文件夹时，"
+"您可以手动删除它。"
 
 msgid ""
 "THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
@@ -1499,10 +1496,11 @@ msgid ""
 "ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
 msgstr ""
 "这将从您的自定义收藏集配置文件中删除所有找不到匹配游戏文件的条目。原始文件的"
-"备份将保存到收藏集目录内的清理文件夹中。仅当前启用的收藏集将被处理。"
+"备份将保存到 collections 目录内的 cleanup 文件夹中。仅当前启用的收藏集将被处"
+"理。"
 
 msgid "NOT STARTED"
-msgstr ""
+msgstr "未开始"
 
 msgid "DESCRIPTION:"
 msgstr "描述："
@@ -1541,7 +1539,7 @@ msgid "COLLECTIONS CLEANUP FAILED"
 msgstr "收藏清理失败"
 
 msgid "There are no enabled custom collections"
-msgstr "未启用自定义集合"
+msgstr "未启用自定义收藏"
 
 msgid "RUNNING COLLECTIONS CLEANUP"
 msgstr "运行收藏清理"
@@ -1551,7 +1549,7 @@ msgstr "正在处理"
 
 #, c-format
 msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr "找到 flatten.txt 文件，跳过“%s”"
+msgstr "找到 flatten.txt 文件，正在跳过 \"%s\""
 
 msgid "Couldn't create target directory, permission problems?"
 msgstr "无法创建目标目录，可能是权限问题？"
@@ -1561,44 +1559,44 @@ msgstr "无法移动媒体文件，可能是权限问题？"
 
 #, c-format
 msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr "无法解析 gamelist.xml 文件中的“%s”"
+msgstr "无法解析 gamelist.xml 文件中的 \"%s\""
 
 #, c-format
 msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr "在文件“%s”中找不到游戏列表标签"
+msgstr "在文件 \"%s\" 中找不到游戏列表标签"
 
 msgid "Couldn't delete temporary gamelist file, permission problems?"
 msgstr "无法删除临时游戏列表文件，可能是权限问题？"
 
 msgid "Couldn't write to temporary gamelist file, permission problems?"
-msgstr "无法写入临时游戏列表文件，权限问题？"
+msgstr "无法写入临时游戏列表文件，可能是权限问题？"
 
 msgid "Couldn't create backup directory, permission problems?"
-msgstr "无法创建备份目录，权限问题？"
+msgstr "无法创建备份目录，可能是权限问题？"
 
 msgid "Couldn't move old gamelist file, permission problems?"
-msgstr "无法移动旧的游戏列表文件，权限问题？"
+msgstr "无法移动旧的游戏列表文件，可能是权限问题？"
 
 msgid "Couldn't move temporary gamelist file, permission problems?"
-msgstr "无法移动临时游戏列表文件，权限问题？"
+msgstr "无法移动临时游戏列表文件，可能是权限问题？"
 
 msgid "Couldn't find custom collection configuration file"
-msgstr "找不到自定义集合配置文件"
+msgstr "找不到自定义收藏配置文件"
 
 msgid "Couldn't open custom collection configuration file"
-msgstr "无法打开自定义集合配置文件"
+msgstr "无法打开自定义收藏配置文件"
 
 msgid "Couldn't delete temporary collection file, permission problems?"
-msgstr "无法删除临时收藏文件，权限问题？"
+msgstr "无法删除临时收藏文件，可能是权限问题？"
 
 msgid "Couldn't write to temporary collection configuration file"
 msgstr "无法写入临时收藏配置文件"
 
 msgid "Couldn't move old collection file, permission problems?"
-msgstr "无法移动旧的收藏文件，权限问题？"
+msgstr "无法移动旧的收藏文件，可能是权限问题？"
 
 msgid "Couldn't move temporary collection file, permission problems?"
-msgstr "无法移动临时收藏文件，权限问题？"
+msgstr "无法移动临时收藏文件，可能是权限问题？"
 
 msgid "ABORTED MEDIA CLEANUP"
 msgstr "终止媒体清理"
@@ -1628,13 +1626,13 @@ msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
 msgstr "关闭此实用程序时，应用程序将重新加载。"
 
 msgid "INVALID ENTRY"
-msgstr "无效输入"
+msgstr "无效条目"
 
 msgid "CLEARED ENTRY"
 msgstr "已清除的条目"
 
 msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr "没有定义替代模拟器"
+msgstr "没有定义备用模拟器"
 
 msgid "CLEAR INVALID ENTRY"
 msgstr "清除无效条目"
@@ -1673,7 +1671,7 @@ msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
 "BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED"
 msgstr ""
-"这将删除此文件夹的所有媒体文件和 GAMELIST.XML 条目，但目录本身或其中的任何内"
+"这将删除此文件夹的所有媒体文件和 gamelist.xml 条目，但目录本身或其中的任何内"
 "容都不会被删除"
 
 msgid "CLEAR"
@@ -1686,14 +1684,14 @@ msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
 "BUT THE GAME FILE ITSELF WILL NOT BE REMOVED"
 msgstr ""
-"这将删除此游戏的所有媒体文件和 GAMELIST.XML 条目，但游戏文件本身不会被删除"
+"这将删除此游戏的所有媒体文件和 gamelist.xml 条目，但游戏文件本身不会被删除"
 
 msgid "clear file"
 msgstr "清理文件"
 
 msgid ""
 "THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY"
-msgstr "这将删除游戏文件、任何媒体文件和 GAMELIST.XML 条目"
+msgstr "这将删除游戏文件、任何媒体文件和 gamelist.xml 条目"
 
 msgid "DELETE"
 msgstr "删除"
@@ -1708,7 +1706,6 @@ msgstr "混合图像离线生成器"
 msgid "%i OF %i GAME PROCESSED"
 msgid_plural "%i OF %i GAMES PROCESSED"
 msgstr[0] "已处理 %i 个游戏，共 %i 个游戏"
-msgstr[1] "已处理 %i 个游戏，共 %i 个游戏"
 
 msgid "Generated:"
 msgstr "已生成："
@@ -1816,10 +1813,10 @@ msgid "Downloaded file does not match expected MD5 checksum"
 msgstr "下载的文件与预期的 MD5 校验和不匹配"
 
 msgid "Error: Couldn't delete temporary package file, permission problems?"
-msgstr "错误：无法删除临时包文件，权限问题？"
+msgstr "错误：无法删除临时包文件，可能是权限问题？"
 
 msgid "Error: Couldn't write package file, permission problems?"
-msgstr "错误：无法写入包文件，权限问题？"
+msgstr "错误：无法写入包文件，可能是权限问题？"
 
 msgid "Error: Couldn't set permissions on AppImage file"
 msgstr "错误：无法设置 AppImage 文件的权限"
@@ -1835,10 +1832,10 @@ msgid "Error: Downloaded file does not match expected MD5 checksum"
 msgstr "错误：下载的文件与预期的 MD5 校验和不匹配"
 
 msgid "Error: Couldn't rename running AppImage file, permission problems?"
-msgstr "错误：无法重命名正在运行的 AppImage 文件，权限问题？"
+msgstr "错误：无法重命名正在运行的 AppImage 文件，可能是权限问题？"
 
 msgid "Error: Couldn't replace running AppImage file, permission problems?"
-msgstr "错误：无法替换正在运行的 AppImage 文件，权限问题？"
+msgstr "错误：无法替换正在运行的 AppImage 文件，可能是权限问题？"
 
 #, c-format
 msgid "Successfully installed as %s"
@@ -1870,67 +1867,67 @@ msgstr "收藏"
 
 #, c-format
 msgid "DISABLED '%s' IN '%s'"
-msgstr "已禁用“%s”中的“%s”"
+msgstr "已禁用'%s'中的'%s'"
 
 #, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr "编辑“%s”收藏，添加/删除 %s 游戏"
+msgstr "编辑 '%s' 个收藏，添加/删除 %s 个游戏"
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr "“%s”收藏已完成编辑"
+msgstr "'%s' 收藏已完成编辑"
 
 msgid "Favorites"
 msgstr "喜爱"
 
 #, c-format
 msgid "ADDED '%s' TO '%s'"
-msgstr "将“%s”添加到“%s”"
+msgstr "将'%s'添加到'%s'"
 
 #, c-format
 msgid "REMOVED '%s' FROM '%s'"
-msgstr "从‘%s’中删除了‘%s’"
+msgstr "从'%s'中删除了'%s'"
 
 msgid "This collection is empty"
-msgstr "此集合为空"
+msgstr "此收藏为空"
 
 #, c-format
 msgid "This collection contains 1 game: '%s [%s]'"
-msgstr "该合集包含 1 个游戏：“%s [%s]”"
+msgstr "该收藏包含 1 个游戏：'%s [%s]'"
 
 #, c-format
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
-msgstr "该合集包含 2 个游戏：“%s [%s]”和“%s [%s]”"
+msgstr "该收藏包含 2 个游戏：'%s [%s]' and '%s [%s]'"
 
 #, c-format
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
-msgstr ""
+msgstr "该收藏包含 3 个游戏：'%s [%s]', '%s [%s]' and '%s [%s]'"
 
 #, c-format
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
 "others"
-msgstr "该集合包含 %i 个游戏：“%s [%s]”、“%s [%s]”和“%s [%s]”等"
+msgstr "该收藏包含 %i 个游戏：'%s [%s]', '%s [%s]'和'%s [%s]'等"
 
 #, c-format
 msgid "This collection contains 1 game: '%s'"
-msgstr "该合集包含 1 个游戏：“%s”"
+msgstr "该收藏包含 1 个游戏：'%s'"
 
 #, c-format
 msgid "This collection contains 2 games: '%s' and '%s'"
-msgstr "该合集包含 2 个游戏：“%s”和“%s”"
+msgstr "该收藏包含 2 个游戏：'%s' 和 '%s'"
 
 #, c-format
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
-msgstr "该合集包含 3 个游戏：“%s”、“%s”和“%s”"
+msgstr "该收藏包含 3 个游戏： '%s', '%s' 和 '%s'"
 
 #, c-format
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr "该合集包含 %i 个游戏：“%s”、“%s”和“%s”等"
+msgstr "该收藏包含 %i 个游戏： '%s', '%s' 和 '%s'等"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
-msgstr "已删除集合‘%s’"
+msgstr "已删除收藏'%s'"
 
 msgid "name, ascending"
 msgstr "名称，升序"
@@ -1994,43 +1991,43 @@ msgstr "平台, 降序"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr "错误：缺少“%s”的预命令查找规则配置"
+msgstr "错误：缺少'%s'的预命令查找规则配置"
 
 msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
 msgstr "错误：找不到预命令，它是否已正确安装？"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "错误：无法找到预命令‘%s’，它是否已正确安装？"
+msgstr "错误：无法找到预命令'%s'，它是否已正确安装？"
 
 #, c-format
 msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr "错误：缺少模拟器查找“%s”的规则配置"
+msgstr "错误：缺少模拟器查找'%s'的规则配置"
 
 msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
 msgstr "错误：找不到应用程序，它是否已正确安装？"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "错误：找不到应用程序‘%s’，它是否已正确安装？"
+msgstr "错误：找不到应用程序'%s'，它是否已正确安装？"
 
 msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
 msgstr "错误：找不到模拟器，是否已正确安装？"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "错误：无法找到模拟器‘%s’，它是否已正确安装？"
+msgstr "错误：无法找到模拟器'%s'，它是否已正确安装？"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr "错误：无法找到模拟器核心文件‘%s’"
+msgstr "错误：无法找到模拟器核心文件'%s'"
 
 msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
 msgstr "错误：系统配置文件中的条目无效"
 
 #, c-format
 msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr "错误：缺少“%s”的核心配置"
+msgstr "错误：缺少'%s'的核心配置"
 
 #, c-format
 msgid "ERROR: INVALID %s VARIABLE ENTRY"
@@ -2039,7 +2036,7 @@ msgstr "错误：%s 变量条目无效"
 #, c-format
 msgid ""
 "ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
-msgstr "错误：无法创建由 %s 定义的目录，权限问题？"
+msgstr "错误：无法创建由 %s 定义的目录，可能是权限问题？"
 
 msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
 msgstr "错误：应用程序或别名文件不存在或无法读取"
@@ -2052,24 +2049,24 @@ msgstr "错误：桌面文件不存在或无法读取"
 
 #, c-format
 msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
-msgstr "启动游戏‘%s’时出错（错误代码 %i）"
+msgstr "启动游戏'%s'时出错（错误代码 %i）"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr "无法将自定义收藏添加到自定义收藏"
 
 msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
-msgstr "无法向自定义集合添加占位符"
+msgstr "无法向自定义收藏添加占位符"
 
 msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
 msgstr "无法将文件夹添加到自定义收藏夹"
 
 #, c-format
 msgid "MARKED FOLDER '%s' AS FAVORITE"
-msgstr "已将文件夹‘%s’标记为收藏夹"
+msgstr "已将文件夹'%s'标记为收藏夹"
 
 #, c-format
 msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
-msgstr "删除文件夹‘%s’的收藏标记"
+msgstr "删除文件夹'%s'的收藏标记"
 
 msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr "无法将不属于游戏的条目添加到自定义收藏中"
@@ -2078,7 +2075,7 @@ msgid "random"
 msgstr "随机"
 
 msgid "screensaver"
-msgstr "屏幕保护程序"
+msgstr "屏保"
 
 msgid "system"
 msgstr "系统"
@@ -2100,7 +2097,7 @@ msgid ""
 "DIRECTORY."
 msgstr ""
 "似乎进行了不安全的升级，可能是通过将新版本解压到旧版本之上？这可能会导致各种"
-"问题，其中一些问题可能不会立即显现。请务必始终遵循 ES-DE 目录中的 README.TXT "
+"问题，其中一些问题可能不会立即显现。请务必始终遵循 ES-DE 目录中的 readme.txt "
 "文件中的升级说明。"
 
 msgid ""
@@ -2132,7 +2129,7 @@ msgid ""
 "FILE EXTENSIONS.\n"
 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"未找到游戏文件。请将您的游戏放入当前配置的 ROM 目录中，或使用下面的按钮更改其"
+"未找到游戏文件。请将您的游戏放入当前配置的 ROM 目录中，或使用下面的按键更改其"
 "路径。也可以选择生成 ROM 目录结构，这将为每个系统创建一个文本文件，提供一些信"
 "息，例如支持的文件扩展名。\n"
 "这是当前配置的 ROM 目录：\n"
@@ -2173,14 +2170,14 @@ msgstr ""
 msgid ""
 "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
 "PLACE YOUR GAMES IN THE NEW FOLDERS"
-msgstr "系统目录已成功生成，退出应用程序并将游戏放入新文件夹中"
+msgstr "平台目录已成功生成，退出应用程序并将游戏放入新文件夹中"
 
 msgid ""
 "ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
 "\n"
 "SEE THE LOG FILE FOR MORE DETAILS"
 msgstr ""
-"创建系统目录时出错、权限问题或磁盘已满？\n"
+"创建平台目录时出错、权限问题或磁盘已满？\n"
 "\n"
 "查看日志文件了解更多详细信息"
 
@@ -2191,7 +2188,7 @@ msgid ""
 "MENU"
 msgstr ""
 "您的系统中至少有一个配置了无效的备用模拟器，且系统配置文件中没有匹配的条目，"
-"请使用“其他设置”菜单中的“备用仿真器”界面检查您的设置"
+"请使用\"其他设置\"菜单中的\"备用模拟器\"界面检查您的设置"
 
 msgid "UPDATE"
 msgstr "更新"
@@ -2204,7 +2201,7 @@ msgid ""
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "应用程序更新程序将为您下载最新的便携式 Windows 版本，但您需要手动执行升级。请"
-"参阅下载的 ZIP 文件中的 README.TXT 文件，了解如何完成此操作。正如该文档中所"
+"参阅下载的 ZIP 文件中的 readme.txt 文件，了解如何完成此操作。正如该文档中所"
 "述，切勿在旧安装的基础上解压新版本，因为这可能会破坏应用程序。"
 
 msgid ""
@@ -2214,8 +2211,8 @@ msgid ""
 "UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
 msgstr ""
 "应用程序更新程序将为您下载最新的 Windows 安装程序版本，但您需要手动运行它才能"
-"执行升级。执行此操作时，请确保您对是否卸载旧版本的问题回答“是”，否则您可能会"
-"得到损坏的设置。"
+"执行升级。执行此操作时，请确保您对是否卸载旧版本的问题回答\"是\"，否则您可能"
+"会得到损坏的设置。"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
@@ -2338,11 +2335,11 @@ msgstr "错误：无法渲染PDF文件"
 
 #, c-format
 msgid "ADDED INPUT DEVICE '%s'"
-msgstr "已添加输入设备‘%s’"
+msgstr "已添加输入设备'%s'"
 
 #, c-format
 msgid "REMOVED INPUT DEVICE '%s'"
-msgstr "已移除输入设备‘%s’"
+msgstr "已移除输入设备'%s'"
 
 msgid "medium"
 msgstr "中"
@@ -2400,19 +2397,17 @@ msgstr "调整"
 
 #, c-format
 msgid "%i (OF %i)"
-msgstr ""
+msgstr "%i / %i"
 
 #, c-format
 msgid "%s SELECTED"
 msgid_plural "%s SELECTED"
 msgstr[0] "已选择 %s"
-msgstr[1] "已选择 %s "
 
 #, c-format
 msgid "%i SELECTED"
 msgid_plural "%i SELECTED"
 msgstr[0] "已选择 %i"
-msgstr[1] "已选择 %i "
 
 msgid "change value"
 msgstr "更改数值"
@@ -2451,19 +2446,19 @@ msgid "LOAD"
 msgstr "加载"
 
 msgid "shift"
-msgstr ""
+msgstr "shift"
 
 msgid "alt"
-msgstr ""
+msgstr "alt"
 
 msgid "newline"
-msgstr ""
+msgstr "newline"
 
 msgid "backspace"
-msgstr ""
+msgstr "backspace"
 
 msgid "space"
-msgstr ""
+msgstr "space"
 
 msgid "WELCOME"
 msgstr "欢迎"
@@ -2474,8 +2469,7 @@ msgstr "配置输入设备"
 #, c-format
 msgid "%i GAMEPAD DETECTED"
 msgid_plural "%i GAMEPADS DETECTED"
-msgstr[0] "检测到游戏手柄 %i"
-msgstr[1] "检测到游戏手柄 %i "
+msgstr[0] "检测到 %i 个游戏手柄"
 
 msgid "NO GAMEPADS DETECTED"
 msgstr "未检测到游戏手柄"
@@ -2542,16 +2536,16 @@ msgid "PLUS"
 msgstr "开始"
 
 msgid "CROSS"
-msgstr "X(PS)/B(XBOX)"
+msgstr "X(PS)/A(XBOX)/B(NS)"
 
 msgid "CIRCLE"
-msgstr "O(PS)/A(XBOX)"
+msgstr "O(PS)/B(XBOX)/A(NS)"
 
 msgid "SQUARE"
-msgstr "□(PS)/Y(XBOX)"
+msgstr "□(PS)/X(XBOX)/Y(NS)"
 
 msgid "TRIANGLE"
-msgstr "△(PS)/X(XBOX)"
+msgstr "△(PS)/Y(XBOX)/X(NS)"
 
 msgid "OPTIONS"
 msgstr "选项"
@@ -2605,7 +2599,7 @@ msgid "RIGHT THUMBSTICK CLICK"
 msgstr "右摇杆 按下(R3)"
 
 msgid "ALREADY TAKEN"
-msgstr "已经映射"
+msgstr "已映射"
 
 msgid "PRESS ANYTHING"
 msgstr "按任意键"
@@ -2616,38 +2610,3 @@ msgstr "您已超出每日抓取配额"
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "服务器返回 HTTP 错误代码 %s"
-
-#~ msgid "GAMES DEFAULT SORT ORDER [SHORT]"
-#~ msgstr "默认排序顺序"
-
-#~ msgid "WHEN TO SAVE GAME METADATA [SHORT]"
-#~ msgstr "何时保存游戏元数据 [简短]"
-
-#~ msgid "MEDIA VIEWER SETTINGS [SHORT]"
-#~ msgstr "媒体播放器设置"
-
-#~ msgid "SCREENSAVER SETTINGS [SHORT]"
-#~ msgstr "屏保设置"
-
-#~ msgid "HORIZONTAL SCREENSHOT FIT [SHORT]"
-#~ msgstr "水平截图适配[简短]"
-
-#~ msgid "VERTICAL SCREENSHOT FIT [SHORT]"
-#~ msgstr "垂直截图适配[简短]"
-
-#~ msgid "SCREENSHOT ASPECT RATIO THRESHOLD [SHORT]"
-#~ msgstr "屏幕截图宽高比阈值 [简短]"
-
-#~ msgid "SCREENSHOT SCALING METHOD [SHORT]"
-#~ msgstr "截图缩放方式[简短]"
-
-#~ msgid "COMPLETED [MIXIMAGE GENERATOR]"
-#~ msgstr "已完成 [混合图像生成器]"
-
-#, fuzzy
-#~ msgid "ENTER HIDE METADATA OFF/ON"
-#~ msgstr "编辑此文件夹的元数据"
-
-#, fuzzy
-#~ msgid "WHEN TO SAVE METADATA"
-#~ msgstr "编辑此游戏的元数据"
