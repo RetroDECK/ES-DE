@@ -32,6 +32,7 @@ namespace Utils
                                                                                   {{"en"}, {"GB"}},
                                                                                   {{"it"}, {"IT"}},
                                                                                   {{"ja"}, {"JP"}},
+                                                                                  {{"pt"}, {"BR"}},
                                                                                   {{"sv"}, {"SE"}},
                                                                                   {{"zh"}, {"CN"}}};
         // clang-format on
