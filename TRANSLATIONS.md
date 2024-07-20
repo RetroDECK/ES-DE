@@ -8,7 +8,7 @@ Table of contents:
 
 ## Introduction
 
-ES-DE has full localization support which means it can be translated to different languages. Adding support for a new locale does however require some minor code changes, so if you're interested in translating to a new locale then you need to request support for it. The best approach is to join our Discord server where we have a dedicated translations channel:
+ES-DE has full localization support which means it can be translated to different languages. Adding support for a new locale does however require some minor code changes, so if you're interested in translating to a new locale you need to request support for it first. The best approach is to join our Discord server where we have a dedicated translations channel:
 
 https://discord.gg/42jqqNcHf9
 
@@ -16,7 +16,7 @@ Translation updates are handled manually via this Discord server. As some transl
 
 ## License and copyright
 
-ES-DE is released under the MIT license which is a permissive license that allows commercial use. Any translation work will as such be MIT licensed too. This is clearly indicated in the .po translation message catalog files that are used as the basis for the translation work. By contributing translations to ES-DE you'll also agree to transferring your copyright to the project, and to its parent company Northwestern Software AB. Although the majority of ES-DE users are running the free and fully open source desktop ports, there is also a paid Android app that is partially closed source. By transferring the copyright as indicated you'll not be able to claim monetary compensation for any sales of the Android app. The copyright owner is also clearly indicated in the .po translation message catalog files.
+ES-DE is released under the MIT license which is a permissive license that allows commercial use. Any translation work will as such be MIT licensed too. This is clearly indicated in the .po message catalog files that are used as the basis for the translation work. By contributing translations to ES-DE you'll also agree to transferring your copyright to the project and its owning company Northwestern Software AB. The copyright owner is also clearly indicated in the .po message catalog files.
 
 ## High level approach
 
@@ -34,7 +34,7 @@ https://gitlab.com/es-de/emulationstation-de/-/tree/master/locale/po
 
 Note that all .po files are named after the locale. This is always in the form of _language code_ plus _country code_. For example _sv_SE.po_ where _sv_ is the language code for Swedish and _SE_ is the country code for Sweden. There are often country-specific variations. For example there's also an sv_FI locale for Swedish (Finland). If you want to add translations for a specific locale such as German (Austria) or English (United Kingdom) then this is therefore possible.
 
-When using ES-DE the specific locale you have configured in your operating systems will be searched for and applied, and if this does not exist then the default locale for your language will be selected such as falling back to sv_SE if you have sv_FI set as your language. If there is no support at all for your language then a fallback will take place to the default application language _English (American)_.
+When using ES-DE the specific locale you have configured in your operating systems will be searched for and applied, and if this does not exist then the default locale for your language will be selected such as falling back to sv_SE if you have sv_FI set as your language. If there is no support at all for your language then a fallback will take place to the default application language _English (United States)_.
 
 You can test your translations quite easily as explained later in this document, and when you want to have your updates added to the ES-DE repository you can share the updated .po file in the Discord server.
 
@@ -56,8 +56,7 @@ https://gitlab.com/es-de/emulationstation-de/-/tree/master/locale/po
 
 You simply download this file and open it in Poedit to start working on your translations.
 
-The way gettext works is that there's a pair of _msgid_ and _msgstr_ entries per text string, and these will be presented as such inside Poedit. The _msgid_ string is the literal string in the default _English (American)_ locale as it's presented inside ES-DE. There is a slight exception for hinting as explained later in this document but in general you simply see the literal text that needs translations and then you add your own translation following this. An entry inside the .po file would look something like this:
-
+The way gettext works is that there's a pair of _msgid_ and _msgstr_ entries per text string, and these will be presented as such inside Poedit. The _msgid_ string is the literal string in the default _English (United States)_ locale as it's presented inside ES-DE. There is a slight exception for hinting as explained later in this document but in general you simply see the literal text that needs translations and then you add your own translation following this. An entry inside the .po file would look something like this:
 ```
 msgid "Permission problems?"
 msgstr "Åtkomstproblem?"
@@ -66,7 +65,6 @@ msgstr "Åtkomstproblem?"
 This is for the Swedish translation in the sv_SE.po file.
 
 In addition to this some strings contain a _format specifier_. This makes it possible to define where a certain value should be placed inside a string. As the order of words differ between languages this is important. But most often it's simply used to parse the actual string that will be visible inside the application. Here's an example to clarify:
-
 ```
 #, c-format
 msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
@@ -76,7 +74,6 @@ msgstr "KUNDE INTE STARTA SPELET '%s' (FELKOD %i)"
 The amount and types of format specifiers in the translated msgstr string must match the source msgid string exactly, or otherwise you'll not be able to compile to .po file and your translations won't work.
 
 Finally there are plural entries where there are different translations based on the numerical amount parsed into the string. The following example will select _%i VALD_ if it's singular and _%i VALDA_ if it's plural in Swedish, even though there is no distinction between the two in the English language:
-
 ```
 #, c-format
 msgid "%i SELECTED"
@@ -87,12 +84,15 @@ msgstr[1] "%i VALDA"
 
 If you're translating to a language where there is no distinction between the two then you simply set the same value for both entries. If using Poedit all this will be easily handled by the user interface where you'll have separate tabs for the singular and plural entries.
 
+As a general remark the correct letter case is very important for the translated text. Although there are a few instances where text is for example automatically converted to uppercase, in most instances no such conversions are made. This means that in most cases the translated text will appear exactly as entered in the .po file. This approach provides maximum flexibility and of course a number of languages don't even have the concept of letter case so automatic case conversions wouldn't make sense.
+
 ## Contextual hinting
 
 As there is sometimes ambiguity regarding translated strings, such as the same word having different meanings depending on the context, there is hinting added to a number of the translation strings. There is a slight variation to this as well where short versions of strings are also hinted as for some languages they would otherwise not fit inside the user interface. This is really a per-case thing and you'll need to test your translations to see what fits inside the interface and what doesn't. If you need a hinted string added that does not already exist then bring it up in the Discord server and it will get added to the application.
 
-Here's an example of a contextual hint that is applicable for the Swedish language:
+If you are translating to a language with excessively long words (Swedish is such a language) then it may be required to adjust the overall font sizes in ES-DE for this specific language. At the moment this is only applicable to the menu titles as these are quite restricted in length. If you find that you're constantly running out of space for your text then bring it up in the Discord server and a font size adjustment can be made in ES-DE for your specific locale.
 
+Here's an example of a contextual hint that is applicable for the Swedish language:
 ```
 msgid "COMPLETED"
 msgstr "SLUTFÖRD"
@@ -106,7 +106,6 @@ msgstr "GENOMSPELAT"
 In general _completed_ is translated as _slutförd_ but for example when having played through an entire game (as indicated in the metadata editor for the game) the word _genomspelat_ makes more sense as this literally translates to "played through". Although you could use _slutförd_ for a completed game this sounds pretty strange in Swedish.
 
 However the English translations for this would be identical as there is no real distinction there:
-
 ```
 msgid "COMPLETED [metadata]"
 msgstr "COMPLETED"
@@ -118,7 +117,6 @@ msgstr "COMPLETED"
 ```
 
 The hints should never be translated literally, anything inside square brackets should be left out. Here's an example for an English short version string to clarify:
-
 ```
 msgid "GAMES DEFAULT SORT ORDER"
 msgstr "GAMES DEFAULT SORT ORDER"
@@ -136,26 +134,33 @@ The short version of this string was required as it would otherwise not fit insi
 Sometimes when changes are made to translation strings this will cause _fuzzy_ entries to get added to the .po file. This means that gettext detected something has changed but is not sure what to do. In these cases the translator needs to make an explicit decision on how to handle the change. Using Poedit makes the whole process simple as each fuzzy entry is clearly indicated with a _Needs Work_ flag in its user interface.
 
 Say there was the following string in ES-DE:
-
 ```
 msgid "THEME ASPECT RATIOS"
-msgstr "TEMA BILDFÖRHÅLLANDE"
+msgstr "TEMA BILDFÖRHÅLLANDEN"
 ```
 
 And then it was decided that this should change to _THEME ASPECT RATIO_ instead. When the corresponding code change was done, new .po files were also automatically generated for all languages and committed to the ES-DE repository. However as the string was changed slightly gettext marked it as fuzzy in the .po files, like so:
 ```
 #, fuzzy
 msgid "THEME ASPECT RATIO"
-msgstr "TEMA BILDFÖRHÅLLANDE"
+msgstr "TEMA BILDFÖRHÅLLANDEN"
 ```
 
 When an entry is marked as fuzzy it's excluded when compiling the .po file, or in other words it's not getting translated at all.
 
-In this case a new translation was not required so it simply needed to be marked as OK in Poedit. But other times a translation change may indeed be required. When marking a translation as OK in Poedit or when updating it, the fuzzy flag is removed and the end result would be something like the following:
+In this case a slightly updated translation was required, but other times it simply needs to be marked as OK in Poedit. When marking a translation as OK in Poedit or when updating it, the fuzzy flag is removed and the end result would look something like the following for our example:
 ```
 msgid "THEME ASPECT RATIO"
 msgstr "TEMA BILDFÖRHÅLLANDE"
 ```
+
+## Continuous translations
+
+As ES-DE is constantly worked on, translations also need continuous updates. When translation strings are updated or added they will be committed to the ES-DE repository, and such changes will also be discussed and communicated in the Discord server. As well sometimes major features may get added that require additional translation work. To check the status for your translations you can always download the latest .po file from here:
+
+https://gitlab.com/es-de/emulationstation-de/-/tree/master/locale/po
+
+If opening the file in Poedit it will tell you the percentage of translated messages, and if any entries are marked as fuzzy.
 
 ## Testing your translations
 

@@ -3240,7 +3240,7 @@ Transition animations to play when navigating between different gamelists, betwe
 
 **Application language**
 
-Sets the language for the application user interface. If this option is set to _automatic_ then the language will be auto-detected, which means ES-DE will attempt to use whatever language has been selected in the operating system language settings. If there are no translations available in ES-DE for this language then a fallback will be done to the closest match, such as _Svenska_ instead of _Svenska (Finland)_. If no close match is available then ES-DE will revert to the default language which is _English (American)_. It's also possible to explicitly select a supported language, which will override whatever has been set by the operating system. Note that the onboarding configurator for the Android release is unaffected by this setting.
+Sets the language for the application user interface. If this option is set to _automatic_ then the language will be auto-detected, which means ES-DE will attempt to use whatever language has been selected in the operating system language settings. If there are no translations available in ES-DE for this language then a fallback will be done to the closest match, such as _Svenska_ instead of _Svenska (Finland)_. If no close match is available then ES-DE will revert to the default language which is _English (United States)_. It's also possible to explicitly select a supported language, which will override whatever has been set by the operating system. Note that the onboarding configurator for the Android release is unaffected by this setting.
 
 **Quick system select**
 

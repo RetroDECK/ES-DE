@@ -15,6 +15,15 @@ Alec Lofquist
 
 Nils Bonenberger
 
+# Translations
+
+**English (United Kingdom)** \
+Weestuarty \
+**Swedish** \
+Leon Styhre \
+**Simplified Chinese** \
+邻家小熊
+
 # Licenses
 
 Please find the individual license files inside the [licenses](https://gitlab.com/es-de/emulationstation-de/-/tree/master/licenses) directory. There is also additional license information in the headers of most source files.
