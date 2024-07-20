@@ -190,7 +190,7 @@ void GuiGamelistFilter::addFiltersToMenu()
                     BadgeComponent::getDisplayName(Utils::String::toLower(it.first))};
                 if (displayName == "unknown")
                     displayName = it.first;
-                optionList->add(displayName, it.first,
+                optionList->add(Utils::String::toUpper(displayName), it.first,
                                 mFilterIndex->isKeyBeingFilteredBy(it.first, type));
             }
         }

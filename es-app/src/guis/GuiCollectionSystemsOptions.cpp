@@ -103,8 +103,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
              customSystems.cbegin();
          it != customSystems.cend(); ++it)
-        mCollectionSystemsCustom->add(it->second.decl.fullName, it->second.decl.name,
-                                      it->second.isEnabled);
+        mCollectionSystemsCustom->add(Utils::String::toUpper(it->second.decl.fullName),
+                                      it->second.decl.name, it->second.isEnabled);
 
     addWithLabel(_("CUSTOM GAME COLLECTIONS"), mCollectionSystemsCustom);
     addSaveFunc([this, customSystems] {
@@ -260,9 +260,10 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             std::function<void()> deleteCollectionCall = [this, name] {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
-                    Utils::String::format(_("THIS WILL PERMANENTLY DELETE THE COLLECTION\n'%s'"),
-                                          Utils::String::toUpper(name).c_str()),
-                    _("PROCEED"),
+                    Utils::String::format(
+                        _("THIS WILL PERMANENTLY DELETE THE COLLECTION\n'%s'\nARE YOU SURE?"),
+                        Utils::String::toUpper(name).c_str()),
+                    _("YES"),
                     [this, name] {
                         if (CollectionSystemsManager::getInstance()->isEditing())
                             CollectionSystemsManager::getInstance()->exitEditMode();
@@ -297,7 +298,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                         CollectionSystemsManager::getInstance()->deleteCustomCollection(name);
                         return true;
                     },
-                    _("CANCEL"), [] { return false; }, "", nullptr, nullptr, false, true,
+                    _("NO"), [] { return false; }, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.43f :
                          0.28f * (1.778f / mRenderer->getScreenAspectRatio()))));

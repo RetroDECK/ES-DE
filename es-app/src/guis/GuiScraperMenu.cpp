@@ -461,9 +461,9 @@ void GuiScraperMenu::openMiximageOptions()
     auto miximageResolution = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), _("MIXIMAGE RESOLUTION"), false);
     std::string selectedResolution {Settings::getInstance()->getString("MiximageResolution")};
-    miximageResolution->add("1280x960", "1280x960", selectedResolution == "1280x960");
-    miximageResolution->add("1920x1440", "1920x1440", selectedResolution == "1920x1440");
-    miximageResolution->add("640x480", "640x480", selectedResolution == "640x480");
+    miximageResolution->add("1280X960", "1280x960", selectedResolution == "1280x960");
+    miximageResolution->add("1920X1440", "1920x1440", selectedResolution == "1920x1440");
+    miximageResolution->add("640X480", "640x480", selectedResolution == "640x480");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the resolution to "1280x960" in this case.
     if (miximageResolution->getSelectedObjects().size() == 0)
@@ -839,25 +839,25 @@ void GuiScraperMenu::openOtherOptions()
     std::string selectedScraperLanguage {Settings::getInstance()->getString("ScraperLanguage")};
     // clang-format off
     scraperLanguage->add("ENGLISH",    "en", selectedScraperLanguage == "en");
-    scraperLanguage->add("ESPAÑOL",    "es", selectedScraperLanguage == "es");
-    scraperLanguage->add("PORTUGUÊS",  "pt", selectedScraperLanguage == "pt");
-    scraperLanguage->add("FRANÇAIS",   "fr", selectedScraperLanguage == "fr");
+    scraperLanguage->add("ČEŠTINA",    "cz", selectedScraperLanguage == "cz");
+    scraperLanguage->add("DANSK",      "da", selectedScraperLanguage == "da");
     scraperLanguage->add("DEUTSCH",    "de", selectedScraperLanguage == "de");
+    scraperLanguage->add("ESPAÑOL",    "es", selectedScraperLanguage == "es");
+    scraperLanguage->add("FRANÇAIS",   "fr", selectedScraperLanguage == "fr");
     scraperLanguage->add("ITALIANO",   "it", selectedScraperLanguage == "it");
+    scraperLanguage->add("MAGYAR",     "hu", selectedScraperLanguage == "hu");
     scraperLanguage->add("NEDERLANDS", "nl", selectedScraperLanguage == "nl");
+    scraperLanguage->add("NORSK",      "no", selectedScraperLanguage == "no");
+    scraperLanguage->add("POLSKI",     "pl", selectedScraperLanguage == "pl");
+    scraperLanguage->add("PORTUGUÊS",  "pt", selectedScraperLanguage == "pt");
+    scraperLanguage->add("РУССКИЙ",    "ru", selectedScraperLanguage == "ru");
+    scraperLanguage->add("SLOVENČINA", "sk", selectedScraperLanguage == "sk");
+    scraperLanguage->add("SUOMI",      "fi", selectedScraperLanguage == "fi");
+    scraperLanguage->add("SVENSKA",    "sv", selectedScraperLanguage == "sv");
+    scraperLanguage->add("TÜRKÇE",     "tr", selectedScraperLanguage == "tr");
     scraperLanguage->add("日本語",      "ja", selectedScraperLanguage == "ja");
     scraperLanguage->add("简体中文",    "zh", selectedScraperLanguage == "zh");
     scraperLanguage->add("한국어",      "ko", selectedScraperLanguage == "ko");
-    scraperLanguage->add("РУССКИЙ",    "ru", selectedScraperLanguage == "ru");
-    scraperLanguage->add("DANSK",      "da", selectedScraperLanguage == "da");
-    scraperLanguage->add("SUOMI",      "fi", selectedScraperLanguage == "fi");
-    scraperLanguage->add("SVENSKA",    "sv", selectedScraperLanguage == "sv");
-    scraperLanguage->add("MAGYAR",     "hu", selectedScraperLanguage == "hu");
-    scraperLanguage->add("NORSK",      "no", selectedScraperLanguage == "no");
-    scraperLanguage->add("POLSKI",     "pl", selectedScraperLanguage == "pl");
-    scraperLanguage->add("ČEŠTINA",    "cz", selectedScraperLanguage == "cz");
-    scraperLanguage->add("SLOVENČINA", "sk", selectedScraperLanguage == "sk");
-    scraperLanguage->add("TÜRKÇE",     "tr", selectedScraperLanguage == "tr");
     // clang-format on
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the language to "English" in this case.

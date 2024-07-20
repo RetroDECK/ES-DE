@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-20 11:45+0200\n"
+"POT-Creation-Date: 2024-07-20 13:05+0200\n"
 "PO-Revision-Date: 2024-07-20 14:43+0800\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
@@ -1076,10 +1076,11 @@ msgstr "删除自定义游戏收藏"
 msgid "COLLECTION TO DELETE"
 msgstr "收藏删除"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
-"'%s'"
+"'%s'\n"
+"ARE YOU SURE?"
 msgstr "这将永久删除收藏 '%s'"
 
 msgid "GROUP CUSTOM COLLECTIONS"
@@ -1437,7 +1438,7 @@ msgstr[0] "已跳过 %i 个游戏"
 msgid "GAMELIST OPTIONS"
 msgstr "游戏列表设置"
 
-msgid "JUMP TO.."
+msgid "JUMP TO..."
 msgstr "跳转到……"
 
 msgid "SORT GAMES BY"
@@ -1667,9 +1668,11 @@ msgstr "保存元数据"
 msgid "cancel changes"
 msgstr "取消更改"
 
+#, fuzzy
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
-"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED"
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
 msgstr ""
 "这将删除此文件夹的所有媒体文件和 gamelist.xml 条目，但目录本身或其中的任何内"
 "容都不会被删除"
@@ -1680,17 +1683,21 @@ msgstr "清理"
 msgid "clear folder"
 msgstr "清理文件夹"
 
+#, fuzzy
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
-"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED"
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
 msgstr ""
 "这将删除此游戏的所有媒体文件和 gamelist.xml 条目，但游戏文件本身不会被删除"
 
 msgid "clear file"
 msgstr "清理文件"
 
+#, fuzzy
 msgid ""
-"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY"
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
 msgstr "这将删除游戏文件、任何媒体文件和 gamelist.xml 条目"
 
 msgid "DELETE"

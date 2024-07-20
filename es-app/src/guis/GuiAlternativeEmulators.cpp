@@ -143,7 +143,7 @@ void GuiAlternativeEmulators::updateMenu(const std::string& systemName,
 
 void GuiAlternativeEmulators::selectorWindow(SystemData* system)
 {
-    auto s = new GuiSettings(system->getFullName());
+    auto s = new GuiSettings(Utils::String::toUpper(system->getFullName()));
 
     std::string selectedLabel {system->getAlternativeEmulator()};
     std::string label;

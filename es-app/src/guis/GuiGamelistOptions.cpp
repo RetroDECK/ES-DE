@@ -103,7 +103,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
                 mCurrentFirstCharacter = Utils::String::getFirstCharacter(file->getSortName());
         }
 
-        mJumpToLetterList = std::make_shared<LetterList>(getHelpStyle(), _("JUMP TO.."), false);
+        mJumpToLetterList = std::make_shared<LetterList>(getHelpStyle(), _("JUMP TO..."), false);
 
         // Enable key repeat so that the left or right button can be held to cycle through
         // the letters.
@@ -117,7 +117,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         }
 
         if (system->getName() != "recent")
-            mMenu.addWithLabel(_("JUMP TO.."), mJumpToLetterList);
+            mMenu.addWithLabel(_("JUMP TO..."), mJumpToLetterList);
 
         // Add the sorting entry, unless this is the grouped custom collections list.
         if (!mIsCustomCollectionGroup) {
