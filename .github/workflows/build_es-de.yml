@@ -75,7 +75,7 @@ jobs:
           body: |
             # Release Notes
             These are the artifact of RetroDECK ES-DE, commit: ${{ github.event.repository.full_name }}@${{github.sha}}.
-            On branch [${{env.BRANCH_NAME}}](https://github.com/XargonWan/RetroDECK-ES-DE/tree/${{env.BRANCH_NAME}}).
+            On branch [${{env.BRANCH_NAME}}](https://github.com/RetroDECK/ES-DE/tree/${{env.BRANCH_NAME}}).
 
           artifacts: "RetroDECK-ES-DE-Artifact.tar.gz, tree.html"
           allowUpdates: true
