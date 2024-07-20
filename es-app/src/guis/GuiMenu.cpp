@@ -486,7 +486,10 @@ void GuiMenu::openUIOptions()
         Settings::getInstance()->getString("ApplicationLanguage")};
     applicationLanguage->add(_("AUTOMATIC"), "automatic",
                              selectedApplicationLanguage == "automatic");
-    applicationLanguage->add("ENGLISH (AMERICAN)", "en_US", selectedApplicationLanguage == "en_US");
+    applicationLanguage->add("ENGLISH (UNITED STATES)", "en_US",
+                             selectedApplicationLanguage == "en_US");
+    applicationLanguage->add("ENGLISH (UNITED KINGDOM)", "en_GB",
+                             selectedApplicationLanguage == "en_GB");
     applicationLanguage->add("SVENSKA", "sv_SE", selectedApplicationLanguage == "sv_SE");
     applicationLanguage->add("简体中文", "zh_CN", selectedApplicationLanguage == "zh_CN");
     // If there are no objects returned, then there must be a manually modified entry in the
