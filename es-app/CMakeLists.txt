@@ -163,6 +163,7 @@ if(WIN32)
                   ../glew32.dll
                   ../libcrypto-3-x64.dll
                   ../libcurl-x64.dll
+                  ../libiconv-2.dll
                   ../libintl-8.dll
                   ../libssl-3-x64.dll
                   ../lunasvg.dll

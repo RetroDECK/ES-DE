@@ -65,6 +65,7 @@ lib /def:libintl-8.def /out:libintl-8.lib /machine:x64
 
 copy /Y libintl-8.dll ..\..\..
 copy /Y libintl-8.lib ..\..\..
+copy /Y libiconv-2.dll ..\..\..
 cd ..\..
 
 echo Setting up curl
