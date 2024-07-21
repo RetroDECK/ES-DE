@@ -30,6 +30,7 @@ namespace Utils
         // clang-format off
         const std::vector<std::pair<std::string, std::string>> sSupportedLocales {{{"en"}, {"US"}},
                                                                                   {{"en"}, {"GB"}},
+                                                                                  {{"el"}, {"GR"}},
                                                                                   {{"fr"}, {"FR"}},
                                                                                   {{"it"}, {"IT"}},
                                                                                   {{"ja"}, {"JP"}},
