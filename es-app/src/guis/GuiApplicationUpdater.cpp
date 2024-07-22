@@ -43,8 +43,10 @@ GuiApplicationUpdater::GuiApplicationUpdater()
     setDownloadPath();
 
     // Set up grid.
-    mTitle = std::make_shared<TextComponent>(_("APPLICATION UPDATER"), Font::get(FONT_SIZE_LARGE),
-                                             mMenuColorTitle, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        _("APPLICATION UPDATER"),
+        Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor), mMenuColorTitle,
+        ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {4, 1},
                    GridFlags::BORDER_BOTTOM);
 

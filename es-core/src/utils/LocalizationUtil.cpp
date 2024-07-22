@@ -150,7 +150,11 @@ namespace Utils
 
             // Language-specific menu title scale factor.
             if (localePair.first == "sv")
-                sMenuTitleScaleFactor = 0.86f;
+                sMenuTitleScaleFactor = 0.87f;
+            else if (localePair.first == "el")
+                sMenuTitleScaleFactor = 0.92f;
+            else if (localePair.first == "zh")
+                sMenuTitleScaleFactor = 0.94f;
 
             std::string localePath;
             localePath.append("/")

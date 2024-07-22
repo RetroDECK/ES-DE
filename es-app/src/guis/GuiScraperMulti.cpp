@@ -49,8 +49,10 @@ GuiScraperMulti::GuiScraperMulti(
         mQueueCountPerSystem[(*it).first] = std::make_pair(0, (*it).second);
 
     // Set up grid.
-    mTitle = std::make_shared<TextComponent>(_("SCRAPING IN PROGRESS"), Font::get(FONT_SIZE_LARGE),
-                                             mMenuColorTitle, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        _("SCRAPING IN PROGRESS"),
+        Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor), mMenuColorTitle,
+        ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
     mSystem = std::make_shared<TextComponent>(_("SYSTEM"), Font::get(FONT_SIZE_MEDIUM),

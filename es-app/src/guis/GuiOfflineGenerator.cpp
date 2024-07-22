@@ -37,7 +37,9 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
 
     // Header.
     mTitle = std::make_shared<TextComponent>(
-        _("MIXIMAGE OFFLINE GENERATOR"), Font::get(FONT_SIZE_LARGE), mMenuColorTitle, ALIGN_CENTER);
+        _("MIXIMAGE OFFLINE GENERATOR"),
+        Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor), mMenuColorTitle,
+        ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {6, 1});
 
     mStatus = std::make_shared<TextComponent>(_("NOT STARTED"), Font::get(FONT_SIZE_MEDIUM),

@@ -49,7 +49,8 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
     mGameName = std::make_shared<TextComponent>(
         scrapeName +
             ((mSearchParams.game->getType() == FOLDER) ? "  " + ViewController::FOLDER_CHAR : ""),
-        Font::get(FONT_SIZE_LARGE), mMenuColorPrimary, ALIGN_CENTER);
+        Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor), mMenuColorPrimary,
+        ALIGN_CENTER);
     mGameName->setColor(mMenuColorTitle);
     mGrid.setEntry(mGameName, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 

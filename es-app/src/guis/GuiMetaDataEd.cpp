@@ -71,8 +71,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(_("EDIT METADATA"), Font::get(FONT_SIZE_LARGE),
-                                             mMenuColorTitle, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        _("EDIT METADATA"), Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor),
+        mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
     // Extract possible subfolders from the path.

@@ -54,8 +54,9 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
     // 0 is a spacer row.
     mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 0}, false);
 
-    mTitle = std::make_shared<TextComponent>(_("CONFIGURING"), Font::get(FONT_SIZE_LARGE),
-                                             mMenuColorTitle, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        _("CONFIGURING"), Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor),
+        mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 1}, false, true);
 
     std::stringstream ss;

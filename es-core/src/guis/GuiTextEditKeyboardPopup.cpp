@@ -114,8 +114,9 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(title, Font::get(FONT_SIZE_LARGE), mMenuColorTitle,
-                                             ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        title, Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor),
+        mMenuColorTitle, ALIGN_CENTER);
 
     std::vector<std::vector<std::string>> kbLayout;
 
