@@ -112,13 +112,13 @@ msgid "PLAYERS"
 msgstr "SPELARE"
 
 msgid "ENTER NUMBER OF PLAYERS"
-msgstr "SKRIV IN SPELARE"
+msgstr "SKRIV IN ANTAL SPELARE"
 
 msgid "FAVORITE"
 msgstr "FAVORIT"
 
 msgid "COMPLETED [metadata]"
-msgstr "GENOMSPELAT"
+msgstr "KLARAT"
 
 msgid "KIDGAME"
 msgstr "BARNSPEL"
@@ -142,10 +142,10 @@ msgid "HIDE METADATA FIELDS"
 msgstr "DÖLJ METADATAFÄLT"
 
 msgid "TIMES PLAYED"
-msgstr "ANTAL GÅNGER SPELAT"
+msgstr "SPELTILLFÄLLEN"
 
 msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr "SKRIV IN ANTAL GÅNGER SPELAT"
+msgstr "SKRIV IN SPELTILLFÄLLEN"
 
 msgid "CONTROLLER"
 msgstr "HANDKONTROLL"
@@ -580,7 +580,7 @@ msgid "ROTATE SCREEN (REQUIRES RESTART)"
 msgstr "ROTERA SKÄRMEN (KRÄVER OMSTART)"
 
 msgid "KEYBOARD QUIT SHORTCUT"
-msgstr "TANGENTBORDSGENVÄG FÖR ATT STÄNGA NER"
+msgstr "TANGENTER FÖR ATT STÄNGA NER"
 
 msgid "WHEN TO SAVE GAME METADATA [short]"
 msgstr "NÄR SPEL-METADATA SKA SPARAS"
@@ -2022,10 +2022,10 @@ msgid "last played, descending"
 msgstr "senast spelat, fallande"
 
 msgid "times played, ascending"
-msgstr "antal gånger spelat, stigande"
+msgstr "speltillfällen, stigande"
 
 msgid "times played, descending"
-msgstr "antal gånger spelat, fallande"
+msgstr "speltillfällen, fallande"
 
 msgid "system, ascending"
 msgstr "system, stigande"
