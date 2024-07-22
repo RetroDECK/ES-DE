@@ -84,7 +84,7 @@ msgstr[1] "%i VALDA"
 
 If you're translating to a language where there is no distinction between the two then you simply set the same value for both entries. If using Poedit all this will be easily handled by the user interface where you'll have separate tabs for the singular and plural entries.
 
-As a general remark the correct letter case is very important for the translated text. Although there are a few instances where text is for example automatically converted to uppercase, in most instances no such conversions are made. This means that in most cases the translated text will appear exactly as entered in the .po file. This approach provides maximum flexibility and of course a number of languages don't even have the concept of letter case so automatic case conversions wouldn't make sense.
+As a general remark the correct letter case is very important for the translated text. Although there are a few instances where text is for example automatically converted to uppercase, in most instances such conversions are not made. This means that in most cases the translated text will appear exactly as entered in the .po file. This approach provides maximum flexibility and of course a number of languages don't even have the concept of letter case so automatic case conversions wouldn't make sense.
 
 ## Contextual hinting
 
@@ -100,10 +100,10 @@ msgstr "SLUTFÖRD"
 
 ```
 msgid "COMPLETED [metadata]"
-msgstr "GENOMSPELAT"
+msgstr "KLARAT"
 ```
 
-In general _completed_ is translated as _slutförd_ but for example when having played through an entire game (as indicated in the metadata editor for the game) the word _genomspelat_ makes more sense as this literally translates to "played through". Although you could use _slutförd_ for a completed game this sounds pretty strange in Swedish.
+In general _completed_ is translated as _slutförd_ but for example when having played through an entire game (as indicated in the metadata editor for the game) the word _klarat_ makes more sense. Although you could use _slutförd_ for a completed game this sounds pretty strange in Swedish.
 
 However the English translations for this would be identical as there is no real distinction there:
 ```
