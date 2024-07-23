@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-20 13:05+0200\n"
+"POT-Creation-Date: 2024-07-23 19:15+0200\n"
 "PO-Revision-Date: 2024-07-23 15:00+0800\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
@@ -57,117 +57,151 @@ msgstr "无法保存媒体文件，权限问题还是磁盘已满？"
 msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr "无法保存调整大小后的图像，可能是权限问题或磁盘已满？"
 
+msgctxt "metadata"
 msgid "NAME"
 msgstr "名称"
 
+msgctxt "metadata"
 msgid "ENTER NAME"
 msgstr "请输入名称"
 
+msgctxt "metadata"
 msgid "SORTNAME"
 msgstr "排序名称"
 
+msgctxt "metadata"
 msgid "ENTER SORTNAME"
 msgstr "请输入排序名称"
 
+msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
 msgstr "自定义收藏排序名称"
 
+msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
 msgstr "请输入收藏排序名称"
 
+msgctxt "metadata"
 msgid "DESCRIPTION"
 msgstr "描述"
 
+msgctxt "metadata"
 msgid "ENTER DESCRIPTION"
 msgstr "请输入描述"
 
+msgctxt "metadata"
 msgid "RATING"
 msgstr "评分"
 
+msgctxt "metadata"
 msgid "RELEASE DATE"
 msgstr "发行日期"
 
-msgid "ENTER RELEASE DATE"
-msgstr "请输入发行日期"
-
+msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr "开发商"
 
+msgctxt "metadata"
 msgid "ENTER DEVELOPER"
 msgstr "请输入开发商"
 
+msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr "发行商"
 
+msgctxt "metadata"
 msgid "ENTER PUBLISHER"
 msgstr "请输入发行商"
 
+msgctxt "metadata"
 msgid "GENRE"
 msgstr "类型"
 
+msgctxt "metadata"
 msgid "ENTER GENRE"
 msgstr "请输入类型"
 
+msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "玩家数"
 
+msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
 msgstr "请输入玩家数"
 
+msgctxt "metadata"
 msgid "FAVORITE"
 msgstr "喜爱"
 
-msgid "COMPLETED [metadata]"
+msgctxt "metadata"
+msgid "COMPLETED"
 msgstr "已完成"
 
+msgctxt "metadata"
 msgid "KIDGAME"
 msgstr "儿童游戏"
 
+msgctxt "metadata"
 msgid "KIDGAME (ONLY AFFECTS BADGES)"
 msgstr "儿童游戏（仅影响徽章）"
 
+msgctxt "metadata"
 msgid "HIDDEN"
 msgstr "隐藏"
 
+msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
 msgstr "损坏/无法使用"
 
+msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
 msgstr "不计入游戏统计"
 
+msgctxt "metadata"
 msgid "EXCLUDE FROM MULTI-SCRAPER"
 msgstr "不被多抓取器处理"
 
+msgctxt "metadata"
 msgid "HIDE METADATA FIELDS"
 msgstr "隐藏元数据字段"
 
+msgctxt "metadata"
 msgid "TIMES PLAYED"
 msgstr "游玩次数"
 
+msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "请输入游戏次数"
 
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "控制器"
 
+msgctxt "metadata"
 msgid "SELECT CONTROLLER"
 msgstr "选择控制器"
 
+msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr "备用模拟器"
 
+msgctxt "metadata"
 msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "请选择备用模拟器"
 
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "文件夹链接"
 
+msgctxt "metadata"
 msgid "SELECT FOLDER LINK"
 msgstr "请选择文件夹链接"
 
+msgctxt "metadata"
 msgid "LAST PLAYED"
 msgstr "最后游玩"
 
+msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
 msgstr "请输入最后游玩日期"
 
@@ -288,7 +322,8 @@ msgstr "设备类型，发布年份"
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr "开发商，设备类型，发行年份"
 
-msgid "GAMES DEFAULT SORT ORDER [short]"
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
 msgstr "游戏默认排序方式"
 
 msgid "GAMES DEFAULT SORT ORDER"
@@ -575,7 +610,8 @@ msgstr "屏幕旋转（需要重新启动）"
 msgid "KEYBOARD QUIT SHORTCUT"
 msgstr "键盘退出快捷键"
 
-msgid "WHEN TO SAVE GAME METADATA [short]"
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
 msgstr "何时保存游戏元数据"
 
 msgid "ALWAYS"
@@ -706,10 +742,12 @@ msgstr "真的要关机吗？"
 msgid "POWER OFF SYSTEM"
 msgstr "关机"
 
-msgid "MEDIA VIEWER SETTINGS [short]"
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
 msgstr "媒体播放器设置"
 
-msgid "SCREENSAVER SETTINGS [short]"
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
 msgstr "屏保设置"
 
 msgid "choose"
@@ -832,7 +870,8 @@ msgstr "游戏手册"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "混合图像分辨率"
 
-msgid "HORIZONTAL SCREENSHOT FIT [short]"
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "水平截图适配"
 
 msgid "CONTAIN"
@@ -847,13 +886,15 @@ msgstr "拉伸"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "水平截图适配"
 
-msgid "VERTICAL SCREENSHOT FIT [short]"
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
 msgstr "垂直截图适配"
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr "垂直截图适配"
 
-msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
 msgstr "截图宽高比阈值"
 
 msgid "HIGH"
@@ -871,7 +912,8 @@ msgstr "黑色"
 msgid "FRAME"
 msgstr "带框"
 
-msgid "SCREENSHOT SCALING METHOD [short]"
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
 msgstr "截图缩放方式"
 
 msgid "SHARP"
@@ -2254,8 +2296,38 @@ msgstr "最后一张"
 msgid "zoom"
 msgstr "zoom"
 
+msgid "RATING"
+msgstr "评分"
+
+msgid "DEVELOPER"
+msgstr "开发商"
+
+msgid "PUBLISHER"
+msgstr "发行商"
+
+msgid "GENRE"
+msgstr "类型"
+
+msgid "PLAYERS"
+msgstr "玩家数"
+
+msgid "FAVORITE"
+msgstr "喜爱"
+
+msgid "KIDGAME"
+msgstr "儿童游戏"
+
+msgid "HIDDEN"
+msgstr "隐藏"
+
 msgid "BROKEN"
 msgstr "损坏"
+
+msgid "CONTROLLER"
+msgstr "控制器"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "备用模拟器"
 
 msgid "FALSE"
 msgstr "FALSE"
