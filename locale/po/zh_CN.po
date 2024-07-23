@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-07-20 13:05+0200\n"
-"PO-Revision-Date: 2024-07-20 14:43+0800\n"
+"PO-Revision-Date: 2024-07-23 15:00+0800\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
 "Language: zh_CN\n"
@@ -115,9 +115,8 @@ msgid "ENTER NUMBER OF PLAYERS"
 msgstr "请输入玩家数"
 
 msgid "FAVORITE"
-msgstr "收藏"
+msgstr "喜爱"
 
-#, fuzzy
 msgid "COMPLETED [metadata]"
 msgstr "已完成"
 
@@ -245,7 +244,7 @@ msgid "APPLICATION LANGUAGE"
 msgstr "应用程序语言"
 
 msgid "QUICK SYSTEM SELECT"
-msgstr "平台快速切换"
+msgstr "快速切换平台快捷键"
 
 msgid "LEFT/RIGHT OR SHOULDERS"
 msgstr "左/右肩键"
@@ -281,15 +280,14 @@ msgid "RELEASE YEAR"
 msgstr "发行年份"
 
 msgid "MANUFACTURER, RELEASE YEAR"
-msgstr "制造商，发行年份"
+msgstr "开发商，发行年份"
 
 msgid "HW TYPE, RELEASE YEAR"
 msgstr "设备类型，发布年份"
 
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
-msgstr "制造商，设备类型，发行年份"
+msgstr "开发商，设备类型，发行年份"
 
-#, fuzzy
 msgid "GAMES DEFAULT SORT ORDER [short]"
 msgstr "游戏默认排序方式"
 
@@ -403,10 +401,10 @@ msgid "SORT FOLDERS ON TOP OF GAMELISTS"
 msgstr "在游戏列表顶部对文件夹进行排序"
 
 msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
-msgstr "将收藏的游戏排在非收藏的游戏之上"
+msgstr "将喜爱的游戏排在非喜爱的游戏之上"
 
 msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
-msgstr "为收藏的游戏添加星号标记"
+msgstr "为喜爱的游戏添加星号标记"
 
 msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
 msgstr "启用文本列表快速滚动覆盖"
@@ -415,7 +413,7 @@ msgid "ENABLE VIRTUAL KEYBOARD"
 msgstr "启用虚拟键盘"
 
 msgid "ENABLE TOGGLE FAVORITES BUTTON"
-msgstr "启用切换收藏夹按键"
+msgstr "启用喜爱切换按键"
 
 msgid "ENABLE GAMELIST FILTERS"
 msgstr "启用游戏列表过滤器"
@@ -577,7 +575,6 @@ msgstr "屏幕旋转（需要重新启动）"
 msgid "KEYBOARD QUIT SHORTCUT"
 msgstr "键盘退出快捷键"
 
-#, fuzzy
 msgid "WHEN TO SAVE GAME METADATA [short]"
 msgstr "何时保存游戏元数据"
 
@@ -660,7 +657,7 @@ msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "显示退出菜单（包含重启和关机选项）"
 
 msgid "ORPHANED DATA CLEANUP"
-msgstr "孤立数据清理"
+msgstr "数据清理"
 
 msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
 msgstr "创建/更新平台目录"
@@ -701,19 +698,17 @@ msgid "REALLY REBOOT?"
 msgstr "真的要重启吗？"
 
 msgid "REBOOT SYSTEM"
-msgstr "重启平台"
+msgstr "重启"
 
 msgid "REALLY POWER OFF?"
 msgstr "真的要关机吗？"
 
 msgid "POWER OFF SYSTEM"
-msgstr "断电系统"
+msgstr "关机"
 
-#, fuzzy
 msgid "MEDIA VIEWER SETTINGS [short]"
 msgstr "媒体播放器设置"
 
-#, fuzzy
 msgid "SCREENSAVER SETTINGS [short]"
 msgstr "屏保设置"
 
@@ -721,10 +716,10 @@ msgid "choose"
 msgstr "选择"
 
 msgid "select"
-msgstr "选择"
+msgstr "确认"
 
 msgid "close menu"
-msgstr "选择菜单"
+msgstr "关闭菜单"
 
 msgid "REFINE SEARCH"
 msgstr "完善搜索"
@@ -739,37 +734,37 @@ msgid "back (cancel)"
 msgstr "返回（取消）"
 
 msgid "SCRAPE FROM"
-msgstr "抓取自"
+msgstr "抓取源"
 
 msgid "SCRAPE THESE GAMES"
-msgstr "抓取这些游戏"
+msgstr "抓取哪些游戏"
 
 msgid "ALL GAMES"
 msgstr "所有游戏"
 
 msgid "FAVORITE GAMES"
-msgstr "收藏的游戏"
+msgstr "喜爱的游戏"
 
 msgid "NO METADATA"
-msgstr "没有元数据"
+msgstr "无元数据的游戏"
 
 msgid "NO GAME IMAGE"
-msgstr "没有游戏图像"
+msgstr "无图像的游戏"
 
 msgid "NO GAME VIDEO"
-msgstr "没有游戏视频"
+msgstr "无视频的游戏"
 
 msgid "FOLDERS ONLY"
-msgstr "仅限文件夹"
+msgstr "仅限文件夹内的游戏"
 
 msgid "SCRAPE THESE SYSTEMS"
-msgstr "删除这些平台"
+msgstr "抓取哪些平台"
 
 msgid "ACCOUNT SETTINGS"
 msgstr "帐号设置"
 
 msgid "CONTENT SETTINGS"
-msgstr "内容设置"
+msgstr "显示内容设置"
 
 msgid "MIXIMAGE SETTINGS"
 msgstr "混合图像设置"
@@ -820,16 +815,16 @@ msgid "BOX BACK COVER IMAGES"
 msgstr "包装盒后盖图像"
 
 msgid "MARQUEE (WHEEL) IMAGES"
-msgstr "选框图像"
+msgstr "游戏标志图像"
 
 msgid "3D BOX IMAGES"
 msgstr "3D盒子图像"
 
 msgid "PHYSICAL MEDIA IMAGES"
-msgstr "物理媒体图像"
+msgstr "实体卡带图像"
 
 msgid "FAN ART IMAGES"
-msgstr "粉丝艺术图像"
+msgstr "粉丝自制图像"
 
 msgid "GAME MANUALS"
 msgstr "游戏手册"
@@ -837,7 +832,6 @@ msgstr "游戏手册"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "混合图像分辨率"
 
-#, fuzzy
 msgid "HORIZONTAL SCREENSHOT FIT [short]"
 msgstr "水平截图适配"
 
@@ -853,16 +847,14 @@ msgstr "拉伸"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "水平截图适配"
 
-#, fuzzy
 msgid "VERTICAL SCREENSHOT FIT [short]"
 msgstr "垂直截图适配"
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr "垂直截图适配"
 
-#, fuzzy
 msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
-msgstr "屏幕截图宽高比阈值"
+msgstr "截图宽高比阈值"
 
 msgid "HIGH"
 msgstr "高"
@@ -879,7 +871,6 @@ msgstr "黑色"
 msgid "FRAME"
 msgstr "带框"
 
-#, fuzzy
 msgid "SCREENSHOT SCALING METHOD [short]"
 msgstr "截图缩放方式"
 
@@ -896,7 +887,7 @@ msgid "BOX SIZE"
 msgstr "盒子尺寸"
 
 msgid "PHYSICAL MEDIA SIZE"
-msgstr "物理媒体大小"
+msgstr "实体卡带大小"
 
 msgid "GENERATE MIXIMAGES WHEN SCRAPING"
 msgstr "抓取时生成混合图像"
@@ -914,16 +905,16 @@ msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
 msgstr "旋转水平方向的盒子"
 
 msgid "INCLUDE MARQUEE IMAGE"
-msgstr "包含滚动图像"
+msgstr "包含游戏标志图像"
 
 msgid "INCLUDE BOX IMAGE"
-msgstr "包含框形图像"
+msgstr "包含盒子图像"
 
 msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
-msgstr "如果 3D 盒装封面缺失，请使用封面图片"
+msgstr "如果 3D 盒装封面缺失，则使用封面图片"
 
 msgid "INCLUDE PHYSICAL MEDIA IMAGE"
-msgstr "包括物理媒体图像"
+msgstr "包括实体卡带图像"
 
 msgid "OFFLINE GENERATOR"
 msgstr "离线生成器"
@@ -947,16 +938,16 @@ msgid "WORLD"
 msgstr "世界"
 
 msgid "REGION"
-msgstr "区域"
+msgstr "元数据区域"
 
 msgid "PREFERRED LANGUAGE"
-msgstr "首选语言"
+msgstr "元数据首选语言"
 
 msgid "AUTOMATIC RETRIES ON ERROR"
 msgstr "发生错误时自动重试"
 
 msgid "RETRY ATTEMPT TIMER"
-msgstr "重试尝试定时器"
+msgstr "重新尝试定时器"
 
 msgid "HASH SEARCHES MAX FILE SIZE"
 msgstr "重试哈希值搜索的最大文件大小"
@@ -1047,7 +1038,7 @@ msgid "SELECT COLLECTIONS"
 msgstr "选择收藏"
 
 msgid "AUTOMATIC GAME COLLECTIONS"
-msgstr "自动游戏收藏"
+msgstr "游戏自动收藏"
 
 msgid "CUSTOM GAME COLLECTIONS"
 msgstr "自定义游戏收藏"
@@ -1076,12 +1067,15 @@ msgstr "删除自定义游戏收藏"
 msgid "COLLECTION TO DELETE"
 msgstr "收藏删除"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
 "'%s'\n"
 "ARE YOU SURE?"
-msgstr "这将永久删除收藏 '%s'"
+msgstr ""
+"这将永久删除收藏\n"
+" '%s'\n"
+"真的要删除吗？"
 
 msgid "GROUP CUSTOM COLLECTIONS"
 msgstr "自定义收藏分组"
@@ -1090,10 +1084,10 @@ msgid "IF UNTHEMED"
 msgstr "如果没有主题"
 
 msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr "将收藏夹排序在顶部以进行自定义收藏"
+msgstr "将喜爱的游戏排序在顶部以进行自定义收藏"
 
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "显示定制收藏的星形标记"
+msgstr "显示自定义收藏的星形标记"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
 msgstr "屏保启动时间（分钟）"
@@ -1212,7 +1206,7 @@ msgstr ""
 "兼容"
 
 msgid "and"
-msgstr "并且"
+msgstr "和"
 
 #, c-format
 msgid ""
@@ -1257,16 +1251,16 @@ msgid "UPDATING THEME"
 msgstr "正在更新主题"
 
 msgid "VARIANTS:"
-msgstr "变体："
+msgstr "变体数量："
 
 msgid "COLOR SCHEMES:"
-msgstr "配色方案："
+msgstr "配色方案数量："
 
 msgid "ASPECT RATIOS:"
-msgstr "长宽比："
+msgstr "长宽比数量："
 
 msgid "FONT SIZES:"
-msgstr "字体大小："
+msgstr "字体大小数量："
 
 msgid "INSTALLED"
 msgstr "已安装"
@@ -1423,7 +1417,7 @@ msgid "GAME %i OF %i"
 msgstr "第 %i 个，共 %i 个游戏"
 
 msgid "NO GAMES WERE SCRAPED"
-msgstr "没有游戏被删除"
+msgstr "未抓取到游戏数据"
 
 #, c-format
 msgid "%i GAME SUCCESSFULLY SCRAPED"
@@ -1633,7 +1627,7 @@ msgid "CLEARED ENTRY"
 msgstr "已清除的条目"
 
 msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr "没有定义备用模拟器"
+msgstr "未定义备用模拟器"
 
 msgid "CLEAR INVALID ENTRY"
 msgstr "清除无效条目"
@@ -1668,14 +1662,14 @@ msgstr "保存元数据"
 msgid "cancel changes"
 msgstr "取消更改"
 
-#, fuzzy
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
 "BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
 "ARE YOU SURE?"
 msgstr ""
 "这将删除此文件夹的所有媒体文件和 gamelist.xml 条目，但目录本身或其中的任何内"
-"容都不会被删除"
+"容都不会被删除\n"
+"真的要删除吗？"
 
 msgid "CLEAR"
 msgstr "清理"
@@ -1683,22 +1677,23 @@ msgstr "清理"
 msgid "clear folder"
 msgstr "清理文件夹"
 
-#, fuzzy
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
 "BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
 "ARE YOU SURE?"
 msgstr ""
-"这将删除此游戏的所有媒体文件和 gamelist.xml 条目，但游戏文件本身不会被删除"
+"这将删除此游戏的所有媒体文件和 gamelist.xml 条目，但游戏文件本身不会被删除\n"
+"真的要删除吗？"
 
 msgid "clear file"
 msgstr "清理文件"
 
-#, fuzzy
 msgid ""
 "THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
 "ARE YOU SURE?"
-msgstr "这将删除游戏文件、任何媒体文件和 gamelist.xml 条目"
+msgstr ""
+"这将删除游戏文件、任何媒体文件和 gamelist.xml 条目\n"
+"真的要删除吗？"
 
 msgid "DELETE"
 msgstr "删除"
@@ -1864,7 +1859,7 @@ msgid "all games"
 msgstr "所有游戏"
 
 msgid "last played"
-msgstr "最后游玩"
+msgstr "最后游玩的游戏"
 
 msgid "favorites"
 msgstr "喜爱"
@@ -1878,7 +1873,7 @@ msgstr "已禁用'%s'中的'%s'"
 
 #, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr "编辑 '%s' 个收藏，添加/删除 %s 个游戏"
+msgstr "编辑 '%s' 收藏，添加/删除 %s 游戏"
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
@@ -1889,11 +1884,11 @@ msgstr "喜爱"
 
 #, c-format
 msgid "ADDED '%s' TO '%s'"
-msgstr "将'%s'添加到'%s'"
+msgstr "已将'%s'添加到'%s'"
 
 #, c-format
 msgid "REMOVED '%s' FROM '%s'"
-msgstr "从'%s'中删除了'%s'"
+msgstr "已将 '%s' 从 '%s' 中移除"
 
 msgid "This collection is empty"
 msgstr "此收藏为空"
@@ -1973,10 +1968,10 @@ msgid "genre, descending"
 msgstr "类型, 降序"
 
 msgid "players, ascending"
-msgstr "玩家, 升序"
+msgstr "玩家数， 升序"
 
 msgid "players, descending"
-msgstr "玩家, 降序"
+msgstr "玩家数， 降序"
 
 msgid "last played, ascending"
 msgstr "最后游玩, 升序"
@@ -2069,11 +2064,11 @@ msgstr "无法将文件夹添加到自定义收藏夹"
 
 #, c-format
 msgid "MARKED FOLDER '%s' AS FAVORITE"
-msgstr "已将文件夹'%s'标记为收藏夹"
+msgstr "已将文件夹'%s'标记为喜爱"
 
 #, c-format
 msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
-msgstr "删除文件夹'%s'的收藏标记"
+msgstr "删除文件夹'%s'的喜爱标记"
 
 msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr "无法将不属于游戏的条目添加到自定义收藏中"
@@ -2085,7 +2080,7 @@ msgid "screensaver"
 msgstr "屏保"
 
 msgid "system"
-msgstr "系统"
+msgstr "切换平台"
 
 msgid "view media"
 msgstr "查看媒体"
@@ -2239,7 +2234,7 @@ msgid "PAGE %s OF %s"
 msgstr "第 %s 页，共 %s 页"
 
 msgid "pan"
-msgstr ""
+msgstr "pan"
 
 msgid "reset"
 msgstr "重置"
@@ -2251,22 +2246,22 @@ msgid "game media"
 msgstr "游戏媒体"
 
 msgid "first"
-msgstr "第一"
+msgstr "第一张"
 
 msgid "last"
-msgstr "最后"
+msgstr "最后一张"
 
 msgid "zoom"
-msgstr ""
+msgstr "zoom"
 
 msgid "BROKEN"
 msgstr "损坏"
 
 msgid "FALSE"
-msgstr ""
+msgstr "FALSE"
 
 msgid "TRUE"
-msgstr ""
+msgstr "TRUE"
 
 msgid "UNKNOWN"
 msgstr "未知"
@@ -2287,16 +2282,16 @@ msgid "Error loading screenshot, couldn't generate miximage"
 msgstr "加载截图时出错，无法生成混合图像"
 
 msgid "Error loading marquee image, corrupt file?"
-msgstr "加载选框图像时出错，文件损坏？"
+msgstr "加载游戏标志图像时出错，文件损坏？"
 
 msgid "Error loading 3d box image, corrupt file?"
-msgstr "加载 3d 盒装图像时出错，文件损坏？"
+msgstr "加载 3D 盒装图像时出错，文件损坏？"
 
 msgid "Error loading box cover image, corrupt file?"
 msgstr "加载盒装封面图像时出错，文件损坏？"
 
 msgid "Error loading physical media image, corrupt file?"
-msgstr "加载物理媒体图像时出错，文件损坏？"
+msgstr "加载实体卡带图像时出错，文件损坏？"
 
 msgid "pdf manual"
 msgstr "PDF手册"
@@ -2314,7 +2309,7 @@ msgid "TITLE SCREEN"
 msgstr "标题"
 
 msgid "FAN ART"
-msgstr "粉丝艺术"
+msgstr "粉丝自制"
 
 msgid "MIXIMAGE"
 msgstr "混合图像"
@@ -2426,10 +2421,10 @@ msgid "select all"
 msgstr "选择全部"
 
 msgid "SELECT NONE"
-msgstr "无选择"
+msgstr "取消选择"
 
 msgid "select none"
-msgstr "无选择"
+msgstr "取消选择"
 
 msgid "move cursor"
 msgstr "移动光标"
@@ -2517,7 +2512,6 @@ msgstr "游戏手柄"
 msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
 msgstr "按住任意按键 1 秒即可跳过"
 
-#, fuzzy
 msgid "NOT DEFINED"
 msgstr "未定义"
 
@@ -2543,16 +2537,16 @@ msgid "PLUS"
 msgstr "开始"
 
 msgid "CROSS"
-msgstr "X(PS)/A(XBOX)/B(NS)"
+msgstr "X"
 
 msgid "CIRCLE"
-msgstr "O(PS)/B(XBOX)/A(NS)"
+msgstr "O"
 
 msgid "SQUARE"
-msgstr "□(PS)/X(XBOX)/Y(NS)"
+msgstr "□"
 
 msgid "TRIANGLE"
-msgstr "△(PS)/Y(XBOX)/X(NS)"
+msgstr "△"
 
 msgid "OPTIONS"
 msgstr "选项"
