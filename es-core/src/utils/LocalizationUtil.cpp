@@ -43,6 +43,35 @@ namespace Utils
         // clang-format on
         float sMenuTitleScaleFactor {1.0f};
 
+        const char* pgettextBuiltin(const char* msgctxt, const char* msgid)
+        {
+            // This is an unbelievable hack but it's actually done pretty much the same way in
+            // the gettext.h header where a macro is used to wrap around the libintl functionality.
+            // Why this function is simply not part of libintl itself is anyone's guess, as that
+            // would be the logical thing to do.
+            std::string lookup;
+            lookup.append(msgctxt).append("\004").append(msgid);
+            const char* translation = gettext(lookup.c_str());
+            if (translation == lookup.c_str())
+                return msgid;
+            else
+                return translation;
+        }
+
+        const char* npgettextBuiltin(const char* msgctxt,
+                                     const char* msgid1,
+                                     const char* msgid2,
+                                     unsigned long int n)
+        {
+            std::string lookup;
+            lookup.append(msgctxt).append("\004").append(msgid1);
+            const char* translation = ngettext(lookup.c_str(), msgid2, n);
+            if (translation == lookup.c_str())
+                return msgid1;
+            else
+                return translation;
+        }
+
         std::pair<std::string, std::string> getLocale()
         {
 #if defined(_WIN64)
