@@ -149,7 +149,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         // entry instead of for instance the spacer. That is so because ComponentList
         // always looks for the help prompt at the back of the element stack.
         ComponentListRow row;
-        auto lbl = std::make_shared<TextComponent>(_(it->displayName.c_str()),
+        auto lbl = std::make_shared<TextComponent>(_p("metadata", it->displayName.c_str()),
                                                    Font::get(FONT_SIZE_SMALL), mMenuColorPrimary);
         row.addElement(lbl, true); // Label.
 
@@ -209,7 +209,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
-                const std::string title {_(it->displayPrompt.c_str())};
+                const std::string title {_p("metadata", it->displayPrompt.c_str())};
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [ed, originalValue](const std::string& newVal) {
@@ -297,7 +297,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
                 const std::string title {mRenderer->getIsVerticalOrientation() ?
                                              _("SELECT EMULATOR") :
-                                             _(it->displayPrompt.c_str())};
+                                             _p("metadata", it->displayPrompt.c_str())};
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [this, ed, originalValue](const std::string& newVal) {
@@ -442,7 +442,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
-                const std::string title {_(it->displayPrompt.c_str())};
+                const std::string title {_p("metadata", it->displayPrompt.c_str())};
 
                 std::vector<FileData*> children;
                 if (originalValue != "")
@@ -563,7 +563,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(bracket, false);
 
                 bool multiLine {it->type == MD_MULTILINE_STRING};
-                const std::string title {_(it->displayPrompt.c_str())};
+                const std::string title {_p("metadata", it->displayPrompt.c_str())};
 
                 gamePath = Utils::FileSystem::getStem(scraperParams.game->getPath());
 

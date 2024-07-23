@@ -605,7 +605,7 @@ void GuiMenu::openUIOptions()
     // Default gamelist sort order.
     std::string sortOrder;
     auto defaultSortOrder = std::make_shared<OptionListComponent<const FileData::SortType*>>(
-        getHelpStyle(), _("GAMES DEFAULT SORT ORDER [short]"), false);
+        getHelpStyle(), _p("short", "GAMES DEFAULT SORT ORDER"), false);
     // Exclude the System sort options.
     unsigned int numSortTypes {static_cast<unsigned int>(FileSorts::SortTypes.size() - 2)};
     for (unsigned int i {0}; i < numSortTypes; ++i) {
@@ -1621,7 +1621,7 @@ void GuiMenu::openOtherOptions()
 
     // When to save game metadata.
     auto saveGamelistsMode = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("WHEN TO SAVE GAME METADATA [short]"), false);
+        getHelpStyle(), _p("short", "WHEN TO SAVE GAME METADATA"), false);
     saveGamelistsMode->add(_("ALWAYS"), "always",
                            Settings::getInstance()->getString("SaveGamelistsMode") == "always");
     saveGamelistsMode->add(_("ON EXIT"), "on exit",
@@ -2217,12 +2217,12 @@ void GuiMenu::openThemeDownloader(GuiSettings* settings)
 
 void GuiMenu::openMediaViewerOptions()
 {
-    mWindow->pushGui(new GuiMediaViewerOptions(_("MEDIA VIEWER SETTINGS [short]")));
+    mWindow->pushGui(new GuiMediaViewerOptions(_p("short", "MEDIA VIEWER SETTINGS")));
 }
 
 void GuiMenu::openScreensaverOptions()
 {
-    mWindow->pushGui(new GuiScreensaverOptions(_("SCREENSAVER SETTINGS [short]")));
+    mWindow->pushGui(new GuiScreensaverOptions(_p("short", "SCREENSAVER SETTINGS")));
 }
 
 void GuiMenu::openCollectionSystemOptions()

@@ -33,7 +33,7 @@ namespace
     {"genre",              MD_STRING,           "unknown",         false,     "GENRE",                       "ENTER GENRE",                      true},
     {"players",            MD_STRING,           "unknown",         false,     "PLAYERS",                     "ENTER NUMBER OF PLAYERS",          true},
     {"favorite",           MD_BOOL,             "false",           false,     "FAVORITE",                    "ENTER FAVORITE OFF/ON",            false},
-    {"completed",          MD_BOOL,             "false",           false,     "COMPLETED [metadata]",        "ENTER COMPLETED OFF/ON",           false},
+    {"completed",          MD_BOOL,             "false",           false,     "COMPLETED",                   "ENTER COMPLETED OFF/ON",           false},
     {"kidgame",            MD_BOOL,             "false",           false,     "KIDGAME",                     "ENTER KIDGAME OFF/ON",             false},
     {"hidden",             MD_BOOL,             "false",           false,     "HIDDEN",                      "ENTER HIDDEN OFF/ON",              false},
     {"broken",             MD_BOOL,             "false",           false,     "BROKEN/NOT WORKING",          "ENTER BROKEN OFF/ON",              false},
@@ -57,7 +57,7 @@ namespace
     {"genre",         MD_STRING,           "unknown",         false,     "GENRE",                         "ENTER GENRE",                      true},
     {"players",       MD_STRING,           "unknown",         false,     "PLAYERS",                       "ENTER NUMBER OF PLAYERS",          true},
     {"favorite",      MD_BOOL,             "false",           false,     "FAVORITE",                      "ENTER FAVORITE OFF/ON",            false},
-    {"completed",     MD_BOOL,             "false",           false,     "COMPLETED [metadata]",          "ENTER COMPLETED OFF/ON",           false},
+    {"completed",     MD_BOOL,             "false",           false,     "COMPLETED",                     "ENTER COMPLETED OFF/ON",           false},
     {"kidgame",       MD_BOOL,             "false",           false,     "KIDGAME (ONLY AFFECTS BADGES)", "ENTER KIDGAME OFF/ON",             false},
     {"hidden",        MD_BOOL,             "false",           false,     "HIDDEN",                        "ENTER HIDDEN OFF/ON",              false},
     {"broken",        MD_BOOL,             "false",           false,     "BROKEN/NOT WORKING",            "ENTER BROKEN OFF/ON",              false},
@@ -189,43 +189,42 @@ void MetaDataList::resetChangedFlag()
 #if defined(GETTEXT_DUMMY_ENTRIES)
 void gettextMessageCatalogEntries()
 {
-    _("NAME");
-    _("ENTER NAME");
-    _("SORTNAME");
-    _("ENTER SORTNAME");
-    _("CUSTOM COLLECTIONS SORTNAME");
-    _("ENTER COLLECTIONS SORTNAME");
-    _("DESCRIPTION");
-    _("ENTER DESCRIPTION");
-    _("RATING");
-    _("RELEASE DATE");
-    _("ENTER RELEASE DATE");
-    _("DEVELOPER");
-    _("ENTER DEVELOPER");
-    _("PUBLISHER");
-    _("ENTER PUBLISHER");
-    _("GENRE");
-    _("ENTER GENRE");
-    _("PLAYERS");
-    _("ENTER NUMBER OF PLAYERS");
-    _("FAVORITE");
-    _("COMPLETED [metadata]");
-    _("KIDGAME");
-    _("KIDGAME (ONLY AFFECTS BADGES)");
-    _("HIDDEN");
-    _("BROKEN/NOT WORKING");
-    _("EXCLUDE FROM GAME COUNTER");
-    _("EXCLUDE FROM MULTI-SCRAPER");
-    _("HIDE METADATA FIELDS");
-    _("TIMES PLAYED");
-    _("ENTER NUMBER OF TIMES PLAYED");
-    _("CONTROLLER");
-    _("SELECT CONTROLLER");
-    _("ALTERNATIVE EMULATOR");
-    _("SELECT ALTERNATIVE EMULATOR");
-    _("FOLDER LINK");
-    _("SELECT FOLDER LINK");
-    _("LAST PLAYED");
-    _("ENTER LAST PLAYED DATE");
+    _p("metadata", "NAME");
+    _p("metadata", "ENTER NAME");
+    _p("metadata", "SORTNAME");
+    _p("metadata", "ENTER SORTNAME");
+    _p("metadata", "CUSTOM COLLECTIONS SORTNAME");
+    _p("metadata", "ENTER COLLECTIONS SORTNAME");
+    _p("metadata", "DESCRIPTION");
+    _p("metadata", "ENTER DESCRIPTION");
+    _p("metadata", "RATING");
+    _p("metadata", "RELEASE DATE");
+    _p("metadata", "DEVELOPER");
+    _p("metadata", "ENTER DEVELOPER");
+    _p("metadata", "PUBLISHER");
+    _p("metadata", "ENTER PUBLISHER");
+    _p("metadata", "GENRE");
+    _p("metadata", "ENTER GENRE");
+    _p("metadata", "PLAYERS");
+    _p("metadata", "ENTER NUMBER OF PLAYERS");
+    _p("metadata", "FAVORITE");
+    _p("metadata", "COMPLETED");
+    _p("metadata", "KIDGAME");
+    _p("metadata", "KIDGAME (ONLY AFFECTS BADGES)");
+    _p("metadata", "HIDDEN");
+    _p("metadata", "BROKEN/NOT WORKING");
+    _p("metadata", "EXCLUDE FROM GAME COUNTER");
+    _p("metadata", "EXCLUDE FROM MULTI-SCRAPER");
+    _p("metadata", "HIDE METADATA FIELDS");
+    _p("metadata", "TIMES PLAYED");
+    _p("metadata", "ENTER NUMBER OF TIMES PLAYED");
+    _p("metadata", "CONTROLLER");
+    _p("metadata", "SELECT CONTROLLER");
+    _p("metadata", "ALTERNATIVE EMULATOR");
+    _p("metadata", "SELECT ALTERNATIVE EMULATOR");
+    _p("metadata", "FOLDER LINK");
+    _p("metadata", "SELECT FOLDER LINK");
+    _p("metadata", "LAST PLAYED");
+    _p("metadata", "ENTER LAST PLAYED DATE");
 }
 #endif
