@@ -1175,10 +1175,10 @@ void GuiThemeDownloader::onSizeChanged()
 
     mGrid.setColWidthPerc(1, 0.04f);
     mCenterGrid->setColWidthPerc(0, 0.01f);
-    mCenterGrid->setColWidthPerc(1, (mRenderer->getScreenAspectRatio() < 1.6f ? 0.21f : 0.18f));
+    mCenterGrid->setColWidthPerc(1, (mRenderer->getScreenAspectRatio() < 1.6f ? 0.22f : 0.18f));
     mCenterGrid->setColWidthPerc(2, 0.05f);
-    mCenterGrid->setColWidthPerc(3, 0.18f);
-    mCenterGrid->setColWidthPerc(4, 0.04f);
+    mCenterGrid->setColWidthPerc(3, (mRenderer->getScreenAspectRatio() < 1.6f ? 0.215f : 0.18f));
+    mCenterGrid->setColWidthPerc(4, 0.035f);
     mCenterGrid->setColWidthPerc(5, 0.005f);
     mCenterGrid->setColWidthPerc(7, 0.04f);
 
