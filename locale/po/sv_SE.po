@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-20 13:05+0200\n"
-"PO-Revision-Date: 2024-07-20 13:05+0200\n"
+"POT-Creation-Date: 2024-07-23 19:15+0200\n"
+"PO-Revision-Date: 2024-07-23 18:58+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -57,117 +57,151 @@ msgstr "Kunde inte spara mediafil, åtkomstproblem eller är disken full?"
 msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr "Kunde inte spara skalad bild, åtkomstproblem eller är disken full?"
 
+msgctxt "metadata"
 msgid "NAME"
 msgstr "NAMN"
 
+msgctxt "metadata"
 msgid "ENTER NAME"
 msgstr "SKRIV IN NAMN"
 
+msgctxt "metadata"
 msgid "SORTNAME"
 msgstr "SORTERINGSNAMN"
 
+msgctxt "metadata"
 msgid "ENTER SORTNAME"
 msgstr "SKRIV IN SORTERINGSNAMN"
 
+msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
 msgstr "SORTERING ANPASSADE SAMLINGAR"
 
+msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
 msgstr "SKRIV IN SORTERINGSNAMN"
 
+msgctxt "metadata"
 msgid "DESCRIPTION"
 msgstr "BESKRIVNING"
 
+msgctxt "metadata"
 msgid "ENTER DESCRIPTION"
 msgstr "SKRIV IN BESKRIVNING"
 
+msgctxt "metadata"
 msgid "RATING"
 msgstr "BETYG"
 
+msgctxt "metadata"
 msgid "RELEASE DATE"
 msgstr "UTGIVNINGSDATUM"
 
-msgid "ENTER RELEASE DATE"
-msgstr "VÄLJ UTGIVNINGSDATUM"
-
+msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr "UTVECKLARE"
 
+msgctxt "metadata"
 msgid "ENTER DEVELOPER"
 msgstr "SKRIV IN UTVECKLARE"
 
+msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr "UTGIVARE"
 
+msgctxt "metadata"
 msgid "ENTER PUBLISHER"
 msgstr "SKRIV IN UTGIVARE"
 
+msgctxt "metadata"
 msgid "GENRE"
 msgstr "GENRE"
 
+msgctxt "metadata"
 msgid "ENTER GENRE"
 msgstr "SKRIV IN GENRE"
 
+msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "SPELARE"
 
+msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
 msgstr "SKRIV IN ANTAL SPELARE"
 
+msgctxt "metadata"
 msgid "FAVORITE"
 msgstr "FAVORIT"
 
-msgid "COMPLETED [metadata]"
+msgctxt "metadata"
+msgid "COMPLETED"
 msgstr "KLARAT"
 
+msgctxt "metadata"
 msgid "KIDGAME"
 msgstr "BARNSPEL"
 
+msgctxt "metadata"
 msgid "KIDGAME (ONLY AFFECTS BADGES)"
 msgstr "BARNSPEL (PÅVERKAR ENDAST EMBLEM)"
 
+msgctxt "metadata"
 msgid "HIDDEN"
 msgstr "DOLD"
 
+msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
 msgstr "TRASIGT/FUNGERAR INTE"
 
+msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
 msgstr "EXKLUDERA FRÅN SPELRÄKNAREN"
 
+msgctxt "metadata"
 msgid "EXCLUDE FROM MULTI-SCRAPER"
 msgstr "EXKLUDERA FRÅN MULTI-SCRAPER"
 
+msgctxt "metadata"
 msgid "HIDE METADATA FIELDS"
 msgstr "DÖLJ METADATAFÄLT"
 
+msgctxt "metadata"
 msgid "TIMES PLAYED"
 msgstr "SPELTILLFÄLLEN"
 
+msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "SKRIV IN SPELTILLFÄLLEN"
 
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "HANDKONTROLL"
 
+msgctxt "metadata"
 msgid "SELECT CONTROLLER"
 msgstr "VÄLJ HANDKONTROLL"
 
+msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr "ALTERNATIV EMULATOR"
 
+msgctxt "metadata"
 msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "VÄLJ ALTERNATIV EMULATOR"
 
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "MAPPLÄNK"
 
+msgctxt "metadata"
 msgid "SELECT FOLDER LINK"
 msgstr "VÄLJ MAPPLÄNK"
 
+msgctxt "metadata"
 msgid "LAST PLAYED"
 msgstr "SENAST SPELAT"
 
+msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
 msgstr "VÄLJ SENAST SPELAT DATUM"
 
@@ -288,7 +322,8 @@ msgstr "HÅRDVARUTYP, UTGIVNINGSÅR"
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr "TILLVK, HÅRDVTYP, UTGIVNINGSÅR"
 
-msgid "GAMES DEFAULT SORT ORDER [short]"
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
 msgstr "SPEL STANDARDSORTERING"
 
 msgid "GAMES DEFAULT SORT ORDER"
@@ -582,7 +617,8 @@ msgstr "ROTERA SKÄRMEN (KRÄVER OMSTART)"
 msgid "KEYBOARD QUIT SHORTCUT"
 msgstr "TANGENTER FÖR ATT STÄNGA NER"
 
-msgid "WHEN TO SAVE GAME METADATA [short]"
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
 msgstr "NÄR SPEL-METADATA SKA SPARAS"
 
 msgid "ALWAYS"
@@ -717,10 +753,12 @@ msgstr "VERKLIGEN STÄNGA AV?"
 msgid "POWER OFF SYSTEM"
 msgstr "STÄNG AV SYSTEMET"
 
-msgid "MEDIA VIEWER SETTINGS [short]"
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
 msgstr "INSTÄLLNINGAR MEDIAVISARE"
 
-msgid "SCREENSAVER SETTINGS [short]"
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
 msgstr "INSTÄLLNINGAR SKÄRMSLÄCKARE"
 
 msgid "choose"
@@ -843,7 +881,8 @@ msgstr "SPELMANUALER"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "MIXBILD UPPLÖSNING"
 
-msgid "HORIZONTAL SCREENSHOT FIT [short]"
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "HORISONTELL INPASSNING"
 
 msgid "CONTAIN"
@@ -858,13 +897,15 @@ msgstr "STRÄCK UT"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "HORISONTELL SKÄRMPDUMP INPASSNING"
 
-msgid "VERTICAL SCREENSHOT FIT [short]"
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
 msgstr "VERTIKAL INPASSNING"
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr "VERTIKAL SKÄRMDUMP INPASSNING"
 
-msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
 msgstr "BILDFÖRHÅLLANDE TRÖSKELVÄRDE"
 
 msgid "HIGH"
@@ -882,7 +923,8 @@ msgstr "SVART"
 msgid "FRAME"
 msgstr "RAM"
 
-msgid "SCREENSHOT SCALING METHOD [short]"
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
 msgstr "SKÄRMDUMP SKALNINGSMETOD"
 
 msgid "SHARP"
@@ -2319,8 +2361,38 @@ msgstr "sista"
 msgid "zoom"
 msgstr "zooma"
 
+msgid "RATING"
+msgstr "BETYG"
+
+msgid "DEVELOPER"
+msgstr "UTVECKLARE"
+
+msgid "PUBLISHER"
+msgstr "UTGIVARE"
+
+msgid "GENRE"
+msgstr "GENRE"
+
+msgid "PLAYERS"
+msgstr "SPELARE"
+
+msgid "FAVORITE"
+msgstr "FAVORIT"
+
+msgid "KIDGAME"
+msgstr "BARNSPEL"
+
+msgid "HIDDEN"
+msgstr "DOLD"
+
 msgid "BROKEN"
 msgstr "TRASIG"
+
+msgid "CONTROLLER"
+msgstr "HANDKONTROLL"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "ALTERNATIV EMULATOR"
 
 msgid "FALSE"
 msgstr "FALSKT"
