@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-20 13:05+0200\n"
-"PO-Revision-Date: 2024-07-21 13:41+0100\n"
+"POT-Creation-Date: 2024-07-23 19:15+0200\n"
+"PO-Revision-Date: 2024-07-23 19:09+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English (United Kingdom) <info@es-de.org>\n"
 "Language: en_GB\n"
@@ -57,117 +57,151 @@ msgstr "Couldn't save media file, permission problems or is the disk full?"
 msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr "Couldn't save resized image, permission problems or is the disk full?"
 
+msgctxt "metadata"
 msgid "NAME"
 msgstr "NAME"
 
+msgctxt "metadata"
 msgid "ENTER NAME"
 msgstr "ENTER NAME"
 
+msgctxt "metadata"
 msgid "SORTNAME"
 msgstr "SORTNAME"
 
+msgctxt "metadata"
 msgid "ENTER SORTNAME"
 msgstr "ENTER SORTNAME"
 
+msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
 msgstr "CUSTOM COLLECTIONS SORTNAME"
 
+msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
 msgstr "ENTER COLLECTIONS SORTNAME"
 
+msgctxt "metadata"
 msgid "DESCRIPTION"
 msgstr "DESCRIPTION"
 
+msgctxt "metadata"
 msgid "ENTER DESCRIPTION"
 msgstr "ENTER DESCRIPTION"
 
+msgctxt "metadata"
 msgid "RATING"
 msgstr "RATING"
 
+msgctxt "metadata"
 msgid "RELEASE DATE"
 msgstr "RELEASE DATE"
 
-msgid "ENTER RELEASE DATE"
-msgstr "ENTER RELEASE DATE"
-
+msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr "DEVELOPER"
 
+msgctxt "metadata"
 msgid "ENTER DEVELOPER"
 msgstr "ENTER DEVELOPER"
 
+msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr "PUBLISHER"
 
+msgctxt "metadata"
 msgid "ENTER PUBLISHER"
 msgstr "ENTER PUBLISHER"
 
+msgctxt "metadata"
 msgid "GENRE"
 msgstr "GENRE"
 
+msgctxt "metadata"
 msgid "ENTER GENRE"
 msgstr "ENTER GENRE"
 
+msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "PLAYERS"
 
+msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
 msgstr "ENTER NUMBER OF PLAYERS"
 
+msgctxt "metadata"
 msgid "FAVORITE"
 msgstr "FAVOURITE"
 
-msgid "COMPLETED [metadata]"
+msgctxt "metadata"
+msgid "COMPLETED"
 msgstr "COMPLETED"
 
+msgctxt "metadata"
 msgid "KIDGAME"
 msgstr "KIDGAME"
 
+msgctxt "metadata"
 msgid "KIDGAME (ONLY AFFECTS BADGES)"
 msgstr "KIDGAME (ONLY AFFECTS BADGES)"
 
+msgctxt "metadata"
 msgid "HIDDEN"
 msgstr "HIDDEN"
 
+msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
 msgstr "BROKEN/NOT WORKING"
 
+msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
 msgstr "EXCLUDE FROM GAME COUNTER"
 
+msgctxt "metadata"
 msgid "EXCLUDE FROM MULTI-SCRAPER"
 msgstr "EXCLUDE FROM MULTI-SCRAPER"
 
+msgctxt "metadata"
 msgid "HIDE METADATA FIELDS"
 msgstr "HIDE METADATA FIELDS"
 
+msgctxt "metadata"
 msgid "TIMES PLAYED"
 msgstr "TIMES PLAYED"
 
+msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "ENTER NUMBER OF TIMES PLAYED"
 
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "CONTROLLER"
 
+msgctxt "metadata"
 msgid "SELECT CONTROLLER"
 msgstr "SELECT CONTROLLER"
 
+msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr "ALTERNATIVE EMULATOR"
 
+msgctxt "metadata"
 msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "SELECT ALTERNATIVE EMULATOR"
 
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "FOLDER LINK"
 
+msgctxt "metadata"
 msgid "SELECT FOLDER LINK"
 msgstr "SELECT FOLDER LINK"
 
+msgctxt "metadata"
 msgid "LAST PLAYED"
 msgstr "LAST PLAYED"
 
+msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
 msgstr "ENTER LAST PLAYED DATE"
 
@@ -288,7 +322,8 @@ msgstr "HW TYPE, RELEASE YEAR"
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr "MANUFACTURER, HW TYPE, REL. YEAR"
 
-msgid "GAMES DEFAULT SORT ORDER [short]"
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
 msgstr "DEFAULT SORT ORDER"
 
 msgid "GAMES DEFAULT SORT ORDER"
@@ -579,7 +614,8 @@ msgstr "ROTATE SCREEN (REQUIRES RESTART)"
 msgid "KEYBOARD QUIT SHORTCUT"
 msgstr "KEYBOARD QUIT SHORTCUT"
 
-msgid "WHEN TO SAVE GAME METADATA [short]"
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
 msgstr "WHEN TO SAVE METADATA"
 
 msgid "ALWAYS"
@@ -714,10 +750,12 @@ msgstr "REALLY POWER OFF?"
 msgid "POWER OFF SYSTEM"
 msgstr "POWER OFF SYSTEM"
 
-msgid "MEDIA VIEWER SETTINGS [short]"
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
 msgstr "MEDIA VIEWER SETTINGS"
 
-msgid "SCREENSAVER SETTINGS [short]"
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
 msgstr "SCREENSAVER SETTINGS"
 
 msgid "choose"
@@ -840,7 +878,8 @@ msgstr "GAME MANUALS"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "MIXIMAGE RESOLUTION"
 
-msgid "HORIZONTAL SCREENSHOT FIT [short]"
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "HORIZONTAL SCREENSHOT FIT"
 
 msgid "CONTAIN"
@@ -855,13 +894,15 @@ msgstr "STRETCH"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "HORIZONTAL SCREENSHOT FIT"
 
-msgid "VERTICAL SCREENSHOT FIT [short]"
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
 msgstr "VERTICAL SCREENSHOT FIT"
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr "VERTICAL SCREENSHOT FIT"
 
-msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
 msgstr "ASPECT RATIO THRESHOLD"
 
 msgid "HIGH"
@@ -879,7 +920,8 @@ msgstr "BLACK"
 msgid "FRAME"
 msgstr "FRAME"
 
-msgid "SCREENSHOT SCALING METHOD [short]"
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
 msgstr "SCREENSHOT SCALING"
 
 msgid "SHARP"
@@ -2309,8 +2351,38 @@ msgstr "last"
 msgid "zoom"
 msgstr "zoom"
 
+msgid "RATING"
+msgstr "RATING"
+
+msgid "DEVELOPER"
+msgstr "DEVELOPER"
+
+msgid "PUBLISHER"
+msgstr "PUBLISHER"
+
+msgid "GENRE"
+msgstr "GENRE"
+
+msgid "PLAYERS"
+msgstr "PLAYERS"
+
+msgid "FAVORITE"
+msgstr "FAVOURITE"
+
+msgid "KIDGAME"
+msgstr "KIDGAME"
+
+msgid "HIDDEN"
+msgstr "HIDDEN"
+
 msgid "BROKEN"
 msgstr "BROKEN"
+
+msgid "CONTROLLER"
+msgstr "CONTROLLER"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "ALTERNATIVE EMULATOR"
 
 msgid "FALSE"
 msgstr "FALSE"
