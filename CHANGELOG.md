@@ -9,7 +9,9 @@
 ### Detailed list of changes
 
 * Added localization support
-* Added Swedish translations
+* Added translations for English (United Kingdom) (en_US)
+* Added translations for Simplified Chinese (zh_CN)
+* Added translations for Swedish (sv_SE)
 * Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
 * Added support for skipping the scanning of game system subdirectories (by using noload.txt files)
 * Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper

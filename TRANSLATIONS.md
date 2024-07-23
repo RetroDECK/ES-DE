@@ -86,20 +86,21 @@ If you're translating to a language where there is no distinction between the tw
 
 As a general remark the correct letter case is very important for the translated text. Although there are a few instances where text is for example automatically converted to uppercase, in most instances such conversions are not made. This means that in most cases the translated text will appear exactly as entered in the .po file. This approach provides maximum flexibility and of course a number of languages don't even have the concept of letter case so automatic case conversions wouldn't make sense.
 
-## Contextual hinting
+## Context information
 
-As there is sometimes ambiguity regarding translated strings, such as the same word having different meanings depending on the context, there is hinting added to a number of the translation strings. There is a slight variation to this as well where short versions of strings are also hinted as for some languages they would otherwise not fit inside the user interface. This is really a per-case thing and you'll need to test your translations to see what fits inside the interface and what doesn't. If you need a hinted string added that does not already exist then bring it up in the Discord server and it will get added to the application.
+As there is sometimes ambiguity regarding translated strings, such as the same word having different meanings depending on the context, there is contextual hinting added to a number of the translation strings. Similarly some strings may need short versions for some languages as they may otherwise not fit inside the user interface. For the latter it's really a per-case thing and you'll need to test your translations to see what fits inside the interface and what doesn't. If you need context information added for a string then bring it up in the Discord server and it will get added to the application.
 
 If you are translating to a language with excessively long words (Swedish is such a language) then it may be required to adjust the overall font sizes in ES-DE for this specific language. At the moment this is only applicable to the menu titles as these are quite restricted in length. If you find that you're constantly running out of space for your text then bring it up in the Discord server and a font size adjustment can be made in ES-DE for your specific locale.
 
-Here's an example of a contextual hint that is applicable for the Swedish language:
+Here's an example of a context information that is applicable for the Swedish language:
 ```
 msgid "COMPLETED"
 msgstr "SLUTFÖRD"
 ```
 
 ```
-msgid "COMPLETED [metadata]"
+msgctxt "metadata"
+msgid "COMPLETED"
 msgstr "KLARAT"
 ```
 
@@ -107,27 +108,31 @@ In general _completed_ is translated as _slutförd_ but for example when having 
 
 However the English translations for this would be identical as there is no real distinction there:
 ```
-msgid "COMPLETED [metadata]"
-msgstr "COMPLETED"
-```
-
-```
 msgid "COMPLETED"
 msgstr "COMPLETED"
 ```
 
-The hints should never be translated literally, anything inside square brackets should be left out. Here's an example for an English short version string to clarify:
+```
+msgctxt "metadata"
+msgid "COMPLETED"
+msgstr "COMPLETED"
+```
+
+Here's also an example of a short version string:
 ```
 msgid "GAMES DEFAULT SORT ORDER"
 msgstr "GAMES DEFAULT SORT ORDER"
 ```
 
 ```
-msgid "GAMES DEFAULT SORT ORDER [short]"
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
 msgstr "DEFAULT SORT ORDER"
 ```
 
 The short version of this string was required as it would otherwise not fit inside the menu header. Note that short strings may only be required for some specific languages, so again you need to test it to see whether you actaully need to provide a short translation or not.
+
+Whenever there's a _msgctxt_ line for a message it will be clearly indicated in Poedit so it's very easy to work with this context information.
 
 ## Fuzzy entries
 

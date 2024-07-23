@@ -19,6 +19,8 @@ Nils Bonenberger
 
 **English (United Kingdom)** \
 Weestuarty \
+**Russian** \
+Lulzee \
 **Swedish** \
 Leon Styhre \
 **Simplified Chinese** \
