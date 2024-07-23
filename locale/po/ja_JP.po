@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-20 13:05+0200\n"
+"POT-Creation-Date: 2024-07-23 19:46+0200\n"
 "PO-Revision-Date: 2024-07-20 13:33+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
@@ -57,117 +57,151 @@ msgstr ""
 msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
 
+msgctxt "metadata"
 msgid "NAME"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER NAME"
 msgstr ""
 
+msgctxt "metadata"
 msgid "SORTNAME"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER SORTNAME"
 msgstr ""
 
+msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
 msgstr ""
 
+msgctxt "metadata"
 msgid "DESCRIPTION"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER DESCRIPTION"
 msgstr ""
 
+msgctxt "metadata"
 msgid "RATING"
 msgstr ""
 
+msgctxt "metadata"
 msgid "RELEASE DATE"
 msgstr ""
 
-msgid "ENTER RELEASE DATE"
-msgstr ""
-
+msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER DEVELOPER"
 msgstr ""
 
+msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER PUBLISHER"
 msgstr ""
 
+msgctxt "metadata"
 msgid "GENRE"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER GENRE"
 msgstr ""
 
+msgctxt "metadata"
 msgid "PLAYERS"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
 msgstr ""
 
+msgctxt "metadata"
 msgid "FAVORITE"
 msgstr ""
 
-msgid "COMPLETED [metadata]"
+msgctxt "metadata"
+msgid "COMPLETED"
 msgstr ""
 
+msgctxt "metadata"
 msgid "KIDGAME"
 msgstr ""
 
+msgctxt "metadata"
 msgid "KIDGAME (ONLY AFFECTS BADGES)"
 msgstr ""
 
+msgctxt "metadata"
 msgid "HIDDEN"
 msgstr ""
 
+msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
 msgstr ""
 
+msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
 msgstr ""
 
+msgctxt "metadata"
 msgid "EXCLUDE FROM MULTI-SCRAPER"
 msgstr ""
 
+msgctxt "metadata"
 msgid "HIDE METADATA FIELDS"
 msgstr ""
 
+msgctxt "metadata"
 msgid "TIMES PLAYED"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr ""
 
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr ""
 
+msgctxt "metadata"
 msgid "SELECT CONTROLLER"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr ""
 
+msgctxt "metadata"
 msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr ""
 
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr ""
 
+msgctxt "metadata"
 msgid "SELECT FOLDER LINK"
 msgstr ""
 
+msgctxt "metadata"
 msgid "LAST PLAYED"
 msgstr ""
 
+msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
 msgstr ""
 
@@ -288,7 +322,8 @@ msgstr ""
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
 msgstr ""
 
-msgid "GAMES DEFAULT SORT ORDER [short]"
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
 msgstr ""
 
 msgid "GAMES DEFAULT SORT ORDER"
@@ -556,7 +591,8 @@ msgstr ""
 msgid "KEYBOARD QUIT SHORTCUT"
 msgstr ""
 
-msgid "WHEN TO SAVE GAME METADATA [short]"
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
 msgstr ""
 
 msgid "ALWAYS"
@@ -682,10 +718,12 @@ msgstr ""
 msgid "POWER OFF SYSTEM"
 msgstr ""
 
-msgid "MEDIA VIEWER SETTINGS [short]"
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
 msgstr ""
 
-msgid "SCREENSAVER SETTINGS [short]"
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
 msgstr ""
 
 msgid "choose"
@@ -808,7 +846,8 @@ msgstr ""
 msgid "MIXIMAGE RESOLUTION"
 msgstr ""
 
-msgid "HORIZONTAL SCREENSHOT FIT [short]"
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr ""
 
 msgid "CONTAIN"
@@ -823,13 +862,15 @@ msgstr ""
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr ""
 
-msgid "VERTICAL SCREENSHOT FIT [short]"
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
 msgstr ""
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr ""
 
-msgid "SCREENSHOT ASPECT RATIO THRESHOLD [short]"
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
 msgstr ""
 
 msgid "HIGH"
@@ -847,7 +888,8 @@ msgstr ""
 msgid "FRAME"
 msgstr ""
 
-msgid "SCREENSHOT SCALING METHOD [short]"
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
 msgstr ""
 
 msgid "SHARP"
@@ -2166,7 +2208,37 @@ msgstr ""
 msgid "zoom"
 msgstr ""
 
+msgid "RATING"
+msgstr ""
+
+msgid "DEVELOPER"
+msgstr ""
+
+msgid "PUBLISHER"
+msgstr ""
+
+msgid "GENRE"
+msgstr ""
+
+msgid "PLAYERS"
+msgstr ""
+
+msgid "FAVORITE"
+msgstr ""
+
+msgid "KIDGAME"
+msgstr ""
+
+msgid "HIDDEN"
+msgstr ""
+
 msgid "BROKEN"
+msgstr ""
+
+msgid "CONTROLLER"
+msgstr ""
+
+msgid "ALTERNATIVE EMULATOR"
 msgstr ""
 
 msgid "FALSE"
