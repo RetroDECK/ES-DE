@@ -162,7 +162,22 @@ namespace Utils
             (wchar_t)0xFF4B, (wchar_t)0xFF4C, (wchar_t)0xFF4D, (wchar_t)0xFF4E, (wchar_t)0xFF4F,
             (wchar_t)0xFF50, (wchar_t)0xFF51, (wchar_t)0xFF52, (wchar_t)0xFF53, (wchar_t)0xFF54,
             (wchar_t)0xFF55, (wchar_t)0xFF56, (wchar_t)0xFF57, (wchar_t)0xFF58, (wchar_t)0xFF59,
-            (wchar_t)0xFF5A, (wchar_t)0x0000};
+            (wchar_t)0xFF5A, (wchar_t)0x0180, (wchar_t)0x0183, (wchar_t)0x0185, (wchar_t)0x0188,
+            (wchar_t)0x018C, (wchar_t)0x0192, (wchar_t)0x0199, (wchar_t)0x01A1, (wchar_t)0x01A3,
+            (wchar_t)0x01A5, (wchar_t)0x01A8, (wchar_t)0x01AD, (wchar_t)0x01B0, (wchar_t)0x01B4,
+            (wchar_t)0x01B6, (wchar_t)0x01B9, (wchar_t)0x01BD, (wchar_t)0x01C6, (wchar_t)0x01C9,
+            (wchar_t)0x01CC, (wchar_t)0x01CE, (wchar_t)0x01D0, (wchar_t)0x01D2, (wchar_t)0x01D4,
+            (wchar_t)0x01D6, (wchar_t)0x01D8, (wchar_t)0x01DA, (wchar_t)0x01DC, (wchar_t)0x01DF,
+            (wchar_t)0x01E1, (wchar_t)0x01E3, (wchar_t)0x01E5, (wchar_t)0x01E7, (wchar_t)0x01E9,
+            (wchar_t)0x01EB, (wchar_t)0x01ED, (wchar_t)0x01EF, (wchar_t)0x01F3, (wchar_t)0x01F5,
+            (wchar_t)0x01F9, (wchar_t)0x01FB, (wchar_t)0x01FD, (wchar_t)0x01FF, (wchar_t)0x0201,
+            (wchar_t)0x0203, (wchar_t)0x0205, (wchar_t)0x0207, (wchar_t)0x0209, (wchar_t)0x020B,
+            (wchar_t)0x020D, (wchar_t)0x020F, (wchar_t)0x0211, (wchar_t)0x0213, (wchar_t)0x0215,
+            (wchar_t)0x0217, (wchar_t)0x0219, (wchar_t)0x021B, (wchar_t)0x021D, (wchar_t)0x021F,
+            (wchar_t)0x0223, (wchar_t)0x0225, (wchar_t)0x0227, (wchar_t)0x0229, (wchar_t)0x022B,
+            (wchar_t)0x022D, (wchar_t)0x022F, (wchar_t)0x0231, (wchar_t)0x0233, (wchar_t)0x023C,
+            (wchar_t)0x0242, (wchar_t)0x0247, (wchar_t)0x0249, (wchar_t)0x024B, (wchar_t)0x024D,
+            (wchar_t)0x024F, (wchar_t)0x0000};
 
         static wchar_t unicodeUppercase[] = {
             (wchar_t)0x0041, (wchar_t)0x0042, (wchar_t)0x0043, (wchar_t)0x0044, (wchar_t)0x0045,
@@ -298,7 +313,22 @@ namespace Utils
             (wchar_t)0xFF2B, (wchar_t)0xFF2C, (wchar_t)0xFF2D, (wchar_t)0xFF2E, (wchar_t)0xFF2F,
             (wchar_t)0xFF30, (wchar_t)0xFF31, (wchar_t)0xFF32, (wchar_t)0xFF33, (wchar_t)0xFF34,
             (wchar_t)0xFF35, (wchar_t)0xFF36, (wchar_t)0xFF37, (wchar_t)0xFF38, (wchar_t)0xFF39,
-            (wchar_t)0xFF3A, (wchar_t)0x0000};
+            (wchar_t)0xFF3A, (wchar_t)0x0181, (wchar_t)0x0182, (wchar_t)0x0184, (wchar_t)0x0187,
+            (wchar_t)0x018B, (wchar_t)0x0191, (wchar_t)0x0198, (wchar_t)0x01A0, (wchar_t)0x01A2,
+            (wchar_t)0x01A4, (wchar_t)0x01A7, (wchar_t)0x01AC, (wchar_t)0x01AF, (wchar_t)0x01B3,
+            (wchar_t)0x01B5, (wchar_t)0x01B8, (wchar_t)0x01BC, (wchar_t)0x01C4, (wchar_t)0x01C7,
+            (wchar_t)0x01CA, (wchar_t)0x01CD, (wchar_t)0x01CF, (wchar_t)0x01D1, (wchar_t)0x01D3,
+            (wchar_t)0x01D5, (wchar_t)0x01D7, (wchar_t)0x01D9, (wchar_t)0x01DB, (wchar_t)0x01DE,
+            (wchar_t)0x01E0, (wchar_t)0x01E2, (wchar_t)0x01E4, (wchar_t)0x01E6, (wchar_t)0x01E8,
+            (wchar_t)0x01EA, (wchar_t)0x01EC, (wchar_t)0x01EE, (wchar_t)0x01F1, (wchar_t)0x01F4,
+            (wchar_t)0x01F8, (wchar_t)0x01FA, (wchar_t)0x01FC, (wchar_t)0x01FE, (wchar_t)0x0200,
+            (wchar_t)0x0202, (wchar_t)0x0204, (wchar_t)0x0206, (wchar_t)0x0208, (wchar_t)0x020A,
+            (wchar_t)0x020C, (wchar_t)0x020E, (wchar_t)0x0210, (wchar_t)0x0212, (wchar_t)0x0214,
+            (wchar_t)0x0216, (wchar_t)0x0218, (wchar_t)0x021A, (wchar_t)0x021C, (wchar_t)0x021E,
+            (wchar_t)0x0222, (wchar_t)0x0224, (wchar_t)0x0226, (wchar_t)0x0228, (wchar_t)0x022A,
+            (wchar_t)0x022C, (wchar_t)0x022E, (wchar_t)0x0230, (wchar_t)0x0232, (wchar_t)0x023B,
+            (wchar_t)0x0241, (wchar_t)0x0246, (wchar_t)0x0248, (wchar_t)0x024A, (wchar_t)0x024C,
+            (wchar_t)0x024E, (wchar_t)0x0000};
 
         unsigned int chars2Unicode(const std::string& stringArg, size_t& cursor)
         {
