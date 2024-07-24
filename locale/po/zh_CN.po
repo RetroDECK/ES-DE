@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-23 19:15+0200\n"
-"PO-Revision-Date: 2024-07-23 15:00+0800\n"
+"POT-Creation-Date: 2024-07-24 11:27+0200\n"
+"PO-Revision-Date: 2024-07-24 11:32+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
 "Language: zh_CN\n"
@@ -1951,7 +1951,10 @@ msgstr "该收藏包含 3 个游戏：'%s [%s]', '%s [%s]' and '%s [%s]'"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
 "others"
-msgstr "该收藏包含 %i 个游戏：'%s [%s]', '%s [%s]'和'%s [%s]'等"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] "该收藏包含 %i 个游戏：'%s [%s]', '%s [%s]'和'%s [%s]'等"
 
 #, c-format
 msgid "This collection contains 1 game: '%s'"
@@ -1967,7 +1970,9 @@ msgstr "该收藏包含 3 个游戏： '%s', '%s' 和 '%s'"
 
 #, c-format
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr "该收藏包含 %i 个游戏： '%s', '%s' 和 '%s'等"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "该收藏包含 %i 个游戏： '%s', '%s' 和 '%s'等"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
