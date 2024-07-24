@@ -804,7 +804,7 @@ void GuiScraperMenu::openOtherOptions()
 
     // Scraper region.
     auto scraperRegion =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "REGION", false);
+        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("REGION"), false);
     std::string selectedScraperRegion {Settings::getInstance()->getString("ScraperRegion")};
     // clang-format off
     scraperRegion->add(_("EUROPE"), "eu",  selectedScraperRegion == "eu");
