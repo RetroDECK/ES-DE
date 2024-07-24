@@ -918,8 +918,11 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
                 }
                 default: {
                     desc = Utils::String::format(
-                        _("This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', "
-                          "among others"),
+                        _n("This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', "
+                           "among others",
+                           "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', "
+                           "among others",
+                           gameCount),
                         gameCount, gamesList[0]->metadata.get("name").c_str(),
                         caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
                             .c_str(),
@@ -957,7 +960,9 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
                 }
                 default: {
                     desc = Utils::String::format(
-                        _("This collection contains %i games: '%s', '%s' and '%s', among others"),
+                        _n("This collection contains %i games: '%s', '%s' and '%s', among others",
+                           "This collection contains %i games: '%s', '%s' and '%s', among others",
+                           gameCount),
                         gameCount, gamesList[0]->metadata.get("name").c_str(),
                         gamesList[1]->metadata.get("name").c_str(),
                         gamesList[2]->metadata.get("name").c_str());
