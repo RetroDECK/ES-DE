@@ -10,6 +10,7 @@
 
 * Added localization support
 * Added translations for English (United Kingdom) (en_US)
+* Added translations for Portuguese (Brazil) (pt_BR)
 * Added translations for Simplified Chinese (zh_CN)
 * Added translations for Swedish (sv_SE)
 * Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
@@ -37,6 +38,7 @@
 * StringUtil::toCapitalized() will now capitalize characters following the ([" characters
 * Removed some obsolete code from DateTimeEditComponent
 * Added the libintl library as a dependency
+* Added case conversion support for the Latin Extended-B Unicode block
 * Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 

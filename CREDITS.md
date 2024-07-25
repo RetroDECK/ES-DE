@@ -17,13 +17,19 @@ Nils Bonenberger
 
 # Translations
 
-**English (United Kingdom)** \
-Weestuarty \
-**Russian** \
-Lulzee \
-**Swedish** \
-Leon Styhre \
-**Simplified Chinese** \
+**English (United Kingdom)**\
+Weestuarty\
+**Portuguese (Brazil)**\
+MrVictorFull\
+**Romanian**\
+SilverGreen93\
+**Russian**\
+Lulzee\
+**Swedish**\
+Leon Styhre\
+**Japanese**\
+冰棍\
+**Simplified Chinese**\
 邻家小熊
 
 # Licenses
