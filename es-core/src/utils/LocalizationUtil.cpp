@@ -51,7 +51,7 @@ namespace Utils
             // would be the logical thing to do.
             std::string lookup;
             lookup.append(msgctxt).append("\004").append(msgid);
-            const char* translation = gettext(lookup.c_str());
+            const char* translation {gettext(lookup.c_str())};
             if (translation == lookup.c_str())
                 return msgid;
             else
@@ -65,7 +65,7 @@ namespace Utils
         {
             std::string lookup;
             lookup.append(msgctxt).append("\004").append(msgid1);
-            const char* translation = ngettext(lookup.c_str(), msgid2, n);
+            const char* translation {ngettext(lookup.c_str(), msgid2, n)};
             if (translation == lookup.c_str())
                 return msgid1;
             else
@@ -187,6 +187,8 @@ namespace Utils
             else if (localePair.first == "pt")
                 sMenuTitleScaleFactor = 0.90f;
             else if (localePair.first == "zh")
+                sMenuTitleScaleFactor = 0.94f;
+            else if (localePair.first == "ja")
                 sMenuTitleScaleFactor = 0.94f;
 
             std::string localePath;
