@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-24 11:27+0200\n"
+"POT-Creation-Date: 2024-07-25 12:24+0200\n"
 "PO-Revision-Date: 2024-07-24 11:32+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
@@ -979,6 +979,9 @@ msgstr ""
 "OFFLINEGENERATORN ANVÄNDER SAMMA SYSTEMKONFIGURATION SOM SCRAPERN, SÅ VÄLJ "
 "MINST ETT SYSTEM ATT GENERERA BILDER FÖR"
 
+msgid "REGION"
+msgstr "REGION"
+
 msgid "EUROPE"
 msgstr "EUROPA"
 
@@ -990,9 +993,6 @@ msgstr "USA"
 
 msgid "WORLD"
 msgstr "VÄRLDEN"
-
-msgid "REGION"
-msgstr "REGION"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "FÖREDRAGET SPRÅK"

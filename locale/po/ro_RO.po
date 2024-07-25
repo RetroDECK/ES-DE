@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the ES-DE Frontend package.
 # Northwestern Software <info@es-de.org>, 2024.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-24 11:27+0200\n"
+"POT-Creation-Date: 2024-07-25 12:24+0200\n"
 "PO-Revision-Date: 2024-07-24 11:32+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
@@ -967,6 +967,9 @@ msgid ""
 msgstr ""
 "离线生成器使用与抓取工具相同的系统选择，因此请选择至少一个系统来生成图像"
 
+msgid "REGION"
+msgstr "元数据区域"
+
 msgid "EUROPE"
 msgstr "欧洲"
 
@@ -978,9 +981,6 @@ msgstr "美国"
 
 msgid "WORLD"
 msgstr "世界"
-
-msgid "REGION"
-msgstr "元数据区域"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "元数据首选语言"
