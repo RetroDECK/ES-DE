@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-24 11:27+0200\n"
+"POT-Creation-Date: 2024-07-25 12:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -942,6 +942,9 @@ msgid ""
 "PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
 msgstr ""
 
+msgid "REGION"
+msgstr ""
+
 msgid "EUROPE"
 msgstr ""
 
@@ -952,9 +955,6 @@ msgid "USA"
 msgstr ""
 
 msgid "WORLD"
-msgstr ""
-
-msgid "REGION"
 msgstr ""
 
 msgid "PREFERRED LANGUAGE"
