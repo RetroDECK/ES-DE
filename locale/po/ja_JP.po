@@ -1905,7 +1905,7 @@ msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
 msgstr "パッケージはダウンロードされ、手動でインストールできます"
 
 msgid "DOWNLOADING 100%"
-msgstr "100% ダウンロード中"
+msgstr "ダウンロード中 100%"
 
 msgid "Downloaded file does not match expected MD5 checksum"
 msgstr "ダウンロードされたファイルは予期されたMD5チェックサムと一致しません"
