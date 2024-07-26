@@ -28,6 +28,8 @@ namespace Utils
     {
         // Unicode case conversion mapping table, based on data from this site:
         // https://www.ibm.com/support/knowledgecenter/ssw_ibm_i_71/nls/rbagslowtoupmaptable.htm
+        // A number of entries from the Latin Extended-B Unicode block has been addded as well:
+        // https://en.wikipedia.org/wiki/Latin_Extended-B
         static wchar_t unicodeLowercase[] = {
             (wchar_t)0x0061, (wchar_t)0x0062, (wchar_t)0x0063, (wchar_t)0x0064, (wchar_t)0x0065,
             (wchar_t)0x0066, (wchar_t)0x0067, (wchar_t)0x0068, (wchar_t)0x0069, (wchar_t)0x006A,
