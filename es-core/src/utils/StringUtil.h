@@ -27,6 +27,7 @@ namespace Utils
         size_t nextCursor(const std::string& stringArg, const size_t cursor);
         size_t prevCursor(const std::string& stringArg, const size_t cursor);
         size_t moveCursor(const std::string& stringArg, const size_t cursor, const int amount);
+        size_t unicodeLength(const std::string& stringArg);
         std::string toLower(const std::string& stringArg);
         std::string toUpper(const std::string& stringArg);
         std::string toCapitalized(const std::string& stringArg);

@@ -470,6 +470,19 @@ namespace Utils
             return result;
         }
 
+        size_t unicodeLength(const std::string& stringArg)
+        {
+            size_t length {0};
+            size_t charLength {0};
+
+            for (size_t i {0}; i < stringArg.length(); i += charLength) {
+                charLength = moveCursor(stringArg, i, 1) - i;
+                ++length;
+            }
+
+            return length;
+        }
+
         std::string toLower(const std::string& stringArg)
         {
             std::string stringLower;
