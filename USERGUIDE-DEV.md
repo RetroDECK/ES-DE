@@ -2295,7 +2295,7 @@ This is what the complete setup could look like:
 
 On Android the Fake-08 core provides a good alternative to the official PICO-8 engine which is not available on this operating system. ES-DE also includes support for the Retro8 RetroArch core across all platforms, but it's borderline unusable and does not seem to be actively developed any longer.
 
-Neither Fake-08 nor Retro8 support the .png file extension, so in order to use these cores you need to remove that extension from your game files and only keep the .p8 extension, such as this:
+To use the .png file extension with Fake-08 and Retro8 you need to disable the built-in image viewer in RetroArch, otherwise you'll have to rename your game files to only use the .p8 extension, such as this:
 
 ```
 ~/ROMs/pico8/c_e_l_e_s_t_e-0.p8

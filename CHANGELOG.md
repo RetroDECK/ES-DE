@@ -10,8 +10,13 @@
 
 * Added localization support
 * Added translations for English (United Kingdom) (en_US)
+* Added translations for French (fr_FR)
+* Added translations for Japanese (ja_JP)
 * Added translations for Portuguese (Brazil) (pt_BR)
+* Added translations for Romanian (ro_RO)
+* Added translations for Russian (ru_RU)
 * Added translations for Simplified Chinese (zh_CN)
+* Added translations for Spanish (Spain) (es_ES)
 * Added translations for Swedish (sv_SE)
 * Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
 * Added support for skipping the scanning of game system subdirectories (by using noload.txt files)

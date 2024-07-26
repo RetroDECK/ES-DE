@@ -19,12 +19,16 @@ Nils Bonenberger
 
 **English (United Kingdom)**\
 Weestuarty\
+**French**\
+Fredy27 (neuromancer974)\
 **Portuguese (Brazil)**\
 MrVictorFull\
 **Romanian**\
 SilverGreen93\
 **Russian**\
 Lulzee\
+**Spanish**\
+Dani (stshunz)\
 **Swedish**\
 Leon Styhre\
 **Japanese**\
