@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-07-24 21:25+0200\n"
-"PO-Revision-Date: 2024-07-24 18:03+0300\n"
+"PO-Revision-Date: 2024-07-26 18:14+0300\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
 "Language: ro_RO\n"
@@ -80,7 +80,7 @@ msgstr "INTRODU NUME SORTAT"
 
 msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "NUME SORTAT COLECȚII PARTICULARIZATE"
+msgstr "NUME SORTAT COLECȚII PERSONALIZATE"
 
 msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
@@ -172,11 +172,11 @@ msgstr "ASCUNDE CÂMPURILE DE METADATE"
 
 msgctxt "metadata"
 msgid "TIMES PLAYED"
-msgstr "NUMĂR JUCĂRI"
+msgstr "NUMĂR PARTIDE JUCATE"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr "INTRODU NUMĂRUL DE JUCĂRI"
+msgstr "INTRODU NUMĂR DE PARTIDE"
 
 msgctxt "metadata"
 msgid "CONTROLLER"
@@ -208,7 +208,7 @@ msgstr "JUCAT ULTIMA DATĂ"
 
 msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
-msgstr "INTRODU DATA ULTIMEI JUCĂRI"
+msgstr "INTRODU DATA ULTIMEI PARTIDE"
 
 msgid "MAIN MENU"
 msgstr "MENIU PRINCIPAL"
@@ -313,7 +313,7 @@ msgid "SYSTEMS SORTING"
 msgstr "SORTARE SISTEME"
 
 msgid "FULL NAMES OR CUSTOM"
-msgstr "NUME COMPLETE SAU PARTICULARIZAT"
+msgstr "NUME COMPLETE SAU PERSONALIZATE"
 
 msgid "RELEASE YEAR"
 msgstr "ANUL LANSĂRII"
@@ -418,7 +418,7 @@ msgid "NO"
 msgstr "NU"
 
 msgid "RANDOM ENTRY BUTTON"
-msgstr "BUTON DE INTRARE ALEATOARE"
+msgstr "BUTON ALEGERE ALEATORIE"
 
 msgid "GAMES ONLY"
 msgstr "DOAR JOCURI"
@@ -617,11 +617,11 @@ msgid "ROTATE SCREEN (REQUIRES RESTART)"
 msgstr "ROTEȘTE ECRANUL (NECESITĂ REPORNIRE)"
 
 msgid "KEYBOARD QUIT SHORTCUT"
-msgstr "SCURTĂTURĂ TASTATURĂ PT. IEȘIRE"
+msgstr "COMBINAȚIE TASTE IEȘIRE"
 
 msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr "MOMENT SALVARE METADATE JOC"
+msgstr "MOMENT SALVARE METADATE"
 
 msgid "ALWAYS"
 msgstr "MEREU"
@@ -675,7 +675,7 @@ msgid "SHOW HIDDEN GAMES"
 msgstr "AFIȘEAZĂ JOCURILE ASCUNSE"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
-msgstr "ACTIVEAZĂ SCRIPTURI EVENIMENTE PARTICULARIZATE"
+msgstr "ACTIVEAZĂ SCRIPTURI EVENIMENTE PERSONALIZATE"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "AFIȘEAZĂ DOAR JOCURILE DIN FIȘIERELE GAMELIST.XML"
@@ -785,16 +785,16 @@ msgid "back (cancel)"
 msgstr "înapoi (anulează)"
 
 msgid "SCRAPE FROM"
-msgstr "PREIA INFORMAȚIILE DIN"
+msgstr "PREIA INFORMAȚIILE DE LA"
 
 msgid "SCRAPE THESE GAMES"
 msgstr "PREIA PENTRU JOCURILE"
 
 msgid "ALL GAMES"
-msgstr "TOATE JOCURILE"
+msgstr "TOATE"
 
 msgid "FAVORITE GAMES"
-msgstr "JOCURILE FAVORITE"
+msgstr "FAVORITE"
 
 msgid "NO METADATA"
 msgstr "FĂRĂ METADATE"
@@ -806,7 +806,7 @@ msgid "NO GAME VIDEO"
 msgstr "FĂRĂ VIDEOCLIP"
 
 msgid "FOLDERS ONLY"
-msgstr "DOAR DOSARE"
+msgstr "DIN SUB-DOSARE"
 
 msgid "SCRAPE THESE SYSTEMS"
 msgstr "PREIA PENTRU SISTEMELE"
@@ -897,14 +897,14 @@ msgid "STRETCH"
 msgstr "ÎNTINS"
 
 msgid "HORIZONTAL SCREENSHOT FIT"
-msgstr "POTRIVIRE ORIZONTALĂ CAPTURĂ DE ECRAN"
+msgstr "POTRIVIRE ORIZONTALĂ CAPTURĂ ECRAN"
 
 msgctxt "short"
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr "POTRIVIRE VERTICALĂ CAPTURĂ ECRAN"
 
 msgid "VERTICAL SCREENSHOT FIT"
-msgstr "POTRIVIRE VERTICALĂ CAPTURĂ DE ECRAN"
+msgstr "POTRIVIRE VERTICALĂ CAPTURĂ ECRAN"
 
 msgctxt "short"
 msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
@@ -930,13 +930,13 @@ msgid "SCREENSHOT SCALING METHOD"
 msgstr "METODĂ SCALARE CAPTURĂ ECRAN"
 
 msgid "SHARP"
-msgstr "CLAR"
+msgstr "CLARĂ"
 
 msgid "SMOOTH"
-msgstr "NETED"
+msgstr "NETEDĂ"
 
 msgid "SCREENSHOT SCALING METHOD"
-msgstr "METODĂ SCALARE CAPTURĂ DE ECRAN"
+msgstr "METODĂ SCALARE CAPTURĂ ECRAN"
 
 msgid "BOX SIZE"
 msgstr "MĂRIME CUTIE"
@@ -1034,7 +1034,7 @@ msgid "EXCLUDE FOLDERS RECURSIVELY"
 msgstr "EXCLUDE DOSARELE RECURSIV"
 
 msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
-msgstr "SCHIMBĂ UNDERSCORE-URILE LA SPAȚII ÎN CĂUTARE"
+msgstr "ÎNLOCUIEȘTE UNDERSCORE CU SPAȚIU ÎN CĂUTARE"
 
 msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
 msgstr "ELIMINĂ PUNCTELE DIN CĂUTĂRI CÂND SE PREIA AUTOMAT"
@@ -1101,19 +1101,19 @@ msgid "AUTOMATIC GAME COLLECTIONS"
 msgstr "COLECȚII DE JOCURI AUTOMATE"
 
 msgid "CUSTOM GAME COLLECTIONS"
-msgstr "COLECȚII DE JOCURI PARTICULARIZATE"
+msgstr "COLECȚII DE JOCURI PERSONALIZATE"
 
 msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr "CREEAZĂ O NOUĂ COLECȚIE PARTICULARIZATĂ DIN TEMĂ"
+msgstr "CREEAZĂ O NOUĂ COLECȚIE PERSONALIZATĂ DIN TEMĂ"
 
 msgid "SELECT THEME FOLDER"
 msgstr "SELECTEAZĂ DOSARUL TEMEI"
 
 msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr "CREEAZĂ O NOUĂ COLECȚIE PARTICULARIZATĂ"
+msgstr "CREEAZĂ O NOUĂ COLECȚIE PERSONALIZATĂ"
 
 msgid "NEW COLLECTION NAME"
-msgstr "NUME COLECȚIE NOUĂ"
+msgstr "DENUMEȘTE NOUA COLECȚIE"
 
 msgid "CREATE"
 msgstr "CREEAZĂ"
@@ -1122,7 +1122,7 @@ msgid "CREATE COLLECTION?"
 msgstr "CREEZI COLECȚIA?"
 
 msgid "DELETE CUSTOM COLLECTION"
-msgstr "ȘTERGE COLECȚIA PARTICULARIZATĂ"
+msgstr "ȘTERGE O COLECȚIE PERSONALIZATĂ"
 
 msgid "COLLECTION TO DELETE"
 msgstr "COLECȚIA DE ȘTERS"
@@ -1138,7 +1138,7 @@ msgstr ""
 "EȘTI SIGUR?"
 
 msgid "GROUP CUSTOM COLLECTIONS"
-msgstr "GRUPEAZĂ COLECȚIILE PARTICULARIZATE"
+msgstr "GRUPEAZĂ COLECȚIILE PERSONALIZATE"
 
 msgid "IF UNTHEMED"
 msgstr "FĂRĂ TEMĂ"
@@ -1147,7 +1147,7 @@ msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
 msgstr "AFIȘEAZĂ FAVORITELE LA ÎNCEPUT PENTRU COLECȚII"
 
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "AFIȘEAZĂ O STEA PENTRU COLECȚIILE PARTICULARIZATE"
+msgstr "AFIȘEAZĂ O STEA PENTRU COLECȚIILE PERSONALIZATE"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
 msgstr "INTERVAL PORNIRE ECONOMIZOR ECRAN"
@@ -1192,13 +1192,13 @@ msgid "RENDER SCANLINES"
 msgstr "REDĂ LINIILE DE SCANARE"
 
 msgid "USE CUSTOM IMAGES"
-msgstr "FOLOSEȘTE IMAGINI PARTICULARIZATE"
+msgstr "FOLOSEȘTE IMAGINI PERSONALIZATE"
 
 msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
-msgstr "CĂUTARE RECURSIVĂ DOSAR IMAGINI PARTICULARIZATE"
+msgstr "CĂUTARE RECURSIVĂ DOSAR IMAGINI PERSONALIZATE"
 
 msgid "CUSTOM IMAGE DIRECTORY"
-msgstr "DOSAR IMAGINI PARTICULARIZATE"
+msgstr "DOSAR IMAGINI PERSONALIZATE"
 
 msgid "VIDEO SCREENSAVER"
 msgstr "ECONOMIZOR DE ECRAN VIDEO"
@@ -1573,9 +1573,9 @@ msgid ""
 "ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
 msgstr ""
 "ACEST LUCRU VA ELIMINA TOATE INTRĂRILE DIN FIȘIERELE DE CONFIGURARE ALE "
-"COLECȚIILOR PARTICULARIZATE PENTRU CARE NU SE GĂSESC FIȘIERE DE JOC "
-"ASOCIATE. COPII DE SIGURANȚĂ ALE FIȘIERELOR ORIGINALE VOR FI SALVATE ÎN "
-"DOSARUL COLECȚIILOR. DOAR COLECȚIILE ÎN PREZENT ACTIVATE VOR FI PROCESATE."
+"COLECȚIILOR PERSONALIZATE PENTRU CARE NU SE GĂSESC FIȘIERE DE JOC ASOCIATE. "
+"COPII DE SIGURANȚĂ ALE FIȘIERELOR ORIGINALE VOR FI SALVATE ÎN DOSARUL "
+"COLECȚIILOR. DOAR COLECȚIILE ÎN PREZENT ACTIVATE VOR FI PROCESATE."
 
 msgid "NOT STARTED"
 msgstr "NU S-A ÎNCEPUT"
@@ -1617,7 +1617,7 @@ msgid "COLLECTIONS CLEANUP FAILED"
 msgstr "CURĂȚAREA COLECȚIILOR A EȘUAT"
 
 msgid "There are no enabled custom collections"
-msgstr "Nu există colecții particularizate activate"
+msgstr "Nu există colecții personalizate activate"
 
 msgid "RUNNING COLLECTIONS CLEANUP"
 msgstr "SE RULEAZĂ CURĂȚAREA COLECȚIILOR"
@@ -1662,11 +1662,11 @@ msgid "Couldn't move temporary gamelist file, permission problems?"
 msgstr "Nu s-a putut muta fișierul temporar gamelist. Probleme cu permisiunea?"
 
 msgid "Couldn't find custom collection configuration file"
-msgstr "Nu s-a găsit fișierul de configurare al colecției particularizate"
+msgstr "Nu s-a găsit fișierul de configurare al colecției personalizate"
 
 msgid "Couldn't open custom collection configuration file"
 msgstr ""
-"Nu s-a putut deschide fișierul de configurare al colecției particularizate"
+"Nu s-a putut deschide fișierul de configurare al colecției personalizate"
 
 msgid "Couldn't delete temporary collection file, permission problems?"
 msgstr ""
@@ -2099,10 +2099,10 @@ msgid "last played, descending"
 msgstr "jucat ultima dată, descendent"
 
 msgid "times played, ascending"
-msgstr "număr jucări, ascendent"
+msgstr "număr partide jucate, ascendent"
 
 msgid "times played, descending"
-msgstr "număr jucări, descendent"
+msgstr "număr partide jucate, descendent"
 
 msgid "system, ascending"
 msgstr "sistem, ascendent"
@@ -2175,13 +2175,13 @@ msgstr "EROARE LA LANSAREA JOCULUI „%s” (COD EROARE %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr ""
-"NU SE POATE ADĂUGA O COLECȚIE PARTICULARIZATĂ LA O COLECȚIE PARTICULARIZATĂ"
+"NU SE POATE ADĂUGA O COLECȚIE PERSONALIZATĂ LA O COLECȚIE PERSONALIZATĂ"
 
 msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
-msgstr "NU SE POT ADĂUGA SPAȚIATORI ÎN COLECȚIILE PARTICULARIZATE"
+msgstr "NU SE POT ADĂUGA SPAȚIATORI ÎN COLECȚIILE PERSONALIZATE"
 
 msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
-msgstr "NU SE POT ADĂUGA DOSARE ÎN COLECȚIILE PARTICULARIZATE"
+msgstr "NU SE POT ADĂUGA DOSARE ÎN COLECȚIILE PERSONALIZATE"
 
 #, c-format
 msgid "MARKED FOLDER '%s' AS FAVORITE"
@@ -2194,10 +2194,10 @@ msgstr "S-A ȘTERS MARCAJUL DE FAVORIT PENTRU DOSARUL „%s”"
 msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr ""
 "NU SE POT ADĂUGA INTRĂRI CARE NU SUNT NUMĂRATE CA JOCURI ÎN COLECȚIILE "
-"PARTICULARIZATE"
+"PERSONALIZATE"
 
 msgid "random"
-msgstr "aleator"
+msgstr "alege aleator"
 
 msgid "screensaver"
 msgstr "economizor de ecran"
@@ -2234,8 +2234,8 @@ msgid ""
 "SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
 msgstr ""
 "NU S-A PUTUT PARCURGE FIȘIERUL DE CONFIGURAȚIE AL SISTEMELOR. DACĂ AI UN "
-"FIȘIER es_systems.xml PARTICULARIZAT, ATUNCI CEL MAI PROBABIL AI O EROARE LA "
-"SINTAXA XML. DACĂ NU AI UN FIȘIER PARTICULARIZAT, INSTALAREA ES-DE ESTE "
+"FIȘIER es_systems.xml PERSONALIZAT, ATUNCI CEL MAI PROBABIL AI O EROARE LA "
+"SINTAXA XML. DACĂ NU AI UN FIȘIER PERSONALIZAT, INSTALAREA ES-DE ESTE "
 "STRICATĂ. VERIFICĂ FIȘIERUL JURNAL es_log.txt PENTRU DETALII ADIȚIONALE"
 
 msgid ""
@@ -2495,7 +2495,7 @@ msgid "MIXIMAGE"
 msgstr "IMAGINE MIX"
 
 msgid "CUSTOM"
-msgstr "PARTICULARIZAT"
+msgstr "PERSONALIZAT"
 
 msgid "Searching for games..."
 msgstr "Se caută jocuri..."
