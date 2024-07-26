@@ -1102,7 +1102,12 @@ void GuiThemeDownloader::update(int deltaTime)
         if (mReceivedObjectsProgress != 1.0f) {
             progress = static_cast<int>(
                 std::round(glm::mix(0.0f, 100.0f, static_cast<float>(mReceivedObjectsProgress))));
-            if (mStatusText.substr(0, std::string {_("DOWNLOADING")}.length()) == _("DOWNLOADING"))
+            if (mStatusText.substr(0, std::string {_("DOWNLOADING")}.length()) ==
+                    _("DOWNLOADING") ||
+                mStatusText.substr(0, std::string {_("DOWNLOADING THEME")}.length()) ==
+                    _("DOWNLOADING THEME") ||
+                mStatusText.substr(0, std::string {_("DOWNLOADING THEMES LIST")}.length()) ==
+                    _("DOWNLOADING THEMES LIST"))
                 mBusyAnim.setText(mStatusText + " " + std::to_string(progress) + "%");
             else
                 mBusyAnim.setText(mStatusText);
@@ -1110,7 +1115,12 @@ void GuiThemeDownloader::update(int deltaTime)
         else if (mReceivedObjectsProgress != 0.0f) {
             progress = static_cast<int>(
                 std::round(glm::mix(0.0f, 100.0f, static_cast<float>(mResolveDeltaProgress))));
-            if (mStatusText.substr(0, std::string {_("DOWNLOADING")}.length()) == _("DOWNLOADING"))
+            if (mStatusText.substr(0, std::string {_("DOWNLOADING")}.length()) ==
+                    _("DOWNLOADING") ||
+                mStatusText.substr(0, std::string {_("DOWNLOADING THEME")}.length()) ==
+                    _("DOWNLOADING THEME") ||
+                mStatusText.substr(0, std::string {_("DOWNLOADING THEMES LIST")}.length()) ==
+                    _("DOWNLOADING THEMES LIST"))
                 mBusyAnim.setText(mStatusText + " " + std::to_string(progress) + "%");
             else
                 mBusyAnim.setText(mStatusText);
