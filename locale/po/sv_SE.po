@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-25 12:24+0200\n"
-"PO-Revision-Date: 2024-07-25 21:05+0200\n"
+"POT-Creation-Date: 2024-07-28 14:00+0200\n"
+"PO-Revision-Date: 2024-07-28 13:55+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -334,6 +334,9 @@ msgstr "MENY FÄRGSCHEMA"
 
 msgid "DARK"
 msgstr "MÖRKT"
+
+msgid "DARK WITH RED"
+msgstr "MÖRKT MED RÖTT"
 
 msgid "LIGHT"
 msgstr "LJUST"
@@ -1365,6 +1368,9 @@ msgstr "KUNDE INTE LADDA NER TEMALISTAN"
 msgid "DOWNLOADING"
 msgstr "LADDAR NER"
 
+msgid "DOWNLOADING THEMES LIST"
+msgstr "LADDAR NER TEMALISTAN"
+
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
 msgstr "DET HÄR KOMMER HELT OCH HÅLLET TA BORT TEMAT"
 
@@ -1401,9 +1407,6 @@ msgstr ""
 "AV ATT FÖREGÅENDE NEDLADDNING BLEV AVBRUTEN, T.EX. ATT ES-DE PROCESSEN "
 "DÖDADES. EN NY NEDLADDNING KRÄVS OCH DEN GAMLA KATALOGEN \"themes-list\" "
 "KOMMER DÖPAS OM TILL \"themes-list_CORRUPT_DISABLED\""
-
-msgid "DOWNLOADING THEMES LIST"
-msgstr "LADDAR NER TEMALISTAN"
 
 msgid "UPDATING THEMES LIST"
 msgstr "UPPDATERAR TEMALISTAN"
