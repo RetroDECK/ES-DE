@@ -3243,7 +3243,7 @@ Transition animations to play when navigating between different gamelists, betwe
 
 **Application language**
 
-Sets the language for the application user interface. If this option is set to _automatic_ then the language will be auto-detected, which means ES-DE will attempt to use whatever language has been selected in the operating system language settings. If there are no translations available in ES-DE for this precise language then a fallback will be done to the closest match, such as _Svenska_ instead of _Svenska (Finland)_. If no close match is available then ES-DE will revert to the default language which is _English (United States)_. It's also possible to explicitly select a supported language, which will override whatever has been set by the operating system. Note that the onboarding configurator for the Android release is unaffected by this setting. Also note that language auto-detection does not work on the Steam Deck when running in game mode, so there it's necessary to select a language explicitly.
+Sets the language for the application user interface. If this option is set to _automatic_ then the language will be auto-detected, which means ES-DE will attempt to use whatever language has been selected in the operating system language settings. If there are no translations available in ES-DE for this precise language then a fallback will be done to the closest match, such as _Svenska_ instead of _Svenska (Finland)_. If no close match is available then ES-DE will revert to the default language which is _English (United States)_. It's also possible to explicitly select a supported language, which will override whatever has been set by the operating system. Note that the onboarding configurator for the Android release is unaffected by this setting. Also note that language auto-detection does not work on the Steam Deck when running in game mode, so there it's necessary to select a language explicitly. If you accidentally select a language you didn't intend to, then you can access the application language setting via the second menu entry from the top after opening the main menu, and then after entering this sub-menu by pressing the down button seven times.
 
 **Quick system select**
 
@@ -3263,7 +3263,7 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 **Menu color scheme**
 
-Provides a selection between a _Dark_ and a _Light_ color scheme. This will affect the entire menu system as well as the game launch screen.
+Provides a selection between the _Dark_, _Dark with red_ and _Light_ color schemes. This will affect the entire menu system as well as the game launch screen.
 
 **Menu opening animation**
 

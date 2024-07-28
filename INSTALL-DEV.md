@@ -2136,7 +2136,7 @@ Just make sure to not place the portable installation on a network share that us
 
 There are numerous locations throughout ES-DE where custom scripts can be executed if the option to do so has been enabled in the settings. You'll find the option _Enable custom event scripts_ on the Main menu under _Other settings_. By default this setting is deactivated so make sure to enable it to use this feature.
 
-The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then attempt to execute all these files (regardless of their file extensions). If you want to have the scripts executed in a certain order you can name them accordingly as they will be sorted and executed in lexicographic order. The sorting is case-sensitive on Unix/Linux and case-insensitive on macOS and Windows. ES-DE will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
+The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then attempt to execute all these files (regardless of their file extensions). If you want to have the scripts executed in a certain order you can name them accordingly as they will be sorted and executed in lexicographic order. The sorting is case-sensitive on Linux and Android and case-insensitive on macOS and Windows. ES-DE will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
 
 On Windows it's also possible to place .lnk shortcut files in the event directories to have these executed in the same manner as a script. Note that while PowerShell scripts can't be executed directly they can be run via either a .lnk shortcut file or a .bat wrapper script where you explicitly call powershell.exe with the -command flag. Just be aware that by default the execution of PowerShell scripts is disabled on Windows. Further details about PowerShell is beyond the scope of this document.
 
@@ -2163,11 +2163,11 @@ We'll go through two examples:
 * Creating a log file that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming
 * Changing the system resolution when launching and returning from a game in order to run the emulator at a lower resolution than ES-DE
 
-The following examples are for Unix systems, but it works the same way on macOS and Windows (although .bat batch files are used on Windows instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix and macOS).
+The following examples are for Linux systems, but it works the same way on Android, macOS and Windows (although .bat batch files are used on Windows instead of shell scripts and any spaces in the parameters are not escaped as is the case on Linux, Android and macOS).
 
 As can be seen in the table above, the events executed when a game starts and ends are named _game-start_ and _game-end_
 
-So let's create the folders for these events in the scripts directory. The location is `~/ES-DE/scripts`
+So let's create the folders for these events inside the application data directory, or more specifically in `~/ES-DE/scripts`
 
 **Game log**
 
