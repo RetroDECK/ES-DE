@@ -46,8 +46,8 @@ namespace Scripting
 
         for (auto dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); ++dirIt) {
             std::list<std::string> scripts {Utils::FileSystem::getDirContent(*dirIt)};
-            // Sort the scripts in case-sensitive order on Unix/Linux and in case-insensitive order
-            // on macOS and Windows.
+            // Sort the scripts in case-sensitive order on Linux, Unix and Android and in
+            // case-insensitive order on macOS and Windows.
 #if defined(__unix__)
             scripts.sort([](std::string a, std::string b) { return a.compare(b) < 0; });
 #else
