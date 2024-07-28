@@ -99,6 +99,43 @@ void ViewController::setMenuColors()
         mMenuColorDateTimeEditMarker = 0x00000022;
         mMenuColorDetectDeviceHeld = 0x44444400;
     }
+    else if (Settings::getInstance()->getString("MenuColorScheme") == "darkred") {
+        mMenuColorFrame = 0x191919FF;
+        mMenuColorFrameLaunchScreen = 0x121212FF;
+        mMenuColorFrameBusyComponent = 0x090909FF;
+        mMenuColorPanelDimmed = 0x00000024;
+
+        mMenuColorTitle = 0x909090FF;
+        mMenuColorPrimary = 0x808080FF;
+        mMenuColorSecondary = 0x939393FF;
+        mMenuColorTertiary = 0x909090FF;
+        mMenuColorRed = 0xCA3E3EFF;
+        mMenuColorGreen = 0x449944FF;
+        mMenuColorBlue = 0x4757ddff;
+
+        mMenuColorSelector = 0x461816FF;
+        mMenuColorSeparators = 0x303030FF;
+        mMenuColorBusyComponent = 0x888888FF;
+        mMenuColorScrollIndicators = 0x707070FF;
+        mMenuColorPopupText = 0xBBBBBBFF;
+
+        mMenuColorButtonFocused = 0x050505FF;
+        mMenuColorButtonTextFocused = 0xAFAFAFFF;
+        mMenuColorButtonTextUnfocused = 0x808080FF;
+        mMenuColorButtonFlatFocused = 0x090909FF;
+        mMenuColorButtonFlatUnfocused = 0x242424FF;
+
+        mMenuColorKeyboardModifier = 0xC62F2FFF;
+        mMenuColorKeyboardCursorFocused = 0xAAAAAAFF;
+        mMenuColorKeyboardCursorUnfocused = 0x666666FF;
+        mMenuColorKeyboardText = 0x92929200;
+        mMenuColorTextInputFrameFocused = 0x090909FF;
+        mMenuColorTextInputFrameUnfocused = 0x242424FF;
+
+        mMenuColorSliderKnobDisabled = 0x393939FF;
+        mMenuColorDateTimeEditMarker = 0xFFFFFF22;
+        mMenuColorDetectDeviceHeld = 0x99999900;
+    }
     else {
         mMenuColorFrame = 0x191919FF;
         mMenuColorFrameLaunchScreen = 0x121212FF;
