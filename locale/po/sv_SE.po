@@ -335,8 +335,8 @@ msgstr "MENY FÄRGSCHEMA"
 msgid "DARK"
 msgstr "MÖRKT"
 
-msgid "DARK WITH RED"
-msgstr "MÖRKT MED RÖTT"
+msgid "DARK AND RED"
+msgstr "MÖRKT OCH RÖTT"
 
 msgid "LIGHT"
 msgstr "LJUST"

@@ -335,8 +335,8 @@ msgstr "MENU COLOR SCHEME"
 msgid "DARK"
 msgstr "DARK"
 
-msgid "DARK WITH RED"
-msgstr "DARK WITH RED"
+msgid "DARK AND RED"
+msgstr "DARK AND RED"
 
 msgid "LIGHT"
 msgstr "LIGHT"

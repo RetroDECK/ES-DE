@@ -335,7 +335,7 @@ msgstr ""
 msgid "DARK"
 msgstr ""
 
-msgid "DARK WITH RED"
+msgid "DARK AND RED"
 msgstr ""
 
 msgid "LIGHT"

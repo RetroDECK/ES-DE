@@ -647,7 +647,7 @@ void GuiMenu::openUIOptions()
         getHelpStyle(), _("MENU COLOR SCHEME"), false);
     const std::string selectedMenuColor {Settings::getInstance()->getString("MenuColorScheme")};
     menuColorScheme->add(_("DARK"), "dark", selectedMenuColor == "dark");
-    menuColorScheme->add(_("DARK WITH RED"), "darkred", selectedMenuColor == "darkred");
+    menuColorScheme->add(_("DARK AND RED"), "darkred", selectedMenuColor == "darkred");
     menuColorScheme->add(_("LIGHT"), "light", selectedMenuColor == "light");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the menu color scheme to "dark" in this case.
