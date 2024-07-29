@@ -341,7 +341,7 @@ msgid "DARK"
 msgstr "ÎNTUNECATĂ"
 
 msgid "DARK AND RED"
-msgstr ""
+msgstr "ÎNTUNECAT ȘI ROȘU"
 
 msgid "LIGHT"
 msgstr "LUMINOASĂ"
