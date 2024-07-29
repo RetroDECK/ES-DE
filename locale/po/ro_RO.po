@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-07-24 21:25+0200\n"
-"PO-Revision-Date: 2024-07-26 18:14+0300\n"
+"PO-Revision-Date: 2024-07-28 23:18+0300\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
 "Language: ro_RO\n"
@@ -72,19 +72,19 @@ msgstr "INTRODU NUME"
 
 msgctxt "metadata"
 msgid "SORTNAME"
-msgstr "NUME SORTAT"
+msgstr "NUME PT. SORTARE"
 
 msgctxt "metadata"
 msgid "ENTER SORTNAME"
-msgstr "INTRODU NUME SORTAT"
+msgstr "INTRODU NUME PT. SORTARE"
 
 msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "NUME SORTAT COLECȚII PERSONALIZATE"
+msgstr "NUME PT. SORTARE COLECȚIE PERSONALIZATĂ"
 
 msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
-msgstr "INTRODU NUME SORTAT COLECȚII"
+msgstr "INTRODU NUME PT. SORTARE COLECȚIE"
 
 msgctxt "metadata"
 msgid "DESCRIPTION"
@@ -128,7 +128,7 @@ msgstr "INTRODU GEN"
 
 msgctxt "metadata"
 msgid "PLAYERS"
-msgstr "JUCĂTORI"
+msgstr "NUMĂR DE JUCĂTORI"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
@@ -313,7 +313,7 @@ msgid "SYSTEMS SORTING"
 msgstr "SORTARE SISTEME"
 
 msgid "FULL NAMES OR CUSTOM"
-msgstr "NUME COMPLETE SAU PERSONALIZATE"
+msgstr "NUME COMPLETE/PERSONALIZATE"
 
 msgid "RELEASE YEAR"
 msgstr "ANUL LANSĂRII"
@@ -329,16 +329,19 @@ msgstr "PRODUCĂTOR, TIP HW, AN LANSARE"
 
 msgctxt "short"
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr "ORDINE IMPLICITĂ SORTARE JOCURI"
+msgstr "SORTARE JOCURI DUPĂ"
 
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr "ORDINE IMPLICITĂ SORTARE JOCURI"
+msgstr "SORTARE JOCURI DUPĂ"
 
 msgid "MENU COLOR SCHEME"
 msgstr "SCHEMĂ DE CULOARE MENIU"
 
 msgid "DARK"
 msgstr "ÎNTUNECATĂ"
+
+msgid "DARK AND RED"
+msgstr ""
 
 msgid "LIGHT"
 msgstr "LUMINOASĂ"
@@ -347,7 +350,7 @@ msgid "MENU OPENING ANIMATION"
 msgstr "ANIMAȚIE DESCHIDERE MENIU"
 
 msgid "SCALE-UP"
-msgstr "SCALEAZĂ ÎN SUS"
+msgstr "MĂRIRE"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "DURATĂ ECRAN PORNIRE"
@@ -1037,7 +1040,7 @@ msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
 msgstr "ÎNLOCUIEȘTE UNDERSCORE CU SPAȚIU ÎN CĂUTARE"
 
 msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
-msgstr "ELIMINĂ PUNCTELE DIN CĂUTĂRI CÂND SE PREIA AUTOMAT"
+msgstr "ELIMINĂ PUNCTELE DIN CĂUTĂRI LA PRELUARE AUTOMATĂ"
 
 msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
 msgstr "ACTIVEAZĂ FALLBACK PENTRU REGIUNI ADIȚIONALE"
@@ -1368,6 +1371,9 @@ msgstr "NU S-A PUTUT DESCĂRCA LISTA DE TEME"
 msgid "DOWNLOADING"
 msgstr "SE DESCARCĂ"
 
+msgid "DOWNLOADING THEMES LIST"
+msgstr "SE DESCARCĂ LISTA DE TEME"
+
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
 msgstr "ACEST LUCRU VA ȘTERGE COMPLET TEMA"
 
@@ -1404,9 +1410,6 @@ msgstr ""
 "DACĂ ES-DE A FOST OPRIT FORȚAT. O DESCĂRCARE NOUĂ ESTE NECESARĂ ȘI VECHIUL "
 "DOSAR „themes-list” VA FI REDENUMIT LA „themes-list_CORRUPT_DISABLED”"
 
-msgid "DOWNLOADING THEMES LIST"
-msgstr "SE DESCARCĂ LISTA DE TEME"
-
 msgid "UPDATING THEMES LIST"
 msgstr "SE ACTUALIZEAZĂ LISTA DE TEME"
 
@@ -1441,7 +1444,7 @@ msgid "GENRE:"
 msgstr "GEN:"
 
 msgid "PLAYERS:"
-msgstr "JUCĂTORI:"
+msgstr "NR. JUCĂTORI:"
 
 msgid "NO GAMES FOUND"
 msgstr "NU S-AU GĂSIT JOCURI"
@@ -2087,10 +2090,10 @@ msgid "genre, descending"
 msgstr "gen, descendent"
 
 msgid "players, ascending"
-msgstr "jucători, ascendent"
+msgstr "număr jucători, ascendent"
 
 msgid "players, descending"
-msgstr "jucători, descendent"
+msgstr "număr jucători, descendent"
 
 msgid "last played, ascending"
 msgstr "jucat ultima dată, ascendent"
@@ -2099,10 +2102,10 @@ msgid "last played, descending"
 msgstr "jucat ultima dată, descendent"
 
 msgid "times played, ascending"
-msgstr "număr partide jucate, ascendent"
+msgstr "nr. partide jucate, ascendent"
 
 msgid "times played, descending"
-msgstr "număr partide jucate, descendent"
+msgstr "nr. partide jucate, descendent"
 
 msgid "system, ascending"
 msgstr "sistem, ascendent"
@@ -2197,16 +2200,16 @@ msgstr ""
 "PERSONALIZATE"
 
 msgid "random"
-msgstr "alege aleator"
+msgstr "aleator"
 
 msgid "screensaver"
-msgstr "economizor de ecran"
+msgstr "economizor ecran"
 
 msgid "system"
 msgstr "sistem"
 
 msgid "view media"
-msgstr "vezi media"
+msgstr "media"
 
 msgid "options"
 msgstr "opțiuni"
@@ -2412,7 +2415,7 @@ msgid "GENRE"
 msgstr "GEN"
 
 msgid "PLAYERS"
-msgstr "JUCĂTORI"
+msgstr "NUMĂR DE JUCĂTORI"
 
 msgid "FAVORITE"
 msgstr "FAVORIT"
@@ -2799,7 +2802,3 @@ msgstr "Ai depășit numărul zilnic maxim de informații preluate"
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Serverul a returnat codul de eroare HTTP %s"
-
-#~ msgctxt "metadata"
-#~ msgid "ENTER RELEASE DATE"
-#~ msgstr "INTRODU DATĂ LANSARE"
