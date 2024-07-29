@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-07-24 19:18+0200\n"
-"PO-Revision-Date: 2024-07-25 10:47-0300\n"
+"PO-Revision-Date: 2024-07-29 15:53-0300\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Português (Brasil) <info@es-de.org>\n"
 "Language: pt_BR\n"
@@ -338,6 +338,9 @@ msgstr "ESQUEMA DE COR DO MENU"
 
 msgid "DARK"
 msgstr "ESCURO"
+
+msgid "DARK AND RED"
+msgstr ""
 
 msgid "LIGHT"
 msgstr "CLARO"
@@ -1367,6 +1370,9 @@ msgstr "FALHA AO BAIXAR A LISTA DE TEMAS"
 msgid "DOWNLOADING"
 msgstr "BAIXANDO"
 
+msgid "DOWNLOADING THEMES LIST"
+msgstr "BAIXANDO A LISTA DE TEMAS"
+
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
 msgstr "ISSO VAI APAGAR O TEMA POR COMPLETO"
 
@@ -1404,9 +1410,6 @@ msgstr ""
 "EXEMPLO, SE O PROCESSO ES-DE FOI INTERROMPIDO. SERÁ NECESSÁRIO BAIXÁ-LO DE "
 "NOVO E A ANTIGA PASTA \"themes-list\" SERÁ RENOMEADA PARA \"themes-"
 "list_CORRUPT_DISABLED\""
-
-msgid "DOWNLOADING THEMES LIST"
-msgstr "BAIXANDO A LISTA DE TEMAS"
 
 msgid "UPDATING THEMES LIST"
 msgstr "ATUALIZANDO A LISTA DE TEMAS"
@@ -1915,20 +1918,17 @@ msgstr ""
 "Erro: Falha ao apagar o arquivo temporário de pacote, problemas na permissão?"
 
 msgid "Error: Couldn't write package file, permission problems?"
-msgstr ""
-"Erro: Não foi possível gravar o arquivo de pacote, problemas na permissão?"
+msgstr "Erro: Falha ao gravar o arquivo de pacote, problemas na permissão?"
 
 msgid "Error: Couldn't set permissions on AppImage file"
-msgstr "Erro: Não foi possível definir as permissões no arquivo AppImage"
+msgstr "Erro: Falha ao definir as permissões no arquivo AppImage"
 
 #, c-format
 msgid "Downloaded %s"
 msgstr "Baixado %s"
 
 msgid "Error: Couldn't open AppImage update file for reading"
-msgstr ""
-"Erro: Não foi possível abrir o arquivo de atualização do AppImage para "
-"leitura"
+msgstr "Erro: Falha ao abrir o arquivo de atualização do AppImage para leitura"
 
 msgid "Error: Downloaded file does not match expected MD5 checksum"
 msgstr ""
@@ -1936,13 +1936,13 @@ msgstr ""
 
 msgid "Error: Couldn't rename running AppImage file, permission problems?"
 msgstr ""
-"Erro: Não foi possível renomear o arquivo AppImage em execução, problemas na "
+"Erro: Falha ao renomear o arquivo AppImage em execução, problemas na "
 "permissão?"
 
 msgid "Error: Couldn't replace running AppImage file, permission problems?"
 msgstr ""
-"Erro: Não foi possível substituir o arquivo AppImage em execução, problemas "
-"na permissão?"
+"Erro: Falha ao substituir o arquivo AppImage em execução, problemas na "
+"permissão?"
 
 #, c-format
 msgid "Successfully installed as %s"
@@ -2231,9 +2231,9 @@ msgid ""
 "YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
 "SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
 msgstr ""
-"NÃO FOI POSSÍVEL ANALISAR O ARQUIVO DE CONFIGURAÇÃO DE SISTEMAS. SE VOCÊ "
-"TIVER UM ARQUIVO es_systems.xml ADAPTADO, É PROVÁVEL QUE TEM ALGO ERRADO COM "
-"A SINTAXE DO XML. SE VOCÊ NÃO TIVER UM ARQUIVO DE SISTEMAS PERSONALIZADO, "
+"FALHA AO ANALISAR O ARQUIVO DE CONFIGURAÇÃO DE SISTEMAS. SE VOCÊ TIVER UM "
+"ARQUIVO es_systems.xml ADAPTADO, É PROVÁVEL QUE TEM ALGO ERRADO COM A "
+"SINTAXE DO XML. SE VOCÊ NÃO TIVER UM ARQUIVO DE SISTEMAS PERSONALIZADO, "
 "ENTÃO A INSTALAÇÃO DO ES-DE ESTÁ COM DEFEITO. CONSULTE O ARQUIVO DE REGISTRO "
 "DO APLICATIVO es_log.txt PARA MAIS INFORMAÇÕES"
 
