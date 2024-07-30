@@ -35,6 +35,7 @@ namespace Utils
                                                                                   {{"fr"}, {"FR"}},
                                                                                   {{"it"}, {"IT"}},
                                                                                   {{"ja"}, {"JP"}},
+                                                                                  {{"nl"}, {"NL"}},
                                                                                   {{"pt"}, {"BR"}},
                                                                                   {{"ro"}, {"RO"}},
                                                                                   {{"ru"}, {"RU"}},
@@ -186,6 +187,8 @@ namespace Utils
                 sMenuTitleScaleFactor = 0.90f;
             else if (localePair.first == "fr")
                 sMenuTitleScaleFactor = 0.90f;
+            else if (localePair.first == "nl")
+                sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "pt")
                 sMenuTitleScaleFactor = 0.90f;
             else if (localePair.first == "sv")
