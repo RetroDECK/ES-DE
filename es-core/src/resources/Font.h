@@ -3,7 +3,7 @@
 //  ES-DE Frontend
 //  Font.h
 //
-//  Loading, unloading, caching and rendering of fonts.
+//  Loading, unloading, caching, shaping and rendering of fonts.
 //  Also functions for text wrapping and similar.
 //
 
@@ -17,6 +17,7 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include <hb-ft.h>
 #include <vector>
 
 class TextCache;
@@ -165,18 +166,42 @@ private:
     struct FontFace {
         const ResourceData data;
         FT_Face face;
+        hb_font_t* fontHB;
 
-        FontFace(ResourceData&& d, float size, const std::string& path);
+        FontFace(ResourceData&& d, float size, const std::string& path, hb_font_t* fontArg);
         virtual ~FontFace();
     };
 
     struct Glyph {
         FontTexture* texture;
+        hb_font_t* fontHB;
         glm::vec2 texPos;
         glm::vec2 texSize; // In texels.
         glm::ivec2 advance;
         glm::ivec2 bearing;
         int rows;
+    };
+
+    struct FallbackFontCache {
+        std::string path;
+        std::shared_ptr<FontFace> face;
+        hb_font_t* fontHB;
+    };
+
+    struct ShapeSegment {
+        unsigned int startPos;
+        unsigned int length;
+        hb_font_t* fontHB;
+        bool doShape;
+        std::string substring;
+
+        ShapeSegment()
+            : startPos {0}
+            , length {0}
+            , fontHB {nullptr}
+            , doShape {false}
+        {
+        }
     };
 
     // Completely recreate the texture data for all textures based on mGlyphs information.
@@ -187,26 +212,32 @@ private:
                                FontTexture*& texOut,
                                glm::ivec2& cursorOut);
 
-    std::vector<std::string> getFallbackFontPaths();
-    FT_Face getFaceForChar(unsigned int id);
+    std::vector<FallbackFontCache> getFallbackFontPaths();
+    FT_Face* getFaceForChar(unsigned int id);
+    FT_Face* getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg);
     Glyph* getGlyph(const unsigned int id);
+    Glyph* getGlyphByIndex(const unsigned int id, hb_font_t* fontArg);
 
     float getNewlineStartOffset(const std::string& text,
                                 const unsigned int& charStart,
                                 const float& xLen,
                                 const Alignment& alignment);
 
-    void clearFaceCache() { mFaceCache.clear(); }
-
     static inline FT_Library sLibrary {nullptr};
     static inline std::map<std::tuple<float, std::string>, std::weak_ptr<Font>> sFontMap;
+    static inline std::vector<FallbackFontCache> sFallbackFonts;
 
     Renderer* mRenderer;
+    std::unique_ptr<FontFace> mFontFace;
     std::vector<std::unique_ptr<FontTexture>> mTextures;
-    std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
     std::map<unsigned int, Glyph> mGlyphMap;
+    std::map<std::pair<unsigned int, hb_font_t*>, Glyph> mGlyphMapByIndex;
 
     const std::string mPath;
+    hb_font_t* mFontHB;
+    hb_font_t* mLastFontHB;
+    hb_buffer_t* mBufHB;
+
     float mFontSize;
     float mLetterHeight;
     int mMaxGlyphHeight;
@@ -215,7 +246,7 @@ private:
 // Used to store a sort of "pre-rendered" string.
 // When a TextCache is constructed (Font::buildTextCache()), the vertices and texture coordinates
 // of the string are calculated and stored in the TextCache object. Rendering a previously
-// constructed TextCache (Font::renderTextCache) every frame is MUCH faster than rebuilding
+// constructed TextCache (Font::renderTextCache) every frame is much faster than rebuilding
 // one every frame. Keep in mind you still need the Font object to render a TextCache (as the
 // Font holds the OpenGL texture), and if a Font changes your TextCache may become invalid.
 class TextCache

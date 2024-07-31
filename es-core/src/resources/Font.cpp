@@ -3,7 +3,7 @@
 //  ES-DE Frontend
 //  Font.h
 //
-//  Loading, unloading, caching and rendering of fonts.
+//  Loading, unloading, caching, shaping and rendering of fonts.
 //  Also functions for text wrapping and similar.
 //
 
@@ -18,6 +18,9 @@
 Font::Font(float size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
     , mPath(path)
+    , mFontHB {nullptr}
+    , mLastFontHB {nullptr}
+    , mBufHB {nullptr}
     , mFontSize {size}
     , mLetterHeight {0.0f}
     , mMaxGlyphHeight {static_cast<int>(std::round(size))}
@@ -31,18 +34,31 @@ Font::Font(float size, const std::string& path)
         LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
     }
 
-    if (!sLibrary)
+    if (!sLibrary) {
         initLibrary();
+        sFallbackFonts = getFallbackFontPaths();
+    }
 
-    // Always initialize ASCII characters.
-    for (unsigned int i {32}; i < 127; ++i)
-        getGlyph(i);
+    const std::string fontPath {ResourceManager::getInstance().getResourcePath(mPath)};
+    hb_blob_t* blobHB {hb_blob_create_from_file(fontPath.c_str())};
+    hb_face_t* faceHB {hb_face_create(blobHB, 0)};
+    mFontHB = hb_font_create(faceHB);
+    hb_font_set_ptem(mFontHB, mFontSize);
+    hb_face_destroy(faceHB);
+    hb_blob_destroy(blobHB);
 
-    clearFaceCache();
+    mBufHB = hb_buffer_create();
+
+    ResourceData data {ResourceManager::getInstance().getFileData(fontPath)};
+    mFontFace = std::make_unique<FontFace>(std::move(data), mFontSize, path, mFontHB);
 }
 
 Font::~Font()
 {
+    mFontFace.reset();
+    hb_buffer_destroy(mBufHB);
+    hb_font_destroy(mFontHB);
+
     unload(ResourceManager::getInstance());
 
     auto fontEntry = sFontMap.find(std::tuple<float, std::string>(mFontSize, mPath));
@@ -51,6 +67,9 @@ Font::~Font()
         sFontMap.erase(fontEntry);
 
     if (sFontMap.empty() && sLibrary) {
+        for (auto& font : sFallbackFonts)
+            hb_font_destroy(font.fontHB);
+        sFallbackFonts.clear();
         FT_Done_FreeType(sLibrary);
         sLibrary = nullptr;
     }
@@ -155,62 +174,163 @@ TextCache* Font::buildTextCache(const std::string& text,
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
 
+    // HarfBuzz segments.
+    std::vector<ShapeSegment> segmentsHB;
+
+    {
+        hb_font_t* lastFont {nullptr};
+        unsigned int lastCursor {0};
+        unsigned int byteLength {0};
+        bool addSegment {false};
+        bool shapeSegment {true};
+        bool lastWasNoShaping {false};
+        size_t textCursor {0};
+        size_t lastFlushPos {0};
+
+        while (textCursor < text.length()) {
+            addSegment = false;
+            shapeSegment = true;
+            lastCursor = textCursor;
+            const unsigned int unicode {Utils::String::chars2Unicode(text, textCursor)};
+            Glyph* currGlyph {getGlyph(unicode)};
+            byteLength = textCursor - lastCursor;
+
+            if (unicode == '\'' || unicode == '\n') {
+                // HarfBuzz converts ' and newline characters to invalid characters, so we
+                // need to exclude these from getting shaped. This means adding a new segment.
+                addSegment = true;
+                if (!lastWasNoShaping) {
+                    textCursor -= byteLength;
+                    if (lastFlushPos == textCursor)
+                        addSegment = false;
+                    lastWasNoShaping = true;
+                }
+                else {
+                    shapeSegment = false;
+                    lastWasNoShaping = false;
+                }
+            }
+            else if (textCursor == text.length()) {
+                // Last (and possibly only) segment for this text.
+                addSegment = true;
+            }
+            else if (lastFont != nullptr && lastFont != currGlyph->fontHB) {
+                // The font changed, which requires a new segment.
+                addSegment = true;
+                textCursor -= byteLength;
+            }
+
+            if (addSegment) {
+                ShapeSegment segment;
+                segment.startPos = lastFlushPos;
+                segment.length = textCursor - lastFlushPos;
+                segment.fontHB = (lastFont == nullptr ? currGlyph->fontHB : lastFont);
+                segment.doShape = shapeSegment;
+                if (!shapeSegment)
+                    segment.substring = text.substr(lastFlushPos, textCursor - lastFlushPos);
+
+                segmentsHB.emplace_back(std::move(segment));
+
+                lastFlushPos = textCursor;
+            }
+            lastFont = currGlyph->fontHB;
+        }
+    }
+
     size_t cursor {0};
-    while (cursor < text.length()) {
-        // Also advances cursor.
-        unsigned int character {Utils::String::chars2Unicode(text, cursor)};
-        Glyph* glyph {nullptr};
+    size_t length {0};
+    hb_glyph_info_t* glyphInfo {nullptr};
+    hb_glyph_position_t* glyphPos {nullptr};
+    unsigned int glyphCount {0};
 
-        // Invalid character.
-        if (character == 0)
-            continue;
+    for (auto& segment : segmentsHB) {
+        cursor = 0;
+        length = 0;
 
-        if (character == '\n') {
-            y += getHeight(lineSpacing);
-            x = offset[0] + (xLen != 0 ?
-                                 getNewlineStartOffset(text,
+        if (segment.doShape) {
+            hb_buffer_reset(mBufHB);
+            hb_buffer_add_utf8(mBufHB, text.c_str(), text.length(), segment.startPos,
+                               segment.length);
+            hb_buffer_guess_segment_properties(mBufHB);
+            hb_shape(segment.fontHB, mBufHB, nullptr, 0);
+
+            glyphInfo = hb_buffer_get_glyph_infos(mBufHB, &glyphCount);
+            glyphPos = hb_buffer_get_glyph_positions(mBufHB, &glyphCount);
+            length = glyphCount;
+        }
+        else {
+            length = segment.length;
+        }
+
+        while (cursor < length) {
+            unsigned int character {0};
+
+            if (segment.doShape) {
+                character = glyphInfo[cursor].codepoint;
+                ++cursor;
+            }
+            else {
+                // This also advances the cursor.
+                character = Utils::String::chars2Unicode(segment.substring, cursor);
+            }
+
+            Glyph* glyph {nullptr};
+
+            // Invalid character.
+            if (character == 0)
+                continue;
+
+            if (character == '\n') {
+                y += getHeight(lineSpacing);
+                x = offset[0] +
+                    (xLen != 0 ? getNewlineStartOffset(text,
                                                        static_cast<const unsigned int>(
                                                            cursor) /* cursor is already advanced */,
                                                        xLen, alignment) :
                                  0);
-            continue;
+                continue;
+            }
+
+            if (segment.doShape)
+                glyph = getGlyphByIndex(character, segment.fontHB);
+            else
+                glyph = getGlyph(character);
+
+            if (glyph == nullptr)
+                continue;
+
+            std::vector<Renderer::Vertex>& verts {vertMap[glyph->texture]};
+            size_t oldVertSize {verts.size()};
+            verts.resize(oldVertSize + 6);
+            Renderer::Vertex* vertices {verts.data() + oldVertSize};
+
+            const float glyphStartX {x + glyph->bearing.x};
+            const glm::ivec2& textureSize {glyph->texture->textureSize};
+
+            vertices[1] = {
+                {glyphStartX, y - glyph->bearing.y}, {glyph->texPos.x, glyph->texPos.y}, color};
+            vertices[2] = {{glyphStartX, y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
+                           {glyph->texPos.x, glyph->texPos.y + glyph->texSize.y},
+                           color};
+            vertices[3] = {{glyphStartX + glyph->texSize.x * textureSize.x, y - glyph->bearing.y},
+                           {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y},
+                           color};
+            vertices[4] = {{glyphStartX + glyph->texSize.x * textureSize.x,
+                            y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
+                           {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y + glyph->texSize.y},
+                           color};
+
+            // Round vertices.
+            for (int i {1}; i < 5; ++i)
+                vertices[i].position = glm::round(vertices[i].position);
+
+            // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
+            vertices[0] = vertices[1];
+            vertices[5] = vertices[4];
+
+            // Advance.
+            x += glyph->advance.x;
         }
-
-        glyph = getGlyph(character);
-        if (glyph == nullptr)
-            continue;
-
-        std::vector<Renderer::Vertex>& verts {vertMap[glyph->texture]};
-        size_t oldVertSize {verts.size()};
-        verts.resize(oldVertSize + 6);
-        Renderer::Vertex* vertices {verts.data() + oldVertSize};
-
-        const float glyphStartX {x + glyph->bearing.x};
-        const glm::ivec2& textureSize {glyph->texture->textureSize};
-
-        vertices[1] = {
-            {glyphStartX, y - glyph->bearing.y}, {glyph->texPos.x, glyph->texPos.y}, color};
-        vertices[2] = {{glyphStartX, y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
-                       {glyph->texPos.x, glyph->texPos.y + glyph->texSize.y},
-                       color};
-        vertices[3] = {{glyphStartX + glyph->texSize.x * textureSize.x, y - glyph->bearing.y},
-                       {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y},
-                       color};
-        vertices[4] = {{glyphStartX + glyph->texSize.x * textureSize.x,
-                        y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
-                       {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y + glyph->texSize.y},
-                       color};
-
-        // Round vertices.
-        for (int i {1}; i < 5; ++i)
-            vertices[i].position = glm::round(vertices[i].position);
-
-        // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
-        vertices[0] = vertices[1];
-        vertices[5] = vertices[4];
-
-        // Advance.
-        x += glyph->advance.x;
     }
 
     TextCache* cache {new TextCache()};
@@ -227,7 +347,6 @@ TextCache* Font::buildTextCache(const std::string& text,
         ++i;
     }
 
-    clearFaceCache();
     return cache;
 }
 
@@ -472,12 +591,15 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
 
 size_t Font::getMemUsage() const
 {
+    // TODO: Summarize actual textures properly instead.
     size_t memUsage {0};
     for (auto it = mTextures.cbegin(); it != mTextures.cend(); ++it)
         memUsage += (*it)->textureSize.x * (*it)->textureSize.y * 4;
 
-    for (auto it = mFaceCache.cbegin(); it != mFaceCache.cend(); ++it)
-        memUsage += it->second->data.length;
+    for (auto it = sFallbackFonts.cbegin(); it != sFallbackFonts.cend(); ++it)
+        memUsage += it->face->data.length;
+
+    memUsage += mFontFace->data.length;
 
     return memUsage;
 }
@@ -500,32 +622,43 @@ size_t Font::getTotalMemUsage()
     return total;
 }
 
-std::vector<std::string> Font::getFallbackFontPaths()
+std::vector<Font::FallbackFontCache> Font::getFallbackFontPaths()
 {
-    std::vector<std::string> fontPaths;
+    std::vector<FallbackFontCache> fontPaths;
 
     // Default application fonts.
     ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Regular.ttf");
     ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
     ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Bold.ttf");
 
-    // Ubuntu Condensed.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/Ubuntu-C.ttf"));
-    // Vera sans Unicode.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/DejaVuSans.ttf"));
-    // GNU FreeFont monospaced.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/FreeMono.ttf"));
-    // Various languages, such as Japanese and Chinese.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
-    // Korean.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/NanumMyeongjo.ttf"));
-    // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/fontawesome-webfont.ttf"));
-    // Google Noto Emoji.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/NotoEmoji.ttf"));
+    const std::vector<std::string> fallbackFonts {
+        // Ubuntu Condensed.
+        ":/fonts/Ubuntu-C.ttf",
+        // Vera sans Unicode.
+        ":/fonts/DejaVuSans.ttf",
+        // GNU FreeFont monospaced.
+        ":/fonts/FreeMono.ttf",
+        // Various languages, such as Japanese and Chinese.
+        ":/fonts/DroidSansFallbackFull.ttf",
+        // Korean
+        ":/fonts/NanumMyeongjo.ttf",
+        // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
+        ":/fonts/fontawesome-webfont.ttf", ":/fonts/NotoEmoji.ttf"};
+
+    for (auto& font : fallbackFonts) {
+        FallbackFontCache fallbackFont;
+        const std::string path {ResourceManager::getInstance().getResourcePath(font)};
+        fallbackFont.path = path;
+        hb_blob_t* blobHB {hb_blob_create_from_file(path.c_str())};
+        hb_face_t* faceHB {hb_face_create(blobHB, 0)};
+        hb_font_t* fontHB {hb_font_create(faceHB)};
+        fallbackFont.fontHB = fontHB;
+        hb_face_destroy(faceHB);
+        hb_blob_destroy(blobHB);
+        ResourceData data {ResourceManager::getInstance().getFileData(path)};
+        fallbackFont.face = std::make_shared<FontFace>(std::move(data), 10.0f, path, fontHB);
+        fontPaths.emplace_back(fallbackFont);
+    }
 
     return fontPaths;
 }
@@ -594,7 +727,7 @@ void Font::FontTexture::deinitTexture()
     }
 }
 
-Font::FontFace::FontFace(ResourceData&& d, float size, const std::string& path)
+Font::FontFace::FontFace(ResourceData&& d, float size, const std::string& path, hb_font_t* fontArg)
     : data {d}
 {
     if (FT_New_Memory_Face(sLibrary, d.ptr.get(), static_cast<FT_Long>(d.length), 0, &face) != 0) {
@@ -607,6 +740,7 @@ Font::FontFace::FontFace(ResourceData&& d, float size, const std::string& path)
     // though as the glyphs will still be much more evenely sized across different resolutions.
     FT_Set_Char_Size(face, static_cast<FT_F26Dot6>(0.0f), static_cast<FT_F26Dot6>(size * 64.0f), 0,
                      0);
+    fontHB = fontArg;
 }
 
 Font::FontFace::~FontFace()
@@ -633,11 +767,31 @@ void Font::rebuildTextures()
 
     // Re-upload the texture data.
     for (auto it = mGlyphMap.cbegin(); it != mGlyphMap.cend(); ++it) {
-        FT_Face face {getFaceForChar(it->first)};
-        FT_GlyphSlot glyphSlot {face->glyph};
+        FT_Face* face {getFaceForChar(it->first)};
+        FT_GlyphSlot glyphSlot {(*face)->glyph};
 
-        // Load the glyph bitmap through FT.
-        FT_Load_Char(face, it->first, FT_LOAD_RENDER);
+        // Load the glyph bitmap through FreeType.
+        FT_Load_Char(*face, it->first, FT_LOAD_RENDER);
+
+        const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
+        const glm::ivec2 cursor {
+            static_cast<int>(it->second.texPos.x * it->second.texture->textureSize.x),
+            static_cast<int>(it->second.texPos.y * it->second.texture->textureSize.y)};
+
+        // Upload glyph bitmap to texture.
+        if (glyphSize.x > 0 && glyphSize.y > 0) {
+            mRenderer->updateTexture(it->second.texture->textureId, 0, Renderer::TextureType::RED,
+                                     cursor.x, cursor.y, glyphSize.x, glyphSize.y,
+                                     glyphSlot->bitmap.buffer);
+        }
+    }
+
+    for (auto it = mGlyphMapByIndex.cbegin(); it != mGlyphMapByIndex.cend(); ++it) {
+        FT_Face* face {getFaceForGlyphIndex(it->first.first, it->first.second)};
+        FT_GlyphSlot glyphSlot {(*face)->glyph};
+
+        // Load the glyph bitmap through FreeType.
+        FT_Load_Glyph(*face, it->first.first, FT_LOAD_RENDER);
 
         const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
         const glm::ivec2 cursor {
@@ -683,28 +837,46 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
     }
 }
 
-FT_Face Font::getFaceForChar(unsigned int id)
+FT_Face* Font::getFaceForChar(unsigned int id)
 {
-    static const std::vector<std::string> fallbackFonts {getFallbackFontPaths()};
-
     // Look for the glyph in our current font and then in the fallback fonts if needed.
-    for (unsigned int i {0}; i < fallbackFonts.size() + 1; ++i) {
-        auto fit = mFaceCache.find(i);
-
-        if (fit == mFaceCache.cend()) {
-            const std::string& path {i == 0 ? mPath : fallbackFonts.at(i - 1)};
-            ResourceData data {ResourceManager::getInstance().getFileData(path)};
-            mFaceCache[i] =
-                std::unique_ptr<FontFace>(new FontFace(std::move(data), mFontSize, mPath));
-            fit = mFaceCache.find(i);
-        }
-
-        if (FT_Get_Char_Index(fit->second->face, id) != 0)
-            return fit->second->face;
+    if (FT_Get_Char_Index(mFontFace->face, id) != 0) {
+        mLastFontHB = mFontHB;
+        return &mFontFace->face;
     }
 
-    // Couldn't find a valid glyph, return the "real" face so we get a "missing" character.
-    return mFaceCache.cbegin()->second->face;
+    for (auto& font : sFallbackFonts) {
+        if (FT_Get_Char_Index(font.face->face, id) != 0) {
+            // This is most definitely not thread safe.
+            FT_Set_Char_Size(font.face->face, static_cast<FT_F26Dot6>(0.0f),
+                             static_cast<FT_F26Dot6>(mFontSize * 64.0f), 0, 0);
+            mLastFontHB = font.fontHB;
+            return &font.face->face;
+        }
+    }
+
+    // Couldn't find a valid glyph, return the current font face so we get a "missing" character.
+    return &mFontFace->face;
+}
+
+FT_Face* Font::getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg)
+{
+    if (mFontFace->fontHB == fontArg && FT_Load_Glyph(mFontFace->face, id, FT_LOAD_RENDER) == 0) {
+        mLastFontHB = mFontHB;
+        return &mFontFace->face;
+    }
+
+    for (auto& font : sFallbackFonts) {
+        if (font.fontHB == fontArg && FT_Load_Glyph(font.face->face, id, FT_LOAD_RENDER) == 0) {
+            FT_Set_Char_Size(font.face->face, static_cast<FT_F26Dot6>(0.0f),
+                             static_cast<FT_F26Dot6>(mFontSize * 64.0f), 0, 0);
+            mLastFontHB = font.fontHB;
+            return &font.face->face;
+        }
+    }
+
+    // Couldn't find a valid glyph, return the current font face so we get a "missing" character.
+    return &mFontFace->face;
 }
 
 Font::Glyph* Font::getGlyph(const unsigned int id)
@@ -715,14 +887,14 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
         return &it->second;
 
     // We need to create a new entry.
-    FT_Face face {getFaceForChar(id)};
+    FT_Face* face {getFaceForChar(id)};
     if (!face) {
         LOG(LogError) << "Couldn't find appropriate font face for character " << id << " for font "
                       << mPath;
         return nullptr;
     }
 
-    const FT_GlyphSlot glyphSlot {face->glyph};
+    const FT_GlyphSlot glyphSlot {(*face)->glyph};
 
     // If the font does not contain hinting information then force the use of the automatic
     // hinter that is built into FreeType. Note: Using font-supplied hints generally looks worse
@@ -730,7 +902,7 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     // const bool hasHinting {static_cast<bool>(glyphSlot->face->face_flags & FT_FACE_FLAG_HINTER)};
     const bool hasHinting {true};
 
-    if (FT_Load_Char(face, id,
+    if (FT_Load_Char(*face, id,
                      (hasHinting ?
                           FT_LOAD_RENDER :
                           FT_LOAD_RENDER | FT_LOAD_FORCE_AUTOHINT | FT_LOAD_TARGET_LIGHT))) {
@@ -758,6 +930,77 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     // Create glyph.
     Glyph& glyph {mGlyphMap[id]};
 
+    glyph.fontHB = mLastFontHB;
+    glyph.texture = tex;
+    glyph.texPos = {cursor.x / static_cast<float>(tex->textureSize.x),
+                    cursor.y / static_cast<float>(tex->textureSize.y)};
+    glyph.texSize = {glyphSize.x / static_cast<float>(tex->textureSize.x),
+                     glyphSize.y / static_cast<float>(tex->textureSize.y)};
+    glyph.advance = {glyphSlot->metrics.horiAdvance >> 6, glyphSlot->metrics.vertAdvance >> 6};
+    glyph.bearing = {glyphSlot->metrics.horiBearingX >> 6, glyphSlot->metrics.horiBearingY >> 6};
+    glyph.rows = glyphSize.y;
+
+    // Upload glyph bitmap to texture.
+    if (glyphSize.x > 0 && glyphSize.y > 0) {
+        mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
+                                 glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+    }
+
+    return &glyph;
+}
+
+Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg)
+{
+    // Check if the glyph has already been loaded.
+    auto it = mGlyphMapByIndex.find(std::make_pair(id, fontArg));
+    if (it != mGlyphMapByIndex.cend())
+        return &it->second;
+
+    // We need to create a new entry.
+    FT_Face* face {getFaceForGlyphIndex(id, fontArg)};
+    if (!face) {
+        LOG(LogError) << "Couldn't find appropriate font face for character " << id << " for font "
+                      << mPath;
+        return nullptr;
+    }
+
+    const FT_GlyphSlot glyphSlot {(*face)->glyph};
+
+    // If the font does not contain hinting information then force the use of the automatic
+    // hinter that is built into FreeType. Note: Using font-supplied hints generally looks worse
+    // than using the auto-hinter so it's disabled for now.
+    // const bool hasHinting {static_cast<bool>(glyphSlot->face->face_flags & FT_FACE_FLAG_HINTER)};
+    const bool hasHinting {true};
+
+    if (FT_Load_Glyph(*face, id,
+                      (hasHinting ?
+                           FT_LOAD_RENDER :
+                           FT_LOAD_RENDER | FT_LOAD_FORCE_AUTOHINT | FT_LOAD_TARGET_LIGHT))) {
+        LOG(LogError) << "Couldn't find glyph for character " << id << " for font " << mPath
+                      << ", size " << mFontSize;
+        return nullptr;
+    }
+
+    FontTexture* tex {nullptr};
+    glm::ivec2 cursor {0, 0};
+    const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
+    getTextureForNewGlyph(glyphSize, tex, cursor);
+
+    // This should (hopefully) never occur as size constraints are enforced earlier on.
+    if (tex == nullptr) {
+        LOG(LogError) << "Couldn't create glyph for character " << id << " for font " << mPath
+                      << ", size " << mFontSize << " (no suitable texture found)";
+        return nullptr;
+    }
+
+    // Use the letter 'S' as a size reference.
+    if (mLetterHeight == 0 && id == 'S')
+        mLetterHeight = static_cast<float>(glyphSize.y);
+
+    // Create glyph.
+    Glyph& glyph {mGlyphMapByIndex[std::make_pair(id, mLastFontHB)]};
+
+    glyph.fontHB = mLastFontHB;
     glyph.texture = tex;
     glyph.texPos = {cursor.x / static_cast<float>(tex->textureSize.x),
                     cursor.y / static_cast<float>(tex->textureSize.y)};
