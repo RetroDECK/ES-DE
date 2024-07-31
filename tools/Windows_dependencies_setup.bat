@@ -135,6 +135,26 @@ copy /Y glew\bin\Release\x64\glew32.dll ..
 copy /Y glew\lib\Release\x64\glew32.lib ..
 
 echo:
+echo Setting up HarfBuzz
+
+if exist harfbuzz\ (
+  rmdir /S /Q harfbuzz
+)
+
+git clone https://github.com/harfbuzz/harfbuzz.git
+
+if not exist harfbuzz\ (
+  echo harfbuzz directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+cd harfbuzz
+git checkout 9.0.0
+mkdir build
+cd ..
+
+echo:
 echo Setting up FreeType
 
 if exist freetype\ (

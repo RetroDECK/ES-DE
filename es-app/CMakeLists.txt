@@ -161,6 +161,7 @@ if(WIN32)
                   ../freetype.dll
                   ../git2.dll
                   ../glew32.dll
+                  ../harfbuzz.dll
                   ../libcrypto-3-x64.dll
                   ../libcurl-x64.dll
                   ../libiconv-2.dll

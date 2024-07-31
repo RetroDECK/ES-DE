@@ -26,6 +26,26 @@ echo:
 
 cd external
 
+echo Building HarfBuzz
+
+if not exist harfbuzz\build\ (
+  echo harfbuzz directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+cd harfbuzz\build
+if exist CMakeCache.txt (
+  nmake clean
+  del CMakeCache.txt
+)
+
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+nmake
+copy /Y harfbuzz.dll ..\..\..\
+copy /Y harfbuzz.lib ..\..\..\
+cd ..\..
+
 echo Building FreeType
 
 if not exist freetype\build\ (
