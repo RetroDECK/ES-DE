@@ -137,6 +137,7 @@ elseif(NOT EMSCRIPTEN AND NOT ANDROID)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
+    find_package(HarfBuzz REQUIRED)
     find_package(Intl REQUIRED)
     find_package(Libgit2 REQUIRED)
     find_package(Pugixml REQUIRED)
@@ -509,6 +510,7 @@ else()
                             ${FreeImage_INCLUDE_DIRS}
                             ${FREETYPE_INCLUDE_DIRS}
                             ${GIT2_INCLUDE_PATH}
+                            ${HarfBuzz_INCLUDE_DIRS}
                             ${PUGIXML_INCLUDE_DIRS}
                             ${SDL2_INCLUDE_DIR})
 endif()
@@ -627,6 +629,7 @@ else()
                          ${FreeImage_LIBRARIES}
                          ${FREETYPE_LIBRARIES}
                          ${GIT2_LIBRARY}
+                         ${HarfBuzz_LIBRARIES}
                          ${PUGIXML_LIBRARIES}
                          ${SDL2_LIBRARY})
     if(Intl_LIBRARY)
