@@ -40,7 +40,7 @@ if exist CMakeCache.txt (
   del CMakeCache.txt
 )
 
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DHB_BUILD_SUBSET=off ..
 nmake
 copy /Y harfbuzz.dll ..\..\..\
 copy /Y harfbuzz.lib ..\..\..\

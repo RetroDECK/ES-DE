@@ -97,7 +97,7 @@ fi
 
 cd harfbuzz/build
 rm -f CMakeCache.txt
-cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DHB_BUILD_SUBSET=off ..
 make clean
 make -j${JOBS}
 cp libharfbuzz.dylib ../../../
