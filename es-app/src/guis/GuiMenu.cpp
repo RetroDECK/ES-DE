@@ -56,26 +56,25 @@ GuiMenu::GuiMenu()
     if (isFullUI)
         addEntry("SCRAPER", mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
-    if (isFullUI)
-        addEntry("UI SETTINGS", mMenuColorPrimary, true, [this] { openUIOptions(); });
-
-    addEntry("SOUND SETTINGS", mMenuColorPrimary, true, [this] { openSoundOptions(); });
+    addEntry("RETRODECK CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckConfigurator(); });
 
     if (isFullUI)
-        addEntry("INPUT DEVICE SETTINGS", mMenuColorPrimary, true,
-                 [this] { openInputDeviceOptions(); });
+    {
+        addEntry("ES-DE CONFIGURATIONS", mMenuColorPrimary, true, [this]
+        {
+            auto configMenu = new GuiMenu(mWindow);
 
-    if (isFullUI)
-        addEntry("GAME COLLECTION SETTINGS", mMenuColorPrimary, true,
-                 [this] { openCollectionSystemOptions(); });
+            configMenu->addEntry("UI SETTINGS", mMenuColorPrimary, true, [this] { openUIOptions(); });
+            configMenu->addEntry("SOUND SETTINGS", mMenuColorPrimary, true, [this] { openSoundOptions(); });
+            configMenu->addEntry("INPUT DEVICE SETTINGS", mMenuColorPrimary, true, [this] { openInputDeviceOptions(); });
+            configMenu->addEntry("OTHER SETTINGS", mMenuColorPrimary, true, [this] { openOtherOptions(); });
 
-    if (isFullUI)
-        addEntry("OTHER SETTINGS", mMenuColorPrimary, true, [this] { openOtherOptions(); });
+            mWindow->pushGui(configMenu);
+        });
+    }
 
     if (isFullUI)
         addEntry("UTILITIES", mMenuColorPrimary, true, [this] { openUtilities(); });
-
-    addEntry("RETRODECK CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckConfigurator(); });
 
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
