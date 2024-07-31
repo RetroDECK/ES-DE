@@ -88,6 +88,22 @@ make install
 cd ..
 
 echo
+echo "\nBuilding HarfBuzz"
+
+if [ ! -d harfbuzz/build ]; then
+  echo "harfbuzz directory is missing, aborting."
+  exit
+fi
+
+cd harfbuzz/build
+rm -f CMakeCache.txt
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+make clean
+make -j${JOBS}
+cp libharfbuzz.dylib ../../../
+cd ../..
+
+echo
 echo "\nBuilding FreeType"
 
 if [ ! -d freetype/build ]; then

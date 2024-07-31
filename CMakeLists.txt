@@ -474,6 +474,7 @@ if(APPLE)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/gettext/gettext-runtime/intl
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/harfbuzz/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL)
 elseif(WIN32)
@@ -548,6 +549,7 @@ if(APPLE)
                          ${PROJECT_SOURCE_DIR}/libfreeimage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
                          ${PROJECT_SOURCE_DIR}/libgit2.1.7.dylib
+                         ${PROJECT_SOURCE_DIR}/libharfbuzz.dylib
                          ${PROJECT_SOURCE_DIR}/libintl.8.dylib
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.0.dylib)

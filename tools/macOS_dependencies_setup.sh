@@ -62,6 +62,21 @@ git checkout v1.6.40
 cd ..
 
 echo
+echo "\nSetting up HarfBuzz"
+rm -rf harfbuzz
+git clone https://github.com/harfbuzz/harfbuzz.git
+
+if [ ! -d harfbuzz ]; then
+  echo "harfbuzz directory is missing, aborting."
+  exit
+fi
+
+cd harfbuzz
+git checkout 9.0.0
+mkdir build
+cd ..
+
+echo
 echo "\nSetting up FreeType"
 rm -rf freetype
 git clone https://github.com/freetype/freetype.git
