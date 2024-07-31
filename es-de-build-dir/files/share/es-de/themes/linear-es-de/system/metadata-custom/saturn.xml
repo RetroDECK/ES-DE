@@ -1,7 +1,0 @@
-<theme>
-   <view name="system,gamelist">
-      <text name="system-label">
-         <text>${systemManufacturer}  /  ${systemReleaseYear}  /  ${systemHardwareType}</text>
-      </text>
-   </view>
-</theme>
