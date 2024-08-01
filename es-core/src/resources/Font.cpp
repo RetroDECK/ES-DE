@@ -713,6 +713,9 @@ bool Font::buildShapeSegments(const std::string& text)
         else if (textCursor == text.length()) {
             // Last (and possibly only) segment for this text.
             addSegment = true;
+            // In case the font changed for the last character.
+            if (lastFont != nullptr && lastFont != currGlyph->fontHB)
+                textCursor -= byteLength;
         }
         else if (lastFont != nullptr && lastFont != currGlyph->fontHB) {
             // The font changed, which requires a new segment.
