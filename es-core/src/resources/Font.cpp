@@ -176,52 +176,20 @@ TextCache* Font::buildTextCache(const std::string& text,
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
 
     // Build segments for HarfBuzz.
-    buildShapeSegments(text);
-
-    size_t cursor {0};
-    size_t length {0};
-    hb_glyph_info_t* glyphInfo {nullptr};
-    hb_glyph_position_t* glyphPos {nullptr};
-    unsigned int glyphCount {0};
+    if (buildShapeSegments(text))
+        shapeSegments(text);
 
     for (auto& segment : mSegmentsHB) {
-        cursor = 0;
-        length = 0;
-
-        if (segment.doShape) {
-            hb_buffer_reset(mBufHB);
-            hb_buffer_add_utf8(mBufHB, text.c_str(), text.length(), segment.startPos,
-                               segment.length);
-            hb_buffer_guess_segment_properties(mBufHB);
-            hb_shape(segment.fontHB, mBufHB, nullptr, 0);
-
-            glyphInfo = hb_buffer_get_glyph_infos(mBufHB, &glyphCount);
-            glyphPos = hb_buffer_get_glyph_positions(mBufHB, &glyphCount);
-            length = glyphCount;
-        }
-        else {
-            length = segment.length;
-        }
-
-        while (cursor < length) {
-            unsigned int character {0};
-
-            if (segment.doShape) {
-                character = glyphInfo[cursor].codepoint;
-                ++cursor;
-            }
-            else {
-                // This also advances the cursor.
-                character = Utils::String::chars2Unicode(segment.substring, cursor);
-            }
+        for (size_t cursor {0}; cursor < segment.glyphIndexes.size(); ++cursor) {
+            unsigned int character {segment.glyphIndexes[cursor]};
 
             Glyph* glyph {nullptr};
 
             // Invalid character.
-            if (character == 0)
+            if (!segment.doShape && character == 0)
                 continue;
 
-            if (character == '\n') {
+            if (!segment.doShape && character == '\n') {
                 y += getHeight(lineSpacing);
                 x = offset[0] +
                     (xLen != 0 ? getNewlineStartOffset(text,
@@ -697,13 +665,13 @@ void Font::initLibrary()
     }
 }
 
-void Font::buildShapeSegments(const std::string& text)
+bool Font::buildShapeSegments(const std::string& text)
 {
     // Calculate the hash value for the string to make sure we're not building segments
     // repeatedly for the same text.
     const size_t hashValue {std::hash<std::string> {}(text)};
     if (hashValue == mTextHash)
-        return;
+        return false;
 
     mTextHash = hashValue;
     mSegmentsHB.clear();
@@ -766,6 +734,55 @@ void Font::buildShapeSegments(const std::string& text)
             lastFlushPos = textCursor;
         }
         lastFont = currGlyph->fontHB;
+    }
+
+    return true;
+}
+
+void Font::shapeSegments(const std::string& text)
+{
+    if (mSegmentsHB.empty())
+        return;
+
+    size_t cursor {0};
+    size_t length {0};
+    hb_glyph_info_t* glyphInfo {nullptr};
+    hb_glyph_position_t* glyphPos {nullptr};
+    unsigned int glyphCount {0};
+
+    for (auto& segment : mSegmentsHB) {
+        cursor = 0;
+        length = 0;
+        segment.glyphIndexes.clear();
+
+        if (segment.doShape) {
+            hb_buffer_reset(mBufHB);
+            hb_buffer_add_utf8(mBufHB, text.c_str(), text.length(), segment.startPos,
+                               segment.length);
+            hb_buffer_guess_segment_properties(mBufHB);
+            hb_shape(segment.fontHB, mBufHB, nullptr, 0);
+
+            glyphInfo = hb_buffer_get_glyph_infos(mBufHB, &glyphCount);
+            length = glyphCount;
+        }
+        else {
+            length = segment.length;
+        }
+
+        while (cursor < length) {
+            unsigned int character {0};
+
+            if (segment.doShape) {
+                character = glyphInfo[cursor].codepoint;
+                ++cursor;
+            }
+            else {
+                // This also advances the cursor.
+                character = Utils::String::chars2Unicode(segment.substring, cursor);
+            }
+
+            segment.glyphIndexes.emplace_back(character);
+        }
     }
 }
 

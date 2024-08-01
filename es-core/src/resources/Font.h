@@ -194,6 +194,7 @@ private:
         hb_font_t* fontHB;
         bool doShape;
         std::string substring;
+        std::vector<unsigned int> glyphIndexes;
 
         ShapeSegment()
             : startPos {0}
@@ -205,7 +206,8 @@ private:
     };
 
     // Builds segments for HarfBuzz.
-    void buildShapeSegments(const std::string& text);
+    bool buildShapeSegments(const std::string& text);
+    void shapeSegments(const std::string& text);
 
     // Completely recreate the texture data for all textures based on mGlyphs information.
     void rebuildTextures();
