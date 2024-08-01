@@ -56,10 +56,10 @@ GuiMenu::GuiMenu()
     if (isFullUI)
         addEntry("SCRAPER", mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
-    addEntry("RETRODECK CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckConfigurator(); });
+    if (isFullUI)
+        addEntry("RETRODECK CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckConfigurator(); });
 
     if (isFullUI)
-    {
         addEntry("ES-DE CONFIGURATIONS", mMenuColorPrimary, true, [this]
         {
             auto configMenu = new GuiMenu(mWindow);
