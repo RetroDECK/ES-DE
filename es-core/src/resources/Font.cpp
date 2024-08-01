@@ -24,6 +24,7 @@ Font::Font(float size, const std::string& path)
     , mFontSize {size}
     , mLetterHeight {0.0f}
     , mMaxGlyphHeight {static_cast<int>(std::round(size))}
+    , mTextHash {0}
 {
     if (mFontSize < 3.0f) {
         mFontSize = 3.0f;
@@ -174,68 +175,8 @@ TextCache* Font::buildTextCache(const std::string& text,
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
 
-    // HarfBuzz segments.
-    std::vector<ShapeSegment> segmentsHB;
-
-    {
-        hb_font_t* lastFont {nullptr};
-        unsigned int lastCursor {0};
-        unsigned int byteLength {0};
-        bool addSegment {false};
-        bool shapeSegment {true};
-        bool lastWasNoShaping {false};
-        size_t textCursor {0};
-        size_t lastFlushPos {0};
-
-        while (textCursor < text.length()) {
-            addSegment = false;
-            shapeSegment = true;
-            lastCursor = textCursor;
-            const unsigned int unicode {Utils::String::chars2Unicode(text, textCursor)};
-            Glyph* currGlyph {getGlyph(unicode)};
-            byteLength = textCursor - lastCursor;
-
-            if (unicode == '\'' || unicode == '\n') {
-                // HarfBuzz converts ' and newline characters to invalid characters, so we
-                // need to exclude these from getting shaped. This means adding a new segment.
-                addSegment = true;
-                if (!lastWasNoShaping) {
-                    textCursor -= byteLength;
-                    if (lastFlushPos == textCursor)
-                        addSegment = false;
-                    lastWasNoShaping = true;
-                }
-                else {
-                    shapeSegment = false;
-                    lastWasNoShaping = false;
-                }
-            }
-            else if (textCursor == text.length()) {
-                // Last (and possibly only) segment for this text.
-                addSegment = true;
-            }
-            else if (lastFont != nullptr && lastFont != currGlyph->fontHB) {
-                // The font changed, which requires a new segment.
-                addSegment = true;
-                textCursor -= byteLength;
-            }
-
-            if (addSegment) {
-                ShapeSegment segment;
-                segment.startPos = lastFlushPos;
-                segment.length = textCursor - lastFlushPos;
-                segment.fontHB = (lastFont == nullptr ? currGlyph->fontHB : lastFont);
-                segment.doShape = shapeSegment;
-                if (!shapeSegment)
-                    segment.substring = text.substr(lastFlushPos, textCursor - lastFlushPos);
-
-                segmentsHB.emplace_back(std::move(segment));
-
-                lastFlushPos = textCursor;
-            }
-            lastFont = currGlyph->fontHB;
-        }
-    }
+    // Build segments for HarfBuzz.
+    buildShapeSegments(text);
 
     size_t cursor {0};
     size_t length {0};
@@ -243,7 +184,7 @@ TextCache* Font::buildTextCache(const std::string& text,
     hb_glyph_position_t* glyphPos {nullptr};
     unsigned int glyphCount {0};
 
-    for (auto& segment : segmentsHB) {
+    for (auto& segment : mSegmentsHB) {
         cursor = 0;
         length = 0;
 
@@ -638,7 +579,9 @@ std::vector<Font::FallbackFontCache> Font::getFallbackFontPaths()
         // Korean
         ":/fonts/NanumMyeongjo.ttf",
         // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
-        ":/fonts/fontawesome-webfont.ttf", ":/fonts/NotoEmoji.ttf"};
+        ":/fonts/fontawesome-webfont.ttf",
+        // Google Noto Emoji.
+        ":/fonts/NotoEmoji.ttf"};
 
     for (auto& font : fallbackFonts) {
         FallbackFontCache fallbackFont;
@@ -754,6 +697,78 @@ void Font::initLibrary()
     }
 }
 
+void Font::buildShapeSegments(const std::string& text)
+{
+    // Calculate the hash value for the string to make sure we're not building segments
+    // repeatedly for the same text.
+    const size_t hashValue {std::hash<std::string> {}(text)};
+    if (hashValue == mTextHash)
+        return;
+
+    mTextHash = hashValue;
+    mSegmentsHB.clear();
+
+    hb_font_t* lastFont {nullptr};
+    unsigned int lastCursor {0};
+    unsigned int byteLength {0};
+    bool addSegment {false};
+    bool shapeSegment {true};
+    bool lastWasNoShaping {false};
+    size_t textCursor {0};
+    size_t lastFlushPos {0};
+
+    while (textCursor < text.length()) {
+        addSegment = false;
+        shapeSegment = true;
+        lastCursor = textCursor;
+        const unsigned int unicode {Utils::String::chars2Unicode(text, textCursor)};
+        Glyph* currGlyph {getGlyph(unicode)};
+        byteLength = textCursor - lastCursor;
+
+        if (unicode == '\'' || unicode == '\n' || currGlyph->fontHB == nullptr) {
+            // HarfBuzz converts ' and newline characters to invalid characters, so we
+            // need to exclude these from getting shaped. This means adding a new segment.
+            // We also add a segment if there is no font set as it means there was a missing
+            // glyph and the "no glyph" symbol should be shown.
+            addSegment = true;
+            if (!lastWasNoShaping) {
+                textCursor -= byteLength;
+                if (lastFlushPos == textCursor)
+                    addSegment = false;
+                lastWasNoShaping = true;
+            }
+            else {
+                shapeSegment = false;
+                lastWasNoShaping = false;
+            }
+        }
+        else if (textCursor == text.length()) {
+            // Last (and possibly only) segment for this text.
+            addSegment = true;
+        }
+        else if (lastFont != nullptr && lastFont != currGlyph->fontHB) {
+            // The font changed, which requires a new segment.
+            addSegment = true;
+            textCursor -= byteLength;
+        }
+
+        if (addSegment) {
+            ShapeSegment segment;
+            segment.startPos = lastFlushPos;
+            segment.length = textCursor - lastFlushPos;
+            segment.fontHB = (lastFont == nullptr ? currGlyph->fontHB : lastFont);
+            segment.doShape = shapeSegment;
+            if (!shapeSegment)
+                segment.substring = text.substr(lastFlushPos, textCursor - lastFlushPos);
+
+            mSegmentsHB.emplace_back(std::move(segment));
+
+            lastFlushPos = textCursor;
+        }
+        lastFont = currGlyph->fontHB;
+    }
+}
+
 void Font::rebuildTextures()
 {
     // Recreate OpenGL textures.
@@ -850,7 +865,8 @@ FT_Face* Font::getFaceForChar(unsigned int id)
         }
     }
 
-    // Couldn't find a valid glyph, return the current font face so we get a "missing" character.
+    // Couldn't find a valid glyph, return the current font face so we get a "no glyph" character.
+    mLastFontHB = nullptr;
     return &mFontFace->face;
 }
 
@@ -870,7 +886,8 @@ FT_Face* Font::getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg)
         }
     }
 
-    // Couldn't find a valid glyph, return the current font face so we get a "missing" character.
+    // Couldn't find a valid glyph, return the current font face so we get a "no glyph" character.
+    mLastFontHB = nullptr;
     return &mFontFace->face;
 }
 

@@ -204,6 +204,9 @@ private:
         }
     };
 
+    // Builds segments for HarfBuzz.
+    void buildShapeSegments(const std::string& text);
+
     // Completely recreate the texture data for all textures based on mGlyphs information.
     void rebuildTextures();
     void unloadTextures();
@@ -232,6 +235,7 @@ private:
     std::vector<std::unique_ptr<FontTexture>> mTextures;
     std::map<unsigned int, Glyph> mGlyphMap;
     std::map<std::pair<unsigned int, hb_font_t*>, Glyph> mGlyphMapByIndex;
+    std::vector<ShapeSegment> mSegmentsHB;
 
     const std::string mPath;
     hb_font_t* mFontHB;
@@ -241,6 +245,7 @@ private:
     float mFontSize;
     float mLetterHeight;
     int mMaxGlyphHeight;
+    size_t mTextHash;
 };
 
 // Used to store a sort of "pre-rendered" string.
