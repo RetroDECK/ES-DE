@@ -591,15 +591,10 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
 
 size_t Font::getMemUsage() const
 {
-    // TODO: Summarize actual textures properly instead.
     size_t memUsage {0};
+
     for (auto it = mTextures.cbegin(); it != mTextures.cend(); ++it)
         memUsage += (*it)->textureSize.x * (*it)->textureSize.y * 4;
-
-    for (auto it = sFallbackFonts.cbegin(); it != sFallbackFonts.cend(); ++it)
-        memUsage += it->face->data.length;
-
-    memUsage += mFontFace->data.length;
 
     return memUsage;
 }
