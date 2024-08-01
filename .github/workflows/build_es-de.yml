@@ -4,6 +4,7 @@ on:
   push:
     branches:
      - retrodeck-main
+     - feat/*
   workflow_dispatch:
 
 
@@ -79,7 +80,7 @@ jobs:
 
           artifacts: "RetroDECK-ES-DE-Artifact.tar.gz, tree.html"
           allowUpdates: true
-          makeLatest: true
+          makeLatest: ${{ contains(env.BRANCH_NAME, 'feat/') && 'false' || 'true' }}
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
         continue-on-error: true
 
@@ -94,13 +95,13 @@ jobs:
       #     git push origin main
       #   continue-on-error: true # TODO: would be good to update the manifest but it's broken
 
-      - name: GitHub Commit & Push
-        uses: actions-js/push@v1.4
-        with: 
-          github_token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
-          message: '[AUTOMATED] Updating ES-DE after build [skip ci]'
-          branch: retrodeck-main
-        continue-on-error: true # TODO: would be good to update the manifest but it's broken
+      # - name: GitHub Commit & Push
+      #   uses: actions-js/push@v1.4
+      #   with: 
+      #     github_token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+      #     message: '[AUTOMATED] Updating ES-DE after build [skip ci]'
+      #     branch: retrodeck-main
+      #   continue-on-error: true # TODO: would be good to update the manifest but it's broken
             
 
 
