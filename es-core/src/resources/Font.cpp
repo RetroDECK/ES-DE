@@ -785,10 +785,10 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
             // Last (and possibly only) segment for this text.
             addSegment = true;
             // In case the font changed for the last character.
-            if (lastFont != nullptr && lastFont != currGlyph->fontHB)
+            if (lastFont != nullptr && lastFont != currGlyph->fontHB && unicode != ' ')
                 textCursor -= byteLength;
         }
-        else if (lastFont != nullptr && lastFont != currGlyph->fontHB) {
+        else if (lastFont != nullptr && lastFont != currGlyph->fontHB && unicode != ' ') {
             // The font changed, which requires a new segment.
             addSegment = true;
             textCursor -= byteLength;
@@ -807,7 +807,8 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
 
             lastFlushPos = textCursor;
         }
-        lastFont = currGlyph->fontHB;
+        if (unicode != ' ' || lastFont == nullptr)
+            lastFont = currGlyph->fontHB;
     }
 
     if (segmentsHB.empty())
