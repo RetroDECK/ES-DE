@@ -218,10 +218,9 @@ TextCache* Font::buildTextCache(const std::string& text,
             if (!segment.doShape && character == '\n') {
                 y += getHeight(lineSpacing);
                 x = offset[0] +
-                    (xLen != 0 ? getNewlineStartOffset(text,
-                                                       static_cast<const unsigned int>(
-                                                           cursor) /* cursor is already advanced */,
-                                                       xLen, alignment) :
+                    (xLen != 0 ? getNewlineStartOffset(
+                                     text, static_cast<const unsigned int>(segment.startPos + 1),
+                                     xLen, alignment) :
                                  0);
                 continue;
             }
