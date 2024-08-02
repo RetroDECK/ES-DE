@@ -24,7 +24,6 @@ Font::Font(float size, const std::string& path)
     , mFontSize {size}
     , mLetterHeight {0.0f}
     , mMaxGlyphHeight {static_cast<int>(std::round(size))}
-    , mTextHash {0}
 {
     if (mFontSize < 3.0f) {
         mFontSize = 3.0f;
@@ -96,14 +95,17 @@ std::shared_ptr<Font> Font::get(float size, const std::string& path)
 
 glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 {
+    if (text == "")
+        return glm::vec2 {0.0f, getHeight(lineSpacing)};
+
     const float lineHeight {getHeight(lineSpacing)};
     float lineWidth {0.0f};
     float highestWidth {0.0f};
     float y {lineHeight};
 
-    shapeText(text);
+    std::vector<ShapeSegment> segmentsHB {std::move(shapeText(text))};
 
-    for (auto& segment : mSegmentsHB) {
+    for (auto& segment : segmentsHB) {
         for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
             const unsigned int character {segment.glyphIndexes[i]};
             Glyph* glyph {nullptr};
@@ -141,9 +143,9 @@ int Font::loadGlyphs(const std::string& text)
 {
     mMaxGlyphHeight = static_cast<int>(std::round(mFontSize));
 
-    shapeText(text);
+    std::vector<ShapeSegment> segmentsHB {std::move(shapeText(text))};
 
-    for (auto& segment : mSegmentsHB) {
+    for (auto& segment : segmentsHB) {
         for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
             const unsigned int character {segment.glyphIndexes[i]};
             Glyph* glyph {nullptr};
@@ -202,9 +204,9 @@ TextCache* Font::buildTextCache(const std::string& text,
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
 
-    shapeText(text);
+    std::vector<ShapeSegment> segmentsHB {std::move(shapeText(text))};
 
-    for (auto& segment : mSegmentsHB) {
+    for (auto& segment : segmentsHB) {
         for (size_t cursor {0}; cursor < segment.glyphIndexes.size(); ++cursor) {
             const unsigned int character {segment.glyphIndexes[cursor]};
             Glyph* glyph {nullptr};
@@ -338,13 +340,13 @@ std::string Font::wrapText(const std::string& text,
     // There are also many instances where this hack will not lead to correct results.
     float totalWidth {0.0f};
     bool skipAbbreviation {false};
-    shapeText(text);
+    std::vector<ShapeSegment> segmentsHB {std::move(shapeText(text))};
 
-    for (auto& segment : mSegmentsHB)
+    for (auto& segment : segmentsHB)
         totalWidth += segment.glyphsWidth;
 
     if (totalWidth <= maxLength ||
-        (mSegmentsHB.size() == 1 && mSegmentsHB.front().glyphsWidth <= maxLength))
+        (segmentsHB.size() == 1 && segmentsHB.front().glyphsWidth <= maxLength))
         skipAbbreviation = true;
 
     for (size_t i {0}; i < text.length(); ++i) {
@@ -469,10 +471,10 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
     size_t cursor {0};
 
     // TEMPORARY - enable this code when shaped text is properly wrapped in wrapText().
-    // shapeText(wrappedText);
+    // std::vector<ShapeSegment> segmentsHB {std::move(shapeText(wrappedText))};
     // size_t totalPos {0};
 
-    // for (auto& segment : mSegmentsHB) {
+    // for (auto& segment : segmentsHB) {
     //     if (totalPos > stop)
     //         break;
     //     for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
@@ -740,17 +742,9 @@ void Font::initLibrary()
     }
 }
 
-void Font::shapeText(const std::string& text)
+std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
 {
-    // Calculate the hash value for the string to make sure we're not shaping the same
-    // text repeatedly.
-    const size_t hashValue {std::hash<std::string> {}(text)};
-    if (hashValue == mTextHash)
-        return;
-
-    mTextHash = hashValue;
-    mSegmentsHB.clear();
-
+    std::vector<ShapeSegment> segmentsHB;
     hb_font_t* lastFont {nullptr};
     unsigned int lastCursor {0};
     unsigned int byteLength {0};
@@ -809,15 +803,15 @@ void Font::shapeText(const std::string& text)
             if (!shapeSegment)
                 segment.substring = text.substr(lastFlushPos, textCursor - lastFlushPos);
 
-            mSegmentsHB.emplace_back(std::move(segment));
+            segmentsHB.emplace_back(std::move(segment));
 
             lastFlushPos = textCursor;
         }
         lastFont = currGlyph->fontHB;
     }
 
-    if (mSegmentsHB.empty())
-        return;
+    if (segmentsHB.empty())
+        return segmentsHB;
 
     size_t cursor {0};
     size_t length {0};
@@ -827,7 +821,7 @@ void Font::shapeText(const std::string& text)
 
     // Step 2, shape text.
 
-    for (auto& segment : mSegmentsHB) {
+    for (auto& segment : segmentsHB) {
         cursor = 0;
         length = 0;
         segment.glyphIndexes.clear();
@@ -868,6 +862,8 @@ void Font::shapeText(const std::string& text)
             segment.glyphIndexes.emplace_back(character);
         }
     }
+
+    return segmentsHB;
 }
 
 void Font::rebuildTextures()
