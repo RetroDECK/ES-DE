@@ -16,7 +16,7 @@ jobs:
       - name: Clone RetroDECK repo
         uses: actions/checkout@v3
         with:
-          submodules: 'true'
+          submodules: 'recursive'
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
           fetch-depth: 1
 
@@ -80,14 +80,14 @@ jobs:
         continue-on-error: true
 
       - name: Clone Cooker repo
+        if: contains(env.BRANCH_NAME, 'feat/') == false
         uses: actions/checkout@v3
         with:
-          repository: https://github.com/RetroDECK/RetroDECK
+          repository: RetroDECK/RetroDECK
           ref: cooker
-          submodules: 'true'
+          submodules: 'recursive'
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
-          path: "${GITHUB_WORKSPACE}/cooker"
-          fetch-depth: 1
+          path: cooker
 
       - name: "Update RetroDECK Cooker manifest with new artifact URL and SHA256"
         if: contains(env.BRANCH_NAME, 'feat/') == false
