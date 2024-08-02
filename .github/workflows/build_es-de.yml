@@ -4,6 +4,7 @@ on:
   push:
     branches:
      - retrodeck-main
+     - main
      - feat/*
   workflow_dispatch:
 
@@ -84,7 +85,7 @@ jobs:
           repository: RetroDECK/Cooker
           submodules: 'true'
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
-          path: cooker
+          path: "${GITHUB_WORKSPACE}/cooker"
           fetch-depth: 1
 
       - name: "Update RetroDECK Cooker manifest with new artifact URL and SHA256"
@@ -99,7 +100,7 @@ jobs:
       - name: Commit and push changes to Cooker repo
         if: contains(env.BRANCH_NAME, 'feat/') == false
         run: |
-          cd cooker
+          cd "${GITHUB_WORKSPACE}/cooker"
           git checkout feat/lighter-manifest # TODO: remove me later
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
