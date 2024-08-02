@@ -4,25 +4,20 @@ on:
   push:
     branches:
      - retrodeck-main
+     - feat/*
   workflow_dispatch:
 
-
 jobs:
-
   Building_RetroDECK-ES-DE:
     runs-on: ubuntu-latest
     steps:
 
-      # Circumventing this bug: https://github.com/flatpak/flatpak-builder/issues/317
-      # - name: Remove stuck mounts
-      #   run: sudo umount -f /home/ubuntu/es-de-runner/_work/RetroDECK-ES-DE/RetroDECK-ES-DE/.flatpak-builder/rofiles/*
-      #   continue-on-error: true
-    
-      - name: Clone repo
+      - name: Clone RetroDECK repo
         uses: actions/checkout@v3
         with:
           submodules: 'true'
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          fetch-depth: 1
 
       - name: "Install dependencies"
         run: "automation_tools/install_dependencies.sh"
@@ -79,28 +74,35 @@ jobs:
 
           artifacts: "RetroDECK-ES-DE-Artifact.tar.gz, tree.html"
           allowUpdates: true
-          makeLatest: true
+          makeLatest: ${{ contains(env.BRANCH_NAME, 'feat/') && 'false' || 'true' }}
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
         continue-on-error: true
 
-      # - name: "Committing changes"
-      #   with: 
-      #     github_token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
-      #   run: |
-      #     git config user.name "GitHub Actions"
-      #     git config user.email "actions@github.com"
-      #     git add * net.retrodeck.es-de.yml
-      #     git commit -m '[AUTOMATED] Updating ES-DE after build [skip ci]'
-      #     git push origin main
-      #   continue-on-error: true # TODO: would be good to update the manifest but it's broken
+      - name: Clone Cooker repo
+        uses: actions/checkout@v3
+        with:
+          repository: RetroDECK/Cooker
+          submodules: 'true'
+          token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          path: cooker
+          fetch-depth: 1
 
-      - name: GitHub Commit & Push
-        uses: actions-js/push@v1.4
-        with: 
-          github_token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
-          message: '[AUTOMATED] Updating ES-DE after build [skip ci]'
-          branch: retrodeck-main
-        continue-on-error: true # TODO: would be good to update the manifest but it's broken
-            
+      - name: "Update RetroDECK Cooker manifest with new artifact URL and SHA256"
+        if: contains(env.BRANCH_NAME, 'feat/') == false
+        run: |
+          NEW_URL="https://github.com/RetroDECK/ES-DE/releases/download/${{env.BRANCH_NAME}}-${{env.DATE}}/RetroDECK-ES-DE-Artifact.tar.gz"
+          NEW_SHA256=$(cat ${GITHUB_WORKSPACE}/RetroDECK-Artifact-cooker.sha)
 
+          yq e -i '.modules[] | select(.name == "ES-DE") | .sources[0].url = strenv(NEW_URL)' cooker/net.retrodeck.retrodeck.yml
+          yq e -i '.modules[] | select(.name == "ES-DE") | .sources[0].sha256 = strenv(NEW_SHA256)' cooker/net.retrodeck.retrodeck.yml
+
+      - name: Commit and push changes to Cooker repo
+        if: contains(env.BRANCH_NAME, 'feat/') == false
+        run: |
+          cd cooker
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add net.retrodeck.retrodeck.yml
+          git commit -m "ES-DE: updated module with new artifact URL and SHA256 [skip ci]"
+          git push origin HEAD
 
