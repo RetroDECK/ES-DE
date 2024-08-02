@@ -84,7 +84,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: RetroDECK/RetroDECK
-          ref: cooker
+          #ref: cooker
+          ref: feat/lighter-manifest # TODO: put cooker when this is merged
           submodules: 'recursive'
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
           path: cooker
@@ -102,7 +103,6 @@ jobs:
         if: contains(env.BRANCH_NAME, 'feat/') == false
         run: |
           cd "${GITHUB_WORKSPACE}/cooker"
-          git checkout feat/lighter-manifest # TODO: remove me later
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add net.retrodeck.retrodeck.yml
