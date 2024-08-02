@@ -205,8 +205,8 @@ private:
         }
     };
 
-    // Builds segments for HarfBuzz.
-    bool buildShapeSegments(const std::string& text);
+    // Shape text using HarfBuzz.
+    void shapeText(const std::string& text);
     void shapeSegments(const std::string& text);
 
     // Completely recreate the texture data for all textures based on mGlyphs information.

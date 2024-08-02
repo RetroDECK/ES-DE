@@ -101,25 +101,38 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
     float highestWidth {0.0f};
     float y {lineHeight};
 
-    size_t i {0};
-    while (i < text.length()) {
-        unsigned int character {Utils::String::chars2Unicode(text, i)}; // Advances i.
+    shapeText(text);
 
-        if (character == '\n') {
-            if (lineWidth > highestWidth)
-                highestWidth = lineWidth;
+    for (auto& segment : mSegmentsHB) {
+        for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
+            const unsigned int character {segment.glyphIndexes[i]};
+            Glyph* glyph {nullptr};
 
-            lineWidth = 0.0f;
-            y += lineHeight;
+            // Invalid character.
+            if (!segment.doShape && character == 0)
+                continue;
+
+            if (!segment.doShape && character == '\n') {
+                if (lineWidth > highestWidth)
+                    highestWidth = lineWidth;
+
+                lineWidth = 0.0f;
+                y += lineHeight;
+                continue;
+            }
+
+            if (segment.doShape)
+                glyph = getGlyphByIndex(character, segment.fontHB);
+            else
+                glyph = getGlyph(character);
+
+            if (glyph)
+                lineWidth += glyph->advance.x;
         }
 
-        Glyph* glyph {getGlyph(character)};
-        if (glyph)
-            lineWidth += glyph->advance.x;
+        if (lineWidth > highestWidth)
+            highestWidth = lineWidth;
     }
-
-    if (lineWidth > highestWidth)
-        highestWidth = lineWidth;
 
     return glm::vec2 {highestWidth, y};
 }
@@ -128,13 +141,27 @@ int Font::loadGlyphs(const std::string& text)
 {
     mMaxGlyphHeight = static_cast<int>(std::round(mFontSize));
 
-    for (size_t i {0}; i < text.length();) {
-        unsigned int character {Utils::String::chars2Unicode(text, i)}; // Advances i.
-        Glyph* glyph {getGlyph(character)};
+    shapeText(text);
 
-        if (glyph->rows > mMaxGlyphHeight)
-            mMaxGlyphHeight = glyph->rows;
+    for (auto& segment : mSegmentsHB) {
+        for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
+            const unsigned int character {segment.glyphIndexes[i]};
+            Glyph* glyph {nullptr};
+
+            // Invalid character.
+            if (!segment.doShape && character == 0)
+                continue;
+
+            if (segment.doShape)
+                glyph = getGlyphByIndex(character, segment.fontHB);
+            else
+                glyph = getGlyph(character);
+
+            if (glyph && glyph->rows > mMaxGlyphHeight)
+                mMaxGlyphHeight = glyph->rows;
+        }
     }
+
     return mMaxGlyphHeight;
 }
 
@@ -175,14 +202,11 @@ TextCache* Font::buildTextCache(const std::string& text,
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
 
-    // Build segments for HarfBuzz.
-    if (buildShapeSegments(text))
-        shapeSegments(text);
+    shapeText(text);
 
     for (auto& segment : mSegmentsHB) {
         for (size_t cursor {0}; cursor < segment.glyphIndexes.size(); ++cursor) {
-            unsigned int character {segment.glyphIndexes[cursor]};
-
+            const unsigned int character {segment.glyphIndexes[cursor]};
             Glyph* glyph {nullptr};
 
             // Invalid character.
@@ -665,13 +689,13 @@ void Font::initLibrary()
     }
 }
 
-bool Font::buildShapeSegments(const std::string& text)
+void Font::shapeText(const std::string& text)
 {
     // Calculate the hash value for the string to make sure we're not building segments
     // repeatedly for the same text.
     const size_t hashValue {std::hash<std::string> {}(text)};
     if (hashValue == mTextHash)
-        return false;
+        return;
 
     mTextHash = hashValue;
     mSegmentsHB.clear();
@@ -684,6 +708,8 @@ bool Font::buildShapeSegments(const std::string& text)
     bool lastWasNoShaping {false};
     size_t textCursor {0};
     size_t lastFlushPos {0};
+
+    // Step 1, build segments.
 
     while (textCursor < text.length()) {
         addSegment = false;
@@ -739,11 +765,6 @@ bool Font::buildShapeSegments(const std::string& text)
         lastFont = currGlyph->fontHB;
     }
 
-    return true;
-}
-
-void Font::shapeSegments(const std::string& text)
-{
     if (mSegmentsHB.empty())
         return;
 
@@ -752,6 +773,8 @@ void Font::shapeSegments(const std::string& text)
     hb_glyph_info_t* glyphInfo {nullptr};
     hb_glyph_position_t* glyphPos {nullptr};
     unsigned int glyphCount {0};
+
+    // Step 2, shape text.
 
     for (auto& segment : mSegmentsHB) {
         cursor = 0;
