@@ -332,6 +332,21 @@ std::string Font::wrapText(const std::string& text,
     std::vector<std::pair<size_t, float>> dotsSection;
     bool addDots {false};
 
+    // TODO: This is a hack to avoid abbreviations and line breaks of shaped strings that actually
+    // fit within maxLength due to their length having been shortened by the shaping process.
+    // Proper line break support will need to be added for shaped strings as a long term solution.
+    // There are also many instances where this hack will not lead to correct results.
+    float totalWidth {0.0f};
+    bool skipAbbreviation {false};
+    shapeText(text);
+
+    for (auto& segment : mSegmentsHB)
+        totalWidth += segment.glyphsWidth;
+
+    if (totalWidth <= maxLength ||
+        (mSegmentsHB.size() == 1 && mSegmentsHB.front().glyphsWidth <= maxLength))
+        skipAbbreviation = true;
+
     for (size_t i {0}; i < text.length(); ++i) {
         if (text[i] == '\n') {
             if (!multiLine) {
@@ -376,7 +391,7 @@ std::string Font::wrapText(const std::string& text,
             lineWidth += charWidth;
             wrappedText.append(charEntry);
         }
-        else if (!multiLine) {
+        else if (!multiLine && !skipAbbreviation) {
             addDots = true;
             break;
         }
@@ -390,14 +405,15 @@ std::string Font::wrapText(const std::string& text,
                 else if (lastSpace != 0) {
                     if (lastSpace + spaceAccum == wrappedText.size())
                         wrappedText.append("\n");
-                    else
+                    else if (!skipAbbreviation)
                         wrappedText[lastSpace + spaceAccum] = '\n';
                     spaceOffset = lineWidth - lastSpacePos;
                 }
                 else {
                     if (lastSpace == 0)
                         ++spaceAccum;
-                    wrappedText.append("\n");
+                    if (!skipAbbreviation)
+                        wrappedText.append("\n");
                 }
                 if (charEntry != " " && charEntry != "\t") {
                     wrappedText.append(charEntry);
@@ -451,6 +467,41 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
     float lineWidth {0.0f};
     float yPos {0.0f};
     size_t cursor {0};
+
+    // TEMPORARY - enable this code when shaped text is properly wrapped in wrapText().
+    // shapeText(wrappedText);
+    // size_t totalPos {0};
+
+    // for (auto& segment : mSegmentsHB) {
+    //     if (totalPos > stop)
+    //         break;
+    //     for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
+    //         ++totalPos;
+    //         if (totalPos > stop)
+    //             break;
+
+    //         const unsigned int character {segment.glyphIndexes[i]};
+    //         Glyph* glyph {nullptr};
+
+    //         // Invalid character.
+    //         if (!segment.doShape && character == 0)
+    //             continue;
+
+    //         if (!segment.doShape && character == '\n') {
+    //             lineWidth = 0.0f;
+    //             yPos += getHeight(lineSpacing);
+    //             continue;
+    //         }
+
+    //         if (segment.doShape)
+    //             glyph = getGlyphByIndex(character, segment.fontHB);
+    //         else
+    //             glyph = getGlyph(character);
+
+    //         if (glyph)
+    //             lineWidth += glyph->advance.x;
+    //     }
+    // }
 
     while (cursor < stop) {
         unsigned int character {Utils::String::chars2Unicode(wrappedText, cursor)};
@@ -691,8 +742,8 @@ void Font::initLibrary()
 
 void Font::shapeText(const std::string& text)
 {
-    // Calculate the hash value for the string to make sure we're not building segments
-    // repeatedly for the same text.
+    // Calculate the hash value for the string to make sure we're not shaping the same
+    // text repeatedly.
     const size_t hashValue {std::hash<std::string> {}(text)};
     if (hashValue == mTextHash)
         return;
@@ -771,7 +822,7 @@ void Font::shapeText(const std::string& text)
     size_t cursor {0};
     size_t length {0};
     hb_glyph_info_t* glyphInfo {nullptr};
-    hb_glyph_position_t* glyphPos {nullptr};
+    // hb_glyph_position_t* glyphPos {nullptr};
     unsigned int glyphCount {0};
 
     // Step 2, shape text.
@@ -801,10 +852,17 @@ void Font::shapeText(const std::string& text)
             if (segment.doShape) {
                 character = glyphInfo[cursor].codepoint;
                 ++cursor;
+                // TEMPORARY - should read native HarfBuzz size information instead.
+                Glyph* glyph {getGlyphByIndex(
+                    character, segment.fontHB == nullptr ? mFontHB : segment.fontHB)};
+                segment.glyphsWidth += glyph->advance.x;
             }
             else {
                 // This also advances the cursor.
                 character = Utils::String::chars2Unicode(segment.substring, cursor);
+                // TEMPORARY - should read native HarfBuzz size information instead.
+                Glyph* glyph = getGlyph(character);
+                segment.glyphsWidth += glyph->advance.x;
             }
 
             segment.glyphIndexes.emplace_back(character);

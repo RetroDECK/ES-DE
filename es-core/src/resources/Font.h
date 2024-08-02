@@ -191,6 +191,7 @@ private:
     struct ShapeSegment {
         unsigned int startPos;
         unsigned int length;
+        float glyphsWidth; // TEMPORARY
         hb_font_t* fontHB;
         bool doShape;
         std::string substring;
@@ -199,6 +200,7 @@ private:
         ShapeSegment()
             : startPos {0}
             , length {0}
+            , glyphsWidth {0} // TEMPORARY
             , fontHB {nullptr}
             , doShape {false}
         {
@@ -207,7 +209,6 @@ private:
 
     // Shape text using HarfBuzz.
     void shapeText(const std::string& text);
-    void shapeSegments(const std::string& text);
 
     // Completely recreate the texture data for all textures based on mGlyphs information.
     void rebuildTextures();
