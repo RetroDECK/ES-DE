@@ -194,6 +194,7 @@ private:
         float glyphsWidth; // TEMPORARY
         hb_font_t* fontHB;
         bool doShape;
+        bool rightToLeft;
         std::string substring;
         std::vector<unsigned int> glyphIndexes;
 
@@ -203,6 +204,7 @@ private:
             , glyphsWidth {0} // TEMPORARY
             , fontHB {nullptr}
             , doShape {false}
+            , rightToLeft {false}
         {
         }
     };

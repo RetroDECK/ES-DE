@@ -834,6 +834,9 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
             hb_buffer_guess_segment_properties(mBufHB);
             hb_shape(segment.fontHB, mBufHB, nullptr, 0);
 
+            if (hb_buffer_get_direction(mBufHB) == HB_DIRECTION_RTL)
+                segment.rightToLeft = true;
+
             glyphInfo = hb_buffer_get_glyph_infos(mBufHB, &glyphCount);
             length = glyphCount;
         }
