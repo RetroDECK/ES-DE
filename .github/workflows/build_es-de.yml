@@ -82,7 +82,7 @@ jobs:
       - name: Clone Cooker repo
         uses: actions/checkout@v3
         with:
-          repository: RetroDECK/Cooker
+          repository: https://github.com/RetroDECK/RetroDECK
           ref: cooker
           submodules: 'true'
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
