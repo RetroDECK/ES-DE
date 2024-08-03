@@ -43,7 +43,6 @@ Font::Font(float size, const std::string& path)
     hb_blob_t* blobHB {hb_blob_create_from_file(fontPath.c_str())};
     hb_face_t* faceHB {hb_face_create(blobHB, 0)};
     mFontHB = hb_font_create(faceHB);
-    hb_font_set_ptem(mFontHB, mFontSize);
     hb_face_destroy(faceHB);
     hb_blob_destroy(blobHB);
 
@@ -745,13 +744,13 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
 {
     std::vector<ShapeSegment> segmentsHB;
     hb_font_t* lastFont {nullptr};
-    unsigned int lastCursor {0};
-    unsigned int byteLength {0};
+    size_t lastCursor {0};
+    size_t byteLength {0};
+    size_t textCursor {0};
+    size_t lastFlushPos {0};
     bool addSegment {false};
     bool shapeSegment {true};
     bool lastWasNoShaping {false};
-    size_t textCursor {0};
-    size_t lastFlushPos {0};
 
     // Step 1, build segments.
 
@@ -795,8 +794,8 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
 
         if (addSegment) {
             ShapeSegment segment;
-            segment.startPos = lastFlushPos;
-            segment.length = textCursor - lastFlushPos;
+            segment.startPos = static_cast<unsigned int>(lastFlushPos);
+            segment.length = static_cast<unsigned int>(textCursor - lastFlushPos);
             segment.fontHB = (lastFont == nullptr ? currGlyph->fontHB : lastFont);
             segment.doShape = shapeSegment;
             if (!shapeSegment)
@@ -816,7 +815,7 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
     size_t cursor {0};
     size_t length {0};
     hb_glyph_info_t* glyphInfo {nullptr};
-    // hb_glyph_position_t* glyphPos {nullptr};
+    hb_glyph_position_t* glyphPos {nullptr};
     unsigned int glyphCount {0};
 
     // Step 2, shape text.
@@ -828,15 +827,18 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
 
         if (segment.doShape) {
             hb_buffer_reset(mBufHB);
-            hb_buffer_add_utf8(mBufHB, text.c_str(), text.length(), segment.startPos,
-                               segment.length);
+            hb_buffer_add_utf8(mBufHB, text.c_str(), static_cast<int>(text.length()),
+                               segment.startPos, segment.length);
             hb_buffer_guess_segment_properties(mBufHB);
+            hb_font_set_scale(segment.fontHB, static_cast<int>(std::round(mFontSize * 256.0f)),
+                              static_cast<int>(std::round(mFontSize * 256.0f)));
             hb_shape(segment.fontHB, mBufHB, nullptr, 0);
 
             if (hb_buffer_get_direction(mBufHB) == HB_DIRECTION_RTL)
                 segment.rightToLeft = true;
 
             glyphInfo = hb_buffer_get_glyph_infos(mBufHB, &glyphCount);
+            glyphPos = hb_buffer_get_glyph_positions(mBufHB, &glyphCount);
             length = glyphCount;
         }
         else {
@@ -848,17 +850,19 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
 
             if (segment.doShape) {
                 character = glyphInfo[cursor].codepoint;
-                ++cursor;
-                // TEMPORARY - should read native HarfBuzz size information instead.
-                Glyph* glyph {getGlyphByIndex(
-                    character, segment.fontHB == nullptr ? mFontHB : segment.fontHB)};
+                // As HarfBuzz sometimes incorrectly indicates a zero advance we need to get the
+                // advance value from the glyph entry as it will in this case fall back to the
+                // built-in font advance value for the glyph.
+                Glyph* glyph {getGlyphByIndex(character,
+                                              segment.fontHB == nullptr ? mFontHB : segment.fontHB,
+                                              glyphPos[cursor].x_advance)};
                 segment.glyphsWidth += glyph->advance.x;
+                ++cursor;
             }
             else {
                 // This also advances the cursor.
                 character = Utils::String::chars2Unicode(segment.substring, cursor);
-                // TEMPORARY - should read native HarfBuzz size information instead.
-                Glyph* glyph = getGlyph(character);
+                Glyph* glyph {getGlyph(character)};
                 segment.glyphsWidth += glyph->advance.x;
             }
 
@@ -1061,7 +1065,7 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     return &glyph;
 }
 
-Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg)
+Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, int xAdvance)
 {
     // Check if the glyph has already been loaded.
     auto it = mGlyphMapByIndex.find(std::make_pair(id, fontArg));
@@ -1118,7 +1122,13 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg)
                     cursor.y / static_cast<float>(tex->textureSize.y)};
     glyph.texSize = {glyphSize.x / static_cast<float>(tex->textureSize.x),
                      glyphSize.y / static_cast<float>(tex->textureSize.y)};
-    glyph.advance = {glyphSlot->metrics.horiAdvance >> 6, glyphSlot->metrics.vertAdvance >> 6};
+    // Sometimes HarfBuzz incorrectly indicates a zero advance so in this case we need to fall back
+    // to the font-default advance value for the glyph.
+    if (xAdvance == 0)
+        glyph.advance = {glyphSlot->metrics.horiAdvance >> 6, glyphSlot->metrics.vertAdvance >> 6};
+    else
+        glyph.advance = {static_cast<int>(std::round(static_cast<float>(xAdvance) / 256.0f)),
+                         glyphSlot->metrics.vertAdvance >> 6};
     glyph.bearing = {glyphSlot->metrics.horiBearingX >> 6, glyphSlot->metrics.horiBearingY >> 6};
     glyph.rows = glyphSize.y;
 

@@ -224,7 +224,7 @@ private:
     FT_Face* getFaceForChar(unsigned int id);
     FT_Face* getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg);
     Glyph* getGlyph(const unsigned int id);
-    Glyph* getGlyphByIndex(const unsigned int id, hb_font_t* fontArg);
+    Glyph* getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, int xAdvance = 0);
 
     float getNewlineStartOffset(const std::string& text,
                                 const unsigned int& charStart,
