@@ -196,7 +196,7 @@ private:
         bool doShape;
         bool rightToLeft;
         std::string substring;
-        std::vector<unsigned int> glyphIndexes;
+        std::vector<std::pair<unsigned int, int>> glyphIndexes;
 
         ShapeSegment()
             : startPos {0}
@@ -224,7 +224,7 @@ private:
     FT_Face* getFaceForChar(unsigned int id);
     FT_Face* getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg);
     Glyph* getGlyph(const unsigned int id);
-    Glyph* getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, int xAdvance = 0);
+    Glyph* getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, int xAdvance);
 
     float getNewlineStartOffset(const std::string& text,
                                 const unsigned int& charStart,
@@ -239,7 +239,7 @@ private:
     std::unique_ptr<FontFace> mFontFace;
     std::vector<std::unique_ptr<FontTexture>> mTextures;
     std::map<unsigned int, Glyph> mGlyphMap;
-    std::map<std::pair<unsigned int, hb_font_t*>, Glyph> mGlyphMapByIndex;
+    std::map<std::tuple<unsigned int, hb_font_t*, int>, Glyph> mGlyphMapByIndex;
 
     const std::string mPath;
     hb_font_t* mFontHB;

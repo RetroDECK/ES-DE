@@ -106,8 +106,7 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 
     for (auto& segment : segmentsHB) {
         for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
-            const unsigned int character {segment.glyphIndexes[i]};
-            Glyph* glyph {nullptr};
+            const unsigned int character {segment.glyphIndexes[i].first};
 
             // Invalid character.
             if (!segment.doShape && character == 0)
@@ -122,13 +121,7 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
                 continue;
             }
 
-            if (segment.doShape)
-                glyph = getGlyphByIndex(character, segment.fontHB);
-            else
-                glyph = getGlyph(character);
-
-            if (glyph)
-                lineWidth += glyph->advance.x;
+            lineWidth += segment.glyphIndexes[i].second;
         }
 
         if (lineWidth > highestWidth)
@@ -146,7 +139,7 @@ int Font::loadGlyphs(const std::string& text)
 
     for (auto& segment : segmentsHB) {
         for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
-            const unsigned int character {segment.glyphIndexes[i]};
+            const unsigned int character {segment.glyphIndexes[i].first};
             Glyph* glyph {nullptr};
 
             // Invalid character.
@@ -154,7 +147,7 @@ int Font::loadGlyphs(const std::string& text)
                 continue;
 
             if (segment.doShape)
-                glyph = getGlyphByIndex(character, segment.fontHB);
+                glyph = getGlyphByIndex(character, segment.fontHB, segment.glyphIndexes[i].second);
             else
                 glyph = getGlyph(character);
 
@@ -207,7 +200,7 @@ TextCache* Font::buildTextCache(const std::string& text,
 
     for (auto& segment : segmentsHB) {
         for (size_t cursor {0}; cursor < segment.glyphIndexes.size(); ++cursor) {
-            const unsigned int character {segment.glyphIndexes[cursor]};
+            const unsigned int character {segment.glyphIndexes[cursor].first};
             Glyph* glyph {nullptr};
 
             // Invalid character.
@@ -225,7 +218,8 @@ TextCache* Font::buildTextCache(const std::string& text,
             }
 
             if (segment.doShape)
-                glyph = getGlyphByIndex(character, segment.fontHB);
+                glyph =
+                    getGlyphByIndex(character, segment.fontHB, segment.glyphIndexes[cursor].second);
             else
                 glyph = getGlyph(character);
 
@@ -480,8 +474,7 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
     //         if (totalPos > stop)
     //             break;
 
-    //         const unsigned int character {segment.glyphIndexes[i]};
-    //         Glyph* glyph {nullptr};
+    //         const unsigned int character {segment.glyphIndexes[i].first};
 
     //         // Invalid character.
     //         if (!segment.doShape && character == 0)
@@ -493,13 +486,7 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
     //             continue;
     //         }
 
-    //         if (segment.doShape)
-    //             glyph = getGlyphByIndex(character, segment.fontHB);
-    //         else
-    //             glyph = getGlyph(character);
-
-    //         if (glyph)
-    //             lineWidth += glyph->advance.x;
+    //         lineWidth += segment.glyphIndexes[i].second;
     //     }
     // }
 
@@ -853,13 +840,12 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
 
             if (segment.doShape) {
                 character = glyphInfo[cursor].codepoint;
-                // As HarfBuzz sometimes incorrectly indicates a zero advance we need to get the
-                // advance value from the glyph entry as it will in this case fall back to the
-                // built-in font advance value for the glyph.
-                Glyph* glyph {getGlyphByIndex(character,
-                                              segment.fontHB == nullptr ? mFontHB : segment.fontHB,
-                                              glyphPos[cursor].x_advance)};
-                segment.glyphsWidth += glyph->advance.x;
+                getGlyphByIndex(character, segment.fontHB == nullptr ? mFontHB : segment.fontHB,
+                                glyphPos[cursor].x_advance);
+                const int advanceX {static_cast<int>(
+                    std::round(static_cast<float>(glyphPos[cursor].x_advance) / 256.0f))};
+                segment.glyphsWidth += advanceX;
+                segment.glyphIndexes.emplace_back(std::make_pair(character, advanceX));
                 ++cursor;
             }
             else {
@@ -867,9 +853,8 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
                 character = Utils::String::chars2Unicode(segment.substring, cursor);
                 Glyph* glyph {getGlyph(character)};
                 segment.glyphsWidth += glyph->advance.x;
+                segment.glyphIndexes.emplace_back(std::make_pair(character, glyph->advance.x));
             }
-
-            segment.glyphIndexes.emplace_back(character);
         }
     }
 
@@ -904,11 +889,11 @@ void Font::rebuildTextures()
     }
 
     for (auto it = mGlyphMapByIndex.cbegin(); it != mGlyphMapByIndex.cend(); ++it) {
-        FT_Face* face {getFaceForGlyphIndex(it->first.first, it->first.second)};
+        FT_Face* face {getFaceForGlyphIndex(std::get<0>(it->first), std::get<1>(it->first))};
         FT_GlyphSlot glyphSlot {(*face)->glyph};
 
         // Load the glyph bitmap through FreeType.
-        FT_Load_Glyph(*face, it->first.first, FT_LOAD_RENDER);
+        FT_Load_Glyph(*face, std::get<0>(it->first), FT_LOAD_RENDER);
 
         const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
         const glm::ivec2 cursor {
@@ -1071,8 +1056,8 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
 Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, int xAdvance)
 {
     // Check if the glyph has already been loaded.
-    auto it = mGlyphMapByIndex.find(std::make_pair(id, fontArg));
-    if (it != mGlyphMapByIndex.cend())
+    auto it = mGlyphMapByIndex.find(std::make_tuple(id, fontArg, xAdvance));
+    if (it != mGlyphMapByIndex.end())
         return &it->second;
 
     // We need to create a new entry.
@@ -1117,7 +1102,7 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
         mLetterHeight = static_cast<float>(glyphSize.y);
 
     // Create glyph.
-    Glyph& glyph {mGlyphMapByIndex[std::make_pair(id, mLastFontHB)]};
+    Glyph& glyph {mGlyphMapByIndex[std::make_tuple(id, mLastFontHB, xAdvance)]};
 
     glyph.fontHB = mLastFontHB;
     glyph.texture = tex;
@@ -1125,13 +1110,7 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
                     cursor.y / static_cast<float>(tex->textureSize.y)};
     glyph.texSize = {glyphSize.x / static_cast<float>(tex->textureSize.x),
                      glyphSize.y / static_cast<float>(tex->textureSize.y)};
-    // Sometimes HarfBuzz incorrectly indicates a zero advance so in this case we need to fall back
-    // to the font-default advance value for the glyph.
-    if (xAdvance == 0)
-        glyph.advance = {glyphSlot->metrics.horiAdvance >> 6, glyphSlot->metrics.vertAdvance >> 6};
-    else
-        glyph.advance = {static_cast<int>(std::round(static_cast<float>(xAdvance) / 256.0f)),
-                         glyphSlot->metrics.vertAdvance >> 6};
+    glyph.advance = {xAdvance, glyphSlot->metrics.vertAdvance >> 6};
     glyph.bearing = {glyphSlot->metrics.horiBearingX >> 6, glyphSlot->metrics.horiBearingY >> 6};
     glyph.rows = glyphSize.y;
 
