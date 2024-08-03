@@ -385,7 +385,7 @@ std::string Font::wrapText(const std::string& text,
             lastSpacePos = lineWidth;
         }
 
-        if (lineWidth + charWidth <= maxLength) {
+        if (lineWidth + charWidth <= maxLength || skipAbbreviation) {
             if (lineWidth + charWidth + dotsWidth > maxLength)
                 dotsSection.emplace_back(std::make_pair(byteCount, charWidth));
             lineWidth += charWidth;
