@@ -760,6 +760,9 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
         lastCursor = textCursor;
         const unsigned int unicode {Utils::String::chars2Unicode(text, textCursor)};
         Glyph* currGlyph {getGlyph(unicode)};
+        // Extra precaution in case the font is really broken.
+        if (currGlyph == nullptr)
+            continue;
         byteLength = textCursor - lastCursor;
 
         if (unicode == '\'' || unicode == '\n' || currGlyph->fontHB == nullptr) {
