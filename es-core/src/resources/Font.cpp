@@ -311,7 +311,7 @@ std::string Font::wrapText(const std::string& text,
 {
     assert(maxLength > 0.0f);
     const float lineHeight {getHeight(lineSpacing)};
-    const float dotsWidth {sizeText("...").x};
+    const float ellipsisWidth {sizeText("…").x};
     float accumHeight {lineHeight};
     float lineWidth {0.0f};
     float charWidth {0.0f};
@@ -323,33 +323,46 @@ std::string Font::wrapText(const std::string& text,
     size_t byteCount {0};
     std::string wrappedText;
     std::string charEntry;
-    std::vector<std::pair<size_t, float>> dotsSection;
-    bool addDots {false};
-
-    // TODO: This is a hack to avoid abbreviations and line breaks of shaped strings that actually
-    // fit within maxLength due to their length having been shortened by the shaping process.
-    // Proper line break support will need to be added for shaped strings as a long term solution.
-    // There are also many instances where this hack will not lead to correct results.
+    std::vector<std::pair<size_t, float>> ellipsisSection;
+    bool addEllipsis {false};
     float totalWidth {0.0f};
-    bool skipAbbreviation {false};
+
     std::vector<ShapeSegment> segmentsHB {std::move(shapeText(text))};
 
-    for (auto& segment : segmentsHB)
-        totalWidth += segment.glyphsWidth;
+    // This should capture a lot of short strings, which are only a single segment.
+    if (!multiLine && segmentsHB.size() == 1 && segmentsHB.front().shapedWidth <= maxLength)
+        return text;
 
-    if (totalWidth <= maxLength ||
-        (segmentsHB.size() == 1 && segmentsHB.front().glyphsWidth <= maxLength))
-        skipAbbreviation = true;
+    // Additionally this should capture many short multi-segment strings that do not require
+    // more involved line breaking.
+    bool hasNewline {false};
+    for (auto& segment : segmentsHB) {
+        totalWidth += segment.shapedWidth;
+        if (!segment.doShape && segment.substring == "\n") {
+            hasNewline = true;
+            break;
+        }
+    }
+    if (!hasNewline && totalWidth <= maxLength)
+        return text;
+
+    totalWidth = 0.0f;
+
+    // TODO: Add proper line breaking logic that takes substituted glyphs and adjusted horizontal
+    // advance values into consideration.
+
+    for (auto& segment : segmentsHB)
+        totalWidth += segment.shapedWidth;
 
     for (size_t i {0}; i < text.length(); ++i) {
         if (text[i] == '\n') {
             if (!multiLine) {
-                addDots = true;
+                addEllipsis = true;
                 break;
             }
             accumHeight += lineHeight;
             if (maxHeight != 0.0f && accumHeight > maxHeight) {
-                addDots = true;
+                addEllipsis = true;
                 break;
             }
             wrappedText.append("\n");
@@ -379,14 +392,14 @@ std::string Font::wrapText(const std::string& text,
             lastSpacePos = lineWidth;
         }
 
-        if (lineWidth + charWidth <= maxLength || skipAbbreviation) {
-            if (lineWidth + charWidth + dotsWidth > maxLength)
-                dotsSection.emplace_back(std::make_pair(byteCount, charWidth));
+        if (lineWidth + charWidth <= maxLength) {
+            if (lineWidth + charWidth + ellipsisWidth > maxLength)
+                ellipsisSection.emplace_back(std::make_pair(byteCount, charWidth));
             lineWidth += charWidth;
             wrappedText.append(charEntry);
         }
-        else if (!multiLine && !skipAbbreviation) {
-            addDots = true;
+        else if (!multiLine) {
+            addEllipsis = true;
             break;
         }
         else {
@@ -399,15 +412,14 @@ std::string Font::wrapText(const std::string& text,
                 else if (lastSpace != 0) {
                     if (lastSpace + spaceAccum == wrappedText.size())
                         wrappedText.append("\n");
-                    else if (!skipAbbreviation)
+                    else
                         wrappedText[lastSpace + spaceAccum] = '\n';
                     spaceOffset = lineWidth - lastSpacePos;
                 }
                 else {
                     if (lastSpace == 0)
                         ++spaceAccum;
-                    if (!skipAbbreviation)
-                        wrappedText.append("\n");
+                    wrappedText.append("\n");
                 }
                 if (charEntry != " " && charEntry != "\t") {
                     wrappedText.append(charEntry);
@@ -423,7 +435,7 @@ std::string Font::wrapText(const std::string& text,
             }
             else {
                 if (multiLine)
-                    addDots = true;
+                    addEllipsis = true;
                 break;
             }
         }
@@ -431,7 +443,7 @@ std::string Font::wrapText(const std::string& text,
         i = cursor - 1;
     }
 
-    if (addDots) {
+    if (addEllipsis) {
         if (!wrappedText.empty() && wrappedText.back() == ' ') {
             lineWidth -= sizeText(" ").x;
             wrappedText.pop_back();
@@ -440,15 +452,16 @@ std::string Font::wrapText(const std::string& text,
             lineWidth -= sizeText("\t").x;
             wrappedText.pop_back();
         }
-        while (!wrappedText.empty() && !dotsSection.empty() && lineWidth + dotsWidth > maxLength) {
-            lineWidth -= dotsSection.back().second;
-            wrappedText.erase(wrappedText.length() - dotsSection.back().first);
-            dotsSection.pop_back();
+        while (!wrappedText.empty() && !ellipsisSection.empty() &&
+               lineWidth + ellipsisWidth > maxLength) {
+            lineWidth -= ellipsisSection.back().second;
+            wrappedText.erase(wrappedText.length() - ellipsisSection.back().first);
+            ellipsisSection.pop_back();
         }
         if (!wrappedText.empty() && wrappedText.back() == ' ')
             wrappedText.pop_back();
 
-        wrappedText.append("...");
+        wrappedText.append("…");
     }
 
     return wrappedText;
@@ -462,7 +475,7 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
     float yPos {0.0f};
     size_t cursor {0};
 
-    // TEMPORARY - enable this code when shaped text is properly wrapped in wrapText().
+    // TODO: Enable this code when shaped text is properly wrapped in wrapText().
     // std::vector<ShapeSegment> segmentsHB {std::move(shapeText(wrappedText))};
     // size_t totalPos {0};
 
@@ -844,7 +857,7 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
                                 glyphPos[cursor].x_advance);
                 const int advanceX {static_cast<int>(
                     std::round(static_cast<float>(glyphPos[cursor].x_advance) / 256.0f))};
-                segment.glyphsWidth += advanceX;
+                segment.shapedWidth += advanceX;
                 segment.glyphIndexes.emplace_back(std::make_pair(character, advanceX));
                 ++cursor;
             }
@@ -852,7 +865,7 @@ std::vector<Font::ShapeSegment> Font::shapeText(const std::string& text)
                 // This also advances the cursor.
                 character = Utils::String::chars2Unicode(segment.substring, cursor);
                 Glyph* glyph {getGlyph(character)};
-                segment.glyphsWidth += glyph->advance.x;
+                segment.shapedWidth += glyph->advance.x;
                 segment.glyphIndexes.emplace_back(std::make_pair(character, glyph->advance.x));
             }
         }

@@ -191,7 +191,7 @@ private:
     struct ShapeSegment {
         unsigned int startPos;
         unsigned int length;
-        float glyphsWidth; // TEMPORARY
+        float shapedWidth;
         hb_font_t* fontHB;
         bool doShape;
         bool rightToLeft;
@@ -201,7 +201,7 @@ private:
         ShapeSegment()
             : startPos {0}
             , length {0}
-            , glyphsWidth {0} // TEMPORARY
+            , shapedWidth {0}
             , fontHB {nullptr}
             , doShape {false}
             , rightToLeft {false}
