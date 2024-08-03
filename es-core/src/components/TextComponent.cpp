@@ -484,7 +484,7 @@ void TextComponent::onTextChanged()
     std::shared_ptr<Font> font {mFont};
 
     // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
-    lineHeight = mFont->loadGlyphs(text) * mLineSpacing;
+    lineHeight = mFont->loadGlyphs(text + "\n") * mLineSpacing;
 
     const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y * mRelativeScale > lineHeight};
     float offsetY {0.0f};
