@@ -3,8 +3,7 @@
 //  ES-DE Frontend
 //  Font.h
 //
-//  Loading, unloading, caching, shaping and rendering of fonts.
-//  Also functions for text wrapping and similar.
+//  Font management and text shaping and rendering.
 //
 
 #ifndef ES_CORE_RESOURCES_FONT_H
@@ -33,8 +32,6 @@ class TextCache;
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
 #define FONT_PATH_BOLD ":/fonts/Akrobat-Bold.ttf"
 
-// A TrueType Font renderer that uses FreeType and OpenGL.
-// The library is automatically initialized when it's needed.
 class Font : public IReloadable
 {
 public:
@@ -135,9 +132,9 @@ public:
                                               const float sizeMultiplier = 1.0f,
                                               const bool fontSizeDimmed = false);
 
-    // Returns an approximation of VRAM used by this font's texture (in bytes).
+    // Returns an approximation of VRAM used by the glyph atlas textures for this font object.
     size_t getMemUsage() const;
-    // Returns an approximation of total VRAM used by font textures (in bytes).
+    // Returns an approximation of VRAM used by the glyph atlas textures for all font objects.
     static size_t getTotalMemUsage();
 
 private:
@@ -155,11 +152,9 @@ private:
         bool findEmpty(const glm::ivec2& size, glm::ivec2& cursorOut);
 
         // You must call initTexture() after creating a FontTexture to get a textureId.
-        // Initializes the OpenGL texture according to this FontTexture's settings,
-        // updating textureId.
         void initTexture();
 
-        // Deinitializes any existing OpenGL textures, is automatically called in destructor.
+        // Deinitializes all glyph atlas textures.
         void deinitTexture();
     };
 
@@ -217,7 +212,7 @@ private:
     // Shape text using HarfBuzz.
     void shapeText(const std::string& text, std::vector<ShapeSegment>& segmentsHB);
 
-    // Completely recreate the texture data for all textures based on mGlyphs information.
+    // Completely recreate the texture data for all glyph atlas entries.
     void rebuildTextures();
     void unloadTextures();
 
@@ -256,12 +251,7 @@ private:
     int mMaxGlyphHeight;
 };
 
-// Used to store a sort of "pre-rendered" string.
-// When a TextCache is constructed (Font::buildTextCache()), the vertices and texture coordinates
-// of the string are calculated and stored in the TextCache object. Rendering a previously
-// constructed TextCache (Font::renderTextCache) every frame is much faster than rebuilding
-// one every frame. Keep in mind you still need the Font object to render a TextCache (as the
-// Font holds the OpenGL texture), and if a Font changes your TextCache may become invalid.
+// Caching of shaped and rendered text.
 class TextCache
 {
 public:

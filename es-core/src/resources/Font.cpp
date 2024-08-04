@@ -3,8 +3,7 @@
 //  ES-DE Frontend
 //  Font.h
 //
-//  Loading, unloading, caching, shaping and rendering of fonts.
-//  Also functions for text wrapping and similar.
+//  Font management and text shaping and rendering.
 //
 
 #include "resources/Font.h"
@@ -654,7 +653,7 @@ Font::FontTexture::FontTexture(const int mFontSize)
     rowHeight = 0;
     writePos = glm::ivec2 {1, 1};
 
-    // Set the texture atlas to a reasonable size, if we run out of space for adding glyphs then
+    // Set the glyph atlas to a reasonable size, if we run out of space for adding glyphs then
     // more textures will be created dynamically.
     textureSize = glm::ivec2 {mFontSize * 6, mFontSize * 6};
 }
@@ -695,7 +694,7 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursorOut)
 void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
-    // Create a black texture with zero alpha value so that the single-pixel spaces between the
+    // Create a black texture with a zero alpha value so that single-pixel spaces between the
     // glyphs will not be visible. That would otherwise lead to edge artifacts as these pixels
     // would get sampled during scaling.
     std::vector<uint8_t> texture(textureSize.x * textureSize.y * 4, 0);
@@ -722,7 +721,7 @@ Font::FontFace::FontFace(ResourceData&& d, float size, const std::string& path, 
 
     // Even though a fractional font size can be requested, the glyphs will always be rounded
     // to integers. It's not useless to call FT_Set_Char_Size() instead of FT_Set_Pixel_Sizes()
-    // though as the glyphs will still be much more evenely sized across different resolutions.
+    // though as the glyphs will still be much more evenly sized across different resolutions.
     FT_Set_Char_Size(face, static_cast<FT_F26Dot6>(0.0f), static_cast<FT_F26Dot6>(size * 64.0f), 0,
                      0);
     fontHB = fontArg;
@@ -867,6 +866,7 @@ void Font::shapeText(const std::string& text, std::vector<ShapeSegment>& segment
             else {
                 // This also advances the cursor.
                 character = Utils::String::chars2Unicode(segment.substring, cursor);
+
                 Glyph* glyph {getGlyph(character)};
                 segment.shapedWidth += glyph->advance.x;
                 segment.glyphIndexes.emplace_back(std::make_pair(character, glyph->advance.x));
@@ -877,7 +877,7 @@ void Font::shapeText(const std::string& text, std::vector<ShapeSegment>& segment
 
 void Font::rebuildTextures()
 {
-    // Recreate OpenGL textures.
+    // Recreate all glyph atlas textures.
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
         (*it)->initTexture();
 
@@ -909,7 +909,6 @@ void Font::rebuildTextures()
             getFaceForGlyphIndex(std::get<0>(it->first), std::get<1>(it->first), &returnedFont)};
         FT_GlyphSlot glyphSlot {(*face)->glyph};
 
-        // Load the glyph bitmap through FreeType.
         FT_Load_Glyph(*face, std::get<0>(it->first), FT_LOAD_RENDER);
 
         const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
@@ -917,7 +916,6 @@ void Font::rebuildTextures()
             static_cast<int>(it->second.texPos.x * it->second.texture->textureSize.x),
             static_cast<int>(it->second.texPos.y * it->second.texture->textureSize.y)};
 
-        // Upload glyph bitmap to texture.
         if (glyphSize.x > 0 && glyphSize.y > 0) {
             mRenderer->updateTexture(it->second.texture->textureId, 0, Renderer::TextureType::RED,
                                      cursor.x, cursor.y, glyphSize.x, glyphSize.y,
@@ -995,7 +993,6 @@ FT_Face* Font::getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg, hb_font
         }
     }
 
-    // Couldn't find a valid glyph, return the current font face so we get a "no glyph" character.
     *returnedFont = nullptr;
     return &mFontFace->face;
 }
@@ -1019,16 +1016,7 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
 
     const FT_GlyphSlot glyphSlot {(*face)->glyph};
 
-    // If the font does not contain hinting information then force the use of the automatic
-    // hinter that is built into FreeType. Note: Using font-supplied hints generally looks worse
-    // than using the auto-hinter so it's disabled for now.
-    // const bool hasHinting {static_cast<bool>(glyphSlot->face->face_flags & FT_FACE_FLAG_HINTER)};
-    const bool hasHinting {true};
-
-    if (FT_Load_Char(*face, id,
-                     (hasHinting ?
-                          FT_LOAD_RENDER :
-                          FT_LOAD_RENDER | FT_LOAD_FORCE_AUTOHINT | FT_LOAD_TARGET_LIGHT))) {
+    if (FT_Load_Char(*face, id, FT_LOAD_RENDER)) {
         LOG(LogError) << "Couldn't find glyph for character " << id << " for font " << mPath
                       << ", size " << mFontSize;
         return nullptr;
@@ -1063,7 +1051,7 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     glyph.bearing = {glyphSlot->metrics.horiBearingX >> 6, glyphSlot->metrics.horiBearingY >> 6};
     glyph.rows = glyphSize.y;
 
-    // Upload glyph bitmap to texture.
+    // Upload glyph bitmap to glyph atlas texture.
     if (glyphSize.x > 0 && glyphSize.y > 0) {
         mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
                                  glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
@@ -1084,24 +1072,15 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
     // We need to create a new entry.
     FT_Face* face {getFaceForGlyphIndex(id, fontArg, &returnedFont)};
     if (!face) {
-        LOG(LogError) << "Couldn't find appropriate font face for character " << id << " for font "
-                      << mPath;
+        LOG(LogError) << "Couldn't find appropriate font face for glyph index " << id
+                      << " for font " << mPath;
         return nullptr;
     }
 
     const FT_GlyphSlot glyphSlot {(*face)->glyph};
 
-    // If the font does not contain hinting information then force the use of the automatic
-    // hinter that is built into FreeType. Note: Using font-supplied hints generally looks worse
-    // than using the auto-hinter so it's disabled for now.
-    // const bool hasHinting {static_cast<bool>(glyphSlot->face->face_flags & FT_FACE_FLAG_HINTER)};
-    const bool hasHinting {true};
-
-    if (FT_Load_Glyph(*face, id,
-                      (hasHinting ?
-                           FT_LOAD_RENDER :
-                           FT_LOAD_RENDER | FT_LOAD_FORCE_AUTOHINT | FT_LOAD_TARGET_LIGHT))) {
-        LOG(LogError) << "Couldn't find glyph for character " << id << " for font " << mPath
+    if (FT_Load_Glyph(*face, id, FT_LOAD_RENDER)) {
+        LOG(LogError) << "Couldn't find glyph for glyph index " << id << " for font " << mPath
                       << ", size " << mFontSize;
         return nullptr;
     }
@@ -1126,7 +1105,7 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
 
     // This should (hopefully) never occur as size constraints are enforced earlier on.
     if (tex == nullptr) {
-        LOG(LogError) << "Couldn't create glyph for character " << id << " for font " << mPath
+        LOG(LogError) << "Couldn't create glyph for glyph index " << id << " for font " << mPath
                       << ", size " << mFontSize << " (no suitable texture found)";
         return nullptr;
     }
@@ -1148,7 +1127,7 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
     glyph.bearing = {glyphSlot->metrics.horiBearingX >> 6, glyphSlot->metrics.horiBearingY >> 6};
     glyph.rows = glyphSize.y;
 
-    // Upload glyph bitmap to texture.
+    // Upload glyph bitmap to glyph atlas texture.
     if (glyphSize.x > 0 && glyphSize.y > 0) {
         mRenderer->updateTexture(tex->textureId, 0, Renderer::TextureType::RED, cursor.x, cursor.y,
                                  glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
