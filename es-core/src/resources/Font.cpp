@@ -19,7 +19,6 @@ Font::Font(float size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
     , mPath(path)
     , mFontHB {nullptr}
-    , mLastFontHB {nullptr}
     , mBufHB {nullptr}
     , mFontSize {size}
     , mLetterHeight {0.0f}
@@ -882,9 +881,11 @@ void Font::rebuildTextures()
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
         (*it)->initTexture();
 
+    hb_font_t* returnedFont {nullptr};
+
     // Re-upload the texture data.
     for (auto it = mGlyphMap.cbegin(); it != mGlyphMap.cend(); ++it) {
-        FT_Face* face {getFaceForChar(it->first)};
+        FT_Face* face {getFaceForChar(it->first, returnedFont)};
         FT_GlyphSlot glyphSlot {(*face)->glyph};
 
         // Load the glyph bitmap through FreeType.
@@ -904,7 +905,8 @@ void Font::rebuildTextures()
     }
 
     for (auto it = mGlyphMapByIndex.cbegin(); it != mGlyphMapByIndex.cend(); ++it) {
-        FT_Face* face {getFaceForGlyphIndex(std::get<0>(it->first), std::get<1>(it->first))};
+        FT_Face* face {
+            getFaceForGlyphIndex(std::get<0>(it->first), std::get<1>(it->first), returnedFont)};
         FT_GlyphSlot glyphSlot {(*face)->glyph};
 
         // Load the glyph bitmap through FreeType.
@@ -954,11 +956,11 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
     }
 }
 
-FT_Face* Font::getFaceForChar(unsigned int id)
+FT_Face* Font::getFaceForChar(unsigned int id, hb_font_t* returnedFont)
 {
     // Look for the glyph in our current font and then in the fallback fonts if needed.
     if (FT_Get_Char_Index(mFontFace->face, id) != 0) {
-        mLastFontHB = mFontHB;
+        returnedFont = mFontHB;
         return &mFontFace->face;
     }
 
@@ -967,20 +969,20 @@ FT_Face* Font::getFaceForChar(unsigned int id)
             // This is most definitely not thread safe.
             FT_Set_Char_Size(font.face->face, static_cast<FT_F26Dot6>(0.0f),
                              static_cast<FT_F26Dot6>(mFontSize * 64.0f), 0, 0);
-            mLastFontHB = font.fontHB;
+            returnedFont = font.fontHB;
             return &font.face->face;
         }
     }
 
     // Couldn't find a valid glyph, return the current font face so we get a "no glyph" character.
-    mLastFontHB = nullptr;
+    returnedFont = nullptr;
     return &mFontFace->face;
 }
 
-FT_Face* Font::getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg)
+FT_Face* Font::getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg, hb_font_t* returnedFont)
 {
     if (mFontFace->fontHB == fontArg && FT_Load_Glyph(mFontFace->face, id, FT_LOAD_RENDER) == 0) {
-        mLastFontHB = mFontHB;
+        returnedFont = mFontHB;
         return &mFontFace->face;
     }
 
@@ -988,13 +990,13 @@ FT_Face* Font::getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg)
         if (font.fontHB == fontArg && FT_Load_Glyph(font.face->face, id, FT_LOAD_RENDER) == 0) {
             FT_Set_Char_Size(font.face->face, static_cast<FT_F26Dot6>(0.0f),
                              static_cast<FT_F26Dot6>(mFontSize * 64.0f), 0, 0);
-            mLastFontHB = font.fontHB;
+            returnedFont = font.fontHB;
             return &font.face->face;
         }
     }
 
     // Couldn't find a valid glyph, return the current font face so we get a "no glyph" character.
-    mLastFontHB = nullptr;
+    returnedFont = nullptr;
     return &mFontFace->face;
 }
 
@@ -1005,8 +1007,10 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     if (it != mGlyphMap.cend())
         return &it->second;
 
+    hb_font_t* returnedFont {nullptr};
+
     // We need to create a new entry.
-    FT_Face* face {getFaceForChar(id)};
+    FT_Face* face {getFaceForChar(id, returnedFont)};
     if (!face) {
         LOG(LogError) << "Couldn't find appropriate font face for character " << id << " for font "
                       << mPath;
@@ -1049,7 +1053,7 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     // Create glyph.
     Glyph& glyph {mGlyphMap[id]};
 
-    glyph.fontHB = mLastFontHB;
+    glyph.fontHB = returnedFont;
     glyph.texture = tex;
     glyph.texPos = {cursor.x / static_cast<float>(tex->textureSize.x),
                     cursor.y / static_cast<float>(tex->textureSize.y)};
@@ -1075,8 +1079,10 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
     if (it != mGlyphMapByIndex.end())
         return &it->second;
 
+    hb_font_t* returnedFont {nullptr};
+
     // We need to create a new entry.
-    FT_Face* face {getFaceForGlyphIndex(id, fontArg)};
+    FT_Face* face {getFaceForGlyphIndex(id, fontArg, returnedFont)};
     if (!face) {
         LOG(LogError) << "Couldn't find appropriate font face for character " << id << " for font "
                       << mPath;
@@ -1117,9 +1123,9 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
         mLetterHeight = static_cast<float>(glyphSize.y);
 
     // Create glyph.
-    Glyph& glyph {mGlyphMapByIndex[std::make_tuple(id, mLastFontHB, xAdvance)]};
+    Glyph& glyph {mGlyphMapByIndex[std::make_tuple(id, returnedFont, xAdvance)]};
 
-    glyph.fontHB = mLastFontHB;
+    glyph.fontHB = returnedFont;
     glyph.texture = tex;
     glyph.texPos = {cursor.x / static_cast<float>(tex->textureSize.x),
                     cursor.y / static_cast<float>(tex->textureSize.y)};

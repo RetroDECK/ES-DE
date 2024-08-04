@@ -221,8 +221,8 @@ private:
                                glm::ivec2& cursorOut);
 
     std::vector<FallbackFontCache> getFallbackFontPaths();
-    FT_Face* getFaceForChar(unsigned int id);
-    FT_Face* getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg);
+    FT_Face* getFaceForChar(unsigned int id, hb_font_t* returnedFont);
+    FT_Face* getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg, hb_font_t* returnedFont);
     Glyph* getGlyph(const unsigned int id);
     Glyph* getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, int xAdvance);
 
@@ -243,7 +243,6 @@ private:
 
     const std::string mPath;
     hb_font_t* mFontHB;
-    hb_font_t* mLastFontHB;
     hb_buffer_t* mBufHB;
 
     float mFontSize;
