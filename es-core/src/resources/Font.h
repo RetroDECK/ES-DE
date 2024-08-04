@@ -210,7 +210,7 @@ private:
     };
 
     // Shape text using HarfBuzz.
-    std::vector<ShapeSegment> shapeText(const std::string& text);
+    void shapeText(const std::string& text, std::vector<ShapeSegment>& segmentsHB);
 
     // Completely recreate the texture data for all textures based on mGlyphs information.
     void rebuildTextures();
