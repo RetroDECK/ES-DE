@@ -502,6 +502,7 @@ void GuiMenu::openUIOptions()
     applicationLanguage->add("SVENSKA", "sv_SE", selectedApplicationLanguage == "sv_SE");
     applicationLanguage->add("日本語", "ja_JP", selectedApplicationLanguage == "ja_JP");
     applicationLanguage->add("简体中文", "zh_CN", selectedApplicationLanguage == "zh_CN");
+    applicationLanguage->add("العربية", "ar_EG", selectedApplicationLanguage == "ar_EG");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the application langauge to "automatic" in this case.
     if (applicationLanguage->getSelectedObjects().size() == 0)
