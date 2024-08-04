@@ -1109,7 +1109,20 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
     FontTexture* tex {nullptr};
     glm::ivec2 cursor {0, 0};
     const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
-    getTextureForNewGlyph(glyphSize, tex, cursor);
+
+    // Check if there is already a texture entry for the glyph, otherwise create it.
+    // This makes sure we don't create multiple identical glyph atlas entries and waste VRAM.
+    auto it2 = mGlyphTextureMap.find(std::make_pair(id, fontArg));
+    if (it2 != mGlyphTextureMap.end()) {
+        tex = (*it2).second.texture;
+        cursor = (*it2).second.cursor;
+    }
+    else {
+        getTextureForNewGlyph(glyphSize, tex, cursor);
+        GlyphTexture& glyphTexture {mGlyphTextureMap[std::make_pair(id, returnedFont)]};
+        glyphTexture.texture = tex;
+        glyphTexture.cursor = cursor;
+    }
 
     // This should (hopefully) never occur as size constraints are enforced earlier on.
     if (tex == nullptr) {

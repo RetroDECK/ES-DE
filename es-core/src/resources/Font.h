@@ -182,6 +182,11 @@ private:
         int rows;
     };
 
+    struct GlyphTexture {
+        FontTexture* texture;
+        glm::ivec2 cursor;
+    };
+
     struct FallbackFontCache {
         std::string path;
         std::shared_ptr<FontFace> face;
@@ -240,6 +245,7 @@ private:
     std::vector<std::unique_ptr<FontTexture>> mTextures;
     std::map<unsigned int, Glyph> mGlyphMap;
     std::map<std::tuple<unsigned int, hb_font_t*, int>, Glyph> mGlyphMapByIndex;
+    std::map<std::pair<unsigned int, hb_font_t*>, GlyphTexture> mGlyphTextureMap;
 
     const std::string mPath;
     hb_font_t* mFontHB;
