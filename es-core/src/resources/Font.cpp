@@ -1,7 +1,7 @@
 //  SPDX-License-Identifier: MIT
 //
 //  ES-DE Frontend
-//  Font.h
+//  Font.cpp
 //
 //  Font management and text shaping and rendering.
 //
