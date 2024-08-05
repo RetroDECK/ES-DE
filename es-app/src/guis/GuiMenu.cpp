@@ -2023,7 +2023,7 @@ void GuiMenu::openUtilities()
 
 void GuiMenu::openESDEConfiguration() {
     // Create a new GuiSettings instance for the ES-DE Configurations menu
-    auto configMenu = new GuiSettings("ES-DE CONFIGURATIONS");
+    auto s = new GuiSettings("ES-DE CONFIGURATIONS");
 
     HelpStyle style{getHelpStyle()};
 
@@ -2036,7 +2036,7 @@ void GuiMenu::openESDEConfiguration() {
     row.makeAcceptInputHandler([this] {
         openUIOptions();
     });
-    configMenu->addRow(row);
+    s->addRow(row);
 
     // SOUND SETTINGS
     row.elements.clear();
@@ -2047,7 +2047,7 @@ void GuiMenu::openESDEConfiguration() {
     row.makeAcceptInputHandler([this] {
         openSoundOptions();
     });
-    configMenu->addRow(row);
+    s->addRow(row);
 
     // INPUT DEVICE SETTINGS
     row.elements.clear();
@@ -2058,7 +2058,7 @@ void GuiMenu::openESDEConfiguration() {
     row.makeAcceptInputHandler([this] {
         openInputDeviceOptions();
     });
-    configMenu->addRow(row);
+    s->addRow(row);
 
     // OTHER SETTINGS
     row.elements.clear();
@@ -2069,11 +2069,11 @@ void GuiMenu::openESDEConfiguration() {
     row.makeAcceptInputHandler([this] {
         openOtherOptions();
     });
-    configMenu->addRow(row);
+    s->addRow(row);
 
     // Set the size and push the menu onto the GUI stack
-    configMenu->setSize(mSize);
-    mWindow->pushGui(configMenu);
+    s->setSize(mSize);
+    mWindow->pushGui(s);
 }
 
 
