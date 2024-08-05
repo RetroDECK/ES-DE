@@ -9,6 +9,7 @@
 ### Detailed list of changes
 
 * Added localization support
+* Added text shaping support using the HarfBuzz library
 * Added translations for English (United Kingdom) (en_US)
 * Added translations for French (fr_FR)
 * Added translations for Japanese (ja_JP)
@@ -44,6 +45,7 @@
 * StringUtil::toCapitalized() will now capitalize characters following the ([" characters
 * Removed some obsolete code from DateTimeEditComponent
 * Added the libintl library as a dependency
+* Added the HarfBuzz library as a dependency
 * Added case conversion support for the Latin Extended-B Unicode block
 * Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer

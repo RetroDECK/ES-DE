@@ -648,8 +648,6 @@ CPack: - package: /Users/myusername/emulationstation-de/ES-DE_3.0.0-arm64.dmg ge
 
 Only the Microsoft Visual C++ (MSVC) compiler is supported on Windows. Although MinGW/GCC produces higher quality code with ES-DE running around 10% to 25% faster it's unfortunately not sustainable to use it. There are multiple technical issues with third party libraries like severe threading issues with FFmpeg and some libraries like Poppler not being readily available.
 
-**MSVC setup**
-
 Install Git for Windows: \
 [https://gitforwindows.org](https://gitforwindows.org)
 
@@ -663,14 +661,8 @@ MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
 Windows 10 SDK
 Just-In-Time debugger
 C++ AddressSanitizer
-```
-
-If you will only use MSVC and not MinGW, then also add this option:
-```
 C++ CMake tools for Windows
 ```
-
-If not installing the CMake version supplied by Microsoft, you need to make sure that you have a recent version on your machine or CMake will not be able to detect MSVC correctly.
 
 It's strongly recommended to also install Jom, which is a drop-in replacement for nmake that offers support for building in parallel using multiple CPU cores:\
 https://wiki.qt.io/Jom

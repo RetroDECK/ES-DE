@@ -63,6 +63,9 @@ http://glew.sourceforge.net
 GLM \
 https://github.com/g-truc/glm
 
+HarfBuzz \
+https://harfbuzz.github.io
+
 libgit2 \
 https://libgit2.org
 
