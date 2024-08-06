@@ -80,9 +80,10 @@ public:
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);
 
-    // Used to determine mMaxGlyphHeight upfront which is needed for accurate text sizing by
-    // wrapText and buildTextCache. This is required as the requested font height is not
-    // guaranteed and can be exceeded by a few pixels for some glyphs.
+    // This determines mMaxGlyphHeight upfront which is useful for accurate text sizing by
+    // wrapText and buildTextCache as the requested font height is not guaranteed and could be
+    // exceeded by a few pixels for some glyphs. However in most instances setting mMaxGlyphHeight
+    // to the font size is good enough, meaning this somehow expensive operation could be omitted.
     int loadGlyphs(const std::string& text);
 
     TextCache* buildTextCache(const std::string& text,
@@ -115,8 +116,9 @@ public:
                                          const float lineSpacing = 1.5f);
 
     // Return overall height including line spacing.
-    float getHeight(float lineSpacing = 1.5f) const { return mMaxGlyphHeight * lineSpacing; }
-    float getLetterHeight();
+    const float getHeight(float lineSpacing = 1.5f) const { return mMaxGlyphHeight * lineSpacing; }
+    // This uses the letter 'S' as a size reference.
+    const float getLetterHeight() { return mLetterHeight; }
 
     void reload(ResourceManager& rm) override { rebuildTextures(); }
     void unload(ResourceManager& rm) override { unloadTextures(); }

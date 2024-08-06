@@ -308,8 +308,6 @@ void DateTimeEditComponent::updateTextCache()
         dispString = mUppercase ? Utils::String::toUpper(getDisplayString()) : getDisplayString();
     }
     std::shared_ptr<Font> font {getFont()};
-    // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
-    font->loadGlyphs(dispString + "\n");
     mTextCache = std::unique_ptr<TextCache>(font->buildTextCache(dispString, 0, 0, mColor));
 
     if (mAlignRight)

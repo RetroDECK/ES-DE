@@ -48,6 +48,16 @@ Font::Font(float size, const std::string& path)
 
     ResourceData data {ResourceManager::getInstance().getFileData(fontPath)};
     mFontFace = std::make_unique<FontFace>(std::move(data), mFontSize, path, mFontHB);
+
+    // Use the letter 'S' as a size reference.
+    mLetterHeight = getGlyph('S')->rows;
+
+    // As no faces should contain a newline glyph, requesting this character normally returns
+    // the size of the font. However there are instances where this is calculated to a slightly
+    // different size than the actual font size, and in this case we want to use this instead
+    // of the font size to avoid some minor sizing issues.
+    if (getGlyph('\n')->rows > mMaxGlyphHeight)
+        mMaxGlyphHeight = getGlyph('\n')->rows;
 }
 
 Font::~Font()
@@ -133,6 +143,8 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 int Font::loadGlyphs(const std::string& text)
 {
     mMaxGlyphHeight = static_cast<int>(std::round(mFontSize));
+    if (getGlyph('\n')->rows > mMaxGlyphHeight)
+        mMaxGlyphHeight = getGlyph('\n')->rows;
 
     std::vector<ShapeSegment> segmentsHB;
     shapeText(text, segmentsHB);
@@ -520,14 +532,6 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
     }
 
     return glm::vec2 {lineWidth, yPos};
-}
-
-float Font::getLetterHeight()
-{
-    if (mLetterHeight == 0.0f)
-        return mFontSize * 0.737f; // Only needed if face does not contain the letter 'S'.
-    else
-        return mLetterHeight;
 }
 
 std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
@@ -1034,10 +1038,6 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
         return nullptr;
     }
 
-    // Use the letter 'S' as a size reference.
-    if (mLetterHeight == 0 && id == 'S')
-        mLetterHeight = static_cast<float>(glyphSize.y);
-
     // Create glyph.
     Glyph& glyph {mGlyphMap[id]};
 
@@ -1109,10 +1109,6 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
                       << ", size " << mFontSize << " (no suitable texture found)";
         return nullptr;
     }
-
-    // Use the letter 'S' as a size reference.
-    if (mLetterHeight == 0 && id == 'S')
-        mLetterHeight = static_cast<float>(glyphSize.y);
 
     // Create glyph.
     Glyph& glyph {mGlyphMapByIndex[std::make_tuple(id, returnedFont, xAdvance)]};

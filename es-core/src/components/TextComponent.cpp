@@ -479,12 +479,9 @@ void TextComponent::onTextChanged()
     if (!mFont || text.empty() || mSize.x < 0.0f)
         return;
 
-    float lineHeight {0.0f};
-    const bool isScrollable {mParent && mParent->isScrollable()};
     std::shared_ptr<Font> font {mFont};
-
-    // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
-    lineHeight = mFont->loadGlyphs(text + "\n") * mLineSpacing;
+    const float lineHeight {mFont->getHeight(mLineSpacing)};
+    const bool isScrollable {mParent && mParent->isScrollable()};
 
     const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y * mRelativeScale > lineHeight};
     float offsetY {0.0f};
