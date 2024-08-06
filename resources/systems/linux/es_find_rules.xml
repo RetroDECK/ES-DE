@@ -807,10 +807,10 @@
     <emulator name="RUFFLE">
         <!-- Adobe Flash player Ruffle -->
         <rule type="systempath">
-            <entry>/app/bin/ruffle-wrapper.sh</entry>   <!-- RetroDECK -->
             <entry>ruffle</entry>
         </rule>
         <rule type="staticpath">
+            <entry>/app/bin/ruffle-wrapper.sh</entry>   <!-- RetroDECK -->
             <entry>~/Applications/ruffle/ruffle</entry>
             <entry>~/.local/share/applications/ruffle/ruffle</entry>
             <entry>~/.local/bin/ruffle/ruffle</entry>
