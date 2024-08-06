@@ -686,18 +686,18 @@
         <platform>fds</platform>
         <theme>fds</theme>
     </system>
-<!--
+
     <system>
         <name>flash</name>
         <fullname>Adobe Flash</fullname>
         <path>%ROMPATH%/flash</path>
         <extension>.swf .SWF</extension>
-        <command label="Ruffle (Standalone)">%EMULATOR_RUFFLE% &ndash;&ndash;fullscreen %ROM%</command>
-        <command label="Lightspark (Standalone)">%EMULATOR_LIGHTSPARK% &ndash;&ndash;fullscreen %ROM%</command>
+        <command label="Ruffle (Standalone)">%EMULATOR_RUFFLE% %ROM%</command>
+        <!-- <command label="Lightspark (Standalone)">%EMULATOR_LIGHTSPARK% &ndash;&ndash;fullscreen %ROM%</command> -->
         <platform>flash</platform>
         <theme>flash</theme>
     </system>
--->
+
     <system>
         <name>fm7</name>
         <fullname>Fujitsu FM-7</fullname>
