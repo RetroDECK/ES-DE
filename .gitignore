@@ -109,3 +109,7 @@ CPackSourceConfig.cmake
 
 # VSCode
 .vscode/
+
+.flatpak-builder
+es-de-build-dir
+es-de-repo

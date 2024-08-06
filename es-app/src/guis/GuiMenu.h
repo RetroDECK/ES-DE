@@ -45,6 +45,7 @@ private:
     void openCollectionSystemOptions();
     void openOtherOptions();
     void openRetroDeckConfigurator();
+    void openESDEConfiguration();
     void openUtilities();
     void openQuitMenu();
 

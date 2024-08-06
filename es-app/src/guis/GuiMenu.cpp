@@ -57,25 +57,13 @@ GuiMenu::GuiMenu()
         addEntry("SCRAPER", mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
     if (isFullUI)
-        addEntry("UI SETTINGS", mMenuColorPrimary, true, [this] { openUIOptions(); });
-
-    addEntry("SOUND SETTINGS", mMenuColorPrimary, true, [this] { openSoundOptions(); });
+        addEntry("RETRODECK CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckConfigurator(); });
 
     if (isFullUI)
-        addEntry("INPUT DEVICE SETTINGS", mMenuColorPrimary, true,
-                 [this] { openInputDeviceOptions(); });
-
-    if (isFullUI)
-        addEntry("GAME COLLECTION SETTINGS", mMenuColorPrimary, true,
-                 [this] { openCollectionSystemOptions(); });
-
-    if (isFullUI)
-        addEntry("OTHER SETTINGS", mMenuColorPrimary, true, [this] { openOtherOptions(); });
+        addEntry("ES-DE CONFIGURATIONS", mMenuColorPrimary, true, [this] { openESDEConfiguration(); });
 
     if (isFullUI)
         addEntry("UTILITIES", mMenuColorPrimary, true, [this] { openUtilities(); });
-
-    addEntry("RETRODECK CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckConfigurator(); });
 
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
@@ -2032,6 +2020,62 @@ void GuiMenu::openUtilities()
     s->setSize(mSize);
     mWindow->pushGui(s);
 }
+
+void GuiMenu::openESDEConfiguration() {
+    // Create a new GuiSettings instance for the ES-DE Configurations menu
+    auto s = new GuiSettings("ES-DE CONFIGURATIONS");
+
+    HelpStyle style{getHelpStyle()};
+
+    // UI SETTINGS
+    ComponentListRow row;
+    row.addElement(std::make_shared<TextComponent>("UI SETTINGS",
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                   true);
+    row.addElement(mMenu.makeArrow(), false);
+    row.makeAcceptInputHandler([this] {
+        openUIOptions();
+    });
+    s->addRow(row);
+
+    // SOUND SETTINGS
+    row.elements.clear();
+    row.addElement(std::make_shared<TextComponent>("SOUND SETTINGS",
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                   true);
+    row.addElement(mMenu.makeArrow(), false);
+    row.makeAcceptInputHandler([this] {
+        openSoundOptions();
+    });
+    s->addRow(row);
+
+    // INPUT DEVICE SETTINGS
+    row.elements.clear();
+    row.addElement(std::make_shared<TextComponent>("INPUT DEVICE SETTINGS",
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                   true);
+    row.addElement(mMenu.makeArrow(), false);
+    row.makeAcceptInputHandler([this] {
+        openInputDeviceOptions();
+    });
+    s->addRow(row);
+
+    // OTHER SETTINGS
+    row.elements.clear();
+    row.addElement(std::make_shared<TextComponent>("OTHER SETTINGS",
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                   true);
+    row.addElement(mMenu.makeArrow(), false);
+    row.makeAcceptInputHandler([this] {
+        openOtherOptions();
+    });
+    s->addRow(row);
+
+    // Set the size and push the menu onto the GUI stack
+    s->setSize(mSize);
+    mWindow->pushGui(s);
+}
+
 
 void GuiMenu::openQuitMenu()
 {
