@@ -505,6 +505,7 @@ elseif(ANDROID)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/gettext/gettext-runtime/intl
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/harfbuzz/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/icu/icu4c/source/common
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_Android)
@@ -592,6 +593,9 @@ elseif(ANDROID)
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreetype.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libgit2.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libharfbuzz.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libicudata.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libicui18n.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libicuuc.a
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libintl.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libjpeg.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libpoppler.so
