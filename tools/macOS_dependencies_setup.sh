@@ -15,12 +15,13 @@ if [ ! -f .clang-format ]; then
   exit
 fi
 
-echo "Setting up dependencies in the ./external directory...\n"
+echo "Setting up dependencies in the ./external directory..."
 
 cd external
 rm -rf local_install
 mkdir local_install
 
+echo
 echo "Setting up libiconv"
 rm -rf libiconv*
 curl -LO https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz
@@ -34,6 +35,7 @@ fi
 mv libiconv-1.17 libiconv
 rm libiconv-1.17.tar.gz
 
+echo
 echo "Setting up gettext"
 rm -rf gettext*
 curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-0.22.5.tar.gz
@@ -47,6 +49,16 @@ fi
 mv gettext-0.22.5 gettext
 rm gettext-0.22.5.tar.gz
 
+echo
+echo "Setting up ICU"
+rm -rf icu
+git clone -n --filter=tree:0 https://github.com/unicode-org/icu.git
+cd icu
+git sparse-checkout set --no-cone icu4c
+git checkout release-75-1
+cd ..
+
+echo
 echo "Setting up libpng"
 rm -rf libpng code
 git clone https://git.code.sf.net/p/libpng/code.git
@@ -62,7 +74,7 @@ git checkout v1.6.40
 cd ..
 
 echo
-echo "\nSetting up HarfBuzz"
+echo "Setting up HarfBuzz"
 rm -rf harfbuzz
 git clone https://github.com/harfbuzz/harfbuzz.git
 
@@ -77,7 +89,7 @@ mkdir build
 cd ..
 
 echo
-echo "\nSetting up FreeType"
+echo "Setting up FreeType"
 rm -rf freetype
 git clone https://github.com/freetype/freetype.git
 
@@ -166,7 +178,7 @@ mkdir build
 cd ..
 
 echo
-echo "\nSetting up FreeImage"
+echo "Setting up FreeImage"
 rm -rf freeimage
 mkdir freeimage
 cd freeimage
@@ -282,7 +294,7 @@ fi
 cd ../..
 
 echo
-echo "\nSetting up libgit2"
+echo "Setting up libgit2"
 rm -rf libgit2
 git clone https://github.com/libgit2/libgit2.git
 
@@ -297,7 +309,7 @@ mkdir build
 cd ..
 
 echo
-echo "\nSetting up pugixml"
+echo "Setting up pugixml"
 rm -rf pugixml
 git clone https://github.com/zeux/pugixml.git
 
@@ -311,7 +323,7 @@ git checkout v1.13
 cd ..
 
 echo
-echo "\nSetting up SDL"
+echo "Setting up SDL"
 rm -rf SDL
 git clone https://github.com/libsdl-org/SDL.git
 
@@ -327,7 +339,7 @@ mkdir build
 cd ..
 
 echo
-echo "\nSetting up libvpx"
+echo "Setting up libvpx"
 rm -rf libvpx
 git clone https://github.com/webmproject/libvpx.git
 
@@ -341,7 +353,7 @@ git checkout v1.13.0
 cd ..
 
 echo
-echo "\nSetting up Ogg"
+echo "Setting up Ogg"
 rm -rf ogg
 git clone https://github.com/xiph/ogg.git
 
@@ -355,7 +367,7 @@ git checkout v1.3.5
 cd ..
 
 echo
-echo "\nSetting up Vorbis"
+echo "Setting up Vorbis"
 rm -rf vorbis
 git clone https://gitlab.xiph.org/xiph/vorbis.git
 
@@ -369,7 +381,7 @@ git checkout v1.3.7
 cd ..
 
 echo
-echo "\nSetting up Opus"
+echo "Setting up Opus"
 rm -rf opus
 git clone https://gitlab.xiph.org/xiph/opus.git
 
@@ -383,7 +395,7 @@ git checkout v1.3.1
 cd ..
 
 echo
-echo "\nSetting up FFmpeg"
+echo "Setting up FFmpeg"
 rm -rf FFmpeg
 git clone https://github.com/FFmpeg/FFmpeg.git
 
