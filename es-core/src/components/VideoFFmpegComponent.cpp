@@ -1178,7 +1178,7 @@ void VideoFFmpegComponent::detectHWDecoder()
                            "hardware decoder";
     }
 #else
-    // This would mostly be Linux, but possibly also BSD Unix.
+    // This would mostly be Linux, but possibly also FreeBSD.
 
     bool hasVAAPI {false};
     bool hasVDPAU {false};
