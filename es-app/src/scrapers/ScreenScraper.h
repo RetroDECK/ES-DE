@@ -51,7 +51,7 @@ public:
         const std::string API_DEV_KEY = {67, 112, 72, 120, 121, 77, 119, 74,  84,  56,
                                          75, 122, 78, 98,  69,  86, 56,  120, 120, 49};
         const std::string API_URL_BASE = "https://api.screenscraper.fr/api2";
-#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
+#if defined(__FreeBSD__)
         const std::string platformIdentifier {" B"};
 #elif defined(STEAM_DECK)
         const std::string platformIdentifier {" S"};

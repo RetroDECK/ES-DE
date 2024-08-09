@@ -381,7 +381,7 @@ if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI)
     set(APPLICATION_UPDATER OFF)
 endif()
 
-if(CMAKE_SYSTEM_NAME MATCHES FreeBSD OR CMAKE_SYSTEM_NAME MATCHES NetBSD OR CMAKE_SYSTEM_NAME MATCHES OpenBSD)
+if(CMAKE_SYSTEM_NAME MATCHES FreeBSD)
     set(APPLICATION_UPDATER OFF)
 endif()
 
@@ -434,13 +434,11 @@ add_compile_definitions(GLM_FORCE_CXX17)
 add_compile_definitions(GLM_FORCE_XYZW_ONLY)
 
 # For Unix systems, assign the installation prefix. If it's not explicitly set,
-# we use /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD.
+# we use /usr on Linux and /usr/local on FreeBSD.
 if(NOT WIN32 AND NOT APPLE AND NOT ANDROID)
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         if(CMAKE_SYSTEM_NAME MATCHES Linux)
             set(CMAKE_INSTALL_PREFIX /usr CACHE INTERNAL CMAKE_INSTALL_PREFIX)
-        elseif(CMAKE_SYSTEM_NAME MATCHES NetBSD)
-            set(CMAKE_INSTALL_PREFIX /usr/pkg CACHE INTERNAL CMAKE_INSTALL_PREFIX)
         else()
             set(CMAKE_INSTALL_PREFIX /usr/local CACHE INTERNAL CMAKE_INSTALL_PREFIX)
         endif()

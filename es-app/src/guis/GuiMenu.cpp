@@ -1084,8 +1084,7 @@ void GuiMenu::openSoundOptions()
     auto s = new GuiSettings(_("SOUND SETTINGS"));
 
 // TODO: Implement system volume support for macOS and Android.
-#if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__) &&                       \
-    !defined(__OpenBSD__) && !defined(__NetBSD__)
+#if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__)
     // System volume.
     // The reason to create the VolumeControl object every time instead of making it a singleton
     // is that this is the easiest way to detect new default audio devices or changes to the

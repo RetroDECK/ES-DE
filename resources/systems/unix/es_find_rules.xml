@@ -17,10 +17,8 @@
         <rule type="corepath">
             <!-- Compiled from source -->
             <entry>~/.config/retroarch/cores</entry>
-            <!-- FreeBSD and OpenBSD repository -->
+            <!-- FreeBSD repository -->
             <entry>/usr/local/lib/libretro</entry>
-            <!-- NetBSD repository -->
-            <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
     <emulator name="ADVANCEMAME">

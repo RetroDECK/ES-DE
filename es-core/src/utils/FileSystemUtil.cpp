@@ -37,17 +37,14 @@
 #endif
 
 // For Unix systems, set the install prefix as defined via CMAKE_INSTALL_PREFIX when CMake was run.
-// If not defined, the default prefix '/usr' will be used on Linux, '/usr/pkg' on NetBSD and
-// '/usr/local' on FreeBSD and OpenBSD. This fallback should not be required though unless the
-// build environment is broken.
+// If not defined, the default prefix "/usr" will be used on Linux and "/usr/local" on FreeBSD.
+// This fallback should not be required though unless the build environment is broken.
 #if defined(__unix__)
 #if defined(ES_INSTALL_PREFIX)
 const std::string installPrefix {ES_INSTALL_PREFIX};
 #else
 #if defined(__linux__)
 const std::string installPrefix {"/usr"};
-#elif defined(__NetBSD__)
-const std::string installPrefix {"/usr/pkg"};
 #else
 const std::string installPrefix {"/usr/local"};
 #endif
