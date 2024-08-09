@@ -50,7 +50,7 @@ Font::Font(float size, const std::string& path)
     mFontFace = std::make_unique<FontFace>(std::move(data), mFontSize, path, mFontHB);
 
     // Use the letter 'S' as a size reference.
-    mLetterHeight = getGlyph('S')->rows;
+    mLetterHeight = static_cast<float>(getGlyph('S')->rows);
 
     // As no faces should contain a newline glyph, requesting this character normally returns
     // the size of the font. However there are instances where this is calculated to a slightly
