@@ -488,6 +488,7 @@ elseif(WIN32)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/gettext/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/harfbuzz/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/icu/icu4c/source/common
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2)
@@ -572,6 +573,9 @@ elseif(WIN32)
                             ${PROJECT_SOURCE_DIR}/git2.lib
                             ${PROJECT_SOURCE_DIR}/glew32.lib
                             ${PROJECT_SOURCE_DIR}/harfbuzz.lib
+                            ${PROJECT_SOURCE_DIR}/icudt.lib
+                            ${PROJECT_SOURCE_DIR}/icuin.lib
+                            ${PROJECT_SOURCE_DIR}/icuuc.lib
                             ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
                             ${PROJECT_SOURCE_DIR}/libintl-8.lib
                             ${PROJECT_SOURCE_DIR}/freetype.lib

@@ -162,6 +162,9 @@ if(WIN32)
                   ../git2.dll
                   ../glew32.dll
                   ../harfbuzz.dll
+                  ../icudt75.dll
+                  ../icuin75.dll
+                  ../icuuc75.dll
                   ../libcrypto-3-x64.dll
                   ../libcurl-x64.dll
                   ../libiconv-2.dll

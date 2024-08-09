@@ -4,7 +4,7 @@
 ::  Windows_dependencies_build.bat
 ::
 ::  Builds the external dependencies in-tree using MSVC.
-::  The Windows_dependencies_setup_MSVC.bat script must have been executed prior to this.
+::  The Windows_dependencies_setup.bat script must have been executed prior to this.
 ::  All libraries will be recompiled from scratch every time.
 ::
 ::  This script needs to run from the root of the repository.
@@ -17,15 +17,35 @@ if not exist .clang-format (
 )
 
 if not exist external\pugixml\ (
-  echo You need to first run tools\Windows_dependencies_setup_MSVC.bat to download and configure the dependencies.
+  echo You need to first run tools\Windows_dependencies_setup.bat to download and configure the dependencies.
   goto end
 )
 
-echo Building all dependencies in the .\external directory...
-echo:
-
 cd external
 
+echo Building all dependencies in the .\external directory...
+
+echo:
+echo Building ICU
+
+if not exist icu/icu4c\ (
+  echo icu/icu4c directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+cd icu/icu4c
+msbuild source\allinone\allinone.sln /p:Configuration=Release /p:Platform=x64 /p:SkipUWP=true
+
+copy /Y bin64\icudt75.dll ..\..\..\
+copy /Y bin64\icuin75.dll ..\..\..\
+copy /Y bin64\icuuc75.dll ..\..\..\
+copy /Y lib64\icudt.lib ..\..\..\
+copy /Y lib64\icuin.lib ..\..\..\
+copy /Y lib64\icuuc.lib ..\..\..\
+cd ..\..
+
+echo:
 echo Building HarfBuzz
 
 if not exist harfbuzz\build\ (
@@ -46,6 +66,7 @@ copy /Y harfbuzz.dll ..\..\..\
 copy /Y harfbuzz.lib ..\..\..\
 cd ..\..
 
+echo:
 echo Building FreeType
 
 if not exist freetype\build\ (
@@ -66,6 +87,7 @@ copy /Y freetype.dll ..\..\..\
 copy /Y freetype.lib ..\..\..\
 cd ..\..
 
+echo:
 echo Building libgit2
 
 if not exist libgit2\build\ (

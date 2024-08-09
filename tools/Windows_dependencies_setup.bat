@@ -28,11 +28,11 @@ if %ERRORLEVEL% neq 0 (
   goto end
 )
 
-echo Setting up dependencies in the .\external directory...
-echo:
-
 cd external
 
+echo Setting up dependencies in the .\external directory...
+
+echo:
 echo Setting up gettext
 
 if exist gettext\ (
@@ -68,6 +68,27 @@ copy /Y libintl-8.lib ..\..\..
 copy /Y libiconv-2.dll ..\..\..
 cd ..\..
 
+echo:
+echo Setting up ICU
+
+if exist icu\ (
+  rmdir /S /Q icu
+)
+
+git clone -n --filter=tree:0 https://github.com/unicode-org/icu.git
+
+if not exist icu\ (
+  echo icu directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+cd icu
+git sparse-checkout set --no-cone icu4c
+git checkout release-75-1
+cd ..
+
+echo:
 echo Setting up curl
 
 if exist curl-8.2.1_11-win64-mingw\ (
