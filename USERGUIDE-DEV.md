@@ -3594,7 +3594,7 @@ The metadata for a game is updated by scraping or by manual editing it using the
 
 **Check for application updates** _Not available for some builds_
 
-By default a check for new ES-DE versions will be done on every application startup and a notification will be displayed if there is a new release available for download. Using this option the frequency of these checks can be set to _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_. This setting is not available on some platforms and package formats such as the Linux AUR release and the semi-official BSD Unix and Raspberry Pi releases where pre-built packages are not provided.
+By default a check for new ES-DE versions will be done on every application startup and a notification will be displayed if there is a new release available for download. Using this option the frequency of these checks can be set to _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_. This setting is not available on some platforms and package formats such as the Linux AUR release and the semi-official FreeBSD and Raspberry Pi releases where pre-built packages are not provided.
 
 **Include prereleases in update checks** _Always enabled for prereleases_
 

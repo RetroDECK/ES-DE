@@ -10,9 +10,11 @@
 
 * Added localization support
 * Added text shaping support using the HarfBuzz library
+* Replaced all built-in Unicode case conversion logic and lookup tables with facilities from the ICU library
 * Added translations for English (United Kingdom) (en_US)
 * Added translations for French (fr_FR)
 * Added translations for Japanese (ja_JP)
+* Added translations for Polish (pl_PL)
 * Added translations for Portuguese (Brazil) (pt_BR)
 * Added translations for Romanian (ro_RO)
 * Added translations for Russian (ru_RU)
@@ -47,7 +49,7 @@
 * Added the libintl library as a dependency
 * Added the HarfBuzz library as a dependency
 * Added the ICU library as a dependency
-* Replaced all built-in Unicode case conversion logic and lookup tables with facilities from the ICU library
+* Removed support for NetBSD and OpenBSD
 * Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 

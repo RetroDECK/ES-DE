@@ -25,7 +25,7 @@ There are some dependencies that need to be fulfilled in order to build ES-DE. T
 All of the required packages can be installed with apt-get:
 
 ```
-sudo apt-get install build-essential clang-format git cmake gettext libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev libpoppler-cpp-dev
+sudo apt-get install build-essential clang-format git cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev libpoppler-cpp-dev
 ```
 
 **Fedora**
@@ -40,7 +40,7 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 Then you can use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake gettext libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel poppler-cpp-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake gettext harfbuzz-devel libicu-devel libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel poppler-cpp-devel
 ```
 
 **Manjaro**
@@ -48,14 +48,14 @@ sudo dnf install gcc-c++ clang-tools-extra cmake gettext libasan rpm-build SDL2-
 Use pacman to install all the required packages:
 
 ```
-sudo pacman -S gcc clang make cmake gettext pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml poppler
+sudo pacman -S gcc clang make cmake gettext harfbuzz icu pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml poppler
 ```
 
 **Raspberry Pi OS**
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install clang-format cmake gettext libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
+sudo apt-get install clang-format cmake gettext libharfbuzz-dev libicu-dev libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
 ```
 
 For a 64-bit build it's very important that you include libraspberrypi-dev because if this package is not installed then the file /usr/include/bcm_host.h is not present on the filesystem. This leads to CMake not detecting that it's indeed a Raspberry Pi and it will attempt to make a regular Linux build instead.
@@ -75,39 +75,10 @@ Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by defaul
 
 Use pkg to install the dependencies:
 ```
-pkg install llvm-devel git pkgconf cmake gettext sdl2 ffmpeg freeimage libgit2 pugixml poppler
+pkg install llvm-devel git pkgconf cmake gettext harfbuzz icu sdl2 ffmpeg freeimage libgit2 pugixml poppler
 ```
 
 Clang/LLVM and curl should already be included in the base OS installation.
-
-**NetBSD**
-
-Use pkgin to install the dependencies:
-```
-pkgin install clang git cmake gettext pkgconf SDL2 ffmpeg4 freeimage libgit2 pugixml poppler-cpp
-```
-
-NetBSD ships with GCC by default, and although you should be able to use Clang/LLVM, it's probably easier to just stick to the default compiler environment. The reason why the clang package needs to be installed is to get clang-format onto the system.
-
-**OpenBSD**
-
-Use pkg_add to install the dependencies:
-```
-pkg_add clang-tools-extra cmake gettext pkgconf sdl2 ffmpeg freeimage libgit2 poppler
-```
-
-In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.
-
-The pugixml library does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
-
-```
-git clone https://github.com/zeux/pugixml.git
-cd pugixml
-git checkout v1.10
-cmake .
-make
-make install
-```
 
 **Cloning and compiling ES-DE**
 
@@ -133,7 +104,7 @@ cmake -DAPPLICATION_UPDATER=off .
 make
 ```
 
-Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or BSD Unix.
+Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or FreeBSD.
 
 On Linux specifically you can build with the DEINIT_ON_LAUNCH option which will deinit the renderer, application window and audio when an emulator is launched. This makes it possible to use ES-DE with KMS/direct framebuffer access to for example make ES-DE a drop-in replacement for RetroPie EmulationStation:
 ```
@@ -269,7 +240,7 @@ make -j8
 
 This renderer is generally only needed on the Raspberry Pi and the desktop OpenGL renderer should otherwise be used.
 
-By default ES-DE will install under /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD although this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.
+By default ES-DE will install under /usr on Linux and /usr/local on FreeBSD although this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.
 
 The following example will build the application for installtion under /opt:
 
