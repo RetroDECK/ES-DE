@@ -46,7 +46,8 @@
 * Removed some obsolete code from DateTimeEditComponent
 * Added the libintl library as a dependency
 * Added the HarfBuzz library as a dependency
-* Added case conversion support for the Latin Extended-B Unicode block
+* Added the ICU library as a dependency
+* Replaced all built-in Unicode case conversion logic and lookup tables with facilities from the ICU library
 * Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 

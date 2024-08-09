@@ -66,6 +66,9 @@ https://github.com/g-truc/glm
 HarfBuzz \
 https://harfbuzz.github.io
 
+ICU \
+https://icu.unicode.org
+
 libgit2 \
 https://libgit2.org
 

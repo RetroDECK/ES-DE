@@ -656,15 +656,17 @@ Install Git for Windows: \
 Download the Visual Studio Build Tools (choose Visual Studio Community edition): \
 [https://visualstudio.microsoft.com/downloads](https://visualstudio.microsoft.com/downloads)
 
-During installation, choose the Desktop development with C++ workload with the following options (version details may differ):
+During installation, choose the Desktop development with C++ workload with the following options:
 
 ```
 MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
-Windows 10 SDK
 Just-In-Time debugger
-C++ AddressSanitizer
 C++ CMake tools for Windows
+C++ AddressSanitizer
+Windows 10 SDK (10.0.20348.0)
 ```
+
+The Windows SDK version is important, it has to be this precise version or some dependencies may not build correctly.
 
 It's strongly recommended to also install Jom, which is a drop-in replacement for nmake that offers support for building in parallel using multiple CPU cores:\
 https://wiki.qt.io/Jom
