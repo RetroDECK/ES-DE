@@ -4,7 +4,6 @@
 //  StringUtil.h
 //
 //  Low-level string functions.
-//  Convert characters to Unicode, upper-/lowercase conversion, string formatting etc.
 //
 
 #ifndef ES_CORE_UTILS_STRING_UTIL_H
