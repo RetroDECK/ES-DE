@@ -13,5 +13,14 @@
         <rule type="systempath">
             <entry>DOSBox</entry>
         </rule>
+        <rule type="staticpath">
+            <entry>/boot/system/apps/DOSBox</entry>
+        </rule>
+    </emulator>
+    <emulator name="PPSSPP">
+        <!-- Sony PlayStation Portable emulator PPSSPP -->
+        <rule type="staticpath">
+            <entry>/boot/system/apps/PPSSPP/PPSSPP</entry>
+        </rule>
     </emulator>
 </ruleList>
