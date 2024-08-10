@@ -132,6 +132,15 @@ elseif(WIN32)
     if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)
         message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
     endif()
+elseif(HAIKU)
+    find_package(FreeImage REQUIRED)
+    find_package(Freetype REQUIRED)
+    find_package(HarfBuzz REQUIRED)
+    find_package(ICU REQUIRED)
+    find_package(Intl REQUIRED)
+    find_package(Libgit2 REQUIRED)
+    find_package(Pugixml REQUIRED)
+    find_package(SDL2 REQUIRED)
 elseif(NOT EMSCRIPTEN AND NOT ANDROID)
     find_package(CURL REQUIRED)
     find_package(FFmpeg REQUIRED)
@@ -378,11 +387,7 @@ if(DEINIT_ON_LAUNCH)
     endif()
 endif()
 
-if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI)
-    set(APPLICATION_UPDATER OFF)
-endif()
-
-if(CMAKE_SYSTEM_NAME MATCHES FreeBSD)
+if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI OR HAIKU OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
     set(APPLICATION_UPDATER OFF)
 endif()
 
@@ -510,6 +515,17 @@ elseif(ANDROID)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_Android)
+elseif(HAIKU)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/FFmpeg
+                            ${FreeImage_INCLUDE_DIRS}
+                            ${FREETYPE_INCLUDE_DIRS}
+                            ${GIT2_INCLUDE_PATH}
+                            ${HarfBuzz_INCLUDE_DIRS}
+                            ${ICU_INCLUDE_DIRS}
+                            ${PUGIXML_INCLUDE_DIRS}
+                            ${SDL2_INCLUDE_DIR})
 else()
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${FFMPEG_INCLUDE_DIRS}
@@ -642,6 +658,23 @@ elseif(EMSCRIPTEN)
                          ${PROJECT_SOURCE_DIR}/libFreeImage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.a
                          ${PROJECT_SOURCE_DIR}/libpugixml.a)
+elseif(HAIKU)
+    # This is just a temporary hack to get the application to build on Haiku r1beta4.
+    set(COMMON_LIBRARIES /boot/system/lib/libavcodec.so.58
+                         /boot/system/lib/libavfilter.so.7
+                         /boot/system/lib/libavformat.so.58
+                         /boot/system/lib/libavutil.so.56
+                         /boot/system/lib/libswresample.so.3
+                         /boot/system/lib/libswscale.so.5
+                         /boot/system/lib/libcurl.so.4
+                         ${Intl_LIBRARY}
+                         ${FreeImage_LIBRARIES}
+                         ${FREETYPE_LIBRARIES}
+                         ${GIT2_LIBRARY}
+                         ${HarfBuzz_LIBRARIES}
+                         ${ICU_LIBRARIES}
+                         ${PUGIXML_LIBRARIES}
+                         ${SDL2_LIBRARY})
 else()
     set(COMMON_LIBRARIES ${CURL_LIBRARIES}
                          ${FFMPEG_LIBRARIES}
@@ -715,21 +748,29 @@ set(dir ${CMAKE_CURRENT_SOURCE_DIR})
 set(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 
-if (COMPILE_LOCALIZATIONS)
+if(COMPILE_LOCALIZATIONS)
     add_subdirectory(locale)
 endif()
 
-add_subdirectory(es-pdf-converter)
+if(NOT HAIKU)
+    add_subdirectory(es-pdf-converter)
+endif()
 add_subdirectory(external)
 add_subdirectory(es-core)
 add_subdirectory(es-app)
 
 # Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
 # Also set lottie2gif to not be built.
-add_dependencies(lunasvg es-pdf-convert)
+if(NOT HAIKU)
+    add_dependencies(lunasvg es-pdf-convert)
+endif()
 
-if (COMPILE_LOCALIZATIONS)
-    add_dependencies(es-pdf-convert localization)
+if(COMPILE_LOCALIZATIONS)
+    if(NOT HAIKU)
+        add_dependencies(es-pdf-convert localization)
+    else()
+        add_dependencies(lunasvg localization)
+    endif()
 endif()
 
 add_dependencies(es-core rlottie)

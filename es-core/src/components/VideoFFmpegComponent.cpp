@@ -605,6 +605,11 @@ bool VideoFFmpegComponent::setupAudioFilters()
 
     std::string channelLayout(128, '\0');
 
+#if defined(__HAIKU__)
+    // This is just a temporary hack to get the application to build on Haiku r1beta4.
+    av_get_channel_layout_string(&channelLayout[0], sizeof(channelLayout),
+                                 mAudioCodecContext->CHANNELS, mAudioCodecContext->channel_layout);
+#else
 #if LIBAVUTIL_VERSION_MAJOR >= 58 ||                                                               \
     (LIBAVUTIL_VERSION_MAJOR >= 57 && LIBAVUTIL_VERSION_MINOR >= 28)
     // FFmpeg 5.1 and above.
@@ -616,6 +621,7 @@ bool VideoFFmpegComponent::setupAudioFilters()
     av_get_channel_layout_string(&channelLayout[0], sizeof(channelLayout),
                                  mAudioCodecContext->CHANNELS, mAudioCodecContext->channel_layout);
 #endif
+#endif // __HAIKU__
 
     std::string filterArguments;
     filterArguments.append("time_base=")

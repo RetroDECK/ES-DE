@@ -28,6 +28,10 @@
 #include <unistd.h>
 #endif
 
+#if defined(__HAIKU__)
+#include <sys/time.h>
+#endif
+
 #include <array>
 #include <fcntl.h>
 
@@ -84,7 +88,7 @@ namespace Utils
                            const std::string& startDirectory,
                            bool runInBackground)
         {
-#if defined(__unix__) || defined(__APPLE__)
+#if defined(__unix__) || defined(__APPLE__) || defined(__HAIKU__)
             std::string command = std::string(cmd_utf8) + " 2>&1 &";
 
             // Launching games while keeping ES-DE running in the background is very crude as for

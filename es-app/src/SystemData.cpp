@@ -62,6 +62,9 @@ void FindRules::loadFindRules()
 #elif defined(__APPLE__)
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/macos/es_find_rules.xml", false);
+#elif defined(__HAIKU__)
+    filePath =
+        ResourceManager::getInstance().getResourcePath(":/systems/haiku/es_find_rules.xml", false);
 #else
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/unix/es_find_rules.xml", false);
@@ -1006,6 +1009,8 @@ std::vector<std::string> SystemData::getConfigPath()
     path = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_systems.xml", true);
 #elif defined(__APPLE__)
     path = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_systems.xml", true);
+#elif defined(__HAIKU__)
+    path = ResourceManager::getInstance().getResourcePath(":/systems/haiku/es_systems.xml", true);
 #else
     path = ResourceManager::getInstance().getResourcePath(":/systems/unix/es_systems.xml", true);
 #endif

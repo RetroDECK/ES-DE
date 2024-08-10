@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for Haiku -->
+<ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>bash</entry>
+            <entry>sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="DOSBOX">
+        <!-- DOS emulator DOSBox -->
+        <rule type="systempath">
+            <entry>DOSBox</entry>
+        </rule>
+    </emulator>
+</ruleList>

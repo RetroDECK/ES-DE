@@ -12,6 +12,10 @@
 // Disable the CImg display capabilities.
 #define cimg_display 0
 
+#if defined(__HAIKU__)
+#include <sys/time.h>
+#endif
+
 #include "CImg.h"
 
 #include <vector>

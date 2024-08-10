@@ -1084,7 +1084,7 @@ void GuiMenu::openSoundOptions()
     auto s = new GuiSettings(_("SOUND SETTINGS"));
 
 // TODO: Implement system volume support for macOS and Android.
-#if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__)
+#if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__) && !defined(__HAIKU__)
     // System volume.
     // The reason to create the VolumeControl object every time instead of making it a singleton
     // is that this is the easiest way to detect new default audio devices or changes to the
@@ -1597,7 +1597,7 @@ void GuiMenu::openOtherOptions()
     auto keyboardQuitShortcut = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), _("KEYBOARD QUIT SHORTCUT"), false);
     std::string selectedShortcut {Settings::getInstance()->getString("KeyboardQuitShortcut")};
-#if defined(_WIN64) || defined(__unix__)
+#if defined(_WIN64) || defined(__unix__) || defined(__HAIKU__)
     keyboardQuitShortcut->add("ALT + F4", "AltF4", selectedShortcut == "AltF4");
     keyboardQuitShortcut->add("CTRL + Q", "CtrlQ", selectedShortcut == "CtrlQ");
     keyboardQuitShortcut->add("ALT + Q", "AltQ", selectedShortcut == "AltQ");
