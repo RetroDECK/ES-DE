@@ -21,6 +21,8 @@ Nils Bonenberger
 Weestuarty\
 **French**\
 Fredy27 (neuromancer974)\
+**Polish**\
+kycho\
 **Portuguese (Brazil)**\
 MrVictorFull\
 **Romanian**\

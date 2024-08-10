@@ -80,10 +80,16 @@ pkg install llvm-devel git pkgconf cmake gettext harfbuzz icu sdl2 ffmpeg freeim
 
 Clang/LLVM and curl should already be included in the base OS installation.
 
+Note that there is a strange issue specifically on FreeBSD 14.1 where the rlottie library refuses to build. This can be resolved by the following workaround:
+```
+echo > external/rlottie/format
+```
+
+It's not clear yet whether this is a compiler bug or some other issue.
+
 **Cloning and compiling ES-DE**
 
 To clone the source repository, run the following:
-
 ```
 git clone https://gitlab.com/es-de/emulationstation-de.git
 ```
@@ -407,6 +413,43 @@ tools/create_AppImage_SteamDeck.sh
 This is similar to the regular AppImage but does not build with the BUNDLED_CERTS option and changes some settings like the VRAM limit.
 
 Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running the build script.
+
+## Building on Haiku
+
+Note that support for Haiku is very experimental, for example the video player and PDF viewers don't work and multiple workarounds are necessary to get ES-DE to build at all. Only R1/beta4 has been tested. Hopefully R1/beta5 will improve things so that full application functionality can be achieved.
+
+Use pkgman to install the required dependencies:
+```
+pkgman install cmake gettext harfbuzz_devel freeimage_devel pugixml_devel libsdl2_devel libgit2_devel freetype_devel ffmpeg
+```
+
+To clone the ES-DE source repository, run the following:
+```
+git clone https://gitlab.com/es-de/emulationstation-de.git
+```
+
+Due to package issues with R1/beta4 you need to manually clone the repositories for curl and FFmpeg to get the necessary header files to build ES-DE:
+```
+cd emulationstation-de
+cd external
+git clone https://github.com/curl/curl.git
+cd curl
+git checkout curl-7_85_0
+cd ..
+git clone https://github.com/FFmpeg/FFmpeg.git
+cd FFmpeg
+git checkout n5.1.6
+./configure --enable-gpl --enable-shared
+cd ../..
+```
+
+Following the above you can go ahead and build ES-DE:
+```
+cmake .
+make -j8
+```
+
+Note that there is no Haiku packaging support, you'll need to run ES-DE from the build directory. As well very few systems and emulators are currently supported. There is also no 3D acceleration available in Haiku so performance in ES-DE will likely be quite lacklustre. Consider the Haiku build a proof of concept port at this moment in time.
 
 ## Building on macOS
 

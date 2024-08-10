@@ -50,6 +50,7 @@
 * Added the HarfBuzz library as a dependency
 * Added the ICU library as a dependency
 * Removed support for NetBSD and OpenBSD
+* Added experimental support for building on Haiku
 * Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 
