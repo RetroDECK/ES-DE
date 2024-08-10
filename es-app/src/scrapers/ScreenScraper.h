@@ -53,6 +53,8 @@ public:
         const std::string API_URL_BASE = "https://api.screenscraper.fr/api2";
 #if defined(__FreeBSD__)
         const std::string platformIdentifier {" B"};
+#elif defined(__HAIKU__)
+        const std::string platformIdentifier {" H"};
 #elif defined(STEAM_DECK)
         const std::string platformIdentifier {" S"};
 #elif defined(RETRODECK)
