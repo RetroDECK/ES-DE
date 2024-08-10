@@ -23,4 +23,13 @@
             <entry>/boot/system/apps/PPSSPP/PPSSPP</entry>
         </rule>
     </emulator>
+    <emulator name="SCUMMVM">
+        <!-- ScummVM game engine -->
+        <rule type="systempath">
+            <entry>ScummVM</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/boot/system/apps/ScummVM</entry>
+        </rule>
+    </emulator>
 </ruleList>

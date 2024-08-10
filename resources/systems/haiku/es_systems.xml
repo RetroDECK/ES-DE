@@ -19,4 +19,13 @@
         <platform>psp</platform>
         <theme>psp</theme>
     </system>
+    <system>
+        <name>scummvm</name>
+        <fullname>ScummVM Game Engine</fullname>
+        <path>%ROMPATH%/scummvm</path>
+        <extension>.scummvm .SCUMMVM .svm .SVM</extension>
+        <command label="ScummVM (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SCUMMVM% %BASENAME%</command>
+        <platform>scummvm</platform>
+        <theme>scummvm</theme>
+    </system>
 </systemList>
