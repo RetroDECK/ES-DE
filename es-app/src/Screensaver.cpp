@@ -54,6 +54,7 @@ Screensaver::Screensaver()
 void Screensaver::startScreensaver(bool generateMediaList)
 {
     ViewController::getInstance()->pauseViewVideos();
+    mGameOverlay = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_SMALL), 0xFFFFFFFF);
 
     mScreensaverType = Settings::getInstance()->getString("ScreensaverType");
     // In case there is an invalid entry in the es_settings.xml file.
@@ -66,13 +67,6 @@ void Screensaver::startScreensaver(bool generateMediaList)
     mHasMediaFiles = false;
     mFallbackScreensaver = false;
     mOpacity = 0.0f;
-
-    // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
-    if (mGameOverlayFont.empty()) {
-        mGameOverlayFont.push_back(Font::get(FONT_SIZE_SMALL));
-        mGameOverlayFont.push_back(Font::get(FONT_SIZE_MEDIUM));
-        mGameOverlayFont.push_back(Font::get(FONT_SIZE_LARGE));
-    }
 
     // Set mPreviousGame which will be used to avoid showing the same game again during
     // the random selection.
@@ -196,15 +190,13 @@ void Screensaver::stopScreensaver()
 {
     mImageScreensaver.reset();
     mVideoScreensaver.reset();
+    mGameOverlay.reset();
 
     mScreensaverActive = false;
     mDimValue = 1.0f;
     mRectangleFadeIn = 50;
     mTextFadeIn = 0;
     mSaturationAmount = 1.0f;
-
-    if (mGameOverlay)
-        mGameOverlay.reset();
 
     ViewController::getInstance()->startViewVideos();
 }
@@ -298,8 +290,7 @@ void Screensaver::renderScreensaver()
             if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
                 mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
             if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
-                !Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages") &&
-                mGameOverlay) {
+                !Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages")) {
                 mRenderer->setMatrix(mRenderer->getIdentity());
                 if (mGameOverlayRectangleCoords.size() == 4) {
                     mRenderer->drawRect(
@@ -311,7 +302,7 @@ void Screensaver::renderScreensaver()
 
                 mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                 if (mTextFadeIn > 50)
-                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                    mGameOverlay->render(trans);
                 if (mTextFadeIn < 255)
                     mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
             }
@@ -340,7 +331,7 @@ void Screensaver::renderScreensaver()
             if (shaders != 0)
                 mRenderer->shaderPostprocessing(shaders, videoParameters);
 
-            if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
+            if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo")) {
                 mRenderer->setMatrix(mRenderer->getIdentity());
                 if (mGameOverlayRectangleCoords.size() == 4) {
                     mRenderer->drawRect(
@@ -352,7 +343,7 @@ void Screensaver::renderScreensaver()
 
                 mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                 if (mTextFadeIn > 50)
-                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                    mGameOverlay->render(trans);
                 if (mTextFadeIn < 255)
                     mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
             }
@@ -689,8 +680,8 @@ void Screensaver::generateOverlayInfo()
     if (mGameName == "" || mSystemName == "")
         return;
 
-    float posX {mRenderer->getScreenWidth() * 0.023f};
-    float posY {mRenderer->getScreenHeight() * 0.02f};
+    const float posX {mRenderer->getScreenWidth() * 0.023f};
+    const float posY {mRenderer->getScreenHeight() * 0.02f};
 
     const bool favoritesOnly {
         (mScreensaverType == "video" &&
@@ -707,28 +698,17 @@ void Screensaver::generateOverlayInfo()
     const std::string systemName {Utils::String::toUpper(mSystemName)};
     const std::string overlayText {gameName + "\n" + systemName};
 
-    mGameOverlay = std::unique_ptr<TextCache>(
-        mGameOverlayFont.at(0)->buildTextCache(overlayText, posX, posY, 0xFFFFFFFF));
+    mGameOverlay->setText(overlayText);
+    mGameOverlay->setPosition(posX, posY);
 
-    float textSizeX {0.0f};
-    float textSizeY {mGameOverlayFont[0].get()->sizeText(overlayText).y};
+    // Setting the Y size to zero makes the text area expand vertically as needed.
+    mGameOverlay->setSize(mGameOverlay->getSize().x, 0.0f);
 
-    // There is a weird issue with sizeText() where the X size value is returned
-    // as too large if there are two rows in a string and the second row is longer
-    // than the first row. Possibly it's the newline character that is somehow
-    // injected in the size calculation. Regardless, this workaround is working
-    // fine for the time being.
-    if (mGameOverlayFont[0].get()->sizeText(gameName).x >
-        mGameOverlayFont[0].get()->sizeText(systemName).x)
-        textSizeX = mGameOverlayFont[0].get()->sizeText(gameName).x;
-    else
-        textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x;
-
-    float marginX {mRenderer->getScreenWidth() * 0.01f};
+    const float marginX {mRenderer->getScreenWidth() * 0.01f};
 
     mGameOverlayRectangleCoords.clear();
     mGameOverlayRectangleCoords.push_back(posX - marginX);
     mGameOverlayRectangleCoords.push_back(posY);
-    mGameOverlayRectangleCoords.push_back(textSizeX + marginX * 2.0f);
-    mGameOverlayRectangleCoords.push_back(textSizeY);
+    mGameOverlayRectangleCoords.push_back(mGameOverlay->getSize().x + marginX * 2.0f);
+    mGameOverlayRectangleCoords.push_back(mGameOverlay->getSize().y);
 }

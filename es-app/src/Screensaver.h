@@ -12,8 +12,8 @@
 
 #include "Window.h"
 #include "components/ImageComponent.h"
+#include "components/TextComponent.h"
 #include "components/VideoComponent.h"
-#include "resources/Font.h"
 
 class Screensaver : public Window::Screensaver
 {
@@ -54,6 +54,8 @@ private:
     std::vector<std::string> mCustomFilesInventory;
     std::unique_ptr<ImageComponent> mImageScreensaver;
     std::unique_ptr<VideoComponent> mVideoScreensaver;
+    std::unique_ptr<TextComponent> mGameOverlay;
+    std::vector<float> mGameOverlayRectangleCoords;
 
     FileData* mCurrentGame;
     FileData* mPreviousGame;
@@ -73,10 +75,6 @@ private:
     unsigned char mRectangleFadeIn;
     unsigned char mTextFadeIn;
     float mSaturationAmount;
-
-    std::unique_ptr<TextCache> mGameOverlay;
-    std::vector<std::shared_ptr<Font>> mGameOverlayFont;
-    std::vector<float> mGameOverlayRectangleCoords;
 };
 
 #endif // ES_APP_SCREENSAVER_H
