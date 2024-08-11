@@ -20,6 +20,7 @@
 #include <vector>
 
 class TextCache;
+class TextComponent;
 
 #define FONT_SIZE_MINI Font::getMiniFont()
 #define FONT_SIZE_SMALL Font::getSmallFont()
@@ -86,23 +87,6 @@ public:
     // to the font size is good enough, meaning this somehow expensive operation could be omitted.
     int loadGlyphs(const std::string& text);
 
-    TextCache* buildTextCache(const std::string& text,
-                              float offsetX,
-                              float offsetY,
-                              unsigned int color,
-                              float lineSpacing = 1.5f,
-                              bool noTopMargin = false);
-
-    TextCache* buildTextCache(const std::string& text,
-                              glm::vec2 offset,
-                              unsigned int color,
-                              float xLen,
-                              Alignment alignment = ALIGN_LEFT,
-                              float lineSpacing = 1.5f,
-                              bool noTopMargin = false);
-
-    void renderTextCache(TextCache* cache);
-
     // Inserts newlines to make text wrap properly and also abbreviates single-line text.
     std::string wrapText(const std::string& text,
                          const float maxLength,
@@ -138,6 +122,19 @@ public:
     size_t getMemUsage() const;
     // Returns an approximation of VRAM used by the glyph atlas textures for all font objects.
     static size_t getTotalMemUsage();
+
+protected:
+    TextCache* buildTextCache(const std::string& text,
+                              glm::vec2 offset,
+                              unsigned int color,
+                              float xLen,
+                              Alignment alignment = ALIGN_LEFT,
+                              float lineSpacing = 1.5f,
+                              bool noTopMargin = false);
+
+    void renderTextCache(TextCache* cache);
+
+    friend TextComponent;
 
 private:
     Font(float size, const std::string& path);

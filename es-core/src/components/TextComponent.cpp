@@ -492,8 +492,8 @@ void TextComponent::onTextChanged()
     if (mHorizontalScrolling) {
         if (lineHeight > mSize.y && mSize.y != 0.0f)
             offsetY = (mSize.y - lineHeight) / 2.0f;
-        mTextCache = std::shared_ptr<TextCache>(
-            font->buildTextCache(text, 0.0f, offsetY, mColor, mLineSpacing));
+        mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(
+            text, glm::vec2 {0.0f, offsetY}, mColor, 0.0f, ALIGN_LEFT, mLineSpacing));
     }
     else if (isMultiline && !isScrollable) {
         const std::string wrappedText {

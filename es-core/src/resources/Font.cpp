@@ -171,151 +171,6 @@ int Font::loadGlyphs(const std::string& text)
     return mMaxGlyphHeight;
 }
 
-TextCache* Font::buildTextCache(const std::string& text,
-                                float offsetX,
-                                float offsetY,
-                                unsigned int color,
-                                float lineSpacing,
-                                bool noTopMargin)
-{
-    return buildTextCache(text, glm::vec2 {offsetX, offsetY}, color, 0.0f, ALIGN_LEFT, lineSpacing,
-                          noTopMargin);
-}
-
-TextCache* Font::buildTextCache(const std::string& text,
-                                glm::vec2 offset,
-                                unsigned int color,
-                                float xLen,
-                                Alignment alignment,
-                                float lineSpacing,
-                                bool noTopMargin)
-{
-    float x {offset.x + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0)};
-    int yTop {0};
-    float yBot {0.0f};
-
-    if (noTopMargin) {
-        yTop = 0;
-        yBot = getHeight(1.5);
-    }
-    else {
-        yTop = getGlyph('S')->bearing.y;
-        yBot = getHeight(lineSpacing);
-    }
-
-    float y {offset.y + ((yBot + yTop) / 2.0f)};
-
-    // Vertices by texture.
-    std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
-
-    std::vector<ShapeSegment> segmentsHB;
-    shapeText(text, segmentsHB);
-
-    for (auto& segment : segmentsHB) {
-        for (size_t cursor {0}; cursor < segment.glyphIndexes.size(); ++cursor) {
-            const unsigned int character {segment.glyphIndexes[cursor].first};
-            Glyph* glyph {nullptr};
-
-            // Invalid character.
-            if (!segment.doShape && character == 0)
-                continue;
-
-            if (!segment.doShape && character == '\n') {
-                y += getHeight(lineSpacing);
-                x = offset[0] +
-                    (xLen != 0 ? getNewlineStartOffset(
-                                     text, static_cast<const unsigned int>(segment.startPos + 1),
-                                     xLen, alignment) :
-                                 0);
-                continue;
-            }
-
-            if (segment.doShape)
-                glyph =
-                    getGlyphByIndex(character, segment.fontHB, segment.glyphIndexes[cursor].second);
-            else
-                glyph = getGlyph(character);
-
-            if (glyph == nullptr)
-                continue;
-
-            std::vector<Renderer::Vertex>& verts {vertMap[glyph->texture]};
-            size_t oldVertSize {verts.size()};
-            verts.resize(oldVertSize + 6);
-            Renderer::Vertex* vertices {verts.data() + oldVertSize};
-
-            const float glyphStartX {x + glyph->bearing.x};
-            const glm::ivec2& textureSize {glyph->texture->textureSize};
-
-            vertices[1] = {
-                {glyphStartX, y - glyph->bearing.y}, {glyph->texPos.x, glyph->texPos.y}, color};
-            vertices[2] = {{glyphStartX, y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
-                           {glyph->texPos.x, glyph->texPos.y + glyph->texSize.y},
-                           color};
-            vertices[3] = {{glyphStartX + glyph->texSize.x * textureSize.x, y - glyph->bearing.y},
-                           {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y},
-                           color};
-            vertices[4] = {{glyphStartX + glyph->texSize.x * textureSize.x,
-                            y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
-                           {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y + glyph->texSize.y},
-                           color};
-
-            // Round vertices.
-            for (int i {1}; i < 5; ++i)
-                vertices[i].position = glm::round(vertices[i].position);
-
-            // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
-            vertices[0] = vertices[1];
-            vertices[5] = vertices[4];
-
-            // Advance.
-            x += glyph->advance.x;
-        }
-    }
-
-    TextCache* cache {new TextCache()};
-    cache->vertexLists.resize(vertMap.size());
-    cache->metrics.size = {sizeText(text, lineSpacing)};
-    cache->metrics.maxGlyphHeight = mMaxGlyphHeight;
-    cache->clipRegion = {0.0f, 0.0f, 0.0f, 0.0f};
-
-    size_t i {0};
-    for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
-        TextCache::VertexList& vertList {cache->vertexLists.at(i)};
-        vertList.textureIdPtr = &it->first->textureId;
-        vertList.verts = it->second;
-        ++i;
-    }
-
-    return cache;
-}
-
-void Font::renderTextCache(TextCache* cache)
-{
-    if (cache == nullptr) {
-        LOG(LogError) << "Attempted to draw nullptr TextCache";
-        return;
-    }
-
-    const bool clipRegion {cache->clipRegion != glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f}};
-
-    for (auto it = cache->vertexLists.begin(); it != cache->vertexLists.end(); ++it) {
-        assert(*it->textureIdPtr != 0);
-
-        it->verts[0].shaderFlags = Renderer::ShaderFlags::FONT_TEXTURE;
-
-        if (clipRegion) {
-            it->verts[0].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
-            it->verts[0].clipRegion = cache->clipRegion;
-        }
-
-        mRenderer->bindTexture(*it->textureIdPtr, 0);
-        mRenderer->drawTriangleStrips(
-            &it->verts[0], static_cast<const unsigned int>(it->verts.size()),
-            Renderer::BlendFactor::SRC_ALPHA, Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA);
-    }
-}
-
 std::string Font::wrapText(const std::string& text,
                            const float maxLength,
                            const float maxHeight,
@@ -608,47 +463,138 @@ size_t Font::getTotalMemUsage()
     return total;
 }
 
-std::vector<Font::FallbackFontCache> Font::getFallbackFontPaths()
+TextCache* Font::buildTextCache(const std::string& text,
+                                glm::vec2 offset,
+                                unsigned int color,
+                                float xLen,
+                                Alignment alignment,
+                                float lineSpacing,
+                                bool noTopMargin)
 {
-    std::vector<FallbackFontCache> fontPaths;
+    float x {offset.x + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0)};
+    int yTop {0};
+    float yBot {0.0f};
 
-    // Default application fonts.
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Regular.ttf");
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Bold.ttf");
-
-    const std::vector<std::string> fallbackFonts {
-        // Ubuntu Condensed.
-        ":/fonts/Ubuntu-C.ttf",
-        // Vera sans Unicode.
-        ":/fonts/DejaVuSans.ttf",
-        // GNU FreeFont monospaced.
-        ":/fonts/FreeMono.ttf",
-        // Various languages, such as Japanese and Chinese.
-        ":/fonts/DroidSansFallbackFull.ttf",
-        // Korean
-        ":/fonts/NanumMyeongjo.ttf",
-        // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
-        ":/fonts/fontawesome-webfont.ttf",
-        // Google Noto Emoji.
-        ":/fonts/NotoEmoji.ttf"};
-
-    for (auto& font : fallbackFonts) {
-        FallbackFontCache fallbackFont;
-        const std::string path {ResourceManager::getInstance().getResourcePath(font)};
-        fallbackFont.path = path;
-        hb_blob_t* blobHB {hb_blob_create_from_file(path.c_str())};
-        hb_face_t* faceHB {hb_face_create(blobHB, 0)};
-        hb_font_t* fontHB {hb_font_create(faceHB)};
-        fallbackFont.fontHB = fontHB;
-        hb_face_destroy(faceHB);
-        hb_blob_destroy(blobHB);
-        ResourceData data {ResourceManager::getInstance().getFileData(path)};
-        fallbackFont.face = std::make_shared<FontFace>(std::move(data), 10.0f, path, fontHB);
-        fontPaths.emplace_back(fallbackFont);
+    if (noTopMargin) {
+        yTop = 0;
+        yBot = getHeight(1.5);
+    }
+    else {
+        yTop = getGlyph('S')->bearing.y;
+        yBot = getHeight(lineSpacing);
     }
 
-    return fontPaths;
+    float y {offset.y + ((yBot + yTop) / 2.0f)};
+
+    // Vertices by texture.
+    std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
+
+    std::vector<ShapeSegment> segmentsHB;
+    shapeText(text, segmentsHB);
+
+    for (auto& segment : segmentsHB) {
+        for (size_t cursor {0}; cursor < segment.glyphIndexes.size(); ++cursor) {
+            const unsigned int character {segment.glyphIndexes[cursor].first};
+            Glyph* glyph {nullptr};
+
+            // Invalid character.
+            if (!segment.doShape && character == 0)
+                continue;
+
+            if (!segment.doShape && character == '\n') {
+                y += getHeight(lineSpacing);
+                x = offset[0] +
+                    (xLen != 0 ? getNewlineStartOffset(
+                                     text, static_cast<const unsigned int>(segment.startPos + 1),
+                                     xLen, alignment) :
+                                 0);
+                continue;
+            }
+
+            if (segment.doShape)
+                glyph =
+                    getGlyphByIndex(character, segment.fontHB, segment.glyphIndexes[cursor].second);
+            else
+                glyph = getGlyph(character);
+
+            if (glyph == nullptr)
+                continue;
+
+            std::vector<Renderer::Vertex>& verts {vertMap[glyph->texture]};
+            size_t oldVertSize {verts.size()};
+            verts.resize(oldVertSize + 6);
+            Renderer::Vertex* vertices {verts.data() + oldVertSize};
+
+            const float glyphStartX {x + glyph->bearing.x};
+            const glm::ivec2& textureSize {glyph->texture->textureSize};
+
+            vertices[1] = {
+                {glyphStartX, y - glyph->bearing.y}, {glyph->texPos.x, glyph->texPos.y}, color};
+            vertices[2] = {{glyphStartX, y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
+                           {glyph->texPos.x, glyph->texPos.y + glyph->texSize.y},
+                           color};
+            vertices[3] = {{glyphStartX + glyph->texSize.x * textureSize.x, y - glyph->bearing.y},
+                           {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y},
+                           color};
+            vertices[4] = {{glyphStartX + glyph->texSize.x * textureSize.x,
+                            y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
+                           {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y + glyph->texSize.y},
+                           color};
+
+            // Round vertices.
+            for (int i {1}; i < 5; ++i)
+                vertices[i].position = glm::round(vertices[i].position);
+
+            // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
+            vertices[0] = vertices[1];
+            vertices[5] = vertices[4];
+
+            // Advance.
+            x += glyph->advance.x;
+        }
+    }
+
+    TextCache* cache {new TextCache()};
+    cache->vertexLists.resize(vertMap.size());
+    cache->metrics.size = {sizeText(text, lineSpacing)};
+    cache->metrics.maxGlyphHeight = mMaxGlyphHeight;
+    cache->clipRegion = {0.0f, 0.0f, 0.0f, 0.0f};
+
+    size_t i {0};
+    for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
+        TextCache::VertexList& vertList {cache->vertexLists.at(i)};
+        vertList.textureIdPtr = &it->first->textureId;
+        vertList.verts = it->second;
+        ++i;
+    }
+
+    return cache;
+}
+
+void Font::renderTextCache(TextCache* cache)
+{
+    if (cache == nullptr) {
+        LOG(LogError) << "Attempted to draw nullptr TextCache";
+        return;
+    }
+
+    const bool clipRegion {cache->clipRegion != glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f}};
+
+    for (auto it = cache->vertexLists.begin(); it != cache->vertexLists.end(); ++it) {
+        assert(*it->textureIdPtr != 0);
+
+        it->verts[0].shaderFlags = Renderer::ShaderFlags::FONT_TEXTURE;
+
+        if (clipRegion) {
+            it->verts[0].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
+            it->verts[0].clipRegion = cache->clipRegion;
+        }
+
+        mRenderer->bindTexture(*it->textureIdPtr, 0);
+        mRenderer->drawTriangleStrips(
+            &it->verts[0], static_cast<const unsigned int>(it->verts.size()),
+            Renderer::BlendFactor::SRC_ALPHA, Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA);
+    }
 }
 
 Font::FontTexture::FontTexture(const int mFontSize)
@@ -956,6 +902,49 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
                       << texOut->textureSize.x << ", " << texOut->textureSize.y << ")";
         texOut = nullptr;
     }
+}
+
+std::vector<Font::FallbackFontCache> Font::getFallbackFontPaths()
+{
+    std::vector<FallbackFontCache> fontPaths;
+
+    // Default application fonts.
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Regular.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Bold.ttf");
+
+    const std::vector<std::string> fallbackFonts {
+        // Ubuntu Condensed.
+        ":/fonts/Ubuntu-C.ttf",
+        // Vera sans Unicode.
+        ":/fonts/DejaVuSans.ttf",
+        // GNU FreeFont monospaced.
+        ":/fonts/FreeMono.ttf",
+        // Various languages, such as Japanese and Chinese.
+        ":/fonts/DroidSansFallbackFull.ttf",
+        // Korean
+        ":/fonts/NanumMyeongjo.ttf",
+        // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
+        ":/fonts/fontawesome-webfont.ttf",
+        // Google Noto Emoji.
+        ":/fonts/NotoEmoji.ttf"};
+
+    for (auto& font : fallbackFonts) {
+        FallbackFontCache fallbackFont;
+        const std::string path {ResourceManager::getInstance().getResourcePath(font)};
+        fallbackFont.path = path;
+        hb_blob_t* blobHB {hb_blob_create_from_file(path.c_str())};
+        hb_face_t* faceHB {hb_face_create(blobHB, 0)};
+        hb_font_t* fontHB {hb_font_create(faceHB)};
+        fallbackFont.fontHB = fontHB;
+        hb_face_destroy(faceHB);
+        hb_blob_destroy(blobHB);
+        ResourceData data {ResourceManager::getInstance().getFileData(path)};
+        fallbackFont.face = std::make_shared<FontFace>(std::move(data), 10.0f, path, fontHB);
+        fontPaths.emplace_back(fallbackFont);
+    }
+
+    return fontPaths;
 }
 
 FT_Face* Font::getFaceForChar(unsigned int id, hb_font_t** returnedFont)
