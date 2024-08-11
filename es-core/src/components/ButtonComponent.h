@@ -3,7 +3,7 @@
 //  ES-DE Frontend
 //  ButtonComponent.h
 //
-//  Basic on/off button.
+//  Basic button, used as a GUI element and for the virtual keyboard buttons.
 //
 
 #ifndef ES_CORE_COMPONENTS_BUTTON_COMPONENT_H
@@ -11,8 +11,7 @@
 
 #include "GuiComponent.h"
 #include "components/NinePatchComponent.h"
-
-class TextCache;
+#include "components/TextComponent.h"
 
 class ButtonComponent : public GuiComponent
 {
@@ -56,8 +55,7 @@ private:
     Renderer* mRenderer;
     NinePatchComponent mBox;
 
-    std::shared_ptr<Font> mFont;
-    std::unique_ptr<TextCache> mTextCache;
+    std::unique_ptr<TextComponent> mButtonText;
     std::function<void()> mPressedFunc;
 
     glm::vec4 mPadding;
