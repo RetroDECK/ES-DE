@@ -3,7 +3,7 @@
 //  ES-DE Frontend
 //  TextEditComponent.cpp
 //
-//  Component for editing text fields in menus.
+//  Component for editing text fields.
 //
 
 #include "components/TextEditComponent.h"
@@ -34,12 +34,14 @@ TextEditComponent::TextEditComponent()
     , mScrollOffset {0.0f, 0.0f}
     , mCursorPos {0.0f, 0.0f}
     , mBox {":/graphics/textinput.svg"}
-    , mFont {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
 {
+    mEditText = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT));
+
     mBox.setSharpCorners(true);
     addChild(&mBox);
     onFocusLost();
-    setSize(4096, mFont->getHeight() + (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier()));
+    setSize(4096,
+            getFont()->getHeight() + (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier()));
 }
 
 TextEditComponent::~TextEditComponent()
@@ -310,10 +312,11 @@ void TextEditComponent::setCursor(size_t pos)
 void TextEditComponent::onTextChanged()
 {
     mWrappedText =
-        (isMultiline() ? mFont->wrapText(mText, getTextAreaSize().x, 0.0f, 1.5f, true) : mText);
-    mTextCache = std::unique_ptr<TextCache>(mFont->buildTextCache(
-        mWrappedText, 0.0f, 0.0f,
-        mMenuColorKeyboardText | static_cast<unsigned char>(mOpacity * 255.0f)));
+        (isMultiline() ? getFont()->wrapText(mText, getTextAreaSize().x, 0.0f, 1.5f, true) : mText);
+    mEditText->setText(mWrappedText);
+    // Setting the Y size to zero makes the text area expand vertically as needed.
+    mEditText->setSize(mEditText->getSize().x, 0.0f);
+    mEditText->setColor(mMenuColorKeyboardText | static_cast<unsigned char>(mOpacity * 255.0f));
 
     if (mCursor > static_cast<int>(mText.length()))
         mCursor = static_cast<int>(mText.length());
@@ -322,17 +325,17 @@ void TextEditComponent::onTextChanged()
 void TextEditComponent::onCursorChanged()
 {
     if (isMultiline()) {
-        mCursorPos = mFont->getWrappedTextCursorOffset(mWrappedText, mCursor);
+        mCursorPos = getFont()->getWrappedTextCursorOffset(mWrappedText, mCursor);
 
         // Need to scroll down?
-        if (mScrollOffset.y + getTextAreaSize().y < mCursorPos.y + mFont->getHeight())
-            mScrollOffset.y = mCursorPos.y - getTextAreaSize().y + mFont->getHeight();
+        if (mScrollOffset.y + getTextAreaSize().y < mCursorPos.y + getFont()->getHeight())
+            mScrollOffset.y = mCursorPos.y - getTextAreaSize().y + getFont()->getHeight();
         // Need to scroll up?
         else if (mScrollOffset.y > mCursorPos.y)
             mScrollOffset.y = mCursorPos.y;
     }
     else {
-        mCursorPos = mFont->sizeText(mText.substr(0, mCursor));
+        mCursorPos = getFont()->sizeText(mText.substr(0, mCursor));
         mCursorPos.y = 0.0f;
 
         if (mScrollOffset.x + getTextAreaSize().x < mCursorPos.x)
@@ -364,24 +367,23 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
 
     trans = glm::translate(trans, glm::round(glm::vec3 {-mScrollOffset.x, -mScrollOffset.y, 0.0f}));
     mRenderer->setMatrix(trans);
-
-    if (mTextCache)
-        mFont->renderTextCache(mTextCache.get());
+    mEditText->render(trans);
 
     // Pop the clip early to allow the cursor to be drawn outside of the "text area".
     mRenderer->popClipRect();
 
     // Draw cursor.
-    const float cursorHeight {mFont->getHeight() * 0.8f};
+    const float textHeight {getFont()->getHeight()};
+    const float cursorHeight {textHeight * 0.8f};
 
     if (!mEditing) {
-        mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
+        mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (textHeight - cursorHeight) / 2.0f,
                             2.0f * mRenderer->getScreenResolutionModifier(), cursorHeight,
                             mMenuColorKeyboardCursorUnfocused, mMenuColorKeyboardCursorUnfocused);
     }
 
     if (mEditing && mBlinkTime < BLINKTIME / 2) {
-        mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
+        mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (textHeight - cursorHeight) / 2.0f,
                             2.0f * mRenderer->getScreenResolutionModifier(), cursorHeight,
                             mMenuColorKeyboardCursorFocused, mMenuColorKeyboardCursorFocused);
     }
