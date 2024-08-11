@@ -258,8 +258,8 @@ void DateTimeEditComponent::changeDate()
             new_tm.tm_mon = 11;
     }
     else if (mEditIndex == 2) {
-        const int days_in_month =
-            Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1);
+        const int days_in_month {
+            Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1)};
         new_tm.tm_mday += mKeyRepeatDir;
 
         if (new_tm.tm_mday > days_in_month)
@@ -269,7 +269,7 @@ void DateTimeEditComponent::changeDate()
     }
 
     // Validate day.
-    const int days_in_month = Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1);
+    const int days_in_month {Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1)};
     if (new_tm.tm_mday > days_in_month)
         new_tm.tm_mday = days_in_month;
 
