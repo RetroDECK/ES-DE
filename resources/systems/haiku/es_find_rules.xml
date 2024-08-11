@@ -8,6 +8,19 @@
             <entry>sh</entry>
         </rule>
     </emulator>
+    <emulator name="RETROARCH">
+        <rule type="systempath">
+            <entry>retroarch</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/boot/system/apps/retroarch</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <entry>/boot/system/add-ons/libretro</entry>
+        </rule>
+    </core>
     <emulator name="DOSBOX">
         <!-- DOS emulator DOSBox -->
         <rule type="systempath">
