@@ -140,6 +140,14 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
                                   (mSize.y - mButtonText->getSize().y) / 2.0f, 0.0f};
     trans = glm::translate(trans, glm::round(centerOffset));
 
+    if (Settings::getInstance()->getBool("DebugText")) {
+        mButtonText->setDebugRendering(false);
+        mRenderer->drawRect(centerOffset.x, 0.0f, mButtonText->getSize().x, mSize.y, 0x00000033,
+                            0x00000033);
+        mRenderer->drawRect(mBox.getPosition().x, 0.0f, mBox.getSize().x, mSize.y, 0x0000FF33,
+                            0x0000FF33);
+    }
+
     mButtonText->setColor(getCurTextColor());
     mButtonText->render(trans);
 }

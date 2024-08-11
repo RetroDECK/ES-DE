@@ -38,6 +38,7 @@ TextComponent::TextComponent()
     , mSelectable {false}
     , mVerticalAutoSizing {false}
     , mHorizontalScrolling {false}
+    , mDebugRendering {true}
     , mScrollSpeed {0.0f}
     , mScrollSpeedMultiplier {1.0f}
     , mScrollDelay {1500.0f}
@@ -85,6 +86,7 @@ TextComponent::TextComponent(const std::string& text,
     , mSelectable {false}
     , mVerticalAutoSizing {false}
     , mHorizontalScrolling {horizontalScrolling}
+    , mDebugRendering {true}
     , mScrollSpeed {0.0f}
     , mScrollSpeedMultiplier {scrollSpeedMultiplier}
     , mScrollDelay {scrollDelay}
@@ -300,8 +302,9 @@ void TextComponent::render(const glm::mat4& parentTrans)
             }
 
             // Draw the overall textbox area. If we're inside a vertical scrollable container then
-            // this area is rendered inside that component instead of here.
-            if (!secondPass && Settings::getInstance()->getBool("DebugText")) {
+            // this area is rendered inside that component instead of here. Some other components
+            // also disable rendering here in a similar fashion.
+            if (mDebugRendering && !secondPass && Settings::getInstance()->getBool("DebugText")) {
                 if (!mParent || !mParent->isScrollable())
                     mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
             }
@@ -309,7 +312,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
             trans = glm::translate(trans, glm::vec3 {0.0f, std::round(yOff), 0.0f});
             mRenderer->setMatrix(trans);
 
-            if (Settings::getInstance()->getBool("DebugText")) {
+            if (mDebugRendering && Settings::getInstance()->getBool("DebugText")) {
                 const float relativeScaleOffset {(mSize.x - (mSize.x * mRelativeScale)) / 2.0f};
                 if (mHorizontalScrolling && !secondPass) {
                     if (mScrollOffset1 <= mTextCache->metrics.size.x) {

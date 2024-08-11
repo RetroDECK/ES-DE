@@ -24,6 +24,8 @@ SliderComponent::SliderComponent(float min, float max, float increment, const st
     , mBarLength {0.0f}
     , mBarHeight {0.0f}
     , mBarPosY {0.0f}
+    , mMoveAccumulator {0}
+    , mSliderTextSize {0.0f, 0.f}
     , mSuffix {suffix}
 {
     assert((min - max) != 0.0f);
@@ -94,6 +96,16 @@ void SliderComponent::update(int deltaTime)
 void SliderComponent::render(const glm::mat4& parentTrans)
 {
     glm::mat4 trans {parentTrans * getTransform()};
+    mRenderer->setMatrix(trans);
+
+    if (Settings::getInstance()->getBool("DebugText")) {
+        mSliderText->setDebugRendering(false);
+        mRenderer->drawRect(mSize.x - mSliderTextSize.x, (mSize.y - mSliderTextSize.y) / 2.0f,
+                            mSliderTextSize.x, mSliderTextSize.y, 0x0000FF33, 0x0000FF33);
+        mRenderer->drawRect(mSize.x - mSliderTextSize.x, 0.0f, mSliderTextSize.x, mSize.y,
+                            0x00000033, 0x00000033);
+    }
+
     mSliderText->render(trans);
     mRenderer->setMatrix(trans);
 
@@ -129,8 +141,6 @@ void SliderComponent::onSizeChanged()
 
 void SliderComponent::onValueChanged()
 {
-    glm::vec2 textSize {0.0f, 0.0f};
-
     {
         std::stringstream ss;
         ss << std::fixed;
@@ -147,8 +157,8 @@ void SliderComponent::onValueChanged()
         ss << mSuffix;
 
         mSliderText->setText(val);
-        textSize = mSliderText->getFont()->sizeText(ss.str());
-        mSliderText->setPosition(mSize.x - textSize.x, (mSize.y - textSize.y) / 2.0f);
+        mSliderTextSize = mSliderText->getFont()->sizeText(ss.str());
+        mSliderText->setPosition(mSize.x - mSliderTextSize.x, (mSize.y - mSliderTextSize.y) / 2.0f);
     }
 
     mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
@@ -168,8 +178,8 @@ void SliderComponent::onValueChanged()
         setSize(getSize().x, getSize().y - 1.0f);
     }
 
-    mBarLength =
-        mSize.x - mKnob.getSize().x - (textSize.x + (4.0f * mRenderer->getScreenWidthModifier()));
+    mBarLength = mSize.x - mKnob.getSize().x -
+                 (mSliderTextSize.x + (4.0f * mRenderer->getScreenWidthModifier()));
 
     if (static_cast<int>(mSize.y) % 2 != static_cast<int>(mBarHeight) % 2) {
         if (mBarHeight > 1.0f && mSize.y / mBarHeight < 5.0f)

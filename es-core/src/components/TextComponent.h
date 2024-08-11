@@ -54,6 +54,8 @@ public:
     void setRenderBackground(bool render) { mRenderBackground = render; }
     void setBackgroundMargins(const glm::vec2 margins) { mBackgroundMargins = margins; }
     void setBackgroundCornerRadius(const float radius) { mBackgroundCornerRadius = radius; }
+    // Used by some components that render the debug overlay themselves.
+    void setDebugRendering(bool state) { mDebugRendering = state; }
 
     void render(const glm::mat4& parentTrans) override;
     void onFocusLost() override { resetComponent(); }
@@ -177,8 +179,8 @@ private:
     bool mNoTopMargin;
     bool mSelectable;
     bool mVerticalAutoSizing;
-
     bool mHorizontalScrolling;
+    bool mDebugRendering;
     float mScrollSpeed;
     float mScrollSpeedMultiplier;
     float mScrollDelay;

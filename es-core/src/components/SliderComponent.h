@@ -56,6 +56,7 @@ private:
     float mBarHeight;
     float mBarPosY;
     int mMoveAccumulator;
+    glm::vec2 mSliderTextSize;
 
     ImageComponent mKnob;
     ImageComponent mKnobDisabled;
