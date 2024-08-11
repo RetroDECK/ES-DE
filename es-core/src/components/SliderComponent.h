@@ -11,9 +11,8 @@
 
 #include "GuiComponent.h"
 #include "components/ImageComponent.h"
-#include "resources/Font.h"
+#include "components/TextComponent.h"
 
-// Slider to set value in a predefined range.
 class SliderComponent : public GuiComponent
 {
 public:
@@ -40,7 +39,7 @@ public:
     void setOpacity(float opacity) override
     {
         mOpacity = opacity;
-        mTextCache->setOpacity(opacity);
+        mSliderText->setOpacity(opacity);
     }
 
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -53,6 +52,7 @@ private:
     float mValue;
     float mSingleIncrement;
     float mMoveRate;
+    float mBarLength;
     float mBarHeight;
     float mBarPosY;
     int mMoveAccumulator;
@@ -61,8 +61,7 @@ private:
     ImageComponent mKnobDisabled;
 
     std::string mSuffix;
-    std::shared_ptr<Font> mFont;
-    std::shared_ptr<TextCache> mTextCache;
+    std::unique_ptr<TextComponent> mSliderText;
     std::function<void()> mChangedValueCallback;
 };
 
