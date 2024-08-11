@@ -10,8 +10,8 @@
 #define ES_CORE_COMPONENTS_DATE_TIME_EDIT_COMPONENT_H
 
 #include "GuiComponent.h"
+#include "components/TextComponent.h"
 #include "renderers/Renderer.h"
-#include "resources/Font.h"
 #include "utils/TimeUtil.h"
 
 class DateTimeEditComponent : public GuiComponent
@@ -41,11 +41,10 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    std::shared_ptr<Font> getFont() const override;
     std::string getDisplayString() const;
 
     void changeDate();
-    void updateTextCache();
+    void updateText();
 
     Renderer* mRenderer;
     Utils::Time::DateTime mTime;
@@ -57,7 +56,7 @@ private:
     int mKeyRepeatDir;
     int mKeyRepeatTimer;
 
-    std::unique_ptr<TextCache> mTextCache;
+    std::unique_ptr<TextComponent> mDateText;
     std::vector<glm::vec4> mCursorBoxes;
 
     unsigned int mColor;
@@ -65,7 +64,6 @@ private:
     unsigned int mColorOriginalValue;
     unsigned int mColorChangedValue;
 
-    std::shared_ptr<Font> mFont;
     bool mAlignRight;
     bool mUppercase;
     bool mAutoSize;

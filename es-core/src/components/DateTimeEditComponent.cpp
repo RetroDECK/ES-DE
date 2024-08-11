@@ -12,7 +12,6 @@
 #include "components/DateTimeEditComponent.h"
 
 #include "Settings.h"
-#include "resources/Font.h"
 #include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
@@ -23,18 +22,18 @@ DateTimeEditComponent::DateTimeEditComponent(bool alignRight)
     , mKeyRepeatDir {0}
     , mKeyRepeatTimer {0}
     , mColor {mMenuColorPrimary}
-    , mFont {Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT)}
     , mAlignRight {alignRight}
     , mUppercase {false}
     , mAutoSize {true}
 {
-    updateTextCache();
+    mDateText = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT));
+    updateText();
 }
 
 void DateTimeEditComponent::onSizeChanged()
 {
     mAutoSize = false;
-    updateTextCache();
+    updateText();
 }
 
 void DateTimeEditComponent::setValue(const std::string& val)
@@ -43,7 +42,7 @@ void DateTimeEditComponent::setValue(const std::string& val)
     mOriginalValue = val;
     if (mAlignRight)
         mAutoSize = true;
-    updateTextCache();
+    updateText();
 }
 
 bool DateTimeEditComponent::input(InputConfig* config, Input input)
@@ -66,7 +65,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
             if (mTime == 0) {
                 mTime = Utils::Time::stringToTime("19990101T000000");
                 mAutoSize = true;
-                updateTextCache();
+                updateText();
             }
         }
 
@@ -85,7 +84,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
             mEditing = false;
             mTime = mTimeBeforeEdit;
             mKeyRepeatDir = 0;
-            updateTextCache();
+            updateText();
             return false;
         }
 
@@ -94,7 +93,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
             mTime = mTimeBeforeEdit;
             mKeyRepeatDir = 0;
             mAutoSize = true;
-            updateTextCache();
+            updateText();
             updateHelpPrompts();
             return true;
         }
@@ -160,54 +159,50 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 {
     glm::mat4 trans {parentTrans * getTransform()};
 
-    if (mTextCache) {
-        std::shared_ptr<Font> font {getFont()};
+    // Center vertically.
+    glm::vec3 off {0.0f, (mSize.y - mDateText->getSize().y) / 2.0f, 0.0f};
 
-        // Center vertically.
-        glm::vec3 off {0.0f, (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
+    trans = glm::translate(trans, glm::round(off));
+    mRenderer->setMatrix(trans);
 
-        trans = glm::translate(trans, glm::round(off));
+    if (Settings::getInstance()->getBool("DebugText")) {
         mRenderer->setMatrix(trans);
-
-        if (Settings::getInstance()->getBool("DebugText")) {
-            mRenderer->setMatrix(trans);
-            if (mTextCache->metrics.size.x > 0.0f) {
-                mRenderer->drawRect(0.0f, 0.0f - off.y, mSize.x - off.x, mSize.y, 0x0000FF33,
-                                    0x0000FF33);
-            }
-            mRenderer->drawRect(0.0f, 0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
-                                0x00000033, 0x00000033);
+        mDateText->setDebugRendering(false);
+        if (mDateText->getSize().x > 0.0f) {
+            mRenderer->drawRect(0.0f, 0.0f - off.y, mSize.x - off.x, mSize.y, 0x0000FF33,
+                                0x0000FF33);
         }
+        mRenderer->drawRect(0.0f, 0.0f, mDateText->getSize().x, mDateText->getSize().y, 0x00000033,
+                            0x00000033);
+    }
 
-        mTextCache->setColor((mColor & 0xFFFFFF00) | static_cast<int>(getOpacity() * 255.0f));
-        font->renderTextCache(mTextCache.get());
+    mDateText->setColor((mColor & 0xFFFFFF00) | static_cast<int>(getOpacity() * 255.0f));
+    mDateText->render(trans);
 
-        if (mEditing && mTime != 0) {
-            if (mEditIndex >= 0 && static_cast<unsigned int>(mEditIndex) < mCursorBoxes.size())
-                mRenderer->drawRect(mCursorBoxes[mEditIndex][0], mCursorBoxes[mEditIndex][1],
-                                    mCursorBoxes[mEditIndex][2], mCursorBoxes[mEditIndex][3],
-                                    mMenuColorDateTimeEditMarker, mMenuColorDateTimeEditMarker);
-        }
+    if (mEditing && mTime != 0) {
+        if (mEditIndex >= 0 && static_cast<unsigned int>(mEditIndex) < mCursorBoxes.size())
+            mRenderer->drawRect(mCursorBoxes[mEditIndex][0], mCursorBoxes[mEditIndex][1],
+                                mCursorBoxes[mEditIndex][2], mCursorBoxes[mEditIndex][3],
+                                mMenuColorDateTimeEditMarker, mMenuColorDateTimeEditMarker);
     }
 }
 
 void DateTimeEditComponent::setColor(unsigned int color)
 {
     mColor = color;
-    if (mTextCache)
-        mTextCache->setColor(color);
+    mDateText->setColor(color);
 }
 
 void DateTimeEditComponent::setFont(std::shared_ptr<Font> font)
 {
-    mFont = font;
-    updateTextCache();
+    mDateText->setFont(font);
+    updateText();
 }
 
 void DateTimeEditComponent::setUppercase(bool uppercase)
 {
     mUppercase = uppercase;
-    updateTextCache();
+    updateText();
 }
 
 std::vector<HelpPrompt> DateTimeEditComponent::getHelpPrompts()
@@ -223,14 +218,6 @@ std::vector<HelpPrompt> DateTimeEditComponent::getHelpPrompts()
         prompts.push_back(HelpPrompt("up/down", _("modify")));
     }
     return prompts;
-}
-
-std::shared_ptr<Font> DateTimeEditComponent::getFont() const
-{
-    if (mFont)
-        return mFont;
-
-    return Font::get(FONT_SIZE_MEDIUM);
 }
 
 std::string DateTimeEditComponent::getDisplayString() const
@@ -292,29 +279,28 @@ void DateTimeEditComponent::changeDate()
         mTime = new_tm;
 
     mAutoSize = true;
-    updateTextCache();
+    updateText();
 }
 
-void DateTimeEditComponent::updateTextCache()
+void DateTimeEditComponent::updateText()
 {
     std::string dispString;
 
     // Hack to set date string to blank instead of 'unknown'.
     // The calling function simply needs to set this string using setValue().
-    if (mTime.getIsoString() == "19710101T010101") {
+    if (mTime.getIsoString() == "19710101T010101")
         dispString = "";
-    }
-    else {
+    else
         dispString = mUppercase ? Utils::String::toUpper(getDisplayString()) : getDisplayString();
-    }
-    std::shared_ptr<Font> font {getFont()};
-    mTextCache = std::unique_ptr<TextCache>(font->buildTextCache(dispString, 0, 0, mColor));
+
+    mDateText->setText(dispString);
+    mDateText->setColor(mColor);
 
     if (mAlignRight)
-        mSize = mTextCache->metrics.size;
+        mSize = mDateText->getSize();
 
     if (mAutoSize) {
-        mSize = mTextCache->metrics.size;
+        mSize = mDateText->getSize();
         mAutoSize = false;
 
         if (getParent())
@@ -327,6 +313,8 @@ void DateTimeEditComponent::updateTextCache()
         return;
 
     // Set up cursor positions.
+
+    std::shared_ptr<Font> font {mDateText->getFont()};
 
     // Year.
     glm::vec2 start {0.0f, 0.0f};
