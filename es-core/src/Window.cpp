@@ -179,7 +179,11 @@ bool Window::init()
 
     mPostprocessedBackground = TextureResource::get("", false, false, false, false, false);
 
-    mListScrollFont = Font::get(FONT_SIZE_LARGE);
+    mListScrollText = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_LARGE));
+    mGPUStatisticsText = std::make_unique<TextComponent>(
+        "", Font::get(FONT_SIZE_SMALL), 0xFF00FFFF, ALIGN_LEFT, ALIGN_CENTER,
+        glm::vec3 {mRenderer->getScreenWidth() * 0.02f, mRenderer->getScreenHeight() * 0.02f, 0.0f},
+        glm::vec2 {0.0f, 0.0f}, 0x00000000, 1.3f);
 
     // Update our help because font sizes probably changed.
     if (peekGui())
@@ -378,9 +382,9 @@ void Window::update(int deltaTime)
             ss << "\nFont VRAM: " << fontVramUsageMiB
                << " MiB\nTexture VRAM: " << textureVramUsageMiB
                << " MiB\nMax Texture VRAM: " << textureTotalUsageMiB << " MiB";
-            mFrameDataText = std::unique_ptr<TextCache>(mDefaultFonts.at(0)->buildTextCache(
-                ss.str(), mRenderer->getScreenWidth() * 0.02f, mRenderer->getScreenHeight() * 0.02f,
-                0xFF00FFFF, 1.3f));
+            mGPUStatisticsText->setText(ss.str());
+            // Setting the Y size to zero makes the text area expand vertically as needed.
+            mGPUStatisticsText->setSize(mGPUStatisticsText->getSize().x, 0.0f);
         }
 
         mFrameTimeElapsed = 0;
@@ -613,15 +617,13 @@ void Window::render()
                             0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f),
                             0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f));
 
-        glm::vec2 offset {mListScrollFont->sizeText(mListScrollText)};
+        glm::vec2 offset {mListScrollText->getSize()};
         offset.x = (mRenderer->getScreenWidth() - offset.x) * 0.5f;
         offset.y = (mRenderer->getScreenHeight() - offset.y) * 0.5f;
-
-        TextCache* cache {mListScrollFont->buildTextCache(
-            mListScrollText, offset.x, offset.y,
-            0xFFFFFF00 | static_cast<unsigned char>(mListScrollOpacity * 255.0f))};
-        mListScrollFont->renderTextCache(cache);
-        delete cache;
+        mListScrollText->setPosition(offset.x, offset.y);
+        mListScrollText->setColor(0xFFFFFF00 |
+                                  static_cast<unsigned char>(mListScrollOpacity * 255.0f));
+        mListScrollText->render(mRenderer->getIdentity());
     }
 
     unsigned int screensaverTimer {
@@ -659,31 +661,29 @@ void Window::render()
         InputOverlay::getInstance().render(mRenderer->getIdentity());
 #endif
 
-    if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
-        mRenderer->setMatrix(mRenderer->getIdentity());
-        mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
-    }
+    if (Settings::getInstance()->getBool("DisplayGPUStatistics"))
+        mGPUStatisticsText->render(mRenderer->getIdentity());
 }
 
 void Window::updateSplashScreenText()
 {
-    mSplashTextScanning = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache(_("Searching for games..."), 0.0f, 0.0f, 0x777777FF));
-    mSplashTextPopulating = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache(_("Loading systems..."), 0.0f, 0.0f, 0x777777FF));
-    mSplashTextReloading = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache(_("Reloading..."), 0.0f, 0.0f, 0x777777FF));
-    mSplashTextResourceCopy = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache(_("Copying resources..."), 0.0f, 0.0f, 0x777777FF));
-    mSplashTextDirCreation = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
-        _("Creating system directories..."), 0.0f, 0.0f, 0x777777FF));
+    mSplashTextScanning = std::make_unique<TextComponent>(_("Searching for games..."),
+                                                          Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mSplashTextPopulating = std::make_unique<TextComponent>(
+        _("Loading systems..."), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mSplashTextReloading =
+        std::make_unique<TextComponent>(_("Reloading..."), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mSplashTextResourceCopy = std::make_unique<TextComponent>(
+        _("Copying resources..."), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mSplashTextDirCreation = std::make_unique<TextComponent>(
+        _("Creating system directories..."), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     mSplashTextPositions.x =
-        (mRenderer->getScreenWidth() - mSplashTextScanning->metrics.size.x) / 2.0f;
+        (mRenderer->getScreenWidth() - mSplashTextScanning->getSize().x) / 2.0f;
     mSplashTextPositions.z =
-        (mRenderer->getScreenWidth() - mSplashTextPopulating->metrics.size.x) / 2.0f;
+        (mRenderer->getScreenWidth() - mSplashTextPopulating->getSize().x) / 2.0f;
     mSplashTextPositions.w =
-        (mRenderer->getScreenWidth() - mSplashTextReloading->metrics.size.x) / 2.0f;
+        (mRenderer->getScreenWidth() - mSplashTextReloading->getSize().x) / 2.0f;
     mSplashTextPositions.y =
         mRenderer->getScreenHeight() * (mRenderer->getIsVerticalOrientation() ? 0.620f : 0.745f);
 }
@@ -723,25 +723,24 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
         textPosY += mDefaultFonts.at(1)->getLetterHeight();
     }
     else if (state == SplashScreenState::RESOURCE_COPY) {
-        textPosX = (mRenderer->getScreenWidth() - mSplashTextResourceCopy->metrics.size.x) / 2.0f;
+        textPosX = (mRenderer->getScreenWidth() - mSplashTextResourceCopy->getSize().x) / 2.0f;
     }
     else if (state == SplashScreenState::DIR_CREATION) {
-        textPosX = (mRenderer->getScreenWidth() - mSplashTextDirCreation->metrics.size.x) / 2.0f;
+        textPosX = (mRenderer->getScreenWidth() - mSplashTextDirCreation->getSize().x) / 2.0f;
     }
 
     trans = glm::translate(trans, glm::round(glm::vec3 {textPosX, textPosY, 0.0f}));
-    mRenderer->setMatrix(trans);
 
     if (state == SplashScreenState::SCANNING)
-        mDefaultFonts.at(1)->renderTextCache(mSplashTextScanning.get());
+        mSplashTextScanning->render(trans);
     else if (state == SplashScreenState::POPULATING)
-        mDefaultFonts.at(1)->renderTextCache(mSplashTextPopulating.get());
+        mSplashTextPopulating->render(trans);
     else if (state == SplashScreenState::RELOADING)
-        mDefaultFonts.at(1)->renderTextCache(mSplashTextReloading.get());
+        mSplashTextReloading->render(trans);
     else if (state == SplashScreenState::RESOURCE_COPY)
-        mDefaultFonts.at(1)->renderTextCache(mSplashTextResourceCopy.get());
+        mSplashTextResourceCopy->render(trans);
     else if (state == SplashScreenState::DIR_CREATION)
-        mDefaultFonts.at(1)->renderTextCache(mSplashTextDirCreation.get());
+        mSplashTextDirCreation->render(trans);
 
     mRenderer->swapBuffers();
 }
@@ -749,7 +748,7 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
 void Window::renderListScrollOverlay(const float opacity, const std::string& text)
 {
     mListScrollOpacity = opacity * 0.6f;
-    mListScrollText = text;
+    mListScrollText->setText(text);
 }
 
 void Window::renderHelpPromptsEarly()
