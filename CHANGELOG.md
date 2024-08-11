@@ -49,6 +49,7 @@
 * Added the libintl library as a dependency
 * Added the HarfBuzz library as a dependency
 * Added the ICU library as a dependency
+* Refactored large parts of the text and font code
 * Removed support for NetBSD and OpenBSD
 * Added experimental support for building on Haiku
 * Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds

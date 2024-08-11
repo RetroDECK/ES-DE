@@ -416,34 +416,18 @@ Both _appimagetool_ and _linuxdeploy_ are required for the build process but the
 
 ## Building on Haiku
 
-Note that support for Haiku is very experimental, for example the video player and PDF viewers don't work and multiple workarounds are necessary to get ES-DE to build at all. Only R1/beta4 has been tested. Hopefully R1/beta5 will improve things so that full application functionality can be achieved.
+Note that support for Haiku is currently very experimental, for instance the video player behaves a bit erratic and the PDF viewer doesn't work at all. You'll also need to run a recent nightly Haiku release to build ES-DE as using R1/beta4 will not work.
 
 Use pkgman to install the required dependencies:
 ```
-pkgman install cmake gettext harfbuzz_devel freeimage_devel pugixml_devel libsdl2_devel libgit2_devel freetype_devel ffmpeg
+pkgman install cmake gettext curl_devel harfbuzz_devel freeimage_devel pugixml_devel libsdl2_devel libgit2_devel freetype_devel ffmpeg_devel
 ```
 
 To clone the ES-DE source repository, run the following:
 ```
 git clone https://gitlab.com/es-de/emulationstation-de.git
 ```
-
-Due to package issues with R1/beta4 you need to manually clone the repositories for curl and FFmpeg to get the necessary header files to build ES-DE:
-```
-cd emulationstation-de
-cd external
-git clone https://github.com/curl/curl.git
-cd curl
-git checkout curl-7_85_0
-cd ..
-git clone https://github.com/FFmpeg/FFmpeg.git
-cd FFmpeg
-git checkout n5.1.6
-./configure --enable-gpl --enable-shared
-cd ../..
-```
-
-Following the above you can go ahead and build ES-DE:
+You can then go ahead and build the application:
 ```
 cmake .
 make -j8
