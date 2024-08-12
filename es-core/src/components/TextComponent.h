@@ -35,14 +35,15 @@ public:
                   bool horizontalScrolling = false,
                   float scrollSpeedMultiplier = 1.0f,
                   float scrollDelay = 1500.0f,
-                  float scrollGap = 1.5f);
+                  float scrollGap = 1.5f,
+                  float maxLength = 0.0f);
 
     void setFont(const std::shared_ptr<Font>& font);
     void setUppercase(bool uppercase);
     void setLowercase(bool lowercase);
     void setCapitalize(bool capitalize);
     void onSizeChanged() override;
-    void setText(const std::string& text, bool update = true);
+    void setText(const std::string& text, bool update = true, float maxLength = 0.0f);
     void setHiddenText(const std::string& text) { mHiddenText = text; }
     void setColor(unsigned int color) override;
     void setHorizontalAlignment(Alignment align);
@@ -188,6 +189,7 @@ private:
     float mScrollOffset1;
     float mScrollOffset2;
     float mScrollTime;
+    float mMaxLength;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_COMPONENT_H

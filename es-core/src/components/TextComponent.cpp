@@ -46,6 +46,7 @@ TextComponent::TextComponent()
     , mScrollOffset1 {0.0f}
     , mScrollOffset2 {0.0f}
     , mScrollTime {0.0f}
+    , mMaxLength {0.0f}
 {
 }
 
@@ -62,7 +63,8 @@ TextComponent::TextComponent(const std::string& text,
                              bool horizontalScrolling,
                              float scrollSpeedMultiplier,
                              float scrollDelay,
-                             float scrollGap)
+                             float scrollGap,
+                             float maxLength)
     : mFont {nullptr}
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
@@ -94,14 +96,18 @@ TextComponent::TextComponent(const std::string& text,
     , mScrollOffset1 {0.0f}
     , mScrollOffset2 {0.0f}
     , mScrollTime {0.0f}
+    , mMaxLength {maxLength}
 {
     setFont(font);
     setColor(color);
     setBackgroundColor(bgcolor);
     setHorizontalScrolling(mHorizontalScrolling);
-    setText(text, false);
+    setText(text, false, mMaxLength);
     setPosition(pos);
-    setSize(size);
+    if (mMaxLength == 0.0f)
+        setSize(size);
+    else
+        setSize(glm::vec2 {mMaxLength, size.y});
 }
 
 void TextComponent::onSizeChanged()
@@ -172,12 +178,13 @@ void TextComponent::setDimming(float dimming)
         mTextCache->setDimming(dimming);
 }
 
-void TextComponent::setText(const std::string& text, bool update)
+void TextComponent::setText(const std::string& text, bool update, float maxLength)
 {
-    if (mText == text)
+    if (mText == text && mMaxLength == maxLength)
         return;
 
     mText = text;
+    mMaxLength = maxLength;
 
     if (update)
         onTextChanged();
@@ -475,7 +482,9 @@ void TextComponent::onTextChanged()
 
     if (mFont && mAutoCalcExtent.x) {
         mSize = mFont->sizeText(text, mLineSpacing);
-        if (mSize.x == 0.0f)
+        if (mMaxLength > 0.0f && mSize.x > mMaxLength)
+            mSize.x = std::round(mMaxLength);
+        else if (mSize.x == 0.0f)
             return;
     }
 
@@ -486,7 +495,8 @@ void TextComponent::onTextChanged()
     const float lineHeight {mFont->getHeight(mLineSpacing)};
     const bool isScrollable {mParent && mParent->isScrollable()};
 
-    const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y * mRelativeScale > lineHeight};
+    // Add one extra pixel to lineHeight as the font may be fractional in size.
+    const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y * mRelativeScale > lineHeight + 1};
     float offsetY {0.0f};
 
     if (mHorizontalScrolling) {

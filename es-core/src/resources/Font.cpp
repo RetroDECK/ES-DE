@@ -22,6 +22,9 @@ Font::Font(float size, const std::string& path)
     , mFontSize {size}
     , mLetterHeight {0.0f}
     , mMaxGlyphHeight {static_cast<int>(std::round(size))}
+    , mWrapMaxLength {0.0f}
+    , mWrapMaxHeight {0.0f}
+    , mWrapLineSpacing {1.5f}
 {
     if (mFontSize < 3.0f) {
         mFontSize = 3.0f;
@@ -195,6 +198,14 @@ std::string Font::wrapText(const std::string& text,
     bool addEllipsis {false};
     float totalWidth {0.0f};
 
+    mWrapMaxLength = maxLength;
+    mWrapMaxHeight = maxHeight;
+    mWrapLineSpacing = lineSpacing;
+
+    // TODO: Fix this rounding issue properly elsewhere.
+    if (mWrapMaxHeight < 1.0f)
+        mWrapMaxHeight = 0.0f;
+
     std::vector<ShapeSegment> segmentsHB;
     shapeText(text, segmentsHB);
 
@@ -230,7 +241,7 @@ std::string Font::wrapText(const std::string& text,
                 break;
             }
             accumHeight += lineHeight;
-            if (maxHeight != 0.0f && accumHeight > maxHeight) {
+            if (mWrapMaxHeight != 0.0f && accumHeight > mWrapMaxHeight) {
                 addEllipsis = true;
                 break;
             }
@@ -272,7 +283,7 @@ std::string Font::wrapText(const std::string& text,
             break;
         }
         else {
-            if (maxHeight == 0.0f || accumHeight < maxHeight) {
+            if (mWrapMaxHeight == 0.0f || accumHeight < mWrapMaxHeight) {
                 // New row.
                 float spaceOffset {0.0f};
                 if (lastSpace == wrappedText.size()) {
@@ -336,13 +347,16 @@ std::string Font::wrapText(const std::string& text,
     return wrappedText;
 }
 
-glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
+glm::vec2 Font::getWrappedTextCursorOffset(const std::string& text,
                                            const size_t stop,
                                            const float lineSpacing)
 {
     float lineWidth {0.0f};
     float yPos {0.0f};
     size_t cursor {0};
+
+    const std::string wrappedText {
+        wrapText(text, mWrapMaxLength, mWrapMaxHeight, mWrapLineSpacing, true)};
 
     // TODO: Enable this code when shaped text is properly wrapped in wrapText().
     // std::vector<ShapeSegment> segmentsHB;
@@ -753,9 +767,12 @@ void Font::shapeText(const std::string& text, std::vector<ShapeSegment>& segment
             segment.length = static_cast<unsigned int>(textCursor - lastFlushPos);
             segment.fontHB = (lastFont == nullptr ? currGlyph->fontHB : lastFont);
             segment.doShape = shapeSegment;
+#if !defined(NDEBUG)
+            segment.substring = text.substr(lastFlushPos, textCursor - lastFlushPos);
+#else
             if (!shapeSegment)
                 segment.substring = text.substr(lastFlushPos, textCursor - lastFlushPos);
-
+#endif
             segmentsHB.emplace_back(std::move(segment));
 
             lastFlushPos = textCursor;

@@ -95,7 +95,7 @@ public:
                          const bool multiLine = false);
 
     // Returns the position of the cursor after moving it to the stop position.
-    glm::vec2 getWrappedTextCursorOffset(const std::string& wrappedText,
+    glm::vec2 getWrappedTextCursorOffset(const std::string& text,
                                          const size_t stop,
                                          const float lineSpacing = 1.5f);
 
@@ -248,6 +248,9 @@ private:
     float mFontSize;
     float mLetterHeight;
     int mMaxGlyphHeight;
+    float mWrapMaxLength;
+    float mWrapMaxHeight;
+    float mWrapLineSpacing;
 };
 
 // Caching of shaped and rendered text.

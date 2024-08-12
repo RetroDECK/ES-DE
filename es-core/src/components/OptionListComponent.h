@@ -352,12 +352,10 @@ private:
             // Display the selected entry and left/right option arrows.
             for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
                 if (it->selected) {
-                    if (it->maxNameLength > 0.0f &&
-                        Font::get(FONT_SIZE_MEDIUM)->sizeText(it->name).x > it->maxNameLength) {
-                        // A maximum length parameter has been passed and the "name" size surpasses
-                        // this value, so abbreviate the string inside the arrows.
-                        auto font = Font::get(FONT_SIZE_MEDIUM);
-                        mText.setText(font->wrapText(it->name, it->maxNameLength));
+                    if (it->maxNameLength > 0.0f) {
+                        // A maximum length parameter is passed to make sure the text is
+                        // abbreviated if it doesn't fit.
+                        mText.setText(it->name, true, it->maxNameLength);
                     }
                     else {
                         mText.setText(it->name);

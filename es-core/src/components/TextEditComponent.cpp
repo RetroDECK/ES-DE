@@ -28,6 +28,7 @@ TextEditComponent::TextEditComponent()
     , mFocused {false}
     , mEditing {false}
     , mMaskInput {true}
+    , mMultiLine {false}
     , mCursor {0}
     , mBlinkTime {0}
     , mCursorRepeatDir {0}
@@ -76,10 +77,10 @@ void TextEditComponent::onSizeChanged()
     onTextChanged(); // Wrap point probably changed.
 }
 
-void TextEditComponent::setValue(const std::string& val)
+void TextEditComponent::setValue(const std::string& val, bool multiLine, bool update)
 {
     mText = val;
-    mTextOrig = val;
+    mMultiLine = multiLine;
     onTextChanged();
     onCursorChanged();
 }
@@ -92,7 +93,7 @@ void TextEditComponent::textInput(const std::string& text, const bool pasting)
 #endif
 
     // Allow pasting up to a reasonable max clipboard size.
-    if (pasting && text.length() > (isMultiline() ? 16384 : 300))
+    if (pasting && text.length() > (mMultiLine ? 16384 : 300))
         return;
 
     if (mEditing) {
@@ -106,12 +107,10 @@ void TextEditComponent::textInput(const std::string& text, const bool pasting)
             }
         }
         else {
-            mText.insert(
-                mCursor,
-                (pasting && !isMultiline() ? Utils::String::replace(text, "\n", " ") : text));
+            mText.insert(mCursor,
+                         (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text));
             mCursor += static_cast<unsigned int>(
-                (pasting && !isMultiline() ? Utils::String::replace(text, "\n", " ") : text)
-                    .size());
+                (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text).size());
         }
     }
 
@@ -191,7 +190,7 @@ bool TextEditComponent::input(InputConfig* config, Input input)
         if (config->getDeviceId() == DEVICE_KEYBOARD) {
             // Special handling for keyboard input as the "A" and "B" buttons are overridden.
             if (input.id == SDLK_RETURN || input.id == SDLK_KP_ENTER) {
-                if (isMultiline()) {
+                if (mMultiLine) {
                     const bool maskValue {mMaskInput};
                     mMaskInput = false;
                     textInput("\n");
@@ -311,11 +310,11 @@ void TextEditComponent::setCursor(size_t pos)
 
 void TextEditComponent::onTextChanged()
 {
-    mWrappedText =
-        (isMultiline() ? getFont()->wrapText(mText, getTextAreaSize().x, 0.0f, 1.5f, true) : mText);
-    mEditText->setText(mWrappedText);
-    // Setting the Y size to zero makes the text area expand vertically as needed.
-    mEditText->setSize(mEditText->getSize().x, 0.0f);
+    if (mMultiLine)
+        mEditText->setText(mText, true, mSize.x);
+    else
+        mEditText->setText(mText);
+
     mEditText->setColor(mMenuColorKeyboardText | static_cast<unsigned char>(mOpacity * 255.0f));
 
     if (mCursor > static_cast<int>(mText.length()))
@@ -324,8 +323,8 @@ void TextEditComponent::onTextChanged()
 
 void TextEditComponent::onCursorChanged()
 {
-    if (isMultiline()) {
-        mCursorPos = getFont()->getWrappedTextCursorOffset(mWrappedText, mCursor);
+    if (mMultiLine) {
+        mCursorPos = getFont()->getWrappedTextCursorOffset(mText, mCursor);
 
         // Need to scroll down?
         if (mScrollOffset.y + getTextAreaSize().y < mCursorPos.y + getFont()->getHeight())

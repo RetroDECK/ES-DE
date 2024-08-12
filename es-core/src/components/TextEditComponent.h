@@ -29,7 +29,7 @@ public:
 
     void onSizeChanged() override;
 
-    void setValue(const std::string& val) override;
+    void setValue(const std::string& val, bool multiLine, bool update = true);
     std::string getValue() const override;
 
     void startEditing();
@@ -50,17 +50,15 @@ private:
     void updateCursorRepeat(int deltaTime);
     void moveCursor(int amt);
 
-    bool isMultiline() { return (getSize().y > getFont()->getHeight() * 1.25f); }
     glm::vec2 getTextAreaPos() const;
     glm::vec2 getTextAreaSize() const;
 
     Renderer* mRenderer;
     std::string mText;
-    std::string mWrappedText;
-    std::string mTextOrig;
     bool mFocused;
     bool mEditing;
     bool mMaskInput;
+    bool mMultiLine;
     int mCursor; // Cursor position in characters.
     int mBlinkTime;
 
