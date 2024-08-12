@@ -124,13 +124,16 @@ public:
     static size_t getTotalMemUsage();
 
 protected:
-    TextCache* buildTextCache(const std::string& text,
+    TextCache* buildTextCache(const std::string& textArg,
                               glm::vec2 offset,
                               unsigned int color,
-                              float xLen,
+                              float length,
+                              float height,
                               Alignment alignment = ALIGN_LEFT,
                               float lineSpacing = 1.5f,
-                              bool noTopMargin = false);
+                              bool noTopMargin = false,
+                              bool doWrapText = false,
+                              bool multiLine = false);
 
     void renderTextCache(TextCache* cache);
 
@@ -227,7 +230,7 @@ private:
 
     float getNewlineStartOffset(const std::string& text,
                                 const unsigned int& charStart,
-                                const float& xLen,
+                                const float& length,
                                 const Alignment& alignment);
 
     static inline FT_Library sLibrary {nullptr};

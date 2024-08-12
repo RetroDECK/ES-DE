@@ -104,7 +104,7 @@ TextComponent::TextComponent(const std::string& text,
     setHorizontalScrolling(mHorizontalScrolling);
     setText(text, false, mMaxLength);
     setPosition(pos);
-    if (mMaxLength == 0.0f)
+    if (mMaxLength == 0.0f || mMaxLength > size.x)
         setSize(size);
     else
         setSize(glm::vec2 {mMaxLength, size.y});
@@ -503,24 +503,20 @@ void TextComponent::onTextChanged()
         if (lineHeight > mSize.y && mSize.y != 0.0f)
             offsetY = (mSize.y - lineHeight) / 2.0f;
         mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(
-            text, glm::vec2 {0.0f, offsetY}, mColor, 0.0f, ALIGN_LEFT, mLineSpacing));
+            text, glm::vec2 {0.0f, offsetY}, mColor, 0.0f, 0.0f, ALIGN_LEFT, mLineSpacing));
     }
     else if (isMultiline && !isScrollable) {
-        const std::string wrappedText {
-            font->wrapText(text, mSize.x * mRelativeScale,
-                           (mVerticalAutoSizing ? 0.0f : (mSize.y * mRelativeScale) - lineHeight),
-                           mLineSpacing, isMultiline)};
         mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(
-            wrappedText, glm::vec2 {0.0f, 0.0f}, mColor, mSize.x * mRelativeScale,
-            mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+            text, glm::vec2 {0.0f, 0.0f}, mColor, mSize.x * mRelativeScale,
+            (mVerticalAutoSizing ? 0.0f : (mSize.y * mRelativeScale) - lineHeight),
+            mHorizontalAlignment, mLineSpacing, mNoTopMargin, true, isMultiline));
     }
     else {
         if (!isMultiline && lineHeight > mSize.y)
             offsetY = (mSize.y - lineHeight) / 2.0f;
-        mTextCache = std::shared_ptr<TextCache>(
-            font->buildTextCache(font->wrapText(text, mSize.x, 0.0f, mLineSpacing, isMultiline),
-                                 glm::vec2 {0.0f, offsetY}, mColor, mSize.x, mHorizontalAlignment,
-                                 mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(
+            text, glm::vec2 {0.0f, offsetY}, mColor, mSize.x, 0.0f, mHorizontalAlignment,
+            mLineSpacing, mNoTopMargin, true, isMultiline));
     }
 
     if (mAutoCalcExtent.y)

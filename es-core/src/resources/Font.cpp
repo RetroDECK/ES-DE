@@ -477,15 +477,24 @@ size_t Font::getTotalMemUsage()
     return total;
 }
 
-TextCache* Font::buildTextCache(const std::string& text,
+TextCache* Font::buildTextCache(const std::string& textArg,
                                 glm::vec2 offset,
                                 unsigned int color,
-                                float xLen,
+                                float length,
+                                float height,
                                 Alignment alignment,
                                 float lineSpacing,
-                                bool noTopMargin)
+                                bool noTopMargin,
+                                bool doWrapText,
+                                bool multiLine)
 {
-    float x {offset.x + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0)};
+    std::string text;
+    if (doWrapText)
+        text = wrapText(textArg, length, height, lineSpacing, multiLine);
+    else
+        text = textArg;
+
+    float x {offset.x + (length != 0 ? getNewlineStartOffset(text, 0, length, alignment) : 0)};
     int yTop {0};
     float yBot {0.0f};
 
@@ -518,10 +527,10 @@ TextCache* Font::buildTextCache(const std::string& text,
             if (!segment.doShape && character == '\n') {
                 y += getHeight(lineSpacing);
                 x = offset[0] +
-                    (xLen != 0 ? getNewlineStartOffset(
-                                     text, static_cast<const unsigned int>(segment.startPos + 1),
-                                     xLen, alignment) :
-                                 0);
+                    (length != 0 ? getNewlineStartOffset(
+                                       text, static_cast<const unsigned int>(segment.startPos + 1),
+                                       length, alignment) :
+                                   0);
                 continue;
             }
 
@@ -1140,7 +1149,7 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
 
 float Font::getNewlineStartOffset(const std::string& text,
                                   const unsigned int& charStart,
-                                  const float& xLen,
+                                  const float& length,
                                   const Alignment& alignment)
 {
     switch (alignment) {
@@ -1150,20 +1159,20 @@ float Font::getNewlineStartOffset(const std::string& text,
         case ALIGN_CENTER: {
             int endChar {0};
             endChar = static_cast<int>(text.find('\n', charStart));
-            return (xLen - sizeText(text.substr(charStart,
-                                                static_cast<size_t>(endChar) != std::string::npos ?
-                                                    endChar - charStart :
-                                                    endChar))
-                               .x) /
+            return (length - sizeText(text.substr(charStart, static_cast<size_t>(endChar) !=
+                                                                     std::string::npos ?
+                                                                 endChar - charStart :
+                                                                 endChar))
+                                 .x) /
                    2.0f;
         }
         case ALIGN_RIGHT: {
             int endChar = static_cast<int>(text.find('\n', charStart));
-            return xLen - (sizeText(text.substr(charStart,
-                                                static_cast<size_t>(endChar) != std::string::npos ?
-                                                    endChar - charStart :
-                                                    endChar))
-                               .x);
+            return length - (sizeText(text.substr(charStart, static_cast<size_t>(endChar) !=
+                                                                     std::string::npos ?
+                                                                 endChar - charStart :
+                                                                 endChar))
+                                 .x);
         }
         default:
             return 0;
