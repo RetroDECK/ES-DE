@@ -115,6 +115,8 @@ void GuiComponent::setOrigin(float x, float y)
 
 void GuiComponent::setSize(const float w, const float h)
 {
+    assert(w >= 0.0f && h >= 0.0f);
+
     if (mSize.x == w && mSize.y == h)
         return;
 
