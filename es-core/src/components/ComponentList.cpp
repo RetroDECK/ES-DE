@@ -382,6 +382,10 @@ void ComponentList::updateElementSize(const ComponentListRow& row)
             width -= it->component->getSize().x;
     }
 
+    // This can happen if the element has zero width, or close to zero width.
+    if (width < 0.0f)
+        width = 0.0f;
+
     // Redistribute the "unused" width equally among the components if resizeWidth is set to true.
     width = width / resizeVec.size();
     for (auto it = resizeVec.cbegin(); it != resizeVec.cend(); ++it)
