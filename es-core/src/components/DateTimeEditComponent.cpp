@@ -165,7 +165,7 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
     trans = glm::translate(trans, glm::round(off));
     mRenderer->setMatrix(trans);
 
-    if (Settings::getInstance()->getBool("DebugText")) {
+    if (Settings::getInstance()->getBool("DebugText") && mDateText->getValue() != "") {
         mRenderer->setMatrix(trans);
         mDateText->setDebugRendering(false);
         if (mDateText->getSize().x > 0.0f) {
