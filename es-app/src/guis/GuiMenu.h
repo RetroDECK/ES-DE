@@ -44,7 +44,8 @@ private:
     void openConfigInput(GuiSettings* settings);
     void openCollectionSystemOptions();
     void openOtherOptions();
-    void openRetroDeckConfigurator();
+    void openRetroDeckClassicConfigurator();
+    void openRetroDeckGodotConfigurator();
     void openESDEConfiguration();
     void openUtilities();
     void openQuitMenu();
