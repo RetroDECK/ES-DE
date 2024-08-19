@@ -375,6 +375,14 @@ namespace Utils
             esBinary = exePath;
             exePath = getCanonicalPath(exePath);
 
+#if defined(__FreeBSD__)
+            // Fallback to getPathToBinary(argv[0]), needed as FreeBSD does not typically
+            // provide /proc/self/exe.
+            if (exePath.empty()) {
+                esBinary = getPathToBinary(path);
+                exePath = getCanonicalPath(esBinary);
+            }
+#endif
             // Fallback to argv[0] if everything else fails.
             if (exePath.empty()) {
                 esBinary = path;
