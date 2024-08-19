@@ -276,7 +276,7 @@ elseif(NOT ANDROID)
     if(NOT HAIKU)
         install(TARGETS es-pdf-convert RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     endif()
-    if(CMAKE_SYSTEM_NAME MATCHES Linux)
+    if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/es-de.6.gz
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man6)
     else()
