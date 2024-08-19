@@ -370,11 +370,11 @@ if(VIDEO_HW_DECODING)
 endif()
 
 if(DEINIT_ON_LAUNCH)
-    if(CMAKE_SYSTEM_NAME MATCHES Linux)
+    if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
         add_compile_definitions(DEINIT_ON_LAUNCH)
         message("-- Building with deinitialization on game launch")
     else()
-        message(FATAL_ERROR "-- Deinitialization on game launch can only be used on Linux")
+        message(FATAL_ERROR "-- Deinitialization on game launch can only be used on Linux and FreeBSD")
     endif()
 endif()
 
