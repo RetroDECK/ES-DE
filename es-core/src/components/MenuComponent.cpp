@@ -31,6 +31,7 @@ MenuComponent::MenuComponent(std::string title, const std::shared_ptr<Font>& tit
 
     // Set up title.
     mTitle = std::make_shared<TextComponent>();
+    mTitle->setAutoCalcExtent(glm::ivec2 {0, 0});
     mTitle->setHorizontalAlignment(ALIGN_CENTER);
     mTitle->setColor(mMenuColorTitle);
     setTitle(title, titleFont);

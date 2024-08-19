@@ -54,7 +54,8 @@ Screensaver::Screensaver()
 void Screensaver::startScreensaver(bool generateMediaList)
 {
     ViewController::getInstance()->pauseViewVideos();
-    mGameOverlay = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_SMALL), 0xFFFFFFFF);
+    mGameOverlay = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_SMALL), 0xFFFFFFFF,
+                                                   ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {1, 1});
 
     mScreensaverType = Settings::getInstance()->getString("ScreensaverType");
     // In case there is an invalid entry in the es_settings.xml file.
@@ -700,9 +701,6 @@ void Screensaver::generateOverlayInfo()
 
     mGameOverlay->setText(overlayText);
     mGameOverlay->setPosition(posX, posY);
-
-    // Setting the Y size to zero makes the text area expand vertically as needed.
-    mGameOverlay->setSize(mGameOverlay->getSize().x, 0.0f);
 
     const float marginX {mRenderer->getScreenWidth() * 0.01f};
 

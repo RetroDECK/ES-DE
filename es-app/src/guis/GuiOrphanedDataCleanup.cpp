@@ -114,7 +114,9 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mMediaDescription,
         Font::get(mRenderer->getScreenAspectRatio() < 1.6f ? FONT_SIZE_SMALL : FONT_SIZE_MEDIUM),
         mMenuColorPrimary, ALIGN_LEFT, ALIGN_TOP);
-    mGrid.setEntry(mDescription, glm::ivec2 {1, 4}, false, true, glm::ivec2 {2, 1});
+    mDescription->setNoSizeUpdate(true);
+    mGrid.setEntry(mDescription, glm::ivec2 {1, 4}, false, true, glm::ivec2 {2, 1},
+                   GridFlags::BORDER_NONE, GridFlags::UPDATE_ALWAYS, glm::ivec2 {0, 1});
 
     mEntryCountHeader = std::make_shared<TextComponent>(
         _("TOTAL ENTRIES REMOVED:"), Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);

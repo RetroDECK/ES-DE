@@ -23,6 +23,7 @@ BusyComponent::BusyComponent()
     // Col 0 = animation, col 1 = spacer, col 2 = text.
     mGrid.setEntry(mAnimation, glm::ivec2 {1, 1}, false, true);
     mGrid.setEntry(mText, glm::ivec2 {3, 1}, false, true);
+    mText->setAutoCalcExtent(glm::ivec2 {1, 0});
 
     addChild(&mBackground);
     addChild(&mGrid);
@@ -37,7 +38,7 @@ void BusyComponent::onSizeChanged()
 
     const float middleSpacerWidth {0.01f * Renderer::getScreenWidth()};
     const float textHeight {mText->getFont()->getLetterHeight()};
-    mText->setSize(0, textHeight);
+    mText->setSize(0.0f, textHeight);
     const float textWidth {mText->getSize().x + (4.0f * Renderer::getScreenWidthModifier())};
 
     mGrid.setColWidthPerc(1, textHeight / mSize.x); // Animation is square.

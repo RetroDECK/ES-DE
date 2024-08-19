@@ -42,7 +42,8 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
 
         std::string name {(*it)->getName()};
         std::shared_ptr<TextComponent> systemText {
-            std::make_shared<TextComponent>(name, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
+            std::make_shared<TextComponent>(name, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary,
+                                            ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {0, 0})};
 
         systemText->setSize(systemSizeX, systemText->getSize().y);
         row.addElement(systemText, false);
@@ -72,15 +73,16 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
         std::shared_ptr<TextComponent> labelText;
 
         if (label == (*it)->getSystemEnvData()->mLaunchCommands.front().second) {
-            labelText =
-                std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT),
-                                                mMenuColorPrimary, ALIGN_RIGHT);
+            labelText = std::make_shared<TextComponent>(
+                label, Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), mMenuColorPrimary, ALIGN_RIGHT,
+                ALIGN_CENTER, glm::ivec2 {0, 0});
         }
         else {
             // Mark any non-default value with bold and add a gear symbol as well.
             labelText = std::make_shared<TextComponent>(
                 label + (!invalidEntry ? " " + ViewController::GEAR_CHAR : ""),
-                Font::get(FONT_SIZE_MEDIUM, FONT_PATH_BOLD), mMenuColorPrimary, ALIGN_RIGHT);
+                Font::get(FONT_SIZE_MEDIUM, FONT_PATH_BOLD), mMenuColorPrimary, ALIGN_RIGHT,
+                ALIGN_CENTER, glm::ivec2 {0, 0});
         }
 
         // Mark invalid entries with red color.

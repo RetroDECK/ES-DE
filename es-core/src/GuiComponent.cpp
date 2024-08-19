@@ -360,8 +360,16 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
     }
 
-    if (properties & ThemeFlags::SIZE && elem->has("size"))
-        setSize(elem->get<glm::vec2>("size") * scale);
+    if (properties & ThemeFlags::SIZE && elem->has("size")) {
+        glm::vec2 size {(elem->get<glm::vec2>("size") * scale)};
+        if (size.x == 0.0f && size.y == 0.0f)
+            setAutoCalcExtent(glm::ivec2 {1, 0});
+        else if (size.x != 0.0f && size.y == 0.0f)
+            setAutoCalcExtent(glm::ivec2 {0, 1});
+        else if (size.x != 0.0f && size.y != 0.0f)
+            setAutoCalcExtent(glm::ivec2 {0, 0});
+        setSize(size);
+    }
 
     // Position + size also implies origin.
     if ((properties & ORIGIN || (properties & POSITION && properties & ThemeFlags::SIZE)) &&

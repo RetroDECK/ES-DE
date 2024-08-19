@@ -203,14 +203,14 @@ void TextListComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
 {
     if (mHorizontalScrolling) {
         entry.data.entryName = std::make_shared<TextComponent>(
-            entry.name, mFont, 0x000000FF, ALIGN_LEFT, ALIGN_CENTER, glm::vec3 {0.0f, 0.0f, 0.0f},
-            glm::vec2 {mFont->sizeText(entry.name).x, mFont->getSize() * 1.5f});
+            entry.name, mFont, 0x000000FF, ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {1, 0},
+            glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {0.0f, mFont->getSize() * 1.5f});
     }
     else {
         entry.data.entryName = std::make_shared<TextComponent>(
-            entry.name, mFont, 0x000000FF, ALIGN_LEFT, ALIGN_CENTER, glm::vec3 {0.0f, 0.0f, 0.0f},
-            glm::vec2 {mFont->sizeText(entry.name).x, mFont->getSize() * 1.5f}, 0x00000000, 1.5f,
-            1.0f, false, 1.0f, 1500.0f, 1.5f, mSize.x - (mHorizontalMargin * 2.0f));
+            entry.name, mFont, 0x000000FF, ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {1, 0},
+            glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {0.0f, mFont->getSize() * 1.5f}, 0x00000000,
+            1.5f, 1.0f, false, 1.0f, 1500.0f, 1.5f, mSize.x - (mHorizontalMargin * 2.0f));
     }
 
     if (mHorizontalScrolling) {

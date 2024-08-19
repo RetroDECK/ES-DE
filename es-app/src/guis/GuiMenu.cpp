@@ -2175,6 +2175,7 @@ void GuiMenu::openQuitMenu()
 void GuiMenu::addVersionInfo()
 {
     mVersion.setFont(Font::get(FONT_SIZE_SMALL));
+    mVersion.setAutoCalcExtent(glm::ivec2 {0, 0});
     mVersion.setColor(mMenuColorTertiary);
 
     const std::string applicationName {"ES-DE"};

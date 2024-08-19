@@ -45,6 +45,7 @@ public:
     {
         auto font {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)};
         mText.setFont(font);
+        mText.setAutoCalcExtent(glm::ivec2 {0, 0});
         mText.setColor(mMenuColorPrimary);
         mText.setHorizontalAlignment(ALIGN_CENTER);
         addChild(&mText);
@@ -342,10 +343,10 @@ private:
 
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y);
-            setSize(mText.getSize().x + mRightArrow.getSize().x +
+            setSize(mText.getTextCache()->metrics.size.x + mRightArrow.getSize().x +
                         Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
                     mText.getSize().y);
-            if (mParent) // Hack since there's no "on child size changed" callback.
+            if (mParent)
                 mParent->onSizeChanged();
         }
         else {
@@ -362,10 +363,11 @@ private:
                     }
 
                     mText.setSize(0.0f, mText.getSize().y);
-                    setSize(mText.getSize().x + mLeftArrow.getSize().x + mRightArrow.getSize().x +
+                    setSize(mText.getTextCache()->metrics.size.x + mLeftArrow.getSize().x +
+                                mRightArrow.getSize().x +
                                 Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
                             mText.getSize().y);
-                    if (mParent) // Hack since there's no "on child size changed" callback.
+                    if (mParent)
                         mParent->onSizeChanged();
 
                     if (mSelectedChangedCallback)

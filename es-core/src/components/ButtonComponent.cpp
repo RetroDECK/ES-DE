@@ -23,14 +23,25 @@ ButtonComponent::ButtonComponent(const std::string& text,
     , mFocused {false}
     , mEnabled {true}
     , mFlatStyle {flatStyle}
+    , mMinWidth {0.0f}
     , mTextColorFocused {mMenuColorButtonTextFocused}
     , mTextColorUnfocused {mMenuColorButtonTextUnfocused}
     , mFlatColorFocused {mMenuColorButtonFlatFocused}
     , mFlatColorUnfocused {mMenuColorButtonFlatUnfocused}
 
 {
-    mButtonText =
-        std::make_unique<TextComponent>("", Font::get(FONT_SIZE_MEDIUM), 0xFFFFFFFF, ALIGN_CENTER);
+    if (mFlatStyle) {
+        mButtonText = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_MEDIUM), 0xFFFFFFFF,
+                                                      ALIGN_CENTER);
+    }
+    else {
+        mButtonText = std::make_unique<TextComponent>("DELETE", Font::get(FONT_SIZE_MEDIUM),
+                                                      0xFFFFFFFF, ALIGN_CENTER);
+        const glm::vec2 textCacheSize {mButtonText->getTextCache() == nullptr ?
+                                           glm::vec2 {0.0f, 0.0f} :
+                                           mButtonText->getTextCache()->metrics.size};
+        mMinWidth = textCacheSize.x + (12.0f * mRenderer->getScreenResolutionModifier());
+    }
 
     mBox.setSharpCorners(true);
     setPressedFunc(func);
@@ -75,12 +86,10 @@ void ButtonComponent::setText(const std::string& text,
     mHelpText = helpText;
     mButtonText->setText(mText);
 
-    const float minWidth {mButtonText->getFont()->sizeText("DELETE").x +
-                          (12.0f * mRenderer->getScreenResolutionModifier())};
     if (resize) {
         setSize(
             std::max(mButtonText->getSize().x + (12.0f * mRenderer->getScreenResolutionModifier()),
-                     minWidth),
+                     mMinWidth),
             mButtonText->getSize().y);
     }
 

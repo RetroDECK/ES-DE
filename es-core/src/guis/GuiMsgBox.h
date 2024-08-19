@@ -34,6 +34,8 @@ public:
               const bool deleteOnButtonPress = true,
               const float maxWidthMultiplier = 0.0f);
 
+    void calculateSize();
+
     void changeText(const std::string& newText);
 
     bool input(InputConfig* config, Input input) override;

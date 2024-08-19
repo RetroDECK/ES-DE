@@ -14,17 +14,21 @@
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
+#define DEBUG_SHAPING false
+#define DISABLE_SHAPING false
+
 Font::Font(float size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
     , mPath(path)
     , mFontHB {nullptr}
     , mBufHB {nullptr}
+    , mEllipsisGlyph {0, 0, nullptr}
     , mFontSize {size}
     , mLetterHeight {0.0f}
+    , mSizeReference {0.0f}
     , mMaxGlyphHeight {static_cast<int>(std::round(size))}
-    , mWrapMaxLength {0.0f}
-    , mWrapMaxHeight {0.0f}
-    , mWrapLineSpacing {1.5f}
+    , mSpaceGlyph {0}
+    , mShapeText {true}
 {
     if (mFontSize < 3.0f) {
         mFontSize = 3.0f;
@@ -61,6 +65,17 @@ Font::Font(float size, const std::string& path)
     // of the font size to avoid some minor sizing issues.
     if (getGlyph('\n')->rows > mMaxGlyphHeight)
         mMaxGlyphHeight = getGlyph('\n')->rows;
+
+    // This is used when abbreviating and wrapping text in wrapText().
+    std::vector<Font::ShapeSegment> shapedGlyph;
+    shapeText("…", shapedGlyph);
+    if (!shapedGlyph.empty()) {
+        mEllipsisGlyph = std::make_tuple(shapedGlyph.front().glyphIndexes.front().first,
+                                         shapedGlyph.front().glyphIndexes.front().second,
+                                         shapedGlyph.front().fontHB);
+    }
+    // This will be zero if there is no space glyph in the font (which hopefully never happens).
+    mSpaceGlyph = FT_Get_Char_Index(mFontFace->face, ' ');
 }
 
 Font::~Font()
@@ -174,235 +189,6 @@ int Font::loadGlyphs(const std::string& text)
     return mMaxGlyphHeight;
 }
 
-std::string Font::wrapText(const std::string& text,
-                           const float maxLength,
-                           const float maxHeight,
-                           const float lineSpacing,
-                           const bool multiLine)
-{
-    assert(maxLength > 0.0f);
-    const float lineHeight {getHeight(lineSpacing)};
-    const float ellipsisWidth {sizeText("…").x};
-    float accumHeight {lineHeight};
-    float lineWidth {0.0f};
-    float charWidth {0.0f};
-    float lastSpacePos {0.0f};
-    unsigned int charID {0};
-    size_t cursor {0};
-    size_t lastSpace {0};
-    size_t spaceAccum {0};
-    size_t byteCount {0};
-    std::string wrappedText;
-    std::string charEntry;
-    std::vector<std::pair<size_t, float>> ellipsisSection;
-    bool addEllipsis {false};
-    float totalWidth {0.0f};
-
-    mWrapMaxLength = maxLength;
-    mWrapMaxHeight = maxHeight;
-    mWrapLineSpacing = lineSpacing;
-
-    // TODO: Fix this rounding issue properly elsewhere.
-    if (mWrapMaxHeight < 1.0f)
-        mWrapMaxHeight = 0.0f;
-
-    std::vector<ShapeSegment> segmentsHB;
-    shapeText(text, segmentsHB);
-
-    // This should capture a lot of short strings, which are only a single segment.
-    if (!multiLine && segmentsHB.size() == 1 && segmentsHB.front().shapedWidth <= maxLength)
-        return text;
-
-    // Additionally this should capture many short multi-segment strings that do not require
-    // more involved line breaking.
-    bool hasNewline {false};
-    for (auto& segment : segmentsHB) {
-        totalWidth += segment.shapedWidth;
-        if (!segment.doShape && segment.substring == "\n") {
-            hasNewline = true;
-            break;
-        }
-    }
-    if (!hasNewline && totalWidth <= maxLength)
-        return text;
-
-    totalWidth = 0.0f;
-
-    // TODO: Add proper line breaking logic that takes substituted glyphs and adjusted horizontal
-    // advance values into consideration.
-
-    for (auto& segment : segmentsHB)
-        totalWidth += segment.shapedWidth;
-
-    for (size_t i {0}; i < text.length(); ++i) {
-        if (text[i] == '\n') {
-            if (!multiLine) {
-                addEllipsis = true;
-                break;
-            }
-            accumHeight += lineHeight;
-            if (mWrapMaxHeight != 0.0f && accumHeight > mWrapMaxHeight) {
-                addEllipsis = true;
-                break;
-            }
-            wrappedText.append("\n");
-            lineWidth = 0.0f;
-            lastSpace = 0;
-            continue;
-        }
-
-        cursor = i;
-
-        // Needed to handle multi-byte Unicode characters.
-        charID = Utils::String::chars2Unicode(text, cursor);
-        charEntry = text.substr(i, cursor - i);
-
-        Glyph* glyph {getGlyph(charID)};
-        if (glyph != nullptr) {
-            charWidth = static_cast<float>(glyph->advance.x);
-            byteCount = cursor - i;
-        }
-        else {
-            // Missing glyph.
-            continue;
-        }
-
-        if (multiLine && (charEntry == " " || charEntry == "\t")) {
-            lastSpace = i;
-            lastSpacePos = lineWidth;
-        }
-
-        if (lineWidth + charWidth <= maxLength) {
-            if (lineWidth + charWidth + ellipsisWidth > maxLength)
-                ellipsisSection.emplace_back(std::make_pair(byteCount, charWidth));
-            lineWidth += charWidth;
-            wrappedText.append(charEntry);
-        }
-        else if (!multiLine) {
-            addEllipsis = true;
-            break;
-        }
-        else {
-            if (mWrapMaxHeight == 0.0f || accumHeight < mWrapMaxHeight) {
-                // New row.
-                float spaceOffset {0.0f};
-                if (lastSpace == wrappedText.size()) {
-                    wrappedText.append("\n");
-                }
-                else if (lastSpace != 0) {
-                    if (lastSpace + spaceAccum == wrappedText.size())
-                        wrappedText.append("\n");
-                    else
-                        wrappedText[lastSpace + spaceAccum] = '\n';
-                    spaceOffset = lineWidth - lastSpacePos;
-                }
-                else {
-                    if (lastSpace == 0)
-                        ++spaceAccum;
-                    wrappedText.append("\n");
-                }
-                if (charEntry != " " && charEntry != "\t") {
-                    wrappedText.append(charEntry);
-                    lineWidth = charWidth;
-                }
-                else {
-                    lineWidth = 0.0f;
-                }
-                accumHeight += lineHeight;
-                lineWidth += spaceOffset;
-                lastSpacePos = 0.0f;
-                lastSpace = 0;
-            }
-            else {
-                if (multiLine)
-                    addEllipsis = true;
-                break;
-            }
-        }
-
-        i = cursor - 1;
-    }
-
-    if (addEllipsis) {
-        if (!wrappedText.empty() && wrappedText.back() == ' ') {
-            lineWidth -= sizeText(" ").x;
-            wrappedText.pop_back();
-        }
-        else if (!wrappedText.empty() && wrappedText.back() == '\t') {
-            lineWidth -= sizeText("\t").x;
-            wrappedText.pop_back();
-        }
-        while (!wrappedText.empty() && !ellipsisSection.empty() &&
-               lineWidth + ellipsisWidth > maxLength) {
-            lineWidth -= ellipsisSection.back().second;
-            wrappedText.erase(wrappedText.length() - ellipsisSection.back().first);
-            ellipsisSection.pop_back();
-        }
-        if (!wrappedText.empty() && wrappedText.back() == ' ')
-            wrappedText.pop_back();
-
-        wrappedText.append("…");
-    }
-
-    return wrappedText;
-}
-
-glm::vec2 Font::getWrappedTextCursorOffset(const std::string& text,
-                                           const size_t stop,
-                                           const float lineSpacing)
-{
-    float lineWidth {0.0f};
-    float yPos {0.0f};
-    size_t cursor {0};
-
-    const std::string wrappedText {
-        wrapText(text, mWrapMaxLength, mWrapMaxHeight, mWrapLineSpacing, true)};
-
-    // TODO: Enable this code when shaped text is properly wrapped in wrapText().
-    // std::vector<ShapeSegment> segmentsHB;
-    // shapeText(wrappedText, segmentsHB);
-    // size_t totalPos {0};
-
-    // for (auto& segment : segmentsHB) {
-    //     if (totalPos > stop)
-    //         break;
-    //     for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
-    //         ++totalPos;
-    //         if (totalPos > stop)
-    //             break;
-
-    //         const unsigned int character {segment.glyphIndexes[i].first};
-
-    //         // Invalid character.
-    //         if (!segment.doShape && character == 0)
-    //             continue;
-
-    //         if (!segment.doShape && character == '\n') {
-    //             lineWidth = 0.0f;
-    //             yPos += getHeight(lineSpacing);
-    //             continue;
-    //         }
-
-    //         lineWidth += segment.glyphIndexes[i].second;
-    //     }
-    // }
-
-    while (cursor < stop) {
-        unsigned int character {Utils::String::chars2Unicode(wrappedText, cursor)};
-        if (character == '\n') {
-            lineWidth = 0.0f;
-            yPos += getHeight(lineSpacing);
-            continue;
-        }
-
-        Glyph* glyph {getGlyph(character)};
-        if (glyph)
-            lineWidth += glyph->advance.x;
-    }
-
-    return glm::vec2 {lineWidth, yPos};
-}
-
 std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          unsigned int properties,
                                          const std::shared_ptr<Font>& orig,
@@ -477,24 +263,21 @@ size_t Font::getTotalMemUsage()
     return total;
 }
 
-TextCache* Font::buildTextCache(const std::string& textArg,
-                                glm::vec2 offset,
-                                unsigned int color,
+TextCache* Font::buildTextCache(const std::string& text,
                                 float length,
+                                float maxLength,
                                 float height,
-                                Alignment alignment,
+                                float offsetY,
                                 float lineSpacing,
+                                Alignment alignment,
+                                unsigned int color,
                                 bool noTopMargin,
-                                bool doWrapText,
-                                bool multiLine)
+                                bool multiLine,
+                                bool needGlyphsPos)
 {
-    std::string text;
-    if (doWrapText)
-        text = wrapText(textArg, length, height, lineSpacing, multiLine);
-    else
-        text = textArg;
+    if (maxLength == 0.0f)
+        maxLength = length;
 
-    float x {offset.x + (length != 0 ? getNewlineStartOffset(text, 0, length, alignment) : 0)};
     int yTop {0};
     float yBot {0.0f};
 
@@ -507,15 +290,43 @@ TextCache* Font::buildTextCache(const std::string& textArg,
         yBot = getHeight(lineSpacing);
     }
 
-    float y {offset.y + ((yBot + yTop) / 2.0f)};
+    std::vector<ShapeSegment> segmentsHB;
+    shapeText(text, segmentsHB);
+    wrapText(segmentsHB, maxLength, height, lineSpacing, multiLine);
+
+    size_t segmentIndex {0};
+    float x {0.0f};
+    float y {offsetY + ((yBot + yTop) / 2.0f)};
+    float lineWidth {0.0f};
+    float longestLine {0.0f};
+    float accumHeight {getHeight(lineSpacing)};
+    bool isNewLine {false};
 
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
 
-    std::vector<ShapeSegment> segmentsHB;
-    shapeText(text, segmentsHB);
+    std::vector<glm::vec2> glyphPositions;
+    if (needGlyphsPos)
+        glyphPositions.emplace_back(0.0f, 0.0f);
 
     for (auto& segment : segmentsHB) {
+        if (isNewLine || segmentIndex == 0) {
+            isNewLine = false;
+            float totalLength {0.0f};
+            for (size_t i {segmentIndex}; i < segmentsHB.size(); ++i) {
+                if (segmentsHB[i].lineBreak)
+                    break;
+                totalLength += segmentsHB[i].shapedWidth;
+            }
+            float lengthTemp {length};
+            if (length == 0.0f)
+                lengthTemp = totalLength;
+            if (alignment == ALIGN_CENTER)
+                x = (lengthTemp - totalLength) / 2.0f;
+            else if (alignment == ALIGN_RIGHT)
+                x = lengthTemp - totalLength;
+        }
+
         for (size_t cursor {0}; cursor < segment.glyphIndexes.size(); ++cursor) {
             const unsigned int character {segment.glyphIndexes[cursor].first};
             Glyph* glyph {nullptr};
@@ -525,12 +336,38 @@ TextCache* Font::buildTextCache(const std::string& textArg,
                 continue;
 
             if (!segment.doShape && character == '\n') {
+                x = 0.0f;
                 y += getHeight(lineSpacing);
-                x = offset[0] +
-                    (length != 0 ? getNewlineStartOffset(
-                                       text, static_cast<const unsigned int>(segment.startPos + 1),
-                                       length, alignment) :
-                                   0);
+                lineWidth = 0.0f;
+                accumHeight += getHeight(lineSpacing);
+
+                // This logic changes the position of any space glyph at the end of a row to the
+                // beginning of the next row, as that's more intuitive when editing text.
+                bool spaceMatch {false};
+                if (needGlyphsPos && segmentIndex > 0) {
+                    unsigned int spaceChar {0};
+                    if (!mShapeText)
+                        spaceChar = 32;
+                    else if (segmentsHB[segmentIndex - 1].fontHB == mFontHB)
+                        spaceChar = mSpaceGlyph;
+                    else if (sFallbackSpaceGlyphs.find(segmentsHB[segmentIndex - 1].fontHB) !=
+                             sFallbackSpaceGlyphs.cend())
+                        spaceChar = sFallbackSpaceGlyphs[segment.fontHB];
+                    unsigned int character {segmentsHB[segmentIndex - 1].glyphIndexes.back().first};
+                    if (character == spaceChar)
+                        spaceMatch = true;
+                }
+
+                if (needGlyphsPos && spaceMatch && glyphPositions.size() > 0) {
+                    glyphPositions.back().x = 0.0f;
+                    glyphPositions.back().y = accumHeight - getHeight(lineSpacing);
+                }
+
+                // Only add positions for "real" line breaks that were part of the original text.
+                if (needGlyphsPos && !segment.wrapped)
+                    glyphPositions.emplace_back(x, accumHeight - getHeight(lineSpacing));
+
+                isNewLine = true;
                 continue;
             }
 
@@ -542,6 +379,8 @@ TextCache* Font::buildTextCache(const std::string& textArg,
 
             if (glyph == nullptr)
                 continue;
+
+            lineWidth += glyph->advance.x;
 
             std::vector<Renderer::Vertex>& verts {vertMap[glyph->texture]};
             size_t oldVertSize {verts.size()};
@@ -574,14 +413,23 @@ TextCache* Font::buildTextCache(const std::string& textArg,
 
             // Advance.
             x += glyph->advance.x;
+
+            if (needGlyphsPos)
+                glyphPositions.emplace_back(x, accumHeight - getHeight(lineSpacing));
+
+            if (lineWidth > longestLine)
+                longestLine = lineWidth;
         }
+        ++segmentIndex;
     }
 
     TextCache* cache {new TextCache()};
     cache->vertexLists.resize(vertMap.size());
-    cache->metrics.size = {sizeText(text, lineSpacing)};
+    cache->metrics.size = glm::vec2 {longestLine, accumHeight};
     cache->metrics.maxGlyphHeight = mMaxGlyphHeight;
     cache->clipRegion = {0.0f, 0.0f, 0.0f, 0.0f};
+    if (needGlyphsPos)
+        cache->glyphPositions = std::move(glyphPositions);
 
     size_t i {0};
     for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
@@ -618,6 +466,38 @@ void Font::renderTextCache(TextCache* cache)
             &it->verts[0], static_cast<const unsigned int>(it->verts.size()),
             Renderer::BlendFactor::SRC_ALPHA, Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA);
     }
+}
+
+float Font::getSizeReference()
+{
+    if (mSizeReference != 0.0f)
+        return mSizeReference;
+
+    const std::string includeChars {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
+    hb_font_t* returnedFont {nullptr};
+    bool fontError {false};
+    int advance {0};
+
+    FT_Face* face {getFaceForChar('A', &returnedFont)};
+    if (!face) {
+        // This is completely inaccurate but it should hopefully never happen.
+        return static_cast<float>(mMaxGlyphHeight * 16);
+    }
+
+    // We don't check the face for each character, we just assume that if the font includes
+    // the 'A' character it also includes the other Latin capital letters.
+    for (auto character : includeChars) {
+        if (!fontError) {
+            const FT_GlyphSlot glyphSlot {(*face)->glyph};
+            if (FT_Load_Char(*face, character, FT_LOAD_RENDER))
+                return static_cast<float>(mMaxGlyphHeight * 16);
+            else
+                advance += glyphSlot->metrics.horiAdvance >> 6;
+        }
+    }
+
+    mSizeReference = advance;
+    return mSizeReference;
 }
 
 Font::FontTexture::FontTexture(const int mFontSize)
@@ -740,11 +620,9 @@ void Font::shapeText(const std::string& text, std::vector<ShapeSegment>& segment
             continue;
         byteLength = textCursor - lastCursor;
 
-        if (unicode == '\'' || unicode == '\n' || currGlyph->fontHB == nullptr) {
-            // HarfBuzz converts ' and newline characters to invalid characters, so we
-            // need to exclude these from getting shaped. This means adding a new segment.
-            // We also add a segment if there is no font set as it means there was a missing
-            // glyph and the "no glyph" symbol should be shown.
+        if (unicode == '\n' || currGlyph->fontHB == nullptr) {
+            // We need to add a segment if there is a line break, or if no font is set as the
+            // latter means there was a missing glyph and the "no glyph" symbol should be shown.
             addSegment = true;
             if (!lastWasNoShaping) {
                 textCursor -= byteLength;
@@ -770,17 +648,29 @@ void Font::shapeText(const std::string& text, std::vector<ShapeSegment>& segment
             textCursor -= byteLength;
         }
 
+#if (DISABLE_SHAPING)
+        shapeSegment = false;
+#else
+        if (!mShapeText)
+            shapeSegment = false;
+#endif
+
         if (addSegment) {
             ShapeSegment segment;
             segment.startPos = static_cast<unsigned int>(lastFlushPos);
             segment.length = static_cast<unsigned int>(textCursor - lastFlushPos);
             segment.fontHB = (lastFont == nullptr ? currGlyph->fontHB : lastFont);
             segment.doShape = shapeSegment;
-#if !defined(NDEBUG)
+#if (DEBUG_SHAPING)
             segment.substring = text.substr(lastFlushPos, textCursor - lastFlushPos);
+            if (segment.substring == "\n")
+                segment.lineBreak = true;
 #else
-            if (!shapeSegment)
+            if (!shapeSegment) {
                 segment.substring = text.substr(lastFlushPos, textCursor - lastFlushPos);
+                if (segment.substring == "\n")
+                    segment.lineBreak = true;
+            }
 #endif
             segmentsHB.emplace_back(std::move(segment));
 
@@ -849,6 +739,335 @@ void Font::shapeText(const std::string& text, std::vector<ShapeSegment>& segment
             }
         }
     }
+}
+
+void Font::wrapText(std::vector<ShapeSegment>& segmentsHB,
+                    float maxLength,
+                    const float maxHeight,
+                    const float lineSpacing,
+                    const bool multiLine)
+{
+    std::vector<ShapeSegment> resultSegments;
+
+    // We first need to check whether the text is mixing left-to-right and right-to-left script
+    // as such text always needs to be processed in order to get spacing correct between segments.
+    bool hasLTR {false};
+    bool hasRTL {false};
+    for (auto& segment : segmentsHB) {
+        if (segment.rightToLeft)
+            hasRTL = true;
+        else
+            hasLTR = true;
+        // This is a special case where there is text with mixed script directions but with no
+        // length restriction. This most often means it's horizontally scrolling text. In this
+        // case we just set the length to a really large number, it's only to correctly get all
+        // segments processed below.
+        if (hasRTL && hasLTR && maxLength == 0.0f)
+            maxLength = 30000.0f;
+    }
+
+    if (!(hasLTR && hasRTL)) {
+        // This captures all text that is only a single segment and fits within maxLength, or that
+        // is not length-restricted.
+        if (maxLength == 0.0f ||
+            (segmentsHB.size() == 1 && segmentsHB.front().shapedWidth <= maxLength))
+            return;
+
+        // Additionally this captures shorter multi-segment text that does not require more involved
+        // line breaking or abbreviations.
+        float combinedWidth {0.0f};
+        bool hasNewline {false};
+        for (auto& segment : segmentsHB) {
+            combinedWidth += segment.shapedWidth;
+            if (segment.lineBreak) {
+                hasNewline = true;
+                break;
+            }
+        }
+        if (!hasNewline && combinedWidth <= maxLength)
+            return;
+    }
+
+    // All text that makes it this far requires either abbrevation or wrapping, or both.
+    // TODO: Text that mixes left-to-right and right-to-left script may not wrap and
+    // abbreviate correctly under all circumstances.
+
+    unsigned int newLength {0};
+    unsigned int spaceChar {0};
+    int lastSpaceWidth {0};
+    const float lineHeight {getHeight(lineSpacing)};
+    float totalWidth {0.0f};
+    float newShapedWidth {0.0f};
+    float accumHeight {lineHeight};
+    bool firstGlyphSpace {false};
+    bool lastSegmentSpace {false};
+    bool addEllipsis {false};
+
+    for (auto& segment : segmentsHB) {
+        if (addEllipsis)
+            break;
+
+        size_t lastSpace {0};
+        size_t spaceAccum {0};
+
+        // The space character glyph differs between fonts, so we need to know the correct
+        // index to be able to detect spaces.
+        if (segment.doShape == false)
+            spaceChar = 32;
+        else if (segment.fontHB == mFontHB)
+            spaceChar = mSpaceGlyph;
+        else if (sFallbackSpaceGlyphs.find(segment.fontHB) != sFallbackSpaceGlyphs.cend())
+            spaceChar = sFallbackSpaceGlyphs[segment.fontHB];
+        else
+            spaceChar = 0;
+
+        newShapedWidth = 0.0f;
+        ShapeSegment newSegment;
+        newSegment.startPos = newLength;
+        newSegment.fontHB = segment.fontHB;
+        newSegment.doShape = segment.doShape;
+        newSegment.rightToLeft = segment.rightToLeft;
+        newSegment.spaceChar = spaceChar;
+#if (DEBUG_SHAPING)
+        newSegment.substring = segment.substring;
+#else
+        if (!newSegment.doShape)
+            newSegment.substring = segment.substring;
+#endif
+
+        // We don't bother to reverse this back later as the segment should only be needed once.
+        if (segment.rightToLeft) {
+            if (segment.glyphIndexes.front().first == spaceChar)
+                std::reverse(segment.glyphIndexes.begin() + 1, segment.glyphIndexes.end());
+            else
+                std::reverse(segment.glyphIndexes.begin(), segment.glyphIndexes.end());
+        }
+
+        for (size_t i {0}; i < segment.glyphIndexes.size(); ++i) {
+            if (multiLine) {
+                if (segment.lineBreak) {
+                    totalWidth = 0.0f;
+                    accumHeight += lineHeight;
+                    newSegment.lineBreak = true;
+                }
+
+                if (segment.glyphIndexes[i].first == spaceChar) {
+                    lastSpace = i;
+                    lastSpaceWidth = segment.glyphIndexes[i].second;
+                    lastSegmentSpace = false;
+                    if (i == 0)
+                        firstGlyphSpace = true;
+                }
+            }
+
+            if (totalWidth + segment.glyphIndexes[i].second > maxLength) {
+                if (multiLine) {
+                    if (maxHeight != 0.0f && accumHeight > maxHeight) {
+                        addEllipsis = true;
+                        break;
+                    }
+                    if (maxHeight == 0.0f || accumHeight < maxHeight) {
+                        // New row.
+                        size_t offset {0};
+
+                        if (lastSpace == i && !lastSegmentSpace) {
+                            if (segment.rightToLeft)
+                                newSegment.glyphIndexes.insert(newSegment.glyphIndexes.begin(),
+                                                               segment.glyphIndexes[i]);
+                            else
+                                newSegment.glyphIndexes.emplace_back(segment.glyphIndexes[i]);
+
+                            ++i;
+                        }
+                        else if (lastSpace != 0 || firstGlyphSpace || lastSegmentSpace) {
+                            size_t accum {0};
+                            if (lastSegmentSpace)
+                                ++accum;
+                            if (newSegment.rightToLeft &&
+                                segment.glyphIndexes.front().first == spaceChar)
+                                ++accum;
+                            lastSegmentSpace = false;
+                            firstGlyphSpace = false;
+                            if (lastSpace + spaceAccum - accum != i) {
+                                offset = i - (lastSpace + spaceAccum - accum) - 1;
+                                newShapedWidth -= lastSpaceWidth;
+                                spaceAccum = 0;
+                            }
+                        }
+                        else {
+                            if (lastSpace == 0)
+                                ++spaceAccum;
+                        }
+
+                        for (size_t o {0}; o < offset; ++o) {
+                            // Remove all glyphs going back to the last space.
+                            --i;
+                            --newLength;
+                            if (newSegment.rightToLeft) {
+                                newShapedWidth -= newSegment.glyphIndexes.front().second;
+                                newSegment.glyphIndexes.erase(newSegment.glyphIndexes.begin());
+                            }
+                            else {
+                                newShapedWidth -= newSegment.glyphIndexes.back().second;
+                                newSegment.glyphIndexes.pop_back();
+                            }
+                        }
+
+                        newSegment.length = newSegment.glyphIndexes.size();
+                        newSegment.shapedWidth = newShapedWidth;
+
+                        if (newSegment.glyphIndexes.size() != 0)
+                            resultSegments.emplace_back(newSegment);
+
+                        ShapeSegment breakSegment;
+                        breakSegment.startPos = newLength;
+                        breakSegment.length = 1;
+                        breakSegment.shapedWidth = 0.0f;
+                        breakSegment.fontHB = nullptr;
+                        breakSegment.doShape = false;
+                        breakSegment.lineBreak = true;
+                        breakSegment.wrapped = true;
+                        breakSegment.rightToLeft = false;
+                        breakSegment.substring = "\n";
+                        breakSegment.glyphIndexes.emplace_back(std::make_pair('\n', 0));
+                        resultSegments.emplace_back(breakSegment);
+
+                        ++newLength;
+
+                        newSegment.glyphIndexes.clear();
+                        newSegment.startPos = newLength;
+                        newSegment.length = 0;
+                        newSegment.shapedWidth = 0.0f;
+                        newShapedWidth = 0.0f;
+                        totalWidth = 0.0f;
+                        lastSpace = 0;
+                        spaceAccum = 0;
+                        accumHeight += lineHeight;
+                    }
+                }
+                else {
+                    addEllipsis = true;
+                    break;
+                }
+            }
+
+            if (i == segment.glyphIndexes.size())
+                continue;
+
+            if (segment.rightToLeft)
+                newSegment.glyphIndexes.insert(newSegment.glyphIndexes.begin(),
+                                               segment.glyphIndexes[i]);
+            else
+                newSegment.glyphIndexes.emplace_back(segment.glyphIndexes[i]);
+
+            newShapedWidth += segment.glyphIndexes[i].second;
+            if (!segment.lineBreak)
+                totalWidth += segment.glyphIndexes[i].second;
+            ++newLength;
+        }
+
+        // If the last glyph in the segment was a space, then this info may be needed for
+        // correct wrapping in the following segment.
+        if (lastSpace != 0 && newSegment.glyphIndexes.size() > 0 &&
+            newSegment.glyphIndexes.back().first == spaceChar)
+            lastSegmentSpace = true;
+        else
+            lastSegmentSpace = false;
+
+        newSegment.length = newSegment.glyphIndexes.size();
+        newSegment.shapedWidth = newShapedWidth;
+
+        if (newSegment.glyphIndexes.size() != 0)
+            resultSegments.emplace_back(newSegment);
+    }
+
+    if (addEllipsis && resultSegments.size() != 0 &&
+        resultSegments.back().glyphIndexes.size() > 0) {
+        std::vector<Font::ShapeSegment> shapedGlyph;
+        shapeText("…", shapedGlyph);
+        if (!shapedGlyph.empty()) {
+            mEllipsisGlyph = std::make_tuple(shapedGlyph.front().glyphIndexes.front().first,
+                                             shapedGlyph.front().glyphIndexes.front().second,
+                                             shapedGlyph.front().fontHB);
+        }
+
+        if (resultSegments.back().rightToLeft) {
+            std::reverse(resultSegments.back().glyphIndexes.begin(),
+                         resultSegments.back().glyphIndexes.end());
+        }
+        // If the last glyph is a space then remove it.
+        if (resultSegments.back().glyphIndexes.back().first == resultSegments.back().spaceChar) {
+            totalWidth -= resultSegments.back().glyphIndexes.back().second;
+            resultSegments.back().shapedWidth -= resultSegments.back().glyphIndexes.back().second;
+            resultSegments.back().glyphIndexes.pop_back();
+        }
+        // Remove as many glyphs as needed to fit the ellipsis glyph within maxLength.
+        while (resultSegments.back().glyphIndexes.size() > 0 &&
+               totalWidth + std::get<1>(mEllipsisGlyph) > maxLength) {
+            totalWidth -= resultSegments.back().glyphIndexes.back().second;
+            resultSegments.back().shapedWidth -= resultSegments.back().glyphIndexes.back().second;
+            resultSegments.back().glyphIndexes.pop_back();
+        }
+        // If the last glyph is a space then remove it before adding the ellipsis. This is
+        // however only done for a single space character in case there are repeating spaces.
+        if (resultSegments.back().glyphIndexes.size() > 0 &&
+            resultSegments.back().glyphIndexes.back().first == resultSegments.back().spaceChar) {
+            totalWidth -= resultSegments.back().glyphIndexes.back().second;
+            resultSegments.back().shapedWidth -= resultSegments.back().glyphIndexes.back().second;
+            resultSegments.back().glyphIndexes.pop_back();
+        }
+        // This is a special case where the last glyph of the last segment was removed and
+        // the last glyph of the previous segment is a space, in this case we want to remove
+        // that space glyph as well.
+        else if (resultSegments.back().glyphIndexes.empty() && resultSegments.size() > 1 &&
+                 resultSegments[resultSegments.size() - 2].glyphIndexes.size() > 0) {
+            if (resultSegments[resultSegments.size() - 2].rightToLeft) {
+                std::reverse(resultSegments[resultSegments.size() - 2].glyphIndexes.begin(),
+                             resultSegments[resultSegments.size() - 2].glyphIndexes.end());
+            }
+            if (resultSegments[resultSegments.size() - 2].glyphIndexes.back().first ==
+                resultSegments[resultSegments.size() - 2].spaceChar) {
+                totalWidth -= resultSegments[resultSegments.size() - 2].glyphIndexes.back().second;
+                resultSegments[resultSegments.size() - 2].shapedWidth -=
+                    resultSegments[resultSegments.size() - 2].glyphIndexes.back().second;
+                resultSegments[resultSegments.size() - 2].glyphIndexes.pop_back();
+            }
+            if (resultSegments[resultSegments.size() - 2].rightToLeft) {
+                std::reverse(resultSegments[resultSegments.size() - 2].glyphIndexes.begin(),
+                             resultSegments[resultSegments.size() - 2].glyphIndexes.end());
+            }
+        }
+        if (resultSegments.back().rightToLeft) {
+            std::reverse(resultSegments.back().glyphIndexes.begin(),
+                         resultSegments.back().glyphIndexes.end());
+        }
+
+        // Append the ellipsis glyph.
+        if (std::get<2>(mEllipsisGlyph) != nullptr) {
+            ShapeSegment newSegment;
+            newSegment.startPos = 0;
+            newSegment.fontHB = std::get<2>(mEllipsisGlyph);
+#if (DISABLE_SHAPING)
+            newSegment.doShape = false;
+#else
+            if (mShapeText)
+                newSegment.doShape = true;
+            else
+                newSegment.doShape = false;
+#endif
+            newSegment.rightToLeft = false;
+            newSegment.shapedWidth += std::get<1>(mEllipsisGlyph);
+            newSegment.glyphIndexes.emplace_back(
+                std::make_pair(std::get<0>(mEllipsisGlyph), std::get<1>(mEllipsisGlyph)));
+
+            if (resultSegments.back().rightToLeft)
+                resultSegments.insert(resultSegments.end() - 1, newSegment);
+            else
+                resultSegments.emplace_back(newSegment);
+        }
+    }
+
+    std::swap(resultSegments, segmentsHB);
 }
 
 void Font::rebuildTextures()
@@ -967,6 +1186,9 @@ std::vector<Font::FallbackFontCache> Font::getFallbackFontPaths()
         hb_blob_destroy(blobHB);
         ResourceData data {ResourceManager::getInstance().getFileData(path)};
         fallbackFont.face = std::make_shared<FontFace>(std::move(data), 10.0f, path, fontHB);
+        const unsigned int spaceChar {FT_Get_Char_Index(fallbackFont.face->face, ' ')};
+        if (spaceChar != 0)
+            sFallbackSpaceGlyphs[fontHB] = spaceChar;
         fontPaths.emplace_back(fallbackFont);
     }
 
@@ -1145,38 +1367,6 @@ Font::Glyph* Font::getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, in
     }
 
     return &glyph;
-}
-
-float Font::getNewlineStartOffset(const std::string& text,
-                                  const unsigned int& charStart,
-                                  const float& length,
-                                  const Alignment& alignment)
-{
-    switch (alignment) {
-        case ALIGN_LEFT: {
-            return 0;
-        }
-        case ALIGN_CENTER: {
-            int endChar {0};
-            endChar = static_cast<int>(text.find('\n', charStart));
-            return (length - sizeText(text.substr(charStart, static_cast<size_t>(endChar) !=
-                                                                     std::string::npos ?
-                                                                 endChar - charStart :
-                                                                 endChar))
-                                 .x) /
-                   2.0f;
-        }
-        case ALIGN_RIGHT: {
-            int endChar = static_cast<int>(text.find('\n', charStart));
-            return length - (sizeText(text.substr(charStart, static_cast<size_t>(endChar) !=
-                                                                     std::string::npos ?
-                                                                 endChar - charStart :
-                                                                 endChar))
-                                 .x);
-        }
-        default:
-            return 0;
-    }
 }
 
 void TextCache::setColor(unsigned int color)

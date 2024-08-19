@@ -199,7 +199,8 @@ void GuiSettings::addEditableTextComponent(const std::string label,
     row.elements.clear();
 
     auto lbl = std::make_shared<TextComponent>(Utils::String::toUpper(label),
-                                               Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+                                               Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary,
+                                               ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {0, 0});
     row.addElement(lbl, true);
     row.addElement(ed, true);
 

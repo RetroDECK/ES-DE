@@ -28,7 +28,8 @@ DateTimeComponent::DateTimeComponent(const std::string& text,
                                      glm::vec3 pos,
                                      glm::vec2 size,
                                      unsigned int bgcolor)
-    : TextComponent {text, font, color, horizontalAlignment, ALIGN_CENTER, pos, size, bgcolor}
+    : TextComponent {text, font, color,  horizontalAlignment, ALIGN_CENTER, glm::vec2 {1, 0},
+                     pos,  size, bgcolor}
     , mRenderer {Renderer::getInstance()}
     , mDisplayRelative {false}
 {
@@ -119,8 +120,8 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                    const std::string& element,
                                    unsigned int properties)
 {
-    GuiComponent::applyTheme(theme, view, element, properties);
     using namespace ThemeFlags;
+    GuiComponent::applyTheme(theme, view, element, properties);
 
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "datetime")};
     if (!elem)
@@ -239,15 +240,22 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     float maxHeight {0.0f};
+    bool hasSize {false};
 
     if (elem->has("size")) {
         const glm::vec2 size {elem->get<glm::vec2>("size")};
-        if (size.x != 0.0f && size.y != 0.0f)
+        if (size.x != 0.0f && size.y != 0.0f) {
             maxHeight = mSize.y * 2.0f;
+            hasSize = true;
+        }
     }
 
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
+    if (getAutoCalcExtent() == glm::ivec2 {1, 0} && !hasSize)
+        mSize.y = 0.0f;
+
     setFont(Font::getFromTheme(elem, properties, mFont, maxHeight));
+    mSize = glm::round(mSize);
 }

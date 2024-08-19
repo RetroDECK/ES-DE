@@ -55,8 +55,8 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
                                                         mMenuColorTitle, ALIGN_CENTER);
     }
 
-    mText = std::make_shared<TextEditComponent>();
-    mText->setValue(initValue, mMultiLine, false);
+    mText = std::make_shared<TextEditComponent>(mMultiLine);
+    mText->setValue(initValue, false);
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(
@@ -67,14 +67,14 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
     if (mComplexMode) {
         buttons.push_back(
             std::make_shared<ButtonComponent>(_("LOAD"), loadBtnHelpText, [this, defaultValue] {
-                mText->setValue(defaultValue, mMultiLine);
+                mText->setValue(defaultValue);
                 mText->setCursor(0);
                 mText->setCursor(defaultValue.size());
             }));
     }
 
-    buttons.push_back(std::make_shared<ButtonComponent>(
-        _("CLEAR"), clearBtnHelpText, [this] { mText->setValue("", mMultiLine); }));
+    buttons.push_back(std::make_shared<ButtonComponent>(_("CLEAR"), clearBtnHelpText,
+                                                        [this] { mText->setValue(""); }));
 
     buttons.push_back(std::make_shared<ButtonComponent>(_("CANCEL"), _("discard changes"),
                                                         [this] { delete this; }));
@@ -83,7 +83,7 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
 
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true);
 
-    int yPos = 1;
+    int yPos {1};
 
     if (mComplexMode) {
         mGrid.setEntry(mInfoString, glm::ivec2 {0, yPos}, false, true);

@@ -47,9 +47,10 @@ public:
                       bool invert_when_selected = true)
     {
         ComponentListRow row;
-        row.addElement(
-            std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
-            true);
+        row.addElement(std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary, ALIGN_LEFT, ALIGN_CENTER,
+                                                       glm::ivec2 {0, 0}),
+                       true);
         row.addElement(comp, false, invert_when_selected);
         addRow(row, setCursorHere);
     }

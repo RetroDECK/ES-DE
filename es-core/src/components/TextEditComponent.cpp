@@ -4,6 +4,7 @@
 //  TextEditComponent.cpp
 //
 //  Component for editing text fields.
+//  TODO: Add support for editing shaped text.
 //
 
 #include "components/TextEditComponent.h"
@@ -23,13 +24,14 @@
 
 #define BLINKTIME 1000
 
-TextEditComponent::TextEditComponent()
+TextEditComponent::TextEditComponent(bool multiLine)
     : mRenderer {Renderer::getInstance()}
     , mFocused {false}
     , mEditing {false}
     , mMaskInput {true}
-    , mMultiLine {false}
+    , mMultiLine {multiLine}
     , mCursor {0}
+    , mCursorShapedText {0}
     , mBlinkTime {0}
     , mCursorRepeatDir {0}
     , mScrollOffset {0.0f, 0.0f}
@@ -37,12 +39,18 @@ TextEditComponent::TextEditComponent()
     , mBox {":/graphics/textinput.svg"}
 {
     mEditText = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT));
+    mEditText->setNeedGlyphsPos(true);
+    mEditText->setTextShaping(false);
+
+    if (mMultiLine)
+        mEditText->setAutoCalcExtent(glm::ivec2 {0, 1});
+    else
+        mEditText->setAutoCalcExtent(glm::ivec2 {1, 0});
 
     mBox.setSharpCorners(true);
     addChild(&mBox);
+
     onFocusLost();
-    setSize(4096,
-            getFont()->getHeight() + (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier()));
 }
 
 TextEditComponent::~TextEditComponent()
@@ -73,16 +81,22 @@ void TextEditComponent::onSizeChanged()
 
     mBox.fitTo(
         mSize, glm::vec3 {0.0f, 0.0f, 0.0f},
-        glm::vec2 {-34.0f, -32.0f - (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier())});
+        glm::vec2 {-32.0f, -32.0f - (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier())});
+
+    if (mMultiLine)
+        mEditText->setSize(getTextAreaSize().x, 0.0f);
+
     onTextChanged(); // Wrap point probably changed.
 }
 
-void TextEditComponent::setValue(const std::string& val, bool multiLine, bool update)
+void TextEditComponent::setValue(const std::string& val, bool update)
 {
     mText = val;
-    mMultiLine = multiLine;
-    onTextChanged();
-    onCursorChanged();
+
+    if (update) {
+        onTextChanged();
+        onCursorChanged();
+    }
 }
 
 void TextEditComponent::textInput(const std::string& text, const bool pasting)
@@ -104,6 +118,7 @@ void TextEditComponent::textInput(const std::string& text, const bool pasting)
                 size_t newCursor = Utils::String::prevCursor(mText, mCursor);
                 mText.erase(mText.begin() + newCursor, mText.begin() + mCursor);
                 mCursor = static_cast<unsigned int>(newCursor);
+                --mCursorShapedText;
             }
         }
         else {
@@ -111,6 +126,7 @@ void TextEditComponent::textInput(const std::string& text, const bool pasting)
                          (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text));
             mCursor += static_cast<unsigned int>(
                 (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text).size());
+            ++mCursorShapedText;
         }
     }
 
@@ -295,26 +311,33 @@ void TextEditComponent::updateCursorRepeat(int deltaTime)
 void TextEditComponent::moveCursor(int amt)
 {
     mCursor = static_cast<unsigned int>(Utils::String::moveCursor(mText, mCursor, amt));
+    mCursorShapedText += amt;
+
+    if (mCursorShapedText < 0)
+        mCursorShapedText = 0;
+    else if (mCursorShapedText > static_cast<int>(Utils::String::unicodeLength(mText)))
+        mCursorShapedText = static_cast<int>(Utils::String::unicodeLength(mText));
+
     onCursorChanged();
 }
 
 void TextEditComponent::setCursor(size_t pos)
 {
-    if (pos == std::string::npos)
+    if (pos == std::string::npos) {
         mCursor = static_cast<unsigned int>(mText.length());
-    else
+        mCursorShapedText = Utils::String::unicodeLength(mText);
+    }
+    else {
         mCursor = static_cast<int>(pos);
+        mCursorShapedText = Utils::String::unicodeLength(mText.substr(0, pos));
+    }
 
     moveCursor(0);
 }
 
 void TextEditComponent::onTextChanged()
 {
-    if (mMultiLine)
-        mEditText->setText(mText, true, mSize.x);
-    else
-        mEditText->setText(mText);
-
+    mEditText->setText(mText);
     mEditText->setColor(mMenuColorKeyboardText | static_cast<unsigned char>(mOpacity * 255.0f));
 
     if (mCursor > static_cast<int>(mText.length()))
@@ -324,7 +347,7 @@ void TextEditComponent::onTextChanged()
 void TextEditComponent::onCursorChanged()
 {
     if (mMultiLine) {
-        mCursorPos = getFont()->getWrappedTextCursorOffset(mText, mCursor);
+        mCursorPos = mEditText->getGlyphPosition(mCursorShapedText);
 
         // Need to scroll down?
         if (mScrollOffset.y + getTextAreaSize().y < mCursorPos.y + getFont()->getHeight())
@@ -334,8 +357,7 @@ void TextEditComponent::onCursorChanged()
             mScrollOffset.y = mCursorPos.y;
     }
     else {
-        mCursorPos = getFont()->sizeText(mText.substr(0, mCursor));
-        mCursorPos.y = 0.0f;
+        mCursorPos = mEditText->getGlyphPosition(mCursorShapedText);
 
         if (mScrollOffset.x + getTextAreaSize().x < mCursorPos.x)
             mScrollOffset.x = mCursorPos.x - getTextAreaSize().x;

@@ -93,6 +93,8 @@ void GuiGamelistFilter::addFiltersToMenu()
 
     mTextFilterField = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
                                                        mMenuColorPrimary, ALIGN_RIGHT);
+    mTextFilterField->setSize(
+        0.0f, mTextFilterField->getFont()->getHeight(mTextFilterField->getLineSpacing()));
 
     // Don't show the free text filter entry unless there are any games in the system.
     if (mSystem->getRootFolder()->getChildren().size() > 0) {

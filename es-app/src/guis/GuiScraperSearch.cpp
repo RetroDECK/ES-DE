@@ -81,7 +81,8 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, in
         mDescContainer->setScrollParameters(6000.0f, 3000.0f, 0.8f);
 
     mResultDesc = std::make_shared<TextComponent>("Result desc", Font::get(FONT_SIZE_SMALL),
-                                                  mMenuColorPrimary);
+                                                  mMenuColorPrimary, ALIGN_LEFT, ALIGN_CENTER,
+                                                  glm::ivec2 {0, 1});
     mDescContainer->addChild(mResultDesc.get());
     mDescContainer->setAutoScroll(true);
 
@@ -257,12 +258,11 @@ void GuiScraperSearch::resizeMetadata()
         float maxLblWidth {0.0f};
         for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); ++it) {
             it->first->setFont(fontLbl);
-            it->first->setSize(0, 0);
-            if (it->first->getSize().x > maxLblWidth)
-                maxLblWidth =
-                    it->first->getSize().x + (16.0f * (mRenderer->getIsVerticalOrientation() ?
-                                                           mRenderer->getScreenHeightModifier() :
-                                                           mRenderer->getScreenWidthModifier()));
+            if (it->first->getTextCache()->metrics.size.x > maxLblWidth)
+                maxLblWidth = it->first->getTextCache()->metrics.size.x +
+                              (16.0f * (mRenderer->getIsVerticalOrientation() ?
+                                            mRenderer->getScreenHeightModifier() :
+                                            mRenderer->getScreenWidthModifier()));
         }
 
         for (unsigned int i {0}; i < mMD_Pairs.size(); ++i)
@@ -514,7 +514,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
             auto gameEntry =
                 std::make_shared<TextComponent>(Utils::String::toUpper(gameName), font, color);
             gameEntry->setHorizontalScrolling(true);
-            row.addElement(gameEntry, true);
+            row.addElement(gameEntry, true, true, glm::ivec2 {1, 0});
             row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
             mResultList->addRow(row);
         }

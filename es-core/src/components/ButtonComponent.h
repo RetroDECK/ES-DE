@@ -67,6 +67,7 @@ private:
     bool mEnabled;
     bool mFlatStyle;
 
+    float mMinWidth;
     unsigned int mTextColorFocused;
     unsigned int mTextColorUnfocused;
     unsigned int mFlatColorFocused;

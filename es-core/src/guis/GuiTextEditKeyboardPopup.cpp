@@ -134,8 +134,8 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     mKeyboardGrid = std::make_shared<ComponentGrid>(
         glm::ivec2 {mHorizontalKeyCount, static_cast<int>(kbLayout.size()) / 3});
 
-    mText = std::make_shared<TextEditComponent>();
-    mText->setValue(initValue, mMultiLine, false);
+    mText = std::make_shared<TextEditComponent>(mMultiLine);
+    mText->setValue(initValue, false);
 
     // Header.
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true);
@@ -685,12 +685,12 @@ std::shared_ptr<ButtonComponent> GuiTextEditKeyboardPopup::makeButton(
                 return;
             }
             else if (key == _("LOAD")) {
-                mText->setValue(mDefaultValue->getValue(), mMultiLine);
+                mText->setValue(mDefaultValue->getValue());
                 mText->setCursor(mDefaultValue->getValue().size());
                 return;
             }
             else if (key == _("CLEAR")) {
-                mText->setValue("", mMultiLine);
+                mText->setValue("");
                 return;
             }
             else if (key == _("CANCEL")) {

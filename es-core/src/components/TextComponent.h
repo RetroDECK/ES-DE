@@ -15,9 +15,16 @@
 class ThemeData;
 
 // TextComponent sizing works in the following ways:
-// setSize(0.0f, 0.0f)      - Automatically sizes single-line text by expanding horizontally.
-// setSize(width, 0.0f)     - Limits size horizontally and automatically expands vertically.
-// setSize(width, height)   - Wraps and abbreviates text inside the width and height boundaries.
+// autoCalcExtent(1, 0)       - Automatically expand horizontally, line breaks are removed.
+// autoCalcExtent(0, 0)       - Wrap and abbreviate inside the width and height boundaries.
+// autoCalcExtent(0, 1)       - Limit size horizontally and automatically expand vertically.
+// autoCalcExtent(1, 1)       - Automatically expand horizontally and wrap by line break.
+
+// The sizing logic above translates to the following theme configuration:
+// <size>0 0</size>           - autoCalcExtent(1, 0)
+// <size>width 0</size>       - autoCalcExtent(0, 1)
+// <size>width height</size>  - autoCalcExtent(0, 0)
+
 class TextComponent : public GuiComponent
 {
 public:
@@ -27,6 +34,7 @@ public:
                   unsigned int color = 0x000000FF,
                   Alignment horizontalAlignment = ALIGN_LEFT,
                   Alignment verticalAlignment = ALIGN_CENTER,
+                  glm::ivec2 autoCalcExtent = {1, 0},
                   glm::vec3 pos = {0.0f, 0.0f, 0.0f},
                   glm::vec2 size = {0.0f, 0.0f},
                   unsigned int bgcolor = 0x00000000,
@@ -42,15 +50,22 @@ public:
     void setUppercase(bool uppercase);
     void setLowercase(bool lowercase);
     void setCapitalize(bool capitalize);
-    void onSizeChanged() override;
+    void onSizeChanged() override { onTextChanged(); }
     void setText(const std::string& text, bool update = true, float maxLength = 0.0f);
     void setHiddenText(const std::string& text) { mHiddenText = text; }
+    void setAutoCalcExtent(glm::ivec2 extent) override { mAutoCalcExtent = extent; }
+    const glm::ivec2 getAutoCalcExtent() { return mAutoCalcExtent; }
     void setColor(unsigned int color) override;
     void setHorizontalAlignment(Alignment align);
     void setVerticalAlignment(Alignment align) { mVerticalAlignment = align; }
     void setLineSpacing(float spacing);
     float getLineSpacing() override { return mLineSpacing; }
+    void setTextShaping(bool state) { mFont->setTextShaping(state); }
     void setNoTopMargin(bool margin);
+    void setNeedGlyphsPos(bool state) { mNeedGlyphsPos = state; }
+    void setRemoveLineBreaks(bool state) override { mRemoveLineBreaks = state; }
+    void setNoSizeUpdate(bool state) { mNoSizeUpdate = state; }
+    const glm::vec2 getGlyphPosition(int cursor);
     void setBackgroundColor(unsigned int color) override;
     void setRenderBackground(bool render) { mRenderBackground = render; }
     void setBackgroundMargins(const glm::vec2 margins) { mBackgroundMargins = margins; }
@@ -95,9 +110,9 @@ public:
     const bool getSystemNameSuffix() const { return mSystemNameSuffix; }
     const LetterCase getLetterCaseSystemNameSuffix() const { return mLetterCaseSystemNameSuffix; }
 
-    int getTextCacheGlyphHeight() override
+    const TextCache* getTextCache() override
     {
-        return (mTextCache == nullptr ? 0 : mTextCache->metrics.maxGlyphHeight);
+        return (mTextCache == nullptr ? nullptr : mTextCache.get());
     }
 
     // Horizontal scrolling for single-line content that is too long to fit.
@@ -178,8 +193,10 @@ private:
     float mLineSpacing;
     float mRelativeScale;
     bool mNoTopMargin;
+    bool mNeedGlyphsPos;
+    bool mRemoveLineBreaks;
+    bool mNoSizeUpdate;
     bool mSelectable;
-    bool mVerticalAutoSizing;
     bool mHorizontalScrolling;
     bool mDebugRendering;
     float mScrollSpeed;

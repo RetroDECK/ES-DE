@@ -114,6 +114,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     // Processing value.
     mProcessingVal = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL),
                                                      mMenuColorSecondary, ALIGN_LEFT);
+    mProcessingVal->setRemoveLineBreaks(true);
     mGrid.setEntry(mProcessingVal, glm::ivec2 {4, 4}, false, true, glm::ivec2 {1, 1});
 
     // Spacer row.
@@ -128,6 +129,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     // Last error message value.
     mLastErrorVal = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL),
                                                     mMenuColorSecondary, ALIGN_LEFT);
+    mLastErrorVal->setRemoveLineBreaks(true);
     mGrid.setEntry(mLastErrorVal, glm::ivec2 {1, 10}, false, true, glm::ivec2 {4, 1});
 
     // Right spacer.

@@ -181,7 +181,7 @@ bool Window::init()
 
     mListScrollText = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_LARGE));
     mGPUStatisticsText = std::make_unique<TextComponent>(
-        "", Font::get(FONT_SIZE_SMALL), 0xFF00FFFF, ALIGN_LEFT, ALIGN_CENTER,
+        "", Font::get(FONT_SIZE_SMALL), 0xFF00FFFF, ALIGN_LEFT, ALIGN_CENTER, glm::vec2 {1, 1},
         glm::vec3 {mRenderer->getScreenWidth() * 0.02f, mRenderer->getScreenHeight() * 0.02f, 0.0f},
         glm::vec2 {0.0f, 0.0f}, 0x00000000, 1.3f);
 
@@ -383,8 +383,6 @@ void Window::update(int deltaTime)
                << " MiB\nTexture VRAM: " << textureVramUsageMiB
                << " MiB\nMax Texture VRAM: " << textureTotalUsageMiB << " MiB";
             mGPUStatisticsText->setText(ss.str());
-            // Setting the Y size to zero makes the text area expand vertically as needed.
-            mGPUStatisticsText->setSize(mGPUStatisticsText->getSize().x, 0.0f);
         }
 
         mFrameTimeElapsed = 0;

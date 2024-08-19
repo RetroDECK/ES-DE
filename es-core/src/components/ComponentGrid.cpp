@@ -9,6 +9,7 @@
 #include "components/ComponentGrid.h"
 
 #include "Settings.h"
+#include "components/TextComponent.h"
 #include "utils/LocalizationUtil.h"
 
 using namespace GridFlags;
@@ -100,11 +101,13 @@ void ComponentGrid::setEntry(const std::shared_ptr<GuiComponent>& comp,
                              bool resize,
                              const glm::ivec2& size,
                              unsigned int border,
-                             GridFlags::UpdateType updateType)
+                             GridFlags::UpdateType updateType,
+                             glm::ivec2 autoCalcExtent)
 {
     assert(pos.x >= 0 && pos.x < mGridSize.x && pos.y >= 0 && pos.y < mGridSize.y);
     assert(comp != nullptr);
     assert(comp->getParent() == nullptr);
+    comp->setAutoCalcExtent(autoCalcExtent);
 
     GridEntry entry {pos, size, comp, canFocus, resize, updateType, border};
     mCells.push_back(entry);

@@ -44,7 +44,8 @@ public:
                   bool resize = true,
                   const glm::ivec2& size = glm::ivec2 {1, 1},
                   unsigned int border = GridFlags::BORDER_NONE,
-                  GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
+                  GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS,
+                  glm::ivec2 autoCalcExtent = {0, 0});
 
     void setPastBoundaryCallback(const std::function<bool(InputConfig* config, Input input)>& func)
     {

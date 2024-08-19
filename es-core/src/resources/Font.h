@@ -19,7 +19,6 @@
 #include <hb-ft.h>
 #include <vector>
 
-class TextCache;
 class TextComponent;
 
 #define FONT_SIZE_MINI Font::getMiniFont()
@@ -78,26 +77,14 @@ public:
         return sLargeFixedFont;
     }
 
-    // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
+    // Returns the size of shaped text without applying any wrapping or abbreviations.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);
 
-    // This determines mMaxGlyphHeight upfront which is useful for accurate text sizing by
-    // wrapText and buildTextCache as the requested font height is not guaranteed and could be
-    // exceeded by a few pixels for some glyphs. However in most instances setting mMaxGlyphHeight
-    // to the font size is good enough, meaning this somehow expensive operation could be omitted.
+    // This determines mMaxGlyphHeight upfront which is useful for accurate text sizing as
+    // the requested font height is not guaranteed and could be exceeded by a few pixels for some
+    // glyphs. However in most instances setting mMaxGlyphHeight to the font size is good enough,
+    // meaning this somehow expensive operation could be skipped.
     int loadGlyphs(const std::string& text);
-
-    // Inserts newlines to make text wrap properly and also abbreviates single-line text.
-    std::string wrapText(const std::string& text,
-                         const float maxLength,
-                         const float maxHeight = 0.0f,
-                         const float lineSpacing = 1.5f,
-                         const bool multiLine = false);
-
-    // Returns the position of the cursor after moving it to the stop position.
-    glm::vec2 getWrappedTextCursorOffset(const std::string& text,
-                                         const size_t stop,
-                                         const float lineSpacing = 1.5f);
 
     // Return overall height including line spacing.
     const float getHeight(float lineSpacing = 1.5f) const { return mMaxGlyphHeight * lineSpacing; }
@@ -124,18 +111,24 @@ public:
     static size_t getTotalMemUsage();
 
 protected:
-    TextCache* buildTextCache(const std::string& textArg,
-                              glm::vec2 offset,
-                              unsigned int color,
+    TextCache* buildTextCache(const std::string& text,
                               float length,
+                              float maxLength,
                               float height,
-                              Alignment alignment = ALIGN_LEFT,
-                              float lineSpacing = 1.5f,
-                              bool noTopMargin = false,
-                              bool doWrapText = false,
-                              bool multiLine = false);
+                              float offsetY,
+                              float lineSpacing,
+                              Alignment alignment,
+                              unsigned int color,
+                              bool noTopMargin,
+                              bool multiLine,
+                              bool needGlyphsPos);
 
     void renderTextCache(TextCache* cache);
+    // This is used to determine the horizontal text scrolling speed.
+    float getSizeReference();
+
+    // Enable or disable shaping, used by TextEditComponent.
+    void setTextShaping(bool state) { mShapeText = state; }
 
     friend TextComponent;
 
@@ -188,6 +181,7 @@ private:
         std::string path;
         std::shared_ptr<FontFace> face;
         hb_font_t* fontHB;
+        unsigned int spaceChar;
     };
 
     struct ShapeSegment {
@@ -196,7 +190,10 @@ private:
         float shapedWidth;
         hb_font_t* fontHB;
         bool doShape;
+        bool lineBreak;
+        bool wrapped;
         bool rightToLeft;
+        unsigned int spaceChar;
         std::string substring;
         std::vector<std::pair<unsigned int, int>> glyphIndexes;
 
@@ -206,13 +203,23 @@ private:
             , shapedWidth {0}
             , fontHB {nullptr}
             , doShape {false}
+            , lineBreak {false}
+            , wrapped {false}
             , rightToLeft {false}
+            , spaceChar {0}
         {
         }
     };
 
     // Shape text using HarfBuzz.
     void shapeText(const std::string& text, std::vector<ShapeSegment>& segmentsHB);
+
+    // Inserts newlines to make text wrap properly and also abbreviates when necessary.
+    void wrapText(std::vector<ShapeSegment>& segmentsHB,
+                  float maxLength,
+                  const float maxHeight = 0.0f,
+                  const float lineSpacing = 1.5f,
+                  const bool multiLine = false);
 
     // Completely recreate the texture data for all glyph atlas entries.
     void rebuildTextures();
@@ -228,14 +235,10 @@ private:
     Glyph* getGlyph(const unsigned int id);
     Glyph* getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, int xAdvance);
 
-    float getNewlineStartOffset(const std::string& text,
-                                const unsigned int& charStart,
-                                const float& length,
-                                const Alignment& alignment);
-
     static inline FT_Library sLibrary {nullptr};
     static inline std::map<std::tuple<float, std::string>, std::weak_ptr<Font>> sFontMap;
     static inline std::vector<FallbackFontCache> sFallbackFonts;
+    static inline std::map<hb_font_t*, unsigned int> sFallbackSpaceGlyphs;
 
     Renderer* mRenderer;
     std::unique_ptr<FontFace> mFontFace;
@@ -247,13 +250,14 @@ private:
     const std::string mPath;
     hb_font_t* mFontHB;
     hb_buffer_t* mBufHB;
+    std::tuple<unsigned int, unsigned int, hb_font_t*> mEllipsisGlyph;
 
     float mFontSize;
     float mLetterHeight;
+    float mSizeReference;
     int mMaxGlyphHeight;
-    float mWrapMaxLength;
-    float mWrapMaxHeight;
-    float mWrapLineSpacing;
+    unsigned int mSpaceGlyph;
+    bool mShapeText;
 };
 
 // Caching of shaped and rendered text.
@@ -275,6 +279,9 @@ public:
     void setDimming(float dimming);
     void setClipRegion(const glm::vec4& clip) { clipRegion = clip; }
     const glm::vec2& getSize() { return metrics.size; }
+
+    // Used by TextEditComponent to position the cursor and scroll the text box.
+    std::vector<glm::vec2> glyphPositions;
 
     friend Font;
 

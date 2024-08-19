@@ -4,6 +4,7 @@
 //  TextEditComponent.h
 //
 //  Component for editing text fields.
+//  TODO: Add support for editing shaped text.
 //
 
 #ifndef ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H
@@ -16,7 +17,7 @@
 class TextEditComponent : public GuiComponent
 {
 public:
-    TextEditComponent();
+    TextEditComponent(bool multiLine);
     ~TextEditComponent();
 
     void textInput(const std::string& text, const bool pasting = false) override;
@@ -29,7 +30,7 @@ public:
 
     void onSizeChanged() override;
 
-    void setValue(const std::string& val, bool multiLine, bool update = true);
+    void setValue(const std::string& val, bool update = true);
     std::string getValue() const override;
 
     void startEditing();
@@ -59,7 +60,8 @@ private:
     bool mEditing;
     bool mMaskInput;
     bool mMultiLine;
-    int mCursor; // Cursor position in characters.
+    int mCursor; // Cursor position in source text.
+    int mCursorShapedText; // Cursor position in shaped text.
     int mBlinkTime;
 
     int mCursorRepeatTimer;

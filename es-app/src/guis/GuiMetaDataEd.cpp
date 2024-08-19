@@ -139,7 +139,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             it->type == MD_ALT_EMULATOR) {
             ed = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
                                                  mMenuColorPrimary, ALIGN_RIGHT);
-            assert(ed);
+            ed->setSize(0.0f, ed->getFont()->getHeight());
             ed->setValue(mMetaData->get(it->key));
             mEditors.push_back(ed);
             continue;
@@ -197,6 +197,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 ed =
                     std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
                                                     mMenuColorPrimary, ALIGN_RIGHT);
+                ed->setSize(0.0f, ed->getFont()->getHeight());
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
@@ -283,6 +284,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 ed =
                     std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
                                                     mMenuColorPrimary, ALIGN_RIGHT);
+                ed->setSize(0.0f, ed->getFont()->getHeight());
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
@@ -430,6 +432,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 ed =
                     std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
                                                     mMenuColorPrimary, ALIGN_RIGHT);
+                ed->setSize(0.0f, ed->getFont()->getHeight());
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
@@ -550,6 +553,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 ed =
                     std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
                                                     mMenuColorPrimary, ALIGN_RIGHT);
+                ed->setRemoveLineBreaks(true);
+                ed->setSize(0.0f, ed->getFont()->getHeight());
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();

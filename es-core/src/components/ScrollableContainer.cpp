@@ -68,15 +68,23 @@ void ScrollableContainer::resetComponent()
     mAtEnd = false;
     mUpdatedSize = false;
 
+    // This applies to the actual TextComponent that is getting displayed.
+    mChildren.front()->setAutoCalcExtent(glm::ivec2 {0, 1});
+    mChildren.front()->setSize(mSize.x, 0.0f);
+
     // This is needed to resize to the designated area when the background image gets invalidated.
     if (!mChildren.empty()) {
         float combinedHeight {0.0f};
         const float cacheGlyphHeight {
-            static_cast<float>(mChildren.front()->getTextCacheGlyphHeight())};
+            mChildren.front()->getTextCache() == nullptr ?
+                0.0f :
+                static_cast<float>(mChildren.front()->getTextCache()->metrics.maxGlyphHeight)};
+
         if (cacheGlyphHeight > 0.0f)
             combinedHeight = cacheGlyphHeight * mChildren.front()->getLineSpacing();
         else
             return;
+
         if (mChildren.front()->getSize().y > mSize.y) {
             if (mVerticalSnap) {
                 float numLines {std::floor(mSize.y / combinedHeight)};
@@ -132,7 +140,12 @@ void ScrollableContainer::update(int deltaTime)
 
     const float lineSpacing {mChildren.front()->getLineSpacing()};
     float combinedHeight {0.0f};
-    const float cacheGlyphHeight {static_cast<float>(mChildren.front()->getTextCacheGlyphHeight())};
+
+    const float cacheGlyphHeight {
+        mChildren.front()->getTextCache() == nullptr ?
+            0.0f :
+            static_cast<float>(mChildren.front()->getTextCache()->metrics.maxGlyphHeight)};
+
     if (cacheGlyphHeight > 0.0f)
         combinedHeight = cacheGlyphHeight * lineSpacing;
     else
