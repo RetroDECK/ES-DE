@@ -43,8 +43,8 @@ namespace Utils
         {
 #if defined(_WIN64)
             return system("shutdown -r -t 0");
-#elif defined(__APPLE__)
-            // This will probably never be used as macOS requires root privileges to reboot.
+#elif defined(__APPLE__) || defined(__FreeBSD__)
+            // This will probably never be used on macOS as it requires root privileges to reboot.
             return system("shutdown -r now");
 #else
             return system("shutdown --reboot now");
@@ -58,6 +58,8 @@ namespace Utils
 #elif defined(__APPLE__)
             // This will probably never be used as macOS requires root privileges to power off.
             return system("shutdown now");
+#elif defined(__FreeBSD__)
+            return system("shutdown -p now");
 #else
             return system("shutdown --poweroff now");
 #endif
