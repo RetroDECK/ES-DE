@@ -48,7 +48,7 @@
 
 GuiMenu::GuiMenu()
     : mRenderer {Renderer::getInstance()}
-    , mMenu {"MAIN MENU"}
+    , mMenu {"MAIN MENU"}   
     , mThemeDownloaderReloadCounter {0}
 {
     const bool isFullUI {UIModeController::getInstance()->isUIModeFull()};
@@ -57,7 +57,10 @@ GuiMenu::GuiMenu()
         addEntry("SCRAPER", mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
     if (isFullUI)
-        addEntry("RETRODECK CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckConfigurator(); });
+        addEntry("RETRODECK CLASSIC CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckClassicConfigurator(); });
+
+    if (isFullUI)
+        addEntry("RETRODECK GODOT CONFIGURATOR", mMenuColorPrimary, false, [this] { openRetroDeckGodotConfigurator(); });
 
     if (isFullUI)
         addEntry("ES-DE CONFIGURATIONS", mMenuColorPrimary, true, [this] { openESDEConfiguration(); });
@@ -2283,7 +2286,7 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
     return prompts;
 }
 
-void GuiMenu::openRetroDeckConfigurator()
+void GuiMenu::openRetroDeckClassicConfigurator()
 {
     // Launch the configurator.sh script
     std::string command;
@@ -2291,6 +2294,19 @@ void GuiMenu::openRetroDeckConfigurator()
     bool runInBackground;
     command = "bash /app/tools/configurator.sh";
     startDirectory = "/app/tools";
+    runInBackground = false;
+    int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
+    // You can add any checks for the script's outcome here.
+}
+
+void GuiMenu::openRetroDeckGodotConfigurator()
+{
+    // Launch the configurator.sh script
+    std::string command;
+    std::string startDirectory;
+    bool runInBackground;
+    command = "bash godot-configurator.sh";
+    startDirectory = "/app";
     runInBackground = false;
     int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
     // You can add any checks for the script's outcome here.
