@@ -30,7 +30,7 @@ public:
 
     void onSizeChanged() override;
 
-    void setValue(const std::string& val, bool update = true);
+    void setText(const std::string& val, bool update = true);
     std::string getValue() const override;
 
     void startEditing();

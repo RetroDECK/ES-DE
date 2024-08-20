@@ -56,7 +56,7 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
     }
 
     mText = std::make_shared<TextEditComponent>(mMultiLine);
-    mText->setValue(initValue, false);
+    mText->setText(initValue, false);
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(
@@ -67,14 +67,14 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
     if (mComplexMode) {
         buttons.push_back(
             std::make_shared<ButtonComponent>(_("LOAD"), loadBtnHelpText, [this, defaultValue] {
-                mText->setValue(defaultValue);
+                mText->setText(defaultValue);
                 mText->setCursor(0);
                 mText->setCursor(defaultValue.size());
             }));
     }
 
     buttons.push_back(std::make_shared<ButtonComponent>(_("CLEAR"), clearBtnHelpText,
-                                                        [this] { mText->setValue(""); }));
+                                                        [this] { mText->setText(""); }));
 
     buttons.push_back(std::make_shared<ButtonComponent>(_("CANCEL"), _("discard changes"),
                                                         [this] { delete this; }));

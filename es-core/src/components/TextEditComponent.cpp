@@ -89,7 +89,7 @@ void TextEditComponent::onSizeChanged()
     onTextChanged(); // Wrap point probably changed.
 }
 
-void TextEditComponent::setValue(const std::string& val, bool update)
+void TextEditComponent::setText(const std::string& val, bool update)
 {
     mText = val;
 
