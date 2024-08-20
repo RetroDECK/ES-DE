@@ -166,7 +166,7 @@ private:
         FontTexture* texture;
         hb_font_t* fontHB;
         glm::vec2 texPos;
-        glm::vec2 texSize; // In texels.
+        glm::vec2 texSize;
         glm::ivec2 advance;
         glm::ivec2 bearing;
         int rows;
@@ -217,9 +217,10 @@ private:
     // Inserts newlines to make text wrap properly and also abbreviates when necessary.
     void wrapText(std::vector<ShapeSegment>& segmentsHB,
                   float maxLength,
-                  const float maxHeight = 0.0f,
-                  const float lineSpacing = 1.5f,
-                  const bool multiLine = false);
+                  const float maxHeight,
+                  const float lineSpacing,
+                  const bool multiLine,
+                  const bool needGlyphsPos);
 
     // Completely recreate the texture data for all glyph atlas entries.
     void rebuildTextures();

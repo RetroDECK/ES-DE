@@ -292,7 +292,7 @@ TextCache* Font::buildTextCache(const std::string& text,
 
     std::vector<ShapeSegment> segmentsHB;
     shapeText(text, segmentsHB);
-    wrapText(segmentsHB, maxLength, height, lineSpacing, multiLine);
+    wrapText(segmentsHB, maxLength, height, lineSpacing, multiLine, needGlyphsPos);
 
     size_t segmentIndex {0};
     float x {0.0f};
@@ -368,6 +368,13 @@ TextCache* Font::buildTextCache(const std::string& text,
                     glyphPositions.emplace_back(x, accumHeight - getHeight(lineSpacing));
 
                 isNewLine = true;
+                continue;
+            }
+            else if (segment.glyphIndexes[cursor].second == -1) {
+                // Special scenario where a space glyph at the end of a segment should be omitted,
+                // in which case it's set to -1 advance in wrapText(). We can't set it to 0 as
+                // that's actually a valid value for some fonts such as when having an apostrophe
+                // followed by a comma.
                 continue;
             }
 
@@ -496,7 +503,7 @@ float Font::getSizeReference()
         }
     }
 
-    mSizeReference = advance;
+    mSizeReference = static_cast<float>(advance);
     return mSizeReference;
 }
 
@@ -745,7 +752,8 @@ void Font::wrapText(std::vector<ShapeSegment>& segmentsHB,
                     float maxLength,
                     const float maxHeight,
                     const float lineSpacing,
-                    const bool multiLine)
+                    const bool multiLine,
+                    const bool needGlyphsPos)
 {
     std::vector<ShapeSegment> resultSegments;
 
@@ -773,8 +781,8 @@ void Font::wrapText(std::vector<ShapeSegment>& segmentsHB,
             (segmentsHB.size() == 1 && segmentsHB.front().shapedWidth <= maxLength))
             return;
 
-        // Additionally this captures shorter multi-segment text that does not require more involved
-        // line breaking or abbreviations.
+        // Additionally this captures shorter single-line multi-segment text that does not require
+        // more involved line breaking or abbreviations.
         float combinedWidth {0.0f};
         bool hasNewline {false};
         for (auto& segment : segmentsHB) {
@@ -911,9 +919,24 @@ void Font::wrapText(std::vector<ShapeSegment>& segmentsHB,
                                 newShapedWidth -= newSegment.glyphIndexes.back().second;
                                 newSegment.glyphIndexes.pop_back();
                             }
+                            // If all glyphs were removed and the last character of the previous
+                            // segment was a space, then set its advance to -1 so it gets excluded
+                            // in buildTextCache(). That is, unless needGlyphPos is true as that
+                            // means the text is needed for TextEditComponent and should therefore
+                            // not be altered.
+                            if (!needGlyphsPos && newSegment.glyphIndexes.empty() &&
+                                !resultSegments.empty()) {
+                                if (resultSegments.back().glyphIndexes.back().first ==
+                                    resultSegments.back().spaceChar) {
+                                    resultSegments.back().shapedWidth -=
+                                        resultSegments.back().glyphIndexes.back().second;
+                                    resultSegments.back().glyphIndexes.back().second = -1;
+                                }
+                            }
                         }
 
-                        newSegment.length = newSegment.glyphIndexes.size();
+                        newSegment.length =
+                            static_cast<unsigned int>(newSegment.glyphIndexes.size());
                         newSegment.shapedWidth = newShapedWidth;
 
                         if (newSegment.glyphIndexes.size() != 0)
@@ -974,7 +997,7 @@ void Font::wrapText(std::vector<ShapeSegment>& segmentsHB,
         else
             lastSegmentSpace = false;
 
-        newSegment.length = newSegment.glyphIndexes.size();
+        newSegment.length = static_cast<unsigned int>(newSegment.glyphIndexes.size());
         newSegment.shapedWidth = newShapedWidth;
 
         if (newSegment.glyphIndexes.size() != 0)
