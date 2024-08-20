@@ -325,11 +325,11 @@ void TextEditComponent::setCursor(size_t pos)
 {
     if (pos == std::string::npos) {
         mCursor = static_cast<unsigned int>(mText.length());
-        mCursorShapedText = Utils::String::unicodeLength(mText);
+        mCursorShapedText = static_cast<int>(Utils::String::unicodeLength(mText));
     }
     else {
         mCursor = static_cast<int>(pos);
-        mCursorShapedText = Utils::String::unicodeLength(mText.substr(0, pos));
+        mCursorShapedText = static_cast<int>(Utils::String::unicodeLength(mText.substr(0, pos)));
     }
 
     moveCursor(0);
