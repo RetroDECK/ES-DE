@@ -770,7 +770,7 @@ void GuiThemeDownloader::populateGUI()
         ThemeGUIEntry guiEntry;
         guiEntry.themeName = themeNameElement;
         mThemeGUIEntries.emplace_back(guiEntry);
-        row.addElement(themeNameElement, false);
+        row.addElement(themeNameElement, false, true, glm::ivec2 {1, 0});
 
         row.makeAcceptInputHandler([this, &theme] {
             std::promise<bool>().swap(mPromise);
