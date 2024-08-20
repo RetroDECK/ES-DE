@@ -1014,7 +1014,20 @@ int main(int argc, char* argv[])
     }
 
 #if defined(__ANDROID__)
-    Utils::Platform::Android::setupLocalizationFiles();
+    // We need to copy the font and locale files before starting the renderer as HarfBuzz
+    // and libintl need them before that point.
+    std::string buildIdentifier {PROGRAM_VERSION_STRING};
+    buildIdentifier.append(" (r")
+        .append(std::to_string(PROGRAM_RELEASE_NUMBER))
+        .append("), built ")
+        .append(PROGRAM_BUILT_STRING);
+    const bool needResourceCopy {Utils::Platform::Android::checkNeedResourceCopy(buildIdentifier)};
+    if (needResourceCopy) {
+        LOG(LogInfo) << "Application has been updated or it's a new installation, copying "
+                        "bundled fonts and locales to internal storage...";
+        Utils::Platform::Android::setupFontFiles();
+        Utils::Platform::Android::setupLocalizationFiles();
+    }
 #endif
 
     Utils::Localization::setLocale();
@@ -1052,21 +1065,14 @@ int main(int argc, char* argv[])
     LOG(LogDebug) << "Android internal directory: " << AndroidVariables::sInternalDataDirectory;
     LOG(LogDebug) << "Android external directory: " << AndroidVariables::sExternalDataDirectory;
 
-    {
-        std::string buildIdentifier {PROGRAM_VERSION_STRING};
-        buildIdentifier.append(" (r")
-            .append(std::to_string(PROGRAM_RELEASE_NUMBER))
-            .append("), built ")
-            .append(PROGRAM_BUILT_STRING);
-        if (Utils::Platform::Android::checkNeedResourceCopy(buildIdentifier)) {
-            LOG(LogInfo) << "Application has been updated or it's a new installation, copying "
-                            "bundled resources and theme to internal storage...";
-            if (Settings::getInstance()->getBool("SplashScreen"))
-                window->renderSplashScreen(Window::SplashScreenState::RESOURCE_COPY, 0.0f);
-            if (Utils::Platform::Android::setupResources(buildIdentifier)) {
-                LOG(LogError) << "Copying of resources and themes failed";
-                return -1;
-            }
+    if (needResourceCopy) {
+        LOG(LogInfo) << "Application has been updated or it's a new installation, copying "
+                        "bundled resources and theme to internal storage...";
+        if (Settings::getInstance()->getBool("SplashScreen"))
+            window->renderSplashScreen(Window::SplashScreenState::RESOURCE_COPY, 0.0f);
+        if (Utils::Platform::Android::setupResources(buildIdentifier)) {
+            LOG(LogError) << "Copying of resources and themes failed";
+            return -1;
         }
     }
 
