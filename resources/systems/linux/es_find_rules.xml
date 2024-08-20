@@ -1163,4 +1163,11 @@
             <entry>~/bin/ZEsarUX/zesarux</entry>
         </rule>
     </emulator>
+    <emulator name="SHADPS4">
+        <!-- Sony PlayStation 4 emulator SHADPS4 -->
+        <rule type="systempath">
+            <entry>shadps4-qt</entry>
+            <entry>shadps4</entry>
+        </rule>
+    </emulator>
 </ruleList>

@@ -1589,17 +1589,15 @@
         <platform>ps3</platform>
         <theme>ps3</theme>
     </system>
-<!--
     <system>
         <name>ps4</name>
         <fullname>Sony PlayStation 4</fullname>
         <path>%ROMPATH%/ps4</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.desktop .pkg</extension>
+        <command label="SHADPS4 Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>ps4</platform>
         <theme>ps4</theme>
     </system>
- -->
     <system>
         <name>psp</name>
         <fullname>Sony PlayStation Portable</fullname>
