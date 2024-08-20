@@ -2396,7 +2396,9 @@ An example setup could look like the following:
 ~/ROMs/scummvm/Flight of the Amazon Queen/queen.scummvm
 ```
 
-To clarify, the sky.scummvm file should contain just the single word `sky` and likewise the queen.scummvm file should only contain the word `queen`.
+To clarify, the sky.scummvm file should contain just the single word _sky_ and likewise the queen.scummvm file should only contain the word _queen_.
+
+However, note that ScummVM on Android (and possibly on other operating systems as well) sometimes changes the short name inside its user interface, for example an index could be added so that instead of _sky_ it says _sky-1_ or some variation of that. In this case you need to have this exact string inside the .scummvm file instead of the default name from the compatibility list linked above.
 
 In order to avoid having to display each game as a directory inside ES-DE (that needs to be entered each time you want to launch a game), you can optionally interpret each game directory as a file. Make sure to read the _Directories interpreted as files_ section [here](USERGUIDE-DEV.md#directories-interpreted-as-files) to understand how this functionality works, but essentially the following would be the setup required for our example:
 ```
