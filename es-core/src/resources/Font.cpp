@@ -346,7 +346,11 @@ TextCache* Font::buildTextCache(const std::string& text,
                 bool spaceMatch {false};
                 if (needGlyphsPos && segmentIndex > 0) {
                     unsigned int spaceChar {0};
+#if (DISABLE_SHAPING)
+                    if (true)
+#else
                     if (!mShapeText)
+#endif
                         spaceChar = 32;
                     else if (segmentsHB[segmentIndex - 1].fontHB == mFontHB)
                         spaceChar = mSpaceGlyph;
