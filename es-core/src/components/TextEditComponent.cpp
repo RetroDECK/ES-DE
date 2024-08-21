@@ -55,6 +55,8 @@ TextEditComponent::TextEditComponent(bool multiLine)
 
 TextEditComponent::~TextEditComponent()
 {
+    mEditText->setTextShaping(true);
+
     // Always disable text input when destroying this component.
     SDL_StopTextInput();
 }
