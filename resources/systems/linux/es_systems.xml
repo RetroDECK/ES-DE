@@ -1567,6 +1567,15 @@
         <theme>ports</theme>
     </system>
     <system>
+        <name>portmaster</name>
+        <fullname>PortMaster</fullname>
+        <path>%ROMPATH%/portmaster</path>
+        <extension>.sh</extension>
+        <command label="PortMaster">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>portmaster, pc, pcwindows</platform>
+        <theme>portmaster</theme>
+    </system>
+    <system>
         <name>ps2</name>
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%/ps2</path>
