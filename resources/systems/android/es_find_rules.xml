@@ -112,6 +112,7 @@
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="androidpackage">
+            <entry>com.flycast.emulator/com.flycast.emulator.MainActivity</entry>
             <entry>com.flycast.emulator/com.reicast.emulator.MainActivity</entry>
         </rule>
     </emulator>
