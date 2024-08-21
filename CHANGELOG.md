@@ -27,6 +27,7 @@
 * Added a "Dark and red" menu color scheme to improve perceived contrast on low-contrast displays
 * (Android) Added support for the Dragon Data Dragon 32 (dragon32) game system
 * (Android) Added support for the Tano Dragon (tanodragon) game system
+* (Android) Added a new default find rule entry for Flycast as its application ID has been changed
 * (Android) Changed the find rule for Ruffle to make game launching work again after a code change in the emulator
 * (Android) Added J2ME Loader standalone as the default emulator for the j2me system
 * (Android) Added JL-Mod standalone as an alternative emulator for the j2me system
