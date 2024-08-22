@@ -641,7 +641,13 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("container") && elem->get<bool>("container")) {
-        if (elem->has("containerType")) {
+        if (!elem->has("size") || (elem->has("size") && elem->get<glm::vec2>("size").x == 0.0f)) {
+            LOG(LogError) << "TextComponent: Invalid theme configuration, property "
+                             "\"container\" for element \""
+                          << element.substr(5)
+                          << "\" can't be used as a horizontal size has not been defined";
+        }
+        else if (elem->has("containerType")) {
             const std::string& containerType {elem->get<std::string>("containerType")};
             if (containerType == "horizontal") {
                 if (elem->has("containerScrollSpeed")) {
