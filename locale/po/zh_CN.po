@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-25 12:24+0200\n"
+"POT-Creation-Date: 2024-08-22 22:26+0200\n"
 "PO-Revision-Date: 2024-07-24 11:32+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
@@ -334,6 +334,9 @@ msgstr "菜单配色方案"
 
 msgid "DARK"
 msgstr "暗黑"
+
+msgid "DARK AND RED"
+msgstr ""
 
 msgid "LIGHT"
 msgstr "明亮"
@@ -1340,6 +1343,9 @@ msgstr "无法下载主题列表"
 msgid "DOWNLOADING"
 msgstr "正在下载"
 
+msgid "DOWNLOADING THEMES LIST"
+msgstr "正在下载主题列表"
+
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
 msgstr "这将彻底删除主题"
 
@@ -1374,9 +1380,6 @@ msgstr ""
 "主题列表存储库似乎已损坏，这可能是由于上次下载或更新中断造成的，例如 ES-DE 进"
 "程被终止。需要重新下载，旧目录\"themes-list\"将重命名为\"themes-"
 "list_CORRUPT_DISABLED\""
-
-msgid "DOWNLOADING THEMES LIST"
-msgstr "正在下载主题列表"
 
 msgid "UPDATING THEMES LIST"
 msgstr "正在更新主题列表"

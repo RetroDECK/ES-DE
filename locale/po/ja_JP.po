@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-25 20:33+0200\n"
+"POT-Creation-Date: 2024-08-22 22:26+0200\n"
 "PO-Revision-Date: 2024-07-27 01:15+0800\n"
 "Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
@@ -338,6 +338,9 @@ msgstr "メニューの配色"
 
 msgid "DARK"
 msgstr "DARK"
+
+msgid "DARK AND RED"
+msgstr ""
 
 msgid "LIGHT"
 msgstr "LIGHT"
@@ -1366,6 +1369,9 @@ msgstr "テーマリストをダウンロードできませんでした"
 msgid "DOWNLOADING"
 msgstr "ダウンロード中"
 
+msgid "DOWNLOADING THEMES LIST"
+msgstr "テーマリストをダウンロード中"
+
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
 msgstr "この操作により、テーマは完全に削除されます"
 
@@ -1402,9 +1408,6 @@ msgstr ""
 "デートの中断による可能性があり、たとえば、ES-DEプロセスがキルされた場合などが"
 "考えられます。もう一度ダウンロードする必要があります。古いディレクトリー"
 "「themes-list」の名前は「themes-list_CORRUPT_DISABLED」に変更されます"
-
-msgid "DOWNLOADING THEMES LIST"
-msgstr "テーマリストをダウンロード中"
 
 msgid "UPDATING THEMES LIST"
 msgstr "テーマリストをアップデート中"

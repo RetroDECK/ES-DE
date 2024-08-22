@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-27 10:26+0200\n"
+"POT-Creation-Date: 2024-08-22 22:26+0200\n"
 "PO-Revision-Date: 2024-07-27 11:30+0400\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
@@ -338,6 +338,9 @@ msgstr "ЦВЕТОВАЯ СХЕМА МЕНЮ"
 
 msgid "DARK"
 msgstr "ТЁМНАЯ"
+
+msgid "DARK AND RED"
+msgstr ""
 
 msgid "LIGHT"
 msgstr "СВЕТЛАЯ"

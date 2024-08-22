@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-24 11:27+0200\n"
+"POT-Creation-Date: 2024-08-22 22:26+0200\n"
 "PO-Revision-Date: 2024-07-20 13:30+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Italiano <info@es-de.org>\n"
@@ -333,6 +333,9 @@ msgid "MENU COLOR SCHEME"
 msgstr ""
 
 msgid "DARK"
+msgstr ""
+
+msgid "DARK AND RED"
 msgstr ""
 
 msgid "LIGHT"
@@ -942,6 +945,9 @@ msgid ""
 "PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
 msgstr ""
 
+msgid "REGION"
+msgstr ""
+
 msgid "EUROPE"
 msgstr ""
 
@@ -952,9 +958,6 @@ msgid "USA"
 msgstr ""
 
 msgid "WORLD"
-msgstr ""
-
-msgid "REGION"
 msgstr ""
 
 msgid "PREFERRED LANGUAGE"
@@ -1301,6 +1304,9 @@ msgstr ""
 msgid "DOWNLOADING"
 msgstr ""
 
+msgid "DOWNLOADING THEMES LIST"
+msgstr ""
+
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
 msgstr ""
 
@@ -1331,9 +1337,6 @@ msgid ""
 "CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
 "THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
 "DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
-msgstr ""
-
-msgid "DOWNLOADING THEMES LIST"
 msgstr ""
 
 msgid "UPDATING THEMES LIST"
