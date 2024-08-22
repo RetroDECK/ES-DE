@@ -8,7 +8,7 @@ Yes it's the exact same application, with only some minor differences. This mean
 
 ## Why is it named ES-DE as in "Desktop Edition" if this is a release for a mobile operating system?
 
-First it's branding, it would be very confusing to have different names for the same application when it's available cross-platform. Second, the _Desktop Edition_ part is now a legacy, nowadays instead think of the D as standing for _Deck, Droid_ or _Desktop_. The _EmulationStation Desktop Edition_ subtitle used on the splash screen is only temporary during a transition period, it will be removed.
+First it's branding, it would be very confusing to have different names for the same application when it's available cross-platform. Second, the _Desktop Edition_ part is now basically legacy. Actually the entire _EmulationStation Desktop Edition_ subtitle used on the splash screen is only temporary during a transition period and it will be removed at some point. The official name of the project is already ES-DE Frontend or ES-DE for short.
 
 ## Is it available for free, and is it open source?
 
@@ -24,7 +24,11 @@ You only need to buy the Patreon release once, and then you can use it on all yo
 
 ## ES-DE doesn't work on my device, can I get a refund?
 
-Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund anyone that bought ES-DE on Patreon within one month from the purchase date if they are unable to get ES-DE to run on their device. Just send a DM on Patreon and we will issue a refund as soon as possible. We are however unfortunately not able to refund purchases on the Samsung Galaxy Store and Huawei AppGallery.
+Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund anyone that bought ES-DE on Patreon within one month from the purchase date if they are unable to get ES-DE to run on their device. Just send a DM on Patreon and we will issue a refund as soon as possible. We are however unfortunately not able to refund purchases on the Samsung Galaxy Store and Huawei AppGallery. But make sure to read the next question below as your device may be compatible after all.
+
+## ES-DE hangs at the onboarding configurator, is the app not compatible with my device?
+
+There are some Android developer options that break ES-DE (and probably many other apps too) so make sure to never change such settings unless you know exactly what you are doing. For instance the option _Don't keep activities_ will make the configurator hang so that you'll never be able to get past the onboarding step.
 
 ## I received an update email to my Gmail account but the APK download link doesn't seem to work?
 

@@ -29,6 +29,7 @@
 * (Android) Added support for the Tano Dragon (tanodragon) game system
 * (Android) Added a new default find rule entry for Flycast as its application ID has been changed
 * (Android) Changed the find rule for Ruffle to make game launching work again after a code change in the emulator
+* (Android) Changed ePSXe to use %ROM% instead of %ROMSAF% as the latter caused game launching to fail on some devices
 * (Android) Added J2ME Loader standalone as the default emulator for the j2me system
 * (Android) Added JL-Mod standalone as an alternative emulator for the j2me system
 * (Android) Added support for launching individual games directly with EKA2L1 for the symbian system
@@ -44,8 +45,9 @@
 * Renamed the "Menu opening effect" setting in the UI settings menu to "Menu opening animation"
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element
+* Added a check for whether a text element has a width defined when the container property is set
 * Game files with only an extension and no filename will now get skipped on application startup
-* StringUtil::toCapitalized() will now capitalize characters following the ([" characters
+* StringUtil::toCapitalized() will now capitalize text more accurately by using ICU boundary analysis
 * Removed some obsolete code from DateTimeEditComponent
 * Added the libintl library as a dependency
 * Added the HarfBuzz library as a dependency

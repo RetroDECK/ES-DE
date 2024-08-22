@@ -2804,8 +2804,9 @@ Properties:
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container.
     - Default is `true` if `metadata` is set to `description`, otherwise `false`
+    - This property can only be used if `size` has a width defined.
 * `containerType` - type: STRING
-    - If `container` has been set, then it's possible to select between a vertically or horizontally scrolling type using this property. If selecting the horizontal container then all line breaks in the text will be automatically converted to spaces. If selecting the vertical container then any value defined for `rotation` will be ignored as this container type can't be rotated. If using this property make sure to set an explicit size for the element, as leaving it as `0 0` will lead to unpredictable results.
+    - If `container` has been set, then it's possible to select between a vertically or horizontally scrolling type using this property. If selecting the horizontal container then all line breaks in the text will be automatically converted to spaces. If selecting the vertical container then any value defined for `rotation` will be ignored as this container type can't be rotated.
     - Valid values are `vertical` or `horizontal`
     - Default is `vertical`
     - This property can only be used when `container` has been explicitly set to `true`

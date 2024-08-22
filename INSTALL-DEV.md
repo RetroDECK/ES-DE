@@ -416,11 +416,15 @@ Both _appimagetool_ and _linuxdeploy_ are required for the build process but the
 
 ## Building on Haiku
 
-Note that support for Haiku is currently very experimental, for instance the video player behaves a bit erratic and the PDF viewer doesn't work at all. You'll also need to run a recent nightly Haiku release to build ES-DE as using R1/beta4 will not work.
+Note that support for Haiku is currently experimental as the operating system itself is experimental. When OS updates are rolled out things may break in ES-DE or they could make the application crash. The video player also behaves erratic and the platform does not provide 3D acceleration meaning performance may not be that great. Apart from that most things should work fine.
+
+You'll need to run a recent nightly Haiku release to build ES-DE as using R1/beta4 will not work. At the moment there is also no packaging support (i.e. for ES-DE specifically), so you'll need to run ES-DE from the build directory.
+
+If running Haiku in KVM/Qemu, make sure to use SATA storage intead of VirtIO storage as you may otherwise experience stability issues and filesystem corruption.
 
 Use pkgman to install the required dependencies:
 ```
-pkgman install cmake gettext curl_devel harfbuzz_devel freeimage_devel pugixml_devel libsdl2_devel libgit2_devel freetype_devel ffmpeg_devel
+pkgman install cmake gettext curl_devel harfbuzz_devel freeimage_devel pugixml_devel libsdl2_devel libgit2_devel freetype_devel ffmpeg_devel poppler24_devel
 ```
 
 To clone the ES-DE source repository, run the following:
@@ -432,8 +436,6 @@ You can then go ahead and build the application:
 cmake .
 make -j8
 ```
-
-Note that there is no Haiku packaging support, you'll need to run ES-DE from the build directory. As well very few systems and emulators are currently supported. There is also no 3D acceleration available in Haiku so performance in ES-DE will likely be quite lacklustre. Consider the Haiku build a proof of concept port at this moment in time.
 
 ## Building on macOS
 
