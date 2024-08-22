@@ -715,26 +715,19 @@ if(COMPILE_LOCALIZATIONS)
     add_subdirectory(locale)
 endif()
 
-if(NOT HAIKU)
-    add_subdirectory(es-pdf-converter)
-endif()
+add_subdirectory(es-pdf-converter)
 add_subdirectory(external)
 add_subdirectory(es-core)
 add_subdirectory(es-app)
 
 # Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
-# Also set lottie2gif to not be built.
-if(NOT HAIKU)
-    add_dependencies(lunasvg es-pdf-convert)
-endif()
+add_dependencies(lunasvg es-pdf-convert)
 
 if(COMPILE_LOCALIZATIONS)
-    if(NOT HAIKU)
-        add_dependencies(es-pdf-convert localization)
-    else()
-        add_dependencies(lunasvg localization)
-    endif()
+    add_dependencies(es-pdf-convert localization)
 endif()
 
 add_dependencies(es-core rlottie)
+
+# Set lottie2gif to not be built.
 set_target_properties(lottie2gif PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)
