@@ -271,6 +271,23 @@ elseif(APPLE)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de DESTINATION ../Resources/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de DESTINATION ../Resources/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION ../Resources)
+elseif(HAIKU)
+    install(TARGETS es-de RUNTIME DESTINATION /boot/system/apps)
+    install(TARGETS es-pdf-convert RUNTIME DESTINATION /boot/system/apps)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/es-de.6.gz
+        DESTINATION /boot/system/documentation/man/man6)
+    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
+        DESTINATION /boot/system/data/es-de)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
+        DESTINATION /boot/system/data/es-de)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/linear-es-de
+        DESTINATION /boot/system/data/es-de/themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de
+        DESTINATION /boot/system/data/es-de/themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de
+        DESTINATION /boot/system/data/es-de/themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
+        DESTINATION /boot/system/data/es-de)
 elseif(NOT ANDROID)
     install(TARGETS es-de RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     install(TARGETS es-pdf-convert RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
