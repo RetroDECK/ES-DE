@@ -415,8 +415,10 @@ namespace Utils
         {
 #if defined(__ANDROID__)
             return AndroidVariables::sInternalDataDirectory;
+#elif defined(__HAIKU__)
+            return "/boot/system/data/es-de";
 #elif defined(__unix__)
-            return installPrefix + "/share/es-de";
+    return installPrefix + "/share/es-de";
 #else
     return "";
 #endif
