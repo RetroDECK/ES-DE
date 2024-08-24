@@ -258,7 +258,8 @@ void GuiScraperSearch::resizeMetadata()
         float maxLblWidth {0.0f};
         for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); ++it) {
             it->first->setFont(fontLbl);
-            if (it->first->getTextCache()->metrics.size.x > maxLblWidth)
+            if (it->first->getTextCache() != nullptr &&
+                it->first->getTextCache()->metrics.size.x > maxLblWidth)
                 maxLblWidth = it->first->getTextCache()->metrics.size.x +
                               (16.0f * (mRenderer->getIsVerticalOrientation() ?
                                             mRenderer->getScreenHeightModifier() :
