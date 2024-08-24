@@ -2126,8 +2126,13 @@ returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBack
                                                 gameToUpdate->metadata.get("lastplayed"));
     }
 
-    CollectionSystemsManager::getInstance()->refreshCollectionSystems(gameToUpdate);
+    // We make an explicit call to close the launch screen instead of waiting for
+    // AnimationController to do it as that would be done too late. This is so because on
+    // gamelist reload the helpsystem uses the state of the launch screen to select between
+    // the dimmed and undimmed element properties.
+    window->closeLaunchScreen();
 
+    CollectionSystemsManager::getInstance()->refreshCollectionSystems(gameToUpdate);
     gameToUpdate->mSystem->onMetaDataSavePoint();
 }
 
