@@ -383,7 +383,7 @@ namespace Utils
                 exePath = getCanonicalPath(esBinary);
             }
 #endif
-            // Fallback to argv[0] if everything else fails.
+            // Fallback to argv[0] if everything else fails, which is always the case on macOS.
             if (exePath.empty()) {
                 esBinary = path;
                 exePath = getCanonicalPath(path);
