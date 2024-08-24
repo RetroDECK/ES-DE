@@ -343,9 +343,11 @@ private:
 
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y);
-            setSize(mText.getTextCache()->metrics.size.x + mRightArrow.getSize().x +
-                        Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
-                    mText.getSize().y);
+            setSize(
+                (mText.getTextCache() == nullptr ? 0.0f : mText.getTextCache()->metrics.size.x) +
+                    mRightArrow.getSize().x +
+                    Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
+                mText.getSize().y);
             if (mParent)
                 mParent->onSizeChanged();
         }
@@ -363,8 +365,10 @@ private:
                     }
 
                     mText.setSize(0.0f, mText.getSize().y);
-                    setSize(mText.getTextCache()->metrics.size.x + mLeftArrow.getSize().x +
-                                mRightArrow.getSize().x +
+                    setSize((mText.getTextCache() == nullptr ?
+                                 0.0f :
+                                 mText.getTextCache()->metrics.size.x) +
+                                mLeftArrow.getSize().x + mRightArrow.getSize().x +
                                 Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
                             mText.getSize().y);
                     if (mParent)
