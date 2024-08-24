@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-08-22 22:26+0200\n"
-"PO-Revision-Date: 2024-07-28 01:37+0200\n"
+"PO-Revision-Date: 2024-08-23 05:39+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Français <info@es-de.org>\n"
 "Language: fr_FR\n"
@@ -219,13 +219,13 @@ msgid "UI SETTINGS"
 msgstr "PARAMÈTRES D'AFFICHAGE"
 
 msgid "SOUND SETTINGS"
-msgstr "PARAMÈTRES  AUDIO"
+msgstr "PARAMÈTRES AUDIO"
 
 msgid "INPUT DEVICE SETTINGS"
 msgstr "PARAMÈTRES DES MANETTES"
 
 msgid "GAME COLLECTION SETTINGS"
-msgstr "PARAMÈTRES  DES COLLECTIONS"
+msgstr "PARAMÈTRES DES COLLECTIONS"
 
 msgid "OTHER SETTINGS"
 msgstr "AUTRES PARAMÈTRES"
@@ -261,7 +261,7 @@ msgid "THEME ASPECT RATIO"
 msgstr "FORMAT D'AFFICHAGE DU THÈME"
 
 msgid "THEME TRANSITIONS"
-msgstr "TRANSITIONS DU THÉME"
+msgstr "TRANSITIONS DU THÈME"
 
 msgid "AUTOMATIC"
 msgstr "AUTOMATIQUE"
@@ -303,7 +303,7 @@ msgid "DISABLED"
 msgstr "DÉSACTIVÉ"
 
 msgid "GAMELIST ON STARTUP"
-msgstr "GAMELIST AU DÉMARRAGE"
+msgstr "LISTE DE JEUX AU DÉMARRAGE"
 
 msgid "NONE"
 msgstr "AUCUN"
@@ -340,7 +340,7 @@ msgid "DARK"
 msgstr "SOMBRE"
 
 msgid "DARK AND RED"
-msgstr ""
+msgstr "SOMBRE ET ROUGE"
 
 msgid "LIGHT"
 msgstr "CLAIR"
@@ -1290,7 +1290,7 @@ msgstr ""
 "RÉPERTOIRE DE THÈMES \"%s\" SERA RENOMMÉ EN \"%s_DISABLED\""
 
 msgid "DOWNLOADING THEME"
-msgstr "TÉLÉCHARGEMENT DE THÈME"
+msgstr "TÉLÉCHARGEMENT DU THÈME"
 
 #, c-format
 msgid ""
@@ -1365,7 +1365,7 @@ msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
 msgstr "CETTE ENTRÉE SERA SUPPRIMÉE DANS UN AVENIR PROCHE"
 
 msgid "CREATED BY"
-msgstr "CRÉE PAR"
+msgstr "CRÉÉ PAR"
 
 msgid "ERROR:"
 msgstr "ERREUR:"
@@ -1980,7 +1980,7 @@ msgid "quit application"
 msgstr "quitter l'application"
 
 msgid "all games"
-msgstr "TOUS LES JEUX"
+msgstr "tous les jeux"
 
 msgid "last played"
 msgstr "dernier joué"
@@ -2657,7 +2657,7 @@ msgid "SPACE"
 msgstr "ESPACE"
 
 msgid "LOAD"
-msgstr "CHARGEMENT"
+msgstr "CHARGER"
 
 msgid "shift"
 msgstr "shift"
