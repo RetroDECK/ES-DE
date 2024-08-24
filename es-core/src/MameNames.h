@@ -27,7 +27,7 @@ public:
 
     std::string getRealName(const std::string& mameName)
     {
-        std::string name = mNamePairs[mameName];
+        std::string name {mNamePairs[mameName]};
         if (name == "")
             return mameName;
         else
