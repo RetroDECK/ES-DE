@@ -490,7 +490,6 @@ void GuiMenu::openUIOptions()
                              selectedApplicationLanguage == "en_US");
     applicationLanguage->add("ENGLISH (UNITED KINGDOM)", "en_GB",
                              selectedApplicationLanguage == "en_GB");
-    applicationLanguage->add("CATALÀ", "ca_AD", selectedApplicationLanguage == "ca_AD");
     applicationLanguage->add("ΕΛΛΗΝΙΚΆ", "el_GR", selectedApplicationLanguage == "el_GR");
     applicationLanguage->add("DEUTSCH", "de_DE", selectedApplicationLanguage == "de_DE");
     applicationLanguage->add("ESPAÑOL (ESPAÑA)", "es_ES", selectedApplicationLanguage == "es_ES");

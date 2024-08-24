@@ -31,7 +31,6 @@ namespace Utils
         const std::vector<std::pair<std::string, std::string>> sSupportedLocales {{{"en"}, {"US"}},
                                                                                   {{"en"}, {"GB"}},
                                                                                   {{"ar"}, {"EG"}},
-                                                                                  {{"ca"}, {"AD"}},
                                                                                   {{"de"}, {"DE"}},
                                                                                   {{"el"}, {"GR"}},
                                                                                   {{"es"}, {"ES"}},
