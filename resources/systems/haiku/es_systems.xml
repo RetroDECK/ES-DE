@@ -2,31 +2,73 @@
 <!-- This is the ES-DE Frontend game systems configuration file for Haiku -->
 <systemList>
     <system>
-        <name>dos</name>
-        <fullname>DOS (PC)</fullname>
-        <path>%ROMPATH%/dos</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
-        <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
-        <command label="DOSBox (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX% %ROM%</command>
-        <platform>dos</platform>
-        <theme>dos</theme>
+        <name>3do</name>
+        <fullname>3DO Interactive Multiplayer</fullname>
+        <path>%ROMPATH%/3do</path>
+        <extension>.bin .BIN .chd .CHD .cue .CUE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <command label="Opera">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/opera_libretro.so %ROM%</command>
+        <platform>3do</platform>
+        <theme>3do</theme>
     </system>
     <system>
-        <name>psp</name>
-        <fullname>Sony PlayStation Portable</fullname>
-        <path>%ROMPATH%/psp</path>
-        <extension>.chd .CHD .cso .CSO .elf .ELF .iso .ISO .pbp .PBP .prx .PRX .7z .7Z .zip .ZIP</extension>
-        <command label="PPSSPP (Standalone)">%EMULATOR_PPSSPP% %ROM%</command>
-        <platform>psp</platform>
-        <theme>psp</theme>
+        <name>adam</name>
+        <fullname>Coleco Adam</fullname>
+        <path>%ROMPATH%/adam</path>
+        <extension>.1dd .1DD .bin .BIN .col .COL .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .ddp .DDP .dfi .DFI .dsk .DSK .hfe .HFE .imd .IMD .mfi .MFI .mfm .MFM .rom .ROM .td0 .TD0 .wav .WAV .7z .7Z .zip .ZIP</extension>
+        <command label="MAME [Diskette] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/adam adam -flop1 %ROM%</command>
+        <command label="MAME [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/adam adam -cass1 %ROM%</command>
+        <command label="MAME [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/adam adam -cart1 %ROM%</command>
+        <command label="MAME [Software list] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/adam adam %BASENAME%</command>
+        <platform>adam</platform>
+        <theme>adam</theme>
     </system>
     <system>
-        <name>scummvm</name>
-        <fullname>ScummVM Game Engine</fullname>
-        <path>%ROMPATH%/scummvm</path>
-        <extension>.scummvm .SCUMMVM .svm .SVM</extension>
-        <command label="ScummVM (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SCUMMVM% %BASENAME%</command>
-        <platform>scummvm</platform>
-        <theme>scummvm</theme>
+        <name>ags</name>
+        <fullname>Adventure Game Studio Game Engine</fullname>
+        <path>%ROMPATH%/ags</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>pcwindows</platform>
+        <theme>ags</theme>
+    </system>
+    <system>
+        <name>amiga</name>
+        <fullname>Commodore Amiga</fullname>
+        <path>%ROMPATH%/amiga</path>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
+        <platform>amiga</platform>
+        <theme>amiga</theme>
+    </system>
+    <system>
+        <name>amiga1200</name>
+        <fullname>Commodore Amiga 1200</fullname>
+        <path>%ROMPATH%/amiga1200</path>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
+        <platform>amiga</platform>
+        <theme>amiga1200</theme>
+    </system>
+    <system>
+        <name>amiga600</name>
+        <fullname>Commodore Amiga 600</fullname>
+        <path>%ROMPATH%/amiga600</path>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command>
+        <platform>amiga</platform>
+        <theme>amiga600</theme>
+    </system>
+    <system>
+        <name>amigacd32</name>
+        <fullname>Commodore Amiga CD32</fullname>
+        <path>%ROMPATH%/amigacd32</path>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
+        <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% --config:amiga-model=CD32 %ROM%</command>
+        <platform>amigacd32</platform>
+        <theme>amigacd32</theme>
     </system>
 </systemList>

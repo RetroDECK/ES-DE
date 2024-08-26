@@ -30,6 +30,24 @@
             <entry>/boot/system/apps/DOSBox</entry>
         </rule>
     </emulator>
+    <emulator name="FS-UAE">
+        <!-- Commodore Amiga emulator FS-UAE -->
+        <rule type="systempath">
+            <entry>fs-uae-launcher</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/bin/fs-uae-launcher</entry>
+        </rule>
+    </emulator>
+    <emulator name="MAME">
+        <!-- Arcade emulator MAME -->
+        <rule type="systempath">
+            <entry>mame</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/bin/mame</entry>
+        </rule>
+    </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="staticpath">
