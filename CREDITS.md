@@ -17,25 +17,27 @@ Nils Bonenberger
 
 # Translations
 
-**English (United Kingdom)**\
-Weestuarty\
-**French**\
-Fredy27 (neuromancer974)\
-**Polish**\
-kycho\
-**Portuguese (Brazil)**\
-MrVictorFull\
-**Romanian**\
-SilverGreen93\
-**Russian**\
-Lulzee\
-**Spanish**\
-Dani (stshunz)\
-**Swedish**\
-Leon Styhre\
-**Japanese**\
-冰棍\
-**Simplified Chinese**\
+**English (United Kingdom)** \
+Weestuarty \
+**French** \
+Fredy27 (neuromancer974) \
+**Italian** \
+Viler \
+**Polish** \
+kycho \
+**Portuguese (Brazil)** \
+MrVictorFull \
+**Romanian** \
+SilverGreen93 \
+**Russian** \
+Lulzee \
+**Spanish** \
+Dani (stshunz) \
+**Swedish** \
+Leon Styhre \
+**Japanese** \
+冰棍 \
+**Simplified Chinese** \
 邻家小熊
 
 # Licenses

@@ -61,6 +61,7 @@
 
 ### Bug fixes
 
+* When returning from a game the helpsystem was sometimes using the dimmed theme properties
 * The StringUtil::toCapitalized() function didn't correctly capitalize multi-byte Unicode characters
 * (Windows) Video textures were sometimes not sized and aligned correctly horizontally
 * There was a typo where the 32:9 aspect ratio was referred to as 32:0

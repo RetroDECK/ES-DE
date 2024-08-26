@@ -416,15 +416,15 @@ Both _appimagetool_ and _linuxdeploy_ are required for the build process but the
 
 ## Building on Haiku
 
-Note that support for Haiku is currently experimental as the operating system itself is experimental. When OS updates are rolled out things may break in ES-DE or they could make the application crash. The video player also behaves erratic and the platform does not provide 3D acceleration meaning performance may not be that great. Apart from that most things should work fine.
-
-You'll need to run a recent nightly Haiku release to build ES-DE as using R1/beta4 will not work. At the moment there is also no packaging support (i.e. for ES-DE specifically), so you'll need to run ES-DE from the build directory.
+You'll need to run a recent nightly Haiku release to build ES-DE as using R1/beta4 will not work.
 
 If running Haiku in KVM/Qemu, make sure to use SATA storage intead of VirtIO storage as you may otherwise experience stability issues and filesystem corruption.
 
+**Local build**
+
 Use pkgman to install the required dependencies:
 ```
-pkgman install cmake gettext curl_devel harfbuzz_devel freeimage_devel pugixml_devel libsdl2_devel libgit2_devel freetype_devel ffmpeg_devel poppler24_devel
+pkgman install cmake gettext curl_devel harfbuzz_devel freeimage_devel pugixml_devel libsdl2_devel libgit2_devel freetype_devel ffmpeg6_devel poppler24_devel
 ```
 
 To clone the ES-DE source repository, run the following:
@@ -433,8 +433,33 @@ git clone https://gitlab.com/es-de/emulationstation-de.git
 ```
 You can then go ahead and build the application:
 ```
+cd emulationstation-de
 cmake .
 make -j8
+```
+
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
+
+**HaikuPorts package build**
+
+Run the following to build the .hpkg package:
+
+```
+cd ~
+git clone https://github.com/haikuports/haikuports.git --depth=50
+mkdir haikuports/games-emulation/es-de
+pkgman install haikuporter
+cp /boot/system/settings/haikuports.conf  ~/config/settings/
+cd emulationstation-de
+cp es-app/assets/es_de-3.1.0.recipe ~/haikuports/games-emulation/es-de
+haikuporter -S --no-source-packages --get-dependencies -j8 es_de
+```
+
+The first time you run haikuporter it will take a while as dependencies for all ports will get updated before the ES-DE build process starts.
+
+Following this you can install the package into the running system:
+```
+cp ~/haikuports/packages/es_de-3.1.0-1-x86_64.hpkg /boot/system/packages
 ```
 
 ## Building on macOS
