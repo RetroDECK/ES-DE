@@ -184,7 +184,9 @@ namespace Utils
             }
 
             // Language-specific menu title scale factor.
-            if (localePair.first == "el")
+            if (localePair.first == "de")
+                sMenuTitleScaleFactor = 0.92f;
+            else if (localePair.first == "el")
                 sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "es")
                 sMenuTitleScaleFactor = 0.90f;
