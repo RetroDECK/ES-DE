@@ -4,9 +4,13 @@ Note that support for Haiku is currently experimental as the operating system it
 
 There are currently no pre-built packages available so you'll need to build ES-DE yourself. Detailed instructions are available in the _Building on Haiku_ section of the [INSTALL-DEV.md](INSTALL-DEV.md#building-on-haiku) document.
 
-## Known problems
+Table of contents:
 
-* Attempting to use the theme downloader crashes the application when using a nightly Haiku build, this is seemingly caused by an OS or libgit2 library bug as ES-DE runs correctly in R1/beta4 (but with other issues on that release)
+[[_TOC_]]
+
+## Known ES-DE problems
+
+* Attempting to use the theme downloader crashes the application when using a nightly Haiku build, this is seemingly caused by an OS or libgit2 library bug as ES-DE runs correctly on R1/beta4 (but with other issues on that release)
 
 * The video player behaves erratic and videos may randomly hang or refuse to play
 
@@ -14,13 +18,55 @@ There are currently no pre-built packages available so you'll need to build ES-D
 
 * There is no 3D acceleration as the operating system does not support that
 
+* The system configuration has not been fully populated yet so game system support is limited (this will get done eventually)
+
 ## Emulator problems
 
 In contrast with all other platforms which ES-DE runs on, on Haiku emulators which are not working correctly are still included in the configuration. This is done with the belief that things will improve in the future as the operating system matures.
 
+**Atari800**
+
+Can't run compressed game files such as those with the .zip extension, and does not seem to be able to correctly emulate any games even if they are uncompressed? (The emulator starts but the games don't.)
+
+**Beetle Lynx**
+
+Games don't start, just displays a black screen.
+
+**blueMSX**
+
+Can't run compressed game files such as those with the .zip extension.
+
+**Caprice32**
+
+Can't run compressed game files such as those with the .zip extension.
+
+**DOSBox-X (Standalone)**
+
+Games can only be launched if ES-DE has been started from the command line, i.e. from a _Terminal_ window. And when existing a game the OS screen resolution is sometimes not reset back to its previous state meaning it has to be manually reset to the correct resolution using the operating system's _Screen_ utility.
+
+**EasyRPG**
+
+Crashes on game start.
+
+**Flycast**
+
+Too slow to be usable in practice, possibly due to lack of 3D acceleration?
+
 **FS-UAE (Standalone)**
 
 This emulator does not seem to accept command-line arguments, meaning games can't be launched from ES-DE.
+
+**Genesis Plus GX Wide**
+
+Can't run compressed game files such as those with the .zip extension (it works fine in Genesis Plus GX).
+
+**gpSP**
+
+Can't run compressed game files such as those with the .zip extension.
+
+**Hatari**
+
+Can't run compressed game files such as those with the .zip extension, and IPF files are not supported.
 
 **MAME (Standalone)**
 
@@ -33,6 +79,10 @@ Crashes on game start.
 **ScummVM (Standalone)**
 
 Games can only be launched if ES-DE has been started from the command line, i.e. from a _Terminal_ window.
+
+**Stella**
+
+Crashes on game start (Stella 2014 works fine).
 
 ## Supported game systems
 
@@ -47,3 +97,66 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | amiga1200             | Commodore Amiga 1200                           | PUAE                              | FS-UAE **(Standalone)**           | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
 | amiga600              | Commodore Amiga 600                            | PUAE                              | FS-UAE **(Standalone)**           | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              | FS-UAE **(Standalone)**           | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
+| amstradcpc            | Amstrad CPC                                    | Caprice32                         | MAME **(Standalone)**             | Yes for MAME | Single archive or disk file          |
+| android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
+| androidapps           | Android Apps                                   | _Placeholder_                     |                                   |              |                                      |
+| androidgames          | Android Games                                  | _Placeholder_                     |                                   |              |                                      |
+| apple2                | Apple II                                       | Mednafen **(Standalone)**         | MAME **(Standalone)**             | Yes          | See the specific _Apple II_ section in the user guide |
+| apple2gs              | Apple IIGS                                     | MAME **(Standalone)**             |                                   | Yes          | See the specific _Apple IIGS_ section in the user guide |
+| arcade                | Arcade                                         | MAME 2003-Plus                    | MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>Geolith,<br>Flycast,<br> _Script_ | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| arcadia               | Emerson Arcadia 2001                           | MAME **(Standalone)**             |                                   | No           | Single archive or ROM file           |
+| archimedes            | Acorn Archimedes                               | MAME [Model A440/1] **(Standalone)** | MAME [Model A3000] **(Standalone)**,<br>MAME [Model A310] **(Standalone)**,<br>MAME [Model A540] **(Standalone)** | Yes          |                                      |
+| arduboy               | Arduboy Miniature Game System                  | _Placeholder_                     |                                   |              |                                      |
+| astrocde              | Bally Astrocade                                | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| atari2600             | Atari 2600                                     | Stella                            | Stella 2014                       | No           | Single archive or ROM file           |
+| atari5200             | Atari 5200                                     | Atari800                          |                                   | Yes          | Single archive or ROM file           |
+| atari7800             | Atari 7800 ProSystem                           | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| atari800              | Atari 800                                      | Atari800                          |                                   | Yes          |                                      |
+| atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | MAME **(Standalone)**             | Yes for MAME | See the specific _Atari Jaguar and Atari Jaguar CD_ section in the user guide |
+| atarijaguarcd         | Atari Jaguar CD                                | _Placeholder_                     |                                   |              |                                      |
+| atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file           |
+| atarist               | Atari ST [also STE and Falcon]                 | Hatari                            |                                   | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
+| atarixe               | Atari XE                                       | Atari800                          |                                   | Yes          |                                      |
+| atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           |                                   | Yes          | Single archive  file                 |
+| bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
+| c64                   | Commodore 64                                   | _Placeholder_                     |                                   |              |                                      |
+| cdimono1              | Philips CD-i                                   | MAME **(Standalone)**             |                                   | Yes          |                                      |
+| cdtv                  | Commodore CDTV                                 | PUAE                              | FS-UAE **(Standalone)**           | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
+| chailove              | ChaiLove Game Engine                           | _Placeholder_                     |                                   |              |                                      |
+| channelf              | Fairchild Channel F                            | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| coco                  | Tandy Color Computer                           | MAME [Cartridge] **(Standalone)** | MAME [Tape] **(Standalone)**      | Yes          | See the specific _Tandy Color Computer_ section in the user guide |
+| colecovision          | Coleco ColecoVision                            | blueMSX                           | Gearcoleco                        | Yes          | Single archive or ROM file           |
+| consolearcade         | Console Arcade Systems                         | MAME **(Standalone)**             | Flycast,<br>Mednafen [Sega Saturn] **(Standalone)**,<br> _Script_ | Depends      | See the specific _Console Arcade Systems_ section in the user guide |
+| cps                   | Capcom Play System                             | MAME 2003-Plus                    | MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| cps1                  | Capcom Play System I                           | MAME 2003-Plus                    | MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| cps2                  | Capcom Play System II                          | MAME 2003-Plus                    | MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| cps3                  | Capcom Play System III                         | MAME 2003-Plus                    | MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| crvision              | VTech CreatiVision                             | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| daphne                | Daphne Arcade LaserDisc Emulator               | MAME **(Standalone)**             |                                   | Depends      | See the specific _LaserDisc Games_ section in the user guide |
+| desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_              | No           | See the specific _Ports and desktop applications_ section in the user guide |
+| doom                  | Doom                                           | _Script_                          |                                   | No           |                                      |
+| dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox,<br>DOSBox-X **(Standalone)** | No           | See the specific _DOS / PC_ section in the user guide |
+| dragon32              | Dragon Data Dragon 32                          | MAME Dragon 32 [Tape] **(Standalone)** | MAME Dragon 32 [Cartridge] **(Standalone)**,<br>MAME Dragon 64 [Tape] **(Standalone)**,<br>MAME Dragon 64 [Cartridge] **(Standalone)** | Yes          | See the specific _Dragon 32 and Tano Dragon_ section in the user guide |
+| dreamcast             | Sega Dreamcast                                 | Flycast                           |                                   | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
+| easyrpg               | EasyRPG Game Engine                            | EasyRPG                           |                                   | No           | See the specific _EasyRPG Game Engine_ section in the user guide |
+| electron              | Acorn Electron                                 | MAME [Tape] **(Standalone)**      | MAME [Diskette DFS] **(Standalone)**,<br>MAME [Diskette ADFS] **(Standalone)** | Yes          | Single archive, or single tape or diskette image file |
+| emulators             | Emulators                                      | _Suspend ES-DE_                   | _Keep ES-DE running_              | No           | See the specific _Ports and desktop applications_ section in the user guide |
+| epic                  | Epic Games Store                               | _Placeholder_                     |                                   |              |                                      |
+| famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>FCEUmm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file           |
+| fba                   | FinalBurn Alpha                                | _Placeholder_                     |                                   |              |                                      |
+| fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     | FinalBurn Neo **(Standalone)**    | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
+| fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>FCEUmm,<br>Mednafen **(Standalone)** | Yes          | Single archive or ROM file           |
+| flash                 | Adobe Flash                                    | _Placeholder_                     |                                   |              |                                      |
+| fm7                   | Fujitsu FM-7                                   | MAME [FM-7 Diskette] **(Standalone)** | MAME [FM-7 Tape] **(Standalone)**,<br>MAME [FM-7 Software list] **(Standalone)**,<br>MAME [FM77AV Diskette] **(Standalone)**,<br>MAME [FM77AV Tape] **(Standalone)**,<br>MAME [FM77AV Software list] **(Standalone)** | Yes          | For tape files you need to manually start the cassette player from the MAME menu after the "load" command, as well as entering the "run" command after loading is complete |
+| fmtowns               | Fujitsu FM Towns                               | MAME **(Standalone)**             |                                   | Yes          | See the specific _Fujitsu FM Towns_ section in the user guide  |
+| fpinball              | Future Pinball                                 | _Placeholder_                     |                                   |              |                                      |
+| gamate                | Bit Corporation Gamate                         | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section in the user guide |
+| gamecom               | Tiger Electronics Game.com                     | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file     |
+| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>mGBA,<br>mGBA **(Standalone)**,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA Next,<br>gpSP,<br>Mednafen **(Standalone)** | No                 | Single archive or ROM file |
+| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>mGBA,<br>mGBA **(Standalone)**,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| gc                    | Nintendo GameCube                              | _Placeholder_                     |                                   |              |                                      |
+| genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+

@@ -31,7 +31,7 @@ MrVictorFull \
 SilverGreen93 \
 **Russian** \
 Lulzee \
-**Spanish** \
+**Spanish (Spain)** \
 Dani (stshunz) \
 **Swedish** \
 Leon Styhre \
