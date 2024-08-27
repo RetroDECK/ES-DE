@@ -114,4 +114,13 @@
             <entry>/boot/system/apps/ScummVM</entry>
         </rule>
     </emulator>
+    <emulator name="SOLARUS">
+        <!-- Solarus game engine -->
+        <rule type="systempath">
+            <entry>solarus-run</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/bin/solarus-run</entry>
+        </rule>
+    </emulator>
 </ruleList>
