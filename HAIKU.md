@@ -24,63 +24,87 @@ Table of contents:
 
 In contrast with all other platforms which ES-DE runs on, on Haiku emulators which are not working correctly are still included in the configuration. This is done with the belief that things will improve in the future as the operating system matures.
 
-**Atari800**
+### Atari800
 
 Can't run compressed game files such as those with the .zip extension, and does not seem to be able to correctly emulate any games even if they are uncompressed? (The emulator starts but the games don't.)
 
-**Beetle Lynx**
+### Beetle Lynx
 
 Games don't start, just displays a black screen.
 
-**blueMSX**
+### blueMSX
 
 Can't run compressed game files such as those with the .zip extension.
 
-**Caprice32**
+### Caprice32
 
 Can't run compressed game files such as those with the .zip extension.
 
-**DOSBox-X (Standalone)**
+### DeSmuME
+
+Can't run compressed game files such as those with the .zip extension.
+
+### DOSBox-X (Standalone)
 
 Games can only be launched if ES-DE has been started from the command line, i.e. from a _Terminal_ window. And when existing a game the OS screen resolution is sometimes not reset back to its previous state meaning it has to be manually reset to the correct resolution using the operating system's _Screen_ utility.
 
-**EasyRPG**
+### EasyRPG
 
 Crashes on game start.
 
-**Flycast**
+### Flycast
 
 Too slow to be usable in practice, possibly due to lack of 3D acceleration?
 
-**FS-UAE (Standalone)**
-
-This emulator does not seem to accept command-line arguments, meaning games can't be launched from ES-DE.
-
-**Genesis Plus GX Wide**
-
-Can't run compressed game files such as those with the .zip extension (it works fine in Genesis Plus GX).
-
-**gpSP**
+### fMSX
 
 Can't run compressed game files such as those with the .zip extension.
 
-**Hatari**
+### FreeIntv
+
+Can't run compressed game files such as those with the .zip extension.
+
+### FS-UAE (Standalone)
+
+This emulator does not seem to accept command-line arguments, meaning games can't be launched from ES-DE.
+
+### Genesis Plus GX Wide
+
+Can't run compressed game files such as those with the .zip extension (it works fine in Genesis Plus GX).
+
+### gpSP
+
+Can't run compressed game files such as those with the .zip extension.
+
+### Hatari
 
 Can't run compressed game files such as those with the .zip extension, and IPF files are not supported.
 
-**MAME (Standalone)**
+### MAME (Standalone)
 
 When existing a game the OS screen resolution is sometimes not reset back to its previous state meaning it has to be manually reset to the correct resolution using the operating system's _Screen_ utility.
 
-**PUAE**
+### melonDS
 
 Crashes on game start.
 
-**ScummVM (Standalone)**
+### melonDS (Standalone)
+
+Crashes on game start if attempting to launch a zipped game file.
+
+### Mupen64Plus-Next
+
+Crashes on game start.
+
+### PUAE
+
+Crashes on game start.
+
+### ScummVM (Standalone)
 
 Games can only be launched if ES-DE has been started from the command line, i.e. from a _Terminal_ window.
 
-**Stella**
+### Stella
 
 Crashes on game start (Stella 2014 works fine).
 
@@ -159,4 +183,41 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>mGBA,<br>mGBA **(Standalone)**,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | _Placeholder_                     |                                   |              |                                      |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| gmaster               | Hartung Game Master                            | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| gx4000                | Amstrad GX4000                                 | Caprice32                         | MAME **(Standalone)**             | No           | Single archive or ROM file           |
+| intellivision         | Mattel Electronics Intellivision               | FreeIntv                          | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
+| j2me                  | Java 2 Micro Edition (J2ME)                    | _Placeholder_                     |                                   |              |                                      |
+| kodi                  | Kodi Home Theatre Software                     | _Placeholder_                     |                                   |              |                                      |
+| laserdisc             | LaserDisc Games                                | MAME **(Standalone)**             |                                   | Depends      | See the specific _LaserDisc Games_ section in the user guide |
+| lcdgames              | LCD Handheld Games                             | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section in the user guide |
+| lowresnx              | LowRes NX Fantasy Console                      | _Placeholder_                     |                                   |              |                                      |
+| lutris                | Lutris Open Gaming Platform                    | _Placeholder_                     |                                   |              |                                      |
+| lutro                 | Lutro Game Engine                              | _Placeholder_                     |                                   |              |                                      |
+| macintosh             | Apple Macintosh                                | MAME Mac SE Bootable **(Standalone)** | MAME Mac SE Boot Disk **(Standalone)**,<br>MAME Mac Plus Bootable **(Standalone)**,<br>MAME Mac Plus Boot Disk **(Standalone)** | Yes          | See the specific _Apple Macintosh_ section in the user guide |
+| mame                  | Multiple Arcade Machine Emulator               | MAME 2003-Plus                    | MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>Geolith,<br>Flycast,<br> _Script_ | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| mame-advmame          | AdvanceMAME                                    | AdvanceMAME **(Standalone)**      |                                   | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive | Yes          |                                      |
+| megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive | Yes          |                                      |
+| megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| megadrivejp           | Sega Mega Drive [Japan]                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| megaduck              | Creatronic Mega Duck                           | _Placeholder_                     |                                   |              |                                      |
+| mess                  | Multi Emulator Super System                    | _Placeholder_                     |                                   |              |                                      |
+| model2                | Sega Model 2                                   | _Placeholder_                     |                                   |              |                                      |
+| model3                | Sega Model 3                                   | _Placeholder_                     |                                   |              |                                      |
+| moto                  | Thomson MO/TO Series                           | _Placeholder_                     |                                   |              |                                      |
+| msx                   | MSX                                            | blueMSX                           | fMSX                              | Yes          |                                      |
+| msx1                  | MSX1                                           | blueMSX                           | fMSX                              | Yes          |                                      |
+| msx2                  | MSX2                                           | blueMSX                           | fMSX                              | Yes          |                                      |
+| msxturbor             | MSX Turbo R                                    | blueMSX                           |                                   | Yes          |                                      |
+| mugen                 | M.U.G.E.N Game Engine                          | _Placeholder_                     |                                   |              |                                      |
+| multivision           | Othello Multivision                            | Gearsystem                        |                                   | No           | Single archive or ROM file           |
+| n3ds                  | Nintendo 3DS                                   | _Placeholder_                     |                                   |              |                                      |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | Mupen64Plus **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
+| n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next                  | Yes          | See the specific _Nintendo 64DD_ section in the user guide |
+| naomi                 | Sega NAOMI                                     | Flycast                           |                                   | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
+| naomi2                | Sega NAOMI 2                                   | Flycast                           |                                   | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
+| naomigd               | Sega NAOMI GD-ROM                              | Flycast                           |                                   | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
+| nds                   | Nintendo DS                                    | melonDS                           | melonDS **(Standalone)**,<br>DeSmuME | No           | Single archive or ROM file |
+
 
