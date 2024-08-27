@@ -32,7 +32,15 @@ Can't run compressed game files such as those with the .zip extension, and does 
 
 Games don't start, just displays a black screen.
 
+### Beetle PSX HW
+
+Crashes on game start.
+
 ### blueMSX
+
+Can't run compressed game files such as those with the .zip extension.
+
+### bsnes
 
 Can't run compressed game files such as those with the .zip extension.
 
@@ -95,6 +103,10 @@ Crashes on game start if attempting to launch a zipped game file.
 ### Mupen64Plus-Next
 
 Crashes on game start.
+
+### PCSX ReARMed
+
+Games don't run, emulator instantly exits.
 
 ### PUAE
 
@@ -219,5 +231,60 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi2                | Sega NAOMI 2                                   | Flycast                           |                                   | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           |                                   | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | nds                   | Nintendo DS                                    | melonDS                           | melonDS **(Standalone)**,<br>DeSmuME | No           | Single archive or ROM file |
+| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)**,<br>Geolith,<br>MAME **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
+| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
+| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
+| nes                   | Nintendo Entertainment System                  | Mesen                             | Mesen                             | Nestopia UE,<br>FCEUmm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file           |
+| ngage                 | Nokia N-Gage                                   | _Placeholder_                     |                                   |              |                                      |
+| ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | Mednafen **(Standalone)**         | No           | Single archive or ROM file           |
+| ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | Mednafen **(Standalone)**         | No           | Single archive or ROM file           |
+| odyssey2              | Magnavox Odyssey 2                             | O2EM                              | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
+| openbor               | OpenBOR Game Engine                            | _Placeholder_                     |                                   |              |                                      |
+| oric                  | Tangerine Computer Systems Oric                | MAME **(Standalone)**             |                                   | Yes          | See the specific _Tangerine Computer Systems Oric_ section in the user guide |
+| palm                  | Palm OS                                        | _Placeholder_                     |                                   |              |                                      |
+| pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox,<br>DOSBox-X **(Standalone)** | No           | See the specific _DOS / PC_ section in the user guide |
+| pc88                  | NEC PC-8800 Series                             | _Placeholder_                     |                                   |              |                                      |
+| pc98                  | NEC PC-9800 Series                             | Neko Project II                   |                                   |              |                                      |
+| pcarcade              | PC Arcade Systems                              | _Script_                          |                                   | No           |                                      |
+| pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Mednafen **(Standalone)** | Yes          |                                      |
+| pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      | Mednafen **(Standalone)**         | Yes          |                                      |
+| pico8                 | PICO-8 Fantasy Console                         | _Placeholder_                     |                                   |              |                                      |
+| plus4                 | Commodore Plus/4                               | _Placeholder_                     |                                   |              |                                      |
+| pokemini              | Nintendo Pokémon Mini                          | _Placeholder_                     |                                   |              |                                      |
+| ports                 | Ports                                          | _Script_                          | OpenLara (Tomb Raider)            | No           | See the specific _Ports and desktop applications_ section in the user guide |
+| ps2                   | Sony PlayStation 2                             | _Placeholder_                     |                                   |              |                                      |
+| ps3                   | Sony PlayStation 3                             | _Placeholder_                     |                                   |              |                                      |
+| ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
+| psp                   | Sony PlayStation Portable                      | PPSSPP **(Standalone)**           |                                   | No           | Single disc image file               |
+| psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
+| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>Mednafen **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| pv1000                | Casio PV-1000                                  | MAME **(Standalone)**             |                                   | No           | Single archive or ROM file           |
+| quake                 | Quake                                          | TyrQuake                          | _Script_                          | No           |                                      |
+| samcoupe              | MGT SAM Coupé                                  | _Placeholder_                     |                                   |              |                                      |
+| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | bsnes                             |              |                                      |
+| saturn                | Sega Saturn                                    | Beetle Saturn                     | Yabause,<br>Mednafen **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Yabause,<br>Mednafen **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| scummvm               | ScummVM Game Engine                            | ScummVM                           | ScummVM **(Standalone)**          | No           | See the specific _ScummVM_ section in the user guide |
+| scv                   | Epoch Super Cassette Vision                    | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file           |
+| sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file           |
+| sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         |                                   | No           | Single archive or ROM file           |
+| segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive | Yes          |                                      |
+| sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | bsnes,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file            |
+| sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>blueMSX | No           | Single archive or ROM file |
+| sgb                   | Nintendo Super Game Boy                        | SameBoy                           | mGBA,<br>mGBA **(Standalone)**    |              |  Single archive or ROM file |
+| snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x - Current                  | bsnes,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file            |
+| snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x - Current                  | bsnes,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file            |
+| solarus               | Solarus Game Engine                            | Solarus **(Standalone)**          |                                   | No           | Single .solarus game file |
+| spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
+| steam                 | Valve Steam                                    | _Placeholder_                     |                                   |              |                                      |
+| stv                   | Sega Titan Video Game System                   | MAME **(Standalone)**             | Mednafen **(Standalone)**         | Yes          | Single archive file                  |
+| sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | bsnes                             |              |                                      |
+| supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file    |
+| supervision           | Watara Supervision                             | _Placeholder_                     |                                   |              |                                      |
+| supracan              | Funtech Super A'Can                            | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file. You need a supracan.zip archive that contains a valid internal_68k.bin file and an empty file named umc6650.bin |
+| switch                | Nintendo Switch                                | _Placeholder_                     |                                   |              |                                      |
+| symbian               | Symbian                                        | _Placeholder_                     |                                   |              |                                      |
 
 
