@@ -21,6 +21,15 @@
             <entry>/boot/system/add-ons/libretro</entry>
         </rule>
     </core>
+    <emulator name="ADVANCEMAME">
+        <!-- Arcade emulator AdvanceMAME -->
+        <rule type="systempath">
+            <entry>advmame</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/bin/advmame</entry>
+        </rule>
+    </emulator>
     <emulator name="DOSBOX-X">
         <!-- DOS emulator DOSBox-X -->
         <rule type="systempath">
@@ -66,6 +75,15 @@
             <entry>/bin/mednafen</entry>
         </rule>
     </emulator>
+    <emulator name="MELONDS">
+        <!-- Nintendo DS and DSi emulator melonDS -->
+        <rule type="systempath">
+            <entry>melonDS</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/boot/system/apps/melonDS</entry>
+        </rule>
+    </emulator>
     <emulator name="MGBA">
         <!-- Nintendo Game Boy Advance emulator mGBA -->
         <rule type="systempath">
@@ -73,6 +91,12 @@
         </rule>
         <rule type="staticpath">
             <entry>/bin/mgba</entry>
+        </rule>
+    </emulator>
+    <emulator name="MUPEN64PLUS">
+        <!-- Nintendo 64 emulator Mupen64Plus -->
+        <rule type="staticpath">
+            <entry>/boot/system/apps/Mupen64Plus/bin/Mupen64Plus</entry>
         </rule>
     </emulator>
     <emulator name="PPSSPP">
