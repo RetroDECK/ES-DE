@@ -18,8 +18,6 @@ Table of contents:
 
 * There is no 3D acceleration as the operating system does not support that
 
-* The system configuration has not been fully populated yet so game system support is limited (this will get done eventually)
-
 ## Emulator problems
 
 In contrast with all other platforms which ES-DE runs on, on Haiku emulators which are not working correctly are still included in the configuration. This is done with the belief that things will improve in the future as the operating system matures.
@@ -54,7 +52,7 @@ Can't run compressed game files such as those with the .zip extension.
 
 ### DOSBox-X (Standalone)
 
-Games can only be launched if ES-DE has been started from the command line, i.e. from a _Terminal_ window. And when existing a game the OS screen resolution is sometimes not reset back to its previous state meaning it has to be manually reset to the correct resolution using the operating system's _Screen_ utility.
+Games can only be launched if ES-DE has been started from the command line, i.e. from a _Terminal_ window. And when existing a game the OS screen resolution is sometimes not reset back to its previous state meaning it has to be manually set to the correct resolution using the operating system's _Screen_ utility.
 
 ### EasyRPG
 
@@ -62,7 +60,7 @@ Crashes on game start.
 
 ### Flycast
 
-Too slow to be usable in practice, possibly due to lack of 3D acceleration?
+Too slow to be usable in practice, probably due to lack of 3D acceleration.
 
 ### fMSX
 
@@ -90,7 +88,7 @@ Can't run compressed game files such as those with the .zip extension, and IPF f
 
 ### MAME (Standalone)
 
-When existing a game the OS screen resolution is sometimes not reset back to its previous state meaning it has to be manually reset to the correct resolution using the operating system's _Screen_ utility.
+When existing a game the OS screen resolution is sometimes not reset back to its previous state meaning it has to be manually set to the correct resolution using the operating system's _Screen_ utility.
 
 ### melonDS
 
@@ -119,6 +117,10 @@ Games can only be launched if ES-DE has been started from the command line, i.e.
 ### Stella
 
 Crashes on game start (Stella 2014 works fine).
+
+### ZEsarUX
+
+Crashes on game start.
 
 ## Supported game systems
 
@@ -216,6 +218,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | megaduck              | Creatronic Mega Duck                           | _Placeholder_                     |                                   |              |                                      |
 | mess                  | Multi Emulator Super System                    | _Placeholder_                     |                                   |              |                                      |
 | model2                | Sega Model 2                                   | _Placeholder_                     |                                   |              |                                      |
+| model2                | Sega Model 2                                   | MAME **(Standalone)**             |                                   | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide  |
 | model3                | Sega Model 3                                   | _Placeholder_                     |                                   |              |                                      |
 | moto                  | Thomson MO/TO Series                           | _Placeholder_                     |                                   |              |                                      |
 | msx                   | MSX                                            | blueMSX                           | fMSX                              | Yes          |                                      |
@@ -286,5 +289,35 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | supracan              | Funtech Super A'Can                            | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file. You need a supracan.zip archive that contains a valid internal_68k.bin file and an empty file named umc6650.bin |
 | switch                | Nintendo Switch                                | _Placeholder_                     |                                   |              |                                      |
 | symbian               | Symbian                                        | _Placeholder_                     |                                   |              |                                      |
-
-
+| tanodragon            | Tano Dragon                                    | MAME [Tape] **(Standalone)**      | MAME [Cartridge] **(Standalone)** | Yes          | See the specific _Dragon 32 and Tano Dragon_ section in the user guide |
+| tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Mednafen **(Standalone)** | Yes          |                                      |
+| ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)**             |                                   | Yes          | See the specific _Texas Instruments TI-99_ section in the user guide |
+| tic80                 | TIC-80 Fantasy Computer                        | _Placeholder_                     |                                   |              |                                      |
+| to8                   | Thomson TO8                                    | _Placeholder_                     |                                   |              |                                      |
+| triforce              | Namco-Sega-Nintendo Triforce                   | _Placeholder_                     |                                   |              |                                      |
+| trs-80                | Tandy TRS-80                                   | _Placeholder_                     |                                   |              |                                      |
+| type-x                | Taito Type X                                   | _Placeholder_                     |                                   |              |                                      |
+| uzebox                | Uzebox Open Source Console                     | _Placeholder_                     |                                   |              |                                      |
+| vectrex               | GCE Vectrex                                    | vecx                              | MAME **(Standalone)**             | Yes for MAME | Single archive or ROM file           |
+| vic20                 | Commodore VIC-20                               | _Placeholder_                     |                                   |              |                                      |
+| videopac              | Philips Videopac G7000                         | O2EM                              | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
+| virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           |                                      |
+| vpinball              | Visual Pinball                                 | _Placeholder_                     |                                   |              |                                      |
+| vsmile                | VTech V.Smile                                  | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| wasm4                 | WASM-4 Fantasy Console                         | _Placeholder_                     |                                   |              |                                      |
+| wii                   | Nintendo Wii                                   | _Placeholder_                     |                                   |              |                                      |
+| wiiu                  | Nintendo Wii U                                 | _Placeholder_                     |                                   |              |                                      |
+| windows               | Microsoft Windows                              | _Placeholder_                     |                                   |              |                                      |
+| windows3x             | Microsoft Windows 3.x                          | DOSBox-X **(Standalone)**         | DOSBox-Pure,<br> _Script (Suspend ES-DE)_,<br> _Script (Keep ES-DE running)_ | No           | See the specific _Microsoft Windows 3.x and 9x_ section in the user guide |
+| windows9x             | Microsoft Windows 9x                           | DOSBox-X **(Standalone)**         | DOSBox-Pure,<br> _Script (Suspend ES-DE)_,<br> _Script (Keep ES-DE running)_ | No           | See the specific _Microsoft Windows 3.x and 9x_ section in the user guide |
+| wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Mednafen **(Standalone)**         | No           | Single archive or ROM file           |
+| wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)**         | No           | Single archive or ROM file           |
+| x1                    | Sharp X1                                       | MAME [Diskette] **(Standalone)**  | MAME [Tape] **(Standalone)**      | Yes          | Single archive or diskette/tape file |
+| x68000                | Sharp X68000                                   | MAME **(Standalone)**             |                                   | Yes          |                                      |
+| xbox                  | Microsoft Xbox                                 | _Placeholder_                     |                                   |              |                                      |
+| xbox360               | Microsoft Xbox 360                             | _Placeholder_                     |                                   |              |                                      |
+| zmachine              | Infocom Z-machine                              | _Placeholder_                     |                                   |              |                                      |
+| zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   | No           |                                      |
+| zxnext                | Sinclair ZX Spectrum Next                      | ZEsarUX **(Standalone)**          |                                   | No           | In separate folder interpreted as a file |
+| zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              | Fuse **(Standalone)**             | No           | Single archive or ROM file           |
