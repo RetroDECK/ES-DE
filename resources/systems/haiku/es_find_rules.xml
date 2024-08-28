@@ -57,6 +57,12 @@
             <entry>/bin/fs-uae-launcher</entry>
         </rule>
     </emulator>
+    <emulator name="FUSE">
+        <!-- Sinclair ZX Spectrum emulator Fuse -->
+        <rule type="staticpath">
+            <entry>/boot/system/apps/Fuse/Fuse</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
@@ -121,6 +127,12 @@
         </rule>
         <rule type="staticpath">
             <entry>/bin/solarus-run</entry>
+        </rule>
+    </emulator>
+    <emulator name="ZESARUX">
+        <!-- Sinclair ZX Spectrum emulator ZEsarUX -->
+        <rule type="staticpath">
+            <entry>/boot/system/apps/ZEsarUX/ZEsarUX</entry>
         </rule>
     </emulator>
 </ruleList>

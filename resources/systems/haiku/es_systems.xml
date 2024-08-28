@@ -921,7 +921,7 @@
         <fullname>Sega Model 2</fullname>
         <path>%ROMPATH%/model2</path>
         <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/model2 %BASENAME%</command>
         <platform>arcade</platform>
         <theme>model2</theme>
     </system>
@@ -1613,5 +1613,313 @@
         <command>PLACEHOLDER %ROM%</command>
         <platform>ngage</platform>
         <theme>symbian</theme>
+    </system>
+    <system>
+        <name>tanodragon</name>
+        <fullname>Tano Dragon</fullname>
+        <path>%ROMPATH%/tanodragon</path>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME [Tape] (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 tanodr64 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%</command>
+        <command label="MAME [Cartridge] (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 tanodr64 -cart %ROM%</command>
+        <platform>dragon32</platform>
+        <theme>tanodragon</theme>
+    </system>
+    <system>
+        <name>tg16</name>
+        <fullname>NEC TurboGrafx-16</fullname>
+        <path>%ROMPATH%/tg16</path>
+        <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.so %ROM%</command>
+        <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_fast_libretro.so %ROM%</command>
+        <command label="Beetle SuperGrafx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supergrafx_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module pce %ROM%</command>
+        <platform>pcengine</platform>
+        <theme>tg16</theme>
+    </system>
+    <system>
+        <name>tg-cd</name>
+        <fullname>NEC TurboGrafx-CD</fullname>
+        <path>%ROMPATH%/tg-cd</path>
+        <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.so %ROM%</command>
+        <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_fast_libretro.so %ROM%</command>
+        <command label="Beetle SuperGrafx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supergrafx_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module pce %ROM%</command>
+        <platform>pcenginecd</platform>
+        <theme>tg-cd</theme>
+    </system>
+    <system>
+        <name>ti99</name>
+        <fullname>Texas Instruments TI-99</fullname>
+        <path>%ROMPATH%/ti99</path>
+        <extension>.rpk .RPK .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/ti99 ti99_4a -ioport peb -ioport:peb:slot3 speech -cart %BASENAME%</command>
+        <platform>ti99</platform>
+        <theme>ti99</theme>
+    </system>
+    <system>
+        <name>tic80</name>
+        <fullname>TIC-80 Fantasy Computer</fullname>
+        <path>%ROMPATH%/tic80</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>tic80</platform>
+        <theme>tic80</theme>
+    </system>
+    <system>
+        <name>to8</name>
+        <fullname>Thomson TO8</fullname>
+        <path>%ROMPATH%/to8</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>moto</platform>
+        <theme>to8</theme>
+    </system>
+    <system>
+        <name>triforce</name>
+        <fullname>Namco-Sega-Nintendo Triforce</fullname>
+        <path>%ROMPATH%/triforce</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>arcade</platform>
+        <theme>triforce</theme>
+    </system>
+    <system>
+        <name>trs-80</name>
+        <fullname>Tandy TRS-80</fullname>
+        <path>%ROMPATH%/trs-80</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>trs-80</platform>
+        <theme>trs-80</theme>
+    </system>
+    <system>
+        <name>type-x</name>
+        <fullname>Taito Type X</fullname>
+        <path>%ROMPATH%/type-x</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>arcade</platform>
+        <theme>type-x</theme>
+    </system>
+    <system>
+        <name>uzebox</name>
+        <fullname>Uzebox Open Source Console</fullname>
+        <path>%ROMPATH%/uzebox</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>uzebox</platform>
+        <theme>uzebox</theme>
+    </system>
+    <system>
+        <name>vectrex</name>
+        <fullname>GCE Vectrex</fullname>
+        <path>%ROMPATH%/vectrex</path>
+        <extension>.bin .BIN .gam .GAM .vc .VC .vec .VEC .7z .7Z .zip .ZIP</extension>
+        <command label="vecx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vecx_libretro.so %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/vectrex vectrex -cart %ROM%</command>
+        <platform>vectrex</platform>
+        <theme>vectrex</theme>
+    </system>
+    <system>
+        <name>vic20</name>
+        <fullname>Commodore VIC-20</fullname>
+        <path>%ROMPATH%/vic20</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>vic20</platform>
+        <theme>vic20</theme>
+    </system>
+    <system>
+        <name>videopac</name>
+        <fullname>Philips Videopac G7000</fullname>
+        <path>%ROMPATH%/videopac</path>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="O2EM">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/o2em_libretro.so %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/videopac videopac -cart %ROM%</command>
+        <platform>odyssey2</platform>
+        <theme>videopac</theme>
+    </system>
+    <system>
+        <name>virtualboy</name>
+        <fullname>Nintendo Virtual Boy</fullname>
+        <path>%ROMPATH%/virtualboy</path>
+        <extension>.bin .BIN .vb .VB .vboy .VBOY .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle VB">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_vb_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module vb %ROM%</command>
+        <platform>virtualboy</platform>
+        <theme>virtualboy</theme>
+    </system>
+    <system>
+        <name>vpinball</name>
+        <fullname>Visual Pinball</fullname>
+        <path>%ROMPATH%/vpinball</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>vpinball</platform>
+        <theme>vpinball</theme>
+    </system>
+    <system>
+        <name>vsmile</name>
+        <fullname>VTech V.Smile</fullname>
+        <path>%ROMPATH%/vsmile</path>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/vsmile vsmile -cart %ROM%</command>
+        <platform>vsmile</platform>
+        <theme>vsmile</theme>
+    </system>
+    <system>
+        <name>wasm4</name>
+        <fullname>WASM-4 Fantasy Console</fullname>
+        <path>%ROMPATH%/wasm4</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>wasm4</platform>
+        <theme>wasm4</theme>
+    </system>
+    <system>
+        <name>wii</name>
+        <fullname>Nintendo Wii</fullname>
+        <path>%ROMPATH%/wii</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>wii</platform>
+        <theme>wii</theme>
+    </system>
+    <system>
+        <name>wiiu</name>
+        <fullname>Nintendo Wii U</fullname>
+        <path>%ROMPATH%/wiiu</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>wiiu</platform>
+        <theme>wiiu</theme>
+    </system>
+    <system>
+        <name>windows</name>
+        <fullname>Microsoft Windows</fullname>
+        <path>%ROMPATH%/windows</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>pcwindows</platform>
+        <theme>windows</theme>
+    </system>
+    <system>
+        <name>windows3x</name>
+        <fullname>Microsoft Windows 3.x</fullname>
+        <path>%ROMPATH%/windows3x</path>
+        <extension>.bat .BAT .dosz .DOSZ .sh .7z .7Z .zip .ZIP</extension>
+        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
+        <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
+        <command label="Script (Suspend ES-DE)">%EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Script (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>windows3x</platform>
+        <theme>windows3x</theme>
+    </system>
+    <system>
+        <name>windows9x</name>
+        <fullname>Microsoft Windows 9x</fullname>
+        <path>%ROMPATH%/windows9x</path>
+        <extension>.bat .BAT .dosz .DOSZ .sh .7z .7Z .zip .ZIP</extension>
+        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
+        <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
+        <command label="Script (Suspend ES-DE)">%EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Script (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>pcwindows</platform>
+        <theme>windows9x</theme>
+    </system>
+    <system>
+        <name>wonderswan</name>
+        <fullname>Bandai WonderSwan</fullname>
+        <path>%ROMPATH%/wonderswan</path>
+        <extension>.pc2 .PC2 .ws .WS .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
+        <platform>wonderswan</platform>
+        <theme>wonderswan</theme>
+    </system>
+    <system>
+        <name>wonderswancolor</name>
+        <fullname>Bandai WonderSwan Color</fullname>
+        <path>%ROMPATH%/wonderswancolor</path>
+        <extension>.pc2 .PC2 .ws .WS .wsc .WSC .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
+        <platform>wonderswancolor</platform>
+        <theme>wonderswancolor</theme>
+    </system>
+    <system>
+        <name>x1</name>
+        <fullname>Sharp X1</fullname>
+        <path>%ROMPATH%/x1</path>
+        <extension>.2d .2D .2hd .2HD .88d .88D .cmd .CMD .d88 .D88 .dup .DUP .dx1 .DX1 .hdm .HDM .tap .TAP .tfd .TFD .xdf .XDF .7z .7Z .zip .ZIP</extension>
+        <command label="MAME [Diskette] (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/x1 x1 -flop1 %ROM%</command>
+        <command label="MAME [Tape] (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/x1 x1 -cass1 %ROM%</command>
+        <platform>x1</platform>
+        <theme>x1</theme>
+    </system>
+    <system>
+        <name>x68000</name>
+        <fullname>Sharp X68000</fullname>
+        <path>%ROMPATH%/x68000</path>
+        <extension>.2hd .2HD .88d .88D .cmd .CMD .d88 .D88 .dim .DIM .dup .DUP .hdf .HDF .hdm .HDM .img .IMG .m3u .M3U .xdf .XDF .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/x68000 x68000 -flop1 %ROM%</command>
+        <platform>x68000</platform>
+        <theme>x68000</theme>
+    </system>
+    <system>
+        <name>xbox</name>
+        <fullname>Microsoft Xbox</fullname>
+        <path>%ROMPATH%/xbox</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>xbox</platform>
+        <theme>xbox</theme>
+    </system>
+    <system>
+        <name>xbox360</name>
+        <fullname>Microsoft Xbox 360</fullname>
+        <path>%ROMPATH%/xbox360</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>xbox360</platform>
+        <theme>xbox360</theme>
+    </system>
+    <system>
+        <name>zmachine</name>
+        <fullname>Infocom Z-machine</fullname>
+        <path>%ROMPATH%/zmachine</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>zmachine</platform>
+        <theme>zmachine</theme>
+    </system>
+    <system>
+        <name>zx81</name>
+        <fullname>Sinclair ZX81</fullname>
+        <path>%ROMPATH%/zx81</path>
+        <extension>.p .P .tzx .TZX .7z .7Z .zip .ZIP</extension>
+        <command label="EightyOne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/81_libretro.so %ROM%</command>
+        <platform>zx81</platform>
+        <theme>zx81</theme>
+    </system>
+    <system>
+        <name>zxnext</name>
+        <fullname>Sinclair ZX Spectrum Next</fullname>
+        <path>%ROMPATH%/zxnext</path>
+        <extension>.nex .NEX .sna .SNA</extension>
+        <command label="ZEsarUX (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ZESARUX% --machine tbblue --realvideo --enabletimexvideo --tbblue-fast-boot-mode --enable-esxdos-handler --esxdos-root-dir %GAMEDIR% %ROM%</command>
+        <platform>zxnext</platform>
+        <theme>zxnext</theme>
+    </system>
+    <system>
+        <name>zxspectrum</name>
+        <fullname>Sinclair ZX Spectrum</fullname>
+        <path>%ROMPATH%/zxspectrum</path>
+        <extension>.dsk .DSK .gz .GZ .img .IMG .mgt .MGT .rzx .RZX .scl .SCL .sh .SH .sna .SNA .szx .SZX .tap .TAP .trd .TRD .tzx .TZX .udi .UDI .z80 .Z80 .7z .7Z .zip .ZIP</extension>
+        <command label="Fuse">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fuse_libretro.so %ROM%</command>
+        <command label="Fuse (Standalone)">%EMULATOR_FUSE% %ROM%</command>
+        <platform>zxspectrum</platform>
+        <theme>zxspectrum</theme>
     </system>
 </systemList>
