@@ -28,23 +28,26 @@ namespace Utils
     namespace Localization
     {
         // clang-format off
+        // When adding a new locale, then make sure to also update ThemeData::sSupportedLanguages.
         const std::vector<std::pair<std::string, std::string>> sSupportedLocales {{{"en"}, {"US"}},
                                                                                   {{"en"}, {"GB"}},
-                                                                                  {{"ar"}, {"EG"}},
-                                                                                  {{"de"}, {"DE"}},
                                                                                   {{"el"}, {"GR"}},
+                                                                                  {{"de"}, {"DE"}},
                                                                                   {{"es"}, {"ES"}},
                                                                                   {{"fr"}, {"FR"}},
                                                                                   {{"it"}, {"IT"}},
-                                                                                  {{"ja"}, {"JP"}},
                                                                                   {{"nl"}, {"NL"}},
                                                                                   {{"pl"}, {"PL"}},
                                                                                   {{"pt"}, {"BR"}},
                                                                                   {{"ro"}, {"RO"}},
                                                                                   {{"ru"}, {"RU"}},
                                                                                   {{"sv"}, {"SE"}},
-                                                                                  {{"zh"}, {"CN"}}};
+                                                                                  {{"ja"}, {"JP"}},
+                                                                                  {{"zh"}, {"CN"}},
+                                                                                  {{"ar"}, {"EG"}}};
         // clang-format on
+
+        std::string sCurrentLocale {"en_US"};
         float sMenuTitleScaleFactor {1.0f};
 
         const char* pgettextBuiltin(const char* msgctxt, const char* msgid)
@@ -136,6 +139,7 @@ namespace Utils
             }
 
             sMenuTitleScaleFactor = 1.0f;
+            sCurrentLocale = "en_US";
             std::string languageSetting {Settings::getInstance()->getString("ApplicationLanguage")};
             std::vector<std::string> localeVector;
             std::pair<std::string, std::string> localePair;
@@ -163,12 +167,12 @@ namespace Utils
             if (std::find(sSupportedLocales.cbegin(), sSupportedLocales.cend(), localePair) !=
                 sSupportedLocales.cend()) {
                 locale = localePairCombined;
-                LOG(LogInfo) << "Setting application locale to \"" << locale << "\"";
+                LOG(LogInfo) << "Application language set to \"" << locale << "\"";
             }
             else {
                 for (auto& localeEntry : sSupportedLocales) {
                     if (localeEntry.first == localePair.first) {
-                        LOG(LogInfo) << "No support for locale \"" << localePairCombined
+                        LOG(LogInfo) << "No support for language \"" << localePairCombined
                                      << "\", falling back to closest match \""
                                      << localeEntry.first + "_" + localeEntry.second << "\"";
                         locale = localeEntry.first + "_" + localeEntry.second;
@@ -178,16 +182,16 @@ namespace Utils
             }
 
             if (locale == "") {
-                LOG(LogInfo) << "No support for locale \"" << localePairCombined
+                LOG(LogInfo) << "No support for language \"" << localePairCombined
                              << "\", falling back to default \"en_US\"";
                 locale = "en_US";
             }
 
             // Language-specific menu title scale factor.
-            if (localePair.first == "de")
-                sMenuTitleScaleFactor = 0.92f;
-            else if (localePair.first == "el")
+            if (localePair.first == "el")
                 sMenuTitleScaleFactor = 0.94f;
+            else if (localePair.first == "de")
+                sMenuTitleScaleFactor = 0.92f;
             else if (localePair.first == "es")
                 sMenuTitleScaleFactor = 0.90f;
             else if (localePair.first == "fr")
@@ -243,6 +247,7 @@ namespace Utils
             textdomain(locale.c_str());
             bindtextdomain(locale.c_str(), objectPath.c_str());
             bind_textdomain_codeset(locale.c_str(), "UTF-8");
+            sCurrentLocale = locale;
         }
 
     } // namespace Localization

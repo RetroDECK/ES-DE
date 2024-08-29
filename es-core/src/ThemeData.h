@@ -186,6 +186,7 @@ public:
         std::vector<ThemeColorScheme> colorSchemes;
         std::vector<std::string> fontSizes;
         std::vector<std::string> aspectRatios;
+        std::vector<std::string> languages;
         std::vector<ThemeTransitions> transitions;
         std::vector<std::string> suppressedTransitionProfiles;
         bool validTheme;
@@ -225,6 +226,7 @@ public:
     const static std::string getSystemThemeFile(const std::string& system);
     const static std::string getFontSizeLabel(const std::string& fontSize);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
+    const static std::string getLanguageLabel(const std::string& language);
     static void setThemeTransitions();
 
     const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
@@ -275,6 +277,7 @@ private:
 
     static std::vector<std::pair<std::string, std::string>> sSupportedFontSizes;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
+    static std::vector<std::pair<std::string, std::string>> sSupportedLanguages;
     static std::map<std::string, float> sAspectRatioMap;
 
     static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
@@ -295,6 +298,7 @@ private:
     std::string mSelectedFontSize;
     static inline std::string sSelectedAspectRatio;
     static inline bool sAspectRatioMatch {false};
+    static inline std::string sThemeLanguage;
     bool mCustomCollection;
 };
 

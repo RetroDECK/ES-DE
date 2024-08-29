@@ -77,7 +77,6 @@ void GuiSettings::save()
             mCloseMenuFunction = nullptr;
         }
         ViewController::getInstance()->rescanROMDirectory();
-        return;
     }
 
     if (mNeedsCollectionsUpdate) {

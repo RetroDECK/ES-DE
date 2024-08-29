@@ -24,6 +24,7 @@ namespace Utils
     namespace Localization
     {
         extern const std::vector<std::pair<std::string, std::string>> sSupportedLocales;
+        extern std::string sCurrentLocale;
         extern float sMenuTitleScaleFactor;
 
         const char* pgettextBuiltin(const char* msgctxt, const char* msgid);

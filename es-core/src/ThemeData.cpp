@@ -102,6 +102,25 @@ std::map<std::string, float> ThemeData::sAspectRatioMap {
     {"32:9_vertical", 0.2813f},
     {"1:1", 1.0f}};
 
+std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedLanguages {
+    {"automatic", "automatic"},
+    {"en_US", "ENGLISH (UNITED STATES)"},
+    {"en_GB", "ENGLISH (UNITED KINGDOM)"},
+    {"el_GR", "ΕΛΛΗΝΙΚΆ"},
+    {"de_DE", "DEUTSCH"},
+    {"es_ES", "ESPAÑOL (ESPAÑA)"},
+    {"fr_FR", "FRANÇAIS"},
+    {"it_IT", "ITALIANO"},
+    {"nl_NL", "NEDERLANDS"},
+    {"pl_PL", "POLSKI"},
+    {"pt_BR", "PORTUGUÊS (BRASIL)"},
+    {"ro_RO", "ROMÂNĂ"},
+    {"ru_RU", "РУССКИЙ"},
+    {"sv_SE", "SVENSKA"},
+    {"ja_JP", "日本語"},
+    {"zh_CN", "简体中文"},
+    {"ar_EG", "العربية"}};
+
 std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
     // The data type is defined by the parent property.
     {
@@ -629,6 +648,7 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     }
 
     sAspectRatioMatch = false;
+    sThemeLanguage = "";
 
     if (sCurrentTheme->second.capabilities.aspectRatios.size() > 0) {
         if (std::find(sCurrentTheme->second.capabilities.aspectRatios.cbegin(),
@@ -660,6 +680,35 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
                     }
                 }
             }
+        }
+    }
+
+    if (sCurrentTheme->second.capabilities.languages.size() > 0) {
+        std::string langSetting {Settings::getInstance()->getString("ThemeLanguage")};
+        if (langSetting == "automatic")
+            langSetting = Utils::Localization::sCurrentLocale;
+
+        // Check if there is an exact match.
+        if (std::find(sCurrentTheme->second.capabilities.languages.cbegin(),
+                      sCurrentTheme->second.capabilities.languages.cend(),
+                      langSetting) != sCurrentTheme->second.capabilities.languages.cend()) {
+            sThemeLanguage = langSetting;
+        }
+        else {
+            // We assume all locales are in the correct format.
+            const std::string currLanguage {langSetting.substr(0, 2)};
+            // Select the closest matching locale (i.e. same language but possibly for a
+            // different country).
+            for (const auto& lang : sCurrentTheme->second.capabilities.languages) {
+                if (lang.substr(0, 2) == currLanguage) {
+                    sThemeLanguage = lang;
+                    break;
+                }
+            }
+            // If there is no match then fall back to the default language en_US, which is
+            // mandatory for all themes that provide language support.
+            if (sThemeLanguage == "")
+                sThemeLanguage = "en_US";
         }
     }
 
@@ -795,8 +844,11 @@ void ThemeData::populateThemes()
                 LOG(LogInfo) << "Added theme \"" << *it << "\"" << themeName;
 #endif
                 int aspectRatios {0};
+                int languages {0};
                 if (capabilities.aspectRatios.size() > 0)
                     aspectRatios = static_cast<int>(capabilities.aspectRatios.size()) - 1;
+                if (capabilities.languages.size() > 0)
+                    languages = static_cast<int>(capabilities.languages.size()) - 1;
                 LOG(LogDebug) << "Theme includes support for " << capabilities.variants.size()
                               << " variant" << (capabilities.variants.size() != 1 ? "s" : "")
                               << ", " << capabilities.colorSchemes.size() << " color scheme"
@@ -804,6 +856,7 @@ void ThemeData::populateThemes()
                               << capabilities.fontSizes.size() << " font size"
                               << (capabilities.fontSizes.size() != 1 ? "s" : "") << ", "
                               << aspectRatios << " aspect ratio" << (aspectRatios != 1 ? "s" : "")
+                              << ", " << languages << " language" << (languages != 1 ? "s" : "")
                               << " and " << capabilities.transitions.size() << " transition"
                               << (capabilities.transitions.size() != 1 ? "s" : "");
 
@@ -876,6 +929,18 @@ const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
         return it->second;
     else
         return "invalid ratio";
+}
+
+const std::string ThemeData::getLanguageLabel(const std::string& language)
+{
+    auto it = std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                           [&language](const std::pair<std::string, std::string>& entry) {
+                               return entry.first == language;
+                           });
+    if (it != sSupportedLanguages.cend())
+        return it->second;
+    else
+        return "invalid language";
 }
 
 void ThemeData::setThemeTransitions()
@@ -971,6 +1036,7 @@ ThemeData::getCurrentThemeSelectedVariantOverrides()
 const void ThemeData::themeLoadedLogOutput()
 {
     LOG(LogInfo) << "Finished loading theme \"" << sCurrentTheme->first << "\"";
+
     if (sSelectedAspectRatio != "") {
         const bool autoDetect {Settings::getInstance()->getString("ThemeAspectRatio") ==
                                "automatic"};
@@ -979,6 +1045,13 @@ const void ThemeData::themeLoadedLogOutput()
         LOG(LogInfo) << "Aspect ratio " << (autoDetect ? "automatically " : "manually ")
                      << "set to " << (autoDetect ? match : "") << "\""
                      << Utils::String::replace(sSelectedAspectRatio, "_", " ") << "\"";
+    }
+
+    if (sThemeLanguage != "") {
+        LOG(LogInfo) << "Theme language set to \"" << sThemeLanguage << "\"";
+    }
+    else {
+        LOG(LogInfo) << "Theme does not have multilingual support";
     }
 }
 
@@ -1028,6 +1101,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
     ThemeCapability capabilities;
     std::vector<std::string> aspectRatiosTemp;
     std::vector<std::string> fontSizesTemp;
+    std::vector<std::string> languagesTemp;
     bool hasTriggers {false};
 
     const std::string capFile {path + "/capabilities.xml"};
@@ -1305,6 +1379,36 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             }
         }
 
+        for (pugi::xml_node language {themeCapabilities.child("language")}; language;
+             language = language.next_sibling("language")) {
+            const std::string& value {language.text().get()};
+            if (std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                             [&value](const std::pair<std::string, std::string>& entry) {
+                                 return entry.first == value;
+                             }) == sSupportedLanguages.cend()) {
+                LOG(LogWarning) << "Declared language \"" << value
+                                << "\" is not supported, ignoring entry in \"" << capFile << "\"";
+            }
+            else {
+                if (std::find(languagesTemp.cbegin(), languagesTemp.cend(), value) !=
+                    languagesTemp.cend()) {
+                    LOG(LogWarning)
+                        << "Language \"" << value
+                        << "\" is declared multiple times, ignoring entry in \"" << capFile << "\"";
+                }
+                else {
+                    languagesTemp.emplace_back(value);
+                }
+            }
+        }
+
+        if (languagesTemp.size() > 0 && std::find(languagesTemp.cbegin(), languagesTemp.cend(),
+                                                  "en_US") == languagesTemp.cend()) {
+            LOG(LogError) << "Theme has declared language support but is missing mandatory "
+                          << "\"en_US\" entry in \"" << capFile << "\"";
+            languagesTemp.clear();
+        }
+
         for (pugi::xml_node transitions {themeCapabilities.child("transitions")}; transitions;
              transitions = transitions.next_sibling("transitions")) {
             std::map<ViewTransition, ViewTransitionAnimation> readTransitions;
@@ -1478,6 +1582,20 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             if (std::find(aspectRatiosTemp.cbegin(), aspectRatiosTemp.cend(), aspectRatio.first) !=
                 aspectRatiosTemp.cend()) {
                 capabilities.aspectRatios.emplace_back(aspectRatio.first);
+            }
+        }
+    }
+
+    // Add the languages in the order they are defined in sSupportedLanguages so they always
+    // show up in the same order in the UI Settings menu.
+    if (!languagesTemp.empty()) {
+        // Add the "automatic" language if there is at least one entry.
+        if (!languagesTemp.empty())
+            capabilities.languages.emplace_back(sSupportedLanguages.front().first);
+        for (auto& language : sSupportedLanguages) {
+            if (std::find(languagesTemp.cbegin(), languagesTemp.cend(), language.first) !=
+                languagesTemp.cend()) {
+                capabilities.languages.emplace_back(language.first);
             }
         }
     }

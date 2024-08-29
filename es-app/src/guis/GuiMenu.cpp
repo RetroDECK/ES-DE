@@ -479,6 +479,49 @@ void GuiMenu::openUIOptions()
     themeTransitionsFunc(Settings::getInstance()->getString("Theme"),
                          Settings::getInstance()->getString("ThemeTransitions"));
 
+    // Theme language.
+    auto themeLanguage = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), _("THEME LANGUAGE"), false);
+    s->addWithLabel(_("THEME LANGUAGE"), themeLanguage);
+    s->addSaveFunc([themeLanguage, s] {
+        if (themeLanguage->getSelected() != Settings::getInstance()->getString("ThemeLanguage")) {
+            Settings::getInstance()->setString("ThemeLanguage", themeLanguage->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
+    auto themeLanguageFunc = [=](const std::string& selectedTheme,
+                                 const std::string& selectedLanguage) {
+        std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
+            currentSet {themes.find(selectedTheme)};
+        if (currentSet == themes.cend())
+            return;
+        // We need to recreate the OptionListComponent entries.
+        themeLanguage->clearEntries();
+        if (currentSet->second.capabilities.languages.size() > 0) {
+            for (auto& language : currentSet->second.capabilities.languages) {
+                themeLanguage->add(
+                    Utils::String::toUpper(_(ThemeData::getLanguageLabel(language).c_str())),
+                    language, language == selectedLanguage);
+            }
+            if (themeLanguage->getSelectedObjects().size() == 0)
+                themeLanguage->selectEntry(0);
+        }
+        else {
+            themeLanguage->add(_("NONE DEFINED"), "none", true);
+            themeLanguage->setEnabled(false);
+            themeLanguage->setOpacity(DISABLED_OPACITY);
+            themeLanguage->getParent()
+                ->getChild(themeLanguage->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+    };
+
+    themeLanguageFunc(Settings::getInstance()->getString("Theme"),
+                      Settings::getInstance()->getString("ThemeLanguage"));
+
     // Application language.
     auto applicationLanguage = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), _("APPLICATION LANGUAGE"), false);
@@ -519,6 +562,8 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
             s->setNeedsCloseMenu([this] { delete this; });
             s->setNeedsRescanROMDirectory();
+            s->setNeedsReloading();
+            s->setNeedsCollectionsUpdate();
         }
     });
 
@@ -1008,6 +1053,7 @@ void GuiMenu::openUIOptions()
             themeColorSchemesFunc(themeName, themeColorScheme->getSelected());
             themeFontSizeFunc(themeName, themeFontSize->getSelected());
             themeAspectRatiosFunc(themeName, themeAspectRatio->getSelected());
+            themeLanguageFunc(themeName, themeLanguage->getSelected());
             themeTransitionsFunc(themeName, themeTransitions->getSelected());
         }
         int selectableVariants {0};
@@ -1055,6 +1101,20 @@ void GuiMenu::openUIOptions()
             themeFontSize->setOpacity(DISABLED_OPACITY);
             themeFontSize->getParent()
                 ->getChild(themeFontSize->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        if (selectedTheme->second.capabilities.languages.size() > 0) {
+            themeLanguage->setEnabled(true);
+            themeLanguage->setOpacity(1.0f);
+            themeLanguage->getParent()
+                ->getChild(themeLanguage->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+        else {
+            themeLanguage->setEnabled(false);
+            themeLanguage->setOpacity(DISABLED_OPACITY);
+            themeLanguage->getParent()
+                ->getChild(themeLanguage->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
         if (selectedTheme->second.capabilities.aspectRatios.size() > 0) {

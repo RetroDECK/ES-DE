@@ -169,6 +169,7 @@ void Settings::setDefaults()
     mStringMap["ThemeFontSize"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
     mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
+    mStringMap["ThemeLanguage"] = {"automatic", "automatic"};
     mStringMap["ApplicationLanguage"] = {"automatic", "automatic"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
