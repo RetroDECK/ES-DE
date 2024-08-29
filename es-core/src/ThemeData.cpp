@@ -856,9 +856,9 @@ void ThemeData::populateThemes()
                               << capabilities.fontSizes.size() << " font size"
                               << (capabilities.fontSizes.size() != 1 ? "s" : "") << ", "
                               << aspectRatios << " aspect ratio" << (aspectRatios != 1 ? "s" : "")
-                              << ", " << languages << " language" << (languages != 1 ? "s" : "")
-                              << " and " << capabilities.transitions.size() << " transition"
-                              << (capabilities.transitions.size() != 1 ? "s" : "");
+                              << ", " << capabilities.transitions.size() << " transition"
+                              << (capabilities.transitions.size() != 1 ? "s" : "") << " and "
+                              << languages << " language" << (languages != 1 ? "s" : "");
 
                 Theme theme {*it, capabilities};
                 sThemes[theme.getName()] = theme;
