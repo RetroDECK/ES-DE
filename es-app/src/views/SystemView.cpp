@@ -829,19 +829,26 @@ void SystemView::updateGameCount(SystemData* system)
     const bool recentSystem {sourceSystem->getName() == "recent"};
 
     if (sourceSystem->isCollection() && favoriteSystem) {
-        ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s");
+        ss << Utils::String::format(_np("theme", "%i game", "%i games", gameCount.first),
+                                    gameCount.first);
     }
     else if (sourceSystem->isCollection() && recentSystem) {
         // The "recent" gamelist has probably been trimmed after sorting, so we'll cap it at
         // its maximum limit of 50 games.
-        ss << (gameCount.first > 50 ? 50 : gameCount.first) << " Game"
-           << (gameCount.first == 1 ? " " : "s");
+        const unsigned int count {gameCount.first > 50 ? 50 : gameCount.first};
+        ss << Utils::String::format(_np("theme", "%i game", "%i games", count), count);
     }
     else {
-        ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ") << "("
-           << gameCount.second << " Favorite" << (gameCount.second == 1 ? ")" : "s)");
-        ssGames << gameCount.first << " Game" << (gameCount.first == 1 ? "" : "s");
-        ssFavorites << gameCount.second << " Favorite" << (gameCount.second == 1 ? "" : "s");
+        ss << Utils::String::format(_np("theme", "%i game", "%i games", gameCount.first),
+                                    gameCount.first)
+           << " "
+           << Utils::String::format(
+                  _np("theme", "(%i favorite)", "(%i favorites)", gameCount.second),
+                  gameCount.second);
+        ssGames << Utils::String::format(_np("theme", "%i game", "%i games", gameCount.first),
+                                         gameCount.first);
+        ssFavorites << Utils::String::format(
+            _np("theme", "%i favorite", "%i favorites", gameCount.second), gameCount.second);
         games = true;
     }
 
