@@ -1604,14 +1604,18 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
         // to the variables that are not applicable. This will be used in ThemeData to make sure
         // unpopulated system variables do not lead to theme loading errors.
         std::map<std::string, std::string> sysData;
+        std::string fullName {getFullName()};
+        // Always translate fullName for the automatic collections.
+        if (isCollection() && !isCustomCollection())
+            fullName = _(fullName.c_str());
         sysData.insert(std::pair<std::string, std::string>("system.name", getName()));
         sysData.insert(std::pair<std::string, std::string>("system.theme", getThemeFolder()));
-        sysData.insert(std::pair<std::string, std::string>("system.fullName", getFullName()));
+        sysData.insert(std::pair<std::string, std::string>("system.fullName", fullName));
         if (isCollection() && isCustomCollection()) {
             sysData.insert(
                 std::pair<std::string, std::string>("system.name.customCollections", getName()));
-            sysData.insert(std::pair<std::string, std::string>("system.fullName.customCollections",
-                                                               getFullName()));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.customCollections", fullName));
             sysData.insert(std::pair<std::string, std::string>("system.theme.customCollections",
                                                                getThemeFolder()));
             sysData.insert(
@@ -1628,8 +1632,8 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
         else if (isCollection()) {
             sysData.insert(
                 std::pair<std::string, std::string>("system.name.autoCollections", getName()));
-            sysData.insert(std::pair<std::string, std::string>("system.fullName.autoCollections",
-                                                               getFullName()));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.autoCollections", fullName));
             sysData.insert(std::pair<std::string, std::string>("system.theme.autoCollections",
                                                                getThemeFolder()));
             sysData.insert(
@@ -1646,8 +1650,8 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
         else {
             sysData.insert(
                 std::pair<std::string, std::string>("system.name.noCollections", getName()));
-            sysData.insert(std::pair<std::string, std::string>("system.fullName.noCollections",
-                                                               getFullName()));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.noCollections", fullName));
             sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections",
                                                                getThemeFolder()));
             sysData.insert(
