@@ -885,7 +885,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
             switch (gameCount) {
                 case 1: {
                     desc = Utils::String::format(
-                        _("This collection contains 1 game: '%s [%s]'"),
+                        _p("theme", "This collection contains 1 game: '%s [%s]'"),
                         gamesList[0]->metadata.get("name").c_str(),
                         caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
                             .c_str());
@@ -893,7 +893,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
                 }
                 case 2: {
                     desc = Utils::String::format(
-                        _("This collection contains 2 games: '%s [%s]' and '%s [%s]'"),
+                        _p("theme", "This collection contains 2 games: '%s [%s]' and '%s [%s]'"),
                         gamesList[0]->metadata.get("name").c_str(),
                         caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
                             .c_str(),
@@ -904,7 +904,8 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
                 }
                 case 3: {
                     desc = Utils::String::format(
-                        _("This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"),
+                        _p("theme",
+                           "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"),
                         gamesList[0]->metadata.get("name").c_str(),
                         caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
                             .c_str(),
@@ -918,11 +919,14 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
                 }
                 default: {
                     desc = Utils::String::format(
-                        _n("This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', "
-                           "among others",
-                           "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', "
-                           "among others",
-                           gameCount),
+                        _np("theme",
+                            "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s "
+                            "[%s]', "
+                            "among others",
+                            "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s "
+                            "[%s]', "
+                            "among others",
+                            gameCount),
                         gameCount, gamesList[0]->metadata.get("name").c_str(),
                         caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
                             .c_str(),
@@ -939,20 +943,21 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
         else {
             switch (gameCount) {
                 case 1: {
-                    desc = Utils::String::format(_("This collection contains 1 game: '%s'"),
-                                                 gamesList[0]->metadata.get("name").c_str());
+                    desc =
+                        Utils::String::format(_p("theme", "This collection contains 1 game: '%s'"),
+                                              gamesList[0]->metadata.get("name").c_str());
                     break;
                 }
                 case 2: {
-                    desc =
-                        Utils::String::format(_("This collection contains 2 games: '%s' and '%s'"),
-                                              gamesList[0]->metadata.get("name").c_str(),
-                                              gamesList[1]->metadata.get("name").c_str());
+                    desc = Utils::String::format(
+                        _p("theme", "This collection contains 2 games: '%s' and '%s'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        gamesList[1]->metadata.get("name").c_str());
                     break;
                 }
                 case 3: {
                     desc = Utils::String::format(
-                        _("This collection contains 3 games: '%s', '%s' and '%s'"),
+                        _p("theme", "This collection contains 3 games: '%s', '%s' and '%s'"),
                         gamesList[0]->metadata.get("name").c_str(),
                         gamesList[1]->metadata.get("name").c_str(),
                         gamesList[2]->metadata.get("name").c_str());
@@ -960,9 +965,10 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
                 }
                 default: {
                     desc = Utils::String::format(
-                        _n("This collection contains %i games: '%s', '%s' and '%s', among others",
-                           "This collection contains %i games: '%s', '%s' and '%s', among others",
-                           gameCount),
+                        _np("theme",
+                            "This collection contains %i games: '%s', '%s' and '%s', among others",
+                            "This collection contains %i games: '%s', '%s' and '%s', among others",
+                            gameCount),
                         gameCount, gamesList[0]->metadata.get("name").c_str(),
                         gamesList[1]->metadata.get("name").c_str(),
                         gamesList[2]->metadata.get("name").c_str());
@@ -973,9 +979,9 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
     }
 
     if (idx->isFiltered()) {
-        desc.append("\n\n'")
-            .append(rootFolder->getSystem()->getFullName())
-            .append("' is filtered so there may be more games available");
+        desc.append("\n\n").append(Utils::String::format(
+            _p("theme", "'%s' is filtered so there may be more games available"),
+            rootFolder->getSystem()->getFullName().c_str()));
     }
 
     rootFolder->metadata.set("desc", desc);
