@@ -1201,23 +1201,53 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 readVariant.name = name;
             }
 
-            const pugi::xml_node& labelTag {variant.child("label")};
-            if (labelTag == nullptr) {
+            if (variant.child("label") == nullptr) {
                 LOG(LogDebug)
-                    << "No variant <label> tag found, setting label value to the variant name \""
+                    << "No variant <label> tags found, setting label value to the variant name \""
                     << name << "\" for \"" << capFile << "\"";
-                readVariant.label = name;
+                readVariant.labels.emplace_back(std::make_pair("en_US", name));
             }
             else {
-                const std::string& labelValue {labelTag.text().as_string()};
-                if (labelValue == "") {
-                    LOG(LogWarning) << "No variant <label> value defined, setting value to "
-                                       "the variant name \""
-                                    << name << "\" for \"" << capFile << "\"";
-                    readVariant.label = name;
+                std::vector<std::pair<std::string, std::string>> labels;
+                for (pugi::xml_node labelTag {variant.child("label")}; labelTag;
+                     labelTag = labelTag.next_sibling("label")) {
+                    std::string language {labelTag.attribute("language").as_string()};
+                    if (language == "")
+                        language = "en_US";
+                    else if (std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                                          [language](std::pair<std::string, std::string> currLang) {
+                                              return currLang.first == language;
+                                          }) == sSupportedLanguages.cend()) {
+                        LOG(LogWarning) << "Declared language \"" << language
+                                        << "\" not supported, setting label language to \"en_US\""
+                                           " for variant name \""
+                                        << name << "\" in \"" << capFile << "\"";
+                        language = "en_US";
+                    }
+                    std::string labelValue {labelTag.text().as_string()};
+                    if (labelValue == "") {
+                        LOG(LogWarning) << "No variant <label> value defined, setting value to "
+                                           "the variant name \""
+                                        << name << "\" for \"" << capFile << "\"";
+                        labelValue = name;
+                    }
+                    labels.emplace_back(std::make_pair(language, labelValue));
                 }
-                else {
-                    readVariant.label = labelValue;
+                if (!labels.empty()) {
+                    // Add the label languages in the order they are defined in sSupportedLanguages.
+                    for (auto& language : sSupportedLanguages) {
+                        if (language.first == "automatic")
+                            continue;
+                        const auto it =
+                            std::find_if(labels.cbegin(), labels.cend(),
+                                         [language](std::pair<std::string, std::string> currLabel) {
+                                             return currLabel.first == language.first;
+                                         });
+                        if (it != labels.cend()) {
+                            readVariant.labels.emplace_back(
+                                std::make_pair((*it).first, (*it).second));
+                        }
+                    }
                 }
             }
 
@@ -1347,23 +1377,53 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 readColorScheme.name = name;
             }
 
-            const pugi::xml_node& labelTag {colorScheme.child("label")};
-            if (labelTag == nullptr) {
+            if (colorScheme.child("label") == nullptr) {
                 LOG(LogDebug) << "No colorScheme <label> tag found, setting label value to the "
                                  "color scheme name \""
                               << name << "\" for \"" << capFile << "\"";
-                readColorScheme.label = name;
+                readColorScheme.labels.emplace_back(std::make_pair("en_US", name));
             }
             else {
-                const std::string& labelValue {labelTag.text().as_string()};
-                if (labelValue == "") {
-                    LOG(LogWarning) << "No colorScheme <label> value defined, setting value to "
-                                       "the color scheme name \""
-                                    << name << "\" for \"" << capFile << "\"";
-                    readColorScheme.label = name;
+                std::vector<std::pair<std::string, std::string>> labels;
+                for (pugi::xml_node labelTag {colorScheme.child("label")}; labelTag;
+                     labelTag = labelTag.next_sibling("label")) {
+                    std::string language {labelTag.attribute("language").as_string()};
+                    if (language == "")
+                        language = "en_US";
+                    else if (std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                                          [language](std::pair<std::string, std::string> currLang) {
+                                              return currLang.first == language;
+                                          }) == sSupportedLanguages.cend()) {
+                        LOG(LogWarning) << "Declared language \"" << language
+                                        << "\" not supported, setting label language to \"en_US\""
+                                           " for color scheme name \""
+                                        << name << "\" in \"" << capFile << "\"";
+                        language = "en_US";
+                    }
+                    std::string labelValue {labelTag.text().as_string()};
+                    if (labelValue == "") {
+                        LOG(LogWarning) << "No colorScheme <label> value defined, setting value to "
+                                           "the color scheme name \""
+                                        << name << "\" for \"" << capFile << "\"";
+                        labelValue = name;
+                    }
+                    labels.emplace_back(std::make_pair(language, labelValue));
                 }
-                else {
-                    readColorScheme.label = labelValue;
+                if (!labels.empty()) {
+                    // Add the label languages in the order they are defined in sSupportedLanguages.
+                    for (auto& language : sSupportedLanguages) {
+                        if (language.first == "automatic")
+                            continue;
+                        const auto it =
+                            std::find_if(labels.cbegin(), labels.cend(),
+                                         [language](std::pair<std::string, std::string> currLabel) {
+                                             return currLabel.first == language.first;
+                                         });
+                        if (it != labels.cend()) {
+                            readColorScheme.labels.emplace_back(
+                                std::make_pair((*it).first, (*it).second));
+                        }
+                    }
                 }
             }
 
@@ -1451,10 +1511,6 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             if (name == "")
                 continue;
 
-            const pugi::xml_node& labelTag {transitions.child("label")};
-            if (labelTag != nullptr)
-                label = labelTag.text().as_string();
-
             const pugi::xml_node& selectableTag {transitions.child("selectable")};
             if (selectableTag != nullptr) {
                 const std::string& value {selectableTag.text().as_string()};
@@ -1524,7 +1580,44 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 
                 ThemeTransitions transition;
                 transition.name = name;
-                transition.label = label;
+
+                std::vector<std::pair<std::string, std::string>> labels;
+                for (pugi::xml_node labelTag {transitions.child("label")}; labelTag;
+                     labelTag = labelTag.next_sibling("label")) {
+                    std::string language {labelTag.attribute("language").as_string()};
+                    if (language == "")
+                        language = "en_US";
+                    else if (std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                                          [language](std::pair<std::string, std::string> currLang) {
+                                              return currLang.first == language;
+                                          }) == sSupportedLanguages.cend()) {
+                        LOG(LogWarning) << "Declared language \"" << language
+                                        << "\" not supported, setting label language to \"en_US\""
+                                           " for transition name \""
+                                        << name << "\" in \"" << capFile << "\"";
+                        language = "en_US";
+                    }
+                    std::string labelValue {labelTag.text().as_string()};
+                    if (labelValue != "")
+                        labels.emplace_back(std::make_pair(language, labelValue));
+                }
+                if (!labels.empty()) {
+                    // Add the label languages in the order they are defined in sSupportedLanguages.
+                    for (auto& language : sSupportedLanguages) {
+                        if (language.first == "automatic")
+                            continue;
+                        const auto it =
+                            std::find_if(labels.cbegin(), labels.cend(),
+                                         [language](std::pair<std::string, std::string> currLabel) {
+                                             return currLabel.first == language.first;
+                                         });
+                        if (it != labels.cend()) {
+                            transition.labels.emplace_back(
+                                std::make_pair((*it).first, (*it).second));
+                        }
+                    }
+                }
+
                 transition.selectable = selectable;
                 transition.animations = std::move(readTransitions);
                 capabilities.transitions.emplace_back(std::move(transition));
@@ -1580,8 +1673,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
     // always show up in the same order in the UI Settings menu.
     if (!aspectRatiosTemp.empty()) {
         // Add the "automatic" aspect ratio if there is at least one entry.
-        if (!aspectRatiosTemp.empty())
-            capabilities.aspectRatios.emplace_back(sSupportedAspectRatios.front().first);
+        capabilities.aspectRatios.emplace_back(sSupportedAspectRatios.front().first);
         for (auto& aspectRatio : sSupportedAspectRatios) {
             if (std::find(aspectRatiosTemp.cbegin(), aspectRatiosTemp.cend(), aspectRatio.first) !=
                 aspectRatiosTemp.cend()) {
@@ -1594,8 +1686,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
     // show up in the same order in the UI Settings menu.
     if (!languagesTemp.empty()) {
         // Add the "automatic" language if there is at least one entry.
-        if (!languagesTemp.empty())
-            capabilities.languages.emplace_back(sSupportedLanguages.front().first);
+        capabilities.languages.emplace_back(sSupportedLanguages.front().first);
         for (auto& language : sSupportedLanguages) {
             if (std::find(languagesTemp.cbegin(), languagesTemp.cend(), language.first) !=
                 languagesTemp.cend()) {

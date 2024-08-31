@@ -152,7 +152,7 @@ public:
 
     struct ThemeVariant {
         std::string name;
-        std::string label;
+        std::vector<std::pair<std::string, std::string>> labels;
         bool selectable;
         std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
             overrides;
@@ -165,12 +165,12 @@ public:
 
     struct ThemeColorScheme {
         std::string name;
-        std::string label;
+        std::vector<std::pair<std::string, std::string>> labels;
     };
 
     struct ThemeTransitions {
         std::string name;
-        std::string label;
+        std::vector<std::pair<std::string, std::string>> labels;
         bool selectable;
         std::map<ViewTransition, ViewTransitionAnimation> animations;
 

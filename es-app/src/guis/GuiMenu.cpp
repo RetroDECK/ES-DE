@@ -230,7 +230,14 @@ void GuiMenu::openUIOptions()
                     // If required, abbreviate the variant name so it doesn't overlap the
                     // setting name.
                     const float maxNameLength {mSize.x * 0.62f};
-                    themeVariant->add(Utils::String::toUpper(variant.label), variant.name,
+                    std::string label {variant.labels.front().second};
+                    for (const auto& labelEntry : variant.labels) {
+                        if (labelEntry.first == Utils::Localization::sCurrentLocale) {
+                            label = labelEntry.second;
+                            break;
+                        }
+                    }
+                    themeVariant->add(Utils::String::toUpper(label), variant.name,
                                       variant.name == selectedVariant, maxNameLength);
                 }
             }
@@ -277,7 +284,14 @@ void GuiMenu::openUIOptions()
                 // If required, abbreviate the color scheme name so it doesn't overlap the
                 // setting name.
                 const float maxNameLength {mSize.x * 0.52f};
-                themeColorScheme->add(Utils::String::toUpper(colorScheme.label), colorScheme.name,
+                std::string label {colorScheme.labels.front().second};
+                for (const auto& labelEntry : colorScheme.labels) {
+                    if (labelEntry.first == Utils::Localization::sCurrentLocale) {
+                        label = labelEntry.second;
+                        break;
+                    }
+                }
+                themeColorScheme->add(Utils::String::toUpper(label), colorScheme.name,
                                       colorScheme.name == selectedColorScheme, maxNameLength);
             }
             if (themeColorScheme->getSelectedObjects().size() == 0)
@@ -413,10 +427,19 @@ void GuiMenu::openUIOptions()
         if (currentSet->second.capabilities.transitions.size() == 1 &&
             currentSet->second.capabilities.transitions.front().selectable) {
             std::string label;
-            if (currentSet->second.capabilities.transitions.front().label == "")
+            if (currentSet->second.capabilities.transitions.front().labels.front().second == "") {
                 label = _("THEME PROFILE");
-            else
-                label = currentSet->second.capabilities.transitions.front().label;
+            }
+            else {
+                label = currentSet->second.capabilities.transitions.front().labels.front().second;
+                for (const auto& labelEntry :
+                     currentSet->second.capabilities.transitions.front().labels) {
+                    if (labelEntry.first == Utils::Localization::sCurrentLocale) {
+                        label = labelEntry.second;
+                        break;
+                    }
+                }
+            }
             const std::string transitions {
                 currentSet->second.capabilities.transitions.front().name};
             themeTransitions->add(Utils::String::toUpper(label), transitions,
@@ -427,10 +450,19 @@ void GuiMenu::openUIOptions()
                 if (!currentSet->second.capabilities.transitions[i].selectable)
                     continue;
                 std::string label;
-                if (currentSet->second.capabilities.transitions[i].label == "")
+                if (currentSet->second.capabilities.transitions[i].labels.empty()) {
                     label = _("THEME PROFILE") + " " + std::to_string(i + 1);
-                else
-                    label = currentSet->second.capabilities.transitions[i].label;
+                }
+                else {
+                    label = currentSet->second.capabilities.transitions[i].labels.front().second;
+                    for (const auto& labelEntry :
+                         currentSet->second.capabilities.transitions[i].labels) {
+                        if (labelEntry.first == Utils::Localization::sCurrentLocale) {
+                            label = labelEntry.second;
+                            break;
+                        }
+                    }
+                }
                 const std::string transitions {currentSet->second.capabilities.transitions[i].name};
                 themeTransitions->add(Utils::String::toUpper(label), transitions,
                                       transitions == selectedThemeTransitions);
