@@ -684,6 +684,9 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     }
 
     if (sCurrentTheme->second.capabilities.languages.size() > 0) {
+        for (auto& language : sCurrentTheme->second.capabilities.languages)
+            mLanguages.emplace_back(language);
+
         std::string langSetting {Settings::getInstance()->getString("ThemeLanguage")};
         if (langSetting == "automatic")
             langSetting = Utils::Localization::sCurrentLocale;
@@ -715,6 +718,7 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     parseVariables(root);
     parseColorSchemes(root);
     parseFontSizes(root);
+    parseLanguages(root);
     parseIncludes(root);
     parseViews(root);
     if (root.child("feature") != nullptr)
@@ -1701,6 +1705,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         parseVariables(theme);
         parseColorSchemes(theme);
         parseFontSizes(theme);
+        parseLanguages(theme);
         parseIncludes(theme);
         parseViews(theme);
         if (theme.child("feature") != nullptr)
@@ -1751,6 +1756,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
                 parseVariables(node);
                 parseColorSchemes(node);
                 parseFontSizes(node);
+                parseLanguages(node);
                 parseIncludes(node);
                 parseViews(node);
                 parseAspectRatios(node);
@@ -1873,6 +1879,7 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
                 parseVariables(node);
                 parseColorSchemes(node);
                 parseFontSizes(node);
+                parseLanguages(node);
                 parseIncludes(node);
                 parseViews(node);
             }
@@ -1898,6 +1905,45 @@ void ThemeData::parseTransitions(const pugi::xml_node& root)
                         << "\" is not matching any defined transitions";
         }
         sVariantDefinedTransitions = transitionsValue;
+    }
+}
+
+void ThemeData::parseLanguages(const pugi::xml_node& root)
+{
+    if (sCurrentTheme == sThemes.end())
+        return;
+
+    if (sThemeLanguage == "")
+        return;
+
+    ThemeException error;
+    error << "ThemeData::parseLanguages(): ";
+    error.setFiles(mPaths);
+
+    for (pugi::xml_node node {root.child("language")}; node; node = node.next_sibling("language")) {
+        if (!node.attribute("name"))
+            throw error << ": <language> tag missing \"name\" attribute";
+
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
+        std::string viewKey;
+        while (off != std::string::npos || prevOff != std::string::npos) {
+            viewKey = nameAttr.substr(prevOff, off - prevOff);
+            prevOff = nameAttr.find_first_not_of(delim, off);
+            off = nameAttr.find_first_of(delim, prevOff);
+
+            if (std::find(mLanguages.cbegin(), mLanguages.cend(), viewKey) == mLanguages.cend()) {
+                throw error << ": <language> value \"" << viewKey
+                            << "\" is not defined in capabilities.xml";
+            }
+
+            if (sThemeLanguage == viewKey) {
+                parseVariables(node);
+                parseIncludes(node);
+            }
+        }
     }
 }
 

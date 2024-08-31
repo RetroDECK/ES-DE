@@ -256,6 +256,7 @@ private:
     void parseVariants(const pugi::xml_node& root);
     void parseColorSchemes(const pugi::xml_node& root);
     void parseFontSizes(const pugi::xml_node& root);
+    void parseLanguages(const pugi::xml_node& root);
     void parseAspectRatios(const pugi::xml_node& root);
     void parseTransitions(const pugi::xml_node& root);
     void parseVariables(const pugi::xml_node& root);
@@ -292,6 +293,7 @@ private:
     std::vector<std::string> mVariants;
     std::vector<std::string> mColorSchemes;
     std::vector<std::string> mFontSizes;
+    std::vector<std::string> mLanguages;
     std::string mSelectedVariant;
     std::string mOverrideVariant;
     std::string mSelectedColorScheme;
