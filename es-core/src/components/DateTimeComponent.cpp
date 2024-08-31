@@ -12,6 +12,7 @@
 
 #include "Log.h"
 #include "Settings.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 DateTimeComponent::DateTimeComponent()
@@ -83,18 +84,24 @@ std::string DateTimeComponent::getDisplayString() const
 
         std::string buf;
 
-        if (dur.getDays() > 0)
-            buf = std::to_string(dur.getDays()) + " day" + // Line break.
-                  (dur.getDays() > 1 ? "s" : "") + " ago";
-        else if (dur.getHours() > 0)
-            buf = std::to_string(dur.getHours()) + " hour" + // Line break.
-                  (dur.getHours() > 1 ? "s" : "") + " ago";
-        else if (dur.getMinutes() > 0)
-            buf = std::to_string(dur.getMinutes()) + " minute" + // Line break.
-                  (dur.getMinutes() > 1 ? "s" : "") + " ago";
-        else
-            buf = std::to_string(dur.getSeconds()) + " second" + // Line break.
-                  (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") + " ago";
+        if (dur.getDays() > 0) {
+            buf = Utils::String::format(_np("theme", "%i day ago", "%i days ago", dur.getDays()),
+                                        dur.getDays());
+        }
+        else if (dur.getHours() > 0) {
+            buf = Utils::String::format(_np("theme", "%i hour ago", "%i hours ago", dur.getHours()),
+                                        dur.getHours());
+        }
+        else if (dur.getMinutes() > 0) {
+            buf = Utils::String::format(
+                _np("theme", "%i minute ago", "%i minutes ago", dur.getMinutes()),
+                dur.getMinutes());
+        }
+        else {
+            buf = Utils::String::format(
+                _np("theme", "%i second ago", "%i seconds ago", dur.getSeconds()),
+                dur.getSeconds());
+        }
 
         return std::string(buf);
     }
