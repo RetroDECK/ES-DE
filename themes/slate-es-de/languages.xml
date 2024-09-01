@@ -1,0 +1,22 @@
+<theme>
+    <language name="en_US en_GB">
+        <variables>
+            <langLabelReleasedate>Released</langLabelReleasedate>
+            <langLabelDeveloper>Developer</langLabelDeveloper>
+            <langLabelPublisher>Publisher</langLabelPublisher>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelPlayers>Players</langLabelPlayers>
+            <langLabelLastPlayed>Last played</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="sv_SE">
+        <variables>
+            <langLabelReleasedate>Utgivet</langLabelReleasedate>
+            <langLabelDeveloper>Utvecklare</langLabelDeveloper>
+            <langLabelPublisher>Utgivare</langLabelPublisher>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelPlayers>Spelare</langLabelPlayers>
+            <langLabelLastPlayed>Senast spelat</langLabelLastPlayed>
+        </variables>
+    </language>
+</theme>
