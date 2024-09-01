@@ -1,5 +1,5 @@
 <!--
-    Linear for ES-DE (linear-es-de)
+    Linear for ES-DE Frontend (linear-es-de)
     Author: ES-DE project
     License: MIT
     Based on: ESonline by Weestuarty
@@ -7,6 +7,7 @@
 
 <theme>
     <include>./colors.xml</include>
+    <include>./languages.xml</include>
     <include>./system/metadata/_default.xml</include>
     <include>./system/metadata/${system.theme}.xml</include>
     <include>./system/metadata-custom/_default.xml</include>
@@ -325,7 +326,7 @@
                 <pos>0.88 0.180</pos>
                 <size>0.165 0.03</size>
                 <origin>0.5 0</origin>
-                <text>Rating</text>
+                <text>${langLabelRating}</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
                 <fontSize>${metadataFontSize}</fontSize>
@@ -353,7 +354,7 @@
                 <pos>0.88 0.262</pos>
                 <size>0.165 0.03</size>
                 <origin>0.5 0</origin>
-                <text>Released</text>
+                <text>${langLabelReleasedate}</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
                 <fontSize>${metadataFontSize}</fontSize>
@@ -385,7 +386,7 @@
                 <pos>0.88 0.345</pos>
                 <size>0.165 0.03</size>
                 <origin>0.5 0</origin>
-                <text>Players</text>
+                <text>${langLabelPlayers}</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
                 <fontSize>${metadataFontSize}</fontSize>
@@ -417,7 +418,7 @@
                 <pos>0.88 0.428</pos>
                 <size>0.165 0.03</size>
                 <origin>0.5 0</origin>
-                <text>Genre</text>
+                <text>${langLabelGenre}</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
                 <fontSize>${metadataFontSize}</fontSize>
@@ -453,7 +454,7 @@
                 <pos>0.88 0.511</pos>
                 <size>0.165 0.03</size>
                 <origin>0.5 0</origin>
-                <text>Developer</text>
+                <text>${langLabelDeveloper}</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
                 <fontSize>${metadataFontSize}</fontSize>
@@ -489,7 +490,7 @@
                 <pos>0.88 0.5935</pos>
                 <size>0.165 0.03</size>
                 <origin>0.5 0</origin>
-                <text>Publisher</text>
+                <text>${langLabelPublisher}</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
                 <fontSize>${metadataFontSize}</fontSize>
@@ -525,7 +526,7 @@
                 <pos>0.88 0.6765</pos>
                 <size>0.165 0.03</size>
                 <origin>0.5 0</origin>
-                <text>Last Played</text>
+                <text>${langLabelLastPlayed}</text>
                 <metadataElement>true</metadataElement>
                 <fontPath>${primaryFont}</fontPath>
                 <fontSize>${metadataFontSize}</fontSize>
@@ -543,6 +544,7 @@
                 <fontSize>${metadataFontSize}</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${primaryColor}</color>
+                <letterCase>capitalize</letterCase>
                 <lineSpacing>1</lineSpacing>
             </datetime>
             <badges name="badges">

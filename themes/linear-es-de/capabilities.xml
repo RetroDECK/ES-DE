@@ -5,6 +5,10 @@
 <themeCapabilities>
     <themeName>Linear</themeName>
 
+    <language>en_US</language>
+    <language>en_GB</language>
+    <language>sv_SE</language>
+
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>16:10</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
@@ -14,11 +18,15 @@
     <fontSize>large</fontSize>
 
     <colorScheme name="dark">
-        <label>Dark</label>
+        <label language="en_US">Dark</label>
+        <label language="en_GB">Dark</label>
+        <label language="sv_SE">Mörkt</label>
     </colorScheme>
 
     <colorScheme name="light">
-        <label>Light</label>
+        <label language="en_US">Light</label>
+        <label language="en_GB">Light</label>
+        <label language="sv_SE">Ljust</label>
     </colorScheme>
 
     <colorScheme name="nso">
@@ -34,37 +42,51 @@
     </colorScheme>
 
     <variant name="textlistWithVideos">
-        <label>Textlist</label>
+        <label language="en_US">Textlist</label>
+        <label language="en_GB">Textlist</label>
+        <label language="sv_SE">Textlista</label>
         <selectable>true</selectable>
     </variant>
 
     <variant name="textlistWithoutVideos">
-        <label>Textlist without videos</label>
+        <label language="en_US">Textlist without videos</label>
+        <label language="en_GB">Textlist without videos</label>
+        <label language="sv_SE">Textlista utan video</label>
         <selectable>true</selectable>
     </variant>
 
     <variant name="simpleTextlistWithVideos">
-        <label>Simple textlist</label>
+        <label language="en_US">Simple textlist</label>
+        <label language="en_GB">Simple textlist</label>
+        <label language="sv_SE">Enkel textlista</label>
         <selectable>true</selectable>
     </variant>
 
     <variant name="simpleTextlistWithoutVideos">
-        <label>Simple textlist without videos</label>
+        <label language="en_US">Simple textlist without videos</label>
+        <label language="en_GB">Simple textlist without videos</label>
+        <label language="sv_SE">Enkel textlista utan video</label>
         <selectable>true</selectable>
     </variant>
 
     <variant name="carousel">
-        <label>Carousel</label>
+        <label language="en_US">Carousel</label>
+        <label language="en_GB">Carousel</label>
+        <label language="sv_SE">Karusell</label>
         <selectable>true</selectable>
     </variant>
 
     <variant name="simpleCarousel">
-        <label>Simple Carousel</label>
+        <label language="en_US">Simple carousel</label>
+        <label language="en_GB">Simple carousel</label>
+        <label language="sv_SE">Enkel karusell</label>
         <selectable>true</selectable>
     </variant>
 
     <transitions name="instantAndSlide">
-        <label>instant and slide</label>
+        <label language="en_US">instant and slide</label>
+        <label language="en_GB">instant and slide</label>
+        <label language="sv_SE">direkt och glidande</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>slide</systemToGamelist>
@@ -75,7 +97,9 @@
     </transitions>
 
     <transitions name="instant">
-        <label>instant</label>
+        <label language="en_US">instant</label>
+        <label language="en_GB">instant</label>
+        <label language="sv_SE">direkt</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>instant</systemToGamelist>
@@ -86,7 +110,9 @@
     </transitions>
 
     <transitions name="fade">
-        <label>fade</label>
+        <label language="en_US">fade</label>
+        <label language="en_GB">fade</label>
+        <label language="sv_SE">uttoning</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>fade</systemToGamelist>

@@ -1,0 +1,28 @@
+<theme>
+    <language name="en_US en_GB">
+        <variables>
+            <langLabelRating>Rating</langLabelRating>
+            <langLabelReleasedate>Released</langLabelReleasedate>
+            <langLabelPlayers>Players</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Developer</langLabelDeveloper>
+            <langLabelPublisher>Publisher</langLabelPublisher>
+            <langLabelLastPlayed>Last Played</langLabelLastPlayed>
+            <langCustomCollections>Custom Collections</langCustomCollections>
+            <langYourCollections>Your Collections</langYourCollections>
+        </variables>
+    </language>
+    <language name="sv_SE">
+        <variables>
+            <langLabelRating>Betyg</langLabelRating>
+            <langLabelReleasedate>Utgivet</langLabelReleasedate>
+            <langLabelPlayers>Spelare</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Utvecklare</langLabelDeveloper>
+            <langLabelPublisher>Utgivare</langLabelPublisher>
+            <langLabelLastPlayed>Senast Spelat</langLabelLastPlayed>
+            <langCustomCollections>Anpassade Samlingar</langCustomCollections>
+            <langYourCollections>Dina Samlingar</langYourCollections>
+        </variables>
+    </language>
+</theme>
