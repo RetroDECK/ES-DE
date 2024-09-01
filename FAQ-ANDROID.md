@@ -106,9 +106,9 @@ Another option that could speed up startup times under some circumstances is dis
 
 In summary huge game collections are discouraged on Android due to limitations in the operating system itself. Setting up a collection of tens of thousands of games is for sure achievable with ES-DE on Linux, macOS or Windows but it's not really feasible on Android.
 
-## On game launch RetroArch runs an old game instead of the one I just selected, how do I prevent this?
+## On game launch the emulator runs an old game instead of the one I just selected, how do I prevent this?
 
-There is a video on the official ES-DE YouTube channel on how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
+You need to exit the game every time you stop playing, by doing this everything will work correctly. Pressing the home button or manually navigating back to ES-DE without exiting the game is equivalent to pressing "Alt+tab" on a desktop operating system, i.e. the game will still run. The difference from desktop operating systems is that Android pauses the game if you switch away from its window so it may seem like it has closed down, although it actually hasn't. While the procedure to fully exit a game differs between emulators there's a video on the official ES-DE YouTube channel on how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
 https://www.youtube.com/watch?v=k5WWacfIn6Y
 
 ## What type of Android devices are supported

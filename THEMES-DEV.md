@@ -97,7 +97,7 @@ themes/
 The ES-DE theme functionality makes it easy for users to install different themes and to choose between them from the _UI Settings_ menu.
 
 There are two places that ES-DE can load themes from:
-* `[HOME]/.emulationstation/themes/`
+* `[HOME]/ES-DE/themes/`
 * `[INSTALLATION PATH]/themes/`
 
 An installation path could be something like this:
@@ -386,7 +386,7 @@ emulationstation --debug --resolution 1280 720
 
 Enforcement of a correct theme configuration is quite strict, and most errors will abort the theme loading, leading to an unthemed system. In each such situation the log output will be very clear of what happened, for instance:
 ```
-Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
+Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/ES-DE/themes/mytheme-es-de/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
 ```
 
 Note that an unthemed system means precisely that, the specific system where the error occured will be unthemed but not necessarily the entire theme. The latter can still happen if the error is global such as a missing variable used by all XML files or an error in a file included by all XML files. The approach is to only untheme relevant sections of the theme to be able to pinpoint precisely where the problem lies.
@@ -407,12 +407,12 @@ Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property "i
 Error handling for missing files is handled a bit differently depending on whether the paths have been defined explicitly or via a variable. For explicitly defined paths a warning will be logged for element properties and an error will be triggered for include files. Here's an example of the latter case:
 
 ```
-Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/.emulationstation/themes/mytheme-es-de/colors_dark.xml")
+Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/ES-DE/themes/mytheme-es-de/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/ES-DE/themes/mytheme-es-de/colors_dark.xml")
 ```
 
 However, if a variable has been used to define the include file, only a debug message will be generated if the file is not found:
 ```
-Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mytheme-es-de/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/.emulationstation/themes/mytheme-es-de/amiga/colors.xml"
+Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/ES-DE/themes/mytheme-es-de/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/ES-DE/themes/mytheme-es-de/amiga/colors.xml"
 ```
 
 It works essentially the same way for element path properties as for include files. This distinction between explicit values and variables makes it possible to create a theme configuration where both include files and files for fonts, images, videos etc. will be used if found, and if not found a fallback configuration can still be applied so the system will be themed.
@@ -742,6 +742,182 @@ Here's an example configuration:
 </theme>
 ```
 
+## Languages
+
+Multilingual support works very similarly to color schemes and font sizes in that it's a variable-based configuration. Due to this you can set any arbitrary property values you want for a certain language, such as different texts or different images and so on. The supported languages for use in themes are the same as for the overall application.
+
+Note that the word _language_ is not technically the correct term as it's rather _locales_ that are used within ES-DE. For instance the en_US and en_GB locales are both for the English language but rather variations for different countries (United States and United Kingdom). Still, as the term _language_ is colloquially used to describe locales in many applications and operating systems this is also used in ES-DE even if it's not entirely correct. The term _language_ is as such also used throughout this document.
+
+While it's possible to use the theme engine language support to set language-specific date formats this is generally discouraged as it's better to use the ISO 8601 (YYYY-MM-DD) standard instead. This is an international standard that makes sense to use in all countries in the world.
+
+The following languages are supported:
+
+| Language      | English name             | Native name              |
+| :------------ | :----------------------- | :----------------------- |
+| en_US         | English (United States)  | English (United States)  |
+| en_GB         | English (United Kingdom) | English (United Kingdom) |
+| es_ES         | Spanish (Spain)          | Español (España)         |
+| fr_FR         | French                   | Français                 |
+| it_IT         | Italian                  | Italiano                 |
+| pl_PL         | Polish                   | Polski                   |
+| pt_BR         | Portuguese (Brazil)      | Português (Brasil)       |
+| ro_RO         | Romanian                 | Română                   |
+| ru_RU         | Russian                  | Русский                  |
+| sv_SE         | Swedish                  | Svenska                  |
+| ja_JP         | Japanese                 | 日本語                   |
+| zh_CN         | Simplified Chinese       | 简体中文                 |
+
+These languages are currently getting translated and may be supported in the near future:
+
+| Language      | English name             | Native name              |
+| :------------ | :----------------------- | :----------------------- |
+| de_DE         | German                   | Deutsch                  |
+| el_GR         | Greek                    | Ελληνικά                 |
+| nl_NL         | Dutch                    | Nederlands               |
+| ar_EG         | Arabic                   | العربية                     |
+
+
+Note that the native name is what is shown inside the _UI Settings_ menu for the _Theme Language_ and _Application Language_ settings.
+
+You can find more information about locales/languages here:\
+https://simplelocalize.io/data/locales
+
+The languages a theme supports need to be declared in the `capabilities.xml` file using `<language>` tag pairs, such as the following example:
+
+```xml
+<!-- Theme capabilities for mytheme-es-de -->
+<themeCapabilities>
+    <themeName>My theme</themeName>
+
+    <language>en_US</language>
+    <language>es_ES</language>
+    <language>pt_PR</language>
+    <language>sv_SE</language>
+    <language>zh_CN</language>
+
+</themeCapabilities>
+```
+
+Although language support is optional for a theme, if you have declared at least one language then you have to include support for en_US as well. Attempting to skip an entry for this language will output an error message and the language configuration will not get loaded. The reason for this is that en_US is the default language for the ES-DE application so all themes have to support it, either implicitly (by not having any multilingual support) or explicitly by declaring it and providing localization for it.
+
+It's also possible to provide label translations for variants, color schemes and transitions, as displayed in the _UI Settings_ menu. This is done using the `language` attribute for these `label` entries, as in this example `capabilities.xml` file:
+
+```xml
+<themeCapabilities>
+    <themeName>My theme</themeName>
+
+    <language>en_US</language>
+    <language>sv_SE</language>
+
+    <colorScheme name="dark">
+        <label language="en_US">Dark</label>
+        <label language="sv_SE">Mörkt</label>
+    </colorScheme>
+
+    <variant name="withVideos">
+        <label language="en_US">Textlist with videos</label>
+        <label language="sv_SE">Textlista med video</label>
+        <selectable>true</selectable>
+        <override>
+            <trigger>noMedia</trigger>
+            <mediaType>miximage, screenshot, cover, video</mediaType>
+            <useVariant>noGameMedia</useVariant>
+        </override>
+    </variant>
+
+    <transitions name="instantAndSlide">
+        <label language="en_US">instant and slide</label>
+        <label language="sv_SE">direkt och glidande</label>
+        <selectable>true</selectable>
+        <systemToSystem>instant</systemToSystem>
+        <systemToGamelist>slide</systemToGamelist>
+        <gamelistToGamelist>instant</gamelistToGamelist>
+        <gamelistToSystem>slide</gamelistToSystem>
+        <startupToSystem>slide</startupToSystem>
+        <startupToGamelist>slide</startupToGamelist>
+    </transitions>
+</themeCapabilities>
+```
+
+Leaving out the `language` property will make ES-DE set the language to en_US.
+
+The actual language-specific values in the theme configuration are defined using variables, like the following example:
+
+```xml
+<theme>
+    <language name="en_US">
+        <variables>
+            <langLabelDeveloper>Developer</langLabelDeveloper>
+            <langLabelPublisher>Publisher</langLabelPublisher>
+        </variables>
+    </language>
+    <language name="sv_SE">
+        <variables>
+            <langLabelDeveloper>Utvecklare</langLabelDeveloper>
+            <langLabelPublisher>Utgivare</langLabelPublisher>
+        </variables>
+    </language>
+
+    <view name="gamelist">
+        <text name="labelDeveloper">
+            <pos>0.88 0.511</pos>
+            <size>0.165 0.03</size>
+            <text>${langLabelDeveloper}</text>
+        </text>
+        <text name="labelPublisher">
+            <pos>0.88 0.5935</pos>
+            <size>0.165 0.03</size>
+            <text>${langLabelPublisher}</text>
+        </text>
+    </view>
+</theme>
+```
+
+It could also be a good idea to include the translations from a separate file:
+```xml
+<theme>
+    <include>./languages.xml</include>
+
+    <view name="gamelist">
+        <text name="labelDeveloper">
+            <pos>0.88 0.511</pos>
+            <size>0.165 0.03</size>
+            <text>${langLabelDeveloper}</text>
+        </text>
+        <text name="labelPublisher">
+            <pos>0.88 0.5935</pos>
+            <size>0.165 0.03</size>
+            <text>${langLabelPublisher}</text>
+        </text>
+    </view>
+</theme>
+```
+
+Including separate files per language is also supported but it's probably not a good idea as it will add a lot of unnecessary files to the theme:
+```xml
+<theme>
+    <language name="en_US">
+        <include>./lang-en_us.xml</include>
+    </language>
+    <language name="sv_SE">
+        <include>./lang-sv_se.xml</include>
+    </language>
+
+    <view name="gamelist">
+        <text name="labelDeveloper">
+            <pos>0.88 0.511</pos>
+            <size>0.165 0.03</size>
+            <text>${langLabelDeveloper}</text>
+        </text>
+        <text name="labelPublisher">
+            <pos>0.88 0.5935</pos>
+            <size>0.165 0.03</size>
+            <text>${langLabelPublisher}</text>
+        </text>
+    </view>
+</theme>
+```
+
 ## Aspect ratios
 
 The aspect ratio support works almost identically to the variants and color schemes with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme can still decide which of the aspect ratios to support (or none at all in which case the theme aspect ratio is left undefined) but it can't create entirely new aspect ratio entries.
@@ -900,9 +1076,9 @@ Finally it's possible to apply theme-defined transition profiles on a per-varian
 
 ## capabilities.xml
 
-Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme configuration files and that is done in the `capabilities.xml` file. This file needs to be located in the root of the theme directory, for example:
+Variants, variant triggers, color schemes, font sizes, languages, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme configuration files and that is done in the `capabilities.xml` file. This file needs to be located in the root of the theme directory, for example:
 ```
-~/.emulationstation/themes/mytheme-es-de/capabilities.xml
+~/ES-DE/themes/mytheme-es-de/capabilities.xml
 ```
 
 The capabilities.xml file is mandatory and if it doesn't exist ES-DE will not attempt to load the theme.
@@ -914,19 +1090,29 @@ The structure of the file is simple, as can be seen in this example:
 <themeCapabilities>
     <themeName>My theme</themeName>
 
+    <language>en_US</language>
+    <language>sv_SE</language>
+
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
     <aspectRatio>4:3_vertical</aspectRatio>
 
+    <fontSize>medium</fontSize>
+    <fontSize>large</fontSize>
+
     <colorScheme name="dark">
-        <label>Dark mode</label>
+        <label language="en_US">Dark</label>
+        <label language="sv_SE">Mörkt</label>
     </colorScheme>
 
     <colorScheme name="light">
-        <label>Light mode</label>
+        <label language="en_US">Light</label>
+        <label language="sv_SE">Ljust</label>
     </colorScheme>
 
     <transitions name="instantAndSlide">
+        <label language="en_US">instant and slide</label>
+        <label language="sv_SE">direkt och glidande</label>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>slide</systemToGamelist>
         <gamelistToGamelist>instant</gamelistToGamelist>
@@ -934,7 +1120,8 @@ The structure of the file is simple, as can be seen in this example:
     </transitions>
 
     <variant name="withVideos">
-        <label>Textlist with videos</label>
+        <label language="en_US">Textlist with videos</label>
+        <label language="sv_SE">Textlista med video</label>
         <selectable>true</selectable>
         <override>
             <trigger>noMedia</trigger>
@@ -944,7 +1131,8 @@ The structure of the file is simple, as can be seen in this example:
     </variant>
 
     <variant name="withoutVideos">
-        <label>Textlist without videos</label>
+        <label language="en_US">Textlist without videos</label>
+        <label language="sv_SE">Textlista utan video</label>
         <selectable>true</selectable>
         <override>
             <trigger>noMedia</trigger>
@@ -959,7 +1147,8 @@ The structure of the file is simple, as can be seen in this example:
     </variant>
 </themeCapabilities>
 ```
-The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes, one transition animation profile and three variants, one of which is a variant trigger override. The `<label>` tag for the variants and transitions is the text that will show up in the _UI Settings_ menu, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
+
+The file format is hopefully mostly self-explanatory; this example provides two languages, three aspect ratios, two font sizes, two color schemes, one transition animation profile and three variants, one of which is a variant trigger override. The `<label>` tag for the variants and transitions is the text that will show up in the _UI Settings_ menu, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
 The optional `<themeName>` tag defines the name that will show up in the _Theme_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEME-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu.
 
@@ -986,7 +1175,7 @@ It's normally not necessary to define all or even most of these for a theme, ins
 
 The declared aspect ratios will always get displayed in the _UI settings_ menu in the order listed in the table above, so they can be declared in any order in the capabilities.xml file. If an unsupported aspect ratio value is entered, a warning will be generated on startup and the entry will not get loaded.
 
-The use of variants, variant triggers, color schemes, aspect ratios and transition animation profiles is optional, i.e. a theme does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
+The use of variants, variant triggers, color schemes, font sizes, languages, aspect ratios and transition animation profiles is optional, i.e. a theme does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
 
 Note that changes to the capabilities.xml file are not reloaded when using the Ctrl + r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
 
@@ -994,7 +1183,7 @@ Note that changes to the capabilities.xml file are not reloaded when using the C
 
 You can include theme files within theme files, for example:
 
-`~/.emulationstation/themes/mytheme-es-de/fonts.xml`:
+`~/ES-DE/themes/mytheme-es-de/fonts.xml`:
 ```xml
 <theme>
     <view name="gamelist">
@@ -1007,7 +1196,7 @@ You can include theme files within theme files, for example:
 </theme>
 ```
 
-`~/.emulationstation/themes/mytheme-es-de/snes/theme.xml`:
+`~/ES-DE/themes/mytheme-es-de/snes/theme.xml`:
 ```xml
 <theme>
     <include>./../fonts.xml</include>
@@ -1281,7 +1470,7 @@ Theme variables can be used to simplify theme construction and there are two typ
 
 ### System variables
 
-System variables are system specific and are derived from values defined in es_systems.xml (except for collections which are derived from hardcoded application-internal values).
+System variables are system-specific and derived from values defined in es_systems.xml (except for collections which are derived from hardcoded application-internal values).
 * `system.name`
 * `system.name.autoCollections`
 * `system.name.customCollections`
@@ -1299,9 +1488,11 @@ System variables are system specific and are derived from values defined in es_s
 `system.fullName` expands to the full system name as defined by the `fullname` tag in es_systems.xml\
 `system.theme` expands to the theme directory as defined by the `theme` tag in es_systems.xml
 
+Note that all _name_ and _fullName_ values for the built-in collections _all games, favorites, last played and collections_ are translated to the language selected via the _Application Language_ option in the _UI Settings_ menu.
+
 If using variables to load theme assets like images and videos, then use the `.name` versions of these variables as short system names should be stable and not change over time. The `.fullName` values could change in future ES-DE releases or they could be user-customized which would break your theme.
 
-The `.autoCollections`, `.customCollections` and `.noCollections` versions of the variables make it possible to differentiate between regular systems, automatic collections (_all games_, _favorites_ and _last played_) and custom collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems.
+The `.autoCollections`, `.customCollections` and `.noCollections` versions of the variables make it possible to differentiate between regular systems, automatic collections (_all games, favorites_ and _last played_) and custom collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems.
 
 The below example capitalizes the names of the auto collections while leaving custom collections and regular systems at their default formatting (as they are defined by the user and es_systems.xml respectively). The reason this works is that the .autoCollections, .customCollections and .noCollections variables are mutually exclusive, i.e. a system is either a real system or an automatic collection or a custom collection and never more than one of these.
 
@@ -1422,12 +1613,13 @@ It's important to understand how the theme configuration files are parsed in ord
 2) Variables
 3) Color schemes
 4) Font sizes
-5) Included files
-6) "General" (non-variant) configuration
-7) Variants
-8) Aspect ratios
+5) Languages
+6) Included files
+7) "General" (non-variant) configuration
+8) Variants
+9) Aspect ratios
 
-When including a file using the `<include>` tag (i.e. step 4 above) then all steps listed above are executed for that included file prior to continuing to the next line after the `<include>` tag.
+When including a file using the `<include>` tag (i.e. step 6 above) then all steps listed above are executed for that included file prior to continuing to the next line after the `<include>` tag.
 
 For any given step, the configuration is parsed in the exact order that it's defined in the XML file. Be mindful of the logic described above as for instance defining variant-specific configuration above general configuration in the same XML file will still have that parsed afterwards.
 

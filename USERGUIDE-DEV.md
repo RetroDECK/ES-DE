@@ -312,6 +312,10 @@ If you are unfamiliar with Linux/Unix operating systems, make sure to at least r
 
 The Android port of ES-DE is quite different than the other versions, so it has its specifics covered by a dedicated [ANDROID.md](ANDROID.md) document.
 
+## Specific notes for Haiku
+
+The [Haiku](https://www.haiku-os.org) port of ES-DE is currently experimental as the OS itself is experimental and has some issues. Still most functionality in ES-DE is working and there is support for a quite large number of systems and emulators. If you're interested in Haiku it's for sure worth trying it out. See the dedicated [HAIKU.md](HAIKU.md) document for more details.
+
 ## Specific notes for Raspberry Pi
 
 For the best experience with the Raspberry Pi it's adviced to run Android on it. There are custom OS builds available here: \
@@ -3242,6 +3246,10 @@ Themes could optionally be optimized for different screen aspect ratios. ES-DE s
 **Theme transitions**
 
 Transition animations to play when navigating between different gamelists, between systems in the system view and between the system and gamelist views. It's up to the theme author to define what to include for this option. Technically these can be any combination of _instant_, _slide_ or _fade_ transitions. If there are no user-selectable transitions avaialable the setting will be grayed out.
+
+**Theme language**
+
+If the selected theme has multilingual support then you can select between its supported languages here. This setting is primarily intended for testing purposes and for theme developers, and should as such usually be left at _automatic_ which will select the same theme language as the overall application language (see the next setting below). Note that not all themes may support all languages that the ES-DE application supports.
 
 **Application language**
 

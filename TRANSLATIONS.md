@@ -185,3 +185,14 @@ ES-DE/resources/locale/sv_SE/LC_MESSAGES/sv_SE.po
 When there's an .mo file stored there it will override the bundled .mo file and ES-DE will use your local copy instead. This way you can easily test your own translations without having to build ES-DE from source code. Note that you need to restart ES-DE anytime you've compiled a new .mo file.
 
 Also note that this will not work unless support for your language has already been explicitly added to ES-DE.
+
+## Theme translations
+
+In addition to what has been described above there is translation work needed for the actual themes as well. Some portion of the text displayed by the theme engine is part of the .po files, like the system view game counter and the custom collection summary, but most text is contained within each theme's configuration files.
+
+So to have a fully translated experience it's important to work together with the theme developers so they can incorporate full localization support into their themes. There is also an official metadata repository available for developers to use to easily include things like game system descriptions and various other information, and the goal is to have this fully translated to all languages as well.
+
+This repository can be found here:\
+https://gitlab.com/es-de/themes/system-metadata
+
+Discussions regarding theme translations are also covered in the ES-DE Discord server.

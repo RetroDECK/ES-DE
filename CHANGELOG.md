@@ -43,9 +43,11 @@
 * (Android) Added support for using the %BASENAME% variable with the %EXTRA% and %EXTRAARRAY% variables
 * Text within parantheses is no longer stripped out from the game name popup when adding or removing games from custom collections
 * Renamed the "Menu opening effect" setting in the UI settings menu to "Menu opening animation"
+* (linear-es-de) Added translations for en_US, en_GB and sv_SE
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element
 * Added a check for whether a text element has a width defined when the container property is set
+* Added support for including theme files from within the colorScheme and fontSize tag pairs
 * Game files with only an extension and no filename will now get skipped on application startup
 * StringUtil::toCapitalized() will now capitalize text more accurately by using ICU boundary analysis
 * Removed some obsolete code from DateTimeEditComponent
@@ -64,6 +66,10 @@
 * When returning from a game the helpsystem was sometimes using the dimmed theme properties
 * The StringUtil::toCapitalized() function didn't correctly capitalize multi-byte Unicode characters
 * (Windows) Video textures were sometimes not sized and aligned correctly horizontally
+* The theme engine game count text was capitalized by default instead of being set as lowercase
+* Text elements defined as gamecount using the systemdata property could not scroll horizontally
+* (linear-es-de) The system logo and carousel icon for saturnjp was incorrectly showing the western variant
+* (modern-es-de) The carousel icon for saturnjp was incorrectly showing the western variant
 * There was a typo where the 32:9 aspect ratio was referred to as 32:0
 
 ## Version 3.0.3 / 3.0.3-26
