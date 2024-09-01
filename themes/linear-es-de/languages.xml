@@ -36,6 +36,19 @@
             <langYourCollections>Vos collections</langYourCollections>
         </variables>
     </language>
+    <language name="ro_RO">
+        <variables>
+            <langLabelRating>Scor</langLabelRating>
+            <langLabelReleasedate>Lansat</langLabelReleasedate>
+            <langLabelPlayers>Număr de jucători</langLabelPlayers>
+            <langLabelGenre>Gen</langLabelGenre>
+            <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langLabelLastPlayed>Jucat ultima dată</langLabelLastPlayed>
+            <langCustomCollections>Colecții personalizate</langCustomCollections>
+            <langYourCollections>Colecțiile tale</langYourCollections>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <langLabelRating>Betyg</langLabelRating>

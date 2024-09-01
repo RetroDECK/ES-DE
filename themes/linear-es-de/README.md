@@ -31,12 +31,13 @@ The following options are included:
 - 4:3
 - 21:9
 
-5 languages:
+6 languages:
 
 - English (United States)
 - English (United Kingdom)
 - Español (España)
 - Français
+- Română
 - Svenska
 
 3 transitions:
