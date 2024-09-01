@@ -902,6 +902,14 @@ void GamelistView::updateView(const CursorState& state)
         std::string metadata;
 
         auto getMetadataValue = [&file, &metadata]() -> std::string {
+#if defined(GETTEXT_DUMMY_ENTRIES)
+            _p("theme", "all");
+            _p("theme", "all games");
+            _p("theme", "recent");
+            _p("theme", "last played");
+            _p("theme", "favorites");
+            _p("theme", "collections");
+#endif
             if (metadata == "name")
                 return file->metadata.get("name");
             else if (metadata == "description")
@@ -915,15 +923,19 @@ void GamelistView::updateView(const CursorState& state)
             else if (metadata == "players")
                 return file->metadata.get("players");
             else if (metadata == "favorite")
-                return file->metadata.get("favorite") == "true" ? "yes" : "no";
+                return file->metadata.get("favorite") == "true" ? _p("theme", "yes") :
+                                                                  _p("theme", "no");
             else if (metadata == "completed")
-                return file->metadata.get("completed") == "true" ? "yes" : "no";
+                return file->metadata.get("completed") == "true" ? _p("theme", "yes") :
+                                                                   _p("theme", "no");
             else if (metadata == "kidgame")
-                return file->metadata.get("kidgame") == "true" ? "yes" : "no";
+                return file->metadata.get("kidgame") == "true" ? _p("theme", "yes") :
+                                                                 _p("theme", "no");
             else if (metadata == "broken")
-                return file->metadata.get("broken") == "true" ? "yes" : "no";
+                return file->metadata.get("broken") == "true" ? _p("theme", "yes") :
+                                                                _p("theme", "no");
             else if (metadata == "manual")
-                return file->getManualPath() != "" ? "yes" : "no";
+                return file->getManualPath() != "" ? _p("theme", "yes") : _p("theme", "no");
             else if (metadata == "playcount")
                 return file->metadata.get("playcount");
             else if (metadata == "altemulator")
@@ -945,8 +957,14 @@ void GamelistView::updateView(const CursorState& state)
                            Utils::FileSystem::getStem(file->getFileName());
             else if (metadata == "physicalNameExtension")
                 return file->getType() == PLACEHOLDER ? "" : file->getFileName();
+            else if (metadata == "systemName" && file->getSystem()->isCollection() &&
+                     !file->getSystem()->isCustomCollection())
+                return _p("theme", file->getSystem()->getName().c_str());
             else if (metadata == "systemName")
                 return file->getSystem()->getName();
+            else if (metadata == "systemFullname" && file->getSystem()->isCollection() &&
+                     !file->getSystem()->isCustomCollection())
+                return _p("theme", file->getSystem()->getFullName().c_str());
             else if (metadata == "systemFullname")
                 return file->getSystem()->getFullName();
             else if (metadata == "sourceSystemName")
