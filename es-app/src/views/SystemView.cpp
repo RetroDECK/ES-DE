@@ -797,25 +797,56 @@ void SystemView::populate()
     if (mGrid != nullptr)
         mGrid->calculateLayout();
 
+#if defined(GETTEXT_DUMMY_ENTRIES)
+    _p("theme", "all");
+    _p("theme", "all games");
+    _p("theme", "recent");
+    _p("theme", "last played");
+    _p("theme", "favorites");
+    _p("theme", "collections");
+#endif
+
     for (auto& elements : mSystemElements) {
         for (auto& text : elements.textComponents) {
             if (text->getThemeSystemdata() != "") {
-                if (text->getThemeSystemdata() == "name")
-                    text->setValue(elements.name);
-                else if (text->getThemeSystemdata() == "fullname")
-                    text->setValue(elements.fullName);
-                else
+                const bool translate {elements.system->isCollection() &&
+                                      !elements.system->isCustomCollection()};
+                if (text->getThemeSystemdata() == "name") {
+                    if (translate)
+                        text->setValue(_p("theme", elements.name.c_str()));
+                    else
+                        text->setValue(elements.name);
+                }
+                else if (text->getThemeSystemdata() == "fullname") {
+                    if (translate)
+                        text->setValue(_p("theme", elements.fullName.c_str()));
+                    else
+                        text->setValue(elements.fullName);
+                }
+                else {
                     text->setValue(text->getThemeSystemdata());
+                }
             }
         }
         for (auto& containerText : elements.containerTextComponents) {
             if (containerText->getThemeSystemdata() != "") {
-                if (containerText->getThemeSystemdata() == "name")
-                    containerText->setValue(elements.name);
-                else if (containerText->getThemeSystemdata() == "fullname")
-                    containerText->setValue(elements.fullName);
-                else
+                const bool translate {elements.system->isCollection() &&
+                                      !elements.system->isCustomCollection()};
+                if (containerText->getThemeSystemdata() == "name") {
+                    if (translate)
+                        containerText->setValue(_p("theme", elements.name.c_str()));
+                    else
+                        containerText->setValue(elements.name);
+                }
+                else if (containerText->getThemeSystemdata() == "fullname") {
+                    if (translate)
+                        containerText->setValue(_p("theme", elements.fullName.c_str()));
+                    else
+                        containerText->setValue(elements.fullName);
+                }
+                else {
                     containerText->setValue(containerText->getThemeSystemdata());
+                }
             }
         }
     }
