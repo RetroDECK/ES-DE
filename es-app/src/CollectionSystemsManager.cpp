@@ -47,7 +47,7 @@ CollectionSystemsManager::CollectionSystemsManager() noexcept
 {
     // clang-format off
     CollectionSystemDecl systemDecls[] {
-    //  Type                 Name                Long name       Theme folder           isCustom
+    //  Type                 Name                Full name       Theme folder           isCustom
         {AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false},
         {AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false},
         {AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false},
