@@ -1,0 +1,32 @@
+<theme>
+    <language name="en_US en_GB">
+        <variables>
+            <langLabelRating>Rating</langLabelRating>
+            <langLabelReleasedate>Released</langLabelReleasedate>
+            <langLabelPlayers>Players</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Developer</langLabelDeveloper>
+            <langLabelPublisher>Publisher</langLabelPublisher>
+        </variables>
+    </language>
+    <language name="fr_FR">
+        <variables>
+            <langLabelRating>Notation</langLabelRating>
+            <langLabelReleasedate>Date de sortie</langLabelReleasedate>
+            <langLabelPlayers>Joueurs</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Développeur</langLabelDeveloper>
+            <langLabelPublisher>Editeur</langLabelPublisher>
+        </variables>
+    </language>
+    <language name="sv_SE">
+        <variables>
+            <langLabelRating>Betyg</langLabelRating>
+            <langLabelReleasedate>Utgivet</langLabelReleasedate>
+            <langLabelPlayers>Spelare</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Utvecklare</langLabelDeveloper>
+            <langLabelPublisher>Utgivare</langLabelPublisher>
+        </variables>
+    </language>
+</theme>
