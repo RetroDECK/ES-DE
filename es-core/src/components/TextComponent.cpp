@@ -489,7 +489,8 @@ void TextComponent::onTextChanged()
                                         (mSize.y - lineHeight) / 2.0f :
                                         0.0f)};
 
-    const float length {mAutoCalcExtent.x ? 0.0f : mSize.x * mRelativeScale};
+    const float length {mAutoCalcExtent.x || mHorizontalScrolling ? 0.0f :
+                                                                    mSize.x * mRelativeScale};
     const float height {mAutoCalcExtent.y ? 0.0f : (mSize.y * mRelativeScale) - lineHeight};
     const Alignment horizontalAlignment {mHorizontalScrolling ? ALIGN_LEFT : mHorizontalAlignment};
     const bool multiLine {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
