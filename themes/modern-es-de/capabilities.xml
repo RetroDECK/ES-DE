@@ -8,6 +8,7 @@
     <language>en_US</language>
     <language>en_GB</language>
     <language>fr_FR</language>
+    <language>ro_RO</language>
     <language>sv_SE</language>
 
     <aspectRatio>16:9</aspectRatio>
@@ -22,6 +23,7 @@
         <label language="en_US">Dark</label>
         <label language="en_GB">Dark</label>
         <label language="fr_FR">Foncé</label>
+        <label language="ro_RO">Întunecată</label>
         <label language="sv_SE">Mörkt</label>
     </colorScheme>
 
@@ -29,14 +31,16 @@
         <label language="en_US">Light</label>
         <label language="en_GB">Light</label>
         <label language="fr_FR">Clair</label>
+        <label language="ro_RO">Luminoasă</label>
         <label language="sv_SE">Ljust</label>
     </colorScheme>
 
     <transitions name="instant">
-        <label language="en_US">instant</label>
-        <label language="en_GB">instant</label>
-        <label language="fr_FR">instantané</label>
-        <label language="sv_SE">direkt</label>
+        <label language="en_US">Instant</label>
+        <label language="en_GB">Instant</label>
+        <label language="fr_FR">Instantané</label>
+        <label language="ro_RO">Instant</label>
+        <label language="sv_SE">Direkt</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>instant</systemToGamelist>
@@ -47,10 +51,11 @@
     </transitions>
 
     <transitions name="instantAndSlide">
-        <label language="en_US">instant and slide</label>
-        <label language="en_GB">instant and slide</label>
-        <label language="fr_FR">instantané et glissement</label>
-        <label language="sv_SE">direkt och glidande</label>
+        <label language="en_US">Instant and slide</label>
+        <label language="en_GB">Instant and slide</label>
+        <label language="fr_FR">Instantané et glissement</label>
+        <label language="ro_RO">Instant și glisează</label>
+        <label language="sv_SE">Direkt och glidande</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>slide</systemToGamelist>
@@ -63,6 +68,7 @@
     <transitions name="instantAndFade">
         <label language="en_US">instant and fade</label>
         <label language="en_US">instant and fade</label>
+        <label language="ro_RO">Instant și estompează</label>
         <label language="sv_SE">direkt och uttoning</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -82,6 +88,7 @@
     <variant name="withVideos">
         <label language="en_US">Textlist with videos</label>
         <label language="en_GB">Textlist with videos</label>
+        <label language="ro_RO">Listă text cu videouri</label>
         <label language="sv_SE">Textlista med video</label>
         <selectable>true</selectable>
         <override>
@@ -94,6 +101,7 @@
     <variant name="withoutVideos">
         <label language="en_US">Textlist without videos</label>
         <label language="en_GB">Textlist without videos</label>
+        <label language="ro_RO">Listă text fără videouri</label>
         <label language="sv_SE">Textlista utan video</label>
         <selectable>true</selectable>
         <override>
@@ -106,6 +114,7 @@
     <variant name="withVideosLegacy">
         <label language="en_US">Textlist with videos (legacy)</label>
         <label language="en_GB">Textlist with videos (legacy)</label>
+        <label language="ro_RO">Listă text cu videouri (învechit)</label>
         <label language="sv_SE">Textlista med video (legacy)</label>
         <selectable>true</selectable>
         <override>
@@ -118,6 +127,7 @@
     <variant name="withoutVideosLegacy">
         <label language="en_US">Textlist without videos (legacy)</label>
         <label language="en_GB">Textlist without videos (legacy)</label>
+        <label language="ro_RO">Listă text fără videouri (învechit)</label>
         <label language="sv_SE">Textlista utan video (legacy)</label>
         <selectable>true</selectable>
         <override>

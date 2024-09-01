@@ -19,6 +19,16 @@
             <langLabelPublisher>Editeur</langLabelPublisher>
         </variables>
     </language>
+    <language name="ro_RO">
+        <variables>
+            <langLabelRating>Scor</langLabelRating>
+            <langLabelReleasedate>Lansat</langLabelReleasedate>
+            <langLabelPlayers>Număr de Jucători</langLabelPlayers>
+            <langLabelGenre>Gen</langLabelGenre>
+            <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <langLabelRating>Betyg</langLabelRating>
