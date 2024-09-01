@@ -7,6 +7,7 @@
 
     <language>en_US</language>
     <language>en_GB</language>
+    <language>fr_FR</language>
     <language>sv_SE</language>
 
     <aspectRatio>16:9</aspectRatio>
@@ -20,12 +21,14 @@
     <colorScheme name="dark">
         <label language="en_US">Dark</label>
         <label language="en_GB">Dark</label>
+        <label language="fr_FR">Foncé</label>
         <label language="sv_SE">Mörkt</label>
     </colorScheme>
 
     <colorScheme name="light">
         <label language="en_US">Light</label>
         <label language="en_GB">Light</label>
+        <label language="fr_FR">Clair</label>
         <label language="sv_SE">Ljust</label>
     </colorScheme>
 
@@ -44,6 +47,7 @@
     <variant name="textlistWithVideos">
         <label language="en_US">Textlist</label>
         <label language="en_GB">Textlist</label>
+        <label language="fr_FR">Textlist avec vidéos</label>
         <label language="sv_SE">Textlista</label>
         <selectable>true</selectable>
     </variant>
@@ -51,6 +55,7 @@
     <variant name="textlistWithoutVideos">
         <label language="en_US">Textlist without videos</label>
         <label language="en_GB">Textlist without videos</label>
+        <label language="fr_FR">Textlist sans vidéos</label>
         <label language="sv_SE">Textlista utan video</label>
         <selectable>true</selectable>
     </variant>
@@ -58,6 +63,7 @@
     <variant name="simpleTextlistWithVideos">
         <label language="en_US">Simple textlist</label>
         <label language="en_GB">Simple textlist</label>
+        <label language="fr_FR">Simple textlist</label>
         <label language="sv_SE">Enkel textlista</label>
         <selectable>true</selectable>
     </variant>
@@ -65,6 +71,7 @@
     <variant name="simpleTextlistWithoutVideos">
         <label language="en_US">Simple textlist without videos</label>
         <label language="en_GB">Simple textlist without videos</label>
+        <label language="fr_FR">Simple textlist sans vidéos</label>
         <label language="sv_SE">Enkel textlista utan video</label>
         <selectable>true</selectable>
     </variant>
@@ -72,6 +79,7 @@
     <variant name="carousel">
         <label language="en_US">Carousel</label>
         <label language="en_GB">Carousel</label>
+        <label language="fr_FR">Carrousel</label>
         <label language="sv_SE">Karusell</label>
         <selectable>true</selectable>
     </variant>
@@ -79,6 +87,7 @@
     <variant name="simpleCarousel">
         <label language="en_US">Simple carousel</label>
         <label language="en_GB">Simple carousel</label>
+        <label language="fr_FR">Simple Carrousel</label>
         <label language="sv_SE">Enkel karusell</label>
         <selectable>true</selectable>
     </variant>
@@ -86,6 +95,7 @@
     <transitions name="instantAndSlide">
         <label language="en_US">instant and slide</label>
         <label language="en_GB">instant and slide</label>
+        <label language="fr_FR">instantané et glissement</label>
         <label language="sv_SE">direkt och glidande</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -99,6 +109,7 @@
     <transitions name="instant">
         <label language="en_US">instant</label>
         <label language="en_GB">instant</label>
+        <label language="fr_FR">instantané</label>
         <label language="sv_SE">direkt</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -112,6 +123,7 @@
     <transitions name="fade">
         <label language="en_US">fade</label>
         <label language="en_GB">fade</label>
+        <label language="fr_FR">fondu</label>
         <label language="sv_SE">uttoning</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>

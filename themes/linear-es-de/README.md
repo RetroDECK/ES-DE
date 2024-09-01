@@ -31,10 +31,11 @@ The following options are included:
 - 4:3
 - 21:9
 
-3 languages:
+4 languages:
 
 - English (United States)
 - English (United Kingdom)
+- Français
 - Svenska
 
 3 transitions:
