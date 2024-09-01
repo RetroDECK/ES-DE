@@ -7,6 +7,7 @@
 
     <language>en_US</language>
     <language>en_GB</language>
+    <language>ro_RO</language>
     <language>sv_SE</language>
 
     <aspectRatio>16:9</aspectRatio>
@@ -20,18 +21,21 @@
     <colorScheme name="dark">
         <label language="en_US">Dark</label>
         <label language="en_GB">Dark</label>
+        <label language="ro_RO">Întunecată</label>
         <label language="sv_SE">Mörkt</label>
     </colorScheme>
 
     <colorScheme name="light">
         <label language="en_US">Light</label>
         <label language="en_GB">Light</label>
+        <label language="ro_RO">Luminoasă</label>
         <label language="sv_SE">Ljust</label>
     </colorScheme>
 
     <transitions name="slide">
         <label language="en_US">Slide</label>
         <label language="en_GB">Slide</label>
+        <label language="ro_RO">Glisează</label>
         <label language="sv_SE">Glidande</label>
         <selectable>true</selectable>
         <systemToSystem>slide</systemToSystem>
@@ -43,6 +47,7 @@
     <transitions name="instant">
         <label language="en_US">Instant</label>
         <label language="en_GB">Instant</label>
+        <label language="ro_RO">Instant</label>
         <label language="sv_SE">Direkt</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -56,6 +61,7 @@
     <transitions name="fade">
         <label language="en_US">Fade</label>
         <label language="en_GB">Fade</label>
+        <label language="ro_RO">Estompează</label>
         <label language="sv_SE">Uttoning</label>
         <selectable>true</selectable>
         <systemToSystem>fade</systemToSystem>
@@ -75,6 +81,7 @@
     <variant name="withVideos">
         <label language="en_US">Textlist with videos</label>
         <label language="en_GB">Textlist with videos</label>
+        <label language="ro_RO">Listă text cu videouri</label>
         <label language="sv_SE">Textlista med video</label>
         <selectable>true</selectable>
         <override>
@@ -87,6 +94,7 @@
     <variant name="withoutVideos">
         <label language="en_US">Textlist without videos</label>
         <label language="en_GB">Textlist without videos</label>
+        <label language="ro_RO">Listă text fără videouri</label>
         <label language="sv_SE">Textlista utan video</label>
         <selectable>true</selectable>
         <override>

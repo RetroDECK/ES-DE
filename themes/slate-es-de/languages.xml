@@ -6,7 +6,17 @@
             <langLabelPublisher>Publisher</langLabelPublisher>
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelPlayers>Players</langLabelPlayers>
-            <langLabelLastPlayed>Last played</langLabelLastPlayed>
+            <langLabelLastPlayed>Last Played</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="ro_RO">
+        <variables>
+            <langLabelReleasedate>Lansat</langLabelReleasedate>
+            <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langLabelGenre>Gen</langLabelGenre>
+            <langLabelPlayers>Număr de Jucători</langLabelPlayers>
+            <langLabelLastPlayed>Jucat Ultima Dată</langLabelLastPlayed>
         </variables>
     </language>
     <language name="sv_SE">
@@ -16,7 +26,7 @@
             <langLabelPublisher>Utgivare</langLabelPublisher>
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelPlayers>Spelare</langLabelPlayers>
-            <langLabelLastPlayed>Senast spelat</langLabelLastPlayed>
+            <langLabelLastPlayed>Senast Spelat</langLabelLastPlayed>
         </variables>
     </language>
 </theme>

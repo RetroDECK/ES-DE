@@ -24,10 +24,11 @@ The following options are included:
 - 4:3
 - 4:3 vertical
 
-3 languages:
+4 languages:
 
 - English (United States)
 - English (United Kingdom)
+- Română
 - Svenska
 
 3 transitions:
