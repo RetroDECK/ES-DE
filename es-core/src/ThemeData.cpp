@@ -1889,8 +1889,10 @@ void ThemeData::parseColorSchemes(const pugi::xml_node& root)
                             << "\" is not defined in capabilities.xml";
             }
 
-            if (mSelectedColorScheme == viewKey)
+            if (mSelectedColorScheme == viewKey) {
                 parseVariables(node);
+                parseIncludes(node);
+            }
         }
     }
 }
@@ -1926,8 +1928,10 @@ void ThemeData::parseFontSizes(const pugi::xml_node& root)
                             << "\" is not defined in capabilities.xml";
             }
 
-            if (mSelectedFontSize == viewKey)
+            if (mSelectedFontSize == viewKey) {
                 parseVariables(node);
+                parseIncludes(node);
+            }
         }
     }
 }
