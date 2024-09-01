@@ -20,7 +20,7 @@
             <langLabelGenre>Genero</langLabelGenre>
             <langLabelDeveloper>Desarrollador</langLabelDeveloper>
             <langLabelPublisher>Compañia</langLabelPublisher>
-            <langLabelLastPlayed>Ultima vez jugado</langLabelLastPlayed>
+            <langLabelLastPlayed>Ultima Vez Jugado</langLabelLastPlayed>
             <langCustomCollections>Colecciones</langCustomCollections>
             <langYourCollections>Tus Colecciones</langYourCollections>
         </variables>
@@ -28,27 +28,27 @@
     <language name="fr_FR">
         <variables>
             <langLabelRating>Notation</langLabelRating>
-            <langLabelReleasedate>Date de sortie</langLabelReleasedate>
+            <langLabelReleasedate>Date de Sortie</langLabelReleasedate>
             <langLabelPlayers>Joueurs</langLabelPlayers>
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelDeveloper>Développeur</langLabelDeveloper>
             <langLabelPublisher>Editeur</langLabelPublisher>
-            <langLabelLastPlayed>Dernier joué</langLabelLastPlayed>
-            <langCustomCollections>Collections perso</langCustomCollections>
-            <langYourCollections>Vos collections</langYourCollections>
+            <langLabelLastPlayed>Dernier Joué</langLabelLastPlayed>
+            <langCustomCollections>Collections Perso</langCustomCollections>
+            <langYourCollections>Vos Collections</langYourCollections>
         </variables>
     </language>
     <language name="ro_RO">
         <variables>
             <langLabelRating>Scor</langLabelRating>
             <langLabelReleasedate>Lansat</langLabelReleasedate>
-            <langLabelPlayers>Număr de jucători</langLabelPlayers>
+            <langLabelPlayers>Număr de Jucători</langLabelPlayers>
             <langLabelGenre>Gen</langLabelGenre>
             <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
             <langLabelPublisher>Editor</langLabelPublisher>
-            <langLabelLastPlayed>Jucat ultima dată</langLabelLastPlayed>
-            <langCustomCollections>Colecții personalizate</langCustomCollections>
-            <langYourCollections>Colecțiile tale</langYourCollections>
+            <langLabelLastPlayed>Jucat Ultima Dată</langLabelLastPlayed>
+            <langCustomCollections>Colecții Personalizate</langCustomCollections>
+            <langYourCollections>Colecțiile Tale</langYourCollections>
         </variables>
     </language>
     <language name="sv_SE">
