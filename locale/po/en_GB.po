@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-28 14:00+0200\n"
-"PO-Revision-Date: 2024-07-28 13:55+0200\n"
+"POT-Creation-Date: 2024-09-01 13:21+0200\n"
+"PO-Revision-Date: 2024-09-01 13:23+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English (United Kingdom) <info@es-de.org>\n"
 "Language: en_GB\n"
@@ -32,6 +32,30 @@ msgstr "For more information visit"
 
 msgid "No Entries Found"
 msgstr "No Entries Found"
+
+msgctxt "theme"
+msgid "all"
+msgstr "all"
+
+msgctxt "theme"
+msgid "all games"
+msgstr "all games"
+
+msgctxt "theme"
+msgid "recent"
+msgstr "recent"
+
+msgctxt "theme"
+msgid "last played"
+msgstr "last played"
+
+msgctxt "theme"
+msgid "favorites"
+msgstr "favorites"
+
+msgctxt "theme"
+msgid "collections"
+msgstr "collections"
 
 msgid "ScreenScraper error:"
 msgstr "ScreenScraper error:"
@@ -273,6 +297,9 @@ msgstr "SLIDE (BUILT-IN)"
 
 msgid "FADE (BUILT-IN)"
 msgstr "FADE (BUILT-IN)"
+
+msgid "THEME LANGUAGE"
+msgstr "THEME LANGUAGE"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "APPLICATION LANGUAGE"
@@ -1973,18 +2000,22 @@ msgid "This collection is empty"
 msgstr "This collection is empty"
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
 msgstr "This collection contains 1 game: '%s [%s]'"
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 msgstr "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 
 #, c-format
+msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
 "others"
@@ -1999,18 +2030,22 @@ msgstr[1] ""
 "others"
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
 msgstr "This collection contains 1 game: '%s'"
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
 msgstr "This collection contains 2 games: '%s' and '%s'"
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr "This collection contains 3 games: '%s', '%s' and '%s'"
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
@@ -2018,6 +2053,11 @@ msgstr[0] ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgstr[1] ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' is filtered so there may be more games available"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -2172,6 +2212,27 @@ msgstr "random"
 msgid "screensaver"
 msgstr "screensaver"
 
+#, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "%i game"
+msgstr[1] "%i games"
+
+#, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "(%i favorite)"
+msgstr[1] "(%i favorites)"
+
+#, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "%i favorite"
+msgstr[1] "%i favorites"
+
 msgid "system"
 msgstr "system"
 
@@ -2183,6 +2244,14 @@ msgstr "options"
 
 msgid "jump to game"
 msgstr "jump to game"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "yes"
+
+msgctxt "theme"
+msgid "no"
+msgstr "no"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2583,6 +2652,34 @@ msgstr "toggle"
 
 msgid "add half star"
 msgstr "add half star"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "%i day ago"
+msgstr[1] "%i days ago"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "%i hour ago"
+msgstr[1] "%i hours ago"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "%i minute ago"
+msgstr[1] "%i minutes ago"
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "%i second ago"
+msgstr[1] "%i seconds ago"
 
 msgid "SPACE"
 msgstr "SPACE"

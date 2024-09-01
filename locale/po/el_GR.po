@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-08-22 22:26+0200\n"
+"POT-Creation-Date: 2024-09-01 13:21+0200\n"
 "PO-Revision-Date: 2024-07-22 17:51+0300\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Ελληνικά <info@es-de.org>\n"
@@ -32,6 +32,34 @@ msgstr "Για περισσότερες πληροφορίες δείτε"
 
 msgid "No Entries Found"
 msgstr "Δεν βρέθηκαν καταχωρίσεις"
+
+#, fuzzy
+msgctxt "theme"
+msgid "all"
+msgstr "μικρό"
+
+#, fuzzy
+msgctxt "theme"
+msgid "all games"
+msgstr "όλα τα παιχνίδια"
+
+msgctxt "theme"
+msgid "recent"
+msgstr ""
+
+msgctxt "theme"
+msgid "last played"
+msgstr ""
+
+#, fuzzy
+msgctxt "theme"
+msgid "favorites"
+msgstr "αγαπημένα"
+
+#, fuzzy
+msgctxt "theme"
+msgid "collections"
+msgstr "ρυθμίσεις"
 
 msgid "ScreenScraper error:"
 msgstr "Σφάλμα ScreenScraper:"
@@ -290,6 +318,9 @@ msgid "SLIDE (BUILT-IN)"
 msgstr ""
 
 msgid "FADE (BUILT-IN)"
+msgstr ""
+
+msgid "THEME LANGUAGE"
 msgstr ""
 
 msgid "APPLICATION LANGUAGE"
@@ -1905,18 +1936,22 @@ msgid "This collection is empty"
 msgstr ""
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
 msgstr ""
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 msgstr ""
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr ""
 
 #, c-format
+msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
 "others"
@@ -1927,23 +1962,32 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
 msgstr ""
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
 msgstr ""
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr ""
 
 #, c-format
+msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgstr[0] ""
 msgstr[1] ""
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr ""
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -2097,6 +2141,27 @@ msgstr ""
 msgid "screensaver"
 msgstr ""
 
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "όλα τα παιχνίδια"
+msgstr[1] "όλα τα παιχνίδια"
+
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "αγαπημένα"
+msgstr[1] "αγαπημένα"
+
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "αγαπημένα"
+msgstr[1] "αγαπημένα"
+
 msgid "system"
 msgstr ""
 
@@ -2107,6 +2172,14 @@ msgid "options"
 msgstr "ρυθμίσεις"
 
 msgid "jump to game"
+msgstr ""
+
+msgctxt "theme"
+msgid "yes"
+msgstr ""
+
+msgctxt "theme"
+msgid "no"
 msgstr ""
 
 msgid ""
@@ -2465,6 +2538,34 @@ msgstr ""
 msgid "add half star"
 msgstr ""
 
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "SPACE"
 msgstr "ΚΕΝΌ"
 
@@ -2636,6 +2737,3 @@ msgstr "Έχετε ξεπεράσει το ημερήσιο όριο"
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Ο διακοσμητής επέστρεψε HTTP κωδικό σφάλματος %s"
-
-#~ msgid "COMPLETED [metadata]"
-#~ msgstr "ΟΛΟΚΛΗΡΩΜΈΝΟ"

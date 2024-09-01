@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-07-24 21:25+0200\n"
+"POT-Creation-Date: 2024-09-01 13:21+0200\n"
 "PO-Revision-Date: 2024-07-28 23:18+0300\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
@@ -33,6 +33,35 @@ msgstr "Pentru mai multe informații vizitează"
 
 msgid "No Entries Found"
 msgstr "Nu s-au găsit intrări"
+
+#, fuzzy
+msgctxt "theme"
+msgid "all"
+msgstr "mic"
+
+#, fuzzy
+msgctxt "theme"
+msgid "all games"
+msgstr "toate jocurile"
+
+msgctxt "theme"
+msgid "recent"
+msgstr ""
+
+#, fuzzy
+msgctxt "theme"
+msgid "last played"
+msgstr "jucat ultima dată"
+
+#, fuzzy
+msgctxt "theme"
+msgid "favorites"
+msgstr "favorite"
+
+#, fuzzy
+msgctxt "theme"
+msgid "collections"
+msgstr "colecții"
 
 msgid "ScreenScraper error:"
 msgstr "Eroare ScreenScraper:"
@@ -278,6 +307,10 @@ msgstr "GLISEAZĂ (INCORPORAT)"
 
 msgid "FADE (BUILT-IN)"
 msgstr "ATENUEAZĂ (INCORPORAT)"
+
+#, fuzzy
+msgid "THEME LANGUAGE"
+msgstr "LIMBA PREFERATĂ"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "LIMBA APLICAȚIEI"
@@ -1998,19 +2031,19 @@ msgstr "S-A ELIMINAT „%s” DIN „%s”"
 msgid "This collection is empty"
 msgstr "Această colecție este goală"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
 msgstr "Această colecție conține 1 joc: „%s [%s]”"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 msgstr "Această colecție conține 2 jocuri: „%s [%s]” și „%s [%s]”"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr "Această colecție conține 3 jocuri: „%s [%s]”, „%s [%s]” și „%s [%s]”"
 
-#, c-format
+msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
 "others"
@@ -2027,19 +2060,19 @@ msgstr[2] ""
 "Această colecție conține %i de jocuri: „%s [%s]”, „%s [%s]” și „%s [%s]”, "
 "printre altele"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
 msgstr "Această colecție conține 1 joc: „%s”"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
 msgstr "Această colecție conține 2 jocuri: „%s” și „%s”"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr "Această colecție conține 3 jocuri: „%s”, „%s” și „%s”"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
@@ -2048,6 +2081,11 @@ msgstr[1] ""
 "Această colecție conține %i jocuri: „%s”, „%s” și „%s”, printre altele"
 msgstr[2] ""
 "Această colecție conține %i de jocuri: „%s”, „%s” și „%s”, printre altele"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr ""
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -2205,6 +2243,30 @@ msgstr "aleator"
 msgid "screensaver"
 msgstr "economizor ecran"
 
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "omite jocul"
+msgstr[1] "omite jocul"
+msgstr[2] "omite jocul"
+
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "favorite"
+msgstr[1] "favorite"
+msgstr[2] "favorite"
+
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "favorite"
+msgstr[1] "favorite"
+msgstr[2] "favorite"
+
 msgid "system"
 msgstr "sistem"
 
@@ -2216,6 +2278,14 @@ msgstr "opțiuni"
 
 msgid "jump to game"
 msgstr "sări la joc"
+
+msgctxt "theme"
+msgid "yes"
+msgstr ""
+
+msgctxt "theme"
+msgid "no"
+msgstr ""
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2627,6 +2697,38 @@ msgstr "comută"
 
 msgid "add half star"
 msgstr "adaugă jumătate de stea"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 msgid "SPACE"
 msgstr "SPAȚIU"

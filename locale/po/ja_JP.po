@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-08-22 22:26+0200\n"
+"POT-Creation-Date: 2024-09-01 13:21+0200\n"
 "PO-Revision-Date: 2024-08-24 03:31+0800\n"
 "Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
@@ -32,6 +32,35 @@ msgstr "詳細はこちらを"
 
 msgid "No Entries Found"
 msgstr "項目が見つかりませんでした"
+
+#, fuzzy
+msgctxt "theme"
+msgid "all"
+msgstr "小さい"
+
+#, fuzzy
+msgctxt "theme"
+msgid "all games"
+msgstr "すべてのゲーム"
+
+msgctxt "theme"
+msgid "recent"
+msgstr ""
+
+#, fuzzy
+msgctxt "theme"
+msgid "last played"
+msgstr "最後に遊んだ日"
+
+#, fuzzy
+msgctxt "theme"
+msgid "favorites"
+msgstr "お気に入り"
+
+#, fuzzy
+msgctxt "theme"
+msgid "collections"
+msgstr "コレクション"
 
 msgid "ScreenScraper error:"
 msgstr "スクリーンスクレイパーエラー："
@@ -277,6 +306,10 @@ msgstr "スライド（内蔵）"
 
 msgid "FADE (BUILT-IN)"
 msgstr "フェイド（内蔵）"
+
+#, fuzzy
+msgid "THEME LANGUAGE"
+msgstr "希望する言語"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "アプリ言語"
@@ -2001,21 +2034,21 @@ msgstr "'%s' から '%s' まで削除しました"
 msgid "This collection is empty"
 msgstr "このコレクションは空白です"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
 msgstr "このコレクションは一個のゲームを含めています：'%s [%s]'"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 msgstr "このコレクションは二個のゲームを含めています：'%s [%s]' と '%s [%s]'"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr ""
 "このコレクションは三個のゲームを含めています：'%s [%s]'、 '%s [%s]' と '%s "
 "[%s]'"
 
-#, c-format
+msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
 "others"
@@ -2026,24 +2059,29 @@ msgstr[0] ""
 "このコレクションは %i 個のゲームを含めています：'%s [%s]'、 '%s [%s]' と '%s "
 "[%s]'、とその他"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
 msgstr "このコレクションは一個のゲームを含めています：'%s'"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
 msgstr "このコレクションは二個のゲームを含めています：'%s' と '%s'"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr "このコレクションは三個のゲームを含めています：'%s'、 '%s' と '%s'"
 
-#, c-format
+msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgstr[0] ""
 "このコレクションは %i 個のゲームを含めています：'%s'、 '%s' と '%s'、とその他"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr ""
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -2206,6 +2244,24 @@ msgstr "ランダム"
 msgid "screensaver"
 msgstr "スクリーンセーバー"
 
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "ゲームをスキップ"
+
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "お気に入り"
+
+#, fuzzy, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "お気に入り"
+
 msgid "system"
 msgstr "システム"
 
@@ -2217,6 +2273,14 @@ msgstr "オプション"
 
 msgid "jump to game"
 msgstr "ゲームに移動する"
+
+msgctxt "theme"
+msgid "yes"
+msgstr ""
+
+msgctxt "theme"
+msgid "no"
+msgstr ""
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2622,6 +2686,30 @@ msgstr "切り替える"
 
 msgid "add half star"
 msgstr "ハーフスターを追加する"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] ""
 
 msgid "SPACE"
 msgstr "SPACE"
