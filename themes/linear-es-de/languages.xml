@@ -12,17 +12,19 @@
             <langYourCollections>Your Collections</langYourCollections>
         </variables>
     </language>
-    <variables name="es_ES">
-        <langLabelRating>Valoracion</langLabelRating>
-        <langLabelReleasedate>Lanzamiento</langLabelReleasedate>
-        <langLabelPlayers>Jugadores</langLabelPlayers>
-        <langLabelGenre>Generp</langLabelGenre>
-        <langLabelDeveloper>Desarrollador</langLabelDeveloper>
-        <langLabelPublisher>Compañia</langLabelPublisher>
-        <langLabelLastPlayed>Jugado por ultima vez</langLabelLastPlayed>
-        <langCustomCollections>Colecciones</langCustomCollections>
-        <langYourCollections>Tus Colecciones</langYourCollections>
-    </variables>
+    <language name="es_ES">
+        <variables>
+            <langLabelRating>Valoracion</langLabelRating>
+            <langLabelReleasedate>Lanzamiento</langLabelReleasedate>
+            <langLabelPlayers>Jugadores</langLabelPlayers>
+            <langLabelGenre>Genero</langLabelGenre>
+            <langLabelDeveloper>Desarrollador</langLabelDeveloper>
+            <langLabelPublisher>Compañia</langLabelPublisher>
+            <langLabelLastPlayed>Ultima vez jugado</langLabelLastPlayed>
+            <langCustomCollections>Colecciones</langCustomCollections>
+            <langYourCollections>Tus Colecciones</langYourCollections>
+        </variables>
+    </language>
     <language name="fr_FR">
         <variables>
             <langLabelRating>Notation</langLabelRating>
