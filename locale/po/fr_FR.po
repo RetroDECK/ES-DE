@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-09-01 13:21+0200\n"
-"PO-Revision-Date: 2024-08-23 05:39+0200\n"
+"PO-Revision-Date: 2024-09-01 17:22+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Français <info@es-de.org>\n"
 "Language: fr_FR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 msgid "Network error (status:"
 msgstr "Erreur réseau (état :"
@@ -33,31 +33,26 @@ msgstr "Pour plus d'information allez à"
 msgid "No Entries Found"
 msgstr "Aucune entrée trouvée"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all"
-msgstr "petit"
+msgstr "tous"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all games"
 msgstr "tous les jeux"
 
 msgctxt "theme"
 msgid "recent"
-msgstr ""
+msgstr "récent"
 
-#, fuzzy
 msgctxt "theme"
 msgid "last played"
 msgstr "dernier joué"
 
-#, fuzzy
 msgctxt "theme"
 msgid "favorites"
 msgstr "favoris"
 
-#, fuzzy
 msgctxt "theme"
 msgid "collections"
 msgstr "collections"
@@ -307,9 +302,8 @@ msgstr "GLISSEMENT  (INTÉGRÉE)"
 msgid "FADE (BUILT-IN)"
 msgstr "FONDU (INTÉGRÉ)"
 
-#, fuzzy
 msgid "THEME LANGUAGE"
-msgstr "LANGUE PRÉFÉRÉE"
+msgstr "LANGUE DU THÈME"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "CHOIX DE LA LANGUE"
@@ -731,7 +725,7 @@ msgid "DEBUG MODE"
 msgstr "MODE DEBUG"
 
 msgid "DISPLAY GPU STATISTICS OVERLAY"
-msgstr "AFFICHER LES STATISTIQUES GPU EN SURIMPRESSION"
+msgstr "AFFICHER LES STATS GPU EN SURIMPRESSION"
 
 msgid "ENABLE MENU IN KID MODE"
 msgstr "ACTIVER LE MENU EN MODE ENFANT"
@@ -2050,18 +2044,22 @@ msgstr "RETIRÉ '%s' DE '%s'"
 msgid "This collection is empty"
 msgstr "Cette collection est vide"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
 msgstr "Cette collection contient 1 jeu: '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 msgstr "Cette collection contient 2 jeux: '%s [%s]' et '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr "Cette collection contient 3 jeux: '%s [%s]', '%s [%s]' et '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
@@ -2076,18 +2074,22 @@ msgstr[1] ""
 "Cette collection contient %i jeux: '%s [%s]', '%s [%s]' et '%s [%s]', et "
 "d'autres"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
 msgstr "Cette collection contient 1 jeu : '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
 msgstr "Cette collection contient 2 jeux: '%s' and '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr "Cette collection contient 3 jeux: '%s', '%s' and '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
@@ -2098,7 +2100,7 @@ msgstr[1] "Cette collection contient %i jeux: '%s', '%s' et '%s', et d'autres"
 #, c-format
 msgctxt "theme"
 msgid "'%s' is filtered so there may be more games available"
-msgstr ""
+msgstr "'%s' est filtré ainsi il peut y avoir plus de jeux dispo"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -2269,26 +2271,26 @@ msgstr "aléatoire"
 msgid "screensaver"
 msgstr "écran de veille"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i game"
 msgid_plural "%i games"
-msgstr[0] "ignorer jeu"
-msgstr[1] "ignorer jeu"
+msgstr[0] "%i jeu"
+msgstr[1] "%i jeux"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "(%i favorite)"
 msgid_plural "(%i favorites)"
-msgstr[0] "favoris"
-msgstr[1] "favoris"
+msgstr[0] "(%i favori)"
+msgstr[1] "(%i favoris)"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
-msgstr[0] "favoris"
-msgstr[1] "favoris"
+msgstr[0] "%i favori"
+msgstr[1] "%i favoris"
 
 msgid "system"
 msgstr "système"
@@ -2304,11 +2306,11 @@ msgstr "aller au jeu"
 
 msgctxt "theme"
 msgid "yes"
-msgstr ""
+msgstr "oui"
 
 msgctxt "theme"
 msgid "no"
-msgstr ""
+msgstr "non"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2724,29 +2726,29 @@ msgstr "ajouter une demi étoile"
 msgctxt "theme"
 msgid "%i day ago"
 msgid_plural "%i days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "il y a %i jour"
+msgstr[1] "il y a %i jours"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour ago"
 msgid_plural "%i hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "il y a %i heure"
+msgstr[1] "il y a %i heures"
 
 #, c-format
 msgctxt "theme"
 msgid "%i minute ago"
 msgid_plural "%i minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "il y a %i minute"
+msgstr[1] "il y a %i minutes"
 
 #, c-format
 msgctxt "theme"
 msgid "%i second ago"
 msgid_plural "%i seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "il y a %i seconde"
+msgstr[1] "il y a %i secondes"
 
 msgid "SPACE"
 msgstr "ESPACE"
