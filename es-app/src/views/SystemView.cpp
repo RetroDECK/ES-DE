@@ -72,6 +72,8 @@ void SystemView::goToSystem(SystemData* system, bool animate)
     }
 
     // Reset horizontally scrolling text.
+    for (auto& text : mSystemElements[mPrimary->getCursor()].gameCountComponents)
+        text->resetComponent();
     for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
         text->resetComponent();
 
@@ -140,6 +142,9 @@ bool SystemView::input(InputConfig* config, Input input)
 void SystemView::update(int deltaTime)
 {
     mPrimary->update(deltaTime);
+
+    for (auto& text : mSystemElements[mPrimary->getCursor()].gameCountComponents)
+        text->update(deltaTime);
 
     for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
         text->update(deltaTime);
@@ -226,6 +231,8 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 void SystemView::onCursorChanged(const CursorState& state)
 {
     // Reset horizontally scrolling text.
+    for (auto& text : mSystemElements[mPrimary->getCursor()].gameCountComponents)
+        text->resetComponent();
     for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
         text->resetComponent();
 
@@ -615,7 +622,8 @@ void SystemView::populate()
                     }
                     if (element.second.has("systemdata") &&
                         element.second.get<std::string>("systemdata").substr(0, 9) == "gamecount") {
-                        // A container can't be used if systemdata is set to a gamecount value.
+                        // A vertical container can't be used if systemdata is set to a gamecount
+                        // value. A horizontal container can be used though.
                         if (element.second.has("systemdata")) {
                             elements.gameCountComponents.emplace_back(
                                 std::make_unique<TextComponent>());
