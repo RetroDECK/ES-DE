@@ -39,6 +39,16 @@
             <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
         </variables>
     </language>
+    <language name="pt_BR">
+        <variables>
+            <langLabelReleasedate>Lançamento</langLabelReleasedate>
+            <langLabelDeveloper>Desenvolvedor</langLabelDeveloper>
+            <langLabelPublisher>Distribuidor</langLabelPublisher>
+            <langLabelGenre>Gênero</langLabelGenre>
+            <langLabelPlayers>Jogadores</langLabelPlayers>
+            <langLabelLastPlayed>Última Vez Que Jogou</langLabelLastPlayed>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <langLabelReleasedate>Lansat</langLabelReleasedate>
