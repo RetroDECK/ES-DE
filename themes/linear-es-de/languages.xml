@@ -38,6 +38,19 @@
             <langYourCollections>Vos Collections</langYourCollections>
         </variables>
     </language>
+    <language name="it_IT">
+        <variables>
+            <langLabelRating>Valutazione</langLabelRating>
+            <langLabelReleasedate>Data Uscita</langLabelReleasedate>
+            <langLabelPlayers>Nr. Giocatori</langLabelPlayers>
+            <langLabelGenre>Genere</langLabelGenre>
+            <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
+            <langLabelPublisher>Casa Editrice</langLabelPublisher>
+            <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
+            <langCustomCollections>Collezioni Personalizzate</langCustomCollections>
+            <langYourCollections>Le tue Collezioni</langYourCollections>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <langLabelRating>Scor</langLabelRating>

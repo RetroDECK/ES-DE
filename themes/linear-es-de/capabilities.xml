@@ -9,6 +9,7 @@
     <language>en_GB</language>
     <language>es_ES</language>
     <language>fr_FR</language>
+    <language>it_IT</language>
     <language>ro_RO</language>
     <language>sv_SE</language>
 
@@ -25,6 +26,7 @@
         <label language="en_GB">Dark</label>
         <label language="es_ES">Oscuro</label>
         <label language="fr_FR">Foncé</label>
+        <label language="it_IT">Scuro</label>
         <label language="ro_RO">Întunecată</label>
         <label language="sv_SE">Mörkt</label>
     </colorScheme>
@@ -34,6 +36,7 @@
         <label language="en_GB">Light</label>
         <label language="es_ES">Claro</label>
         <label language="fr_FR">Clair</label>
+        <label language="it_IT">Chiaro</label>
         <label language="ro_RO">Luminoasă</label>
         <label language="sv_SE">Ljust</label>
     </colorScheme>
@@ -54,7 +57,8 @@
         <label language="en_US">Textlist</label>
         <label language="en_GB">Textlist</label>
         <label language="es_ES">Lista</label>
-        <label language="fr_FR">Textlist</label>
+        <label language="fr_FR">Liste</label>
+        <label language="it_IT">Lista testi</label>
         <label language="ro_RO">Listă text</label>
         <label language="sv_SE">Textlista</label>
         <selectable>true</selectable>
@@ -64,7 +68,8 @@
         <label language="en_US">Textlist without videos</label>
         <label language="en_GB">Textlist without videos</label>
         <label language="es_ES">Lista sin videos</label>
-        <label language="fr_FR">Textlist sans vidéos</label>
+        <label language="fr_FR">Liste sans vidéos</label>
+        <label language="it_IT">Lista testi, no video</label>
         <label language="ro_RO">Listă text fără videouri</label>
         <label language="sv_SE">Textlista utan video</label>
         <selectable>true</selectable>
@@ -74,7 +79,8 @@
         <label language="en_US">Simple textlist</label>
         <label language="en_GB">Simple textlist</label>
         <label language="es_ES">Lista simple</label>
-        <label language="fr_FR">Simple textlist</label>
+        <label language="fr_FR">Simple liste</label>
+        <label language="it_IT">Lista testi semplice</label>
         <label language="ro_RO">Listă text simplă</label>
         <label language="sv_SE">Enkel textlista</label>
         <selectable>true</selectable>
@@ -84,7 +90,8 @@
         <label language="en_US">Simple textlist without videos</label>
         <label language="en_GB">Simple textlist without videos</label>
         <label language="es_ES">Lista simple sin videos</label>
-        <label language="fr_FR">Simple textlist sans vidéos</label>
+        <label language="fr_FR">Simple liste sans vidéos</label>
+        <label language="it_IT">Lista testi semplice, no video</label>
         <label language="ro_RO">Listă text simplă fără videouri</label>
         <label language="sv_SE">Enkel textlista utan video</label>
         <selectable>true</selectable>
@@ -95,6 +102,7 @@
         <label language="en_GB">Carousel</label>
         <label language="es_ES">Carrusel</label>
         <label language="fr_FR">Carrousel</label>
+        <label language="it_IT">Carosello</label>
         <label language="ro_RO">Carusel</label>
         <label language="sv_SE">Karusell</label>
         <selectable>true</selectable>
@@ -105,18 +113,20 @@
         <label language="en_GB">Simple carousel</label>
         <label language="es_ES">Carrusel simple</label>
         <label language="fr_FR">Simple Carrousel</label>
+        <label language="it_IT">Carosello semplice</label>
         <label language="ro_RO">instant și glisează</label>
         <label language="sv_SE">Enkel karusell</label>
         <selectable>true</selectable>
     </variant>
 
     <transitions name="instantAndSlide">
-        <label language="en_US">instant and slide</label>
-        <label language="en_GB">instant and slide</label>
-        <label language="es_ES">instantanea y deslizante</label>
-        <label language="fr_FR">instantané et glissement</label>
-        <label language="ro_RO">instant și glisează</label>
-        <label language="sv_SE">direkt och glidande</label>
+        <label language="en_US">Instant and slide</label>
+        <label language="en_GB">Instant and slide</label>
+        <label language="es_ES">Instantanea y deslizante</label>
+        <label language="fr_FR">Instantané et glissement</label>
+        <label language="it_IT">Istantanea e scorri</label>
+        <label language="ro_RO">Instant și glisează</label>
+        <label language="sv_SE">Direkt och glidande</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>slide</systemToGamelist>
@@ -127,12 +137,13 @@
     </transitions>
 
     <transitions name="instant">
-        <label language="en_US">instant</label>
-        <label language="en_GB">instant</label>
-        <label language="es_ES">instantanea</label>
-        <label language="fr_FR">instantané</label>
-        <label language="ro_RO">instant</label>
-        <label language="sv_SE">direkt</label>
+        <label language="en_US">Instant</label>
+        <label language="en_GB">Instant</label>
+        <label language="es_ES">Instantanea</label>
+        <label language="fr_FR">Instantané</label>
+        <label language="it_IT">Istantanea</label>
+        <label language="ro_RO">Instant</label>
+        <label language="sv_SE">Direkt</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>instant</systemToGamelist>
@@ -143,12 +154,13 @@
     </transitions>
 
     <transitions name="fade">
-        <label language="en_US">fade</label>
-        <label language="en_GB">fade</label>
-        <label language="es_ES">fundido</label>
-        <label language="fr_FR">fondu</label>
-        <label language="ro_RO">estompează</label>
-        <label language="sv_SE">uttoning</label>
+        <label language="en_US">Fade</label>
+        <label language="en_GB">Fade</label>
+        <label language="es_ES">Fundido</label>
+        <label language="fr_FR">Fondu</label>
+        <label language="it_IT">Dissolvi</label>
+        <label language="ro_RO">Estompează</label>
+        <label language="sv_SE">Uttoning</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>fade</systemToGamelist>
