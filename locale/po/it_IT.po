@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-09-01 13:21+0200\n"
-"PO-Revision-Date: 2024-08-30 13:09+0300\n"
+"PO-Revision-Date: 2024-09-02 13:06+0300\n"
 "Last-Translator: Lorenzo Castelletta <lorenzo.castelletta@gmail.com>\n"
 "Language-Team: Italiano <info@es-de.org>\n"
 "Language: it_IT\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 
 msgid "Network error (status:"
-msgstr "Errore di rete (status:"
+msgstr "Errore di rete (stato:"
 
 msgid "New prerelease available:"
 msgstr "Nuova prerelease disponibile:"
@@ -33,31 +33,26 @@ msgstr "Per ulteriori informazioni visita"
 msgid "No Entries Found"
 msgstr "Nessun elemento trovato"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all"
-msgstr "piccole"
+msgstr "tutto"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all games"
 msgstr "tutti i giochi"
 
 msgctxt "theme"
 msgid "recent"
-msgstr ""
+msgstr "recenti"
 
-#, fuzzy
 msgctxt "theme"
 msgid "last played"
 msgstr "ultima partita"
 
-#, fuzzy
 msgctxt "theme"
 msgid "favorites"
 msgstr "preferiti"
 
-#, fuzzy
 msgctxt "theme"
 msgid "collections"
 msgstr "collezioni"
@@ -243,7 +238,7 @@ msgid "SCRAPER"
 msgstr "SCRAPING"
 
 msgid "UI SETTINGS"
-msgstr "IMPOSTAZIONI G.U.I."
+msgstr "IMPOSTAZIONI UI"
 
 msgid "SOUND SETTINGS"
 msgstr "IMPOSTAZIONI AUDIO"
@@ -305,9 +300,8 @@ msgstr "SCIVOLA (INTEGRATO)"
 msgid "FADE (BUILT-IN)"
 msgstr "DISSOLVENZA (INTEGRATO)"
 
-#, fuzzy
 msgid "THEME LANGUAGE"
-msgstr "LINGUA PREFERITA"
+msgstr "LINGUA DEL TEMA"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "LINGUA DELL' APPLICAZIONE"
@@ -1073,7 +1067,7 @@ msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
 msgstr "CONVERTI UNDERSCORE IN SPAZI DURANTE RICERCA"
 
 msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
-msgstr "RIMUOVI PUNTI DA RICERCHE DURANTE SCRAPING AUTOM."
+msgstr "RIMUOVI PUNTI DA RICERCHE DURANTE AUTOSCRAPING"
 
 msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
 msgstr "ABILITA IL FALLBACK SU ALTRE REGIONI"
@@ -1113,7 +1107,7 @@ msgid "DISPLAY MEDIA TYPES"
 msgstr "MOSTRA I TIPI DEI MEDIA"
 
 msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
-msgstr "CONTINUA ESEC. VIDEO DURANTE VISUALIZZ. IMMAG."
+msgstr "CONTINUA ESEC. VIDEO IN VISUALIZZ. IMMAGINI"
 
 msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
 msgstr "ALLARGA VIDEO ALLA RISOLUZIONE SCHERMO"
@@ -1181,10 +1175,10 @@ msgid "IF UNTHEMED"
 msgstr "SE SENZA TEMA"
 
 msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr "ORDINA PREFERITI IN CIMA NELLE COLLEZIONI PERS."
+msgstr "METTI I PREFERITI IN CIMA NELLE COLLEZIONI PERS."
 
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "MOSTRA STELLE DIVALUTAZIONE NELLE COLLEZIONI PERS."
+msgstr "MOSTRA STELLE DI VALUTAZIONE NELLE COLLEZIONI PERS."
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
 msgstr "AVVIA SCREENSAVER DOPO (MINUTI)"
@@ -2044,18 +2038,22 @@ msgstr "RIMOSSO '%s' DA '%s'"
 msgid "This collection is empty"
 msgstr "Questa collezione è vuota"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
 msgstr "Questa collezione contiene 1 gioco: '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 msgstr "Questa collezione contiene 2 giochi: '%s [%s]' e '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr "Questa collezione contiene 3 giochi: '%s [%s]', '%s [%s]' e '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
@@ -2068,18 +2066,22 @@ msgstr[0] ""
 msgstr[1] ""
 "Questa collezione contiene %i giochi, come '%s [%s]', '%s [%s]' e '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
 msgstr "Questa collezione contiene 1 gioco: '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
 msgstr "Questa collezione contiene 2 giochi: '%s' e '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr "Questa collezione contiene 3 giochi: '%s', '%s' e '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
@@ -2090,7 +2092,7 @@ msgstr[1] "Questa collezione contiene %i, come '%s', '%s' e '%s'"
 #, c-format
 msgctxt "theme"
 msgid "'%s' is filtered so there may be more games available"
-msgstr ""
+msgstr "'%s' è filtrata, quindi potrebbero esserci altri giochi disponibili"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -2258,26 +2260,26 @@ msgstr "casuale"
 msgid "screensaver"
 msgstr "screensaver"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i game"
 msgid_plural "%i games"
-msgstr[0] "salta gioco"
-msgstr[1] "salta gioco"
+msgstr[0] "%i game gioco"
+msgstr[1] "%i giochi"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "(%i favorite)"
 msgid_plural "(%i favorites)"
-msgstr[0] "preferiti"
-msgstr[1] "preferiti"
+msgstr[0] "(%i preferito)"
+msgstr[1] "(%i preferiti)"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
-msgstr[0] "preferiti"
-msgstr[1] "preferiti"
+msgstr[0] "%i preferito"
+msgstr[1] "%i preferiti"
 
 msgid "system"
 msgstr "sistema"
@@ -2293,11 +2295,11 @@ msgstr "vai al gioco"
 
 msgctxt "theme"
 msgid "yes"
-msgstr ""
+msgstr "sì"
 
 msgctxt "theme"
 msgid "no"
-msgstr ""
+msgstr "no"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2714,29 +2716,29 @@ msgstr "aggiungi mezza stella"
 msgctxt "theme"
 msgid "%i day ago"
 msgid_plural "%i days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i giorno fa"
+msgstr[1] "%i giorni fa"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour ago"
 msgid_plural "%i hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i ora fa"
+msgstr[1] "%i ore fa"
 
 #, c-format
 msgctxt "theme"
 msgid "%i minute ago"
 msgid_plural "%i minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i minuto fa"
+msgstr[1] "%i minuti fa"
 
 #, c-format
 msgctxt "theme"
 msgid "%i second ago"
 msgid_plural "%i seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i secondo fa"
+msgstr[1] "%i secondi fa"
 
 msgid "SPACE"
 msgstr "SPAZIO"
