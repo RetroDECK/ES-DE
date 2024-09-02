@@ -118,6 +118,10 @@ Games can only be launched if ES-DE has been started from the command line, i.e.
 
 Crashes on game start (Stella 2014 works fine).
 
+### VICE x64sc Accurate / x64 SuperCPU / x128 / xplus4 / xvic
+
+Games don't run, emulator instantly exits (VICE x64 Fast works fine).
+
 ### ZEsarUX
 
 Crashes on game start.
@@ -157,7 +161,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atarixe               | Atari XE                                       | Atari800                          |                                   | Yes          |                                      |
 | atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           |                                   | Yes          | Single archive  file                 |
 | bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
-| c64                   | Commodore 64                                   | _Placeholder_                     |                                   |              |                                      |
+| c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128 | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | cdimono1              | Philips CD-i                                   | MAME **(Standalone)**             |                                   | Yes          |                                      |
 | cdtv                  | Commodore CDTV                                 | PUAE                              | FS-UAE **(Standalone)**           | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
 | chailove              | ChaiLove Game Engine                           | _Placeholder_                     |                                   |              |                                      |
@@ -253,7 +257,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Mednafen **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      | Mednafen **(Standalone)**         | Yes          |                                      |
 | pico8                 | PICO-8 Fantasy Console                         | _Placeholder_                     |                                   |              |                                      |
-| plus4                 | Commodore Plus/4                               | _Placeholder_                     |                                   |              |                                      |
+| plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | _Placeholder_                     |                                   |              |                                      |
 | ports                 | Ports                                          | _Script_                          | OpenLara (Tomb Raider)            | No           | See the specific _Ports and desktop applications_ section in the user guide |
 | ps2                   | Sony PlayStation 2                             | _Placeholder_                     |                                   |              |                                      |
@@ -300,7 +304,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | type-x                | Taito Type X                                   | _Placeholder_                     |                                   |              |                                      |
 | uzebox                | Uzebox Open Source Console                     | _Placeholder_                     |                                   |              |                                      |
 | vectrex               | GCE Vectrex                                    | vecx                              | MAME **(Standalone)**             | Yes for MAME | Single archive or ROM file           |
-| vic20                 | Commodore VIC-20                               | _Placeholder_                     |                                   |              |                                      |
+| vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   | No           | Single archive or tape, cartridge or diskette image file |
 | videopac              | Philips Videopac G7000                         | O2EM                              | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           |                                      |
 | vpinball              | Visual Pinball                                 | _Placeholder_                     |                                   |              |                                      |

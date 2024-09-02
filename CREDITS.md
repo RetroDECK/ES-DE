@@ -19,6 +19,8 @@ Nils Bonenberger
 
 **English (United Kingdom)** \
 Weestuarty \
+**Spanish (Spain)** \
+Dani (stshunz) \
 **French** \
 Fredy27 (neuromancer974) \
 **Italian** \
@@ -31,14 +33,13 @@ MrVictorFull \
 SilverGreen93 \
 **Russian** \
 Lulzee \
-**Spanish (Spain)** \
-Dani (stshunz) \
 **Swedish** \
 Leon Styhre \
 **Japanese** \
 冰棍 \
 **Simplified Chinese** \
-邻家小熊
+邻家小熊 \
+冰棍
 
 # Licenses
 

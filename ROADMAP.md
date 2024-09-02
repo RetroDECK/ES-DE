@@ -10,7 +10,6 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * Bulk metadata editor
 * Background music
 * Controller button mappings from inside ES-DE (similar to pad2key in Batocera)
-* Localization/multi-language support
 * Auto-import tools for Android apps, Steam, Lutris etc.
 
 **User interface**

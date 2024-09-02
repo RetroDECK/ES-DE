@@ -6,21 +6,32 @@
 
 ### Release overview
 
+This release brings full localization support and includes translations to ten new languages. More specifically these are Spanish (Spain), French, Italian, Polish, Portuguese (Brazil), Romanian, Russian, Swedish, Japanese and Simplified Chinese. More languages will follow in future releases.
+
+As part of the localization work there have been substantial changes made to the application; text rendering has been improved with proper text shaping using the HarfBuzz library and case mappings and boundary analysis are now performed by the ICU library.
+
+As for minor but notable improvements, entering the wrong ScreenScraper credentials will now display an error popup during scraping, specific subdirectories inside the system directories can now be exluded from getting loaded, and starting time for the video screensaver has been greatly reduced on devices with poor disk I/O performance, such as Android.
+
+The release also brings a new port with experimental support for the Haiku operating system.
+
+See the full list below for all changes like added emulators, launch command modifications and bug fixes.
+
 ### Detailed list of changes
 
 * Added localization support
 * Added text shaping support using the HarfBuzz library
 * Replaced all built-in Unicode case conversion logic and lookup tables with facilities from the ICU library
 * Added translations for English (United Kingdom) (en_US)
+* Added translations for Spanish (Spain) (es_ES)
 * Added translations for French (fr_FR)
-* Added translations for Japanese (ja_JP)
+* Added translations for Italian (it_IT)
 * Added translations for Polish (pl_PL)
 * Added translations for Portuguese (Brazil) (pt_BR)
 * Added translations for Romanian (ro_RO)
 * Added translations for Russian (ru_RU)
-* Added translations for Simplified Chinese (zh_CN)
-* Added translations for Spanish (Spain) (es_ES)
 * Added translations for Swedish (sv_SE)
+* Added translations for Japanese (ja_JP)
+* Added translations for Simplified Chinese (zh_CN)
 * Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
 * Added support for skipping the scanning of game system subdirectories (by using noload.txt files)
 * Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper

@@ -3249,7 +3249,7 @@ Transition animations to play when navigating between different gamelists, betwe
 
 **Theme language**
 
-If the selected theme has multilingual support then you can select between its supported languages here. This setting is primarily intended for testing purposes and for theme developers, and should as such usually be left at _automatic_ which will select the same theme language as the overall application language (see the next setting below). Note that not all themes may support all languages that the ES-DE application supports.
+If the selected theme has multilingual support then you can select between its supported languages here. This setting is primarily intended for testing purposes and for theme developers, and should as such usually be left at _automatic_ which will select the same theme language as the overall application language (see the next setting below). Note that not all themes may support all languages that the ES-DE application supports. Also note that a portion of the theme translations are contained within the base application itself and as such will not switch language unless you also change the _Application language_ setting accordingly.
 
 **Application language**
 

@@ -188,11 +188,14 @@ Also note that this will not work unless support for your language has already b
 
 ## Theme translations
 
-In addition to what has been described above there is translation work needed for the actual themes as well. Some portion of the text displayed by the theme engine is part of the .po files, like the system view game counter and the custom collection summary, but most text is contained within each theme's configuration files.
+In addition to what has been described above there is translation work needed for the actual themes as well. Some portion of the text displayed by the theme engine comes from the application .po files (like the system view game counter and the custom collection summary), but most text is contained within each theme's configuration files.
 
-So to have a fully translated experience it's important to work together with the theme developers so they can incorporate full localization support into their themes. There is also an official metadata repository available for developers to use to easily include things like game system descriptions and various other information, and the goal is to have this fully translated to all languages as well.
+So to have a fully translated experience it's important to work together with the theme developers so they can incorporate full localization support into their themes. There is also an official system metadata repository available for theme developers to easily include things like game system descriptions and various other information, and the goal is to have this translated to all languages as well.
 
 This repository can be found here:\
 https://gitlab.com/es-de/themes/system-metadata
+
+And here is a link to the language section of the theme engine documentation which contains some further relevant information:\
+[THEMES-DEV.md](THEMES-DEV.md#languages)
 
 Discussions regarding theme translations are also covered in the ES-DE Discord server.
