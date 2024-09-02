@@ -9,6 +9,16 @@
             <langLabelPublisher>Publisher</langLabelPublisher>
         </variables>
     </language>
+    <language name="es_ES">
+        <variables>
+            <langLabelRating>Valoracion</langLabelRating>
+            <langLabelReleasedate>Lanzamiento</langLabelReleasedate>
+            <langLabelPlayers>Jugadores</langLabelPlayers>
+            <langLabelGenre>Genero</langLabelGenre>
+            <langLabelDeveloper>Desarrollador</langLabelDeveloper>
+            <langLabelPublisher>Compañia</langLabelPublisher>
+        </variables>
+    </language>
     <language name="fr_FR">
         <variables>
             <langLabelRating>Notation</langLabelRating>
@@ -17,6 +27,16 @@
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelDeveloper>Développeur</langLabelDeveloper>
             <langLabelPublisher>Editeur</langLabelPublisher>
+        </variables>
+    </language>
+    <language name="it_IT">
+        <variables>
+            <langLabelRating>Valutazione</langLabelRating>
+            <langLabelReleasedate>Data Uscita</langLabelReleasedate>
+            <langLabelPlayers>Nr. Giocatori</langLabelPlayers>
+            <langLabelGenre>Genere</langLabelGenre>
+            <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
+            <langLabelPublisher>Casa Editrice</langLabelPublisher>
         </variables>
     </language>
     <language name="ro_RO">
