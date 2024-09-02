@@ -39,6 +39,16 @@
             <langLabelPublisher>Casa Editrice</langLabelPublisher>
         </variables>
     </language>
+    <language name="pt_BR">
+        <variables>
+            <langLabelRating>Avaliação</langLabelRating>
+            <langLabelReleasedate>Lançamento</langLabelReleasedate>
+            <langLabelPlayers>Jogadores</langLabelPlayers>
+            <langLabelGenre>Gênero</langLabelGenre>
+            <langLabelDeveloper>Desenvolvedor</langLabelDeveloper>
+            <langLabelPublisher>Distribuidor</langLabelPublisher>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <langLabelRating>Scor</langLabelRating>
