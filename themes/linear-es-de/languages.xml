@@ -51,6 +51,19 @@
             <langYourCollections>Le tue Collezioni</langYourCollections>
         </variables>
     </language>
+    <language name="pt_BR">
+        <variables>
+            <langLabelRating>Avaliação</langLabelRating>
+            <langLabelReleasedate>Lançamento</langLabelReleasedate>
+            <langLabelPlayers>Jogadores</langLabelPlayers>
+            <langLabelGenre>Gênero</langLabelGenre>
+            <langLabelDeveloper>Desenvolvedor</langLabelDeveloper>
+            <langLabelPublisher>Distribuidor</langLabelPublisher>
+            <langLabelLastPlayed>Última Vez Que Jogou</langLabelLastPlayed>
+            <langCustomCollections>Coleções Adaptadas</langCustomCollections>
+            <langYourCollections>Suas Coleções</langYourCollections>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <langLabelRating>Scor</langLabelRating>
