@@ -9,6 +9,36 @@
             <langLabelLastPlayed>Last Played</langLabelLastPlayed>
         </variables>
     </language>
+    <language name="es_ES">
+        <variables>
+            <langLabelReleasedate>Lanzamiento</langLabelReleasedate>
+            <langLabelDeveloper>Desarrollador</langLabelDeveloper>
+            <langLabelPublisher>Compañia</langLabelPublisher>
+            <langLabelGenre>Genero</langLabelGenre>
+            <langLabelPlayers>Jugadores</langLabelPlayers>
+            <langLabelLastPlayed>Ultima Vez Jugado</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="fr_FR">
+        <variables>
+            <langLabelReleasedate>Date de Sortie</langLabelReleasedate>
+            <langLabelDeveloper>Développeur</langLabelDeveloper>
+            <langLabelPublisher>Editeur</langLabelPublisher>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelPlayers>Joueurs</langLabelPlayers>
+            <langLabelLastPlayed>Dernier Joué</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="it_IT">
+        <variables>
+            <langLabelReleasedate>Data Uscita</langLabelReleasedate>
+            <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
+            <langLabelPublisher>Casa Editrice</langLabelPublisher>
+            <langLabelGenre>Genere</langLabelGenre>
+            <langLabelPlayers>Nr. Giocatori</langLabelPlayers>
+            <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <langLabelReleasedate>Lansat</langLabelReleasedate>
