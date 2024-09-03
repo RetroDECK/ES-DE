@@ -86,6 +86,7 @@ if not exist icu\ (
 cd icu
 git sparse-checkout set --no-cone icu4c
 git checkout release-75-1
+copy /Y ..\..\es-app\assets\icu_filters.json icu4c\source\
 cd ..
 
 echo:

@@ -35,6 +35,14 @@ if not exist icu/icu4c\ (
 )
 
 cd icu/icu4c
+set ICU_DATA_FILTER_FILE=%cd%\source\icu_filters.json
+
+if not exist %ICU_DATA_FILTER_FILE% (
+  echo %ICU_DATA_FILTER_FILE% file is missing, aborting.
+  cd ..
+  goto end
+)
+
 msbuild source\allinone\allinone.sln /p:Configuration=Release /p:Platform=x64 /p:SkipUWP=true
 
 copy /Y bin64\icudt75.dll ..\..\..\
