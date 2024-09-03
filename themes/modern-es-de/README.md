@@ -26,7 +26,7 @@ The following options are included:
 - 4:3
 - 21:9
 
-8 languages:
+9 languages:
 
 - English (United States)
 - English (United Kingdom)
@@ -35,6 +35,7 @@ The following options are included:
 - Italiano
 - Português (Brasil)
 - Română
+- Русский
 - Svenska
 
 3 transitions:

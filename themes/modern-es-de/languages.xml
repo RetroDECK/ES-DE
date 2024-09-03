@@ -59,6 +59,16 @@
             <langLabelPublisher>Editor</langLabelPublisher>
         </variables>
     </language>
+    <language name="ru_RU">
+        <variables>
+            <langLabelRating>Рейтинг</langLabelRating>
+            <langLabelReleasedate>Дата Выхода</langLabelReleasedate>
+            <langLabelPlayers>Игроки</langLabelPlayers>
+            <langLabelGenre>Жанр</langLabelGenre>
+            <langLabelDeveloper>Разработчик</langLabelDeveloper>
+            <langLabelPublisher>Издатель</langLabelPublisher>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <langLabelRating>Betyg</langLabelRating>

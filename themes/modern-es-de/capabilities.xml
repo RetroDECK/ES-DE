@@ -12,6 +12,7 @@
     <language>it_IT</language>
     <language>pt_BR</language>
     <language>ro_RO</language>
+    <language>ru_RU</language>
     <language>sv_SE</language>
 
     <aspectRatio>16:9</aspectRatio>
@@ -30,6 +31,7 @@
         <label language="it_IT">Scuro</label>
         <label language="pt_BR">Escuro</label>
         <label language="ro_RO">Întunecată</label>
+        <label language="ru_RU">Тёмная</label>
         <label language="sv_SE">Mörkt</label>
     </colorScheme>
 
@@ -41,6 +43,7 @@
         <label language="it_IT">Chiaro</label>
         <label language="pt_BR">Claro</label>
         <label language="ro_RO">Luminoasă</label>
+        <label language="ru_RU">Светлая</label>
         <label language="sv_SE">Ljust</label>
     </colorScheme>
 
@@ -52,6 +55,7 @@
         <label language="it_IT">Istantanea</label>
         <label language="pt_BR">Deslizar</label>
         <label language="ro_RO">Instant</label>
+        <label language="ru_RU">Мгновенно</label>
         <label language="sv_SE">Direkt</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -70,6 +74,7 @@
         <label language="it_IT">Istantanea e scorri</label>
         <label language="pt_BR">Instantâneo e deslizar</label>
         <label language="ro_RO">Instant și glisează</label>
+        <label language="ru_RU">Мгновенно и скольжение</label>
         <label language="sv_SE">Direkt och glidande</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -88,6 +93,7 @@
         <label language="it_IT">Istantanea e dissolvi</label>
         <label language="pt_BR">Instantâneo e esmaecer</label>
         <label language="ro_RO">Instant și estompează</label>
+        <label language="ru_RU">Мгновенно и затухание</label>
         <label language="sv_SE">Direkt och uttoning</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -112,6 +118,7 @@
         <label language="it_IT">Lista testi con video</label>
         <label language="pt_BR">Lista de texto com vídeos</label>
         <label language="ro_RO">Listă text cu videouri</label>
+        <label language="ru_RU">Текст с видео</label>
         <label language="sv_SE">Textlista med video</label>
         <selectable>true</selectable>
         <override>
@@ -129,6 +136,7 @@
         <label language="it_IT">Lista testi, no video</label>
         <label language="pt_BR">Lista de texto sem vídeos</label>
         <label language="ro_RO">Listă text fără videouri</label>
+        <label language="ru_RU">Текст без видео</label>
         <label language="sv_SE">Textlista utan video</label>
         <selectable>true</selectable>
         <override>
@@ -146,6 +154,7 @@
         <label language="it_IT">Lista testi con video (legacy)</label>
         <label language="pt_BR">Lista de texto com vídeos (legado)</label>
         <label language="ro_RO">Listă text cu videouri (învechit)</label>
+        <label language="ru_RU">Текст с видео (устар.)</label>
         <label language="sv_SE">Textlista med video (legacy)</label>
         <selectable>true</selectable>
         <override>
@@ -163,6 +172,7 @@
         <label language="it_IT">Lista testi, no video (legacy)</label>
         <label language="pt_BR">Lista de texto sem vídeos (legado)</label>
         <label language="ro_RO">Listă text fără videouri (învechit)</label>
+        <label language="ru_RU">Текст без видео (устар.)</label>
         <label language="sv_SE">Textlista utan video (legacy)</label>
         <selectable>true</selectable>
         <override>
