@@ -204,6 +204,8 @@ namespace Utils
                 sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "pt")
                 sMenuTitleScaleFactor = 0.90f;
+            else if (localePair.first == "ru")
+                sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "sv")
                 sMenuTitleScaleFactor = 0.87f;
             else if (localePair.first == "ja")
