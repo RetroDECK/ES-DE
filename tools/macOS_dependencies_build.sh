@@ -78,8 +78,13 @@ if [ ! -d icu/icu4c ]; then
   exit
 fi
 
+if [ ! -f icu/icu4c/source/icu_filters.json ]; then
+  echo "icu/icu4c/source/icu_filters.json is missing, aborting."
+  exit
+fi
+
 cd icu/icu4c/source
-./configure --disable-extras --disable-icuio --disable-samples --disable-tests
+ICU_DATA_FILTER_FILE=icu_filters.json CXXFLAGS="-DUCONFIG_NO_COLLATION -DUCONFIG_NO_TRANSLITERATION" ./configure --disable-extras --disable-icuio --disable-samples --disable-tests
 make clean
 make -j${JOBS}
 cd lib

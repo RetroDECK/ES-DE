@@ -56,6 +56,7 @@ git clone -n --filter=tree:0 https://github.com/unicode-org/icu.git
 cd icu
 git sparse-checkout set --no-cone icu4c
 git checkout release-75-1
+cp ../../es-app/assets/icu_filters.json icu4c/source/
 cd ..
 
 echo
