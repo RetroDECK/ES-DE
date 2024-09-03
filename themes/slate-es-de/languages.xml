@@ -59,6 +59,16 @@
             <langLabelLastPlayed>Jucat Ultima Dată</langLabelLastPlayed>
         </variables>
     </language>
+    <language name="ru_RU">
+        <variables>
+            <langLabelReleasedate>Дата Выхода</langLabelReleasedate>
+            <langLabelDeveloper>Разработчик</langLabelDeveloper>
+            <langLabelPublisher>Издатель</langLabelPublisher>
+            <langLabelGenre>Жанр</langLabelGenre>
+            <langLabelPlayers>Игроки</langLabelPlayers>
+            <langLabelLastPlayed>Последняя Игра</langLabelLastPlayed>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <langLabelReleasedate>Utgivet</langLabelReleasedate>
