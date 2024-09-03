@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-09-01 13:21+0200\n"
-"PO-Revision-Date: 2024-07-27 11:30+0400\n"
+"PO-Revision-Date: 2024-09-03 16:34+0400\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
 "Language: ru_RU\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 msgid "Network error (status:"
 msgstr "Ошибка сети (статус:"
@@ -34,31 +34,26 @@ msgstr "Для получения доп. информации посетите"
 msgid "No Entries Found"
 msgstr "Не Найдено Записей"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all"
-msgstr "маленький"
+msgstr "все"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all games"
 msgstr "все игры"
 
 msgctxt "theme"
 msgid "recent"
-msgstr ""
+msgstr "недавние"
 
-#, fuzzy
 msgctxt "theme"
 msgid "last played"
 msgstr "последние"
 
-#, fuzzy
 msgctxt "theme"
 msgid "favorites"
 msgstr "избранное"
 
-#, fuzzy
 msgctxt "theme"
 msgid "collections"
 msgstr "коллекции"
@@ -307,9 +302,8 @@ msgstr "СКОЛЬЖЕНИЕ (ВСТРОЕННЫЙ)"
 msgid "FADE (BUILT-IN)"
 msgstr "ЗАТУХАНИЕ (ВСТРОЕННОЕ)"
 
-#, fuzzy
 msgid "THEME LANGUAGE"
-msgstr "ПРЕДПОЧИТАЕМЫЙ ЯЗЫК"
+msgstr "ЯЗЫК ТЕМЫ"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "ЯЗЫК ПРИЛОЖЕНИЯ"
@@ -373,7 +367,7 @@ msgid "DARK"
 msgstr "ТЁМНАЯ"
 
 msgid "DARK AND RED"
-msgstr ""
+msgstr "ТЁМНЫЙ И КРАСНЫЙ"
 
 msgid "LIGHT"
 msgstr "СВЕТЛАЯ"
@@ -711,13 +705,13 @@ msgid "SHOW HIDDEN GAMES"
 msgstr "ПОКАЗЫВАТЬ СКРЫТЫЕ ИГРЫ"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
-msgstr "РАЗРЕШИТЬ ПОЛЬЗОВАТЕЛЬСКИЕ СЦЕНАРИИ СОБЫТИЙ"
+msgstr "РАЗРЕШИТЬ ПОЛЬЗ. СЦЕНАРИИ СОБЫТИЙ"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
-msgstr "ПОКАЗЫВАТЬ ТОЛЬКО ИГРЫ ИЗ ФАЙЛОВ GAMELIST.XML"
+msgstr "ПОКАЗЫВАТЬ  ИГРЫ ТОЛЬКО ИЗ GAMELIST.XML"
 
 msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
-msgstr "УДАЛЯТЬ ЛИШНЕЕ ИНФО ОБ ИМЕНИ MAME (НУЖЕН ПЕРЕЗАПУСК)"
+msgstr "УДАЛЯТЬ ЛИШНЕЕ У ИМЕНИ MAME (НУЖЕН ПЕРЕЗАПУСК)"
 
 msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
 msgstr "ОТКЛ. КОМПОЗИЦИЮ РАБ. СТОЛА (НУЖЕН ПЕРЕЗАПУСК)"
@@ -800,7 +794,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "НАСТРОЙКИ ЗАСТАВКИ"
 
 msgid "choose"
-msgstr "выберите"
+msgstr "выбор"
 
 msgid "select"
 msgstr "выбрать"
@@ -921,7 +915,7 @@ msgstr "РАЗРЕШЕНИЕ МИКС-ИЗОБРАЖЕНИЯ"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
-msgstr "ГОРИЗОНТАЛЬНАЯ ПОДГОНКА СКРИНШОТОВ"
+msgstr "ГОРИЗ. ПОДГОНКА СКРИНШОТОВ"
 
 msgid "CONTAIN"
 msgstr "ПО СОДЕРЖИМОМУ"
@@ -937,7 +931,7 @@ msgstr "ГОРИЗОНТАЛЬНАЯ ПОДГОНКА СКРИНШОТОВ"
 
 msgctxt "short"
 msgid "VERTICAL SCREENSHOT FIT"
-msgstr "ВЕРТИКАЛЬНАЯ ПОДГОНКА СКРИНШОТОВ"
+msgstr "ВЕРТ. ПОДГОНКА СКРИНШОТОВ"
 
 msgid "VERTICAL SCREENSHOT FIT"
 msgstr "ВЕРТИКАЛЬНАЯ ПОДГОНКА СКРИНШОТОВ"
@@ -1139,13 +1133,13 @@ msgid "CUSTOM GAME COLLECTIONS"
 msgstr "ПОЛЬЗОВАТЕЛЬСКИЕ КОЛЛЕКЦИИ ИГР"
 
 msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr "СОЗДАТЬ НОВУЮ ПОЛЬЗОВАТЕЛЬСКУЮ КОЛЛЕКЦИЮ ИЗ ТЕМЫ"
+msgstr "СОЗДАТЬ НОВУЮ ПОЛЬЗ. КОЛЛЕКЦИЮ ИЗ ТЕМЫ"
 
 msgid "SELECT THEME FOLDER"
 msgstr "ВЫБРАТЬ ПАПКУ С ТЕМОЙ"
 
 msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr "СОЗДАТЬ НОВУЮ ПОЛЬЗОВАТЕЛЬСКУЮ КОЛЛЕКЦИЮ"
+msgstr "СОЗДАТЬ НОВУЮ ПОЛЬЗ. КОЛЛЕКЦИЮ"
 
 msgid "NEW COLLECTION NAME"
 msgstr "ИМЯ НОВОЙ КОЛЛЕКЦИИ"
@@ -1157,7 +1151,7 @@ msgid "CREATE COLLECTION?"
 msgstr "СОЗДАТЬ КОЛЛЕКЦИЮ?"
 
 msgid "DELETE CUSTOM COLLECTION"
-msgstr "УДАЛИТЬ ПОЛЬЗОВАТЕЛЬСКУЮ КОЛЛЕКЦИЮ"
+msgstr "УДАЛИТЬ ПОЛЬЗ. КОЛЛЕКЦИЮ"
 
 msgid "COLLECTION TO DELETE"
 msgstr "КОЛЛЕКЦИЯ К УДАЛЕНИЮ"
@@ -2027,18 +2021,22 @@ msgstr "УДАЛЁН '%s' ИЗ '%s'"
 msgid "This collection is empty"
 msgstr "Эта коллекция пуста"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
 msgstr "Эта коллекция содержит 1 игру: '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 msgstr "Эта коллекция содержит 2 игры: '%s [%s]' и '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr "Эта коллекция содержит 3 игры: '%s [%s]', '%s [%s]' и '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
@@ -2055,18 +2053,22 @@ msgstr[1] ""
 msgstr[2] ""
 "Эта коллекция содержит %i игр: '%s [%s]', '%s [%s]' и '%s [%s]', среди прочих"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
 msgstr "Эта коллекция содержит 1 игру: '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
 msgstr "Эта коллекция содержит 2 игры: '%s' и '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr "Эта коллекция содержит 3 игры: '%s', '%s' и '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
@@ -2078,7 +2080,7 @@ msgstr[2] "Эта коллекция содержит %i игр: '%s', '%s' и '
 #, c-format
 msgctxt "theme"
 msgid "'%s' is filtered so there may be more games available"
-msgstr ""
+msgstr "'%s' отфильтрован - без фильтра может быть больше игр"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -2236,35 +2238,35 @@ msgstr "случайно"
 msgid "screensaver"
 msgstr "заставка"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i game"
 msgid_plural "%i games"
-msgstr[0] "пропустить игру"
-msgstr[1] "пропустить игру"
-msgstr[2] "пропустить игру"
+msgstr[0] "%i игра"
+msgstr[1] "%i игры"
+msgstr[2] "%i игр"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "(%i favorite)"
 msgid_plural "(%i favorites)"
-msgstr[0] "избранное"
-msgstr[1] "избранное"
-msgstr[2] "избранное"
+msgstr[0] "(%i избранная)"
+msgstr[1] "(%i избранные)"
+msgstr[2] "(%i избранных)"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
-msgstr[0] "избранное"
-msgstr[1] "избранное"
-msgstr[2] "избранное"
+msgstr[0] "%i избранная"
+msgstr[1] "%i избранны"
+msgstr[2] "%i избранных"
 
 msgid "system"
 msgstr "система"
 
 msgid "view media"
-msgstr "просмотр медиа"
+msgstr "медиа"
 
 msgid "options"
 msgstr "опции"
@@ -2274,11 +2276,11 @@ msgstr "к игре"
 
 msgctxt "theme"
 msgid "yes"
-msgstr ""
+msgstr "да"
 
 msgctxt "theme"
 msgid "no"
-msgstr ""
+msgstr "нет"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2695,33 +2697,33 @@ msgstr "добавить ползвезды"
 msgctxt "theme"
 msgid "%i day ago"
 msgid_plural "%i days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i день назад"
+msgstr[1] "%i дня назад"
+msgstr[2] "%i дней назад"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour ago"
 msgid_plural "%i hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i час назад"
+msgstr[1] "%i часа назад"
+msgstr[2] "%i часов назад"
 
 #, c-format
 msgctxt "theme"
 msgid "%i minute ago"
 msgid_plural "%i minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i минуту назад"
+msgstr[1] "%i минуты назад"
+msgstr[2] "%i минут назад"
 
 #, c-format
 msgctxt "theme"
 msgid "%i second ago"
 msgid_plural "%i seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i секунд назад"
+msgstr[1] "%i секунды назад"
+msgstr[2] "%i секунд назад"
 
 msgid "SPACE"
 msgstr "ПРОБЕЛ"
@@ -2795,7 +2797,7 @@ msgid "GAMEPAD"
 msgstr "ГЕЙМПАД"
 
 msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
-msgstr "УДЕРЖИВАЙТЕ ЛЮБУЮ КНОПКУ 1 СЕКУНДУ ДЛЯ ПРОПУСКА"
+msgstr "ДЕРЖИТЕ ЛЮБУЮ КНОПКУ 1 СЕК. ДЛЯ ПРОПУСКА"
 
 msgid "NOT DEFINED"
 msgstr "НЕ ОПРЕДЕЛЁН"
