@@ -77,6 +77,19 @@
             <langYourCollections>Colecțiile Tale</langYourCollections>
         </variables>
     </language>
+    <language name="ru_RU">
+        <variables>
+            <langLabelRating>Рейтинг</langLabelRating>
+            <langLabelReleasedate>Дата Выхода</langLabelReleasedate>
+            <langLabelPlayers>Игроки</langLabelPlayers>
+            <langLabelGenre>Жанр</langLabelGenre>
+            <langLabelDeveloper>Разработчик</langLabelDeveloper>
+            <langLabelPublisher>Издатель</langLabelPublisher>
+            <langLabelLastPlayed>Последняя Игра</langLabelLastPlayed>
+            <langCustomCollections>Польз. Коллекции</langCustomCollections>
+            <langYourCollections>Ваши Коллекции</langYourCollections>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <langLabelRating>Betyg</langLabelRating>
