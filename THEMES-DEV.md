@@ -847,18 +847,25 @@ The actual language-specific values in the theme configuration are defined using
 <theme>
     <language name="en_US">
         <variables>
+            <langLogo>logo.svg</langLogo>
             <langLabelDeveloper>Developer</langLabelDeveloper>
             <langLabelPublisher>Publisher</langLabelPublisher>
         </variables>
     </language>
     <language name="sv_SE">
         <variables>
+            <langLogo>logo-sv-se.svg</langLogo>
             <langLabelDeveloper>Utvecklare</langLabelDeveloper>
             <langLabelPublisher>Utgivare</langLabelPublisher>
         </variables>
     </language>
 
     <view name="gamelist">
+        <image name="logo">
+            <pos>0.38 0.1781</pos>
+            <size>0.158 0.12</size>
+            <path>./assets/${langLogo}</path>
+        </image>
         <text name="labelDeveloper">
             <pos>0.88 0.511</pos>
             <size>0.165 0.03</size>
@@ -879,6 +886,11 @@ It could also be a good idea to include the translations from a separate file:
     <include>./languages.xml</include>
 
     <view name="gamelist">
+        <image name="logo">
+            <pos>0.38 0.1781</pos>
+            <size>0.158 0.12</size>
+            <path>./assets/${langLogo}</path>
+        </image>
         <text name="labelDeveloper">
             <pos>0.88 0.511</pos>
             <size>0.165 0.03</size>
@@ -897,13 +909,18 @@ Including separate files per language is also supported but it's probably not a 
 ```xml
 <theme>
     <language name="en_US">
-        <include>./lang-en_us.xml</include>
+        <include>./lang-en-us.xml</include>
     </language>
     <language name="sv_SE">
-        <include>./lang-sv_se.xml</include>
+        <include>./lang-sv-se.xml</include>
     </language>
 
     <view name="gamelist">
+        <image name="logo">
+            <pos>0.38 0.1781</pos>
+            <size>0.158 0.12</size>
+            <path>./assets/${langLogo}</path>
+        </image>
         <text name="labelDeveloper">
             <pos>0.88 0.511</pos>
             <size>0.165 0.03</size>
@@ -916,6 +933,19 @@ Including separate files per language is also supported but it's probably not a 
         </text>
     </view>
 </theme>
+```
+
+Note the naming convention when using localized versions of files such as images. These should include the locale/language in their name and they should be in lowercase characters, using only dashes as separators. For the default language the locale could be omitted from the filename (as language-specific images and similar will likely be exceptions with most files rather shared across all locales). Here are some examples:
+
+```
+logo.svg
+logo-fr-fr.svg
+logo-pt-br.svg
+logo-sv-se.svg
+auto-allgames.webp
+auto-allgames-fr-fr.webp
+auto-allgames-pt-br.webp
+auto-allgames-sv-se.webp
 ```
 
 ## Aspect ratios

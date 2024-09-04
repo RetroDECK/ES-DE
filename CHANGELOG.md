@@ -10,7 +10,7 @@ This release brings full localization support and includes translations to ten n
 
 As part of the localization work there have been substantial changes made to the application; text rendering has been improved with proper text shaping using the HarfBuzz library and case mappings and boundary analysis are now performed by the ICU library.
 
-As for minor but notable improvements, entering the wrong ScreenScraper credentials will now display an error popup during scraping, specific subdirectories inside the system directories can now be exluded from getting loaded, and starting time for the video screensaver has been greatly reduced on devices with poor disk I/O performance, such as Android.
+As for minor but notable improvements, entering the wrong ScreenScraper credentials will now display an error popup during scraping, specific subdirectories inside the system directories can now be exluded from getting loaded, and the starting time for the video screensaver has been greatly reduced on devices with poor disk I/O performance, such as Android.
 
 The release also brings a new port with experimental support for the Haiku operating system.
 
@@ -69,7 +69,7 @@ See the full list below for all changes like added emulators, launch command mod
 * Added experimental support for building on Haiku
 * Added some improvements for building and running on FreeBSD
 * Removed support for NetBSD and OpenBSD
-* Updated SDL to 2.30.5 on Android, Windows, macOS and the Linux AppImage builds
+* Updated SDL to 2.30.6 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 
 ### Bug fixes
