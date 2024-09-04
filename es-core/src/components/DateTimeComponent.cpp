@@ -74,7 +74,7 @@ std::string DateTimeComponent::getDisplayString() const
         // Workaround to handle Unix epoch for different time zones.
         if (mTime.getTime() < 82800) {
             if (mDefaultValue == "")
-                return "never";
+                return _p("theme", "never");
             else
                 return mDefaultValue;
         }
@@ -108,7 +108,7 @@ std::string DateTimeComponent::getDisplayString() const
 
     if (mTime.getTime() == 0) {
         if (mDefaultValue == "")
-            return "unknown";
+            return _p("theme", "unknown");
         else
             return mDefaultValue;
     }
