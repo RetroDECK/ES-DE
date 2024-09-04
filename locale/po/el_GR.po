@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-04 17:44+0200\n"
-"PO-Revision-Date: 2024-07-22 17:51+0300\n"
+"POT-Creation-Date: 2024-09-01 13:21+0200\n"
+"PO-Revision-Date: 2024-09-04 11:44+0300\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Ελληνικά <info@es-de.org>\n"
 "Language: el_GR\n"
@@ -33,33 +33,29 @@ msgstr "Για περισσότερες πληροφορίες δείτε"
 msgid "No Entries Found"
 msgstr "Δεν βρέθηκαν καταχωρίσεις"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all"
-msgstr "μικρό"
+msgstr "ΟΛΑ"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all games"
 msgstr "όλα τα παιχνίδια"
 
 msgctxt "theme"
 msgid "recent"
-msgstr ""
+msgstr "πρόσφατα"
 
 msgctxt "theme"
 msgid "last played"
 msgstr ""
 
-#, fuzzy
 msgctxt "theme"
 msgid "favorites"
 msgstr "αγαπημένα"
 
-#, fuzzy
 msgctxt "theme"
 msgid "collections"
-msgstr "ρυθμίσεις"
+msgstr ""
 
 msgid "ScreenScraper error:"
 msgstr "Σφάλμα ScreenScraper:"
@@ -85,7 +81,6 @@ msgstr ""
 msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
 
-#, fuzzy
 msgctxt "metadata"
 msgid "NAME"
 msgstr "ΟΝΟΜΑ"
@@ -93,17 +88,15 @@ msgstr "ΟΝΟΜΑ"
 #, fuzzy
 msgctxt "metadata"
 msgid "ENTER NAME"
-msgstr "ΕΙΣΉΓΑΓΕ ΌΝΟΜΑ"
+msgstr "ΕΙΣΗΓΑΓΕ ΟΝΟΜΑ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "SORTNAME"
-msgstr "ΟΝΟΜΑ"
+msgstr "ΟΝΟΜΑ ΤΑΞΙΝΟΜΙΣΗΣ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "ENTER SORTNAME"
-msgstr "ΕΙΣΉΓΑΓΕ ΌΝΟΜΑ"
+msgstr "ΕΙΣΗΓΑΓΕ ΟΝΟΜΑ ΓΙΑ ΤΑΞΙΝΟΜΙΣΗ"
 
 msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
@@ -113,20 +106,17 @@ msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
 msgstr ""
 
-#, fuzzy
 msgctxt "metadata"
 msgid "DESCRIPTION"
 msgstr "ΠΕΡΙΓΡΑΦΗ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "ENTER DESCRIPTION"
-msgstr "ΠΕΡΙΓΡΑΦΗ"
+msgstr ""
 
-#, fuzzy
 msgctxt "metadata"
 msgid "RATING"
-msgstr "ΑΞΙΟΛΌΓΗΣΉ"
+msgstr "ΑΞΙΟΛΟΓΗΣΗ"
 
 msgctxt "metadata"
 msgid "RELEASE DATE"
@@ -142,59 +132,51 @@ msgstr ""
 
 msgctxt "metadata"
 msgid "PUBLISHER"
-msgstr ""
+msgstr "ΕΚΔΟΤΗΣ"
 
 msgctxt "metadata"
 msgid "ENTER PUBLISHER"
-msgstr ""
+msgstr "ΕΙΣΗΓΑΓΕ ΤΟΝ ΕΚΔΟΤΗ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "GENRE"
 msgstr "ΓΕΝΙΑ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "ENTER GENRE"
-msgstr "ΕΙΣΉΓΑΓΕ ΌΝΟΜΑ"
+msgstr "ΕΙΣΉΓΑΓΕ ΟΝΟΜΑ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "ΠΑΙΧΤΕΣ"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
-msgstr ""
+msgstr "ΕΙΣΗΓΑΓΕ ΑΡΙΘΜΟ ΠΑΙΧΤΩΝ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "FAVORITE"
-msgstr "ΑΓΑΠΗΜΈΝΟ"
+msgstr "ΑΓΑΠΗΜΕΝΟ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "COMPLETED"
-msgstr "ΟΛΟΚΛΗΡΏΘΗΚΕ"
+msgstr "ΟΛΟΚΛΗΡΩΜΕΝΟ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "KIDGAME"
-msgstr "ΠΑΙΧΝΙΔΙ"
+msgstr ""
 
 msgctxt "metadata"
 msgid "KIDGAME (ONLY AFFECTS BADGES)"
 msgstr ""
 
-#, fuzzy
 msgctxt "metadata"
 msgid "HIDDEN"
-msgstr "ΚΡΥΜΜΈΝΟ"
+msgstr "ΚΡΥΜΜΕΝΟ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
-msgstr "ΧΑΛΑΣΜΕΝΟ/ΔΕΝ ΔΟΥΛΕΥΕΙ"
+msgstr "ΧΑΛΑΣΜΕΝΟ/ΔΕΝ ΛΕΙΤΟΥΡΓΕΙ"
 
 msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
@@ -216,15 +198,13 @@ msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr ""
 
-#, fuzzy
 msgctxt "metadata"
 msgid "CONTROLLER"
-msgstr "ΤΗΛΕΧΕΙΡΙΣΤΉΡΙΟ"
+msgstr "ΧΕΙΡΙΣΤΉΡΙΟ"
 
-#, fuzzy
 msgctxt "metadata"
 msgid "SELECT CONTROLLER"
-msgstr "ΤΗΛΕΧΕΙΡΙΣΤΉΡΙΟ"
+msgstr ""
 
 msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
@@ -238,10 +218,9 @@ msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr ""
 
-#, fuzzy
 msgctxt "metadata"
 msgid "SELECT FOLDER LINK"
-msgstr "επιλογή όλων"
+msgstr ""
 
 msgctxt "metadata"
 msgid "LAST PLAYED"
@@ -261,7 +240,7 @@ msgid "UI SETTINGS"
 msgstr ""
 
 msgid "SOUND SETTINGS"
-msgstr "ΕΠΙΛΟΓΈΣ ΗΧΟΥ"
+msgstr "ΡΥΘΜΗΣΕΙΣ ΗΧΟΥ"
 
 msgid "INPUT DEVICE SETTINGS"
 msgstr ""
@@ -270,13 +249,13 @@ msgid "GAME COLLECTION SETTINGS"
 msgstr ""
 
 msgid "OTHER SETTINGS"
-msgstr "ΆΛΛΕΣ ΡΥΘΜΊΣΕΙΣ"
+msgstr "ΑΛΛΕΣ ΡΥΘΜΙΣΕΙΣ"
 
 msgid "UTILITIES"
 msgstr ""
 
 msgid "QUIT ES-DE"
-msgstr ""
+msgstr "ΕΞΟΔΟΣ ES-DE"
 
 msgid "QUIT"
 msgstr "ΕΞΟΔΟΣ"
@@ -342,16 +321,16 @@ msgid "TRIGGERS"
 msgstr ""
 
 msgid "LEFT/RIGHT"
-msgstr ""
+msgstr "ΑΡΙΣΤΕΡΑ/ΔΕΞΙΑ"
 
 msgid "DISABLED"
-msgstr ""
+msgstr "ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ"
 
 msgid "GAMELIST ON STARTUP"
 msgstr ""
 
 msgid "NONE"
-msgstr ""
+msgstr "ΚΑΝΕΝΑ"
 
 msgid "SYSTEMS SORTING"
 msgstr ""
@@ -360,7 +339,7 @@ msgid "FULL NAMES OR CUSTOM"
 msgstr ""
 
 msgid "RELEASE YEAR"
-msgstr ""
+msgstr "ΧΡΟΝΟΣ ΕΚΔΟΣΗΣ"
 
 msgid "MANUFACTURER, RELEASE YEAR"
 msgstr ""
@@ -382,13 +361,13 @@ msgid "MENU COLOR SCHEME"
 msgstr ""
 
 msgid "DARK"
-msgstr ""
+msgstr "ΣΚΟΤΕΙΝΟ"
 
 msgid "DARK AND RED"
-msgstr ""
+msgstr "ΣΚΟΤΙΝΟ ΚΑΙ ΚΟΚΚΙΝΟ"
 
 msgid "LIGHT"
-msgstr ""
+msgstr "ΦΩΤΕΙΝΟ"
 
 msgid "MENU OPENING ANIMATION"
 msgstr ""
@@ -403,22 +382,22 @@ msgid "NORMAL"
 msgstr ""
 
 msgid "BRIEF"
-msgstr ""
+msgstr "ΣΥΝΤΟΜΑ"
 
 msgid "LONG"
-msgstr ""
+msgstr "ΜΑΚΡΥ"
 
 msgid "UI MODE"
-msgstr ""
+msgstr "ΛΕΙΤΟΥΡΓΙΑ UI"
 
 msgid "FULL"
-msgstr ""
+msgstr "ΓΕΜΑΤΟ"
 
 msgid "KIOSK"
-msgstr ""
+msgstr "KIOSK"
 
 msgid "KID"
-msgstr ""
+msgstr "ΠΑΙΔΙ"
 
 #, c-format
 msgid ""
@@ -495,13 +474,13 @@ msgid "DISPLAY ON-SCREEN HELP"
 msgstr ""
 
 msgid "SYSTEM VOLUME"
-msgstr ""
+msgstr "ΕΝΤΑΣΗ ΣΥΣΤΗΜΑΤΟΣ"
 
 msgid "NAVIGATION SOUNDS VOLUME"
 msgstr ""
 
 msgid "VIDEO PLAYER VOLUME"
-msgstr ""
+msgstr "ΕΝΤΑΣΗ ΒΙΝΤΕΟ PLAYER"
 
 msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
 msgstr ""
@@ -516,7 +495,7 @@ msgid "ENABLE NAVIGATION SOUNDS"
 msgstr ""
 
 msgid "CONTROLLER TYPE"
-msgstr ""
+msgstr "ΕΙΔΟΣ ΤΗΛΕΧΗΡΙΣΤΙΡΙΟΥ"
 
 msgid "TOUCH OVERLAY SIZE"
 msgstr ""
@@ -531,7 +510,7 @@ msgid "SMALL"
 msgstr "ΜΙΚΡΟ"
 
 msgid "EXTRA SMALL"
-msgstr ""
+msgstr "EXTRA ΜΙΚΡΟ"
 
 msgid "TOUCH OVERLAY OPACITY"
 msgstr ""
@@ -605,16 +584,16 @@ msgid "load default directory"
 msgstr ""
 
 msgid "VRAM LIMIT"
-msgstr ""
+msgstr "ΟΡΙΟ VRAM"
 
 msgid "ANTI-ALIASING (MSAA)"
 msgstr ""
 
 msgid "2X"
-msgstr ""
+msgstr "2X"
 
 msgid "4X"
-msgstr ""
+msgstr "4X"
 
 msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
 msgstr ""
@@ -645,7 +624,7 @@ msgstr "ΣΥΝΤΟΜΕΥΣΗ ΠΛΗΚΤΡΟΛΟΓΙΟΥ ΕΞΟΔΟΥ"
 
 msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr ""
+msgstr "ΠΟΤΕ ΝΑ ΣΩΖΟΝΤΑΙ ΤΑ ΜΕΤΑΔΕΔΟΜΕΝΑ"
 
 msgid "ALWAYS"
 msgstr "ΠΆΝΤΑ"
@@ -657,7 +636,7 @@ msgid "NEVER"
 msgstr "ΠΟΤΕ"
 
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr ""
+msgstr "ΠΟΤΕ ΝΑ ΣΩΖΟΝΤΑΙ ΤΑ ΜΕΤΑΔΕΔΟΜΕΝΑ"
 
 msgid "APPLICATION UPDATES"
 msgstr "EΛΕΓΧΟ ΓΙΑ ΑΝΑΒΑΘΜIΣΕΙΣ ΛΟΓΙΣΜΙΚΟY"
@@ -672,7 +651,7 @@ msgid "MONTHLY"
 msgstr "ΜΗΝΙΑΊΑ"
 
 msgid "CHECK FOR APPLICATION UPDATES"
-msgstr "ΈΛΕΓΧΟ ΓΙΑ ΑΝΑΒΑΘΜΊΣΕΙΣ ΛΟΓΙΣΜΗΚΟΥ"
+msgstr "EΛΕΓΧΟ ΓΙΑ ΑΝΑΒΑΘΜIΣΕΙΣ ΛΟΓΙΣΜΙΚΟY"
 
 msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
 msgstr ""
@@ -723,7 +702,7 @@ msgid "ENABLE MENU IN KID MODE"
 msgstr ""
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
-msgstr ""
+msgstr "ΕΜΦΑΝΙΣΗ ΜΕΝΟΥ ΕΞΟΔΟΥ (ΕΠΑΝΕΚΚΙΝΗΣΗ ΚΑΙ ΑΠΕΝΕΡΓΟΠΗΣΗ)"
 
 msgid "ORPHANED DATA CLEANUP"
 msgstr ""
@@ -748,7 +727,7 @@ msgid ""
 msgstr ""
 
 msgid "RESCAN ROM DIRECTORY"
-msgstr ""
+msgstr "ΣΑΡΩΣΗ ROM ΚΑΤΑΛΟΓΟΥ"
 
 msgid ""
 "THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
@@ -756,32 +735,30 @@ msgid ""
 msgstr ""
 
 msgid "REALLY QUIT?"
-msgstr ""
+msgstr "ΣΙΓΟΥΡΑ?"
 
 msgid "REALLY REBOOT?"
-msgstr ""
+msgstr "ΕΠΙΒΕΒΑΙΩΣΗ ΕΠΑΝΕΚΚΙΝΗΣΗΣ?"
 
 msgid "REBOOT SYSTEM"
-msgstr ""
+msgstr "ΕΠΑΝΕΚΙΝΙΣΗ ΣΥΣΤΗΜΑΤΟΣ"
 
 msgid "REALLY POWER OFF?"
-msgstr ""
+msgstr "ΕΠΙΒΕΒΑΙΩΣΗ ΑΠΕΝΕΡΓΟΠΟΙΗΣΗΣ?"
 
 msgid "POWER OFF SYSTEM"
 msgstr ""
 
-#, fuzzy
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
-msgstr "ΆΛΛΕΣ ΡΥΘΜΊΣΕΙΣ"
+msgstr ""
 
-#, fuzzy
 msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
-msgstr "ΆΛΛΕΣ ΡΥΘΜΊΣΕΙΣ"
+msgstr ""
 
 msgid "choose"
-msgstr ""
+msgstr "επελεξε"
 
 msgid "select"
 msgstr "επιλέξετε"
@@ -859,7 +836,7 @@ msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
 msgstr ""
 
 msgid "GAME NAMES"
-msgstr ""
+msgstr "ΟΝΟΜΑ ΠΑΙΧΝΙΔΙΩΝ"
 
 msgid "RATINGS"
 msgstr ""
@@ -1000,13 +977,13 @@ msgid "REGION"
 msgstr ""
 
 msgid "EUROPE"
-msgstr ""
+msgstr "ΕΥΡΩΠΗ"
 
 msgid "JAPAN"
-msgstr ""
+msgstr "ΙΑΠΩΝΙΑ"
 
 msgid "USA"
-msgstr ""
+msgstr "ΗΠΑ"
 
 msgid "WORLD"
 msgstr ""
@@ -1170,7 +1147,7 @@ msgid "SLIDESHOW"
 msgstr ""
 
 msgid "VIDEO"
-msgstr ""
+msgstr "ΒΙΝΤΕΟ"
 
 msgid "ENABLE SCREENSAVER CONTROLS"
 msgstr ""
@@ -1227,7 +1204,7 @@ msgid "GAME NAME"
 msgstr ""
 
 msgid "APPLY CHANGES?"
-msgstr ""
+msgstr "ΕΦΑΡΜΟΣΕ ΑΛΛΑΓΕΣ?"
 
 msgid "NOTHING TO FILTER"
 msgstr ""
@@ -1320,7 +1297,7 @@ msgid "FONT SIZES:"
 msgstr ""
 
 msgid "INSTALLED"
-msgstr ""
+msgstr "ΕΓΚΑΤΑΣΤΗΜΕΝΟ"
 
 msgid "MANUAL DOWNLOAD"
 msgstr ""
@@ -1335,7 +1312,7 @@ msgid "NOT INSTALLED (NEW)"
 msgstr ""
 
 msgid "NOT INSTALLED"
-msgstr ""
+msgstr "ΜΗ ΕΓΚΑΤΑΣΤΗΜΕΝΟ"
 
 msgid "LOCAL CHANGES"
 msgstr ""
@@ -1412,7 +1389,7 @@ msgid "DEVELOPER:"
 msgstr ""
 
 msgid "PUBLISHER:"
-msgstr ""
+msgstr "ΕΚΔΟΤΗΣ:"
 
 msgid "GENRE:"
 msgstr "ΓΕΝΙΑ:"
@@ -1421,7 +1398,7 @@ msgid "PLAYERS:"
 msgstr "ΠΑΙΧΤΕΣ:"
 
 msgid "NO GAMES FOUND"
-msgstr ""
+msgstr "ΔΕΝ ΒΡΕΘΗΚΑΝ ΠΑΙΧΝΙΔΙΑ"
 
 msgid "RETRY"
 msgstr ""
@@ -1448,7 +1425,7 @@ msgid "SCRAPING IN PROGRESS"
 msgstr ""
 
 msgid "SYSTEM"
-msgstr ""
+msgstr "ΣΥΣΤΗΜΑ"
 
 msgid "skip game"
 msgstr ""
@@ -1696,13 +1673,11 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#, fuzzy
 msgid "SCRAPE"
-msgstr "Έχετε ξεπεράσει το ημερήσιο όριο"
+msgstr ""
 
-#, fuzzy
 msgid "scrape"
-msgstr "Έχετε ξεπεράσει το ημερήσιο όριο"
+msgstr ""
 
 msgid "save metadata"
 msgstr ""
@@ -1933,7 +1908,7 @@ msgid "REMOVED '%s' FROM '%s'"
 msgstr ""
 
 msgid "This collection is empty"
-msgstr ""
+msgstr "Αυτή η συλλογή είναι άδειά"
 
 #, c-format
 msgctxt "theme"
@@ -2141,33 +2116,33 @@ msgstr ""
 msgid "screensaver"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i game"
 msgid_plural "%i games"
-msgstr[0] "όλα τα παιχνίδια"
-msgstr[1] "όλα τα παιχνίδια"
+msgstr[0] "%i παιχνίδι"
+msgstr[1] "%i παιχνίδια"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "(%i favorite)"
 msgid_plural "(%i favorites)"
-msgstr[0] "αγαπημένα"
-msgstr[1] "αγαπημένα"
+msgstr[0] "(%i αγαπημένο)"
+msgstr[1] "(%i αγαπημένα)"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
-msgstr[0] "αγαπημένα"
-msgstr[1] "αγαπημένα"
+msgstr[0] "%i αγαπημένο"
+msgstr[1] "%i αγαπημένα"
 
 msgctxt "theme"
 msgid "unknown"
 msgstr ""
 
 msgid "system"
-msgstr ""
+msgstr "συστημα"
 
 msgid "view media"
 msgstr ""
@@ -2180,7 +2155,7 @@ msgstr ""
 
 msgctxt "theme"
 msgid "yes"
-msgstr ""
+msgstr "ναι"
 
 msgctxt "theme"
 msgid "no"
@@ -2328,7 +2303,7 @@ msgid "DEVELOPER"
 msgstr ""
 
 msgid "PUBLISHER"
-msgstr ""
+msgstr "ΕΚΔΟΤΗΣ"
 
 msgid "GENRE"
 msgstr "ΓΕΝΙΑ"
@@ -2349,7 +2324,7 @@ msgid "BROKEN"
 msgstr "ΧΑΛΑΣΜΈΝΟ"
 
 msgid "CONTROLLER"
-msgstr "ΤΗΛΕΧΕΙΡΙΣΤΉΡΙΟ"
+msgstr "ΧΕΙΡΙΣΤΉΡΙΟ"
 
 msgid "ALTERNATIVE EMULATOR"
 msgstr ""
@@ -2391,13 +2366,13 @@ msgid "Error loading physical media image, corrupt file?"
 msgstr ""
 
 msgid "pdf manual"
-msgstr ""
+msgstr "pdf εγχειρίδιο"
 
 msgid "SCREENSHOT"
 msgstr ""
 
 msgid "BOX COVER"
-msgstr ""
+msgstr "ΚΑΛΗΜΑ ΚΟΥΤΟΥ"
 
 msgid "BOX BACK COVER"
 msgstr ""
@@ -2496,7 +2471,7 @@ msgstr ""
 
 #, c-format
 msgid "%i (OF %i)"
-msgstr "%i ΑΠΟ %i"
+msgstr "%i (ΑΠΟ %i)"
 
 #, c-format
 msgid "%s SELECTED"
@@ -2513,9 +2488,8 @@ msgstr[1] ""
 msgid "change value"
 msgstr ""
 
-#, fuzzy
 msgid "SELECT ALL"
-msgstr "επιλογή όλων"
+msgstr "ΕΠΙΛΟΓΗ ΟΛΩΝ"
 
 msgid "select all"
 msgstr "επιλογή όλων"
@@ -2532,9 +2506,8 @@ msgstr ""
 msgid "edit"
 msgstr "επεξεργασία"
 
-#, fuzzy
 msgid "WORKING..."
-msgstr "ΧΑΛΑΣΜΕΝΟ/ΔΕΝ ΔΟΥΛΕΥΕΙ"
+msgstr "ΔΟΥΛΕΥΕΙ..."
 
 msgid "toggle"
 msgstr ""
@@ -2550,29 +2523,29 @@ msgstr ""
 msgctxt "theme"
 msgid "%i day ago"
 msgid_plural "%i days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i μερα πριν"
+msgstr[1] "%i μέρες πριν"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour ago"
 msgid_plural "%i hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i ώρα πριν"
+msgstr[1] "%i ώρες πριν"
 
 #, c-format
 msgctxt "theme"
 msgid "%i minute ago"
 msgid_plural "%i minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i λεπτο πριν"
+msgstr[1] "%i λεπτα πριν"
 
 #, c-format
 msgctxt "theme"
 msgid "%i second ago"
 msgid_plural "%i seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i δευτερολεπτο πριν"
+msgstr[1] "%i δευτερολεπτα πριν"
 
 msgid "SPACE"
 msgstr "ΚΕΝΌ"
@@ -2686,16 +2659,16 @@ msgid "OPTIONS"
 msgstr "ΡΥΘΜΙΣΕΙΣ"
 
 msgid "VIEW"
-msgstr ""
+msgstr "ΠΡΟΕΠΙΣΚΟΠΙΣΗ"
 
 msgid "MENU"
 msgstr "ΜΕΝΟΎ"
 
 msgid "LEFT SHOULDER"
-msgstr ""
+msgstr "LEFT SHOULDER"
 
 msgid "RIGHT SHOULDER"
-msgstr ""
+msgstr "RIGHT SHOULDER"
 
 msgid "LEFT TRIGGER"
 msgstr ""
