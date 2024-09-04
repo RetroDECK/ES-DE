@@ -1,17 +1,16 @@
 <theme>
-    <language name="en_US en_GB">
-        <variables>
-            <langLabelRating>Rating</langLabelRating>
-            <langLabelReleasedate>Released</langLabelReleasedate>
-            <langLabelPlayers>Players</langLabelPlayers>
-            <langLabelGenre>Genre</langLabelGenre>
-            <langLabelDeveloper>Developer</langLabelDeveloper>
-            <langLabelPublisher>Publisher</langLabelPublisher>
-            <langLabelLastPlayed>Last Played</langLabelLastPlayed>
-            <langCustomCollections>Custom Collections</langCustomCollections>
-            <langYourCollections>Your Collections</langYourCollections>
-        </variables>
-    </language>
+    <!-- Defaults, used for en_US and en_GB -->
+    <variables>
+        <langLabelRating>Rating</langLabelRating>
+        <langLabelReleasedate>Released</langLabelReleasedate>
+        <langLabelPlayers>Players</langLabelPlayers>
+        <langLabelGenre>Genre</langLabelGenre>
+        <langLabelDeveloper>Developer</langLabelDeveloper>
+        <langLabelPublisher>Publisher</langLabelPublisher>
+        <langLabelLastPlayed>Last Played</langLabelLastPlayed>
+        <langCustomCollections>Custom Collections</langCustomCollections>
+        <langYourCollections>Your Collections</langYourCollections>
+    </variables>
     <language name="es_ES">
         <variables>
             <langLabelRating>Valoracion</langLabelRating>
@@ -101,6 +100,32 @@
             <langLabelLastPlayed>Senast Spelat</langLabelLastPlayed>
             <langCustomCollections>Anpassade Samlingar</langCustomCollections>
             <langYourCollections>Dina Samlingar</langYourCollections>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <langLabelRating>評価</langLabelRating>
+            <langLabelReleasedate>発行日</langLabelReleasedate>
+            <langLabelPlayers>プレイヤー</langLabelPlayers>
+            <langLabelGenre>ジャンル</langLabelGenre>
+            <langLabelDeveloper>開発者</langLabelDeveloper>
+            <langLabelPublisher>発行者</langLabelPublisher>
+            <langLabelLastPlayed>最後に遊んだ日</langLabelLastPlayed>
+            <langCustomCollections>カスタムコレクション</langCustomCollections>
+            <langYourCollections>あなたのコレクション</langYourCollections>
+        </variables>
+    </language>
+    <language name="zh_CN">
+        <variables>
+            <langLabelRating>评分</langLabelRating>
+            <langLabelReleasedate>发行日</langLabelReleasedate>
+            <langLabelPlayers>玩家</langLabelPlayers>
+            <langLabelGenre>分类</langLabelGenre>
+            <langLabelDeveloper>开发者</langLabelDeveloper>
+            <langLabelPublisher>发行商</langLabelPublisher>
+            <langLabelLastPlayed>最后游玩</langLabelLastPlayed>
+            <langCustomCollections>自定义收藏</langCustomCollections>
+            <langYourCollections>您的收藏</langYourCollections>
         </variables>
     </language>
 </theme>

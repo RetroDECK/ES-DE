@@ -14,6 +14,8 @@
     <language>ro_RO</language>
     <language>ru_RU</language>
     <language>sv_SE</language>
+    <language>ja_JP</language>
+    <language>zh_CN</language>
 
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>16:10</aspectRatio>
@@ -33,6 +35,8 @@
         <label language="ro_RO">Întunecată</label>
         <label language="ru_RU">Тёмная</label>
         <label language="sv_SE">Mörkt</label>
+        <label language="ja_JP">ダーク</label>
+        <label language="zh_CN">暗黑</label>
     </colorScheme>
 
     <colorScheme name="light">
@@ -45,6 +49,8 @@
         <label language="ru_RU">Светлая</label>
         <label language="ro_RO">Luminoasă</label>
         <label language="sv_SE">Ljust</label>
+        <label language="ja_JP">ライト</label>
+        <label language="zh_CN">明亮</label>
     </colorScheme>
 
     <colorScheme name="nso">
@@ -69,6 +75,8 @@
         <label language="ro_RO">Listă text</label>
         <label language="ru_RU">Текст</label>
         <label language="sv_SE">Textlista</label>
+        <label language="ja_JP">テキストリスト</label>
+        <label language="zh_CN">文字列表</label>
         <selectable>true</selectable>
     </variant>
 
@@ -82,6 +90,8 @@
         <label language="ro_RO">Listă text fără videouri</label>
         <label language="ru_RU">Текст без видео</label>
         <label language="sv_SE">Textlista utan video</label>
+        <label language="ja_JP">ビデオが含まないテキストリスト</label>
+        <label language="zh_CN">不带视频的文字列表</label>
         <selectable>true</selectable>
     </variant>
 
@@ -95,6 +105,8 @@
         <label language="ro_RO">Listă text simplă</label>
         <label language="ru_RU">Простой текст</label>
         <label language="sv_SE">Enkel textlista</label>
+        <label language="ja_JP">簡易なテキストリスト</label>
+        <label language="zh_CN">简易文字列表</label>
         <selectable>true</selectable>
     </variant>
 
@@ -108,6 +120,8 @@
         <label language="ro_RO">Listă text simplă fără videouri</label>
         <label language="ru_RU">Простой текст без видео</label>
         <label language="sv_SE">Enkel textlista utan video</label>
+        <label language="ja_JP">ビデオが含まない簡単なテキストリスト</label>
+        <label language="zh_CN">不带视频的简易文字列表</label>
         <selectable>true</selectable>
     </variant>
 
@@ -121,6 +135,8 @@
         <label language="ro_RO">Carusel</label>
         <label language="ru_RU">Карусель</label>
         <label language="sv_SE">Karusell</label>
+        <label language="ja_JP">カルーセル</label>
+        <label language="zh_CN">轮播</label>
         <selectable>true</selectable>
     </variant>
 
@@ -134,6 +150,8 @@
         <label language="ro_RO">instant și glisează</label>
         <label language="ru_RU">Простая карусель</label>
         <label language="sv_SE">Enkel karusell</label>
+        <label language="ja_JP">簡単なカルーセル</label>
+        <label language="zh_CN">简易轮播</label>
         <selectable>true</selectable>
     </variant>
 
@@ -147,6 +165,8 @@
         <label language="ro_RO">Instant și glisează</label>
         <label language="ru_RU">Мгновенное скольжение</label>
         <label language="sv_SE">Direkt och glidande</label>
+        <label language="ja_JP">インスタントとスライド</label>
+        <label language="zh_CN">即时与滑动</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>slide</systemToGamelist>
@@ -166,6 +186,8 @@
         <label language="ro_RO">Instant</label>
         <label language="ru_RU">Мгновенно</label>
         <label language="sv_SE">Direkt</label>
+        <label language="ja_JP">インスタント</label>
+        <label language="zh_CN">即时</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>instant</systemToGamelist>
@@ -185,6 +207,8 @@
         <label language="ro_RO">Estompează</label>
         <label language="ru_RU">Затухание</label>
         <label language="sv_SE">Uttoning</label>
+        <label language="ja_JP">フェイド</label>
+        <label language="zh_CN">淡出</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>fade</systemToGamelist>
