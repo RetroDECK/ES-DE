@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-01 13:21+0200\n"
+"POT-Creation-Date: 2024-09-04 17:44+0200\n"
 "PO-Revision-Date: 2024-09-03 16:34+0400\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
@@ -2262,6 +2262,10 @@ msgstr[0] "%i избранная"
 msgstr[1] "%i избранны"
 msgstr[2] "%i избранных"
 
+msgctxt "theme"
+msgid "unknown"
+msgstr "неизвестно"
+
 msgid "system"
 msgstr "система"
 
@@ -2692,6 +2696,10 @@ msgstr "переключить"
 
 msgid "add half star"
 msgstr "добавить ползвезды"
+
+msgctxt "theme"
+msgid "never"
+msgstr "никогда"
 
 #, c-format
 msgctxt "theme"

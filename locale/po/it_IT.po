@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-01 13:21+0200\n"
+"POT-Creation-Date: 2024-09-04 17:44+0200\n"
 "PO-Revision-Date: 2024-09-02 13:06+0300\n"
 "Last-Translator: Lorenzo Castelletta <lorenzo.castelletta@gmail.com>\n"
 "Language-Team: Italiano <info@es-de.org>\n"
@@ -1775,7 +1775,7 @@ msgid "SELECT EMULATOR"
 msgstr "SELEZIONA L'EMULATORE"
 
 msgid "SYSTEM-WIDE"
-msgstr ""
+msgstr "SYSTEM-WIDE"
 
 msgid "unknown"
 msgstr "sconosciuto"
@@ -2281,6 +2281,10 @@ msgid_plural "%i favorites"
 msgstr[0] "%i preferito"
 msgstr[1] "%i preferiti"
 
+msgctxt "theme"
+msgid "unknown"
+msgstr "sconosciuto"
+
 msgid "system"
 msgstr "sistema"
 
@@ -2711,6 +2715,10 @@ msgstr "togli"
 
 msgid "add half star"
 msgstr "aggiungi mezza stella"
+
+msgctxt "theme"
+msgid "never"
+msgstr "mai"
 
 #, c-format
 msgctxt "theme"

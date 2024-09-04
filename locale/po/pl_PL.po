@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-01 13:21+0200\n"
+"POT-Creation-Date: 2024-09-04 17:44+0200\n"
 "PO-Revision-Date: 2024-08-24 12:00+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Polski <info@es-de.org>\n"
@@ -2031,18 +2031,22 @@ msgstr "USUNIĘTO '%s' Z '%s'"
 msgid "This collection is empty"
 msgstr "Ta kolekcja jest pusta"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
 msgstr "Ta kolekcja zawiera 1 grę: '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
 msgstr "Ta kolekcja zawiera 2 gry: '%s [%s]' i '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr "Ta kolekcja zawiera 3 gry: '%s [%s]', '%s [%s]' i '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
@@ -2057,18 +2061,22 @@ msgstr[1] ""
 msgstr[2] ""
 "Ta kolekcja zawiera %i gier, między innymi: '%s [%s]', '%s [%s]' i '%s [%s]'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
 msgstr "Ta kolekcja zawiera 1 grę: '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
 msgstr "Ta kolekcja zawiera 2 gry: '%s' i '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr "Ta kolekcja zawiera 3 gry: '%s', '%s' i '%s'"
 
+#, c-format
 msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
@@ -2270,6 +2278,10 @@ msgid_plural "%i favorites"
 msgstr[0] "ulubione"
 msgstr[1] "ulubione"
 msgstr[2] "ulubione"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "nieznane"
 
 msgid "system"
 msgstr "system"
@@ -2698,6 +2710,10 @@ msgstr "przełącz"
 
 msgid "add half star"
 msgstr "dodaj pół gwiazdki"
+
+msgctxt "theme"
+msgid "never"
+msgstr "nigdy"
 
 #, c-format
 msgctxt "theme"

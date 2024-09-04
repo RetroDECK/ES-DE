@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-01 13:21+0200\n"
+"POT-Creation-Date: 2024-09-04 17:44+0200\n"
 "PO-Revision-Date: 2024-09-02 00:16+0800\n"
 "Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
@@ -2264,6 +2264,10 @@ msgid "%i favorite"
 msgid_plural "%i favorites"
 msgstr[0] "%i 個のお気に入り"
 
+msgctxt "theme"
+msgid "unknown"
+msgstr "未知"
+
 msgid "system"
 msgstr "システム"
 
@@ -2688,6 +2692,10 @@ msgstr "切り替える"
 
 msgid "add half star"
 msgstr "ハーフスターを追加する"
+
+msgctxt "theme"
+msgid "never"
+msgstr "しない"
 
 #, c-format
 msgctxt "theme"

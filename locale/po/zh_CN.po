@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-01 13:21+0200\n"
+"POT-Creation-Date: 2024-09-04 17:44+0200\n"
 "PO-Revision-Date: 2024-09-02 00:19+0800\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
@@ -2187,6 +2187,10 @@ msgid "%i favorite"
 msgid_plural "%i favorites"
 msgstr[0] "%i 个喜爱"
 
+msgctxt "theme"
+msgid "unknown"
+msgstr "未知"
+
 msgid "system"
 msgstr "切换平台"
 
@@ -2586,6 +2590,10 @@ msgstr "切换"
 
 msgid "add half star"
 msgstr "加半颗星"
+
+msgctxt "theme"
+msgid "never"
+msgstr "从不"
 
 #, c-format
 msgctxt "theme"
