@@ -7,6 +7,7 @@
         <langLabelGenre>Genre</langLabelGenre>
         <langLabelDeveloper>Developer</langLabelDeveloper>
         <langLabelPublisher>Publisher</langLabelPublisher>
+        <langUnknown>Unknown</langUnknown>
     </variables>
     <language name="es_ES">
         <variables>
@@ -16,6 +17,7 @@
             <langLabelGenre>Genero</langLabelGenre>
             <langLabelDeveloper>Desarrollador</langLabelDeveloper>
             <langLabelPublisher>Compañia</langLabelPublisher>
+            <langUnknown>Desconocido</langUnknown>
         </variables>
     </language>
     <language name="fr_FR">
@@ -26,6 +28,7 @@
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelDeveloper>Développeur</langLabelDeveloper>
             <langLabelPublisher>Editeur</langLabelPublisher>
+            <langUnknown>Inconnu</langUnknown>
         </variables>
     </language>
     <language name="it_IT">
@@ -36,6 +39,7 @@
             <langLabelGenre>Genere</langLabelGenre>
             <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
             <langLabelPublisher>Casa Editrice</langLabelPublisher>
+            <langUnknown>Sconosciuto</langUnknown>
         </variables>
     </language>
     <language name="pt_BR">
@@ -46,6 +50,7 @@
             <langLabelGenre>Gênero</langLabelGenre>
             <langLabelDeveloper>Desenvolvedor</langLabelDeveloper>
             <langLabelPublisher>Distribuidor</langLabelPublisher>
+            <langUnknown>Desconhecido</langUnknown>
         </variables>
     </language>
     <language name="ro_RO">
@@ -56,6 +61,7 @@
             <langLabelGenre>Gen</langLabelGenre>
             <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
             <langLabelPublisher>Editor</langLabelPublisher>
+            <langUnknown>Necunoscut</langUnknown>
         </variables>
     </language>
     <language name="ru_RU">
@@ -66,6 +72,7 @@
             <langLabelGenre>Жанр</langLabelGenre>
             <langLabelDeveloper>Разработчик</langLabelDeveloper>
             <langLabelPublisher>Издатель</langLabelPublisher>
+            <langUnknown>Неизвестно</langUnknown>
         </variables>
     </language>
     <language name="sv_SE">
@@ -76,6 +83,7 @@
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelDeveloper>Utvecklare</langLabelDeveloper>
             <langLabelPublisher>Utgivare</langLabelPublisher>
+            <langUnknown>Okänd</langUnknown>
         </variables>
     </language>
     <language name="ja_JP">
@@ -86,6 +94,7 @@
             <langLabelGenre>ジャンル</langLabelGenre>
             <langLabelDeveloper>開発者</langLabelDeveloper>
             <langLabelPublisher>発行者</langLabelPublisher>
+            <langUnknown>未知</langUnknown>
         </variables>
     </language>
     <language name="zh_CN">
@@ -96,6 +105,7 @@
             <langLabelGenre>分类</langLabelGenre>
             <langLabelDeveloper>开发者</langLabelDeveloper>
             <langLabelPublisher>发行商</langLabelPublisher>
+            <langUnknown>未知</langUnknown>
         </variables>
     </language>
 </theme>

@@ -305,7 +305,7 @@
                 <pos>0.70 0.552</pos>
                 <size>0.13125 0.03</size>
                 <metadata>publisher</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelDeveloper">
@@ -319,7 +319,7 @@
                 <pos>0.8453 0.552</pos>
                 <size>0.13125 0.03</size>
                 <metadata>developer</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelReleasedate">
@@ -333,7 +333,7 @@
                 <pos>0.70 0.628</pos>
                 <size>0.13125 0.03</size>
                 <metadata>releasedate</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </datetime>
             <text name="labelPlayers">
@@ -347,7 +347,7 @@
                 <pos>0.8453 0.628</pos>
                 <size>0.13125 0.03</size>
                 <metadata>players</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelGenre">
@@ -361,7 +361,7 @@
                 <pos>0.70 0.704</pos>
                 <size>0.13125 0.03</size>
                 <metadata>genre</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelRating">
