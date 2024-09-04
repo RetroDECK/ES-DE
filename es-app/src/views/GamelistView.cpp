@@ -909,19 +909,26 @@ void GamelistView::updateView(const CursorState& state)
             _p("theme", "last played");
             _p("theme", "favorites");
             _p("theme", "collections");
+            -p("theme", "unknown");
 #endif
             if (metadata == "name")
                 return file->metadata.get("name");
             else if (metadata == "description")
                 return file->metadata.get("desc");
             else if (metadata == "developer")
-                return file->metadata.get("developer");
+                return (file->metadata.get("developer") == "unknown" ?
+                            _p("theme", "unknown") :
+                            file->metadata.get("developer"));
             else if (metadata == "publisher")
-                return file->metadata.get("publisher");
+                return (file->metadata.get("publisher") == "unknown" ?
+                            _p("theme", "unknown") :
+                            file->metadata.get("publisher"));
             else if (metadata == "genre")
-                return file->metadata.get("genre");
+                return (file->metadata.get("genre") == "unknown" ? _p("theme", "unknown") :
+                                                                   file->metadata.get("genre"));
             else if (metadata == "players")
-                return file->metadata.get("players");
+                return (file->metadata.get("players") == "unknown" ? _p("theme", "unknown") :
+                                                                     file->metadata.get("players"));
             else if (metadata == "favorite")
                 return file->metadata.get("favorite") == "true" ? _p("theme", "yes") :
                                                                   _p("theme", "no");

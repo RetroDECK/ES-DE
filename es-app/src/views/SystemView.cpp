@@ -1284,13 +1284,21 @@ void SystemView::updateGameSelectors()
                 text->setValue(RatingComponent::getRatingValue(
                     games.at(gameSelectorEntry)->metadata.get("rating")));
             else if (metadata == "developer")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("developer"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("developer") == "unknown" ?
+                                   _p("theme", "unknown") :
+                                   games.at(gameSelectorEntry)->metadata.get("developer"));
             else if (metadata == "publisher")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("publisher"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("publisher") == "unknown" ?
+                                   _p("theme", "unknown") :
+                                   games.at(gameSelectorEntry)->metadata.get("publisher"));
             else if (metadata == "genre")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("genre"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("genre") == "unknown" ?
+                                   _p("theme", "unknown") :
+                                   games.at(gameSelectorEntry)->metadata.get("genre"));
             else if (metadata == "players")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("players"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("players") == "unknown" ?
+                                   _p("theme", "unknown") :
+                                   games.at(gameSelectorEntry)->metadata.get("players"));
             else if (metadata == "favorite")
                 text->setValue(
                     games.at(gameSelectorEntry)->metadata.get("favorite") == "true" ? "yes" : "no");
