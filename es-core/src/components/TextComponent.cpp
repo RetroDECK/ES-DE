@@ -392,7 +392,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
 void TextComponent::setValue(const std::string& value)
 {
-    if (value == "unknown" && mDefaultValue != "" &&
+    if (value == _p("theme", "unknown") && mDefaultValue != "" &&
         (mThemeMetadata == "developer" || mThemeMetadata == "publisher" ||
          mThemeMetadata == "genre" || mThemeMetadata == "players")) {
         setText(mDefaultValue);
