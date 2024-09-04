@@ -70,7 +70,6 @@ void ScrollableContainer::resetComponent()
 
     // This applies to the actual TextComponent that is getting displayed.
     mChildren.front()->setAutoCalcExtent(glm::ivec2 {0, 1});
-    mChildren.front()->setSize(mSize.x, 0.0f);
 
     // This is needed to resize to the designated area when the background image gets invalidated.
     if (!mChildren.empty()) {
