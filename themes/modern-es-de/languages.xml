@@ -1,14 +1,13 @@
 <theme>
-    <language name="en_US en_GB">
-        <variables>
-            <langLabelRating>Rating</langLabelRating>
-            <langLabelReleasedate>Released</langLabelReleasedate>
-            <langLabelPlayers>Players</langLabelPlayers>
-            <langLabelGenre>Genre</langLabelGenre>
-            <langLabelDeveloper>Developer</langLabelDeveloper>
-            <langLabelPublisher>Publisher</langLabelPublisher>
-        </variables>
-    </language>
+    <!-- Defaults, used for en_US and en_GB -->
+    <variables>
+        <langLabelRating>Rating</langLabelRating>
+        <langLabelReleasedate>Released</langLabelReleasedate>
+        <langLabelPlayers>Players</langLabelPlayers>
+        <langLabelGenre>Genre</langLabelGenre>
+        <langLabelDeveloper>Developer</langLabelDeveloper>
+        <langLabelPublisher>Publisher</langLabelPublisher>
+    </variables>
     <language name="es_ES">
         <variables>
             <langLabelRating>Valoracion</langLabelRating>
@@ -77,6 +76,26 @@
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelDeveloper>Utvecklare</langLabelDeveloper>
             <langLabelPublisher>Utgivare</langLabelPublisher>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <langLabelRating>評価</langLabelRating>
+            <langLabelReleasedate>発行日</langLabelReleasedate>
+            <langLabelPlayers>プレイヤー</langLabelPlayers>
+            <langLabelGenre>ジャンル</langLabelGenre>
+            <langLabelDeveloper>開発者</langLabelDeveloper>
+            <langLabelPublisher>発行者</langLabelPublisher>
+        </variables>
+    </language>
+    <language name="zh_CN">
+        <variables>
+            <langLabelRating>评价</langLabelRating>
+            <langLabelReleasedate>发行日</langLabelReleasedate>
+            <langLabelPlayers>玩家</langLabelPlayers>
+            <langLabelGenre>分类</langLabelGenre>
+            <langLabelDeveloper>开发者</langLabelDeveloper>
+            <langLabelPublisher>发行商</langLabelPublisher>
         </variables>
     </language>
 </theme>
