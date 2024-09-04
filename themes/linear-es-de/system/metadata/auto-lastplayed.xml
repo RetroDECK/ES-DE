@@ -1,12 +1,17 @@
 <theme>
-   <variables>
-      <systemName>Last Played</systemName>
-      <systemDescription>View your recently played games across the entire library.</systemDescription>
-      <systemManufacturer>Various</systemManufacturer>
-      <systemReleaseYear>Various</systemReleaseYear>
-      <systemReleaseDate>Various</systemReleaseDate>
-      <systemReleaseDateFormated>Various</systemReleaseDateFormated>
-      <systemHardwareType>Collection</systemHardwareType>
-      <systemCoverSize>1-1</systemCoverSize>
-   </variables>
+    <variables>
+        <systemName>Last Played</systemName>
+        <systemDescription>View your recently played games across the entire library.</systemDescription>
+        <systemManufacturer>Various</systemManufacturer>
+        <systemReleaseYear>Various</systemReleaseYear>
+        <systemReleaseDate>Various</systemReleaseDate>
+        <systemReleaseDateFormated>Various</systemReleaseDateFormated>
+        <systemHardwareType>Collection</systemHardwareType>
+        <systemCoverSize>1-1</systemCoverSize>
+    </variables>
+    <language name="sv_SE">
+        <variables>
+            <systemHardwareType>Samling</systemHardwareType>
+        </variables>
+    </language>
 </theme>

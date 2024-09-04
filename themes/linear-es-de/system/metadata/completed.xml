@@ -1,13 +1,18 @@
 <theme>
-   <variables>
-      <systemName>Completed</systemName>
-      <systemDescription>Keep track of the games you've finished.</systemDescription>
-      <systemManufacturer>Various</systemManufacturer>
-      <systemReleaseYear>Various</systemReleaseYear>
-      <systemReleaseDate>Various</systemReleaseDate>
-      <systemReleaseDateFormated>Various</systemReleaseDateFormated>
-      <systemHardwareType>Collection</systemHardwareType>
-      <systemColor>222222</systemColor>
-      <systemCoverSize>1-1</systemCoverSize>
-   </variables>
+    <variables>
+        <systemName>Completed</systemName>
+        <systemDescription>Keep track of the games you've finished.</systemDescription>
+        <systemManufacturer>Various</systemManufacturer>
+        <systemReleaseYear>Various</systemReleaseYear>
+        <systemReleaseDate>Various</systemReleaseDate>
+        <systemReleaseDateFormated>Various</systemReleaseDateFormated>
+        <systemHardwareType>Collection</systemHardwareType>
+        <systemColor>222222</systemColor>
+        <systemCoverSize>1-1</systemCoverSize>
+    </variables>
+    <language name="sv_SE">
+        <variables>
+            <systemHardwareType>Samling</systemHardwareType>
+        </variables>
+    </language>
 </theme>

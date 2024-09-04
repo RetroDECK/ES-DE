@@ -1,13 +1,18 @@
 <theme>
-   <variables>
-      <systemName>Android Games</systemName>
-      <systemDescription>View and play your favorite Android games</systemDescription>
-      <systemManufacturer>Various</systemManufacturer>
-      <systemReleaseYear>Various</systemReleaseYear>
-      <systemReleaseDate>Various</systemReleaseDate>
-      <systemReleaseDateFormated>Various</systemReleaseDateFormated>
-      <systemHardwareType>Folder</systemHardwareType>
-      <systemCoverSize>1-1</systemCoverSize>
-      <systemColor>5A9035</systemColor>
-   </variables>
+    <variables>
+        <systemName>Android Games</systemName>
+        <systemDescription>View and play your favorite Android games</systemDescription>
+        <systemManufacturer>Various</systemManufacturer>
+        <systemReleaseYear>Various</systemReleaseYear>
+        <systemReleaseDate>Various</systemReleaseDate>
+        <systemReleaseDateFormated>Various</systemReleaseDateFormated>
+        <systemHardwareType>Folder</systemHardwareType>
+        <systemCoverSize>1-1</systemCoverSize>
+        <systemColor>5A9035</systemColor>
+    </variables>
+    <language name="sv_SE">
+        <variables>
+            <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
 </theme>
