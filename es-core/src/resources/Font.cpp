@@ -882,7 +882,12 @@ void Font::wrapText(std::vector<ShapeSegment>& segmentsHB,
                         // New row.
                         size_t offset {0};
 
-                        if (lastSpace == i && !lastSegmentSpace) {
+                        bool shapedSegmentChange {false};
+                        if (lastSpace == 0 && resultSegments.size() > 0 &&
+                            !resultSegments.back().lineBreak)
+                            shapedSegmentChange = true;
+
+                        if (lastSpace == i && !lastSegmentSpace && !shapedSegmentChange) {
                             if (segment.rightToLeft)
                                 newSegment.glyphIndexes.insert(newSegment.glyphIndexes.begin(),
                                                                segment.glyphIndexes[i]);
@@ -905,6 +910,9 @@ void Font::wrapText(std::vector<ShapeSegment>& segmentsHB,
                                 newShapedWidth -= lastSpaceWidth;
                                 spaceAccum = 0;
                             }
+                        }
+                        else if (shapedSegmentChange) {
+                            offset = i;
                         }
                         else {
                             if (lastSpace == 0)
