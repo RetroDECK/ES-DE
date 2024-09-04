@@ -1,13 +1,13 @@
 <theme>
    <variables>
-      <systemName>Completed</systemName>
-      <systemDescription>Keep track of the games you've finished.</systemDescription>
+      <systemName>Android Apps</systemName>
+      <systemDescription>View and use your favorite Android apps</systemDescription>
       <systemManufacturer>Various</systemManufacturer>
       <systemReleaseYear>Various</systemReleaseYear>
       <systemReleaseDate>Various</systemReleaseDate>
       <systemReleaseDateFormated>Various</systemReleaseDateFormated>
-      <systemHardwareType>Collection</systemHardwareType>
-      <systemColor>222222</systemColor>
+      <systemHardwareType>Folder</systemHardwareType>
       <systemCoverSize>1-1</systemCoverSize>
+      <systemColor>5A9035</systemColor>
    </variables>
 </theme>

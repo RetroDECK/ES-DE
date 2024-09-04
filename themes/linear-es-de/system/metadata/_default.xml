@@ -1,7 +1,7 @@
 <theme>
    <variables>
       <systemName>${system.fullName}</systemName>
-      <systemDescription>View and play the ${system.fullName}</systemDescription>
+      <systemDescription>&#032;</systemDescription>
       <systemManufacturer>&#032;</systemManufacturer>
       <systemReleaseYear>&#032;</systemReleaseYear>
       <systemReleaseDate>&#032;</systemReleaseDate>
