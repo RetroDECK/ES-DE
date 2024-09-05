@@ -553,12 +553,13 @@
         <name>dos</name>
         <fullname>DOS (PC)</fullname>
         <path>%ROMPATH%\dos</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_core_libretro.dll %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_svn_libretro.dll %ROM%</command>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
         <command label="DOSBox Staging (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%</command>
+        <command label="VirtualXT">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\virtualxt_libretro.dll %ROM%</command>
         <platform>dos</platform>
         <theme>dos</theme>
     </system>
@@ -1428,12 +1429,13 @@
         <name>pc</name>
         <fullname>IBM PC</fullname>
         <path>%ROMPATH%\pc</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_core_libretro.dll %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_svn_libretro.dll %ROM%</command>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
         <command label="DOSBox Staging (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%</command>
+        <command label="VirtualXT">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\virtualxt_libretro.dll %ROM%</command>
         <platform>pc</platform>
         <theme>pc</theme>
     </system>
