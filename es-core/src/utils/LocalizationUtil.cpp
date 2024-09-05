@@ -31,20 +31,16 @@ namespace Utils
         // When adding a new locale, then make sure to also update ThemeData::sSupportedLanguages.
         const std::vector<std::pair<std::string, std::string>> sSupportedLocales {{{"en"}, {"US"}},
                                                                                   {{"en"}, {"GB"}},
-                                                                                  {{"el"}, {"GR"}},
-                                                                                  {{"de"}, {"DE"}},
                                                                                   {{"es"}, {"ES"}},
                                                                                   {{"fr"}, {"FR"}},
                                                                                   {{"it"}, {"IT"}},
-                                                                                  {{"nl"}, {"NL"}},
                                                                                   {{"pl"}, {"PL"}},
                                                                                   {{"pt"}, {"BR"}},
                                                                                   {{"ro"}, {"RO"}},
                                                                                   {{"ru"}, {"RU"}},
                                                                                   {{"sv"}, {"SE"}},
                                                                                   {{"ja"}, {"JP"}},
-                                                                                  {{"zh"}, {"CN"}},
-                                                                                  {{"ar"}, {"EG"}}};
+                                                                                  {{"zh"}, {"CN"}}};
         // clang-format on
 
         std::string sCurrentLocale {"en_US"};
@@ -188,22 +184,18 @@ namespace Utils
             }
 
             // Language-specific menu title scale factor.
-            if (localePair.first == "el")
-                sMenuTitleScaleFactor = 0.94f;
-            else if (localePair.first == "de")
-                sMenuTitleScaleFactor = 0.92f;
-            else if (localePair.first == "es")
+            if (localePair.first == "es")
                 sMenuTitleScaleFactor = 0.90f;
             else if (localePair.first == "fr")
                 sMenuTitleScaleFactor = 0.90f;
             else if (localePair.first == "it")
                 sMenuTitleScaleFactor = 0.94f;
-            else if (localePair.first == "nl")
-                sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "pl")
                 sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "pt")
                 sMenuTitleScaleFactor = 0.90f;
+            else if (localePair.first == "ro")
+                sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "ru")
                 sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "sv")

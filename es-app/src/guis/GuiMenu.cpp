@@ -565,12 +565,9 @@ void GuiMenu::openUIOptions()
                              selectedApplicationLanguage == "en_US");
     applicationLanguage->add("ENGLISH (UNITED KINGDOM)", "en_GB",
                              selectedApplicationLanguage == "en_GB");
-    applicationLanguage->add("ΕΛΛΗΝΙΚΆ", "el_GR", selectedApplicationLanguage == "el_GR");
-    applicationLanguage->add("DEUTSCH", "de_DE", selectedApplicationLanguage == "de_DE");
     applicationLanguage->add("ESPAÑOL (ESPAÑA)", "es_ES", selectedApplicationLanguage == "es_ES");
     applicationLanguage->add("FRANÇAIS", "fr_FR", selectedApplicationLanguage == "fr_FR");
     applicationLanguage->add("ITALIANO", "it_IT", selectedApplicationLanguage == "it_IT");
-    applicationLanguage->add("NEDERLANDS", "nl_NL", selectedApplicationLanguage == "nl_NL");
     applicationLanguage->add("POLSKI", "pl_PL", selectedApplicationLanguage == "pl_PL");
     applicationLanguage->add("PORTUGUÊS (BRASIL)", "pt_BR", selectedApplicationLanguage == "pt_BR");
     applicationLanguage->add("ROMÂNĂ", "ro_RO", selectedApplicationLanguage == "ro_RO");
@@ -578,7 +575,6 @@ void GuiMenu::openUIOptions()
     applicationLanguage->add("SVENSKA", "sv_SE", selectedApplicationLanguage == "sv_SE");
     applicationLanguage->add("日本語", "ja_JP", selectedApplicationLanguage == "ja_JP");
     applicationLanguage->add("简体中文", "zh_CN", selectedApplicationLanguage == "zh_CN");
-    applicationLanguage->add("العربية", "ar_EG", selectedApplicationLanguage == "ar_EG");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the application langauge to "automatic" in this case.
     if (applicationLanguage->getSelectedObjects().size() == 0)
