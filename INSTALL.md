@@ -649,10 +649,10 @@ CPack: - package: /Users/myusername/emulationstation-de/ES-DE_3.0.0-arm64.dmg ge
 Only the Microsoft Visual C++ (MSVC) compiler is supported on Windows. Although MinGW/GCC produces higher quality code with ES-DE running around 10% to 25% faster it's unfortunately not sustainable to use it. There are multiple technical issues with third party libraries like severe threading issues with FFmpeg and some libraries like Poppler not being readily available.
 
 Install Git for Windows: \
-[https://gitforwindows.org](https://gitforwindows.org)
+https://gitforwindows.org
 
 Download the Visual Studio Build Tools (choose Visual Studio Community edition): \
-[https://visualstudio.microsoft.com/downloads](https://visualstudio.microsoft.com/downloads)
+https://visualstudio.microsoft.com/downloads
 
 During installation, choose the Desktop development with C++ workload with the following options (version details may differ):
 
@@ -678,7 +678,7 @@ It's important to choose the x64-specific shell and not the x86 variant, as ES-D
 **Other preparations**
 
 In order to get clang-format onto the system you need to download and install Clang/LLVM: \
-[https://releases.llvm.org](https://releases.llvm.org)
+https://releases.llvm.org
 
 Just run the installer and make sure to select the option _Add LLVM to the system PATH for current user_.
 
@@ -758,7 +758,7 @@ On Windows the certificates supplied with the operating system will not be utili
 
 **Running with OpenGL software rendering**
 
-If you are running Windows in a virtualized environment such as QEMU-KVM that does not support HW accelerated OpenGL, you can install the Mesa3D for Windows library, which can be downloaded at [https://fdossena.com/?p=mesa/index.frag](https://fdossena.com/?p=mesa/index.frag).
+If you are running Windows in a virtualized environment such as QEMU-KVM that does not support HW accelerated OpenGL, you can install the Mesa3D for Windows library, which can be downloaded at https://fdossena.com/?p=mesa/index.frag
 
 You simply extract the opengl32.dll file into the ES-DE directory and this will enable the llvmpipe renderer. The performance will be terrible of course, but everything should work and it should be good enough for test building on Windows without having to reboot your computer to a native Windows installation. (Note that you may need to copy opengl32.dll to your RetroArch installation directory as well to get the emulators to work somehow correctly.)
 
@@ -768,7 +768,7 @@ Obviously this library is only intended for development and will not be shipped 
 
 To create an NSIS installer (Nullsoft Scriptable Install System) you need to first install the NSIS creation tool:
 
-[https://nsis.sourceforge.io/Download](https://nsis.sourceforge.io/Download)
+https://nsis.sourceforge.io/Download
 
 Simply install the application using its installer.
 
@@ -911,9 +911,9 @@ Of course you would like to get the code formatted according to the clang-format
 
 There are some files shipped with ES-DE that need to be pulled from external resources, the first one being the CA certificate bundle to get TLS/SSL support working on Windows.
 
-The CA certificates shipped with ES-DE come directly from the curl project but they're originally supplied by the Mozilla foundation. See [https://wiki.mozilla.org/CA](https://wiki.mozilla.org/CA) for more information about this certificate bundle.
+The CA certificates shipped with ES-DE come directly from the curl project but they're originally supplied by the Mozilla foundation. See https://wiki.mozilla.org/CA for more information about this certificate bundle.
 
-The latest version can be downloaded from [https://curl.se/docs/caextract.html](https://curl.se/docs/caextract.html)
+The latest version can be downloaded from https://curl.se/docs/caextract.html
 
 After downloading the file, rename it from `cacert.pem` to `curl-ca-bundle.crt` and move it to the certificates directory i.e.:
 
@@ -925,7 +925,7 @@ emulationstation-de/resources/certificates/curl-ca-bundle.crt
 
 ES-DE automatically identifies and excludes MAME BIOS and device files, as well as translating the short MAME ROM names to their full game names. This is done using information from the MAME driver file shipped with the official MAME distribution. The file needs to be converted to an internal format used by ES-DE as the original file is huge and most of the information is not required.
 
-To get hold of the driver file, go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like `mame0226lx.zip` and unzipping it will give you a filename such as `mame0226.xml`.
+To get hold of the driver file, go to https://www.mamedev.org/release.php and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like `mame0226lx.zip` and unzipping it will give you a filename such as `mame0226.xml`.
 
 Move the XML driver file to the resources/MAME directory and then convert it to the ES-DE internal files:
 

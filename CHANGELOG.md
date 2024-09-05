@@ -47,6 +47,9 @@ See the full list below for all changes like added emulators, launch command mod
 * Added NooDS standalone as an alternative emulator for the gba and nds systems on Android, Linux and Windows
 * Added MAME standalone as the default emulator for the dragon32 and tanodragon systems on Linux, macOS and Windows
 * Added the .7z and .zip file extensions to the dragon32 and tanodragon systems
+* Added the Stella 2023 RetroArch core as an alternative emulator for the atari2600 system
+* Added the VirtualXT RetroArch core as an alternative emulator for the dos and pc systems
+* Added the .img file extension to the dos and pc systems
 * Added the Ardens RetroArch core as an alternative emulator for the arduboy system
 * Added the .arduboy file extension to the arduboy system
 * (Linux) Added a systempath find rule for the ppsspp binary name for the PPSSPP emulator
@@ -71,6 +74,8 @@ See the full list below for all changes like added emulators, launch command mod
 * Removed support for NetBSD and OpenBSD
 * Updated SDL to 2.30.6 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
+* Updated the MAME index files to include ROMs up to MAME version 0.269
+* Bundled the July 2024 release of the Mozilla TLS/SSL certificates
 
 ### Bug fixes
 

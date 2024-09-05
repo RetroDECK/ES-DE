@@ -764,18 +764,8 @@ The following languages are supported:
 | ro_RO         | Romanian                 | Română                   |
 | ru_RU         | Russian                  | Русский                  |
 | sv_SE         | Swedish                  | Svenska                  |
-| ja_JP         | Japanese                 | 日本語                   |
-| zh_CN         | Simplified Chinese       | 简体中文                 |
-
-These languages are currently getting translated and may be supported in the near future:
-
-| Language      | English name             | Native name              |
-| :------------ | :----------------------- | :----------------------- |
-| de_DE         | German                   | Deutsch                  |
-| el_GR         | Greek                    | Ελληνικά                 |
-| nl_NL         | Dutch                    | Nederlands               |
-| ar_EG         | Arabic                   | العربية                     |
-
+| ja_JP         | Japanese                 | 日本語                    |
+| zh_CN         | Simplified Chinese       | 简体中文                  |
 
 Note that the native name is what is shown inside the _UI Settings_ menu for the _Theme Language_ and _Application Language_ settings.
 

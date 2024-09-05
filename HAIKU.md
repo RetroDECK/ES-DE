@@ -118,10 +118,6 @@ Games can only be launched if ES-DE has been started from the command line, i.e.
 
 Crashes on game start (Stella 2014 works fine).
 
-### VICE x64sc Accurate / x64 SuperCPU / x128 / xplus4 / xvic
-
-Games don't run, emulator instantly exits (VICE x64 Fast works fine).
-
 ### ZEsarUX
 
 Crashes on game start.

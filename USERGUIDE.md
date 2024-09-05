@@ -22,11 +22,11 @@ You can always close the application immediately using the keyboard, by default 
 For additional details, read on below.
 
 There are also installation videos available at the ES-DE YouTube channel:\
-[https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
+https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ
 
 ## Installation and first startup
 
-To install ES-DE, just download the package or installer from [https://es-de.org](https://es-de.org) and follow the brief instructions below.
+To install ES-DE, just download the package or installer from https://es-de.org and follow the brief instructions below.
 
 As for display resolutions, the minimum pixel value is 224 and the maximum is 7680. This means that you can run ES-DE at for instance 320x224 all the way up to 7680x4320 (8K UHD). Vertical screen orientation is also supported, as well as ultra-wide resolutions like 3840x1440.
 
@@ -229,7 +229,7 @@ Just make sure to never place games or other resources on network shares using t
 
 Also make sure that you don't use the exFAT filesystem as its very poor disk I/O performance will make ES-DE run really slowly. Using this filesystem will make the theme downloader fail as well.
 
-In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start. For really old graphics cards the available drivers may not provide an OpenGL version that is modern enough for ES-DE to work, and in this case a last resort solution would be to install the _Mesa3D for Windows_ library which provides software-based OpenGL rendering. The 64-bit version of this library can be downloaded from [https://fdossena.com/?p=mesa/index.frag](https://fdossena.com/?p=mesa/index.frag) and you simply extract the opengl32.dll file into the ES-DE installation directory. Just be aware that the performance may be quite bad.
+In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start. For really old graphics cards the available drivers may not provide an OpenGL version that is modern enough for ES-DE to work, and in this case a last resort solution would be to install the _Mesa3D for Windows_ library which provides software-based OpenGL rendering. The 64-bit version of this library can be downloaded from https://fdossena.com/?p=mesa/index.frag and you simply extract the opengl32.dll file into the ES-DE installation directory. Just be aware that the performance may be quite bad.
 
 On some GPUs with buggy drivers, ES-DE may only display a black screen on startup or when launching a game. The problem can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for example:
 ```
@@ -290,9 +290,9 @@ Unless RetroDECK is used, Flatpak releases of some emulators may need some extra
 
 If you are unfamiliar with Linux/Unix operating systems, make sure to at least read up on the concepts of _dotfiles_ (hidden files and directories), _home directories_ (including use of the tilde ~ character) and _symbolic links_ (symlinks):
 
-[https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments) \
-[https://en.wikipedia.org/wiki/Home_directory#Unix](https://en.wikipedia.org/wiki/Home_directory#Unix) \
-[https://en.wikipedia.org/wiki/Symbolic_link](https://en.wikipedia.org/wiki/Symbolic_link)
+https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments \
+https://en.wikipedia.org/wiki/Home_directory#Unix \
+https://en.wikipedia.org/wiki/Symbolic_link
 
 ## Specific notes for Android
 
@@ -1326,7 +1326,7 @@ There are multiple ways to run these games, for the computer models like the A50
 This emulator is by far the most straightforward Amiga emulator to use, it's easy to configure and it runs all file types that ES-DE supports. It can run zipped files too for all supported formats.
 
 PUAE requires Amiga Kickstart ROMs to run, you can find more information about that topic here:\
-[https://github.com/libretro/libretro-uae/blob/master/README.md](https://github.com/libretro/libretro-uae/blob/master/README.md)
+https://github.com/libretro/libretro-uae/blob/master/README.md
 
 For the Amiga computer models the recommended approach is to go for WHDLoad-packaged files in the `.lha` or `.zip` format. While it's also possible to use WHDLoad hard drive images in `.hdf` or `.hdz` format these will only work in PAUE so they are not really recommended as you may want to use another emulator in the future.
 
@@ -1709,7 +1709,7 @@ For Daphne games the structure will look something like the following, which is 
 ```
 
 The directory name has to keep this naming convention with the name consisting of the Daphne game type (_lair_ for this example) followed by the .daphne extension. This name logic with a short name per game is similar to how it works in MAME and ScummVM. A list of available games can be found here: \
-[http://www.daphne-emu.com/mediawiki/index.php/CmdLine](http://www.daphne-emu.com/mediawiki/index.php/CmdLine)
+https://www.daphne-emu.com:9443/mediawiki/index.php/CmdLine
 
 In order to get the games to work, simply create an empty file named _\<game\>.daphne_ inside the game directory, for example `lair.daphne` in this case. The _Directories interpreted as files_ functionality will then allow the game to be launched even though it shows up as a single entry inside ES-DE.
 
@@ -2214,7 +2214,7 @@ The drawback to using shortcuts is that they're not portable, if you change the 
 
 **Linux:**
 
-On Linux you need to supply your own game engine binary as few (if any) games are distributed with the Linux release of OpenBOR. Download the .7z archive from the [https://github.com/DCurrent/openbor](https://github.com/DCurrent/openbor) repository. The file you want is _OpenBOR_3.0_6391.AppImage_ which is located inside the LINUX/OpenBOR folder. If you need an older engine for some specific game, then you may need to download an earlier release instead.
+On Linux you need to supply your own game engine binary as few (if any) games are distributed with the Linux release of OpenBOR. Download the .7z archive from the https://github.com/DCurrent/openbor repository. The file you want is _OpenBOR_3.0_6391.AppImage_ which is located inside the LINUX/OpenBOR folder. If you need an older engine for some specific game, then you may need to download an earlier release instead.
 
 Copy this file to the game directory and make it executable using the command `chmod +x OpenBOR_3.0_6391.AppImage`
 
@@ -2366,7 +2366,7 @@ ScummVM overlaps a bit with DOS when it comes to the logic of setting it up. It'
 Although ScummVM supports launching of .exe files, ES-DE is currently not configured as such and it's instead recommended to create a .scummvm file in each game directory and launch that. This makes for a cleaner setup as you don't need to run game configuration utilities like INSTALL.EXE or SETUP.EXE directly as you would with DOSBox. Rather the game configuration is done within the ScummVM emulator.
 
 The .scummvm file must be named using the correct _Game Short Name_ and it must also contain this short name as a single string/word. You can find the complete list of supported ScummVM games with their corresponding short names here:\
-[https://www.scummvm.org/compatibility](https://www.scummvm.org/compatibility)
+https://www.scummvm.org/compatibility
 
 An example setup could look like the following:
 ```
