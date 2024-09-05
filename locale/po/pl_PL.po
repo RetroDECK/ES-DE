@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-09-04 17:44+0200\n"
-"PO-Revision-Date: 2024-08-24 12:00+0200\n"
+"PO-Revision-Date: 2024-09-04 23:57+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Polski <info@es-de.org>\n"
 "Language: pl_PL\n"
@@ -34,31 +34,26 @@ msgstr "Więcej informacji na stronie"
 msgid "No Entries Found"
 msgstr "Nie znaleziono wpisów"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all"
-msgstr "małe"
+msgstr "wszystko"
 
-#, fuzzy
 msgctxt "theme"
 msgid "all games"
 msgstr "wszystkie gry"
 
 msgctxt "theme"
 msgid "recent"
-msgstr ""
+msgstr "niedawna"
 
-#, fuzzy
 msgctxt "theme"
 msgid "last played"
 msgstr "ostatnio grane"
 
-#, fuzzy
 msgctxt "theme"
 msgid "favorites"
 msgstr "ulubione"
 
-#, fuzzy
 msgctxt "theme"
 msgid "collections"
 msgstr "kolekcje"
@@ -308,9 +303,8 @@ msgstr "SLAJD (WBUDOWANE)"
 msgid "FADE (BUILT-IN)"
 msgstr "ZANIKANIE (WBUDOWANE)"
 
-#, fuzzy
 msgid "THEME LANGUAGE"
-msgstr "JĘZYK PREFEROWANY"
+msgstr "JĘZYK MOTYWU"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "JĘZYK APLIKACJI"
@@ -2088,7 +2082,7 @@ msgstr[2] "Ta kolekcja zawiera %i gier, między innymi: '%s', '%s' i '%s'"
 #, c-format
 msgctxt "theme"
 msgid "'%s' is filtered so there may be more games available"
-msgstr ""
+msgstr "'%s' jest filtrowana, więc może być dostępnych więcej gier"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
@@ -2255,29 +2249,29 @@ msgstr "losowo"
 msgid "screensaver"
 msgstr "wygaszacz"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i game"
 msgid_plural "%i games"
-msgstr[0] "pomiń grę"
-msgstr[1] "pomiń grę"
-msgstr[2] "pomiń grę"
+msgstr[0] "%i gra"
+msgstr[1] "%i gry"
+msgstr[2] "%i gier"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "(%i favorite)"
 msgid_plural "(%i favorites)"
-msgstr[0] "ulubione"
-msgstr[1] "ulubione"
-msgstr[2] "ulubione"
+msgstr[0] "(%i ulubiona)"
+msgstr[1] "(%i ulubione)"
+msgstr[2] "(%i ulubionych)"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
-msgstr[0] "ulubione"
-msgstr[1] "ulubione"
-msgstr[2] "ulubione"
+msgstr[0] "%i ulubiona"
+msgstr[1] "%i ulubione"
+msgstr[2] "%i ulubionych"
 
 msgctxt "theme"
 msgid "unknown"
@@ -2297,11 +2291,11 @@ msgstr "przejdź do gry"
 
 msgctxt "theme"
 msgid "yes"
-msgstr ""
+msgstr "tak"
 
 msgctxt "theme"
 msgid "no"
-msgstr ""
+msgstr "nie"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2719,33 +2713,33 @@ msgstr "nigdy"
 msgctxt "theme"
 msgid "%i day ago"
 msgid_plural "%i days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i dzień temu"
+msgstr[1] "%i dni temu"
+msgstr[2] "%i dni temu"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour ago"
 msgid_plural "%i hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i godzinę temu"
+msgstr[1] "%i godziny temu"
+msgstr[2] "%i godzin temu"
 
 #, c-format
 msgctxt "theme"
 msgid "%i minute ago"
 msgid_plural "%i minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i minutę temu"
+msgstr[1] "%i minuty temu"
+msgstr[2] "%i minut temu"
 
 #, c-format
 msgctxt "theme"
 msgid "%i second ago"
 msgid_plural "%i seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i sekunda temu"
+msgstr[1] "%i sekundy temu"
+msgstr[2] "%i sekund temu"
 
 msgid "SPACE"
 msgstr "SPACJA"
