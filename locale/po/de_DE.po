@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-04 17:44+0200\n"
-"PO-Revision-Date: 2024-08-21 20:59+0200\n"
+"POT-Creation-Date: 2024-08-21 21:00+0200\n"
+"PO-Revision-Date: 2024-08-27 09:24+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Deutsch <info@es-de.org>\n"
 "Language: de_DE\n"
@@ -19,19 +19,19 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 
 msgid "Network error (status:"
-msgstr ""
+msgstr "Netzwerkfehler (Status:"
 
 msgid "New prerelease available:"
-msgstr ""
+msgstr "Neue Vorabversion verfügbar:"
 
 msgid "New release available:"
-msgstr ""
+msgstr "Neue Version verfügbar:"
 
 msgid "For more information visit"
-msgstr ""
+msgstr "Weitere Informationen finden Sie unter"
 
 msgid "No Entries Found"
-msgstr ""
+msgstr "Keine Einträge gefunden"
 
 msgctxt "theme"
 msgid "all"
@@ -58,345 +58,349 @@ msgid "collections"
 msgstr ""
 
 msgid "ScreenScraper error:"
-msgstr ""
+msgstr "ScreenScraper Fehler:"
 
 msgid "ScreenScraper: Wrong username or password"
-msgstr ""
+msgstr "ScreenScraper: Falscher Benutzername oder Passwort"
 
 msgid "Network error:"
-msgstr ""
+msgstr "Netzwerkfehler:"
 
 msgid "Media directory does not exist and can't be created."
-msgstr ""
+msgstr "Das Medienverzeichnis existiert nicht und kann nicht erstellt werden."
 
 msgid "Permission problems?"
-msgstr ""
+msgstr "Berechtigungsprobleme?"
 
 msgid "Failed to open path for writing media file."
-msgstr ""
+msgstr "Pfad zum Speichern der Mediendatei nicht verfügbar."
 
 msgid "Couldn't save media file, permission problems or is the disk full?"
 msgstr ""
+"Konnte Mediendatei nicht speichern: Berechtigungsfehler oder Speicher voll?"
 
 msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
+"Skaliertes Bild konnte nicht gespeichert werden: Berechtigungsfehler oder "
+"Speicher voll?"
 
 msgctxt "metadata"
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 msgctxt "metadata"
 msgid "ENTER NAME"
-msgstr ""
+msgstr "NAME EINGEBEN"
 
 msgctxt "metadata"
 msgid "SORTNAME"
-msgstr ""
+msgstr "NAME SORTIEREN"
 
 msgctxt "metadata"
 msgid "ENTER SORTNAME"
-msgstr ""
+msgstr "SORTIERNAME EINGEBEN"
 
 msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr ""
+msgstr "BENUTZERDEFINIERTE SAMMLUNGEN SORTIERNAME"
 
 msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
-msgstr ""
+msgstr "SORTIERNAME DER SAMMLUNGEN EINGEBEN"
 
 msgctxt "metadata"
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "BESCHREIBUNG"
 
 msgctxt "metadata"
 msgid "ENTER DESCRIPTION"
-msgstr ""
+msgstr "BESCHREIBUNG EINGEBEN"
 
 msgctxt "metadata"
 msgid "RATING"
-msgstr ""
+msgstr "BEWERTUNG"
 
 msgctxt "metadata"
 msgid "RELEASE DATE"
-msgstr ""
+msgstr "ERSCHEINUNGSDATUM"
 
 msgctxt "metadata"
 msgid "DEVELOPER"
-msgstr ""
+msgstr "ENTWICKLER"
 
 msgctxt "metadata"
 msgid "ENTER DEVELOPER"
-msgstr ""
+msgstr "ENTWICKLER EINGEBEN"
 
 msgctxt "metadata"
 msgid "PUBLISHER"
-msgstr ""
+msgstr "HERAUSGEBER"
 
 msgctxt "metadata"
 msgid "ENTER PUBLISHER"
-msgstr ""
+msgstr "HERAUSGEBER EINGEBEN"
 
 msgctxt "metadata"
 msgid "GENRE"
-msgstr ""
+msgstr "GENRE"
 
 msgctxt "metadata"
 msgid "ENTER GENRE"
-msgstr ""
+msgstr "GENRE EINGEBEN"
 
 msgctxt "metadata"
 msgid "PLAYERS"
-msgstr ""
+msgstr "SPIELER"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
-msgstr ""
+msgstr "ANZAHL SPIELER EINGEBEN"
 
 msgctxt "metadata"
 msgid "FAVORITE"
-msgstr ""
+msgstr "FAVORIT"
 
 msgctxt "metadata"
 msgid "COMPLETED"
-msgstr ""
+msgstr "ABGESCHLOSSEN"
 
 msgctxt "metadata"
 msgid "KIDGAME"
-msgstr ""
+msgstr "KINDERSPIEL"
 
 msgctxt "metadata"
 msgid "KIDGAME (ONLY AFFECTS BADGES)"
-msgstr ""
+msgstr "KINDERSPIEL (BETRIFFT NUR BADGES)"
 
 msgctxt "metadata"
 msgid "HIDDEN"
-msgstr ""
+msgstr "VERSTECKT"
 
 msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
-msgstr ""
+msgstr "DEFEKT/FUNKTIONIERT NICHT"
 
 msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
-msgstr ""
+msgstr "VOM SPIELZÄHLER AUSSCHLIESSEN"
 
 msgctxt "metadata"
 msgid "EXCLUDE FROM MULTI-SCRAPER"
-msgstr ""
+msgstr "VOM MULTI-SCRAPER AUSSCHLIESSEN"
 
 msgctxt "metadata"
 msgid "HIDE METADATA FIELDS"
-msgstr ""
+msgstr "METADATENFELDER AUSBLENDEN"
 
 msgctxt "metadata"
 msgid "TIMES PLAYED"
-msgstr ""
+msgstr "ANZAHL DER SPIELE"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr ""
+msgstr "ANZAHL DER SPIELE EINGEBEN"
 
 msgctxt "metadata"
 msgid "CONTROLLER"
-msgstr ""
+msgstr "CONTROLLER"
 
 msgctxt "metadata"
 msgid "SELECT CONTROLLER"
-msgstr ""
+msgstr "CONTROLLER AUSWÄHLEN"
 
 msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
-msgstr ""
+msgstr "ALTERNATIVER EMULATOR"
 
 msgctxt "metadata"
 msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr ""
+msgstr "ALTERNATIVEN EMULATOR AUSWÄHLEN"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
-msgstr ""
+msgstr "ORDNERLINK"
 
 msgctxt "metadata"
 msgid "SELECT FOLDER LINK"
-msgstr ""
+msgstr "ORDNERLINK AUSWÄHLEN"
 
 msgctxt "metadata"
 msgid "LAST PLAYED"
-msgstr ""
+msgstr "ZULETZT GESPIELT"
 
 msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
-msgstr ""
+msgstr "LETZTES SPIELDATUM EINGEBEN"
 
 msgid "MAIN MENU"
 msgstr ""
 
 msgid "SCRAPER"
-msgstr ""
+msgstr "SCRAPER"
 
 msgid "UI SETTINGS"
-msgstr ""
+msgstr "UI OPTIONEN"
 
 msgid "SOUND SETTINGS"
-msgstr ""
+msgstr "AUDIOEINSTELLUNGEN"
 
 msgid "INPUT DEVICE SETTINGS"
-msgstr ""
+msgstr "EINGABEGERÄTE-EINSTELLUNGEN"
 
 msgid "GAME COLLECTION SETTINGS"
-msgstr ""
+msgstr "SPIELESAMMLUNGS-EINSTELLUNGEN"
 
 msgid "OTHER SETTINGS"
-msgstr ""
+msgstr "ANDERE EINSTELLUNGEN"
 
 msgid "UTILITIES"
-msgstr ""
+msgstr "DIENSTPROGRAMME"
 
 msgid "QUIT ES-DE"
-msgstr ""
+msgstr "BEENDE ES-DE"
 
 msgid "QUIT"
-msgstr ""
+msgstr "BEENDEN"
 
 msgid "THEME"
-msgstr ""
+msgstr "THEME"
 
 msgid "THEME DOWNLOADER"
-msgstr ""
+msgstr "THEME DOWNLOADER"
 
 msgid "THEME VARIANT"
-msgstr ""
+msgstr "THEME VARIANTE"
 
 msgid "NONE DEFINED"
-msgstr ""
+msgstr "KEINE DEFINIERT"
 
 msgid "THEME COLOR SCHEME"
-msgstr ""
+msgstr "THEME FARBSCHEMA"
 
 msgid "THEME FONT SIZE"
-msgstr ""
+msgstr "THEME SCHRIFTGRÖßE"
 
 msgid "THEME ASPECT RATIO"
-msgstr ""
+msgstr "THEME BILDFORMAT"
 
 msgid "THEME TRANSITIONS"
-msgstr ""
+msgstr "THEMENÜBERGÄNGE"
 
 msgid "AUTOMATIC"
-msgstr ""
+msgstr "AUTOMATISCH"
 
 msgid "THEME PROFILE"
-msgstr ""
+msgstr "THEMENPROFIL"
 
 msgid "INSTANT (BUILT-IN)"
-msgstr ""
+msgstr "SOFORT (INTEGRIERT)"
 
 msgid "SLIDE (BUILT-IN)"
-msgstr ""
+msgstr "FOLIE (INTEGRIERT)"
 
 msgid "FADE (BUILT-IN)"
-msgstr ""
+msgstr "VERBLASSEN (INTEGRIERT)"
 
+#, fuzzy
 msgid "THEME LANGUAGE"
-msgstr ""
+msgstr "THEME DOWNLOADER"
 
 msgid "APPLICATION LANGUAGE"
-msgstr ""
+msgstr "ANWENDUNGSSPRACHE"
 
 msgid "QUICK SYSTEM SELECT"
-msgstr ""
+msgstr "SCHNELLE SYSTEMAUSWAHL"
 
 msgid "LEFT/RIGHT OR SHOULDERS"
-msgstr ""
+msgstr "LINKS/RECHTS ODER SCHULTERTASTEN"
 
 msgid "LEFT/RIGHT OR TRIGGERS"
-msgstr ""
+msgstr "LINKS/RECHTS ODER TRIGGER"
 
 msgid "SHOULDERS"
-msgstr ""
+msgstr "SCHULTERTASTEN"
 
 msgid "TRIGGERS"
-msgstr ""
+msgstr "TRIGGER"
 
 msgid "LEFT/RIGHT"
-msgstr ""
+msgstr "LINKS/RECHTS"
 
 msgid "DISABLED"
-msgstr ""
+msgstr "DEAKTIVIERT"
 
 msgid "GAMELIST ON STARTUP"
-msgstr ""
+msgstr "SPIELELISTE BEIM START"
 
 msgid "NONE"
-msgstr ""
+msgstr "KEINE"
 
 msgid "SYSTEMS SORTING"
-msgstr ""
+msgstr "SYSTEME SORTIEREN"
 
 msgid "FULL NAMES OR CUSTOM"
-msgstr ""
+msgstr "VOLLE NAMEN ODER BENUTZERDEFINIERT"
 
 msgid "RELEASE YEAR"
-msgstr ""
+msgstr "ERSCHEINUNGSJAHR"
 
 msgid "MANUFACTURER, RELEASE YEAR"
-msgstr ""
+msgstr "HERSTELLER, ERSCHEINUNGSJAHR"
 
 msgid "HW TYPE, RELEASE YEAR"
-msgstr ""
+msgstr "HW TYP, ERSCHEINUNGSJAHR"
 
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
-msgstr ""
+msgstr "HERSTELLER, HW TYP, ERSCH. JAHR"
 
 msgctxt "short"
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr ""
+msgstr "STANDARD-SORTIERUNG FÜR SPIELE"
 
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr ""
+msgstr "STANDARD-SORTIERUNG FÜR SPIELE"
 
 msgid "MENU COLOR SCHEME"
-msgstr ""
+msgstr "MENÜ-FARBSCHEMA"
 
 msgid "DARK"
-msgstr ""
+msgstr "DUNKEL"
 
 msgid "DARK AND RED"
-msgstr ""
+msgstr "DUNKEL UND ROT"
 
 msgid "LIGHT"
 msgstr ""
 
 msgid "MENU OPENING ANIMATION"
-msgstr ""
+msgstr "MENÜ-ÖFFNUNGSANIMATION"
 
 msgid "SCALE-UP"
-msgstr ""
+msgstr "HOCHSKALIEREN"
 
 msgid "LAUNCH SCREEN DURATION"
-msgstr ""
+msgstr "STARTBILDSCHIRMDAUER"
 
 msgid "NORMAL"
-msgstr ""
+msgstr "NORMAL"
 
 msgid "BRIEF"
-msgstr ""
+msgstr "KURZ"
 
 msgid "LONG"
-msgstr ""
+msgstr "LANG"
 
 msgid "UI MODE"
-msgstr ""
+msgstr "UI MODUS"
 
 msgid "FULL"
-msgstr ""
+msgstr "VOLL"
 
 msgid "KIOSK"
-msgstr ""
+msgstr "KIOS"
 
 msgid "KID"
-msgstr ""
+msgstr "KINDER"
 
 #, c-format
 msgid ""
@@ -408,6 +412,13 @@ msgid ""
 "\n"
 "DO YOU WANT TO PROCEED?"
 msgstr ""
+"DIES ÄNDERT DIE UI IN DEN BESCHRÄNKTEN MODUS\n"
+"'KIOSK'\n"
+"DIES WIRD DIE MEISTEN MENÜ-OPTIONEN AUSBLENDEN\n"
+"ZUM ENTSPERREN UND RÜCKKEHR ZUR VOLLEN UI, DIESEN CODE EINGEBEN:\n"
+"%s\n"
+"\n"
+"WOLLEN SIE FORTFAHREN?"
 
 #, c-format
 msgid ""
@@ -420,111 +431,121 @@ msgid ""
 "\n"
 "DO YOU WANT TO PROCEED?"
 msgstr ""
+"DIES ÄNDERT DIE UI IN DEN BESCHRÄNKTEN MODUS\n"
+"'KIND'\n"
+"DIES ERLAUBT NUR SPIELE, DIE ALS FÜR KINDER\n"
+"GEEIGNET MARKIERT SIND\n"
+"ZUM ENTSPERREN UND RÜCKKEHR ZUR VOLLEN UI, DIESEN CODE EINGEBEN:\n"
+"%s\n"
+"\n"
+"WOLLEN SIE FORTFAHREN?"
 
 msgid "YES"
-msgstr ""
+msgstr "JA"
 
 msgid "NO"
-msgstr ""
+msgstr "NEIN"
 
 msgid "RANDOM ENTRY BUTTON"
-msgstr ""
+msgstr "ZUFALLS-EINGABE-TASTE"
 
 msgid "GAMES ONLY"
-msgstr ""
+msgstr "NUR SPIELE"
 
 msgid "GAMES AND SYSTEMS"
-msgstr ""
+msgstr "SPIELE UND PLATTFORMEN"
 
 msgid "MEDIA VIEWER SETTINGS"
-msgstr ""
+msgstr "MEDIENBETRACHTER-EINSTELLUNGEN"
 
 msgid "SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "BILDSCHIRMSCHONER-EINSTELLUNGEN"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
-msgstr ""
+msgstr "THEMEN-VARIANTEN-TRIGGER AKTIVIEREN"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
-msgstr ""
+msgstr "HINTERGRUND TRÜBEN WENN MENÜ GEÖFFNET IST"
 
 msgid "SORT FOLDERS ON TOP OF GAMELISTS"
-msgstr ""
+msgstr "ORDNER ÜBER SPIELELISTEN SORTIEREN"
 
 msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
-msgstr ""
+msgstr "FAVORITEN ÜBER NICHT-FAVORITEN SORTIEREN"
 
 msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
-msgstr ""
+msgstr "STERN-MARKIERUNGEN ZU LIEBLINGS-SPIELEN HINZUFÜGEN"
 
 msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
-msgstr ""
+msgstr "TEXTLISTE-SCHNELLBLÄTTERN-OVERLAY AKTIVIEREN"
 
 msgid "ENABLE VIRTUAL KEYBOARD"
-msgstr ""
+msgstr "AKTIVIERE VIRTUELLE TASTATUR"
 
 msgid "ENABLE TOGGLE FAVORITES BUTTON"
-msgstr ""
+msgstr "ZEIGE FAVORITEN-TASTE AKTIVIEREN"
 
 msgid "ENABLE GAMELIST FILTERS"
-msgstr ""
+msgstr "SPIELELISTE-FILTER AKTIVIEREN"
 
 msgid "DISPLAY ON-SCREEN HELP"
-msgstr ""
+msgstr "ON-SCREEN-HILFE ANZEIGEN"
 
 msgid "SYSTEM VOLUME"
-msgstr ""
+msgstr "SYSTEM-LAUTSTÄRKE"
 
 msgid "NAVIGATION SOUNDS VOLUME"
-msgstr ""
+msgstr "NAVIGATIONS-TASTEN LAUTSTÄRKE"
 
 msgid "VIDEO PLAYER VOLUME"
-msgstr ""
+msgstr "VIDEO PLAYER LAUTSTÄRKE"
 
 msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
-msgstr ""
+msgstr "AUDIO FÜR SPIELELISTE UND SYSTEMANSICHT-VIDEOS WIEDERGEBEN"
 
 msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
-msgstr ""
+msgstr "AUDIO FÜR MEDIENANSICHT-VIDEOS WIEDERGEBEN"
 
 msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
-msgstr ""
+msgstr "AUDIO FÜR BILDSCHIRMSCHONER-VIDEOS WIEDERGEBEN"
 
 msgid "ENABLE NAVIGATION SOUNDS"
-msgstr ""
+msgstr "NAVIGATIONS-TASTEN LAUTSTÄRKE AKTIVIEREN"
 
 msgid "CONTROLLER TYPE"
-msgstr ""
+msgstr "CONTROLLER-TYP"
 
 msgid "TOUCH OVERLAY SIZE"
-msgstr ""
+msgstr "TOUCH-OVERLAY-GRÖßE"
 
 msgid "MEDIUM"
-msgstr ""
+msgstr "MEDIUM"
 
 msgid "LARGE"
-msgstr ""
+msgstr "GROß"
 
 msgid "SMALL"
-msgstr ""
+msgstr "KLEIN"
 
 msgid "EXTRA SMALL"
-msgstr ""
+msgstr "EXTRA-KLEIN"
 
 msgid "TOUCH OVERLAY OPACITY"
-msgstr ""
+msgstr "TOUCH-OVERLAY-TRANSPARENZ"
 
+#, fuzzy
 msgid "LOW"
-msgstr ""
+msgstr "GERING"
 
+#, fuzzy
 msgid "VERY LOW"
-msgstr ""
+msgstr "SEHR GERING"
 
 msgid "TOUCH OVERLAY FADE-OUT TIME"
-msgstr ""
+msgstr "TOUCH-OVERLAY-AUSBLENDZEIT"
 
 msgid "ENABLE TOUCH OVERLAY"
-msgstr ""
+msgstr "TOUCH-OVERLAY AKTIVIEREN"
 
 msgid ""
 "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
@@ -533,181 +554,189 @@ msgid ""
 "OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
 "THE CONFIGURATOR TO RUN ON NEXT STARTUP"
 msgstr ""
+"DEAKTIVIEREN SIE DAS TOUCH-OVERLAY NICHT, AUßER SIE VERWENDEN EINEN "
+"CONTROLLER, SONST SPERREN SIE SICH AUS DER APP AUS. IN DIESEM FALL MÜSSEN "
+"SIE EINEN CONTROLLER ODER TASTATUR ANSCHLIESSEN, UM DIESE EINSTELLUNG ZU "
+"AKTIVIEREN, ODER DEN ES-DE-SPEICHER IN DEN ANDROID-APP-EINSTELLUNGEN "
+"LÖSCHEN, UM DEN KONFIGURATOR BEIM NÄCHSTEN START ZU ERZWINGEN"
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
-msgstr ""
+msgstr "NUR EINGABEN VOM ERSTEN CONTROLLER AKZEPTIEREN"
 
 msgid "SWAP THE A/B AND X/Y BUTTONS"
-msgstr ""
+msgstr "A/B- UND X/Y-TASTEN TAUSCHEN"
 
 msgid "IGNORE KEYBOARD INPUT"
-msgstr ""
+msgstr "KEYBOARD-EINGABEN IGNORIEREN"
 
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
-msgstr ""
+msgstr "KEYBOARD/CONTROLLER-EINGABEN KONFIGURIEREN"
 
 msgid ""
 "THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
 "TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
 "HELP PROMPTS)"
 msgstr ""
+"DAS TASTATUR- UND CONTROLLER-SETUP WIRD VORKONFIGURIERT. MIT DIESEM WERKZEUG "
+"KÖNNEN SIE DIE STANDARD-TASTENZUORDNUNGEN ÄNDERN (DIE HILFEANZEIGEN WERDEN "
+"DAVON NICHT BETROFFEN)"
 
 msgid "PROCEED"
-msgstr ""
+msgstr "FORTFAHREN"
 
 msgid "CANCEL"
-msgstr ""
+msgstr "ABBRECHEN"
 
 msgid "ALTERNATIVE EMULATORS"
-msgstr ""
+msgstr "ALTERNATIVE EMULATOREN"
 
 msgid "GAME MEDIA DIRECTORY"
-msgstr ""
+msgstr "SPIELE-MEDIEN-VERZEICHNIS"
 
 msgid "ENTER GAME MEDIA DIRECTORY"
-msgstr ""
+msgstr "ÖFFNE SPIELE-MEDIEN-VERZEICHNIS"
 
 msgid "Default directory:"
-msgstr ""
+msgstr "Standardverzeichnis:"
 
 msgid "SAVE"
-msgstr ""
+msgstr "SPEICHERN"
 
 msgid "SAVE CHANGES?"
-msgstr ""
+msgstr "ÄNDERUNGEN SPEICHERN"
 
 msgid "load default directory"
-msgstr ""
+msgstr "standardverzeichnis öffnen"
 
 msgid "VRAM LIMIT"
-msgstr ""
+msgstr "VRAM LIMIT"
 
 msgid "ANTI-ALIASING (MSAA)"
-msgstr ""
+msgstr "KANTENGLÄTTUNG (MSAA)"
 
 msgid "2X"
-msgstr ""
+msgstr "2X"
 
 msgid "4X"
-msgstr ""
+msgstr "4X"
 
 msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
-msgstr ""
+msgstr "KANTENGLÄTTUNG (MSAA) (NEUSTART ERFORDERLICH)"
 
 msgid "DISPLAY/MONITOR INDEX"
-msgstr ""
+msgstr "DISPLAY/MONITOR INDEX"
 
 msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
-msgstr ""
+msgstr "DISPLAY/MONITOR INDEX (NEUSTART ERFORDERLICH)"
 
 msgid "ROTATE SCREEN"
-msgstr ""
+msgstr "BILDSCHIRM ROTIEREN"
 
 msgid "90 DEGREES"
-msgstr ""
+msgstr "90°"
 
 msgid "180 DEGREES"
-msgstr ""
+msgstr "180°"
 
 msgid "270 DEGREES"
-msgstr ""
+msgstr "270°"
 
 msgid "ROTATE SCREEN (REQUIRES RESTART)"
-msgstr ""
+msgstr "BILDSCHIRM ROTIEREN (NEUSTART ERFORDERLICH)"
 
 msgid "KEYBOARD QUIT SHORTCUT"
-msgstr ""
+msgstr "TASTATUR BEENDEN SCHNELLEINGABE"
 
 msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr ""
+msgstr "WANN SPIELE-METADATEN SPEICHERN"
 
 msgid "ALWAYS"
-msgstr ""
+msgstr "IMMER"
 
 msgid "ON EXIT"
-msgstr ""
+msgstr "BEIM BEENDEN"
 
 msgid "NEVER"
-msgstr ""
+msgstr "NIEMALS"
 
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr ""
+msgstr "WANN SPIELE-METADATEN SPEICHERN"
 
 msgid "APPLICATION UPDATES"
-msgstr ""
+msgstr "APPLICATION UPDATES"
 
 msgid "DAILY"
-msgstr ""
+msgstr "TÄGLICH"
 
 msgid "WEEKLY"
-msgstr ""
+msgstr "WÖCHENTLICH"
 
 msgid "MONTHLY"
-msgstr ""
+msgstr "MONATLICH"
 
 msgid "CHECK FOR APPLICATION UPDATES"
-msgstr ""
+msgstr "NACH APPLICATION-UPDATES SUCHEN"
 
 msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
-msgstr ""
+msgstr "VORABVERSIONEN IN DER UPDATE-SUCHE"
 
 msgid "HIDE TASKBAR (REQUIRES RESTART)"
-msgstr ""
+msgstr "TASKBAR VERSTECKEN (NEUSTART ERFORDERLICH)"
 
 msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
-msgstr ""
+msgstr "IM HINTERGRUND LAUFEN LASSEN (WENN SPIEL GESTARTET IST)"
 
 msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
-msgstr ""
+msgstr "VIDEO HARDWARE DECODIERUNG (EXPERIMENTELL)"
 
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
-msgstr ""
+msgstr "VIDEO-FRAMERATE AUF 60FPS HOCHSKALIEREN"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
-msgstr ""
+msgstr "ALTERNATIVE EMULATOREN PRO SPIEL AKTIVIEREN"
 
 msgid "SHOW HIDDEN FILES AND FOLDERS"
-msgstr ""
+msgstr "VERSTECKE DATEIEN UND ORDNER ZEIGEN"
 
 msgid "SHOW HIDDEN GAMES"
-msgstr ""
+msgstr "VERSTECKTE SPIELE ZEIGEN"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
-msgstr ""
+msgstr "BENUTZERDEFINIERTE EREIGNIS-SKRIPTE AKTIVIEREN"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
-msgstr ""
+msgstr "NUR SPIELE AUS DER GAMELIST.XML-DATEI ANZEIGEN"
 
 msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
-msgstr ""
+msgstr "ÜBERSCHÜSSIGE MAME-NAMEN-INFO ENTFERNEN (NEUSTART ERFORDERLICH)"
 
 msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
-msgstr ""
+msgstr "DESKTOP-ZUSAMMENSETZUNG DEAKTIVIEREN (NEUSTART ERFORDERLICH)"
 
 msgid "BACK BUTTON/BACK SWIPE EXITS APP"
-msgstr ""
+msgstr "ZURÜCK-TASTE/ZURÜCK-WISCHEN SCHLIESST DIE APP"
 
 msgid "DEBUG MODE"
-msgstr ""
+msgstr "DEBUG MODUS"
 
 msgid "DISPLAY GPU STATISTICS OVERLAY"
-msgstr ""
+msgstr "GPU-STATISTIK OVERLAY ANZEIGEN"
 
 msgid "ENABLE MENU IN KID MODE"
-msgstr ""
+msgstr "MENÜ IM KINDER-MODUS AKTIVIEREN"
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
-msgstr ""
+msgstr "BEENDENMENÜ ANZEIGEN (NEUSTART- UND AUSSCHALTFUNKTIONEN)"
 
 msgid "ORPHANED DATA CLEANUP"
-msgstr ""
+msgstr "VERWAISTE DATEN AUFRÄUMEN"
 
 msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
-msgstr ""
+msgstr "SYSTEMVERZEICHNISSE ERSTELLEN/AKTUALISIEREN"
 
 msgid ""
 "THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
@@ -716,66 +745,75 @@ msgid ""
 "TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
 "RUNNING THIS UTILITY"
 msgstr ""
+"DIES ERSTELLT ALLE SPIELSYSTEMVERZEICHNISSE IN IHREM ROM-ORDNER UND "
+"AKTUALISIERT ALLE SYSTEMINFO.TXT-DATEIEN. DIES IST EIN SICHERER VORGANG, DER "
+"IHRE SPIELDATEIEN NICHT LÖSCHT ODER ÄNDERT. UM DIE STARTZEIT DER ANWENDUNG "
+"ZU VERKÜRZEN, WIRD EMPFOHLEN, DIE SYSTEMVERZEICHNISSE, DIE SIE NICHT "
+"BENÖTIGEN, NACH DER AUSFÜHRUNG DIESES PROGRAMMS ZU LÖSCHEN"
 
 msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
-msgstr ""
+msgstr "DIE SYSTEMVERZEICHNISSE WURDEN ERFOLGREICH ERSTELLT"
 
 msgid ""
 "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
 "LOG FILE FOR MORE DETAILS"
 msgstr ""
+"FEHLER BEIM ERSTELLEN DER SYSTEMVERZEICHNISSE, BERECHTIGUNGSPROBLEME ODER "
+"SPEICHER VOLL? SIEHE PROTOKOLLDATEI FÜR WEITERE DETAILS"
 
 msgid "RESCAN ROM DIRECTORY"
-msgstr ""
+msgstr "ROM-VERZEICHNISSE ERNEUT SCANNEN"
 
 msgid ""
 "THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
 "GAMES AND SYSTEMS"
 msgstr ""
+"DIES WIRD IHR ROM-VERZEICHNIS NACH ÄNDERUNGEN WIE HINZUGEFÜGTEN ODER "
+"ENTFERNTEN SPIELEN UND SYSTEMEN ERNEUT SCANNEN"
 
 msgid "REALLY QUIT?"
-msgstr ""
+msgstr "WIRKLICH BEENDEN?"
 
 msgid "REALLY REBOOT?"
-msgstr ""
+msgstr "WIRKLICH NEUSTARTEN?"
 
 msgid "REBOOT SYSTEM"
-msgstr ""
+msgstr "SYSTEM NEUSTARTEN"
 
 msgid "REALLY POWER OFF?"
-msgstr ""
+msgstr "WIRKLICH HERUNTERFAHREN?"
 
 msgid "POWER OFF SYSTEM"
-msgstr ""
+msgstr "SYSTEM HERUNTERFAHREN"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
-msgstr ""
+msgstr "MEDIENBETRACHTER EINSTELLUNGEN"
 
 msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "BILDSCHIRMSCHONER EINSTELLUNGEN"
 
 msgid "choose"
-msgstr ""
+msgstr "wählen"
 
 msgid "select"
-msgstr ""
+msgstr "auswählen"
 
 msgid "close menu"
-msgstr ""
+msgstr "menü schließen"
 
 msgid "REFINE SEARCH"
-msgstr ""
+msgstr "SUCHE EINSCHRÄNKEN"
 
 msgid "refine search"
-msgstr ""
+msgstr "suche einschränken"
 
 msgid "cancel"
-msgstr ""
+msgstr "abbrechen"
 
 msgid "back (cancel)"
-msgstr ""
+msgstr "zurück (abbrechen)"
 
 msgid "SCRAPE FROM"
 msgstr ""
