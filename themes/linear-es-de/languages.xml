@@ -50,6 +50,19 @@
             <langYourCollections>Le tue Collezioni</langYourCollections>
         </variables>
     </language>
+    <language name="pl_PL">
+        <variables>
+            <langLabelRating>Ocena</langLabelRating>
+            <langLabelReleasedate>Wydano</langLabelReleasedate>
+            <langLabelPlayers>Liczba Graczy</langLabelPlayers>
+            <langLabelGenre>Gatunek</langLabelGenre>
+            <langLabelDeveloper>Deweloper</langLabelDeveloper>
+            <langLabelPublisher>Wydawca</langLabelPublisher>
+            <langLabelLastPlayed>Ostatnio Grane</langLabelLastPlayed>
+            <langCustomCollections>Kolekcje Własne</langCustomCollections>
+            <langYourCollections>Twoje Kolekcje</langYourCollections>
+        </variables>
+    </language>
     <language name="pt_BR">
         <variables>
             <langLabelRating>Avaliação</langLabelRating>
