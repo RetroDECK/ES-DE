@@ -38,6 +38,16 @@
             <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
         </variables>
     </language>
+    <language name="pl_PL">
+        <variables>
+            <langLabelReleasedate>Wydano</langLabelReleasedate>
+            <langLabelDeveloper>Deweloper</langLabelDeveloper>
+            <langLabelPublisher>Wydawca</langLabelPublisher>
+            <langLabelGenre>Gatunek</langLabelGenre>
+            <langLabelPlayers>Liczba Graczy</langLabelPlayers>
+            <langLabelLastPlayed>Ostatnio Grane</langLabelLastPlayed>
+        </variables>
+    </language>
     <language name="pt_BR">
         <variables>
             <langLabelReleasedate>Lançamento</langLabelReleasedate>
