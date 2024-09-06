@@ -10,6 +10,7 @@
     <language>es_ES</language>
     <language>fr_FR</language>
     <language>it_IT</language>
+    <language>pl_PL</language>
     <language>pt_BR</language>
     <language>ro_RO</language>
     <language>ru_RU</language>
@@ -31,6 +32,7 @@
         <label language="es_ES">Oscuro</label>
         <label language="fr_FR">Foncé</label>
         <label language="it_IT">Scuro</label>
+        <label language="pl_PL">Ciemna</label>
         <label language="pt_BR">Escuro</label>
         <label language="ro_RO">Întunecată</label>
         <label language="ru_RU">Тёмная</label>
@@ -45,6 +47,7 @@
         <label language="es_ES">Claro</label>
         <label language="fr_FR">Clair</label>
         <label language="it_IT">Chiaro</label>
+        <label language="pl_PL">Jasna</label>
         <label language="pt_BR">Claro</label>
         <label language="ro_RO">Luminoasă</label>
         <label language="ru_RU">Светлая</label>
@@ -59,6 +62,7 @@
         <label language="es_ES">Instantanea</label>
         <label language="fr_FR">Instantané</label>
         <label language="it_IT">Istantanea</label>
+        <label language="pl_PL">Natychmiastowe</label>
         <label language="pt_BR">Deslizar</label>
         <label language="ro_RO">Instant</label>
         <label language="ru_RU">Мгновенно</label>
@@ -80,6 +84,7 @@
         <label language="es_ES">Instantanea y deslizante</label>
         <label language="fr_FR">Instantané et glissement</label>
         <label language="it_IT">Istantanea e scorri</label>
+        <label language="pl_PL">Momentalne przesunięcie</label>
         <label language="pt_BR">Instantâneo e deslizar</label>
         <label language="ro_RO">Instant și glisează</label>
         <label language="ru_RU">Мгновенно и скольжение</label>
@@ -101,6 +106,7 @@
         <label language="es_ES">Instantanea y fundido</label>
         <label language="fr_FR">Instantané et fondu</label>
         <label language="it_IT">Istantanea e dissolvi</label>
+        <label language="pl_PL">Momentalne zanikanie</label>
         <label language="pt_BR">Instantâneo e esmaecer</label>
         <label language="ro_RO">Instant și estompează</label>
         <label language="ru_RU">Мгновенно и затухание</label>
@@ -128,6 +134,7 @@
         <label language="es_ES">Lista con videos</label>
         <label language="fr_FR">Liste avec vidéos</label>
         <label language="it_IT">Lista testi con video</label>
+        <label language="pl_PL">Lista tekstowa z wideo</label>
         <label language="pt_BR">Lista de texto com vídeos</label>
         <label language="ro_RO">Listă text cu videouri</label>
         <label language="ru_RU">Текст с видео</label>
@@ -148,6 +155,7 @@
         <label language="es_ES">Lista sin videos</label>
         <label language="fr_FR">Liste sans vidéos</label>
         <label language="it_IT">Lista testi, no video</label>
+        <label language="pl_PL">Lista tekstowa bez wideo</label>
         <label language="pt_BR">Lista de texto sem vídeos</label>
         <label language="ro_RO">Listă text fără videouri</label>
         <label language="ru_RU">Текст без видео</label>
@@ -168,6 +176,7 @@
         <label language="es_ES">Lista con videos (legacy)</label>
         <label language="fr_FR">Liste avec vidéos (legacy)</label>
         <label language="it_IT">Lista testi con video (legacy)</label>
+        <label language="pl_PL">Lista tekstowa z wideo (stara)</label>
         <label language="pt_BR">Lista de texto com vídeos (legado)</label>
         <label language="ro_RO">Listă text cu videouri (învechit)</label>
         <label language="ru_RU">Текст с видео (устар.)</label>
@@ -188,6 +197,7 @@
         <label language="es_ES">Lista sin videos (legacy)</label>
         <label language="fr_FR">Liste sans vidéos (legacy)</label>
         <label language="it_IT">Lista testi, no video (legacy)</label>
+        <label language="pl_PL">Lista tekstowa bez wideo (stara)</label>
         <label language="pt_BR">Lista de texto sem vídeos (legado)</label>
         <label language="ro_RO">Listă text fără videouri (învechit)</label>
         <label language="ru_RU">Текст без видео (устар.)</label>

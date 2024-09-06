@@ -26,13 +26,14 @@ The following options are included:
 - 4:3
 - 21:9
 
-11 languages:
+12 languages:
 
 - English (United States)
 - English (United Kingdom)
 - Español (España)
 - Français
 - Italiano
+- Polski
 - Português (Brasil)
 - Română
 - Русский

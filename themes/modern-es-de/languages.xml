@@ -42,6 +42,17 @@
             <langUnknown>Sconosciuto</langUnknown>
         </variables>
     </language>
+    <language name="pl_PL">
+        <variables>
+            <langLabelRating>Ocena</langLabelRating>
+            <langLabelReleasedate>Wydano</langLabelReleasedate>
+            <langLabelPlayers>Liczba Graczy</langLabelPlayers>
+            <langLabelGenre>Gatunek</langLabelGenre>
+            <langLabelDeveloper>Deweloper</langLabelDeveloper>
+            <langLabelPublisher>Wydawca</langLabelPublisher>
+            <langUnknown>Nieznane</langUnknown>
+        </variables>
+    </language>
     <language name="pt_BR">
         <variables>
             <langLabelRating>Avaliação</langLabelRating>
