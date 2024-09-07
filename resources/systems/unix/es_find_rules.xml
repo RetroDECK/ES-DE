@@ -252,6 +252,7 @@
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="systempath">
+            <entry>lime3ds</entry>
             <entry>lime3ds-gui</entry>
         </rule>
     </emulator>
