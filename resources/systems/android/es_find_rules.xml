@@ -400,6 +400,12 @@
             <entry>com.winlator/.XServerDisplayActivity</entry>
         </rule>
     </emulator>
+    <emulator name="WINLATOR-PROOT">
+        <!-- Microsoft Windows emulator Winlator PRoot Cmod -->
+        <rule type="androidpackage">
+            <entry>com.cmodded.winlator/com.winlator.XServerDisplayActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="YABASANSHIRO-2">
         <!-- Sega Saturn emulator Yaba Sanshiro 2 -->
         <rule type="androidpackage">

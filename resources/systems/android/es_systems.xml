@@ -1978,6 +1978,7 @@
         <path>%ROMPATH%/windows</path>
         <extension>.desktop</extension>
         <command label="Winlator Glibc Cmod (Standalone)">%EMULATOR_WINLATOR-GLIBC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
+        <command label="Winlator PRoot Cmod (Standalone)">%EMULATOR_WINLATOR-PROOT% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
         <platform>pcwindows</platform>
         <theme>windows</theme>
     </system>
