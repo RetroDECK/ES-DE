@@ -82,7 +82,7 @@ Emulators\gopher2600\gopher2600_windows_amd64.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\KEmulator\KEmulator.exe
-Emulators\lime3ds\lime3ds-gui.exe
+Emulators\lime3ds\lime3ds.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
 Emulators\mednafen\mednafen.exe

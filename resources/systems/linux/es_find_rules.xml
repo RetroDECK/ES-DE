@@ -484,10 +484,15 @@
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="systempath">
+            <entry>lime3ds</entry>
             <entry>lime3ds-gui</entry>
             <entry>lime-qt</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/lime3ds.AppImage</entry>
+            <entry>~/.local/share/applications/lime3ds.AppImage</entry>
+            <entry>~/.local/bin/lime3ds.AppImage</entry>
+            <entry>~/bin/lime3ds.AppImage</entry>
             <entry>~/Applications/lime3ds-gui*.AppImage</entry>
             <entry>~/.local/share/applications/lime3ds-gui*.AppImage</entry>
             <entry>~/.local/bin/lime3ds-gui*.AppImage</entry>
@@ -496,6 +501,10 @@
             <entry>~/.local/share/applications/lime-qt*.AppImage</entry>
             <entry>~/.local/bin/lime-qt*.AppImage</entry>
             <entry>~/bin/lime-qt*.AppImage</entry>
+            <entry>~/Applications/lime3ds*.AppImage</entry>
+            <entry>~/.local/share/applications/lime3ds*.AppImage</entry>
+            <entry>~/.local/bin/lime3ds*.AppImage</entry>
+            <entry>~/bin/lime3ds*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
         </rule>
