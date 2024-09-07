@@ -10,7 +10,7 @@ This release brings full localization support and includes translations to ten n
 
 As part of the localization work there have been substantial changes made to the application; text rendering has been improved with proper text shaping using the HarfBuzz library and case mappings and boundary analysis are now performed by the ICU library.
 
-As for minor but notable improvements, entering the wrong ScreenScraper credentials will now display an error popup during scraping, specific subdirectories inside the system directories can now be exluded from getting loaded, and the starting time for the video screensaver has been greatly reduced on devices with poor disk I/O performance, such as Android.
+As for minor but notable improvements, entering the wrong ScreenScraper credentials will now display an error popup during scraping, specific subdirectories inside the system folders can be excluded from getting loaded, and the starting time for the video screensaver has been greatly reduced on devices with poor disk I/O performance, such as Android.
 
 The release also brings a new port with experimental support for the Haiku operating system.
 
@@ -44,6 +44,8 @@ See the full list below for all changes like added emulators, launch command mod
 * (Android) Added J2ME Loader standalone as the default emulator for the j2me system
 * (Android) Added JL-Mod standalone as an alternative emulator for the j2me system
 * (Android) Added support for launching individual games directly with EKA2L1 for the symbian system
+* Added jgenesis as an alternative emulator for the famicom, gamegear, gb, gbc, genesis, mastersystem and megacd systems on Linux and Windows
+* Added jgenesis as an alternative emulator for the megacdjp, megadrive, megadrivejp, nes, segacd, sfc, snes and snesna systems on Linux and Windows
 * Added NooDS standalone as an alternative emulator for the gba and nds systems on Android, Linux and Windows
 * Added MAME standalone as the default emulator for the dragon32 and tanodragon systems on Linux, macOS and Windows
 * Added the .7z and .zip file extensions to the dragon32 and tanodragon systems
@@ -52,6 +54,9 @@ See the full list below for all changes like added emulators, launch command mod
 * Added the .img file extension to the dos and pc systems
 * Added the Ardens RetroArch core as an alternative emulator for the arduboy system
 * Added the .arduboy file extension to the arduboy system
+* Added support for the new Lime3DS binary names on Linux, macOS and Windows
+* (Windows) Added "Shortcut" as an alternative emulator for the switch system
+* (Windows) Added the .lnk file extension to the switch system
 * (Linux) Added a systempath find rule for the ppsspp binary name for the PPSSPP emulator
 * (Linux) Added a systempath find rule for the ryujinx binary name for the Ryujinx emulator
 * (Android) Added support for using the %BASENAME% variable with the %EXTRA% and %EXTRAARRAY% variables
@@ -72,7 +77,7 @@ See the full list below for all changes like added emulators, launch command mod
 * Added experimental support for building on Haiku
 * Added some improvements for building and running on FreeBSD
 * Removed support for NetBSD and OpenBSD
-* Updated SDL to 2.30.6 on Android, Windows, macOS and the Linux AppImage builds
+* Updated SDL to 2.30.7 on Android, Windows, macOS and the Linux AppImage builds
 * Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
 * Updated the MAME index files to include ROMs up to MAME version 0.269
 * Bundled the July 2024 release of the Mozilla TLS/SSL certificates
