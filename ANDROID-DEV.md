@@ -514,6 +514,25 @@ This PlayStation Vita emulator can be downloaded from their GitHub site. Refer t
 
 https://github.com/Vita3K/Vita3K-Android/releases
 
+### Winlator
+
+In order to use Winlator to run Windows games you need to use a specific fork named _Winlator Cmod_ as mainline [Winlator](https://winlator.com/) does not offer frontend support. However the official GitHub page of this fork has disappeared so it's not clear which is the official release and where it can be downloaded from. As there are now multiple builds floating around the Internet you'll need to do some web searches to find a reliable distribution.
+
+There are two variants of the fork, Glibc and PRoot, both of which comes with some pros and cons with regards to compatibility and performance.
+
+The following builds have been successfully tested with ES-DE:
+
+| Filename                                | Type | MD5 hash |
+| :-------------------------------------- | :---- |:-------------------------------- |
+| cmod-v6-pre-release-v6fix1.apk          | glibc | 678c6edf341f17128b071daa9756c459 |
+| Winlator-7.1.3-glibc-cmod-v7fix5.apk    | glibc | a3d935d7d09e7999c43511de333efbcc |
+| Winlator-7.1.2-proot-cmod-v6.5-BETA.apk | proot | 540fcc6faf1f0938d1bee3c85235d9ed |
+
+
+Consider these as examples only, there may very well be a lot of other builds that work fine with ES-DE.
+
+It's beyond the scope of this document to describe how to install games in Winlator, but once it's done and you've created a shortcut to your game from inside the container you can export it via the _Export for Frontend_ option in the Winlator user interface. This will generate a .desktop file that you can place in the `ROMs/windows` folder and launch from ES-DE.
+
 ### Yaba Sanshiro 2
 
 This emulator can be installed from the Play store. Note that only the paid Pro version supports game launching from ES-DE. Also note that .bin/.cue files can't be launched for the time being, only .chd files seem to work. This needs to be fixed in the emulator so nothing can be done in ES-DE to work around that limitation.
@@ -824,7 +843,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | _Placeholder_                     |                                   |              |                                      |
-| windows               | Microsoft Windows                              | _Placeholder_                     |                                   |              |                                      |
+| windows               | Microsoft Windows                              | Winlator Glibc Cmod **(Standalone)** | Winlator PRoot Cmod **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
 | windows3x             | Microsoft Windows 3.x                          | DOSBox-Pure                       |                                   | No           |                                      |
 | windows9x             | Microsoft Windows 9x                           | DOSBox-Pure                       |                                   | No           |                                      |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Swan.emu **(Standalone)**         | No           | Single archive or ROM file           |

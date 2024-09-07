@@ -36,6 +36,7 @@ See the full list below for all changes like added emulators, launch command mod
 * Added support for skipping the scanning of game system subdirectories (by using noload.txt files)
 * Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper
 * Added a "Dark and red" menu color scheme to improve perceived contrast on low-contrast displays
+* (Android) Added support for the Microsoft Windows (windows) game system using the Winlator emulator
 * (Android) Added support for the Dragon Data Dragon 32 (dragon32) game system
 * (Android) Added support for the Tano Dragon (tanodragon) game system
 * (Android) Added a new default find rule entry for Flycast as its application ID has been changed
@@ -47,6 +48,7 @@ See the full list below for all changes like added emulators, launch command mod
 * Added jgenesis as an alternative emulator for the famicom, gamegear, gb, gbc, genesis, mastersystem and megacd systems on Linux and Windows
 * Added jgenesis as an alternative emulator for the megacdjp, megadrive, megadrivejp, nes, segacd, sfc, snes and snesna systems on Linux and Windows
 * Added NooDS standalone as an alternative emulator for the gba and nds systems on Android, Linux and Windows
+* Added izapple2 standalone as an alternative emulator for the apple2 system on Linux and Windows
 * Added MAME standalone as the default emulator for the dragon32 and tanodragon systems on Linux, macOS and Windows
 * Added the .7z and .zip file extensions to the dragon32 and tanodragon systems
 * Added the Stella 2023 RetroArch core as an alternative emulator for the atari2600 system
