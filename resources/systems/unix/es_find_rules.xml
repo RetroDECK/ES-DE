@@ -237,6 +237,15 @@
             <entry>~/bin/hypseus-singe/hypseus.bin</entry>
         </rule>
     </emulator>
+    <emulator name="IZAPPLE2">
+        <!-- Apple II emulator izapple2 -->
+        <rule type="staticpath">
+            <entry>~/Applications/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/.local/share/applications/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/.local/bin/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/bin/izapple2/izapple2sdl_linux_amd64</entry>
+        </rule>
+    </emulator>
     <emulator name="LIGHTSPARK">
         <!-- Adobe Flash player Lightspark -->
         <rule type="systempath">

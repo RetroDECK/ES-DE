@@ -125,6 +125,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module apple2 %ROM%</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "apple2e -rompath \"%GAMEDIRRAW%;%ROMPATH%\apple2\" -gameio joy -flop1 \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\apple2 apple2e -gameio joy -flop1 %ROM%</command>
+        <command label="izapple2 (Standalone)">%EMULATOR_IZAPPLE2% %ROM%</command>
         <platform>apple2</platform>
         <theme>apple2</theme>
     </system>

@@ -412,6 +412,16 @@
             <entry>%ESPATH%\..\Emulators\Hypseus Singe\hypseus.exe</entry>
         </rule>
     </emulator>
+    <emulator name="IZAPPLE2">
+        <!-- Apple II emulator izapple2 -->
+        <rule type="systempath">
+            <entry>izapple2sdl_windows_amd64.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\izapple2\izapple2sdl_windows_amd64.exe</entry>
+            <entry>%ESPATH%\..\Emulators\izapple2\izapple2sdl_windows_amd64.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="JGENESIS">
         <!-- Multi-system emulator jgenesis -->
         <rule type="systempath">
