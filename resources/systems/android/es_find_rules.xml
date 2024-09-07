@@ -394,6 +394,12 @@
             <entry>org.vita3k.emulator/.Emulator</entry>
         </rule>
     </emulator>
+    <emulator name="WINLATOR-GLIBC">
+        <!-- Microsoft Windows emulator Winlator Glibc Cmod -->
+        <rule type="androidpackage">
+            <entry>com.winlator/.XServerDisplayActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="YABASANSHIRO-2">
         <!-- Sega Saturn emulator Yaba Sanshiro 2 -->
         <rule type="androidpackage">
