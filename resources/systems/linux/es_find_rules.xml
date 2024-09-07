@@ -469,6 +469,15 @@
             <entry>~/bin/hypseus-singe/hypseus.bin</entry>
         </rule>
     </emulator>
+    <emulator name="JGENESIS">
+        <!-- Multi-system emulator jgenesis -->
+        <rule type="staticpath">
+            <entry>~/Applications/jgenesis-cli*.AppImage</entry>
+            <entry>~/.local/share/applications/jgenesis-cli*.AppImage</entry>
+            <entry>~/.local/bin/jgenesis-cli*.AppImage</entry>
+            <entry>~/bin/jgenesis-cli*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="LIGHTSPARK">
         <!-- Adobe Flash player Lightspark -->
         <rule type="systempath">

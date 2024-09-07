@@ -645,6 +645,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module nes %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Famicom" %ROM%</command>
         <command label="ares FDS (Standalone)">%EMULATOR_ARES% --fullscreen --system "Famicom Disk System" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <command label="3dSen (Standalone)">%EMULATOR_3DSEN% -id=%INJECT%=%BASENAME%.3dsen</command>
         <platform>famicom</platform>
         <theme>famicom</theme>
@@ -775,6 +776,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gg %ROM%</command>
         <command label="Mesen (Standalone)">%EMULATOR_MESEN% --fullscreen %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Gear" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>gamegear</platform>
         <theme>gamegear</theme>
     </system>
@@ -800,6 +802,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gb %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy" %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>gb</platform>
         <theme>gb</theme>
     </system>
@@ -843,6 +846,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gb %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Color" %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>gbc</platform>
         <theme>gbc</theme>
     </system>
@@ -869,6 +873,7 @@
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\blastem_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module md %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega Drive" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>genesis</platform>
         <theme>genesis</theme>
     </system>
@@ -1037,6 +1042,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module sms %ROM%</command>
         <command label="Mesen (Standalone)">%EMULATOR_MESEN% --fullscreen %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Master System" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>mastersystem</platform>
         <theme>mastersystem</theme>
     </system>
@@ -1049,6 +1055,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\genesis_plus_gx_wide_libretro.dll %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega CD" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>segacd</platform>
         <theme>megacd</theme>
     </system>
@@ -1061,6 +1068,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\genesis_plus_gx_wide_libretro.dll %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega CD" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>segacd</platform>
         <theme>megacdjp</theme>
     </system>
@@ -1075,6 +1083,7 @@
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\blastem_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module md %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega Drive" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>megadrive</platform>
         <theme>megadrive</theme>
     </system>
@@ -1089,6 +1098,7 @@
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\blastem_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module md %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega Drive" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>megadrive</platform>
         <theme>megadrivejp</theme>
     </system>
@@ -1349,6 +1359,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module nes %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Famicom" %ROM%</command>
         <command label="ares FDS (Standalone)">%EMULATOR_ARES% --fullscreen --system "Famicom Disk System" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <command label="3dSen (Standalone)">%EMULATOR_3DSEN% -id=%INJECT%=%BASENAME%.3dsen</command>
         <platform>nes</platform>
         <theme>nes</theme>
@@ -1755,6 +1766,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\genesis_plus_gx_wide_libretro.dll %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega CD" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>segacd</platform>
         <theme>segacd</theme>
     </system>
@@ -1776,6 +1788,7 @@
         <command label="Mesen (Standalone)">%EMULATOR_MESEN% --fullscreen %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module snes %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Super Famicom" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>snes</platform>
         <theme>sfc</theme>
     </system>
@@ -1824,6 +1837,7 @@
         <command label="Mesen (Standalone)">%EMULATOR_MESEN% --fullscreen %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module snes %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Super Famicom" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>snes</platform>
         <theme>snes</theme>
     </system>
@@ -1845,6 +1859,7 @@
         <command label="Mesen (Standalone)">%EMULATOR_MESEN% --fullscreen %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module snes %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Super Famicom" %ROM%</command>
+        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
         <platform>snes</platform>
         <theme>snesna</theme>
     </system>

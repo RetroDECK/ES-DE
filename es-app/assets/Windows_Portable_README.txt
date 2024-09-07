@@ -81,6 +81,7 @@ Emulators\Gearboy\Gearboy.exe
 Emulators\gopher2600\gopher2600_windows_amd64.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
+Emulators\jgenesis\jgenesis-cli.exe
 Emulators\KEmulator\KEmulator.exe
 Emulators\lime3ds\lime3ds.exe
 Emulators\m2emulator\EMULATOR.EXE

@@ -412,6 +412,16 @@
             <entry>%ESPATH%\..\Emulators\Hypseus Singe\hypseus.exe</entry>
         </rule>
     </emulator>
+    <emulator name="JGENESIS">
+        <!-- Multi-system emulator jgenesis -->
+        <rule type="systempath">
+            <entry>jgenesis-cli.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\jgenesis\jgenesis-cli.exe</entry>
+            <entry>%ESPATH%\..\Emulators\jgenesis\jgenesis-cli.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="KEMULATOR">
         <!-- Java 2 Micro Edition emulator KEmulator -->
         <rule type="systempath">
