@@ -8,13 +8,13 @@
 
 This release brings full localization support and includes translations to ten new languages. More specifically these are Spanish (Spain), French, Italian, Polish, Portuguese (Brazil), Romanian, Russian, Swedish, Japanese and Simplified Chinese. More languages will follow in future releases.
 
-As part of the localization work there have been substantial changes made to the application; text rendering has been improved with proper text shaping using the HarfBuzz library and case mappings and boundary analysis are now performed by the ICU library.
+As part of the localization work there have been substantial changes made to the application, for instance to the text rendering which has been improved with proper text shaping using the HarfBuzz library. Case mappings and boundary analysis are now also performed by the ICU library rather than using inaccurate built-in functions as was previously the case.
 
-As for minor but notable improvements, entering the wrong ScreenScraper credentials will now display an error popup during scraping, specific subdirectories inside the system folders can be excluded from getting loaded, and the starting time for the video screensaver has been greatly reduced on devices with poor disk I/O performance, such as Android.
+As for other notable improvements, entering the wrong ScreenScraper credentials will now display an error popup during scraping, specific subdirectories inside the system folders can be excluded from getting loaded, and the starting time for the screensaver has been greatly reduced on devices with poor disk I/O performance, such as Android. A number of new systems have also been enabled on Android, which brings game system support for this platform one step closer to being on par with the desktop ports.
 
-The release also brings a new port with experimental support for the Haiku operating system.
+And talking of ports, this release also brings experimental support for the Haiku operating system.
 
-See the full list below for all changes like added emulators, launch command modifications and bug fixes.
+See the full list below for all changes and bug fixes.
 
 ### Detailed list of changes
 
@@ -32,10 +32,12 @@ See the full list below for all changes like added emulators, launch command mod
 * Added translations for Swedish (sv_SE)
 * Added translations for Japanese (ja_JP)
 * Added translations for Simplified Chinese (zh_CN)
-* Dramatically improved start times for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
-* Added support for skipping the scanning of game system subdirectories (by using noload.txt files)
+* Dramatically reduced the start time for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
+* Added support for skipping game system subdirectories scanning on startup (by using noload.txt files)
 * Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper
 * Added a "Dark and red" menu color scheme to improve perceived contrast on low-contrast displays
+* (Android) Added support for the PC Arcade Systems (pcarcade) game system using the Winlator emulator
+* (Android) Added support for the Taito Type X (type-x) game system using the Winlator emulator
 * (Android) Added support for the Microsoft Windows (windows) game system using the Winlator emulator
 * (Android) Added support for the Dragon Data Dragon 32 (dragon32) game system
 * (Android) Added support for the Tano Dragon (tanodragon) game system
@@ -64,7 +66,9 @@ See the full list below for all changes like added emulators, launch command mod
 * (Android) Added support for using the %BASENAME% variable with the %EXTRA% and %EXTRAARRAY% variables
 * Text within parantheses is no longer stripped out from the game name popup when adding or removing games from custom collections
 * Renamed the "Menu opening effect" setting in the UI settings menu to "Menu opening animation"
-* (linear-es-de) Added translations for en_US, en_GB and sv_SE
+* (linear-es-de) Added translations for all supported languages
+* (modern-es-de) Added translations for all supported languages
+* (slate-es-de) Added partial translations for all supported languages
 * Added a "backgroundMargins" property to the datetime element
 * Added a "backgroundCornerRadius" property to the datetime element
 * Added a check for whether a text element has a width defined when the container property is set
@@ -76,7 +80,7 @@ See the full list below for all changes like added emulators, launch command mod
 * Added the HarfBuzz library as a dependency
 * Added the ICU library as a dependency
 * Refactored large parts of the text and font code
-* Added experimental support for building on Haiku
+* Added experimental support for the Haiku operating system
 * Added some improvements for building and running on FreeBSD
 * Removed support for NetBSD and OpenBSD
 * Updated SDL to 2.30.7 on Android, Windows, macOS and the Linux AppImage builds

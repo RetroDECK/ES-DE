@@ -165,6 +165,11 @@ It could also be a good idea to use the `TSAN_suppressions` file included in the
 TSAN_OPTIONS="suppressions=tools/TSAN_suppressions" ./es-de --debug --resolution 2560 1440
 ```
 
+On some Linux distributions you need to modify the _vm.mmap_rnd_bits_ kernel runtime parameter or you'll see an error message such as _FATAL: ThreadSanitizer: unexpected memory mapping 0x58bd90d75000-0x58bd90dbe000_ when attempting to start ES-DE. Setting the parameter to 28 should make ThreadSanitizer work correctly. The following is how it's done on Ubuntu:
+```
+sudo sysctl vm.mmap_rnd_bits=28
+```
+
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .

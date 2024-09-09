@@ -196,6 +196,6 @@ This repository can be found here:\
 https://gitlab.com/es-de/themes/system-metadata
 
 And here is a link to the language section of the theme engine documentation which contains some further relevant information:\
-[THEMES-DEV.md](THEMES-DEV.md#languages)
+[THEMES.md](THEMES.md#languages)
 
 Discussions regarding theme translations are also covered in the ES-DE Discord server.

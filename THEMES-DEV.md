@@ -102,9 +102,9 @@ There are two places that ES-DE can load themes from:
 
 An installation path could be something like this:
 ```
-/usr/share/emulationstation/themes/slate-es-de/
-/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/
-C:\Program Files\EmulationStation-DE\themes\
+/usr/share/es-de/themes/
+/Applications/ES-DE.app/Contents/Resources/themes/
+C:\Program Files\ES-DE\themes\
 ```
 
 If a theme with the same name exists in both locations, the one in the home directory will be loaded and the other one will be skipped.
@@ -145,7 +145,7 @@ As for more specific changes, the following are the most important ones compared
 * The helpsystem `textColorDimmed` and `iconColorDimmed` properties (which apply when opening a menu) were always defined under the system view configuration which meant these properties could not be separately set for the gamelist views. Now these properties work as expected with the possibility to configure separate values for the system and gamelist views
 * When right-aligning the helpsystem using an X origin value of 1, the element is now aligned correctly to the defined position instead of being offset by the entrySpacing width (in RetroPie ES the offset was instead the hardcoded element entry padding)
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
-* Many additional elements and properties have been added, refer to the [Reference](THEMES-DEV.md#reference) section for more information
+* Many additional elements and properties have been added, refer to the reference section for more information
 
 Attempting to use any of the legacy logic in the new theme structure will make the theme loading fail, for example adding the _extra="true"_ attribute to any element.
 
@@ -298,8 +298,7 @@ This is the element structure:
 </ElementTypeHere>
 ```
 
-Finally _properties_ control how a particular element looks and behaves, for example its position, size, image path, animation controls etc. The property type determines what kinds of values you can use. You can read about each type below in the
-[Reference](THEMES-DEV.md#reference) section. Properties are defined like this:
+Finally _properties_ control how a particular element looks and behaves, for example its position, size, image path, animation controls etc. The property type determines what kinds of values you can use. You can read about each type below in the reference section. Properties are defined like this:
 
 ```xml
 <propertyNameHere>valueHere</propertyNameHere>
@@ -381,7 +380,7 @@ If you are writing a theme it's recommended to enable the _Debug mode_ setting f
 
 Here's an example of launching ES-DE in debug mode at a limited resolution, which will make it run in a window:
 ```
-emulationstation --debug --resolution 1280 720
+es-de --debug --resolution 1280 720
 ```
 
 Enforcement of a correct theme configuration is quite strict, and most errors will abort the theme loading, leading to an unthemed system. In each such situation the log output will be very clear of what happened, for instance:
@@ -396,7 +395,7 @@ Sanitization for valid data format and structure is done in this manner, but ver
 Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, property "horizontalAlignment" for element "gamelistBadges" defined as "leftr"
 ```
 
-Note however that warnings are not printed for all invalid properties as that would lead to an excessive amount of logging code. This is especially true for numeric values which are commonly just clamped to the allowable range without notifying the theme author. So make sure to check the [Reference](THEMES-DEV.md#reference) section of this document for valid values for each property.
+Note however that warnings are not printed for all invalid properties as that would lead to an excessive amount of logging code. This is especially true for numeric values which are commonly just clamped to the allowable range without notifying the theme author. So make sure to check the reference section of this document for valid values for each property.
 
 For more serious issues where it does not make sense to assign a default value or auto-adjust the configuration, an error log entry is generated and the element will in most instances not get rendered at all. Here's such an example where the imageType property for a video element was accidentally set to _covr_ instead of _cover_:
 
@@ -1461,7 +1460,7 @@ Example `navigationsounds.xml` file:
 
 ## Element rendering order using zIndex
 
-You can change the order in which elements are rendered by setting their `zIndex` values. All elements have a default value so you only need to define it for the ones you wish to explicitly change. Elements will be rendered in order from smallest to largest values. A complete description of each element including all supported properties can be found in the [Reference](THEMES-DEV.md#reference) section.
+You can change the order in which elements are rendered by setting their `zIndex` values. All elements have a default value so you only need to define it for the ones you wish to explicitly change. Elements will be rendered in order from smallest to largest values. A complete description of each element including all supported properties can be found in the reference section.
 
 These are the default zIndex values per element type:
 
