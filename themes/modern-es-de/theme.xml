@@ -79,7 +79,7 @@
         </aspectRatio>
     </variant>
 
-    <variant name="withVideos, withoutVideos">
+    <variant name="withVideos, withoutVideos, noGameMedia">
         <variables>
             <artDirectory>art</artDirectory>
         </variables>
