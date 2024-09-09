@@ -395,13 +395,13 @@
         </rule>
     </emulator>
     <emulator name="WINLATOR-GLIBC">
-        <!-- Microsoft Windows emulator Winlator Glibc Cmod -->
+        <!-- Microsoft Windows emulator Winlator Cmod Glibc -->
         <rule type="androidpackage">
             <entry>com.winlator/.XServerDisplayActivity</entry>
         </rule>
     </emulator>
     <emulator name="WINLATOR-PROOT">
-        <!-- Microsoft Windows emulator Winlator PRoot Cmod -->
+        <!-- Microsoft Windows emulator Winlator Cmod PRoot -->
         <rule type="androidpackage">
             <entry>com.cmodded.winlator/com.winlator.XServerDisplayActivity</entry>
         </rule>
