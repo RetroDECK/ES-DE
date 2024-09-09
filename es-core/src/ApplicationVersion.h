@@ -15,7 +15,7 @@
 #define PROGRAM_VERSION_MAINTENANCE  0
 #define PROGRAM_RELEASE_NUMBER       45
 // clang-format on
-#define PROGRAM_VERSION_STRING "3.1.0-alpha"
+#define PROGRAM_VERSION_STRING "3.1.0"
 
 #define PROGRAM_BUILT_STRING __DATE__ " - " __TIME__
 
