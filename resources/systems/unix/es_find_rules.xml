@@ -477,6 +477,12 @@
             <entry>~/bin/sdl2trs/sdl2trs</entry>
         </rule>
     </emulator>
+    <emulator name="SHADPS4">
+        <!-- Sony PlayStation 4 emulator SHADPS4 RetroDECK -->
+        <rule type="systempath">
+            <entry>shadps4</entry>
+        </rule>
+    </emulator>
     <emulator name="SHEEPSHAVER">
         <!-- Apple Macintosh PowerPC emulator SheepShaver -->
         <rule type="systempath">

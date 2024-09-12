@@ -1551,8 +1551,8 @@
         <name>ps4</name>
         <fullname>Sony PlayStation 4</fullname>
         <path>%ROMPATH%/ps4</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.pkg .PKG</extension>
+        <command label="SHADPS4">%EMULATOR_SHADPS4% %ROM%</command>
         <platform>ps4</platform>
         <theme>ps4</theme>
     </system>
