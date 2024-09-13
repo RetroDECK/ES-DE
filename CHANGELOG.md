@@ -21,7 +21,7 @@ See the full list below for all changes and bug fixes.
 * Added localization support
 * Added text shaping support using the HarfBuzz library
 * Replaced all built-in Unicode case conversion logic and lookup tables with facilities from the ICU library
-* Added translations for English (United Kingdom) (en_US)
+* Added translations for English (United Kingdom) (en_GB)
 * Added translations for Spanish (Spain) (es_ES)
 * Added translations for French (fr_FR)
 * Added translations for Italian (it_IT)
