@@ -6,11 +6,11 @@ As of the 3.0.0 release the official name for the project and application is ES-
 
 ## Is this software available for free, and is it open source?
 
-ES-DE is available for free on Windows, macOS and Linux and it's released under the MIT open source license. For Android it's a paid app available via [Patreon](https://www.patreon.com/es_de) and this port is partially closed source.
+ES-DE is available for free on Windows, macOS and Linux and it's released under the MIT open source license. For Android it's a paid app available via [Patreon](https://www.patreon.com/es_de), the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy) and [Huawei AppGallery](https://appgallery.huawei.com/#/app/C111315115) and this port is partially closed source.
 
 ## Which operating systems are supported?
 
-ES-DE runs on Windows, macOS and multiple Linux distributions including Ubuntu, Fedora, Arch, Manjaro, SteamOS etc.
+ES-DE is officially supported on Android, Windows, macOS and multiple Linux distributions including Ubuntu, Fedora, Arch, Manjaro, SteamOS etc. It's also semiofficially supported on some secondary platforms like FreeBSD, the Raspberry Pi and Haiku although these ports may not always be up to date and you may have to build ES-DE yourself.
 
 ## What is the relationship between ES-DE and RetroDECK?
 
@@ -27,6 +27,10 @@ See the _Supported game systems_ section at the bottom of the [User guide](USERG
 ## Why can't I press the up button in menus to jump to the bottom row and vice versa?
 
 Menus in ES-DE are not lists but grids, sometimes there is only a list but sometimes there are buttons beneath the list. Enabling the up and down buttons to wrap around would therefore not work consistently as it would sometimes jump to the last row of the list and sometimes to a button, requiring a different number of button presses depending on the menu layout. This type of contextual navigation feels very weird in practice, especially when you have to press the up button twice to get to the bottom of a list. The solution is instead to use the shoulder buttons (which will jump six rows), or the trigger buttons (which will jump to the first and last row). These buttons work consistently throughout the application and avoid the strange side effects just mentioned.
+
+## I'm using SteamOS and my language settings are not reflected in ES-DE, how can I get language auto-detection to work?
+
+SteamOS does not setup the environment correctly in game mode so it's not possible for ES-DE to detect your configured language. As such you need to manually select your language inside ES-DE using the _Application Language_ option in the _UI Settings_ menu.
 
 ## Can I change the system sorting to not sort by full system names?
 

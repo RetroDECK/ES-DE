@@ -334,6 +334,20 @@ After installing the emulator, open it and go to the settings tab, then choose "
 
 http://www.arts-union.ru/node/23
 
+### J2ME Loader
+
+This emulator can be installed from the Play store or the F-Droid store, or it can be downloaded from their GitHub site.
+
+https://play.google.com/store/apps/details?id=ru.playsoftware.j2meloader \
+https://f-droid.org/en/packages/ru.playsoftware.j2meloader \
+https://github.com/nikita36078/J2ME-Loader/releases
+
+### JL-Mod
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/woesss/JL-Mod/releases
+
 ### Lime3DS
 
 This emulator which is forked from Citra can be downloaded from their GitHub site.
@@ -396,6 +410,12 @@ Nesoid is not available on the Play store but it can be installed from the F-Dro
 
 https://f-droid.org/en/packages/com.androidemu.nes \
 https://github.com/proninyaroslav/nesoid/releases
+
+### NooDS
+
+Although NooDS is available via the Play store that version does not allow game launching from ES-DE. To get that to work instead use the version from their GitHub site. Also note that this emulator does not support launching of zipped game files.
+
+https://github.com/Hydr8gon/NooDS/releases
 
 ### OpenBOR
 
@@ -493,6 +513,17 @@ https://github.com/vpinball/vpinball/actions
 This PlayStation Vita emulator can be downloaded from their GitHub site. Refer to the User guide for detailed game setup instructions.
 
 https://github.com/Vita3K/Vita3K-Android/releases
+
+### Winlator
+
+In order to use Winlator to run Windows games you need to use a specific fork named _Winlator Cmod_ as mainline [Winlator](https://winlator.com/) does not offer frontend support. The Cmod fork can be downloaded from their GitHub page:\
+https://github.com/coffincolors/winlator
+
+There are two variants of the fork, Glibc and PRoot, both of which come with some pros and cons with regards to compatibility and performance. The Glibc variant is the default emulator in ES-DE, so to use PRoot instead you'll need to select its alternative emulator entry.
+
+In addition to the official repository there are multiple Winlator builds floating around the Internet, but these have not been extensively tested with ES-DE.
+
+It's beyond the scope of this document to describe how to install games in Winlator, but once it's done and you've created a shortcut to your game from inside the container you can export it via the _Export for Frontend_ option in the Winlator user interface. This will generate a .desktop file that you can place in the `ROMs/pcarcade`, `ROMs/type-x` or `ROMs/windows` folder and launch from ES-DE. You can alternatively set the _Frontend Export Path_ setting from inside the Winlator Settings screen to avoid the manual step of moving the .desktop file.
 
 ### Yaba Sanshiro 2
 
@@ -628,10 +659,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | 3do                   | 3DO Interactive Multiplayer                    | Opera                             | Real3DOPlayer **(Standalone)**    | Yes          |                                      |
 | adam                  | Coleco Adam                                    | MAME4droid 2024 [Diskette] **(Standalone)** | MAME4droid 2024 [Tape] **(Standalone)**,<br>MAME4droid 2024 [Cartridge] **(Standalone)**,<br>MAME4droid 2024 [Software list] **(Standalone)**,<br>ColEm **(Standalone)** | Yes for MAME4droid 2024 |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Placeholder_                     |                                   |              |                                      |
-| amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          |                                      |
-| amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
-| amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021                         | Yes          |                                      |
-| amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
+| amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
+| amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
+| amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
+| amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS,<br>MAME4droid 2024 **(Standalone)** | Yes for MAME4droid 2024 | Single archive or disk file          |
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
 | androidapps           | Android Apps                                   | _Native apps_                     |                                   | No           |                                      |
@@ -641,9 +672,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)** | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
 | arcadia               | Emerson Arcadia 2001                           | DroidArcadia **(Standalone**)     | MAME4droid 2024 **(Standalone)**  | No           | Single archive or ROM file           |
 | archimedes            | Acorn Archimedes                               | MAME4droid 2024 [Model A440/1] **(Standalone)** | MAME4droid 2024 [Model A3000] **(Standalone)**,<br>MAME4droid 2024 [Model A310] **(Standalone)**,<br>MAME4droid 2024 [Model A540] **(Standalone)** | Yes          |                                      |
-| arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
+| arduboy               | Arduboy Miniature Game System                  | Arduous                           | Ardens                            | No           | Single archive or .hex file          |
 | astrocde              | Bally Astrocade                                | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
-| atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>2600.emu **(Standalone)** | No           | Single archive or ROM file           |
+| atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>Stella 2023,<br>2600.emu **(Standalone)** | No           | Single archive or ROM file           |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800                          | Yes          | Single archive or ROM file           |
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         | MAME4droid 2024 **(Standalone)**  | Yes          | Single archive or ROM file           |
 | atari800              | Atari 800                                      | Atari800                          |                                   | Yes          |                                      |
@@ -670,8 +701,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | daphne                | Daphne Arcade LaserDisc Emulator               | MAME4droid 2024 **(Standalone)**  | DirkSimple                        | Depends      | See the specific _LaserDisc Games_ section in the user guide |
 | desktop               | Desktop Applications                           | _Placeholder_                     |                                   |              |                                      |
 | doom                  | Doom                                           | PrBoom                            |                                   | No           |                                      |
-| dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN        | No           |                                      |
-| dragon32              | Dragon Data Dragon 32                          | _Placeholder_                     |                                   |              |                                      |
+| dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>VirtualXT | No           | See the specific _DOS / PC_ section in the user guide |
+| dragon32              | Dragon Data Dragon 32                          | MAME4droid 2024 Dragon 32 [Tape] **(Standalone)** | MAME4droid 2024 Dragon 32 [Cartridge] **(Standalone)**,<br>MAME4droid 2024 Dragon 64 [Tape] **(Standalone)**,<br>MAME4droid 2024 Dragon 64 [Cartridge] **(Standalone)** | Yes          | See the specific _Dragon 32 and Tano Dragon_ section in the user guide |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)**,<br>Redream **(Standalone)** | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           |                                   | No           |                                      |
 | electron              | Acorn Electron                                 | MAME4droid 2024 [Tape] **(Standalone)** | MAME4droid 2024 [Diskette DFS] **(Standalone)**,<br>MAME4droid 2024 [Diskette ADFS] **(Standalone)** | Yes          | Single archive, or single tape or diskette image file |
@@ -690,14 +721,14 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gamecom               | Tiger Electronics Game.com                     | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
-| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP,<br>GBA.emu **(Standalone)**,<br>My Boy! **(Standalone)**,<br>Pizza Boy GBA **(Standalone)** | No          | Single archive or ROM file |
+| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP,<br>GBA.emu **(Standalone)**,<br>My Boy! **(Standalone)**,<br>NooDS **(Standalone)**,<br>Pizza Boy GBA **(Standalone)** | No          | Single archive or ROM file |
 | gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           | Disc image file for single-disc games, .m3u playlist for multi-disc games |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | No           | Single archive or ROM file |
 | gmaster               | Hartung Game Master                            | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | gx4000                | Amstrad GX4000                                 | Caprice32                         | CrocoDS,<br>MAME4droid 2024 **(Standalone)** | No           | Single archive or ROM file           |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          | MAME4droid 2024 **(Standalone)**  | Yes          | Single archive or ROM file           |
-| j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | No           | Single .jar file                     |
+| j2me                  | Java 2 Micro Edition (J2ME)                    | J2ME Loader **(Standalone)**      | JL-Mod **(Standalone)**,<br>SquirrelJME | No           | Single .jar file                     |
 | kodi                  | Kodi Home Theatre Software                     | _Placeholder_                     |                                   |              |                                      |
 | laserdisc             | LaserDisc Games                                | MAME4droid 2024 **(Standalone)**  |  DirkSimple                       | Depends      | See the specific _LaserDisc Games_ section in the user guide |
 | lcdgames              | LCD Handheld Games                             | Multi (MESS)                      | MAME4droid 2024 Local Artwork **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section in the user guide |
@@ -729,7 +760,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
-| nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)** | No           | Single archive or ROM file |
+| nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)**,<br>NooDS **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>MAME4droid 2024 **(Standalone)** | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>MAME4droid 2024 **(Standalone)** | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
@@ -741,10 +772,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)**          |                                   | No           | See the specific _OpenBOR_ section in the User guide |
 | oric                  | Tangerine Computer Systems Oric                | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | See the specific _Tangerine Computer Systems Oric_ section in the user guide |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
-| pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN        | No           |                                      |
+| pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>VirtualXT | No           | See the specific _DOS / PC_ section in the user guide |
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   | Yes          |                                      |
 | pc98                  | NEC PC-9800 Series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
-| pcarcade              | PC Arcade Systems                              | _Placeholder_                     |                                   |              |                                      |                                   |
+| pcarcade              | PC Arcade Systems                              | Winlator Cmod Glibc **(Standalone)** | Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   | Yes          |                                      |
@@ -785,7 +816,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | supracan              | Funtech Super A'Can                            | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file. You need a supracan.zip archive that contains a valid internal_68k.bin file and an empty file named umc6650.bin |
 | switch                | Nintendo Switch                                | Skyline **(Standalone)**          |                                   | Yes          |                                      |
 | symbian               | Symbian                                        | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
-| tanodragon            | Tano Dragon                                    | _Placeholder_                     |                                   |              |                                      |
+| tanodragon            | Tano Dragon                                    | MAME4droid 2024 [Tape] **(Standalone)** | MAME4droid 2024 [Cartridge] **(Standalone)** | Yes          | See the specific _Dragon 32 and Tano Dragon_ section in the user guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | Yes          |                                      |
 | ti99                  | Texas Instruments TI-99                        | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | See the specific _Texas Instruments TI-99_ section in the user guide |
@@ -793,7 +824,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | to8                   | Thomson TO8                                    | Theodore                          |                                   |              |                                      |
 | triforce              | Namco-Sega-Nintendo Triforce                   | _Placeholder_                     |                                   |              |                                      |
 | trs-80                | Tandy TRS-80                                   | _Placeholder_                     |                                   |              |                                      |
-| type-x                | Taito Type X                                   | _Placeholder_                     |                                   |              |                                      |
+| type-x                | Taito Type X                                   | Winlator Cmod Glibc **(Standalone)** | Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
 | uzebox                | Uzebox Open Source Console                     | Uzem                              |                                   |              |                                      |
 | vectrex               | GCE Vectrex                                    | vecx                              | MAME4droid 2024 **(Standalone)**  | Yes for MAME4droid 2024 | Single archive or ROM file           |
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   | No           | Single archive or tape, cartridge or diskette image file |
@@ -804,7 +835,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | _Placeholder_                     |                                   |              |                                      |
-| windows               | Microsoft Windows                              | _Placeholder_                     |                                   |              |                                      |
+| windows               | Microsoft Windows                              | Winlator Cmod Glibc **(Standalone)** | Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
 | windows3x             | Microsoft Windows 3.x                          | DOSBox-Pure                       |                                   | No           |                                      |
 | windows9x             | Microsoft Windows 9x                           | DOSBox-Pure                       |                                   | No           |                                      |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Swan.emu **(Standalone)**         | No           | Single archive or ROM file           |
@@ -814,6 +845,6 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | xbox                  | Microsoft Xbox                                 | _Placeholder_                     |                                   |              |                                      |
 | xbox360               | Microsoft Xbox 360                             | _Placeholder_                     |                                   |              |                                      |
 | zmachine              | Infocom Z-machine                              | MojoZork                          |                                   | No           |                                      |
-| zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
+| zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   | No           |                                      |
 | zxnext                | Sinclair ZX Spectrum Next                      | _Placeholder_                     |                                   |              |                                      |
 | zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              | Speccy **(Standalone)**           | No           | Single archive or ROM file           |

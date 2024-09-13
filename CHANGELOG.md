@@ -1,8 +1,8 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.1.0 (in development)
+## Version 3.1.0 / 3.1.0-32
 
-**Release date:** TBD
+**Release date:** 2024-09-13
 
 ### Release overview
 

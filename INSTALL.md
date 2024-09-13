@@ -23,7 +23,7 @@ There are some dependencies that need to be fulfilled in order to build ES-DE. T
 All of the required packages can be installed with apt-get:
 
 ```
-sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev libpoppler-cpp-dev
+sudo apt-get install build-essential clang-format git cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev libpoppler-cpp-dev
 ```
 
 **Fedora**
@@ -38,7 +38,7 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 Then you can use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel poppler-cpp-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake gettext harfbuzz-devel libicu-devel libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel poppler-cpp-devel
 ```
 
 **Manjaro**
@@ -46,14 +46,14 @@ sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ff
 Use pacman to install all the required packages:
 
 ```
-sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml poppler
+sudo pacman -S gcc clang make cmake gettext harfbuzz icu pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml poppler
 ```
 
 **Raspberry Pi OS**
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install clang-format cmake libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
+sudo apt-get install clang-format cmake gettext libharfbuzz-dev libicu-dev libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
 ```
 
 For a 64-bit build it's very important that you include libraspberrypi-dev because if this package is not installed then the file /usr/include/bcm_host.h is not present on the filesystem. This leads to CMake not detecting that it's indeed a Raspberry Pi and it will attempt to make a regular Linux build instead.
@@ -73,44 +73,21 @@ Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by defaul
 
 Use pkg to install the dependencies:
 ```
-pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage libgit2 pugixml poppler
+pkg install llvm-devel git pkgconf cmake gettext harfbuzz icu sdl2 ffmpeg freeimage libgit2 pugixml poppler
 ```
 
 Clang/LLVM and curl should already be included in the base OS installation.
 
-**NetBSD**
-
-Use pkgin to install the dependencies:
+Note that there is a strange issue specifically on FreeBSD 14.1 where the rlottie library refuses to build. This can be resolved by the following workaround:
 ```
-pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage libgit2 pugixml poppler-cpp
+echo > external/rlottie/format
 ```
 
-NetBSD ships with GCC by default, and although you should be able to use Clang/LLVM, it's probably easier to just stick to the default compiler environment. The reason why the clang package needs to be installed is to get clang-format onto the system.
-
-**OpenBSD**
-
-Use pkg_add to install the dependencies:
-```
-pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage libgit2 poppler
-```
-
-In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.
-
-The pugixml library does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
-
-```
-git clone https://github.com/zeux/pugixml.git
-cd pugixml
-git checkout v1.10
-cmake .
-make
-make install
-```
+It's not clear yet whether this is a compiler bug or some other issue.
 
 **Cloning and compiling ES-DE**
 
 To clone the source repository, run the following:
-
 ```
 git clone https://gitlab.com/es-de/emulationstation-de.git
 ```
@@ -131,7 +108,7 @@ cmake -DAPPLICATION_UPDATER=off .
 make
 ```
 
-Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or BSD Unix.
+Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or FreeBSD.
 
 On Linux specifically you can build with the DEINIT_ON_LAUNCH option which will deinit the renderer, application window and audio when an emulator is launched. This makes it possible to use ES-DE with KMS/direct framebuffer access to for example make ES-DE a drop-in replacement for RetroPie EmulationStation:
 ```
@@ -184,6 +161,11 @@ make -j8
 It could also be a good idea to use the `TSAN_suppressions` file included in the repository to suppress issues reported by some third party libraries, for example:
 ```
 TSAN_OPTIONS="suppressions=tools/TSAN_suppressions" ./es-de --debug --resolution 2560 1440
+```
+
+On some Linux distributions you need to modify the _vm.mmap_rnd_bits_ kernel runtime parameter or you'll see an error message such as _FATAL: ThreadSanitizer: unexpected memory mapping 0x58bd90d75000-0x58bd90dbe000_ when attempting to start ES-DE. Setting the parameter to 28 should make ThreadSanitizer work correctly. The following is how it's done on Ubuntu:
+```
+sudo sysctl vm.mmap_rnd_bits=28
 ```
 
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
@@ -267,7 +249,7 @@ make -j8
 
 This renderer is generally only needed on the Raspberry Pi and the desktop OpenGL renderer should otherwise be used.
 
-By default ES-DE will install under /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD although this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.
+By default ES-DE will install under /usr on Linux and /usr/local on FreeBSD although this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.
 
 The following example will build the application for installtion under /opt:
 
@@ -434,6 +416,54 @@ tools/create_AppImage_SteamDeck.sh
 This is similar to the regular AppImage but does not build with the BUNDLED_CERTS option and changes some settings like the VRAM limit.
 
 Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running the build script.
+
+## Building on Haiku
+
+You'll need to run a recent nightly Haiku release to build ES-DE as using R1/beta4 will not work.
+
+If running Haiku in KVM/Qemu, make sure to use SATA storage intead of VirtIO storage as you may otherwise experience stability issues and filesystem corruption.
+
+**Local build**
+
+Use pkgman to install the required dependencies:
+```
+pkgman install cmake gettext curl_devel harfbuzz_devel freeimage_devel pugixml_devel libsdl2_devel libgit2_devel freetype_devel ffmpeg6_devel poppler24_devel
+```
+
+To clone the ES-DE source repository, run the following:
+```
+git clone https://gitlab.com/es-de/emulationstation-de.git
+```
+You can then go ahead and build the application:
+```
+cd emulationstation-de
+cmake .
+make -j8
+```
+
+Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
+
+**HaikuPorts package build**
+
+Run the following to build the .hpkg package:
+
+```
+cd ~
+git clone https://github.com/haikuports/haikuports.git --depth=50
+mkdir haikuports/games-emulation/es-de
+pkgman install haikuporter
+cp /boot/system/settings/haikuports.conf  ~/config/settings/
+cd emulationstation-de
+cp es-app/assets/es_de-3.1.0.recipe ~/haikuports/games-emulation/es-de
+haikuporter -S --no-source-packages --get-dependencies -j8 es_de
+```
+
+The first time you run haikuporter it will take a while as dependencies for all ports will get updated before the ES-DE build process starts.
+
+Following this you can install the package into the running system:
+```
+cp ~/haikuports/packages/es_de-3.1.0-1-x86_64.hpkg /boot/system/packages
+```
 
 ## Building on macOS
 
@@ -654,15 +684,17 @@ https://gitforwindows.org
 Download the Visual Studio Build Tools (choose Visual Studio Community edition): \
 https://visualstudio.microsoft.com/downloads
 
-During installation, choose the Desktop development with C++ workload with the following options (version details may differ):
+During installation, choose the Desktop development with C++ workload with the following options:
 
 ```
 MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
-Windows 10 SDK
 Just-In-Time debugger
-C++ AddressSanitizer
 C++ CMake tools for Windows
+C++ AddressSanitizer
+Windows 10 SDK (10.0.20348.0)
 ```
+
+The Windows SDK version is important, it has to be this precise version or some dependencies may not build correctly.
 
 It's strongly recommended to also install Jom, which is a drop-in replacement for nmake that offers support for building in parallel using multiple CPU cores:\
 https://wiki.qt.io/Jom
@@ -1752,9 +1784,9 @@ The es_systems.xml file on Android utilizes variables heavily to implement the _
 There are two main ways to pass options to emulators, using _extras_ or using the _data_ URI. There can only be a single data URI but there can be an arbitrary amount of extras. To understand more about the way this works, you can read about the _putExtra()_ and and _setData()_ functions here:\
 https://developer.android.com/reference/android/content/Intent
 
-`%EXTRA_` - This passes an _extra_ which contains any additional information that the emulator may support. This is provided as a key/value pair where you define the key name following the literal %EXTRA_ string and terminate it with a % sign and then assign the value using an equal sign. For example %EXTRA_LIBRETRO%=puae_libretro_android.so will pass the extra named _LIBRETRO_ with its value set to _puae_libretro_android.so_. You can pass an unlimited number of extras and you can also use various ROM variables in combination with this as described below. It's also possible to use the `%GAMEDIRRAW%`, `%ROMPATHRAW%` and `%ROMRAW%` variables inside an `%EXTRA_` variable definition, which will expand to the the directory of the game file, the ROM directory and the path to the game file respectively.
+`%EXTRA_` - This passes an _extra_ which contains any additional information that the emulator may support. This is provided as a key/value pair where you define the key name following the literal %EXTRA_ string and terminate it with a % sign and then assign the value using an equal sign. For example %EXTRA_LIBRETRO%=puae_libretro_android.so will pass the extra named _LIBRETRO_ with its value set to _puae_libretro_android.so_. You can pass an unlimited number of extras and you can also use various ROM variables in combination with this as described below. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%` and `%ROMRAW%` variables inside an `%EXTRA_` variable definition, which will expand to the basename of the game file, the directory of the game file, the ROM directory and the path to the game file respectively.
 
-`%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_. It's also possible to use the `%GAMEDIRRAW%`, `%ROMPATHRAW%` and `%ROMRAW%` variables inside an `%EXTRAARRAY_` variable definition, which will expand to the the directory of the game file, the ROM directory and the path to the game file respectively.
+`%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings and special variables are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%` and `%ROMRAW%` variables inside an `%EXTRAARRAY_` variable definition, which will expand to the basename of the game file, the directory of the game file, the ROM directory and the path to the game file respectively.
 
 `%EXTRABOOL_` - Sets an extra with a boolean value, i.e. true/1 or false/0.
 
