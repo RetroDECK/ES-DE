@@ -2063,6 +2063,17 @@ void GuiMenu::openESDEConfiguration() {
     });
     s->addRow(row);
 
+    // COLLECTION SETTINGS
+    row.elements.clear();
+    row.addElement(std::make_shared<TextComponent>("GAME COLLECTION SETTINGS",
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                   true);
+    row.addElement(mMenu.makeArrow(), false);
+    row.makeAcceptInputHandler([this] {
+        openCollectionSystemOptions();
+    });
+    s->addRow(row);
+
     // OTHER SETTINGS
     row.elements.clear();
     row.addElement(std::make_shared<TextComponent>("OTHER SETTINGS",
