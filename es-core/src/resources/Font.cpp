@@ -1203,7 +1203,7 @@ std::vector<Font::FallbackFontCache> Font::getFallbackFontPaths()
         // Various languages, such as Japanese and Chinese.
         ":/fonts/DroidSansFallbackFull.ttf",
         // Korean
-        ":/fonts/NanumMyeongjo.ttf",
+        ":/fonts/NanumSquareNeo-bRg.ttf",
         // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
         ":/fonts/fontawesome-webfont.ttf",
         // Google Noto Emoji.
