@@ -182,6 +182,8 @@ void GuiScraperMenu::openAccountOptions()
         "", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_RIGHT);
     s->addEditableTextComponent(_("SCREENSCRAPER USERNAME"), scraperUsernameScreenScraper,
                                 Settings::getInstance()->getString("ScraperUsernameScreenScraper"));
+    scraperUsernameScreenScraper->setSize(0.0f,
+                                          scraperUsernameScreenScraper->getFont()->getHeight());
     s->addSaveFunc([scraperUsernameScreenScraper, s] {
         if (scraperUsernameScreenScraper->getValue() !=
             Settings::getInstance()->getString("ScraperUsernameScreenScraper")) {
@@ -202,6 +204,8 @@ void GuiScraperMenu::openAccountOptions()
     }
     s->addEditableTextComponent(_("SCREENSCRAPER PASSWORD"), scraperPasswordScreenScraper,
                                 passwordMasked, "", true);
+    scraperPasswordScreenScraper->setSize(0.0f,
+                                          scraperPasswordScreenScraper->getFont()->getHeight());
     s->addSaveFunc([scraperPasswordScreenScraper, s] {
         if (scraperPasswordScreenScraper->getHiddenValue() !=
             Settings::getInstance()->getString("ScraperPasswordScreenScraper")) {
