@@ -860,8 +860,8 @@ void GuiScraperMenu::openOtherOptions()
     scraperLanguage->add("SVENSKA",    "sv", selectedScraperLanguage == "sv");
     scraperLanguage->add("TÜRKÇE",     "tr", selectedScraperLanguage == "tr");
     scraperLanguage->add("日本語",      "ja", selectedScraperLanguage == "ja");
-    scraperLanguage->add("简体中文",    "zh", selectedScraperLanguage == "zh");
     scraperLanguage->add("한국어",      "ko", selectedScraperLanguage == "ko");
+    scraperLanguage->add("简体中文",    "zh", selectedScraperLanguage == "zh");
     // clang-format on
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the language to "English" in this case.

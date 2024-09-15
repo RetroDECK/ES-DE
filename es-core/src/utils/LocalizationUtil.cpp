@@ -40,8 +40,8 @@ namespace Utils
                                                                                   {{"ru"}, {"RU"}},
                                                                                   {{"sv"}, {"SE"}},
                                                                                   {{"ja"}, {"JP"}},
-                                                                                  {{"zh"}, {"CN"}},
-                                                                                  {{"ko"}, {"KR"}}};
+                                                                                  {{"ko"}, {"KR"}},
+                                                                                  {{"zh"}, {"CN"}}};
         // clang-format on
 
         std::string sCurrentLocale {"en_US"};
@@ -203,10 +203,10 @@ namespace Utils
                 sMenuTitleScaleFactor = 0.87f;
             else if (localePair.first == "ja")
                 sMenuTitleScaleFactor = 0.94f;
-            else if (localePair.first == "zh")
-                sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "ko")
                 sMenuTitleScaleFactor = 0.96f;
+            else if (localePair.first == "zh")
+                sMenuTitleScaleFactor = 0.94f;
 
             std::string localePath;
             localePath.append("/")
