@@ -10,10 +10,6 @@ Table of contents:
 
 ## Known ES-DE problems
 
-* Attempting to use the theme downloader crashes the application when using a nightly Haiku build, this is seemingly caused by an OS or libgit2 library bug as ES-DE runs correctly on R1/beta4 (but with other issues on that release)
-
-* The video player behaves erratic and videos may randomly hang or refuse to play
-
 * Key repeat doesn't work in text editing fields (but it works elsewhere in the application)
 
 * There is no 3D acceleration as the operating system does not support that

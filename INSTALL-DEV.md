@@ -421,7 +421,7 @@ Both _appimagetool_ and _linuxdeploy_ are required for the build process but the
 
 ## Building on Haiku
 
-You'll need to run a recent nightly Haiku release to build ES-DE as using R1/beta4 will not work.
+It's recommended to run R1/beta5 as the nightly Haiku builds can be quite unstable.
 
 If running Haiku in KVM/Qemu, make sure to use SATA storage intead of VirtIO storage as you may otherwise experience stability issues and filesystem corruption.
 

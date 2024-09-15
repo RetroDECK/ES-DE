@@ -1,5 +1,23 @@
 # ES-DE Frontend - Changelog
 
+## Version 3.1.1 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+3.1 maintenance release.
+
+### Detailed list of changes
+
+* Added translations for Korean (ko_KR)
+* Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
+* Added the Nanum Square Neo Korean font
+
+### Bug fixes
+
+* Newly entered ScreenScraper username and password values were positioned incorrectly vertically in the account settings menu
+
 ## Version 3.1.0 / 3.1.0-32
 
 **Release date:** 2024-09-13

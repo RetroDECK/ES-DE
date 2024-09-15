@@ -144,10 +144,10 @@ https://fontawesome.com
 GNU FreeFont (FreeMono) \
 https://www.gnu.org/software/freefont
 
-Nanum font \
-https://hangeul.naver.com
+Nanum Square Neo font \
+https://campaign.naver.com/nanumsquare_neo
 
-Noto Emoji \
+Noto Emoji font \
 https://fonts.google.com/noto/specimen/Noto+Emoji
 
 Ubuntu font \
