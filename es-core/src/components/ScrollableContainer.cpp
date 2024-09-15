@@ -89,7 +89,7 @@ void ScrollableContainer::resetComponent()
                 float numLines {std::floor(mSize.y / combinedHeight)};
                 if (numLines == 0)
                     numLines = 1;
-                mAdjustedHeight = std::round(numLines * combinedHeight);
+                mAdjustedHeight = std::ceil(numLines * combinedHeight);
             }
             else {
                 mAdjustedHeight = mSize.y;
@@ -163,7 +163,7 @@ void ScrollableContainer::update(int deltaTime)
             float numLines {std::floor(mSize.y / combinedHeight)};
             if (numLines == 0)
                 numLines = 1;
-            mAdjustedHeight = std::round(numLines * combinedHeight);
+            mAdjustedHeight = std::ceil(numLines * combinedHeight);
         }
         else {
             mAdjustedHeight = mSize.y;
