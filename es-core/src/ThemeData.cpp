@@ -115,7 +115,8 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedLanguages 
     {"ru_RU", "РУССКИЙ"},
     {"sv_SE", "SVENSKA"},
     {"ja_JP", "日本語"},
-    {"zh_CN", "简体中文"}};
+    {"zh_CN", "简体中文"},
+    {"ko_KR", "한국어"}};
 
 std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
     // The data type is defined by the parent property.
