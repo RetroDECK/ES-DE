@@ -38,6 +38,7 @@ public:
     SystemView();
 
     void onShow() override;
+    void onHide() override;
     void onTransition() override;
     void goToSystem(SystemData* system, bool animate);
 

@@ -96,6 +96,15 @@ void GamelistView::onShow()
     mPrimary->onShowPrimary();
 }
 
+void GamelistView::onHide()
+{
+    for (auto& video : mVideoComponents)
+        video->stopVideoPlayer(false);
+
+    for (auto& video : mStaticVideoComponents)
+        video->stopVideoPlayer(false);
+}
+
 void GamelistView::onTransition()
 {
     for (auto& animation : mLottieAnimComponents)

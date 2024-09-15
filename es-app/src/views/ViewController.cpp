@@ -731,6 +731,14 @@ void ViewController::goToGamelist(SystemData* system)
     bool slideTransitions {false};
     bool fadeTransitions {false};
 
+    // Special case where we moved to another gamelist while the system to gamelist animation
+    // was still playing, in this case we need to explictly call onHide() so that all system view
+    // videos are stopped.
+    if (mState.previouslyViewed == ViewMode::SYSTEM_SELECT &&
+        mState.viewing == ViewMode::GAMELIST && isAnimationPlaying(0)) {
+        getSystemListView()->onHide();
+    }
+
     if (mCurrentView != nullptr)
         mCurrentView->onTransition();
 
@@ -926,6 +934,8 @@ void ViewController::playViewTransition(ViewTransition transitionType, bool inst
                 this->mCamera[3].x = -target.x;
                 this->mCamera[3].y = -target.y;
                 this->mCamera[3].z = -target.z;
+                if (mState.previouslyViewed == ViewMode::SYSTEM_SELECT)
+                    getSystemListView()->onHide();
                 if (mPreviousView)
                     mPreviousView->onHide();
             },
@@ -946,6 +956,8 @@ void ViewController::playViewTransition(ViewTransition transitionType, bool inst
         };
 
         auto fadeCallback = [this]() {
+            if (mState.previouslyViewed == ViewMode::SYSTEM_SELECT || mSystemViewTransition)
+                getSystemListView()->onHide();
             if (mPreviousView)
                 mPreviousView->onHide();
         };
@@ -975,6 +987,8 @@ void ViewController::playViewTransition(ViewTransition transitionType, bool inst
     }
     else if (transitionAnim == ViewTransitionAnimation::SLIDE) {
         auto slideCallback = [this]() {
+            if (mState.previouslyViewed == ViewMode::SYSTEM_SELECT || mSystemViewTransition)
+                getSystemListView()->onHide();
             if (mSkipView) {
                 mSkipView->onHide();
                 mSkipView.reset();

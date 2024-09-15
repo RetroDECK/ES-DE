@@ -50,6 +50,12 @@ void SystemView::onShow()
     mPrimary->onShowPrimary();
 }
 
+void SystemView::onHide()
+{
+    for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
+        video->stopVideoPlayer(false);
+}
+
 void SystemView::onTransition()
 {
     for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
@@ -284,8 +290,14 @@ void SystemView::onCursorChanged(const CursorState& state)
     }
 
     if (mLastCursor >= 0 && mLastCursor <= static_cast<int>(mSystemElements.size())) {
-        for (auto& video : mSystemElements[mLastCursor].videoComponents)
-            video->pauseVideoPlayer();
+        if (transitionAnim == ViewTransitionAnimation::INSTANT || isAnimationPlaying(0)) {
+            for (auto& video : mSystemElements[mLastCursor].videoComponents)
+                video->stopVideoPlayer(false);
+        }
+        else {
+            for (auto& video : mSystemElements[mLastCursor].videoComponents)
+                video->pauseVideoPlayer();
+        }
     }
 
     for (auto& container : mSystemElements[mPrimary->getCursor()].containerComponents)
@@ -316,6 +328,7 @@ void SystemView::onCursorChanged(const CursorState& state)
             mCamOffset = static_cast<float>(cursor);
     }
 
+    const int prevLastCursor {mLastCursor};
     mLastCursor = cursor;
 
     for (auto& video : mSystemElements[cursor].videoComponents)
@@ -390,7 +403,7 @@ void SystemView::onCursorChanged(const CursorState& state)
     if (transitionAnim == ViewTransitionAnimation::FADE) {
         float startFade {mFadeOpacity};
         anim = new LambdaAnimation(
-            [this, startFade, endPos](float t) {
+            [this, startFade, endPos, prevLastCursor](float t) {
                 if (t < 0.3f)
                     mFadeOpacity =
                         glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startFade, 0.0f, 1.0f));
@@ -405,6 +418,11 @@ void SystemView::onCursorChanged(const CursorState& state)
                 if (mNavigated && t >= 0.7f && t != 1.0f)
                     mMaxFade = true;
 
+                if (t == 1.0f && prevLastCursor >= 0) {
+                    for (auto& video : mSystemElements[prevLastCursor].videoComponents)
+                        video->stopVideoPlayer(false);
+                }
+
                 // Update the game count when the entire animation has been completed.
                 if (mFadeOpacity == 1.0f) {
                     mMaxFade = false;
@@ -416,7 +434,7 @@ void SystemView::onCursorChanged(const CursorState& state)
     else if (transitionAnim == ViewTransitionAnimation::SLIDE) {
         mUpdatedGameCount = false;
         anim = new LambdaAnimation(
-            [this, startPos, endPos, posMax](float t) {
+            [this, startPos, endPos, posMax, prevLastCursor](float t) {
                 // Non-linear interpolation.
                 t = 1.0f - (1.0f - t) * (1.0f - t);
                 float f {(endPos * t) + (startPos * (1.0f - t))};
@@ -427,6 +445,11 @@ void SystemView::onCursorChanged(const CursorState& state)
                     f -= posMax;
 
                 mCamOffset = f;
+
+                if (t == 1.0f && prevLastCursor >= 0) {
+                    for (auto& video : mSystemElements[prevLastCursor].videoComponents)
+                        video->stopVideoPlayer(false);
+                }
 
                 // Hack to make the game count being updated in the middle of the animation.
                 bool update {false};
