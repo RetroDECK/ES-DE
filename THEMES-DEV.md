@@ -755,6 +755,7 @@ The following languages are supported:
 | :------------ | :----------------------- | :----------------------- |
 | en_US         | English (United States)  | English (United States)  |
 | en_GB         | English (United Kingdom) | English (United Kingdom) |
+| de_DE         | German                   | Deutsch                  |
 | es_ES         | Spanish (Spain)          | Español (España)         |
 | fr_FR         | French                   | Français                 |
 | it_IT         | Italian                  | Italiano                 |

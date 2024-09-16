@@ -19,6 +19,9 @@ Nils Bonenberger
 
 **English (United Kingdom)** \
 Weestuarty \
+**German** \
+Thorsten \
+Pest \
 **Spanish (Spain)** \
 Dani (stshunz) \
 **French** \

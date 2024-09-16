@@ -10,6 +10,7 @@
 
 ### Detailed list of changes
 
+* Added translations for German (de_DE)
 * Added translations for Korean (ko_KR)
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
 * Added the Nanum Square Neo Korean font
