@@ -45,8 +45,6 @@ bool MediaViewer::startMediaViewer(FileData* game)
     mKeyRepeatDir = 0;
     mKeyRepeatTimer = 0;
 
-    ViewController::getInstance()->pauseViewVideos();
-
     mShowMediaTypes = Settings::getInstance()->getBool("MediaViewerShowTypes");
 
     if (Settings::getInstance()->getString("MediaViewerHelpPrompts") == "disabled")
@@ -69,6 +67,7 @@ bool MediaViewer::startMediaViewer(FileData* game)
     if (!mHasVideo && !mHasImages)
         return false;
 
+    ViewController::getInstance()->pauseViewVideos();
     Window::getInstance()->stopInfoPopup();
 
     HelpStyle style;
