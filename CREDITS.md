@@ -37,6 +37,8 @@ Lulzee \
 Leon Styhre \
 **Japanese** \
 冰棍 \
+**Korean** \
+wakeboxer \
 **Simplified Chinese** \
 邻家小熊 \
 冰棍

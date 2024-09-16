@@ -325,7 +325,7 @@ Note that there are no prebuilt Linux packages for the Raspberry Pi, so you will
 
 The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested.
 
-In general, 720p works fine with the RPi 4, and 1080p is tolerable but not really a nice and smooth experience. Due to the relative weakness of the Rasperry Pi GPU, the video scanline rendering options for the screensaver and media viewer have been disabled (only for Linux and not for Android). These options can be re-enabled via the menu if you don't mind lower video framerates.
+In general, 720p works fine with the RPi 4, and 1080p is tolerable on the RPi 5, but due to the relative weakness of the Rasperry Pi GPU, the video scanline rendering options for the screensaver and media viewer have been disabled (only for Linux and not for Android). These options can be re-enabled via the menu if you don't mind lower video framerates.
 
 ## Game system customizations
 

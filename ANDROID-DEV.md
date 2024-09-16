@@ -597,6 +597,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
 | Oppo         | Reno5                   | 12              | Yes       | None                |                            |
 | Raspberry    | Pi 4/400                | 13, 14          | Yes       | None                | Low-power GPU so ES-DE may run a bit sluggish |
+| Raspberry    | Pi 5                    | 15              | Yes       | None                | Very poor GPU performance, runs at almost double speed in Raspberry Pi OS so likely a driver issue |
 | Razer        | Edge                    | 13              | Yes       | None                |                            |
 | Realme       | GT2                     | 12              | Yes       | None                |                            |
 | Retroid      | Pocket 2+               | 11              | Yes       | None                |                            |

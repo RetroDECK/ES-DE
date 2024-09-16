@@ -16,6 +16,7 @@
 
 ### Bug fixes
 
+* Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos
 * Newly entered ScreenScraper username and password values were positioned incorrectly vertically in the account settings menu
 
 ## Version 3.1.0 / 3.1.0-32

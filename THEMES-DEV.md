@@ -764,8 +764,8 @@ The following languages are supported:
 | ru_RU         | Russian                  | Русский                  |
 | sv_SE         | Swedish                  | Svenska                  |
 | ja_JP         | Japanese                 | 日本語                   |
-| zh_CN         | Simplified Chinese       | 简体中文                 |
 | ko_KR         | Korean                   | 한국어                   |
+| zh_CN         | Simplified Chinese       | 简体中文                 |
 
 Note that the native name is what is shown inside the _UI Settings_ menu for the _Theme Language_ and _Application Language_ settings.
 
