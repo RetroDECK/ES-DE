@@ -657,7 +657,7 @@ msgid "ALWAYS"
 msgstr "TOUJOURS"
 
 msgid "ON EXIT"
-msgstr "À L'EXCTINCTION"
+msgstr "À L'ARRÊT"
 
 msgid "NEVER"
 msgstr "JAMAIS"
@@ -786,7 +786,7 @@ msgid "REALLY POWER OFF?"
 msgstr "VOULEZ-VOUS VRAIMENT ÉTEINDRE?"
 
 msgid "POWER OFF SYSTEM"
-msgstr "EXCTINCTION DU SYSTÈME"
+msgstr "ARRÊT DU SYSTÈME"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
