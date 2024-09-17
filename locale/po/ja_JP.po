@@ -1,0 +1,2895 @@
+# ES-DE Frontend translation strings.
+# Copyright (c) 2024 Northwestern Software AB
+# This file is distributed under the same license as the ES-DE Frontend package.
+# Northwestern Software <info@es-de.org>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ES-DE Frontend\n"
+"Report-Msgid-Bugs-To: info@es-de.org\n"
+"POT-Creation-Date: 2024-09-04 17:44+0200\n"
+"PO-Revision-Date: 2024-09-02 00:16+0800\n"
+"Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
+"Language-Team: 日本語 <info@es-de.org>\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.4.2\n"
+
+msgid "Network error (status:"
+msgstr "ネットワークエラー（ステータス："
+
+msgid "New prerelease available:"
+msgstr "新しいプレリリースが利用可能："
+
+msgid "New release available:"
+msgstr "新しいリリースが利用可能："
+
+msgid "For more information visit"
+msgstr "詳細はこちらを"
+
+msgid "No Entries Found"
+msgstr "項目が見つかりませんでした"
+
+msgctxt "theme"
+msgid "all"
+msgstr "すべて"
+
+msgctxt "theme"
+msgid "all games"
+msgstr "すべてのゲーム"
+
+msgctxt "theme"
+msgid "recent"
+msgstr "最近"
+
+msgctxt "theme"
+msgid "last played"
+msgstr "最後に遊んだ日"
+
+msgctxt "theme"
+msgid "favorites"
+msgstr "お気に入り"
+
+msgctxt "theme"
+msgid "collections"
+msgstr "コレクション"
+
+msgid "ScreenScraper error:"
+msgstr "スクリーンスクレイパーエラー："
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr "スクリーンスクレイパー：ユーザー名あるいはパスワードが間違っています"
+
+msgid "Network error:"
+msgstr "ネットワークエラー："
+
+msgid "Media directory does not exist and can't be created."
+msgstr "メディアディレクトリは存在しないので、作成することもできません。"
+
+msgid "Permission problems?"
+msgstr "権限の問題である可能性があります。"
+
+msgid "Failed to open path for writing media file."
+msgstr "パスを開くことに失敗したので、メディアファイルに書き込めません。"
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr ""
+"メディアファイルを保存できませんでした。権限の問題か、あるいはディスクがいっ"
+"ぱいになっている可能性があります。"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr ""
+"リサイズされた画像を保存できませんでした。権限の問題か、あるいはディスクが"
+"いっぱいになっている可能性があります。"
+
+msgctxt "metadata"
+msgid "NAME"
+msgstr "名前"
+
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "名前を入力してください"
+
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "ソート名"
+
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "ソート名を入力してください"
+
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "コレクションのソート名をカスタムしてください"
+
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "コレクションのソート名を入力してください"
+
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "説明"
+
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "説明を入力してください"
+
+msgctxt "metadata"
+msgid "RATING"
+msgstr "評価"
+
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "リリース日"
+
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "開発者"
+
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "開発者を入力してください"
+
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "パブリッシャー"
+
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "パブリッシャーを入力してください"
+
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "ジャンル"
+
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "ジャンルを入力してください"
+
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "プレイヤー"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "プレイヤーを入力してください"
+
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "お気に入り"
+
+msgctxt "metadata"
+msgid "COMPLETED"
+msgstr "完了した"
+
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "子供ゲーム"
+
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "子供ゲーム（バッジのみに影響）"
+
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "非表示"
+
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "壊れている/稼働していない"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "ゲームカウンターから除外する"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "マルチスクレイパーから除外する"
+
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "メタデータフィールドを非表示にする"
+
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "遊んだ回数"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "遊んだ回数を入力してください"
+
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "コントローラー"
+
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "コントローラーを選んでください"
+
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "代替エミュレーター"
+
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "代替エミュレーターを選んでください"
+
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "フォルダリンク"
+
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "フォルダリンクを選んでください"
+
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "最後に遊んだ日"
+
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "最後に遊んだ日を入力してください"
+
+msgid "MAIN MENU"
+msgstr "メインメニュー"
+
+msgid "SCRAPER"
+msgstr "スクレーパー"
+
+msgid "UI SETTINGS"
+msgstr "UI設定"
+
+msgid "SOUND SETTINGS"
+msgstr "音声設定"
+
+msgid "INPUT DEVICE SETTINGS"
+msgstr "入力デバイス設定"
+
+msgid "GAME COLLECTION SETTINGS"
+msgstr "ゲームコレクション設定"
+
+msgid "OTHER SETTINGS"
+msgstr "他の設定"
+
+msgid "UTILITIES"
+msgstr "ユーティリティ"
+
+msgid "QUIT ES-DE"
+msgstr "ES-DEを終了"
+
+msgid "QUIT"
+msgstr "終了"
+
+msgid "THEME"
+msgstr "テーマ"
+
+msgid "THEME DOWNLOADER"
+msgstr "テーマダウンローダー"
+
+msgid "THEME VARIANT"
+msgstr "テーマのバリエーション"
+
+msgid "NONE DEFINED"
+msgstr "定義されていない"
+
+msgid "THEME COLOR SCHEME"
+msgstr "テーマの配色"
+
+msgid "THEME FONT SIZE"
+msgstr "テーマのフォントサイズ"
+
+msgid "THEME ASPECT RATIO"
+msgstr "テーマのアスペクト比"
+
+msgid "THEME TRANSITIONS"
+msgstr "テーマの遷移"
+
+msgid "AUTOMATIC"
+msgstr "自動"
+
+msgid "THEME PROFILE"
+msgstr "テーマプロファイル"
+
+msgid "INSTANT (BUILT-IN)"
+msgstr "インスタント（内蔵）"
+
+msgid "SLIDE (BUILT-IN)"
+msgstr "スライド（内蔵）"
+
+msgid "FADE (BUILT-IN)"
+msgstr "フェイド（内蔵）"
+
+msgid "THEME LANGUAGE"
+msgstr "テーマ言語"
+
+msgid "APPLICATION LANGUAGE"
+msgstr "アプリ言語"
+
+msgid "QUICK SYSTEM SELECT"
+msgstr "クイックシステム選択"
+
+msgid "LEFT/RIGHT OR SHOULDERS"
+msgstr "左/右 OR ショルダー"
+
+msgid "LEFT/RIGHT OR TRIGGERS"
+msgstr "左/右 OR トリガー"
+
+msgid "SHOULDERS"
+msgstr "ショルダー"
+
+msgid "TRIGGERS"
+msgstr "トリガー"
+
+msgid "LEFT/RIGHT"
+msgstr "左/右"
+
+msgid "DISABLED"
+msgstr "無効"
+
+msgid "GAMELIST ON STARTUP"
+msgstr "起動時にゲームリスト"
+
+msgid "NONE"
+msgstr "無"
+
+msgid "SYSTEMS SORTING"
+msgstr "システムのソート"
+
+msgid "FULL NAMES OR CUSTOM"
+msgstr "フルネームまたはカスタム"
+
+msgid "RELEASE YEAR"
+msgstr "リリース年"
+
+msgid "MANUFACTURER, RELEASE YEAR"
+msgstr "メーカー、リリース年"
+
+msgid "HW TYPE, RELEASE YEAR"
+msgstr "HWタイプ、リリース年"
+
+msgid "MANUFACTURER, HW TYPE, REL. YEAR"
+msgstr "メーカー、HWタイプ、リリース年"
+
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "ゲームデフォルト並び順"
+
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "ゲームデフォルト並び順"
+
+msgid "MENU COLOR SCHEME"
+msgstr "メニューの配色"
+
+msgid "DARK"
+msgstr "DARK"
+
+msgid "DARK AND RED"
+msgstr "ダークレッド"
+
+msgid "LIGHT"
+msgstr "LIGHT"
+
+msgid "MENU OPENING ANIMATION"
+msgstr "メニューオープニングアニメーション"
+
+msgid "SCALE-UP"
+msgstr "拡大"
+
+msgid "LAUNCH SCREEN DURATION"
+msgstr "起動画面の継続時間"
+
+msgid "NORMAL"
+msgstr "普通"
+
+msgid "BRIEF"
+msgstr "簡単"
+
+msgid "LONG"
+msgstr "長い"
+
+msgid "UI MODE"
+msgstr "UIモード"
+
+msgid "FULL"
+msgstr "フール"
+
+msgid "KIOSK"
+msgstr "簡易"
+
+msgid "KID"
+msgstr "子供"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"この操作により、UIが制限され、\n"
+"'KIOSK'\n"
+"モードに入り、大部分のメニューが非表示になります。\n"
+"解除するには、こちらのコード：\n"
+"%s\n"
+"を入力し、フールUIモードに戻れます。\n"
+"続きますか？"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"この操作により、UIが制限され、\n"
+"'KID''\n"
+"モードに入り、「子供向け」としてフラグ付けされた\n"
+"ゲームのみが有効にされます。\n"
+"解除するには、こちらのコード：\n"
+"%s\n"
+"を入力し、フールUIモードに戻れます。\n"
+"続きますか？"
+
+msgid "YES"
+msgstr "はい"
+
+msgid "NO"
+msgstr "いいえ"
+
+msgid "RANDOM ENTRY BUTTON"
+msgstr "ランダム項目ボタン"
+
+msgid "GAMES ONLY"
+msgstr "ゲームのみ"
+
+msgid "GAMES AND SYSTEMS"
+msgstr "ゲームとシステム"
+
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "メディアビューアー設定"
+
+msgid "SCREENSAVER SETTINGS"
+msgstr "スクリーンセーバー設定"
+
+msgid "ENABLE THEME VARIANT TRIGGERS"
+msgstr "テーマバリエーショントリガーを有効に"
+
+msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
+msgstr "メニューが開いているときに背景をぼかす"
+
+msgid "SORT FOLDERS ON TOP OF GAMELISTS"
+msgstr "ゲームリストの上にフォルダを並べる"
+
+msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+msgstr "お気に入りのゲームをより上に並べる"
+
+msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
+msgstr "お気に入りのゲームに星マークを追加"
+
+msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+msgstr "クイックスクロールオーバーレイを有効に"
+
+msgid "ENABLE VIRTUAL KEYBOARD"
+msgstr "仮想キーボードを有効に"
+
+msgid "ENABLE TOGGLE FAVORITES BUTTON"
+msgstr "お気に入りの切り替えボタンを有効に"
+
+msgid "ENABLE GAMELIST FILTERS"
+msgstr "ゲームリストのフィルターを有効に"
+
+msgid "DISPLAY ON-SCREEN HELP"
+msgstr "オンスクリーンヘルプを表示"
+
+msgid "SYSTEM VOLUME"
+msgstr "システム音量"
+
+msgid "NAVIGATION SOUNDS VOLUME"
+msgstr "ナビゲーション音量"
+
+msgid "VIDEO PLAYER VOLUME"
+msgstr "ビデオプレーヤー音量"
+
+msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+msgstr "ゲームリスト/システムのビデオに音声を再生"
+
+msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+msgstr "メディア一覧のビデオに音声を再生"
+
+msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+msgstr "スクリーンセイバーのビデオに音声を再生"
+
+msgid "ENABLE NAVIGATION SOUNDS"
+msgstr "ナビゲーション音声を有効に"
+
+msgid "CONTROLLER TYPE"
+msgstr "コントローラータイプ"
+
+msgid "TOUCH OVERLAY SIZE"
+msgstr "タッチオーバーレイのサイズ"
+
+msgid "MEDIUM"
+msgstr "普通"
+
+msgid "LARGE"
+msgstr "大きい"
+
+msgid "SMALL"
+msgstr "小さい"
+
+msgid "EXTRA SMALL"
+msgstr "もっと小さい"
+
+msgid "TOUCH OVERLAY OPACITY"
+msgstr "タッチオーバーレイの不透明度"
+
+msgid "LOW"
+msgstr "低い"
+
+msgid "VERY LOW"
+msgstr "とても低い"
+
+msgid "TOUCH OVERLAY FADE-OUT TIME"
+msgstr "タッチオーバーレイのフェードアウト時間"
+
+msgid "ENABLE TOUCH OVERLAY"
+msgstr "タッチオーバーレイを有効にする"
+
+msgid ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+msgstr ""
+"コントローラーを使用していない場合は、タッチオーバーレイを無効にしないでくだ"
+"さい。そうしないと、アプリからロックアウトされる可能性があります。このような"
+"状況が発生した場合、一時的にコントローラーまたはキーボードを接続してこの設定"
+"を再度有効にする必要があります。または、Androidアプリの設定でES-DEストレージ"
+"を消去して、次回起動時に設定を実行させることもできます"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+msgstr "一番のコントローラーの入力だけを受入"
+
+msgid "SWAP THE A/B AND X/Y BUTTONS"
+msgstr "A/B ボタンと X/Y ボタンを入れ替える"
+
+msgid "IGNORE KEYBOARD INPUT"
+msgstr "キーボードからの入力を無視"
+
+msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
+msgstr "キーボードとコントローラーを設定"
+
+msgid ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
+"HELP PROMPTS)"
+msgstr ""
+"キーボードとコントローラーの配置は自動的に生成されますが、このツールを利用し"
+"て、デフォルトのボタンマッピングを上書きできます（ヘルププロンプトには影響し"
+"ません）"
+
+msgid "PROCEED"
+msgstr "進む"
+
+msgid "CANCEL"
+msgstr "キャンセル"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "代替エミュレータ"
+
+msgid "GAME MEDIA DIRECTORY"
+msgstr "ゲームメディアディレクトリ"
+
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr "ディレクトリを入力してください"
+
+msgid "Default directory:"
+msgstr "デフォルトディレクトリ："
+
+msgid "SAVE"
+msgstr "セーブ"
+
+msgid "SAVE CHANGES?"
+msgstr "セーブしますか？"
+
+msgid "load default directory"
+msgstr "デフォルトディレクトリをロードします"
+
+msgid "VRAM LIMIT"
+msgstr "VRAM制限"
+
+msgid "ANTI-ALIASING (MSAA)"
+msgstr "アンチエイリアス（MSAA）"
+
+msgid "2X"
+msgstr "2X"
+
+msgid "4X"
+msgstr "4X"
+
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr "アンチエイリアス（MSAA）（再起動が必要）"
+
+msgid "DISPLAY/MONITOR INDEX"
+msgstr "モニターのインデックス"
+
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr "モニターのインデックス（再起動が必要）"
+
+msgid "ROTATE SCREEN"
+msgstr "画面を回転する"
+
+msgid "90 DEGREES"
+msgstr "90度"
+
+msgid "180 DEGREES"
+msgstr "180度"
+
+msgid "270 DEGREES"
+msgstr "270度"
+
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr "画面を回転する（再起動が必要）"
+
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr "退出のショートカット"
+
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "メタデータの保存タイミング"
+
+msgid "ALWAYS"
+msgstr "いつも"
+
+msgid "ON EXIT"
+msgstr "退出のとき"
+
+msgid "NEVER"
+msgstr "しない"
+
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "メタデータの保存タイミング"
+
+msgid "APPLICATION UPDATES"
+msgstr "アプリのアップデート"
+
+msgid "DAILY"
+msgstr "毎日"
+
+msgid "WEEKLY"
+msgstr "毎週"
+
+msgid "MONTHLY"
+msgstr "毎月"
+
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "アプリ更新をチェックする"
+
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr "更新チェックにプレリリースを含める"
+
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr "タスクバーを非表示にする（再起動が必要）"
+
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr "ゲームが起動中にバックグラウンドで実行"
+
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr "ビデオハードウェアデコーディング（実験的）"
+
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr "ビデオのフレームレートを60 FPSに引き上げる"
+
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr "ゲームごとに代替エミュレータを有効に"
+
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr "隠しファイルとフォルダを表示"
+
+msgid "SHOW HIDDEN GAMES"
+msgstr "非表示中のゲームを表示"
+
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "カスタムイベントスクリプトを有効に"
+
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr "GAMELIST.XML ファイルにあるゲームのみを表示"
+
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr "余分なMAME名情報を削除（再起動が必要）"
+
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr "デスクトップ合成を無効に（再起動が必要）"
+
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr "バックボタン/バックスワイプでアプリを終了"
+
+msgid "DEBUG MODE"
+msgstr "デバッグモード"
+
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr "GPU統計オーバーレイを表示"
+
+msgid "ENABLE MENU IN KID MODE"
+msgstr "キッズモードでメニューを有効"
+
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr "終了メニューを表示（再起動/電源オフ）"
+
+msgid "ORPHANED DATA CLEANUP"
+msgstr "孤児データのクリーンアップ"
+
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr "システムディレクトリを作成/更新"
+
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+"この操作は、ROMフォルダ内に全てのゲームシステムディレクトリを作成し、及び"
+"systeminfo.txtファイルを更新します。これは安全な操作で、ゲームファイルを削除"
+"したり、変更したりはしません。アプリの起動時間を短縮するために、このユーティ"
+"リティを実行した後に、必要のないシステムディレクトリを削除することをお勧めし"
+"ます"
+
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr "システムディレクトリが正常に作成されました"
+
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+"システムディレクトリの作成にエラー発生。権限の問題か、あるいはディスク容量が"
+"いっぱいになっている可能性があります。詳細についてはログファイルを参照してく"
+"ださい"
+
+msgid "RESCAN ROM DIRECTORY"
+msgstr "ROMディレクトリを再スキャン"
+
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr ""
+"追加または削除されたゲームやシステムなどの変更を検出するために、ROMディレクト"
+"リを再スキャンします"
+
+msgid "REALLY QUIT?"
+msgstr "本当にやめますか？"
+
+msgid "REALLY REBOOT?"
+msgstr "本当に再起動しますか？"
+
+msgid "REBOOT SYSTEM"
+msgstr "システムを再起動"
+
+msgid "REALLY POWER OFF?"
+msgstr "本当に電源を切りますか？"
+
+msgid "POWER OFF SYSTEM"
+msgstr "電源を切る"
+
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "メディアビューアー設定"
+
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
+msgstr "スクリーンセーバー設定"
+
+msgid "choose"
+msgstr "選ぶ"
+
+msgid "select"
+msgstr "選ぶ"
+
+msgid "close menu"
+msgstr "メニューを閉じる"
+
+msgid "REFINE SEARCH"
+msgstr "絞り込み検索"
+
+msgid "refine search"
+msgstr "絞り込み検索"
+
+msgid "cancel"
+msgstr "キャンセル"
+
+msgid "back (cancel)"
+msgstr "バック（キャンセル）"
+
+msgid "SCRAPE FROM"
+msgstr "スクレイプ源"
+
+msgid "SCRAPE THESE GAMES"
+msgstr "スクレイプしたいゲーム"
+
+msgid "ALL GAMES"
+msgstr "すべてのゲーム"
+
+msgid "FAVORITE GAMES"
+msgstr "お気に入りのゲーム"
+
+msgid "NO METADATA"
+msgstr "メタデータを除く"
+
+msgid "NO GAME IMAGE"
+msgstr "ゲーム画像を除く"
+
+msgid "NO GAME VIDEO"
+msgstr "ゲームビデオを除く"
+
+msgid "FOLDERS ONLY"
+msgstr "フォルダのみ"
+
+msgid "SCRAPE THESE SYSTEMS"
+msgstr "スクレイプしたいシステム"
+
+msgid "ACCOUNT SETTINGS"
+msgstr "アカウント設定"
+
+msgid "CONTENT SETTINGS"
+msgstr "コンテンツ設定"
+
+msgid "MIXIMAGE SETTINGS"
+msgstr "複合画像の設定"
+
+msgid "START"
+msgstr "開始"
+
+msgid "start scraper"
+msgstr "スクレイパーを開始"
+
+msgid "BACK"
+msgstr "戻る"
+
+msgid "back"
+msgstr "戻る"
+
+msgid "SCREENSCRAPER USERNAME"
+msgstr "ユーザー名"
+
+msgid "SCREENSCRAPER PASSWORD"
+msgstr "パスワード"
+
+msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
+msgstr "このアカウントでスクレイプ"
+
+msgid "GAME NAMES"
+msgstr "ゲーム名"
+
+msgid "RATINGS"
+msgstr "評価"
+
+msgid "OTHER METADATA"
+msgstr "他のメタデータ"
+
+msgid "VIDEOS"
+msgstr "ビデオ"
+
+msgid "SCREENSHOT IMAGES"
+msgstr "スクリーンショット画像"
+
+msgid "TITLE SCREEN IMAGES"
+msgstr "タイトルスクリーン画像"
+
+msgid "BOX COVER IMAGES"
+msgstr "ボックスカバー画像"
+
+msgid "BOX BACK COVER IMAGES"
+msgstr "ボックスバックカバー画像"
+
+msgid "MARQUEE (WHEEL) IMAGES"
+msgstr "マーキー（ホイール）画像"
+
+msgid "3D BOX IMAGES"
+msgstr "3Dボックス画像"
+
+msgid "PHYSICAL MEDIA IMAGES"
+msgstr "物理メディア画像"
+
+msgid "FAN ART IMAGES"
+msgstr "ファンアート画像"
+
+msgid "GAME MANUALS"
+msgstr "ゲームマニュアル"
+
+msgid "MIXIMAGE RESOLUTION"
+msgstr "複合画像の解像度"
+
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "水平スクリーンショットの調整"
+
+msgid "CONTAIN"
+msgstr "含める"
+
+msgid "CROP"
+msgstr "切り取る"
+
+msgid "STRETCH"
+msgstr "伸ばす"
+
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "水平スクリーンショットの調整"
+
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "垂直スクリーンショットの調整"
+
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "垂直スクリーンショットの調整"
+
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "スクショのアスペクト比のしきい値"
+
+msgid "HIGH"
+msgstr "高い"
+
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "スクショのアスペクト比のしきい値"
+
+msgid "BLANK AREAS FILL COLOR"
+msgstr "空白エリアの充填色"
+
+msgid "BLACK"
+msgstr "黒い"
+
+msgid "FRAME"
+msgstr "フレーム"
+
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "スクリーンショットの拡大縮小方法"
+
+msgid "SHARP"
+msgstr "鋭い"
+
+msgid "SMOOTH"
+msgstr "柔らかい"
+
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "スクリーンショットの拡大縮小方法"
+
+msgid "BOX SIZE"
+msgstr "ボックスサイズ"
+
+msgid "PHYSICAL MEDIA SIZE"
+msgstr "物理メディアサイズ"
+
+msgid "GENERATE MIXIMAGES WHEN SCRAPING"
+msgstr "スクレイプするときに複合画像を生成"
+
+msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
+msgstr "複合画像を上書き"
+
+msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
+msgstr "スクリーンショットからレターボックスを削除"
+
+msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
+msgstr "スクリーンショットからピラーボックスを削除"
+
+msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
+msgstr "水平方向に配置されたボックスを回転させる"
+
+msgid "INCLUDE MARQUEE IMAGE"
+msgstr "マーキー画像を含める"
+
+msgid "INCLUDE BOX IMAGE"
+msgstr "ボックス画像を含める"
+
+msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
+msgstr "3Dボックスがない場合カバー画像を使用"
+
+msgid "INCLUDE PHYSICAL MEDIA IMAGE"
+msgstr "物理メディア画像を含める"
+
+msgid "OFFLINE GENERATOR"
+msgstr "オフラインジェネレーター"
+
+msgid ""
+"THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
+"PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
+msgstr ""
+"オフラインジェネレーターは、スクレイパーと同じシステム選択を使用するため、画"
+"像を生成するために、少なくとも1つのシステムを選択する必要があります"
+
+msgid "REGION"
+msgstr "地域"
+
+msgid "EUROPE"
+msgstr "ヨーロッパ"
+
+msgid "JAPAN"
+msgstr "日本"
+
+msgid "USA"
+msgstr "アメリカ"
+
+msgid "WORLD"
+msgstr "世界"
+
+msgid "PREFERRED LANGUAGE"
+msgstr "希望する言語"
+
+msgid "AUTOMATIC RETRIES ON ERROR"
+msgstr "エラー発生時に自動再試行"
+
+msgid "RETRY ATTEMPT TIMER"
+msgstr "再試行タイマー"
+
+msgid "HASH SEARCHES MAX FILE SIZE"
+msgstr "ハッシュ検索の最大ファイルサイズ"
+
+msgid "OVERWRITE FILES AND DATA"
+msgstr "ファイルとデータを上書き"
+
+msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
+msgstr "ファイルハッシュを使用して検索"
+
+msgid "SEARCH USING METADATA NAMES"
+msgstr "メタデータ名を使用して検索"
+
+msgid "SCRAPE ACTUAL FOLDERS"
+msgstr "実際のフォルダをスクレイプ"
+
+msgid "INTERACTIVE MODE"
+msgstr "対話モード"
+
+msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
+msgstr "単一のマッチ結果を自動的に確認"
+
+msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
+msgstr "ファイルごとのスクレーパー除外設定を尊重"
+
+msgid "EXCLUDE FOLDERS RECURSIVELY"
+msgstr "フォルダを再帰的に除外"
+
+msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
+msgstr "検索時にアンダースコアをスペースに変換"
+
+msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
+msgstr "自動スクレイピング時に検索からドットを削除"
+
+msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
+msgstr "追加地域へのフォールバックを許可"
+
+msgid ""
+"THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
+msgstr ""
+"選んだシステムにプラットフォームが設定されていません。結果が不正確である可能"
+"性があります"
+
+msgid ""
+"AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
+"MAY BE INACCURATE"
+msgstr ""
+"選んだシステムのうちには、少なくとも1つにプラットフォームが設定されていませ"
+"ん。結果が不正確である可能性があります"
+
+msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
+msgstr "スクレイプするには、少なくとも1つのシステムを選んでください"
+
+msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
+msgstr "スクレイプするには、少なくとも1つのコンテンツタイプを選んでください"
+
+msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
+msgstr ""
+"すべてのゲームがフィルターされました。再度スクレイプする必要がありません"
+
+msgid "HELP PROMPTS"
+msgstr "ヘルププロンプト"
+
+msgid "TOP"
+msgstr "上"
+
+msgid "BOTTOM"
+msgstr "下"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "メディアタイプを表示"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "画像を見るときビデオの再生を中断しない"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "画面解像度に合わせてビデオを拡大して表示"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "ビデオのスキャンラインをレンダリング"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "ビデオのぼかしをレンダリング"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "スクショとタイトルのスキャンラインをレンダリング"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "'%s' 個のコレクションの編集が完了"
+
+msgid "SELECT COLLECTIONS"
+msgstr "コレクションを選ぶ"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "ゲームコレクションを自動化"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "ゲームコレクションをカスタム"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "テーマから新しいカスタムコレクションを作成"
+
+msgid "SELECT THEME FOLDER"
+msgstr "テーマフォルダを選んでください"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "新しいカスタムコレクションを作成"
+
+msgid "NEW COLLECTION NAME"
+msgstr "新しいコレクション名"
+
+msgid "CREATE"
+msgstr "CREATE"
+
+msgid "CREATE COLLECTION?"
+msgstr "コレクションを作成しますか？"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "カスタムコレクションを削除"
+
+msgid "COLLECTION TO DELETE"
+msgstr "削除したいコレクション"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"コレクション\n"
+"'%s'\n"
+"を完全に削除しますが、よろしいですか？"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "カスタムコレクションをグループ化"
+
+msgid "IF UNTHEMED"
+msgstr "未テーマ化"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "カスタムコレクションのお気に入りを上に"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "カスタムコレクションにスターマークを表示"
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr "（分） 経過後に開始"
+
+msgid "SCREENSAVER TYPE"
+msgstr "スクリーンセーバーのタイプ"
+
+msgid "DIM"
+msgstr "DIM"
+
+msgid "SLIDESHOW"
+msgstr "スライドショー"
+
+msgid "VIDEO"
+msgstr "ビデオ"
+
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr "スクリーンセーバーのコントロールを有効に"
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr "スライドショーのスクリーンセーバー設定"
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr "ビデオスクリーンセーバーの設定"
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr "スライドショーのスクリーンセーバー"
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr "（秒）経過後に画像を交換"
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr "お気に入りのゲームのみを含める"
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr "画面解像度に合わせて画像を拡大して表示"
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr "ゲーム情報オーバーレイを表示"
+
+msgid "RENDER SCANLINES"
+msgstr "スキャンラインをレンダリング"
+
+msgid "USE CUSTOM IMAGES"
+msgstr "カスタム画像を使用"
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr "カスタム画像ディレクトリを再帰検索"
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr "カスタム画像ディレクトリ"
+
+msgid "VIDEO SCREENSAVER"
+msgstr "ビデオスクリーンセーバー"
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr "（秒）経過後にビデオを交換"
+
+msgid "RENDER BLUR"
+msgstr "ぼかしをレンダリング"
+
+msgid "FILTER GAMELIST"
+msgstr "ゲームリストを絞り込む"
+
+msgid "RESET ALL FILTERS"
+msgstr "フィルターをすべてリセット"
+
+msgid "GAME NAME"
+msgstr "ゲーム名"
+
+msgid "APPLY CHANGES?"
+msgstr "変更を適用しますか？"
+
+msgid "NOTHING TO FILTER"
+msgstr "絞り込む必要がありません"
+
+msgid "LAUNCHING GAME"
+msgstr "ゲームを起動"
+
+msgid "CLOSE"
+msgstr "閉じる"
+
+msgid "close"
+msgstr "閉じる"
+
+msgid "DOWNLOADING THEMES LIST 100%"
+msgstr "テーマリストのダウンロードが100% 完了しました"
+
+msgid "THEME ALREADY UP TO DATE"
+msgstr "テーマはすでに最新の状態です"
+
+msgid "THEME HAS BEEN UPDATED"
+msgstr "テーマが更新されました"
+
+#, c-format
+msgid ""
+"COULDN'T RENAME DIRECTORY \"%s\"\n"
+"PERMISSION PROBLEMS?"
+msgstr ""
+"ディレクトリ \"%s\" を名前を変更できませんでした。権限の問題である可能性があ"
+"ります。"
+
+msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
+msgstr "テーマリストの設定ファイルが見つかりませんでした"
+
+msgid ""
+"COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
+"REPOSITORY IS CORRUPT?"
+msgstr ""
+"テーマリスト設定ファイルを解析できませんでした。ローカルリポジトリが壊れてい"
+"る可能性があります。"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+"BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
+msgstr ""
+"おそらく最新のES-DEリリースを実行していないようです。まずはアップグレードして"
+"ください。そうしない場合、現バージョンとの互換性に問題を起こしかねます"
+
+msgid "and"
+msgstr "と"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA THIS "
+"THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+"\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
+msgstr ""
+"おそらくこのテーマは、本テーマダウンローダーを介したものではなく、手動でダウ"
+"ンロードされたと思われます。新たにダウンロードする必要があります。古いテーマ"
+"ディレクトリ \"%s\" の名前は \"%s_DISABLED\" に変更されます"
+
+msgid "DOWNLOADING THEME"
+msgstr "テーマをダウンローダー中"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
+"DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
+msgstr ""
+"このテーマリポジトリは壊れているようです。これは以前のダウンロードやアップ"
+"デートの中断による可能性があります。例えば、ES-DEプロセスが停止された場合など"
+"です。もう一度ダウンロードする必要があります。古いテーマディレクトリ \"%s\" "
+"の名前は \"%s_CORRUPT_DISABLED\" に変更されます"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
+"DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH "
+"DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
+"\"%s_DISABLED\""
+msgstr ""
+"これはおそらく他のツールを使ってダウンロードされたシャローリポジトリのようで"
+"す。もう一度ダウンロードする必要があります。古いテーマディレクトリ \"%s\" の"
+"名前は \"%s_CORRUPT_DISABLED\" に変更されます"
+
+#, c-format
+msgid ""
+"THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
+"CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
+msgstr ""
+"テーマリポジトリ \"%s\" にはローカルでの変更が含まれています。変更を上書きし"
+"て続行するか、すべてのアップデートをスキップしてキャンセルするしかありません"
+
+msgid "UPDATING THEME"
+msgstr "テーマをアップデート中"
+
+msgid "VARIANTS:"
+msgstr "バリアント："
+
+msgid "COLOR SCHEMES:"
+msgstr "カラースキーム:"
+
+msgid "ASPECT RATIOS:"
+msgstr "アスペクト比："
+
+msgid "FONT SIZES:"
+msgstr "フォントサイズ："
+
+msgid "INSTALLED"
+msgstr "インストール済み"
+
+msgid "MANUAL DOWNLOAD"
+msgstr "手動ダウンロード"
+
+msgid "CORRUPT"
+msgstr "破損した"
+
+msgid "SHALLOW"
+msgstr "シャロー"
+
+msgid "NOT INSTALLED (NEW)"
+msgstr "未インストール（新）"
+
+msgid "NOT INSTALLED"
+msgstr "未インストール"
+
+msgid "LOCAL CHANGES"
+msgstr "ローカル変更"
+
+msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
+msgstr "このテーマ項目は近い将来削除される予定です"
+
+msgid "CREATED BY"
+msgstr "作者："
+
+msgid "ERROR:"
+msgstr "エラー："
+
+msgid "COULDN'T DOWNLOAD THEMES LIST"
+msgstr "テーマリストをダウンロードできませんでした"
+
+msgid "DOWNLOADING"
+msgstr "ダウンロード中"
+
+msgid "DOWNLOADING THEMES LIST"
+msgstr "テーマリストをダウンロード中"
+
+msgid "THIS WILL COMPLETELY DELETE THE THEME"
+msgstr "この操作により、テーマは完全に削除されます"
+
+msgid ""
+"THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
+msgstr ""
+"この操作により、ローカルのカスタマイズを含む、テーマ全体が完全に削除されます"
+
+msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
+msgstr "テーマを削除できませんでした。権限の問題である可能性があります。"
+
+msgid "THEME WAS DELETED"
+msgstr "テーマは削除されました"
+
+msgid "view screenshots"
+msgstr "スクリーンショットを見る"
+
+msgid "fetch updates"
+msgstr "更新を取得"
+
+msgid "delete"
+msgstr "削除"
+
+msgid "download"
+msgstr "ダウンロード"
+
+msgid ""
+"IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
+"DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
+msgstr ""
+"テーマリストリポジトリが壊れているようです。これは以前のダウンロードやアップ"
+"デートの中断による可能性があり、たとえば、ES-DEプロセスがキルされた場合などが"
+"考えられます。もう一度ダウンロードする必要があります。古いディレクトリー"
+"「themes-list」の名前は「themes-list_CORRUPT_DISABLED」に変更されます"
+
+msgid "UPDATING THEMES LIST"
+msgstr "テーマリストをアップデート中"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
+"THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+"WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED "
+"FILES WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE "
+"THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
+"CORRUPTION."
+msgstr ""
+"どうやらテーマダウンローダーをご利用するのは初めてのようですね。そのため、"
+"テーマリストリポジトリがダウンロードされますが、しばらく時間がかかります。次"
+"回は、新規または修正されたファイルのみを取得するため、大幅高速になります。ダ"
+"ウンロードしたテーマについても同じです。データを破損しかねない可能性があるの"
+"で、進行中のダウンロードを中止するのは不可能であることに注意してください。"
+
+msgid "RATING:"
+msgstr "評価："
+
+msgid "RELEASED:"
+msgstr "リリース日："
+
+msgid "DEVELOPER:"
+msgstr "開発者："
+
+msgid "PUBLISHER:"
+msgstr "パブリッシャー："
+
+msgid "GENRE:"
+msgstr "ジャンル："
+
+msgid "PLAYERS:"
+msgstr "プレイヤー："
+
+msgid "NO GAMES FOUND"
+msgstr "ゲームを発見できませんでした"
+
+msgid "RETRY"
+msgstr "再試行"
+
+msgid "SKIP"
+msgstr "スキップ"
+
+msgid "Error downloading thumbnail:"
+msgstr "サムネイルのダウンロード中にエラーが発生しました："
+
+msgid "SEARCH"
+msgstr "検索"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "リファインド名で検索しますか？"
+
+msgid "skip"
+msgstr "スキップ"
+
+msgid "accept result"
+msgstr "結果を受け入れる"
+
+msgid "SCRAPING IN PROGRESS"
+msgstr "スクレイプ中"
+
+msgid "SYSTEM"
+msgstr "システム"
+
+msgid "skip game"
+msgstr "ゲームをスキップ"
+
+msgid "STOP"
+msgstr "停止"
+
+msgid "stop"
+msgstr "停止"
+
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "ゲーム"
+
+#, c-format
+msgid "GAME %i OF %i"
+msgstr "ゲーム %i の %i"
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr "スクレイプされたゲームがありません"
+
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i 個のゲームが正常にスクレイプされました"
+
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i 個のゲームがスキップされました"
+
+msgid "GAMELIST OPTIONS"
+msgstr "ゲームリストのオプション"
+
+msgid "JUMP TO..."
+msgstr "...に移動"
+
+msgid "SORT GAMES BY"
+msgstr "ゲームを並べ替える"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "このシステムにゲームがありません"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "このコレクションにゲームを追加/削除"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "このフォルダのメタデータを編集"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "このゲームのメタデータを編集"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "フォルダを入力してください（フォルダリンクをオーバーライドします）"
+
+msgid "APPLY"
+msgstr "同意"
+
+msgid "apply"
+msgstr "同意"
+
+msgid "close (apply)"
+msgstr "閉じる（同意）"
+
+msgid "close (cancel)"
+msgstr "閉じる（キャンセル）"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"この操作により、対応するゲームファイルが見つからないメディアファイルがすべて"
+"削除されます。 これらのファイルは、ゲームメディアディレクトリ内のクリーンアッ"
+"プフォルダに移動されます。 必要がないと判断した場合、このフォルダを手動で削除"
+"しても構いません。"
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"この操作により、GAMELISTの「XML ファイル」から、一致するゲームファイルが見つ"
+"からないすべての項目が削除されます。元のファイルのバックアップは、"
+"「GAMELISTS ディレクトリ」内の「CLEANUP フォルダ」に保存されます。必要がない"
+"と判断した場合、このフォルダを手動で削除しても構いません。"
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"この操作により、カスタムコレクションの設定ファイルから、対応するゲームファイ"
+"ルが見つからない項目がすべて削除されます。元のファイルのバックアップは、コレ"
+"クションディレクトリ内のクリーンアップフォルダに保存されます。現在有効になっ"
+"ているコレクションのみが処理されます。"
+
+msgid "NOT STARTED"
+msgstr "未スタート"
+
+msgid "DESCRIPTION:"
+msgstr "説明："
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "削除した項目数："
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "前回の実行システム："
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "前回のエラー情報："
+
+msgid "MEDIA"
+msgstr "メディア"
+
+msgid "start processing"
+msgstr "処理開始"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "メディアをクリーンアップ中"
+
+msgid "stop processing"
+msgstr "処理停止"
+
+msgid "GAMELISTS"
+msgstr "ゲームリスト"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "ゲームリストをクリーンアップ中"
+
+msgid "COLLECTIONS"
+msgstr "コレクション"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "コレクションのクリーンアップが失敗しました"
+
+msgid "There are no enabled custom collections"
+msgstr "有効にしたカスタムコレクションがありません"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "コレクションをクリーンアップ中"
+
+msgid "PROCESSING"
+msgstr "処理中"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "「flatten.txt」というファイルが見つかりました。\"%s\" をスキップ中"
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr ""
+"目標ディレクトリを作成できませんでした。権限の問題である可能性があります。"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr ""
+"メディアファイルを移動できませんでした。権限の問題である可能性があります。"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "\"%s\" のgamelist.xmlファイルを解析できませんでした"
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "\"%s\" のゲームリストのタッグが見つかりませんでした"
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr ""
+"一時ゲームリストファイルを削除できませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr ""
+"一時ゲームリストファイルに書き込めませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr ""
+"バックアップディレクトリを作成できませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr ""
+"古いゲームリストファイルを移動できませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr ""
+"一時ゲームリストファイルを移動できませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "カスタムコレクションの設定ファイルが見つかりませんでした"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "カスタムコレクションの設定ファイル開けませんでした"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr ""
+"一時コレクションファイルを削除できませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "一時コレクションファイルに書き込めませんでした"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr ""
+"古いコレクションファイルを移動できませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr ""
+"一時コレクションファイルを移動できませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "メディアのクリーンアップを中止"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "メディアのクリーンアップが完了"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "ゲームリストのクリーンアップを中止"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "ゲームリストのクリーンアップが完了"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "コレクションのクリーンアップを中止"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "コレクションのクリーンアップが完了"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "メディアのクリーンアップに失敗"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "ゲームリストのクリーンアップに失敗"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "このユーティリティを閉じると、アプリケーションが再読み込みされます。"
+
+msgid "INVALID ENTRY"
+msgstr "不正な項目"
+
+msgid "CLEARED ENTRY"
+msgstr "削除された項目"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "定義された代替エミュレータがありません"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "不正な項目を削除する"
+
+msgid "DEFAULT"
+msgstr "デフォルト"
+
+msgid "EDIT METADATA"
+msgstr "メタデータを編集する"
+
+msgid "CLEAR ENTRY"
+msgstr "項目を削除する"
+
+msgid "SELECT EMULATOR"
+msgstr "エミュレータを選ぶ"
+
+msgid "SYSTEM-WIDE"
+msgstr "システム全体"
+
+msgid "unknown"
+msgstr "未知"
+
+msgid "SCRAPE"
+msgstr "スクレイプ"
+
+msgid "scrape"
+msgstr "スクレイプ"
+
+msgid "save metadata"
+msgstr "メタデータをセーブする"
+
+msgid "cancel changes"
+msgstr "変更をキャンセルする"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"この操作によって、このフォルダのすべてのメディアファイルとゲームリストのXML項"
+"目が削除されます。フォルダ自体やその中のコンテンツは削除されません。\n"
+"よろしいですか？"
+
+msgid "CLEAR"
+msgstr "削除"
+
+msgid "clear folder"
+msgstr "フォルダを削除する"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"この操作によって、このゲームに関連するすべてのメディアファイルとゲームリスト"
+"のXML項目は削除されます。ゲームファイル自体は削除されません。\n"
+"よろしいですか？"
+
+msgid "clear file"
+msgstr "ファイルを削除する"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"この操作によって、ゲームファイルとすべてのメディアファイル、及びGAMELIST.XML"
+"項目が削除されます。\n"
+"よろしいですか？"
+
+msgid "DELETE"
+msgstr "削除"
+
+msgid "delete game"
+msgstr "ゲームを削除する"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "複合画像オフラインジェネレーター"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i 個のうちに %i 個のゲームが処理されました"
+
+msgid "Generated:"
+msgstr "ジェネレートされた："
+
+msgid "Overwritten:"
+msgstr "上書きされた："
+
+msgid "Skipped:"
+msgstr "スキップされた："
+
+msgid "Skipped (existing):"
+msgstr "スキップされた（存在）："
+
+msgid "Failed:"
+msgstr "失敗した："
+
+msgid "Processing:"
+msgstr "処理中："
+
+msgid "Last error message:"
+msgstr "最後のエラー情報："
+
+msgid "PAUSE"
+msgstr "一時停止"
+
+msgid "pause processing"
+msgstr "処理を一時停止"
+
+msgid "close (abort processing)"
+msgstr "閉じる（処理を停止）"
+
+msgid "RUNNING..."
+msgstr "実行中..."
+
+msgid "PAUSED"
+msgstr "一時停止された"
+
+msgid "RUNNING"
+msgstr "実行中"
+
+msgid "COMPLETED"
+msgstr "完了した"
+
+msgid "DONE"
+msgstr "完了"
+
+msgid "done (close)"
+msgstr "完了（閉じる）"
+
+msgid "APPLICATION UPDATER"
+msgstr "アプリアップデート"
+
+msgid "INSTALLATION STEPS:"
+msgstr "インストール手順："
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "新しいリリースをダウンロードする"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "新しいリリースをこのディレクトリにダウンロードする："
+
+msgid "INSTALL PACKAGE"
+msgstr "パッケージをインストールする"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "ES-DEを終了し、手動で再起動する"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "ES-DEを終了し、手動で更新する"
+
+msgid "STATUS MESSAGE:"
+msgstr "ステータス情報："
+
+msgid "DOWNLOAD"
+msgstr "ダウンロード"
+
+msgid "download new release"
+msgstr "新しいリリースをダウンロードする"
+
+msgid "Download directory does not exist"
+msgstr "ダウンロードディレクトリが存在しません"
+
+msgid "CHANGE DIRECTORY"
+msgstr "ディレクトリを変更する"
+
+msgid "change download directory"
+msgstr "ダウンロードディレクトリを変更する"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "ダウンロードディレクトリを入力する"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "ダウンロードが中止されました"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "ディスクに保存されたパッケージがありません"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "パッケージはダウンロードされ、手動でインストールできます"
+
+msgid "DOWNLOADING 100%"
+msgstr "ダウンロード中 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "ダウンロードされたファイルは予期されたMD5チェックサムと一致しません"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr ""
+"エラー：一時パッケージファイルを削除できませんでした。権限の問題である可能性"
+"があります。"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr ""
+"エラー：パッケージファイル書き込めませんでした。権限の問題である可能性があり"
+"ます。"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "エラー：AppImageファイルに権限を設定できませんでした"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "%s ダウンロードされました"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "エラー：AppImageのアップデートファイルを読み込めませんでした"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr ""
+"エラー：ダウンロードされたファイルは予期されたMD5チェックサムと一致しません"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"エラー: 実行中のAppImageファイルの名前を変更できませんでした。権限の問題であ"
+"る可能性があります。"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"エラー：実行中のAppImageファイルを置換できませんでした。権限の問題である可能"
+"性があります。"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "%s として正常にインストールされました"
+
+msgid "INSTALL"
+msgstr "インストール"
+
+msgid "install package"
+msgstr "パッケージをインストールする"
+
+msgid "Find the detailed changelog at"
+msgstr "詳細な変更履歴はこちらでご覧いただけます"
+
+msgid "quit application"
+msgstr "アプリを中止"
+
+msgid "all games"
+msgstr "すべてのゲーム"
+
+msgid "last played"
+msgstr "最後に遊んだ日"
+
+msgid "favorites"
+msgstr "お気に入り"
+
+msgid "collections"
+msgstr "コレクション"
+
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "'%s' 個のうちに を '%s' 個を無効にしました"
+
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "'%s' 個のコレクションの編集、%s 個のゲームを追加/削除しました"
+
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "'%s' 個のコレクションの編集を完了しました"
+
+msgid "Favorites"
+msgstr "気に入り"
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "'%s' から '%s' まで追加しました"
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "'%s' から '%s' まで削除しました"
+
+msgid "This collection is empty"
+msgstr "このコレクションは空白です"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "このコレクションは一個のゲームを含めています：'%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "このコレクションは二個のゲームを含めています：'%s [%s]' と '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr ""
+"このコレクションは三個のゲームを含めています：'%s [%s]'、 '%s [%s]' と '%s "
+"[%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"このコレクションは %i 個のゲームを含めています：'%s [%s]'、 '%s [%s]' と '%s "
+"[%s]'、とその他"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "このコレクションは一個のゲームを含めています：'%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "このコレクションは二個のゲームを含めています：'%s' と '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "このコレクションは三個のゲームを含めています：'%s'、 '%s' と '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] ""
+"このコレクションは %i 個のゲームを含めています：'%s'、 '%s' と '%s'、とその他"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' が絞り込まれ、可能なゲームが増えました"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "コレクション '%s' を削除しました"
+
+msgid "name, ascending"
+msgstr "名前、昇順"
+
+msgid "name, descending"
+msgstr "名前、降順"
+
+msgid "rating, ascending"
+msgstr "名前、昇順"
+
+msgid "rating, descending"
+msgstr "評価、降順"
+
+msgid "release date, ascending"
+msgstr "リリース日、昇順"
+
+msgid "release date, descending"
+msgstr "リリース日、降順"
+
+msgid "developer, ascending"
+msgstr "開発者、昇順"
+
+msgid "developer, descending"
+msgstr "開発者、降順"
+
+msgid "publisher, ascending"
+msgstr "パブリッシャー、昇順"
+
+msgid "publisher, descending"
+msgstr "パブリッシャー、降順"
+
+msgid "genre, ascending"
+msgstr "ジャンル、昇順"
+
+msgid "genre, descending"
+msgstr "ジャンル、降順"
+
+msgid "players, ascending"
+msgstr "プレイヤー、昇順"
+
+msgid "players, descending"
+msgstr "プレイヤー、降順"
+
+msgid "last played, ascending"
+msgstr "最後に遊んだ日、昇順"
+
+msgid "last played, descending"
+msgstr "最後に遊んだ日、降順"
+
+msgid "times played, ascending"
+msgstr "遊んだ回数、昇順"
+
+msgid "times played, descending"
+msgstr "遊んだ回数、降順"
+
+msgid "system, ascending"
+msgstr "システム、昇順"
+
+msgid "system, descending"
+msgstr "システム、降順"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "エラー：'%s' のプレコマンド検索ルール設定がありません"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"エラー：プリコマンドが見つかりません。正確にインストールされていますか？"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"エラー：プリコマンド '%s' が見つかりません。正確にインストールされています"
+"か？"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "エラー：'%s' のエミュレータ検索ルール設定がありません"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "エラー：アプリが見つかりません。正確にインストールされていますか？"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"エラー：アプリ '%s' が見つかりません。正確にインストールされていますか？"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"エラー：エミュレータが見つかりません。正確にインストールされていますか？"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"エラー：エミュレータ '%s' が見つかりません。正確にインストールされています"
+"か？"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "エラー：コアファイル '%s' が見つかりません"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "エラー：システム設定ファイルに無効な項目があります"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "エラー：'%s' のコア設定がありません"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "エラー：%s 個の変数項目が無効です"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr ""
+"エラー：%s で定義されたディレクトリを作成できませんでした。権限の問題である可"
+"能性があります。"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "エラー：アプリまたは別名ファイルが存在しないか、あるいは読み込めません"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "エラー：デスクトップファイルが無効化されたか、あるいは読み込めません"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "エラー：デスクトップファイルが存在しないか、あるいは読み込めません"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "ゲーム '%s' の起動にエラー発生（エラーコード %i）"
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr "カスタムコレクションに追加できません"
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr "カスタムコレクションにプレースホルダを追加できません"
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr "カスタムコレクションにフォルダを追加できません"
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr "フォルダ '%s' がお気に入りにマークされました"
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr "フォルダ '%s' のお気に入りマークを削除しました"
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
+msgstr "該当項目はゲームではないので、カスタムコレクションに追加できません"
+
+msgid "random"
+msgstr "ランダム"
+
+msgid "screensaver"
+msgstr "スクリーンセーバー"
+
+#, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "%i 個のゲーム"
+
+#, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "（%i 個のお気に入り）"
+
+#, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "%i 個のお気に入り"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "未知"
+
+msgid "system"
+msgstr "システム"
+
+msgid "view media"
+msgstr "メディアを見る"
+
+msgid "options"
+msgstr "オプション"
+
+msgid "jump to game"
+msgstr "ゲームに移動する"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "はい"
+
+msgctxt "theme"
+msgid "no"
+msgstr "いいえ"
+
+msgid ""
+"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
+"NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE VARIOUS PROBLEMS, SOME OF "
+"WHICH MAY NOT BE APPARENT IMMEDIATELY. MAKE SURE TO ALWAYS FOLLOW THE "
+"UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
+"DIRECTORY."
+msgstr ""
+"不安全なアップグレードが行われたようです。新しいリリースを古いものの上に展開"
+"したことが原因かと思われます。これはさまざまな問題を引き起こす可能性があり、"
+"一部はすぐには明らかにならないかもしれません。常に ES-DE ディレクトリにある "
+"README.TXT ファイル内のアップグレード手順に従うことを意識してください。"
+
+msgid ""
+"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
+"es_systems.xml FILE, THEN SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. IF "
+"YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
+"SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
+msgstr ""
+"システムの設定ファイルを解析できませんでした。カスタマイズされたes_systems."
+"xmlファイルがすでに存在している場合、おそらくXML構文に問題がある可能性があり"
+"ます。カスタムシステムファイルが存在しない場合、ES-DEのインストールに問題があ"
+"る可能性があります。詳細情報については、アプリのログファイルであるes_log.txt"
+"を参照してください"
+
+msgid ""
+"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
+"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
+"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
+"THE SUPPORTED FILE EXTENSIONS.\n"
+"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"ゲームファイルが見つかりませんでした。設定されたROMディレクトリにゲームを配置"
+"してください。オプションとして、ROMディレクトリ構造を生成することもできます。"
+"これにより、各システム用のテキストファイルが作成され、サポートされているファ"
+"イル拡張子などの情報も提供されます。\n"
+"以下が現在設定されているROMディレクトリです：\n"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
+"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
+"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
+"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
+"FILE EXTENSIONS.\n"
+"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"ゲームファイルが見つかりませんでした。現在構成されているROMディレクトリにゲー"
+"ムを配置するか、以下のボタンを使用してパスを変更してください。オプションとし"
+"て、ROMディレクトリ構造が生成され、各システムのテキストファイルが作成されま"
+"す。サポートされているファイル拡張子などの情報も提供されます。\n"
+"以下が現在設定されているROMディレクトリです：\n"
+
+msgid "CHANGE ROM DIRECTORY"
+msgstr "ROMディレクトリを変更する"
+
+msgid "ENTER ROM DIRECTORY PATH"
+msgstr "ROMディレクトリパスを入力してください"
+
+msgid ""
+"ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
+msgstr ""
+"ROMディレクトリ設定がセーブされました。システムを再スキャンするために、アプリ"
+"を再起動してください"
+
+msgid "Currently configured path:"
+msgstr "現在設定されたパス："
+
+msgid "LOAD CURRENTLY CONFIGURED PATH"
+msgstr "現在設定されたパスをロード"
+
+msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
+msgstr "クリア（何も入力せずにデフォルトパスにリセット）"
+
+msgid "CREATE DIRECTORIES"
+msgstr "ディレクトリを作成する"
+
+msgid ""
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
+"xml\n"
+"\n"
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"DON'T NEED"
+msgstr ""
+"この操作により、es_systems.xml で定義されたすべてのゲームシステム用のディレク"
+"トリが作成されます。\n"
+"多くのフォルダが作成される可能性がありますので、必要のないものは削除すること"
+"がお勧めです"
+
+msgid ""
+"THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
+"PLACE YOUR GAMES IN THE NEW FOLDERS"
+msgstr ""
+"システムディレクトリは正常に生成されました。アプリを終了して、ゲームを新たに"
+"生成されたフォルダに配置してください"
+
+msgid ""
+"ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
+"\n"
+"SEE THE LOG FILE FOR MORE DETAILS"
+msgstr ""
+"システムディレクトリの作成にエラー発生。権限の問題か、あるいはディスク容量が"
+"いっぱいになっている可能性があります。\n"
+"\n"
+"詳細についてはログファイルを参照してください"
+
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+"少なくとも1つのシステムが無効な代替エミュレータに設定されており、システム設定"
+"ファイルに対応する項目がありません。設定を確認するには、「その他の設定」メ"
+"ニュー内の「代替エミュレータ」インターフェースを使用してください"
+
+msgid "UPDATE"
+msgstr "アップデート"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
+"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
+"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
+msgstr ""
+"アプリの更新プログラムは、最新のポータブルWindowsリリースをダウンロードします"
+"が、アップグレードを手動で実行する必要があります。アップグレードの方法につい"
+"ては、ダウンロードしたZIPファイル内のREADME.TXTファイルをご覧ください。そのド"
+"キュメントにも記載されているように、アプリケーションを壊す可能性があるので、"
+"古いインストールの上に新しいリリースを展開しないようにしてください。"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM THE UPGRADE. WHEN "
+"DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
+"UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
+msgstr ""
+"アプリの更新プログラムは、最新のWindowsインストーラーリリースをダウンロードし"
+"ますが、アップグレードを実行するためには手動で実行する必要があります。これを"
+"行う際には、「古いバージョンをアンインストールするかないか」の質問に「YES」と"
+"答えることを意識してください。そうしないと、破損したセットアップが残る可能性"
+"があります。"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
+"WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
+msgstr ""
+"アプリの更新プログラムは最新リリースをダウンロードしますが、アップグレードを"
+"行うにはDMGファイルを手動でインストールする必要があります。"
+
+#, c-format
+msgid "LAUNCHING GAME '%s'"
+msgstr "ゲーム '%s' を起動中"
+
+msgid "menu"
+msgstr "メニュー"
+
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr "ページ %s ／ %s"
+
+msgid "pan"
+msgstr "パン"
+
+msgid "reset"
+msgstr "リセット"
+
+msgid "browse"
+msgstr "閲覧する"
+
+msgid "game media"
+msgstr "ゲームメディア"
+
+msgid "first"
+msgstr "一番"
+
+msgid "last"
+msgstr "最後"
+
+msgid "zoom"
+msgstr "拡大"
+
+msgid "RATING"
+msgstr "評価"
+
+msgid "DEVELOPER"
+msgstr "開発者"
+
+msgid "PUBLISHER"
+msgstr "パブリッシャー"
+
+msgid "GENRE"
+msgstr "ジャンル"
+
+msgid "PLAYERS"
+msgstr "プレイヤー"
+
+msgid "FAVORITE"
+msgstr "お気に入り"
+
+msgid "KIDGAME"
+msgstr "子供ゲーム"
+
+msgid "HIDDEN"
+msgstr "非表示"
+
+msgid "BROKEN"
+msgstr "破損"
+
+msgid "CONTROLLER"
+msgstr "コントローラー"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "代替エミュレーター"
+
+msgid "FALSE"
+msgstr "仮"
+
+msgid "TRUE"
+msgstr "真"
+
+msgid "UNKNOWN"
+msgstr "未知"
+
+msgid "NONE SELECTED"
+msgstr "何も選択されていません"
+
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "スクリーンショットが見つからないので、複合画像を生成できません"
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr "スクリーンショットのフォーマットが未知なので、複合画像を生成できません"
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr ""
+"スクリーンショットのフォーマットが支持されていないので、複合画像を生成できま"
+"せん"
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "スクリーンショットの読み込み中にエラー発生、複合画像を生成できません"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr ""
+"マーキー画像の読み込み中にエラー発生、ファイルが壊れいるかと思われます。"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr ""
+"3Dボックス画像の読み込み中にエラー発生、ファイルが壊れいるかと思われます。"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr ""
+"ボックスカバー画像の読み込み中にエラー発生、ファイルが壊れいるかと思われま"
+"す。"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr ""
+"物理メディア画像の読み込み中にエラー発生、ファイルが壊れいるかと思われます。"
+
+msgid "pdf manual"
+msgstr "PDFマニュアル"
+
+msgid "SCREENSHOT"
+msgstr "スクリーンショット"
+
+msgid "BOX COVER"
+msgstr "ボックスカバー"
+
+msgid "BOX BACK COVER"
+msgstr "ボックスバックカバー"
+
+msgid "TITLE SCREEN"
+msgstr "タイトルスクリーン"
+
+msgid "FAN ART"
+msgstr "ファンアート"
+
+msgid "MIXIMAGE"
+msgstr "複合画像"
+
+msgid "CUSTOM"
+msgstr "カスタム"
+
+msgid "Searching for games..."
+msgstr "ゲームを検索中..."
+
+msgid "Loading systems..."
+msgstr "システムを読み込み中..."
+
+msgid "Reloading..."
+msgstr "再読込中..."
+
+msgid "Copying resources..."
+msgstr "リソースをコピー中..."
+
+msgid "Creating system directories..."
+msgstr "システムディレクトリを作成中..."
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "エラー：PDFファイルをレンダリングできませんでした"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "入力デバイス '%s' を追加しました"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "入力デバイス '%s' を削除しました"
+
+msgid "medium"
+msgstr "普通"
+
+msgid "large"
+msgstr "大きい"
+
+msgid "small"
+msgstr "小さい"
+
+msgid "extra small"
+msgstr "もっと小さい"
+
+msgid "extra large"
+msgstr "もっと大きい"
+
+msgid "automatic"
+msgstr "自動"
+
+msgid "16:9 vertical"
+msgstr "16:9 垂直"
+
+msgid "16:10 vertical"
+msgstr "16:10 垂直"
+
+msgid "3:2 vertical"
+msgstr "3:2 垂直"
+
+msgid "4:3 vertical"
+msgstr "4:3 垂直"
+
+msgid "5:4 vertical"
+msgstr "5:4 垂直"
+
+msgid "19.5:9 vertical"
+msgstr "19.5:5 垂直"
+
+msgid "20:9 vertical"
+msgstr "20:9 垂直"
+
+msgid "21:9 vertical"
+msgstr "21:9 垂直"
+
+msgid "32:9 vertical"
+msgstr "32:9 垂直"
+
+msgid "edit date"
+msgstr "日付を編集する"
+
+msgid "Y-M-D"
+msgstr "年ー月ー日"
+
+msgid "modify"
+msgstr "修正する"
+
+#, c-format
+msgid "%i (OF %i)"
+msgstr "%i (/ %i)"
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] "%s 種を選んだ"
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] "%i 種を選んだ"
+
+msgid "change value"
+msgstr "値を変更する"
+
+msgid "SELECT ALL"
+msgstr "すべてを選ぶ"
+
+msgid "select all"
+msgstr "すべてを選ぶ"
+
+msgid "SELECT NONE"
+msgstr "何も選ばない"
+
+msgid "select none"
+msgstr "何も選ばない"
+
+msgid "move cursor"
+msgstr "カーソルを移動"
+
+msgid "edit"
+msgstr "編集"
+
+msgid "WORKING..."
+msgstr "稼働中..."
+
+msgid "toggle"
+msgstr "切り替える"
+
+msgid "add half star"
+msgstr "ハーフスターを追加する"
+
+msgctxt "theme"
+msgid "never"
+msgstr "しない"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "%i 日前"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "%i 時間前"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "%i 分前"
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "%i 秒前"
+
+msgid "SPACE"
+msgstr "SPACE"
+
+msgid "LOAD"
+msgstr "読み込む"
+
+msgid "shift"
+msgstr "shift"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "改行"
+
+msgid "backspace"
+msgstr "backspace"
+
+msgid "space"
+msgstr "space"
+
+msgid "WELCOME"
+msgstr "いらっしゃい"
+
+msgid "CONFIGURE INPUT DEVICE"
+msgstr "入力デバイスを設定する"
+
+#, c-format
+msgid "%i GAMEPAD DETECTED"
+msgid_plural "%i GAMEPADS DETECTED"
+msgstr[0] "%i 個のゲームパッドを検知しました"
+
+msgid "NO GAMEPADS DETECTED"
+msgstr "ゲームパッドを検知できませんでした"
+
+msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
+msgstr "（一番のコントローラーの入力だけを受入）"
+
+msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
+msgstr "設定するにはデバイスの任意ボタンを押してください"
+
+msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
+msgstr "設定するにはキーボードの任意ボタンを押してください"
+
+msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
+msgstr ""
+"ESC キーを押してスキップ（また、任意のタイミングで、退出ショートカットで退出"
+"できる）"
+
+msgid "PRESS ESC TO CANCEL"
+msgstr "ESC キーを押してキャンセル"
+
+msgid "LOAD DEFAULT"
+msgstr "デフォルト設定を読み込む"
+
+msgid "DISCARD CHANGES"
+msgstr "変更を無視"
+
+msgid "discard changes"
+msgstr "ESC キーを押してスキップ"
+
+msgid "CONFIGURING"
+msgstr "設定"
+
+msgid "KEYBOARD"
+msgstr "キーボード"
+
+msgid "GAMEPAD"
+msgstr "ゲームパッド"
+
+msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
+msgstr "任意のボタンを一秒間押してスキップ"
+
+msgid "NOT DEFINED"
+msgstr "定義なし"
+
+msgid "ok"
+msgstr "ok"
+
+msgid "D-PAD UP"
+msgstr "D-PAD 上"
+
+msgid "D-PAD DOWN"
+msgstr "D-PAD 下"
+
+msgid "D-PAD LEFT"
+msgstr "D-PAD 左"
+
+msgid "D-PAD RIGHT"
+msgstr "D-PAD 右"
+
+msgid "MINUS"
+msgstr "−ボタン"
+
+msgid "PLUS"
+msgstr "+ボタン"
+
+msgid "CROSS"
+msgstr "✕ボタン"
+
+msgid "CIRCLE"
+msgstr "○ボタン"
+
+msgid "SQUARE"
+msgstr "□ボタン"
+
+msgid "TRIANGLE"
+msgstr "△ボタン"
+
+msgid "OPTIONS"
+msgstr "OPTIONS"
+
+msgid "VIEW"
+msgstr "VIEW"
+
+msgid "MENU"
+msgstr "MENU"
+
+msgid "LEFT SHOULDER"
+msgstr "左ショルダーボタン"
+
+msgid "RIGHT SHOULDER"
+msgstr "右ショルダーボタン"
+
+msgid "LEFT TRIGGER"
+msgstr "左トリガーボタン"
+
+msgid "RIGHT TRIGGER"
+msgstr "右トリガーボタン"
+
+msgid "LEFT THUMBSTICK UP"
+msgstr "左のサムスティック上"
+
+msgid "LEFT THUMBSTICK DOWN"
+msgstr "左のサムスティック下"
+
+msgid "LEFT THUMBSTICK LEFT"
+msgstr "左のサムスティック左"
+
+msgid "LEFT THUMBSTICK RIGHT"
+msgstr "左のサムスティック右"
+
+msgid "LEFT THUMBSTICK CLICK"
+msgstr "左のサムスティック押し"
+
+msgid "RIGHT THUMBSTICK UP"
+msgstr "右のサムスティック上"
+
+msgid "RIGHT THUMBSTICK DOWN"
+msgstr "右のサムスティック下"
+
+msgid "RIGHT THUMBSTICK LEFT"
+msgstr "右のサムスティック左"
+
+msgid "RIGHT THUMBSTICK RIGHT"
+msgstr "右のサムスティック右"
+
+msgid "RIGHT THUMBSTICK CLICK"
+msgstr "右のサムスティック押し"
+
+msgid "ALREADY TAKEN"
+msgstr "既に設定されています"
+
+msgid "PRESS ANYTHING"
+msgstr "任意のボタンを押してください"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "一日のスクレイプ制限を超えました"
+
+#, c-format
+msgid "Server returned HTTP error code %s"
+msgstr "サーバーがHTTPエラーコード %s を返しました"

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for Android -->
+<!-- This is the ES-DE Frontend find rules configuration file for Android -->
 <ruleList>
     <emulator name="RETROARCH">
         <rule type="androidpackage">
             <!-- 64-bit and 32-bit releases from the retroarch.com website -->
             <entry>com.retroarch.aarch64/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
             <entry>com.retroarch.ra32/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
-            <!-- Samsung Galaxy Store, Amazon Appstore and Google Play releases -->
+            <!-- All other releases -->
             <entry>com.retroarch/com.retroarch.browser.retroactivity.RetroActivityFuture</entry>
         </rule>
     </emulator>
@@ -94,6 +94,12 @@
     <emulator name="EKA2L1">
         <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
         <rule type="androidpackage">
+            <entry>com.github.eka2l1/.emu.EmulatorActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="EKA2L1-GUI">
+        <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
+        <rule type="androidpackage">
             <entry>com.github.eka2l1/.MainActivity</entry>
         </rule>
     </emulator>
@@ -106,6 +112,7 @@
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="androidpackage">
+            <entry>com.flycast.emulator/com.flycast.emulator.MainActivity</entry>
             <entry>com.flycast.emulator/com.reicast.emulator.MainActivity</entry>
         </rule>
     </emulator>
@@ -150,6 +157,18 @@
         <!-- Atari Jaguar emulator IrataJaguar -->
         <rule type="androidpackage">
             <entry>ru.vastness.altmer.iratajaguar/.EmulatorActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="J2ME-LOADER">
+        <!-- Java 2 Micro Edition emulator J2ME Loader -->
+        <rule type="androidpackage">
+            <entry>ru.playsoftware.j2meloader/.MainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="JL-MOD">
+        <!-- Java 2 Micro Edition emulator JL-Mod -->
+        <rule type="androidpackage">
+            <entry>ru.woesss.j2meloader/ru.playsoftware.j2meloader.MainActivity</entry>
         </rule>
     </emulator>
     <emulator name="LIME3DS">
@@ -256,8 +275,14 @@
             <entry>com.explusalpha.NgpEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="NOODS">
+        <!-- Nintendo DS and Game Boy Advance emulator NooDS -->
+        <rule type="androidpackage">
+            <entry>com.hydra.noods/.FileBrowser</entry>
+        </rule>
+    </emulator>
     <emulator name="OPENBOR">
-        <!-- OpenBOR Game Engine -->
+        <!-- OpenBOR game engine -->
         <rule type="androidpackage">
             <entry>org.openbor.engine/.GameActivity</entry>
         </rule>
@@ -316,7 +341,7 @@
     <emulator name="RUFFLE">
         <!-- Adobe Flash player Ruffle -->
         <rule type="androidpackage">
-            <entry>rs.ruffle/.MainActivity</entry>
+            <entry>rs.ruffle/.PlayerActivity</entry>
         </rule>
     </emulator>
     <emulator name="SATURN-EMU">
@@ -367,6 +392,18 @@
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="androidpackage">
             <entry>org.vita3k.emulator/.Emulator</entry>
+        </rule>
+    </emulator>
+    <emulator name="WINLATOR-GLIBC">
+        <!-- Microsoft Windows emulator Winlator Cmod Glibc -->
+        <rule type="androidpackage">
+            <entry>com.winlator/.XServerDisplayActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="WINLATOR-PROOT">
+        <!-- Microsoft Windows emulator Winlator Cmod PRoot -->
+        <rule type="androidpackage">
+            <entry>com.cmodded.winlator/com.winlator.XServerDisplayActivity</entry>
         </rule>
     </emulator>
     <emulator name="YABASANSHIRO-2">

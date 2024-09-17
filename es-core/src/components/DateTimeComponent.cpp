@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  DateTimeComponent.cpp
 //
 //  Provides the date and time, in absolute (actual date) or relative
@@ -12,6 +12,7 @@
 
 #include "Log.h"
 #include "Settings.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 DateTimeComponent::DateTimeComponent()
@@ -28,7 +29,9 @@ DateTimeComponent::DateTimeComponent(const std::string& text,
                                      glm::vec3 pos,
                                      glm::vec2 size,
                                      unsigned int bgcolor)
-    : TextComponent {text, font, color, horizontalAlignment, ALIGN_CENTER, pos, size, bgcolor}
+    : TextComponent {text, font, color,  horizontalAlignment, ALIGN_CENTER, glm::vec2 {1, 0},
+                     pos,  size, bgcolor}
+    , mRenderer {Renderer::getInstance()}
     , mDisplayRelative {false}
 {
     // ISO 8601 date format.
@@ -71,7 +74,7 @@ std::string DateTimeComponent::getDisplayString() const
         // Workaround to handle Unix epoch for different time zones.
         if (mTime.getTime() < 82800) {
             if (mDefaultValue == "")
-                return "never";
+                return _p("theme", "never");
             else
                 return mDefaultValue;
         }
@@ -81,25 +84,31 @@ std::string DateTimeComponent::getDisplayString() const
 
         std::string buf;
 
-        if (dur.getDays() > 0)
-            buf = std::to_string(dur.getDays()) + " day" + // Line break.
-                  (dur.getDays() > 1 ? "s" : "") + " ago";
-        else if (dur.getHours() > 0)
-            buf = std::to_string(dur.getHours()) + " hour" + // Line break.
-                  (dur.getHours() > 1 ? "s" : "") + " ago";
-        else if (dur.getMinutes() > 0)
-            buf = std::to_string(dur.getMinutes()) + " minute" + // Line break.
-                  (dur.getMinutes() > 1 ? "s" : "") + " ago";
-        else
-            buf = std::to_string(dur.getSeconds()) + " second" + // Line break.
-                  (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") + " ago";
+        if (dur.getDays() > 0) {
+            buf = Utils::String::format(_np("theme", "%i day ago", "%i days ago", dur.getDays()),
+                                        dur.getDays());
+        }
+        else if (dur.getHours() > 0) {
+            buf = Utils::String::format(_np("theme", "%i hour ago", "%i hours ago", dur.getHours()),
+                                        dur.getHours());
+        }
+        else if (dur.getMinutes() > 0) {
+            buf = Utils::String::format(
+                _np("theme", "%i minute ago", "%i minutes ago", dur.getMinutes()),
+                dur.getMinutes());
+        }
+        else {
+            buf = Utils::String::format(
+                _np("theme", "%i second ago", "%i seconds ago", dur.getSeconds()),
+                dur.getSeconds());
+        }
 
         return std::string(buf);
     }
 
     if (mTime.getTime() == 0) {
         if (mDefaultValue == "")
-            return "unknown";
+            return _p("theme", "unknown");
         else
             return mDefaultValue;
     }
@@ -118,8 +127,8 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                    const std::string& element,
                                    unsigned int properties)
 {
-    GuiComponent::applyTheme(theme, view, element, properties);
     using namespace ThemeFlags;
+    GuiComponent::applyTheme(theme, view, element, properties);
 
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "datetime")};
     if (!elem)
@@ -151,6 +160,17 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & COLOR && elem->has("backgroundColor")) {
         setBackgroundColor(elem->get<unsigned int>("backgroundColor"));
         setRenderBackground(true);
+    }
+
+    if (elem->has("backgroundMargins")) {
+        setBackgroundMargins(glm::clamp(elem->get<glm::vec2>("backgroundMargins"), 0.0f, 0.5f) *
+                             mRenderer->getScreenWidth());
+    }
+
+    if (elem->has("backgroundCornerRadius")) {
+        setBackgroundCornerRadius(
+            glm::clamp(elem->get<float>("backgroundCornerRadius"), 0.0f, 0.5f) *
+            mRenderer->getScreenWidth());
     }
 
     if (properties & ALIGNMENT && elem->has("horizontalAlignment")) {
@@ -227,15 +247,22 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     float maxHeight {0.0f};
+    bool hasSize {false};
 
     if (elem->has("size")) {
         const glm::vec2 size {elem->get<glm::vec2>("size")};
-        if (size.x != 0.0f && size.y != 0.0f)
+        if (size.x != 0.0f && size.y != 0.0f) {
             maxHeight = mSize.y * 2.0f;
+            hasSize = true;
+        }
     }
 
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
+    if (getAutoCalcExtent() == glm::ivec2 {1, 0} && !hasSize)
+        mSize.y = 0.0f;
+
     setFont(Font::getFromTheme(elem, properties, mFont, maxHeight));
+    mSize = glm::round(mSize);
 }

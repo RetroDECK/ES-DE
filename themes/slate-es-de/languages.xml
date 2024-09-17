@@ -1,0 +1,111 @@
+<theme>
+    <!-- Defaults, used for en_US and en_GB -->
+    <variables>
+        <langLabelReleasedate>Released</langLabelReleasedate>
+        <langLabelDeveloper>Developer</langLabelDeveloper>
+        <langLabelPublisher>Publisher</langLabelPublisher>
+        <langLabelGenre>Genre</langLabelGenre>
+        <langLabelPlayers>Players</langLabelPlayers>
+        <langLabelLastPlayed>Last Played</langLabelLastPlayed>
+    </variables>
+    <language name="es_ES">
+        <variables>
+            <langLabelReleasedate>Lanzamiento</langLabelReleasedate>
+            <langLabelDeveloper>Desarrollador</langLabelDeveloper>
+            <langLabelPublisher>Compañia</langLabelPublisher>
+            <langLabelGenre>Genero</langLabelGenre>
+            <langLabelPlayers>Jugadores</langLabelPlayers>
+            <langLabelLastPlayed>Ultima Vez Jugado</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="fr_FR">
+        <variables>
+            <langLabelReleasedate>Date de Sortie</langLabelReleasedate>
+            <langLabelDeveloper>Développeur</langLabelDeveloper>
+            <langLabelPublisher>Editeur</langLabelPublisher>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelPlayers>Joueurs</langLabelPlayers>
+            <langLabelLastPlayed>Dernier Joué</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="it_IT">
+        <variables>
+            <langLabelReleasedate>Data Uscita</langLabelReleasedate>
+            <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
+            <langLabelPublisher>Casa Editrice</langLabelPublisher>
+            <langLabelGenre>Genere</langLabelGenre>
+            <langLabelPlayers>Nr. Giocatori</langLabelPlayers>
+            <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="pl_PL">
+        <variables>
+            <langLabelReleasedate>Wydano</langLabelReleasedate>
+            <langLabelDeveloper>Deweloper</langLabelDeveloper>
+            <langLabelPublisher>Wydawca</langLabelPublisher>
+            <langLabelGenre>Gatunek</langLabelGenre>
+            <langLabelPlayers>Liczba Graczy</langLabelPlayers>
+            <langLabelLastPlayed>Ostatnio Grane</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="pt_BR">
+        <variables>
+            <langLabelReleasedate>Lançamento</langLabelReleasedate>
+            <langLabelDeveloper>Desenvolvedor</langLabelDeveloper>
+            <langLabelPublisher>Distribuidor</langLabelPublisher>
+            <langLabelGenre>Gênero</langLabelGenre>
+            <langLabelPlayers>Jogadores</langLabelPlayers>
+            <langLabelLastPlayed>Última Vez Que Jogou</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="ro_RO">
+        <variables>
+            <langLabelReleasedate>Lansat</langLabelReleasedate>
+            <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langLabelGenre>Gen</langLabelGenre>
+            <langLabelPlayers>Număr de Jucători</langLabelPlayers>
+            <langLabelLastPlayed>Jucat Ultima Dată</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="ru_RU">
+        <variables>
+            <langLabelReleasedate>Дата Выхода</langLabelReleasedate>
+            <langLabelDeveloper>Разработчик</langLabelDeveloper>
+            <langLabelPublisher>Издатель</langLabelPublisher>
+            <langLabelGenre>Жанр</langLabelGenre>
+            <langLabelPlayers>Игроки</langLabelPlayers>
+            <langLabelLastPlayed>Последняя Игра</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="sv_SE">
+        <variables>
+            <langLabelReleasedate>Utgivet</langLabelReleasedate>
+            <langLabelDeveloper>Utvecklare</langLabelDeveloper>
+            <langLabelPublisher>Utgivare</langLabelPublisher>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelPlayers>Spelare</langLabelPlayers>
+            <langLabelLastPlayed>Senast Spelat</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <langLabelReleasedate>発行日</langLabelReleasedate>
+            <langLabelDeveloper>開発者</langLabelDeveloper>
+            <langLabelPublisher>発行者</langLabelPublisher>
+            <langLabelGenre>ジャンル</langLabelGenre>
+            <langLabelPlayers>プレイヤー</langLabelPlayers>
+            <langLabelLastPlayed>最後に遊んだ日</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="zh_CN">
+        <variables>
+            <langLabelReleasedate>发行日</langLabelReleasedate>
+            <langLabelDeveloper>开发者</langLabelDeveloper>
+            <langLabelPublisher>发行者</langLabelPublisher>
+            <langLabelGenre>类别</langLabelGenre>
+            <langLabelPlayers>玩家</langLabelPlayers>
+            <langLabelLastPlayed>最后游玩</langLabelLastPlayed>
+        </variables>
+    </language>
+</theme>

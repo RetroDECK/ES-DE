@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ComponentList.h
 //
 //  Used to lay out and navigate lists in GUI menus.
@@ -36,11 +36,13 @@ struct ComponentListRow {
     // is to forward the input to the rightmost element in the currently selected row.
     std::function<bool(InputConfig*, Input)> inputHandler;
 
-    void addElement(const std::shared_ptr<GuiComponent>& component,
+    void addElement(const std::shared_ptr<GuiComponent>& comp,
                     bool resizeWidth,
-                    bool invertWhenSelected = true)
+                    bool invertWhenSelected = true,
+                    glm::ivec2 autoCalcExtent = {0, 0})
     {
-        elements.push_back(ComponentListElement(component, resizeWidth, invertWhenSelected));
+        comp->setAutoCalcExtent(autoCalcExtent);
+        elements.push_back(ComponentListElement(comp, resizeWidth, invertWhenSelected));
     }
 
     // Utility function for making an input handler for an input event.

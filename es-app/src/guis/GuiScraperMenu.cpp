@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiScraperMenu.cpp
 //
 //  Game media scraper, including settings as well as the scraping start button.
@@ -18,6 +18,7 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOfflineGenerator.h"
 #include "guis/GuiScraperMulti.h"
+#include "utils/LocalizationUtil.h"
 
 GuiScraperMenu::GuiScraperMenu(std::string title)
     : mRenderer {Renderer::getInstance()}
@@ -25,60 +26,61 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
 {
     // Scraper service.
     mScraper =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "SCRAPE FROM", false);
+        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("SCRAPE FROM"), false);
     std::vector<std::string> scrapers = getScraperList();
     // Select either the first entry or the one read from the settings,
     // just in case the scraper from settings has vanished.
     for (auto it = scrapers.cbegin(); it != scrapers.cend(); ++it)
-        mScraper->add(*it, *it, *it == Settings::getInstance()->getString("Scraper"));
+        mScraper->add(Utils::String::toUpper(*it), *it,
+                      *it == Settings::getInstance()->getString("Scraper"));
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the scraper to "screenscraper" in this case.
     if (mScraper->getSelectedObjects().size() == 0)
         mScraper->selectEntry(0);
 
-    mMenu.addWithLabel("SCRAPE FROM", mScraper);
+    mMenu.addWithLabel(_("SCRAPE FROM"), mScraper);
 
     // Search filters, getSearches() will generate a queue of games to scrape
     // based on the outcome of the checks below.
-    mFilters = std::make_shared<OptionListComponent<GameFilterFunc>>(getHelpStyle(),
-                                                                     "SCRAPE THESE GAMES", false);
+    mFilters = std::make_shared<OptionListComponent<GameFilterFunc>>(
+        getHelpStyle(), _("SCRAPE THESE GAMES"), false);
     mFilters->add(
-        "ALL GAMES",
+        _("ALL GAMES"),
         [](SystemData*, FileData*) -> bool {
             // All games.
             return true;
         },
         false);
     mFilters->add(
-        "FAVORITE GAMES",
+        _("FAVORITE GAMES"),
         [](SystemData*, FileData* g) -> bool {
             // Favorite games.
             return g->getFavorite();
         },
         false);
     mFilters->add(
-        "NO METADATA",
+        _("NO METADATA"),
         [](SystemData*, FileData* g) -> bool {
             // No metadata.
             return g->metadata.get("desc").empty();
         },
         false);
     mFilters->add(
-        "NO GAME IMAGE",
+        _("NO GAME IMAGE"),
         [](SystemData*, FileData* g) -> bool {
             // No game image.
             return g->getImagePath().empty();
         },
         false);
     mFilters->add(
-        "NO GAME VIDEO",
+        _("NO GAME VIDEO"),
         [](SystemData*, FileData* g) -> bool {
             // No game video.
             return g->getVideoPath().empty();
         },
         false);
     mFilters->add(
-        "FOLDERS ONLY",
+        _("FOLDERS ONLY"),
         [](SystemData*, FileData* g) -> bool {
             // Folders only.
             return g->getType() == FOLDER;
@@ -86,7 +88,7 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
         false);
 
     mFilters->selectEntry(Settings::getInstance()->getInt("ScraperFilter"));
-    mMenu.addWithLabel("SCRAPE THESE GAMES", mFilters);
+    mMenu.addWithLabel(_("SCRAPE THESE GAMES"), mFilters);
 
     mMenu.addSaveFunc([this] {
         if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper")) {
@@ -102,22 +104,23 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
 
     // Add systems (all systems with an existing platform ID are listed).
     mSystems = std::make_shared<OptionListComponent<SystemData*>>(getHelpStyle(),
-                                                                  "SCRAPE THESE SYSTEMS", true);
+                                                                  _("SCRAPE THESE SYSTEMS"), true);
     for (unsigned int i {0}; i < SystemData::sSystemVector.size(); ++i) {
         if (!SystemData::sSystemVector[i]->hasPlatformId(PlatformIds::PLATFORM_IGNORE)) {
-            mSystems->add(SystemData::sSystemVector[i]->getFullName(), SystemData::sSystemVector[i],
+            mSystems->add(Utils::String::toUpper(SystemData::sSystemVector[i]->getFullName()),
+                          SystemData::sSystemVector[i],
                           !SystemData::sSystemVector[i]->getPlatformIds().empty());
             SystemData::sSystemVector[i]->getScrapeFlag() ? mSystems->selectEntry(i) :
                                                             mSystems->unselectEntry(i);
         }
     }
-    mMenu.addWithLabel("SCRAPE THESE SYSTEMS", mSystems);
+    mMenu.addWithLabel(_("SCRAPE THESE SYSTEMS"), mSystems);
 
-    addEntry("ACCOUNT SETTINGS", mMenuColorPrimary, true, [this] {
+    addEntry(_("ACCOUNT SETTINGS"), mMenuColorPrimary, true, [this] {
         // Open the account options menu.
         openAccountOptions();
     });
-    addEntry("CONTENT SETTINGS", mMenuColorPrimary, true, [this] {
+    addEntry(_("CONTENT SETTINGS"), mMenuColorPrimary, true, [this] {
         // If the scraper service has been changed before entering this menu, then save the
         // settings so that the specific options supported by the respective scrapers
         // can be enabled or disabled.
@@ -125,11 +128,11 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
             mMenu.save();
         openContentOptions();
     });
-    addEntry("MIXIMAGE SETTINGS", mMenuColorPrimary, true, [this] {
+    addEntry(_("MIXIMAGE SETTINGS"), mMenuColorPrimary, true, [this] {
         // Open the miximage options menu.
         openMiximageOptions();
     });
-    addEntry("OTHER SETTINGS", mMenuColorPrimary, true, [this] {
+    addEntry(_("OTHER SETTINGS"), mMenuColorPrimary, true, [this] {
         // If the scraper service has been changed before entering this menu, then save the
         // settings so that the specific options supported by the respective scrapers
         // can be enabled or disabled.
@@ -140,8 +143,8 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
 
     addChild(&mMenu);
 
-    mMenu.addButton("START", "start scraper", std::bind(&GuiScraperMenu::pressedStart, this));
-    mMenu.addButton("BACK", "back", [&] { delete this; });
+    mMenu.addButton(_("START"), _("start scraper"), std::bind(&GuiScraperMenu::pressedStart, this));
+    mMenu.addButton(_("BACK"), _("back"), [&] { delete this; });
 
     setSize(mMenu.getSize());
 
@@ -172,13 +175,15 @@ GuiScraperMenu::~GuiScraperMenu()
 
 void GuiScraperMenu::openAccountOptions()
 {
-    auto s = new GuiSettings("ACCOUNT SETTINGS");
+    auto s = new GuiSettings(_("ACCOUNT SETTINGS"));
 
     // ScreenScraper username.
     auto scraperUsernameScreenScraper = std::make_shared<TextComponent>(
         "", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_RIGHT);
-    s->addEditableTextComponent("SCREENSCRAPER USERNAME", scraperUsernameScreenScraper,
+    s->addEditableTextComponent(_("SCREENSCRAPER USERNAME"), scraperUsernameScreenScraper,
                                 Settings::getInstance()->getString("ScraperUsernameScreenScraper"));
+    scraperUsernameScreenScraper->setSize(0.0f,
+                                          scraperUsernameScreenScraper->getFont()->getHeight());
     s->addSaveFunc([scraperUsernameScreenScraper, s] {
         if (scraperUsernameScreenScraper->getValue() !=
             Settings::getInstance()->getString("ScraperUsernameScreenScraper")) {
@@ -197,8 +202,10 @@ void GuiScraperMenu::openAccountOptions()
         scraperPasswordScreenScraper->setHiddenValue(
             Settings::getInstance()->getString("ScraperPasswordScreenScraper"));
     }
-    s->addEditableTextComponent("SCREENSCRAPER PASSWORD", scraperPasswordScreenScraper,
+    s->addEditableTextComponent(_("SCREENSCRAPER PASSWORD"), scraperPasswordScreenScraper,
                                 passwordMasked, "", true);
+    scraperPasswordScreenScraper->setSize(0.0f,
+                                          scraperPasswordScreenScraper->getFont()->getHeight());
     s->addSaveFunc([scraperPasswordScreenScraper, s] {
         if (scraperPasswordScreenScraper->getHiddenValue() !=
             Settings::getInstance()->getString("ScraperPasswordScreenScraper")) {
@@ -212,7 +219,7 @@ void GuiScraperMenu::openAccountOptions()
     auto scraperUseAccountScreenScraper = std::make_shared<SwitchComponent>();
     scraperUseAccountScreenScraper->setState(
         Settings::getInstance()->getBool("ScraperUseAccountScreenScraper"));
-    s->addWithLabel("USE THIS ACCOUNT FOR SCREENSCRAPER", scraperUseAccountScreenScraper);
+    s->addWithLabel(_("USE THIS ACCOUNT FOR SCREENSCRAPER"), scraperUseAccountScreenScraper);
     s->addSaveFunc([scraperUseAccountScreenScraper, s] {
         if (scraperUseAccountScreenScraper->getState() !=
             Settings::getInstance()->getBool("ScraperUseAccountScreenScraper")) {
@@ -227,12 +234,12 @@ void GuiScraperMenu::openAccountOptions()
 
 void GuiScraperMenu::openContentOptions()
 {
-    auto s = new GuiSettings("CONTENT SETTINGS");
+    auto s = new GuiSettings(_("CONTENT SETTINGS"));
 
     // Scrape game names.
     auto scrapeGameNames = std::make_shared<SwitchComponent>();
     scrapeGameNames->setState(Settings::getInstance()->getBool("ScrapeGameNames"));
-    s->addWithLabel("GAME NAMES", scrapeGameNames);
+    s->addWithLabel(_("GAME NAMES"), scrapeGameNames);
     s->addSaveFunc([scrapeGameNames, s] {
         if (scrapeGameNames->getState() != Settings::getInstance()->getBool("ScrapeGameNames")) {
             Settings::getInstance()->setBool("ScrapeGameNames", scrapeGameNames->getState());
@@ -243,7 +250,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape ratings.
     auto scrapeRatings = std::make_shared<SwitchComponent>();
     scrapeRatings->setState(Settings::getInstance()->getBool("ScrapeRatings"));
-    s->addWithLabel("RATINGS", scrapeRatings);
+    s->addWithLabel(_("RATINGS"), scrapeRatings);
     s->addSaveFunc([scrapeRatings, s] {
         if (scrapeRatings->getState() != Settings::getInstance()->getBool("ScrapeRatings")) {
             Settings::getInstance()->setBool("ScrapeRatings", scrapeRatings->getState());
@@ -286,7 +293,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape other metadata.
     auto scrapeMetadata = std::make_shared<SwitchComponent>();
     scrapeMetadata->setState(Settings::getInstance()->getBool("ScrapeMetadata"));
-    s->addWithLabel("OTHER METADATA", scrapeMetadata);
+    s->addWithLabel(_("OTHER METADATA"), scrapeMetadata);
     s->addSaveFunc([scrapeMetadata, s] {
         if (scrapeMetadata->getState() != Settings::getInstance()->getBool("ScrapeMetadata")) {
             Settings::getInstance()->setBool("ScrapeMetadata", scrapeMetadata->getState());
@@ -297,7 +304,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape videos.
     auto scrapeVideos = std::make_shared<SwitchComponent>();
     scrapeVideos->setState(Settings::getInstance()->getBool("ScrapeVideos"));
-    s->addWithLabel("VIDEOS", scrapeVideos);
+    s->addWithLabel(_("VIDEOS"), scrapeVideos);
     s->addSaveFunc([scrapeVideos, s] {
         if (scrapeVideos->getState() != Settings::getInstance()->getBool("ScrapeVideos")) {
             Settings::getInstance()->setBool("ScrapeVideos", scrapeVideos->getState());
@@ -317,7 +324,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape screenshots images.
     auto scrapeScreenshots = std::make_shared<SwitchComponent>();
     scrapeScreenshots->setState(Settings::getInstance()->getBool("ScrapeScreenshots"));
-    s->addWithLabel("SCREENSHOT IMAGES", scrapeScreenshots);
+    s->addWithLabel(_("SCREENSHOT IMAGES"), scrapeScreenshots);
     s->addSaveFunc([scrapeScreenshots, s] {
         if (scrapeScreenshots->getState() !=
             Settings::getInstance()->getBool("ScrapeScreenshots")) {
@@ -329,7 +336,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape title screen images.
     auto scrapeTitleScreens = std::make_shared<SwitchComponent>();
     scrapeTitleScreens->setState(Settings::getInstance()->getBool("ScrapeTitleScreens"));
-    s->addWithLabel("TITLE SCREEN IMAGES", scrapeTitleScreens);
+    s->addWithLabel(_("TITLE SCREEN IMAGES"), scrapeTitleScreens);
     s->addSaveFunc([scrapeTitleScreens, s] {
         if (scrapeTitleScreens->getState() !=
             Settings::getInstance()->getBool("ScrapeTitleScreens")) {
@@ -341,7 +348,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape box cover images.
     auto scrapeCovers = std::make_shared<SwitchComponent>();
     scrapeCovers->setState(Settings::getInstance()->getBool("ScrapeCovers"));
-    s->addWithLabel("BOX COVER IMAGES", scrapeCovers);
+    s->addWithLabel(_("BOX COVER IMAGES"), scrapeCovers);
     s->addSaveFunc([scrapeCovers, s] {
         if (scrapeCovers->getState() != Settings::getInstance()->getBool("ScrapeCovers")) {
             Settings::getInstance()->setBool("ScrapeCovers", scrapeCovers->getState());
@@ -352,7 +359,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape box back cover images.
     auto scrapeBackCovers = std::make_shared<SwitchComponent>();
     scrapeBackCovers->setState(Settings::getInstance()->getBool("ScrapeBackCovers"));
-    s->addWithLabel("BOX BACK COVER IMAGES", scrapeBackCovers);
+    s->addWithLabel(_("BOX BACK COVER IMAGES"), scrapeBackCovers);
     s->addSaveFunc([scrapeBackCovers, s] {
         if (scrapeBackCovers->getState() != Settings::getInstance()->getBool("ScrapeBackCovers")) {
             Settings::getInstance()->setBool("ScrapeBackCovers", scrapeBackCovers->getState());
@@ -363,7 +370,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape marquee images.
     auto scrapeMarquees = std::make_shared<SwitchComponent>();
     scrapeMarquees->setState(Settings::getInstance()->getBool("ScrapeMarquees"));
-    s->addWithLabel("MARQUEE (WHEEL) IMAGES", scrapeMarquees);
+    s->addWithLabel(_("MARQUEE (WHEEL) IMAGES"), scrapeMarquees);
     s->addSaveFunc([scrapeMarquees, s] {
         if (scrapeMarquees->getState() != Settings::getInstance()->getBool("ScrapeMarquees")) {
             Settings::getInstance()->setBool("ScrapeMarquees", scrapeMarquees->getState());
@@ -374,7 +381,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape 3D box images.
     auto scrape3dBoxes = std::make_shared<SwitchComponent>();
     scrape3dBoxes->setState(Settings::getInstance()->getBool("Scrape3DBoxes"));
-    s->addWithLabel("3D BOX IMAGES", scrape3dBoxes);
+    s->addWithLabel(_("3D BOX IMAGES"), scrape3dBoxes);
     s->addSaveFunc([scrape3dBoxes, s] {
         if (scrape3dBoxes->getState() != Settings::getInstance()->getBool("Scrape3DBoxes")) {
             Settings::getInstance()->setBool("Scrape3DBoxes", scrape3dBoxes->getState());
@@ -395,7 +402,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape physical media images.
     auto scrapePhysicalMedia = std::make_shared<SwitchComponent>();
     scrapePhysicalMedia->setState(Settings::getInstance()->getBool("ScrapePhysicalMedia"));
-    s->addWithLabel("PHYSICAL MEDIA IMAGES", scrapePhysicalMedia);
+    s->addWithLabel(_("PHYSICAL MEDIA IMAGES"), scrapePhysicalMedia);
     s->addSaveFunc([scrapePhysicalMedia, s] {
         if (scrapePhysicalMedia->getState() !=
             Settings::getInstance()->getBool("ScrapePhysicalMedia")) {
@@ -418,7 +425,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape fan art images.
     auto scrapeFanArt = std::make_shared<SwitchComponent>();
     scrapeFanArt->setState(Settings::getInstance()->getBool("ScrapeFanArt"));
-    s->addWithLabel("FAN ART IMAGES", scrapeFanArt);
+    s->addWithLabel(_("FAN ART IMAGES"), scrapeFanArt);
     s->addSaveFunc([scrapeFanArt, s] {
         if (scrapeFanArt->getState() != Settings::getInstance()->getBool("ScrapeFanArt")) {
             Settings::getInstance()->setBool("ScrapeFanArt", scrapeFanArt->getState());
@@ -429,7 +436,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape game manuals.
     auto scrapeManuals = std::make_shared<SwitchComponent>();
     scrapeManuals->setState(Settings::getInstance()->getBool("ScrapeManuals"));
-    s->addWithLabel("GAME MANUALS", scrapeManuals);
+    s->addWithLabel(_("GAME MANUALS"), scrapeManuals);
     s->addSaveFunc([scrapeManuals, s] {
         if (scrapeManuals->getState() != Settings::getInstance()->getBool("ScrapeManuals")) {
             Settings::getInstance()->setBool("ScrapeManuals", scrapeManuals->getState());
@@ -452,20 +459,20 @@ void GuiScraperMenu::openContentOptions()
 
 void GuiScraperMenu::openMiximageOptions()
 {
-    auto s = new GuiSettings("MIXIMAGE SETTINGS");
+    auto s = new GuiSettings(_("MIXIMAGE SETTINGS"));
 
     // Miximage resolution.
     auto miximageResolution = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "MIXIMAGE RESOLUTION", false);
+        getHelpStyle(), _("MIXIMAGE RESOLUTION"), false);
     std::string selectedResolution {Settings::getInstance()->getString("MiximageResolution")};
-    miximageResolution->add("1280x960", "1280x960", selectedResolution == "1280x960");
-    miximageResolution->add("1920x1440", "1920x1440", selectedResolution == "1920x1440");
-    miximageResolution->add("640x480", "640x480", selectedResolution == "640x480");
+    miximageResolution->add("1280X960", "1280x960", selectedResolution == "1280x960");
+    miximageResolution->add("1920X1440", "1920x1440", selectedResolution == "1920x1440");
+    miximageResolution->add("640X480", "640x480", selectedResolution == "640x480");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the resolution to "1280x960" in this case.
     if (miximageResolution->getSelectedObjects().size() == 0)
         miximageResolution->selectEntry(0);
-    s->addWithLabel("MIXIMAGE RESOLUTION", miximageResolution);
+    s->addWithLabel(_("MIXIMAGE RESOLUTION"), miximageResolution);
     s->addSaveFunc([miximageResolution, s] {
         if (miximageResolution->getSelected() !=
             Settings::getInstance()->getString("MiximageResolution")) {
@@ -477,17 +484,17 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Horizontally oriented screenshots fit.
     auto miximageHorizontalFit = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "HORIZONTAL SCREENSHOT FIT", false);
+        getHelpStyle(), _p("short", "HORIZONTAL SCREENSHOT FIT"), false);
     const std::string selectedHorizontalFit {
         Settings::getInstance()->getString("MiximageScreenshotHorizontalFit")};
-    miximageHorizontalFit->add("contain", "contain", selectedHorizontalFit == "contain");
-    miximageHorizontalFit->add("crop", "crop", selectedHorizontalFit == "crop");
-    miximageHorizontalFit->add("stretch", "stretch", selectedHorizontalFit == "stretch");
+    miximageHorizontalFit->add(_("CONTAIN"), "contain", selectedHorizontalFit == "contain");
+    miximageHorizontalFit->add(_("CROP"), "crop", selectedHorizontalFit == "crop");
+    miximageHorizontalFit->add(_("STRETCH"), "stretch", selectedHorizontalFit == "stretch");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the horizontal screenshot fit to "crop" in this case.
     if (miximageHorizontalFit->getSelectedObjects().size() == 0)
         miximageHorizontalFit->selectEntry(1);
-    s->addWithLabel("HORIZONTAL SCREENSHOT FIT", miximageHorizontalFit);
+    s->addWithLabel(_("HORIZONTAL SCREENSHOT FIT"), miximageHorizontalFit);
     s->addSaveFunc([miximageHorizontalFit, s] {
         if (miximageHorizontalFit->getSelected() !=
             Settings::getInstance()->getString("MiximageScreenshotHorizontalFit")) {
@@ -499,17 +506,17 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Vertically oriented screenshots fit.
     auto miximageVerticalFit = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "VERTICAL SCREENSHOT FIT", false);
+        getHelpStyle(), _p("short", "VERTICAL SCREENSHOT FIT"), false);
     const std::string selectedVerticalFit {
         Settings::getInstance()->getString("MiximageScreenshotVerticalFit")};
-    miximageVerticalFit->add("contain", "contain", selectedVerticalFit == "contain");
-    miximageVerticalFit->add("crop", "crop", selectedVerticalFit == "crop");
-    miximageVerticalFit->add("stretch", "stretch", selectedVerticalFit == "stretch");
+    miximageVerticalFit->add(_("CONTAIN"), "contain", selectedVerticalFit == "contain");
+    miximageVerticalFit->add(_("CROP"), "crop", selectedVerticalFit == "crop");
+    miximageVerticalFit->add(_("STRETCH"), "stretch", selectedVerticalFit == "stretch");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the vertical screenshot fit to "contain" in this case.
     if (miximageVerticalFit->getSelectedObjects().size() == 0)
         miximageVerticalFit->selectEntry(0);
-    s->addWithLabel("VERTICAL SCREENSHOT FIT", miximageVerticalFit);
+    s->addWithLabel(_("VERTICAL SCREENSHOT FIT"), miximageVerticalFit);
     s->addSaveFunc([miximageVerticalFit, s] {
         if (miximageVerticalFit->getSelected() !=
             Settings::getInstance()->getString("MiximageScreenshotVerticalFit")) {
@@ -521,16 +528,16 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Screenshots aspect ratio threshold.
     auto miximageAspectThreshold = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "ASPECT RATIO THRESHOLD", false);
+        getHelpStyle(), _p("short", "SCREENSHOT ASPECT RATIO THRESHOLD"), false);
     const std::string selectedAspectThreshold {
         Settings::getInstance()->getString("MiximageScreenshotAspectThreshold")};
-    miximageAspectThreshold->add("high", "high", selectedAspectThreshold == "high");
-    miximageAspectThreshold->add("low", "low", selectedAspectThreshold == "low");
+    miximageAspectThreshold->add(_("HIGH"), "high", selectedAspectThreshold == "high");
+    miximageAspectThreshold->add(_("LOW"), "low", selectedAspectThreshold == "low");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the screenshot aspect threshold to "high" in this case.
     if (miximageAspectThreshold->getSelectedObjects().size() == 0)
         miximageAspectThreshold->selectEntry(0);
-    s->addWithLabel("SCREENSHOT ASPECT RATIO THRESHOLD", miximageAspectThreshold);
+    s->addWithLabel(_("SCREENSHOT ASPECT RATIO THRESHOLD"), miximageAspectThreshold);
     s->addSaveFunc([miximageAspectThreshold, s] {
         if (miximageAspectThreshold->getSelected() !=
             Settings::getInstance()->getString("MiximageScreenshotAspectThreshold")) {
@@ -542,16 +549,16 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Blank areas fill color.
     auto miximageBlankAreasColor = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "BLANK AREAS FILL COLOR", false);
+        getHelpStyle(), _("BLANK AREAS FILL COLOR"), false);
     const std::string selectedBlankAreasColor {
         Settings::getInstance()->getString("MiximageScreenshotBlankAreasColor")};
-    miximageBlankAreasColor->add("black", "black", selectedBlankAreasColor == "black");
-    miximageBlankAreasColor->add("frame", "frame", selectedBlankAreasColor == "frame");
+    miximageBlankAreasColor->add(_("BLACK"), "black", selectedBlankAreasColor == "black");
+    miximageBlankAreasColor->add(_("FRAME"), "frame", selectedBlankAreasColor == "frame");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the blank area fill color to "black" in this case.
     if (miximageBlankAreasColor->getSelectedObjects().size() == 0)
         miximageBlankAreasColor->selectEntry(0);
-    s->addWithLabel("BLANK AREAS FILL COLOR", miximageBlankAreasColor);
+    s->addWithLabel(_("BLANK AREAS FILL COLOR"), miximageBlankAreasColor);
     s->addSaveFunc([miximageBlankAreasColor, s] {
         if (miximageBlankAreasColor->getSelected() !=
             Settings::getInstance()->getString("MiximageScreenshotBlankAreasColor")) {
@@ -563,15 +570,15 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Screenshot scaling method.
     auto miximageScaling = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "SCREENSHOT SCALING", false);
+        getHelpStyle(), _p("short", "SCREENSHOT SCALING METHOD"), false);
     std::string selectedScaling {Settings::getInstance()->getString("MiximageScreenshotScaling")};
-    miximageScaling->add("sharp", "sharp", selectedScaling == "sharp");
-    miximageScaling->add("smooth", "smooth", selectedScaling == "smooth");
+    miximageScaling->add(_("SHARP"), "sharp", selectedScaling == "sharp");
+    miximageScaling->add(_("SMOOTH"), "smooth", selectedScaling == "smooth");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the scaling method to "sharp" in this case.
     if (miximageScaling->getSelectedObjects().size() == 0)
         miximageScaling->selectEntry(0);
-    s->addWithLabel("SCREENSHOT SCALING METHOD", miximageScaling);
+    s->addWithLabel(_("SCREENSHOT SCALING METHOD"), miximageScaling);
     s->addSaveFunc([miximageScaling, s] {
         if (miximageScaling->getSelected() !=
             Settings::getInstance()->getString("MiximageScreenshotScaling")) {
@@ -583,16 +590,16 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Box/cover size.
     auto miximageBoxSize =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "BOX SIZE", false);
+        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("BOX SIZE"), false);
     std::string selectedBoxSize {Settings::getInstance()->getString("MiximageBoxSize")};
-    miximageBoxSize->add("small", "small", selectedBoxSize == "small");
-    miximageBoxSize->add("medium", "medium", selectedBoxSize == "medium");
-    miximageBoxSize->add("large", "large", selectedBoxSize == "large");
+    miximageBoxSize->add(_("SMALL"), "small", selectedBoxSize == "small");
+    miximageBoxSize->add(_("MEDIUM"), "medium", selectedBoxSize == "medium");
+    miximageBoxSize->add(_("LARGE"), "large", selectedBoxSize == "large");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the box size to "medium" in this case.
     if (miximageBoxSize->getSelectedObjects().size() == 0)
         miximageBoxSize->selectEntry(0);
-    s->addWithLabel("BOX SIZE", miximageBoxSize);
+    s->addWithLabel(_("BOX SIZE"), miximageBoxSize);
     s->addSaveFunc([miximageBoxSize, s] {
         if (miximageBoxSize->getSelected() !=
             Settings::getInstance()->getString("MiximageBoxSize")) {
@@ -603,17 +610,17 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Physical media size.
     auto miximagePhysicalMediaSize = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "PHYSICAL MEDIA SIZE", false);
+        getHelpStyle(), _("PHYSICAL MEDIA SIZE"), false);
     std::string selectedPhysicalMediaSize {
         Settings::getInstance()->getString("MiximagePhysicalMediaSize")};
-    miximagePhysicalMediaSize->add("small", "small", selectedPhysicalMediaSize == "small");
-    miximagePhysicalMediaSize->add("medium", "medium", selectedPhysicalMediaSize == "medium");
-    miximagePhysicalMediaSize->add("large", "large", selectedPhysicalMediaSize == "large");
+    miximagePhysicalMediaSize->add(_("SMALL"), "small", selectedPhysicalMediaSize == "small");
+    miximagePhysicalMediaSize->add(_("MEDIUM"), "medium", selectedPhysicalMediaSize == "medium");
+    miximagePhysicalMediaSize->add(_("LARGE"), "large", selectedPhysicalMediaSize == "large");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the physical media size to "medium" in this case.
     if (miximagePhysicalMediaSize->getSelectedObjects().size() == 0)
         miximagePhysicalMediaSize->selectEntry(0);
-    s->addWithLabel("PHYSICAL MEDIA SIZE", miximagePhysicalMediaSize);
+    s->addWithLabel(_("PHYSICAL MEDIA SIZE"), miximagePhysicalMediaSize);
     s->addSaveFunc([miximagePhysicalMediaSize, s] {
         if (miximagePhysicalMediaSize->getSelected() !=
             Settings::getInstance()->getString("MiximagePhysicalMediaSize")) {
@@ -626,7 +633,7 @@ void GuiScraperMenu::openMiximageOptions()
     // Whether to generate miximages when scraping.
     auto miximageGenerate = std::make_shared<SwitchComponent>();
     miximageGenerate->setState(Settings::getInstance()->getBool("MiximageGenerate"));
-    s->addWithLabel("GENERATE MIXIMAGES WHEN SCRAPING", miximageGenerate);
+    s->addWithLabel(_("GENERATE MIXIMAGES WHEN SCRAPING"), miximageGenerate);
     s->addSaveFunc([miximageGenerate, s] {
         if (miximageGenerate->getState() != Settings::getInstance()->getBool("MiximageGenerate")) {
             Settings::getInstance()->setBool("MiximageGenerate", miximageGenerate->getState());
@@ -637,7 +644,7 @@ void GuiScraperMenu::openMiximageOptions()
     // Whether to overwrite miximages (both for the scraper and offline generator).
     auto miximageOverwrite = std::make_shared<SwitchComponent>();
     miximageOverwrite->setState(Settings::getInstance()->getBool("MiximageOverwrite"));
-    s->addWithLabel("OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)", miximageOverwrite);
+    s->addWithLabel(_("OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"), miximageOverwrite);
     s->addSaveFunc([miximageOverwrite, s] {
         if (miximageOverwrite->getState() !=
             Settings::getInstance()->getBool("MiximageOverwrite")) {
@@ -650,7 +657,7 @@ void GuiScraperMenu::openMiximageOptions()
     auto miximageRemoveLetterboxes = std::make_shared<SwitchComponent>();
     miximageRemoveLetterboxes->setState(
         Settings::getInstance()->getBool("MiximageRemoveLetterboxes"));
-    s->addWithLabel("REMOVE LETTERBOXES FROM SCREENSHOTS", miximageRemoveLetterboxes);
+    s->addWithLabel(_("REMOVE LETTERBOXES FROM SCREENSHOTS"), miximageRemoveLetterboxes);
     s->addSaveFunc([miximageRemoveLetterboxes, s] {
         if (miximageRemoveLetterboxes->getState() !=
             Settings::getInstance()->getBool("MiximageRemoveLetterboxes")) {
@@ -664,7 +671,7 @@ void GuiScraperMenu::openMiximageOptions()
     auto miximageRemovePillarboxes = std::make_shared<SwitchComponent>();
     miximageRemovePillarboxes->setState(
         Settings::getInstance()->getBool("MiximageRemovePillarboxes"));
-    s->addWithLabel("REMOVE PILLARBOXES FROM SCREENSHOTS", miximageRemovePillarboxes);
+    s->addWithLabel(_("REMOVE PILLARBOXES FROM SCREENSHOTS"), miximageRemovePillarboxes);
     s->addSaveFunc([miximageRemovePillarboxes, s] {
         if (miximageRemovePillarboxes->getState() !=
             Settings::getInstance()->getBool("MiximageRemovePillarboxes")) {
@@ -678,7 +685,7 @@ void GuiScraperMenu::openMiximageOptions()
     auto miximageRotateBoxes = std::make_shared<SwitchComponent>();
     miximageRotateBoxes->setState(
         Settings::getInstance()->getBool("MiximageRotateHorizontalBoxes"));
-    s->addWithLabel("ROTATE HORIZONTALLY ORIENTED BOXES", miximageRotateBoxes);
+    s->addWithLabel(_("ROTATE HORIZONTALLY ORIENTED BOXES"), miximageRotateBoxes);
     s->addSaveFunc([miximageRotateBoxes, s] {
         if (miximageRotateBoxes->getState() !=
             Settings::getInstance()->getBool("MiximageRotateHorizontalBoxes")) {
@@ -691,7 +698,7 @@ void GuiScraperMenu::openMiximageOptions()
     // Whether to include marquee images.
     auto miximageIncludeMarquee = std::make_shared<SwitchComponent>();
     miximageIncludeMarquee->setState(Settings::getInstance()->getBool("MiximageIncludeMarquee"));
-    s->addWithLabel("INCLUDE MARQUEE IMAGE", miximageIncludeMarquee);
+    s->addWithLabel(_("INCLUDE MARQUEE IMAGE"), miximageIncludeMarquee);
     s->addSaveFunc([miximageIncludeMarquee, s] {
         if (miximageIncludeMarquee->getState() !=
             Settings::getInstance()->getBool("MiximageIncludeMarquee")) {
@@ -704,7 +711,7 @@ void GuiScraperMenu::openMiximageOptions()
     // Whether to include box images.
     auto miximageIncludeBox = std::make_shared<SwitchComponent>();
     miximageIncludeBox->setState(Settings::getInstance()->getBool("MiximageIncludeBox"));
-    s->addWithLabel("INCLUDE BOX IMAGE", miximageIncludeBox);
+    s->addWithLabel(_("INCLUDE BOX IMAGE"), miximageIncludeBox);
     s->addSaveFunc([miximageIncludeBox, s] {
         if (miximageIncludeBox->getState() !=
             Settings::getInstance()->getBool("MiximageIncludeBox")) {
@@ -716,7 +723,7 @@ void GuiScraperMenu::openMiximageOptions()
     // Whether to use cover image if there is no 3D box image.
     auto miximageCoverFallback = std::make_shared<SwitchComponent>();
     miximageCoverFallback->setState(Settings::getInstance()->getBool("MiximageCoverFallback"));
-    s->addWithLabel("USE COVER IMAGE IF 3D BOX IS MISSING", miximageCoverFallback);
+    s->addWithLabel(_("USE COVER IMAGE IF 3D BOX IS MISSING"), miximageCoverFallback);
     s->addSaveFunc([miximageCoverFallback, s] {
         if (miximageCoverFallback->getState() !=
             Settings::getInstance()->getBool("MiximageCoverFallback")) {
@@ -730,7 +737,7 @@ void GuiScraperMenu::openMiximageOptions()
     auto miximageIncludePhysicalMedia = std::make_shared<SwitchComponent>();
     miximageIncludePhysicalMedia->setState(
         Settings::getInstance()->getBool("MiximageIncludePhysicalMedia"));
-    s->addWithLabel("INCLUDE PHYSICAL MEDIA IMAGE", miximageIncludePhysicalMedia);
+    s->addWithLabel(_("INCLUDE PHYSICAL MEDIA IMAGE"), miximageIncludePhysicalMedia);
     s->addSaveFunc([miximageIncludePhysicalMedia, s] {
         if (miximageIncludePhysicalMedia->getState() !=
             Settings::getInstance()->getBool("MiximageIncludePhysicalMedia")) {
@@ -743,7 +750,7 @@ void GuiScraperMenu::openMiximageOptions()
     // Miximage offline generator.
     ComponentListRow offlineGeneratorRow;
     offlineGeneratorRow.elements.clear();
-    offlineGeneratorRow.addElement(std::make_shared<TextComponent>("OFFLINE GENERATOR",
+    offlineGeneratorRow.addElement(std::make_shared<TextComponent>(_("OFFLINE GENERATOR"),
                                                                    Font::get(FONT_SIZE_MEDIUM),
                                                                    mMenuColorPrimary),
                                    true);
@@ -759,9 +766,15 @@ void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
 {
     if (mSystems->getSelectedObjects().empty()) {
         mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
-                                       "THE OFFLINE GENERATOR USES THE SAME SYSTEM\n"
-                                       "SELECTIONS AS THE SCRAPER, SO PLEASE SELECT\n"
-                                       "AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"));
+                                       _("THE OFFLINE GENERATOR USES THE SAME SYSTEM "
+                                         "SELECTIONS AS THE SCRAPER, SO PLEASE SELECT "
+                                         "AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"),
+                                       _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, false,
+                                       true,
+                                       (mRenderer->getIsVerticalOrientation() ?
+                                            0.80f :
+                                            0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
+
         return;
     }
 
@@ -791,23 +804,23 @@ void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
 
 void GuiScraperMenu::openOtherOptions()
 {
-    auto s = new GuiSettings("OTHER SETTINGS");
+    auto s = new GuiSettings(_("OTHER SETTINGS"));
 
     // Scraper region.
     auto scraperRegion =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "REGION", false);
+        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("REGION"), false);
     std::string selectedScraperRegion {Settings::getInstance()->getString("ScraperRegion")};
     // clang-format off
-    scraperRegion->add("Europe", "eu",  selectedScraperRegion == "eu");
-    scraperRegion->add("Japan",  "jp",  selectedScraperRegion == "jp");
-    scraperRegion->add("USA",    "us",  selectedScraperRegion == "us");
-    scraperRegion->add("World",  "wor", selectedScraperRegion == "wor");
+    scraperRegion->add(_("EUROPE"), "eu",  selectedScraperRegion == "eu");
+    scraperRegion->add(_("JAPAN"),  "jp",  selectedScraperRegion == "jp");
+    scraperRegion->add(_("USA"),    "us",  selectedScraperRegion == "us");
+    scraperRegion->add(_("WORLD"),  "wor", selectedScraperRegion == "wor");
     // clang-format on
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the region to "Europe" in this case.
     if (scraperRegion->getSelectedObjects().size() == 0)
         scraperRegion->selectEntry(0);
-    s->addWithLabel("REGION", scraperRegion);
+    s->addWithLabel(_("REGION"), scraperRegion);
     s->addSaveFunc([scraperRegion, s] {
         if (scraperRegion->getSelected() != Settings::getInstance()->getString("ScraperRegion")) {
             Settings::getInstance()->setString("ScraperRegion", scraperRegion->getSelected());
@@ -826,35 +839,35 @@ void GuiScraperMenu::openOtherOptions()
 
     // Scraper language.
     auto scraperLanguage = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "PREFERRED LANGUAGE", false);
+        getHelpStyle(), _("PREFERRED LANGUAGE"), false);
     std::string selectedScraperLanguage {Settings::getInstance()->getString("ScraperLanguage")};
     // clang-format off
-    scraperLanguage->add("English",    "en", selectedScraperLanguage == "en");
-    scraperLanguage->add("Español",    "es", selectedScraperLanguage == "es");
-    scraperLanguage->add("Português",  "pt", selectedScraperLanguage == "pt");
-    scraperLanguage->add("Français",   "fr", selectedScraperLanguage == "fr");
-    scraperLanguage->add("Deutsch",    "de", selectedScraperLanguage == "de");
-    scraperLanguage->add("Italiano",   "it", selectedScraperLanguage == "it");
-    scraperLanguage->add("Nederlands", "nl", selectedScraperLanguage == "nl");
+    scraperLanguage->add("ENGLISH",    "en", selectedScraperLanguage == "en");
+    scraperLanguage->add("ČEŠTINA",    "cz", selectedScraperLanguage == "cz");
+    scraperLanguage->add("DANSK",      "da", selectedScraperLanguage == "da");
+    scraperLanguage->add("DEUTSCH",    "de", selectedScraperLanguage == "de");
+    scraperLanguage->add("ESPAÑOL",    "es", selectedScraperLanguage == "es");
+    scraperLanguage->add("FRANÇAIS",   "fr", selectedScraperLanguage == "fr");
+    scraperLanguage->add("ITALIANO",   "it", selectedScraperLanguage == "it");
+    scraperLanguage->add("MAGYAR",     "hu", selectedScraperLanguage == "hu");
+    scraperLanguage->add("NEDERLANDS", "nl", selectedScraperLanguage == "nl");
+    scraperLanguage->add("NORSK",      "no", selectedScraperLanguage == "no");
+    scraperLanguage->add("POLSKI",     "pl", selectedScraperLanguage == "pl");
+    scraperLanguage->add("PORTUGUÊS",  "pt", selectedScraperLanguage == "pt");
+    scraperLanguage->add("РУССКИЙ",    "ru", selectedScraperLanguage == "ru");
+    scraperLanguage->add("SLOVENČINA", "sk", selectedScraperLanguage == "sk");
+    scraperLanguage->add("SUOMI",      "fi", selectedScraperLanguage == "fi");
+    scraperLanguage->add("SVENSKA",    "sv", selectedScraperLanguage == "sv");
+    scraperLanguage->add("TÜRKÇE",     "tr", selectedScraperLanguage == "tr");
     scraperLanguage->add("日本語",      "ja", selectedScraperLanguage == "ja");
-    scraperLanguage->add("简体中文",    "zh", selectedScraperLanguage == "zh");
     scraperLanguage->add("한국어",      "ko", selectedScraperLanguage == "ko");
-    scraperLanguage->add("Русский",    "ru", selectedScraperLanguage == "ru");
-    scraperLanguage->add("Dansk",      "da", selectedScraperLanguage == "da");
-    scraperLanguage->add("Suomi",      "fi", selectedScraperLanguage == "fi");
-    scraperLanguage->add("Svenska",    "sv", selectedScraperLanguage == "sv");
-    scraperLanguage->add("Magyar",     "hu", selectedScraperLanguage == "hu");
-    scraperLanguage->add("Norsk",      "no", selectedScraperLanguage == "no");
-    scraperLanguage->add("Polski",     "pl", selectedScraperLanguage == "pl");
-    scraperLanguage->add("Čeština",    "cz", selectedScraperLanguage == "cz");
-    scraperLanguage->add("Slovenčina", "sk", selectedScraperLanguage == "sk");
-    scraperLanguage->add("Türkçe",     "tr", selectedScraperLanguage == "tr");
+    scraperLanguage->add("简体中文",    "zh", selectedScraperLanguage == "zh");
     // clang-format on
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the language to "English" in this case.
     if (scraperLanguage->getSelectedObjects().size() == 0)
         scraperLanguage->selectEntry(0);
-    s->addWithLabel("PREFERRED LANGUAGE", scraperLanguage);
+    s->addWithLabel(_("PREFERRED LANGUAGE"), scraperLanguage);
     s->addSaveFunc([scraperLanguage, s] {
         if (scraperLanguage->getSelected() !=
             Settings::getInstance()->getString("ScraperLanguage")) {
@@ -877,7 +890,7 @@ void GuiScraperMenu::openOtherOptions()
     mScraperRetryOnErrorCount = std::make_shared<SliderComponent>(0.0f, 10.0f, 1.0f);
     mScraperRetryOnErrorCount->setValue(
         static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorCount")));
-    s->addWithLabel("AUTOMATIC RETRIES ON ERROR", mScraperRetryOnErrorCount);
+    s->addWithLabel(_("AUTOMATIC RETRIES ON ERROR"), mScraperRetryOnErrorCount);
     s->addSaveFunc([this, s] {
         if (mScraperRetryOnErrorCount->getValue() !=
             static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"))) {
@@ -892,7 +905,7 @@ void GuiScraperMenu::openOtherOptions()
     auto scraperRetryOnErrorTimer = std::make_shared<SliderComponent>(1.0f, 30.0f, 1.0f, "s");
     scraperRetryOnErrorTimer->setValue(
         static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorTimer")));
-    s->addWithLabel("RETRY ATTEMPT TIMER", scraperRetryOnErrorTimer);
+    s->addWithLabel(_("RETRY ATTEMPT TIMER"), scraperRetryOnErrorTimer);
     s->addSaveFunc([scraperRetryOnErrorTimer, s] {
         if (scraperRetryOnErrorTimer->getValue() !=
             static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorTimer"))) {
@@ -915,7 +928,7 @@ void GuiScraperMenu::openOtherOptions()
         std::make_shared<SliderComponent>(32.0f, 800.0f, 32.0f, "MiB");
     scraperSearchFileHashMaxSize->setValue(
         static_cast<float>(Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize")));
-    s->addWithLabel("HASH SEARCHES MAX FILE SIZE", scraperSearchFileHashMaxSize);
+    s->addWithLabel(_("HASH SEARCHES MAX FILE SIZE"), scraperSearchFileHashMaxSize);
     s->addSaveFunc([scraperSearchFileHashMaxSize, s] {
         if (scraperSearchFileHashMaxSize->getValue() !=
             static_cast<float>(Settings::getInstance()->getInt("ScraperSearchFileHashMaxSize"))) {
@@ -940,7 +953,7 @@ void GuiScraperMenu::openOtherOptions()
     // Overwrite files and data.
     auto scraperOverwriteData = std::make_shared<SwitchComponent>();
     scraperOverwriteData->setState(Settings::getInstance()->getBool("ScraperOverwriteData"));
-    s->addWithLabel("OVERWRITE FILES AND DATA", scraperOverwriteData);
+    s->addWithLabel(_("OVERWRITE FILES AND DATA"), scraperOverwriteData);
     s->addSaveFunc([scraperOverwriteData, s] {
         if (scraperOverwriteData->getState() !=
             Settings::getInstance()->getBool("ScraperOverwriteData")) {
@@ -953,7 +966,7 @@ void GuiScraperMenu::openOtherOptions()
     // Search using file hashes for non-interactive mode.
     auto scraperSearchFileHash = std::make_shared<SwitchComponent>();
     scraperSearchFileHash->setState(Settings::getInstance()->getBool("ScraperSearchFileHash"));
-    s->addWithLabel("SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)", scraperSearchFileHash);
+    s->addWithLabel(_("SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"), scraperSearchFileHash);
     s->addSaveFunc([scraperSearchFileHash, s] {
         if (scraperSearchFileHash->getState() !=
             Settings::getInstance()->getBool("ScraperSearchFileHash")) {
@@ -977,7 +990,7 @@ void GuiScraperMenu::openOtherOptions()
     auto scraperSearchMetadataName = std::make_shared<SwitchComponent>();
     scraperSearchMetadataName->setState(
         Settings::getInstance()->getBool("ScraperSearchMetadataName"));
-    s->addWithLabel("SEARCH USING METADATA NAMES", scraperSearchMetadataName);
+    s->addWithLabel(_("SEARCH USING METADATA NAMES"), scraperSearchMetadataName);
     s->addSaveFunc([scraperSearchMetadataName, s] {
         if (scraperSearchMetadataName->getState() !=
             Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
@@ -990,7 +1003,7 @@ void GuiScraperMenu::openOtherOptions()
     // Include actual folders when scraping.
     auto scraperIncludeFolders = std::make_shared<SwitchComponent>();
     scraperIncludeFolders->setState(Settings::getInstance()->getBool("ScraperIncludeFolders"));
-    s->addWithLabel("SCRAPE ACTUAL FOLDERS", scraperIncludeFolders);
+    s->addWithLabel(_("SCRAPE ACTUAL FOLDERS"), scraperIncludeFolders);
     s->addSaveFunc([scraperIncludeFolders, s] {
         if (scraperIncludeFolders->getState() !=
             Settings::getInstance()->getBool("ScraperIncludeFolders")) {
@@ -1003,7 +1016,7 @@ void GuiScraperMenu::openOtherOptions()
     // Interactive scraping.
     auto scraperInteractive = std::make_shared<SwitchComponent>();
     scraperInteractive->setState(Settings::getInstance()->getBool("ScraperInteractive"));
-    s->addWithLabel("INTERACTIVE MODE", scraperInteractive);
+    s->addWithLabel(_("INTERACTIVE MODE"), scraperInteractive);
     s->addSaveFunc([scraperInteractive, s] {
         if (scraperInteractive->getState() !=
             Settings::getInstance()->getBool("ScraperInteractive")) {
@@ -1015,7 +1028,7 @@ void GuiScraperMenu::openOtherOptions()
     // Semi-automatic scraping.
     auto scraperSemiautomatic = std::make_shared<SwitchComponent>();
     scraperSemiautomatic->setState(Settings::getInstance()->getBool("ScraperSemiautomatic"));
-    s->addWithLabel("AUTO-ACCEPT SINGLE GAME MATCHES", scraperSemiautomatic);
+    s->addWithLabel(_("AUTO-ACCEPT SINGLE GAME MATCHES"), scraperSemiautomatic);
     s->addSaveFunc([scraperSemiautomatic, s] {
         if (scraperSemiautomatic->getState() !=
             Settings::getInstance()->getBool("ScraperSemiautomatic")) {
@@ -1038,7 +1051,7 @@ void GuiScraperMenu::openOtherOptions()
     auto scraperRespectExclusions = std::make_shared<SwitchComponent>();
     scraperRespectExclusions->setState(
         Settings::getInstance()->getBool("ScraperRespectExclusions"));
-    s->addWithLabel("RESPECT PER-FILE SCRAPER EXCLUSIONS", scraperRespectExclusions);
+    s->addWithLabel(_("RESPECT PER-FILE SCRAPER EXCLUSIONS"), scraperRespectExclusions);
     s->addSaveFunc([scraperRespectExclusions, s] {
         if (scraperRespectExclusions->getState() !=
             Settings::getInstance()->getBool("ScraperRespectExclusions")) {
@@ -1052,7 +1065,7 @@ void GuiScraperMenu::openOtherOptions()
     auto scraperExcludeRecursively = std::make_shared<SwitchComponent>();
     scraperExcludeRecursively->setState(
         Settings::getInstance()->getBool("ScraperExcludeRecursively"));
-    s->addWithLabel("EXCLUDE FOLDERS RECURSIVELY", scraperExcludeRecursively);
+    s->addWithLabel(_("EXCLUDE FOLDERS RECURSIVELY"), scraperExcludeRecursively);
     s->addSaveFunc([scraperExcludeRecursively, s] {
         if (scraperExcludeRecursively->getState() !=
             Settings::getInstance()->getBool("ScraperExcludeRecursively")) {
@@ -1075,7 +1088,7 @@ void GuiScraperMenu::openOtherOptions()
     auto scraperConvertUnderscores = std::make_shared<SwitchComponent>();
     scraperConvertUnderscores->setState(
         Settings::getInstance()->getBool("ScraperConvertUnderscores"));
-    s->addWithLabel("CONVERT UNDERSCORES TO SPACES WHEN SEARCHING", scraperConvertUnderscores);
+    s->addWithLabel(_("CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"), scraperConvertUnderscores);
     s->addSaveFunc([scraperConvertUnderscores, s] {
         if (scraperConvertUnderscores->getState() !=
             Settings::getInstance()->getBool("ScraperConvertUnderscores")) {
@@ -1089,7 +1102,7 @@ void GuiScraperMenu::openOtherOptions()
     auto scraperAutomaticRemoveDots = std::make_shared<SwitchComponent>();
     scraperAutomaticRemoveDots->setState(
         Settings::getInstance()->getBool("ScraperAutomaticRemoveDots"));
-    s->addWithLabel("REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING", scraperAutomaticRemoveDots);
+    s->addWithLabel(_("REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"), scraperAutomaticRemoveDots);
     s->addSaveFunc([scraperAutomaticRemoveDots, s] {
         if (scraperAutomaticRemoveDots->getState() !=
             Settings::getInstance()->getBool("ScraperAutomaticRemoveDots")) {
@@ -1111,7 +1124,7 @@ void GuiScraperMenu::openOtherOptions()
     // Whether to fallback to additional regions.
     auto scraperRegionFallback = std::make_shared<SwitchComponent>(mWindow);
     scraperRegionFallback->setState(Settings::getInstance()->getBool("ScraperRegionFallback"));
-    s->addWithLabel("ENABLE FALLBACK TO ADDITIONAL REGIONS", scraperRegionFallback);
+    s->addWithLabel(_("ENABLE FALLBACK TO ADDITIONAL REGIONS"), scraperRegionFallback);
     s->addSaveFunc([scraperRegionFallback, s] {
         if (scraperRegionFallback->getState() !=
             Settings::getInstance()->getBool("ScraperRegionFallback")) {
@@ -1220,16 +1233,17 @@ void GuiScraperMenu::pressedStart()
         if ((*it)->getPlatformIds().empty()) {
             std::string warningString;
             if (sys.size() == 1) {
-                warningString = "THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE "
-                                "INACCURATE";
+                warningString =
+                    _("THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE "
+                      "INACCURATE");
             }
             else {
-                warningString = "AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM "
-                                "SET, RESULTS MAY BE INACCURATE";
+                warningString = _("AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM "
+                                  "SET, RESULTS MAY BE INACCURATE");
             }
             mWindow->pushGui(
-                new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(warningString), "PROCEED",
-                              std::bind(&GuiScraperMenu::start, this), "CANCEL", nullptr, "",
+                new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(warningString), _("PROCEED"),
+                              std::bind(&GuiScraperMenu::start, this), _("CANCEL"), nullptr, "",
                               nullptr, nullptr, false, true,
                               (mRenderer->getIsVerticalOrientation() ?
                                    0.80f :
@@ -1244,7 +1258,7 @@ void GuiScraperMenu::start()
 {
     if (mSystems->getSelectedObjects().empty()) {
         mWindow->pushGui(
-            new GuiMsgBox(getHelpStyle(), "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"));
+            new GuiMsgBox(getHelpStyle(), _("PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE")));
         return;
     }
 
@@ -1319,7 +1333,7 @@ void GuiScraperMenu::start()
 
     if (!contentToScrape) {
         mWindow->pushGui(
-            new GuiMsgBox(getHelpStyle(), "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"));
+            new GuiMsgBox(getHelpStyle(), _("PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE")));
         return;
     }
 
@@ -1327,7 +1341,7 @@ void GuiScraperMenu::start()
 
     if (searches.first.empty()) {
         mWindow->pushGui(
-            new GuiMsgBox(getHelpStyle(), "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"));
+            new GuiMsgBox(getHelpStyle(), _("ALL GAMES WERE FILTERED, NOTHING TO SCRAPE")));
     }
     else {
         GuiScraperMulti* gsm {
@@ -1402,7 +1416,7 @@ bool GuiScraperMenu::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "back"));
-    prompts.push_back(HelpPrompt("y", "start scraper"));
+    prompts.push_back(HelpPrompt("b", _("back")));
+    prompts.push_back(HelpPrompt("y", _("start scraper")));
     return prompts;
 }

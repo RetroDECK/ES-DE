@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  SystemData.cpp
 //
 //  Provides data structures for the game systems and populates and indexes them based
@@ -22,6 +22,7 @@
 #include "UIModeController.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
@@ -61,6 +62,9 @@ void FindRules::loadFindRules()
 #elif defined(__APPLE__)
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/macos/es_find_rules.xml", false);
+#elif defined(__HAIKU__)
+    filePath =
+        ResourceManager::getInstance().getResourcePath(":/systems/haiku/es_find_rules.xml", false);
 #else
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/unix/es_find_rules.xml", false);
@@ -260,7 +264,8 @@ SystemData::SystemData(const std::string& name,
     }
 
     // This placeholder can be used later in the gamelist view.
-    mPlaceholder = new FileData(PLACEHOLDER, "<No Entries Found>", getSystemEnvData(), this);
+    mPlaceholder =
+        new FileData(PLACEHOLDER, "<" + _("No Entries Found") + ">", getSystemEnvData(), this);
 
     setIsGameSystemStatus();
     loadTheme(ThemeTriggers::TriggerType::NONE);
@@ -349,6 +354,12 @@ bool SystemData::populateFolder(FileData* folder)
             !(isDirectory && extension == ".")) {
             FileData* newGame {new FileData(GAME, filePath, mEnvData, this)};
 
+            if (newGame->metadata.get("name") == "") {
+                LOG(LogWarning) << "Skipped \"" << filePath << "\" as it has no filename";
+                delete newGame;
+                continue;
+            }
+
             // If adding a configured file extension to a directory it will get interpreted as
             // a regular file. This is useful for displaying multi-file/multi-disc games as single
             // entries or for emulators that can get directories passed to them as command line
@@ -410,6 +421,20 @@ bool SystemData::populateFolder(FileData* folder)
                     LOG(LogWarning) << "Skipped \"" << filePath << "\" as it's a recursive symlink";
                     continue;
                 }
+            }
+
+            if (Utils::FileSystem::exists(filePath + "/noload.txt")) {
+#if defined(_WIN64)
+                LOG(LogInfo) << "Skipped folder \"" << Utils::String::replace(filePath, "/", "\\")
+                             << "\" as a noload.txt file is present";
+#else
+                LOG(LogInfo) << "Skipped folder \"" << filePath
+                             << "\" as a noload.txt file is present";
+#endif
+                FileData* newFolder {new FileData(FOLDER, filePath, mEnvData, this)};
+                newFolder->setNoLoad(true);
+                folder->addChild(newFolder);
+                continue;
             }
 
             FileData* newFolder {new FileData(FOLDER, filePath, mEnvData, this)};
@@ -984,6 +1009,8 @@ std::vector<std::string> SystemData::getConfigPath()
     path = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_systems.xml", true);
 #elif defined(__APPLE__)
     path = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_systems.xml", true);
+#elif defined(__HAIKU__)
+    path = ResourceManager::getInstance().getResourcePath(":/systems/haiku/es_systems.xml", true);
 #else
     path = ResourceManager::getInstance().getResourcePath(":/systems/unix/es_systems.xml", true);
 #endif
@@ -1577,14 +1604,29 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
         // to the variables that are not applicable. This will be used in ThemeData to make sure
         // unpopulated system variables do not lead to theme loading errors.
         std::map<std::string, std::string> sysData;
-        sysData.insert(std::pair<std::string, std::string>("system.name", getName()));
+        std::string name {getName()};
+        std::string fullName {getFullName()};
+#if defined(GETTEXT_DUMMY_ENTRIES)
+        _p("theme", "all");
+        _p("theme", "all games");
+        _p("theme", "recent");
+        _p("theme", "last played");
+        _p("theme", "favorites");
+        _p("theme", "collections");
+#endif
+        // Always translate fullName for the automatic collections.
+        if (isCollection() && !isCustomCollection()) {
+            name = _p("theme", name.c_str());
+            fullName = _p("theme", fullName.c_str());
+        }
+        sysData.insert(std::pair<std::string, std::string>("system.name", name));
         sysData.insert(std::pair<std::string, std::string>("system.theme", getThemeFolder()));
-        sysData.insert(std::pair<std::string, std::string>("system.fullName", getFullName()));
+        sysData.insert(std::pair<std::string, std::string>("system.fullName", fullName));
         if (isCollection() && isCustomCollection()) {
             sysData.insert(
-                std::pair<std::string, std::string>("system.name.customCollections", getName()));
-            sysData.insert(std::pair<std::string, std::string>("system.fullName.customCollections",
-                                                               getFullName()));
+                std::pair<std::string, std::string>("system.name.customCollections", name));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.customCollections", fullName));
             sysData.insert(std::pair<std::string, std::string>("system.theme.customCollections",
                                                                getThemeFolder()));
             sysData.insert(
@@ -1600,9 +1642,9 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
         }
         else if (isCollection()) {
             sysData.insert(
-                std::pair<std::string, std::string>("system.name.autoCollections", getName()));
-            sysData.insert(std::pair<std::string, std::string>("system.fullName.autoCollections",
-                                                               getFullName()));
+                std::pair<std::string, std::string>("system.name.autoCollections", name));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.autoCollections", fullName));
             sysData.insert(std::pair<std::string, std::string>("system.theme.autoCollections",
                                                                getThemeFolder()));
             sysData.insert(
@@ -1617,10 +1659,9 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
             sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections", "\b"));
         }
         else {
+            sysData.insert(std::pair<std::string, std::string>("system.name.noCollections", name));
             sysData.insert(
-                std::pair<std::string, std::string>("system.name.noCollections", getName()));
-            sysData.insert(std::pair<std::string, std::string>("system.fullName.noCollections",
-                                                               getFullName()));
+                std::pair<std::string, std::string>("system.fullName.noCollections", fullName));
             sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections",
                                                                getThemeFolder()));
             sysData.insert(

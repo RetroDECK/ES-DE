@@ -1,4 +1,4 @@
-# Slate for ES-DE (slate-es-de)
+# Slate for ES-DE Frontend (slate-es-de)
 
 The following options are included:
 
@@ -23,6 +23,21 @@ The following options are included:
 - 16:9 vertical
 - 4:3
 - 4:3 vertical
+
+12 languages:
+
+- English (United States)
+- English (United Kingdom)
+- Español (España)
+- Français
+- Italiano
+- Polski
+- Português (Brasil)
+- Română
+- Русский
+- Svenska
+- 日本語
+- 简体中文
 
 3 transitions:
 

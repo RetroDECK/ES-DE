@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- This is the ES-DE game systems configuration file for Android -->
+<!-- This is the ES-DE Frontend game systems configuration file for Android -->
 <systemList>
     <system>
         <name>3do</name>
@@ -176,8 +176,9 @@
         <name>arduboy</name>
         <fullname>Arduboy Miniature Game System</fullname>
         <path>%ROMPATH%/arduboy</path>
-        <extension>.hex .HEX .7z .7Z .zip .ZIP</extension>
+        <extension>.arduboy .ARDUBOY .hex .HEX .7z .7Z .zip .ZIP</extension>
         <command label="Arduous">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=arduous_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Ardens">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=ardens_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>arduboy</platform>
         <theme>arduboy</theme>
     </system>
@@ -197,6 +198,7 @@
         <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="Stella">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=stella_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Stella 2014">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=stella2014_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Stella 2023">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=stella2023_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="2600.emu (Standalone)">%EMULATOR_2600-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>atari2600</platform>
         <theme>atari2600</theme>
@@ -501,10 +503,11 @@
         <name>dos</name>
         <fullname>DOS (PC)</fullname>
         <path>%ROMPATH%/dos</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=dosbox_pure_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=dosbox_core_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=dosbox_svn_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="VirtualXT">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=virtualxt_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>dos</platform>
         <theme>dos</theme>
     </system>
@@ -512,8 +515,11 @@
         <name>dragon32</name>
         <fullname>Dragon Data Dragon 32</fullname>
         <path>%ROMPATH%/dragon32</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 Dragon 32 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -autoboot_delay '4' -autoboot_command 'cloadm\"\"\n' -cass '%ROMRAW%'" %DATA%=dragon32</command>
+        <command label="MAME4droid 2024 Dragon 32 [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -cart '%ROMRAW%'" %DATA%=dragon32</command>
+        <command label="MAME4droid 2024 Dragon 64 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -autoboot_delay '4' -autoboot_command 'cloadm\"\"\n' -cass '%ROMRAW%'" %DATA%=dragon64</command>
+        <command label="MAME4droid 2024 Dragon 64 [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -cart '%ROMRAW%'" %DATA%=dragon64</command>
         <platform>dragon32</platform>
         <theme>dragon32</theme>
     </system>
@@ -733,6 +739,7 @@
         <command label="gpSP">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=gpsp_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="GBA.emu (Standalone)">%EMULATOR_GBA-EMU% %DATA%=%ROMPROVIDER%</command>
         <command label="My Boy! (Standalone)">%EMULATOR_MY-BOY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
+        <command label="NooDS (Standalone)">%EMULATOR_NOODS% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_LaunchPath%=%ROM%</command>
         <command label="Pizza Boy GBA (Standalone)">%EMULATOR_PIZZA-BOY-GBA% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_rom_uri%=%ROM%</command>
         <platform>gba</platform>
         <theme>gba</theme>
@@ -816,6 +823,8 @@
         <fullname>Java 2 Micro Edition (J2ME)</fullname>
         <path>%ROMPATH%/j2me</path>
         <extension>.jar .JAR .7z .7Z .zip .ZIP</extension>
+        <command label="J2ME Loader (Standalone)">%EMULATOR_J2ME-LOADER% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMPROVIDER%</command>
+        <command label="JL-Mod (Standalone)">%EMULATOR_JL-MOD% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMPROVIDER%</command>
         <command label="SquirrelJME">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=squirreljme_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>android</platform>
         <theme>j2me</theme>
@@ -1175,6 +1184,7 @@
         <command label="DeSmuME">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=desmume_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=desmume2015_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DraStic (Standalone)">%EMULATOR_DRASTIC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %DATA%=%ROMSAF%</command>
+        <command label="NooDS (Standalone)">%EMULATOR_NOODS% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_LaunchPath%=%ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>
@@ -1233,7 +1243,7 @@
         <fullname>Nokia N-Gage</fullname>
         <path>%ROMPATH%/ngage</path>
         <extension>.ngage .zip .ZIP</extension>
-        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1%</command>
+        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1-GUI% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP%</command>
         <platform>ngage</platform>
         <theme>ngage</theme>
     </system>
@@ -1300,10 +1310,11 @@
         <name>pc</name>
         <fullname>IBM PC</fullname>
         <path>%ROMPATH%/pc</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=dosbox_pure_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=dosbox_core_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=dosbox_svn_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="VirtualXT">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=virtualxt_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>pc</platform>
         <theme>pc</theme>
     </system>
@@ -1330,8 +1341,9 @@
         <name>pcarcade</name>
         <fullname>PC Arcade Systems</fullname>
         <path>%ROMPATH%/pcarcade</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.desktop</extension>
+        <command label="Winlator Cmod Glibc (Standalone)">%EMULATOR_WINLATOR-GLIBC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
+        <command label="Winlator Cmod PRoot (Standalone)">%EMULATOR_WINLATOR-PROOT% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
         <platform>arcade</platform>
         <theme>pcarcade</theme>
     </system>
@@ -1465,7 +1477,7 @@
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=pcsx_rearmed_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="SwanStation">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=swanstation_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRABOOL_resumeState%=false %EXTRA_bootPath%=%ROMSAF%</command>
-        <command label="ePSXe (Standalone)">%EMULATOR_EPSXE% %ACTION%=android.intent.action.MAIN %EXTRA_com.epsxe.ePSXe.isoName%=%ROMSAF%</command>
+        <command label="ePSXe (Standalone)">%EMULATOR_EPSXE% %ACTION%=android.intent.action.MAIN %EXTRA_com.epsxe.ePSXe.isoName%=%ROM%</command>
         <command label="FPseNG (Standalone)">%EMULATOR_FPSE-NG% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="FPse (Standalone)">%EMULATOR_FPSE% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>psx</platform>
@@ -1773,8 +1785,8 @@
         <name>symbian</name>
         <fullname>Symbian</fullname>
         <path>%ROMPATH%/symbian</path>
-        <extension>.sis .SIS .sisx .SISX .symbian</extension>
-        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1%</command>
+        <extension>.json .JSON</extension>
+        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>ngage</platform>
         <theme>symbian</theme>
     </system>
@@ -1782,8 +1794,9 @@
         <name>tanodragon</name>
         <fullname>Tano Dragon</fullname>
         <path>%ROMPATH%/tanodragon</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME4droid 2024 [Tape] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -autoboot_delay '4' -autoboot_command 'cloadm\"\"\n' -cass '%ROMRAW%'" %DATA%=tanodr64</command>
+        <command label="MAME4droid 2024 [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/dragon32' -cart '%ROMRAW%'" %DATA%=tanodr64</command>
         <platform>dragon32</platform>
         <theme>tanodragon</theme>
     </system>
@@ -1860,8 +1873,9 @@
         <name>type-x</name>
         <fullname>Taito Type X</fullname>
         <path>%ROMPATH%/type-x</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.desktop</extension>
+        <command label="Winlator Cmod Glibc (Standalone)">%EMULATOR_WINLATOR-GLIBC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
+        <command label="Winlator Cmod PRoot (Standalone)">%EMULATOR_WINLATOR-PROOT% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
         <platform>arcade</platform>
         <theme>type-x</theme>
     </system>
@@ -1964,8 +1978,9 @@
         <name>windows</name>
         <fullname>Microsoft Windows</fullname>
         <path>%ROMPATH%/windows</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.desktop</extension>
+        <command label="Winlator Cmod Glibc (Standalone)">%EMULATOR_WINLATOR-GLIBC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
+        <command label="Winlator Cmod PRoot (Standalone)">%EMULATOR_WINLATOR-PROOT% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
         <platform>pcwindows</platform>
         <theme>windows</theme>
     </system>

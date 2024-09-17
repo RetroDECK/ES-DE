@@ -15,6 +15,7 @@
 #include "Window.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
@@ -822,9 +823,10 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
 
     if (window != nullptr) {
         window->queueInfoPopup(
-            "ADDED INPUT DEVICE '" +
-                Utils::String::toUpper(std::string(SDL_GameControllerName(mControllers[joyID]))) +
-                "'",
+            Utils::String::format(
+                _("ADDED INPUT DEVICE '%s'"),
+                Utils::String::toUpper(std::string(SDL_GameControllerName(mControllers[joyID])))
+                    .c_str()),
             4000);
     }
 
@@ -870,9 +872,10 @@ void InputManager::removeControllerByJoystickID(Window* window, SDL_JoystickID j
 
     if (window != nullptr) {
         window->queueInfoPopup(
-            "REMOVED INPUT DEVICE '" +
-                Utils::String::toUpper(std::string(SDL_GameControllerName(mControllers[joyID]))) +
-                "'",
+            Utils::String::format(
+                _("REMOVED INPUT DEVICE '%s'"),
+                Utils::String::toUpper(std::string(SDL_GameControllerName(mControllers[joyID])))
+                    .c_str()),
             4000);
     }
 

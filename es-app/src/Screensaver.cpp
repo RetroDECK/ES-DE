@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Screensaver.cpp
 //
 //  Screensaver, supporting the following types:
@@ -54,6 +54,8 @@ Screensaver::Screensaver()
 void Screensaver::startScreensaver(bool generateMediaList)
 {
     ViewController::getInstance()->pauseViewVideos();
+    mGameOverlay = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_SMALL), 0xFFFFFFFF,
+                                                   ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {1, 1});
 
     mScreensaverType = Settings::getInstance()->getString("ScreensaverType");
     // In case there is an invalid entry in the es_settings.xml file.
@@ -66,13 +68,6 @@ void Screensaver::startScreensaver(bool generateMediaList)
     mHasMediaFiles = false;
     mFallbackScreensaver = false;
     mOpacity = 0.0f;
-
-    // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
-    if (mGameOverlayFont.empty()) {
-        mGameOverlayFont.push_back(Font::get(FONT_SIZE_SMALL));
-        mGameOverlayFont.push_back(Font::get(FONT_SIZE_MEDIUM));
-        mGameOverlayFont.push_back(Font::get(FONT_SIZE_LARGE));
-    }
 
     // Set mPreviousGame which will be used to avoid showing the same game again during
     // the random selection.
@@ -196,15 +191,13 @@ void Screensaver::stopScreensaver()
 {
     mImageScreensaver.reset();
     mVideoScreensaver.reset();
+    mGameOverlay.reset();
 
     mScreensaverActive = false;
     mDimValue = 1.0f;
     mRectangleFadeIn = 50;
     mTextFadeIn = 0;
     mSaturationAmount = 1.0f;
-
-    if (mGameOverlay)
-        mGameOverlay.reset();
 
     ViewController::getInstance()->startViewVideos();
 }
@@ -298,8 +291,7 @@ void Screensaver::renderScreensaver()
             if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
                 mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
             if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
-                !Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages") &&
-                mGameOverlay) {
+                !Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages")) {
                 mRenderer->setMatrix(mRenderer->getIdentity());
                 if (mGameOverlayRectangleCoords.size() == 4) {
                     mRenderer->drawRect(
@@ -311,7 +303,7 @@ void Screensaver::renderScreensaver()
 
                 mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                 if (mTextFadeIn > 50)
-                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                    mGameOverlay->render(trans);
                 if (mTextFadeIn < 255)
                     mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
             }
@@ -340,7 +332,7 @@ void Screensaver::renderScreensaver()
             if (shaders != 0)
                 mRenderer->shaderPostprocessing(shaders, videoParameters);
 
-            if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
+            if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo")) {
                 mRenderer->setMatrix(mRenderer->getIdentity());
                 if (mGameOverlayRectangleCoords.size() == 4) {
                     mRenderer->drawRect(
@@ -352,7 +344,7 @@ void Screensaver::renderScreensaver()
 
                 mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                 if (mTextFadeIn > 50)
-                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                    mGameOverlay->render(trans);
                 if (mTextFadeIn < 255)
                     mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
             }
@@ -418,6 +410,32 @@ void Screensaver::generateImageList()
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
+        // This method of building an inventory of all image files isn't pretty, but to use the
+        // FileData::getImagePath() function leads to unacceptable performance issues on some
+        // platforms like Android that offer very poor disk I/O performance. To instead list
+        // all files recursively is much faster as this avoids stat() function calls which are
+        // very expensive on such problematic platforms.
+        const std::string mediaDirMiximages {
+            FileData::getMediaDirectory() + (*it)->getRootFolder()->getSystemName() + "/miximages"};
+        const std::string mediaDirScreenshots {FileData::getMediaDirectory() +
+                                               (*it)->getRootFolder()->getSystemName() +
+                                               "/screenshots"};
+        const std::string mediaDirTitlescreens {FileData::getMediaDirectory() +
+                                                (*it)->getRootFolder()->getSystemName() +
+                                                "/titlescreens"};
+        const std::string mediaDirCovers {FileData::getMediaDirectory() +
+                                          (*it)->getRootFolder()->getSystemName() + "/covers"};
+        const Utils::FileSystem::StringList dirContentMiximages {
+            Utils::FileSystem::getDirContent(mediaDirMiximages, true)};
+        const Utils::FileSystem::StringList dirContentScreenshots {
+            Utils::FileSystem::getDirContent(mediaDirScreenshots, true)};
+        const Utils::FileSystem::StringList dirContentTitlescreens {
+            Utils::FileSystem::getDirContent(mediaDirTitlescreens, true)};
+        const Utils::FileSystem::StringList dirContentCovers {
+            Utils::FileSystem::getDirContent(mediaDirCovers, true)};
+
+        std::string subFolders;
+
         std::vector<FileData*> allFiles {(*it)->getRootFolder()->getFilesRecursive(GAME, true)};
         for (auto it2 = allFiles.cbegin(); it2 != allFiles.cend(); ++it2) {
             // Only include games suitable for children if we're in Kid UI mode.
@@ -426,9 +444,36 @@ void Screensaver::generateImageList()
                 continue;
             if (favoritesOnly && (*it2)->metadata.get("favorite") != "true")
                 continue;
-            std::string imagePath {(*it2)->getImagePath()};
-            if (imagePath != "")
-                mImageFiles.push_back((*it2));
+
+            subFolders = Utils::String::replace(Utils::FileSystem::getParent((*it2)->getPath()),
+                                                (*it)->getStartPath(), "");
+            const std::string gamePath {subFolders + "/" + (*it2)->getDisplayName()};
+
+            for (auto& extension : FileData::sImageExtensions) {
+                if (std::find(dirContentMiximages.cbegin(), dirContentMiximages.cend(),
+                              mediaDirMiximages + gamePath + extension) !=
+                    dirContentMiximages.cend()) {
+                    mImageFiles.push_back((*it2));
+                    break;
+                }
+                if (std::find(dirContentScreenshots.cbegin(), dirContentScreenshots.cend(),
+                              mediaDirScreenshots + gamePath + extension) !=
+                    dirContentScreenshots.cend()) {
+                    mImageFiles.push_back((*it2));
+                    break;
+                }
+                if (std::find(dirContentTitlescreens.cbegin(), dirContentTitlescreens.cend(),
+                              mediaDirTitlescreens + gamePath + extension) !=
+                    dirContentTitlescreens.cend()) {
+                    mImageFiles.push_back((*it2));
+                    break;
+                }
+                if (std::find(dirContentCovers.cbegin(), dirContentCovers.cend(),
+                              mediaDirCovers + gamePath + extension) != dirContentCovers.cend()) {
+                    mImageFiles.push_back((*it2));
+                    break;
+                }
+            }
         }
     }
 
@@ -445,6 +490,18 @@ void Screensaver::generateVideoList()
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
+        // This method of building an inventory of all video files isn't pretty, but to use the
+        // FileData::getVideoPath() function leads to unacceptable performance issues on some
+        // platforms like Android that offer very poor disk I/O performance. To instead list
+        // all files recursively is much faster as this avoids stat() function calls which are
+        // very expensive on such problematic platforms.
+        const std::string mediaDir {FileData::getMediaDirectory() +
+                                    (*it)->getRootFolder()->getSystemName() + "/videos"};
+        const Utils::FileSystem::StringList dirContent {
+            Utils::FileSystem::getDirContent(mediaDir, true)};
+
+        std::string subFolders;
+
         std::vector<FileData*> allFiles {(*it)->getRootFolder()->getFilesRecursive(GAME, true)};
         for (auto it2 = allFiles.cbegin(); it2 != allFiles.cend(); ++it2) {
             // Only include games suitable for children if we're in Kid UI mode.
@@ -453,9 +510,18 @@ void Screensaver::generateVideoList()
                 continue;
             if (favoritesOnly && (*it2)->metadata.get("favorite") != "true")
                 continue;
-            std::string videoPath {(*it2)->getVideoPath()};
-            if (videoPath != "")
-                mVideoFiles.push_back((*it2));
+
+            subFolders = Utils::String::replace(Utils::FileSystem::getParent((*it2)->getPath()),
+                                                (*it)->getStartPath(), "");
+            const std::string gamePath {subFolders + "/" + (*it2)->getDisplayName()};
+
+            for (auto& extension : FileData::sVideoExtensions) {
+                if (std::find(dirContent.cbegin(), dirContent.cend(),
+                              mediaDir + gamePath + extension) != dirContent.cend()) {
+                    mVideoFiles.push_back((*it2));
+                    break;
+                }
+            }
         }
     }
 
@@ -615,8 +681,8 @@ void Screensaver::generateOverlayInfo()
     if (mGameName == "" || mSystemName == "")
         return;
 
-    float posX {mRenderer->getScreenWidth() * 0.023f};
-    float posY {mRenderer->getScreenHeight() * 0.02f};
+    const float posX {mRenderer->getScreenWidth() * 0.023f};
+    const float posY {mRenderer->getScreenHeight() * 0.02f};
 
     const bool favoritesOnly {
         (mScreensaverType == "video" &&
@@ -633,28 +699,14 @@ void Screensaver::generateOverlayInfo()
     const std::string systemName {Utils::String::toUpper(mSystemName)};
     const std::string overlayText {gameName + "\n" + systemName};
 
-    mGameOverlay = std::unique_ptr<TextCache>(
-        mGameOverlayFont.at(0)->buildTextCache(overlayText, posX, posY, 0xFFFFFFFF));
+    mGameOverlay->setText(overlayText);
+    mGameOverlay->setPosition(posX, posY);
 
-    float textSizeX {0.0f};
-    float textSizeY {mGameOverlayFont[0].get()->sizeText(overlayText).y};
-
-    // There is a weird issue with sizeText() where the X size value is returned
-    // as too large if there are two rows in a string and the second row is longer
-    // than the first row. Possibly it's the newline character that is somehow
-    // injected in the size calculation. Regardless, this workaround is working
-    // fine for the time being.
-    if (mGameOverlayFont[0].get()->sizeText(gameName).x >
-        mGameOverlayFont[0].get()->sizeText(systemName).x)
-        textSizeX = mGameOverlayFont[0].get()->sizeText(gameName).x;
-    else
-        textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x;
-
-    float marginX {mRenderer->getScreenWidth() * 0.01f};
+    const float marginX {mRenderer->getScreenWidth() * 0.01f};
 
     mGameOverlayRectangleCoords.clear();
     mGameOverlayRectangleCoords.push_back(posX - marginX);
     mGameOverlayRectangleCoords.push_back(posY);
-    mGameOverlayRectangleCoords.push_back(textSizeX + marginX * 2.0f);
-    mGameOverlayRectangleCoords.push_back(textSizeY);
+    mGameOverlayRectangleCoords.push_back(mGameOverlay->getSize().x + marginX * 2.0f);
+    mGameOverlayRectangleCoords.push_back(mGameOverlay->getSize().y);
 }

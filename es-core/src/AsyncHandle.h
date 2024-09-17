@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  AsyncHandle.h
 //
 //  Asynchronous operations used by GuiScraperSearch and Scraper.
@@ -24,6 +24,7 @@ public:
     AsyncHandle()
         : mStatus(ASYNC_IN_PROGRESS)
         , mRetry {true}
+        , mFatalError {false}
     {
     }
     virtual ~AsyncHandle() {}
@@ -38,6 +39,7 @@ public:
     }
 
     const bool getRetry() { return mRetry; }
+    const bool getFatalError() { return mFatalError; }
 
     // User-friendly string of our current status.
     // Will return error message if status() == SEARCH_ERROR.
@@ -51,22 +53,24 @@ public:
             case ASYNC_DONE:
                 return "done";
             default:
-                return "something impossible has occured; row, row, fight the power";
+                return "something impossible has occured";
         }
     }
 
 protected:
     void setStatus(AsyncHandleStatus status) { mStatus = status; }
-    void setError(const std::string& error, bool retry)
+    void setError(const std::string& error, bool retry, bool fatalError = false)
     {
         setStatus(ASYNC_ERROR);
         mError = error;
         mRetry = retry;
+        mFatalError = fatalError;
     }
 
     std::string mError;
     AsyncHandleStatus mStatus;
     bool mRetry;
+    bool mFatalError;
 };
 
 #endif // ES_CORE_ASYNC_HANDLE_H

@@ -3,8 +3,7 @@
 //  ES-DE Frontend
 //  Font.h
 //
-//  Loading, unloading, caching and rendering of fonts.
-//  Also functions for text wrapping and similar.
+//  Font management and text shaping and rendering.
 //
 
 #ifndef ES_CORE_RESOURCES_FONT_H
@@ -17,9 +16,10 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include <hb-ft.h>
 #include <vector>
 
-class TextCache;
+class TextComponent;
 
 #define FONT_SIZE_MINI Font::getMiniFont()
 #define FONT_SIZE_SMALL Font::getSmallFont()
@@ -32,8 +32,6 @@ class TextCache;
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
 #define FONT_PATH_BOLD ":/fonts/Akrobat-Bold.ttf"
 
-// A TrueType Font renderer that uses FreeType and OpenGL.
-// The library is automatically initialized when it's needed.
 class Font : public IReloadable
 {
 public:
@@ -79,46 +77,19 @@ public:
         return sLargeFixedFont;
     }
 
-    // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
+    // Returns the size of shaped text without applying any wrapping or abbreviations.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);
 
-    // Used to determine mMaxGlyphHeight upfront which is needed for accurate text sizing by
-    // wrapText and buildTextCache. This is required as the requested font height is not
-    // guaranteed and can be exceeded by a few pixels for some glyphs.
+    // This determines mMaxGlyphHeight upfront which is useful for accurate text sizing as
+    // the requested font height is not guaranteed and could be exceeded by a few pixels for some
+    // glyphs. However in most instances setting mMaxGlyphHeight to the font size is good enough,
+    // meaning this somehow expensive operation could be skipped.
     int loadGlyphs(const std::string& text);
 
-    TextCache* buildTextCache(const std::string& text,
-                              float offsetX,
-                              float offsetY,
-                              unsigned int color,
-                              float lineSpacing = 1.5f,
-                              bool noTopMargin = false);
-
-    TextCache* buildTextCache(const std::string& text,
-                              glm::vec2 offset,
-                              unsigned int color,
-                              float xLen,
-                              Alignment alignment = ALIGN_LEFT,
-                              float lineSpacing = 1.5f,
-                              bool noTopMargin = false);
-
-    void renderTextCache(TextCache* cache);
-
-    // Inserts newlines to make text wrap properly and also abbreviates single-line text.
-    std::string wrapText(const std::string& text,
-                         const float maxLength,
-                         const float maxHeight = 0.0f,
-                         const float lineSpacing = 1.5f,
-                         const bool multiLine = false);
-
-    // Returns the position of the cursor after moving it to the stop position.
-    glm::vec2 getWrappedTextCursorOffset(const std::string& wrappedText,
-                                         const size_t stop,
-                                         const float lineSpacing = 1.5f);
-
     // Return overall height including line spacing.
-    float getHeight(float lineSpacing = 1.5f) const { return mMaxGlyphHeight * lineSpacing; }
-    float getLetterHeight();
+    const float getHeight(float lineSpacing = 1.5f) const { return mMaxGlyphHeight * lineSpacing; }
+    // This uses the letter 'S' as a size reference.
+    const float getLetterHeight() { return mLetterHeight; }
 
     void reload(ResourceManager& rm) override { rebuildTextures(); }
     void unload(ResourceManager& rm) override { unloadTextures(); }
@@ -134,10 +105,32 @@ public:
                                               const float sizeMultiplier = 1.0f,
                                               const bool fontSizeDimmed = false);
 
-    // Returns an approximation of VRAM used by this font's texture (in bytes).
+    // Returns an approximation of VRAM used by the glyph atlas textures for this font object.
     size_t getMemUsage() const;
-    // Returns an approximation of total VRAM used by font textures (in bytes).
+    // Returns an approximation of VRAM used by the glyph atlas textures for all font objects.
     static size_t getTotalMemUsage();
+
+protected:
+    TextCache* buildTextCache(const std::string& text,
+                              float length,
+                              float maxLength,
+                              float height,
+                              float offsetY,
+                              float lineSpacing,
+                              Alignment alignment,
+                              unsigned int color,
+                              bool noTopMargin,
+                              bool multiLine,
+                              bool needGlyphsPos);
+
+    void renderTextCache(TextCache* cache);
+    // This is used to determine the horizontal text scrolling speed.
+    float getSizeReference();
+
+    // Enable or disable shaping, used by TextEditComponent.
+    void setTextShaping(bool state) { mShapeText = state; }
+
+    friend TextComponent;
 
 private:
     Font(float size, const std::string& path);
@@ -154,32 +147,82 @@ private:
         bool findEmpty(const glm::ivec2& size, glm::ivec2& cursorOut);
 
         // You must call initTexture() after creating a FontTexture to get a textureId.
-        // Initializes the OpenGL texture according to this FontTexture's settings,
-        // updating textureId.
         void initTexture();
 
-        // Deinitializes any existing OpenGL textures, is automatically called in destructor.
+        // Deinitializes all glyph atlas textures.
         void deinitTexture();
     };
 
     struct FontFace {
         const ResourceData data;
         FT_Face face;
+        hb_font_t* fontHB;
 
-        FontFace(ResourceData&& d, float size, const std::string& path);
+        FontFace(ResourceData&& d, float size, const std::string& path, hb_font_t* fontArg);
         virtual ~FontFace();
     };
 
     struct Glyph {
         FontTexture* texture;
+        hb_font_t* fontHB;
         glm::vec2 texPos;
-        glm::vec2 texSize; // In texels.
+        glm::vec2 texSize;
         glm::ivec2 advance;
         glm::ivec2 bearing;
         int rows;
     };
 
-    // Completely recreate the texture data for all textures based on mGlyphs information.
+    struct GlyphTexture {
+        FontTexture* texture;
+        glm::ivec2 cursor;
+    };
+
+    struct FallbackFontCache {
+        std::string path;
+        std::shared_ptr<FontFace> face;
+        hb_font_t* fontHB;
+        unsigned int spaceChar;
+    };
+
+    struct ShapeSegment {
+        unsigned int startPos;
+        unsigned int length;
+        float shapedWidth;
+        hb_font_t* fontHB;
+        bool doShape;
+        bool lineBreak;
+        bool wrapped;
+        bool rightToLeft;
+        unsigned int spaceChar;
+        std::string substring;
+        std::vector<std::pair<unsigned int, int>> glyphIndexes;
+
+        ShapeSegment()
+            : startPos {0}
+            , length {0}
+            , shapedWidth {0}
+            , fontHB {nullptr}
+            , doShape {false}
+            , lineBreak {false}
+            , wrapped {false}
+            , rightToLeft {false}
+            , spaceChar {0}
+        {
+        }
+    };
+
+    // Shape text using HarfBuzz.
+    void shapeText(const std::string& text, std::vector<ShapeSegment>& segmentsHB);
+
+    // Inserts newlines to make text wrap properly and also abbreviates when necessary.
+    void wrapText(std::vector<ShapeSegment>& segmentsHB,
+                  float maxLength,
+                  const float maxHeight,
+                  const float lineSpacing,
+                  const bool multiLine,
+                  const bool needGlyphsPos);
+
+    // Completely recreate the texture data for all glyph atlas entries.
     void rebuildTextures();
     void unloadTextures();
 
@@ -187,37 +230,38 @@ private:
                                FontTexture*& texOut,
                                glm::ivec2& cursorOut);
 
-    std::vector<std::string> getFallbackFontPaths();
-    FT_Face getFaceForChar(unsigned int id);
+    std::vector<FallbackFontCache> getFallbackFontPaths();
+    FT_Face* getFaceForChar(unsigned int id, hb_font_t** returnedFont);
+    FT_Face* getFaceForGlyphIndex(unsigned int id, hb_font_t* fontArg, hb_font_t** returnedFont);
     Glyph* getGlyph(const unsigned int id);
-
-    float getNewlineStartOffset(const std::string& text,
-                                const unsigned int& charStart,
-                                const float& xLen,
-                                const Alignment& alignment);
-
-    void clearFaceCache() { mFaceCache.clear(); }
+    Glyph* getGlyphByIndex(const unsigned int id, hb_font_t* fontArg, int xAdvance);
 
     static inline FT_Library sLibrary {nullptr};
     static inline std::map<std::tuple<float, std::string>, std::weak_ptr<Font>> sFontMap;
+    static inline std::vector<FallbackFontCache> sFallbackFonts;
+    static inline std::map<hb_font_t*, unsigned int> sFallbackSpaceGlyphs;
 
     Renderer* mRenderer;
+    std::unique_ptr<FontFace> mFontFace;
     std::vector<std::unique_ptr<FontTexture>> mTextures;
-    std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
     std::map<unsigned int, Glyph> mGlyphMap;
+    std::map<std::tuple<unsigned int, hb_font_t*, int>, Glyph> mGlyphMapByIndex;
+    std::map<std::pair<unsigned int, hb_font_t*>, GlyphTexture> mGlyphTextureMap;
 
     const std::string mPath;
+    hb_font_t* mFontHB;
+    hb_buffer_t* mBufHB;
+    std::tuple<unsigned int, unsigned int, hb_font_t*> mEllipsisGlyph;
+
     float mFontSize;
     float mLetterHeight;
+    float mSizeReference;
     int mMaxGlyphHeight;
+    unsigned int mSpaceGlyph;
+    bool mShapeText;
 };
 
-// Used to store a sort of "pre-rendered" string.
-// When a TextCache is constructed (Font::buildTextCache()), the vertices and texture coordinates
-// of the string are calculated and stored in the TextCache object. Rendering a previously
-// constructed TextCache (Font::renderTextCache) every frame is MUCH faster than rebuilding
-// one every frame. Keep in mind you still need the Font object to render a TextCache (as the
-// Font holds the OpenGL texture), and if a Font changes your TextCache may become invalid.
+// Caching of shaped and rendered text.
 class TextCache
 {
 public:
@@ -236,6 +280,9 @@ public:
     void setDimming(float dimming);
     void setClipRegion(const glm::vec4& clip) { clipRegion = clip; }
     const glm::vec2& getSize() { return metrics.size; }
+
+    // Used by TextEditComponent to position the cursor and scroll the text box.
+    std::vector<glm::vec2> glyphPositions;
 
     friend Font;
 

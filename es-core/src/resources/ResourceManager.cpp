@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ResourceManager.cpp
 //
 //  Handles the application resources (fonts, graphics, sounds etc.).
@@ -40,7 +40,7 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
         if (Utils::FileSystem::exists(applePackagePath)) {
             return applePackagePath;
         }
-#elif (defined(__unix__) && !defined(APPIMAGE_BUILD)) || defined(__ANDROID__)
+#elif (defined(__unix__) && !defined(APPIMAGE_BUILD)) || defined(__ANDROID__) || defined(__HAIKU__)
         // Check in the program data directory.
         std::string testDataPath {Utils::FileSystem::getProgramDataPath() + "/resources/" +
                                   &path[2]};

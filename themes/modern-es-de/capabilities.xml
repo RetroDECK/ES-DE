@@ -5,6 +5,19 @@
 <themeCapabilities>
     <themeName>Modern</themeName>
 
+    <language>en_US</language>
+    <language>en_GB</language>
+    <language>es_ES</language>
+    <language>fr_FR</language>
+    <language>it_IT</language>
+    <language>pl_PL</language>
+    <language>pt_BR</language>
+    <language>ro_RO</language>
+    <language>ru_RU</language>
+    <language>sv_SE</language>
+    <language>ja_JP</language>
+    <language>zh_CN</language>
+
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>16:10</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
@@ -14,15 +27,48 @@
     <fontSize>large</fontSize>
 
     <colorScheme name="dark">
-        <label>Dark</label>
+        <label language="en_US">Dark</label>
+        <label language="en_GB">Dark</label>
+        <label language="es_ES">Oscuro</label>
+        <label language="fr_FR">Foncé</label>
+        <label language="it_IT">Scuro</label>
+        <label language="pl_PL">Ciemna</label>
+        <label language="pt_BR">Escuro</label>
+        <label language="ro_RO">Întunecată</label>
+        <label language="ru_RU">Тёмная</label>
+        <label language="sv_SE">Mörkt</label>
+        <label language="ja_JP">ダーク</label>
+        <label language="zh_CN">暗黑</label>
     </colorScheme>
 
     <colorScheme name="light">
-        <label>Light</label>
+        <label language="en_US">Light</label>
+        <label language="en_GB">Light</label>
+        <label language="es_ES">Claro</label>
+        <label language="fr_FR">Clair</label>
+        <label language="it_IT">Chiaro</label>
+        <label language="pl_PL">Jasna</label>
+        <label language="pt_BR">Claro</label>
+        <label language="ro_RO">Luminoasă</label>
+        <label language="ru_RU">Светлая</label>
+        <label language="sv_SE">Ljust</label>
+        <label language="ja_JP">ライト</label>
+        <label language="zh_CN">明亮</label>
     </colorScheme>
 
     <transitions name="instant">
-        <label>instant</label>
+        <label language="en_US">Instant</label>
+        <label language="en_GB">Instant</label>
+        <label language="es_ES">Instantanea</label>
+        <label language="fr_FR">Instantané</label>
+        <label language="it_IT">Istantanea</label>
+        <label language="pl_PL">Natychmiastowe</label>
+        <label language="pt_BR">Deslizar</label>
+        <label language="ro_RO">Instant</label>
+        <label language="ru_RU">Мгновенно</label>
+        <label language="sv_SE">Direkt</label>
+        <label language="ja_JP">インスタント</label>
+        <label language="zh_CN">即时</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>instant</systemToGamelist>
@@ -33,7 +79,18 @@
     </transitions>
 
     <transitions name="instantAndSlide">
-        <label>instant and slide</label>
+        <label language="en_US">Instant and slide</label>
+        <label language="en_GB">Instant and slide</label>
+        <label language="es_ES">Instantanea y deslizante</label>
+        <label language="fr_FR">Instantané et glissement</label>
+        <label language="it_IT">Istantanea e scorri</label>
+        <label language="pl_PL">Momentalne przesunięcie</label>
+        <label language="pt_BR">Instantâneo e deslizar</label>
+        <label language="ro_RO">Instant și glisează</label>
+        <label language="ru_RU">Мгновенно и скольжение</label>
+        <label language="sv_SE">Direkt och glidande</label>
+        <label language="ja_JP">インスタントとスライド</label>
+        <label language="zh_CN">即时与滑动</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>slide</systemToGamelist>
@@ -44,7 +101,18 @@
     </transitions>
 
     <transitions name="instantAndFade">
-        <label>instant and fade</label>
+        <label language="en_US">Instant and fade</label>
+        <label language="en_GB">Instant and fade</label>
+        <label language="es_ES">Instantanea y fundido</label>
+        <label language="fr_FR">Instantané et fondu</label>
+        <label language="it_IT">Istantanea e dissolvi</label>
+        <label language="pl_PL">Momentalne zanikanie</label>
+        <label language="pt_BR">Instantâneo e esmaecer</label>
+        <label language="ro_RO">Instant și estompează</label>
+        <label language="ru_RU">Мгновенно и затухание</label>
+        <label language="sv_SE">Direkt och uttoning</label>
+        <label language="ja_JP">インスタントとフェイド</label>
+        <label language="zh_CN">即时与淡出</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>fade</systemToGamelist>
@@ -61,7 +129,18 @@
     </suppressTransitionProfiles>
 
     <variant name="withVideos">
-        <label>Textlist with videos</label>
+        <label language="en_US">Textlist with videos</label>
+        <label language="en_GB">Textlist with videos</label>
+        <label language="es_ES">Lista con videos</label>
+        <label language="fr_FR">Liste avec vidéos</label>
+        <label language="it_IT">Lista testi con video</label>
+        <label language="pl_PL">Lista tekstowa z wideo</label>
+        <label language="pt_BR">Lista de texto com vídeos</label>
+        <label language="ro_RO">Listă text cu videouri</label>
+        <label language="ru_RU">Текст с видео</label>
+        <label language="sv_SE">Textlista med video</label>
+        <label language="ja_JP">ビデオが含まるテキストリスト</label>
+        <label language="zh_CN">带视频的文字列表</label>
         <selectable>true</selectable>
         <override>
             <trigger>noMedia</trigger>
@@ -71,7 +150,18 @@
     </variant>
 
     <variant name="withoutVideos">
-        <label>Textlist without videos</label>
+        <label language="en_US">Textlist without videos</label>
+        <label language="en_GB">Textlist without videos</label>
+        <label language="es_ES">Lista sin videos</label>
+        <label language="fr_FR">Liste sans vidéos</label>
+        <label language="it_IT">Lista testi, no video</label>
+        <label language="pl_PL">Lista tekstowa bez wideo</label>
+        <label language="pt_BR">Lista de texto sem vídeos</label>
+        <label language="ro_RO">Listă text fără videouri</label>
+        <label language="ru_RU">Текст без видео</label>
+        <label language="sv_SE">Textlista utan video</label>
+        <label language="ja_JP">ビデオが含まないテキストリスト</label>
+        <label language="zh_CN">不带视频的文字列表</label>
         <selectable>true</selectable>
         <override>
             <trigger>noMedia</trigger>
@@ -81,7 +171,18 @@
     </variant>
 
     <variant name="withVideosLegacy">
-        <label>Textlist with videos (legacy)</label>
+        <label language="en_US">Textlist with videos (legacy)</label>
+        <label language="en_GB">Textlist with videos (legacy)</label>
+        <label language="es_ES">Lista con videos (legacy)</label>
+        <label language="fr_FR">Liste avec vidéos (legacy)</label>
+        <label language="it_IT">Lista testi con video (legacy)</label>
+        <label language="pl_PL">Lista tekstowa z wideo (stara)</label>
+        <label language="pt_BR">Lista de texto com vídeos (legado)</label>
+        <label language="ro_RO">Listă text cu videouri (învechit)</label>
+        <label language="ru_RU">Текст с видео (устар.)</label>
+        <label language="sv_SE">Textlista med video (legacy)</label>
+        <label language="ja_JP">ビデオが含まるテキストリスト（レガシー）</label>
+        <label language="zh_CN">带视频的文字列表（传统）</label>
         <selectable>true</selectable>
         <override>
             <trigger>noMedia</trigger>
@@ -91,7 +192,18 @@
     </variant>
 
     <variant name="withoutVideosLegacy">
-        <label>Textlist without videos (legacy)</label>
+        <label language="en_US">Textlist without videos (legacy)</label>
+        <label language="en_GB">Textlist without videos (legacy)</label>
+        <label language="es_ES">Lista sin videos (legacy)</label>
+        <label language="fr_FR">Liste sans vidéos (legacy)</label>
+        <label language="it_IT">Lista testi, no video (legacy)</label>
+        <label language="pl_PL">Lista tekstowa bez wideo (stara)</label>
+        <label language="pt_BR">Lista de texto sem vídeos (legado)</label>
+        <label language="ro_RO">Listă text fără videouri (învechit)</label>
+        <label language="ru_RU">Текст без видео (устар.)</label>
+        <label language="sv_SE">Textlista utan video (legacy)</label>
+        <label language="ja_JP">ビデオが含まないテキストリスト（レガシー）</label>
+        <label language="zh_CN">不带视频的文字列表（传统）</label>
         <selectable>true</selectable>
         <override>
             <trigger>noMedia</trigger>

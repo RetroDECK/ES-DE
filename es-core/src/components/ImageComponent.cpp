@@ -14,6 +14,7 @@
 #include "Window.h"
 #include "resources/TextureResource.h"
 #include "utils/CImgUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
@@ -759,7 +760,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 std::vector<HelpPrompt> ImageComponent::getHelpPrompts()
 {
     std::vector<HelpPrompt> ret;
-    ret.push_back(HelpPrompt("a", "select"));
+    ret.push_back(HelpPrompt("a", _("select")));
     return ret;
 }
 

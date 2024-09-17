@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GamelistView.cpp
 //
 //  Main gamelist logic.
@@ -11,6 +11,7 @@
 #include "CollectionSystemsManager.h"
 #include "UIModeController.h"
 #include "animations/LambdaAnimation.h"
+#include "utils/LocalizationUtil.h"
 
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 325
@@ -93,6 +94,15 @@ void GamelistView::onShow()
     updateView(CursorState::CURSOR_STOPPED);
     mPrimary->finishAnimation(0);
     mPrimary->onShowPrimary();
+}
+
+void GamelistView::onHide()
+{
+    for (auto& video : mVideoComponents)
+        video->stopVideoPlayer(false);
+
+    for (auto& video : mStaticVideoComponents)
+        video->stopVideoPlayer(false);
 }
 
 void GamelistView::onTransition()
@@ -506,33 +516,33 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 
     if (Settings::getInstance()->getString("QuickSystemSelect") != "disabled") {
         if (getQuickSystemSelectLeftButton() == "leftshoulder")
-            prompts.push_back(HelpPrompt("lr", "system"));
+            prompts.push_back(HelpPrompt("lr", _("system")));
         else if (getQuickSystemSelectLeftButton() == "lefttrigger")
-            prompts.push_back(HelpPrompt("ltrt", "system"));
+            prompts.push_back(HelpPrompt("ltrt", _("system")));
         else if (getQuickSystemSelectLeftButton() == "left")
-            prompts.push_back(HelpPrompt("left/right", "system"));
+            prompts.push_back(HelpPrompt("left/right", _("system")));
     }
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::ViewMode::GAMELIST)
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
     else
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
 
-    prompts.push_back(HelpPrompt("b", "back"));
-    prompts.push_back(HelpPrompt("x", "view media"));
+    prompts.push_back(HelpPrompt("b", _("back")));
+    prompts.push_back(HelpPrompt("x", _("view media")));
 
     if (!UIModeController::getInstance()->isUIModeKid())
-        prompts.push_back(HelpPrompt("back", "options"));
+        prompts.push_back(HelpPrompt("back", _("options")));
     if (mRoot->getSystem()->isGameSystem() &&
         (Settings::getInstance()->getString("RandomEntryButton") == "games" ||
          Settings::getInstance()->getString("RandomEntryButton") == "gamessystems"))
-        prompts.push_back(HelpPrompt("thumbstickclick", "random"));
+        prompts.push_back(HelpPrompt("thumbstickclick", _("random")));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
         !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::ViewMode::GAMELIST) {
-        prompts.push_back(HelpPrompt("y", "jump to game"));
+        prompts.push_back(HelpPrompt("y", _("jump to game")));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
              (mRoot->getSystem()->getThemeFolder() != "custom-collections" ||
@@ -542,6 +552,8 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
              (Settings::getInstance()->getBool("FavoritesAddButton") ||
               CollectionSystemsManager::getInstance()->isEditing())) {
         std::string prompt {CollectionSystemsManager::getInstance()->getEditingCollection()};
+        if (prompt == "Favorites")
+            prompt = _("Favorites");
         if (prompt.length() > 24)
             prompt = prompt.substr(0, 22) + "...";
         prompts.push_back(HelpPrompt("y", prompt));
@@ -899,28 +911,47 @@ void GamelistView::updateView(const CursorState& state)
         std::string metadata;
 
         auto getMetadataValue = [&file, &metadata]() -> std::string {
+#if defined(GETTEXT_DUMMY_ENTRIES)
+            _p("theme", "all");
+            _p("theme", "all games");
+            _p("theme", "recent");
+            _p("theme", "last played");
+            _p("theme", "favorites");
+            _p("theme", "collections");
+            -p("theme", "unknown");
+#endif
             if (metadata == "name")
                 return file->metadata.get("name");
             else if (metadata == "description")
                 return file->metadata.get("desc");
             else if (metadata == "developer")
-                return file->metadata.get("developer");
+                return (file->metadata.get("developer") == "unknown" ?
+                            _p("theme", "unknown") :
+                            file->metadata.get("developer"));
             else if (metadata == "publisher")
-                return file->metadata.get("publisher");
+                return (file->metadata.get("publisher") == "unknown" ?
+                            _p("theme", "unknown") :
+                            file->metadata.get("publisher"));
             else if (metadata == "genre")
-                return file->metadata.get("genre");
+                return (file->metadata.get("genre") == "unknown" ? _p("theme", "unknown") :
+                                                                   file->metadata.get("genre"));
             else if (metadata == "players")
-                return file->metadata.get("players");
+                return (file->metadata.get("players") == "unknown" ? _p("theme", "unknown") :
+                                                                     file->metadata.get("players"));
             else if (metadata == "favorite")
-                return file->metadata.get("favorite") == "true" ? "yes" : "no";
+                return file->metadata.get("favorite") == "true" ? _p("theme", "yes") :
+                                                                  _p("theme", "no");
             else if (metadata == "completed")
-                return file->metadata.get("completed") == "true" ? "yes" : "no";
+                return file->metadata.get("completed") == "true" ? _p("theme", "yes") :
+                                                                   _p("theme", "no");
             else if (metadata == "kidgame")
-                return file->metadata.get("kidgame") == "true" ? "yes" : "no";
+                return file->metadata.get("kidgame") == "true" ? _p("theme", "yes") :
+                                                                 _p("theme", "no");
             else if (metadata == "broken")
-                return file->metadata.get("broken") == "true" ? "yes" : "no";
+                return file->metadata.get("broken") == "true" ? _p("theme", "yes") :
+                                                                _p("theme", "no");
             else if (metadata == "manual")
-                return file->getManualPath() != "" ? "yes" : "no";
+                return file->getManualPath() != "" ? _p("theme", "yes") : _p("theme", "no");
             else if (metadata == "playcount")
                 return file->metadata.get("playcount");
             else if (metadata == "altemulator")
@@ -942,8 +973,14 @@ void GamelistView::updateView(const CursorState& state)
                            Utils::FileSystem::getStem(file->getFileName());
             else if (metadata == "physicalNameExtension")
                 return file->getType() == PLACEHOLDER ? "" : file->getFileName();
+            else if (metadata == "systemName" && file->getSystem()->isCollection() &&
+                     !file->getSystem()->isCustomCollection())
+                return _p("theme", file->getSystem()->getName().c_str());
             else if (metadata == "systemName")
                 return file->getSystem()->getName();
+            else if (metadata == "systemFullname" && file->getSystem()->isCollection() &&
+                     !file->getSystem()->isCustomCollection())
+                return _p("theme", file->getSystem()->getFullName().c_str());
             else if (metadata == "systemFullname")
                 return file->getSystem()->getFullName();
             else if (metadata == "sourceSystemName")

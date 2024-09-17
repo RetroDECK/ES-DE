@@ -12,6 +12,7 @@
 #include "Window.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #define SCREENSAVER_FADE_IN_TIME 900
@@ -392,7 +393,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 std::vector<HelpPrompt> VideoComponent::getHelpPrompts()
 {
     std::vector<HelpPrompt> ret;
-    ret.push_back(HelpPrompt("a", "select"));
+    ret.push_back(HelpPrompt("a", _("select")));
     return ret;
 }
 

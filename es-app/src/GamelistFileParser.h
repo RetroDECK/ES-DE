@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GamelistFileParser.h
 //
 //  Parses and updates the gamelist.xml files.

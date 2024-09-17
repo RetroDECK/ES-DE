@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiComponent.h
 //
 //  Basic GUI component handling such as placement, rotation, Z-order, rendering and animation.
@@ -23,6 +23,7 @@ class Animation;
 class AnimationController;
 class Font;
 class InputConfig;
+class TextCache;
 class ThemeData;
 class Window;
 
@@ -185,7 +186,9 @@ public:
             mComponentThemeFlags ^= ComponentThemeFlags::METADATA_ELEMENT;
     }
 
-    virtual int getTextCacheGlyphHeight() { return 0; }
+    virtual const TextCache* getTextCache() { return nullptr; }
+    virtual void setRemoveLineBreaks(bool state) {}
+    virtual void setAutoCalcExtent(glm::ivec2 extent) {};
 
     // Returns the center point of the image (takes origin into account).
     const glm::vec2 getCenter() const;

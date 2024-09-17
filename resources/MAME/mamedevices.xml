@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0265.xml -->
+<!-- Last updated with information from MAME driver file mame0269.xml -->
 <device>22vp931</device>
 <device>3c505</device>
 <device>3xtwin</device>
@@ -291,6 +291,7 @@
 <device>bbc_tube_arm</device>
 <device>bbc_tube_casper</device>
 <device>bbc_tube_cms6809</device>
+<device>bbc_tube_matchbox</device>
 <device>bbc_tube_pcplus</device>
 <device>bbc_tube_rc6502</device>
 <device>bbc_tube_rc65816</device>
@@ -598,6 +599,7 @@
 <device>hp82937</device>
 <device>hp82939</device>
 <device>hp9122c</device>
+<device>hp9133</device>
 <device>hp98034</device>
 <device>hp98035</device>
 <device>hp98046</device>
@@ -711,6 +713,7 @@
 <device>mackbd_m0110b</device>
 <device>mackbd_m0110</device>
 <device>mackbd_m0110f</device>
+<device>mackbd_m0110j</device>
 <device>mackbd_m0110t</device>
 <device>mackbd_m0120</device>
 <device>mackbd_m0120p</device>
@@ -718,6 +721,7 @@
 <device>mbc55x_kbd</device>
 <device>mc10_mcx128</device>
 <device>mc1502_rom</device>
+<device>mcx128</device>
 <device>md_kbd</device>
 <device>md_rom_svp</device>
 <device>mg1_kbd_device</device>
@@ -744,6 +748,15 @@
 <device>mpcba79</device>
 <device>mpcbb68</device>
 <device>mpcbb92</device>
+<device>mpf1_epb</device>
+<device>mpf1_epb_ibp</device>
+<device>mpf1_iom_ip</device>
+<device>mpf1_prt</device>
+<device>mpf1_prt_ip</device>
+<device>mpf1_sgb</device>
+<device>mpf1_ssb</device>
+<device>mpf1_tva_ip</device>
+<device>mpf1_vid</device>
 <device>mps1200</device>
 <device>mps1250</device>
 <device>mpu401</device>
@@ -763,6 +776,7 @@
 <device>msx_cart_sfg01</device>
 <device>msx_cart_sfg05</device>
 <device>msx_cart_skw01</device>
+<device>msx_cart_sunrise_ataide</device>
 <device>msx_moonsound</device>
 <device>mtx_cfx</device>
 <device>mtx_sdxbas</device>
@@ -820,6 +834,7 @@
 <device>nb_thungx</device>
 <device>nb_vikbw</device>
 <device>nb_wspt</device>
+<device>ncr53c825_pci</device>
 <device>neogs</device>
 <device>nes_rob</device>
 <device>newbrain_eim</device>
@@ -1099,6 +1114,7 @@
 <device>technica</device>
 <device>tek410x_kbd</device>
 <device>tek_msu_fdc</device>
+<device>teletex800</device>
 <device>tetriskr_cga</device>
 <device>tgui9680</device>
 <device>ti99_bwg</device>
@@ -1136,6 +1152,7 @@
 <device>ultra24f</device>
 <device>uni800</device>
 <device>unidisk</device>
+<device>upd7220a</device>
 <device>upd7220</device>
 <device>uts_400kbd</device>
 <device>uts_extw</device>

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MameNames.cpp
 //
 //  Provides expanded game names based on short MAME name arguments. Also contains
@@ -48,7 +48,7 @@ MameNames::MameNames()
         return;
     }
 
-    for (pugi::xml_node gameNode = doc.child("game"); gameNode;
+    for (pugi::xml_node gameNode {doc.child("game")}; gameNode;
          gameNode = gameNode.next_sibling("game")) {
         mNamePairs[gameNode.child("mamename").text().get()] =
             gameNode.child("realname").text().get();
@@ -75,7 +75,7 @@ MameNames::MameNames()
         return;
     }
 
-    for (pugi::xml_node biosNode = doc.child("bios"); biosNode;
+    for (pugi::xml_node biosNode {doc.child("bios")}; biosNode;
          biosNode = biosNode.next_sibling("bios")) {
         std::string bios = biosNode.text().get();
         mMameBioses.emplace_back(bios);
@@ -102,9 +102,9 @@ MameNames::MameNames()
         return;
     }
 
-    for (pugi::xml_node deviceNode = doc.child("device"); deviceNode;
+    for (pugi::xml_node deviceNode {doc.child("device")}; deviceNode;
          deviceNode = deviceNode.next_sibling("device")) {
-        std::string device = deviceNode.text().get();
+        std::string device {deviceNode.text().get()};
         mMameDevices.emplace_back(device);
     }
 }

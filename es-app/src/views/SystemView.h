@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  SystemView.h
 //
 //  Main system view.
@@ -38,6 +38,7 @@ public:
     SystemView();
 
     void onShow() override;
+    void onHide() override;
     void onTransition() override;
     void goToSystem(SystemData* system, bool animate);
 

@@ -380,7 +380,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         // when quick-jumping as textures are not loaded in this case.
         auto text = std::make_shared<TextComponent>(
             entry.name, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
-            glm::vec3 {0.0f, 0.0f, 0.0f},
+            glm::ivec2 {0, 0}, glm::vec3 {0.0f, 0.0f, 0.0f},
             glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)), 0x00000000,
             mLineSpacing, mTextRelativeScale, mTextHorizontalScrolling, mTextHorizontalScrollSpeed,
             mTextHorizontalScrollDelay, mTextHorizontalScrollGap);

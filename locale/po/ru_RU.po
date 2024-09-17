@@ -1,0 +1,2908 @@
+# ES-DE Frontend translation strings.
+# Copyright (c) 2024 Northwestern Software AB
+# This file is distributed under the same license as the ES-DE Frontend package.
+# Northwestern Software <info@es-de.org>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ES-DE Frontend\n"
+"Report-Msgid-Bugs-To: info@es-de.org\n"
+"POT-Creation-Date: 2024-09-04 17:44+0200\n"
+"PO-Revision-Date: 2024-09-03 16:34+0400\n"
+"Last-Translator: Northwestern Software <info@es-de.org>\n"
+"Language-Team: Русский <info@es-de.org>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.5\n"
+
+msgid "Network error (status:"
+msgstr "Ошибка сети (статус:"
+
+msgid "New prerelease available:"
+msgstr "Доступна новая предрелизная версия:"
+
+msgid "New release available:"
+msgstr "Доступна новая версия:"
+
+msgid "For more information visit"
+msgstr "Для получения доп. информации посетите"
+
+msgid "No Entries Found"
+msgstr "Не Найдено Записей"
+
+msgctxt "theme"
+msgid "all"
+msgstr "все"
+
+msgctxt "theme"
+msgid "all games"
+msgstr "все игры"
+
+msgctxt "theme"
+msgid "recent"
+msgstr "недавние"
+
+msgctxt "theme"
+msgid "last played"
+msgstr "последние"
+
+msgctxt "theme"
+msgid "favorites"
+msgstr "избранное"
+
+msgctxt "theme"
+msgid "collections"
+msgstr "коллекции"
+
+msgid "ScreenScraper error:"
+msgstr "Ошибка ScreenScraper:"
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: Неправильное имя пользователя или пароль"
+
+msgid "Network error:"
+msgstr "Ошибка сети:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "Каталог медиа не существует и не может быть создан."
+
+msgid "Permission problems?"
+msgstr "Проблемы с правами?"
+
+msgid "Failed to open path for writing media file."
+msgstr "Не удалось открыть путь для записи медиафайла."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr ""
+"Не удалось сохранить медиафайл - проблемы с правами или диск переполнен?"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr ""
+"Не удалось сохранить изменённое изображение - проблемы с правами или диск "
+"переполнен?"
+
+msgctxt "metadata"
+msgid "NAME"
+msgstr "ИМЯ"
+
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "ВВЕДИТЕ ИМЯ"
+
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "СОРТИРОВОЧНОЕ ИМЯ"
+
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "ВВЕДИТЕ СОРТИРОВОЧНОЕ ИМЯ"
+
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "СОРТИРОВОЧНОЕ ИМЯ ДЛЯ ПОЛЬЗОВАТЕЛЬСКИХ КОЛЛЕКЦИЙ"
+
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "ВВЕДИТЕ СОРТИРОВОЧНОЕ ИМЯ ДЛЯ КОЛЛЕКЦИЙ"
+
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "ОПИСАНИЕ"
+
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "ВВЕДИТЕ ОПИСАНИЕ"
+
+msgctxt "metadata"
+msgid "RATING"
+msgstr "РЕЙТИНГ"
+
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "ДАТА ВЫХОДА"
+
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "РАЗРАБОТЧИК"
+
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "ВВЕДИТЕ РАЗРАБОТЧИКА"
+
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "ИЗДАТЕЛЬ"
+
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "ВВЕДИТЕ ИЗДАТЕЛЯ"
+
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "ЖАНР"
+
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "ВВЕДИТЕ ЖАНР"
+
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "ИГРОКИ"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "ВВЕДИТЕ КОЛИЧЕСТВО ИГРОКОВ"
+
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "ИЗБРАННОЕ"
+
+msgctxt "metadata"
+msgid "COMPLETED"
+msgstr "ПРОЙДЕНО"
+
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "ДЕТСКАЯ"
+
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "ДЕТСКАЯ (ВЛИЯЕТ ТОЛЬКО НА ЗНАЧКИ)"
+
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "СКРЫТО"
+
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "СЛОМАНО/НЕ РАБОТАЕТ"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "ИСКЛЮЧИТЬ ИЗ СЧЕТЧИКА ИГР"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "ИСКЛЮЧИТЬ ИЗ МУЛЬТИ-СКРЕЙПЕРА"
+
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "СКРЫТЬ ПОЛЯ МЕТАДАННЫХ"
+
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "СЫГРАНО РАЗ"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "ВВЕДИТЕ ЧИСЛО СЫГРАННЫХ РАЗ"
+
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "КОНТРОЛЛЕР"
+
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "ВЫБЕРИТЕ КОНТРОЛЛЕР"
+
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "АЛЬТЕРНАТИВНЫЕ ЭМУЛЯТОРЫ"
+
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "ВЫБЕРИТЕ АЛЬТ. ЭМУЛЯТОРЫ"
+
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "ССЫЛКА НА ПАПКУ"
+
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "ВЫБЕРИТЕ ССЫЛКУ НА ПАПКУ"
+
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "ПОСЛЕДНЯЯ ИГРА"
+
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "ВВЕДИТЕ ДАТУ ПОСЛЕДНЕЙ ИГРЫ"
+
+msgid "MAIN MENU"
+msgstr "ГЛАВНОЕ МЕНЮ"
+
+msgid "SCRAPER"
+msgstr "СКРЕЙПЕР"
+
+msgid "UI SETTINGS"
+msgstr "НАСТРОЙКИ ИНТЕРФЕЙСА"
+
+msgid "SOUND SETTINGS"
+msgstr "НАСТРОЙКИ ЗВУКА"
+
+msgid "INPUT DEVICE SETTINGS"
+msgstr "НАСТРОЙКИ ВВОДА"
+
+msgid "GAME COLLECTION SETTINGS"
+msgstr "НАСТРОЙКИ КОЛЛЕКЦИЙ"
+
+msgid "OTHER SETTINGS"
+msgstr "ПРОЧИЕ НАСТРОЙКИ"
+
+msgid "UTILITIES"
+msgstr "УТИЛИТЫ"
+
+msgid "QUIT ES-DE"
+msgstr "ВЫХОД ИЗ ES-DE"
+
+msgid "QUIT"
+msgstr "ВЫХОД"
+
+msgid "THEME"
+msgstr "ТЕМА"
+
+msgid "THEME DOWNLOADER"
+msgstr "ЗАГРУЗЧИК ТЕМ"
+
+msgid "THEME VARIANT"
+msgstr "ВАРИАНТ ТЕМЫ"
+
+msgid "NONE DEFINED"
+msgstr "НЕ ОПРЕДЕЛЁН"
+
+msgid "THEME COLOR SCHEME"
+msgstr "ЦВЕТОВАЯ СХЕМА ТЕМЫ"
+
+msgid "THEME FONT SIZE"
+msgstr "РАЗМЕР ШРИФТА ТЕМЫ"
+
+msgid "THEME ASPECT RATIO"
+msgstr "СООТНОШЕНИЕ СТОРОН ТЕМЫ"
+
+msgid "THEME TRANSITIONS"
+msgstr "ПЕРЕХОДЫ ТЕМЫ"
+
+msgid "AUTOMATIC"
+msgstr "АВТОМАТИЧЕСКИ"
+
+msgid "THEME PROFILE"
+msgstr "ПРОФИЛЬ ТЕМЫ"
+
+msgid "INSTANT (BUILT-IN)"
+msgstr "МГНОВЕННО (ВСТРОЕННЫЙ)"
+
+msgid "SLIDE (BUILT-IN)"
+msgstr "СКОЛЬЖЕНИЕ (ВСТРОЕННЫЙ)"
+
+msgid "FADE (BUILT-IN)"
+msgstr "ЗАТУХАНИЕ (ВСТРОЕННОЕ)"
+
+msgid "THEME LANGUAGE"
+msgstr "ЯЗЫК ТЕМЫ"
+
+msgid "APPLICATION LANGUAGE"
+msgstr "ЯЗЫК ПРИЛОЖЕНИЯ"
+
+msgid "QUICK SYSTEM SELECT"
+msgstr "БЫСТРЫЙ ВЫБОР СИСТЕМЫ"
+
+msgid "LEFT/RIGHT OR SHOULDERS"
+msgstr "ВЛЕВО/ВПРАВО ИЛИ БАМПЕРЫ"
+
+msgid "LEFT/RIGHT OR TRIGGERS"
+msgstr "ВЛЕВО/ВПРАВО ИЛИ ТРИГГЕРЫ"
+
+msgid "SHOULDERS"
+msgstr "БАМПЕРЫ"
+
+msgid "TRIGGERS"
+msgstr "ТРИГГЕРЫ"
+
+msgid "LEFT/RIGHT"
+msgstr "ВЛЕВО/ВПРАВО"
+
+msgid "DISABLED"
+msgstr "ОТКЛЮЧЕНО"
+
+msgid "GAMELIST ON STARTUP"
+msgstr "ГЕЙМЛИСТ ПРИ ЗАПУСКЕ"
+
+msgid "NONE"
+msgstr "НЕТ"
+
+msgid "SYSTEMS SORTING"
+msgstr "СОРТИРОВКА СИСТЕМ"
+
+msgid "FULL NAMES OR CUSTOM"
+msgstr "ПОЛНЫЕ ИМЕНА ИЛИ ПОЛЬЗОВАТЕЛЬСКИЕ"
+
+msgid "RELEASE YEAR"
+msgstr "ГОД ВЫХОДА"
+
+msgid "MANUFACTURER, RELEASE YEAR"
+msgstr "ПРОИЗВОДИТЕЛЬ, ГОД ВЫХОДА"
+
+msgid "HW TYPE, RELEASE YEAR"
+msgstr "ТИП ЖЕЛЕЗА, ГОД ВЫХОДА"
+
+msgid "MANUFACTURER, HW TYPE, REL. YEAR"
+msgstr "ПРОИЗВОДИТЕЛЬ, ТИП ЖЕЛЕЗА, ГОД ВЫХОДА"
+
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "ПОРЯДОК СОРТИРОВКИ ИГР ПО УМОЛЧАНИЮ"
+
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "ПОРЯДОК СОРТИРОВКИ ИГР ПО УМОЛЧАНИЮ"
+
+msgid "MENU COLOR SCHEME"
+msgstr "ЦВЕТОВАЯ СХЕМА МЕНЮ"
+
+msgid "DARK"
+msgstr "ТЁМНАЯ"
+
+msgid "DARK AND RED"
+msgstr "ТЁМНЫЙ И КРАСНЫЙ"
+
+msgid "LIGHT"
+msgstr "СВЕТЛАЯ"
+
+msgid "MENU OPENING ANIMATION"
+msgstr "АНИМАЦИЯ ОТКРЫТИЯ МЕНЮ"
+
+msgid "SCALE-UP"
+msgstr "УВЕЛИЧЕНИЕ"
+
+msgid "LAUNCH SCREEN DURATION"
+msgstr "ПРОДОЛЖИТЕЛЬНОСТЬ ЭКРАНА ЗАПУСКА"
+
+msgid "NORMAL"
+msgstr "НОРМАЛЬНАЯ"
+
+msgid "BRIEF"
+msgstr "КОРОТКАЯ"
+
+msgid "LONG"
+msgstr "ДЛИННАЯ"
+
+msgid "UI MODE"
+msgstr "РЕЖИМ ИНТЕРФЕЙСА"
+
+msgid "FULL"
+msgstr "ПОЛНЫЙ"
+
+msgid "KIOSK"
+msgstr "КИОСК"
+
+msgid "KID"
+msgstr "ДЕТСКИЙ"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"ЭТО ИЗМЕНИТ ИНТЕРФЕЙС НА ОГРАНИЧЕННЫЙ РЕЖИМ\n"
+"'КИОСК'\n"
+"В РЕЗУЛЬТАТЕ БОЛЬШИНСТВО ПУНКТОВ МЕНЮ БУДУТ СКРЫТЫ.\n"
+"ЧТОБЫ РАЗБЛОКИРОВАТЬ И ВЕРНУТЬСЯ К ПОЛНОМУ ИНТЕРФЕЙСУ, ВВЕДИТЕ ЭТОТ КОД:\n"
+"%s\n"
+"\n"
+"ХОТИТЕ ПРОДОЛЖИТЬ?"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"ЭТО ИЗМЕНИТ ИНТЕРФЕЙС НА ОГРАНИЧЕННЫЙ РЕЖИМ\n"
+"'ДЕТСКИЙ'\n"
+"ЭТО ПОЗВОЛИТ ИСПОЛЬЗОВАТЬ ТОЛЬКО ТЕ ИГРЫ, КОТОРЫЕ БЫЛИ ОТМЕЧЕНЫ\n"
+"КАК ПОДХОДЯЩИЕ ДЛЯ ДЕТЕЙ\n"
+"ЧТОБЫ РАЗБЛОКИРОВАТЬ И ВЕРНУТЬСЯ К ПОЛНОМУ ИНТЕРФЕЙСУ, ВВЕДИТЕ ЭТОТ КОД:\n"
+"%s\n"
+"\n"
+"ХОТИТЕ ПРОДОЛЖИТЬ?"
+
+msgid "YES"
+msgstr "ДА"
+
+msgid "NO"
+msgstr "НЕТ"
+
+msgid "RANDOM ENTRY BUTTON"
+msgstr "КНОПКА СЛУЧАЙНОЙ ЗАПИСИ"
+
+msgid "GAMES ONLY"
+msgstr "ТОЛЬКО ИГРЫ"
+
+msgid "GAMES AND SYSTEMS"
+msgstr "ИГРЫ И СИСТЕМЫ"
+
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "НАСТРОЙКИ ПРОСМОТРЩИКА МЕДИА"
+
+msgid "SCREENSAVER SETTINGS"
+msgstr "НАСТРОЙКИ ЗАСТАВКИ"
+
+msgid "ENABLE THEME VARIANT TRIGGERS"
+msgstr "РАЗРЕШИТЬ СМЕНУ ВАРИАНТОВ ТЕМ ТРИГГЕРАМИ"
+
+msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
+msgstr "РАЗМЫТИЕ ФОНА ПРИ ОТКРЫТИИ МЕНЮ"
+
+msgid "SORT FOLDERS ON TOP OF GAMELISTS"
+msgstr "СОРТИРОВАТЬ ПАПКИ ПОВЕРХ ГЕЙМЛИСТЫ"
+
+msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+msgstr "СОРТИРОВАТЬ ИЗБРАННЫЕ ИГРЫ НАД НЕИЗБРАННЫМИ"
+
+msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
+msgstr "МАРКИРОВКА ЗВЁЗДАМИ ДЛЯ ИЗБРАННОГО"
+
+msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+msgstr "ВКЛЮЧИТЬ ОВЕРЛЕЙ ПРОКРУТКИ ТЕКСТОВОГО СПИСКА"
+
+msgid "ENABLE VIRTUAL KEYBOARD"
+msgstr "ВКЛЮЧИТЬ ВИРТУАЛЬНУЮ КЛАВИАТУРУ"
+
+msgid "ENABLE TOGGLE FAVORITES BUTTON"
+msgstr "ВКЛЮЧИТЬ КНОПКУ ПЕРЕКЛЮЧЕНИЯ ИЗБРАННОГО"
+
+msgid "ENABLE GAMELIST FILTERS"
+msgstr "РАЗРЕШИТЬ ФИЛЬТРЫ ГЕЙМЛИСТА"
+
+msgid "DISPLAY ON-SCREEN HELP"
+msgstr "ОТОБРАЖЕНИЕ ЭКРАННОЙ СПРАВКИ"
+
+msgid "SYSTEM VOLUME"
+msgstr "ГРОМКОСТЬ СИСТЕМЫ"
+
+msgid "NAVIGATION SOUNDS VOLUME"
+msgstr "ГРОМКОСТЬ ЗВУКОВ НАВИГАЦИИ"
+
+msgid "VIDEO PLAYER VOLUME"
+msgstr "ГРОМКОСТЬ ВИДЕОПЛЕЕРА"
+
+msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+msgstr "ВКЛЮЧИТЬ ЗВУК ВИДЕО ГЕЙМЛИСТОВ И СИСТЕМ"
+
+msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+msgstr "ВКЛЮЧИТЬ ЗВУК ПРОСМОТРЩИКА ВИДЕО"
+
+msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+msgstr "ВКЛЮЧИТЬ ЗВУК ЗАСТАВОЧНЫХ ВИДЕО"
+
+msgid "ENABLE NAVIGATION SOUNDS"
+msgstr "ВКЛЮЧИТЬ ЗВУКИ НАВИГАЦИИ"
+
+msgid "CONTROLLER TYPE"
+msgstr "ТИП КОНТРОЛЛЕРА"
+
+msgid "TOUCH OVERLAY SIZE"
+msgstr "РАЗМЕР СЕНСОРНОГО ОВЕРЛЕЯ"
+
+msgid "MEDIUM"
+msgstr "СРЕДНИЙ"
+
+msgid "LARGE"
+msgstr "БОЛЬШОЙ"
+
+msgid "SMALL"
+msgstr "МАЛЕНЬКИЙ"
+
+msgid "EXTRA SMALL"
+msgstr "ОЧЕНЬ МАЛЕНЬКИЙ"
+
+msgid "TOUCH OVERLAY OPACITY"
+msgstr "ПРОЗРАЧНОСТЬ СЕНСОРНОГО ОВЕРЛЕЯ"
+
+msgid "LOW"
+msgstr "НИЗКАЯ"
+
+msgid "VERY LOW"
+msgstr "ОЧЕНЬ НИЗКАЯ"
+
+msgid "TOUCH OVERLAY FADE-OUT TIME"
+msgstr "ЗАТУХАНИЕ СЕНСОРНОГО ОВЕРЛЕЯ"
+
+msgid "ENABLE TOUCH OVERLAY"
+msgstr "ВКЛЮЧИТЬ СЕНСОРНЫЙ ОВЕРЛЕЙ"
+
+msgid ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+msgstr ""
+"НЕ ОТКЛЮЧАЙТЕ СЕНСОРНЫЙ ОВЕРЛЕЙ, ЕСЛИ ВЫ НЕ ИСПОЛЬЗУЕТЕ ВНЕШНИЙ КОНТРОЛЛЕР, "
+"ИНАЧЕ ВЫ ЛИШИТЕСЬ УПРАВЛЕНИЯ В ПРИЛОЖЕНИИ. ЕСЛИ ЭТО ПРОИЗОЙДЕТ, ВАМ ПРИДЕТСЯ "
+"ВРЕМЕННО ПОДКЛЮЧИТЬ КОНТРОЛЛЕР ИЛИ КЛАВИАТУРУ, ЧТОБЫ СНОВА ВКЛЮЧИТЬ ЭТУ "
+"НАСТРОЙКУ, ИЛИ ЖЕ ВЫ МОЖЕТЕ ОЧИСТИТЬ ХРАНИЛИЩЕ ДЛЯ ПРИЛОЖЕНИЯ ES-DE В "
+"НАСТРОЙКАХ ANDROID, ЧТОБЫ ЗАПУСТИТЬ ПЕРВОНАЧАЛЬНУЮ НАСТРОЙКУ ПРИ СЛЕДУЮЩЕМ "
+"ЗАПУСКЕ"
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+msgstr "ПРИНИМАТЬ ВВОД ТОЛЬКО С ПЕРВОГО КОНТРОЛЛЕРА"
+
+msgid "SWAP THE A/B AND X/Y BUTTONS"
+msgstr "ПОМЕНЯТЬ A/B И X/Y МЕСТАМИ"
+
+msgid "IGNORE KEYBOARD INPUT"
+msgstr "ИГНОРИРОВАТЬ ВВОД С КЛАВИАТУРЫ"
+
+msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
+msgstr "НАСТРОЙКА КЛАВИАТУРЫ И КОНТРОЛЛЕРОВ"
+
+msgid ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
+"HELP PROMPTS)"
+msgstr ""
+"КЛАВИАТУРА И КОНТРОЛЛЕРЫ НАСТРАИВАЮТСЯ АВТОМАТИЧЕСКИ, НО С ПОМОЩЬЮ ЭТОГО "
+"ИНСТРУМЕНТА ВЫ МОЖЕТЕ ПЕРЕНАЗНАЧИТЬ СТАНДАРТНЫЕ НАСТРОЙКИ КНОПОК (ЭТО НЕ "
+"ПОВЛИЯЕТ НА ПОДСКАЗКИ)."
+
+msgid "PROCEED"
+msgstr "ПРОДОЛЖИТЬ"
+
+msgid "CANCEL"
+msgstr "ОТМЕНА"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "АЛЬТЕРНАТИВНЫЕ ЭМУЛЯТОРЫ"
+
+msgid "GAME MEDIA DIRECTORY"
+msgstr "КАТАЛОГ ИГРОВЫХ МЕДИА"
+
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr "ВВЕДИТЕ ПАПКУ ДЛЯ МЕДИА"
+
+msgid "Default directory:"
+msgstr "Каталог по умолчанию:"
+
+msgid "SAVE"
+msgstr "СОХРАНИТЬ"
+
+msgid "SAVE CHANGES?"
+msgstr "СОХРАНИТЬ ИЗМЕНЕНИЯ?"
+
+msgid "load default directory"
+msgstr "загрузить каталог по умолчанию"
+
+msgid "VRAM LIMIT"
+msgstr "ЛИМИТ VRAM"
+
+msgid "ANTI-ALIASING (MSAA)"
+msgstr "СГЛАЖИВАНИЕ (MSAA)"
+
+msgid "2X"
+msgstr "2X"
+
+msgid "4X"
+msgstr "4X"
+
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr "СГЛАЖИВАНИЕ (НУЖЕН ПЕРЕЗАПУСК)"
+
+msgid "DISPLAY/MONITOR INDEX"
+msgstr "ИНДЕКС ДИСПЛЕЯ/МОНИТОРА"
+
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr "ИНДЕКС ДИСПЛЕЯ/МОНИТОРА (НУЖЕН ПЕРЕЗАПУСК)"
+
+msgid "ROTATE SCREEN"
+msgstr "ПОВОРОТ ЭКРАНА"
+
+msgid "90 DEGREES"
+msgstr "90 ГРАДУСОВ"
+
+msgid "180 DEGREES"
+msgstr "180 ГРАДУСОВ"
+
+msgid "270 DEGREES"
+msgstr "270 ГРАДУСОВ"
+
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr "ПОВОРОТ ЭКРАНА (НУЖЕН ПЕРЕЗАПУСК)"
+
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr "СОЧЕТАНИЕ КЛАВИШ ДЛЯ ВЫХОДА"
+
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "КОГДА СОХРАНЯТЬ МЕТАДАННЫЕ ИГРЫ"
+
+msgid "ALWAYS"
+msgstr "ВСЕГДА"
+
+msgid "ON EXIT"
+msgstr "ПРИ ВЫХОДЕ"
+
+msgid "NEVER"
+msgstr "НИКОГДА"
+
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "КОГДА СОХРАНЯТЬ МЕТАДАННЫЕ ИГРЫ"
+
+msgid "APPLICATION UPDATES"
+msgstr "ОБНОВЛЕНИЯ ПРИЛОЖЕНИЯ"
+
+msgid "DAILY"
+msgstr "ЕЖЕДНЕВНО"
+
+msgid "WEEKLY"
+msgstr "ЕЖЕНЕДЕЛЬНО"
+
+msgid "MONTHLY"
+msgstr "ЕЖЕМЕСЯЧНО"
+
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "ПРОВЕРЯТЬ НАЛИЧИЕ ОБНОВЛЕНИЙ ES-DE"
+
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr "ВКЛЮЧАТЬ ПРЕДРЕЛИЗНЫЕ ВЕРСИИ В ПРОВЕРКУ"
+
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr "СКРЫТЬ ПАНЕЛЬ ЗАДАЧ (НУЖЕН ПЕРЕЗАПУСК)"
+
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr "РАБОТАТЬ В ФОНОВОМ РЕЖИМЕ (ИГРА ЗАПУЩЕНА)"
+
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr "АППАРАТНОЕ ДЕКОДИРОВАНИЕ ВИДЕО (ЭКСПЕРИМЕНТАЛЬНО)"
+
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr "УВЕЛИЧЕНИЕ ЧАСТОТЫ КАДРОВ ВИДЕО ДО 60 FPS"
+
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr "РАЗРЕШИТЬ АЛЬТ. ЭМУЛЯТОРЫ ДЛЯ КАЖДОЙ ИГРЫ"
+
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr "ПОКАЗЫВАТЬ СКРЫТЫЕ ФАЙЛЫ И ПАПКИ"
+
+msgid "SHOW HIDDEN GAMES"
+msgstr "ПОКАЗЫВАТЬ СКРЫТЫЕ ИГРЫ"
+
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "РАЗРЕШИТЬ ПОЛЬЗ. СЦЕНАРИИ СОБЫТИЙ"
+
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr "ПОКАЗЫВАТЬ  ИГРЫ ТОЛЬКО ИЗ GAMELIST.XML"
+
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr "УДАЛЯТЬ ЛИШНЕЕ У ИМЕНИ MAME (НУЖЕН ПЕРЕЗАПУСК)"
+
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr "ОТКЛ. КОМПОЗИЦИЮ РАБ. СТОЛА (НУЖЕН ПЕРЕЗАПУСК)"
+
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr "КНОПКА НАЗАД/СВАЙП НАЗАД ЗАКРЫВАЮТ ПРИЛОЖЕНИЕ"
+
+msgid "DEBUG MODE"
+msgstr "РЕЖИМ ОТЛАДКИ"
+
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr "ОТОБРАЖАТЬ ОВЕРЛЕЙ СТАТИСТИКИ GPU"
+
+msgid "ENABLE MENU IN KID MODE"
+msgstr "РАЗРЕШИТЬ МЕНЮ В ДЕТСКОМ РЕЖИМЕ"
+
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr "МЕНЮ ВЫХОДА (ПУНКТЫ ПЕРЕЗАГРУЗКИ И ВЫКЛ.)"
+
+msgid "ORPHANED DATA CLEANUP"
+msgstr "ОЧИСТКА НЕАКТУАЛЬНЫХ ДАННЫХ"
+
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr "СОЗДАТЬ/ОБНОВИТЬ КАТАЛОГИ СИСТЕМ"
+
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+"ЭТО СОЗДАСТ КАТАЛОГИ ВСЕХ ИГРОВЫХ СИСТЕМ В ВАШЕЙ ПАПКЕ РОМОВ, А ТАКЖЕ "
+"ОБНОВИТ ВСЕ ФАЙЛЫ SYSTEMINFO.TXT. ЭТО БЕЗОПАСНАЯ ОПЕРАЦИЯ, КОТОРАЯ НЕ "
+"ПРИВЕДЁТ К УДАЛЕНИЮ ИЛИ ИЗМЕНЕНИЮ ВАШИХ ИГРОВЫХ ФАЙЛОВ. ДЛЯ УМЕНЬШЕНИЯ "
+"ВРЕМЕНИ ЗАПУСКА ПРИЛОЖЕНИЙ РЕКОМЕНДУЕТСЯ УДАЛИТЬ НЕНУЖНЫЕ КАТАЛОГИ СИСТЕМ "
+"ПОСЛЕ ЗАПУСКА ЭТОЙ УТИЛИТЫ"
+
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr "КАТАЛОГИ СИСТЕМ БЫЛИ УСПЕШНО СОЗДАНЫ"
+
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+"ОШИБКА СОЗДАНИЯ КАТАЛОГОВ СИСТЕМ, ПРОБЛЕМЫ С ПРАВАМИ ИЛИ ДИСК ПЕРЕПОЛНЕН? "
+"СМОТРИТЕ ЛОГ ДЛЯ ПОЛУЧЕНИЯ БОЛЕЕ ПОДРОБНОЙ ИНФОРМАЦИИ"
+
+msgid "RESCAN ROM DIRECTORY"
+msgstr "ПЕРЕСКАНИРОВАТЬ КАТАЛОГ РОМОВ"
+
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr ""
+"ЭТО ПРОСКАНИРУЕТ КАТАЛОГ РОМОВ НА ПРЕДМЕТ ИЗМЕНЕНИЙ, ТАКИХ КАК ДОБАВЛЕНИЕ "
+"ИЛИ УДАЛЕНИЕ ИГР И СИСТЕМ"
+
+msgid "REALLY QUIT?"
+msgstr "ДЕЙСТВИТЕЛЬНО ВЫЙТИ?"
+
+msgid "REALLY REBOOT?"
+msgstr "ДЕЙСТВИТЕЛЬНО ПЕРЕЗАГРУЗИТЬ?"
+
+msgid "REBOOT SYSTEM"
+msgstr "ПЕРЕЗАГРУЗКА СИСТЕМЫ"
+
+msgid "REALLY POWER OFF?"
+msgstr "ДЕЙСТВИТЕЛЬНО ЗАВЕРШИТЬ РАБОТУ СИСТЕМЫ?"
+
+msgid "POWER OFF SYSTEM"
+msgstr "ВЫКЛЮЧИТЬ ПИТАНИЕ СИСТЕМЫ"
+
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "НАСТРОЙКИ ПРОСМОТРЩИКА МЕДИА"
+
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
+msgstr "НАСТРОЙКИ ЗАСТАВКИ"
+
+msgid "choose"
+msgstr "выбор"
+
+msgid "select"
+msgstr "выбрать"
+
+msgid "close menu"
+msgstr "закрыть меню"
+
+msgid "REFINE SEARCH"
+msgstr "УТОЧНИТЬ ПОИСК"
+
+msgid "refine search"
+msgstr "уточнить поиск"
+
+msgid "cancel"
+msgstr "отмена"
+
+msgid "back (cancel)"
+msgstr "назад (отмена)"
+
+msgid "SCRAPE FROM"
+msgstr "СКРЕЙПИТЬ ИЗ"
+
+msgid "SCRAPE THESE GAMES"
+msgstr "СКРЕЙПИТЬ ЭТИ ИГРЫ"
+
+msgid "ALL GAMES"
+msgstr "ВСЕ ИГРЫ"
+
+msgid "FAVORITE GAMES"
+msgstr "ИЗБРАННЫЕ ИГРЫ"
+
+msgid "NO METADATA"
+msgstr "БЕЗ МЕТАДАННЫХ"
+
+msgid "NO GAME IMAGE"
+msgstr "БЕЗ ИЗОБРАЖЕНИЙ"
+
+msgid "NO GAME VIDEO"
+msgstr "БЕЗ ВИДЕО"
+
+msgid "FOLDERS ONLY"
+msgstr "ТОЛЬКО ПАПКИ"
+
+msgid "SCRAPE THESE SYSTEMS"
+msgstr "СКРЕЙПИТЬ ЭТИ СИСТЕМЫ"
+
+msgid "ACCOUNT SETTINGS"
+msgstr "НАСТРОЙКИ АККАУНТА"
+
+msgid "CONTENT SETTINGS"
+msgstr "НАСТРОЙКИ СОДЕРЖИМОГО"
+
+msgid "MIXIMAGE SETTINGS"
+msgstr "НАСТРОЙКИ МИКС-ИЗОБРАЖЕНИЙ"
+
+msgid "START"
+msgstr "СТАРТ"
+
+msgid "start scraper"
+msgstr "запуск скрейпера"
+
+msgid "BACK"
+msgstr "НАЗАД"
+
+msgid "back"
+msgstr "назад"
+
+msgid "SCREENSCRAPER USERNAME"
+msgstr "ЛОГИН SCREENSCRAPER"
+
+msgid "SCREENSCRAPER PASSWORD"
+msgstr "ПАРОЛЬ SCREENSCRAPER"
+
+msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
+msgstr "ИСПОЛЬЗОВАТЬ ЭТОТ АККАУНТ ДЛЯ SCREENSCRAPER"
+
+msgid "GAME NAMES"
+msgstr "НАЗВАНИЯ ИГР"
+
+msgid "RATINGS"
+msgstr "РЕЙТИНГИ"
+
+msgid "OTHER METADATA"
+msgstr "ПРОЧИЕ МЕТАДАННЫЕ"
+
+msgid "VIDEOS"
+msgstr "ВИДЕО"
+
+msgid "SCREENSHOT IMAGES"
+msgstr "СКРИНШОТЫ"
+
+msgid "TITLE SCREEN IMAGES"
+msgstr "СКРИНШОТЫ ГЛАВНОГО МЕНЮ"
+
+msgid "BOX COVER IMAGES"
+msgstr "ПЕРЕДНИЕ ОБЛОЖКИ"
+
+msgid "BOX BACK COVER IMAGES"
+msgstr "ЗАДНИЕ ОБЛОЖКИ"
+
+msgid "MARQUEE (WHEEL) IMAGES"
+msgstr "ЛОГО (БАННЕРЫ)"
+
+msgid "3D BOX IMAGES"
+msgstr "3D-ОБЛОЖКИ"
+
+msgid "PHYSICAL MEDIA IMAGES"
+msgstr "ФИЗИЧЕСКИЕ НОСИТЕЛИ"
+
+msgid "FAN ART IMAGES"
+msgstr "ФАН-АРТЫ"
+
+msgid "GAME MANUALS"
+msgstr "РУКОВОДСТВА"
+
+msgid "MIXIMAGE RESOLUTION"
+msgstr "РАЗРЕШЕНИЕ МИКС-ИЗОБРАЖЕНИЯ"
+
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "ГОРИЗ. ПОДГОНКА СКРИНШОТОВ"
+
+msgid "CONTAIN"
+msgstr "ПО СОДЕРЖИМОМУ"
+
+msgid "CROP"
+msgstr "ОБРЕЗАТЬ"
+
+msgid "STRETCH"
+msgstr "РАСТЯНУТЬ"
+
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "ГОРИЗОНТАЛЬНАЯ ПОДГОНКА СКРИНШОТОВ"
+
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "ВЕРТ. ПОДГОНКА СКРИНШОТОВ"
+
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "ВЕРТИКАЛЬНАЯ ПОДГОНКА СКРИНШОТОВ"
+
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "ПОРОГ СООТНОШЕНИЯ СТОРОН СКРИНШОТА"
+
+msgid "HIGH"
+msgstr "ВЫСОКИЙ"
+
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "ПОРОГ СООТНОШЕНИЯ СТОРОН СКРИНШОТА"
+
+msgid "BLANK AREAS FILL COLOR"
+msgstr "ЦВЕТ ЗАЛИВКИ ПУСТЫХ ОБЛАСТЕЙ"
+
+msgid "BLACK"
+msgstr "ЧЁРНЫЙ"
+
+msgid "FRAME"
+msgstr "РАМКА"
+
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "МЕТОД МАСШТАБИРОВАНИЯ СКРИНШОТОВ"
+
+msgid "SHARP"
+msgstr "РЕЗКИЙ"
+
+msgid "SMOOTH"
+msgstr "ПЛАВНЫЙ"
+
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "МЕТОД МАСШТАБИРОВАНИЯ СКРИНШОТОВ"
+
+msgid "BOX SIZE"
+msgstr "РАЗМЕР ОБЛОЖКИ КОРОБКИ"
+
+msgid "PHYSICAL MEDIA SIZE"
+msgstr "РАЗМЕР ФИЗИЧЕСКОГО НОСИТЕЛЯ"
+
+msgid "GENERATE MIXIMAGES WHEN SCRAPING"
+msgstr "ГЕНЕРИРОВАТЬ МИКС-ИЗОБРАЖЕНИЯ ПРИ СКРЕЙПИНГЕ"
+
+msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
+msgstr "ПЕРЕЗАПИСЬ МИКС-ИЗОБР. (СКРЕЙПЕР/ОФФЛАЙН-ГЕНЕРАТОР)"
+
+msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
+msgstr "УДАЛЯТЬ ВЕРТ. РАМКИ СО СКРИНШОТОВ (ЛЕТТЕРБОКС)"
+
+msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
+msgstr "УДАЛЯТЬ ГОР. РАМКИ СО СКРИНШОТОВ (ПИЛЛАРБОКС)"
+
+msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
+msgstr "ПОВОРАЧИВАТЬ ГОР. ОРИЕНТИРОВАННЫЕ ОБЛОЖКИ"
+
+msgid "INCLUDE MARQUEE IMAGE"
+msgstr "ВКЛЮЧАТЬ ЛОГО (БАННЕР)"
+
+msgid "INCLUDE BOX IMAGE"
+msgstr "ВКЛЮЧАТЬ ОБЛОЖКУ"
+
+msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
+msgstr "ИСПОЛЬЗОВАТЬ ОБЛОЖКУ ЕСЛИ НЕТ 3D-ОБЛОЖКИ"
+
+msgid "INCLUDE PHYSICAL MEDIA IMAGE"
+msgstr "ВКЛЮЧАТЬ ФИЗИЧЕСКИЙ НОСИТЕЛЬ"
+
+msgid "OFFLINE GENERATOR"
+msgstr "ОФФЛАЙН-ГЕНЕРАТОР"
+
+msgid ""
+"THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
+"PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
+msgstr ""
+"АВТОНОМНЫЙ ГЕНЕРАТОР ИСПОЛЬЗУЕТ ТЕ ЖЕ СИСТЕМНЫЕ НАСТРОЙКИ, ЧТО И СКРЕЙПЕР, "
+"ПОЭТОМУ ВЫБЕРИТЕ ХОТЯ БЫ ОДНУ СИСТЕМУ ДЛЯ ГЕНЕРАЦИИ ИЗОБРАЖЕНИЙ"
+
+msgid "REGION"
+msgstr "РЕГИОН"
+
+msgid "EUROPE"
+msgstr "ЕВРОПА"
+
+msgid "JAPAN"
+msgstr "ЯПОНИЯ"
+
+msgid "USA"
+msgstr "США"
+
+msgid "WORLD"
+msgstr "МИР"
+
+msgid "PREFERRED LANGUAGE"
+msgstr "ПРЕДПОЧИТАЕМЫЙ ЯЗЫК"
+
+msgid "AUTOMATIC RETRIES ON ERROR"
+msgstr "ПОВТОРНЫЕ ПОПЫТКИ ПРИ ОШИБКЕ"
+
+msgid "RETRY ATTEMPT TIMER"
+msgstr "ТАЙМЕР ПОВТОРНЫХ ПОПЫТОК"
+
+msgid "HASH SEARCHES MAX FILE SIZE"
+msgstr "ПОИСК ПО ХЭШУ, МАКС. РАЗМЕР ФАЙЛА"
+
+msgid "OVERWRITE FILES AND DATA"
+msgstr "ПЕРЕЗАПИСЫВАТЬ ФАЙЛЫ И ДАННЫЕ"
+
+msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
+msgstr "ПОИСК ПО ХЭШАМ ФАЙЛОВ (НЕИНТЕРАКТИВН. РЕЖИМ)"
+
+msgid "SEARCH USING METADATA NAMES"
+msgstr "ПОИСК ПО ИМЕНАМ ИЗ МЕТАДАННЫХ"
+
+msgid "SCRAPE ACTUAL FOLDERS"
+msgstr "СКРЕЙПИТЬ ПАПКИ КАК ИГРЫ"
+
+msgid "INTERACTIVE MODE"
+msgstr "ИНТЕРАКТИВНЫЙ РЕЖИМ"
+
+msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
+msgstr "АВТО-ПРИНЯТИЕ ПРИ ЕДИНСТВЕННОМ РЕЗУЛЬТАТЕ"
+
+msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
+msgstr "УЧИТЫВАТЬ ПОФАЙЛОВЫЕ ИСКЛ. ИЗ СКРЕЙПИНГА"
+
+msgid "EXCLUDE FOLDERS RECURSIVELY"
+msgstr "ИСКЛЮЧАТЬ ПАПКИ РЕКУРСИВНО"
+
+msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
+msgstr "СМЕНА ПОДЧЁРКИВАНИЙ НА ПРОБЕЛЫ ПРИ ПОИСКЕ"
+
+msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
+msgstr "УДАЛЕНИЕ ТОЧЕК ИЗ ПОИСКА ПРИ АВТО-СКРЕЙПИНГЕ"
+
+msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
+msgstr "РАЗРЕШИТЬ ПОИСК В ИНЫХ РЕГИОНАХ ПРИ ОТСУТСТВИИ"
+
+msgid ""
+"THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
+msgstr ""
+"ВЫБРАННАЯ СИСТЕМА НЕ ИМЕЕТ НАБОРА ПЛАТФОРМ, РЕЗУЛЬТАТЫ МОГУТ БЫТЬ НЕТОЧНЫМИ"
+
+msgid ""
+"AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
+"MAY BE INACCURATE"
+msgstr ""
+"ХОТЯ БЫ ОДНА ИЗ ВЫБРАННЫХ ВАМИ СИСТЕМ НЕ ИМЕЕТ НАБОРА ПЛАТФОРМ, РЕЗУЛЬТАТЫ "
+"МОГУТ БЫТЬ НЕТОЧНЫМИ"
+
+msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
+msgstr "ПОЖАЛУЙСТА, ВЫБЕРИТЕ ХОТЯ БЫ ОДНУ СИСТЕМУ ДЛЯ СКРЕЙПИНГА"
+
+msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
+msgstr "ПОЖАЛУЙСТА, ВЫБЕРИТЕ ХОТЯ БЫ ОДИН ТИП СОДЕРЖИМОГО ДЛЯ СКАНИРОВАНИЯ"
+
+msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
+msgstr "ВСЕ ИГРЫ БЫЛИ ОТФИЛЬТРОВАНЫ, НЕЧЕГО СКРЕЙПИТЬ"
+
+msgid "HELP PROMPTS"
+msgstr "ПОДСКАЗКИ"
+
+msgid "TOP"
+msgstr "СВЕРХУ"
+
+msgid "BOTTOM"
+msgstr "СНИЗУ"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "ОТОБРАЖАТЬ ТИПЫ МЕДИА"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "ПРОИГРЫШ ВИДЕО ПРИ ПРОСМОТРЕ ИЗОБРАЖЕНИЙ"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "РАСТЯГИВАТЬ ВИДЕО ДО РАЗРЕШЕНИЯ ЭКРАНА"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "РЕНДЕРИНГ СКАНЛАЙНОВ ДЛЯ ВИДЕО (ЭФФЕКТ ЭЛТ)"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "РЕНДЕРИНГ РАЗМЫТИЯ ДЛЯ ВИДЕО"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "РЕНДЕРИНГ CКАНЛАЙНОВ (СКРИНЫ ИГРЫ И ГЛ. МЕНЮ)"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "ЗАВЕРШИТЬ РЕДАКТИРОВАНИЕ КОЛЛЕКЦИИ '%s'"
+
+msgid "SELECT COLLECTIONS"
+msgstr "ВЫБОР КОЛЛЕКЦИЙ"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "АВТОКОЛЛЕКЦИИ ИГР"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "ПОЛЬЗОВАТЕЛЬСКИЕ КОЛЛЕКЦИИ ИГР"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "СОЗДАТЬ НОВУЮ ПОЛЬЗ. КОЛЛЕКЦИЮ ИЗ ТЕМЫ"
+
+msgid "SELECT THEME FOLDER"
+msgstr "ВЫБРАТЬ ПАПКУ С ТЕМОЙ"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "СОЗДАТЬ НОВУЮ ПОЛЬЗ. КОЛЛЕКЦИЮ"
+
+msgid "NEW COLLECTION NAME"
+msgstr "ИМЯ НОВОЙ КОЛЛЕКЦИИ"
+
+msgid "CREATE"
+msgstr "СОЗДАТЬ"
+
+msgid "CREATE COLLECTION?"
+msgstr "СОЗДАТЬ КОЛЛЕКЦИЮ?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "УДАЛИТЬ ПОЛЬЗ. КОЛЛЕКЦИЮ"
+
+msgid "COLLECTION TO DELETE"
+msgstr "КОЛЛЕКЦИЯ К УДАЛЕНИЮ"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"ЭТО ПРИВЕДЕТ К БЕЗВОЗВРАТНОМУ УДАЛЕНИЮ КОЛЛЕКЦИИ\n"
+"'%s'\n"
+"ВЫ УВЕРЕНЫ?"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "ГРУППИРОВАТЬ ПОЛЬЗ. КОЛЛЕКЦИИ"
+
+msgid "IF UNTHEMED"
+msgstr "ЕСЛИ НЕ ТЕМАТИЧЕСКИЕ"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "ИЗБРАННОЕ СВЕРХУ ДЛЯ ПОЛЬЗ. КОЛЛЕКЦИЙ"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "ВКЛ. ОЦЕНКУ ЗВЁЗДАМИ ДЛЯ ПОЛЬЗ. КОЛЛЕКЦИЙ"
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr "ЗАПУСК ЭКРАННОЙ ЗАСТАВКИ ЧЕРЕЗ (МИН.)"
+
+msgid "SCREENSAVER TYPE"
+msgstr "ТИП ЗАСТАВКИ"
+
+msgid "DIM"
+msgstr "ЗАТЕМНЕНИЕ"
+
+msgid "SLIDESHOW"
+msgstr "СЛАЙД-ШОУ"
+
+msgid "VIDEO"
+msgstr "ВИДЕО"
+
+# ВО ВРЕМЯ ЗАСТАВКИ?
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr "РАЗРЕШИТЬ ВВОД ВО ВРЕМЯ ЗАСТАВКИ"
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr "НАСТРОЙКИ СЛАЙД-ШОУ"
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr "НАСТРОЙКИ ВИДЕОЗАСТАВКИ"
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr "СЛАЙД-ШОУ ЗАСТАВКА"
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr "СМЕНА ИЗОБРАЖЕНИЙ ЧЕРЕЗ (СЕК.)"
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr "ВКЛЮЧАТЬ ТОЛЬКО ИЗБРАННОЕ"
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr "РАСТЯГИВАТЬ ИЗОБРАЖЕНИЯ ДО РАЗРЕШЕНИЯ ЭКРАНА"
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr "ОТОБРАЖЕНИЕ ИНФОРМАЦИИ ОБ ИГРЕ"
+
+msgid "RENDER SCANLINES"
+msgstr "РЕНДЕРИНГ СКАНЛАЙНОВ (ЭФФЕКТ ЭЛТ)"
+
+msgid "USE CUSTOM IMAGES"
+msgstr "ИСПОЛЬЗОВАТЬ ПОЛЬЗОВАТЕЛЬСКИЕ ИЗОБРАЖЕНИЯ"
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr "РЕКУРСИВНЫЙ ПОИСК ПО ПАПКЕ ПОЛЬЗ. ИЗОБРАЖЕНИЙ"
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr "ПАПКА ПОЛЬЗ. ИЗОБРАЖЕНИЙ"
+
+msgid "VIDEO SCREENSAVER"
+msgstr "ВИДЕОЗАСТАВКА"
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr "СМЕНА ВИДЕО ЧЕРЕЗ (В СЕКУНДАХ)"
+
+msgid "RENDER BLUR"
+msgstr "РЕНДЕРИНГ РАЗМЫТИЯ"
+
+msgid "FILTER GAMELIST"
+msgstr "ФИЛЬТР ГЕЙМЛИСТА"
+
+msgid "RESET ALL FILTERS"
+msgstr "СБРОС ВСЕХ ФИЛЬТРОВ"
+
+msgid "GAME NAME"
+msgstr "НАЗВАНИЕ ИГРЫ"
+
+msgid "APPLY CHANGES?"
+msgstr "ПРИМЕНИТЬ ИЗМЕНЕНИЯ?"
+
+msgid "NOTHING TO FILTER"
+msgstr "НЕЧЕГО ФИЛЬТРОВАТЬ"
+
+msgid "LAUNCHING GAME"
+msgstr "ЗАПУСК ИГРЫ"
+
+msgid "CLOSE"
+msgstr "ЗАКРЫТЬ"
+
+msgid "close"
+msgstr "закрыть"
+
+msgid "DOWNLOADING THEMES LIST 100%"
+msgstr "ЗАГРУЗКА СПИСКА ТЕМ 100%"
+
+msgid "THEME ALREADY UP TO DATE"
+msgstr "ТЕМА УЖЕ АКТУАЛЬНАЯ"
+
+msgid "THEME HAS BEEN UPDATED"
+msgstr "ТЕМА БЫЛА ОБНОВЛЕНА"
+
+#, c-format
+msgid ""
+"COULDN'T RENAME DIRECTORY \"%s\"\n"
+"PERMISSION PROBLEMS?"
+msgstr ""
+"НЕВОЗМОЖНО ПЕРЕИМЕНОВАТЬ КАТАЛОГ \"%s\"\n"
+"ПРОБЛЕМЫ С ПРАВАМИ?"
+
+msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
+msgstr "НЕ УДАЛОСЬ НАЙТИ КОНФИГУРАЦИОННЫЙ ФАЙЛ СПИСКА ТЕМ"
+
+msgid ""
+"COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
+"REPOSITORY IS CORRUPT?"
+msgstr ""
+"НЕ УДАЛОСЬ СЧИТАТЬ КОНФИГУРАЦИОННЫЙ ФАЙЛ СПИСКА ТЕМ, ВОЗМОЖНО, ЛОКАЛЬНОЕ "
+"ХРАНИЛИЩЕ ПОВРЕЖДЕНО?"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+"BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
+msgstr ""
+"ПОХОЖЕ, ЧТО ВЫ ИСПОЛЬЗУЕТЕ НЕ САМУЮ ПОСЛЕДНЮЮ ВЕРСИЮ ES-DE, ПОЖАЛУЙСТА, "
+"ОБНОВИТЕ ЕЁ, ПРЕЖДЕ ЧЕМ ПРОДОЛЖИТЬ, ТАК КАК ЭТИ ТЕМЫ МОГУТ БЫТЬ НЕСОВМЕСТИМЫ "
+"С ВАШЕЙ ВЕРСИЕЙ"
+
+msgid "and"
+msgstr "и"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA THIS "
+"THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+"\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
+msgstr ""
+"ПОХОЖЕ, ЧТО ЭТА ТЕМА БЫЛА ЗАГРУЖЕНА ВРУЧНУЮ, А НЕ ЧЕРЕЗ ЭТОТ ЗАГРУЗЧИК ТЕМ. "
+"ТРЕБУЕТСЯ ЗАГРУЗИТЬ ТЕМУ ЗАНОВО, А КАТАЛОГ СТАРОЙ ТЕМЫ \"%s\" БУДЕТ "
+"ПЕРЕИМЕНОВАН В \"%s_DISABLED\"."
+
+msgid "DOWNLOADING THEME"
+msgstr "ЗАГРУЗКА ТЕМЫ"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
+"DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
+msgstr ""
+"ПОХОЖЕ, ЧТО ХРАНИЛИЩЕ ТЕМ ПОВРЕЖДЕНО, ЧТО МОГЛО БЫТЬ ВЫЗВАНО ПРЕРЫВАНИЕМ "
+"ПРЕДЫДУЩЕЙ ЗАГРУЗКИ ИЛИ ОБНОВЛЕНИЯ, НАПРИМЕР, ЕСЛИ ПРОЦЕСС ES-DE БЫЛ "
+"ЗАВЕРШЕН. НЕОБХОДИМО ЗАГРУЗИТЬ ТЕМУ ЗАНОВО, ПОСЛЕ ЧЕГО СТАРЫЙ КАТАЛОГ ТЕМ "
+"\"%s\" БУДЕТ ПЕРЕИМЕНОВАН В \"%s_CORRUPT_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
+"DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH "
+"DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
+"\"%s_DISABLED\""
+msgstr ""
+"ПОХОЖЕ, ЧТО ЭТО ПОВЕРХНОСТНЫЙ РЕПОЗИТОРИЙ, ЧТО ОЗНАЧАЕТ, ЧТО ОН БЫЛ ЗАГРУЖЕН "
+"С ПОМОЩЬЮ КАКОГО-ТО ДРУГОГО ИНСТРУМЕНТА, А НЕ ЭТОГО ЗАГРУЗЧИКА ТЕМ. "
+"НЕОБХОДИМО ЗАГРУЗИТЬ ТЕМУ ЗАНОВО, А КАТАЛОГ СТАРОЙ ТЕМЫ \"%s\" БУДЕТ "
+"ПЕРЕИМЕНОВАН В \"%s_DISABLED\""
+
+#, c-format
+msgid ""
+"THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
+"CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
+msgstr ""
+"РЕПОЗИТОРИЙ ТЕМЫ \"%s\" СОДЕРЖИТ ЛОКАЛЬНЫЕ ИЗМЕНЕНИЯ. ПЕРЕЗАПИШИТЕ ВАШИ "
+"ИЗМЕНЕНИЯ ИЛИ ОТМЕНИТЕ ОБНОВЛЕНИЕ, ЧТОБЫ ПРОПУСТИТЬ ВСЕ ОБНОВЛЕНИЯ ДЛЯ ЭТОЙ "
+"ТЕМЫ"
+
+msgid "UPDATING THEME"
+msgstr "ОБНОВЛЕНИЕ ТЕМЫ"
+
+msgid "VARIANTS:"
+msgstr "ВАРИАНТЫ:"
+
+msgid "COLOR SCHEMES:"
+msgstr "ЦВЕТОВЫЕ СХЕМЫ:"
+
+msgid "ASPECT RATIOS:"
+msgstr "СООТН. ЭКРАНА:"
+
+msgid "FONT SIZES:"
+msgstr "РАЗМЕРЫ ШРИФТОВ:"
+
+msgid "INSTALLED"
+msgstr "УСТАНОВЛЕНО"
+
+# ЗАГРУЗКА РУКОВОДСТВА?
+msgid "MANUAL DOWNLOAD"
+msgstr "РУЧНАЯ ЗАГРУЗКА"
+
+msgid "CORRUPT"
+msgstr "ИСКАЖЁННЫЕ"
+
+msgid "SHALLOW"
+msgstr "ПОВЕРХНОСТНЫХ"
+
+msgid "NOT INSTALLED (NEW)"
+msgstr "НЕ УСТАНОВЛЕНО (НОВОЕ)"
+
+msgid "NOT INSTALLED"
+msgstr "НЕ УСТАНОВЛЕНО"
+
+msgid "LOCAL CHANGES"
+msgstr "ЛОКАЛЬНЫЕ ИЗМЕНЕНИЯ"
+
+msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
+msgstr "ЗАПИСЬ ЭТОЙ ТЕМЫ БУДЕТ УДАЛЕНА В БЛИЖАЙШЕЕ ВРЕМЯ"
+
+# It's by purpose, cause in russian we doesn't have "by"
+msgid "CREATED BY"
+msgstr "АВТОР:"
+
+msgid "ERROR:"
+msgstr "ОШИБКА:"
+
+msgid "COULDN'T DOWNLOAD THEMES LIST"
+msgstr "НЕ УДАЛОСЬ ЗАГРУЗИТЬ СПИСОК ТЕМ"
+
+msgid "DOWNLOADING"
+msgstr "СКАЧИВАНИЕ"
+
+msgid "DOWNLOADING THEMES LIST"
+msgstr "ЗАГРУЗКА"
+
+msgid "THIS WILL COMPLETELY DELETE THE THEME"
+msgstr "ЭТО ПРИВЕДЕТ К ПОЛНОМУ УДАЛЕНИЮ ТЕМЫ"
+
+msgid ""
+"THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
+msgstr "ЭТО ПРИВЕДЕТ К ПОЛНОМУ УДАЛЕНИЮ ТЕМЫ, ВКЛЮЧАЯ ВСЕ ЛОКАЛЬНЫЕ НАСТРОЙКИ"
+
+msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
+msgstr "НЕВОЗМОЖНО УДАЛИТЬ ТЕМУ, ПРОБЛЕМЫ С ПРАВАМИ?"
+
+msgid "THEME WAS DELETED"
+msgstr "ТЕМА БЫЛА УДАЛЕНА"
+
+msgid "view screenshots"
+msgstr "просмотреть скриншоты"
+
+msgid "fetch updates"
+msgstr "получить обновления"
+
+msgid "delete"
+msgstr "удалить"
+
+msgid "download"
+msgstr "скачать"
+
+msgid ""
+"IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
+"DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
+msgstr ""
+"ПОХОЖЕ, ЧТО ХРАНИЛИЩЕ СПИСКА ТЕМ ПОВРЕЖДЕНО, ЧТО МОГЛО БЫТЬ ВЫЗВАНО "
+"ПРЕРЫВАНИЕМ ПРЕДЫДУЩЕЙ ЗАГРУЗКИ ИЛИ ОБНОВЛЕНИЯ, НАПРИМЕР, ЕСЛИ ПРОЦЕСС ES-DE "
+"БЫЛ ЗАВЕРШЕН. ТРЕБУЕТСЯ ЗАНОВО ЗАГРУЗИТЬ ФАЙЛ, А СТАРАЯ ПАПКА \"themes-"
+"list\" БУДЕТ ПЕРЕИМЕНОВАНА В \"themes-list_CORRUPT_DISABLED\"."
+
+msgid "UPDATING THEMES LIST"
+msgstr "ОБНОВЛЕНИЕ СПИСКА ТЕМ"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
+"THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+"WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED "
+"FILES WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE "
+"THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
+"CORRUPTION."
+msgstr ""
+"ПОХОЖЕ, ЧТО ВЫ ВПЕРВЫЕ ИСПОЛЬЗУЕТЕ ПРОГРАММУ ЗАГРУЗКИ ТЕМ. В ЭТОМ СЛУЧАЕ "
+"БУДЕТ ЗАГРУЖЕН РЕПОЗИТОРИЙ СО СПИСКОМ ТЕМ, ЧТО ЗАЙМЕТ НЕКОТОРОЕ ВРЕМЯ. "
+"ОДНАКО ПОСЛЕДУЮЩИЕ ЗАПУСКИ БУДУТ ПРОИСХОДИТЬ ГОРАЗДО БЫСТРЕЕ, ПОСКОЛЬКУ "
+"БУДУТ ЗАГРУЖАТЬСЯ ТОЛЬКО НОВЫЕ ИЛИ ИЗМЕНЕННЫЕ ФАЙЛЫ. ТО ЖЕ САМОЕ СПРАВЕДЛИВО "
+"ДЛЯ ВСЕХ ЗАГРУЖАЕМЫХ ТЕМ. ОБРАТИТЕ ВНИМАНИЕ, ЧТО ВЫ НЕ МОЖЕТЕ ПРЕРВАТЬ "
+"ТЕКУЩУЮ ЗАГРУЗКУ, ТАК КАК ЭТО МОЖЕТ ПРИВЕСТИ К ПОВРЕЖДЕНИЮ ДАННЫХ."
+
+msgid "RATING:"
+msgstr "РЕЙТИНГ:"
+
+msgid "RELEASED:"
+msgstr "ДАТА ВЫХОДА:"
+
+msgid "DEVELOPER:"
+msgstr "РАЗРАБОТЧИК:"
+
+msgid "PUBLISHER:"
+msgstr "ИЗДАТЕЛЬ:"
+
+msgid "GENRE:"
+msgstr "ЖАНР:"
+
+msgid "PLAYERS:"
+msgstr "ИГРОКИ:"
+
+msgid "NO GAMES FOUND"
+msgstr "НЕ НАЙДЕНО ИГР"
+
+msgid "RETRY"
+msgstr "ПОВТОР"
+
+msgid "SKIP"
+msgstr "ПРОПУСТИТЬ"
+
+msgid "Error downloading thumbnail:"
+msgstr "Ошибка загрузки миниатюры:"
+
+msgid "SEARCH"
+msgstr "ПОИСК"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "ИСКАТЬ ПО УТОЧНЁННОМУ ИМЕНИ?"
+
+msgid "skip"
+msgstr "пропуск"
+
+msgid "accept result"
+msgstr "принять результат"
+
+msgid "SCRAPING IN PROGRESS"
+msgstr "СКРЕЙПИНГ В ПРОЦЕССЕ"
+
+msgid "SYSTEM"
+msgstr "СИСТЕМА"
+
+msgid "skip game"
+msgstr "пропустить игру"
+
+msgid "STOP"
+msgstr "СТОП"
+
+msgid "stop"
+msgstr "стоп"
+
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "ИГРА"
+msgstr[1] "ИГРЫ"
+msgstr[2] "ИГР"
+
+#, c-format
+msgid "GAME %i OF %i"
+msgstr "ИГРА %i ИЗ %i"
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr "НИ ОДНОЙ ИГРЫ НЕ БЫЛО ЗАСКРЕЙПЛЕНО"
+
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i ИГРА УСПЕШНО ЗАСКРЕЙПЛЕНА"
+msgstr[1] "%i ИГР УСПЕШНО ЗАСКРЕЙПЛЕНО"
+msgstr[2] "%i ИГР УСПЕШНО ЗАСКРЕЙПЛЕНО"
+
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i ИГРА ПРОПУЩЕНА"
+msgstr[1] "%i ИГР ПРОПУЩЕНО"
+msgstr[2] "%i ИГР ПРОПУЩЕНО"
+
+msgid "GAMELIST OPTIONS"
+msgstr "ОПЦИИ ГЕЙМЛИСТА"
+
+msgid "JUMP TO..."
+msgstr "ПЕРЕЙТИ К..."
+
+msgid "SORT GAMES BY"
+msgstr "СОРТИРОВКА ПО"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "У ЭТОЙ СИСТЕМЫ НЕТ ИГР"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "ДОБАВИТЬ/УДАЛИТЬ ИГРЫ В ЭТУ КОЛЛЕКЦИЮ"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "РЕДАКТИРОВАТЬ МЕТАДАННЫЕ ЭТОЙ ПАПКИ"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "РЕДАКТИРОВАТЬ МЕТАДАННЫЕ ЭТОЙ ИГРЫ"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "ВВЕДИТЕ ПАПКУ (ПЕРЕЗАПИСАТЬ ССЫЛКУ НА ПАПКУ)"
+
+msgid "APPLY"
+msgstr "ПРИМЕНИТЬ"
+
+msgid "apply"
+msgstr "применить"
+
+msgid "close (apply)"
+msgstr "закрыть (применить)"
+
+msgid "close (cancel)"
+msgstr "закрыть (отмена)"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"В РЕЗУЛЬТАТЕ БУДУТ УДАЛЕНЫ ВСЕ МЕДИАФАЙЛЫ, ДЛЯ КОТОРЫХ НЕ НАШЛОСЬ ПОДХОДЯЩИХ "
+"ФАЙЛОВ ИГРЫ. ЭТИ ФАЙЛЫ БУДУТ ПЕРЕМЕЩЕНЫ В ПАПКУ 'CLEANUP' ВНУТРИ КАТАЛОГА "
+"ИГРОВЫХ МЕДИАФАЙЛОВ. ВЫ МОЖЕТЕ ВРУЧНУЮ УДАЛИТЬ ЭТУ ПАПКУ, КОГДА УБЕДИТЕСЬ, "
+"ЧТО ОНА БОЛЬШЕ НЕ НУЖНА."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"ЭТО УДАЛИТ ВСЕ ЗАПИСИ ИЗ XML-ФАЙЛОВ ГЕЙМЛИСТОВ, В КОТОРЫХ НЕ БЫЛО НАЙДЕНО "
+"ВЕРНЫХ ФАЙЛОВ ИГР. РЕЗЕРВНЫЕ КОПИИ ОРИГ. ФАЙЛОВ БУДУТ СОХРАНЕНЫ В ПАПКЕ "
+"'CLEANUP' ВНУТРИ КАТАЛОГА 'GAMELISTS'. ВЫ МОЖЕТЕ ВРУЧНУЮ УДАЛИТЬ ЭТУ ПАПКУ, "
+"КОГДА УБЕДИТЕСЬ, ЧТО ОНА БОЛЬШЕ НЕ НУЖНА."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"В РЕЗУЛЬТАТЕ БУДУТ УДАЛЕНЫ ВСЕ ЗАПИСИ ИЗ КОНФИГУР. ФАЙЛОВ ПОЛЬЗ. КОЛЛЕКЦИЙ, "
+"В КОТОРЫХ НЕ БЫЛО НАЙДЕНО ВЕРНЫХ ФАЙЛОВ ИГР. РЕЗЕРВНЫЕ КОПИИ ИСХОДНЫХ ФАЙЛОВ "
+"БУДУТ СОХРАНЕНЫ В ПАПКЕ 'CLEANUP' ВНУТРИ КАТАЛОГА КОЛЛЕКЦИЙ. БУДУТ "
+"ОБРАБОТАНЫ ТОЛЬКО ВКЛЮЧЁННЫЕ КОЛЛЕКЦИИ."
+
+msgid "NOT STARTED"
+msgstr "НЕ НАЧАТО"
+
+msgid "DESCRIPTION:"
+msgstr "ОПИСАНИЕ:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "ВСЕГО УДАЛЕНО ЗАПИСЕЙ:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "ПОСЛЕДНЯЯ СИСТЕМА:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "ПОСЛЕДНЯЯ ОШИБКА:"
+
+msgid "MEDIA"
+msgstr "МЕДИА"
+
+msgid "start processing"
+msgstr "начать обработку"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "ВЫПОЛНЯЕТСЯ ОЧИСТКА МЕДИА"
+
+msgid "stop processing"
+msgstr "остановить выполнение"
+
+msgid "GAMELISTS"
+msgstr "ГЕЙМЛИСТЫ"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "ВЫПОЛНЯЕТСЯ ОЧИСТКА ГЕЙМЛИСТОВ"
+
+msgid "COLLECTIONS"
+msgstr "КОЛЛЕКЦИИ"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "ОЧИСТКА КОЛЛЕКЦИЙ НЕ УДАЛАСЬ"
+
+msgid "There are no enabled custom collections"
+msgstr "Нет включенных пользовательских коллекций"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "ВЫПОЛНЯЕТСЯ ОЧИСТКА КОЛЛЕКЦИЙ"
+
+msgid "PROCESSING"
+msgstr "ВЫПОЛНЕНИЕ"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "Найден файл flatten.txt, пропускаем \"%s\""
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "Не удалось создать целевой каталог, проблемы с правами?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "Не удалось переместить медиафайл, проблемы с правами?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "Не удалось считать файл gamelist.xml для \"%s\""
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "Не удалось найти в файле тег геймлиста ('gamelist') для \"%s\""
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr ""
+"Не удалось удалить временный файл геймлиста (\"gamelist\"), проблемы с "
+"правами?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr ""
+"Не удалось записать во временный файл геймлиста (\"gamelist\"), проблемы с "
+"правами?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr "Не удалось создать каталог резервного копирования, проблемы с правами?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "Не удалось переместить старый файл gamelist, проблемы с правами?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr "Не удалось переместить временный файл gamelist, проблемы с правами?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "Не удалось найти конфигурационный файл пользовательской коллекции"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "Не удалось открыть конфигурационный файл пользовательской коллекции"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr "Не удалось удалить временный файл коллекции, проблемы с правами?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "Не удалось записать во временный конфигурационный файл коллекции"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr "Не удалось переместить старый файл коллекции, проблемы с правами?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr "Не удалось переместить файл временной коллекции, проблемы с правами?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "ПРЕРВАНА ОЧИСТКА МЕДИА"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "ЗАВЕРШЕНА ОЧИСТКА МЕДИА"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "ПРЕРВАНА ОЧИСТКА ГЕЙМЛИСТА"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "ЗАВЕРШЕНА ОЧИСТКА ГЕЙМЛИСТА"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "ОТМЕНЕНА ОЧИСТКА КОЛЛЕКЦИЙ"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "ЗАВЕРШЕНА ОЧИСТКА КОЛЛЕКЦИЙ"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "ОЧИСТКА МЕДИА НЕ УДАЛАСЬ"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "ОЧИСТКА ГЕЙМЛИСТОВ НЕ УДАЛАСЬ"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "ПРИЛОЖЕНИЕ БУДЕТ ПЕРЕЗАПУЩЕНО ПОСЛЕ ЗАКРЫТИЯ ЭТОЙ УТИЛИТЫ."
+
+msgid "INVALID ENTRY"
+msgstr "НЕКОРРЕКТНАЯ ЗАПИСЬ"
+
+msgid "CLEARED ENTRY"
+msgstr "ОЧИЩЕНА ЗАПИСЬ"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "АЛЬТЕРНАТИВНЫЕ ЭМУЛЯТОРЫ НЕ ОПРЕДЕЛЕНЫ"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "ОЧИСТИТЬ НЕКОРРЕКТНУЮ ЗАПИСЬ"
+
+msgid "DEFAULT"
+msgstr "ПО УМОЛЧАНИЮ"
+
+msgid "EDIT METADATA"
+msgstr "ИЗМЕНИТЬ МЕТАДАННЫЕ"
+
+msgid "CLEAR ENTRY"
+msgstr "ОЧИСТИТЬ ЗАПИСЬ"
+
+msgid "SELECT EMULATOR"
+msgstr "ВЫБРАТЬ ЭМУЛЯТОР"
+
+msgid "SYSTEM-WIDE"
+msgstr "В МАСШТАБАХ СИСТЕМЫ"
+
+msgid "unknown"
+msgstr "неизвестно"
+
+msgid "SCRAPE"
+msgstr "СКРЕЙПИТЬ"
+
+msgid "scrape"
+msgstr "скрейпить"
+
+msgid "save metadata"
+msgstr "сохранить метаданные"
+
+msgid "cancel changes"
+msgstr "отменить изменения"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"ЭТО ПРИВЕДЁТ К УДАЛЕНИЮ ВСЕХ МЕДИАФАЙЛОВ И ЗАПИСИ GAMELIST.XML ДЛЯ ЭТОЙ "
+"ПАПКИ, НО НИ САМА ДИРЕКТОРИЯ, НИ СОДЕРЖИМОЕ ВНУТРИ НЕЁ НЕ БУДУТ УДАЛЕНЫ\n"
+"ВЫ УВЕРЕНЫ?"
+
+msgid "CLEAR"
+msgstr "ОЧИСТИТЬ"
+
+msgid "clear folder"
+msgstr "очистить папку"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"ЭТО ПРИВЕДЁТ К УДАЛЕНИЮ ВСЕХ МЕДИАФАЙЛОВ И ЗАПИСИ В ФАЙЛЕ GAMELIST.XML ДЛЯ "
+"ЭТОЙ ИГРЫ, НО САМ ФАЙЛ ИГРЫ НЕ БУДЕТ УДАЛЁН\n"
+"ВЫ УВЕРЕНЫ?"
+
+msgid "clear file"
+msgstr "очистить файл"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"ЭТО ПРИВЕДЁТ К УДАЛЕНИЮ ФАЙЛА ИГРЫ, ВСЕХ МЕДИАФАЙЛОВ И ЗАПИСИ В ФАЙЛЕ "
+"GAMELIST.XML.\n"
+"ВЫ УВЕРЕНЫ?"
+
+msgid "DELETE"
+msgstr "УДАЛИТЬ"
+
+msgid "delete game"
+msgstr "удалить игру"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "ОФФЛАЙН-ГЕНЕРАТОР МИКС-ИЗОБРАЖЕНИЙ"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i ИГРА ИЗ %i ИГР ОБРАБОТАНА"
+msgstr[1] "%i ИГРЫ ИЗ %i ИГР ОБРАБОТАНЫ"
+msgstr[2] "%i ИГР ИЗ %i ИГР ОБРАБОТАНО"
+
+msgid "Generated:"
+msgstr "Сгенерировано:"
+
+msgid "Overwritten:"
+msgstr "Перезаписано:"
+
+msgid "Skipped:"
+msgstr "Пропущено:"
+
+msgid "Skipped (existing):"
+msgstr "Пропущено (уже есть):"
+
+msgid "Failed:"
+msgstr "Не удалось:"
+
+msgid "Processing:"
+msgstr "Обработка:"
+
+msgid "Last error message:"
+msgstr "Последнее сообщение об ошибке:"
+
+msgid "PAUSE"
+msgstr "ПАУЗА"
+
+msgid "pause processing"
+msgstr "пауза обработки"
+
+msgid "close (abort processing)"
+msgstr "закрыть (отменить обработку)"
+
+msgid "RUNNING..."
+msgstr "ВЫПОЛНЕНИЕ..."
+
+msgid "PAUSED"
+msgstr "НА ПАУЗЕ"
+
+msgid "RUNNING"
+msgstr "ВЫПОЛНЯЕТСЯ"
+
+msgid "COMPLETED"
+msgstr "ЗАВЕРШЕНО"
+
+msgid "DONE"
+msgstr "ГОТОВО"
+
+msgid "done (close)"
+msgstr "готово (закрыть)"
+
+msgid "APPLICATION UPDATER"
+msgstr "АПДЕЙТЕР ПРИЛОЖЕНИЯ"
+
+msgid "INSTALLATION STEPS:"
+msgstr "ПОРЯДОК УСТАНОВКИ:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "СКАЧАТЬ НОВЫЙ РЕЛИЗ"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "СКАЧАТЬ НОВЫЙ РЕЛИЗ В ЭТУ ПАПКУ:"
+
+msgid "INSTALL PACKAGE"
+msgstr "УСТАНОВИТЬ ПАКЕТ"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "ВЫЙТИ И ВРУЧНУЮ ПЕРЕЗАПУСТИТЬ ES-DE"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "ВЫЙТИ И ВРУЧНУЮ ОБНОВИТЬ ES-DE"
+
+msgid "STATUS MESSAGE:"
+msgstr "СООБЩЕНИЕ О СТАТУСЕ:"
+
+msgid "DOWNLOAD"
+msgstr "СКАЧАТЬ"
+
+msgid "download new release"
+msgstr "скачать новый релиз"
+
+msgid "Download directory does not exist"
+msgstr "Каталог загрузки не существует"
+
+msgid "CHANGE DIRECTORY"
+msgstr "СМЕНИТЬ КАТАЛОГ"
+
+msgid "change download directory"
+msgstr "изменить каталог загрузки"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "ВВЕДИТЕ КАТАЛОГ ЗАГРУЗКИ"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "ЗАГРУЗКА ПРЕРВАНА"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "ПАКЕТ НЕ СОХРАНЕН НА ДИСКЕ"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "ПАКЕТ БЫЛ ЗАГРУЖЕН И МОЖЕТ БЫТЬ УСТАНОВЛЕН ВРУЧНУЮ"
+
+msgid "DOWNLOADING 100%"
+msgstr "СКАЧАНО 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "Загруженный файл не соответствует ожидаемой контрольной сумме MD5"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr "Ошибка: Не удалось удалить временный файл пакета, проблемы с правами?"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr "Ошибка: Не удалось записать файл пакета, проблемы с правами?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "Ошибка: Не удалось установить разрешения на файл AppImage"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "Скачано %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "Ошибка: Не удалось открыть файл обновления AppImage для чтения"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr ""
+"Ошибка: Загруженный файл не соответствует ожидаемой контрольной сумме MD5"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"Ошибка: Не удалось переименовать запущенный файл AppImage, проблемы с "
+"правами?"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"Ошибка: Не удалось заменить запущенный файл AppImage, проблемы с правами?"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "Успешная установлено как %s"
+
+msgid "INSTALL"
+msgstr "УСТАНОВКА"
+
+msgid "install package"
+msgstr "установить пакет"
+
+msgid "Find the detailed changelog at"
+msgstr "Найти подробный лог"
+
+msgid "quit application"
+msgstr "закрыть приложение"
+
+msgid "all games"
+msgstr "все игры"
+
+msgid "last played"
+msgstr "последние"
+
+msgid "favorites"
+msgstr "избранное"
+
+msgid "collections"
+msgstr "коллекции"
+
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "ОТКЛЮЧЕН '%s' В '%s'"
+
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "РЕДАКТИРОВАНИЕ КОЛЛЕКЦИИ '%s', ДОБАВЛЕНИЕ/УДАЛЕНИЕ ИГР С %s"
+
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "ЗАВЕРШЕНО РЕДАКТИРОВАНИЕ КОЛЛЕКЦИИ '%s'"
+
+msgid "Favorites"
+msgstr "Избранное"
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "ДОБАВЛЕН '%s' В '%s'"
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "УДАЛЁН '%s' ИЗ '%s'"
+
+msgid "This collection is empty"
+msgstr "Эта коллекция пуста"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "Эта коллекция содержит 1 игру: '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "Эта коллекция содержит 2 игры: '%s [%s]' и '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "Эта коллекция содержит 3 игры: '%s [%s]', '%s [%s]' и '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"Эта коллекция содержит %i игру: '%s [%s]', '%s [%s]' и '%s [%s]', среди "
+"прочих"
+msgstr[1] ""
+"Эта коллекция содержит %i игры: '%s [%s]', '%s [%s]' и '%s [%s]', среди "
+"прочих"
+msgstr[2] ""
+"Эта коллекция содержит %i игр: '%s [%s]', '%s [%s]' и '%s [%s]', среди прочих"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "Эта коллекция содержит 1 игру: '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "Эта коллекция содержит 2 игры: '%s' и '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "Эта коллекция содержит 3 игры: '%s', '%s' и '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "Эта коллекция содержит %i игру: '%s', '%s' и '%s', среди прочих"
+msgstr[1] "Эта коллекция содержит %i игры: '%s', '%s' и '%s', среди прочих"
+msgstr[2] "Эта коллекция содержит %i игр: '%s', '%s' и '%s', среди прочих"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' отфильтрован - без фильтра может быть больше игр"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "УДАЛЕНА КОЛЛЕКЦИЯ '%s'"
+
+msgid "name, ascending"
+msgstr "имя, по возрастанию"
+
+msgid "name, descending"
+msgstr "имя, по убыванию"
+
+msgid "rating, ascending"
+msgstr "рейтинг, по возрастанию"
+
+msgid "rating, descending"
+msgstr "рейтинг, убывание"
+
+msgid "release date, ascending"
+msgstr "дата выхода, по возрастанию"
+
+msgid "release date, descending"
+msgstr "дата выхода, по убыванию"
+
+msgid "developer, ascending"
+msgstr "разработчик, по возрастанию"
+
+msgid "developer, descending"
+msgstr "разработчик, убывающий"
+
+msgid "publisher, ascending"
+msgstr "издатель, по возрастанию"
+
+msgid "publisher, descending"
+msgstr "издатель, по убыванию"
+
+msgid "genre, ascending"
+msgstr "жанр, по возрастанию"
+
+msgid "genre, descending"
+msgstr "жанр, по убыванию"
+
+msgid "players, ascending"
+msgstr "игроки, по возрастанию"
+
+msgid "players, descending"
+msgstr "игроки, по убыванию"
+
+msgid "last played, ascending"
+msgstr "последняя игра, по возрастанию"
+
+msgid "last played, descending"
+msgstr "последняя игра, по убыванию"
+
+msgid "times played, ascending"
+msgstr "сыграно раз, по возрастанию"
+
+msgid "times played, descending"
+msgstr "сыграно раз, по убыванию"
+
+msgid "system, ascending"
+msgstr "система, по возрастанию"
+
+msgid "system, descending"
+msgstr "система, по убыванию"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "ОШИБКА: ОТСУТСТВУЕТ ПРЕДВ. КОМАНДА КОНФИГУРАЦИИ ПРАВИЛ ПОИСКА ДЛЯ '%s'"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ОШИБКА: НЕ УДАЛОСЬ НАЙТИ ПРЕДВ. КОМАНДУ, ОНА ПРАВИЛЬНО УСТАНОВЛЕНА?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"ОШИБКА: НЕ УДАЛОСЬ НАЙТИ ПРЕДВ. КОМАНДУ '%s', ОНА ПРАВИЛЬНО УСТАНОВЛЕНА?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "ОШИБКА: ОТСУТСТВУЕТ КОНФИГ ПРАВИЛ ПОИСКА ЭМУЛЯТОРА для '%s'"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ОШИБКА: НЕ УДАЛОСЬ НАЙТИ ПРИЛОЖЕНИЕ, ОНО ПРАВИЛЬНО УСТАНОВЛЕНО?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ОШИБКА: НЕ УДАЛОСЬ НАЙТИ ПРИЛОЖЕНИЕ '%s', ОНО ПРАВИЛЬНО УСТАНОВЛЕНО?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ОШИБКА: НЕ УДАЛОСЬ НАЙТИ ЭМУЛЯТОР, ОН ПРАВИЛЬНО УСТАНОВЛЕН?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ОШИБКА: НЕ УДАЛОСЬ НАЙТИ ЭМУЛЯТОР '%s', ОН ПРАВИЛЬНО УСТАНОВЛЕН?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "ОШИБКА: НЕ УДАЛОСЬ НАЙТИ ФАЙЛ ЯДРА ЭМУЛЯТОРА '%s'"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "ОШИБКА: НЕДОПУСТИМАЯ ЗАПИСЬ В ФАЙЛЕ КОНФИГУРАЦИИ СИСТЕМЫ"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "ОШИБКА: ОТСУТСТВУЕТ КОНФИГУРАЦИЯ ЯДРА ДЛЯ '%s'"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "ОШИБКА: НЕДОПУСТИМАЯ ЗАПИСЬ %s ПЕРЕМЕННОЙ"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr ""
+"ОШИБКА: КАТАЛОГ, ОПРЕДЕЛЕННЫЙ %s, НЕ МОЖЕТ БЫТЬ СОЗДАН, ПРОБЛЕМЫ С ПРАВАМИ?"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "ОШИБКА: ФАЙЛ ПРИЛОЖЕНИЯ ИЛИ ПСЕВДОНИМА НЕ СУЩЕСТВУЕТ ИЛИ НЕЧИТАЕМ"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "ОШИБКА: ФАЙЛ РАБОЧЕГО СТОЛА НЕДЕЙСТВИТЕЛЕН ИЛИ НЕЧИТАЕМ"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "ОШИБКА: ФАЙЛ РАБОЧЕГО СТОЛА НЕ СУЩЕСТВУЕТ ИЛИ НЕЧИТАЕМ"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "ОШИБКА ЗАПУСКА ИГРЫ '%s' (КОД ОШИБКИ %i)"
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr "НЕВОЗМОЖНО ДОБАВИТЬ ПОЛЬЗОВАТЕЛЬСКУЮ КОЛЛЕКЦИЮ В ПОЛЬЗ. КОЛЛЕКЦИЮ"
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr "НЕВОЗМОЖНО ДОБАВИТЬ ЗАПОЛНИТЕЛИ В ПОЛЬЗОВАТЕЛЬСКИЕ КОЛЛЕКЦИИ"
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr "НЕВОЗМОЖНО ДОБАВИТЬ ПАПКИ В ПОЛЬЗОВАТЕЛЬСКИЕ КОЛЛЕКЦИИ"
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr "ПОМЕТИЛ ПАПКУ '%s' КАК ИЗБРАННУЮ"
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr "УДАЛЕНА ПОМЕТКА \"ИЗБРАННОЕ\" ДЛЯ ПАПКИ '%s'"
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
+msgstr ""
+"НЕЛЬЗЯ ДОБАВЛЯТЬ ЗАПИСИ, КОТОРЫЕ НЕ СЧИТАЮТСЯ ИГРАМИ, В ПОЛЬЗОВАТЕЛЬСКИЕ "
+"КОЛЛЕКЦИИ"
+
+msgid "random"
+msgstr "случайно"
+
+msgid "screensaver"
+msgstr "заставка"
+
+#, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "%i игра"
+msgstr[1] "%i игры"
+msgstr[2] "%i игр"
+
+#, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "(%i избранная)"
+msgstr[1] "(%i избранные)"
+msgstr[2] "(%i избранных)"
+
+#, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "%i избранная"
+msgstr[1] "%i избранны"
+msgstr[2] "%i избранных"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "неизвестно"
+
+msgid "system"
+msgstr "система"
+
+msgid "view media"
+msgstr "медиа"
+
+msgid "options"
+msgstr "опции"
+
+msgid "jump to game"
+msgstr "к игре"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "да"
+
+msgctxt "theme"
+msgid "no"
+msgstr "нет"
+
+msgid ""
+"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
+"NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE VARIOUS PROBLEMS, SOME OF "
+"WHICH MAY NOT BE APPARENT IMMEDIATELY. MAKE SURE TO ALWAYS FOLLOW THE "
+"UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
+"DIRECTORY."
+msgstr ""
+"ПОХОЖЕ, ЧТО БЫЛО ПРОИЗВЕДЕНО НЕБЕЗОПАСНОЕ ОБНОВЛЕНИЕ, ВОЗМОЖНО, ПУТЕМ "
+"РАСПАКОВКИ НОВОГО РЕЛИЗА ПОВЕРХ СТАРОГО? ЭТО МОЖЕТ ПРИВЕСТИ К РАЗЛИЧНЫМ "
+"ПРОБЛЕМАМ, НЕКОТОРЫЕ ИЗ КОТОРЫХ МОГУТ НЕ ПРОЯВИТЬСЯ СРАЗУ. ОБЯЗАТЕЛЬНО "
+"СЛЕДУЙТЕ ИНСТРУКЦИЯМ ПО ОБНОВЛЕНИЮ В ФАЙЛЕ README.TXT, КОТОРЫЙ НАХОДИТСЯ В "
+"КАТАЛОГЕ ES-DE."
+
+msgid ""
+"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
+"es_systems.xml FILE, THEN SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. IF "
+"YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
+"SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
+msgstr ""
+"НЕ УДАЛОСЬ РАЗОБРАТЬ ФАЙЛ КОНФИГУРАЦИИ СИСТЕМ. ЕСЛИ У ВАС ЕСТЬ "
+"ПОЛЬЗОВАТЕЛЬСКИЙ ФАЙЛ es_systems.xml, ТО, ВЕРОЯТНО, ЧТО-ТО НЕ ТАК С XML-"
+"СИНТАКСОМ. ЕСЛИ У ВАС НЕТ ПОЛЬЗОВАТЕЛЬСКОГО ФАЙЛА СИСТЕМ, ЗНАЧИТ, УСТАНОВКА "
+"ES-DE НАРУШЕНА. ПРОСМОТРИТЕ ФАЙЛ ЛОГА ПРИЛОЖЕНИЯ es_log.txt ДЛЯ "
+"ДОПОЛНИТЕЛЬНОЙ ИНФОРМАЦИИ"
+
+msgid ""
+"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
+"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
+"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
+"THE SUPPORTED FILE EXTENSIONS.\n"
+"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"ФАЙЛЫ ИГР НЕ НАЙДЕНЫ. ПОЖАЛУЙСТА, ПОМЕСТИТЕ СВОИ ИГРЫ В РАНЕЕ УКАЗАННЫЙ "
+"КАТАЛОГ РОМОВ. ОПЦИОНАЛЬНО, МОЖНО СГЕНЕРИРОВАТЬ СТРУКТУРУ ПАПОК КАТАЛОГА "
+"РОМОВ, ЧТО ТАКЖЕ СОЗДАСТ ТЕКСТОВЫЙ ФАЙЛ ДЛЯ КАЖДОЙ СИСТЕМЫ, СОДЕРЖАЩИЙ "
+"НЕКОТОРУЮ ИНФОРМАЦИЮ - НАПРИМЕР, О ПОДДЕРЖИВАЕМЫХ РАСШИРЕНИЯХ ФАЙЛОВ.\n"
+"ЭТО ТЕКУЩАЯ ДИРЕКТОРИЯ РОМОВ:\n"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
+"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
+"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
+"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
+"FILE EXTENSIONS.\n"
+"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"ФАЙЛЫ ИГР НЕ НАЙДЕНЫ. ПОМЕСТИТЕ СВОИ ИГРЫ В ТЕКУЩИЙ КАТАЛОГ РОМОВ ИЛИ "
+"ИЗМЕНИТЕ ПУТЬ К НЕМУ С ПОМОЩЬЮ КНОПКИ НИЖЕ. ОПЦИОНАЛЬНО, МОЖНО СГЕНЕРИРОВАТЬ "
+"СТРУКТУРУ ПАПОК КАТАЛОГА РОМОВ, ЧТО ТАКЖЕ СОЗДАСТ ТЕКСТОВЫЙ ФАЙЛ ДЛЯ КАЖДОЙ "
+"СИСТЕМЫ, СОДЕРЖАЩИЙ НЕКОТОРУЮ ИНФОРМАЦИЮ - НАПРИМЕР, ПОДДЕРЖИВАЕМЫЕ "
+"РАСШИРЕНИЯ ФАЙЛОВ.\n"
+"ЭТО ТЕКУЩАЯ ДИРЕКТОРИЯ РОМОВ:\n"
+
+msgid "CHANGE ROM DIRECTORY"
+msgstr "СМЕНИТЬ КАТАЛОГ РОМОВ"
+
+msgid "ENTER ROM DIRECTORY PATH"
+msgstr "ВВЕДИТЕ ПУТЬ К КАТАЛОГУ РОМОВ"
+
+msgid ""
+"ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
+msgstr ""
+"НАСТРОЙКИ КАТАЛОГА РОМОВ СОХРАНЕНЫ, ПЕРЕЗАПУСТИТЕ ПРИЛОЖЕНИЕ ДЛЯ ПОВТОРНОГО "
+"СКАНИРОВАНИЯ СИСТЕМ"
+
+msgid "Currently configured path:"
+msgstr "Текущий путь:"
+
+msgid "LOAD CURRENTLY CONFIGURED PATH"
+msgstr "ЗАГРУЗИТЬ ТЕКУЩИЙ ПУТЬ"
+
+msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
+msgstr "ОЧИСТИТЬ (ОСТАВЬТЕ ПУСТЫМ, ЧТОБЫ СБРОСИТЬ ПУТЬ ПО УМОЛЧАНИЮ)"
+
+msgid "CREATE DIRECTORIES"
+msgstr "СОЗДАТЬ ПАПКИ"
+
+msgid ""
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
+"xml\n"
+"\n"
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"DON'T NEED"
+msgstr ""
+"ЭТО СОЗДАСТ ПАПКИ ДЛЯ ВСЕХ ИГРОВЫХ СИСТЕМ, ОПРЕДЕЛЁННЫХ В es_systems.xml\n"
+"\n"
+"В РЕЗУЛЬТАТЕ МОЖЕТ ОБРАЗОВАТЬСЯ МНОГО ПАПОК, ПОЭТОМУ РЕКОМЕНДУЕТСЯ УДАЛИТЬ "
+"НЕНУЖНЫЕ"
+
+msgid ""
+"THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
+"PLACE YOUR GAMES IN THE NEW FOLDERS"
+msgstr ""
+"ПАПКИ СИСТЕМ БЫЛИ УСПЕШНО СОЗДАНЫ, ВЫЙДИТЕ ИЗ ПРИЛОЖЕНИЯ И ПОМЕСТИТЕ СВОИ "
+"ИГРЫ В НОВЫЕ ПАПКИ"
+
+msgid ""
+"ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
+"\n"
+"SEE THE LOG FILE FOR MORE DETAILS"
+msgstr ""
+"ОШИБКА ПРИ СОЗДАНИИ ПАПОК СИСТЕМ. ПРОБЛЕМЫ С ПРАВАМИ ИЛИ ПЕРЕПОЛНЕН ДИСК?\n"
+"\n"
+"ПРОВЕРЬТЕ ЛОГ ДЛЯ ПОЛУЧЕНИЯ БОЛЕЕ ПОДРОБНОЙ ИНФОРМАЦИИ"
+
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+"ПО КРАЙНЕЙ МЕРЕ В ОДНОЙ ИЗ ВАШИХ СИСТЕМ НАСТРОЕН НЕКОРРЕКТНО АЛЬТЕРНАТИВНЫЙ "
+"ЭМУЛЯТОР, НЕ ИМЕЮЩИЙ СООТВЕТСТВУЮЩЕЙ ЗАПИСИ В КОНФИГУРАЦИОННОМ ФАЙЛЕ "
+"СИСТЕМЫ. ПОЖАЛУЙСТА, ПРОВЕРЬТЕ НАСТРОЙКИ С ПОМОЩЬЮ ИНТЕРФЕЙСА "
+"\"АЛЬТЕРНАТИВНЫЕ ЭМУЛЯТОРЫ\" В МЕНЮ \"ДРУГИЕ НАСТРОЙКИ\""
+
+msgid "UPDATE"
+msgstr "ОБНОВИТЬ"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
+"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
+"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
+msgstr ""
+"ПРОГРАММА ОБНОВЛЕНИЯ ПРИЛОЖЕНИЯ ЗАГРУЗИТ ПОСЛЕДНЮЮ ПОРТАТИВНУЮ ВЕРСИЮ ДЛЯ "
+"WINDOWS, НО ВАМ ПРИДЁТСЯ ВРУЧНУЮ ВЫПОЛНИТЬ ОБНОВЛЕНИЕ. ИНСТРУКЦИИ ПО "
+"ВЫПОЛНЕНИЮ ЭТОЙ ОПЕРАЦИИ СМ. В ФАЙЛЕ README.TXT, НАХОДЯЩЕМСЯ В ЗАГРУЖЕННОМ "
+"ZIP-ФАЙЛЕ. КАК ТАКЖЕ ОПИСАНО В ЭТОМ ДОКУМЕНТЕ, НИКОГДА НЕ РАСПАКОВЫВАЙТЕ "
+"НОВЫЙ ВЫПУСК ПОВЕРХ СТАРОЙ УСТАНОВКИ, ТАК КАК ЭТО МОЖЕТ ПРИВЕСТИ К ПОЛОМКЕ "
+"ПРИЛОЖЕНИЯ."
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM THE UPGRADE. WHEN "
+"DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
+"UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
+msgstr ""
+"ПРОГРАММА ОБНОВЛЕНИЯ ПРИЛОЖЕНИЙ ЗАГРУЗИТ ДЛЯ ВАС ПОСЛЕДНЮЮ ВЕРСИЮ "
+"УСТАНОВОЧНОГО ФАЙЛА ДЛЯ WINDOWS, НО ВАМ ПРИДЁТСЯ ВРУЧНУЮ ЗАПУСТИТЬ ЕЁ, ЧТОБЫ "
+"ВЫПОЛНИТЬ ОБНОВЛЕНИЕ. ПРИ ЭТОМ УБЕДИТЕСЬ, ЧТО ВЫ ОТВЕТИЛИ \"ДА\" НА ВОПРОС О "
+"ТОМ, НУЖНО ЛИ УДАЛЯТЬ СТАРУЮ ВЕРСИЮ, ИНАЧЕ ВЫ МОЖЕТЕ ПОЛУЧИТЬ НЕРАБОТАЮЩУЮ "
+"УСТАНОВКУ."
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
+"WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
+msgstr ""
+"ПРОГРАММА ОБНОВЛЕНИЯ ПРИЛОЖЕНИЯ ЗАГРУЗИТ ДЛЯ ВАС ПОСЛЕДНЮЮ ВЕРСИЮ, НО ДЛЯ "
+"ОБНОВЛЕНИЯ ВАМ НУЖНО БУДЕТ ВРУЧНУЮ УСТАНОВИТЬ DMG-ФАЙЛ."
+
+#, c-format
+msgid "LAUNCHING GAME '%s'"
+msgstr "ЗАПУСК ИГРЫ '%s'"
+
+msgid "menu"
+msgstr "меню"
+
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr "СТРАНИЦА %s ИЗ %s"
+
+msgid "pan"
+msgstr "панорама"
+
+msgid "reset"
+msgstr "сброс"
+
+msgid "browse"
+msgstr "просмотр"
+
+msgid "game media"
+msgstr "игровые медиа"
+
+msgid "first"
+msgstr "первый"
+
+msgid "last"
+msgstr "последний"
+
+msgid "zoom"
+msgstr "масштаб"
+
+msgid "RATING"
+msgstr "РЕЙТИНГ"
+
+msgid "DEVELOPER"
+msgstr "РАЗРАБОТЧИК"
+
+msgid "PUBLISHER"
+msgstr "ИЗДАТЕЛЬ"
+
+msgid "GENRE"
+msgstr "ЖАНР"
+
+msgid "PLAYERS"
+msgstr "ИГРОКИ"
+
+msgid "FAVORITE"
+msgstr "ИЗБРАННОЕ"
+
+msgid "KIDGAME"
+msgstr "ДЕТСКАЯ"
+
+msgid "HIDDEN"
+msgstr "СКРЫТО"
+
+msgid "BROKEN"
+msgstr "СЛОМАНО"
+
+msgid "CONTROLLER"
+msgstr "КОНТРОЛЛЕР"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "АЛЬТЕРНАТИВНЫЙ ЭМУЛЯТОР"
+
+msgid "FALSE"
+msgstr "ЛОЖЬ"
+
+msgid "TRUE"
+msgstr "ИСТИНА"
+
+msgid "UNKNOWN"
+msgstr "НЕИЗВЕСТНО"
+
+msgid "NONE SELECTED"
+msgstr "НИЧЕГО НЕ ВЫБРАНО"
+
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "Скриншот не найден, не удалось сгенерировать микс-изображение"
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr ""
+"Снимок экрана в неизвестном формате, не удалось сгенерировать микс-"
+"изображение"
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr ""
+"Снимок экрана в неподдерживаемом формате, не удалось сгенерировать микс-"
+"изображение"
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr ""
+"Ошибка при загрузке скриншота, не удалось сгенерировать микс-изображение"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Ошибка при загрузке лого (баннера), поврежденный файл?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Ошибка при загрузке изображения 3d-обложки, поврежденный файл?"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "Ошибка при загрузке изображения обложки коробки, поврежденный файл?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr ""
+"Ошибка при загрузке изображения физического носителя, поврежденный файл?"
+
+msgid "pdf manual"
+msgstr "pdf руководство"
+
+msgid "SCREENSHOT"
+msgstr "СКРИНШОТ"
+
+msgid "BOX COVER"
+msgstr "ПЕРЕДНЯЯ ОБЛОЖКА"
+
+msgid "BOX BACK COVER"
+msgstr "ЗАДНЯЯ ОБЛОЖКА"
+
+msgid "TITLE SCREEN"
+msgstr "ГЛАВНОЕ МЕНЮ"
+
+msgid "FAN ART"
+msgstr "ФАН-АРТ"
+
+msgid "MIXIMAGE"
+msgstr "МИКС-ИЗОБРАЖЕНИЕ"
+
+msgid "CUSTOM"
+msgstr "ПОЛЬЗОВАТЕЛЬСКИЕ"
+
+msgid "Searching for games..."
+msgstr "Поиск игр..."
+
+msgid "Loading systems..."
+msgstr "Загрузка систем..."
+
+msgid "Reloading..."
+msgstr "Перезагрузка..."
+
+msgid "Copying resources..."
+msgstr "Копирование ресурсов..."
+
+msgid "Creating system directories..."
+msgstr "Создание папок систем..."
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "ОШИБКА: НЕ УДАЛОСЬ ОТОБРАЗИТЬ PDF-ФАЙЛ"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "ДОБАВЛЕНО УСТРОЙСТВО ВВОДА '%s'"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "УДАЛЕНО УСТРОЙСТВО ВВОДА '%s'"
+
+msgid "medium"
+msgstr "средне"
+
+msgid "large"
+msgstr "большой"
+
+msgid "small"
+msgstr "маленький"
+
+msgid "extra small"
+msgstr "очень маленький"
+
+msgid "extra large"
+msgstr "очень большой"
+
+msgid "automatic"
+msgstr "автоматически"
+
+msgid "16:9 vertical"
+msgstr "16:9 вертикальный"
+
+msgid "16:10 vertical"
+msgstr "16:10 вертикальный"
+
+msgid "3:2 vertical"
+msgstr "3:2 вертикальный"
+
+msgid "4:3 vertical"
+msgstr "4:3 вертикальный"
+
+msgid "5:4 vertical"
+msgstr "5:4 вертикальный"
+
+msgid "19.5:9 vertical"
+msgstr "19.5:9 вертикальный"
+
+msgid "20:9 vertical"
+msgstr "20:9 вертикальный"
+
+msgid "21:9 vertical"
+msgstr "21:9 вертикальный"
+
+msgid "32:9 vertical"
+msgstr "32:9 вертикальный"
+
+msgid "edit date"
+msgstr "изменить дату"
+
+msgid "Y-M-D"
+msgstr "Г-М-Д"
+
+msgid "modify"
+msgstr "изменить"
+
+#, c-format
+msgid "%i (OF %i)"
+msgstr "%i (ИЗ %i)"
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] "%s ВЫБРАН"
+msgstr[1] "%s ВЫБРАНО"
+msgstr[2] "%s ВЫБРАНО"
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] "%i ВЫБРАН"
+msgstr[1] "%i ВЫБРАНО"
+msgstr[2] "%i ВЫБРАНО"
+
+msgid "change value"
+msgstr "изменить значение"
+
+msgid "SELECT ALL"
+msgstr "ВЫБРАТЬ ВСЁ"
+
+msgid "select all"
+msgstr "выбрать всё"
+
+msgid "SELECT NONE"
+msgstr "НЕ ВЫБИРАТЬ НИЧЕГО"
+
+msgid "select none"
+msgstr "не выбирать"
+
+msgid "move cursor"
+msgstr "переместить курсор"
+
+msgid "edit"
+msgstr "редактировать"
+
+msgid "WORKING..."
+msgstr "ВЫПОЛНЕНИЕ..."
+
+msgid "toggle"
+msgstr "переключить"
+
+msgid "add half star"
+msgstr "добавить ползвезды"
+
+msgctxt "theme"
+msgid "never"
+msgstr "никогда"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "%i день назад"
+msgstr[1] "%i дня назад"
+msgstr[2] "%i дней назад"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "%i час назад"
+msgstr[1] "%i часа назад"
+msgstr[2] "%i часов назад"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "%i минуту назад"
+msgstr[1] "%i минуты назад"
+msgstr[2] "%i минут назад"
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "%i секунд назад"
+msgstr[1] "%i секунды назад"
+msgstr[2] "%i секунд назад"
+
+msgid "SPACE"
+msgstr "ПРОБЕЛ"
+
+msgid "LOAD"
+msgstr "ЗАГРУЗКА"
+
+msgid "shift"
+msgstr "shift"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "перенос строки"
+
+msgid "backspace"
+msgstr "backspace"
+
+msgid "space"
+msgstr "пробел"
+
+msgid "WELCOME"
+msgstr "ДОБРО ПОЖАЛОВАТЬ"
+
+msgid "CONFIGURE INPUT DEVICE"
+msgstr "НАСТРОЙКА УСТРОЙСТВА ВВОДА"
+
+#, c-format
+msgid "%i GAMEPAD DETECTED"
+msgid_plural "%i GAMEPADS DETECTED"
+msgstr[0] "ОБНАРУЖЕН %i ГЕЙМПАД"
+msgstr[1] "ОБНАРУЖЕНО %i ГЕЙМПАДА"
+msgstr[2] "ОБНАРУЖЕНО %i ГЕЙМПАДОВ"
+
+msgid "NO GAMEPADS DETECTED"
+msgstr "ГЕЙМПАДЫ НЕ ОБНАРУЖЕНЫ"
+
+msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
+msgstr "(ПРИНИМАТЬ ВВОД ТОЛЬКО ОТ ПЕРВОГО КОНТРОЛЛЕРА)"
+
+msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
+msgstr "УДЕРЖИВАЙТЕ КНОПКУ \"A\" НА УСТРОЙСТВЕ, ЧТОБЫ НАСТРОИТЬ ЕГО"
+
+msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
+msgstr "УДЕРЖИВАЙТЕ КЛАВИШУ \"A\" НА КЛАВИАТУРЕ, ЧТОБЫ НАСТРОИТЬ ЕЕ"
+
+msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
+msgstr ""
+"НАЖМИТЕ ESC ДЛЯ ПРОПУСКА (ИЛИ ЯРЛЫК \"ВЫХОД\", ЧТОБЫ ВЫЙТИ В ЛЮБОЙ МОМЕНТ)"
+
+msgid "PRESS ESC TO CANCEL"
+msgstr "НАЖМИТЕ ESC ДЛЯ ОТМЕНЫ"
+
+msgid "LOAD DEFAULT"
+msgstr "ЗАГРУЗИТЬ ЗНАЧЕНИЯ ПО УМОЛЧАНИЮ"
+
+msgid "DISCARD CHANGES"
+msgstr "ОТМЕНИТЬ ИЗМЕНЕНИЯ"
+
+msgid "discard changes"
+msgstr "отменить изменения"
+
+msgid "CONFIGURING"
+msgstr "НАСТРОЙКА"
+
+msgid "KEYBOARD"
+msgstr "КЛАВИАТУРА"
+
+msgid "GAMEPAD"
+msgstr "ГЕЙМПАД"
+
+msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
+msgstr "ДЕРЖИТЕ ЛЮБУЮ КНОПКУ 1 СЕК. ДЛЯ ПРОПУСКА"
+
+msgid "NOT DEFINED"
+msgstr "НЕ ОПРЕДЕЛЁН"
+
+msgid "ok"
+msgstr "ок"
+
+msgid "D-PAD UP"
+msgstr "D-PAD ВВЕРХ"
+
+msgid "D-PAD DOWN"
+msgstr "D-PAD ВНИЗ"
+
+msgid "D-PAD LEFT"
+msgstr "D-PAD ВЛЕВО"
+
+msgid "D-PAD RIGHT"
+msgstr "D-PAD ВПРАВО"
+
+msgid "MINUS"
+msgstr "МИНУС"
+
+msgid "PLUS"
+msgstr "ПЛЮС"
+
+msgid "CROSS"
+msgstr "КРЕСТ"
+
+msgid "CIRCLE"
+msgstr "КРУГ"
+
+msgid "SQUARE"
+msgstr "КВАДРАТ"
+
+msgid "TRIANGLE"
+msgstr "ТРЕУГОЛЬНИК"
+
+msgid "OPTIONS"
+msgstr "ОПЦИИ"
+
+msgid "VIEW"
+msgstr "ПРОСМОТР"
+
+msgid "MENU"
+msgstr "МЕНЮ"
+
+msgid "LEFT SHOULDER"
+msgstr "ЛЕВЫЙ БАМПЕР"
+
+msgid "RIGHT SHOULDER"
+msgstr "ПРАВЫЙ БАМПЕР"
+
+msgid "LEFT TRIGGER"
+msgstr "ЛЕВЫЙ ТРИГГЕР"
+
+msgid "RIGHT TRIGGER"
+msgstr "ПРАВЫЙ ТРИГГЕР"
+
+msgid "LEFT THUMBSTICK UP"
+msgstr "ЛЕВЫЙ СТИК ВВЕРХ"
+
+msgid "LEFT THUMBSTICK DOWN"
+msgstr "ЛЕВЫЙ СТИК ВНИЗ"
+
+msgid "LEFT THUMBSTICK LEFT"
+msgstr "ЛЕВЫЙ СТИК ВЛЕВО"
+
+msgid "LEFT THUMBSTICK RIGHT"
+msgstr "ЛЕВЫЙ СТИК ВПРАВО"
+
+msgid "LEFT THUMBSTICK CLICK"
+msgstr "ЛЕВЫЙ СТИК, НАЖАТИЕ"
+
+msgid "RIGHT THUMBSTICK UP"
+msgstr "ПРАВЫЙ СТИК ВВЕРХ"
+
+msgid "RIGHT THUMBSTICK DOWN"
+msgstr "ПРАВЫЙ СТИК ВНИЗ"
+
+msgid "RIGHT THUMBSTICK LEFT"
+msgstr "ПРАВЫЙ СТИК ВЛЕВО"
+
+msgid "RIGHT THUMBSTICK RIGHT"
+msgstr "ПРАВЫЙ СТИК ВПРАВО"
+
+msgid "RIGHT THUMBSTICK CLICK"
+msgstr "ПРАВЫЙ СТИК, НАЖАТИЕ"
+
+msgid "ALREADY TAKEN"
+msgstr "УЖЕ ЗАНЯТО"
+
+msgid "PRESS ANYTHING"
+msgstr "НАЖМИТЕ ЛЮБУЮ КНОПКУ"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Вы превысили суточную норму скрейпинга"
+
+#, c-format
+msgid "Server returned HTTP error code %s"
+msgstr "Сервер вернул код ошибки HTTP %s"

@@ -11,6 +11,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "Window.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 TextComponent::TextComponent()
@@ -28,15 +29,18 @@ TextComponent::TextComponent()
     , mUppercase {false}
     , mLowercase {false}
     , mCapitalize {false}
-    , mAutoCalcExtent {1, 1}
+    , mAutoCalcExtent {1, 0}
     , mHorizontalAlignment {ALIGN_LEFT}
     , mVerticalAlignment {ALIGN_CENTER}
     , mLineSpacing {1.5f}
     , mRelativeScale {1.0f}
     , mNoTopMargin {false}
+    , mNeedGlyphsPos {false}
+    , mRemoveLineBreaks {false}
+    , mNoSizeUpdate {false}
     , mSelectable {false}
-    , mVerticalAutoSizing {false}
     , mHorizontalScrolling {false}
+    , mDebugRendering {true}
     , mScrollSpeed {0.0f}
     , mScrollSpeedMultiplier {1.0f}
     , mScrollDelay {1500.0f}
@@ -44,6 +48,7 @@ TextComponent::TextComponent()
     , mScrollOffset1 {0.0f}
     , mScrollOffset2 {0.0f}
     , mScrollTime {0.0f}
+    , mMaxLength {0.0f}
 {
 }
 
@@ -52,6 +57,7 @@ TextComponent::TextComponent(const std::string& text,
                              unsigned int color,
                              Alignment horizontalAlignment,
                              Alignment verticalAlignment,
+                             glm::ivec2 autoCalcExtent,
                              glm::vec3 pos,
                              glm::vec2 size,
                              unsigned int bgcolor,
@@ -60,7 +66,8 @@ TextComponent::TextComponent(const std::string& text,
                              bool horizontalScrolling,
                              float scrollSpeedMultiplier,
                              float scrollDelay,
-                             float scrollGap)
+                             float scrollGap,
+                             float maxLength)
     : mFont {nullptr}
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
@@ -75,15 +82,18 @@ TextComponent::TextComponent(const std::string& text,
     , mUppercase {false}
     , mLowercase {false}
     , mCapitalize {false}
-    , mAutoCalcExtent {1, 1}
+    , mAutoCalcExtent {autoCalcExtent}
     , mHorizontalAlignment {horizontalAlignment}
     , mVerticalAlignment {verticalAlignment}
     , mLineSpacing {lineSpacing}
     , mRelativeScale {relativeScale}
     , mNoTopMargin {false}
+    , mNeedGlyphsPos {false}
+    , mRemoveLineBreaks {false}
+    , mNoSizeUpdate {false}
     , mSelectable {false}
-    , mVerticalAutoSizing {false}
     , mHorizontalScrolling {horizontalScrolling}
+    , mDebugRendering {true}
     , mScrollSpeed {0.0f}
     , mScrollSpeedMultiplier {scrollSpeedMultiplier}
     , mScrollDelay {scrollDelay}
@@ -91,20 +101,15 @@ TextComponent::TextComponent(const std::string& text,
     , mScrollOffset1 {0.0f}
     , mScrollOffset2 {0.0f}
     , mScrollTime {0.0f}
+    , mMaxLength {maxLength}
 {
     setFont(font);
     setColor(color);
     setBackgroundColor(bgcolor);
     setHorizontalScrolling(mHorizontalScrolling);
-    setText(text, false);
-    setPosition(pos);
     setSize(size);
-}
-
-void TextComponent::onSizeChanged()
-{
-    mAutoCalcExtent = glm::ivec2 {getSize().x == 0, getSize().y == 0};
-    onTextChanged();
+    setText(text, true, mMaxLength);
+    setPosition(pos);
 }
 
 void TextComponent::setFont(const std::shared_ptr<Font>& font)
@@ -116,7 +121,6 @@ void TextComponent::setFont(const std::shared_ptr<Font>& font)
     onTextChanged();
 }
 
-//  Set the color of the font/text.
 void TextComponent::setColor(unsigned int color)
 {
     if (mColor == color)
@@ -127,7 +131,14 @@ void TextComponent::setColor(unsigned int color)
     onColorChanged();
 }
 
-//  Set the color of the background box.
+const glm::vec2 TextComponent::getGlyphPosition(int cursor)
+{
+    if (mTextCache == nullptr || mTextCache->glyphPositions.empty())
+        return glm::vec2 {0.0f, 0.0f};
+
+    return mTextCache->glyphPositions.at(cursor);
+}
+
 void TextComponent::setBackgroundColor(unsigned int color)
 {
     if (mBgColor == color)
@@ -169,12 +180,13 @@ void TextComponent::setDimming(float dimming)
         mTextCache->setDimming(dimming);
 }
 
-void TextComponent::setText(const std::string& text, bool update)
+void TextComponent::setText(const std::string& text, bool update, float maxLength)
 {
-    if (mText == text)
+    if (mText == text && mMaxLength == maxLength)
         return;
 
     mText = text;
+    mMaxLength = maxLength;
 
     if (update)
         onTextChanged();
@@ -299,8 +311,9 @@ void TextComponent::render(const glm::mat4& parentTrans)
             }
 
             // Draw the overall textbox area. If we're inside a vertical scrollable container then
-            // this area is rendered inside that component instead of here.
-            if (!secondPass && Settings::getInstance()->getBool("DebugText")) {
+            // this area is rendered inside that component instead of here. Some other components
+            // also disable rendering here in a similar fashion.
+            if (mDebugRendering && !secondPass && Settings::getInstance()->getBool("DebugText")) {
                 if (!mParent || !mParent->isScrollable())
                     mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
             }
@@ -308,7 +321,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
             trans = glm::translate(trans, glm::vec3 {0.0f, std::round(yOff), 0.0f});
             mRenderer->setMatrix(trans);
 
-            if (Settings::getInstance()->getBool("DebugText")) {
+            if (mDebugRendering && Settings::getInstance()->getBool("DebugText")) {
                 const float relativeScaleOffset {(mSize.x - (mSize.x * mRelativeScale)) / 2.0f};
                 if (mHorizontalScrolling && !secondPass) {
                     if (mScrollOffset1 <= mTextCache->metrics.size.x) {
@@ -379,13 +392,10 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
 void TextComponent::setValue(const std::string& value)
 {
-    if (value == "unknown" && mDefaultValue != "" &&
+    if (value == _p("theme", "unknown") && mDefaultValue != "" &&
         (mThemeMetadata == "developer" || mThemeMetadata == "publisher" ||
          mThemeMetadata == "genre" || mThemeMetadata == "players")) {
         setText(mDefaultValue);
-    }
-    else if (mHorizontalScrolling) {
-        setText(Utils::String::replace(value, "\n", " "));
     }
     else {
         setText(value);
@@ -398,8 +408,7 @@ void TextComponent::setHorizontalScrolling(bool state)
     mHorizontalScrolling = state;
 
     if (mHorizontalScrolling) {
-        mScrollSpeed =
-            mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f * mScrollSpeedMultiplier;
+        mScrollSpeed = mFont->getSizeReference() * 0.247f * mScrollSpeedMultiplier;
     }
     else if (mTextCache != nullptr) {
         mTextCache->setClipRegion(
@@ -453,9 +462,6 @@ void TextComponent::onTextChanged()
 {
     mTextCache.reset();
 
-    if (!mVerticalAutoSizing)
-        mVerticalAutoSizing = (mSize.x != 0.0f && mSize.y == 0.0f);
-
     std::string text;
 
     if (mText != "") {
@@ -469,50 +475,40 @@ void TextComponent::onTextChanged()
             text = mText; // Original case.
     }
 
-    if (mFont && mAutoCalcExtent.x) {
-        mSize = mFont->sizeText(text, mLineSpacing);
-        if (mSize.x == 0.0f)
-            return;
-    }
-
-    if (!mFont || text.empty() || mSize.x < 0.0f)
+    if (!mFont || text.empty())
         return;
 
-    float lineHeight {0.0f};
-    const bool isScrollable {mParent && mParent->isScrollable()};
-    std::shared_ptr<Font> font {mFont};
+    const float lineHeight {mFont->getHeight(mLineSpacing)};
 
-    // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
-    lineHeight = mFont->loadGlyphs(text + "\n") * mLineSpacing;
+    if ((!mAutoCalcExtent.y && mSize.y == 0.0f))
+        mSize.y = lineHeight;
 
-    const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y * mRelativeScale > lineHeight};
-    float offsetY {0.0f};
+    // If the line height is less than the font size then a vertical offset is required to make
+    // sure the text is correctly centered vertically.
+    const float offsetY {std::round(lineHeight > mSize.y && mSize.y != 0.0f && !mAutoCalcExtent.y ?
+                                        (mSize.y - lineHeight) / 2.0f :
+                                        0.0f)};
 
-    if (mHorizontalScrolling) {
-        if (lineHeight > mSize.y && mSize.y != 0.0f)
-            offsetY = (mSize.y - lineHeight) / 2.0f;
-        mTextCache = std::shared_ptr<TextCache>(
-            font->buildTextCache(text, 0.0f, offsetY, mColor, mLineSpacing));
-    }
-    else if (isMultiline && !isScrollable) {
-        const std::string wrappedText {
-            font->wrapText(text, mSize.x * mRelativeScale,
-                           (mVerticalAutoSizing ? 0.0f : (mSize.y * mRelativeScale) - lineHeight),
-                           mLineSpacing, isMultiline)};
-        mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(
-            wrappedText, glm::vec2 {0.0f, 0.0f}, mColor, mSize.x * mRelativeScale,
-            mHorizontalAlignment, mLineSpacing, mNoTopMargin));
-    }
-    else {
-        if (!isMultiline && lineHeight > mSize.y)
-            offsetY = (mSize.y - lineHeight) / 2.0f;
-        mTextCache = std::shared_ptr<TextCache>(
-            font->buildTextCache(font->wrapText(text, mSize.x, 0.0f, mLineSpacing, isMultiline),
-                                 glm::vec2 {0.0f, offsetY}, mColor, mSize.x, mHorizontalAlignment,
-                                 mLineSpacing, mNoTopMargin));
-    }
+    const float length {mAutoCalcExtent.x || mHorizontalScrolling ? 0.0f :
+                                                                    mSize.x * mRelativeScale};
+    const float height {mAutoCalcExtent.y ? 0.0f : (mSize.y * mRelativeScale) - lineHeight};
+    const Alignment horizontalAlignment {mHorizontalScrolling ? ALIGN_LEFT : mHorizontalAlignment};
+    const bool multiLine {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
 
-    if (mAutoCalcExtent.y)
+    // Always convert line breaks to spaces for single-line text (or if it's set explicitly).
+    if (mRemoveLineBreaks || mAutoCalcExtent == glm::ivec2 {1, 0})
+        text = Utils::String::replace(text, "\n", " ");
+
+    mTextCache = std::shared_ptr<TextCache>(mFont->buildTextCache(
+        text, length, mMaxLength * mRelativeScale, height, offsetY, mLineSpacing,
+        horizontalAlignment, mColor, mNoTopMargin, multiLine, mNeedGlyphsPos));
+
+    if (mHorizontalScrolling && mSize.x == 0.0f)
+        mSize.x = mTextCache->metrics.size.x;
+    else if (mAutoCalcExtent.x && !mHorizontalScrolling && !mNoSizeUpdate)
+        mSize.x = mTextCache->metrics.size.x;
+
+    if (mAutoCalcExtent.y && !mNoSizeUpdate)
         mSize.y = mTextCache->metrics.size.y;
 
     if (mOpacity != 1.0f || mThemeOpacity != 1.0f)
@@ -559,7 +555,7 @@ std::vector<HelpPrompt> TextComponent::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
     if (mSelectable)
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
     return prompts;
 }
 
@@ -646,7 +642,13 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("container") && elem->get<bool>("container")) {
-        if (elem->has("containerType")) {
+        if (!elem->has("size") || (elem->has("size") && elem->get<glm::vec2>("size").x == 0.0f)) {
+            LOG(LogError) << "TextComponent: Invalid theme configuration, property "
+                             "\"container\" for element \""
+                          << element.substr(5)
+                          << "\" can't be used as a horizontal size has not been defined";
+        }
+        else if (elem->has("containerType")) {
             const std::string& containerType {elem->get<std::string>("containerType")};
             if (containerType == "horizontal") {
                 if (elem->has("containerScrollSpeed")) {
@@ -660,6 +662,7 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 if (elem->has("containerScrollGap")) {
                     mScrollGap = glm::clamp(elem->get<float>("containerScrollGap"), 0.1f, 5.0f);
                 }
+                mAutoCalcExtent = glm::ivec2 {1, 0};
                 mHorizontalScrolling = true;
             }
             else if (containerType != "vertical") {
@@ -784,17 +787,24 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     float maxHeight {0.0f};
+    bool hasSize {false};
 
     if (elem->has("size")) {
         const glm::vec2 size {elem->get<glm::vec2>("size")};
-        if (size.x != 0.0f && size.y != 0.0f)
+        if (size.x != 0.0f && size.y != 0.0f) {
             maxHeight = mSize.y * 2.0f;
+            hasSize = true;
+        }
     }
 
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
+    if (mAutoCalcExtent == glm::ivec2 {1, 0} && !hasSize)
+        mSize.y = 0.0f;
+
     setFont(Font::getFromTheme(elem, properties, mFont, maxHeight));
+    mSize = glm::round(mSize);
 
     // We need to do this after setting the font as the scroll speed is calculated from its size.
     if (mHorizontalScrolling)

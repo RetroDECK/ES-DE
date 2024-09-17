@@ -1,5 +1,5 @@
 <!--
-    Slate for ES-DE (slate-es-de)
+    Slate for ES-DE Frontend (slate-es-de)
     Author: ES-DE project
     License: Creative Commons CC-BY-NC-SA
     Based on: recalbox-multi by the Recalbox community
@@ -7,6 +7,7 @@
 
 <theme>
     <include>./navigationsounds.xml</include>
+    <include>./languages.xml</include>
     <include>./colors.xml</include>
 
     <!-- Per-system band colors and platform info -->
@@ -207,42 +208,42 @@
                 <letterCase>uppercase</letterCase>
             </datetime>
             <text name="labelReleasedate">
-                <text>Released:</text>
+                <text>${langLabelReleasedate}:</text>
                 <metadataElement>true</metadataElement>
             </text>
             <datetime name="releasedate">
                 <metadata>releasedate</metadata>
             </datetime>
             <text name="labelDeveloper">
-                <text>Developer:</text>
+                <text>${langLabelDeveloper}:</text>
                 <metadataElement>true</metadataElement>
             </text>
             <text name="developer">
                 <metadata>developer</metadata>
             </text>
             <text name="labelPublisher">
-                <text>Publisher:</text>
+                <text>${langLabelPublisher}:</text>
                 <metadataElement>true</metadataElement>
             </text>
             <text name="publisher">
                 <metadata>publisher</metadata>
             </text>
             <text name="labelGenre">
-                <text>Genre:</text>
+                <text>${langLabelGenre}:</text>
                 <metadataElement>true</metadataElement>
             </text>
             <text name="genre">
                 <metadata>genre</metadata>
             </text>
             <text name="labelPlayers">
-                <text>Players:</text>
+                <text>${langLabelPlayers}:</text>
                 <metadataElement>true</metadataElement>
             </text>
             <text name="players">
                 <metadata>players</metadata>
             </text>
             <text name="labelLastplayed">
-                <text>Last played:</text>
+                <text>${langLabelLastPlayed}:</text>
                 <metadataElement>true</metadataElement>
             </text>
             <datetime name="lastplayed">

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiDetectDevice.cpp
 //
 //  Detect input devices (keyboards, joysticks and gamepads).
@@ -13,6 +13,7 @@
 #include "components/TextComponent.h"
 #include "guis/GuiInputConfig.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #define HOLD_TIME 1000.0f
@@ -34,9 +35,10 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
     addChild(&mGrid);
 
     // Title.
-    mTitle =
-        std::make_shared<TextComponent>(firstRun ? "WELCOME" : "CONFIGURE INPUT DEVICE",
-                                        Font::get(FONT_SIZE_LARGE), mMenuColorTitle, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        firstRun ? _("WELCOME") : _("CONFIGURE INPUT DEVICE"),
+        Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor), mMenuColorTitle,
+        ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {1, 1},
                    GridFlags::BORDER_BOTTOM);
 
@@ -44,13 +46,16 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
     std::stringstream deviceInfo;
     int numDevices {InputManager::getInstance().getNumJoysticks()};
 
-    if (numDevices > 0)
-        deviceInfo << numDevices << " GAMEPAD" << (numDevices > 1 ? "S" : "") << " DETECTED";
-    else
-        deviceInfo << "NO GAMEPADS DETECTED";
+    if (numDevices > 0) {
+        deviceInfo << Utils::String::format(
+            _n("%i GAMEPAD DETECTED", "%i GAMEPADS DETECTED", numDevices), numDevices);
+    }
+    else {
+        deviceInfo << _("NO GAMEPADS DETECTED");
+    }
 
     if (numDevices > 1 && Settings::getInstance()->getBool("InputOnlyFirstController"))
-        deviceInfo << " (ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)";
+        deviceInfo << " " << _("(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)");
 
     mDeviceInfo = std::make_shared<TextComponent>(deviceInfo.str(), Font::get(FONT_SIZE_SMALL),
                                                   mMenuColorSecondary, ALIGN_CENTER);
@@ -58,20 +63,21 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
 
     // Message.
     if (numDevices > 0) {
-        mMsg1 = std::make_shared<TextComponent>(
-            "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT", Font::get(FONT_SIZE_SMALL),
-            mMenuColorPrimary, ALIGN_CENTER);
+        mMsg1 = std::make_shared<TextComponent>(_("HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"),
+                                                Font::get(FONT_SIZE_SMALL), mMenuColorPrimary,
+                                                ALIGN_CENTER);
     }
     else {
-        mMsg1 = std::make_shared<TextComponent>("HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT",
+        mMsg1 = std::make_shared<TextComponent>(_("HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"),
                                                 Font::get(FONT_SIZE_SMALL), mMenuColorPrimary,
                                                 ALIGN_CENTER);
     }
 
     mGrid.setEntry(mMsg1, glm::ivec2 {0, 2}, false, true);
 
-    const std::string msg2str {firstRun ? "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" :
-                                          "PRESS ESC TO CANCEL"};
+    const std::string msg2str {
+        firstRun ? _("PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)") :
+                   _("PRESS ESC TO CANCEL")};
     mMsg2 = std::make_shared<TextComponent>(msg2str, Font::get(FONT_SIZE_SMALL), mMenuColorPrimary,
                                             ALIGN_CENTER);
     mGrid.setEntry(mMsg2, glm::ivec2 {0, 3}, false, true);
@@ -129,7 +135,7 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
             // Started holding.
             mHoldingConfig = config;
             mHoldTime = static_cast<int>(HOLD_TIME);
-            mDeviceHeld->setText(Utils::String::toUpper(config->getDeviceName()));
+            mDeviceHeld->setText(_(Utils::String::toUpper(config->getDeviceName()).c_str()));
         }
         else if (!input.value && mHoldingConfig == config) {
             // Cancel.

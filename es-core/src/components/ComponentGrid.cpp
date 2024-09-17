@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ComponentGrid.cpp
 //
 //  Provides basic layout of components in an X*Y grid.
@@ -9,6 +9,8 @@
 #include "components/ComponentGrid.h"
 
 #include "Settings.h"
+#include "components/TextComponent.h"
+#include "utils/LocalizationUtil.h"
 
 using namespace GridFlags;
 
@@ -99,11 +101,13 @@ void ComponentGrid::setEntry(const std::shared_ptr<GuiComponent>& comp,
                              bool resize,
                              const glm::ivec2& size,
                              unsigned int border,
-                             GridFlags::UpdateType updateType)
+                             GridFlags::UpdateType updateType,
+                             glm::ivec2 autoCalcExtent)
 {
     assert(pos.x >= 0 && pos.x < mGridSize.x && pos.y >= 0 && pos.y < mGridSize.y);
     assert(comp != nullptr);
     assert(comp->getParent() == nullptr);
+    comp->setAutoCalcExtent(autoCalcExtent);
 
     GridEntry entry {pos, size, comp, canFocus, resize, updateType, border};
     mCells.push_back(entry);
@@ -515,12 +519,12 @@ std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
 
     // Check existing capabilities as indicated by the help prompts, and if the prompts should
     // be combined into "up/down/left/right" then also remove the single-axis prompts.
-    if (!prompts.empty() && prompts.back() == HelpPrompt("up/down", "choose")) {
+    if (!prompts.empty() && prompts.back() == HelpPrompt("up/down", _("choose"))) {
         canScrollVert = true;
         if (canScrollHoriz && canScrollVert)
             prompts.pop_back();
     }
-    else if (!prompts.empty() && prompts.back() == HelpPrompt("left/right", "choose")) {
+    else if (!prompts.empty() && prompts.back() == HelpPrompt("left/right", _("choose"))) {
         canScrollHoriz = true;
         if (canScrollHoriz && canScrollVert)
             prompts.pop_back();
@@ -528,11 +532,11 @@ std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
 
     // Any duplicates will be removed in Window::setHelpPrompts()
     if (canScrollHoriz && canScrollVert)
-        prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
+        prompts.push_back(HelpPrompt("up/down/left/right", _("choose")));
     else if (canScrollHoriz)
-        prompts.push_back(HelpPrompt("left/right", "choose"));
+        prompts.push_back(HelpPrompt("left/right", _("choose")));
     else if (canScrollVert)
-        prompts.push_back(HelpPrompt("up/down", "choose"));
+        prompts.push_back(HelpPrompt("up/down", _("choose")));
 
     return prompts;
 }

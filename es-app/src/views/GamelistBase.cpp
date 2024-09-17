@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GamelistBase.cpp
 //
 //  Gamelist base class with utility functions and other low-level logic.
@@ -17,6 +17,7 @@
 #include "FileFilterIndex.h"
 #include "UIModeController.h"
 #include "guis/GuiGamelistOptions.h"
+#include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
 
 GamelistBase::GamelistBase(FileData* root)
@@ -270,13 +271,14 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                 getCursor()->getParent()->getPath() == "collections") {
                 NavigationSounds::getInstance().playThemeNavigationSound(FAVORITESOUND);
-                mWindow->queueInfoPopup("CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS", 4000);
+                mWindow->queueInfoPopup(_("CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"),
+                                        4000);
             }
             // Notify the user if attempting to add a placeholder to a custom collection.
             if (CollectionSystemsManager::getInstance()->isEditing() &&
                 mRoot->getSystem()->isGameSystem() && getCursor()->getType() == PLACEHOLDER) {
                 NavigationSounds::getInstance().playThemeNavigationSound(FAVORITESOUND);
-                mWindow->queueInfoPopup("CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS", 4000);
+                mWindow->queueInfoPopup(_("CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"), 4000);
             }
             else if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                      getCursor()->getParent()->getPath() != "collections") {
@@ -385,26 +387,28 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 // CollectionSystemsManager.
                 if (entryToUpdate->getType() == FOLDER) {
                     if (isEditing) {
-                        mWindow->queueInfoPopup("CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS", 4000);
+                        mWindow->queueInfoPopup(_("CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"), 4000);
                     }
                     else {
                         MetaDataList* md {&entryToUpdate->getSourceFileData()->metadata};
                         if (md->get("favorite") == "false") {
                             md->set("favorite", "true");
                             mWindow->queueInfoPopup(
-                                "MARKED FOLDER '" +
-                                    Utils::String::toUpper(Utils::String::removeParenthesis(
-                                        entryToUpdate->getName())) +
-                                    "' AS FAVORITE",
+                                Utils::String::format(
+                                    _("MARKED FOLDER '%s' AS FAVORITE"),
+                                    Utils::String::toUpper(
+                                        Utils::String::removeParenthesis(entryToUpdate->getName()))
+                                        .c_str()),
                                 4000);
                         }
                         else {
                             md->set("favorite", "false");
                             mWindow->queueInfoPopup(
-                                "REMOVED FAVORITE MARKING FOR FOLDER '" +
-                                    Utils::String::toUpper(Utils::String::removeParenthesis(
-                                        entryToUpdate->getName())) +
-                                    "'",
+                                Utils::String::format(
+                                    _("REMOVED FAVORITE MARKING FOR FOLDER '%s'"),
+                                    Utils::String::toUpper(
+                                        Utils::String::removeParenthesis(entryToUpdate->getName()))
+                                        .c_str()),
                                 4000);
                         }
                     }
@@ -430,8 +434,8 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     return true;
                 }
                 else if (isEditing && entryToUpdate->metadata.get("nogamecount") == "true") {
-                    mWindow->queueInfoPopup("CAN'T ADD ENTRIES THAT ARE NOT COUNTED "
-                                            "AS GAMES TO CUSTOM COLLECTIONS",
+                    mWindow->queueInfoPopup(_("CAN'T ADD ENTRIES THAT ARE NOT COUNTED "
+                                              "AS GAMES TO CUSTOM COLLECTIONS"),
                                             4000);
                 }
                 else if (CollectionSystemsManager::getInstance()->toggleGameInCollection(

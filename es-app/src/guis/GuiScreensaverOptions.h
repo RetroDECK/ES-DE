@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiScreensaverOptions.h
 //
 //  User interface for the screensaver options.

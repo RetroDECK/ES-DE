@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.0.3
+3.1.1-alpha
 
 The latest version can be downloaded from https://es-de.org
 
@@ -81,8 +81,10 @@ Emulators\Gearboy\Gearboy.exe
 Emulators\gopher2600\gopher2600_windows_amd64.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
+Emulators\izapple2\izapple2sdl_windows_amd64.exe
+Emulators\jgenesis\jgenesis-cli.exe
 Emulators\KEmulator\KEmulator.exe
-Emulators\lime3ds\lime3ds-gui.exe
+Emulators\lime3ds\lime3ds.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
 Emulators\mednafen\mednafen.exe
@@ -90,6 +92,7 @@ Emulators\melonDS\melonDS.exe
 Emulators\Mesen\Mesen.exe
 Emulators\mGBA\mGBA.exe
 Emulators\mupen64plus\mupen64plus-ui-console.exe
+Emulators\noods\noods.exe
 Emulators\openMSX\openmsx.exe
 Emulators\Oricutron\oricutron.exe
 Emulators\Panda3DS\Alber.exe

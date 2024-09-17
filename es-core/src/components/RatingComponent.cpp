@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  RatingComponent.cpp
 //
 //  Game rating icons.
@@ -12,6 +12,7 @@
 #include "Settings.h"
 #include "ThemeData.h"
 #include "resources/TextureResource.h"
+#include "utils/LocalizationUtil.h"
 
 RatingComponent::RatingComponent(bool colorizeChanges, bool linearInterpolation)
     : mRenderer {Renderer::getInstance()}
@@ -308,6 +309,6 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 std::vector<HelpPrompt> RatingComponent::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
-    prompts.push_back(HelpPrompt("a", "add half star"));
+    prompts.push_back(HelpPrompt("a", _("add half star")));
     return prompts;
 }

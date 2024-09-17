@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  HelpPrompt.h
 //
 //  Definition of the pair used by help prompts to display an icon and its mapped function.

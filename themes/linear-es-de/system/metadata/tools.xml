@@ -1,12 +1,21 @@
 <theme>
-   <variables>
-      <systemName>Tools</systemName>
-      <systemDescription>Programs, scripts and utilities to manage your set up.</systemDescription>
-      <systemManufacturer>Various</systemManufacturer>
-      <systemReleaseYear>Various</systemReleaseYear>
-      <systemReleaseDate>Various</systemReleaseDate>
-      <systemReleaseDateFormated>Various</systemReleaseDateFormated>
-      <systemHardwareType>Folder</systemHardwareType>
-      <systemCoverSize>1-1</systemCoverSize>
-   </variables>
+    <variables>
+        <systemName>Tools</systemName>
+        <systemDescription>Programs, scripts and utilities to manage your set up.</systemDescription>
+        <systemManufacturer>Various</systemManufacturer>
+        <systemReleaseYear>Various</systemReleaseYear>
+        <systemReleaseDate>Various</systemReleaseDate>
+        <systemReleaseDateFormated>Various</systemReleaseDateFormated>
+        <systemHardwareType>Folder</systemHardwareType>
+        <systemCoverSize>1-1</systemCoverSize>
+    </variables>
+    <language name="sv_SE">
+        <variables>
+            <systemManufacturer>Diverse</systemManufacturer>
+            <systemReleaseYear>Diverse</systemReleaseYear>
+            <systemReleaseDate>Diverse</systemReleaseDate>
+            <systemReleaseDateFormated>Diverse</systemReleaseDateFormated>
+            <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
 </theme>

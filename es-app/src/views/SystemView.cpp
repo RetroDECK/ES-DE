@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  SystemView.cpp
 //
 //  Main system view.
@@ -15,6 +15,7 @@
 #include "Window.h"
 #include "animations/LambdaAnimation.h"
 #include "guis/GuiMsgBox.h"
+#include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
 
 #if defined(_WIN64)
@@ -49,6 +50,12 @@ void SystemView::onShow()
     mPrimary->onShowPrimary();
 }
 
+void SystemView::onHide()
+{
+    for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
+        video->stopVideoPlayer(false);
+}
+
 void SystemView::onTransition()
 {
     for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
@@ -71,6 +78,8 @@ void SystemView::goToSystem(SystemData* system, bool animate)
     }
 
     // Reset horizontally scrolling text.
+    for (auto& text : mSystemElements[mPrimary->getCursor()].gameCountComponents)
+        text->resetComponent();
     for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
         text->resetComponent();
 
@@ -140,6 +149,9 @@ void SystemView::update(int deltaTime)
 {
     mPrimary->update(deltaTime);
 
+    for (auto& text : mSystemElements[mPrimary->getCursor()].gameCountComponents)
+        text->update(deltaTime);
+
     for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
         text->update(deltaTime);
 
@@ -200,24 +212,24 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
     if (mCarousel != nullptr) {
         if (mCarousel->getType() == CarouselComponent<SystemData*>::CarouselType::VERTICAL ||
             mCarousel->getType() == CarouselComponent<SystemData*>::CarouselType::VERTICAL_WHEEL)
-            prompts.push_back(HelpPrompt("up/down", "choose"));
+            prompts.push_back(HelpPrompt("up/down", _("choose")));
         else
-            prompts.push_back(HelpPrompt("left/right", "choose"));
+            prompts.push_back(HelpPrompt("left/right", _("choose")));
     }
     else if (mGrid != nullptr) {
-        prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
+        prompts.push_back(HelpPrompt("up/down/left/right", _("choose")));
     }
     else if (mTextList != nullptr) {
-        prompts.push_back(HelpPrompt("up/down", "choose"));
+        prompts.push_back(HelpPrompt("up/down", _("choose")));
     }
 
-    prompts.push_back(HelpPrompt("a", "select"));
+    prompts.push_back(HelpPrompt("a", _("select")));
 
     if (Settings::getInstance()->getString("RandomEntryButton") == "gamessystems")
-        prompts.push_back(HelpPrompt("thumbstickclick", "random"));
+        prompts.push_back(HelpPrompt("thumbstickclick", _("random")));
 
     if (Settings::getInstance()->getBool("ScreensaverControls"))
-        prompts.push_back(HelpPrompt("x", "screensaver"));
+        prompts.push_back(HelpPrompt("x", _("screensaver")));
 
     return prompts;
 }
@@ -225,6 +237,8 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 void SystemView::onCursorChanged(const CursorState& state)
 {
     // Reset horizontally scrolling text.
+    for (auto& text : mSystemElements[mPrimary->getCursor()].gameCountComponents)
+        text->resetComponent();
     for (auto& text : mSystemElements[mPrimary->getCursor()].textComponents)
         text->resetComponent();
 
@@ -276,8 +290,14 @@ void SystemView::onCursorChanged(const CursorState& state)
     }
 
     if (mLastCursor >= 0 && mLastCursor <= static_cast<int>(mSystemElements.size())) {
-        for (auto& video : mSystemElements[mLastCursor].videoComponents)
-            video->pauseVideoPlayer();
+        if (transitionAnim == ViewTransitionAnimation::INSTANT || isAnimationPlaying(0)) {
+            for (auto& video : mSystemElements[mLastCursor].videoComponents)
+                video->stopVideoPlayer(false);
+        }
+        else {
+            for (auto& video : mSystemElements[mLastCursor].videoComponents)
+                video->pauseVideoPlayer();
+        }
     }
 
     for (auto& container : mSystemElements[mPrimary->getCursor()].containerComponents)
@@ -308,6 +328,7 @@ void SystemView::onCursorChanged(const CursorState& state)
             mCamOffset = static_cast<float>(cursor);
     }
 
+    const int prevLastCursor {mLastCursor};
     mLastCursor = cursor;
 
     for (auto& video : mSystemElements[cursor].videoComponents)
@@ -382,7 +403,7 @@ void SystemView::onCursorChanged(const CursorState& state)
     if (transitionAnim == ViewTransitionAnimation::FADE) {
         float startFade {mFadeOpacity};
         anim = new LambdaAnimation(
-            [this, startFade, endPos](float t) {
+            [this, startFade, endPos, prevLastCursor](float t) {
                 if (t < 0.3f)
                     mFadeOpacity =
                         glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startFade, 0.0f, 1.0f));
@@ -397,6 +418,11 @@ void SystemView::onCursorChanged(const CursorState& state)
                 if (mNavigated && t >= 0.7f && t != 1.0f)
                     mMaxFade = true;
 
+                if (t == 1.0f && prevLastCursor >= 0) {
+                    for (auto& video : mSystemElements[prevLastCursor].videoComponents)
+                        video->stopVideoPlayer(false);
+                }
+
                 // Update the game count when the entire animation has been completed.
                 if (mFadeOpacity == 1.0f) {
                     mMaxFade = false;
@@ -408,7 +434,7 @@ void SystemView::onCursorChanged(const CursorState& state)
     else if (transitionAnim == ViewTransitionAnimation::SLIDE) {
         mUpdatedGameCount = false;
         anim = new LambdaAnimation(
-            [this, startPos, endPos, posMax](float t) {
+            [this, startPos, endPos, posMax, prevLastCursor](float t) {
                 // Non-linear interpolation.
                 t = 1.0f - (1.0f - t) * (1.0f - t);
                 float f {(endPos * t) + (startPos * (1.0f - t))};
@@ -419,6 +445,11 @@ void SystemView::onCursorChanged(const CursorState& state)
                     f -= posMax;
 
                 mCamOffset = f;
+
+                if (t == 1.0f && prevLastCursor >= 0) {
+                    for (auto& video : mSystemElements[prevLastCursor].videoComponents)
+                        video->stopVideoPlayer(false);
+                }
 
                 // Hack to make the game count being updated in the middle of the animation.
                 bool update {false};
@@ -614,7 +645,8 @@ void SystemView::populate()
                     }
                     if (element.second.has("systemdata") &&
                         element.second.get<std::string>("systemdata").substr(0, 9) == "gamecount") {
-                        // A container can't be used if systemdata is set to a gamecount value.
+                        // A vertical container can't be used if systemdata is set to a gamecount
+                        // value. A horizontal container can be used though.
                         if (element.second.has("systemdata")) {
                             elements.gameCountComponents.emplace_back(
                                 std::make_unique<TextComponent>());
@@ -788,25 +820,56 @@ void SystemView::populate()
     if (mGrid != nullptr)
         mGrid->calculateLayout();
 
+#if defined(GETTEXT_DUMMY_ENTRIES)
+    _p("theme", "all");
+    _p("theme", "all games");
+    _p("theme", "recent");
+    _p("theme", "last played");
+    _p("theme", "favorites");
+    _p("theme", "collections");
+#endif
+
     for (auto& elements : mSystemElements) {
         for (auto& text : elements.textComponents) {
             if (text->getThemeSystemdata() != "") {
-                if (text->getThemeSystemdata() == "name")
-                    text->setValue(elements.name);
-                else if (text->getThemeSystemdata() == "fullname")
-                    text->setValue(elements.fullName);
-                else
+                const bool translate {elements.system->isCollection() &&
+                                      !elements.system->isCustomCollection()};
+                if (text->getThemeSystemdata() == "name") {
+                    if (translate)
+                        text->setValue(_p("theme", elements.name.c_str()));
+                    else
+                        text->setValue(elements.name);
+                }
+                else if (text->getThemeSystemdata() == "fullname") {
+                    if (translate)
+                        text->setValue(_p("theme", elements.fullName.c_str()));
+                    else
+                        text->setValue(elements.fullName);
+                }
+                else {
                     text->setValue(text->getThemeSystemdata());
+                }
             }
         }
         for (auto& containerText : elements.containerTextComponents) {
             if (containerText->getThemeSystemdata() != "") {
-                if (containerText->getThemeSystemdata() == "name")
-                    containerText->setValue(elements.name);
-                else if (containerText->getThemeSystemdata() == "fullname")
-                    containerText->setValue(elements.fullName);
-                else
+                const bool translate {elements.system->isCollection() &&
+                                      !elements.system->isCustomCollection()};
+                if (containerText->getThemeSystemdata() == "name") {
+                    if (translate)
+                        containerText->setValue(_p("theme", elements.name.c_str()));
+                    else
+                        containerText->setValue(elements.name);
+                }
+                else if (containerText->getThemeSystemdata() == "fullname") {
+                    if (translate)
+                        containerText->setValue(_p("theme", elements.fullName.c_str()));
+                    else
+                        containerText->setValue(elements.fullName);
+                }
+                else {
                     containerText->setValue(containerText->getThemeSystemdata());
+                }
             }
         }
     }
@@ -828,19 +891,26 @@ void SystemView::updateGameCount(SystemData* system)
     const bool recentSystem {sourceSystem->getName() == "recent"};
 
     if (sourceSystem->isCollection() && favoriteSystem) {
-        ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s");
+        ss << Utils::String::format(_np("theme", "%i game", "%i games", gameCount.first),
+                                    gameCount.first);
     }
     else if (sourceSystem->isCollection() && recentSystem) {
         // The "recent" gamelist has probably been trimmed after sorting, so we'll cap it at
         // its maximum limit of 50 games.
-        ss << (gameCount.first > 50 ? 50 : gameCount.first) << " Game"
-           << (gameCount.first == 1 ? " " : "s");
+        const unsigned int count {gameCount.first > 50 ? 50 : gameCount.first};
+        ss << Utils::String::format(_np("theme", "%i game", "%i games", count), count);
     }
     else {
-        ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ") << "("
-           << gameCount.second << " Favorite" << (gameCount.second == 1 ? ")" : "s)");
-        ssGames << gameCount.first << " Game" << (gameCount.first == 1 ? "" : "s");
-        ssFavorites << gameCount.second << " Favorite" << (gameCount.second == 1 ? "" : "s");
+        ss << Utils::String::format(_np("theme", "%i game", "%i games", gameCount.first),
+                                    gameCount.first)
+           << " "
+           << Utils::String::format(
+                  _np("theme", "(%i favorite)", "(%i favorites)", gameCount.second),
+                  gameCount.second);
+        ssGames << Utils::String::format(_np("theme", "%i game", "%i games", gameCount.first),
+                                         gameCount.first);
+        ssFavorites << Utils::String::format(
+            _np("theme", "%i favorite", "%i favorites", gameCount.second), gameCount.second);
         games = true;
     }
 
@@ -1237,13 +1307,21 @@ void SystemView::updateGameSelectors()
                 text->setValue(RatingComponent::getRatingValue(
                     games.at(gameSelectorEntry)->metadata.get("rating")));
             else if (metadata == "developer")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("developer"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("developer") == "unknown" ?
+                                   _p("theme", "unknown") :
+                                   games.at(gameSelectorEntry)->metadata.get("developer"));
             else if (metadata == "publisher")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("publisher"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("publisher") == "unknown" ?
+                                   _p("theme", "unknown") :
+                                   games.at(gameSelectorEntry)->metadata.get("publisher"));
             else if (metadata == "genre")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("genre"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("genre") == "unknown" ?
+                                   _p("theme", "unknown") :
+                                   games.at(gameSelectorEntry)->metadata.get("genre"));
             else if (metadata == "players")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("players"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("players") == "unknown" ?
+                                   _p("theme", "unknown") :
+                                   games.at(gameSelectorEntry)->metadata.get("players"));
             else if (metadata == "favorite")
                 text->setValue(
                     games.at(gameSelectorEntry)->metadata.get("favorite") == "true" ? "yes" : "no");

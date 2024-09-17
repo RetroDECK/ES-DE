@@ -14,6 +14,8 @@
 #include "Settings.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
+#include "utils/StringUtil.h"
 
 #include <algorithm>
 #include <assert.h>
@@ -398,7 +400,7 @@ void HttpReq::pollCurl()
 
                         if (responseCode == 430 &&
                             Settings::getInstance()->getString("Scraper") == "screenscraper") {
-                            req->mContent << "You have exceeded your daily scrape quota";
+                            req->mContent << _("You have exceeded your daily scrape quota");
                             req->mStatus = REQ_SUCCESS;
                         }
                         else if (responseCode == 404 && req->mScraperRequest &&
@@ -407,8 +409,9 @@ void HttpReq::pollCurl()
                         }
                         else {
                             req->mStatus = REQ_BAD_STATUS_CODE;
-                            req->onError("Server returned HTTP error code " +
-                                         std::to_string(responseCode));
+                            req->onError(
+                                Utils::String::format(_("Server returned HTTP error code %s"),
+                                                      std::to_string(responseCode).c_str()));
                         }
                     }
                     else {

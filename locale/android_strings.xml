@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">ES-DE</string>
+    <string name="configurator_welcome_header">Welcome to ES-DE</string>
+    <string name="configurator_welcome_text">A few things need to be configured before you can use this app</string>
+    <string name="configurator_welcome_button">Begin setup</string>
+
+    <string name="configurator_storage_header">Storage permission</string>
+    <string name="configurator_storage_text">ES-DE requires permission to manage your storage (to have access to all your files) so please enable this setting using the button below</string>
+    <string name="configurator_storage_button">Open permission screen</string>
+    <string name="configurator_storage_button_legacy">Grant permission</string>
+    <string name="configurator_permission_granted">Permission granted</string>
+    <string name="configurator_permission_not_granted">Permission not granted, please try again</string>
+
+    <string name="configurator_datadir_header">Application data directory</string>
+    <!-- "ES-DE" will be appended to the string below -->
+    <string name="configurator_datadir_text">Select the data directory which will contain your settings, gamelists, scraped media etc. It\'s recommended to name it</string>
+    <string name="configurator_datadir_button">Select directory</string>
+
+    <string name="configurator_romsdir_header">Games (ROMs) directory</string>
+    <!-- "ROMs" will be added between the two strings below -->
+    <string name="configurator_romsdir_text_1">Select the directory where you want to keep your games, it\'s recommended to name it</string>
+    <string name="configurator_romsdir_text_2">(you also need to add at least one game there after setup or ES-DE will not start)</string>
+    <string name="configurator_romsdir_button">Select directory</string>
+
+    <string name="configurator_dircreate_header">Create system directories?</string>
+    <!-- "ROMs" and "systeminfo.txt" will be added between the three strings below -->
+    <string name="configurator_dircreate_text_1">This will create directories for all supported game systems inside your</string>
+    <string name="configurator_dircreate_text_2">folder and it will also create</string>
+    <string name="configurator_dircreate_text_3">files which contain useful information about each system</string>
+    <string name="configurator_dircreate_button_1">Create them</string>
+    <string name="configurator_dircreate_button_2">Skip</string>
+
+    <string name="configurator_completed_header">Setup complete!</string>
+    <string name="configurator_completed_text">ES-DE has now been configured but you\'ll need to install your emulators separately. Also be aware that some emulators need to have ROM directory permissions configured as well, or your games will not start</string>
+    <string name="configurator_completed_button">I understand</string>
+
+    <string name="configurator_invalid_directory">Invalid directory or no write permissions, please try again</string>
+</resources>

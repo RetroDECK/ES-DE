@@ -31,6 +31,7 @@
 #include "guis/GuiMenu.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "utils/LocalizationUtil.h"
 #include "views/GamelistView.h"
 #include "views/SystemView.h"
 
@@ -98,6 +99,43 @@ void ViewController::setMenuColors()
         mMenuColorDateTimeEditMarker = 0x00000022;
         mMenuColorDetectDeviceHeld = 0x44444400;
     }
+    else if (Settings::getInstance()->getString("MenuColorScheme") == "darkred") {
+        mMenuColorFrame = 0x191919FF;
+        mMenuColorFrameLaunchScreen = 0x121212FF;
+        mMenuColorFrameBusyComponent = 0x090909FF;
+        mMenuColorPanelDimmed = 0x00000024;
+
+        mMenuColorTitle = 0x909090FF;
+        mMenuColorPrimary = 0x808080FF;
+        mMenuColorSecondary = 0x939393FF;
+        mMenuColorTertiary = 0x909090FF;
+        mMenuColorRed = 0xCA3E3EFF;
+        mMenuColorGreen = 0x449944FF;
+        mMenuColorBlue = 0x4757ddff;
+
+        mMenuColorSelector = 0x461816FF;
+        mMenuColorSeparators = 0x303030FF;
+        mMenuColorBusyComponent = 0x888888FF;
+        mMenuColorScrollIndicators = 0x707070FF;
+        mMenuColorPopupText = 0xBBBBBBFF;
+
+        mMenuColorButtonFocused = 0x050505FF;
+        mMenuColorButtonTextFocused = 0xAFAFAFFF;
+        mMenuColorButtonTextUnfocused = 0x808080FF;
+        mMenuColorButtonFlatFocused = 0x090909FF;
+        mMenuColorButtonFlatUnfocused = 0x242424FF;
+
+        mMenuColorKeyboardModifier = 0xC62F2FFF;
+        mMenuColorKeyboardCursorFocused = 0xAAAAAAFF;
+        mMenuColorKeyboardCursorUnfocused = 0x666666FF;
+        mMenuColorKeyboardText = 0x92929200;
+        mMenuColorTextInputFrameFocused = 0x090909FF;
+        mMenuColorTextInputFrameUnfocused = 0x242424FF;
+
+        mMenuColorSliderKnobDisabled = 0x393939FF;
+        mMenuColorDateTimeEditMarker = 0xFFFFFF22;
+        mMenuColorDetectDeviceHeld = 0x99999900;
+    }
     else {
         mMenuColorFrame = 0x191919FF;
         mMenuColorFrameLaunchScreen = 0x121212FF;
@@ -157,8 +195,8 @@ void ViewController::legacyAppDataDialog()
 #endif
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
-        true,
+        HelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr,
+        true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -186,15 +224,15 @@ void ViewController::migratedAppDataFilesDialog()
 void ViewController::unsafeUpgradeDialog()
 {
     const std::string upgradeMessage {
-        "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY "
-        "UNPACKING THE NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE "
-        "VARIOUS PROBLEMS, SOME OF WHICH MAY NOT BE APPARENT IMMEDIATELY. "
-        "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
-        "README.TXT FILE THAT CAN BE FOUND IN THE ES-DE DIRECTORY."};
+        _("IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY "
+          "UNPACKING THE NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE "
+          "VARIOUS PROBLEMS, SOME OF WHICH MAY NOT BE APPARENT IMMEDIATELY. "
+          "MAKE SURE TO ALWAYS FOLLOW THE UPGRADE INSTRUCTIONS IN THE "
+          "README.TXT FILE THAT CAN BE FOUND IN THE ES-DE DIRECTORY.")};
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "", nullptr, nullptr, true,
-        true,
+        HelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr,
+        true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -202,15 +240,15 @@ void ViewController::unsafeUpgradeDialog()
 
 void ViewController::invalidSystemsFileDialog()
 {
-    const std::string errorMessage {"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. "
-                                    "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN "
-                                    "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
-                                    "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
-                                    "ES-DE INSTALLATION IS BROKEN. SEE THE APPLICATION "
-                                    "LOG FILE es_log.txt FOR ADDITIONAL INFO"};
+    const std::string errorMessage {_("COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. "
+                                      "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN "
+                                      "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
+                                      "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
+                                      "ES-DE INSTALLATION IS BROKEN. SEE THE APPLICATION "
+                                      "LOG FILE es_log.txt FOR ADDITIONAL INFO")};
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), errorMessage.c_str(), "QUIT",
+        HelpStyle(), errorMessage.c_str(), _("QUIT"),
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
@@ -225,15 +263,15 @@ void ViewController::invalidSystemsFileDialog()
 void ViewController::noGamesDialog()
 {
 #if defined(__ANDROID__)
-    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN "
-                           "THE CONFIGURED ROM DIRECTORY. OPTIONALLY THE ROM "
-                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
-                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
-                           "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
-                           "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN "
+                             "THE CONFIGURED ROM DIRECTORY. OPTIONALLY THE ROM "
+                             "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
+                             "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+                             "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+                             "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n");
 #else
-    mNoGamesErrorMessage = "NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
-                           "THE RETRODECK ROM DIRECTORY LOCATED IN:\n";
+    mNoGamesErrorMessage = _("NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
+                           "THE RETRODECK ROM DIRECTORY LOCATED IN:\n");
 #endif
 
 #if defined(_WIN64)
@@ -247,7 +285,7 @@ void ViewController::noGamesDialog()
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
 #else
     mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "QUIT",
+        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, _("QUIT"),
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
@@ -266,13 +304,16 @@ void ViewController::invalidAlternativeEmulatorDialog()
 {
     cancelViewTransitions();
     mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
-                                   "AT LEAST ONE OF YOUR SYSTEMS HAS AN\n"
-                                   "INVALID ALTERNATIVE EMULATOR CONFIGURED\n"
-                                   "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
-                                   "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
-                                   "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
-                                   "INTERFACE IN THE 'OTHER SETTINGS' MENU",
-                                   "OK", nullptr, "", nullptr, "", nullptr, nullptr, true, true));
+                                   _("AT LEAST ONE OF YOUR SYSTEMS HAS AN "
+                                     "INVALID ALTERNATIVE EMULATOR CONFIGURED "
+                                     "WITH NO MATCHING ENTRY IN THE SYSTEMS "
+                                     "CONFIGURATION FILE, PLEASE REVIEW YOUR "
+                                     "SETUP USING THE 'ALTERNATIVE EMULATORS' "
+                                     "INTERFACE IN THE 'OTHER SETTINGS' MENU"),
+                                   _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                                   (mRenderer->getIsVerticalOrientation() ?
+                                        0.70f :
+                                        0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
 }
 
 void ViewController::updateAvailableDialog()
@@ -291,7 +332,7 @@ void ViewController::updateAvailableDialog()
                       << "\"";
 
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(), results, "UPDATE",
+            getHelpStyle(), results, _("UPDATE"),
             [this, package] {
                 mWindow->pushGui(new GuiApplicationUpdater());
 
@@ -299,36 +340,36 @@ void ViewController::updateAvailableDialog()
                     std::string upgradeMessage;
                     if (package.name == "WindowsPortable") {
                         upgradeMessage =
-                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS "
-                            "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. "
-                            "SEE THE README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR "
-                            "INSTRUCTIONS ON HOW THIS IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN "
-                            "THAT DOCUMENT, NEVER UNPACK A NEW RELEASE ON TOP OF AN OLD "
-                            "INSTALLATION AS THAT MAY COMPLETELY BREAK THE APPLICATION.";
+                            _("THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS "
+                              "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. "
+                              "SEE THE README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR "
+                              "INSTRUCTIONS ON HOW THIS IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN "
+                              "THAT DOCUMENT, NEVER UNPACK A NEW RELEASE ON TOP OF AN OLD "
+                              "INSTALLATION AS THAT MAY BREAK THE APPLICATION.");
                     }
                     else if (package.name == "WindowsInstaller") {
                         upgradeMessage =
-                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER "
-                            "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM "
-                            "THE UPGRADE. WHEN DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE "
-                            "QUESTION OF WHETHER TO UNINSTALL THE OLD VERSION, OR YOU MAY "
-                            "END UP WITH A BROKEN SETUP.";
+                            _("THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER "
+                              "RELEASE FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM "
+                              "THE UPGRADE. WHEN DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE "
+                              "QUESTION OF WHETHER TO UNINSTALL THE OLD VERSION, OR YOU MAY "
+                              "END UP WITH A BROKEN SETUP.");
                     }
                     else if (package.name == "macOSApple" || package.name == "macOSIntel") {
                         upgradeMessage =
-                            "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR "
-                            "YOU, BUT YOU WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM "
-                            "THE UPGRADE.";
+                            _("THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR "
+                              "YOU, BUT YOU WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM "
+                              "THE UPGRADE.");
                     }
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(), upgradeMessage.c_str(), "OK", [] {}, "", nullptr, "",
+                        getHelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "",
                         nullptr, nullptr, true, true,
                         (mRenderer->getIsVerticalOrientation() ?
                              0.85f :
                              0.535f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
-            "CANCEL",
+            _("CANCEL"),
             [] {
                 HttpReq::cleanupCurlMulti();
                 return;
@@ -339,7 +380,7 @@ void ViewController::updateAvailableDialog()
                  0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
     }
     else {
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, "OK", nullptr, "", nullptr, "",
+        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, _("OK"), nullptr, "", nullptr, "",
                                        nullptr, nullptr, true, true,
                                        (mRenderer->getIsVerticalOrientation() ?
                                             0.70f :
@@ -575,6 +616,14 @@ void ViewController::goToGamelist(SystemData* system)
     bool slideTransitions {false};
     bool fadeTransitions {false};
 
+    // Special case where we moved to another gamelist while the system to gamelist animation
+    // was still playing, in this case we need to explictly call onHide() so that all system view
+    // videos are stopped.
+    if (mState.previouslyViewed == ViewMode::SYSTEM_SELECT &&
+        mState.viewing == ViewMode::GAMELIST && isAnimationPlaying(0)) {
+        getSystemListView()->onHide();
+    }
+
     if (mCurrentView != nullptr)
         mCurrentView->onTransition();
 
@@ -770,6 +819,8 @@ void ViewController::playViewTransition(ViewTransition transitionType, bool inst
                 this->mCamera[3].x = -target.x;
                 this->mCamera[3].y = -target.y;
                 this->mCamera[3].z = -target.z;
+                if (mState.previouslyViewed == ViewMode::SYSTEM_SELECT)
+                    getSystemListView()->onHide();
                 if (mPreviousView)
                     mPreviousView->onHide();
             },
@@ -790,6 +841,8 @@ void ViewController::playViewTransition(ViewTransition transitionType, bool inst
         };
 
         auto fadeCallback = [this]() {
+            if (mState.previouslyViewed == ViewMode::SYSTEM_SELECT || mSystemViewTransition)
+                getSystemListView()->onHide();
             if (mPreviousView)
                 mPreviousView->onHide();
         };
@@ -819,6 +872,8 @@ void ViewController::playViewTransition(ViewTransition transitionType, bool inst
     }
     else if (transitionAnim == ViewTransitionAnimation::SLIDE) {
         auto slideCallback = [this]() {
+            if (mState.previouslyViewed == ViewMode::SYSTEM_SELECT || mSystemViewTransition)
+                getSystemListView()->onHide();
             if (mSkipView) {
                 mSkipView->onHide();
                 mSkipView.reset();
@@ -862,7 +917,9 @@ void ViewController::launch(FileData* game)
         // If the game launch screen has been set as disabled, show a simple info popup
         // notification instead.
         mWindow->queueInfoPopup(
-            "LAUNCHING GAME '" + Utils::String::toUpper(game->metadata.get("name") + "'"), 10000);
+            Utils::String::format(_("LAUNCHING GAME '%s'"),
+                                  Utils::String::toUpper(game->metadata.get("name")).c_str()),
+            10000);
         duration = 1700;
     }
     else if (durationString == "brief") {
@@ -1433,7 +1490,7 @@ std::vector<HelpPrompt> ViewController::getHelpPrompts()
     prompts = mCurrentView->getHelpPrompts();
     if (!(UIModeController::getInstance()->isUIModeKid() &&
           !Settings::getInstance()->getBool("EnableMenuKidMode")))
-        prompts.push_back(HelpPrompt("start", "menu"));
+        prompts.push_back(HelpPrompt("start", _("menu")));
     return prompts;
 }
 

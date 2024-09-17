@@ -29,10 +29,77 @@ if [ ! -d FFmpeg ]; then
   exit
 fi
 
-echo "Building all dependencies in the ./external directory...\n"
+echo "Building all dependencies in the ./external directory..."
 
 export PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig
 
+echo
+echo "Building libiconv"
+
+if [ ! -d libiconv ]; then
+  echo "libiconv directory is missing, aborting."
+  exit
+fi
+
+cd libiconv
+
+./configure --enable-static=yes --enable-shared=no --prefix=$(pwd)/../local_install
+make clean
+make -j${JOBS}
+make install
+cd ..
+
+echo
+echo "Building gettext"
+
+if [ ! -d gettext ]; then
+  echo "gettext directory is missing, aborting."
+  exit
+fi
+
+cd gettext
+
+./configure --with-libiconv-prefix=$(pwd)/../local_install --prefix=$(pwd)/../local_install
+make clean
+make -j${JOBS}
+
+cd gettext-runtime/intl/.libs
+install_name_tool -id "@rpath/libintl.8.dylib" libintl.8.dylib
+cp libintl.8.dylib ../../../../../
+cd ../../../
+make install
+cd ..
+
+echo
+echo "Building ICU"
+
+if [ ! -d icu/icu4c ]; then
+  echo "icu/icu4c directory is missing, aborting."
+  exit
+fi
+
+if [ ! -f icu/icu4c/source/icu_filters.json ]; then
+  echo "icu/icu4c/source/icu_filters.json is missing, aborting."
+  exit
+fi
+
+cd icu/icu4c/source
+ICU_DATA_FILTER_FILE=icu_filters.json CXXFLAGS="-DUCONFIG_NO_COLLATION -DUCONFIG_NO_TRANSLITERATION" ./configure --disable-extras --disable-icuio --disable-samples --disable-tests
+make clean
+make -j${JOBS}
+cd lib
+install_name_tool -id "@rpath/libicudata.75.dylib" libicudata.75.1.dylib
+install_name_tool -id "@rpath/libicui18n.75.dylib" libicui18n.75.1.dylib
+install_name_tool -change $(otool -L libicui18n.75.1.dylib | grep libicuuc | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicuuc.75.dylib libicui18n.75.1.dylib
+install_name_tool -change $(otool -L libicui18n.75.1.dylib | grep libicudata | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicudata.75.dylib libicui18n.75.1.dylib
+install_name_tool -id "@rpath/libicuuc.75.dylib" libicuuc.75.1.dylib
+install_name_tool -change $(otool -L libicuuc.75.1.dylib | grep libicudata | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicudata.75.dylib libicuuc.75.1.dylib
+cp libicudata.75.1.dylib ../../../../../libicudata.75.dylib
+cp libicui18n.75.1.dylib ../../../../../libicui18n.75.dylib
+cp libicuuc.75.1.dylib ../../../../../libicuuc.75.dylib
+cd ../../../../
+
+echo
 echo "Building libpng"
 
 if [ ! -d libpng ]; then
@@ -53,7 +120,23 @@ make install
 cd ..
 
 echo
-echo "\nBuilding FreeType"
+echo "Building HarfBuzz"
+
+if [ ! -d harfbuzz/build ]; then
+  echo "harfbuzz directory is missing, aborting."
+  exit
+fi
+
+cd harfbuzz/build
+rm -f CMakeCache.txt
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DHB_BUILD_SUBSET=off ..
+make clean
+make -j${JOBS}
+cp libharfbuzz.dylib ../../../
+cd ../..
+
+echo
+echo "Building FreeType"
 
 if [ ! -d freetype/build ]; then
   echo "FreeType directory is missing, aborting."
@@ -166,7 +249,7 @@ cp cpp/libpoppler-cpp.0.11.0.dylib ../../../libpoppler-cpp.0.dylib
 cd ../..
 
 echo
-echo "\nBuilding FreeImage"
+echo "Building FreeImage"
 
 if [ ! -d freeimage/FreeImage ]; then
   echo "FreeImage directory is missing, aborting."
@@ -180,7 +263,7 @@ cp libfreeimage.a ../../..
 cd ../..
 
 echo
-echo "\nBuilding libgit2"
+echo "Building libgit2"
 
 if [ ! -d libgit2/build ]; then
   echo "libgit2 directory is missing, aborting."
@@ -196,7 +279,7 @@ cp libgit2.1.7.1.dylib ../../../libgit2.1.7.dylib
 cd ../..
 
 echo
-echo "\nBuilding pugixml"
+echo "Building pugixml"
 
 if [ ! -d pugixml ]; then
   echo "pugixml directory is missing, aborting."
@@ -212,7 +295,7 @@ cp libpugixml.a ../..
 cd ..
 
 echo
-echo "\nBuilding SDL"
+echo "Building SDL"
 
 if [ ! -d SDL/build ]; then
   echo "SDL directory is missing, aborting."
@@ -228,7 +311,7 @@ cp libSDL2-2.0.0.dylib ../../..
 cd ../..
 
 echo
-echo "\nBuilding libvpx"
+echo "Building libvpx"
 
 if [ ! -d libvpx ]; then
   echo "libvpx directory is missing, aborting."
@@ -243,7 +326,7 @@ make install
 cd ..
 
 echo
-echo "\nBuilding Ogg"
+echo "Building Ogg"
 
 if [ ! -d ogg ]; then
   echo "Ogg directory is missing, aborting."
@@ -259,7 +342,7 @@ make install
 cd ..
 
 echo
-echo "\nBuilding Vorbis"
+echo "Building Vorbis"
 
 if [ ! -d vorbis ]; then
   echo "Vorbis directory is missing, aborting."
@@ -277,7 +360,7 @@ cp lib/libvorbis.0.4.9.dylib ../..
 cd ..
 
 echo
-echo "\nBuilding Opus"
+echo "Building Opus"
 
 if [ ! -d opus ]; then
   echo "Opus directory is missing, aborting."
@@ -293,7 +376,7 @@ make install
 cd ..
 
 echo
-echo "\nBuilding FFmpeg"
+echo "Building FFmpeg"
 
 if [ ! -d FFmpeg ]; then
   echo "FFmpeg directory is missing, aborting."

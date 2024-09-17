@@ -1,0 +1,28 @@
+{
+    "resourceFilters": [
+        {
+            "categories": [
+                "coll_tree"
+            ],
+            "rules": [
+                "-/collations/*",
+                "-/collations/*"
+            ]
+        }
+    ],
+    "featureFilters": {
+        "confusables": "exclude",
+        "curr_supplemental": "exclude",
+        "curr_tree": "exclude",
+        "lang_tree": "exclude",
+        "region_tree": "exclude",
+        "rbnf_tree": "exclude",
+        "stringprep": "exclude",
+        "zone_supplemental": "exclude",
+        "zone_tree": "exclude",
+        "translit": "exclude",
+        "unames": "exclude",
+        "unit_tree": "exclude",
+        "locales_tree": "exclude"
+    }
+}

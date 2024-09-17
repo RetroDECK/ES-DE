@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiTextEditPopup.cpp
 //
 //  Text edit popup.
@@ -45,8 +45,8 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(
-        Utils::String::toUpper(title), Font::get(FONT_SIZE_MEDIUM), mMenuColorTitle, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(title, Font::get(FONT_SIZE_MEDIUM), mMenuColorTitle,
+                                             ALIGN_CENTER);
 
     if (mComplexMode) {
         mInfoString = std::make_shared<TextComponent>(infoString, Font::get(FONT_SIZE_SMALL),
@@ -55,8 +55,8 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
                                                         mMenuColorTitle, ALIGN_CENTER);
     }
 
-    mText = std::make_shared<TextEditComponent>();
-    mText->setValue(initValue);
+    mText = std::make_shared<TextEditComponent>(mMultiLine);
+    mText->setText(initValue, false);
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(
@@ -66,24 +66,24 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
         }));
     if (mComplexMode) {
         buttons.push_back(
-            std::make_shared<ButtonComponent>("load", loadBtnHelpText, [this, defaultValue] {
-                mText->setValue(defaultValue);
+            std::make_shared<ButtonComponent>(_("LOAD"), loadBtnHelpText, [this, defaultValue] {
+                mText->setText(defaultValue);
                 mText->setCursor(0);
                 mText->setCursor(defaultValue.size());
             }));
     }
 
-    buttons.push_back(std::make_shared<ButtonComponent>("clear", clearBtnHelpText,
-                                                        [this] { mText->setValue(""); }));
+    buttons.push_back(std::make_shared<ButtonComponent>(_("CLEAR"), clearBtnHelpText,
+                                                        [this] { mText->setText(""); }));
 
-    buttons.push_back(
-        std::make_shared<ButtonComponent>("CANCEL", "discard changes", [this] { delete this; }));
+    buttons.push_back(std::make_shared<ButtonComponent>(_("CANCEL"), _("discard changes"),
+                                                        [this] { delete this; }));
 
     mButtonGrid = MenuComponent::makeButtonGrid(buttons);
 
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true);
 
-    int yPos = 1;
+    int yPos {1};
 
     if (mComplexMode) {
         mGrid.setEntry(mInfoString, glm::ivec2 {0, yPos}, false, true);
@@ -191,13 +191,13 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
-                mHelpStyle, mSaveConfirmationText, "YES",
+                mHelpStyle, mSaveConfirmationText, _("YES"),
                 [this] {
                     this->mOkCallback(mText->getValue());
                     delete this;
                     return true;
                 },
-                "NO",
+                _("NO"),
                 [this] {
                     delete this;
                     return true;
@@ -272,14 +272,14 @@ std::vector<HelpPrompt> GuiTextEditPopup::getHelpPrompts()
 
     if (mText->isEditing()) {
         if (mMultiLine)
-            prompts.push_back(HelpPrompt("a", "newline"));
+            prompts.push_back(HelpPrompt("a", _("newline")));
         else
             prompts.push_back(HelpPrompt("a", mAcceptBtnText));
     }
 
-    prompts.push_back(HelpPrompt("l", "backspace"));
-    prompts.push_back(HelpPrompt("r", "space"));
-    prompts.push_back(HelpPrompt("b", "back"));
+    prompts.push_back(HelpPrompt("l", _("backspace")));
+    prompts.push_back(HelpPrompt("r", _("space")));
+    prompts.push_back(HelpPrompt("b", _("back")));
     return prompts;
 }
 

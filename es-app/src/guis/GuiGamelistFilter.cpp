@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiGamelistFilter.cpp
 //
 //  User interface for the gamelist filters.
@@ -16,11 +16,12 @@
 #include "components/OptionListComponent.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 GuiGamelistFilter::GuiGamelistFilter(SystemData* system,
                                      std::function<void(bool)> filterChangedCallback)
-    : mMenu {"FILTER GAMELIST"}
+    : mMenu {_("FILTER GAMELIST")}
     , mSystem {system}
     , mFiltersChangedCallback {filterChangedCallback}
     , mFiltersChanged {false}
@@ -39,8 +40,8 @@ void GuiGamelistFilter::initializeMenu()
 
     // Show filtered menu.
     row.elements.clear();
-    row.addElement(std::make_shared<TextComponent>("RESET ALL FILTERS", Font::get(FONT_SIZE_MEDIUM),
-                                                   mMenuColorPrimary),
+    row.addElement(std::make_shared<TextComponent>(_("RESET ALL FILTERS"),
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
     row.makeAcceptInputHandler(std::bind(&GuiGamelistFilter::resetAllFilters, this));
     mMenu.addRow(row);
@@ -48,7 +49,7 @@ void GuiGamelistFilter::initializeMenu()
 
     addFiltersToMenu();
 
-    mMenu.addButton("BACK", "back", std::bind(&GuiGamelistFilter::applyFilters, this));
+    mMenu.addButton(_("BACK"), _("back"), std::bind(&GuiGamelistFilter::applyFilters, this));
 
     mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x) / 2.0f,
                       Renderer::getScreenHeight() * 0.13f);
@@ -87,11 +88,13 @@ void GuiGamelistFilter::addFiltersToMenu()
     ComponentListRow row;
 
     auto lbl = std::make_shared<TextComponent>(
-        Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
+        Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " " + _("GAME NAME")),
         Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
 
     mTextFilterField = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
                                                        mMenuColorPrimary, ALIGN_RIGHT);
+    mTextFilterField->setSize(
+        0.0f, mTextFilterField->getFont()->getHeight(mTextFilterField->getLineSpacing()));
 
     // Don't show the free text filter entry unless there are any games in the system.
     if (mSystem->getRootFolder()->getChildren().size() > 0) {
@@ -122,15 +125,15 @@ void GuiGamelistFilter::addFiltersToMenu()
             const float verticalPosition {
                 Renderer::getIsVerticalOrientation() ? mMenu.getPosition().y : 0.0f};
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                getHelpStyle(), verticalPosition, "GAME NAME", mTextFilterField->getValue(),
-                updateVal, false, "OK", "APPLY CHANGES?"));
+                getHelpStyle(), verticalPosition, _("GAME NAME"), mTextFilterField->getValue(),
+                updateVal, false, _("OK"), _("APPLY CHANGES?")));
         });
     }
     else {
         row.makeAcceptInputHandler([this, updateVal] {
-            mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), "GAME NAME",
+            mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), _("GAME NAME"),
                                                   mTextFilterField->getValue(), updateVal, false,
-                                                  "OK", "APPLY CHANGES?"));
+                                                  _("OK"), _("APPLY CHANGES?")));
         });
     }
 
@@ -180,7 +183,7 @@ void GuiGamelistFilter::addFiltersToMenu()
         if (allKeys->size() == 1 || allKeys->empty()) {
             optionList->setEnabled(false);
             optionList->setOpacity(DISABLED_OPACITY);
-            optionList->setOverrideMultiText("NOTHING TO FILTER");
+            optionList->setOverrideMultiText(_("NOTHING TO FILTER"));
         }
 
         if (type == CONTROLLER_FILTER) {
@@ -189,14 +192,22 @@ void GuiGamelistFilter::addFiltersToMenu()
                     BadgeComponent::getDisplayName(Utils::String::toLower(it.first))};
                 if (displayName == "unknown")
                     displayName = it.first;
-                optionList->add(displayName, it.first,
+                optionList->add(Utils::String::toUpper(displayName), it.first,
                                 mFilterIndex->isKeyBeingFilteredBy(it.first, type));
             }
         }
         else {
-            for (auto it : *allKeys)
-                optionList->add(it.first, it.first,
-                                mFilterIndex->isKeyBeingFilteredBy(it.first, type));
+            if (type == FAVORITES_FILTER || type == COMPLETED_FILTER || type == KIDGAME_FILTER ||
+                type == HIDDEN_FILTER || type == BROKEN_FILTER) {
+                for (auto it : *allKeys)
+                    optionList->add(_(it.first.c_str()), it.first,
+                                    mFilterIndex->isKeyBeingFilteredBy(it.first, type));
+            }
+            else {
+                for (auto it : *allKeys)
+                    optionList->add(it.first, it.first,
+                                    mFilterIndex->isKeyBeingFilteredBy(it.first, type));
+            }
         }
 
         if (allKeys->size() == 0)
@@ -245,7 +256,7 @@ bool GuiGamelistFilter::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiGamelistFilter::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "back"));
-    prompts.push_back(HelpPrompt("a", "select"));
+    prompts.push_back(HelpPrompt("b", _("back")));
+    prompts.push_back(HelpPrompt("a", _("select")));
     return prompts;
 }

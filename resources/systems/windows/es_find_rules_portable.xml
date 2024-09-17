@@ -274,6 +274,20 @@
             <entry>%ESPATH%\..\Emulators\Hypseus Singe\hypseus.exe</entry>
         </rule>
     </emulator>
+    <emulator name="IZAPPLE2">
+        <!-- Apple II emulator izapple2 -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\izapple2\izapple2sdl_windows_amd64.exe</entry>
+            <entry>%ESPATH%\..\Emulators\izapple2\izapple2sdl_windows_amd64.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="JGENESIS">
+        <!-- Multi-system emulator jgenesis -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\jgenesis\jgenesis-cli.exe</entry>
+            <entry>%ESPATH%\..\Emulators\jgenesis\jgenesis-cli.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="KEMULATOR">
         <!-- Java 2 Micro Edition emulator KEmulator -->
         <rule type="staticpath">
@@ -284,6 +298,8 @@
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\lime3ds\lime3ds.exe</entry>
+            <entry>%ESPATH%\..\Emulators\lime3ds\lime3ds.exe</entry>
             <entry>%ESPATH%\Emulators\lime3ds\lime3ds-gui.exe</entry>
             <entry>%ESPATH%\..\Emulators\lime3ds\lime3ds-gui.exe</entry>
             <entry>%ESPATH%\Emulators\lime-qt\lime-qt.exe</entry>
@@ -337,6 +353,13 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\mupen64plus\mupen64plus-ui-console.exe</entry>
             <entry>%ESPATH%\..\Emulators\mupen64plus\mupen64plus-ui-console.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="NOODS">
+        <!-- Nintendo DS and Game Boy Advance emulator NooDS -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\noods\noods.exe</entry>
+            <entry>%ESPATH%\..\Emulators\noods\noods.exe</entry>
         </rule>
     </emulator>
     <emulator name="OPENMSX">

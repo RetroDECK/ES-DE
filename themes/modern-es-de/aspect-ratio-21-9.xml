@@ -3,7 +3,7 @@
         <helpsystem name="help">
             <pos>0.96 0.935</pos>
             <fontSize>0.035</fontSize>
-            <entrySpacing>0.024</entrySpacing>
+            <entrySpacing>0.018</entrySpacing>
             <iconTextSpacing>0.00516</iconTextSpacing>
         </helpsystem>
         <image name="bottomLine">

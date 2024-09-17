@@ -28,11 +28,68 @@ if %ERRORLEVEL% neq 0 (
   goto end
 )
 
-echo Setting up dependencies in the .\external directory...
-echo:
-
 cd external
 
+echo Setting up dependencies in the .\external directory...
+
+echo:
+echo Setting up gettext
+
+if exist gettext\ (
+  rmdir /S /Q gettext
+)
+
+mkdir gettext
+cd gettext
+
+curl -LO https://github.com/vslavik/gettext-tools-windows/releases/download/v0.22.5/gettext-tools-windows-0.22.5.zip
+7z x gettext-tools-windows-0.22.5.zip
+
+if not exist bin\msgfmt.exe (
+  echo msgfmt.exe is missing, aborting.
+  cd ..\..
+  goto end
+)
+
+mkdir include
+copy ..\..\es-app\assets\libintl_Windows.h include\libintl.h
+
+cd bin
+
+dumpbin /exports libintl-8.dll > exports.txt
+echo LIBRARY libintl-8 > libintl-8.def
+echo EXPORTS >> libintl-8.def
+for /f "skip=90 tokens=4" %%A in (exports.txt) do echo %%A >> libintl-8.def
+echo DllMain >> libintl-8.def
+lib /def:libintl-8.def /out:libintl-8.lib /machine:x64
+
+copy /Y libintl-8.dll ..\..\..
+copy /Y libintl-8.lib ..\..\..
+copy /Y libiconv-2.dll ..\..\..
+cd ..\..
+
+echo:
+echo Setting up ICU
+
+if exist icu\ (
+  rmdir /S /Q icu
+)
+
+git clone -n --filter=tree:0 https://github.com/unicode-org/icu.git
+
+if not exist icu\ (
+  echo icu directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+cd icu
+git sparse-checkout set --no-cone icu4c
+git checkout release-75-1
+copy /Y ..\..\es-app\assets\icu_filters.json icu4c\source\
+cd ..
+
+echo:
 echo Setting up curl
 
 if exist curl-8.2.1_11-win64-mingw\ (
@@ -98,6 +155,26 @@ rename glew-2.1.0 glew
 
 copy /Y glew\bin\Release\x64\glew32.dll ..
 copy /Y glew\lib\Release\x64\glew32.lib ..
+
+echo:
+echo Setting up HarfBuzz
+
+if exist harfbuzz\ (
+  rmdir /S /Q harfbuzz
+)
+
+git clone https://github.com/harfbuzz/harfbuzz.git
+
+if not exist harfbuzz\ (
+  echo harfbuzz directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+cd harfbuzz
+git checkout 9.0.0
+mkdir build
+cd ..
 
 echo:
 echo Setting up FreeType
@@ -230,29 +307,29 @@ cd ..
 echo:
 echo Setting up SDL
 
-if exist SDL2-2.30.2\ (
-  rmdir /S /Q SDL2-2.30.2
+if exist SDL2-2.30.7\ (
+  rmdir /S /Q SDL2-2.30.7
 )
 
 if exist SDL2\ (
   rmdir /S /Q SDL2
 )
 
-if exist SDL2-devel-2.30.2-VC.zip (
-  del SDL2-devel-2.30.2-VC.zip
+if exist SDL2-devel-2.30.7-VC.zip (
+  del SDL2-devel-2.30.7-VC.zip
 )
 
-curl -LO https://libsdl.org/release/SDL2-devel-2.30.2-VC.zip
+curl -LO https://libsdl.org/release/SDL2-devel-2.30.7-VC.zip
 
-7z x SDL2-devel-2.30.2-VC.zip
+7z x SDL2-devel-2.30.7-VC.zip
 
-if not exist SDL2-2.30.2\ (
+if not exist SDL2-2.30.7\ (
   echo SDL directory is missing, aborting.
   cd ..
   goto end
 )
 
-rename SDL2-2.30.2 SDL2
+rename SDL2-2.30.7 SDL2
 
 cd SDL2
 rename include SDL2

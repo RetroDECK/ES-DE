@@ -1,5 +1,124 @@
 # ES-DE Frontend - Changelog
 
+## Version 3.1.1 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+3.1 maintenance release.
+
+### Detailed list of changes
+
+* Added translations for German (de_DE)
+* Added translations for Korean (ko_KR)
+* Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
+* Added the Nanum Square Neo Korean font
+
+### Bug fixes
+
+* Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos
+* Newly entered ScreenScraper username and password values were positioned incorrectly vertically in the account settings menu
+
+## Version 3.1.0 / 3.1.0-32
+
+**Release date:** 2024-09-13
+
+### Release overview
+
+This release brings full localization support and includes translations to ten new languages. More specifically these are Spanish (Spain), French, Italian, Polish, Portuguese (Brazil), Romanian, Russian, Swedish, Japanese and Simplified Chinese. More languages will follow in future releases.
+
+As part of the localization work there have been substantial changes made to the application, for instance to the text rendering which has been improved with proper text shaping using the HarfBuzz library. Case mappings and boundary analysis are now also performed by the ICU library rather than using inaccurate built-in functions as was previously the case.
+
+As for other notable improvements, entering the wrong ScreenScraper credentials will now display an error popup during scraping, specific subdirectories inside the system folders can be excluded from getting loaded, and the starting time for the screensaver has been greatly reduced on devices with poor disk I/O performance, such as Android. A number of new systems have also been enabled on Android, which brings game system support for this platform one step closer to being on par with the desktop ports.
+
+And talking of ports, this release also brings experimental support for the Haiku operating system.
+
+See the full list below for all changes and bug fixes.
+
+### Detailed list of changes
+
+* Added localization support
+* Added text shaping support using the HarfBuzz library
+* Replaced all built-in Unicode case conversion logic and lookup tables with facilities from the ICU library
+* Added translations for English (United Kingdom) (en_GB)
+* Added translations for Spanish (Spain) (es_ES)
+* Added translations for French (fr_FR)
+* Added translations for Italian (it_IT)
+* Added translations for Polish (pl_PL)
+* Added translations for Portuguese (Brazil) (pt_BR)
+* Added translations for Romanian (ro_RO)
+* Added translations for Russian (ru_RU)
+* Added translations for Swedish (sv_SE)
+* Added translations for Japanese (ja_JP)
+* Added translations for Simplified Chinese (zh_CN)
+* Dramatically reduced the start time for the video and slideshow screensavers on devices with poor disk I/O performance (like Android)
+* Added support for skipping game system subdirectories scanning on startup (by using noload.txt files)
+* Added an error popup if incorrect credentials (username and password) are used when scraping using ScreenScraper
+* Added a "Dark and red" menu color scheme to improve perceived contrast on low-contrast displays
+* (Android) Added support for the PC Arcade Systems (pcarcade) game system using the Winlator emulator
+* (Android) Added support for the Taito Type X (type-x) game system using the Winlator emulator
+* (Android) Added support for the Microsoft Windows (windows) game system using the Winlator emulator
+* (Android) Added support for the Dragon Data Dragon 32 (dragon32) game system
+* (Android) Added support for the Tano Dragon (tanodragon) game system
+* (Android) Added a new default find rule entry for Flycast as its application ID has been changed
+* (Android) Changed the find rule for Ruffle to make game launching work again after a code change in the emulator
+* (Android) Changed ePSXe to use %ROM% instead of %ROMSAF% as the latter caused game launching to fail on some devices
+* (Android) Added J2ME Loader standalone as the default emulator for the j2me system
+* (Android) Added JL-Mod standalone as an alternative emulator for the j2me system
+* (Android) Added support for launching individual games directly with EKA2L1 for the symbian system
+* Added jgenesis as an alternative emulator for the famicom, gamegear, gb, gbc, genesis, mastersystem and megacd systems on Linux and Windows
+* Added jgenesis as an alternative emulator for the megacdjp, megadrive, megadrivejp, nes, segacd, sfc, snes and snesna systems on Linux and Windows
+* Added NooDS standalone as an alternative emulator for the gba and nds systems on Android, Linux and Windows
+* Added izapple2 standalone as an alternative emulator for the apple2 system on Linux and Windows
+* Added MAME standalone as the default emulator for the dragon32 and tanodragon systems on Linux, macOS and Windows
+* Added the .7z and .zip file extensions to the dragon32 and tanodragon systems
+* Added the Stella 2023 RetroArch core as an alternative emulator for the atari2600 system
+* Added the VirtualXT RetroArch core as an alternative emulator for the dos and pc systems
+* Added the .img file extension to the dos and pc systems
+* Added the Ardens RetroArch core as an alternative emulator for the arduboy system
+* Added the .arduboy file extension to the arduboy system
+* Added support for the new Lime3DS binary names on Linux, macOS and Windows
+* (Windows) Added "Shortcut" as an alternative emulator for the switch system
+* (Windows) Added the .lnk file extension to the switch system
+* (Linux) Added a systempath find rule for the ppsspp binary name for the PPSSPP emulator
+* (Linux) Added a systempath find rule for the ryujinx binary name for the Ryujinx emulator
+* (Android) Added support for using the %BASENAME% variable with the %EXTRA% and %EXTRAARRAY% variables
+* Text within parantheses is no longer stripped out from the game name popup when adding or removing games from custom collections
+* Renamed the "Menu opening effect" setting in the UI settings menu to "Menu opening animation"
+* (linear-es-de) Added translations for all supported languages
+* (modern-es-de) Added translations for all supported languages
+* (slate-es-de) Added partial translations for all supported languages
+* Added a "backgroundMargins" property to the datetime element
+* Added a "backgroundCornerRadius" property to the datetime element
+* Added a check for whether a text element has a width defined when the container property is set
+* Added support for including theme files from within the colorScheme and fontSize tag pairs
+* Game files with only an extension and no filename will now get skipped on application startup
+* StringUtil::toCapitalized() will now capitalize text more accurately by using ICU boundary analysis
+* Removed some obsolete code from DateTimeEditComponent
+* Added the libintl library as a dependency
+* Added the HarfBuzz library as a dependency
+* Added the ICU library as a dependency
+* Refactored large parts of the text and font code
+* Added experimental support for the Haiku operating system
+* Added some improvements for building and running on FreeBSD
+* Removed support for NetBSD and OpenBSD
+* Updated SDL to 2.30.7 on Android, Windows, macOS and the Linux AppImage builds
+* Added some extra compiler checking options when building with AddressSanitizer or UndefinedBehaviorSanitizer
+* Updated the MAME index files to include ROMs up to MAME version 0.269
+* Bundled the July 2024 release of the Mozilla TLS/SSL certificates
+
+### Bug fixes
+
+* When returning from a game the helpsystem was sometimes using the dimmed theme properties
+* The StringUtil::toCapitalized() function didn't correctly capitalize multi-byte Unicode characters
+* (Windows) Video textures were sometimes not sized and aligned correctly horizontally
+* The theme engine game count text was capitalized by default instead of being set as lowercase
+* Text elements defined as gamecount using the systemdata property could not scroll horizontally
+* (linear-es-de) The system logo and carousel icon for saturnjp was incorrectly showing the western variant
+* (modern-es-de) The carousel icon for saturnjp was incorrectly showing the western variant
+* There was a typo where the 32:9 aspect ratio was referred to as 32:0
+
 ## Version 3.0.3 / 3.0.3-26
 
 **Release date:** 2024-06-14

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ScreenScraper.cpp
 //
 //  Functions specifically for scraping from screenscraper.fr
@@ -14,6 +14,7 @@
 #include "PlatformId.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 
@@ -281,9 +282,17 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
         std::stringstream ss;
         ss << "ScreenScraperRequest - Error parsing XML: " << parseResult.description();
 
-        std::string err = ss.str();
+        const size_t maxErrorLength {150};
+
+        std::string err {ss.str()};
+        if (err.length() > maxErrorLength)
+            err = err.substr(0, maxErrorLength) + "...";
         LOG(LogError) << err;
-        setError("ScreenScraper error: \n" + req->getContent(), true);
+
+        std::string content {req->getContent()};
+        if (content.length() > maxErrorLength)
+            content = content.substr(0, maxErrorLength) + "...";
+        setError(_("ScreenScraper error:") + " \n" + content, true);
 
         return;
     }
@@ -334,24 +343,33 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 {
     pugi::xml_node data {xmldoc.child("Data")};
 
-    // Check if our username was included in the response (assuming an account is used).
-    // It seems as if this information is randomly missing from the server response, which
-    // also seems to correlate with missing scraper allowance data. This is however a scraper
-    // service issue so we're not attempting to compensate for it here.
+    // The "niveau" tag indicates whether the account is valid (correct username and password).
     if (Settings::getInstance()->getBool("ScraperUseAccountScreenScraper") &&
-        Settings::getInstance()->getString("ScraperUsernameScreenScraper") != "" &&
-        Settings::getInstance()->getString("ScraperPasswordScreenScraper") != "") {
-        std::string userID {data.child("ssuser").child("id").text().get()};
-        if (userID != "") {
-            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping using account \""
-                          << userID << "\"";
+        Settings::getInstance()->getString("ScraperUsernameScreenScraper") != "") {
+        if (data.child("ssuser").child("niveau") != nullptr) {
+            const std::string userID {data.child("ssuser").child("id").text().get()};
+            const std::string userStatus {data.child("ssuser").child("niveau").text().get()};
+            if (userStatus != "0") {
+                LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping using account \""
+                              << userID << "\"";
+            }
+            else {
+                LOG(LogError) << "ScreenScraper: Couldn't authenticate user \""
+                              << Settings::getInstance()->getString("ScraperUsernameScreenScraper")
+                              << "\", wrong username or password?";
+
+                setError(_("ScreenScraper: Wrong username or password"), false, true);
+                return;
+            }
         }
         else {
-            LOG(LogDebug)
-                << "ScreenScraperRequest::processGame(): The configured account '"
-                << Settings::getInstance()->getString("ScraperUsernameScreenScraper")
-                << "' was not included in the scraper response, wrong username or password?";
+            LOG(LogWarning)
+                << "ScreenScraperRequest::processGame(): Invalid server response, missing "
+                   "\"niveau\" tag";
         }
+    }
+    else {
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping without a user account";
     }
 
     // Find how many more requests we can make before the scraper request

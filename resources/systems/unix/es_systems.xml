@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- This is the ES-DE game systems configuration file for BSD Unix -->
+<!-- This is the ES-DE Frontend game systems configuration file for BSD Unix -->
 <systemList>
     <system>
         <name>3do</name>
@@ -127,6 +127,7 @@
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module apple2 %ROM%</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so "apple2e -rompath \"%GAMEDIRRAW%;%ROMPATH%/apple2\" -gameio joy -flop1 \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/apple2 apple2e -gameio joy -flop1 %ROM%</command>
+        <command label="izapple2 (Standalone)">%EMULATOR_IZAPPLE2% %ROM%</command>
         <platform>apple2</platform>
         <theme>apple2</theme>
     </system>
@@ -190,8 +191,9 @@
         <name>arduboy</name>
         <fullname>Arduboy Miniature Game System</fullname>
         <path>%ROMPATH%/arduboy</path>
-        <extension>.hex .HEX .7z .7Z .zip .ZIP</extension>
+        <extension>.arduboy .ARDUBOY .hex .HEX .7z .7Z .zip .ZIP</extension>
         <command label="Arduous">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/arduous_libretro.so %ROM%</command>
+        <command label="Ardens">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/ardens_libretro.so %ROM%</command>
         <platform>arduboy</platform>
         <theme>arduboy</theme>
     </system>
@@ -212,6 +214,7 @@
         <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="Stella">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella_libretro.so %ROM%</command>
         <command label="Stella 2014">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella2014_libretro.so %ROM%</command>
+        <command label="Stella 2023">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella2023_libretro.so %ROM%</command>
         <command label="Stella (Standalone)">%EMULATOR_STELLA% %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Atari 2600" %ROM%</command>
         <platform>atari2600</platform>
@@ -543,12 +546,13 @@
         <name>dos</name>
         <fullname>DOS (PC)</fullname>
         <path>%ROMPATH%/dos</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
         <command label="DOSBox Staging (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%</command>
+        <command label="VirtualXT">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/virtualxt_libretro.so %ROM%</command>
         <platform>dos</platform>
         <theme>dos</theme>
     </system>
@@ -556,7 +560,11 @@
         <name>dragon32</name>
         <fullname>Dragon Data Dragon 32</fullname>
         <path>%ROMPATH%/dragon32</path>
-        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM</extension>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME Dragon 32 [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon32 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%</command>
+        <command label="MAME Dragon 32 [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon32 -cart %ROM%</command>
+        <command label="MAME Dragon 64 [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon64 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%</command>
+        <command label="MAME Dragon 64 [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon64 -cart %ROM%</command>
         <command label="XRoar Dragon 32 (Standalone)">%EMULATOR_XROAR% -fs -default-machine dragon32 %ROM%</command>
         <command label="XRoar Dragon 64 (Standalone)">%EMULATOR_XROAR% -fs -default-machine dragon64 %ROM%</command>
         <platform>dragon32</platform>
@@ -799,6 +807,7 @@
         <command label="gpSP">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gpsp_libretro.so %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Advance" %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <command label="NooDS (Standalone)">%EMULATOR_NOODS% %ROM%</command>
         <platform>gba</platform>
         <theme>gba</theme>
     </system>
@@ -1273,6 +1282,7 @@
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.so %ROM%</command>
         <command label="DeSmuME (Standalone)">%EMULATOR_DESMUME% %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
+        <command label="NooDS (Standalone)">%EMULATOR_NOODS% %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>
@@ -1407,12 +1417,13 @@
         <name>pc</name>
         <fullname>IBM PC</fullname>
         <path>%ROMPATH%/pc</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
         <command label="DOSBox Staging (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%</command>
+        <command label="VirtualXT">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/virtualxt_libretro.so %ROM%</command>
         <platform>pc</platform>
         <theme>pc</theme>
     </system>
@@ -1935,7 +1946,9 @@
         <name>tanodragon</name>
         <fullname>Tano Dragon</fullname>
         <path>%ROMPATH%/tanodragon</path>
-        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM</extension>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 tanodr64 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%</command>
+        <command label="MAME [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 tanodr64 -cart %ROM%</command>
         <command label="XRoar (Standalone)">%EMULATOR_XROAR% -fs -default-machine tano %ROM%</command>
         <platform>dragon32</platform>
         <theme>tanodragon</theme>

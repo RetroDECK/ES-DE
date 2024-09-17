@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiApplicationUpdater.cpp
 //
 //  Installs application updates.
@@ -12,6 +12,7 @@
 #include "ApplicationVersion.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/PlatformUtil.h"
 
 #include <SDL2/SDL_timer.h>
@@ -42,17 +43,19 @@ GuiApplicationUpdater::GuiApplicationUpdater()
     setDownloadPath();
 
     // Set up grid.
-    mTitle = std::make_shared<TextComponent>("APPLICATION UPDATER", Font::get(FONT_SIZE_LARGE),
-                                             mMenuColorTitle, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        _("APPLICATION UPDATER"),
+        Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor), mMenuColorTitle,
+        ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {4, 1},
                    GridFlags::BORDER_BOTTOM);
 
     mStatusHeader = std::make_shared<TextComponent>(
-        "INSTALLATION STEPS:", Font::get(FONT_SIZE_MINI), mMenuColorPrimary, ALIGN_LEFT);
+        _("INSTALLATION STEPS:"), Font::get(FONT_SIZE_MINI), mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mStatusHeader, glm::ivec2 {1, 1}, false, true, glm::ivec2 {2, 1});
 
-    const std::string step1Text {mLinuxAppImage ? "DOWNLOAD NEW RELEASE" :
-                                                  "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"};
+    const std::string step1Text {mLinuxAppImage ? _("DOWNLOAD NEW RELEASE") :
+                                                  _("DOWNLOAD NEW RELEASE TO THIS DIRECTORY:")};
     mProcessStep1 = std::make_shared<TextComponent>(step1Text, Font::get(FONT_SIZE_MEDIUM),
                                                     mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mProcessStep1, glm::ivec2 {1, 2}, false, true, glm::ivec2 {2, 1});
@@ -62,21 +65,21 @@ GuiApplicationUpdater::GuiApplicationUpdater()
         Utils::String::replace(Utils::FileSystem::getParent(mDownloadPackageFilename), "/", "\\")};
 #else
     const std::string step2Text {mLinuxAppImage ?
-                                     "INSTALL PACKAGE" :
+                                     _("INSTALL PACKAGE") :
                                      Utils::FileSystem::getParent(mDownloadPackageFilename)};
 #endif
     mProcessStep2 = std::make_shared<TextComponent>(step2Text, Font::get(FONT_SIZE_MEDIUM),
                                                     mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mProcessStep2, glm::ivec2 {1, 3}, false, true, glm::ivec2 {2, 1});
 
-    const std::string step3Text {mLinuxAppImage ? "QUIT AND MANUALLY RESTART ES-DE" :
-                                                  "QUIT AND MANUALLY UPGRADE ES-DE"};
+    const std::string step3Text {mLinuxAppImage ? _("QUIT AND MANUALLY RESTART ES-DE") :
+                                                  _("QUIT AND MANUALLY UPGRADE ES-DE")};
     mProcessStep3 = std::make_shared<TextComponent>(step3Text, Font::get(FONT_SIZE_MEDIUM),
                                                     mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mProcessStep3, glm::ivec2 {1, 4}, false, true, glm::ivec2 {2, 1});
 
     mStatusMessageHeader = std::make_shared<TextComponent>(
-        "STATUS MESSAGE:", Font::get(FONT_SIZE_MINI), mMenuColorPrimary, ALIGN_LEFT);
+        _("STATUS MESSAGE:"), Font::get(FONT_SIZE_MINI), mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mStatusMessageHeader, glm::ivec2 {1, 6}, false, true, glm::ivec2 {2, 1});
 
     mStatusMessage = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL),
@@ -90,32 +93,34 @@ GuiApplicationUpdater::GuiApplicationUpdater()
     // Buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-    mButton1 = std::make_shared<ButtonComponent>("DOWNLOAD", "download new release", [this]() {
-        if (!mDownloading) {
-            if (!mLinuxAppImage) {
-                if (!Utils::FileSystem::exists(
-                        Utils::FileSystem::getParent(mDownloadPackageFilename))) {
-                    mMessage = "Download directory does not exist";
-                    return;
+    mButton1 =
+        std::make_shared<ButtonComponent>(_("DOWNLOAD"), _("download new release"), [this]() {
+            if (!mDownloading) {
+                if (!mLinuxAppImage) {
+                    if (!Utils::FileSystem::exists(
+                            Utils::FileSystem::getParent(mDownloadPackageFilename))) {
+                        mMessage = _("Download directory does not exist");
+                        return;
+                    }
                 }
+                mMessage = "";
+                mStatusMessage->setText(mMessage);
+                mDownloadPercentage = 0;
+                mDownloading = true;
+                if (mThread) {
+                    mThread->join();
+                    mThread.reset();
+                }
+                mThread =
+                    std::make_unique<std::thread>(&GuiApplicationUpdater::downloadPackage, this);
             }
-            mMessage = "";
-            mStatusMessage->setText(mMessage);
-            mDownloadPercentage = 0;
-            mDownloading = true;
-            if (mThread) {
-                mThread->join();
-                mThread.reset();
-            }
-            mThread = std::make_unique<std::thread>(&GuiApplicationUpdater::downloadPackage, this);
-        }
-    });
+        });
 
     buttons.push_back(mButton1);
 
     if (!mLinuxAppImage) {
         mButton2 = std::make_shared<ButtonComponent>(
-            "CHANGE DIRECTORY", "change download directory", [this]() {
+            _("CHANGE DIRECTORY"), _("change download directory"), [this]() {
                 if (mDownloading || mHasDownloaded)
                     return;
 #if defined(_WIN64)
@@ -156,39 +161,39 @@ GuiApplicationUpdater::GuiApplicationUpdater()
                 };
                 if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                     mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                        getHelpStyle(), 0.0f, "ENTER DOWNLOAD DIRECTORY", currentDownloadDirectory,
-                        directoryFunc, false));
+                        getHelpStyle(), 0.0f, _("ENTER DOWNLOAD DIRECTORY"),
+                        currentDownloadDirectory, directoryFunc, false));
                 }
                 else {
                     mWindow->pushGui(
-                        new GuiTextEditPopup(getHelpStyle(), "ENTER DOWNLOAD DIRECTORY",
+                        new GuiTextEditPopup(getHelpStyle(), _("ENTER DOWNLOAD DIRECTORY"),
                                              currentDownloadDirectory, directoryFunc, false));
                 }
             });
         buttons.push_back(mButton2);
     }
 
-    mButton3 = std::make_shared<ButtonComponent>("CANCEL", "cancel", [this]() {
+    mButton3 = std::make_shared<ButtonComponent>(_("CANCEL"), _("cancel"), [this]() {
         mAbortDownload = true;
         if (mThread) {
             mThread->join();
             mThread.reset();
         }
         if (mDownloading) {
-            mWindow->pushGui(
-                new GuiMsgBox(getHelpStyle(), "DOWNLOAD ABORTED\nNO PACKAGE SAVED TO DISK", "OK",
-                              nullptr, "", nullptr, "", nullptr, nullptr, true, true,
-                              (mRenderer->getIsVerticalOrientation() ?
-                                   0.70f :
-                                   0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
-        }
-        else if (mHasDownloaded || mReadyToInstall) {
             mWindow->pushGui(new GuiMsgBox(
-                getHelpStyle(), "PACKAGE WAS DOWNLOADED AND\nCAN BE MANUALLY INSTALLED", "OK",
-                nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                getHelpStyle(), _("DOWNLOAD ABORTED") + "\n" + _("NO PACKAGE SAVED TO DISK"),
+                _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
                 (mRenderer->getIsVerticalOrientation() ?
                      0.70f :
                      0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+        }
+        else if (mHasDownloaded || mReadyToInstall) {
+            mWindow->pushGui(new GuiMsgBox(
+                getHelpStyle(), _("PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"), _("OK"),
+                nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                (mRenderer->getIsVerticalOrientation() ?
+                     0.60f :
+                     0.35f * (1.778f / mRenderer->getScreenAspectRatio()))));
         }
         delete this;
     });
@@ -217,7 +222,7 @@ GuiApplicationUpdater::GuiApplicationUpdater()
                 std::round(mRenderer->getScreenHeight() * 0.13f));
 
     mBusyAnim.setSize(mSize);
-    mBusyAnim.setText("DOWNLOADING 100%");
+    mBusyAnim.setText(_("DOWNLOADING 100%"));
     mBusyAnim.onSizeChanged();
 }
 
@@ -270,8 +275,9 @@ bool GuiApplicationUpdater::downloadPackage()
             break;
         }
         else if (reqStatus != HttpReq::REQ_IN_PROGRESS) {
-            std::string errorMessage {"Network error (status: "};
-            errorMessage.append(std::to_string(reqStatus))
+            std::string errorMessage {_("Network error (status:")};
+            errorMessage.append(" ")
+                .append(std::to_string(reqStatus))
                 .append(") - ")
                 .append(mRequest->getErrorMsg());
             mRequest.reset();
@@ -301,7 +307,7 @@ bool GuiApplicationUpdater::downloadPackage()
     mRequest.reset();
 
     if (Utils::Math::md5Hash(fileContents, false) != mPackage.md5) {
-        const std::string errorMessage {"Downloaded file does not match expected MD5 checksum"};
+        const std::string errorMessage {_("Downloaded file does not match expected MD5 checksum")};
         LOG(LogError) << errorMessage;
         std::unique_lock<std::mutex> lock {mMutex};
         mMessage = "Error: " + errorMessage;
@@ -317,11 +323,9 @@ bool GuiApplicationUpdater::downloadPackage()
             LOG(LogInfo) << "Temporary package file already exists, deleting it";
             Utils::FileSystem::removeFile(mDownloadPackageFilename);
             if (Utils::FileSystem::exists(mDownloadPackageFilename)) {
-                const std::string errorMessage {
-                    "Couldn't delete temporary package file, permission problems?"};
-                LOG(LogError) << errorMessage;
+                LOG(LogError) << "Couldn't delete temporary package file, permission problems?";
                 std::unique_lock<std::mutex> lock {mMutex};
-                mMessage = "Error: " + errorMessage;
+                mMessage = _("Error: Couldn't delete temporary package file, permission problems?");
                 return true;
             }
         }
@@ -334,7 +338,7 @@ bool GuiApplicationUpdater::downloadPackage()
         LOG(LogError) << "Couldn't write package file \"" << mDownloadPackageFilename
                       << "\", permission problems?";
         std::unique_lock<std::mutex> lock {mMutex};
-        mMessage = "Error: Couldn't write package file, permission problems?";
+        mMessage = _("Error: Couldn't write package file, permission problems?");
         return true;
     }
 
@@ -353,10 +357,9 @@ bool GuiApplicationUpdater::downloadPackage()
             (std::filesystem::perms::owner_all | std::filesystem::perms::group_all |
              std::filesystem::perms::others_read | std::filesystem::perms::others_exec)) {
             Utils::FileSystem::removeFile(mDownloadPackageFilename);
-            const std::string errorMessage {"Couldn't set permissions on AppImage file"};
-            LOG(LogError) << errorMessage;
+            LOG(LogError) << "Couldn't set permissions on AppImage file";
             std::unique_lock<std::mutex> lock {mMutex};
-            mMessage = "Error: " + errorMessage;
+            mMessage = _("Error: Couldn't set permissions on AppImage file");
             return true;
         }
     }
@@ -364,7 +367,8 @@ bool GuiApplicationUpdater::downloadPackage()
     LOG(LogInfo) << "Successfully downloaded package file \"" << mDownloadPackageFilename << "\"";
 
     std::unique_lock<std::mutex> lock {mMutex};
-    mMessage = "Downloaded " + Utils::FileSystem::getFileName(mDownloadPackageFilename);
+    mMessage = Utils::String::format(
+        _("Downloaded %s"), Utils::FileSystem::getFileName(mDownloadPackageFilename).c_str());
 
     mDownloading = false;
     mReadyToInstall = true;
@@ -398,9 +402,8 @@ bool GuiApplicationUpdater::installAppImage()
     readFile.open(mDownloadPackageFilename.c_str(), std::ofstream::binary);
 
     if (readFile.fail()) {
-        const std::string errorMessage {"Couldn't open AppImage update file for reading"};
-        LOG(LogError) << errorMessage;
-        mMessage = "Error: " + errorMessage;
+        LOG(LogError) << "Couldn't open AppImage update file for reading";
+        mMessage = _("Error: Couldn't open AppImage update file for reading");
         mHasDownloaded = false;
         return true;
     }
@@ -413,9 +416,8 @@ bool GuiApplicationUpdater::installAppImage()
     readFile.close();
 
     if (Utils::Math::md5Hash(fileData, false) != mPackage.md5) {
-        const std::string errorMessage {"Downloaded file does not match expected MD5 checksum"};
-        LOG(LogError) << errorMessage;
-        mMessage = "Error: " + errorMessage;
+        LOG(LogError) << "Downloaded file does not match expected MD5 checksum";
+        mMessage = _("Error: Downloaded file does not match expected MD5 checksum");
         mHasDownloaded = false;
         return true;
     }
@@ -423,10 +425,8 @@ bool GuiApplicationUpdater::installAppImage()
     const std::string packageOldFile {packageTargetFile + "_" + PROGRAM_VERSION_STRING + ".OLD"};
 
     if (Utils::FileSystem::renameFile(packageTargetFile, packageOldFile, true)) {
-        const std::string errorMessage {
-            "Couldn't rename running AppImage file, permission problems?"};
-        LOG(LogError) << errorMessage;
-        mMessage = "Error: " + errorMessage;
+        LOG(LogError) << "Couldn't rename running AppImage file, permission problems?";
+        mMessage = _("Error: Couldn't rename running AppImage file, permission problems?");
         LOG(LogInfo) << "Attempting to rename \"" << packageOldFile
                      << "\" back to running AppImage";
         Utils::FileSystem::renameFile(packageOldFile, packageTargetFile, true);
@@ -437,10 +437,8 @@ bool GuiApplicationUpdater::installAppImage()
     LOG(LogInfo) << "Renamed running AppImage to \"" << packageOldFile << "\"";
 
     if (Utils::FileSystem::renameFile(mDownloadPackageFilename, packageTargetFile, true)) {
-        const std::string errorMessage {
-            "Couldn't replace running AppImage file, permission problems?"};
-        LOG(LogError) << errorMessage;
-        mMessage = "Error: " + errorMessage;
+        LOG(LogError) << "Couldn't replace running AppImage file, permission problems?";
+        mMessage = _("Error: Couldn't replace running AppImage file, permission problems?");
         LOG(LogInfo) << "Attempting to rename \"" << packageOldFile
                      << "\" back to running AppImage";
         Utils::FileSystem::renameFile(packageOldFile, packageTargetFile, true);
@@ -451,7 +449,8 @@ bool GuiApplicationUpdater::installAppImage()
     LOG(LogInfo) << "Package was successfully installed as \"" << packageTargetFile << "\"";
 
     std::unique_lock<std::mutex> lock {mMutex};
-    mMessage = "Successfully installed as " + Utils::FileSystem::getFileName(packageTargetFile);
+    mMessage = Utils::String::format(_("Successfully installed as %s"),
+                                     Utils::FileSystem::getFileName(packageTargetFile).c_str());
     mHasInstalled = true;
 
     return false;
@@ -468,13 +467,13 @@ void GuiApplicationUpdater::update(int deltaTime)
     }
 
     if (mDownloading) {
-        mBusyAnim.setText("DOWNLOADING " + std::to_string(mDownloadPercentage) + "%");
+        mBusyAnim.setText(_("DOWNLOADING") + " " + std::to_string(mDownloadPercentage) + "%");
         mBusyAnim.update(deltaTime);
     }
     else if (mLinuxAppImage && mReadyToInstall) {
         mProcessStep1->setText(ViewController::TICKMARK_CHAR + " " + mProcessStep1->getValue());
         mProcessStep1->setColor(mMenuColorGreen);
-        mButton1->setText("INSTALL", "install package", true, false);
+        mButton1->setText(_("INSTALL"), _("install package"), true, false);
         mButton1->setPressedFunc([this] {
             if (!mInstalling) {
                 mMessage = "";
@@ -494,10 +493,10 @@ void GuiApplicationUpdater::update(int deltaTime)
             mProcessStep1->setText(ViewController::TICKMARK_CHAR + " " + mProcessStep1->getValue());
             mProcessStep1->setColor(mMenuColorGreen);
         }
-        mChangelogMessage->setText("Find the detailed changelog at https://es-de.org");
+        mChangelogMessage->setText(_("Find the detailed changelog at") + " https://es-de.org");
         mGrid.removeEntry(mButtons);
         mGrid.setEntry(MenuComponent::makeButtonGrid(std::vector<std::shared_ptr<ButtonComponent>> {
-                           std::make_shared<ButtonComponent>("QUIT", "quit application",
+                           std::make_shared<ButtonComponent>(_("QUIT"), _("quit application"),
                                                              [this]() {
                                                                  delete this;
                                                                  Utils::Platform::quitES();

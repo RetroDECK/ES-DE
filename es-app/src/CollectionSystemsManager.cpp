@@ -30,6 +30,7 @@
 #include "UIModeController.h"
 #include "Window.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "views/GamelistView.h"
@@ -46,13 +47,21 @@ CollectionSystemsManager::CollectionSystemsManager() noexcept
 {
     // clang-format off
     CollectionSystemDecl systemDecls[] {
-    //  Type                 Name                Long name       Theme folder           isCustom
+    //  Type                 Name                Full name       Theme folder           isCustom
         {AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false},
         {AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false},
         {AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false},
         {CUSTOM_COLLECTION,  myCollectionsName,  "collections",  "custom-collections",  true }
     };
     // clang-format on
+
+#if defined(GETTEXT_DUMMY_ENTRIES)
+    // This is just to get gettext msgid entries added to the PO message catalog files.
+    _("all games");
+    _("last played");
+    _("favorites");
+    _("collections");
+#endif
 
     // Create a map of the collections.
     std::vector<CollectionSystemDecl> tempSystemDecl {std::vector<CollectionSystemDecl>(
@@ -388,10 +397,12 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                                                parentRootFolder->getSortTypeString()),
                                            favoritesSorting);
                     mWindow->queueInfoPopup(
-                        "DISABLED '" +
+                        Utils::String::format(
+                            _("DISABLED '%s' IN '%s'"),
                             Utils::String::toUpper(
-                                Utils::String::removeParenthesis(file->getName())) +
-                            "' IN '" + Utils::String::toUpper(sysData.system->getName()) + "'",
+                                Utils::String::removeParenthesis(file->getName()))
+                                .c_str(),
+                            Utils::String::toUpper(sysData.system->getName()).c_str()),
                         4000);
                 }
                 else {
@@ -659,18 +670,21 @@ void CollectionSystemsManager::setEditMode(const std::string& collectionName, bo
             else
                 editButton = "'Y'";
         }
-        mWindow->queueInfoPopup("EDITING '" + Utils::String::toUpper(collectionName) +
-                                    "' COLLECTION, ADD/REMOVE GAMES WITH " + editButton,
-                                10000);
+        mWindow->queueInfoPopup(
+            Utils::String::format(_("EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"),
+                                  Utils::String::toUpper(collectionName).c_str(),
+                                  editButton.c_str()),
+            10000);
     }
 }
 
 void CollectionSystemsManager::exitEditMode(bool showPopup)
 {
     if (showPopup) {
-        mWindow->queueInfoPopup("FINISHED EDITING '" + Utils::String::toUpper(mEditingCollection) +
-                                    "' COLLECTION",
-                                4000);
+        mWindow->queueInfoPopup(
+            Utils::String::format(_("FINISHED EDITING '%s' COLLECTION"),
+                                  Utils::String::toUpper(mEditingCollection).c_str()),
+            4000);
     }
 
     mIsEditingCustom = false;
@@ -774,17 +788,20 @@ const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 ViewController::getInstance()->reloadGamelistView(
                     mAutoCollectionSystemsData["favorites"].system);
         }
+        std::string sysTemp {sysName};
+        if (sysTemp == "Favorites")
+            sysTemp = _("Favorites");
         if (adding) {
-            mWindow->queueInfoPopup(
-                "ADDED '" + Utils::String::toUpper(Utils::String::removeParenthesis(name)) +
-                    "' TO '" + Utils::String::toUpper(sysName) + "'",
-                4000);
+            mWindow->queueInfoPopup(Utils::String::format(_("ADDED '%s' TO '%s'"),
+                                                          Utils::String::toUpper(name).c_str(),
+                                                          Utils::String::toUpper(sysTemp).c_str()),
+                                    4000);
         }
         else {
-            mWindow->queueInfoPopup(
-                "REMOVED '" + Utils::String::toUpper(Utils::String::removeParenthesis(name)) +
-                    "' FROM '" + Utils::String::toUpper(sysName) + "'",
-                4000);
+            mWindow->queueInfoPopup(Utils::String::format(_("REMOVED '%s' FROM '%s'"),
+                                                          Utils::String::toUpper(name).c_str(),
+                                                          Utils::String::toUpper(sysTemp).c_str()),
+                                    4000);
         }
         return true;
     }
@@ -815,7 +832,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
 
     FileData* rootFolder {sys->getRootFolder()};
     FileFilterIndex* idx {rootFolder->getSystem()->getIndex()};
-    std::string desc {"This collection is empty"};
+    std::string desc {_("This collection is empty")};
     std::vector<FileData*> gamesList;
     std::vector<FileData*> gamesListRandom;
 
@@ -867,48 +884,58 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
             };
             switch (gameCount) {
                 case 1: {
-                    desc = "This collection contains 1 game: '";
-                    desc.append(gamesList[0]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
-                        .append("]'");
+                    desc = Utils::String::format(
+                        _p("theme", "This collection contains 1 game: '%s [%s]'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
+                            .c_str());
                     break;
                 }
                 case 2: {
-                    desc = "This collection contains 2 games: '";
-                    desc.append(gamesList[0]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
-                        .append("]' and '")
-                        .append(gamesList[1]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[1]->getSourceFileData()->getSystem()->getName()))
-                        .append("]'");
+                    desc = Utils::String::format(
+                        _p("theme", "This collection contains 2 games: '%s [%s]' and '%s [%s]'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[1]->getSourceFileData()->getSystem()->getName())
+                            .c_str());
+                    break;
+                }
+                case 3: {
+                    desc = Utils::String::format(
+                        _p("theme",
+                           "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[1]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[2]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[2]->getSourceFileData()->getSystem()->getName())
+                            .c_str());
                     break;
                 }
                 default: {
-                    desc = "This collection contains ";
-                    desc.append(std::to_string(gameCount))
-                        .append(" games: '")
-                        .append(gamesList[0]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
-                        .append("]', '")
-                        .append(gamesList[1]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[1]->getSourceFileData()->getSystem()->getName()))
-                        .append("]' and '")
-                        .append(gamesList[2]->metadata.get("name"))
-                        .append(" [")
-                        .append(caseConversion(
-                            gamesList[2]->getSourceFileData()->getSystem()->getName()))
-                        .append("]'");
-                    desc.append(gameCount == 3 ? "" : ", among others");
+                    desc = Utils::String::format(
+                        _np("theme",
+                            "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s "
+                            "[%s]', "
+                            "among others",
+                            "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s "
+                            "[%s]', "
+                            "among others",
+                            gameCount),
+                        gameCount, gamesList[0]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[0]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[1]->getSourceFileData()->getSystem()->getName())
+                            .c_str(),
+                        gamesList[2]->metadata.get("name").c_str(),
+                        caseConversion(gamesList[2]->getSourceFileData()->getSystem()->getName())
+                            .c_str());
                     break;
                 }
             }
@@ -916,29 +943,35 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
         else {
             switch (gameCount) {
                 case 1: {
-                    desc = "This collection contains 1 game: '";
-                    desc.append(gamesList[0]->metadata.get("name")).append("'");
+                    desc =
+                        Utils::String::format(_p("theme", "This collection contains 1 game: '%s'"),
+                                              gamesList[0]->metadata.get("name").c_str());
                     break;
                 }
                 case 2: {
-                    desc = "This collection contains 2 games: '";
-                    desc.append(gamesList[0]->metadata.get("name"))
-                        .append("' and '")
-                        .append(gamesList[1]->metadata.get("name"))
-                        .append("'");
+                    desc = Utils::String::format(
+                        _p("theme", "This collection contains 2 games: '%s' and '%s'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        gamesList[1]->metadata.get("name").c_str());
+                    break;
+                }
+                case 3: {
+                    desc = Utils::String::format(
+                        _p("theme", "This collection contains 3 games: '%s', '%s' and '%s'"),
+                        gamesList[0]->metadata.get("name").c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        gamesList[2]->metadata.get("name").c_str());
                     break;
                 }
                 default: {
-                    desc = "This collection contains ";
-                    desc.append(std::to_string(gameCount))
-                        .append(" games: '")
-                        .append(gamesList[0]->metadata.get("name"))
-                        .append("', '")
-                        .append(gamesList[1]->metadata.get("name"))
-                        .append("' and '")
-                        .append(gamesList[2]->metadata.get("name"))
-                        .append("'");
-                    desc.append(gameCount == 3 ? "" : ", among others");
+                    desc = Utils::String::format(
+                        _np("theme",
+                            "This collection contains %i games: '%s', '%s' and '%s', among others",
+                            "This collection contains %i games: '%s', '%s' and '%s', among others",
+                            gameCount),
+                        gameCount, gamesList[0]->metadata.get("name").c_str(),
+                        gamesList[1]->metadata.get("name").c_str(),
+                        gamesList[2]->metadata.get("name").c_str());
                     break;
                 }
             }
@@ -946,9 +979,9 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
     }
 
     if (idx->isFiltered()) {
-        desc.append("\n\n'")
-            .append(rootFolder->getSystem()->getFullName())
-            .append("' is filtered so there may be more games available");
+        desc.append("\n\n").append(Utils::String::format(
+            _p("theme", "'%s' is filtered so there may be more games available"),
+            rootFolder->getSystem()->getFullName().c_str()));
     }
 
     rootFolder->metadata.set("desc", desc);
@@ -1030,7 +1063,9 @@ void CollectionSystemsManager::deleteCustomCollection(const std::string& collect
                       << configFile << "\"";
 #endif
         mWindow->queueInfoPopup(
-            "DELETED COLLECTION '" + Utils::String::toUpper(collectionName) + "'", 5000);
+            Utils::String::format(_("DELETED COLLECTION '%s'"),
+                                  Utils::String::toUpper(collectionName).c_str()),
+            5000);
     }
     else {
         LOG(LogError) << "Attempted to delete custom collection \"" + collectionName + "\" " +

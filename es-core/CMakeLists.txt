@@ -90,6 +90,7 @@ set(CORE_HEADERS
     # Utils
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/CImgUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/LocalizationUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.h
@@ -164,6 +165,7 @@ set(CORE_SOURCES
     # Utils
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/CImgUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/LocalizationUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.cpp

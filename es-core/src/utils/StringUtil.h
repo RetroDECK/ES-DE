@@ -1,10 +1,9 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  StringUtil.h
 //
 //  Low-level string functions.
-//  Convert characters to Unicode, upper-/lowercase conversion, string formatting etc.
 //
 
 #ifndef ES_CORE_UTILS_STRING_UTIL_H
@@ -27,6 +26,7 @@ namespace Utils
         size_t nextCursor(const std::string& stringArg, const size_t cursor);
         size_t prevCursor(const std::string& stringArg, const size_t cursor);
         size_t moveCursor(const std::string& stringArg, const size_t cursor, const int amount);
+        size_t unicodeLength(const std::string& stringArg);
         std::string toLower(const std::string& stringArg);
         std::string toUpper(const std::string& stringArg);
         std::string toCapitalized(const std::string& stringArg);
@@ -35,6 +35,7 @@ namespace Utils
         std::string replace(const std::string& stringArg,
                             const std::string& from,
                             const std::string& to);
+        std::string format(const std::string stringArg, ...);
         std::wstring stringToWideString(const std::string& stringArg);
         std::string wideStringToString(const std::wstring& stringArg);
         bool startsWith(const std::string& stringArg, const std::string& start);

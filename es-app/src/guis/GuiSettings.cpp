@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiSettings.cpp
 //
 //  User interface template for a settings GUI.
@@ -39,7 +39,7 @@ GuiSettings::GuiSettings(std::string title)
     , mInvalidateCachedBackground {false}
 {
     addChild(&mMenu);
-    mMenu.addButton("BACK", "back", [this] { delete this; });
+    mMenu.addButton(_("BACK"), _("back"), [this] { delete this; });
 
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     mMenu.setPosition((mSize.x - mMenu.getSize().x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
@@ -77,7 +77,6 @@ void GuiSettings::save()
             mCloseMenuFunction = nullptr;
         }
         ViewController::getInstance()->rescanROMDirectory();
-        return;
     }
 
     if (mNeedsCollectionsUpdate) {
@@ -199,7 +198,8 @@ void GuiSettings::addEditableTextComponent(const std::string label,
     row.elements.clear();
 
     auto lbl = std::make_shared<TextComponent>(Utils::String::toUpper(label),
-                                               Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+                                               Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary,
+                                               ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {0, 0});
     row.addElement(lbl, true);
     row.addElement(ed, true);
 
@@ -237,23 +237,24 @@ void GuiSettings::addEditableTextComponent(const std::string label,
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             // Never display the value if it's a password, instead set it to blank.
             if (isPassword)
-                mWindow->pushGui(
-                    new GuiTextEditKeyboardPopup(getHelpStyle(), getMenu().getPosition().y, label,
-                                                 "", updateVal, false, "SAVE", "SAVE CHANGES?"));
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    getHelpStyle(), getMenu().getPosition().y, label, "", updateVal, false,
+                    _("SAVE"), _("SAVE CHANGES?")));
             else
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
                     getHelpStyle(), getMenu().getPosition().y, label, ed->getValue(), updateVal,
-                    false, "SAVE", "SAVE CHANGES?"));
+                    false, _("SAVE"), _("SAVE CHANGES?")));
         });
     }
     else {
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             if (isPassword)
                 mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), label, "", updateVal, false,
-                                                      "SAVE", "SAVE CHANGES?"));
+                                                      _("SAVE"), _("SAVE CHANGES?")));
             else
                 mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), label, ed->getValue(),
-                                                      updateVal, false, "SAVE", "SAVE CHANGES?"));
+                                                      updateVal, false, _("SAVE"),
+                                                      _("SAVE CHANGES?")));
         });
     }
 
@@ -276,6 +277,6 @@ bool GuiSettings::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiSettings::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "back"));
+    prompts.push_back(HelpPrompt("b", _("back")));
     return prompts;
 }

@@ -1,4 +1,4 @@
-# Modern for ES-DE (modern-es-de)
+# Modern for ES-DE Frontend (modern-es-de)
 
 The following options are included:
 
@@ -25,6 +25,21 @@ The following options are included:
 - 16:10
 - 4:3
 - 21:9
+
+12 languages:
+
+- English (United States)
+- English (United Kingdom)
+- Español (España)
+- Français
+- Italiano
+- Polski
+- Português (Brasil)
+- Română
+- Русский
+- Svenska
+- 日本語
+- 简体中文
 
 3 transitions:
 

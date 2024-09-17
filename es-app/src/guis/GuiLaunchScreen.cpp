@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiLaunchScreen.cpp
 //
 //  Screen shown when launching a game.
@@ -12,6 +12,7 @@
 #include "SystemData.h"
 #include "components/ComponentGrid.h"
 #include "components/TextComponent.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 GuiLaunchScreen::GuiLaunchScreen()
@@ -54,7 +55,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
 
     // Title.
     mTitle = std::make_shared<TextComponent>(
-        "LAUNCHING GAME",
+        _("LAUNCHING GAME"),
         Font::get(titleFontSize *
                   std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())),
         mMenuColorTertiary, ALIGN_CENTER);

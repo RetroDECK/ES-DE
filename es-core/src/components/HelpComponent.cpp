@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  HelpComponent.cpp
 //
 //  Help information in icon and text pairs.
