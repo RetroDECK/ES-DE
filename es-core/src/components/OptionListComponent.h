@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  OptionListComponent.h
 //
 //  Provides a list of option components.
@@ -45,6 +45,7 @@ public:
     {
         auto font {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)};
         mText.setFont(font);
+        mText.setAutoCalcExtent(glm::ivec2 {0, 0});
         mText.setColor(mMenuColorPrimary);
         mText.setHorizontalAlignment(ALIGN_CENTER);
         addChild(&mText);
@@ -322,43 +323,55 @@ private:
             std::stringstream ss;
 
             // For special situations, allow the "selected" text to be overridden to a custom value.
-            if (mOverrideMultiText != "")
+            if (mOverrideMultiText != "") {
                 ss << mOverrideMultiText;
-            else if (mMultiShowTotal)
-                ss << getSelectedObjects().size() << " (OF " << mEntries.size() << ") SELECTED";
-            else
-                ss << getSelectedObjects().size() << " SELECTED";
+            }
+            else if (mMultiShowTotal) {
+                const std::string numString {Utils::String::format(
+                    _("%i (OF %i)"), getSelectedObjects().size(), mEntries.size())};
+                ss << Utils::String::format(
+                    _n("%s SELECTED", "%s SELECTED",
+                       static_cast<unsigned long>(getSelectedObjects().size())),
+                    numString.c_str());
+            }
+            else {
+                ss << Utils::String::format(
+                    _n("%i SELECTED", "%i SELECTED",
+                       static_cast<unsigned long>(getSelectedObjects().size())),
+                    getSelectedObjects().size());
+            }
 
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y);
-            setSize(mText.getSize().x + mRightArrow.getSize().x +
-                        Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
-                    mText.getSize().y);
-            if (mParent) // Hack since there's no "on child size changed" callback.
+            setSize(
+                (mText.getTextCache() == nullptr ? 0.0f : mText.getTextCache()->metrics.size.x) +
+                    mRightArrow.getSize().x +
+                    Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
+                mText.getSize().y);
+            if (mParent)
                 mParent->onSizeChanged();
         }
         else {
             // Display the selected entry and left/right option arrows.
             for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
                 if (it->selected) {
-                    if (it->maxNameLength > 0.0f &&
-                        Font::get(FONT_SIZE_MEDIUM)->sizeText(Utils::String::toUpper(it->name)).x >
-                            it->maxNameLength) {
-                        // A maximum length parameter has been passed and the "name" size surpasses
-                        // this value, so abbreviate the string inside the arrows.
-                        auto font = Font::get(FONT_SIZE_MEDIUM);
-                        mText.setText(Utils::String::toUpper(
-                            font->wrapText(Utils::String::toUpper(it->name), it->maxNameLength)));
+                    if (it->maxNameLength > 0.0f) {
+                        // A maximum length parameter is passed to make sure the text is
+                        // abbreviated if it doesn't fit.
+                        mText.setText(it->name, true, it->maxNameLength);
                     }
                     else {
-                        mText.setText(Utils::String::toUpper(it->name));
+                        mText.setText(it->name);
                     }
 
                     mText.setSize(0.0f, mText.getSize().y);
-                    setSize(mText.getSize().x + mLeftArrow.getSize().x + mRightArrow.getSize().x +
+                    setSize((mText.getTextCache() == nullptr ?
+                                 0.0f :
+                                 mText.getTextCache()->metrics.size.x) +
+                                mLeftArrow.getSize().x + mRightArrow.getSize().x +
                                 Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
                             mText.getSize().y);
-                    if (mParent) // Hack since there's no "on child size changed" callback.
+                    if (mParent)
                         mParent->onSizeChanged();
 
                     if (mSelectedChangedCallback)
@@ -375,9 +388,9 @@ private:
     {
         std::vector<HelpPrompt> prompts;
         if (!mMultiSelect)
-            prompts.push_back(HelpPrompt("left/right", "change value"));
+            prompts.push_back(HelpPrompt("left/right", _("change value")));
 
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
         return prompts;
     }
 
@@ -433,8 +446,8 @@ private:
 
             for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); ++it) {
                 row.elements.clear();
-                auto textComponent = std::make_shared<TextComponent>(
-                    Utils::String::toUpper(it->name), font, mMenuColorPrimary);
+                auto textComponent =
+                    std::make_shared<TextComponent>(it->name, font, mMenuColorPrimary);
                 row.addElement(textComponent, true);
 
                 if (mParent->mMultiExclusiveSelect && hasSelectedRow && !(*it).selected) {
@@ -515,11 +528,11 @@ private:
                 mMenu.addRow(row, (!mParent->mMultiSelect && it->selected), false);
             }
 
-            mMenu.addButton("BACK", "back", [this] { delete this; });
+            mMenu.addButton(_("BACK"), _("back"), [this] { delete this; });
 
             if (mParent->mMultiSelect) {
                 if (!mParent->mMultiExclusiveSelect) {
-                    mMenu.addButton("SELECT ALL", "select all", [this, checkBoxes] {
+                    mMenu.addButton(_("SELECT ALL"), _("select all"), [this, checkBoxes] {
                         for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
                             mParent->mEntries.at(i).selected = true;
                             checkBoxes.at(i)->setImage(CHECKED_PATH);
@@ -528,18 +541,19 @@ private:
                     });
                 }
 
-                mMenu.addButton("SELECT NONE", "select none", [this, checkBoxes, textEntries] {
-                    for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
-                        mParent->mEntries.at(i).selected = false;
-                        checkBoxes.at(i)->setImage(UNCHECKED_PATH);
-                        if (mParent->mMultiExclusiveSelect) {
-                            checkBoxes.at(i)->setOpacity(1.0f);
-                            textEntries.at(i)->setOpacity(1.0f);
-                            textEntries.at(i)->setEnabled(true);
-                        }
-                    }
-                    mParent->onSelectedChanged();
-                });
+                mMenu.addButton(_("SELECT NONE"), _("select none"),
+                                [this, checkBoxes, textEntries] {
+                                    for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
+                                        mParent->mEntries.at(i).selected = false;
+                                        checkBoxes.at(i)->setImage(UNCHECKED_PATH);
+                                        if (mParent->mMultiExclusiveSelect) {
+                                            checkBoxes.at(i)->setOpacity(1.0f);
+                                            textEntries.at(i)->setOpacity(1.0f);
+                                            textEntries.at(i)->setEnabled(true);
+                                        }
+                                    }
+                                    mParent->onSelectedChanged();
+                                });
             }
 
             mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x) / 2.0f,
@@ -560,8 +574,8 @@ private:
         std::vector<HelpPrompt> getHelpPrompts() override
         {
             auto prompts = mMenu.getHelpPrompts();
-            prompts.push_back(HelpPrompt("a", "select"));
-            prompts.push_back(HelpPrompt("b", "back"));
+            prompts.push_back(HelpPrompt("a", _("select")));
+            prompts.push_back(HelpPrompt("b", _("back")));
             return prompts;
         }
 

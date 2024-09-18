@@ -152,7 +152,7 @@ public:
 
     struct ThemeVariant {
         std::string name;
-        std::string label;
+        std::vector<std::pair<std::string, std::string>> labels;
         bool selectable;
         std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
             overrides;
@@ -165,12 +165,12 @@ public:
 
     struct ThemeColorScheme {
         std::string name;
-        std::string label;
+        std::vector<std::pair<std::string, std::string>> labels;
     };
 
     struct ThemeTransitions {
         std::string name;
-        std::string label;
+        std::vector<std::pair<std::string, std::string>> labels;
         bool selectable;
         std::map<ViewTransition, ViewTransitionAnimation> animations;
 
@@ -186,6 +186,7 @@ public:
         std::vector<ThemeColorScheme> colorSchemes;
         std::vector<std::string> fontSizes;
         std::vector<std::string> aspectRatios;
+        std::vector<std::string> languages;
         std::vector<ThemeTransitions> transitions;
         std::vector<std::string> suppressedTransitionProfiles;
         bool validTheme;
@@ -225,6 +226,7 @@ public:
     const static std::string getSystemThemeFile(const std::string& system);
     const static std::string getFontSizeLabel(const std::string& fontSize);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
+    const static std::string getLanguageLabel(const std::string& language);
     static void setThemeTransitions();
 
     const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
@@ -254,6 +256,7 @@ private:
     void parseVariants(const pugi::xml_node& root);
     void parseColorSchemes(const pugi::xml_node& root);
     void parseFontSizes(const pugi::xml_node& root);
+    void parseLanguages(const pugi::xml_node& root);
     void parseAspectRatios(const pugi::xml_node& root);
     void parseTransitions(const pugi::xml_node& root);
     void parseVariables(const pugi::xml_node& root);
@@ -263,6 +266,11 @@ private:
                       const std::map<std::string, ElementPropertyType>& typeMap,
                       ThemeElement& element);
 
+#if defined(GETTEXT_DUMMY_ENTRIES)
+    // This is just to get gettext msgid entries added to the PO message catalog files.
+    void gettextMessageCatalogEntries();
+#endif
+
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sSupportedMediaTypes;
     static std::vector<std::string> sSupportedTransitions;
@@ -270,6 +278,7 @@ private:
 
     static std::vector<std::pair<std::string, std::string>> sSupportedFontSizes;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
+    static std::vector<std::pair<std::string, std::string>> sSupportedLanguages;
     static std::map<std::string, float> sAspectRatioMap;
 
     static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
@@ -284,12 +293,14 @@ private:
     std::vector<std::string> mVariants;
     std::vector<std::string> mColorSchemes;
     std::vector<std::string> mFontSizes;
+    std::vector<std::string> mLanguages;
     std::string mSelectedVariant;
     std::string mOverrideVariant;
     std::string mSelectedColorScheme;
     std::string mSelectedFontSize;
     static inline std::string sSelectedAspectRatio;
     static inline bool sAspectRatioMatch {false};
+    static inline std::string sThemeLanguage;
     bool mCustomCollection;
 };
 

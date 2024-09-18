@@ -1,17 +1,26 @@
 <theme>
-   <variables>
-      <systemName>Ports</systemName>
-      <systemDescription>View and play all of your favorite game ports.</systemDescription>
-      <systemManufacturer>Various</systemManufacturer>
-      <systemReleaseYear>Various</systemReleaseYear>
-      <systemReleaseDate>Various</systemReleaseDate>
-      <systemReleaseDateFormated>Various</systemReleaseDateFormated>
-      <systemHardwareType>Folder</systemHardwareType>
-      <systemCoverSize>3-4</systemCoverSize>
-      <systemColor>3161BC</systemColor>
-      <systemColorPalette1>4F5054</systemColorPalette1>
-      <systemColorPalette2>737375</systemColorPalette2>
-      <systemColorPalette3>F4BE46</systemColorPalette3>
-      <systemColorPalette4>E45B12</systemColorPalette4>
-   </variables>
+    <variables>
+        <systemName>Ports</systemName>
+        <systemDescription>View and play all of your favorite game ports.</systemDescription>
+        <systemManufacturer>Various</systemManufacturer>
+        <systemReleaseYear>Various</systemReleaseYear>
+        <systemReleaseDate>Various</systemReleaseDate>
+        <systemReleaseDateFormated>Various</systemReleaseDateFormated>
+        <systemHardwareType>Folder</systemHardwareType>
+        <systemCoverSize>3-4</systemCoverSize>
+        <systemColor>3161BC</systemColor>
+        <systemColorPalette1>4F5054</systemColorPalette1>
+        <systemColorPalette2>737375</systemColorPalette2>
+        <systemColorPalette3>F4BE46</systemColorPalette3>
+        <systemColorPalette4>E45B12</systemColorPalette4>
+    </variables>
+    <language name="sv_SE">
+        <variables>
+            <systemManufacturer>Diverse</systemManufacturer>
+            <systemReleaseYear>Diverse</systemReleaseYear>
+            <systemReleaseDate>Diverse</systemReleaseDate>
+            <systemReleaseDateFormated>Diverse</systemReleaseDateFormated>
+            <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
 </theme>

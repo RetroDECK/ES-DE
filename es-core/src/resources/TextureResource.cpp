@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  TextureResource.cpp
 //
 //  Handles textures including loading, unloading and cache management.

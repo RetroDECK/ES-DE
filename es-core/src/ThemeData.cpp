@@ -15,6 +15,7 @@
 #include "components/ImageComponent.h"
 #include "components/TextComponent.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #include <algorithm>
@@ -76,7 +77,7 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRati
     {"20:9_vertical", "20:9 vertical"},
     {"21:9", "21:9"},
     {"21:9_vertical", "21:9 vertical"},
-    {"32:9", "32:0"},
+    {"32:9", "32:9"},
     {"32:9_vertical", "32:9 vertical"},
     {"1:1", "1:1"}};
 
@@ -100,6 +101,23 @@ std::map<std::string, float> ThemeData::sAspectRatioMap {
     {"32:9", 3.5555f},
     {"32:9_vertical", 0.2813f},
     {"1:1", 1.0f}};
+
+std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedLanguages {
+    {"automatic", "automatic"},
+    {"en_US", "ENGLISH (UNITED STATES)"},
+    {"en_GB", "ENGLISH (UNITED KINGDOM)"},
+    {"de_DE", "DEUTSCH"},
+    {"es_ES", "ESPAÑOL (ESPAÑA)"},
+    {"fr_FR", "FRANÇAIS"},
+    {"it_IT", "ITALIANO"},
+    {"pl_PL", "POLSKI"},
+    {"pt_BR", "PORTUGUÊS (BRASIL)"},
+    {"ro_RO", "ROMÂNĂ"},
+    {"ru_RU", "РУССКИЙ"},
+    {"sv_SE", "SVENSKA"},
+    {"ja_JP", "日本語"},
+    {"ko_KR", "한국어"},
+    {"zh_CN", "简体中文"}};
 
 std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
     // The data type is defined by the parent property.
@@ -468,6 +486,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"verticalAlignment", STRING},
        {"color", COLOR},
        {"backgroundColor", COLOR},
+       {"backgroundMargins", NORMALIZED_PAIR},
+       {"backgroundCornerRadius", FLOAT},
        {"letterCase", STRING},
        {"lineSpacing", FLOAT},
        {"format", STRING},
@@ -626,6 +646,7 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     }
 
     sAspectRatioMatch = false;
+    sThemeLanguage = "";
 
     if (sCurrentTheme->second.capabilities.aspectRatios.size() > 0) {
         if (std::find(sCurrentTheme->second.capabilities.aspectRatios.cbegin(),
@@ -660,9 +681,42 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
         }
     }
 
+    if (sCurrentTheme->second.capabilities.languages.size() > 0) {
+        for (auto& language : sCurrentTheme->second.capabilities.languages)
+            mLanguages.emplace_back(language);
+
+        std::string langSetting {Settings::getInstance()->getString("ThemeLanguage")};
+        if (langSetting == "automatic")
+            langSetting = Utils::Localization::sCurrentLocale;
+
+        // Check if there is an exact match.
+        if (std::find(sCurrentTheme->second.capabilities.languages.cbegin(),
+                      sCurrentTheme->second.capabilities.languages.cend(),
+                      langSetting) != sCurrentTheme->second.capabilities.languages.cend()) {
+            sThemeLanguage = langSetting;
+        }
+        else {
+            // We assume all locales are in the correct format.
+            const std::string currLanguage {langSetting.substr(0, 2)};
+            // Select the closest matching locale (i.e. same language but possibly for a
+            // different country).
+            for (const auto& lang : sCurrentTheme->second.capabilities.languages) {
+                if (lang.substr(0, 2) == currLanguage) {
+                    sThemeLanguage = lang;
+                    break;
+                }
+            }
+            // If there is no match then fall back to the default language en_US, which is
+            // mandatory for all themes that provide language support.
+            if (sThemeLanguage == "")
+                sThemeLanguage = "en_US";
+        }
+    }
+
     parseVariables(root);
     parseColorSchemes(root);
     parseFontSizes(root);
+    parseLanguages(root);
     parseIncludes(root);
     parseViews(root);
     if (root.child("feature") != nullptr)
@@ -792,8 +846,11 @@ void ThemeData::populateThemes()
                 LOG(LogInfo) << "Added theme \"" << *it << "\"" << themeName;
 #endif
                 int aspectRatios {0};
+                int languages {0};
                 if (capabilities.aspectRatios.size() > 0)
                     aspectRatios = static_cast<int>(capabilities.aspectRatios.size()) - 1;
+                if (capabilities.languages.size() > 0)
+                    languages = static_cast<int>(capabilities.languages.size()) - 1;
                 LOG(LogDebug) << "Theme includes support for " << capabilities.variants.size()
                               << " variant" << (capabilities.variants.size() != 1 ? "s" : "")
                               << ", " << capabilities.colorSchemes.size() << " color scheme"
@@ -801,8 +858,9 @@ void ThemeData::populateThemes()
                               << capabilities.fontSizes.size() << " font size"
                               << (capabilities.fontSizes.size() != 1 ? "s" : "") << ", "
                               << aspectRatios << " aspect ratio" << (aspectRatios != 1 ? "s" : "")
-                              << " and " << capabilities.transitions.size() << " transition"
-                              << (capabilities.transitions.size() != 1 ? "s" : "");
+                              << ", " << capabilities.transitions.size() << " transition"
+                              << (capabilities.transitions.size() != 1 ? "s" : "") << " and "
+                              << languages << " language" << (languages != 1 ? "s" : "");
 
                 Theme theme {*it, capabilities};
                 sThemes[theme.getName()] = theme;
@@ -873,6 +931,18 @@ const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
         return it->second;
     else
         return "invalid ratio";
+}
+
+const std::string ThemeData::getLanguageLabel(const std::string& language)
+{
+    auto it = std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                           [&language](const std::pair<std::string, std::string>& entry) {
+                               return entry.first == language;
+                           });
+    if (it != sSupportedLanguages.cend())
+        return it->second;
+    else
+        return "invalid language";
 }
 
 void ThemeData::setThemeTransitions()
@@ -968,6 +1038,7 @@ ThemeData::getCurrentThemeSelectedVariantOverrides()
 const void ThemeData::themeLoadedLogOutput()
 {
     LOG(LogInfo) << "Finished loading theme \"" << sCurrentTheme->first << "\"";
+
     if (sSelectedAspectRatio != "") {
         const bool autoDetect {Settings::getInstance()->getString("ThemeAspectRatio") ==
                                "automatic"};
@@ -976,6 +1047,13 @@ const void ThemeData::themeLoadedLogOutput()
         LOG(LogInfo) << "Aspect ratio " << (autoDetect ? "automatically " : "manually ")
                      << "set to " << (autoDetect ? match : "") << "\""
                      << Utils::String::replace(sSelectedAspectRatio, "_", " ") << "\"";
+    }
+
+    if (sThemeLanguage != "") {
+        LOG(LogInfo) << "Theme language set to \"" << sThemeLanguage << "\"";
+    }
+    else {
+        LOG(LogInfo) << "Theme does not have multilingual support";
     }
 }
 
@@ -1025,6 +1103,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
     ThemeCapability capabilities;
     std::vector<std::string> aspectRatiosTemp;
     std::vector<std::string> fontSizesTemp;
+    std::vector<std::string> languagesTemp;
     bool hasTriggers {false};
 
     const std::string capFile {path + "/capabilities.xml"};
@@ -1120,23 +1199,53 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 readVariant.name = name;
             }
 
-            const pugi::xml_node& labelTag {variant.child("label")};
-            if (labelTag == nullptr) {
+            if (variant.child("label") == nullptr) {
                 LOG(LogDebug)
-                    << "No variant <label> tag found, setting label value to the variant name \""
+                    << "No variant <label> tags found, setting label value to the variant name \""
                     << name << "\" for \"" << capFile << "\"";
-                readVariant.label = name;
+                readVariant.labels.emplace_back(std::make_pair("en_US", name));
             }
             else {
-                const std::string& labelValue {labelTag.text().as_string()};
-                if (labelValue == "") {
-                    LOG(LogWarning) << "No variant <label> value defined, setting value to "
-                                       "the variant name \""
-                                    << name << "\" for \"" << capFile << "\"";
-                    readVariant.label = name;
+                std::vector<std::pair<std::string, std::string>> labels;
+                for (pugi::xml_node labelTag {variant.child("label")}; labelTag;
+                     labelTag = labelTag.next_sibling("label")) {
+                    std::string language {labelTag.attribute("language").as_string()};
+                    if (language == "")
+                        language = "en_US";
+                    else if (std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                                          [language](std::pair<std::string, std::string> currLang) {
+                                              return currLang.first == language;
+                                          }) == sSupportedLanguages.cend()) {
+                        LOG(LogWarning) << "Declared language \"" << language
+                                        << "\" not supported, setting label language to \"en_US\""
+                                           " for variant name \""
+                                        << name << "\" in \"" << capFile << "\"";
+                        language = "en_US";
+                    }
+                    std::string labelValue {labelTag.text().as_string()};
+                    if (labelValue == "") {
+                        LOG(LogWarning) << "No variant <label> value defined, setting value to "
+                                           "the variant name \""
+                                        << name << "\" for \"" << capFile << "\"";
+                        labelValue = name;
+                    }
+                    labels.emplace_back(std::make_pair(language, labelValue));
                 }
-                else {
-                    readVariant.label = labelValue;
+                if (!labels.empty()) {
+                    // Add the label languages in the order they are defined in sSupportedLanguages.
+                    for (auto& language : sSupportedLanguages) {
+                        if (language.first == "automatic")
+                            continue;
+                        const auto it =
+                            std::find_if(labels.cbegin(), labels.cend(),
+                                         [language](std::pair<std::string, std::string> currLabel) {
+                                             return currLabel.first == language.first;
+                                         });
+                        if (it != labels.cend()) {
+                            readVariant.labels.emplace_back(
+                                std::make_pair((*it).first, (*it).second));
+                        }
+                    }
                 }
             }
 
@@ -1266,23 +1375,53 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 readColorScheme.name = name;
             }
 
-            const pugi::xml_node& labelTag {colorScheme.child("label")};
-            if (labelTag == nullptr) {
+            if (colorScheme.child("label") == nullptr) {
                 LOG(LogDebug) << "No colorScheme <label> tag found, setting label value to the "
                                  "color scheme name \""
                               << name << "\" for \"" << capFile << "\"";
-                readColorScheme.label = name;
+                readColorScheme.labels.emplace_back(std::make_pair("en_US", name));
             }
             else {
-                const std::string& labelValue {labelTag.text().as_string()};
-                if (labelValue == "") {
-                    LOG(LogWarning) << "No colorScheme <label> value defined, setting value to "
-                                       "the color scheme name \""
-                                    << name << "\" for \"" << capFile << "\"";
-                    readColorScheme.label = name;
+                std::vector<std::pair<std::string, std::string>> labels;
+                for (pugi::xml_node labelTag {colorScheme.child("label")}; labelTag;
+                     labelTag = labelTag.next_sibling("label")) {
+                    std::string language {labelTag.attribute("language").as_string()};
+                    if (language == "")
+                        language = "en_US";
+                    else if (std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                                          [language](std::pair<std::string, std::string> currLang) {
+                                              return currLang.first == language;
+                                          }) == sSupportedLanguages.cend()) {
+                        LOG(LogWarning) << "Declared language \"" << language
+                                        << "\" not supported, setting label language to \"en_US\""
+                                           " for color scheme name \""
+                                        << name << "\" in \"" << capFile << "\"";
+                        language = "en_US";
+                    }
+                    std::string labelValue {labelTag.text().as_string()};
+                    if (labelValue == "") {
+                        LOG(LogWarning) << "No colorScheme <label> value defined, setting value to "
+                                           "the color scheme name \""
+                                        << name << "\" for \"" << capFile << "\"";
+                        labelValue = name;
+                    }
+                    labels.emplace_back(std::make_pair(language, labelValue));
                 }
-                else {
-                    readColorScheme.label = labelValue;
+                if (!labels.empty()) {
+                    // Add the label languages in the order they are defined in sSupportedLanguages.
+                    for (auto& language : sSupportedLanguages) {
+                        if (language.first == "automatic")
+                            continue;
+                        const auto it =
+                            std::find_if(labels.cbegin(), labels.cend(),
+                                         [language](std::pair<std::string, std::string> currLabel) {
+                                             return currLabel.first == language.first;
+                                         });
+                        if (it != labels.cend()) {
+                            readColorScheme.labels.emplace_back(
+                                std::make_pair((*it).first, (*it).second));
+                        }
+                    }
                 }
             }
 
@@ -1300,6 +1439,36 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 if (!duplicate)
                     capabilities.colorSchemes.emplace_back(readColorScheme);
             }
+        }
+
+        for (pugi::xml_node language {themeCapabilities.child("language")}; language;
+             language = language.next_sibling("language")) {
+            const std::string& value {language.text().get()};
+            if (std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                             [&value](const std::pair<std::string, std::string>& entry) {
+                                 return entry.first == value;
+                             }) == sSupportedLanguages.cend()) {
+                LOG(LogWarning) << "Declared language \"" << value
+                                << "\" is not supported, ignoring entry in \"" << capFile << "\"";
+            }
+            else {
+                if (std::find(languagesTemp.cbegin(), languagesTemp.cend(), value) !=
+                    languagesTemp.cend()) {
+                    LOG(LogWarning)
+                        << "Language \"" << value
+                        << "\" is declared multiple times, ignoring entry in \"" << capFile << "\"";
+                }
+                else {
+                    languagesTemp.emplace_back(value);
+                }
+            }
+        }
+
+        if (languagesTemp.size() > 0 && std::find(languagesTemp.cbegin(), languagesTemp.cend(),
+                                                  "en_US") == languagesTemp.cend()) {
+            LOG(LogError) << "Theme has declared language support but is missing mandatory "
+                          << "\"en_US\" entry in \"" << capFile << "\"";
+            languagesTemp.clear();
         }
 
         for (pugi::xml_node transitions {themeCapabilities.child("transitions")}; transitions;
@@ -1339,10 +1508,6 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 
             if (name == "")
                 continue;
-
-            const pugi::xml_node& labelTag {transitions.child("label")};
-            if (labelTag != nullptr)
-                label = labelTag.text().as_string();
 
             const pugi::xml_node& selectableTag {transitions.child("selectable")};
             if (selectableTag != nullptr) {
@@ -1413,7 +1578,44 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 
                 ThemeTransitions transition;
                 transition.name = name;
-                transition.label = label;
+
+                std::vector<std::pair<std::string, std::string>> labels;
+                for (pugi::xml_node labelTag {transitions.child("label")}; labelTag;
+                     labelTag = labelTag.next_sibling("label")) {
+                    std::string language {labelTag.attribute("language").as_string()};
+                    if (language == "")
+                        language = "en_US";
+                    else if (std::find_if(sSupportedLanguages.cbegin(), sSupportedLanguages.cend(),
+                                          [language](std::pair<std::string, std::string> currLang) {
+                                              return currLang.first == language;
+                                          }) == sSupportedLanguages.cend()) {
+                        LOG(LogWarning) << "Declared language \"" << language
+                                        << "\" not supported, setting label language to \"en_US\""
+                                           " for transition name \""
+                                        << name << "\" in \"" << capFile << "\"";
+                        language = "en_US";
+                    }
+                    std::string labelValue {labelTag.text().as_string()};
+                    if (labelValue != "")
+                        labels.emplace_back(std::make_pair(language, labelValue));
+                }
+                if (!labels.empty()) {
+                    // Add the label languages in the order they are defined in sSupportedLanguages.
+                    for (auto& language : sSupportedLanguages) {
+                        if (language.first == "automatic")
+                            continue;
+                        const auto it =
+                            std::find_if(labels.cbegin(), labels.cend(),
+                                         [language](std::pair<std::string, std::string> currLabel) {
+                                             return currLabel.first == language.first;
+                                         });
+                        if (it != labels.cend()) {
+                            transition.labels.emplace_back(
+                                std::make_pair((*it).first, (*it).second));
+                        }
+                    }
+                }
+
                 transition.selectable = selectable;
                 transition.animations = std::move(readTransitions);
                 capabilities.transitions.emplace_back(std::move(transition));
@@ -1469,12 +1671,24 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
     // always show up in the same order in the UI Settings menu.
     if (!aspectRatiosTemp.empty()) {
         // Add the "automatic" aspect ratio if there is at least one entry.
-        if (!aspectRatiosTemp.empty())
-            capabilities.aspectRatios.emplace_back(sSupportedAspectRatios.front().first);
+        capabilities.aspectRatios.emplace_back(sSupportedAspectRatios.front().first);
         for (auto& aspectRatio : sSupportedAspectRatios) {
             if (std::find(aspectRatiosTemp.cbegin(), aspectRatiosTemp.cend(), aspectRatio.first) !=
                 aspectRatiosTemp.cend()) {
                 capabilities.aspectRatios.emplace_back(aspectRatio.first);
+            }
+        }
+    }
+
+    // Add the languages in the order they are defined in sSupportedLanguages so they always
+    // show up in the same order in the UI Settings menu.
+    if (!languagesTemp.empty()) {
+        // Add the "automatic" language if there is at least one entry.
+        capabilities.languages.emplace_back(sSupportedLanguages.front().first);
+        for (auto& language : sSupportedLanguages) {
+            if (std::find(languagesTemp.cbegin(), languagesTemp.cend(), language.first) !=
+                languagesTemp.cend()) {
+                capabilities.languages.emplace_back(language.first);
             }
         }
     }
@@ -1580,6 +1794,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         parseVariables(theme);
         parseColorSchemes(theme);
         parseFontSizes(theme);
+        parseLanguages(theme);
         parseIncludes(theme);
         parseViews(theme);
         if (theme.child("feature") != nullptr)
@@ -1630,6 +1845,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
                 parseVariables(node);
                 parseColorSchemes(node);
                 parseFontSizes(node);
+                parseLanguages(node);
                 parseIncludes(node);
                 parseViews(node);
                 parseAspectRatios(node);
@@ -1671,8 +1887,10 @@ void ThemeData::parseColorSchemes(const pugi::xml_node& root)
                             << "\" is not defined in capabilities.xml";
             }
 
-            if (mSelectedColorScheme == viewKey)
+            if (mSelectedColorScheme == viewKey) {
                 parseVariables(node);
+                parseIncludes(node);
+            }
         }
     }
 }
@@ -1708,8 +1926,10 @@ void ThemeData::parseFontSizes(const pugi::xml_node& root)
                             << "\" is not defined in capabilities.xml";
             }
 
-            if (mSelectedFontSize == viewKey)
+            if (mSelectedFontSize == viewKey) {
                 parseVariables(node);
+                parseIncludes(node);
+            }
         }
     }
 }
@@ -1752,6 +1972,7 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
                 parseVariables(node);
                 parseColorSchemes(node);
                 parseFontSizes(node);
+                parseLanguages(node);
                 parseIncludes(node);
                 parseViews(node);
             }
@@ -1777,6 +1998,45 @@ void ThemeData::parseTransitions(const pugi::xml_node& root)
                         << "\" is not matching any defined transitions";
         }
         sVariantDefinedTransitions = transitionsValue;
+    }
+}
+
+void ThemeData::parseLanguages(const pugi::xml_node& root)
+{
+    if (sCurrentTheme == sThemes.end())
+        return;
+
+    if (sThemeLanguage == "")
+        return;
+
+    ThemeException error;
+    error << "ThemeData::parseLanguages(): ";
+    error.setFiles(mPaths);
+
+    for (pugi::xml_node node {root.child("language")}; node; node = node.next_sibling("language")) {
+        if (!node.attribute("name"))
+            throw error << ": <language> tag missing \"name\" attribute";
+
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
+        std::string viewKey;
+        while (off != std::string::npos || prevOff != std::string::npos) {
+            viewKey = nameAttr.substr(prevOff, off - prevOff);
+            prevOff = nameAttr.find_first_not_of(delim, off);
+            off = nameAttr.find_first_of(delim, prevOff);
+
+            if (std::find(mLanguages.cbegin(), mLanguages.cend(), viewKey) == mLanguages.cend()) {
+                throw error << ": <language> value \"" << viewKey
+                            << "\" is not defined in capabilities.xml";
+            }
+
+            if (sThemeLanguage == viewKey) {
+                parseVariables(node);
+                parseIncludes(node);
+            }
+        }
     }
 }
 
@@ -2059,3 +2319,27 @@ void ThemeData::parseElement(const pugi::xml_node& root,
         }
     }
 }
+
+#if defined(GETTEXT_DUMMY_ENTRIES)
+void ThemeData::gettextMessageCatalogEntries()
+{
+    // sSupportedFontSizes
+    _("medium");
+    _("large");
+    _("small");
+    _("extra small");
+    _("extra large");
+
+    // sSupportedAspectRatios
+    _("automatic");
+    _("16:9 vertical");
+    _("16:10 vertical");
+    _("3:2 vertical");
+    _("4:3 vertical");
+    _("5:4 vertical");
+    _("19.5:9 vertical");
+    _("20:9 vertical");
+    _("21:9 vertical");
+    _("32:9 vertical");
+}
+#endif

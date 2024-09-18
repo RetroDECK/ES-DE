@@ -10,9 +10,16 @@
 #ifndef ES_CORE_WINDOW_H
 #define ES_CORE_WINDOW_H
 
+#include "GuiComponent.h"
 #include "HelpPrompt.h"
+#include "HelpStyle.h"
 #include "InputConfig.h"
 #include "Settings.h"
+#include "components/HelpComponent.h"
+#include "components/ImageComponent.h"
+#include "components/TextComponent.h"
+#include "guis/GuiInfoPopup.h"
+#include "resources/Font.h"
 #include "resources/TextureResource.h"
 
 #include <atomic>
@@ -20,14 +27,6 @@
 #include <queue>
 
 class FileData;
-class Font;
-class GuiComponent;
-class GuiInfoPopup;
-class HelpComponent;
-class ImageComponent;
-class InputConfig;
-class TextCache;
-struct HelpStyle;
 
 class Window
 {
@@ -114,6 +113,7 @@ public:
         DIR_CREATION
     };
 
+    void updateSplashScreenText();
     void renderSplashScreen(SplashScreenState state, float progress);
     // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
     void renderListScrollOverlay(const float opacity, const std::string& text);
@@ -188,18 +188,19 @@ private:
     std::unique_ptr<HelpComponent> mHelp;
     std::unique_ptr<ImageComponent> mBackgroundOverlay;
     std::unique_ptr<ImageComponent> mSplash;
-    std::unique_ptr<TextCache> mSplashTextScanning;
-    std::unique_ptr<TextCache> mSplashTextPopulating;
-    std::unique_ptr<TextCache> mSplashTextReloading;
-    std::unique_ptr<TextCache> mSplashTextResourceCopy;
-    std::unique_ptr<TextCache> mSplashTextDirCreation;
+    std::unique_ptr<TextComponent> mSplashTextScanning;
+    std::unique_ptr<TextComponent> mSplashTextPopulating;
+    std::unique_ptr<TextComponent> mSplashTextReloading;
+    std::unique_ptr<TextComponent> mSplashTextResourceCopy;
+    std::unique_ptr<TextComponent> mSplashTextDirCreation;
+
     glm::vec4 mSplashTextPositions;
     std::vector<ProgressBarRectangle> mProgressBarRectangles;
 
     float mBackgroundOverlayOpacity;
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;
-    std::unique_ptr<TextCache> mFrameDataText;
+    std::unique_ptr<TextComponent> mGPUStatisticsText;
 
     Screensaver* mScreensaver;
     MediaViewer* mMediaViewer;
@@ -211,8 +212,7 @@ private:
     std::shared_ptr<TextureResource> mPostprocessedBackground;
 
     std::vector<std::string> mGameEndEventParams;
-    std::string mListScrollText;
-    std::shared_ptr<Font> mListScrollFont;
+    std::unique_ptr<TextComponent> mListScrollText;
     float mListScrollOpacity;
 
     int mFrameTimeElapsed;

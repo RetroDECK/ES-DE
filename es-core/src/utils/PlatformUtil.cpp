@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  PlatformUtil.cpp
 //
 //  Platform utility functions.
@@ -28,6 +28,10 @@
 #include <unistd.h>
 #endif
 
+#if defined(__HAIKU__)
+#include <sys/time.h>
+#endif
+
 #include <array>
 #include <fcntl.h>
 
@@ -39,8 +43,8 @@ namespace Utils
         {
 #if defined(_WIN64)
             return system("shutdown -r -t 0");
-#elif defined(__APPLE__)
-            // This will probably never be used as macOS requires root privileges to reboot.
+#elif defined(__APPLE__) || defined(__FreeBSD__)
+            // This will probably never be used on macOS as it requires root privileges to reboot.
             return system("shutdown -r now");
 #else
             return system("shutdown --reboot now");
@@ -54,6 +58,8 @@ namespace Utils
 #elif defined(__APPLE__)
             // This will probably never be used as macOS requires root privileges to power off.
             return system("shutdown now");
+#elif defined(__FreeBSD__)
+            return system("shutdown -p now");
 #else
             return system("shutdown --poweroff now");
 #endif
@@ -84,7 +90,7 @@ namespace Utils
                            const std::string& startDirectory,
                            bool runInBackground)
         {
-#if defined(__unix__) || defined(__APPLE__)
+#if defined(__unix__) || defined(__APPLE__) || defined(__HAIKU__)
             std::string command = std::string(cmd_utf8) + " 2>&1 &";
 
             // Launching games while keeping ES-DE running in the background is very crude as for

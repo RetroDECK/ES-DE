@@ -24,7 +24,7 @@ BEGIN
             VALUE "FileDescription", "ES-DE\0"
             VALUE "FileVersion", RESOURCE_VERSION_STRING
             VALUE "InternalName", "ES-DE.exe\0"
-            VALUE "LegalCopyright", "Copyright (c) 2020-2024 Leon Styhre\0"
+            VALUE "LegalCopyright", "Copyright (c) 2024 Northwestern Software AB\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "ES-DE.exe\0"
             VALUE "ProductName", "ES-DE\0"

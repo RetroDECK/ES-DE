@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiGamelistOptions.cpp
 //
 //  Gamelist options menu for the 'Jump to...' quick selector,
@@ -27,12 +27,13 @@
 #include "UIModeController.h"
 #include "guis/GuiGamelistFilter.h"
 #include "scrapers/Scraper.h"
+#include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
 
 #include <SDL2/SDL.h>
 
 GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
-    : mMenu {"GAMELIST OPTIONS"}
+    : mMenu {_("GAMELIST OPTIONS")}
     , mSystem {system}
     , mFiltersChanged {false}
     , mCancelled {false}
@@ -102,7 +103,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
                 mCurrentFirstCharacter = Utils::String::getFirstCharacter(file->getSortName());
         }
 
-        mJumpToLetterList = std::make_shared<LetterList>(getHelpStyle(), "JUMP TO...", false);
+        mJumpToLetterList = std::make_shared<LetterList>(getHelpStyle(), _("JUMP TO..."), false);
 
         // Enable key repeat so that the left or right button can be held to cycle through
         // the letters.
@@ -116,12 +117,12 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         }
 
         if (system->getName() != "recent")
-            mMenu.addWithLabel("JUMP TO..", mJumpToLetterList);
+            mMenu.addWithLabel(_("JUMP TO..."), mJumpToLetterList);
 
         // Add the sorting entry, unless this is the grouped custom collections list.
         if (!mIsCustomCollectionGroup) {
             // Sort list by selected sort type (persistent throughout the program session).
-            mListSort = std::make_shared<SortList>(getHelpStyle(), "SORT GAMES BY", false);
+            mListSort = std::make_shared<SortList>(getHelpStyle(), _("SORT GAMES BY"), false);
             FileData* root {nullptr};
             if (mIsCustomCollection)
                 root = getGamelist()->getCursor()->getSystem()->getRootFolder();
@@ -137,9 +138,11 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
             for (unsigned int i {0}; i < numSortTypes; ++i) {
                 const FileData::SortType& sort {FileSorts::SortTypes.at(i)};
                 if (sort.description == sortType)
-                    mListSort->add(sort.description, &sort, true);
+                    mListSort->add(Utils::String::toUpper(_(sort.description.c_str())), &sort,
+                                   true);
                 else
-                    mListSort->add(sort.description, &sort, false);
+                    mListSort->add(Utils::String::toUpper(_(sort.description.c_str())), &sort,
+                                   false);
             }
 
             // Enable key repeat so that the left or right button can be held to cycle through
@@ -148,7 +151,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
 
             // Don't show the sort type option if the gamelist type is recent/last played.
             if (system->getName() != "recent")
-                mMenu.addWithLabel("SORT GAMES BY", mListSort);
+                mMenu.addWithLabel(_("SORT GAMES BY"), mListSort);
         }
     }
 
@@ -157,8 +160,9 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     if (!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() > 0) {
         if (system->getName() != "recent" && Settings::getInstance()->getBool("GamelistFilters")) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>(
-                               "FILTER GAMELIST", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+            row.addElement(std::make_shared<TextComponent>(_("FILTER GAMELIST"),
+                                                           Font::get(FONT_SIZE_MEDIUM),
+                                                           mMenuColorPrimary),
                            true);
             row.addElement(mMenu.makeArrow(), false);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openGamelistFilter, this));
@@ -170,7 +174,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
              mSystem->getRootFolder()->getChildren().size() == 0 && !mIsCustomCollectionGroup &&
              !mIsCustomCollection) {
         row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>("THIS SYSTEM HAS NO GAMES",
+        row.addElement(std::make_shared<TextComponent>(_("THIS SYSTEM HAS NO GAMES"),
                                                        Font::get(FONT_SIZE_MEDIUM),
                                                        mMenuColorPrimary),
                        true);
@@ -182,7 +186,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         if (CollectionSystemsManager::getInstance()->getEditingCollection() !=
             getGamelist()->getCursor()->getSystem()->getName()) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>("ADD/REMOVE GAMES TO THIS COLLECTION",
+            row.addElement(std::make_shared<TextComponent>(_("ADD/REMOVE GAMES TO THIS COLLECTION"),
                                                            Font::get(FONT_SIZE_MEDIUM),
                                                            mMenuColorPrimary),
                            true);
@@ -193,15 +197,14 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
 
     if (UIModeController::getInstance()->isUIModeFull() &&
         CollectionSystemsManager::getInstance()->isEditing()) {
+        const std::string editingText {Utils::String::format(
+            _("FINISH EDITING '%s' COLLECTION"),
+            Utils::String::toUpper(CollectionSystemsManager::getInstance()->getEditingCollection())
+                .c_str())};
         row.elements.clear();
-        row.addElement(
-            std::make_shared<TextComponent>(
-                "FINISH EDITING '" +
-                    Utils::String::toUpper(
-                        CollectionSystemsManager::getInstance()->getEditingCollection()) +
-                    "' COLLECTION",
-                Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
-            true);
+        row.addElement(std::make_shared<TextComponent>(editingText, Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary),
+                       true);
         row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::exitEditMode, this));
         mMenu.addRow(row);
     }
@@ -210,7 +213,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         if (UIModeController::getInstance()->isUIModeFull() && !mFromPlaceholder &&
             !(mSystem->isCollection() && file->getType() == FOLDER)) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>("EDIT THIS FOLDER'S METADATA",
+            row.addElement(std::make_shared<TextComponent>(_("EDIT THIS FOLDER'S METADATA"),
                                                            Font::get(FONT_SIZE_MEDIUM),
                                                            mMenuColorPrimary),
                            true);
@@ -223,7 +226,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         if (UIModeController::getInstance()->isUIModeFull() && !mFromPlaceholder &&
             !(mSystem->isCollection() && file->getType() == FOLDER)) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>("EDIT THIS GAME'S METADATA",
+            row.addElement(std::make_shared<TextComponent>(_("EDIT THIS GAME'S METADATA"),
                                                            Font::get(FONT_SIZE_MEDIUM),
                                                            mMenuColorPrimary),
                            true);
@@ -235,7 +238,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
 
     if (file->getType() == FOLDER && file->metadata.get("folderlink") != "") {
         row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>("ENTER FOLDER (OVERRIDE FOLDER LINK)",
+        row.addElement(std::make_shared<TextComponent>(_("ENTER FOLDER (OVERRIDE FOLDER LINK)"),
                                                        Font::get(FONT_SIZE_MEDIUM),
                                                        mMenuColorPrimary),
                        true);
@@ -250,14 +253,14 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     // Buttons. The logic to apply or cancel settings are handled by the destructor.
     if ((!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() == 0) ||
         system->getName() == "recent") {
-        mMenu.addButton("CLOSE", "close", [&] {
+        mMenu.addButton(_("CLOSE"), _("close"), [&] {
             mCancelled = true;
             delete this;
         });
     }
     else {
-        mMenu.addButton("APPLY", "apply", [&] { delete this; });
-        mMenu.addButton("CANCEL", "cancel", [&] {
+        mMenu.addButton(_("APPLY"), _("apply"), [&] { delete this; });
+        mMenu.addButton(_("CANCEL"), _("cancel"), [&] {
             mCancelled = true;
             delete this;
         });
@@ -596,14 +599,14 @@ std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
     auto prompts = mMenu.getHelpPrompts();
     if (mSystem->getRootFolder()->getChildren().size() > 0 || mIsCustomCollectionGroup ||
         mIsCustomCollection || CollectionSystemsManager::getInstance()->isEditing())
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
     if (mSystem->getRootFolder()->getChildren().size() > 0 && mSystem->getName() != "recent") {
-        prompts.push_back(HelpPrompt("b", "close (apply)"));
-        prompts.push_back(HelpPrompt("back", "close (cancel)"));
+        prompts.push_back(HelpPrompt("b", _("close (apply)")));
+        prompts.push_back(HelpPrompt("back", _("close (cancel)")));
     }
     else {
-        prompts.push_back(HelpPrompt("b", "close"));
-        prompts.push_back(HelpPrompt("back", "close"));
+        prompts.push_back(HelpPrompt("b", _("close")));
+        prompts.push_back(HelpPrompt("back", _("close")));
     }
     return prompts;
 }

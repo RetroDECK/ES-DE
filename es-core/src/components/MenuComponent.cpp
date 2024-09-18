@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MenuComponent.cpp
 //
 //  Basic component for building a menu.
@@ -31,6 +31,7 @@ MenuComponent::MenuComponent(std::string title, const std::shared_ptr<Font>& tit
 
     // Set up title.
     mTitle = std::make_shared<TextComponent>();
+    mTitle->setAutoCalcExtent(glm::ivec2 {0, 0});
     mTitle->setHorizontalAlignment(ALIGN_CENTER);
     mTitle->setColor(mMenuColorTitle);
     setTitle(title, titleFont);
@@ -83,7 +84,7 @@ void MenuComponent::save()
 
 void MenuComponent::setTitle(std::string title, const std::shared_ptr<Font>& font)
 {
-    mTitle->setText(Utils::String::toUpper(title));
+    mTitle->setText(title);
     mTitle->setFont(font);
 }
 
@@ -116,6 +117,7 @@ void MenuComponent::updateSize()
     float width {std::min(mRenderer->getScreenHeight() * 1.05f,
                           mRenderer->getScreenWidth() *
                               (mRenderer->getIsVerticalOrientation() ? 0.94f : 0.90f))};
+
     setSize(width, height);
 }
 
@@ -146,8 +148,7 @@ void MenuComponent::addButton(const std::string& name,
                               const std::string& helpText,
                               const std::function<void()>& callback)
 {
-    mButtons.push_back(
-        std::make_shared<ButtonComponent>(Utils::String::toUpper(name), helpText, callback));
+    mButtons.push_back(std::make_shared<ButtonComponent>(name, helpText, callback));
     updateGrid();
     updateSize();
 }

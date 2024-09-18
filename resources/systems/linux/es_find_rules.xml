@@ -473,6 +473,24 @@
             <entry>~/bin/hypseus-singe/hypseus.bin</entry>
         </rule>
     </emulator>
+    <emulator name="IZAPPLE2">
+        <!-- Apple II emulator izapple2 -->
+        <rule type="staticpath">
+            <entry>~/Applications/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/.local/share/applications/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/.local/bin/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/bin/izapple2/izapple2sdl_linux_amd64</entry>
+        </rule>
+    </emulator>
+    <emulator name="JGENESIS">
+        <!-- Multi-system emulator jgenesis -->
+        <rule type="staticpath">
+            <entry>~/Applications/jgenesis-cli*.AppImage</entry>
+            <entry>~/.local/share/applications/jgenesis-cli*.AppImage</entry>
+            <entry>~/.local/bin/jgenesis-cli*.AppImage</entry>
+            <entry>~/bin/jgenesis-cli*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="LIGHTSPARK">
         <!-- Adobe Flash player Lightspark -->
         <rule type="systempath">
@@ -488,10 +506,15 @@
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="systempath">
+            <entry>lime3ds</entry>
             <entry>lime3ds-gui</entry>
             <entry>lime-qt</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/lime3ds.AppImage</entry>
+            <entry>~/.local/share/applications/lime3ds.AppImage</entry>
+            <entry>~/.local/bin/lime3ds.AppImage</entry>
+            <entry>~/bin/lime3ds.AppImage</entry>
             <entry>~/Applications/lime3ds-gui*.AppImage</entry>
             <entry>~/.local/share/applications/lime3ds-gui*.AppImage</entry>
             <entry>~/.local/bin/lime3ds-gui*.AppImage</entry>
@@ -500,6 +523,10 @@
             <entry>~/.local/share/applications/lime-qt*.AppImage</entry>
             <entry>~/.local/bin/lime-qt*.AppImage</entry>
             <entry>~/bin/lime-qt*.AppImage</entry>
+            <entry>~/Applications/lime3ds*.AppImage</entry>
+            <entry>~/.local/share/applications/lime3ds*.AppImage</entry>
+            <entry>~/.local/bin/lime3ds*.AppImage</entry>
+            <entry>~/bin/lime3ds*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
         </rule>
@@ -608,6 +635,12 @@
             <entry>~/.local/share/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
         </rule>
     </emulator>
+    <emulator name="NOODS">
+        <!-- Nintendo DS and Game Boy Advance emulator NooDS -->
+        <rule type="systempath">
+            <entry>noods</entry>
+        </rule>
+    </emulator>
     <emulator name="OPENMSX">
         <!-- MSX home computer emulator openMSX -->
         <rule type="systempath">
@@ -699,6 +732,7 @@
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="systempath">
+            <entry>ppsspp</entry>
             <entry>ppsspp-emu.ppsspp-sdl</entry>
             <entry>PPSSPPSDL</entry>
             <entry>PPSSPPQt</entry>
@@ -822,6 +856,7 @@
         <rule type="systempath">
             <entry>Ryujinx.sh</entry>
             <entry>Ryujinx.Ava</entry>
+            <entry>ryujinx</entry>
             <entry>org.ryujinx.Ryujinx</entry>
         </rule>
         <rule type="staticpath">

@@ -1,0 +1,122 @@
+<theme>
+    <!-- Defaults, used for en_US and en_GB -->
+    <variables>
+        <langLabelRating>Rating</langLabelRating>
+        <langLabelReleasedate>Released</langLabelReleasedate>
+        <langLabelPlayers>Players</langLabelPlayers>
+        <langLabelGenre>Genre</langLabelGenre>
+        <langLabelDeveloper>Developer</langLabelDeveloper>
+        <langLabelPublisher>Publisher</langLabelPublisher>
+        <langUnknown>Unknown</langUnknown>
+    </variables>
+    <language name="es_ES">
+        <variables>
+            <langLabelRating>Valoracion</langLabelRating>
+            <langLabelReleasedate>Lanzamiento</langLabelReleasedate>
+            <langLabelPlayers>Jugadores</langLabelPlayers>
+            <langLabelGenre>Genero</langLabelGenre>
+            <langLabelDeveloper>Desarrollador</langLabelDeveloper>
+            <langLabelPublisher>Compañia</langLabelPublisher>
+            <langUnknown>Desconocido</langUnknown>
+        </variables>
+    </language>
+    <language name="fr_FR">
+        <variables>
+            <langLabelRating>Notation</langLabelRating>
+            <langLabelReleasedate>Date de Sortie</langLabelReleasedate>
+            <langLabelPlayers>Joueurs</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Développeur</langLabelDeveloper>
+            <langLabelPublisher>Editeur</langLabelPublisher>
+            <langUnknown>Inconnu</langUnknown>
+        </variables>
+    </language>
+    <language name="it_IT">
+        <variables>
+            <langLabelRating>Valutazione</langLabelRating>
+            <langLabelReleasedate>Data Uscita</langLabelReleasedate>
+            <langLabelPlayers>Nr. Giocatori</langLabelPlayers>
+            <langLabelGenre>Genere</langLabelGenre>
+            <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
+            <langLabelPublisher>Casa Editrice</langLabelPublisher>
+            <langUnknown>Sconosciuto</langUnknown>
+        </variables>
+    </language>
+    <language name="pl_PL">
+        <variables>
+            <langLabelRating>Ocena</langLabelRating>
+            <langLabelReleasedate>Wydano</langLabelReleasedate>
+            <langLabelPlayers>Liczba Graczy</langLabelPlayers>
+            <langLabelGenre>Gatunek</langLabelGenre>
+            <langLabelDeveloper>Deweloper</langLabelDeveloper>
+            <langLabelPublisher>Wydawca</langLabelPublisher>
+            <langUnknown>Nieznane</langUnknown>
+        </variables>
+    </language>
+    <language name="pt_BR">
+        <variables>
+            <langLabelRating>Avaliação</langLabelRating>
+            <langLabelReleasedate>Lançamento</langLabelReleasedate>
+            <langLabelPlayers>Jogadores</langLabelPlayers>
+            <langLabelGenre>Gênero</langLabelGenre>
+            <langLabelDeveloper>Desenvolvedor</langLabelDeveloper>
+            <langLabelPublisher>Distribuidor</langLabelPublisher>
+            <langUnknown>Desconhecido</langUnknown>
+        </variables>
+    </language>
+    <language name="ro_RO">
+        <variables>
+            <langLabelRating>Scor</langLabelRating>
+            <langLabelReleasedate>Lansat</langLabelReleasedate>
+            <langLabelPlayers>Număr de Jucători</langLabelPlayers>
+            <langLabelGenre>Gen</langLabelGenre>
+            <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langUnknown>Necunoscut</langUnknown>
+        </variables>
+    </language>
+    <language name="ru_RU">
+        <variables>
+            <langLabelRating>Рейтинг</langLabelRating>
+            <langLabelReleasedate>Дата Выхода</langLabelReleasedate>
+            <langLabelPlayers>Игроки</langLabelPlayers>
+            <langLabelGenre>Жанр</langLabelGenre>
+            <langLabelDeveloper>Разработчик</langLabelDeveloper>
+            <langLabelPublisher>Издатель</langLabelPublisher>
+            <langUnknown>Неизвестно</langUnknown>
+        </variables>
+    </language>
+    <language name="sv_SE">
+        <variables>
+            <langLabelRating>Betyg</langLabelRating>
+            <langLabelReleasedate>Utgivet</langLabelReleasedate>
+            <langLabelPlayers>Spelare</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Utvecklare</langLabelDeveloper>
+            <langLabelPublisher>Utgivare</langLabelPublisher>
+            <langUnknown>Okänd</langUnknown>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <langLabelRating>評価</langLabelRating>
+            <langLabelReleasedate>発行日</langLabelReleasedate>
+            <langLabelPlayers>プレイヤー</langLabelPlayers>
+            <langLabelGenre>ジャンル</langLabelGenre>
+            <langLabelDeveloper>開発者</langLabelDeveloper>
+            <langLabelPublisher>発行者</langLabelPublisher>
+            <langUnknown>未知</langUnknown>
+        </variables>
+    </language>
+    <language name="zh_CN">
+        <variables>
+            <langLabelRating>评价</langLabelRating>
+            <langLabelReleasedate>发行日</langLabelReleasedate>
+            <langLabelPlayers>玩家</langLabelPlayers>
+            <langLabelGenre>分类</langLabelGenre>
+            <langLabelDeveloper>开发者</langLabelDeveloper>
+            <langLabelPublisher>发行商</langLabelPublisher>
+            <langUnknown>未知</langUnknown>
+        </variables>
+    </language>
+</theme>

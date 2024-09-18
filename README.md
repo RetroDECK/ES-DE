@@ -2,7 +2,7 @@
 
 ES-DE (EmulationStation Desktop Edition) is a frontend for browsing and launching games from your multi-platform collection.
 
-It's officially supported on Linux, macOS, Windows and Android but can also be used on BSD Unix and the Raspberry Pi if you build it yourself from source code.
+It's officially supported on Linux, macOS, Windows and Android but can also be used on Haiku and the Raspberry Pi if you build it yourself from source code. There is also an ES-DE package in the FreeBSD ports collection.
 
 Website:\
 https://es-de.org
@@ -27,11 +27,13 @@ https://gitlab.com/es-de/themes/themes-list
 
 ## Download
 
-Visit https://es-de.org to download the latest ES-DE release or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find most previous releases.
+Visit https://es-de.org to download the latest ES-DE release or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find a number of previous releases.
 
-The Android port of ES-DE is a paid app, which you can get on [Patreon](https://www.patreon.com/es_de) or on the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy).
+The Android port of ES-DE is a paid app, which you can get on [Patreon](https://www.patreon.com/es_de), the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy) and [Huawei AppGallery](https://appgallery.huawei.com/#/app/C111315115).
 
-If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you need to compile from source code as no prebuilt packages are provided for these platforms. A detailed build guide is available in [INSTALL.md](INSTALL.md).
+If you're using a Raspberry Pi or if you run Haiku, then you need to compile from source code as no prebuilt packages are provided for these platforms. A detailed build guide is available in [INSTALL.md](INSTALL.md).
+
+If your run FreeBSD then ES-DE is available as an [official port](https://www.freshports.org/emulators/es-de).
 
 ## Additional information
 

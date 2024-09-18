@@ -97,6 +97,8 @@ public:
 
     const bool getDeletionFlag() const { return mDeletionFlag; }
     void setDeletionFlag(bool setting) { mDeletionFlag = setting; }
+    const bool getNoLoad() const { return mNoLoad; }
+    void setNoLoad(bool state) { mNoLoad = state; }
     const bool isPlaceHolder() const { return mType == PLACEHOLDER; }
     void refreshMetadata() { metadata = mSourceFileData->metadata; }
 
@@ -154,6 +156,10 @@ public:
     const std::string& getSortTypeString() const { return mSortTypeString; }
     const FileData::SortType& getSortTypeFromString(const std::string& desc) const;
 
+    static inline std::vector<std::string> sImageExtensions {".png", ".jpg"};
+    static inline std::vector<std::string> sVideoExtensions {".mp4", ".mkv", ".avi",
+                                                             ".mp4", ".wmv", ".mov"};
+
 protected:
     FileData* mSourceFileData;
     FileData* mParent;
@@ -171,9 +177,7 @@ private:
     std::vector<FileData*> mChildrenLastPlayed;
     std::vector<FileData*> mChildrenMostPlayed;
     std::function<void()> mUpdateListCallback;
-    static inline std::vector<std::string> sImageExtensions {".png", ".jpg"};
-    static inline std::vector<std::string> sVideoExtensions {".mp4", ".mkv", ".avi",
-                                                             ".mp4", ".wmv", ".mov"};
+
     // The pair includes all games, and favorite games.
     std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;
@@ -182,6 +186,7 @@ private:
     bool mUpdateChildrenMostPlayed;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;
+    bool mNoLoad;
 };
 
 class CollectionFileData : public FileData

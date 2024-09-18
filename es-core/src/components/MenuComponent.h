@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MenuComponent.h
 //
 //  Basic component for building a menu.
@@ -16,6 +16,7 @@
 #include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"
 #include "components/TextComponent.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #include <cmath>
@@ -24,7 +25,8 @@ class MenuComponent : public GuiComponent
 {
 public:
     MenuComponent(std::string title,
-                  const std::shared_ptr<Font>& titleFont = Font::get(FONT_SIZE_LARGE));
+                  const std::shared_ptr<Font>& titleFont =
+                      Font::get(FONT_SIZE_LARGE * Utils::Localization::sMenuTitleScaleFactor));
     virtual ~MenuComponent();
 
     void save();
@@ -45,9 +47,9 @@ public:
                       bool invert_when_selected = true)
     {
         ComponentListRow row;
-        row.addElement(std::make_shared<TextComponent>(Utils::String::toUpper(label),
-                                                       Font::get(FONT_SIZE_MEDIUM),
-                                                       mMenuColorPrimary),
+        row.addElement(std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary, ALIGN_LEFT, ALIGN_CENTER,
+                                                       glm::ivec2 {0, 0}),
                        true);
         row.addElement(comp, false, invert_when_selected);
         addRow(row, setCursorHere);

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiMsgBox.h
 //
 //  Popup message dialog with a notification text and a choice of one,
@@ -13,6 +13,7 @@
 #include "GuiComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
+#include "utils/LocalizationUtil.h"
 
 class ButtonComponent;
 class TextComponent;
@@ -22,7 +23,7 @@ class GuiMsgBox : public GuiComponent
 public:
     GuiMsgBox(const HelpStyle& helpstyle,
               const std::string& text,
-              const std::string& name1 = "OK",
+              const std::string& name1 = _("OK"),
               const std::function<void()>& func1 = nullptr,
               const std::string& name2 = "",
               const std::function<void()>& func2 = nullptr,
@@ -32,6 +33,8 @@ public:
               const bool disableBackButton = false,
               const bool deleteOnButtonPress = true,
               const float maxWidthMultiplier = 0.0f);
+
+    void calculateSize();
 
     void changeText(const std::string& newText);
 

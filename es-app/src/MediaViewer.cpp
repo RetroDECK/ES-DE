@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MediaViewer.cpp
 //
 //  Fullscreen game media viewer.
@@ -10,6 +10,7 @@
 
 #include "Sound.h"
 #include "components/VideoFFmpegComponent.h"
+#include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
 
 #define KEY_REPEAT_START_DELAY 600
@@ -44,8 +45,6 @@ bool MediaViewer::startMediaViewer(FileData* game)
     mKeyRepeatDir = 0;
     mKeyRepeatTimer = 0;
 
-    ViewController::getInstance()->pauseViewVideos();
-
     mShowMediaTypes = Settings::getInstance()->getBool("MediaViewerShowTypes");
 
     if (Settings::getInstance()->getString("MediaViewerHelpPrompts") == "disabled")
@@ -68,6 +67,7 @@ bool MediaViewer::startMediaViewer(FileData* game)
     if (!mHasVideo && !mHasImages)
         return false;
 
+    ViewController::getInstance()->pauseViewVideos();
     Window::getInstance()->stopInfoPopup();
 
     HelpStyle style;
@@ -79,7 +79,7 @@ bool MediaViewer::startMediaViewer(FileData* game)
     mEntryCount = std::to_string(mImages.size() + (mVideo == nullptr ? 0 : 1));
 
     mMediaType =
-        std::make_unique<TextComponent>((mHasVideo ? "VIDEO" : mImageFiles[0].second.mediaType),
+        std::make_unique<TextComponent>((mHasVideo ? _("VIDEO") : mImageFiles[0].second.mediaType),
                                         Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
     mMediaType->setOrigin(0.0f, 0.5f);
 
@@ -246,11 +246,11 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
 std::vector<HelpPrompt> MediaViewer::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
-    prompts.push_back(HelpPrompt("left/right", "browse"));
+    prompts.push_back(HelpPrompt("left/right", _("browse")));
     if (mHasManual)
-        prompts.push_back(HelpPrompt("up", "pdf manual"));
-    prompts.push_back(HelpPrompt("lt", "first"));
-    prompts.push_back(HelpPrompt("rt", "last"));
+        prompts.push_back(HelpPrompt("up", _("pdf manual")));
+    prompts.push_back(HelpPrompt("lt", _("first")));
+    prompts.push_back(HelpPrompt("rt", _("last")));
 
     return prompts;
 }
@@ -280,34 +280,34 @@ void MediaViewer::findMedia()
     }
 
     if (!mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("SCREENSHOT", false)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo(_("SCREENSHOT"), false)));
         mScreenshotIndex = 0;
     }
 
     if ((mediaFile = mGame->getCoverPath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("BOX COVER", true)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo(_("BOX COVER"), true)));
 
     if ((mediaFile = mGame->getBackCoverPath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("BOX BACK COVER", true)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo(_("BOX BACK COVER"), true)));
 
     if ((mediaFile = mGame->getTitleScreenPath()) != "") {
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("TITLE SCREEN", false)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo(_("TITLE SCREEN"), false)));
         mTitleScreenIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
     if (mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("SCREENSHOT", false)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo(_("SCREENSHOT"), false)));
         mScreenshotIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
     if ((mediaFile = mGame->getFanArtPath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("FAN ART", true)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo(_("FAN ART"), true)));
 
     if ((mediaFile = mGame->getMiximagePath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("MIXIMAGE", true)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo(_("MIXIMAGE"), true)));
 
     if ((mediaFile = mGame->getCustomImagePath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("CUSTOM", true)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo(_("CUSTOM"), true)));
 
     if (!mImageFiles.empty())
         mHasImages = true;
@@ -406,7 +406,7 @@ void MediaViewer::showPrevious()
     }
     else if (mCurrentImageIndex == 0 && mHasVideo) {
         mDisplayingImage = false;
-        mMediaType->setText("VIDEO");
+        mMediaType->setText(_("VIDEO"));
         playVideo();
         return;
     }
@@ -425,7 +425,8 @@ void MediaViewer::showFirst()
         return;
 
     mCurrentImageIndex = 0;
-    mMediaType->setText((mHasVideo ? "VIDEO" : mImageFiles[mCurrentImageIndex].second.mediaType));
+    mMediaType->setText(
+        (mHasVideo ? _("VIDEO") : mImageFiles[mCurrentImageIndex].second.mediaType));
 
     if (mHasVideo) {
         mDisplayingImage = false;

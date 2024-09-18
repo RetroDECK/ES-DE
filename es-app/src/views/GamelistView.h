@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GamelistView.h
 //
 //  Main gamelist logic.
@@ -23,6 +23,7 @@ public:
     // Called when a FileData* is added, has its metadata changed, or is removed.
     void onFileChanged(FileData* file, bool reloadGamelist) override;
     void onShow() override;
+    void onHide() override;
     void onTransition() override;
 
     void preloadGamelist() { updateView(CursorState::CURSOR_STOPPED); }

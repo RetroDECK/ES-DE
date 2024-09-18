@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  SystemData.h
 //
 //  Provides data structures for the game systems and populates and indexes them based

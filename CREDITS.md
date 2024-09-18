@@ -15,6 +15,37 @@ Alec Lofquist
 
 Nils Bonenberger
 
+# Translations
+
+**English (United Kingdom)** \
+Weestuarty \
+**German** \
+Thorsten \
+Pest \
+**Spanish (Spain)** \
+Dani (stshunz) \
+**French** \
+Fredy27 (neuromancer974) \
+**Italian** \
+Viler \
+**Polish** \
+kycho \
+**Portuguese (Brazil)** \
+MrVictorFull \
+**Romanian** \
+SilverGreen93 \
+**Russian** \
+Lulzee \
+**Swedish** \
+Leon Styhre \
+**Japanese** \
+冰棍 \
+**Korean** \
+wakeboxer \
+**Simplified Chinese** \
+邻家小熊 \
+冰棍
+
 # Licenses
 
 Please find the individual license files inside the [licenses](https://gitlab.com/es-de/emulationstation-de/-/tree/master/licenses) directory. There is also additional license information in the headers of most source files.
@@ -42,8 +73,17 @@ http://glew.sourceforge.net
 GLM \
 https://github.com/g-truc/glm
 
+HarfBuzz \
+https://harfbuzz.github.io
+
+ICU \
+https://icu.unicode.org
+
 libgit2 \
 https://libgit2.org
+
+libintl (gettext) \
+https://www.gnu.org/software/gettext
 
 libvpx \
 https://github.com/webmproject/libvpx
@@ -109,10 +149,10 @@ https://fontawesome.com
 GNU FreeFont (FreeMono) \
 https://www.gnu.org/software/freefont
 
-Nanum font \
-https://hangeul.naver.com
+Nanum Square Neo font \
+https://campaign.naver.com/nanumsquare_neo
 
-Noto Emoji \
+Noto Emoji font \
 https://fonts.google.com/noto/specimen/Noto+Emoji
 
 Ubuntu font \

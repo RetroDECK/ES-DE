@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  PlatformId.h
 //
 //  Index of all supported systems/platforms.

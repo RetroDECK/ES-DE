@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ShaderOpenGL.cpp
 //
 //  OpenGL / OpenGL ES shader functions.
@@ -273,11 +273,11 @@ void ShaderOpenGL::printShaderInfoLog(GLuint shaderID, GLenum shaderType, bool e
         int maxLength;
 
         glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &maxLength);
-        std::vector<char> infoLog(maxLength);
 
-        if (infoLog.size() == 0)
+        if (maxLength == 0)
             return;
 
+        std::vector<char> infoLog(maxLength);
         glGetShaderInfoLog(shaderID, maxLength, &logLength, &infoLog.front());
 
         if (logLength > 0) {

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  MameNames.h
 //
 //  Provides expanded game names based on short MAME name arguments. Also contains
@@ -27,7 +27,7 @@ public:
 
     std::string getRealName(const std::string& mameName)
     {
-        std::string name = mNamePairs[mameName];
+        std::string name {mNamePairs[mameName]};
         if (name == "")
             return mameName;
         else

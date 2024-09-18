@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GamelistFileParser.cpp
 //
 //  Parses and updates the gamelist.xml files.
@@ -59,15 +59,20 @@ namespace GamelistFileParser
             if (found)
                 treeNode = children.at(key);
 
+            if (treeNode->getNoLoad())
+                return treeNode;
+
             // This is the end.
             if (path_it == --pathList.end()) {
                 if (found)
                     return treeNode;
 
                 if (type == FOLDER) {
-                    LOG(LogWarning) << "A folder defined in gamelist.xml does not exist or "
-                                       "contains no valid games: \""
-                                    << path << "\"";
+                    if (!Utils::FileSystem::exists(path + "/noload.txt")) {
+                        LOG(LogWarning) << "A folder defined in gamelist.xml does not exist or "
+                                           "contains no valid games: \""
+                                        << path << "\"";
+                    }
                     return nullptr;
                 }
 
@@ -132,12 +137,21 @@ namespace GamelistFileParser
         if (!Utils::FileSystem::exists(xmlpath)) {
             LOG(LogDebug) << "GamelistFileParser::parseGamelist(): System \"" << system->getName()
                           << "\" does not have a gamelist.xml file";
+            // Get rid of any orphaned noload.txt folder entries.
+            for (auto child : system->getRootFolder()->getChildrenRecursive()) {
+                if (child->getNoLoad())
+                    delete child;
+            }
             return;
         }
 
         if (Utils::FileSystem::getFileSize(xmlpath) == 0) {
             LOG(LogWarning) << "GamelistFileParser::parseGamelist(): System \"" << system->getName()
                             << "\" has an empty gamelist.xml file";
+            for (auto child : system->getRootFolder()->getChildrenRecursive()) {
+                if (child->getNoLoad())
+                    delete child;
+            }
             return;
         }
 
@@ -231,6 +245,9 @@ namespace GamelistFileParser
 
                 FileData* file {findOrCreateFile(system, path, type)};
 
+                if (file != nullptr && file->getNoLoad())
+                    continue;
+
                 // Don't load entries with the wrong type. This should very rarely (if ever) happen.
                 if (file != nullptr && ((tag == "game" && file->getType() == FOLDER) ||
                                         (tag == "folder" && file->getType() == GAME))) {
@@ -240,13 +257,15 @@ namespace GamelistFileParser
                 }
 
                 if (!file) {
+                    if (!Utils::FileSystem::exists(path + "/noload.txt")) {
 #if defined(_WIN64)
-                    LOG(LogWarning)
-                        << "Couldn't process \"" << Utils::String::replace(path, "/", "\\")
-                        << "\", skipping entry";
+                        LOG(LogWarning)
+                            << "Couldn't process \"" << Utils::String::replace(path, "/", "\\")
+                            << "\", skipping entry";
 #else
-                    LOG(LogWarning) << "Couldn't process \"" << path << "\", skipping entry";
+                        LOG(LogWarning) << "Couldn't process \"" << path << "\", skipping entry";
 #endif
+                    }
                     continue;
                 }
                 else if (!file->isArcadeAsset()) {
@@ -295,6 +314,11 @@ namespace GamelistFileParser
                         delete file;
                     }
                 }
+            }
+            // Get rid of any orphaned noload.txt folder entries.
+            for (auto child : system->getRootFolder()->getChildrenRecursive()) {
+                if (child->getNoLoad())
+                    delete child;
             }
         }
     }

@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  CECInput.cpp
 //
 //  CEC (Consumer Electronics Control) input.

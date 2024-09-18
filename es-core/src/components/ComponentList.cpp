@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ComponentList.cpp
 //
 //  Used to lay out and navigate lists in GUI menus.
@@ -9,6 +9,7 @@
 #include "components/ComponentList.h"
 
 #include "resources/Font.h"
+#include "utils/LocalizationUtil.h"
 
 #define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
@@ -381,6 +382,10 @@ void ComponentList::updateElementSize(const ComponentListRow& row)
             width -= it->component->getSize().x;
     }
 
+    // This can happen if the element has zero width, or close to zero width.
+    if (width < 0.0f)
+        width = 0.0f;
+
     // Redistribute the "unused" width equally among the components if resizeWidth is set to true.
     width = width / resizeVec.size();
     for (auto it = resizeVec.cbegin(); it != resizeVec.cend(); ++it)
@@ -412,7 +417,7 @@ std::vector<HelpPrompt> ComponentList::getHelpPrompts()
             }
         }
         if (addMovePrompt)
-            prompts.push_back(HelpPrompt("up/down", "choose"));
+            prompts.push_back(HelpPrompt("up/down", _("choose")));
     }
 
     return prompts;

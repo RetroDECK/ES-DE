@@ -161,8 +161,14 @@ if(WIN32)
                   ../freetype.dll
                   ../git2.dll
                   ../glew32.dll
+                  ../harfbuzz.dll
+                  ../icudt75.dll
+                  ../icuin75.dll
+                  ../icuuc75.dll
                   ../libcrypto-3-x64.dll
                   ../libcurl-x64.dll
+                  ../libiconv-2.dll
+                  ../libintl-8.dll
                   ../libssl-3-x64.dll
                   ../lunasvg.dll
                   ../pugixml.dll
@@ -236,6 +242,16 @@ elseif(APPLE)
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libgit2.1.7.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libharfbuzz.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libicudata.75.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libicui18n.75.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libicuuc.75.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libintl.8.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libjpeg.62.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libopenjp2.7.dylib
@@ -255,10 +271,27 @@ elseif(APPLE)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de DESTINATION ../Resources/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de DESTINATION ../Resources/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION ../Resources)
+elseif(HAIKU)
+    install(TARGETS es-de RUNTIME DESTINATION apps)
+    install(TARGETS es-pdf-convert RUNTIME DESTINATION apps)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/es-de.6.gz
+        DESTINATION documentation/man/man6)
+    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
+        DESTINATION data/es-de)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
+        DESTINATION data/es-de)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/linear-es-de
+        DESTINATION data/es-de/themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de
+        DESTINATION data/es-de/themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de
+        DESTINATION data/es-de/themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
+        DESTINATION data/es-de)
 elseif(NOT ANDROID)
     install(TARGETS es-de RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     install(TARGETS es-pdf-convert RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-    if(CMAKE_SYSTEM_NAME MATCHES Linux)
+    if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/es-de.6.gz
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man6)
     else()
@@ -306,7 +339,7 @@ elseif(WIN32)
 else()
     set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 endif()
-set(CPACK_PACKAGE_VENDOR "Leon Styhre")
+set(CPACK_PACKAGE_VENDOR "Northwestern Software AB")
 
 # Use the shorter x64 descriptor for the x86_64/AMD64 architecture.
 if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64 OR CMAKE_SYSTEM_PROCESSOR MATCHES AMD64)
@@ -352,7 +385,7 @@ else()
         set(CPACK_GENERATOR DEB)
     endif()
     set(CPACK_DEBIAN_FILE_NAME es-de_${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.deb)
-    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Leon Styhre <info@es-de.org>")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Leon Styhre <leon.styhre@nw-soft.com>")
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE https://es-de.org)
     set(CPACK_DEBIAN_PACKAGE_SECTION games)
     set(CPACK_DEBIAN_PACKAGE_PRIORITY optional)

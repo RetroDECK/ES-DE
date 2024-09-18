@@ -17,10 +17,8 @@
         <rule type="corepath">
             <!-- Compiled from source -->
             <entry>~/.config/retroarch/cores</entry>
-            <!-- FreeBSD and OpenBSD repository -->
+            <!-- FreeBSD repository -->
             <entry>/usr/local/lib/libretro</entry>
-            <!-- NetBSD repository -->
-            <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
     <emulator name="ADVANCEMAME">
@@ -239,6 +237,15 @@
             <entry>~/bin/hypseus-singe/hypseus.bin</entry>
         </rule>
     </emulator>
+    <emulator name="IZAPPLE2">
+        <!-- Apple II emulator izapple2 -->
+        <rule type="staticpath">
+            <entry>~/Applications/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/.local/share/applications/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/.local/bin/izapple2/izapple2sdl_linux_amd64</entry>
+            <entry>~/bin/izapple2/izapple2sdl_linux_amd64</entry>
+        </rule>
+    </emulator>
     <emulator name="LIGHTSPARK">
         <!-- Adobe Flash player Lightspark -->
         <rule type="systempath">
@@ -254,6 +261,7 @@
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="systempath">
+            <entry>lime3ds</entry>
             <entry>lime3ds-gui</entry>
         </rule>
     </emulator>
@@ -313,6 +321,12 @@
             <entry>nestopia</entry>
         </rule>
     </emulator>
+    <emulator name="NOODS">
+        <!-- Nintendo DS and Game Boy Advance emulator NooDS -->
+        <rule type="systempath">
+            <entry>noods</entry>
+        </rule>
+    </emulator>
     <emulator name="OPENMSX">
         <!-- MSX home computer emulator openMSX -->
         <rule type="systempath">
@@ -359,6 +373,7 @@
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="systempath">
+            <entry>ppsspp</entry>
             <entry>ppsspp-emu.ppsspp-sdl</entry>
             <entry>PPSSPPSDL</entry>
             <entry>PPSSPPQt</entry>
@@ -441,6 +456,7 @@
         <rule type="systempath">
             <entry>Ryujinx</entry>
             <entry>Ryujinx.Ava</entry>
+            <entry>ryujinx</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/publish/Ryujinx</entry>

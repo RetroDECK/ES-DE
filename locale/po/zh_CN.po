@@ -1,0 +1,2791 @@
+# ES-DE Frontend translation strings.
+# Copyright (c) 2024 Northwestern Software AB
+# This file is distributed under the same license as the ES-DE Frontend package.
+# Northwestern Software <info@es-de.org>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ES-DE Frontend\n"
+"Report-Msgid-Bugs-To: info@es-de.org\n"
+"POT-Creation-Date: 2024-09-04 17:44+0200\n"
+"PO-Revision-Date: 2024-09-02 00:19+0800\n"
+"Last-Translator: Northwestern Software <info@es-de.org>\n"
+"Language-Team: 简体中文 <info@es-de.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.4.2\n"
+
+msgid "Network error (status:"
+msgstr "网络错误（状态："
+
+msgid "New prerelease available:"
+msgstr "有新预发布版本："
+
+msgid "New release available:"
+msgstr "新版本发布："
+
+msgid "For more information visit"
+msgstr "更多信息请访问"
+
+msgid "No Entries Found"
+msgstr "未找到任何条目"
+
+msgctxt "theme"
+msgid "all"
+msgstr "所有"
+
+msgctxt "theme"
+msgid "all games"
+msgstr "所有游戏"
+
+msgctxt "theme"
+msgid "recent"
+msgstr "最近"
+
+msgctxt "theme"
+msgid "last played"
+msgstr "最后游玩的游戏"
+
+msgctxt "theme"
+msgid "favorites"
+msgstr "喜爱"
+
+msgctxt "theme"
+msgid "collections"
+msgstr "收藏"
+
+msgid "ScreenScraper error:"
+msgstr "ScreenScraper 错误："
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper：用户名或密码错误"
+
+msgid "Network error:"
+msgstr "网络错误："
+
+msgid "Media directory does not exist and can't be created."
+msgstr "媒体目录不存在，无法创建。"
+
+msgid "Permission problems?"
+msgstr "可能是权限问题？"
+
+msgid "Failed to open path for writing media file."
+msgstr "无法打开用于写入媒体文件的路径。"
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr "无法保存媒体文件，权限问题还是磁盘已满？"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr "无法保存调整大小后的图像，可能是权限问题或磁盘已满？"
+
+msgctxt "metadata"
+msgid "NAME"
+msgstr "名称"
+
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "请输入名称"
+
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "排序名称"
+
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "请输入排序名称"
+
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "自定义收藏排序名称"
+
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "请输入收藏排序名称"
+
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "描述"
+
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "请输入描述"
+
+msgctxt "metadata"
+msgid "RATING"
+msgstr "评分"
+
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "发行日期"
+
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "开发商"
+
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "请输入开发商"
+
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "发行商"
+
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "请输入发行商"
+
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "类型"
+
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "请输入类型"
+
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "玩家数"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "请输入玩家数"
+
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "喜爱"
+
+msgctxt "metadata"
+msgid "COMPLETED"
+msgstr "已完成"
+
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "儿童游戏"
+
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "儿童游戏（仅影响徽章）"
+
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "隐藏"
+
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "损坏/无法使用"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "不计入游戏统计"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "不被多抓取器处理"
+
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "隐藏元数据字段"
+
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "游玩次数"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "请输入游戏次数"
+
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "控制器"
+
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "选择控制器"
+
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "备用模拟器"
+
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "请选择备用模拟器"
+
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "文件夹链接"
+
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "请选择文件夹链接"
+
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "最后游玩"
+
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "请输入最后游玩日期"
+
+msgid "MAIN MENU"
+msgstr "主菜单"
+
+msgid "SCRAPER"
+msgstr "刮削/抓取"
+
+msgid "UI SETTINGS"
+msgstr "界面设置"
+
+msgid "SOUND SETTINGS"
+msgstr "声音设置"
+
+msgid "INPUT DEVICE SETTINGS"
+msgstr "输入设备设置"
+
+msgid "GAME COLLECTION SETTINGS"
+msgstr "游戏收藏设置"
+
+msgid "OTHER SETTINGS"
+msgstr "其他设置"
+
+msgid "UTILITIES"
+msgstr "工具"
+
+msgid "QUIT ES-DE"
+msgstr "退出ES-DE"
+
+msgid "QUIT"
+msgstr "退出"
+
+msgid "THEME"
+msgstr "主题"
+
+msgid "THEME DOWNLOADER"
+msgstr "主题下载器"
+
+msgid "THEME VARIANT"
+msgstr "主题变体"
+
+msgid "NONE DEFINED"
+msgstr "未定义"
+
+msgid "THEME COLOR SCHEME"
+msgstr "主题配色方案"
+
+msgid "THEME FONT SIZE"
+msgstr "主题字体大小"
+
+msgid "THEME ASPECT RATIO"
+msgstr "主题宽高比"
+
+msgid "THEME TRANSITIONS"
+msgstr "主题过渡"
+
+msgid "AUTOMATIC"
+msgstr "自动"
+
+msgid "THEME PROFILE"
+msgstr "主题配置"
+
+msgid "INSTANT (BUILT-IN)"
+msgstr "即时（内置）"
+
+msgid "SLIDE (BUILT-IN)"
+msgstr "滑动（内置）"
+
+msgid "FADE (BUILT-IN)"
+msgstr "淡入淡出（内置）"
+
+msgid "THEME LANGUAGE"
+msgstr "主题语言"
+
+msgid "APPLICATION LANGUAGE"
+msgstr "应用程序语言"
+
+msgid "QUICK SYSTEM SELECT"
+msgstr "快速切换平台快捷键"
+
+msgid "LEFT/RIGHT OR SHOULDERS"
+msgstr "左/右肩键"
+
+msgid "LEFT/RIGHT OR TRIGGERS"
+msgstr "左/右扳机键"
+
+msgid "SHOULDERS"
+msgstr "肩键"
+
+msgid "TRIGGERS"
+msgstr "扳机键"
+
+msgid "LEFT/RIGHT"
+msgstr "左/右键"
+
+msgid "DISABLED"
+msgstr "禁用"
+
+msgid "GAMELIST ON STARTUP"
+msgstr "启动时显示游戏列表"
+
+msgid "NONE"
+msgstr "无"
+
+msgid "SYSTEMS SORTING"
+msgstr "平台分类"
+
+msgid "FULL NAMES OR CUSTOM"
+msgstr "完整名称或自定义"
+
+msgid "RELEASE YEAR"
+msgstr "发行年份"
+
+msgid "MANUFACTURER, RELEASE YEAR"
+msgstr "开发商，发行年份"
+
+msgid "HW TYPE, RELEASE YEAR"
+msgstr "设备类型，发布年份"
+
+msgid "MANUFACTURER, HW TYPE, REL. YEAR"
+msgstr "开发商，设备类型，发行年份"
+
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "游戏默认排序方式"
+
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "游戏默认排序方式"
+
+msgid "MENU COLOR SCHEME"
+msgstr "菜单配色方案"
+
+msgid "DARK"
+msgstr "暗黑"
+
+msgid "DARK AND RED"
+msgstr "暗红"
+
+msgid "LIGHT"
+msgstr "明亮"
+
+msgid "MENU OPENING ANIMATION"
+msgstr "菜单展开动画"
+
+msgid "SCALE-UP"
+msgstr "放大"
+
+msgid "LAUNCH SCREEN DURATION"
+msgstr "启动画面时长"
+
+msgid "NORMAL"
+msgstr "正常"
+
+msgid "BRIEF"
+msgstr "短"
+
+msgid "LONG"
+msgstr "长"
+
+msgid "UI MODE"
+msgstr "界面显示模式"
+
+msgid "FULL"
+msgstr "完整模式"
+
+msgid "KIOSK"
+msgstr "安全模式"
+
+msgid "KID"
+msgstr "儿童模式"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"这将更改用户界面为限制模式\n"
+"'安全'\n"
+"这样会隐藏大多数菜单选项\n"
+"要解锁并返回到完整的用户界面，请输入此代码：\n"
+"%s\n"
+"\n"
+"您是否要继续？"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"这将更改用户界面为限制模式\n"
+"'儿童'\n"
+"这仅启用已被标记为适合儿童的游戏\n"
+"要解锁并返回到完整的用户界面，请输入此代码：\n"
+"%s\n"
+"\n"
+"您是否要继续？"
+
+msgid "YES"
+msgstr "是"
+
+msgid "NO"
+msgstr "否"
+
+msgid "RANDOM ENTRY BUTTON"
+msgstr "随机选择按键"
+
+msgid "GAMES ONLY"
+msgstr "仅游戏"
+
+msgid "GAMES AND SYSTEMS"
+msgstr "游戏和平台"
+
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "媒体播放器设置"
+
+msgid "SCREENSAVER SETTINGS"
+msgstr "屏保设置"
+
+msgid "ENABLE THEME VARIANT TRIGGERS"
+msgstr "启用主题变体触发器"
+
+msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
+msgstr "当菜单打开时模糊背景"
+
+msgid "SORT FOLDERS ON TOP OF GAMELISTS"
+msgstr "在游戏列表顶部对文件夹进行排序"
+
+msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+msgstr "将喜爱的游戏排在非喜爱的游戏之上"
+
+msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
+msgstr "为喜爱的游戏添加星号标记"
+
+msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+msgstr "启用文本列表快速滚动覆盖"
+
+msgid "ENABLE VIRTUAL KEYBOARD"
+msgstr "启用虚拟键盘"
+
+msgid "ENABLE TOGGLE FAVORITES BUTTON"
+msgstr "启用喜爱切换按键"
+
+msgid "ENABLE GAMELIST FILTERS"
+msgstr "启用游戏列表过滤器"
+
+msgid "DISPLAY ON-SCREEN HELP"
+msgstr "显示屏幕帮助"
+
+msgid "SYSTEM VOLUME"
+msgstr "系统音量"
+
+msgid "NAVIGATION SOUNDS VOLUME"
+msgstr "导航声音音量"
+
+msgid "VIDEO PLAYER VOLUME"
+msgstr "视频播放器音量"
+
+msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+msgstr "播放游戏列表和系统视图视频的音频"
+
+msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+msgstr "播放媒体查看器视频的音频"
+
+msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+msgstr "播放屏保视频的音频"
+
+msgid "ENABLE NAVIGATION SOUNDS"
+msgstr "启用导航声音"
+
+msgid "CONTROLLER TYPE"
+msgstr "控制器类型"
+
+msgid "TOUCH OVERLAY SIZE"
+msgstr "虚拟按键大小"
+
+msgid "MEDIUM"
+msgstr "中"
+
+msgid "LARGE"
+msgstr "大"
+
+msgid "SMALL"
+msgstr "小"
+
+msgid "EXTRA SMALL"
+msgstr "极小"
+
+msgid "TOUCH OVERLAY OPACITY"
+msgstr "虚拟按键不透明度"
+
+msgid "LOW"
+msgstr "低"
+
+msgid "VERY LOW"
+msgstr "很低"
+
+msgid "TOUCH OVERLAY FADE-OUT TIME"
+msgstr "虚拟按键淡出时间"
+
+msgid "ENABLE TOUCH OVERLAY"
+msgstr "启用虚拟按键"
+
+msgid ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+msgstr ""
+"除非您正在使用控制器，否则请不要禁用虚拟按键，否则您将无法再访问该应用。如果"
+"发生这种情况，您需要暂时插入一个控制器或键盘来重新启用此设置，或者您可以在"
+"Android应用设置中清除ES-DE存储，以强制配置器在下次启动时运行"
+
+msgid "OK"
+msgstr "好"
+
+msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+msgstr "仅接受来自第一个控制器的输入"
+
+msgid "SWAP THE A/B AND X/Y BUTTONS"
+msgstr "交换 A/B 和 X/Y 按键"
+
+msgid "IGNORE KEYBOARD INPUT"
+msgstr "忽略键盘输入"
+
+msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
+msgstr "配置键盘和控制器"
+
+msgid ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
+"HELP PROMPTS)"
+msgstr ""
+"键盘和控制器是自动配置的，但使用此工具您可以覆盖默认的按键映射（这不会影响帮"
+"助提示）"
+
+msgid "PROCEED"
+msgstr "继续"
+
+msgid "CANCEL"
+msgstr "取消"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "备用模拟器"
+
+msgid "GAME MEDIA DIRECTORY"
+msgstr "游戏媒体目录"
+
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr "请输入游戏媒体目录"
+
+msgid "Default directory:"
+msgstr "默认目录："
+
+msgid "SAVE"
+msgstr "保存"
+
+msgid "SAVE CHANGES?"
+msgstr "要保存更改吗？"
+
+msgid "load default directory"
+msgstr "加载默认目录"
+
+msgid "VRAM LIMIT"
+msgstr "显存限制"
+
+msgid "ANTI-ALIASING (MSAA)"
+msgstr "抗锯齿 (MSAA)"
+
+msgid "2X"
+msgstr "2倍"
+
+msgid "4X"
+msgstr "4倍"
+
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr "抗锯齿 (MSAA)（需要重启）"
+
+msgid "DISPLAY/MONITOR INDEX"
+msgstr "显示/监视器索引"
+
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr "显示/监控索引（需要重新启动）"
+
+msgid "ROTATE SCREEN"
+msgstr "屏幕旋转"
+
+msgid "90 DEGREES"
+msgstr "90度"
+
+msgid "180 DEGREES"
+msgstr "180度"
+
+msgid "270 DEGREES"
+msgstr "270度"
+
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr "屏幕旋转（需要重新启动）"
+
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr "键盘退出快捷键"
+
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "何时保存游戏元数据"
+
+msgid "ALWAYS"
+msgstr "总是"
+
+msgid "ON EXIT"
+msgstr "退出时"
+
+msgid "NEVER"
+msgstr "从不"
+
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "何时保存游戏元数据"
+
+msgid "APPLICATION UPDATES"
+msgstr "应用程序更新"
+
+msgid "DAILY"
+msgstr "平时"
+
+msgid "WEEKLY"
+msgstr "每周"
+
+msgid "MONTHLY"
+msgstr "每月"
+
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "检查应用程序更新"
+
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr "在更新检查中包含预发布版本"
+
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr "隐藏任务栏（需要重启）"
+
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr "在后台运行（游戏启动时）"
+
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr "视频硬件解码（实验性）"
+
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr "将视频帧率提升至 60 FPS"
+
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr "为每个游戏启用备用模拟器"
+
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr "显示隐藏文件和文件夹"
+
+msgid "SHOW HIDDEN GAMES"
+msgstr "显示隐藏的游戏"
+
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "启用自定义事件脚本"
+
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr "仅显示 gamelist.xml 文件中的游戏"
+
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr "删除多余的 MAME 名称信息（需要重新启动）"
+
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr "禁用桌面组合（需要重启）"
+
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr "返回键/向后滑动退出应用程序"
+
+msgid "DEBUG MODE"
+msgstr "调试模式"
+
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr "显示 GPU 统计信息"
+
+msgid "ENABLE MENU IN KID MODE"
+msgstr "在儿童模式下启用菜单"
+
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr "显示退出菜单（包含重启和关机选项）"
+
+msgid "ORPHANED DATA CLEANUP"
+msgstr "数据清理"
+
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr "创建/更新平台目录"
+
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+"这将在您的 ROM 文件夹中创建所有游戏平台目录，并且还将更新所有 systeminfo.txt "
+"文件。这是一个安全的操作，不会删除或修改您的游戏文件。为了减少应用程序启动时"
+"间，建议在运行此实用程序后删除不需要的平台目录"
+
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr "平台目录已成功创建"
+
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+"创建平台目录时出错，可能是权限问题或着磁盘空间已满？请参阅日志文件了解更多详"
+"细信息"
+
+msgid "RESCAN ROM DIRECTORY"
+msgstr "重新扫描 ROM 目录"
+
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr "这将重新扫描你的 ROM 目录以查找更改，例如添加或删除的游戏和平台"
+
+msgid "REALLY QUIT?"
+msgstr "真的要退出吗？"
+
+msgid "REALLY REBOOT?"
+msgstr "真的要重启吗？"
+
+msgid "REBOOT SYSTEM"
+msgstr "重启"
+
+msgid "REALLY POWER OFF?"
+msgstr "真的要关机吗？"
+
+msgid "POWER OFF SYSTEM"
+msgstr "关机"
+
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "媒体播放器设置"
+
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
+msgstr "屏保设置"
+
+msgid "choose"
+msgstr "选择"
+
+msgid "select"
+msgstr "确认"
+
+msgid "close menu"
+msgstr "关闭菜单"
+
+msgid "REFINE SEARCH"
+msgstr "完善搜索"
+
+msgid "refine search"
+msgstr "完善搜索"
+
+msgid "cancel"
+msgstr "取消"
+
+msgid "back (cancel)"
+msgstr "返回（取消）"
+
+msgid "SCRAPE FROM"
+msgstr "抓取源"
+
+msgid "SCRAPE THESE GAMES"
+msgstr "抓取哪些游戏"
+
+msgid "ALL GAMES"
+msgstr "所有游戏"
+
+msgid "FAVORITE GAMES"
+msgstr "喜爱的游戏"
+
+msgid "NO METADATA"
+msgstr "无元数据的游戏"
+
+msgid "NO GAME IMAGE"
+msgstr "无图像的游戏"
+
+msgid "NO GAME VIDEO"
+msgstr "无视频的游戏"
+
+msgid "FOLDERS ONLY"
+msgstr "仅限文件夹内的游戏"
+
+msgid "SCRAPE THESE SYSTEMS"
+msgstr "抓取哪些平台"
+
+msgid "ACCOUNT SETTINGS"
+msgstr "帐号设置"
+
+msgid "CONTENT SETTINGS"
+msgstr "显示内容设置"
+
+msgid "MIXIMAGE SETTINGS"
+msgstr "混合图像设置"
+
+msgid "START"
+msgstr "开始"
+
+msgid "start scraper"
+msgstr "开始刮削/抓取"
+
+msgid "BACK"
+msgstr "返回"
+
+msgid "back"
+msgstr "返回"
+
+msgid "SCREENSCRAPER USERNAME"
+msgstr "ScreenScraper用户名"
+
+msgid "SCREENSCRAPER PASSWORD"
+msgstr "ScreenScraper密码"
+
+msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
+msgstr "使用此帐户进行抓取"
+
+msgid "GAME NAMES"
+msgstr "游戏名称"
+
+msgid "RATINGS"
+msgstr "评分"
+
+msgid "OTHER METADATA"
+msgstr "其他元数据"
+
+msgid "VIDEOS"
+msgstr "视频"
+
+msgid "SCREENSHOT IMAGES"
+msgstr "截图图像"
+
+msgid "TITLE SCREEN IMAGES"
+msgstr "标题图像"
+
+msgid "BOX COVER IMAGES"
+msgstr "包装盒前盖图像"
+
+msgid "BOX BACK COVER IMAGES"
+msgstr "包装盒后盖图像"
+
+msgid "MARQUEE (WHEEL) IMAGES"
+msgstr "游戏标志图像"
+
+msgid "3D BOX IMAGES"
+msgstr "3D盒子图像"
+
+msgid "PHYSICAL MEDIA IMAGES"
+msgstr "实体卡带图像"
+
+msgid "FAN ART IMAGES"
+msgstr "粉丝自制图像"
+
+msgid "GAME MANUALS"
+msgstr "游戏手册"
+
+msgid "MIXIMAGE RESOLUTION"
+msgstr "混合图像分辨率"
+
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "水平截图适配"
+
+msgid "CONTAIN"
+msgstr "适应"
+
+msgid "CROP"
+msgstr "裁剪"
+
+msgid "STRETCH"
+msgstr "拉伸"
+
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "水平截图适配"
+
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "垂直截图适配"
+
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "垂直截图适配"
+
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "截图宽高比阈值"
+
+msgid "HIGH"
+msgstr "高"
+
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "屏幕截图宽高比阈值"
+
+msgid "BLANK AREAS FILL COLOR"
+msgstr "空白区域填充颜色"
+
+msgid "BLACK"
+msgstr "黑色"
+
+msgid "FRAME"
+msgstr "带框"
+
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "截图缩放方式"
+
+msgid "SHARP"
+msgstr "锐利"
+
+msgid "SMOOTH"
+msgstr "平滑"
+
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "截图缩放方式"
+
+msgid "BOX SIZE"
+msgstr "盒子尺寸"
+
+msgid "PHYSICAL MEDIA SIZE"
+msgstr "实体卡带大小"
+
+msgid "GENERATE MIXIMAGES WHEN SCRAPING"
+msgstr "抓取时生成混合图像"
+
+msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
+msgstr "覆盖混合图像（抓取/离线生成器）"
+
+msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
+msgstr "从截图中移除黑边"
+
+msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
+msgstr "从截图中移除柱形黑边"
+
+msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
+msgstr "旋转水平方向的盒子"
+
+msgid "INCLUDE MARQUEE IMAGE"
+msgstr "包含游戏标志图像"
+
+msgid "INCLUDE BOX IMAGE"
+msgstr "包含盒子图像"
+
+msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
+msgstr "如果 3D 盒装封面缺失，则使用封面图片"
+
+msgid "INCLUDE PHYSICAL MEDIA IMAGE"
+msgstr "包括实体卡带图像"
+
+msgid "OFFLINE GENERATOR"
+msgstr "离线生成器"
+
+msgid ""
+"THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
+"PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
+msgstr ""
+"离线生成器使用与抓取工具相同的系统选择，因此请选择至少一个系统来生成图像"
+
+msgid "REGION"
+msgstr "元数据区域"
+
+msgid "EUROPE"
+msgstr "欧洲"
+
+msgid "JAPAN"
+msgstr "日本"
+
+msgid "USA"
+msgstr "美国"
+
+msgid "WORLD"
+msgstr "世界"
+
+msgid "PREFERRED LANGUAGE"
+msgstr "元数据首选语言"
+
+msgid "AUTOMATIC RETRIES ON ERROR"
+msgstr "发生错误时自动重试"
+
+msgid "RETRY ATTEMPT TIMER"
+msgstr "重新尝试定时器"
+
+msgid "HASH SEARCHES MAX FILE SIZE"
+msgstr "重试哈希值搜索的最大文件大小"
+
+msgid "OVERWRITE FILES AND DATA"
+msgstr "覆盖文件和数据"
+
+msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
+msgstr "使用文件哈希值搜索（非交互模式）"
+
+msgid "SEARCH USING METADATA NAMES"
+msgstr "使用元数据名称搜索"
+
+msgid "SCRAPE ACTUAL FOLDERS"
+msgstr "抓取实际文件夹"
+
+msgid "INTERACTIVE MODE"
+msgstr "交互模式"
+
+msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
+msgstr "自动接受单场游戏匹配"
+
+msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
+msgstr "尊重每个文件的抓取排除规则"
+
+msgid "EXCLUDE FOLDERS RECURSIVELY"
+msgstr "递归排除文件夹"
+
+msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
+msgstr "搜索时将下划线转换为空格"
+
+msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
+msgstr "自动抓取时删除搜索中的点"
+
+msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
+msgstr "启用回退到其他区域"
+
+msgid ""
+"THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
+msgstr "所选系统没有平台设置，结果可能不准确"
+
+msgid ""
+"AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
+"MAY BE INACCURATE"
+msgstr "您选择的系统中至少有一个没有设置平台，结果可能不准确"
+
+msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
+msgstr "请选择至少一个要抓取的平台"
+
+msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
+msgstr "请选择至少一种要抓取的内容类型"
+
+msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
+msgstr "所有游戏都经过过滤，无需抓取"
+
+msgid "HELP PROMPTS"
+msgstr "帮助提示"
+
+msgid "TOP"
+msgstr "顶部"
+
+msgid "BOTTOM"
+msgstr "底部"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "显示媒体类型"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "查看图像时保持视频运行"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "将视频拉伸至屏幕分辨率"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "渲染视频扫描线"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "渲染视频模糊"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "渲染屏幕截图和标题的扫描线"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "完成编辑 '%s' 收藏"
+
+msgid "SELECT COLLECTIONS"
+msgstr "选择收藏"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "游戏自动收藏"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "自定义游戏收藏"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "从主题创建新的自定义收藏"
+
+msgid "SELECT THEME FOLDER"
+msgstr "选择主题文件夹"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "创建新的自定义游戏收藏"
+
+msgid "NEW COLLECTION NAME"
+msgstr "新的收藏名称"
+
+msgid "CREATE"
+msgstr "创建"
+
+msgid "CREATE COLLECTION?"
+msgstr "创建游戏收藏？"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "删除自定义游戏收藏"
+
+msgid "COLLECTION TO DELETE"
+msgstr "收藏删除"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"这将永久删除收藏\n"
+" '%s'\n"
+"真的要删除吗？"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "自定义收藏分组"
+
+msgid "IF UNTHEMED"
+msgstr "如果没有主题"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "将喜爱的游戏排序在顶部以进行自定义收藏"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "显示自定义收藏的星形标记"
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr "屏保启动时间（分钟）"
+
+msgid "SCREENSAVER TYPE"
+msgstr "屏保类型"
+
+msgid "DIM"
+msgstr "暗淡"
+
+msgid "SLIDESHOW"
+msgstr "幻灯片"
+
+msgid "VIDEO"
+msgstr "视频"
+
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr "启用屏保控制"
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr "幻灯片屏保设置"
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr "视频屏保设置"
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr "幻灯片屏保"
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr "几秒后更换图像"
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr "仅包含喜爱的游戏"
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr "将图像拉伸至屏幕分辨率"
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr "显示游戏信息"
+
+msgid "RENDER SCANLINES"
+msgstr "渲染扫描线"
+
+msgid "USE CUSTOM IMAGES"
+msgstr "使用自定义图像"
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr "自定义图像目录递归搜索"
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr "自定义图像目录"
+
+msgid "VIDEO SCREENSAVER"
+msgstr "视频屏保"
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr "几秒后更换视频"
+
+msgid "RENDER BLUR"
+msgstr "渲染模糊"
+
+msgid "FILTER GAMELIST"
+msgstr "过滤游戏列表"
+
+msgid "RESET ALL FILTERS"
+msgstr "重置所有过滤器"
+
+msgid "GAME NAME"
+msgstr "游戏名称"
+
+msgid "APPLY CHANGES?"
+msgstr "真的要应用更改吗？"
+
+msgid "NOTHING TO FILTER"
+msgstr "无需过滤"
+
+msgid "LAUNCHING GAME"
+msgstr "启动游戏"
+
+msgid "CLOSE"
+msgstr "关闭"
+
+msgid "close"
+msgstr "关闭"
+
+msgid "DOWNLOADING THEMES LIST 100%"
+msgstr "正在下载主题列表 100%"
+
+msgid "THEME ALREADY UP TO DATE"
+msgstr "主题已是最新版本"
+
+msgid "THEME HAS BEEN UPDATED"
+msgstr "主题已更新"
+
+#, c-format
+msgid ""
+"COULDN'T RENAME DIRECTORY \"%s\"\n"
+"PERMISSION PROBLEMS?"
+msgstr ""
+"无法重命名目录 \"%s\"\n"
+"可能是权限问题？"
+
+msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
+msgstr "无法找到主题列表的配置文件"
+
+msgid ""
+"COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
+"REPOSITORY IS CORRUPT?"
+msgstr "无法解析主题列表配置文件，也许本地存储库已损坏？"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+"BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
+msgstr ""
+"似乎您没有运行最新的 ES-DE 版本，请先升级再继续，因为这些主题可能与您的版本不"
+"兼容"
+
+msgid "and"
+msgstr "和"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA THIS "
+"THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+"\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
+msgstr ""
+"似乎该主题是手动下载的，而不是通过此主题下载器下载的。需要重新下载，旧主题目"
+"录\"%s\"将重命名为\"%s_DISABLED\""
+
+msgid "DOWNLOADING THEME"
+msgstr "正在下载主题"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
+"DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
+msgstr ""
+"似乎该主题存储库已损坏，这可能是由于上次下载或更新中断造成的，例如 ES-DE 进程"
+"被终止。需要重新下载，旧主题目录\"%s\"将重命名为\"%s_CORRUPT_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
+"DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH "
+"DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
+"\"%s_DISABLED\""
+msgstr ""
+"这似乎是一个浅层存储库，这意味着它是使用此主题下载器以外的其他工具下载的。需"
+"要重新下载，旧主题目录\"%s\"将重命名为\"%s_DISABLED\""
+
+#, c-format
+msgid ""
+"THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
+"CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
+msgstr ""
+"主题存储库\"%s\"包含本地更改。继续覆盖您的更改或取消以跳过此主题的所有更新"
+
+msgid "UPDATING THEME"
+msgstr "正在更新主题"
+
+msgid "VARIANTS:"
+msgstr "变体数量："
+
+msgid "COLOR SCHEMES:"
+msgstr "配色方案数量："
+
+msgid "ASPECT RATIOS:"
+msgstr "长宽比数量："
+
+msgid "FONT SIZES:"
+msgstr "字体大小数量："
+
+msgid "INSTALLED"
+msgstr "已安装"
+
+msgid "MANUAL DOWNLOAD"
+msgstr "手册下载"
+
+msgid "CORRUPT"
+msgstr "损坏"
+
+msgid "SHALLOW"
+msgstr "浅"
+
+msgid "NOT INSTALLED (NEW)"
+msgstr "未安装（新）"
+
+msgid "NOT INSTALLED"
+msgstr "未安装"
+
+msgid "LOCAL CHANGES"
+msgstr "本地更改"
+
+msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
+msgstr "此主题将在不久的将来被删除"
+
+msgid "CREATED BY"
+msgstr "制作者"
+
+msgid "ERROR:"
+msgstr "错误："
+
+msgid "COULDN'T DOWNLOAD THEMES LIST"
+msgstr "无法下载主题列表"
+
+msgid "DOWNLOADING"
+msgstr "正在下载"
+
+msgid "DOWNLOADING THEMES LIST"
+msgstr "正在下载主题列表"
+
+msgid "THIS WILL COMPLETELY DELETE THE THEME"
+msgstr "这将彻底删除主题"
+
+msgid ""
+"THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
+msgstr "这将彻底删除主题，包括任何本地自定义内容"
+
+msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
+msgstr "无法删除主题，可能是权限问题？"
+
+msgid "THEME WAS DELETED"
+msgstr "主题已被删除"
+
+msgid "view screenshots"
+msgstr "查看屏幕截图"
+
+msgid "fetch updates"
+msgstr "获取更新"
+
+msgid "delete"
+msgstr "删除"
+
+msgid "download"
+msgstr "下载"
+
+msgid ""
+"IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
+"DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
+msgstr ""
+"主题列表存储库似乎已损坏，这可能是由于上次下载或更新中断造成的，例如 ES-DE 进"
+"程被终止。需要重新下载，旧目录\"themes-list\"将重命名为\"themes-"
+"list_CORRUPT_DISABLED\""
+
+msgid "UPDATING THEMES LIST"
+msgstr "正在更新主题列表"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
+"THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+"WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED "
+"FILES WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE "
+"THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
+"CORRUPTION."
+msgstr ""
+"看起来您是第一次使用主题下载器。因此将下载主题列表存储库，这将需要一些时间。"
+"但是，后续运行将快得多，因为只会获取新文件或修改过的文件。对于您下载的任何主"
+"题也是如此。请注意，您无法中止正在进行的下载，因为这可能会导致数据损坏。"
+
+msgid "RATING:"
+msgstr "评分："
+
+msgid "RELEASED:"
+msgstr "发行日期："
+
+msgid "DEVELOPER:"
+msgstr "开发商："
+
+msgid "PUBLISHER:"
+msgstr "发行商："
+
+msgid "GENRE:"
+msgstr "类型："
+
+msgid "PLAYERS:"
+msgstr "玩家数："
+
+msgid "NO GAMES FOUND"
+msgstr "未找到游戏"
+
+msgid "RETRY"
+msgstr "重试"
+
+msgid "SKIP"
+msgstr "跳过"
+
+msgid "Error downloading thumbnail:"
+msgstr "下载缩略图错误："
+
+msgid "SEARCH"
+msgstr "搜索"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "使用精确名称进行搜索？"
+
+msgid "skip"
+msgstr "跳过"
+
+msgid "accept result"
+msgstr "接受结果"
+
+msgid "SCRAPING IN PROGRESS"
+msgstr "抓取正在进行中"
+
+msgid "SYSTEM"
+msgstr "平台"
+
+msgid "skip game"
+msgstr "跳过游戏"
+
+msgid "STOP"
+msgstr "停止"
+
+msgid "stop"
+msgstr "停止"
+
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "游戏"
+
+#, c-format
+msgid "GAME %i OF %i"
+msgstr "第 %i 个，共 %i 个游戏"
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr "未抓取到游戏数据"
+
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "已成功抓取 %i 个游戏"
+
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "已跳过 %i 个游戏"
+
+msgid "GAMELIST OPTIONS"
+msgstr "游戏列表设置"
+
+msgid "JUMP TO..."
+msgstr "跳转到……"
+
+msgid "SORT GAMES BY"
+msgstr "对游戏进行排序"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "该平台没有游戏"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "添加/删除此收藏中的游戏"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "编辑此文件夹的元数据"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "编辑此游戏的元数据"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "输入文件夹（覆盖文件夹链接）"
+
+msgid "APPLY"
+msgstr "应用"
+
+msgid "apply"
+msgstr "应用"
+
+msgid "close (apply)"
+msgstr "关闭（应用）"
+
+msgid "close (cancel)"
+msgstr "关闭（取消）"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"这将删除所有找不到匹配游戏文件的媒体文件。这些文件将被移动到游戏媒体目录内的 "
+"cleanup 文件夹中。当您确定不再需要此文件夹时，您可以手动删除它。"
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"这将从您的 gamelist.xml 文件中删除所有找不到匹配游戏文件的条目。原始文件的备"
+"份将保存到 gamelists 目录内的 cleanup 文件夹中。当您确定不再需要此文件夹时，"
+"您可以手动删除它。"
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"这将从您的自定义收藏集配置文件中删除所有找不到匹配游戏文件的条目。原始文件的"
+"备份将保存到 collections 目录内的 cleanup 文件夹中。仅当前启用的收藏集将被处"
+"理。"
+
+msgid "NOT STARTED"
+msgstr "未开始"
+
+msgid "DESCRIPTION:"
+msgstr "描述："
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "删除的条目总数："
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "最后处理的平台："
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "最后一条错误信息："
+
+msgid "MEDIA"
+msgstr "媒体"
+
+msgid "start processing"
+msgstr "开始处理"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "正在运行媒体清理"
+
+msgid "stop processing"
+msgstr "停止处理"
+
+msgid "GAMELISTS"
+msgstr "游戏列表"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "运行游戏列表清理"
+
+msgid "COLLECTIONS"
+msgstr "收藏"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "收藏清理失败"
+
+msgid "There are no enabled custom collections"
+msgstr "未启用自定义收藏"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "运行收藏清理"
+
+msgid "PROCESSING"
+msgstr "正在处理"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "找到 flatten.txt 文件，正在跳过 \"%s\""
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "无法创建目标目录，可能是权限问题？"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "无法移动媒体文件，可能是权限问题？"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "无法解析 gamelist.xml 文件中的 \"%s\""
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "在文件 \"%s\" 中找不到游戏列表标签"
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr "无法删除临时游戏列表文件，可能是权限问题？"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr "无法写入临时游戏列表文件，可能是权限问题？"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr "无法创建备份目录，可能是权限问题？"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "无法移动旧的游戏列表文件，可能是权限问题？"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr "无法移动临时游戏列表文件，可能是权限问题？"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "找不到自定义收藏配置文件"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "无法打开自定义收藏配置文件"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr "无法删除临时收藏文件，可能是权限问题？"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "无法写入临时收藏配置文件"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr "无法移动旧的收藏文件，可能是权限问题？"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr "无法移动临时收藏文件，可能是权限问题？"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "终止媒体清理"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "完成媒体清理"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "中止游戏列表清理"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "已完成游戏列表清理"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "中止收藏清理"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "已完成收藏清理"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "媒体清理失败"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "游戏列表清理失败"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "关闭此实用程序时，应用程序将重新加载。"
+
+msgid "INVALID ENTRY"
+msgstr "无效条目"
+
+msgid "CLEARED ENTRY"
+msgstr "已清除的条目"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "未定义备用模拟器"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "清除无效条目"
+
+msgid "DEFAULT"
+msgstr "默认"
+
+msgid "EDIT METADATA"
+msgstr "编辑元数据"
+
+msgid "CLEAR ENTRY"
+msgstr "清除条目"
+
+msgid "SELECT EMULATOR"
+msgstr "选择模拟器"
+
+msgid "SYSTEM-WIDE"
+msgstr "全平台"
+
+msgid "unknown"
+msgstr "未知"
+
+msgid "SCRAPE"
+msgstr "刮削/抓取"
+
+msgid "scrape"
+msgstr "刮削/抓取"
+
+msgid "save metadata"
+msgstr "保存元数据"
+
+msgid "cancel changes"
+msgstr "取消更改"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"这将删除此文件夹的所有媒体文件和 gamelist.xml 条目，但目录本身或其中的任何内"
+"容都不会被删除\n"
+"真的要删除吗？"
+
+msgid "CLEAR"
+msgstr "清理"
+
+msgid "clear folder"
+msgstr "清理文件夹"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"这将删除此游戏的所有媒体文件和 gamelist.xml 条目，但游戏文件本身不会被删除\n"
+"真的要删除吗？"
+
+msgid "clear file"
+msgstr "清理文件"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"这将删除游戏文件、任何媒体文件和 gamelist.xml 条目\n"
+"真的要删除吗？"
+
+msgid "DELETE"
+msgstr "删除"
+
+msgid "delete game"
+msgstr "删除游戏"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "混合图像离线生成器"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "已处理 %i 个游戏，共 %i 个游戏"
+
+msgid "Generated:"
+msgstr "已生成："
+
+msgid "Overwritten:"
+msgstr "复写："
+
+msgid "Skipped:"
+msgstr "已跳过："
+
+msgid "Skipped (existing):"
+msgstr "已跳过（现有）："
+
+msgid "Failed:"
+msgstr "失败："
+
+msgid "Processing:"
+msgstr "处理："
+
+msgid "Last error message:"
+msgstr "最后一条错误消息："
+
+msgid "PAUSE"
+msgstr "暂停"
+
+msgid "pause processing"
+msgstr "正在暂停处理"
+
+msgid "close (abort processing)"
+msgstr "关闭（中止处理）"
+
+msgid "RUNNING..."
+msgstr "正在运行……"
+
+msgid "PAUSED"
+msgstr "已暂停"
+
+msgid "RUNNING"
+msgstr "正在运行"
+
+msgid "COMPLETED"
+msgstr "已完成"
+
+msgid "DONE"
+msgstr "完成"
+
+msgid "done (close)"
+msgstr "完成（关闭）"
+
+msgid "APPLICATION UPDATER"
+msgstr "应用程序更新程序"
+
+msgid "INSTALLATION STEPS:"
+msgstr "安装步骤："
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "下载最新版本"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "下载最新版本至此目录："
+
+msgid "INSTALL PACKAGE"
+msgstr "安装包"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "退出并手动重新启动 ES-DE"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "退出并手动升级 ES-DE"
+
+msgid "STATUS MESSAGE:"
+msgstr "状态信息："
+
+msgid "DOWNLOAD"
+msgstr "下载"
+
+msgid "download new release"
+msgstr "下载新版本"
+
+msgid "Download directory does not exist"
+msgstr "下载目录不存在"
+
+msgid "CHANGE DIRECTORY"
+msgstr "更改目录"
+
+msgid "change download directory"
+msgstr "更改下载目录"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "输入下载目录"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "下载已终止"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "没有包保存到磁盘"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "软件包已下载并可手动安装"
+
+msgid "DOWNLOADING 100%"
+msgstr "正在下载 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "下载的文件与预期的 MD5 校验和不匹配"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr "错误：无法删除临时包文件，可能是权限问题？"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr "错误：无法写入包文件，可能是权限问题？"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "错误：无法设置 AppImage 文件的权限"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "已下载 %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "错误：无法打开 AppImage 更新文件进行读取"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr "错误：下载的文件与预期的 MD5 校验和不匹配"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr "错误：无法重命名正在运行的 AppImage 文件，可能是权限问题？"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr "错误：无法替换正在运行的 AppImage 文件，可能是权限问题？"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "已成功安装为 %s"
+
+msgid "INSTALL"
+msgstr "安装"
+
+msgid "install package"
+msgstr "安装包"
+
+msgid "Find the detailed changelog at"
+msgstr "详细更新日志请见"
+
+msgid "quit application"
+msgstr "退出应用"
+
+msgid "all games"
+msgstr "所有游戏"
+
+msgid "last played"
+msgstr "最后游玩的游戏"
+
+msgid "favorites"
+msgstr "喜爱"
+
+msgid "collections"
+msgstr "收藏"
+
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "已禁用'%s'中的'%s'"
+
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "编辑 '%s' 收藏，添加/删除 %s 游戏"
+
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "'%s' 收藏已完成编辑"
+
+msgid "Favorites"
+msgstr "喜爱"
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "已将'%s'添加到'%s'"
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "已将 '%s' 从 '%s' 中移除"
+
+msgid "This collection is empty"
+msgstr "此收藏为空"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "该收藏包含 1 个游戏：'%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "该收藏包含 2 个游戏：'%s [%s]' and '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "该收藏包含 3 个游戏：'%s [%s]', '%s [%s]' and '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] "该收藏包含 %i 个游戏：'%s [%s]', '%s [%s]'和'%s [%s]'等"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "该收藏包含 1 个游戏：'%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "该收藏包含 2 个游戏：'%s' 和 '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "该收藏包含 3 个游戏： '%s', '%s' 和 '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "该收藏包含 %i 个游戏： '%s', '%s' 和 '%s'等"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' 个游戏被筛选，现新增了更多可游玩的游戏"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "已删除收藏'%s'"
+
+msgid "name, ascending"
+msgstr "名称，升序"
+
+msgid "name, descending"
+msgstr "名称，降序"
+
+msgid "rating, ascending"
+msgstr "评分, 升序"
+
+msgid "rating, descending"
+msgstr "评分, 降序"
+
+msgid "release date, ascending"
+msgstr "发行日期, 升序"
+
+msgid "release date, descending"
+msgstr "发行日期, 降序"
+
+msgid "developer, ascending"
+msgstr "开发商, 升序"
+
+msgid "developer, descending"
+msgstr "开发商, 降序"
+
+msgid "publisher, ascending"
+msgstr "发行商, 升序"
+
+msgid "publisher, descending"
+msgstr "发行商, 降序"
+
+msgid "genre, ascending"
+msgstr "类型, 升序"
+
+msgid "genre, descending"
+msgstr "类型, 降序"
+
+msgid "players, ascending"
+msgstr "玩家数， 升序"
+
+msgid "players, descending"
+msgstr "玩家数， 降序"
+
+msgid "last played, ascending"
+msgstr "最后游玩, 升序"
+
+msgid "last played, descending"
+msgstr "最后游玩, 降序"
+
+msgid "times played, ascending"
+msgstr "游玩次数, 升序"
+
+msgid "times played, descending"
+msgstr "游玩次数, 降序"
+
+msgid "system, ascending"
+msgstr "平台, 升序"
+
+msgid "system, descending"
+msgstr "平台, 降序"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "错误：缺少'%s'的预命令查找规则配置"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "错误：找不到预命令，它是否已正确安装？"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "错误：无法找到预命令'%s'，它是否已正确安装？"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "错误：缺少模拟器查找'%s'的规则配置"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "错误：找不到应用程序，它是否已正确安装？"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "错误：找不到应用程序'%s'，它是否已正确安装？"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "错误：找不到模拟器，是否已正确安装？"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "错误：无法找到模拟器'%s'，它是否已正确安装？"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "错误：无法找到模拟器核心文件'%s'"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "错误：系统配置文件中的条目无效"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "错误：缺少'%s'的核心配置"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "错误：%s 变量条目无效"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr "错误：无法创建由 %s 定义的目录，可能是权限问题？"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "错误：应用程序或别名文件不存在或无法读取"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "错误：桌面文件无效或无法读取"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "错误：桌面文件不存在或无法读取"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "启动游戏'%s'时出错（错误代码 %i）"
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr "无法将自定义收藏添加到自定义收藏"
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr "无法向自定义收藏添加占位符"
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr "无法将文件夹添加到自定义收藏夹"
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr "已将文件夹'%s'标记为喜爱"
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr "删除文件夹'%s'的喜爱标记"
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
+msgstr "无法将不属于游戏的条目添加到自定义收藏中"
+
+msgid "random"
+msgstr "随机"
+
+msgid "screensaver"
+msgstr "屏保"
+
+#, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "%i 个游戏"
+
+#, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "（%i 个喜爱）"
+
+#, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "%i 个喜爱"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "未知"
+
+msgid "system"
+msgstr "切换平台"
+
+msgid "view media"
+msgstr "查看媒体"
+
+msgid "options"
+msgstr "选项"
+
+msgid "jump to game"
+msgstr "跳转到游戏"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "是"
+
+msgctxt "theme"
+msgid "no"
+msgstr "否"
+
+msgid ""
+"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
+"NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE VARIOUS PROBLEMS, SOME OF "
+"WHICH MAY NOT BE APPARENT IMMEDIATELY. MAKE SURE TO ALWAYS FOLLOW THE "
+"UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
+"DIRECTORY."
+msgstr ""
+"似乎进行了不安全的升级，可能是通过将新版本解压到旧版本之上？这可能会导致各种"
+"问题，其中一些问题可能不会立即显现。请务必始终遵循 ES-DE 目录中的 readme.txt "
+"文件中的升级说明。"
+
+msgid ""
+"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
+"es_systems.xml FILE, THEN SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. IF "
+"YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
+"SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
+msgstr ""
+"无法解析系统配置文件。如果您有自定义的 es_systems.xml 文件，则您的 XML 语法可"
+"能有问题。如果您没有自定义系统文件，则 ES-DE 安装已损坏。请参阅应用程序日志文"
+"件 es_log.txt 以获取更多信息"
+
+msgid ""
+"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
+"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
+"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
+"THE SUPPORTED FILE EXTENSIONS.\n"
+"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"未找到游戏文件，请将您的游戏放在已配置的 ROM 目录中。可选择生成 ROM 目录结"
+"构，这将为每个系统创建一个文本文件，提供一些信息，例如支持的文件扩展名。\n"
+"这是当前配置的 ROM 目录：\n"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
+"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
+"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
+"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
+"FILE EXTENSIONS.\n"
+"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"未找到游戏文件。请将您的游戏放入当前配置的 ROM 目录中，或使用下面的按键更改其"
+"路径。也可以选择生成 ROM 目录结构，这将为每个系统创建一个文本文件，提供一些信"
+"息，例如支持的文件扩展名。\n"
+"这是当前配置的 ROM 目录：\n"
+
+msgid "CHANGE ROM DIRECTORY"
+msgstr "更改 ROM 目录"
+
+msgid "ENTER ROM DIRECTORY PATH"
+msgstr "输入 ROM 目录路径"
+
+msgid ""
+"ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
+msgstr "ROM 目录设置已保存，重新启动应用程序以重新扫描系统"
+
+msgid "Currently configured path:"
+msgstr "当前配置的路径："
+
+msgid "LOAD CURRENTLY CONFIGURED PATH"
+msgstr "加载当前配置的路径"
+
+msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
+msgstr "清除（留空则重置为默认路径）"
+
+msgid "CREATE DIRECTORIES"
+msgstr "创建目录"
+
+msgid ""
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
+"xml\n"
+"\n"
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"DON'T NEED"
+msgstr ""
+"这将为 es_systems.xml 中定义的所有游戏系统创建目录\n"
+"\n"
+"这可能会创建大量文件夹，因此建议删除不需要的文件夹"
+
+msgid ""
+"THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
+"PLACE YOUR GAMES IN THE NEW FOLDERS"
+msgstr "平台目录已成功生成，退出应用程序并将游戏放入新文件夹中"
+
+msgid ""
+"ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
+"\n"
+"SEE THE LOG FILE FOR MORE DETAILS"
+msgstr ""
+"创建平台目录时出错、权限问题或磁盘已满？\n"
+"\n"
+"查看日志文件了解更多详细信息"
+
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+"您的系统中至少有一个配置了无效的备用模拟器，且系统配置文件中没有匹配的条目，"
+"请使用\"其他设置\"菜单中的\"备用模拟器\"界面检查您的设置"
+
+msgid "UPDATE"
+msgstr "更新"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
+"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
+"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
+msgstr ""
+"应用程序更新程序将为您下载最新的便携式 Windows 版本，但您需要手动执行升级。请"
+"参阅下载的 ZIP 文件中的 readme.txt 文件，了解如何完成此操作。正如该文档中所"
+"述，切勿在旧安装的基础上解压新版本，因为这可能会破坏应用程序。"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM THE UPGRADE. WHEN "
+"DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
+"UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
+msgstr ""
+"应用程序更新程序将为您下载最新的 Windows 安装程序版本，但您需要手动运行它才能"
+"执行升级。执行此操作时，请确保您对是否卸载旧版本的问题回答\"是\"，否则您可能"
+"会得到损坏的设置。"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
+"WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
+msgstr ""
+"应用程序更新程序将为您下载最新版本，但您需要手动安装 DMG 文件来执行升级。"
+
+#, c-format
+msgid "LAUNCHING GAME '%s'"
+msgstr "正在启动游戏 '%s'"
+
+msgid "menu"
+msgstr "菜单"
+
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr "第 %s 页，共 %s 页"
+
+msgid "pan"
+msgstr "pan"
+
+msgid "reset"
+msgstr "重置"
+
+msgid "browse"
+msgstr "浏览"
+
+msgid "game media"
+msgstr "游戏媒体"
+
+msgid "first"
+msgstr "第一张"
+
+msgid "last"
+msgstr "最后一张"
+
+msgid "zoom"
+msgstr "zoom"
+
+msgid "RATING"
+msgstr "评分"
+
+msgid "DEVELOPER"
+msgstr "开发商"
+
+msgid "PUBLISHER"
+msgstr "发行商"
+
+msgid "GENRE"
+msgstr "类型"
+
+msgid "PLAYERS"
+msgstr "玩家数"
+
+msgid "FAVORITE"
+msgstr "喜爱"
+
+msgid "KIDGAME"
+msgstr "儿童游戏"
+
+msgid "HIDDEN"
+msgstr "隐藏"
+
+msgid "BROKEN"
+msgstr "损坏"
+
+msgid "CONTROLLER"
+msgstr "控制器"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "备用模拟器"
+
+msgid "FALSE"
+msgstr "FALSE"
+
+msgid "TRUE"
+msgstr "TRUE"
+
+msgid "UNKNOWN"
+msgstr "未知"
+
+msgid "NONE SELECTED"
+msgstr "未选择"
+
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "未找到屏幕截图，无法生成混合图像"
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr "屏幕截图格式未知，无法生成混合图像"
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr "屏幕截图的格式不受支持，无法生成混合图像"
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "加载截图时出错，无法生成混合图像"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "加载游戏标志图像时出错，文件损坏？"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "加载 3D 盒装图像时出错，文件损坏？"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "加载盒装封面图像时出错，文件损坏？"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "加载实体卡带图像时出错，文件损坏？"
+
+msgid "pdf manual"
+msgstr "PDF手册"
+
+msgid "SCREENSHOT"
+msgstr "截图"
+
+msgid "BOX COVER"
+msgstr "盒装前盖"
+
+msgid "BOX BACK COVER"
+msgstr "盒装后盖"
+
+msgid "TITLE SCREEN"
+msgstr "标题"
+
+msgid "FAN ART"
+msgstr "粉丝自制"
+
+msgid "MIXIMAGE"
+msgstr "混合图像"
+
+msgid "CUSTOM"
+msgstr "自定义"
+
+msgid "Searching for games..."
+msgstr "正在搜索游戏……"
+
+msgid "Loading systems..."
+msgstr "正在加载平台……"
+
+msgid "Reloading..."
+msgstr "正在重新加载……"
+
+msgid "Copying resources..."
+msgstr "正在复制资源……"
+
+msgid "Creating system directories..."
+msgstr "正在创建平台目录……"
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "错误：无法渲染PDF文件"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "已添加输入设备'%s'"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "已移除输入设备'%s'"
+
+msgid "medium"
+msgstr "中"
+
+msgid "large"
+msgstr "大"
+
+msgid "small"
+msgstr "小"
+
+msgid "extra small"
+msgstr "极小"
+
+msgid "extra large"
+msgstr "极大"
+
+msgid "automatic"
+msgstr "自动"
+
+msgid "16:9 vertical"
+msgstr "垂直方向 16:9"
+
+msgid "16:10 vertical"
+msgstr "垂直方向 16:10"
+
+msgid "3:2 vertical"
+msgstr "垂直方向 3:2"
+
+msgid "4:3 vertical"
+msgstr "垂直方向 4:3"
+
+msgid "5:4 vertical"
+msgstr "垂直方向 5:4"
+
+msgid "19.5:9 vertical"
+msgstr "垂直方向 19.5:9"
+
+msgid "20:9 vertical"
+msgstr "垂直方向 20:9"
+
+msgid "21:9 vertical"
+msgstr "垂直方向 21:9"
+
+msgid "32:9 vertical"
+msgstr "垂直方向 32:9"
+
+msgid "edit date"
+msgstr "编辑日期"
+
+msgid "Y-M-D"
+msgstr "年-月-日"
+
+msgid "modify"
+msgstr "调整"
+
+#, c-format
+msgid "%i (OF %i)"
+msgstr "%i / %i"
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] "已选择 %s"
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] "已选择 %i"
+
+msgid "change value"
+msgstr "更改数值"
+
+msgid "SELECT ALL"
+msgstr "选择全部"
+
+msgid "select all"
+msgstr "选择全部"
+
+msgid "SELECT NONE"
+msgstr "取消选择"
+
+msgid "select none"
+msgstr "取消选择"
+
+msgid "move cursor"
+msgstr "移动光标"
+
+msgid "edit"
+msgstr "编辑"
+
+msgid "WORKING..."
+msgstr "正在运行……"
+
+msgid "toggle"
+msgstr "切换"
+
+msgid "add half star"
+msgstr "加半颗星"
+
+msgctxt "theme"
+msgid "never"
+msgstr "从不"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "%i 天前"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "%i 小时前"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "%i 分钟前"
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "%i 秒前"
+
+msgid "SPACE"
+msgstr "空格"
+
+msgid "LOAD"
+msgstr "加载"
+
+msgid "shift"
+msgstr "shift"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "newline"
+
+msgid "backspace"
+msgstr "backspace"
+
+msgid "space"
+msgstr "space"
+
+msgid "WELCOME"
+msgstr "欢迎"
+
+msgid "CONFIGURE INPUT DEVICE"
+msgstr "配置输入设备"
+
+#, c-format
+msgid "%i GAMEPAD DETECTED"
+msgid_plural "%i GAMEPADS DETECTED"
+msgstr[0] "检测到 %i 个游戏手柄"
+
+msgid "NO GAMEPADS DETECTED"
+msgstr "未检测到游戏手柄"
+
+msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
+msgstr "（仅接受来自第一个控制器的输入）"
+
+msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
+msgstr "按住设备上的某个按键以进行配置"
+
+msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
+msgstr "按住键盘上的某个按键以进行配置"
+
+msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
+msgstr "按 ESC 跳过（或按退出快捷键随时退出）"
+
+msgid "PRESS ESC TO CANCEL"
+msgstr "按 ESC 取消"
+
+msgid "LOAD DEFAULT"
+msgstr "加载默认值"
+
+msgid "DISCARD CHANGES"
+msgstr "放弃更改"
+
+msgid "discard changes"
+msgstr "放弃更改"
+
+msgid "CONFIGURING"
+msgstr "正在配置"
+
+msgid "KEYBOARD"
+msgstr "键盘"
+
+msgid "GAMEPAD"
+msgstr "游戏手柄"
+
+msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
+msgstr "按住任意按键 1 秒即可跳过"
+
+msgid "NOT DEFINED"
+msgstr "未定义"
+
+msgid "ok"
+msgstr "好"
+
+msgid "D-PAD UP"
+msgstr "十字键 上"
+
+msgid "D-PAD DOWN"
+msgstr "十字键 下"
+
+msgid "D-PAD LEFT"
+msgstr "十字键 左"
+
+msgid "D-PAD RIGHT"
+msgstr "十字键 右"
+
+msgid "MINUS"
+msgstr "选择"
+
+msgid "PLUS"
+msgstr "开始"
+
+msgid "CROSS"
+msgstr "X"
+
+msgid "CIRCLE"
+msgstr "O"
+
+msgid "SQUARE"
+msgstr "□"
+
+msgid "TRIANGLE"
+msgstr "△"
+
+msgid "OPTIONS"
+msgstr "选项"
+
+msgid "VIEW"
+msgstr "查看"
+
+msgid "MENU"
+msgstr "菜单"
+
+msgid "LEFT SHOULDER"
+msgstr "左肩键(L1)"
+
+msgid "RIGHT SHOULDER"
+msgstr "右肩键(R1)"
+
+msgid "LEFT TRIGGER"
+msgstr "左扳机键(L2)"
+
+msgid "RIGHT TRIGGER"
+msgstr "右扳机键(R2)"
+
+msgid "LEFT THUMBSTICK UP"
+msgstr "左摇杆 上"
+
+msgid "LEFT THUMBSTICK DOWN"
+msgstr "左摇杆 下"
+
+msgid "LEFT THUMBSTICK LEFT"
+msgstr "左摇杆 左"
+
+msgid "LEFT THUMBSTICK RIGHT"
+msgstr "左摇杆 右"
+
+msgid "LEFT THUMBSTICK CLICK"
+msgstr "左摇杆 按下(L3)"
+
+msgid "RIGHT THUMBSTICK UP"
+msgstr "右摇杆 上"
+
+msgid "RIGHT THUMBSTICK DOWN"
+msgstr "右摇杆 下"
+
+msgid "RIGHT THUMBSTICK LEFT"
+msgstr "右摇杆 左"
+
+msgid "RIGHT THUMBSTICK RIGHT"
+msgstr "右摇杆 右"
+
+msgid "RIGHT THUMBSTICK CLICK"
+msgstr "右摇杆 按下(R3)"
+
+msgid "ALREADY TAKEN"
+msgstr "已映射"
+
+msgid "PRESS ANYTHING"
+msgstr "按任意键"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "您已超出每日抓取配额"
+
+#, c-format
+msgid "Server returned HTTP error code %s"
+msgstr "服务器返回 HTTP 错误代码 %s"

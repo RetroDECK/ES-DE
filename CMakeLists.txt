@@ -19,7 +19,7 @@ endif()
 project(es-de)
 
 # Application version, update this when making a new release.
-set(ES_VERSION 3.0.3)
+set(ES_VERSION 3.1.1-alpha)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
@@ -35,6 +35,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
 option(GL "Set to ON if targeting Desktop OpenGL" ON)
 option(GLES "Set to ON if targeting OpenGL ES" OFF)
 option(APPLICATION_UPDATER "Set to OFF to build without the application updater" ON)
+option(COMPILE_LOCALIZATIONS "Set to OFF to skip compilation of localization message catalogs" ON)
 option(APPIMAGE_BUILD "Set to ON when building as an AppImage" OFF)
 option(AUR_BUILD "Set to ON when building for the AUR" OFF)
 option(FLATPAK_BUILD "Set to ON when building as a Flatpak" OFF)
@@ -136,6 +137,9 @@ elseif(NOT EMSCRIPTEN AND NOT ANDROID)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
+    find_package(HarfBuzz REQUIRED)
+    find_package(ICU REQUIRED)
+    find_package(Intl REQUIRED)
     find_package(Libgit2 REQUIRED)
     find_package(Pugixml REQUIRED)
     find_package(SDL2 REQUIRED)
@@ -213,7 +217,8 @@ else()
     endif()
 endif()
 
-if(APPLE AND CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 15.0.0)
+# Silence some annoying warnings caused by invalid characters in some FreeImage source comments.
+if(CMAKE_CXX_COMPILER_ID MATCHES Clang AND CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 15.0.0)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-invalid-utf8")
 endif()
 
@@ -269,6 +274,11 @@ if(UBSAN)
     endif()
 endif()
 
+if(ASAN OR UBSAN)
+    # Add some extra checks when building with AddressSanitizer or UndefinedBehaviorSanitizer.
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_ASSERTIONS -D_FORTIFY_SOURCE=3")
+endif()
+
 # The following removes half of the ranlib warnings on macOS regarding no symbols for files
 # that are #ifdef'ed away. There must be a way to remove the other half as well?
 if(APPLE)
@@ -284,6 +294,7 @@ endif()
 
 if(ANDROID)
     set(BUNDLED_CERTS ON)
+    set(COMPILE_LOCALIZATIONS OFF)
     add_compile_definitions(ANDROID_VERSION_CODE=${ANDROID_VERSION_CODE})
     add_compile_definitions(ANDROID_APPLICATION_ID="org.es_de.frontend")
 endif()
@@ -359,19 +370,15 @@ if(VIDEO_HW_DECODING)
 endif()
 
 if(DEINIT_ON_LAUNCH)
-    if(CMAKE_SYSTEM_NAME MATCHES Linux)
+    if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
         add_compile_definitions(DEINIT_ON_LAUNCH)
         message("-- Building with deinitialization on game launch")
     else()
-        message(FATAL_ERROR "-- Deinitialization on game launch can only be used on Linux")
+        message(FATAL_ERROR "-- Deinitialization on game launch can only be used on Linux and FreeBSD")
     endif()
 endif()
 
-if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI)
-    set(APPLICATION_UPDATER OFF)
-endif()
-
-if(CMAKE_SYSTEM_NAME MATCHES FreeBSD OR CMAKE_SYSTEM_NAME MATCHES NetBSD OR CMAKE_SYSTEM_NAME MATCHES OpenBSD)
+if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI OR HAIKU OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
     set(APPLICATION_UPDATER OFF)
 endif()
 
@@ -424,13 +431,11 @@ add_compile_definitions(GLM_FORCE_CXX17)
 add_compile_definitions(GLM_FORCE_XYZW_ONLY)
 
 # For Unix systems, assign the installation prefix. If it's not explicitly set,
-# we use /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD.
+# we use /usr on Linux and /usr/local on FreeBSD.
 if(NOT WIN32 AND NOT APPLE AND NOT ANDROID)
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         if(CMAKE_SYSTEM_NAME MATCHES Linux)
             set(CMAKE_INSTALL_PREFIX /usr CACHE INTERNAL CMAKE_INSTALL_PREFIX)
-        elseif(CMAKE_SYSTEM_NAME MATCHES NetBSD)
-            set(CMAKE_INSTALL_PREFIX /usr/pkg CACHE INTERNAL CMAKE_INSTALL_PREFIX)
         else()
             set(CMAKE_INSTALL_PREFIX /usr/local CACHE INTERNAL CMAKE_INSTALL_PREFIX)
         endif()
@@ -463,7 +468,10 @@ if(APPLE)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FFmpeg
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freeimage/FreeImage/Source
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/gettext/gettext-runtime/intl
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/harfbuzz/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/icu/icu4c/source/common
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL)
 elseif(WIN32)
@@ -473,6 +481,9 @@ elseif(WIN32)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/gettext/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/harfbuzz/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/icu/icu4c/source/common
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2)
@@ -489,6 +500,9 @@ elseif(ANDROID)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-kit/src/ffmpeg
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freeimage/FreeImage/Source
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/gettext/gettext-runtime/intl
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/harfbuzz/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/icu/icu4c/source/common
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_Android)
@@ -498,6 +512,8 @@ else()
                             ${FreeImage_INCLUDE_DIRS}
                             ${FREETYPE_INCLUDE_DIRS}
                             ${GIT2_INCLUDE_PATH}
+                            ${HarfBuzz_INCLUDE_DIRS}
+                            ${ICU_INCLUDE_DIRS}
                             ${PUGIXML_INCLUDE_DIRS}
                             ${SDL2_INCLUDE_DIR})
 endif()
@@ -534,6 +550,11 @@ if(APPLE)
                          ${PROJECT_SOURCE_DIR}/libfreeimage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
                          ${PROJECT_SOURCE_DIR}/libgit2.1.7.dylib
+                         ${PROJECT_SOURCE_DIR}/libharfbuzz.dylib
+                         ${PROJECT_SOURCE_DIR}/libicudata.75.dylib
+                         ${PROJECT_SOURCE_DIR}/libicui18n.75.dylib
+                         ${PROJECT_SOURCE_DIR}/libicuuc.75.dylib
+                         ${PROJECT_SOURCE_DIR}/libintl.8.dylib
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.0.dylib)
 elseif(WIN32)
@@ -546,7 +567,12 @@ elseif(WIN32)
                             ${PROJECT_SOURCE_DIR}/FreeImage.lib
                             ${PROJECT_SOURCE_DIR}/git2.lib
                             ${PROJECT_SOURCE_DIR}/glew32.lib
+                            ${PROJECT_SOURCE_DIR}/harfbuzz.lib
+                            ${PROJECT_SOURCE_DIR}/icudt.lib
+                            ${PROJECT_SOURCE_DIR}/icuin.lib
+                            ${PROJECT_SOURCE_DIR}/icuuc.lib
                             ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
+                            ${PROJECT_SOURCE_DIR}/libintl-8.lib
                             ${PROJECT_SOURCE_DIR}/freetype.lib
                             ${PROJECT_SOURCE_DIR}/lunasvg.lib
                             ${PROJECT_SOURCE_DIR}/pugixml.lib
@@ -569,6 +595,11 @@ elseif(ANDROID)
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreeimage.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libfreetype.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libgit2.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libharfbuzz.so
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libicudata.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libicui18n.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libicuuc.a
+                        ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libintl.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libjpeg.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libpoppler.so
                         ${PROJECT_SOURCE_DIR}/android/libs/${ANDROID_CPU_ARCH}/libpugixml.a
@@ -613,8 +644,15 @@ else()
                          ${FreeImage_LIBRARIES}
                          ${FREETYPE_LIBRARIES}
                          ${GIT2_LIBRARY}
+                         ${HarfBuzz_LIBRARIES}
+                         ${ICU_LIBRARIES}
                          ${PUGIXML_LIBRARIES}
                          ${SDL2_LIBRARY})
+    if(Intl_LIBRARY)
+        # On Unix systems where the gettext functions are not part of the C standard library
+        # we need to explicitly link with the libintl library.
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${Intl_LIBRARY})
+    endif()
 endif()
 
 if(NOT WIN32)
@@ -673,15 +711,23 @@ set(dir ${CMAKE_CURRENT_SOURCE_DIR})
 set(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 
-# Add each component.
+if(COMPILE_LOCALIZATIONS)
+    add_subdirectory(locale)
+endif()
+
 add_subdirectory(es-pdf-converter)
 add_subdirectory(external)
 add_subdirectory(es-core)
 add_subdirectory(es-app)
 
 # Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
-# Also set lottie2gif to not be built.
 add_dependencies(lunasvg es-pdf-convert)
 
+if(COMPILE_LOCALIZATIONS)
+    add_dependencies(es-pdf-convert localization)
+endif()
+
 add_dependencies(es-core rlottie)
+
+# Set lottie2gif to not be built.
 set_target_properties(lottie2gif PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)

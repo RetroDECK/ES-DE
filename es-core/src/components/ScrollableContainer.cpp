@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ScrollableContainer.cpp
 //
 //  Component containing scrollable information, used for the game
@@ -68,21 +68,28 @@ void ScrollableContainer::resetComponent()
     mAtEnd = false;
     mUpdatedSize = false;
 
+    // This applies to the actual TextComponent that is getting displayed.
+    mChildren.front()->setAutoCalcExtent(glm::ivec2 {0, 1});
+
     // This is needed to resize to the designated area when the background image gets invalidated.
     if (!mChildren.empty()) {
         float combinedHeight {0.0f};
         const float cacheGlyphHeight {
-            static_cast<float>(mChildren.front()->getTextCacheGlyphHeight())};
+            mChildren.front()->getTextCache() == nullptr ?
+                0.0f :
+                static_cast<float>(mChildren.front()->getTextCache()->metrics.maxGlyphHeight)};
+
         if (cacheGlyphHeight > 0.0f)
             combinedHeight = cacheGlyphHeight * mChildren.front()->getLineSpacing();
         else
             return;
+
         if (mChildren.front()->getSize().y > mSize.y) {
             if (mVerticalSnap) {
                 float numLines {std::floor(mSize.y / combinedHeight)};
                 if (numLines == 0)
                     numLines = 1;
-                mAdjustedHeight = std::round(numLines * combinedHeight);
+                mAdjustedHeight = std::ceil(numLines * combinedHeight);
             }
             else {
                 mAdjustedHeight = mSize.y;
@@ -132,7 +139,12 @@ void ScrollableContainer::update(int deltaTime)
 
     const float lineSpacing {mChildren.front()->getLineSpacing()};
     float combinedHeight {0.0f};
-    const float cacheGlyphHeight {static_cast<float>(mChildren.front()->getTextCacheGlyphHeight())};
+
+    const float cacheGlyphHeight {
+        mChildren.front()->getTextCache() == nullptr ?
+            0.0f :
+            static_cast<float>(mChildren.front()->getTextCache()->metrics.maxGlyphHeight)};
+
     if (cacheGlyphHeight > 0.0f)
         combinedHeight = cacheGlyphHeight * lineSpacing;
     else
@@ -151,7 +163,7 @@ void ScrollableContainer::update(int deltaTime)
             float numLines {std::floor(mSize.y / combinedHeight)};
             if (numLines == 0)
                 numLines = 1;
-            mAdjustedHeight = std::round(numLines * combinedHeight);
+            mAdjustedHeight = std::ceil(numLines * combinedHeight);
         }
         else {
             mAdjustedHeight = mSize.y;

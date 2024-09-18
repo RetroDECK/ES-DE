@@ -1,9 +1,10 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  TextEditComponent.h
 //
-//  Component for editing text fields in menus.
+//  Component for editing text fields.
+//  TODO: Add support for editing shaped text.
 //
 
 #ifndef ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H
@@ -11,16 +12,12 @@
 
 #include "GuiComponent.h"
 #include "components/NinePatchComponent.h"
-#include "resources/Font.h"
+#include "components/TextComponent.h"
 
-class Font;
-class TextCache;
-
-// Used to enter text.
 class TextEditComponent : public GuiComponent
 {
 public:
-    TextEditComponent();
+    TextEditComponent(bool multiLine);
     ~TextEditComponent();
 
     void textInput(const std::string& text, const bool pasting = false) override;
@@ -33,14 +30,14 @@ public:
 
     void onSizeChanged() override;
 
-    void setValue(const std::string& val) override;
+    void setText(const std::string& val, bool update = true);
     std::string getValue() const override;
 
     void startEditing();
     void stopEditing();
 
     bool isEditing() const { return mEditing; }
-    std::shared_ptr<Font> getFont() const override { return mFont; }
+    std::shared_ptr<Font> getFont() const override { return mEditText->getFont(); }
 
     void setCursor(size_t pos);
     void setMaskInput(bool state) { mMaskInput = state; }
@@ -54,18 +51,17 @@ private:
     void updateCursorRepeat(int deltaTime);
     void moveCursor(int amt);
 
-    bool isMultiline() { return (getSize().y > mFont->getHeight() * 1.25f); }
     glm::vec2 getTextAreaPos() const;
     glm::vec2 getTextAreaSize() const;
 
     Renderer* mRenderer;
     std::string mText;
-    std::string mWrappedText;
-    std::string mTextOrig;
     bool mFocused;
     bool mEditing;
     bool mMaskInput;
-    int mCursor; // Cursor position in characters.
+    bool mMultiLine;
+    int mCursor; // Cursor position in source text.
+    int mCursorShapedText; // Cursor position in shaped text.
     int mBlinkTime;
 
     int mCursorRepeatTimer;
@@ -75,9 +71,7 @@ private:
     glm::vec2 mCursorPos;
 
     NinePatchComponent mBox;
-
-    std::shared_ptr<Font> mFont;
-    std::unique_ptr<TextCache> mTextCache;
+    std::unique_ptr<TextComponent> mEditText;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H

@@ -1,5 +1,5 @@
 <!--
-    Modern for ES-DE (modern-es-de)
+    Modern for ES-DE Frontend (modern-es-de)
     Author: Sophia Hadash
     Email: s.hadash2@protonmail.com
     License: Creative Commons CC-BY-NC-SA
@@ -8,6 +8,7 @@
 
 <theme>
     <include>./navigationsounds.xml</include>
+    <include>./languages.xml</include>
     <include>./colors.xml</include>
 
     <variables>
@@ -78,7 +79,7 @@
         </aspectRatio>
     </variant>
 
-    <variant name="withVideos, withoutVideos">
+    <variant name="withVideos, withoutVideos, noGameMedia">
         <variables>
             <artDirectory>art</artDirectory>
         </variables>
@@ -296,7 +297,7 @@
             <text name="labelPublisher">
                 <pos>${publisherLabelPos}</pos>
                 <size>0.13125 0.02</size>
-                <text>Publisher:</text>
+                <text>${langLabelPublisher}:</text>
                 <metadataElement>true</metadataElement>
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
@@ -304,13 +305,13 @@
                 <pos>0.70 0.552</pos>
                 <size>0.13125 0.03</size>
                 <metadata>publisher</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelDeveloper">
                 <pos>${developerLabelPos}</pos>
                 <size>0.13125 0.02</size>
-                <text>Developer:</text>
+                <text>${langLabelDeveloper}:</text>
                 <metadataElement>true</metadataElement>
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
@@ -318,13 +319,13 @@
                 <pos>0.8453 0.552</pos>
                 <size>0.13125 0.03</size>
                 <metadata>developer</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelReleasedate">
                 <pos>${releaseDateLabelPos}</pos>
                 <size>0.13125 0.02</size>
-                <text>Released:</text>
+                <text>${langLabelReleasedate}:</text>
                 <metadataElement>true</metadataElement>
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
@@ -332,13 +333,13 @@
                 <pos>0.70 0.628</pos>
                 <size>0.13125 0.03</size>
                 <metadata>releasedate</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </datetime>
             <text name="labelPlayers">
                 <pos>${playersLabelPos}</pos>
                 <size>0.13125 0.02</size>
-                <text>Players:</text>
+                <text>${langLabelPlayers}:</text>
                 <metadataElement>true</metadataElement>
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
@@ -346,13 +347,13 @@
                 <pos>0.8453 0.628</pos>
                 <size>0.13125 0.03</size>
                 <metadata>players</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelGenre">
                 <pos>${genreLabelPos}</pos>
                 <size>0.13125 0.02</size>
-                <text>Genre:</text>
+                <text>${langLabelGenre}:</text>
                 <metadataElement>true</metadataElement>
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
@@ -360,13 +361,13 @@
                 <pos>0.70 0.704</pos>
                 <size>0.13125 0.03</size>
                 <metadata>genre</metadata>
-                <defaultValue>Unknown</defaultValue>
+                <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
             <text name="labelRating">
                 <pos>${ratingLabelPos}</pos>
                 <size>0.13125 0.02</size>
-                <text>Rating:</text>
+                <text>${langLabelRating}:</text>
                 <metadataElement>true</metadataElement>
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>

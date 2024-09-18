@@ -8,11 +8,11 @@ Yes it's the exact same application, with only some minor differences. This mean
 
 ## Why is it named ES-DE as in "Desktop Edition" if this is a release for a mobile operating system?
 
-First it's branding, it would be very confusing to have different names for the same application when it's available cross-platform. Second, the _Desktop Edition_ part is now a legacy, nowadays instead think of the D as standing for _Deck, Droid_ or _Desktop_. The _EmulationStation Desktop Edition_ subtitle used on the splash screen is only temporary during a transition period, it will be removed.
+First it's branding, it would be very confusing to have different names for the same application when it's available cross-platform. Second, the _Desktop Edition_ part is now basically legacy. Actually the entire _EmulationStation Desktop Edition_ subtitle used on the splash screen is only temporary during a transition period and it will be removed at some point. The official name of the project is already ES-DE Frontend or ES-DE for short.
 
 ## Is it available for free, and is it open source?
 
-The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de) or the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy). And although approximately 99% of the app is open source there are some portions of the code that is closed source.
+The Android release specifically is not free, it's a paid app available for purchase through [Patreon](https://www.patreon.com/es_de), the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy) and [Huawei AppGallery](https://appgallery.huawei.com/#/app/C111315115). And although the majority of the code is open source there is some Android-specific code that is copyrighted and closed source.
 
 ## I bought ES-DE on Patreon, how do I get access to future releases?
 
@@ -20,11 +20,15 @@ When a new release is available you will be sent a download link to the email ad
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
-You only need to buy it once, and then you can use it on all your devices. There are no subscriptions or additional costs, you just buy it once. With that said we do appreciate if you want to support the project by keeping your paid Patreon subscription.
+You only need to buy the Patreon release once, and then you can use it on all your devices. There are no subscriptions or additional costs, you just buy it once. With that said we do appreciate if you want to support the project by keeping your paid Patreon subscription. The Samsung Galaxy Store and Huawei AppGallery releases may not be available on all your devices, but that is not an ES-DE restriction but rather governed by the availability of these app stores on your different Android devices.
 
 ## ES-DE doesn't work on my device, can I get a refund?
 
-Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund everyone up to one month from the purchase date if they are unable to get ES-DE to run on their device, just send a DM on Patreon and we will issue a refund as soon as possible.
+Although the overwhelming majority of people have successfully got ES-DE to run on their devices (assuming they are fulfilling the basic requirements of 64-bit Android 10 or later) there are some devices that have been problematic. Unfortunately Android is not really a standardized operating system and hardware manufacturers are sometimes applying custom patches and such which may prevent ES-DE from working correctly. We will refund anyone that bought ES-DE on Patreon within one month from the purchase date if they are unable to get ES-DE to run on their device. Just send a DM on Patreon and we will issue a refund as soon as possible. We are however unfortunately not able to refund purchases on the Samsung Galaxy Store and Huawei AppGallery. But make sure to read the next question below as your device may be compatible after all.
+
+## ES-DE hangs at the onboarding configurator, is the app not compatible with my device?
+
+There are some Android developer options that break ES-DE (and probably many other apps too) so make sure to never change such settings unless you know exactly what you are doing. For instance the option _Don't keep activities_ will make the configurator hang so that you'll never be able to get past the onboarding step.
 
 ## I received an update email to my Gmail account but the APK download link doesn't seem to work?
 
@@ -42,7 +46,7 @@ The second reason is that the APK is corrupt or not complete. When we make relea
 
 ## Can I set ES-DE as my home app/launcher?
 
-Yes, as of version 3.0.3 there is experimental support for setting ES-DE as the home app. Read the _Running ES-DE as the Android home app_ section of the [Android documentation](ANDROID.md#running-es-de-as-the-android-home-app) for more information about this functionality. There are currently some minor glitches like sometimes needing to start ES-DE twice after switching between regular mode and home app mode, but apart from that it should hopefully work fine.
+Yes, read the _Running ES-DE as the Android home app_ section of the [Android documentation](ANDROID.md#running-es-de-as-the-android-home-app) for more information about this functionality.
 
 ## Can I launch Android apps and games from inside ES-DE?
 
@@ -68,7 +72,9 @@ Yes but this is not recommended. It's tedious to setup and not how ES-DE is inte
 
 RetroArch on Android is very unforgiving, if you haven't installed the necessary core or BIOS files it's a high chance that you just see a black screen and it will hang there, possibly until you kill it. And due to the security model in Android it's not possible for ES-DE to check if a core is actually installed prior to attempting to launch RetroArch (on Linux, macOS and Windows a popup is shown if the core file is missing and the game is never actually launched in this case). Also make sure that the core you have installed in RetroArch is the one you actually use in ES-DE. You can select between different cores and emulators for most systems using the _Alternative emulators_ interface in the _Other settings_ menu.
 
-Also note that the RetroArch release on the Google Play store is not working correctly on some devices, it can be used on its own but game launching fails from ES-DE. These issues have been resolved by a number of people by instead switching to the release from the [RetroArch](https://retroarch.com) website.
+Another reason for the black screen is if you have multiple users configured on your device and attempt to run RetroArch from a non-primary user while having your ROMs on internal storage. At the time of writing RetroArch does not support external game launching for any other user than the primary user as it can't parse paths such as /storage/emulated/10/.
+
+Also note that the RetroArch release on the Google Play store is not working correctly on most devices. It can be used on its own but game launching fails from ES-DE. These issues are resolved by using a current release from the [RetroArch](https://retroarch.com) website.
 
 ## When I launch a game using a standalone emulator, why does it say the game file could not be opened?
 
@@ -92,11 +98,19 @@ No Android may stop applications that are not currently focused if it needs to r
 
 ## ES-DE takes a very long time to start, is there a way to improve this?
 
-Unfortunately disk I/O performance on Android leaves a lot to be desired compared to desktop operating systems. Google has prioritized other things over performance which leads to disk speed being poor overall on this operating system. The main offender is the choice of FAT filesystems such as exFAT for external storage which offer very poor performance for some file operations on which ES-DE relies heavily. Generally speaking a small to medium ROM collection can normally be placed on a FAT-formatted device such as an SD card but the ES-DE directory and more importantly the _downloaded_media_ directory should always be placed on internal storage. For large game collections ES-DE could turn borderline unusable if the ES-DE directory is placed on an SD card or USB memory stick. It's also possible to enable the _Only show games from gamelist.xml files_ option in the _Other settings_ menu to skip checking for game files on startup, but this has multiple implications such as what's displayed inside ES-DE not necessarily reflecting reality any longer. And obviously you'll need gamelist.xml entries for all games you want to show up inside ES-DE. So this option is really a last resort and is generally only recommended for testing purposes. In summary huge game collections are discouraged on Android due to limitations in the operating system itself. Setting up a collection of tens of thousands of games is for sure achievable with ES-DE on Linux, macOS or Windows but it's not really feasible on Android.
+Unfortunately disk I/O performance on Android is not on par with desktop operating systems. Google has prioritized other things over performance which leads to disk speed being poor overall on this operating system. The main issue is the choice of FAT filesystems such as exFAT for external storage which offer very poor performance for some file operations on which ES-DE relies heavily. The SAF/MediaStore layer also adds a lot of overhead. Generally speaking a small to medium ROM collection can be placed on a FAT-formatted device such as an SD card, but it's recommended to place the ES-DE directory and more importantly the _downloaded_media_ directory on internal storage. For large game collections ES-DE could turn borderline unusable if the _downloaded_media_ directory is placed on an SD card or on a USB memory stick. This seems to be quite device-dependent though and on some devices performance is still acceptable, so you'll need to test it.
 
-## On game launch RetroArch runs an old game instead of the one I just selected, how do I prevent this?
+One possible improvement to startup times is to enable the _Only show games from gamelist.xml files_ option in the _Other settings_ menu to skip checking for game files on startup, but this has multiple implications such as what's displayed inside ES-DE not necessarily reflecting reality any longer. And obviously you'll need gamelist.xml entries for all games you want to show up inside ES-DE. So this option is really a last resort and is generally only recommended for testing purposes.
 
-There is a video on the official ES-DE YouTube channel on how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
+Another option that could speed up startup times under some circumstances is disabling the _Enable theme variant triggers_ setting in the _UI settings_ menu. But whether this has a tangible effect depends on the theme used and to what extent there is scraped media available for your game systems.
+
+Finally, if you keep directories containing texture packs and similar inside your game system folders then these can slow down the startup considerably. To exclude scanning of any such directory you can place a file named `noload.txt` inside the folder and it will get completely skipped on startup.
+
+In summary huge game collections are discouraged on Android due to limitations in the operating system itself. Setting up a collection of tens of thousands of games is for sure achievable with ES-DE on Linux, macOS or Windows but it's not really feasible on Android.
+
+## On game launch the emulator runs an old game instead of the one I just selected, how do I prevent this?
+
+You need to exit the game every time you stop playing, by doing this everything will work correctly. Pressing the home button or manually navigating back to ES-DE without exiting the game is equivalent to pressing "Alt+tab" on a desktop operating system, i.e. the game will still run. The difference from desktop operating systems is that Android pauses the game if you switch away from its window so it may seem like it has closed down, although it actually hasn't. While the procedure to fully exit a game differs between emulators there's a video on the official ES-DE YouTube channel on how to configure RetroArch correctly so that it quits completely when you're exiting a game:\
 https://www.youtube.com/watch?v=k5WWacfIn6Y
 
 ## What type of Android devices are supported

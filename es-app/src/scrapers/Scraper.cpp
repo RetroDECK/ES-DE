@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  Scraper.cpp
 //
 //  Main scraper logic.
@@ -16,6 +16,7 @@
 #include "ScreenScraper.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
 
 #if defined(_WIN64)
@@ -116,7 +117,7 @@ void ScraperSearchHandle::update()
 
         if (status == ASYNC_ERROR) {
             // Propagate error.
-            setError(req.getStatusString(), req.getRetry());
+            setError(req.getStatusString(), req.getRetry(), req.getFatalError());
 
             // Empty our queue.
             while (!mRequestQueue.empty())
@@ -178,7 +179,7 @@ void ScraperHttpRequest::update()
     // Everything else is some sort of error.
     LOG(LogError) << "ScraperHttpRequest network error (status: " << status << ") - "
                   << mReq->getErrorMsg();
-    setError("Network error: " + mReq->getErrorMsg(), true);
+    setError(_("Network error:") + " " + mReq->getErrorMsg(), true);
 }
 
 // Download and write the media files to disk.
@@ -325,8 +326,8 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             // If the media directory does not exist, something is wrong, possibly permission
             // problems or the MediaDirectory setting points to a file instead of a directory.
             if (!Utils::FileSystem::isDirectory(Utils::FileSystem::getParent(filePath))) {
-                setError("Media directory does not exist and can't be created. "
-                         "Permission problems?",
+                setError(_("Media directory does not exist and can't be created.") + " \n" +
+                             _("Permission problems?"),
                          false);
                 LOG(LogError) << "Couldn't create media directory: \""
                               << Utils::FileSystem::getParent(filePath) << "\"";
@@ -340,7 +341,9 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             std::ofstream stream(filePath, std::ios_base::out | std::ios_base::binary);
 #endif
             if (!stream || stream.bad()) {
-                setError("Failed to open path for writing media file\nPermission error?", false);
+                setError(_("Failed to open path for writing media file.") + " \n" +
+                             _("Permission problems?"),
+                         false);
                 return;
             }
 
@@ -348,14 +351,17 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             stream.write(content.data(), content.length());
             stream.close();
             if (stream.bad()) {
-                setError("Failed to save media file\nDisk full?", false);
+                setError(_("Couldn't save media file, permission problems or is the disk full?"),
+                         false);
                 return;
             }
 
             // Resize it.
             if (it->resizeFile) {
                 if (!resizeImage(filePath, it->subDirectory)) {
-                    setError("Error saving resized image\nOut of memory? Disk full?", false);
+                    setError(
+                        _("Couldn't save resized image, permission problems or is the disk full?"),
+                        false);
                     return;
                 }
             }
@@ -429,7 +435,7 @@ void MediaDownloadHandle::update()
 
     if (mReq->status() != HttpReq::REQ_SUCCESS) {
         std::stringstream ss;
-        ss << "Network error: " << mReq->getErrorMsg();
+        ss << _("Network error:") << " " << mReq->getErrorMsg();
         setError(ss.str(), true);
         return;
     }
@@ -524,7 +530,8 @@ void MediaDownloadHandle::update()
     // If the media directory does not exist, something is wrong, possibly permission
     // problems or the MediaDirectory setting points to a file instead of a directory.
     if (!Utils::FileSystem::isDirectory(Utils::FileSystem::getParent(mSavePath))) {
-        setError("Media directory does not exist and can't be created. Permission problems?",
+        setError(_("Media directory does not exist and can't be created.") + " \n" +
+                     _("Permission problems?"),
                  false);
         LOG(LogError) << "Couldn't create media directory: \""
                       << Utils::FileSystem::getParent(mSavePath) << "\"";
@@ -538,7 +545,9 @@ void MediaDownloadHandle::update()
     std::ofstream stream(mSavePath, std::ios_base::out | std::ios_base::binary);
 #endif
     if (!stream || stream.bad()) {
-        setError("Failed to open path for writing media file\nPermission error?", false);
+        setError(_("Failed to open path for writing media file.") + " \n" +
+                     _("Permission problems?"),
+                 false);
         return;
     }
 
@@ -546,7 +555,7 @@ void MediaDownloadHandle::update()
     stream.write(content.data(), content.length());
     stream.close();
     if (stream.bad()) {
-        setError("Failed to save media file\nDisk full?", false);
+        setError(_("Couldn't save media file, permission problems or is the disk full?"), false);
         return;
     }
 
@@ -570,7 +579,8 @@ void MediaDownloadHandle::update()
     // Resize it.
     if (mResizeFile) {
         if (!resizeImage(mSavePath, mMediaType)) {
-            setError("Error saving resized image\nOut of memory? Disk full?", false);
+            setError(_("Couldn't save resized image, permission problems or is the disk full?"),
+                     false);
             return;
         }
     }

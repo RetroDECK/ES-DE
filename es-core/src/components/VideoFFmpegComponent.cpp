@@ -54,6 +54,7 @@ VideoFFmpegComponent::VideoFFmpegComponent()
     , mVideoTargetQueueSize {0}
     , mAudioTargetQueueSize {0}
     , mVideoTimeBase {0.0l}
+    , mLinePaddingComp {0.0f}
     , mAccumulatedTime {0.0l}
     , mStartTimeAccumulation {false}
     , mDecodedFrame {false}
@@ -212,11 +213,13 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         if (!mDecodedFrame)
             return;
 
+        const float paddingComp {mLinePaddingComp};
+
         // clang-format off
-        vertices[0] = {{0.0f,    0.0f   }, {mTopLeftCrop.x - mCropOffset.x,              1.0f - mBottomRightCrop.y + mCropOffset.y}, 0xFFFFFFFF};
-        vertices[1] = {{0.0f,    mSize.y}, {mTopLeftCrop.x - mCropOffset.x,              1.0f - mTopLeftCrop.y + mCropOffset.y    }, 0xFFFFFFFF};
-        vertices[2] = {{mSize.x, 0.0f   }, {(mBottomRightCrop.x * 1.0f) - mCropOffset.x, 1.0f - mBottomRightCrop.y + mCropOffset.y}, 0xFFFFFFFF};
-        vertices[3] = {{mSize.x, mSize.y}, {(mBottomRightCrop.x * 1.0f) - mCropOffset.x, 1.0f - mTopLeftCrop.y + mCropOffset.y    }, 0xFFFFFFFF};
+        vertices[0] = {{0.0f,    0.0f   }, {mTopLeftCrop.x - mCropOffset.x,                            1.0f - mBottomRightCrop.y + mCropOffset.y}, 0xFFFFFFFF};
+        vertices[1] = {{0.0f,    mSize.y}, {mTopLeftCrop.x - mCropOffset.x,                            1.0f - mTopLeftCrop.y + mCropOffset.y    }, 0xFFFFFFFF};
+        vertices[2] = {{mSize.x, 0.0f   }, {(mBottomRightCrop.x * 1.0f) - mCropOffset.x - paddingComp, 1.0f - mBottomRightCrop.y + mCropOffset.y}, 0xFFFFFFFF};
+        vertices[3] = {{mSize.x, mSize.y}, {(mBottomRightCrop.x * 1.0f) - mCropOffset.x - paddingComp, 1.0f - mTopLeftCrop.y + mCropOffset.y    }, 0xFFFFFFFF};
         // clang-format on
 
         vertices[0].color = mColorShift;
@@ -847,6 +850,16 @@ void VideoFFmpegComponent::getProcessedFrames()
         const int bytesPerPixel {4};
         const int width {mVideoFrameResampled->linesize[0] / bytesPerPixel};
 
+        // For performance reasons the linesize value may padded to a larger size than the
+        // usable data. This seems to happen mostly (only?) on Windows. If this occurs we
+        // need to compensate for this when calculating the vertices in render().
+        if (width != mVideoFrameResampled->width && width > 0) {
+            const float linePaddingComp {static_cast<float>(width - mVideoFrameResampled->width) /
+                                         static_cast<float>(width)};
+            if (linePaddingComp != 0.0f)
+                mLinePaddingComp = linePaddingComp;
+        }
+
         currFrame.width = width;
         currFrame.height = mVideoFrameResampled->height;
 
@@ -1165,7 +1178,7 @@ void VideoFFmpegComponent::detectHWDecoder()
                            "hardware decoder";
     }
 #else
-    // This would mostly be Linux, but possibly also BSD Unix.
+    // This would mostly be Linux, but possibly also FreeBSD.
 
     bool hasVAAPI {false};
     bool hasVDPAU {false};
@@ -1408,7 +1421,8 @@ void VideoFFmpegComponent::startVideoStream()
         mFrameProcessingThread = nullptr;
         mVideoWidth = 0;
         mVideoHeight = 0;
-        mAccumulatedTime = 0;
+        mLinePaddingComp = 0.0f;
+        mAccumulatedTime = 0.0;
         mStartTimeAccumulation = false;
         mSWDecoder = true;
         mDecodedFrame = false;
@@ -1648,7 +1662,7 @@ void VideoFFmpegComponent::stopVideoPlayer(bool muteAudio)
     std::queue<AudioFrame>().swap(mAudioFrameQueue);
 
     // Clear the audio buffer.
-    if (AudioManager::sAudioDevice != 0)
+    if (muteAudio && AudioManager::sAudioDevice != 0)
         AudioManager::getInstance().clearStream();
 
     if (mFormatContext) {

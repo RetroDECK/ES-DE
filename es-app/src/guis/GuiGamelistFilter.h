@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiGamelistFilter.h
 //
 //  User interface for the gamelist filters.

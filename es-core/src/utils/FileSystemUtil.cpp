@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  FileSystemUtil.cpp
 //
 //  Low-level filesystem functions.
@@ -37,17 +37,14 @@
 #endif
 
 // For Unix systems, set the install prefix as defined via CMAKE_INSTALL_PREFIX when CMake was run.
-// If not defined, the default prefix '/usr' will be used on Linux, '/usr/pkg' on NetBSD and
-// '/usr/local' on FreeBSD and OpenBSD. This fallback should not be required though unless the
-// build environment is broken.
+// If not defined, the default prefix "/usr" will be used on Linux and "/usr/local" on FreeBSD.
+// This fallback should not be required though unless the build environment is broken.
 #if defined(__unix__)
 #if defined(ES_INSTALL_PREFIX)
 const std::string installPrefix {ES_INSTALL_PREFIX};
 #else
 #if defined(__linux__)
 const std::string installPrefix {"/usr"};
-#elif defined(__NetBSD__)
-const std::string installPrefix {"/usr/pkg"};
 #else
 const std::string installPrefix {"/usr/local"};
 #endif
@@ -378,7 +375,15 @@ namespace Utils
             esBinary = exePath;
             exePath = getCanonicalPath(exePath);
 
-            // Fallback to argv[0] if everything else fails.
+#if defined(__FreeBSD__) || defined(__HAIKU__)
+            // Fallback to getPathToBinary(argv[0]), needed as FreeBSD and Haiku do not
+            // provide /proc/self/exe.
+            if (exePath.empty()) {
+                esBinary = getPathToBinary(path);
+                exePath = getCanonicalPath(esBinary);
+            }
+#endif
+            // Fallback to argv[0] if everything else fails, which is always the case on macOS.
             if (exePath.empty()) {
                 esBinary = path;
                 exePath = getCanonicalPath(path);
@@ -410,8 +415,10 @@ namespace Utils
         {
 #if defined(__ANDROID__)
             return AndroidVariables::sInternalDataDirectory;
+#elif defined(__HAIKU__)
+            return "/boot/system/data/es-de";
 #elif defined(__unix__)
-            return installPrefix + "/share/es-de";
+    return installPrefix + "/share/es-de";
 #else
     return "";
 #endif

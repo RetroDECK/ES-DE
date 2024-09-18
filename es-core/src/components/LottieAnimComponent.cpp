@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  LottieAnimComponent.cpp
 //
 //  Component to play Lottie animations using the rlottie library.

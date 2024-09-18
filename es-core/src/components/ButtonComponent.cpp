@@ -1,9 +1,9 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  ButtonComponent.cpp
 //
-//  Basic on/off button.
+//  Basic button, used as a GUI element and for the virtual keyboard buttons.
 //
 
 #include "components/ButtonComponent.h"
@@ -19,17 +19,30 @@ ButtonComponent::ButtonComponent(const std::string& text,
                                  bool flatStyle)
     : mRenderer {Renderer::getInstance()}
     , mBox {":/graphics/button.svg"}
-    , mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mPadding {0.0f, 0.0f, 0.0f, 0.0f}
     , mFocused {false}
     , mEnabled {true}
     , mFlatStyle {flatStyle}
+    , mMinWidth {0.0f}
     , mTextColorFocused {mMenuColorButtonTextFocused}
     , mTextColorUnfocused {mMenuColorButtonTextUnfocused}
     , mFlatColorFocused {mMenuColorButtonFlatFocused}
     , mFlatColorUnfocused {mMenuColorButtonFlatUnfocused}
 
 {
+    if (mFlatStyle) {
+        mButtonText = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_MEDIUM), 0xFFFFFFFF,
+                                                      ALIGN_CENTER);
+    }
+    else {
+        mButtonText = std::make_unique<TextComponent>("DELETE", Font::get(FONT_SIZE_MEDIUM),
+                                                      0xFFFFFFFF, ALIGN_CENTER);
+        const glm::vec2 textCacheSize {mButtonText->getTextCache() == nullptr ?
+                                           glm::vec2 {0.0f, 0.0f} :
+                                           mButtonText->getTextCache()->metrics.size};
+        mMinWidth = textCacheSize.x + (12.0f * mRenderer->getScreenResolutionModifier());
+    }
+
     mBox.setSharpCorners(true);
     setPressedFunc(func);
     setText(text, helpText, upperCase);
@@ -71,17 +84,13 @@ void ButtonComponent::setText(const std::string& text,
 {
     mText = upperCase ? Utils::String::toUpper(text) : text;
     mHelpText = helpText;
+    mButtonText->setText(mText);
 
-    mTextCache =
-        std::unique_ptr<TextCache>(mFont->buildTextCache(mText, 0.0f, 0.0f, getCurTextColor()));
-
-    const float minWidth {mFont->sizeText("DELETE").x +
-                          (12.0f * mRenderer->getScreenResolutionModifier())};
     if (resize) {
-        setSize(std::max(mTextCache->metrics.size.x +
-                             (12.0f * mRenderer->getScreenResolutionModifier()),
-                         minWidth),
-                mTextCache->metrics.size.y);
+        setSize(
+            std::max(mButtonText->getSize().x + (12.0f * mRenderer->getScreenResolutionModifier()),
+                     mMinWidth),
+            mButtonText->getSize().y);
     }
 
     updateHelpPrompts();
@@ -136,26 +145,20 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
         mBox.render(trans);
     }
 
-    if (mTextCache) {
-        glm::vec3 centerOffset {(mSize.x - mTextCache->metrics.size.x) / 2.0f,
-                                (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
-        trans = glm::translate(trans, glm::round(centerOffset));
+    const glm::vec3 centerOffset {(mSize.x - mButtonText->getSize().x) / 2.0f,
+                                  (mSize.y - mButtonText->getSize().y) / 2.0f, 0.0f};
+    trans = glm::translate(trans, glm::round(centerOffset));
 
-        if (Settings::getInstance()->getBool("DebugText")) {
-            mRenderer->drawRect(centerOffset.x, 0.0f, mTextCache->metrics.size.x, mSize.y,
-                                0x00000033, 0x00000033);
-            mRenderer->drawRect(mBox.getPosition().x, 0.0f, mBox.getSize().x, mSize.y, 0x0000FF33,
-                                0x0000FF33);
-        }
-
-        mRenderer->setMatrix(trans);
-
-        mTextCache->setColor(getCurTextColor());
-        mFont->renderTextCache(mTextCache.get());
-        trans = glm::translate(trans, glm::round(-centerOffset));
+    if (Settings::getInstance()->getBool("DebugText")) {
+        mButtonText->setDebugRendering(false);
+        mRenderer->drawRect(centerOffset.x, 0.0f, mButtonText->getSize().x, mSize.y, 0x00000033,
+                            0x00000033);
+        mRenderer->drawRect(mBox.getPosition().x, 0.0f, mBox.getSize().x, mSize.y, 0x0000FF33,
+                            0x0000FF33);
     }
 
-    renderChildren(trans);
+    mButtonText->setColor(getCurTextColor());
+    mButtonText->render(trans);
 }
 
 std::vector<HelpPrompt> ButtonComponent::getHelpPrompts()

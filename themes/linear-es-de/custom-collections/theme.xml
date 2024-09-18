@@ -4,12 +4,12 @@
     <variant name="all">
         <view name="gamelist">
             <text name="systemName">
-                <text>Custom Collections</text>
+                <text>${langCustomCollections}</text>
                 <letterCase>capitalize</letterCase>
             </text>
             <text name="system-label">
                 <metadata>systemFullname</metadata>
-                <defaultValue>Your Collections</defaultValue>
+                <defaultValue>${langYourCollections}</defaultValue>
             </text>
         </view>
     </variant>
@@ -19,7 +19,7 @@
         <view name="gamelist">
             <text name="customCollectionName">
                 <metadata>systemFullname</metadata>
-                <defaultValue>Your Collections</defaultValue>
+                <defaultValue>${langYourCollections}</defaultValue>
             </text>
         </view>
     </variant>

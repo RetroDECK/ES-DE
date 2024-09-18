@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  GuiAlternativeEmulators.cpp
 //
 //  User interface to select between alternative emulators per system
@@ -11,14 +11,15 @@
 
 #include "GamelistFileParser.h"
 #include "SystemData.h"
+#include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
 
 GuiAlternativeEmulators::GuiAlternativeEmulators()
-    : mMenu {"ALTERNATIVE EMULATORS"}
+    : mMenu {_("ALTERNATIVE EMULATORS")}
     , mHasSystems {false}
 {
     addChild(&mMenu);
-    mMenu.addButton("BACK", "back", [this] { delete this; });
+    mMenu.addButton(_("BACK"), _("back"), [this] { delete this; });
 
     // Horizontal sizes for the system and label entries.
     float systemSizeX {mMenu.getSize().x / 3.27f};
@@ -41,7 +42,8 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
 
         std::string name {(*it)->getName()};
         std::shared_ptr<TextComponent> systemText {
-            std::make_shared<TextComponent>(name, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
+            std::make_shared<TextComponent>(name, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary,
+                                            ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {0, 0})};
 
         systemText->setSize(systemSizeX, systemText->getSize().y);
         row.addElement(systemText, false);
@@ -64,22 +66,23 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
         bool invalidEntry {false};
 
         if (label.empty()) {
-            label = ViewController::EXCLAMATION_CHAR + " INVALID ENTRY";
+            label = ViewController::EXCLAMATION_CHAR + " " + _("INVALID ENTRY");
             invalidEntry = true;
         }
 
         std::shared_ptr<TextComponent> labelText;
 
         if (label == (*it)->getSystemEnvData()->mLaunchCommands.front().second) {
-            labelText =
-                std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT),
-                                                mMenuColorPrimary, ALIGN_RIGHT);
+            labelText = std::make_shared<TextComponent>(
+                label, Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), mMenuColorPrimary, ALIGN_RIGHT,
+                ALIGN_CENTER, glm::ivec2 {0, 0});
         }
         else {
             // Mark any non-default value with bold and add a gear symbol as well.
             labelText = std::make_shared<TextComponent>(
                 label + (!invalidEntry ? " " + ViewController::GEAR_CHAR : ""),
-                Font::get(FONT_SIZE_MEDIUM, FONT_PATH_BOLD), mMenuColorPrimary, ALIGN_RIGHT);
+                Font::get(FONT_SIZE_MEDIUM, FONT_PATH_BOLD), mMenuColorPrimary, ALIGN_RIGHT,
+                ALIGN_CENTER, glm::ivec2 {0, 0});
         }
 
         // Mark invalid entries with red color.
@@ -97,7 +100,8 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
             *std::find(SystemData::sSystemVector.cbegin(), SystemData::sSystemVector.cend(), *it)};
 
         row.makeAcceptInputHandler([this, systemEntry, labelText] {
-            if (labelText->getValue() == ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY")
+            if (labelText->getValue() ==
+                ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEARED ENTRY"))
                 return;
             selectorWindow(systemEntry);
         });
@@ -111,7 +115,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
     if (!mHasSystems) {
         ComponentListRow row;
         std::shared_ptr<TextComponent> systemText {std::make_shared<TextComponent>(
-            ViewController::EXCLAMATION_CHAR + " NO ALTERNATIVE EMULATORS DEFINED",
+            ViewController::EXCLAMATION_CHAR + " " + _("NO ALTERNATIVE EMULATORS DEFINED"),
             Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_CENTER)};
         row.addElement(systemText, true);
         mMenu.addRow(row);
@@ -141,7 +145,7 @@ void GuiAlternativeEmulators::updateMenu(const std::string& systemName,
 
 void GuiAlternativeEmulators::selectorWindow(SystemData* system)
 {
-    auto s = new GuiSettings(system->getFullName());
+    auto s = new GuiSettings(Utils::String::toUpper(system->getFullName()));
 
     std::string selectedLabel {system->getAlternativeEmulator()};
     std::string label;
@@ -150,7 +154,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
         ComponentListRow row;
 
         if (entry.second == "")
-            label = ViewController::CROSSEDCIRCLE_CHAR + " CLEAR INVALID ENTRY";
+            label = ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEAR INVALID ENTRY");
         else
             label = entry.second;
 
@@ -159,7 +163,8 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
         labelText->setSelectable(true);
 
         if (system->getSystemEnvData()->mLaunchCommands.front().second == label)
-            labelText->setValue(labelText->getValue().append(" [DEFAULT]"));
+            labelText->setValue(
+                labelText->getValue().append(" [").append(_("DEFAULT")).append("]"));
 
         row.addElement(labelText, true);
         row.makeAcceptInputHandler([this, s, system, labelText, entry, selectedLabel] {
@@ -173,7 +178,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
                 if (entry.second == system->getSystemEnvData()->mLaunchCommands.front().second) {
                     if (system->getSystemEnvData()->mLaunchCommands.front().second == "") {
                         updateMenu(system->getName(),
-                                   ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY",
+                                   ViewController::CROSSEDCIRCLE_CHAR + " " + _("CLEARED ENTRY"),
                                    (entry.second ==
                                     system->getSystemEnvData()->mLaunchCommands.front().second));
                     }
@@ -256,8 +261,8 @@ bool GuiAlternativeEmulators::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiAlternativeEmulators::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "back"));
+    prompts.push_back(HelpPrompt("b", _("back")));
     if (mHasSystems)
-        prompts.push_back(HelpPrompt("a", "select"));
+        prompts.push_back(HelpPrompt("a", _("select")));
     return prompts;
 }

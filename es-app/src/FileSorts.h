@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  ES-DE
+//  ES-DE Frontend
 //  FileSorts.h
 //
 //  Gamelist sorting functions.
@@ -36,6 +36,11 @@ namespace FileSorts
     bool compareTimesPlayedDescending(const FileData* file1, const FileData* fil2);
     bool compareSystem(const FileData* file1, const FileData* file2);
     bool compareSystemDescending(const FileData* file1, const FileData* file2);
+
+#if defined(GETTEXT_DUMMY_ENTRIES)
+    // This is just to get gettext msgid entries added to the PO message catalog files.
+    void gettextMessageCatalogEntries();
+#endif
 
     extern const std::vector<FileData::SortType> SortTypes;
 } // namespace FileSorts
