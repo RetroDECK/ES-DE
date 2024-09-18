@@ -52,6 +52,9 @@ void SystemView::onShow()
 
 void SystemView::onHide()
 {
+    if (mPrimary == nullptr || mPrimary->getCursor() > static_cast<int>(mSystemElements.size() - 1))
+        return;
+
     for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
         video->stopVideoPlayer(false);
 }
