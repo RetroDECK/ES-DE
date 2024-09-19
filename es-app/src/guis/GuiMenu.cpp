@@ -2331,6 +2331,11 @@ void GuiMenu::addVersionInfo()
 
     const std::string applicationName {"RetroDECK"};
 
+    std::ifstream file("/app/retrodeck/version");
+    std::string version;
+    std::getline(file, version);
+    file.close();
+
 #if defined(IS_PRERELEASE)
 #if defined(__ANDROID__)
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
@@ -2344,10 +2349,6 @@ void GuiMenu::addVersionInfo()
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
                      std::to_string(ANDROID_VERSION_CODE));
 #else
-    std::ifstream file("/app/retrodeck/version");
-    std::string version;
-    std::getline(file, version);
-    file.close();
     #undef PROGRAM_VERSION_STRING
     #define PROGRAM_VERSION_STRING version.c_str()
     std::cout << PROGRAM_VERSION_STRING << std::endl;
