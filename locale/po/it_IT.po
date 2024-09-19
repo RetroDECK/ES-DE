@@ -2921,3 +2921,10 @@ msgstr "Hai oltrepassato la tua quota giornaliera di scraping"
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Il server ha ritornato un errore HTTP con codice %s"
+
+# RetroDECK Specific
+msgid "QUIT RETRODECK"
+msgstr "ESCI DA RETRODECK"
+
+msgid "ES-DE CONFIGURATIONS"
+msgstr "IMPOSTAZIONI DI ES-DE"
