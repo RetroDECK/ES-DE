@@ -106,6 +106,7 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedLanguages 
     {"automatic", "automatic"},
     {"en_US", "ENGLISH (UNITED STATES)"},
     {"en_GB", "ENGLISH (UNITED KINGDOM)"},
+    {"ca_ES", "CATALÀ"},
     {"de_DE", "DEUTSCH"},
     {"es_ES", "ESPAÑOL (ESPAÑA)"},
     {"fr_FR", "FRANÇAIS"},
