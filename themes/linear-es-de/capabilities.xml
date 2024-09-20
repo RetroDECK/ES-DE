@@ -7,6 +7,7 @@
 
     <language>en_US</language>
     <language>en_GB</language>
+    <language>de_DE</language>
     <language>es_ES</language>
     <language>fr_FR</language>
     <language>it_IT</language>
@@ -29,6 +30,7 @@
     <colorScheme name="dark">
         <label language="en_US">Dark</label>
         <label language="en_GB">Dark</label>
+        <label language="de_DE">Dunkel</label>
         <label language="es_ES">Oscuro</label>
         <label language="fr_FR">Foncé</label>
         <label language="it_IT">Scuro</label>
@@ -44,6 +46,7 @@
     <colorScheme name="light">
         <label language="en_US">Light</label>
         <label language="en_GB">Light</label>
+        <label language="de_DE">Hell</label>
         <label language="es_ES">Claro</label>
         <label language="fr_FR">Clair</label>
         <label language="it_IT">Chiaro</label>
@@ -71,6 +74,7 @@
     <variant name="textlistWithVideos">
         <label language="en_US">Textlist</label>
         <label language="en_GB">Textlist</label>
+        <label language="de_DE">Liste</label>
         <label language="es_ES">Lista</label>
         <label language="fr_FR">Liste</label>
         <label language="it_IT">Lista testi</label>
@@ -87,6 +91,7 @@
     <variant name="textlistWithoutVideos">
         <label language="en_US">Textlist without videos</label>
         <label language="en_GB">Textlist without videos</label>
+        <label language="de_DE">Liste ohne videos</label>
         <label language="es_ES">Lista sin videos</label>
         <label language="fr_FR">Liste sans vidéos</label>
         <label language="it_IT">Lista testi, no video</label>
@@ -103,6 +108,7 @@
     <variant name="simpleTextlistWithVideos">
         <label language="en_US">Simple textlist</label>
         <label language="en_GB">Simple textlist</label>
+        <label language="de_DE">Einfache liste</label>
         <label language="es_ES">Lista simple</label>
         <label language="fr_FR">Simple liste</label>
         <label language="it_IT">Lista testi semplice</label>
@@ -119,6 +125,7 @@
     <variant name="simpleTextlistWithoutVideos">
         <label language="en_US">Simple textlist without videos</label>
         <label language="en_GB">Simple textlist without videos</label>
+        <label language="de_DE">Einfache liste ohne videos</label>
         <label language="es_ES">Lista simple sin videos</label>
         <label language="fr_FR">Simple liste sans vidéos</label>
         <label language="it_IT">Lista testi semplice, no video</label>
@@ -135,6 +142,7 @@
     <variant name="carousel">
         <label language="en_US">Carousel</label>
         <label language="en_GB">Carousel</label>
+        <label language="de_DE">Karussell</label>
         <label language="es_ES">Carrusel</label>
         <label language="fr_FR">Carrousel</label>
         <label language="it_IT">Carosello</label>
@@ -151,6 +159,7 @@
     <variant name="simpleCarousel">
         <label language="en_US">Simple carousel</label>
         <label language="en_GB">Simple carousel</label>
+        <label language="de_DE">Einfaches karussell</label>
         <label language="es_ES">Carrusel simple</label>
         <label language="fr_FR">Simple Carrousel</label>
         <label language="it_IT">Carosello semplice</label>
@@ -167,6 +176,7 @@
     <transitions name="instantAndSlide">
         <label language="en_US">Instant and slide</label>
         <label language="en_GB">Instant and slide</label>
+        <label language="de_DE">Sofort und gleiten</label>
         <label language="es_ES">Instantanea y deslizante</label>
         <label language="fr_FR">Instantané et glissement</label>
         <label language="it_IT">Istantanea e scorri</label>
@@ -189,6 +199,7 @@
     <transitions name="instant">
         <label language="en_US">Instant</label>
         <label language="en_GB">Instant</label>
+        <label language="de_DE">Sofort</label>
         <label language="es_ES">Instantanea</label>
         <label language="fr_FR">Instantané</label>
         <label language="it_IT">Istantanea</label>
@@ -211,6 +222,7 @@
     <transitions name="fade">
         <label language="en_US">Fade</label>
         <label language="en_GB">Fade</label>
+        <label language="de_DE">Überblendung</label>
         <label language="es_ES">Fundido</label>
         <label language="fr_FR">Fondu</label>
         <label language="it_IT">Dissolvi</label>

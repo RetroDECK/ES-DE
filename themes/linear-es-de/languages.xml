@@ -11,6 +11,19 @@
         <langCustomCollections>Custom Collections</langCustomCollections>
         <langYourCollections>Your Collections</langYourCollections>
     </variables>
+    <language name="de_DE">
+        <variables>
+            <langLabelRating>Bewertung</langLabelRating>
+            <langLabelReleasedate>Veröffentlicht</langLabelReleasedate>
+            <langLabelPlayers>Spieler</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Entwickler</langLabelDeveloper>
+            <langLabelPublisher>Herausgeber</langLabelPublisher>
+            <langLabelLastPlayed>Zuletzt Gespielt</langLabelLastPlayed>
+            <langCustomCollections>Benutzerdefinierte Sammlungen</langCustomCollections>
+            <langYourCollections>Deine Sammlungen</langYourCollections>
+        </variables>
+    </language>
     <language name="es_ES">
         <variables>
             <langLabelRating>Valoracion</langLabelRating>
