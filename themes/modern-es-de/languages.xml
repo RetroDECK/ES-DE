@@ -9,6 +9,17 @@
         <langLabelPublisher>Publisher</langLabelPublisher>
         <langUnknown>Unknown</langUnknown>
     </variables>
+    <language name="de_DE">
+        <variables>
+            <langLabelRating>Bewertung</langLabelRating>
+            <langLabelReleasedate>Veröffentlicht</langLabelReleasedate>
+            <langLabelPlayers>Spieler</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Entwickler</langLabelDeveloper>
+            <langLabelPublisher>Herausgeber</langLabelPublisher>
+            <langUnknown>Unbekannt</langUnknown>
+        </variables>
+    </language>
     <language name="es_ES">
         <variables>
             <langLabelRating>Valoracion</langLabelRating>
