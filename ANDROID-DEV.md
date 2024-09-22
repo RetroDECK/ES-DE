@@ -216,7 +216,7 @@ https://github.com/Trixarian/NetherSX2-patch
 
 ### Cemu
 
-This emulator can be downloaded from their GitHub site. Note that this is a fork and not released by the main Cemu project.
+This emulator can be downloaded from the following GitHub site. Note that this repository is not from the official Cemu project, we consider Cemu as experimental on Android for the time being.
 
 https://github.com/SSimco/Cemu/releases
 

@@ -14,7 +14,7 @@
 * Added translations for Dutch (nl_NL)
 * Added translations for Korean (ko_KR)
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
-* (Android) Added support for the Nintendo Wii U (wiiu) game system
+* (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Improved the experience when running in multi-window mode
 * Added the Nanum Square Neo Korean font
 
