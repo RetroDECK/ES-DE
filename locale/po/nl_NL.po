@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-09-22 14:58+0200\n"
-"PO-Revision-Date: 2024-07-30 18:16+0200\n"
+"PO-Revision-Date: 2024-09-22 16:23+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
 "Language: nl_NL\n"
@@ -654,7 +654,7 @@ msgstr "TOETSENBORD AFSLUITEN SNELKNOP"
 
 msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr "WANNEER MOET JE DE GAMEMETADATA OPSLAAN?"
+msgstr "WANNEER MOET JE DE GAMEMETADATA OPSLAAN"
 
 msgid "ALWAYS"
 msgstr "ALTIJD"
@@ -666,7 +666,7 @@ msgid "NEVER"
 msgstr "NOOIT"
 
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr "WANNEER MOET JE DE GAMEMETADATA OPSLAAN?"
+msgstr "WANNEER MOET JE DE GAMEMETADATA OPSLAAN"
 
 msgid "APPLICATION UPDATES"
 msgstr "TOEPASSINGSUPDATES"
@@ -1297,12 +1297,12 @@ msgid ""
 "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
 "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
 msgstr ""
-"HET LIJKT EROP DAT U NIET DE NIEUWSTE ES-DE RELEASE GEBRUIKT. UPGRADE "
+"HET LIJKT EROP DAT U NIET DE NIEUWSTE ES-DE RELEASE GEBRUIKT.,UPGRADE "
 "ALVORENS VERDER TE GAAN, OMDAT DEZE THEMA'S MOGELIJK NIET COMPATIBEL ZIJN "
 "MET UW VERSIE."
 
 msgid "and"
-msgstr "En"
+msgstr "en"
 
 #, c-format
 msgid ""
@@ -1519,7 +1519,7 @@ msgstr "stop"
 msgid "GAME"
 msgid_plural "GAMES"
 msgstr[0] "SPEL"
-msgstr[1] ""
+msgstr[1] "SPELLEN"
 
 #, c-format
 msgid "GAME %i OF %i"
@@ -1528,17 +1528,17 @@ msgstr "SPEL %i VAN %i"
 msgid "NO GAMES WERE SCRAPED"
 msgstr "GEEN SPELLETJES WERDEN GESCHRAPT"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%i GAME SUCCESSFULLY SCRAPED"
 msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
 msgstr[0] "%i GAME SUCCESVOL GESCHRAPT"
-msgstr[1] ""
+msgstr[1] "%i GAMES SUCCESVOL GESCHRAPT"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%i GAME SKIPPED"
 msgid_plural "%i GAMES SKIPPED"
 msgstr[0] "%i SPEL OVERGESLAGEN"
-msgstr[1] ""
+msgstr[1] "%i SPELLEN OVERGESLAGEN"
 
 msgid "GAMELIST OPTIONS"
 msgstr "GAMELIST-OPTIES"
@@ -1831,14 +1831,14 @@ msgstr "spel verwijderen"
 msgid "MIXIMAGE OFFLINE GENERATOR"
 msgstr "MIXIMAGE OFFLINE-GENERATOR"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%i OF %i GAME PROCESSED"
 msgid_plural "%i OF %i GAMES PROCESSED"
 msgstr[0] "%i VAN %i SPEL VERWERKT"
-msgstr[1] ""
+msgstr[1] "%i Van %i SPELLEN VERWERKT"
 
 msgid "Generated:"
-msgstr "gegenereerd:"
+msgstr "Gegenereerd:"
 
 msgid "Overwritten:"
 msgstr "Overschreven:"
@@ -2042,7 +2042,7 @@ msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
 msgstr "Deze collectie bevat 3 spellen: '%s [%s]', '%s [%s]' en '%s [%s]'"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
@@ -2054,6 +2054,8 @@ msgstr[0] ""
 "Deze collectie bevat %i games: '%s [%s]', '%s [%s]' en '%s [%s]', onder "
 "andere"
 msgstr[1] ""
+"Deze collecties bevat %i games: ‘%s [%s]’, ‘%s [%s]’ en ‘%s [%s]’, onder "
+"andere"
 
 #, c-format
 msgctxt "theme"
@@ -2070,13 +2072,13 @@ msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
 msgstr "Deze collectie bevat 3 spellen: '%s', '%s' en '%s'"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgstr[0] "Deze collectie bevat %i games: '%s', '%s' en '%s', onder andere"
-msgstr[1] ""
+msgstr[1] "Deze collecties bevat %i games: ‘%s’, ‘%s’ en ‘%s’, onder andere"
 
 #, c-format
 msgctxt "theme"
@@ -2239,26 +2241,26 @@ msgstr "willekeurig"
 msgid "screensaver"
 msgstr "schermbeveiliging"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i game"
 msgid_plural "%i games"
 msgstr[0] "%i spel"
-msgstr[1] ""
+msgstr[1] "%i spellen"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "(%i favorite)"
 msgid_plural "(%i favorites)"
 msgstr[0] "(%i favoriet)"
-msgstr[1] ""
+msgstr[1] "(%i favorieten)"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
 msgstr[0] "%i favoriet"
-msgstr[1] ""
+msgstr[1] "%i favorieten"
 
 msgctxt "theme"
 msgid "unknown"
@@ -2278,11 +2280,11 @@ msgstr "spring naar spel"
 
 msgctxt "theme"
 msgid "yes"
-msgstr "Ja"
+msgstr "Ja "
 
 msgctxt "theme"
 msgid "no"
-msgstr "Nee"
+msgstr "Nee "
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2399,7 +2401,7 @@ msgstr ""
 "MINSTENS ÉÉN VAN UW SYSTEMEN HEEFT EEN ONGELDIGE ALTERNATIEVE EMULATOR "
 "GECONFIGUREERD MET GEEN OVEREENKOMSTIGE INVOER IN HET "
 "SYSTEEMCONFIGURATIEBESTAND. CONTROLEER UW INSTELLING MET DE INTERFACE "
-"'ALTERNATIEVE EMULATORS' IN HET MENU 'OVERIGE INSTELLINGEN'."
+"'ALTERNATIEVE EMULATORS' IN HET MENU 'OVERIGE INSTELLINGEN'"
 
 msgid "UPDATE"
 msgstr "UPDATE"
@@ -2459,7 +2461,7 @@ msgid "game media"
 msgstr "spelmedia"
 
 msgid "first"
-msgstr "Eerst"
+msgstr "eerst"
 
 msgid "last"
 msgstr "laatst"
@@ -2645,17 +2647,17 @@ msgstr "bewerken"
 msgid "%i (OF %i)"
 msgstr "%i (VAN %i)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s SELECTED"
 msgid_plural "%s SELECTED"
 msgstr[0] "%s GESELECTEERD"
-msgstr[1] ""
+msgstr[1] "%s GESELECTEERDE"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%i SELECTED"
 msgid_plural "%i SELECTED"
 msgstr[0] "%i GESELECTEERD"
-msgstr[1] ""
+msgstr[1] "%i GESELECTEERDE"
 
 msgid "change value"
 msgstr "waarde veranderen"
@@ -2691,33 +2693,33 @@ msgctxt "theme"
 msgid "never"
 msgstr "nooit"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i day ago"
 msgid_plural "%i days ago"
 msgstr[0] "%i dag geleden"
-msgstr[1] ""
+msgstr[1] "%i dagen geleden"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i hour ago"
 msgid_plural "%i hours ago"
 msgstr[0] "%i uur geleden"
-msgstr[1] ""
+msgstr[1] "%i uren geleden"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i minute ago"
 msgid_plural "%i minutes ago"
 msgstr[0] "%i minuut geleden"
-msgstr[1] ""
+msgstr[1] "%i minuten geleden"
 
-#, fuzzy, c-format
+#, c-format
 msgctxt "theme"
 msgid "%i second ago"
 msgid_plural "%i seconds ago"
 msgstr[0] "%i seconde geleden"
-msgstr[1] ""
+msgstr[1] "%i seconden geleden"
 
 msgid "SPACE"
 msgstr "RUIMTE"
@@ -2746,11 +2748,11 @@ msgstr "WELKOM"
 msgid "CONFIGURE INPUT DEVICE"
 msgstr "CONFIGUREREN INPUT APPARAAT"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%i GAMEPAD DETECTED"
 msgid_plural "%i GAMEPADS DETECTED"
 msgstr[0] "%i GAMEPAD GEDETECTEERD"
-msgstr[1] ""
+msgstr[1] "%i GAMEPADS GEDETECTEERD"
 
 msgid "NO GAMEPADS DETECTED"
 msgstr "GEEN GAMEPADS GEDETECTEERD"
@@ -2797,7 +2799,7 @@ msgid "NOT DEFINED"
 msgstr "NIET GEDEFINIEERD"
 
 msgid "ok"
-msgstr "OK"
+msgstr "ok"
 
 msgid "D-PAD UP"
 msgstr "D-PAD OMHOOG"
