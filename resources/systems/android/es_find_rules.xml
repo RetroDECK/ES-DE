@@ -28,6 +28,12 @@
             <entry>com.explusalpha.C64Emu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="CEMU">
+        <!-- Nintendo Wii U emulator Cemu -->
+        <rule type="androidpackage">
+            <entry>info.cemu.Cemu/info.cemu.Cemu.emulation.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="androidpackage">
