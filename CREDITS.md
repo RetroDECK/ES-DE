@@ -28,6 +28,8 @@ Dani (stshunz) \
 Fredy27 (neuromancer974) \
 **Italian** \
 Viler \
+**Dutch**\
+Stefan VDB\
 **Polish** \
 kycho \
 **Portuguese (Brazil)** \

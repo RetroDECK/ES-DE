@@ -11,14 +11,17 @@
 ### Detailed list of changes
 
 * Added translations for German (de_DE)
+* Added translations for Dutch (nl_NL)
 * Added translations for Korean (ko_KR)
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
+* (Android) Added support for the Nintendo Wii U (wiiu) game system
 * (Android) Improved the experience when running in multi-window mode
 * Added the Nanum Square Neo Korean font
 
 ### Bug fixes
 
 * (Android) Switching from ES-DE to another app and back again while the "no ROMs" dialog was shown crashed the application
+* There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver
 * Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos
 * Newly entered ScreenScraper username and password values were positioned incorrectly vertically in the account settings menu
 

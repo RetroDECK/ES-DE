@@ -755,10 +755,12 @@ The following languages are supported:
 | :------------ | :----------------------- | :----------------------- |
 | en_US         | English (United States)  | English (United States)  |
 | en_GB         | English (United Kingdom) | English (United Kingdom) |
+| ca_ES         | Catalan                  | Català                   |
 | de_DE         | German                   | Deutsch                  |
 | es_ES         | Spanish (Spain)          | Español (España)         |
 | fr_FR         | French                   | Français                 |
 | it_IT         | Italian                  | Italiano                 |
+| nl_NL         | Dutch                    | Nederlands               |
 | pl_PL         | Polish                   | Polski                   |
 | pt_BR         | Portuguese (Brazil)      | Português (Brasil)       |
 | ro_RO         | Romanian                 | Română                   |

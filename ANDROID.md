@@ -4,8 +4,7 @@ This document contains information specific to the Android release, for more gen
 
 It's also generally recommended to read the [Frequently Asked Questions (FAQ) for Android](FAQ-ANDROID.md) document prior to diving into the information in this document.
 
-You can buy the Android APK from our Patreon page: \
-https://www.patreon.com/es_de
+You can buy the Android APK via [Patreon](https://www.patreon.com/es_de), the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy) or [Huawei AppGallery](https://appgallery.huawei.com/#/app/C111315115)
 
 Table of contents:
 
@@ -615,8 +614,8 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Samsung      | Galaxy A71 5G           | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy M52 5G           | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy Note 9           | 10              | Yes       | None                |                            |
-| Samsung      | Galaxy Note 20          | 13              | No        | Fails at configurator/onboarding |                            |
-| Samsung      | Galaxy Note 20 Ultra 5G | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 20          | 13              | Yes       | None                | The configurator/onboarding may fail if the device is in portrait mode, so always use landscape mode when running through the initial setup |
+| Samsung      | Galaxy Note 20 Ultra 5G | 13              | Yes       | None                | The configurator/onboarding may fail if the device is in portrait mode, so always use landscape mode when running through the initial setup |
 | Samsung      | Galaxy S9+              | 10              | Yes       | None                |                            |
 | Samsung      | Galaxy S10              | 12              | Yes       | None                |                            |
 | Samsung      | Galaxy S20              | 13              | Yes       | None                |                            |
