@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-04 17:44+0200\n"
+"POT-Creation-Date: 2024-09-22 14:58+0200\n"
 "PO-Revision-Date: 2024-07-30 18:16+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
@@ -16,387 +16,392 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 msgid "Network error (status:"
-msgstr ""
+msgstr "Netwerkfout (status:"
 
 msgid "New prerelease available:"
-msgstr ""
+msgstr "Nieuwe prerelease beschikbaar:"
 
 msgid "New release available:"
-msgstr ""
+msgstr "Nieuwe release beschikbaar:"
 
 msgid "For more information visit"
-msgstr ""
+msgstr "Voor meer informatie bezoek"
 
 msgid "No Entries Found"
-msgstr ""
+msgstr "Geen items gevonden"
 
 msgctxt "theme"
 msgid "all"
-msgstr ""
+msgstr "alle"
 
 msgctxt "theme"
 msgid "all games"
-msgstr ""
+msgstr "alle spellen"
 
 msgctxt "theme"
 msgid "recent"
-msgstr ""
+msgstr "recent"
 
 msgctxt "theme"
 msgid "last played"
-msgstr ""
+msgstr "laatst gespeeld"
 
 msgctxt "theme"
 msgid "favorites"
-msgstr ""
+msgstr "favorieten"
 
 msgctxt "theme"
 msgid "collections"
-msgstr ""
+msgstr "verzamelingen"
 
 msgid "ScreenScraper error:"
-msgstr ""
+msgstr "ScreenScraper-fout:"
 
 msgid "ScreenScraper: Wrong username or password"
-msgstr ""
+msgstr "ScreenScraper: Verkeerde gebruikersnaam of wachtwoord"
 
 msgid "Network error:"
-msgstr ""
+msgstr "Netwerkfout:"
 
 msgid "Media directory does not exist and can't be created."
-msgstr ""
+msgstr "De mediamap bestaat niet en kan niet worden aangemaakt."
 
 msgid "Permission problems?"
-msgstr ""
+msgstr "Problemen met toestemming?"
 
 msgid "Failed to open path for writing media file."
 msgstr ""
+"Het openen van het pad voor het schrijven van het mediabestand is mislukt."
 
 msgid "Couldn't save media file, permission problems or is the disk full?"
 msgstr ""
+"Kan het mediabestand niet opslaan, zijn er problemen met de rechten of is de "
+"schijf vol?"
 
 msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
+"Kan de gewijzigde afbeelding niet opslaan, zijn er rechtenproblemen of is de "
+"schijf vol?"
 
 msgctxt "metadata"
 msgid "NAME"
-msgstr ""
+msgstr "NAAM"
 
 msgctxt "metadata"
 msgid "ENTER NAME"
-msgstr ""
+msgstr "VOER NAAM IN"
 
 msgctxt "metadata"
 msgid "SORTNAME"
-msgstr ""
+msgstr "SORTEERNAAM"
 
 msgctxt "metadata"
 msgid "ENTER SORTNAME"
-msgstr ""
+msgstr "VOER SORTNAME IN"
 
 msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr ""
+msgstr "AANGEPASTE COLLECTIES SORTNAME"
 
 msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
-msgstr ""
+msgstr "VOER COLLECTIES IN SORTNAME"
 
 msgctxt "metadata"
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "BESCHRIJVING"
 
 msgctxt "metadata"
 msgid "ENTER DESCRIPTION"
-msgstr ""
+msgstr "VOER BESCHRIJVING IN"
 
 msgctxt "metadata"
 msgid "RATING"
-msgstr ""
+msgstr "BEOORDELING"
 
 msgctxt "metadata"
 msgid "RELEASE DATE"
-msgstr ""
+msgstr "PUBLICATIEDATUM"
 
 msgctxt "metadata"
 msgid "DEVELOPER"
-msgstr ""
+msgstr "ONTWIKKELAAR"
 
 msgctxt "metadata"
 msgid "ENTER DEVELOPER"
-msgstr ""
+msgstr "ONTWIKKELAAR VOEREN"
 
 msgctxt "metadata"
 msgid "PUBLISHER"
-msgstr ""
+msgstr "UITGEVER"
 
 msgctxt "metadata"
 msgid "ENTER PUBLISHER"
-msgstr ""
+msgstr "VOER UITGEVER IN"
 
 msgctxt "metadata"
 msgid "GENRE"
-msgstr ""
+msgstr "GENRE"
 
 msgctxt "metadata"
 msgid "ENTER GENRE"
-msgstr ""
+msgstr "VOER GENRE IN"
 
 msgctxt "metadata"
 msgid "PLAYERS"
-msgstr ""
+msgstr "SPELERS"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
-msgstr ""
+msgstr "VOER HET AANTAL SPELERS IN"
 
 msgctxt "metadata"
 msgid "FAVORITE"
-msgstr ""
+msgstr "FAVORIET"
 
 msgctxt "metadata"
 msgid "COMPLETED"
-msgstr ""
+msgstr "VOLTOOID"
 
 msgctxt "metadata"
 msgid "KIDGAME"
-msgstr ""
+msgstr "KINDERSPEL"
 
 msgctxt "metadata"
 msgid "KIDGAME (ONLY AFFECTS BADGES)"
-msgstr ""
+msgstr "KIDGAME (heeft alleen invloed op BADGES)"
 
 msgctxt "metadata"
 msgid "HIDDEN"
-msgstr ""
+msgstr "VERBORGEN"
 
 msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
-msgstr ""
+msgstr "KAPOT/WERKT NIET"
 
 msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
-msgstr ""
+msgstr "UITSLUITEN VAN SPELTELLER"
 
 msgctxt "metadata"
 msgid "EXCLUDE FROM MULTI-SCRAPER"
-msgstr ""
+msgstr "UITSLUITEN VAN MULTI-SCHRAPER"
 
 msgctxt "metadata"
 msgid "HIDE METADATA FIELDS"
-msgstr ""
+msgstr "METADATA-VELDEN VERBERGEN"
 
 msgctxt "metadata"
 msgid "TIMES PLAYED"
-msgstr ""
+msgstr "KEER GESPEELD"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr ""
+msgstr "VOER HET AANTAL KEER IN DAT JE GESPEELD HEBT"
 
 msgctxt "metadata"
 msgid "CONTROLLER"
-msgstr ""
+msgstr "VERWERKER"
 
 msgctxt "metadata"
 msgid "SELECT CONTROLLER"
-msgstr ""
+msgstr "SELECTEER CONTROLLER"
 
 msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
-msgstr ""
+msgstr "ALTERNATIEVE EMULATOR"
 
 msgctxt "metadata"
 msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr ""
+msgstr "SELECTEER ALTERNATIEVE EMULATOR"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
-msgstr ""
+msgstr "MAP LINK"
 
 msgctxt "metadata"
 msgid "SELECT FOLDER LINK"
-msgstr ""
+msgstr "SELECTEER MAP LINK"
 
 msgctxt "metadata"
 msgid "LAST PLAYED"
-msgstr ""
+msgstr "LAATST GESPEELD"
 
 msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
-msgstr ""
+msgstr "VOER DE LAATSTE SPEELDATUM IN"
 
 msgid "MAIN MENU"
-msgstr ""
+msgstr "HOOFDMENU"
 
 msgid "SCRAPER"
-msgstr ""
+msgstr "SCHRAPER"
 
 msgid "UI SETTINGS"
-msgstr ""
+msgstr "UI-INSTELLINGEN"
 
 msgid "SOUND SETTINGS"
-msgstr ""
+msgstr "GELUIDSINSTELLINGEN"
 
 msgid "INPUT DEVICE SETTINGS"
-msgstr ""
+msgstr "INSTELLINGEN INPUT-APPARAAT"
 
 msgid "GAME COLLECTION SETTINGS"
-msgstr ""
+msgstr "INSTELLINGEN VOOR SPELVERZAMELING"
 
 msgid "OTHER SETTINGS"
-msgstr ""
+msgstr "ANDERE INSTELLINGEN"
 
 msgid "UTILITIES"
-msgstr ""
+msgstr "NUTSVOORZIENINGEN"
 
 msgid "QUIT ES-DE"
-msgstr ""
+msgstr "STOP ES-DE"
 
 msgid "QUIT"
-msgstr ""
+msgstr "ONTSLAG NEMEN"
 
 msgid "THEME"
-msgstr ""
+msgstr "THEMA"
 
 msgid "THEME DOWNLOADER"
-msgstr ""
+msgstr "THEMA DOWNLOADER"
 
 msgid "THEME VARIANT"
-msgstr ""
+msgstr "THEMA VARIANT"
 
 msgid "NONE DEFINED"
-msgstr ""
+msgstr "GEEN GEDEFINIEERD"
 
 msgid "THEME COLOR SCHEME"
-msgstr ""
+msgstr "THEMA KLEURENSCHEMA"
 
 msgid "THEME FONT SIZE"
-msgstr ""
+msgstr "THEMA LETTERGROOTTE"
 
 msgid "THEME ASPECT RATIO"
-msgstr ""
+msgstr "THEMA ASPECTVERHOUDING"
 
 msgid "THEME TRANSITIONS"
-msgstr ""
+msgstr "THEMA-OVERGANGEN"
 
 msgid "AUTOMATIC"
-msgstr ""
+msgstr "AUTOMATISCH"
 
 msgid "THEME PROFILE"
-msgstr ""
+msgstr "THEMA PROFIEL"
 
 msgid "INSTANT (BUILT-IN)"
-msgstr ""
+msgstr "DIRECT (INGEBOUWD)"
 
 msgid "SLIDE (BUILT-IN)"
-msgstr ""
+msgstr "SCHUIF (INGEBOUWD)"
 
 msgid "FADE (BUILT-IN)"
-msgstr ""
+msgstr "FADE (INGEBOUWD)"
 
 msgid "THEME LANGUAGE"
-msgstr ""
+msgstr "THEMA TAAL"
 
 msgid "APPLICATION LANGUAGE"
-msgstr ""
+msgstr "TOEPASSINGSTAAL"
 
 msgid "QUICK SYSTEM SELECT"
-msgstr ""
+msgstr "SNEL SYSTEEM SELECTIE"
 
 msgid "LEFT/RIGHT OR SHOULDERS"
-msgstr ""
+msgstr "LINKS/RECHTS OF SCHOUDERS"
 
 msgid "LEFT/RIGHT OR TRIGGERS"
-msgstr ""
+msgstr "LINKS/RECHTS OF TRIGGERS"
 
 msgid "SHOULDERS"
-msgstr ""
+msgstr "SCHOUDERS"
 
 msgid "TRIGGERS"
-msgstr ""
+msgstr "TRIGGERS"
 
 msgid "LEFT/RIGHT"
-msgstr ""
+msgstr "LINKS/RECHTS"
 
 msgid "DISABLED"
-msgstr ""
+msgstr "GEHANDICAPT"
 
 msgid "GAMELIST ON STARTUP"
-msgstr ""
+msgstr "GAMELIST OP STARTUP"
 
 msgid "NONE"
-msgstr ""
+msgstr "GEEN"
 
 msgid "SYSTEMS SORTING"
-msgstr ""
+msgstr "SYSTEEMSORTERING"
 
 msgid "FULL NAMES OR CUSTOM"
-msgstr ""
+msgstr "VOLLEDIGE NAMEN OF AANGEPASTE NAMEN"
 
 msgid "RELEASE YEAR"
-msgstr ""
+msgstr "JAAR VAN UITGAVE"
 
 msgid "MANUFACTURER, RELEASE YEAR"
-msgstr ""
+msgstr "FABRIKANT, UITGAVEJAAR"
 
 msgid "HW TYPE, RELEASE YEAR"
-msgstr ""
+msgstr "HW-TYPE, UITGAVEJAAR"
 
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
-msgstr ""
+msgstr "FABRIKANT, HW-TYPE, REL. JAAR"
 
 msgctxt "short"
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr ""
+msgstr "SPELLEN STANDAARD SORTEERVOLGORDE"
 
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr ""
+msgstr "SPELLEN STANDAARD SORTEERVOLGORDE"
 
 msgid "MENU COLOR SCHEME"
-msgstr ""
+msgstr "MENU KLEURENSCHEMA"
 
 msgid "DARK"
-msgstr ""
+msgstr "DONKER"
 
 msgid "DARK AND RED"
-msgstr ""
+msgstr "DONKER EN ROOD"
 
 msgid "LIGHT"
-msgstr ""
+msgstr "LICHT"
 
 msgid "MENU OPENING ANIMATION"
-msgstr ""
+msgstr "MENU OPENING ANIMATIE"
 
 msgid "SCALE-UP"
-msgstr ""
+msgstr "OPSCHALING"
 
 msgid "LAUNCH SCREEN DURATION"
-msgstr ""
+msgstr "DUUR VAN HET STARTSCHERM"
 
 msgid "NORMAL"
-msgstr ""
+msgstr "NORMAAL"
 
 msgid "BRIEF"
-msgstr ""
+msgstr "KORT"
 
 msgid "LONG"
-msgstr ""
+msgstr "LANG"
 
 msgid "UI MODE"
-msgstr ""
+msgstr "UI-MODUS"
 
 msgid "FULL"
-msgstr ""
+msgstr "VOL"
 
 msgid "KIOSK"
-msgstr ""
+msgstr "KIOSK"
 
 msgid "KID"
-msgstr ""
+msgstr "KIND"
 
 #, c-format
 msgid ""
@@ -408,6 +413,14 @@ msgid ""
 "\n"
 "DO YOU WANT TO PROCEED?"
 msgstr ""
+"DIT VERANDERT DE UI NAAR DE BEPERKTE MODUS\n"
+"'KIOSK'\n"
+"DIT VERBERGT DE MEESTE MENU-OPTIES\n"
+"OM TE ONTGRENDELEN EN TERUG TE GAAN NAAR DE VOLLEDIGE UI, VOER DEZE CODE "
+"IN:\n"
+"%s\n"
+"\n"
+"WILT U DOORGAAN?"
 
 #, c-format
 msgid ""
@@ -420,111 +433,120 @@ msgid ""
 "\n"
 "DO YOU WANT TO PROCEED?"
 msgstr ""
+"DIT VERANDERT DE UI NAAR DE BEPERKTE MODUS\n"
+"'KID'\n"
+"DIT ZORGT ER ALLEEN VOOR DAT SPELLETJES DIE ZIJN GEMARKEERD\n"
+"ALS GESCHIKT VOOR KINDEREN\n"
+"OM TE ONTGRENDELEN EN TERUG TE GAAN NAAR DE VOLLEDIGE UI, VOER DEZE CODE "
+"IN:\n"
+"%s\n"
+"\n"
+"WILT U DOORGAAN?"
 
 msgid "YES"
-msgstr ""
+msgstr "JA"
 
 msgid "NO"
-msgstr ""
+msgstr "NEE"
 
 msgid "RANDOM ENTRY BUTTON"
-msgstr ""
+msgstr "TOEWIJZING KNOP"
 
 msgid "GAMES ONLY"
-msgstr ""
+msgstr "ALLEEN SPELLETJES"
 
 msgid "GAMES AND SYSTEMS"
-msgstr ""
+msgstr "SPELLEN EN SYSTEMEN"
 
 msgid "MEDIA VIEWER SETTINGS"
-msgstr ""
+msgstr "MEDIA VIEWER-INSTELLINGEN"
 
 msgid "SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "SCREENSAVER-INSTELLINGEN"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
-msgstr ""
+msgstr "THEMA VARIANT TRIGGERS INSCHAKELEN"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
-msgstr ""
+msgstr "ACHTERGROND VERVAGEN ALS HET MENU GEOPEND IS"
 
 msgid "SORT FOLDERS ON TOP OF GAMELISTS"
-msgstr ""
+msgstr "SORTEER MAPPEN BOVEN OP GAMELISTEN"
 
 msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
-msgstr ""
+msgstr "SORTEER FAVORIETE SPELLEN BOVEN NIET-FAVORIETEN"
 
 msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
-msgstr ""
+msgstr "VOEG STERRENMARKERINGEN TOE AAN FAVORIETE SPELLETJES"
 
 msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
-msgstr ""
+msgstr "OVERLAY VOOR SNEL SCROLLEN VAN TEKSTLIJST INSCHAKELEN"
 
 msgid "ENABLE VIRTUAL KEYBOARD"
-msgstr ""
+msgstr "VIRTUEEL TOETSENBORD INSCHAKELEN"
 
 msgid "ENABLE TOGGLE FAVORITES BUTTON"
-msgstr ""
+msgstr "KNOP FAVORIETEN INSCHAKELEN"
 
 msgid "ENABLE GAMELIST FILTERS"
-msgstr ""
+msgstr "GAMELIST-FILTERS INSCHAKELEN"
 
 msgid "DISPLAY ON-SCREEN HELP"
-msgstr ""
+msgstr "WEERGAVE VAN ON-SCREEN HELP"
 
 msgid "SYSTEM VOLUME"
-msgstr ""
+msgstr "SYSTEEMVOLUME"
 
 msgid "NAVIGATION SOUNDS VOLUME"
-msgstr ""
+msgstr "NAVIGATIE GELUIDEN VOLUME"
 
 msgid "VIDEO PLAYER VOLUME"
-msgstr ""
+msgstr "VIDEOSPELERVOLUME"
 
 msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
-msgstr ""
+msgstr "SPEEL AUDIO VOOR GAMELIST EN SYSTEEM VIDEO'S BEKIJKEN"
 
 msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
-msgstr ""
+msgstr "AUDIO AFSPELEN VOOR MEDIA VIEWER VIDEO'S"
 
 msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
-msgstr ""
+msgstr "SPEEL AUDIO VOOR SCREENSAVER VIDEO'S"
 
 msgid "ENABLE NAVIGATION SOUNDS"
-msgstr ""
+msgstr "NAVIGATIEGELUIDEN INSCHAKELEN"
 
 msgid "CONTROLLER TYPE"
-msgstr ""
+msgstr "CONTROLLERTYPE"
 
 msgid "TOUCH OVERLAY SIZE"
-msgstr ""
+msgstr "GROOTTE VAN DE TOUCH OVERLAY"
 
 msgid "MEDIUM"
-msgstr ""
+msgstr "MEDIUM"
 
 msgid "LARGE"
-msgstr ""
+msgstr "GROOT"
 
 msgid "SMALL"
-msgstr ""
+msgstr "KLEIN"
 
 msgid "EXTRA SMALL"
-msgstr ""
+msgstr "EXTRA KLEIN"
 
 msgid "TOUCH OVERLAY OPACITY"
-msgstr ""
+msgstr "TOUCH OVERLAY OPACITEIT"
 
 msgid "LOW"
-msgstr ""
+msgstr "LAAG"
 
 msgid "VERY LOW"
-msgstr ""
+msgstr "ZEER LAAG"
 
 msgid "TOUCH OVERLAY FADE-OUT TIME"
-msgstr ""
+msgstr "TOUCH OVERLAY FADE-OUT TIJD"
 
 msgid "ENABLE TOUCH OVERLAY"
-msgstr ""
+msgstr "TOUCH OVERLAY INSCHAKELEN"
 
 msgid ""
 "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
@@ -533,181 +555,190 @@ msgid ""
 "OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
 "THE CONFIGURATOR TO RUN ON NEXT STARTUP"
 msgstr ""
+"SCHAKEL DE TOUCH OVERLAY NIET UIT, TENZIJ U EEN CONTROLLER GEBRUIKT, ANDERS "
+"WORDT U UITGESLOTEN VAN DE APP. ALS DIT GEBEURT, MOET U TIJDELIJK EEN "
+"CONTROLLER OF TOETSENBORD AANSLUITEN OM DEZE INSTELLING WEER IN TE "
+"SCHAKELEN, OF U KUNT DE ES-DE OPSLAG IN DE INSTELLINGEN VAN DE ANDROID-APP "
+"WISSEN OM DE CONFIGURATOR TE DWINGEN OM BIJ DE VOLGENDE OPSTART TE WORDEN "
+"UITGEVOERD"
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
-msgstr ""
+msgstr "ACCEPTEER ALLEEN INPUT VAN DE EERSTE CONTROLLER"
 
 msgid "SWAP THE A/B AND X/Y BUTTONS"
-msgstr ""
+msgstr "VERWISSEL DE A/B EN X/Y KNOPPEN"
 
 msgid "IGNORE KEYBOARD INPUT"
-msgstr ""
+msgstr "NEGEER TOETSENBORDINVOER"
 
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
-msgstr ""
+msgstr "TOETSENBORD EN CONTROLLERS CONFIGUREREN"
 
 msgid ""
 "THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
 "TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
 "HELP PROMPTS)"
 msgstr ""
+"HET TOETSENBORD EN DE CONTROLLERS WORDEN AUTOMATISCH GECONFIGUREERD, MAAR "
+"MET DEZE TOOL KUNT U DE STANDAARD KNOPPENTOEWIJZINGEN OVERSCHRIJDEN (DIT "
+"HEEFT GEEN INVLOED OP DE HELPPROMPTS)"
 
 msgid "PROCEED"
-msgstr ""
+msgstr "DOORGAAN"
 
 msgid "CANCEL"
-msgstr ""
+msgstr "ANNULEREN"
 
 msgid "ALTERNATIVE EMULATORS"
-msgstr ""
+msgstr "ALTERNATIEVE EMULATORS"
 
 msgid "GAME MEDIA DIRECTORY"
-msgstr ""
+msgstr "GAME MEDIA GIDS"
 
 msgid "ENTER GAME MEDIA DIRECTORY"
-msgstr ""
+msgstr "GA NAAR DE GAME MEDIA DIRECTORY"
 
 msgid "Default directory:"
-msgstr ""
+msgstr "Standaardmap:"
 
 msgid "SAVE"
-msgstr ""
+msgstr "REDDEN"
 
 msgid "SAVE CHANGES?"
-msgstr ""
+msgstr "WIJZIGINGEN OPSLAAN?"
 
 msgid "load default directory"
-msgstr ""
+msgstr "laad standaardmap"
 
 msgid "VRAM LIMIT"
-msgstr ""
+msgstr "VRAM-LIMIET"
 
 msgid "ANTI-ALIASING (MSAA)"
-msgstr ""
+msgstr "ANTI-ALIASING (MSAA)"
 
 msgid "2X"
-msgstr ""
+msgstr "2X"
 
 msgid "4X"
-msgstr ""
+msgstr "4X"
 
 msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
-msgstr ""
+msgstr "ANTI-ALIASING (MSAA) (VEREIST HERSTART)"
 
 msgid "DISPLAY/MONITOR INDEX"
-msgstr ""
+msgstr "WEERGAVE-/MONITORINDEX"
 
 msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
-msgstr ""
+msgstr "DISPLAY/MONITOR INDEX (VEREIST HERSTART)"
 
 msgid "ROTATE SCREEN"
-msgstr ""
+msgstr "SCHERM DRAAIEN"
 
 msgid "90 DEGREES"
-msgstr ""
+msgstr "90 GRADEN"
 
 msgid "180 DEGREES"
-msgstr ""
+msgstr "180 GRADEN"
 
 msgid "270 DEGREES"
-msgstr ""
+msgstr "270 GRADEN"
 
 msgid "ROTATE SCREEN (REQUIRES RESTART)"
-msgstr ""
+msgstr "SCHERM DRAAIEN (VEREIST HERSTART)"
 
 msgid "KEYBOARD QUIT SHORTCUT"
-msgstr ""
+msgstr "TOETSENBORD AFSLUITEN SNELKNOP"
 
 msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr ""
+msgstr "WANNEER MOET JE DE GAMEMETADATA OPSLAAN?"
 
 msgid "ALWAYS"
-msgstr ""
+msgstr "ALTIJD"
 
 msgid "ON EXIT"
-msgstr ""
+msgstr "BIJ UITGANG"
 
 msgid "NEVER"
-msgstr ""
+msgstr "NOOIT"
 
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr ""
+msgstr "WANNEER MOET JE DE GAMEMETADATA OPSLAAN?"
 
 msgid "APPLICATION UPDATES"
-msgstr ""
+msgstr "TOEPASSINGSUPDATES"
 
 msgid "DAILY"
-msgstr ""
+msgstr "DAGELIJKS"
 
 msgid "WEEKLY"
-msgstr ""
+msgstr "WEKELIJKS"
 
 msgid "MONTHLY"
-msgstr ""
+msgstr "MAANDELIJKS"
 
 msgid "CHECK FOR APPLICATION UPDATES"
-msgstr ""
+msgstr "CONTROLEER OP AANVRAAGUPDATES"
 
 msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
-msgstr ""
+msgstr "NEEM PRERELEASES OP IN UPDATE CONTROLES"
 
 msgid "HIDE TASKBAR (REQUIRES RESTART)"
-msgstr ""
+msgstr "TAAKBALK VERBERGEN (VEREIST HERSTART)"
 
 msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
-msgstr ""
+msgstr "OP DE ACHTERGROND RENNEN (TERWIJL HET SPEL START)"
 
 msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
-msgstr ""
+msgstr "VIDEO HARDWARE DECODERING (EXPERIMENTEEL)"
 
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
-msgstr ""
+msgstr "UPSCALE VIDEOFRAME-SNELHEID NAAR 60 FPS"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
-msgstr ""
+msgstr "ALTERNATIEVE EMULATORS PER SPEL INSCHAKELEN"
 
 msgid "SHOW HIDDEN FILES AND FOLDERS"
-msgstr ""
+msgstr "VERBORGEN BESTANDEN EN MAPPEN WEERGEVEN"
 
 msgid "SHOW HIDDEN GAMES"
-msgstr ""
+msgstr "VERBORGEN SPELLETJES TONEN"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
-msgstr ""
+msgstr "AANGEPASTE EVENEMENTEN-SCRIPTS INSCHAKELEN"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
-msgstr ""
+msgstr "ALLEEN GAMES UIT GAMELIST.XML-BESTANDEN TONEN"
 
 msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
-msgstr ""
+msgstr "STRIP EXTRA MAME NAAM INFO (VEREIST HERSTART)"
 
 msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
-msgstr ""
+msgstr "DESKTOPCOMPOSITIE UITSCHAKELEN (VEREIST HERSTART)"
 
 msgid "BACK BUTTON/BACK SWIPE EXITS APP"
-msgstr ""
+msgstr "TERUGKNOP/TERUGVEGEN APP AFSLUITEN"
 
 msgid "DEBUG MODE"
-msgstr ""
+msgstr "DEBUG-MODUS"
 
 msgid "DISPLAY GPU STATISTICS OVERLAY"
-msgstr ""
+msgstr "GPU-STATISTIEKEN OVERLAY WEERGEVEN"
 
 msgid "ENABLE MENU IN KID MODE"
-msgstr ""
+msgstr "MENU IN KINDMODUS INSCHAKELEN"
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
-msgstr ""
+msgstr "MENU AFSLUITEN TONEN (HERSTARTEN EN UITSCHAKELEN)"
 
 msgid "ORPHANED DATA CLEANUP"
-msgstr ""
+msgstr "OPRUIMING VAN VERWEESDE DATA"
 
 msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
-msgstr ""
+msgstr "SYSTEEMMAPPEN MAKEN/BIJWERKEN"
 
 msgid ""
 "THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
@@ -716,403 +747,418 @@ msgid ""
 "TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
 "RUNNING THIS UTILITY"
 msgstr ""
+"DIT MAAKT ALLE GAME SYSTEM DIRECTORIES IN UW ROM-MAP EN HET ZAL OOK ALLE "
+"SYSTEMINFO.TXT-BESTANDEN BIJWERKEN. DIT IS EEN VEILIGE HANDELING DIE UW GAME-"
+"BESTANDEN NIET VERWIJDERT OF WIJZIGT. OM DE OPSTARTTIJDEN VAN DE TOEPASSING "
+"TE VERKLEINEN, WORDT HET AANGERADEN OM DE SYSTEEM DIRECTORIES TE VERWIJDEREN "
+"DIE U NIET NODIG HEBT NA HET UITVOEREN VAN DIT HULPPROGRAMMA"
 
 msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
-msgstr ""
+msgstr "DE SYSTEEMDIRECTORY'S ZIJN MET SUCCES GEMAAKT"
 
 msgid ""
 "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
 "LOG FILE FOR MORE DETAILS"
 msgstr ""
+"FOUT BIJ HET AANMAKEN VAN SYSTEEMDIRECTORY'S, TOESTEMMINGSPROBLEMEN OF "
+"SCHIJF VOL? ZIE HET LOGBESTAND VOOR MEER DETAILS"
 
 msgid "RESCAN ROM DIRECTORY"
-msgstr ""
+msgstr "ROM-DIRECTORY OPNIEUW SCANNEN"
 
 msgid ""
 "THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
 "GAMES AND SYSTEMS"
 msgstr ""
+"DIT SCANT UW ROM-DIRECTORY OPNIEUW OP WIJZIGINGEN ZOALS TOEGEVOEGDE OF "
+"VERWIJDERDE GAMES EN SYSTEMEN"
 
 msgid "REALLY QUIT?"
-msgstr ""
+msgstr "ECHT STOPPEN?"
 
 msgid "REALLY REBOOT?"
-msgstr ""
+msgstr "ECHT HERSTARTEN?"
 
 msgid "REBOOT SYSTEM"
-msgstr ""
+msgstr "HERSTART SYSTEEM"
 
 msgid "REALLY POWER OFF?"
-msgstr ""
+msgstr "ECHT UITSCHAKELEN?"
 
 msgid "POWER OFF SYSTEM"
-msgstr ""
+msgstr "UITSCHAKELSYSTEEM"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
-msgstr ""
+msgstr "MEDIA VIEWER-INSTELLINGEN"
 
 msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "SCREENSAVER-INSTELLINGEN"
 
 msgid "choose"
-msgstr ""
+msgstr "kiezen"
 
 msgid "select"
-msgstr ""
+msgstr "selecteren"
 
 msgid "close menu"
-msgstr ""
+msgstr "menu sluiten"
 
 msgid "REFINE SEARCH"
-msgstr ""
+msgstr "VERFIJN ZOEKOPDRACHT"
 
 msgid "refine search"
-msgstr ""
+msgstr "zoekopdracht verfijnen"
 
 msgid "cancel"
-msgstr ""
+msgstr "annuleren"
 
 msgid "back (cancel)"
-msgstr ""
+msgstr "terug (annuleren)"
 
 msgid "SCRAPE FROM"
-msgstr ""
+msgstr "SCHRAPEN VAN"
 
 msgid "SCRAPE THESE GAMES"
-msgstr ""
+msgstr "SCHRAAP DEZE SPELLETJES"
 
 msgid "ALL GAMES"
-msgstr ""
+msgstr "ALLE SPELLEN"
 
 msgid "FAVORITE GAMES"
-msgstr ""
+msgstr "FAVORIETE SPELLETJES"
 
 msgid "NO METADATA"
-msgstr ""
+msgstr "GEEN METADATA"
 
 msgid "NO GAME IMAGE"
-msgstr ""
+msgstr "GEEN SPELAFBEELDING"
 
 msgid "NO GAME VIDEO"
-msgstr ""
+msgstr "GEEN SPELVIDEO"
 
 msgid "FOLDERS ONLY"
-msgstr ""
+msgstr "ALLEEN MAPPEN"
 
 msgid "SCRAPE THESE SYSTEMS"
-msgstr ""
+msgstr "SCHRAAP DEZE SYSTEMEN"
 
 msgid "ACCOUNT SETTINGS"
-msgstr ""
+msgstr "ACCOUNTINSTELLINGEN"
 
 msgid "CONTENT SETTINGS"
-msgstr ""
+msgstr "INHOUDSINSTELLINGEN"
 
 msgid "MIXIMAGE SETTINGS"
-msgstr ""
+msgstr "MIXIMAGE-INSTELLINGEN"
 
 msgid "START"
-msgstr ""
+msgstr "BEGIN"
 
 msgid "start scraper"
-msgstr ""
+msgstr "start schraper"
 
 msgid "BACK"
-msgstr ""
+msgstr "RUG"
 
 msgid "back"
-msgstr ""
+msgstr "rug"
 
 msgid "SCREENSCRAPER USERNAME"
-msgstr ""
+msgstr "SCREENSCRAPER GEBRUIKERSNAAM"
 
 msgid "SCREENSCRAPER PASSWORD"
-msgstr ""
+msgstr "SCREENSCRAPER WACHTWOORD"
 
 msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
-msgstr ""
+msgstr "GEBRUIK DIT ACCOUNT VOOR SCREENSCRAPER"
 
 msgid "GAME NAMES"
-msgstr ""
+msgstr "SPELNAMEN"
 
 msgid "RATINGS"
-msgstr ""
+msgstr "BEOORDELINGEN"
 
 msgid "OTHER METADATA"
-msgstr ""
+msgstr "ANDERE METADATA"
 
 msgid "VIDEOS"
-msgstr ""
+msgstr "VIDEO'S"
 
 msgid "SCREENSHOT IMAGES"
-msgstr ""
+msgstr "SCREENSHOT-AFBEELDINGEN"
 
 msgid "TITLE SCREEN IMAGES"
-msgstr ""
+msgstr "TITEL SCHERM AFBEELDINGEN"
 
 msgid "BOX COVER IMAGES"
-msgstr ""
+msgstr "AFBEELDINGEN VAN DE DOOS"
 
 msgid "BOX BACK COVER IMAGES"
-msgstr ""
+msgstr "AFBEELDINGEN OP DE ACHTERKANT VAN DE DOOS"
 
 msgid "MARQUEE (WHEEL) IMAGES"
-msgstr ""
+msgstr "MARQUEE (WIEL) AFBEELDINGEN"
 
 msgid "3D BOX IMAGES"
-msgstr ""
+msgstr "3D-BOXAFBEELDINGEN"
 
 msgid "PHYSICAL MEDIA IMAGES"
-msgstr ""
+msgstr "FYSIEKE MEDIA-AFBEELDINGEN"
 
 msgid "FAN ART IMAGES"
-msgstr ""
+msgstr "FAN ART-AFBEELDINGEN"
 
 msgid "GAME MANUALS"
-msgstr ""
+msgstr "SPELHANDLEIDING"
 
 msgid "MIXIMAGE RESOLUTION"
-msgstr ""
+msgstr "MIXIMAGE-RESOLUTIE"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
-msgstr ""
+msgstr "HORIZONTALE SCREENSHOT FIT"
 
 msgid "CONTAIN"
-msgstr ""
+msgstr "BEVATTEN"
 
 msgid "CROP"
-msgstr ""
+msgstr "GEWAS"
 
 msgid "STRETCH"
-msgstr ""
+msgstr "REKKEN"
 
 msgid "HORIZONTAL SCREENSHOT FIT"
-msgstr ""
+msgstr "HORIZONTALE SCREENSHOT FIT"
 
 msgctxt "short"
 msgid "VERTICAL SCREENSHOT FIT"
-msgstr ""
+msgstr "VERTICALE SCREENSHOT FIT"
 
 msgid "VERTICAL SCREENSHOT FIT"
-msgstr ""
+msgstr "VERTICALE SCREENSHOT FIT"
 
 msgctxt "short"
 msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
-msgstr ""
+msgstr "SCREENSHOT ASPECTVERHOUDING DREMPEL"
 
 msgid "HIGH"
-msgstr ""
+msgstr "HOOG"
 
 msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
-msgstr ""
+msgstr "SCREENSHOT ASPECTVERHOUDING DREMPEL"
 
 msgid "BLANK AREAS FILL COLOR"
-msgstr ""
+msgstr "LEGE GEBIEDEN OPVULKLEUR"
 
 msgid "BLACK"
-msgstr ""
+msgstr "ZWART"
 
 msgid "FRAME"
-msgstr ""
+msgstr "KADER"
 
 msgctxt "short"
 msgid "SCREENSHOT SCALING METHOD"
-msgstr ""
+msgstr "SCREENSHOT SCHAALMETHODE"
 
 msgid "SHARP"
-msgstr ""
+msgstr "SCHERP"
 
 msgid "SMOOTH"
-msgstr ""
+msgstr "ZACHT"
 
 msgid "SCREENSHOT SCALING METHOD"
-msgstr ""
+msgstr "SCREENSHOT SCHAALMETHODE"
 
 msgid "BOX SIZE"
-msgstr ""
+msgstr "DOOSGROOTTE"
 
 msgid "PHYSICAL MEDIA SIZE"
-msgstr ""
+msgstr "FYSIEKE MEDIAGROOTTE"
 
 msgid "GENERATE MIXIMAGES WHEN SCRAPING"
-msgstr ""
+msgstr "GENEREER MIXIMAGES BIJ HET SCRAPPEN"
 
 msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
-msgstr ""
+msgstr "OVERSCHRIJF MIXIMAGES (SCHRAPER/OFFLINE GENERATOR)"
 
 msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
-msgstr ""
+msgstr "VERWIJDER BRIEVENBUSSEN UIT SCREENSHOTS"
 
 msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
-msgstr ""
+msgstr "VERWIJDER PILLARBOXES UIT SCREENSHOTS"
 
 msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
-msgstr ""
+msgstr "HORIZONTAAL GEORIËNTEERDE DOZEN DRAAIEN"
 
 msgid "INCLUDE MARQUEE IMAGE"
-msgstr ""
+msgstr "VOEG MARQUEE AFBEELDING TOE"
 
 msgid "INCLUDE BOX IMAGE"
-msgstr ""
+msgstr "AFBEELDING VAN DOOS INVOEGEN"
 
 msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
-msgstr ""
+msgstr "GEBRUIK DEKKINGAFBEELDING ALS HET 3D-VAK ONTBREEKT"
 
 msgid "INCLUDE PHYSICAL MEDIA IMAGE"
-msgstr ""
+msgstr "FYSIEKE MEDIA-AFBEELDING TOEVOEGEN"
 
 msgid "OFFLINE GENERATOR"
-msgstr ""
+msgstr "OFFLINEGENERATOR"
 
 msgid ""
 "THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
 "PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
 msgstr ""
+"DE OFFLINE GENERATOR GEBRUIKT DEZELFDE SYSTEEMSELECTIES ALS DE SCRAPER, DUS "
+"SELECTEER TEN MINSTE ÉÉN SYSTEEM OM AFBEELDINGEN VOOR TE GENEREREN"
 
 msgid "REGION"
-msgstr ""
+msgstr "REGIO"
 
 msgid "EUROPE"
-msgstr ""
+msgstr "EUROPA"
 
 msgid "JAPAN"
-msgstr ""
+msgstr "JAPAN"
 
 msgid "USA"
-msgstr ""
+msgstr "VS"
 
 msgid "WORLD"
-msgstr ""
+msgstr "WERELD"
 
 msgid "PREFERRED LANGUAGE"
-msgstr ""
+msgstr "GEWENSTE TAAL"
 
 msgid "AUTOMATIC RETRIES ON ERROR"
-msgstr ""
+msgstr "AUTOMATISCHE HERHALINGEN BIJ FOUTEN"
 
 msgid "RETRY ATTEMPT TIMER"
-msgstr ""
+msgstr "TIMER VOOR OPNIEUW PROBEREN"
 
 msgid "HASH SEARCHES MAX FILE SIZE"
-msgstr ""
+msgstr "HASH ZOEKOPDRACHTEN MAXIMALE BESTANDSGROOTTE"
 
 msgid "OVERWRITE FILES AND DATA"
-msgstr ""
+msgstr "BESTANDEN EN GEGEVENS OVERSCHRIJVEN"
 
 msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
-msgstr ""
+msgstr "ZOEKEN MET BESTANDSHASHES (NIET-INTERACTIEVE MODUS)"
 
 msgid "SEARCH USING METADATA NAMES"
-msgstr ""
+msgstr "ZOEKEN MET METADATANAMEN"
 
 msgid "SCRAPE ACTUAL FOLDERS"
-msgstr ""
+msgstr "SCHRAAP ECHTE MAPPEN"
 
 msgid "INTERACTIVE MODE"
-msgstr ""
+msgstr "INTERACTIEVE MODUS"
 
 msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
-msgstr ""
+msgstr "AUTOMATISCH ACCEPTEREN VAN ENKELE SPELWEDSTRIJDEN"
 
 msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
-msgstr ""
+msgstr "RESPECTEER PER-BESTAND SCRAPER-UITSLUITINGEN"
 
 msgid "EXCLUDE FOLDERS RECURSIVELY"
-msgstr ""
+msgstr "MAPPEN RECURSIEF UITSLUITEN"
 
 msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
-msgstr ""
+msgstr "Converteer ONDERSTREPEN NAAR SPATIES BIJ HET ZOEKEN"
 
 msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
-msgstr ""
+msgstr "VERWIJDER PUNTJES UIT ZOEKOPDRACHTEN BIJ AUTOMATISCH SCRAPEN"
 
 msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
-msgstr ""
+msgstr "TERUGVAL OP EXTRA REGIO'S INSCHAKELEN"
 
 msgid ""
 "THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
 msgstr ""
+"HET GESELECTEERDE SYSTEEM HEEFT GEEN PLATFORMSET, RESULTATEN KUNNEN ONJUIST "
+"ZIJN"
 
 msgid ""
 "AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
 "MAY BE INACCURATE"
 msgstr ""
+"MINSTENS ÉÉN VAN UW GESELECTEERDE SYSTEMEN HEEFT GEEN PLATFORMSET, DE "
+"RESULTATEN KUNNEN ONJUIST ZIJN"
 
 msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
-msgstr ""
+msgstr "KIES TEN MINSTE ÉÉN SYSTEEM OM TE SCRAPPEN"
 
 msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
-msgstr ""
+msgstr "Selecteer ten minste één inhoudstype om te schrapen"
 
 msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
-msgstr ""
+msgstr "ALLE SPELLETJES ZIJN GEFILTERD, ER IS NIETS TE SCHRAPEN"
 
 msgid "HELP PROMPTS"
-msgstr ""
+msgstr "HULPPROMPTS"
 
 msgid "TOP"
-msgstr ""
+msgstr "BOVENKANT"
 
 msgid "BOTTOM"
-msgstr ""
+msgstr "ONDERKANT"
 
 msgid "DISPLAY MEDIA TYPES"
-msgstr ""
+msgstr "WEERGAVEMEDIATYPES"
 
 msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
-msgstr ""
+msgstr "HOUD VIDEO'S AAN TIJDENS HET BEKIJKEN VAN AFBEELDINGEN"
 
 msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
-msgstr ""
+msgstr "REK VIDEO'S UIT TOT SCHERMRESOLUTIE"
 
 msgid "RENDER SCANLINES FOR VIDEOS"
-msgstr ""
+msgstr "SCANLIJNEN VOOR VIDEO'S RENDEN"
 
 msgid "RENDER BLUR FOR VIDEOS"
-msgstr ""
+msgstr "RENDER BLUR VOOR VIDEO'S"
 
 msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
-msgstr ""
+msgstr "SCANLINES RENDEN VOOR SCREENSHOTS EN TITELS"
 
 #, c-format
 msgid "FINISH EDITING '%s' COLLECTION"
-msgstr ""
+msgstr "VOLTOOIEN VAN DE BEWERKING VAN DE '%s'-COLLECTIE"
 
 msgid "SELECT COLLECTIONS"
-msgstr ""
+msgstr "SELECTEER COLLECTIES"
 
 msgid "AUTOMATIC GAME COLLECTIONS"
-msgstr ""
+msgstr "AUTOMATISCHE SPELCOLLECTIES"
 
 msgid "CUSTOM GAME COLLECTIONS"
-msgstr ""
+msgstr "AANGEPASTE SPELCOLLECTIES"
 
 msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr ""
+msgstr "MAAK EEN NIEUWE AANGEPASTE COLLECTIE VANUIT HET THEMA"
 
 msgid "SELECT THEME FOLDER"
-msgstr ""
+msgstr "SELECTEER THEMAMAP"
 
 msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr ""
+msgstr "NIEUWE AANGEPASTE COLLECTIE MAKEN"
 
 msgid "NEW COLLECTION NAME"
-msgstr ""
+msgstr "NIEUWE COLLECTIE NAAM"
 
 msgid "CREATE"
-msgstr ""
+msgstr "CREËREN"
 
 msgid "CREATE COLLECTION?"
-msgstr ""
+msgstr "COLLECTIE MAKEN?"
 
 msgid "DELETE CUSTOM COLLECTION"
-msgstr ""
+msgstr "AANGEPASTE COLLECTIE VERWIJDEREN"
 
 msgid "COLLECTION TO DELETE"
-msgstr ""
+msgstr "VERZAMELING OM TE VERWIJDEREN"
 
 #, c-format
 msgid ""
@@ -1120,133 +1166,143 @@ msgid ""
 "'%s'\n"
 "ARE YOU SURE?"
 msgstr ""
+"DIT VERWIJDERT DE COLLECTIE PERMANENT\n"
+"'%s'\n"
+"BENT U ZEKER?"
 
 msgid "GROUP CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "GROEPSCOLLECTIES OP MAAT"
 
 msgid "IF UNTHEMED"
-msgstr ""
+msgstr "ALS HET NIET THEMA IS"
 
 msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "SORTEER FAVORIETEN BOVEN VOOR AANGEPASTE COLLECTIES"
 
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "WEERGAVE VAN STERRENMARKERINGEN VOOR AANGEPASTE COLLECTIES"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
-msgstr ""
+msgstr "SCREENSAVER STARTEN NA (MINUTEN)"
 
 msgid "SCREENSAVER TYPE"
-msgstr ""
+msgstr "SCHERMVEILIGHEIDSTYPE"
 
 msgid "DIM"
-msgstr ""
+msgstr "DIMM"
 
 msgid "SLIDESHOW"
-msgstr ""
+msgstr "DIAVOORSTELLING"
 
 msgid "VIDEO"
-msgstr ""
+msgstr "VIDEO"
 
 msgid "ENABLE SCREENSAVER CONTROLS"
-msgstr ""
+msgstr "SCREENSAVER-BEDIENINGEN INSCHAKELEN"
 
 msgid "SLIDESHOW SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "DIASHOW SCREENSAVER INSTELLINGEN"
 
 msgid "VIDEO SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "VIDEO SCREENSAVER INSTELLINGEN"
 
 msgid "SLIDESHOW SCREENSAVER"
-msgstr ""
+msgstr "DIASHOW-SCHERMBEVEILIGING"
 
 msgid "SWAP IMAGES AFTER (SECONDS)"
-msgstr ""
+msgstr "AFBEELDINGEN VERWISSELEN NA (SECONDEN)"
 
 msgid "ONLY INCLUDE FAVORITE GAMES"
-msgstr ""
+msgstr "ALLEEN FAVORIETE SPELLETJES OPNEMEN"
 
 msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
-msgstr ""
+msgstr "REK AFBEELDINGEN UIT NAAR SCHERMRESOLUTIE"
 
 msgid "DISPLAY GAME INFO OVERLAY"
-msgstr ""
+msgstr "WEERGAVE VAN DE GAME-INFO OVERLAY"
 
 msgid "RENDER SCANLINES"
-msgstr ""
+msgstr "SCANLIJNEN RENDEREN"
 
 msgid "USE CUSTOM IMAGES"
-msgstr ""
+msgstr "GEBRUIK AANGEPASTE AFBEELDINGEN"
 
 msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
-msgstr ""
+msgstr "AANGEPASTE AFBEELDINGENLIJST RECURSIEVE ZOEKOPDRACHT"
 
 msgid "CUSTOM IMAGE DIRECTORY"
-msgstr ""
+msgstr "AANGEPASTE AFBEELDINGENLIJST"
 
 msgid "VIDEO SCREENSAVER"
-msgstr ""
+msgstr "VIDEOSCHERMBEVEILIGING"
 
 msgid "SWAP VIDEOS AFTER (SECONDS)"
-msgstr ""
+msgstr "VIDEO'S WISSELEN NA (SECONDEN)"
 
 msgid "RENDER BLUR"
-msgstr ""
+msgstr "WISSEN WISSEN"
 
 msgid "FILTER GAMELIST"
-msgstr ""
+msgstr "FILTER GAMELIJST"
 
 msgid "RESET ALL FILTERS"
-msgstr ""
+msgstr "ALLE FILTERS RESETTEN"
 
 msgid "GAME NAME"
-msgstr ""
+msgstr "NAAM VAN HET SPEL"
 
 msgid "APPLY CHANGES?"
-msgstr ""
+msgstr "WIJZIGINGEN TOEPASSEN?"
 
 msgid "NOTHING TO FILTER"
-msgstr ""
+msgstr "NIETS OM TE FILTEREN"
 
 msgid "LAUNCHING GAME"
-msgstr ""
+msgstr "STARTSPEL"
 
 msgid "CLOSE"
-msgstr ""
+msgstr "DICHTBIJ"
 
 msgid "close"
-msgstr ""
+msgstr "dichtbij"
 
 msgid "DOWNLOADING THEMES LIST 100%"
-msgstr ""
+msgstr "DOWNLOAD THEMA LIJST 100%"
 
 msgid "THEME ALREADY UP TO DATE"
-msgstr ""
+msgstr "THEMA AL BIJGEWERKT"
 
 msgid "THEME HAS BEEN UPDATED"
-msgstr ""
+msgstr "THEMA IS GEÜPDATE"
 
 #, c-format
 msgid ""
 "COULDN'T RENAME DIRECTORY \"%s\"\n"
 "PERMISSION PROBLEMS?"
 msgstr ""
+"KON DIRECTORY \"%s\" NIET HERNOEMEN\n"
+"PROBLEMEN MET DE TOESTEMMING?"
 
 msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
-msgstr ""
+msgstr "KON HET CONFIGURATIEBESTAND VOOR DE THEMA-LIJST NIET VINDEN"
 
 msgid ""
 "COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
 "REPOSITORY IS CORRUPT?"
 msgstr ""
+"KON HET CONFIGURATIEBESTAND VAN DE THEMA-LIJST NIET PARSEN, MISSCHIEN IS DE "
+"LOKALE REPOSITORY CORRUPT?"
 
 msgid ""
 "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
 "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
 msgstr ""
+"HET LIJKT EROP DAT U NIET DE NIEUWSTE ES-DE RELEASE GEBRUIKT. UPGRADE "
+"ALVORENS VERDER TE GAAN, OMDAT DEZE THEMA'S MOGELIJK NIET COMPATIBEL ZIJN "
+"MET UW VERSIE."
 
 msgid "and"
-msgstr ""
+msgstr "En"
 
 #, c-format
 msgid ""
@@ -1254,9 +1310,12 @@ msgid ""
 "THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
 "\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
 msgstr ""
+"HET LIJKT EROP DAT DIT THEMA HANDMATIG IS GEDOWNLOAD IN PLAATS VAN VIA DEZE "
+"THEMA DOWNLOADER. EEN NIEUWE DOWNLOAD IS VEREIST EN DE OUDE THEMA DIRECTORY "
+"\"%s\" WORDT HERNOEMD NAAR \"%s_DISABLED\""
 
 msgid "DOWNLOADING THEME"
-msgstr ""
+msgstr "THEMA DOWNLOADEN"
 
 #, c-format
 msgid ""
@@ -1265,6 +1324,10 @@ msgid ""
 "THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
 "DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
 msgstr ""
+"HET LIJKT EROP DAT DEZE THEMA-REPOSITORY CORRUPT IS, WAT VEROORZAAKT KAN "
+"ZIJN DOOR EEN ONDERBREKING VAN EEN EERDERE DOWNLOAD OF UPDATE, BIJVOORBEELD "
+"ALS HET ES-DE-PROCES IS AFGESLOTEN. EEN NIEUWE DOWNLOAD IS VEREIST EN DE "
+"OUDE THEMA-MAP \"%s\" WORDT HERNOEMD NAAR \"%s_CORRUPT_DISABLED\""
 
 #, c-format
 msgid ""
@@ -1273,91 +1336,98 @@ msgid ""
 "DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
 "\"%s_DISABLED\""
 msgstr ""
+"HET LIJKT EROP DAT DIT EEN ONdiepe REPOSITORY IS, WAT BETEKENT DAT HET IS "
+"GEDOWNLOAD MET EEN ANDERE TOOL DAN DEZE THEMA DOWNLOADER. EEN NIEUWE "
+"DOWNLOAD IS VEREIST EN DE OUDE THEMA DIRECTORY \"%s\" WORDT HERNOEMD NAAR "
+"\"%s_DISABLED\""
 
 #, c-format
 msgid ""
 "THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
 "CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
 msgstr ""
+"THEMA-REPOSITORY \"%s\" BEVAT LOKALE WIJZIGINGEN. GA DOOR MET HET "
+"OVERSCHRIJVEN VAN UW WIJZIGINGEN OF ANNULEER OM ALLE UPDATES VOOR DIT THEMA "
+"OVER TE SLAAN"
 
 msgid "UPDATING THEME"
-msgstr ""
+msgstr "THEMA BIJWERKEN"
 
 msgid "VARIANTS:"
-msgstr ""
+msgstr "VARIANTEN:"
 
 msgid "COLOR SCHEMES:"
-msgstr ""
+msgstr "KLEURENSCHEMA'S:"
 
 msgid "ASPECT RATIOS:"
-msgstr ""
+msgstr "ASPECTVERHOUDINGEN:"
 
 msgid "FONT SIZES:"
-msgstr ""
+msgstr "LETTERGROOTTE:"
 
 msgid "INSTALLED"
-msgstr ""
+msgstr "GEÏNSTALLEERD"
 
 msgid "MANUAL DOWNLOAD"
-msgstr ""
+msgstr "HANDLEIDING DOWNLOADEN"
 
 msgid "CORRUPT"
-msgstr ""
+msgstr "CORRUPTE"
 
 msgid "SHALLOW"
-msgstr ""
+msgstr "OPPERVLAKKIG"
 
 msgid "NOT INSTALLED (NEW)"
-msgstr ""
+msgstr "NIET GEÏNSTALLEERD (NIEUW)"
 
 msgid "NOT INSTALLED"
-msgstr ""
+msgstr "NIET GEÏNSTALLEERD"
 
 msgid "LOCAL CHANGES"
-msgstr ""
+msgstr "LOKALE WIJZIGINGEN"
 
 msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
-msgstr ""
+msgstr "DEZE THEMA-INZENDING WORDT IN DE BINNENKORT VERWIJDERD"
 
 msgid "CREATED BY"
-msgstr ""
+msgstr "GEMAAKT DOOR"
 
 msgid "ERROR:"
-msgstr ""
+msgstr "FOUT:"
 
 msgid "COULDN'T DOWNLOAD THEMES LIST"
-msgstr ""
+msgstr "KON DE THEMA'SLIJST NIET DOWNLOADEN"
 
 msgid "DOWNLOADING"
-msgstr ""
+msgstr "DOWNLOADEN"
 
 msgid "DOWNLOADING THEMES LIST"
-msgstr ""
+msgstr "DOWNLOADEN VAN THEMA'SLIJST"
 
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
-msgstr ""
+msgstr "DIT ZAL HET THEMA VOLLEDIG VERWIJDEREN"
 
 msgid ""
 "THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
-msgstr ""
+msgstr "DIT VERWIJDERT HET THEMA VOLLEDIG, INCLUSIEF ALLE LOKALE AANPASSINGEN"
 
 msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
-msgstr ""
+msgstr "THEMA KAN NIET WORDEN VERWIJDERD, PROBLEMEN MET DE TOESTEMMING?"
 
 msgid "THEME WAS DELETED"
-msgstr ""
+msgstr "THEMA IS VERWIJDERD"
 
 msgid "view screenshots"
-msgstr ""
+msgstr "Bekijk screenshots"
 
 msgid "fetch updates"
-msgstr ""
+msgstr "updates ophalen"
 
 msgid "delete"
-msgstr ""
+msgstr "verwijderen"
 
 msgid "download"
-msgstr ""
+msgstr "downloaden"
 
 msgid ""
 "IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
@@ -1365,9 +1435,14 @@ msgid ""
 "THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
 "DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
 msgstr ""
+"HET LIJKT EROP DAT DE THEMALIJST-REPOSITORY CORRUPT IS, WAT VEROORZAAKT KAN "
+"ZIJN DOOR EEN ONDERBREKING VAN EEN EERDERE DOWNLOAD OF UPDATE, BIJVOORBEELD "
+"ALS HET ES-DE-PROCES IS GEKILLED. EEN NIEUWE DOWNLOAD IS VEREIST EN DE OUDE "
+"DIRECTORY \"themes-list\" WORDT HERNOEMD NAAR \"themes-"
+"list_CORRUPT_DISABLED\""
 
 msgid "UPDATING THEMES LIST"
-msgstr ""
+msgstr "THEMA'SLIJST BIJWERKEN"
 
 msgid ""
 "IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
@@ -1377,123 +1452,129 @@ msgid ""
 "THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
 "CORRUPTION."
 msgstr ""
+"HET LIJKT EROP DAT JE DE THEMA DOWNLOADER VOOR HET EERST GEBRUIKT. ALS "
+"ZODANIG WORDT DE THEMA LIJST REPOSITORY GEDOWNLOAD, WAT EEN TIJDJE DUURT. "
+"VOLGENDE RUNS ZULLEN ECHTER VEEL SNELLER GAAN OMDAT ALLEEN NIEUWE OF "
+"GEWIJZIGDE BESTANDEN WORDEN OPGEHAALD. HETZELFDE GELDT VOOR ALLE THEMA'S DIE "
+"JE DOWNLOADT. LET OP: JE KUNT EEN LOPENDE DOWNLOAD NIET AFBREKEN, WANT DAT "
+"KAN LEIDEN TOT GEGEVENSVERBORGENHEID."
 
 msgid "RATING:"
-msgstr ""
+msgstr "BEOORDELING:"
 
 msgid "RELEASED:"
-msgstr ""
+msgstr "UITGEGEVEN:"
 
 msgid "DEVELOPER:"
-msgstr ""
+msgstr "ONTWIKKELAAR:"
 
 msgid "PUBLISHER:"
-msgstr ""
+msgstr "UITGEVER:"
 
 msgid "GENRE:"
-msgstr ""
+msgstr "GENRE:"
 
 msgid "PLAYERS:"
-msgstr ""
+msgstr "SPELERS:"
 
 msgid "NO GAMES FOUND"
-msgstr ""
+msgstr "GEEN SPELLETJES GEVONDEN"
 
 msgid "RETRY"
-msgstr ""
+msgstr "OPNIEUW PROBEREN"
 
 msgid "SKIP"
-msgstr ""
+msgstr "OVERSLAAN"
 
 msgid "Error downloading thumbnail:"
-msgstr ""
+msgstr "Fout bij het downloaden van de miniatuur:"
 
 msgid "SEARCH"
-msgstr ""
+msgstr "ZOEKOPDRACHT"
 
 msgid "SEARCH USING REFINED NAME?"
-msgstr ""
+msgstr "ZOEKEN MET VERFIJNDE NAAM?"
 
 msgid "skip"
-msgstr ""
+msgstr "overslaan"
 
 msgid "accept result"
-msgstr ""
+msgstr "resultaat accepteren"
 
 msgid "SCRAPING IN PROGRESS"
-msgstr ""
+msgstr "SCHRAPEN IN UITVOERING"
 
 msgid "SYSTEM"
-msgstr ""
+msgstr "SYSTEEM"
 
 msgid "skip game"
-msgstr ""
+msgstr "spel overslaan"
 
 msgid "STOP"
-msgstr ""
+msgstr "STOP"
 
 msgid "stop"
-msgstr ""
+msgstr "stop"
 
 msgid "GAME"
 msgid_plural "GAMES"
-msgstr[0] ""
+msgstr[0] "SPEL"
 msgstr[1] ""
 
 #, c-format
 msgid "GAME %i OF %i"
-msgstr ""
+msgstr "SPEL %i VAN %i"
 
 msgid "NO GAMES WERE SCRAPED"
-msgstr ""
+msgstr "GEEN SPELLETJES WERDEN GESCHRAPT"
 
-#, c-format
+#, fuzzy, c-format
 msgid "%i GAME SUCCESSFULLY SCRAPED"
 msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] ""
+msgstr[0] "%i GAME SUCCESVOL GESCHRAPT"
 msgstr[1] ""
 
-#, c-format
+#, fuzzy, c-format
 msgid "%i GAME SKIPPED"
 msgid_plural "%i GAMES SKIPPED"
-msgstr[0] ""
+msgstr[0] "%i SPEL OVERGESLAGEN"
 msgstr[1] ""
 
 msgid "GAMELIST OPTIONS"
-msgstr ""
+msgstr "GAMELIST-OPTIES"
 
 msgid "JUMP TO..."
-msgstr ""
+msgstr "GA NAAR..."
 
 msgid "SORT GAMES BY"
-msgstr ""
+msgstr "SORTEER SPELLETJES OP"
 
 msgid "THIS SYSTEM HAS NO GAMES"
-msgstr ""
+msgstr "DIT SYSTEEM HEEFT GEEN SPELLETJES"
 
 msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
-msgstr ""
+msgstr "SPELLEN TOEVOEGEN AAN/VERWIJDEREN UIT DEZE COLLECTIE"
 
 msgid "EDIT THIS FOLDER'S METADATA"
-msgstr ""
+msgstr "DE METADATA VAN DEZE MAP BEWERKEN"
 
 msgid "EDIT THIS GAME'S METADATA"
-msgstr ""
+msgstr "DE METADATA VAN DEZE GAME BEWERKEN"
 
 msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
-msgstr ""
+msgstr "VOER MAP IN (OVERSCHRIJD MAP LINK)"
 
 msgid "APPLY"
-msgstr ""
+msgstr "TOEPASSEN"
 
 msgid "apply"
-msgstr ""
+msgstr "toepassen"
 
 msgid "close (apply)"
-msgstr ""
+msgstr "sluiten (toepassen)"
 
 msgid "close (cancel)"
-msgstr ""
+msgstr "sluiten (annuleren)"
 
 msgid ""
 "THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
@@ -1501,6 +1582,10 @@ msgid ""
 "DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
 "LONGER NEEDED."
 msgstr ""
+"DIT VERWIJDERT ALLE MEDIABESTANDEN WAAR GEEN OVEREENKOMSTIGE GAMEBESTANDEN "
+"TE VINDEN ZIJN. DEZE BESTANDEN WORDEN VERPLAATST NAAR EEN OPRUIMINGSMAP IN "
+"JE GAMEMEDIAMAP. JE KUNT DEZE MAP HANDMATIG VERWIJDEREN WANNEER JE ZEKER "
+"WEET DAT JE DEZE NIET MEER NODIG HEBT."
 
 msgid ""
 "THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
@@ -1508,6 +1593,11 @@ msgid ""
 "CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
 "FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
 msgstr ""
+"DIT VERWIJDERT ALLE INVOER UIT JE GAMELIST XML-BESTANDEN WAAR GEEN "
+"OVEREENKOMSTIGE GAMEBESTANDEN TE VINDEN ZIJN. BACKUPS VAN DE ORIGINELE "
+"BESTANDEN WORDEN OPGESLAGEN IN EEN CLEANUP-MAP IN JE GAMELIST-MAP. JE KUNT "
+"DEZE MAP HANDMATIG VERWIJDEREN WANNEER JE ZEKER WEET DAT JE DEZE NIET MEER "
+"NODIG HEBT."
 
 msgid ""
 "THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
@@ -1515,416 +1605,444 @@ msgid ""
 "FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
 "ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
 msgstr ""
+"HIERMEE WORDEN ALLE VERMELDINGEN UIT DE CONFIGURATIEBESTANDEN VAN UW "
+"AANGEPASTE COLLECTIES VERWIJDERD WAAR GEEN OVEREENKOMSTIGE SPELBESTANDEN TE "
+"VINDEN ZIJN. BACK-UPS VAN DE ORIGINELE BESTANDEN WORDEN OPGESLAGEN IN EEN "
+"OPRUIMINGSMAP IN UW COLLECTIES-MAP. ALLEEN DE COLLECTIES DIE OP DIT MOMENT "
+"ZIJN INGESCHAKELD, WORDEN VERWERKT."
 
 msgid "NOT STARTED"
-msgstr ""
+msgstr "NIET GESTART"
 
 msgid "DESCRIPTION:"
-msgstr ""
+msgstr "BESCHRIJVING:"
 
 msgid "TOTAL ENTRIES REMOVED:"
-msgstr ""
+msgstr "TOTAAL AANTAL VERWIJDERDE INZENDINGEN:"
 
 msgid "LAST PROCESSED SYSTEM:"
-msgstr ""
+msgstr "LAATSTE VERWERKTE SYSTEEM:"
 
 msgid "LAST ERROR MESSAGE:"
-msgstr ""
+msgstr "LAATSTE FOUTMELDING:"
 
 msgid "MEDIA"
-msgstr ""
+msgstr "MEDIA"
 
 msgid "start processing"
-msgstr ""
+msgstr "begin met verwerken"
 
 msgid "RUNNING MEDIA CLEANUP"
-msgstr ""
+msgstr "OPRUIMING VAN DE LOPENDE MEDIA"
 
 msgid "stop processing"
-msgstr ""
+msgstr "stop met verwerken"
 
 msgid "GAMELISTS"
-msgstr ""
+msgstr "SPELLIJSTEN"
 
 msgid "RUNNING GAMELISTS CLEANUP"
-msgstr ""
+msgstr "OPRUIMING VAN LOPENDE SPELLIJSTEN"
 
 msgid "COLLECTIONS"
-msgstr ""
+msgstr "COLLECTIES"
 
 msgid "COLLECTIONS CLEANUP FAILED"
-msgstr ""
+msgstr "COLLECTIES OPRUIMEN MISLUKT"
 
 msgid "There are no enabled custom collections"
-msgstr ""
+msgstr "Er zijn geen aangepaste collecties ingeschakeld"
 
 msgid "RUNNING COLLECTIONS CLEANUP"
-msgstr ""
+msgstr "LOPENDE COLLECTIES OPRUIMEN"
 
 msgid "PROCESSING"
-msgstr ""
+msgstr "VERWERKING"
 
 #, c-format
 msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr ""
+msgstr "Er is een flatten.txt-bestand gevonden, waarbij \"%s\" is overgeslagen"
 
 msgid "Couldn't create target directory, permission problems?"
-msgstr ""
+msgstr "Kan de doelmap niet aanmaken, problemen met rechten?"
 
 msgid "Couldn't move media file, permission problems?"
-msgstr ""
+msgstr "Kan mediabestand niet verplaatsen, problemen met rechten?"
 
 #, c-format
 msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr ""
+msgstr "Kan gamelist.xml-bestand voor \"%s\" niet parseren"
 
 #, c-format
 msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr ""
+msgstr "Kon geen gamelist-tag vinden in het bestand voor \"%s\""
 
 msgid "Couldn't delete temporary gamelist file, permission problems?"
 msgstr ""
+"Het tijdelijke gamelijstbestand kon niet worden verwijderd, problemen met de "
+"rechten?"
 
 msgid "Couldn't write to temporary gamelist file, permission problems?"
 msgstr ""
+"Kon niet naar het tijdelijke gamelijstbestand schrijven, problemen met "
+"rechten?"
 
 msgid "Couldn't create backup directory, permission problems?"
-msgstr ""
+msgstr "Kan geen back-upmap aanmaken, problemen met rechten?"
 
 msgid "Couldn't move old gamelist file, permission problems?"
-msgstr ""
+msgstr "Kan het oude gamelistbestand niet verplaatsen, problemen met rechten?"
 
 msgid "Couldn't move temporary gamelist file, permission problems?"
 msgstr ""
+"Kon het tijdelijke gamelijstbestand niet verplaatsen, problemen met rechten?"
 
 msgid "Couldn't find custom collection configuration file"
-msgstr ""
+msgstr "Kon het aangepaste verzamelingsconfiguratiebestand niet vinden"
 
 msgid "Couldn't open custom collection configuration file"
-msgstr ""
+msgstr "Kan het aangepaste verzamelingsconfiguratiebestand niet openen"
 
 msgid "Couldn't delete temporary collection file, permission problems?"
 msgstr ""
+"Kan het tijdelijke verzamelbestand niet verwijderen, problemen met de "
+"rechten?"
 
 msgid "Couldn't write to temporary collection configuration file"
-msgstr ""
+msgstr "Kon niet schrijven naar tijdelijke verzameling configuratiebestand"
 
 msgid "Couldn't move old collection file, permission problems?"
-msgstr ""
+msgstr "Kan het oude collectiebestand niet verplaatsen, problemen met rechten?"
 
 msgid "Couldn't move temporary collection file, permission problems?"
 msgstr ""
+"Kan het tijdelijke verzamelbestand niet verplaatsen, problemen met rechten?"
 
 msgid "ABORTED MEDIA CLEANUP"
-msgstr ""
+msgstr "GEBROKEN MEDIA-OPRUIMING"
 
 msgid "COMPLETED MEDIA CLEANUP"
-msgstr ""
+msgstr "VOLTOOIDE MEDIA-OPRUIMING"
 
 msgid "ABORTED GAMELIST CLEANUP"
-msgstr ""
+msgstr "AFGEBROKEN GAMELIST OPRUIMEN"
 
 msgid "COMPLETED GAMELIST CLEANUP"
-msgstr ""
+msgstr "VOLTOOIDE GAMELIST OPRUIMEN"
 
 msgid "ABORTED COLLECTIONS CLEANUP"
-msgstr ""
+msgstr "OPRUIMING VAN AFGEBROKEN COLLECTIES"
 
 msgid "COMPLETED COLLECTIONS CLEANUP"
-msgstr ""
+msgstr "VOLTOOIDE COLLECTIES OPRUIMEN"
 
 msgid "MEDIA CLEANUP FAILED"
-msgstr ""
+msgstr "MEDIA OPRUIMEN MISLUKT"
 
 msgid "GAMELISTS CLEANUP FAILED"
-msgstr ""
+msgstr "GAMELISTS CLEANUP MISLUKT"
 
 msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
-msgstr ""
+msgstr "DE TOEPASSING WORDT OPNIEUW GELADEN WANNEER U DIT HULPPROGRAMMA SLUIT."
 
 msgid "INVALID ENTRY"
-msgstr ""
+msgstr "ONGELDIGE INVOER"
 
 msgid "CLEARED ENTRY"
-msgstr ""
+msgstr "GEKLEURDE TOEGANG"
 
 msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr ""
+msgstr "GEEN ALTERNATIEVE EMULATORS GEDEFINIEERD"
 
 msgid "CLEAR INVALID ENTRY"
-msgstr ""
+msgstr "WIS ONGELDIGE INVOER"
 
 msgid "DEFAULT"
-msgstr ""
+msgstr "STANDAARD"
 
 msgid "EDIT METADATA"
-msgstr ""
+msgstr "METADATA BEWERKEN"
 
 msgid "CLEAR ENTRY"
-msgstr ""
+msgstr "DUIDELIJKE INVOER"
 
 msgid "SELECT EMULATOR"
-msgstr ""
+msgstr "SELECTEER EMULATOR"
 
 msgid "SYSTEM-WIDE"
-msgstr ""
+msgstr "SYSTEEMBREED"
 
 msgid "unknown"
-msgstr ""
+msgstr "onbekend"
 
 msgid "SCRAPE"
-msgstr ""
+msgstr "SCHRAPEN"
 
 msgid "scrape"
-msgstr ""
+msgstr "schrapen"
 
 msgid "save metadata"
-msgstr ""
+msgstr "metagegevens opslaan"
 
 msgid "cancel changes"
-msgstr ""
+msgstr "wijzigingen annuleren"
 
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
 "BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
 "ARE YOU SURE?"
 msgstr ""
+"DIT VERWIJDERT ALLE MEDIABESTANDEN EN DE GAMELIST.XML-VERMELDING VOOR DEZE "
+"MAP, MAAR NOCH DE MAP ZELF NOCH DE INHOUD ERIN WORDT VERWIJDERD\n"
+"WEET U HET ZEKER?"
 
 msgid "CLEAR"
-msgstr ""
+msgstr "DUIDELIJK"
 
 msgid "clear folder"
-msgstr ""
+msgstr "map wissen"
 
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
 "BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
 "ARE YOU SURE?"
 msgstr ""
+"DIT VERWIJDERT ALLE MEDIABESTANDEN EN DE GAMELIST.XML-VERMELDING VOOR DEZE "
+"GAME, MAAR HET GAMEBESTAND ZELF WORDT NIET VERWIJDERD\n"
+"WEET U HET ZEKER?"
 
 msgid "clear file"
-msgstr ""
+msgstr "bestand wissen"
 
 msgid ""
 "THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
 "ARE YOU SURE?"
 msgstr ""
+"DIT VERWIJDERT HET GAMEBESTAND, ALLE MEDIABESTANDEN EN DE GAMELIST.XML-"
+"INVOER\n"
+"WEET U HET ZEKER?"
 
 msgid "DELETE"
-msgstr ""
+msgstr "VERWIJDEREN"
 
 msgid "delete game"
-msgstr ""
+msgstr "spel verwijderen"
 
 msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr ""
+msgstr "MIXIMAGE OFFLINE-GENERATOR"
 
-#, c-format
+#, fuzzy, c-format
 msgid "%i OF %i GAME PROCESSED"
 msgid_plural "%i OF %i GAMES PROCESSED"
-msgstr[0] ""
+msgstr[0] "%i VAN %i SPEL VERWERKT"
 msgstr[1] ""
 
 msgid "Generated:"
-msgstr ""
+msgstr "gegenereerd:"
 
 msgid "Overwritten:"
-msgstr ""
+msgstr "Overschreven:"
 
 msgid "Skipped:"
-msgstr ""
+msgstr "Overgeslagen:"
 
 msgid "Skipped (existing):"
-msgstr ""
+msgstr "Overgeslagen (bestaand):"
 
 msgid "Failed:"
-msgstr ""
+msgstr "Mislukt:"
 
 msgid "Processing:"
-msgstr ""
+msgstr "Verwerken:"
 
 msgid "Last error message:"
-msgstr ""
+msgstr "Laatste foutmelding:"
 
 msgid "PAUSE"
-msgstr ""
+msgstr "PAUZE"
 
 msgid "pause processing"
-msgstr ""
+msgstr "pauze verwerking"
 
 msgid "close (abort processing)"
-msgstr ""
+msgstr "sluiten (verwerking afbreken)"
 
 msgid "RUNNING..."
-msgstr ""
+msgstr "RENNEN..."
 
 msgid "PAUSED"
-msgstr ""
+msgstr "GEPAUZEERD"
 
 msgid "RUNNING"
-msgstr ""
+msgstr "RENNEN"
 
 msgid "COMPLETED"
-msgstr ""
+msgstr "VOLTOOID"
 
 msgid "DONE"
-msgstr ""
+msgstr "KLAAR"
 
 msgid "done (close)"
-msgstr ""
+msgstr "gedaan (dichtbij)"
 
 msgid "APPLICATION UPDATER"
-msgstr ""
+msgstr "TOEPASSINGSUPDATER"
 
 msgid "INSTALLATION STEPS:"
-msgstr ""
+msgstr "INSTALLATIESTAPPEN:"
 
 msgid "DOWNLOAD NEW RELEASE"
-msgstr ""
+msgstr "DOWNLOAD NIEUWE RELEASE"
 
 msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
-msgstr ""
+msgstr "DOWNLOAD NIEUWE RELEASE IN DEZE GIDS:"
 
 msgid "INSTALL PACKAGE"
-msgstr ""
+msgstr "PAKKET INSTALLEREN"
 
 msgid "QUIT AND MANUALLY RESTART ES-DE"
-msgstr ""
+msgstr "ES-DE AFSLUITEN EN HANDMATIG OPNIEUW OPSTARTEN"
 
 msgid "QUIT AND MANUALLY UPGRADE ES-DE"
-msgstr ""
+msgstr "STOP EN UPGRADE ES-DE HANDMATIG"
 
 msgid "STATUS MESSAGE:"
-msgstr ""
+msgstr "STATUSBERICHT:"
 
 msgid "DOWNLOAD"
-msgstr ""
+msgstr "DOWNLOADEN"
 
 msgid "download new release"
-msgstr ""
+msgstr "download nieuwe release"
 
 msgid "Download directory does not exist"
-msgstr ""
+msgstr "Download directory bestaat niet"
 
 msgid "CHANGE DIRECTORY"
-msgstr ""
+msgstr "WIJZIG DIRECTORY"
 
 msgid "change download directory"
-msgstr ""
+msgstr "download directory wijzigen"
 
 msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr ""
+msgstr "GA NAAR DE DOWNLOADGIDS"
 
 msgid "DOWNLOAD ABORTED"
-msgstr ""
+msgstr "DOWNLOAD AFGEBROKEN"
 
 msgid "NO PACKAGE SAVED TO DISK"
-msgstr ""
+msgstr "GEEN PAKKET OPGESLAGEN OP SCHIJF"
 
 msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr ""
+msgstr "PAKKET IS GEDOWNLOAD EN KAN HANDMATIG WORDEN GEÏNSTALLEERD"
 
 msgid "DOWNLOADING 100%"
-msgstr ""
+msgstr "DOWNLOADEN 100%"
 
 msgid "Downloaded file does not match expected MD5 checksum"
 msgstr ""
+"Het gedownloade bestand komt niet overeen met de verwachte MD5-controlesom"
 
 msgid "Error: Couldn't delete temporary package file, permission problems?"
 msgstr ""
+"Fout: Kan tijdelijk pakketbestand niet verwijderen, problemen met rechten?"
 
 msgid "Error: Couldn't write package file, permission problems?"
-msgstr ""
+msgstr "Fout: Pakketbestand kon niet worden geschreven, machtigingsproblemen?"
 
 msgid "Error: Couldn't set permissions on AppImage file"
-msgstr ""
+msgstr "Fout: Kan geen machtigingen instellen voor AppImage-bestand"
 
 #, c-format
 msgid "Downloaded %s"
-msgstr ""
+msgstr "Gedownload %s"
 
 msgid "Error: Couldn't open AppImage update file for reading"
-msgstr ""
+msgstr "Fout: Kan AppImage-updatebestand niet openen om te lezen"
 
 msgid "Error: Downloaded file does not match expected MD5 checksum"
-msgstr ""
+msgstr "Fout: gedownload bestand komt niet overeen met verwachte MD5-checksum"
 
 msgid "Error: Couldn't rename running AppImage file, permission problems?"
 msgstr ""
+"Fout: Kan de naam van het actieve AppImage-bestand niet wijzigen, problemen "
+"met de rechten?"
 
 msgid "Error: Couldn't replace running AppImage file, permission problems?"
 msgstr ""
+"Fout: Kan het actieve AppImage-bestand niet vervangen, problemen met de "
+"machtigingen?"
 
 #, c-format
 msgid "Successfully installed as %s"
-msgstr ""
+msgstr "Succesvol geïnstalleerd als %s"
 
 msgid "INSTALL"
-msgstr ""
+msgstr "INSTALLEREN"
 
 msgid "install package"
-msgstr ""
+msgstr "pakket installeren"
 
 msgid "Find the detailed changelog at"
-msgstr ""
+msgstr "Het gedetailleerde changelog vindt u op"
 
 msgid "quit application"
-msgstr ""
+msgstr "stop met applicatie"
 
 msgid "all games"
-msgstr ""
+msgstr "alle spellen"
 
 msgid "last played"
-msgstr ""
+msgstr "laatst gespeeld"
 
 msgid "favorites"
-msgstr ""
+msgstr "favorieten"
 
 msgid "collections"
-msgstr ""
+msgstr "verzamelingen"
 
 #, c-format
 msgid "DISABLED '%s' IN '%s'"
-msgstr ""
+msgstr "UITGESCHAKELD '%s' IN '%s'"
 
 #, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr ""
+msgstr "BEWERKEN VAN '%s'-COLLECTIE, SPELLEN TOEVOEGEN/VERWIJDEREN MET %s"
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr ""
+msgstr "VOLTOOID BEWERKING '%s' COLLECTIE"
 
 msgid "Favorites"
-msgstr ""
+msgstr "Favorieten"
 
 #, c-format
 msgid "ADDED '%s' TO '%s'"
-msgstr ""
+msgstr "TOEGEVOEGD '%s' AAN '%s'"
 
 #, c-format
 msgid "REMOVED '%s' FROM '%s'"
-msgstr ""
+msgstr "'%s' VERWIJDERD VAN '%s'"
 
 msgid "This collection is empty"
-msgstr ""
+msgstr "Deze collectie is leeg"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
-msgstr ""
+msgstr "Deze collectie bevat 1 spel: '%s [%s]'"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
-msgstr ""
+msgstr "Deze collectie bevat 2 spellen: '%s [%s]' en '%s [%s]'"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
-msgstr ""
+msgstr "Deze collectie bevat 3 spellen: '%s [%s]', '%s [%s]' en '%s [%s]'"
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
@@ -1933,232 +2051,238 @@ msgid_plural ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
 "others"
 msgstr[0] ""
+"Deze collectie bevat %i games: '%s [%s]', '%s [%s]' en '%s [%s]', onder "
+"andere"
 msgstr[1] ""
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
-msgstr ""
+msgstr "Deze collectie bevat 1 spel: '%s'"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
-msgstr ""
+msgstr "Deze collectie bevat 2 spellen: '%s' en '%s'"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
-msgstr ""
+msgstr "Deze collectie bevat 3 spellen: '%s', '%s' en '%s'"
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr[0] ""
+msgstr[0] "Deze collectie bevat %i games: '%s', '%s' en '%s', onder andere"
 msgstr[1] ""
 
 #, c-format
 msgctxt "theme"
 msgid "'%s' is filtered so there may be more games available"
-msgstr ""
+msgstr "'%s' is gefilterd, dus er kunnen meer spellen beschikbaar zijn"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
-msgstr ""
+msgstr "VERWIJDERDE COLLECTIE '%s'"
 
 msgid "name, ascending"
-msgstr ""
+msgstr "naam, oplopend"
 
 msgid "name, descending"
-msgstr ""
+msgstr "naam, aflopend"
 
 msgid "rating, ascending"
-msgstr ""
+msgstr "beoordeling, oplopend"
 
 msgid "rating, descending"
-msgstr ""
+msgstr "beoordeling, aflopend"
 
 msgid "release date, ascending"
-msgstr ""
+msgstr "releasedatum, oplopend"
 
 msgid "release date, descending"
-msgstr ""
+msgstr "releasedatum, aflopend"
 
 msgid "developer, ascending"
-msgstr ""
+msgstr "ontwikkelaar, oplopend"
 
 msgid "developer, descending"
-msgstr ""
+msgstr "ontwikkelaar, aflopend"
 
 msgid "publisher, ascending"
-msgstr ""
+msgstr "uitgever, oplopend"
 
 msgid "publisher, descending"
-msgstr ""
+msgstr "uitgever, aflopend"
 
 msgid "genre, ascending"
-msgstr ""
+msgstr "genre, oplopend"
 
 msgid "genre, descending"
-msgstr ""
+msgstr "genre, aflopend"
 
 msgid "players, ascending"
-msgstr ""
+msgstr "spelers, oplopend"
 
 msgid "players, descending"
-msgstr ""
+msgstr "spelers, aflopend"
 
 msgid "last played, ascending"
-msgstr ""
+msgstr "laatst gespeeld, oplopend"
 
 msgid "last played, descending"
-msgstr ""
+msgstr "laatst gespeeld, aflopend"
 
 msgid "times played, ascending"
-msgstr ""
+msgstr "keer gespeeld, oplopend"
 
 msgid "times played, descending"
-msgstr ""
+msgstr "keer gespeeld, aflopend"
 
 msgid "system, ascending"
-msgstr ""
+msgstr "systeem, oplopend"
 
 msgid "system, descending"
-msgstr ""
+msgstr "systeem, aflopend"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr ""
+msgstr "FOUT: ONTBREKENDE PRE-COMMAND FIND RULES CONFIGURATIE VOOR '%s'"
 
 msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "FOUT: KON PRE-COMMAND NIET VINDEN, IS HET GOED GEÏNSTALLEERD?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "FOUT: KON PRE-COMMAND '%s' NIET VINDEN, IS HET GOED GEÏNSTALLEERD?"
 
 #, c-format
 msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr ""
+msgstr "FOUT: ONTBREKENDE EMULATOR VINDREGELS CONFIGURATIE VOOR '%s'"
 
 msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "FOUT: KAN DE APP NIET VINDEN, IS DEZE GOED GEÏNSTALLEERD?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "FOUT: KON APP '%s' NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
 
 msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "FOUT: KAN EMULATOR NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "FOUT: KON EMULATOR '%s' NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr ""
+msgstr "FOUT: KON EMULATOR CORE-BESTAND '%s' NIET VINDEN"
 
 msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr ""
+msgstr "FOUT: ONGELDIGE INVOER IN HET SYSTEEMCONFIGURATIEBESTAND"
 
 #, c-format
 msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr ""
+msgstr "FOUT: ONTBREKENDE KERNCONFIGURATIE VOOR '%s'"
 
 #, c-format
 msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr ""
+msgstr "FOUT: ONGELDIGE %s VARIABELE INVOER"
 
 #, c-format
 msgid ""
 "ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
 msgstr ""
+"FOUT: MAP GEDEFINIEERD DOOR %s KON NIET WORDEN AANGEMAAKT, PROBLEMEN MET DE "
+"TOESTEMMING?"
 
 msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr ""
+msgstr "FOUT: APP OF ALIAS-BESTAND BESTAAT NIET OF IS ONLEESBAAR"
 
 msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr ""
+msgstr "FOUT: DESKTOPBESTAND IS ONGELDIG OF ONLEESBAAR"
 
 msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr ""
+msgstr "FOUT: HET DESKTOPBESTAND BESTAAT NIET OF IS ONLEESBAAR"
 
 #, c-format
 msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
-msgstr ""
+msgstr "FOUT BIJ HET STARTEN VAN HET SPEL '%s' (FOUTCODE %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "KAN GEEN AANGEPASTE COLLECTIES TOEVOEGEN AAN AANGEPASTE COLLECTIES"
 
 msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "KAN GEEN PLAATSHOUDERS TOEVOEGEN AAN AANGEPASTE COLLECTIES"
 
 msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "KAN GEEN MAPPEN TOEVOEGEN AAN AANGEPASTE COLLECTIES"
 
 #, c-format
 msgid "MARKED FOLDER '%s' AS FAVORITE"
-msgstr ""
+msgstr "GEMARKEERDE MAP '%s' ALS FAVORIET"
 
 #, c-format
 msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
-msgstr ""
+msgstr "FAVORIETE MARKERING VOOR MAP '%s' VERWIJDERD"
 
 msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr ""
+"KUNNEN GEEN INZENDINGEN TOEVOEGEN DIE NIET ALS SPELLEN WORDEN GETELD AAN "
+"AANGEPASTE COLLECTIES"
 
 msgid "random"
-msgstr ""
+msgstr "willekeurig"
 
 msgid "screensaver"
-msgstr ""
+msgstr "schermbeveiliging"
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid "%i game"
 msgid_plural "%i games"
-msgstr[0] ""
+msgstr[0] "%i spel"
 msgstr[1] ""
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid "(%i favorite)"
 msgid_plural "(%i favorites)"
-msgstr[0] ""
+msgstr[0] "(%i favoriet)"
 msgstr[1] ""
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
-msgstr[0] ""
+msgstr[0] "%i favoriet"
 msgstr[1] ""
 
 msgctxt "theme"
 msgid "unknown"
-msgstr ""
+msgstr "onbekend"
 
 msgid "system"
-msgstr ""
+msgstr "systeem"
 
 msgid "view media"
-msgstr ""
+msgstr "media bekijken"
 
 msgid "options"
-msgstr ""
+msgstr "opties"
 
 msgid "jump to game"
-msgstr ""
+msgstr "spring naar spel"
 
 msgctxt "theme"
 msgid "yes"
-msgstr ""
+msgstr "Ja"
 
 msgctxt "theme"
 msgid "no"
-msgstr ""
+msgstr "Nee"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2167,6 +2291,11 @@ msgid ""
 "UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
 "DIRECTORY."
 msgstr ""
+"HET LIJKT EROP DAT ER EEN ONVEILIGE UPGRADE IS GEMAAKT, MOGELIJK DOOR HET "
+"UITPAKKEN VAN DE NIEUWE RELEASE BOVENOP DE OUDE? DIT KAN VERSCHILLENDE "
+"PROBLEMEN VEROORZAKEN, WAARVAN SOMMIGE NIET DIRECT DUIDELIJK ZIJN. VOLG "
+"ALTIJD DE UPGRADE-INSTRUCTIES IN HET README.TXT-BESTAND DAT TE VINDEN IS IN "
+"DE ES-DE DIRECTORY."
 
 msgid ""
 "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
@@ -2174,6 +2303,10 @@ msgid ""
 "YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
 "SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
 msgstr ""
+"KON HET SYSTEMS CONFIGURATIEBESTAND NIET ONTLEDEN. ALS U EEN AANGEPAST "
+"es_systems.xml-BESTAND HEBT, IS ER WAARSCHIJNLIJK IETS MIS MET UW XML-"
+"SYNTAX. ALS U GEEN AANGEPAST SYSTEMS-BESTAND HEBT, IS DE ES-DE-INSTALLATIE "
+"GEBROKEN. ZIE HET TOEPASSINGSLOGBESTAND es_log.txt VOOR EXTRA INFO"
 
 msgid ""
 "NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
@@ -2182,6 +2315,11 @@ msgid ""
 "THE SUPPORTED FILE EXTENSIONS.\n"
 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
+"GEEN GAMEBESTANDEN GEVONDEN, PLAATS UW GAMES IN DE GECONFIGUREERDE ROM-"
+"DIRECTORY. Optioneel kan de ROM-DIRECTORY-STRUCTUUR WORDEN GEGENEREERD, WAT "
+"EEN TEKSTBESTAND VOOR ELK SYSTEEM CREËERT MET ENIGE INFORMATIE, ZOALS DE "
+"ONDERSTEUNDE BESTANDSEXTENSIES.\n"
+"DIT IS DE HUIDIG GECONFIGUREERDE ROM-DIRECTORY:\n"
 
 msgid ""
 "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
@@ -2191,28 +2329,36 @@ msgid ""
 "FILE EXTENSIONS.\n"
 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
+"GEEN GAMEBESTANDEN GEVONDEN. PLAATS UW GAMES IN DE HUIDIG GECONFIGUREERDE "
+"ROM-DIRECTORY OF WIJZIG HET PAD MET DE KNOP HIERONDER. Optioneel kan de ROM-"
+"DIRECTORYSTRUCTUUR WORDEN GEGENEREERD, WAARBIJ VOOR ELK SYSTEEM EEN "
+"TEKSTBESTAND WORDT GEMAAKT MET INFORMATIE ZOALS DE ONDERSTEUNDE "
+"BESTANDSEXTENSIES.\n"
+"DIT IS DE HUIDIG GECONFIGUREERDE ROM-DIRECTORY:\n"
 
 msgid "CHANGE ROM DIRECTORY"
-msgstr ""
+msgstr "ROM-MAP WIJZIGEN"
 
 msgid "ENTER ROM DIRECTORY PATH"
-msgstr ""
+msgstr "VOER HET PAD VAN DE ROM-MAP IN"
 
 msgid ""
 "ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
 msgstr ""
+"ROM DIRECTORY INSTELLING OPGESLAGEN, START DE TOEPASSING OPNIEUW OM DE "
+"SYSTEMEN OPNIEUW TE SCANNEN"
 
 msgid "Currently configured path:"
-msgstr ""
+msgstr "Huidig geconfigureerd pad:"
 
 msgid "LOAD CURRENTLY CONFIGURED PATH"
-msgstr ""
+msgstr "LAAD HET HUIDIG GECONFIGUREERDE PAD"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
-msgstr ""
+msgstr "WISSEN (LEEG LATEN OM STANDAARDPAD TE HERSTELLEN)"
 
 msgid "CREATE DIRECTORIES"
-msgstr ""
+msgstr "MAAK DIRECTORY'S"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2221,17 +2367,28 @@ msgid ""
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
 "DON'T NEED"
 msgstr ""
+"DIT MAAKT DIRECTORIES VOOR ALLE GAME SYSTEMEN DIE GEDEFINIEERD ZIJN IN "
+"es_systems.xml\n"
+"\n"
+"DIT KAN VEEL MAPPEN MAKEN, DUS HET IS AAN TE RADEN DE MAPPEN TE VERWIJDEREN "
+"DIE U NIET NODIG HEBT"
 
 msgid ""
 "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
 "PLACE YOUR GAMES IN THE NEW FOLDERS"
 msgstr ""
+"DE SYSTEEMMAPPEN ZIJN SUCCESVOL GEGENEREERD, VERLAAT DE TOEPASSING EN PLAATS "
+"UW SPELLEN IN DE NIEUWE MAPPEN"
 
 msgid ""
 "ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
 "\n"
 "SEE THE LOG FILE FOR MORE DETAILS"
 msgstr ""
+"FOUT BIJ HET CREËREN VAN DE SYSTEEMDIRECTORIES, TOESTEMMINGSPROBLEMEN OF "
+"SCHIJF VOL?\n"
+"\n"
+"ZIE HET LOGBESTAND VOOR MEER DETAILS"
 
 msgid ""
 "AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
@@ -2239,9 +2396,13 @@ msgid ""
 "SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
 "MENU"
 msgstr ""
+"MINSTENS ÉÉN VAN UW SYSTEMEN HEEFT EEN ONGELDIGE ALTERNATIEVE EMULATOR "
+"GECONFIGUREERD MET GEEN OVEREENKOMSTIGE INVOER IN HET "
+"SYSTEEMCONFIGURATIEBESTAND. CONTROLEER UW INSTELLING MET DE INTERFACE "
+"'ALTERNATIEVE EMULATORS' IN HET MENU 'OVERIGE INSTELLINGEN'."
 
 msgid "UPDATE"
-msgstr ""
+msgstr "UPDATE"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
@@ -2250,6 +2411,11 @@ msgid ""
 "ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
+"DE APPLICATIE-UPDATER DOWNLOADT DE NIEUWSTE PORTABLE WINDOWS-RELEASE VOOR U, "
+"MAAR U MOET DE UPGRADE HANDMATIG UITVOEREN. ZIE HET README.TXT-BESTAND IN "
+"HET GEDOWNLOADE ZIP-BESTAND VOOR INSTRUCTIES OVER HOE DIT WORDT UITGEVOERD. "
+"ZOALS OOK IN DAT DOCUMENT WORDT BESCHREVEN, PAK NOOIT EEN NIEUWE RELEASE UIT "
+"OVER EEN OUDE INSTALLATIE, OMDAT DAT DE APPLICATIE KAN KWIJTSCHAKELEN."
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
@@ -2257,463 +2423,472 @@ msgid ""
 "DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
 "UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
 msgstr ""
+"DE APPLICATIE-UPDATER DOWNLOADT DE NIEUWSTE WINDOWS INSTALLER-RELEASE VOOR "
+"U, MAAR U MOET DEZE HANDMATIG UITVOEREN OM DE UPGRADE UIT TE VOEREN. ZORG ER "
+"ERVOOR DAT U JA BEANTWOORDT OP DE VRAAG OF U DE OUDE VERSIE MOET "
+"VERWIJDEREN, ANDERS KAN U EINDIGEN MET EEN GEBROKEN INSTALLATIE."
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
 "WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
 msgstr ""
+"DE APPLICATIE-UPDATER DOWNLOADT DE NIEUWSTE RELEASE VOOR U, MAAR U MOET HET "
+"DMG-BESTAND HANDMATIG INSTALLEREN OM DE UPGRADE UIT TE VOEREN."
 
 #, c-format
 msgid "LAUNCHING GAME '%s'"
-msgstr ""
+msgstr "SPEL '%s' STARTEN"
 
 msgid "menu"
-msgstr ""
+msgstr "menu"
 
 #, c-format
 msgid "PAGE %s OF %s"
-msgstr ""
+msgstr "PAGINA %s VAN %s"
 
 msgid "pan"
-msgstr ""
+msgstr "pan"
 
 msgid "reset"
-msgstr ""
+msgstr "opnieuw instellen"
 
 msgid "browse"
-msgstr ""
+msgstr "bladeren"
 
 msgid "game media"
-msgstr ""
+msgstr "spelmedia"
 
 msgid "first"
-msgstr ""
+msgstr "Eerst"
 
 msgid "last"
-msgstr ""
+msgstr "laatst"
 
 msgid "zoom"
-msgstr ""
+msgstr "zoom"
 
 msgid "RATING"
-msgstr ""
+msgstr "BEOORDELING"
 
 msgid "DEVELOPER"
-msgstr ""
+msgstr "ONTWIKKELAAR"
 
 msgid "PUBLISHER"
-msgstr ""
+msgstr "UITGEVER"
 
 msgid "GENRE"
-msgstr ""
+msgstr "GENRE"
 
 msgid "PLAYERS"
-msgstr ""
+msgstr "SPELERS"
 
 msgid "FAVORITE"
-msgstr ""
+msgstr "FAVORIET"
 
 msgid "KIDGAME"
-msgstr ""
+msgstr "KINDERSPEL"
 
 msgid "HIDDEN"
-msgstr ""
+msgstr "VERBORGEN"
 
 msgid "BROKEN"
-msgstr ""
+msgstr "GEBROKEN"
 
 msgid "CONTROLLER"
-msgstr ""
+msgstr "VERWERKER"
 
 msgid "ALTERNATIVE EMULATOR"
-msgstr ""
+msgstr "ALTERNATIEVE EMULATOR"
 
 msgid "FALSE"
-msgstr ""
+msgstr "ONWAAR"
 
 msgid "TRUE"
-msgstr ""
+msgstr "WAAR"
 
 msgid "UNKNOWN"
-msgstr ""
+msgstr "ONBEKEND"
 
 msgid "NONE SELECTED"
-msgstr ""
+msgstr "GEEN GESELECTEERD"
 
 msgid "No screenshot found, couldn't generate miximage"
-msgstr ""
+msgstr "Geen screenshot gevonden, kon geen miximage genereren"
 
 msgid "Screenshot in unknown format, couldn't generate miximage"
-msgstr ""
+msgstr "Screenshot in onbekend formaat, kon geen miximage genereren"
 
 msgid "Screenshot in unsupported format, couldn't generate miximage"
-msgstr ""
+msgstr "Screenshot in niet-ondersteund formaat, kon geen miximage genereren"
 
 msgid "Error loading screenshot, couldn't generate miximage"
-msgstr ""
+msgstr "Fout bij het laden van screenshot, kon geen miximage genereren"
 
 msgid "Error loading marquee image, corrupt file?"
-msgstr ""
+msgstr "Fout bij het laden van de marquee-afbeelding, beschadigd bestand?"
 
 msgid "Error loading 3d box image, corrupt file?"
-msgstr ""
+msgstr "Fout bij het laden van 3D-box-afbeelding, beschadigd bestand?"
 
 msgid "Error loading box cover image, corrupt file?"
 msgstr ""
+"Fout bij het laden van de afbeelding van de doosomslag, beschadigd bestand?"
 
 msgid "Error loading physical media image, corrupt file?"
-msgstr ""
+msgstr "Fout bij het laden van fysieke media-afbeelding, beschadigd bestand?"
 
 msgid "pdf manual"
-msgstr ""
+msgstr "pdf-handleiding"
 
 msgid "SCREENSHOT"
-msgstr ""
+msgstr "SCHERMAFDRUK"
 
 msgid "BOX COVER"
-msgstr ""
+msgstr "DOOS DEKSEL"
 
 msgid "BOX BACK COVER"
-msgstr ""
+msgstr "DOOS ACHTERKANT"
 
 msgid "TITLE SCREEN"
-msgstr ""
+msgstr "TITELSCHERM"
 
 msgid "FAN ART"
-msgstr ""
+msgstr "Fankunst"
 
 msgid "MIXIMAGE"
-msgstr ""
+msgstr "MIXAFBEELDING"
 
 msgid "CUSTOM"
-msgstr ""
+msgstr "AANGEPAST"
 
 msgid "Searching for games..."
-msgstr ""
+msgstr "Op zoek naar spellen..."
 
 msgid "Loading systems..."
-msgstr ""
+msgstr "Systemen laden..."
 
 msgid "Reloading..."
-msgstr ""
+msgstr "Opnieuw laden..."
 
 msgid "Copying resources..."
-msgstr ""
+msgstr "Bronnen kopiëren..."
 
 msgid "Creating system directories..."
-msgstr ""
+msgstr "Systeemmappen maken..."
 
 msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr ""
+msgstr "FOUT: PDF-BESTAND KAN NIET WEERGEVEN"
 
 #, c-format
 msgid "ADDED INPUT DEVICE '%s'"
-msgstr ""
+msgstr "TOEGEVOEGD INVOERAPPARAAT '%s'"
 
 #, c-format
 msgid "REMOVED INPUT DEVICE '%s'"
-msgstr ""
+msgstr "VERWIJDERD INVOERAPPARAAT '%s'"
 
 msgid "medium"
-msgstr ""
+msgstr "medium"
 
 msgid "large"
-msgstr ""
+msgstr "groot"
 
 msgid "small"
-msgstr ""
+msgstr "klein"
 
 msgid "extra small"
-msgstr ""
+msgstr "extra klein"
 
 msgid "extra large"
-msgstr ""
+msgstr "extra groot"
 
 msgid "automatic"
-msgstr ""
+msgstr "automatisch"
 
 msgid "16:9 vertical"
-msgstr ""
+msgstr "16:9 verticaal"
 
 msgid "16:10 vertical"
-msgstr ""
+msgstr "16:10 verticaal"
 
 msgid "3:2 vertical"
-msgstr ""
+msgstr "3:2 verticaal"
 
 msgid "4:3 vertical"
-msgstr ""
+msgstr "4:3 verticaal"
 
 msgid "5:4 vertical"
-msgstr ""
+msgstr "5:4 verticaal"
 
 msgid "19.5:9 vertical"
-msgstr ""
+msgstr "19.5:9 verticaal"
 
 msgid "20:9 vertical"
-msgstr ""
+msgstr "20:9 verticaal"
 
 msgid "21:9 vertical"
-msgstr ""
+msgstr "21:9 verticaal"
 
 msgid "32:9 vertical"
-msgstr ""
+msgstr "32:9 verticaal"
 
 msgid "edit date"
-msgstr ""
+msgstr "datum bewerken"
 
 msgid "Y-M-D"
-msgstr ""
+msgstr "J-M-D"
 
 msgid "modify"
-msgstr ""
+msgstr "bewerken"
 
 #, c-format
 msgid "%i (OF %i)"
-msgstr ""
+msgstr "%i (VAN %i)"
 
-#, c-format
+#, fuzzy, c-format
 msgid "%s SELECTED"
 msgid_plural "%s SELECTED"
-msgstr[0] ""
+msgstr[0] "%s GESELECTEERD"
 msgstr[1] ""
 
-#, c-format
+#, fuzzy, c-format
 msgid "%i SELECTED"
 msgid_plural "%i SELECTED"
-msgstr[0] ""
+msgstr[0] "%i GESELECTEERD"
 msgstr[1] ""
 
 msgid "change value"
-msgstr ""
+msgstr "waarde veranderen"
 
 msgid "SELECT ALL"
-msgstr ""
+msgstr "SELECTEER ALLES"
 
 msgid "select all"
-msgstr ""
+msgstr "selecteer alles"
 
 msgid "SELECT NONE"
-msgstr ""
+msgstr "SELECTEER GEEN"
 
 msgid "select none"
-msgstr ""
+msgstr "selecteer geen"
 
 msgid "move cursor"
-msgstr ""
+msgstr "cursor verplaatsen"
 
 msgid "edit"
-msgstr ""
+msgstr "bewerking"
 
 msgid "WORKING..."
-msgstr ""
+msgstr "WERKEN..."
 
 msgid "toggle"
-msgstr ""
+msgstr "schakelaar"
 
 msgid "add half star"
-msgstr ""
+msgstr "halve ster toevoegen"
 
 msgctxt "theme"
 msgid "never"
-msgstr ""
+msgstr "nooit"
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid "%i day ago"
 msgid_plural "%i days ago"
-msgstr[0] ""
+msgstr[0] "%i dag geleden"
 msgstr[1] ""
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid "%i hour ago"
 msgid_plural "%i hours ago"
-msgstr[0] ""
+msgstr[0] "%i uur geleden"
 msgstr[1] ""
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid "%i minute ago"
 msgid_plural "%i minutes ago"
-msgstr[0] ""
+msgstr[0] "%i minuut geleden"
 msgstr[1] ""
 
-#, c-format
+#, fuzzy, c-format
 msgctxt "theme"
 msgid "%i second ago"
 msgid_plural "%i seconds ago"
-msgstr[0] ""
+msgstr[0] "%i seconde geleden"
 msgstr[1] ""
 
 msgid "SPACE"
-msgstr ""
+msgstr "RUIMTE"
 
 msgid "LOAD"
-msgstr ""
+msgstr "LADEN"
 
 msgid "shift"
-msgstr ""
+msgstr "verschuiving"
 
 msgid "alt"
-msgstr ""
+msgstr "alt"
 
 msgid "newline"
-msgstr ""
+msgstr "nieuwe regel"
 
 msgid "backspace"
-msgstr ""
+msgstr "backspace"
 
 msgid "space"
-msgstr ""
+msgstr "ruimte"
 
 msgid "WELCOME"
-msgstr ""
+msgstr "WELKOM"
 
 msgid "CONFIGURE INPUT DEVICE"
-msgstr ""
+msgstr "CONFIGUREREN INPUT APPARAAT"
 
-#, c-format
+#, fuzzy, c-format
 msgid "%i GAMEPAD DETECTED"
 msgid_plural "%i GAMEPADS DETECTED"
-msgstr[0] ""
+msgstr[0] "%i GAMEPAD GEDETECTEERD"
 msgstr[1] ""
 
 msgid "NO GAMEPADS DETECTED"
-msgstr ""
+msgstr "GEEN GAMEPADS GEDETECTEERD"
 
 msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
-msgstr ""
+msgstr "(ALLEEN INPUT VAN EERSTE CONTROLLER ACCEPTEREN)"
 
 msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
-msgstr ""
+msgstr "HOUD EEN KNOP OP UW APPARAAT INGEDRUKT OM HET TE CONFIGUREREN"
 
 msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
-msgstr ""
+msgstr "HOUD EEN KNOP OP UW TOETSENBORD INGEDRUKT OM HET TE CONFIGUREREN"
 
 msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
 msgstr ""
+"DRUK OP ESC OM OVER TE SLAAN (OF OP DE SNELKNOP OM OP ELK GEWENST MOMENT TE "
+"STOPPEN)"
 
 msgid "PRESS ESC TO CANCEL"
-msgstr ""
+msgstr "Druk op ESC om te annuleren"
 
 msgid "LOAD DEFAULT"
-msgstr ""
+msgstr "LAAD STANDAARD"
 
 msgid "DISCARD CHANGES"
-msgstr ""
+msgstr "VERANDERINGEN VERWERPEN"
 
 msgid "discard changes"
-msgstr ""
+msgstr "wijzigingen negeren"
 
 msgid "CONFIGURING"
-msgstr ""
+msgstr "CONFIGUREREN"
 
 msgid "KEYBOARD"
-msgstr ""
+msgstr "TOETSENBORD"
 
 msgid "GAMEPAD"
-msgstr ""
+msgstr "SPEELPAD"
 
 msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
-msgstr ""
+msgstr "HOUD EEN KNOP 1 SECONDE INGEDRUKT OM OVER TE SLAAN"
 
 msgid "NOT DEFINED"
-msgstr ""
+msgstr "NIET GEDEFINIEERD"
 
 msgid "ok"
-msgstr ""
+msgstr "OK"
 
 msgid "D-PAD UP"
-msgstr ""
+msgstr "D-PAD OMHOOG"
 
 msgid "D-PAD DOWN"
-msgstr ""
+msgstr "D-PAD OMLAAG"
 
 msgid "D-PAD LEFT"
-msgstr ""
+msgstr "D-PAD LINKS"
 
 msgid "D-PAD RIGHT"
-msgstr ""
+msgstr "D-PAD RECHTS"
 
 msgid "MINUS"
-msgstr ""
+msgstr "MINUS"
 
 msgid "PLUS"
-msgstr ""
+msgstr "PLUS"
 
 msgid "CROSS"
-msgstr ""
+msgstr "KRUIS"
 
 msgid "CIRCLE"
-msgstr ""
+msgstr "CIRKEL"
 
 msgid "SQUARE"
-msgstr ""
+msgstr "VIERKANT"
 
 msgid "TRIANGLE"
-msgstr ""
+msgstr "DRIEHOEK"
 
 msgid "OPTIONS"
-msgstr ""
+msgstr "OPTIES"
 
 msgid "VIEW"
-msgstr ""
+msgstr "WEERGAVE"
 
 msgid "MENU"
-msgstr ""
+msgstr "MENU"
 
 msgid "LEFT SHOULDER"
-msgstr ""
+msgstr "LINKER SCHOUDER"
 
 msgid "RIGHT SHOULDER"
-msgstr ""
+msgstr "RECHTER SCHOUDER"
 
 msgid "LEFT TRIGGER"
-msgstr ""
+msgstr "LINKER TREKKER"
 
 msgid "RIGHT TRIGGER"
-msgstr ""
+msgstr "RECHTER TREKKER"
 
 msgid "LEFT THUMBSTICK UP"
-msgstr ""
+msgstr "LINKER DUIMSTOK OMHOOG"
 
 msgid "LEFT THUMBSTICK DOWN"
-msgstr ""
+msgstr "LINKER DUIMSTOK OMLAAG"
 
 msgid "LEFT THUMBSTICK LEFT"
-msgstr ""
+msgstr "LINKER DUIMSTOK LINKS"
 
 msgid "LEFT THUMBSTICK RIGHT"
-msgstr ""
+msgstr "LINKER DUIMSTOK RECHTS"
 
 msgid "LEFT THUMBSTICK CLICK"
-msgstr ""
+msgstr "LINKER DUIMSTOK KLIK"
 
 msgid "RIGHT THUMBSTICK UP"
-msgstr ""
+msgstr "RECHTER DUIMSTOK OMHOOG"
 
 msgid "RIGHT THUMBSTICK DOWN"
-msgstr ""
+msgstr "RECHTER DUIMSTOK OMLAAG"
 
 msgid "RIGHT THUMBSTICK LEFT"
-msgstr ""
+msgstr "RECHTER DUIMSTOK LINKS"
 
 msgid "RIGHT THUMBSTICK RIGHT"
-msgstr ""
+msgstr "RECHTER DUIMSTOK RECHTS"
 
 msgid "RIGHT THUMBSTICK CLICK"
-msgstr ""
+msgstr "RECHTER DUIMSTOK KLIK"
 
 msgid "ALREADY TAKEN"
-msgstr ""
+msgstr "AL GENOMEN"
 
 msgid "PRESS ANYTHING"
-msgstr ""
+msgstr "Druk op IETS"
 
 msgid "You have exceeded your daily scrape quota"
-msgstr ""
+msgstr "U hebt uw dagelijkse scrape-quotum overschreden"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
-msgstr ""
+msgstr "Server retourneerde HTTP-foutcode %s"

@@ -111,6 +111,7 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedLanguages 
     {"es_ES", "ESPAÑOL (ESPAÑA)"},
     {"fr_FR", "FRANÇAIS"},
     {"it_IT", "ITALIANO"},
+    {"nl_NL", "NEDERLANDS"},
     {"pl_PL", "POLSKI"},
     {"pt_BR", "PORTUGUÊS (BRASIL)"},
     {"ro_RO", "ROMÂNĂ"},
