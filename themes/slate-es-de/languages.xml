@@ -108,6 +108,16 @@
             <langLabelLastPlayed>最後に遊んだ日</langLabelLastPlayed>
         </variables>
     </language>
+    <language name="ko_KR">
+        <variables>
+            <langLabelReleasedate>발매일</langLabelReleasedate>
+            <langLabelDeveloper>개발사</langLabelDeveloper>
+            <langLabelPublisher>배급사</langLabelPublisher>
+            <langLabelGenre>장르</langLabelGenre>
+            <langLabelPlayers>플레이어</langLabelPlayers>
+            <langLabelLastPlayed>최근 실행</langLabelLastPlayed>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <langLabelReleasedate>发行日</langLabelReleasedate>
