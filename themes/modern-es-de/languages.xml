@@ -119,6 +119,17 @@
             <langUnknown>未知</langUnknown>
         </variables>
     </language>
+    <language name="ko_KR">
+        <variables>
+            <langLabelRating>평점</langLabelRating>
+            <langLabelReleasedate>발매일</langLabelReleasedate>
+            <langLabelPlayers>플레이어</langLabelPlayers>
+            <langLabelGenre>장르</langLabelGenre>
+            <langLabelDeveloper>개발사</langLabelDeveloper>
+            <langLabelPublisher>배급사</langLabelPublisher>
+            <langUnknown>알수없음</langUnknown>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <langLabelRating>评价</langLabelRating>
