@@ -141,6 +141,19 @@
             <langYourCollections>あなたのコレクション</langYourCollections>
         </variables>
     </language>
+    <language name="ko_KR">
+        <variables>
+            <langLabelRating>평점</langLabelRating>
+            <langLabelReleasedate>발매일</langLabelReleasedate>
+            <langLabelPlayers>플레이어</langLabelPlayers>
+            <langLabelGenre>장르</langLabelGenre>
+            <langLabelDeveloper>개발사</langLabelDeveloper>
+            <langLabelPublisher>배급사</langLabelPublisher>
+            <langLabelLastPlayed>최근 실행</langLabelLastPlayed>
+            <langCustomCollections>커스텀 컬렉션</langCustomCollections>
+            <langYourCollections>너의 컬렉션</langYourCollections>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <langLabelRating>评分</langLabelRating>
