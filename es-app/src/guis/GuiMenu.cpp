@@ -2330,6 +2330,18 @@ void GuiMenu::addVersionInfo()
     mVersion.setColor(mMenuColorTertiary);
 
     const std::string applicationName {"RetroDECK"};
+    std::ifstream file("/app/retrodeck/version");
+    std::string version;
+    if (file.is_open() && std::getline(file, version) && !version.empty()) {
+        file.close();
+        #undef PROGRAM_VERSION_STRING
+        #define PROGRAM_VERSION_STRING version.c_str()
+        std::cout << "Version read from file: " << PROGRAM_VERSION_STRING << std::endl;
+    } else {
+        std::cerr << "Error: Cannot read version from file or file is empty!" << std::endl;
+        // Set a default value in case the file can't be read
+        #define PROGRAM_VERSION_STRING "UNKNOWN"
+    }
 
 #if defined(IS_PRERELEASE)
 #if defined(__ANDROID__)
@@ -2344,19 +2356,9 @@ void GuiMenu::addVersionInfo()
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
                      std::to_string(ANDROID_VERSION_CODE));
 #else
-    std::ifstream file("/app/retrodeck/version");
-    std::string version;
-    std::getline(file, version);
-    file.close();
-    #undef PROGRAM_VERSION_STRING
-    #define PROGRAM_VERSION_STRING version.c_str()
-    std::cout << PROGRAM_VERSION_STRING << std::endl;
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 #endif
 #endif
-
-    mVersion.setHorizontalAlignment(ALIGN_CENTER);
-    addChild(&mVersion);
 }
 
 void GuiMenu::openThemeDownloader(GuiSettings* settings)
