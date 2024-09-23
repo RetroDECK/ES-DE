@@ -200,8 +200,12 @@ void GuiSettings::addEditableTextComponent(const std::string label,
     auto lbl = std::make_shared<TextComponent>(Utils::String::toUpper(label),
                                                Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary,
                                                ALIGN_LEFT, ALIGN_CENTER, glm::ivec2 {0, 0});
-    row.addElement(lbl, true);
+    row.addElement(lbl, false);
     row.addElement(ed, true);
+
+    const float maxLabelWidth {mMenu.getSize().x * 0.65f};
+    lbl->setSize(glm::clamp(lbl->getTextCache()->metrics.size.x, 0.0f, maxLabelWidth),
+                 lbl->getSize().y);
 
     auto spacer = std::make_shared<GuiComponent>();
     spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
