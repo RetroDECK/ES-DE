@@ -8,395 +8,399 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2024-09-20 14:06+0200\n"
-"PO-Revision-Date: 2024-09-20 14:03+0200\n"
-"Last-Translator: Northwestern Software <info@es-de.org>\n"
+"PO-Revision-Date: 2024-09-25 01:51+0200\n"
+"Last-Translator: Josep M <johnnydement@duck.com>\n"
 "Language-Team: Català <info@es-de.org>\n"
 "Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 msgid "Network error (status:"
-msgstr ""
+msgstr "Error de xarxa (estat:"
 
 msgid "New prerelease available:"
-msgstr ""
+msgstr "Hi ha disponible una nova versió prèvia:"
 
 msgid "New release available:"
-msgstr ""
+msgstr "Hi ha disponible una nova versió:"
 
 msgid "For more information visit"
-msgstr ""
+msgstr "Si vols més informació visita"
 
 msgid "No Entries Found"
-msgstr ""
+msgstr "No s'han trobat entrades"
 
 msgctxt "theme"
 msgid "all"
-msgstr ""
+msgstr "tots"
 
 msgctxt "theme"
 msgid "all games"
-msgstr ""
+msgstr "tots els jocs"
 
 msgctxt "theme"
 msgid "recent"
-msgstr ""
+msgstr "recent"
 
 msgctxt "theme"
 msgid "last played"
-msgstr ""
+msgstr "darrera partida"
 
 msgctxt "theme"
 msgid "favorites"
-msgstr ""
+msgstr "favorits"
 
 msgctxt "theme"
 msgid "collections"
-msgstr ""
+msgstr "col·leccions"
 
 msgid "ScreenScraper error:"
-msgstr ""
+msgstr "Error d'ScreenScraper:"
 
 msgid "ScreenScraper: Wrong username or password"
-msgstr ""
+msgstr "ScreenScraper: nom d'usuari o contrasenya incorrectes"
 
 msgid "Network error:"
-msgstr ""
+msgstr "Error de xarxa:"
 
 msgid "Media directory does not exist and can't be created."
-msgstr ""
+msgstr "El directori de mitjans ni existeix ni es pot crear."
 
 msgid "Permission problems?"
-msgstr ""
+msgstr "Problemes de permisos?"
 
 msgid "Failed to open path for writing media file."
-msgstr ""
+msgstr "No s'ha pogut obrir la ruta per guardar l'arxiu multimèdia."
 
 msgid "Couldn't save media file, permission problems or is the disk full?"
 msgstr ""
+"No s'ha pogut guardar l'arxiu multimèdia, problemes de permisos o està ple "
+"el disc?"
 
 msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
+"No s'ha pogut redimensionar la imatge, problemes de permisos o està ple el "
+"disc?"
 
 msgctxt "metadata"
 msgid "NAME"
-msgstr ""
+msgstr "NOM"
 
 msgctxt "metadata"
 msgid "ENTER NAME"
-msgstr ""
+msgstr "ESCRIU EL NOM"
 
 msgctxt "metadata"
 msgid "SORTNAME"
-msgstr ""
+msgstr "NOM D'ORDENACIÓ"
 
 msgctxt "metadata"
 msgid "ENTER SORTNAME"
-msgstr ""
+msgstr "ESCRIU EL NOM D'ORDENACIÓ"
 
 msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr ""
+msgstr "NOM D'ORDENACIÓ DE COL·LECCIÓ PERSONALITZADA"
 
 msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
-msgstr ""
+msgstr "ESCRIU EL NOM D'ORDENACIÓ DE LA COL·LECCIÓ"
 
 msgctxt "metadata"
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "DESCRIPCIÓ"
 
 msgctxt "metadata"
 msgid "ENTER DESCRIPTION"
-msgstr ""
+msgstr "ESCRIU LA DESCRIPCIÓ"
 
 msgctxt "metadata"
 msgid "RATING"
-msgstr ""
+msgstr "VALORACIÓ"
 
 msgctxt "metadata"
 msgid "RELEASE DATE"
-msgstr ""
+msgstr "DATA DE LLANÇAMENT"
 
 msgctxt "metadata"
 msgid "DEVELOPER"
-msgstr ""
+msgstr "DESENVOLUPADOR"
 
 msgctxt "metadata"
 msgid "ENTER DEVELOPER"
-msgstr ""
+msgstr "ESCRIU EL DESENVOLUPADOR"
 
 msgctxt "metadata"
 msgid "PUBLISHER"
-msgstr ""
+msgstr "EDITOR"
 
 msgctxt "metadata"
 msgid "ENTER PUBLISHER"
-msgstr ""
+msgstr "ESCRIU L'EDITOR"
 
 msgctxt "metadata"
 msgid "GENRE"
-msgstr ""
+msgstr "GÈNERE"
 
 msgctxt "metadata"
 msgid "ENTER GENRE"
-msgstr ""
+msgstr "ESCRIU EL GÈNERE"
 
 msgctxt "metadata"
 msgid "PLAYERS"
-msgstr ""
+msgstr "JUGADORS"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF PLAYERS"
-msgstr ""
+msgstr "ESCRIU EL NÚMERO DE JUGADORS"
 
 msgctxt "metadata"
 msgid "FAVORITE"
-msgstr ""
+msgstr "FAVORIT"
 
 msgctxt "metadata"
 msgid "COMPLETED"
-msgstr ""
+msgstr "COMPLETAT"
 
 msgctxt "metadata"
 msgid "KIDGAME"
-msgstr ""
+msgstr "INFANTIL"
 
 msgctxt "metadata"
 msgid "KIDGAME (ONLY AFFECTS BADGES)"
-msgstr ""
+msgstr "JOC INFANTIL (NOMÉS AFECTA LES INSÍGNIES)"
 
 msgctxt "metadata"
 msgid "HIDDEN"
-msgstr ""
+msgstr "OCULT"
 
 msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
-msgstr ""
+msgstr "TRENCAT/NO FUNCIONA"
 
 msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
-msgstr ""
+msgstr "EXCLOURE DEL COMPUT DE JOCS"
 
 msgctxt "metadata"
 msgid "EXCLUDE FROM MULTI-SCRAPER"
-msgstr ""
+msgstr "EXCLOURE DEL MULTI-GARBELLAT"
 
 msgctxt "metadata"
 msgid "HIDE METADATA FIELDS"
-msgstr ""
+msgstr "AMAGAR CAMPS DE METADADES"
 
 msgctxt "metadata"
 msgid "TIMES PLAYED"
-msgstr ""
+msgstr "VEGADES JUGAT"
 
 msgctxt "metadata"
 msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr ""
+msgstr "ESCRIU EL NÚMERO DE VEGADES QUE S'HA JUGAT"
 
 msgctxt "metadata"
 msgid "CONTROLLER"
-msgstr ""
+msgstr "COMANDAMENT"
 
 msgctxt "metadata"
 msgid "SELECT CONTROLLER"
-msgstr ""
+msgstr "ESCULL COMANDAMENT"
 
 msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
-msgstr ""
+msgstr "EMULADOR ALTERNATIU"
 
 msgctxt "metadata"
 msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr ""
+msgstr "ESCULL UN EMULADOR ALTERNATIU"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
-msgstr ""
+msgstr "ENLLAÇ A LA CARPETA"
 
 msgctxt "metadata"
 msgid "SELECT FOLDER LINK"
-msgstr ""
+msgstr "ESCULL L'ENLLAÇ A LA CARPETA"
 
 msgctxt "metadata"
 msgid "LAST PLAYED"
-msgstr ""
+msgstr "ÚLTIMA PARTIDA"
 
 msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
-msgstr ""
+msgstr "ESCRIU LA DATA DE LA DARRERA PARTIDA"
 
 msgid "MAIN MENU"
-msgstr ""
+msgstr "MENÚ PRINCIPAL"
 
 msgid "SCRAPER"
-msgstr ""
+msgstr "GARBELLAT"
 
 msgid "UI SETTINGS"
-msgstr ""
+msgstr "OPCIONS D'INTERFÍCIE"
 
 msgid "SOUND SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE SÓ"
 
 msgid "INPUT DEVICE SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE DISPOSITIU D'ENTRADA"
 
 msgid "GAME COLLECTION SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE COL·LECCIÓ DE JOCS"
 
 msgid "OTHER SETTINGS"
-msgstr ""
+msgstr "ALTRES OPCIONS"
 
 msgid "UTILITIES"
-msgstr ""
+msgstr "UTILITATS"
 
 msgid "QUIT ES-DE"
-msgstr ""
+msgstr "TANCAR ES-DE"
 
 msgid "QUIT"
-msgstr ""
+msgstr "TANCAR"
 
 msgid "THEME"
-msgstr ""
+msgstr "TEMA"
 
 msgid "THEME DOWNLOADER"
-msgstr ""
+msgstr "DESCÀRREGA DE TEMES"
 
 msgid "THEME VARIANT"
-msgstr ""
+msgstr "VARIACIÓ DEL TEMA"
 
 msgid "NONE DEFINED"
-msgstr ""
+msgstr "NO S'HA DEFINIT"
 
 msgid "THEME COLOR SCHEME"
-msgstr ""
+msgstr "ESQUEMA DE COLOR DEL TEMA"
 
 msgid "THEME FONT SIZE"
-msgstr ""
+msgstr "MIDA DE LA FONT DEL TEMA"
 
 msgid "THEME ASPECT RATIO"
-msgstr ""
+msgstr "RELACIÓ D'ASPECTE DEL TEMA"
 
 msgid "THEME TRANSITIONS"
-msgstr ""
+msgstr "TRANSICIONS DEL TEMA"
 
 msgid "AUTOMATIC"
-msgstr ""
+msgstr "AUTOMÀTIC"
 
 msgid "THEME PROFILE"
-msgstr ""
+msgstr "PERFIL DEL TEMA"
 
 msgid "INSTANT (BUILT-IN)"
-msgstr ""
+msgstr "INSTANTANI (INTEGRAT)"
 
 msgid "SLIDE (BUILT-IN)"
-msgstr ""
+msgstr "LLISCANT (INTEGRAT)"
 
 msgid "FADE (BUILT-IN)"
-msgstr ""
+msgstr "ESVANIMENT (INTEGRAT)"
 
 msgid "THEME LANGUAGE"
-msgstr ""
+msgstr "IDIOMA DEL TEMA"
 
 msgid "APPLICATION LANGUAGE"
-msgstr ""
+msgstr "IDIOMA DE L'APLICACIÓ"
 
 msgid "QUICK SYSTEM SELECT"
-msgstr ""
+msgstr "SELECCIÓ RÀPIDA DE SISTEMA"
 
 msgid "LEFT/RIGHT OR SHOULDERS"
-msgstr ""
+msgstr "ESQUERRA/DRETA O BOTONS SUPERIORS"
 
 msgid "LEFT/RIGHT OR TRIGGERS"
-msgstr ""
+msgstr "ESQUERRA/DRETA O GATELLS"
 
 msgid "SHOULDERS"
-msgstr ""
+msgstr "BOTONS SUPERIORS"
 
 msgid "TRIGGERS"
-msgstr ""
+msgstr "GATELLS"
 
 msgid "LEFT/RIGHT"
-msgstr ""
+msgstr "ESQUERRA/DRETA"
 
 msgid "DISABLED"
-msgstr ""
+msgstr "DESHABILITAT"
 
 msgid "GAMELIST ON STARTUP"
-msgstr ""
+msgstr "LLISTAT DE JOCS EN OBRIR"
 
 msgid "NONE"
-msgstr ""
+msgstr "CAP"
 
 msgid "SYSTEMS SORTING"
-msgstr ""
+msgstr "ORDENACIÓ DELS SISTEMES"
 
 msgid "FULL NAMES OR CUSTOM"
-msgstr ""
+msgstr "NOMS COMPLETS O PERSONALITZAT"
 
 msgid "RELEASE YEAR"
-msgstr ""
+msgstr "DATA DE LLANÇAMENT"
 
 msgid "MANUFACTURER, RELEASE YEAR"
-msgstr ""
+msgstr "FABRICANT, ANY DE LLANÇAMENT"
 
 msgid "HW TYPE, RELEASE YEAR"
-msgstr ""
+msgstr "TIPUS DE MAQUINARI, ANY DE LLANÇAMENT"
 
 msgid "MANUFACTURER, HW TYPE, REL. YEAR"
-msgstr ""
+msgstr "FABRICANT, TIPUS DE MAQUINARI, ANY DE LLANÇAMENT"
 
 msgctxt "short"
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr ""
+msgstr "ORDENACIÓ PER DEFECTE DELS JOCS"
 
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr ""
+msgstr "ORDENACIÓ PER DEFECTE DELS JOCS"
 
 msgid "MENU COLOR SCHEME"
-msgstr ""
+msgstr "ESQUEMA DE COLOR DEL MENÚ"
 
 msgid "DARK"
-msgstr ""
+msgstr "FOSC"
 
 msgid "DARK AND RED"
-msgstr ""
+msgstr "FOSC I VERMELL"
 
 msgid "LIGHT"
-msgstr ""
+msgstr "CLAR"
 
 msgid "MENU OPENING ANIMATION"
-msgstr ""
+msgstr "ANIMACIÓ D'OBERTURA DE MENÚ"
 
 msgid "SCALE-UP"
-msgstr ""
+msgstr "ESCALAR"
 
 msgid "LAUNCH SCREEN DURATION"
-msgstr ""
+msgstr "DURACIÓ DE LA PANTALLA DE LLANÇAMENT"
 
 msgid "NORMAL"
-msgstr ""
+msgstr "NORMAL"
 
 msgid "BRIEF"
-msgstr ""
+msgstr "BREU"
 
 msgid "LONG"
-msgstr ""
+msgstr "LLARGA"
 
 msgid "UI MODE"
-msgstr ""
+msgstr "MODE D'INTERFÍCIE"
 
 msgid "FULL"
-msgstr ""
+msgstr "COMPLET"
 
 msgid "KIOSK"
-msgstr ""
+msgstr "QUIOSC"
 
 msgid "KID"
-msgstr ""
+msgstr "INFANTIL"
 
 #, c-format
 msgid ""
@@ -408,6 +412,12 @@ msgid ""
 "\n"
 "DO YOU WANT TO PROCEED?"
 msgstr ""
+"AIXÒ CANVIA LA INTERFÍCIE AL MODE RESTRINGIT\n"
+"«QUIOSC»\n"
+"AIXÒ AMAGARÀ LA MAJOR PART DE LES OPCIONS DE MENÚ\n"
+"PER DESBLOQUEJAR I TORNAR A LA INTERFÍCIE COMPLETA, ESCRIU AQUEST CODI:\n"
+"%s\n"
+"VOLS CONTINUAR?"
 
 #, c-format
 msgid ""
@@ -420,111 +430,118 @@ msgid ""
 "\n"
 "DO YOU WANT TO PROCEED?"
 msgstr ""
+"AIXÒ CANVIA LA INTERFÍCIE AL MODE RESTRINGIT\n"
+"«INFANTIL»\n"
+"AIXÒ HABILITA L'ÚS NOMÉS DE JOCS MARCATS COM\n"
+"ADEQUATS PER NENS\n"
+"PER DESBLOQUEJAR I TORNAR A LA INTERFÍCIE COMPLETA, ESCRIU AQUEST CODI:\n"
+"%s\n"
+"VOLS CONTINUAR?"
 
 msgid "YES"
-msgstr ""
+msgstr "SI"
 
 msgid "NO"
-msgstr ""
+msgstr "NO"
 
 msgid "RANDOM ENTRY BUTTON"
-msgstr ""
+msgstr "BOTÓ D'ENTRADA ALEATÒRIA"
 
 msgid "GAMES ONLY"
-msgstr ""
+msgstr "NOMÉS JOCS"
 
 msgid "GAMES AND SYSTEMS"
-msgstr ""
+msgstr "JOCS I SISTEMES"
 
 msgid "MEDIA VIEWER SETTINGS"
-msgstr ""
+msgstr "OPCIONS DEL VISUALITZADOR MULTIMÈDIA"
 
 msgid "SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "OPCIONS DEL SALVAPANTALLES"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
-msgstr ""
+msgstr "ACTIVAR ELS DISPARADORS DE LES VARIANTS DEL TEMA"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
-msgstr ""
+msgstr "DESENFOCA EL FONS QUAN S'OBRE EL MENÚ"
 
 msgid "SORT FOLDERS ON TOP OF GAMELISTS"
-msgstr ""
+msgstr "COL·LOCA LES CARPETES SOBRE LA LLISTA DE JOCS"
 
 msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
-msgstr ""
+msgstr "COL·LOCA ELS FAVORITS ABANS QUE LA RESTA"
 
 msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
-msgstr ""
+msgstr "AFEGEIX UNA ESTRELLA ALS JOCS FAVORITS"
 
 msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
-msgstr ""
+msgstr "HABILITA LA CAPA DE NAVEGACIÓ RÀPIDA PER LLISTA DE TEXT"
 
 msgid "ENABLE VIRTUAL KEYBOARD"
-msgstr ""
+msgstr "HABILITA EL TECLAT VIRTUAL"
 
 msgid "ENABLE TOGGLE FAVORITES BUTTON"
-msgstr ""
+msgstr "HABILITA EL BOTÓ INTERCANVIADOR DE FAVORITS"
 
 msgid "ENABLE GAMELIST FILTERS"
-msgstr ""
+msgstr "ACTIVA ELS FILTRES DE LA LLISTA DE JOCS"
 
 msgid "DISPLAY ON-SCREEN HELP"
-msgstr ""
+msgstr "MOSTRA L'AJUDA EN PANTALLA"
 
 msgid "SYSTEM VOLUME"
-msgstr ""
+msgstr "VOLUM DEL SISTEMA"
 
 msgid "NAVIGATION SOUNDS VOLUME"
-msgstr ""
+msgstr "VOLUM DELS SONS DE NAVEGACIÓ"
 
 msgid "VIDEO PLAYER VOLUME"
-msgstr ""
+msgstr "VOLUM DEL REPRODUCTOR DE VÍDEO"
 
 msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
-msgstr ""
+msgstr "REPRODUEIX EL SO EN VEURE VÍDEOS A LA LLISTA DE JOCS I SISTEMES"
 
 msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
-msgstr ""
+msgstr "REPRODUEIX EL SO EN VEURE VÍDEOS AL REPRODUCTOR MULTIMÈDIA"
 
 msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
-msgstr ""
+msgstr "REPRODUEIX EL SO DELS VÍDEOS DEL SALVAPANTALLES"
 
 msgid "ENABLE NAVIGATION SOUNDS"
-msgstr ""
+msgstr "HABILITAR ELS SONS DE NAVEGACIÓ"
 
 msgid "CONTROLLER TYPE"
-msgstr ""
+msgstr "TIPUS DE COMANDAMENT"
 
 msgid "TOUCH OVERLAY SIZE"
-msgstr ""
+msgstr "MIDA DE LA SOBREPOSICIÓ TÀCTIL"
 
 msgid "MEDIUM"
-msgstr ""
+msgstr "MITJANA"
 
 msgid "LARGE"
-msgstr ""
+msgstr "GRAN"
 
 msgid "SMALL"
-msgstr ""
+msgstr "PETITA"
 
 msgid "EXTRA SMALL"
-msgstr ""
+msgstr "MOLT PETITA"
 
 msgid "TOUCH OVERLAY OPACITY"
-msgstr ""
+msgstr "OPACITAT DE LA SOBREPOSICIÓ TÀCTIL"
 
 msgid "LOW"
-msgstr ""
+msgstr "BAIXA"
 
 msgid "VERY LOW"
-msgstr ""
+msgstr "MOLT BAIXA"
 
 msgid "TOUCH OVERLAY FADE-OUT TIME"
-msgstr ""
+msgstr "TEMPS D'ESVANIMENT DE LA SOBREPOSICIÓ TÀCTIL"
 
 msgid "ENABLE TOUCH OVERLAY"
-msgstr ""
+msgstr "ACTIVAR SOBREPOSICIÓ TÀCTIL"
 
 msgid ""
 "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
@@ -533,181 +550,189 @@ msgid ""
 "OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
 "THE CONFIGURATOR TO RUN ON NEXT STARTUP"
 msgstr ""
+"NO DESHABILITIS LA SOBREPOSICIÓ TÀCTIL A NO SER QUE FACIS SERVIR UN "
+"COMANDAMENT O ET DEIXARÀS SENSE ACCÈS A LA APP. SI AIXÒ PASES, HAURIES DE "
+"CONECTAR UN COMANDAMENT O UN TECLAT PER REACTIVAR AQUESTA FUNCIÓ. TAMBÉ "
+"PODRIES NETEJAR LA MEMÒRIA D'ES-DE A LES OPCIONS DE L'APLICACIÓ ANDROID PER "
+"FORÇAR L'INICI DEL CONFIGURADOR LA PROPERA EXECUCIÓ"
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
-msgstr ""
+msgstr "ACCEPTA ENTRADES NOMÉS DEL PRIMER COMANDAMENT"
 
 msgid "SWAP THE A/B AND X/Y BUTTONS"
-msgstr ""
+msgstr "INTERCANVIA EL BOTONS A/B I X/Y"
 
 msgid "IGNORE KEYBOARD INPUT"
-msgstr ""
+msgstr "IGNORA LES ENTRADES DEL TECLAT"
 
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
-msgstr ""
+msgstr "CONFIGURA EL TECLAT I ELS COMANDAMENTS"
 
 msgid ""
 "THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
 "TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
 "HELP PROMPTS)"
 msgstr ""
+"EL TECLAT I ELS COMANDAMENTS ES CONFIGUREN AUTOMÀTICAMENT, PERÒ AMB AQUESTA "
+"EINA POTS SOBREEESCRIURE EL MAPEJAT DE BOTONS PER DEFECTE (AIXÒ NO AFECTARÀ "
+"ELS MISSATGES D'AJUDA)"
 
 msgid "PROCEED"
-msgstr ""
+msgstr "PROCEDIR"
 
 msgid "CANCEL"
-msgstr ""
+msgstr "CANCEL·LAR"
 
 msgid "ALTERNATIVE EMULATORS"
-msgstr ""
+msgstr "EMULADORS ALTERNATIUS"
 
 msgid "GAME MEDIA DIRECTORY"
-msgstr ""
+msgstr "DIRECTORI DE MITJANS DE JOC"
 
 msgid "ENTER GAME MEDIA DIRECTORY"
-msgstr ""
+msgstr "ESCRIU LA RUTA AL DIRECTORI DE MITJANS DE JOC"
 
 msgid "Default directory:"
-msgstr ""
+msgstr "Directori per defecte:"
 
 msgid "SAVE"
-msgstr ""
+msgstr "GUARDAR"
 
 msgid "SAVE CHANGES?"
-msgstr ""
+msgstr "GUARDAR CANVIS?"
 
 msgid "load default directory"
-msgstr ""
+msgstr "guardar directori per defecte"
 
 msgid "VRAM LIMIT"
-msgstr ""
+msgstr "LÍMIT VRAM"
 
 msgid "ANTI-ALIASING (MSAA)"
-msgstr ""
+msgstr "ANTI-ALIASING (MSAA)"
 
 msgid "2X"
-msgstr ""
+msgstr "2x"
 
 msgid "4X"
-msgstr ""
+msgstr "4x"
 
 msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
-msgstr ""
+msgstr "ANTI-ALIASING (MSAA) (PRECISA REINICIAR)"
 
 msgid "DISPLAY/MONITOR INDEX"
-msgstr ""
+msgstr "ÍNDEX VISUALITZADOR/MONITOR"
 
 msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
-msgstr ""
+msgstr "ÍNDEX VISUALITZADOR/MONITOR (PRECISA REINICIAR)"
 
 msgid "ROTATE SCREEN"
-msgstr ""
+msgstr "ROTAR LA PANTALLA"
 
 msgid "90 DEGREES"
-msgstr ""
+msgstr "90 GRAUS"
 
 msgid "180 DEGREES"
-msgstr ""
+msgstr "180 GRAUS"
 
 msgid "270 DEGREES"
-msgstr ""
+msgstr "270 GRAUS"
 
 msgid "ROTATE SCREEN (REQUIRES RESTART)"
-msgstr ""
+msgstr "ROTAR LA PANTALLA (PRECISA REINICIAR)"
 
 msgid "KEYBOARD QUIT SHORTCUT"
-msgstr ""
+msgstr "DREÇERA DE TECLAT PER TANCAR"
 
 msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr ""
+msgstr "QUAN GUARDAR METADADES DE JOC"
 
 msgid "ALWAYS"
-msgstr ""
+msgstr "SEMPRE"
 
 msgid "ON EXIT"
-msgstr ""
+msgstr "AL SORTIR"
 
 msgid "NEVER"
-msgstr ""
+msgstr "MAI"
 
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr ""
+msgstr "QUAN GUARDAR METADADES DE JOC"
 
 msgid "APPLICATION UPDATES"
-msgstr ""
+msgstr "ACTUALITZACIONS DE L'APLICACIÓ"
 
 msgid "DAILY"
-msgstr ""
+msgstr "DIARIES"
 
 msgid "WEEKLY"
-msgstr ""
+msgstr "SETMANALS"
 
 msgid "MONTHLY"
-msgstr ""
+msgstr "MENSUALS"
 
 msgid "CHECK FOR APPLICATION UPDATES"
-msgstr ""
+msgstr "BUSCAR ACTUALITZACIONS DE L'APLICACIÓ"
 
 msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
-msgstr ""
+msgstr "INCLOURE VERSIONS PRELIMINARS AL BUSCAR ACTUALITZACIONS"
 
 msgid "HIDE TASKBAR (REQUIRES RESTART)"
-msgstr ""
+msgstr "AMAGAR BARRA DE TASQUES (PRECISA REINICIAR)"
 
 msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
-msgstr ""
+msgstr "EXECUTAR EN SEGON PLÀ (MENTRE EL JOC ESTÀ EN FUNCIONAMENT)"
 
 msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
-msgstr ""
+msgstr "DECODIFICAT DE VÍDEO PER MAQUINARI (EXPERIMENTAL)"
 
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
-msgstr ""
+msgstr "SOBREESCALAR LA TAXA D'IMATGES PER SEGON A 60 FPS"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
-msgstr ""
+msgstr "ACTIVAR EMULADOR ALTERNATIUS PER JOC"
 
 msgid "SHOW HIDDEN FILES AND FOLDERS"
-msgstr ""
+msgstr "MOSTRAR ARXIUS I CARPETES OCULTES"
 
 msgid "SHOW HIDDEN GAMES"
-msgstr ""
+msgstr "MOSTRAR JOCS OCULTS"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
-msgstr ""
+msgstr "ACTIVAR SCRIPTS PERSONALITZATS D'ESDEVENIMENT"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
-msgstr ""
+msgstr "MOSTRAR NOMÉS JOCS DELS ARXIUS GAMELIST.XML"
 
 msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
-msgstr ""
+msgstr "DESCARTA INFORMACIÓ EXTRA DE NOM MAME (PRECISA REINICIAR)"
 
 msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
-msgstr ""
+msgstr "DESHABILITA LA COMPOSICIÓ D'ESCRIPTORI (PRECISA REINICIAR)"
 
 msgid "BACK BUTTON/BACK SWIPE EXITS APP"
-msgstr ""
+msgstr "BOTÓ ENRERA/LLISCAR ENRERA TANCA L'APP"
 
 msgid "DEBUG MODE"
-msgstr ""
+msgstr "MODE DE DEPURACIÓ"
 
 msgid "DISPLAY GPU STATISTICS OVERLAY"
-msgstr ""
+msgstr "MOSTRA LA SUPERPOSICIÓ D'ESTADÍSTIQUES DE GPU"
 
 msgid "ENABLE MENU IN KID MODE"
-msgstr ""
+msgstr "ACTIVAR EL MENÚ EN MODE INFANTIL"
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
-msgstr ""
+msgstr "MOSTRAR MENÚ SORTIR (OPCIONS DE REINICI I APAGAR)"
 
 msgid "ORPHANED DATA CLEANUP"
-msgstr ""
+msgstr "NETEJA DADES ORFES"
 
 msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
-msgstr ""
+msgstr "CREA/ACTUALITZA DIRECTORIS DE SISTEMA"
 
 msgid ""
 "THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
@@ -716,537 +741,560 @@ msgid ""
 "TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
 "RUNNING THIS UTILITY"
 msgstr ""
+"AIXÒ CREARÀ TOTS ELS DIRECTORIS DE SISTEMES DE JOC DINS LA TEVA CARPETA DE "
+"ROMS I N'ACTUALITZARÀ TOTS ELS ARXIUS SYSTEMINFO.TXT.  AQUESTA ÉS UNA "
+"OPERACIÓ SEGURA QUE NO ESBORRARÀ NI MODIFICARÀ ELS TEUS ARXIUS DE JOC.  PER "
+"REDUIR EL TEMPS D'INICI DE L'APLICACIÓ ES RECOMANA ESBORRAR ELS DIRECTORIS "
+"DE SISTEMES QUE NO NECESSITIS DESPRÉS D'EXECUTAR AQUESTA FUNCIÓ"
 
 msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
-msgstr ""
+msgstr "S'HAN CREAT AMB ÈXIT ELS DIRECTORIS DE SISTEMES"
 
 msgid ""
 "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
 "LOG FILE FOR MORE DETAILS"
 msgstr ""
+"HI HA HAGUT UN ERROR AL CREAR ELS DIRECTORIS DE SISTEMES, PROBLEMES DE "
+"PERMISOS O DISC PLE? CONSULTA L'ARXIU LOG PER MÉS DETALLS"
 
 msgid "RESCAN ROM DIRECTORY"
-msgstr ""
+msgstr "REESCANEJAR EL DIRECTORI DE ROMS"
 
 msgid ""
 "THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
 "GAMES AND SYSTEMS"
 msgstr ""
+"AIXÒ REESCANEJARÀ EL TEU DIRECTORI DE ROMS BUSCANT JOCS I SISTEMES AFEGITS O "
+"ELIMINATS"
 
 msgid "REALLY QUIT?"
-msgstr ""
+msgstr "EN SERIO VOLS SORTIR?"
 
 msgid "REALLY REBOOT?"
-msgstr ""
+msgstr "DE DEBÓ VOLS REINICIAR?"
 
 msgid "REBOOT SYSTEM"
-msgstr ""
+msgstr "REINICIAR EL SISTEMA"
 
 msgid "REALLY POWER OFF?"
-msgstr ""
+msgstr "APAGAR, EN SERIO?"
 
 msgid "POWER OFF SYSTEM"
-msgstr ""
+msgstr "APAGAR EL SISTEMA"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE VISUALITZADOR MULTIMÈDIA"
 
 msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "OPCIONS DEL SALVAPANTALLES"
 
 msgid "choose"
-msgstr ""
+msgstr "tancar"
 
 msgid "select"
-msgstr ""
+msgstr "escollir"
 
 msgid "close menu"
-msgstr ""
+msgstr "tancar menú"
 
 msgid "REFINE SEARCH"
-msgstr ""
+msgstr "REFINAR CERCA"
 
 msgid "refine search"
-msgstr ""
+msgstr "refinar cerca"
 
 msgid "cancel"
-msgstr ""
+msgstr "cancel·lar"
 
 msgid "back (cancel)"
-msgstr ""
+msgstr "tornar (cancel·lar)"
 
 msgid "SCRAPE FROM"
-msgstr ""
+msgstr "GARBELLAR DES DE"
 
 msgid "SCRAPE THESE GAMES"
-msgstr ""
+msgstr "GARBELLAR AQUEST JOCS"
 
 msgid "ALL GAMES"
-msgstr ""
+msgstr "TOTS ELS JOCS"
 
 msgid "FAVORITE GAMES"
-msgstr ""
+msgstr "JOCS FAVORITS"
 
 msgid "NO METADATA"
-msgstr ""
+msgstr "SENSE METADADES"
 
 msgid "NO GAME IMAGE"
-msgstr ""
+msgstr "SENSE IMATGE DEL JOC"
 
 msgid "NO GAME VIDEO"
-msgstr ""
+msgstr "SENSE VÍDEO DEL JOC"
 
 msgid "FOLDERS ONLY"
-msgstr ""
+msgstr "NOMÉS CARPETES"
 
 msgid "SCRAPE THESE SYSTEMS"
-msgstr ""
+msgstr "GARBELLAR AQUESTS SISTEMES"
 
 msgid "ACCOUNT SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE COMPTE"
 
 msgid "CONTENT SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE CONTINGUT"
 
 msgid "MIXIMAGE SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE COMPOSICIÓ D'IMATGES"
 
 msgid "START"
-msgstr ""
+msgstr "INICIAR"
 
 msgid "start scraper"
-msgstr ""
+msgstr "iniciar garbellat de dades"
 
 msgid "BACK"
-msgstr ""
+msgstr "TORNAR"
 
 msgid "back"
-msgstr ""
+msgstr "tornar"
 
 msgid "SCREENSCRAPER USERNAME"
-msgstr ""
+msgstr "NOM D'USUARI SCREENSCRAPER"
 
 msgid "SCREENSCRAPER PASSWORD"
-msgstr ""
+msgstr "CONTRASENYA SCREENSCRAPER"
 
 msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
-msgstr ""
+msgstr "UTILITZA AQUEST COMPTE PER SCREENSCRAPER"
 
 msgid "GAME NAMES"
-msgstr ""
+msgstr "NOMS DE JOCS"
 
 msgid "RATINGS"
-msgstr ""
+msgstr "VALORACIONS"
 
 msgid "OTHER METADATA"
-msgstr ""
+msgstr "ALTRES METADADES"
 
 msgid "VIDEOS"
-msgstr ""
+msgstr "VÍDEOS"
 
 msgid "SCREENSHOT IMAGES"
-msgstr ""
+msgstr "CAPTURES DE PANTALLA"
 
 msgid "TITLE SCREEN IMAGES"
-msgstr ""
+msgstr "IMATGES DE TÍTOL"
 
 msgid "BOX COVER IMAGES"
-msgstr ""
+msgstr "IMATGES DE PORTADA"
 
 msgid "BOX BACK COVER IMAGES"
-msgstr ""
+msgstr "IMATGES DE CONTRAPORTADA"
 
 msgid "MARQUEE (WHEEL) IMAGES"
-msgstr ""
+msgstr "IMATGES DE MARQUESINES (RODA)"
 
 msgid "3D BOX IMAGES"
-msgstr ""
+msgstr "IMATGES DE CAIXA 3D"
 
 msgid "PHYSICAL MEDIA IMAGES"
-msgstr ""
+msgstr "IMATGES DE MITJÀ FÍSIC"
 
 msgid "FAN ART IMAGES"
-msgstr ""
+msgstr "IMATGES FAN ART"
 
 msgid "GAME MANUALS"
-msgstr ""
+msgstr "MANUALS DE JOC"
 
 msgid "MIXIMAGE RESOLUTION"
-msgstr ""
+msgstr "RESOLUCIÓ DE COMPOSICIÓ"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
-msgstr ""
+msgstr "AJUST HORITZONTAL DE CAPTURA"
 
 msgid "CONTAIN"
-msgstr ""
+msgstr "CONTÉ"
 
 msgid "CROP"
-msgstr ""
+msgstr "RETALLAR"
 
 msgid "STRETCH"
-msgstr ""
+msgstr "AJUSTAR"
 
 msgid "HORIZONTAL SCREENSHOT FIT"
-msgstr ""
+msgstr "AJUSTAR CAPTURA DE PANTALLA HORITZONTALMENT"
 
 msgctxt "short"
 msgid "VERTICAL SCREENSHOT FIT"
-msgstr ""
+msgstr "AJUST VERTICAL DE CAPTURA"
 
 msgid "VERTICAL SCREENSHOT FIT"
-msgstr ""
+msgstr "AJUSTAR CAPTURA DE PANTALLA VERTICALMENT"
 
 msgctxt "short"
 msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
-msgstr ""
+msgstr "DESVIACIÓ TOLERADA A LA RELACIÓ D'ASPECTE DE LA CAPTURA"
 
 msgid "HIGH"
-msgstr ""
+msgstr "ALTA"
 
 msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
-msgstr ""
+msgstr "DESVIACIÓ TOLERADA A LA RELACIÓ D'ASPECTE DE LA CAPTURA"
 
 msgid "BLANK AREAS FILL COLOR"
-msgstr ""
+msgstr "COLOR PER AREES BUIDES"
 
 msgid "BLACK"
-msgstr ""
+msgstr "NEGRE"
 
 msgid "FRAME"
-msgstr ""
+msgstr "IMATGE"
 
 msgctxt "short"
 msgid "SCREENSHOT SCALING METHOD"
-msgstr ""
+msgstr "MÈTODE D'ESCALAT DE CAPTURA"
 
 msgid "SHARP"
-msgstr ""
+msgstr "ENFOCAT"
 
 msgid "SMOOTH"
-msgstr ""
+msgstr "SUAVITZAT"
 
 msgid "SCREENSHOT SCALING METHOD"
-msgstr ""
+msgstr "MÈTODE D'ESCALAT DE CAPTURA DE PANTALLA"
 
 msgid "BOX SIZE"
-msgstr ""
+msgstr "MIDA DE LA CAIXA"
 
 msgid "PHYSICAL MEDIA SIZE"
-msgstr ""
+msgstr "MIDA DEL MITJÀ FÍSIC"
 
 msgid "GENERATE MIXIMAGES WHEN SCRAPING"
-msgstr ""
+msgstr "GENERAR COMPOSICIÓ EN GARBELLAR"
 
 msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
-msgstr ""
+msgstr "SOBREESCRIURE COMPOSICIONS (GARBELLADOR/GENERADOR FORA DE LÍNIA)"
 
 msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
-msgstr ""
+msgstr "ELIMINAR MATTES SUPERIOR I INFERIOR"
 
 msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
-msgstr ""
+msgstr "ELIMINAR MATTES LATERALS"
 
 msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
-msgstr ""
+msgstr "ROTAR CAIXES ORIENTADES EN HORITZONTAL"
 
 msgid "INCLUDE MARQUEE IMAGE"
-msgstr ""
+msgstr "INCLOURE MARQUESINA"
 
 msgid "INCLUDE BOX IMAGE"
-msgstr ""
+msgstr "INCLOURE CAIXA"
 
 msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
-msgstr ""
+msgstr "UTILITZA IMATGE DE PORTADA SI NO HI HA CAIXA 3D"
 
 msgid "INCLUDE PHYSICAL MEDIA IMAGE"
-msgstr ""
+msgstr "INCLOURE MITJÀ FÍSIC"
 
 msgid "OFFLINE GENERATOR"
-msgstr ""
+msgstr "GENERADOR FORA DE LÍNIA"
 
 msgid ""
 "THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
 "PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
 msgstr ""
+"EL GENERADOR FORA DE LÍNIA UTILITZA LA MATEIXA SELECCIÓ DE SISTEMES QUE EL "
+"GARBELLADOR, PER TANT, ESCULL AL MENYS UN SISTEMA DEL QUÈ GENERAR-NE IMATGES"
 
 msgid "REGION"
-msgstr ""
+msgstr "REGIÓ"
 
 msgid "EUROPE"
-msgstr ""
+msgstr "EUROPA"
 
 msgid "JAPAN"
-msgstr ""
+msgstr "JAPÓ"
 
 msgid "USA"
-msgstr ""
+msgstr "EEUU"
 
 msgid "WORLD"
-msgstr ""
+msgstr "MUNDIAL"
 
 msgid "PREFERRED LANGUAGE"
-msgstr ""
+msgstr "IDIOMA PREFERIT"
 
 msgid "AUTOMATIC RETRIES ON ERROR"
-msgstr ""
+msgstr "REINTENTAR AUTOMÀTICAMENT DAVANT D'ERRORS"
 
 msgid "RETRY ATTEMPT TIMER"
-msgstr ""
+msgstr "TEMPORITZADOR DELS REINTENTS"
 
 msgid "HASH SEARCHES MAX FILE SIZE"
-msgstr ""
+msgstr "MIDA MÀXIMA D'ARXIU EN CERQUES HASH"
 
 msgid "OVERWRITE FILES AND DATA"
-msgstr ""
+msgstr "SOBREESCRIURE ARXIUS I DADES"
 
 msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
-msgstr ""
+msgstr "BUSCAR AMB HASH D'ARXIU (MODE NO INTERACTIU)"
 
 msgid "SEARCH USING METADATA NAMES"
-msgstr ""
+msgstr "BUSCAR AMB METADADES DE NOM"
 
 msgid "SCRAPE ACTUAL FOLDERS"
-msgstr ""
+msgstr "GARBELLAR ELS ARXIUS ACTUALS"
 
 msgid "INTERACTIVE MODE"
-msgstr ""
+msgstr "MODE INTERACTIU"
 
 msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
-msgstr ""
+msgstr "ACCEPTAR AUTOMÀTICAMENT COINCIDÈNCIES DE JOC ÚNIQUES"
 
 msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
-msgstr ""
+msgstr "RESPECTAR LES EXCLUSIONS DE GARBELLAT PER ARXIU"
 
 msgid "EXCLUDE FOLDERS RECURSIVELY"
-msgstr ""
+msgstr "EXCLUSIÓ RECURSIVA DE CARPETES"
 
 msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
-msgstr ""
+msgstr "CONVERTIR GUIONS BAIXOS EN ESPAIS AL BUSCAR"
 
 msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
-msgstr ""
+msgstr "ELIMINAR PUNTS DE LES CERQUES AL GARBELLAT AUTOMÀTIC"
 
 msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
-msgstr ""
+msgstr "HABILITAR OPCIONS DE RESCAT DE REGIONS ADICIONALS"
 
 msgid ""
 "THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
 msgstr ""
+"EL SISTEMA ESCOLLIT NO TÉ UNA PLATAFORMA ASSIGNADA, ELS RESULTATS PODEN SER "
+"POC PRECISOS"
 
 msgid ""
 "AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
 "MAY BE INACCURATE"
 msgstr ""
+"COM A MÍNIM UN DELS SISTEMES ESCOLLITS NO TÉ UNA PLATAFORMA ASSIGNADA, ELS "
+"RESULTATS PODEN SER POC PRECISOS"
 
 msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
-msgstr ""
+msgstr "ESCULL COM A MÍNIM UN SISTEMA PER GARBELLAR-NE DADES"
 
 msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
-msgstr ""
+msgstr "ESCULL COM A MÍNIM UN TIPUS DE CONTINGUT A GARBELLAR"
 
 msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
-msgstr ""
+msgstr "S'HAN FILTRAT TOTS ELS JOCS, NO HI HA RES A GARBELLAR"
 
 msgid "HELP PROMPTS"
-msgstr ""
+msgstr "MISSATGES D'AJUDA"
 
 msgid "TOP"
-msgstr ""
+msgstr "SUPERIOR"
 
 msgid "BOTTOM"
-msgstr ""
+msgstr "INFERIOR"
 
 msgid "DISPLAY MEDIA TYPES"
-msgstr ""
+msgstr "MOSTRAR TIPUS DE MITJANS"
 
 msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
-msgstr ""
+msgstr "CONTINUAR REPRODUINT VÍDEOS MENTRE ES VISUALITZEN IMATGES"
 
 msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
-msgstr ""
+msgstr "AJUSTAR ELS VÍDEOS A LA RESOLUCIÓ DE LA PANTALLA"
 
 msgid "RENDER SCANLINES FOR VIDEOS"
-msgstr ""
+msgstr "RENDERITZAR SCANLINES PELS VÍDEOS"
 
 msgid "RENDER BLUR FOR VIDEOS"
-msgstr ""
+msgstr "RENDERITZAR DIFUMINAT PELS VÍDEOS"
 
 msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
-msgstr ""
+msgstr "RENDERITZAR SCANLINES PER LES CAPTURES I ELS TÍTOLS"
 
 #, c-format
 msgid "FINISH EDITING '%s' COLLECTION"
-msgstr ""
+msgstr "ACABAR D'EDITAR LA COL·LECCIÓ «%s»"
 
 msgid "SELECT COLLECTIONS"
-msgstr ""
+msgstr "ESCOLLIR COL·LECCIONS"
 
 msgid "AUTOMATIC GAME COLLECTIONS"
-msgstr ""
+msgstr "COL·LECCIONS DE JOCS AUTOMÀTIQUES"
 
 msgid "CUSTOM GAME COLLECTIONS"
-msgstr ""
+msgstr "COL·LECCIONS DE JOCS PERSONALITZADES"
 
 msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr ""
+msgstr "CREAR NOVA COL·LECCIÓ A PARTIR DEL TEMA"
 
 msgid "SELECT THEME FOLDER"
-msgstr ""
+msgstr "ESCOLLIR CARPETA DEL TEMA"
 
 msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr ""
+msgstr "CREAR NOVA COL·LECCIÓ PERSONALITZADA"
 
 msgid "NEW COLLECTION NAME"
-msgstr ""
+msgstr "NOM DE LA NOVA COL·LECCIÓ"
 
 msgid "CREATE"
-msgstr ""
+msgstr "CREAR"
 
 msgid "CREATE COLLECTION?"
-msgstr ""
+msgstr "CREAR COL·LECCIÓ?"
 
 msgid "DELETE CUSTOM COLLECTION"
-msgstr ""
+msgstr "ESBORRAR COL·LECCIÓ PERSONALITZADA"
 
 msgid "COLLECTION TO DELETE"
-msgstr ""
+msgstr "COL·LECCIÓ A ESBORRAR"
 
 #, c-format
 msgid ""
 "THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
 "'%s'\n"
 "ARE YOU SURE?"
-msgstr ""
+msgstr "AIXÒ ELIMINARÀ PERMANENTMENT LA COL·LECCIÓ «%s». ESTÀS SEGUR?"
 
 msgid "GROUP CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "AGRUPAR COL·LECCIONS PERSONALITZADES"
 
 msgid "IF UNTHEMED"
-msgstr ""
+msgstr "SI NO TENEN TEMA"
 
 msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "ORDENA ELS FAVORITS AL PRINCIPI A LES COL·LECCIONS PERSONALITZADES"
 
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "MOSTRAR UNA INSIGNIA D'ESTRELLA A LES COL·LECCIONS PERSONALITZADES"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
-msgstr ""
+msgstr "INICIAR SALVAPANTALLES DESPRÉS DE (MINUTS)"
 
 msgid "SCREENSAVER TYPE"
-msgstr ""
+msgstr "TIPUS DE SALVAPANTALLES"
 
 msgid "DIM"
-msgstr ""
+msgstr "ATENUACIÓ"
 
 msgid "SLIDESHOW"
-msgstr ""
+msgstr "DIAPOSITIVES"
 
 msgid "VIDEO"
-msgstr ""
+msgstr "VÍDEO"
 
 msgid "ENABLE SCREENSAVER CONTROLS"
-msgstr ""
+msgstr "ACTIVAR CONTROLS DE SALVAPANTALLES"
 
 msgid "SLIDESHOW SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE SALVAPANTALLES TIPUS DIAPOSITIVES"
 
 msgid "VIDEO SCREENSAVER SETTINGS"
-msgstr ""
+msgstr "OPCIONS DE SALVAPANTALLES TIPUS VÍDEO"
 
 msgid "SLIDESHOW SCREENSAVER"
-msgstr ""
+msgstr "SALVAPANTALLES DE DIAPOSITIVES"
 
 msgid "SWAP IMAGES AFTER (SECONDS)"
-msgstr ""
+msgstr "CANVIAR IMATGES AL CAP DE (SEGONS)"
 
 msgid "ONLY INCLUDE FAVORITE GAMES"
-msgstr ""
+msgstr "INCLOURE NOMÉS JOCS FAVORITS"
 
 msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
-msgstr ""
+msgstr "AJUSTAR IMATGES A LA RESOLUCIÓ DE LA PANTALLA"
 
 msgid "DISPLAY GAME INFO OVERLAY"
-msgstr ""
+msgstr "MOSTRAR LA INFORMACIÓ DEL JOC SOBREIMPRESA"
 
 msgid "RENDER SCANLINES"
-msgstr ""
+msgstr "RENDERITZAR SCANLINES"
 
 msgid "USE CUSTOM IMAGES"
-msgstr ""
+msgstr "UTILITZAR IMATGES PERSONALITZADES"
 
 msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
-msgstr ""
+msgstr "CERCA RECURSIVA DEL DIRECTORI D'IMATGES PERSONALITZADES"
 
 msgid "CUSTOM IMAGE DIRECTORY"
-msgstr ""
+msgstr "DIRECTORI D'IMATGES PERSONALITZADES"
 
 msgid "VIDEO SCREENSAVER"
-msgstr ""
+msgstr "SALVAPANTALLES DE VÍDEO"
 
 msgid "SWAP VIDEOS AFTER (SECONDS)"
 msgstr ""
+"CANVIAR VÍDEO AL CAP DE (SEGONS)\n"
+"RENDERITZAR DIFUMINAT"
 
 msgid "RENDER BLUR"
-msgstr ""
+msgstr "RENDERITZAR DIFUMINAT"
 
 msgid "FILTER GAMELIST"
-msgstr ""
+msgstr "FILTRAR LA LLISTA DE JOCS"
 
 msgid "RESET ALL FILTERS"
-msgstr ""
+msgstr "REINICIAR TOTS ELS FILTRES"
 
 msgid "GAME NAME"
-msgstr ""
+msgstr "NOM DEL JOC"
 
 msgid "APPLY CHANGES?"
-msgstr ""
+msgstr "APLICAR ELS CANVIS?"
 
 msgid "NOTHING TO FILTER"
-msgstr ""
+msgstr "NO HI HA RES A FILTRAR"
 
 msgid "LAUNCHING GAME"
-msgstr ""
+msgstr "INICIANT JOC"
 
 msgid "CLOSE"
-msgstr ""
+msgstr "TANCAR"
 
 msgid "close"
-msgstr ""
+msgstr "tancar"
 
 msgid "DOWNLOADING THEMES LIST 100%"
-msgstr ""
+msgstr "DESCARREGANT EL LLISTAT DE TEMES 100%"
 
 msgid "THEME ALREADY UP TO DATE"
-msgstr ""
+msgstr "EL TEMA JA ESTÀ ACTUALITZAT"
 
 msgid "THEME HAS BEEN UPDATED"
-msgstr ""
+msgstr "S'HA ACTUALITZAT EL TEMA"
 
 #, c-format
 msgid ""
 "COULDN'T RENAME DIRECTORY \"%s\"\n"
 "PERMISSION PROBLEMS?"
 msgstr ""
+"NO S'HA POGUT REANOMENTAR EL DIRECTORI «%s»\n"
+"PROBLEMES DE PERMISOS?"
 
 msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
-msgstr ""
+msgstr "NO S'HA POGUT TROBAR L'ARXIU DE CONFIGURACIÓ DEL LLISTAT DE TEMES"
 
 msgid ""
 "COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
 "REPOSITORY IS CORRUPT?"
 msgstr ""
+"NO S'HA POGUT PROCESSAR L'ARXIU DE CONFIGURACIÓ DEL LLISTAT DE TEMES. ÉS "
+"POSSIBLE QUE EL REPOSITORI LOCAL SIGUI CORRUPTE?"
 
 msgid ""
 "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
 "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
 msgstr ""
+"SEMBLA QUE NO ESTÀS FENT SERVIR LA DARRERA VERSIÓ D'ES-de, ACTUALITZA ABANS "
+"DE CONTINUAR JA QUE ELS TEMES PODRIEN NO SER COMPATIBLES AMB LA TEVA VERSIÓ"
 
 msgid "and"
-msgstr ""
+msgstr "i"
 
 #, c-format
 msgid ""
@@ -1254,9 +1302,12 @@ msgid ""
 "THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
 "\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
 msgstr ""
+"SEMBLA QUE AQUEST TEMA S'HA DESCARREGAT MANUALMENT ENLLOC DEL GESTOR DE "
+"TEMES. CAL UNA NOVA DESCÀRREGA I ES REANOMENARÀ EL DIRECTORI ANTERIOR «%s» "
+"COM «%s_DISABLED»"
 
 msgid "DOWNLOADING THEME"
-msgstr ""
+msgstr "DESCARREGANT TEMA"
 
 #, c-format
 msgid ""
@@ -1265,6 +1316,10 @@ msgid ""
 "THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
 "DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
 msgstr ""
+"SEMBLA QUE EL REPOSITORI D'AQUEST TEMA ÉS CORRUPTE, AIXÒ HO PODRIA HAVER "
+"CAUSAT UNA INTERRUPCIÓ DE LA DARRERA DESCÀRREGA O ACTUALITZACIÓ, PER "
+"EXEMPLE, SI ES MATA EL PROCÉS ES-DE. CAL UNA NOVA DESCÀRREGA I ES "
+"REANOMENARÀ EL DIRECTORI ANTERIOR «%s» COM «%s_CORRUPT_DISABLED»"
 
 #, c-format
 msgid ""
@@ -1273,91 +1328,97 @@ msgid ""
 "DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
 "\"%s_DISABLED\""
 msgstr ""
+"SEMBLA QUE AQUEST ÉS UN REPOSITORI INFORMAL, AIXÒ VOL DIR QUE LA DESCÀRREGA "
+"S'HA FET AMB UNA EINA DIFERENT AL GESTOR DE TEMES. CAL UNA NOVA DESCÀRREGA I "
+"ES REANOMENARÀ EL DIRECTORI ANTERIOR «%s» COM «%s_DISABLED»"
 
 #, c-format
 msgid ""
 "THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
 "CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
 msgstr ""
+"EL REPOSITORI DEL TEMA «%s» CONTÉ CANVIS LOCALS. SI CONTINUES, ES "
+"SOBREESCRIURÀN ELS TEUS CANVIS, SI CANCEL·LES, S'IGNORARAN LES "
+"ACTUALITZACIONS D'AQUEST TEMA"
 
 msgid "UPDATING THEME"
-msgstr ""
+msgstr "ACTUALITZANT TEMA"
 
 msgid "VARIANTS:"
-msgstr ""
+msgstr "VARIACIONS:"
 
 msgid "COLOR SCHEMES:"
-msgstr ""
+msgstr "ESQUEMES DE COLOR:"
 
 msgid "ASPECT RATIOS:"
-msgstr ""
+msgstr "RELACIONS D'ASPECTE:"
 
 msgid "FONT SIZES:"
-msgstr ""
+msgstr "MIDES DE TEXT:"
 
 msgid "INSTALLED"
-msgstr ""
+msgstr "INSTAL·LAT"
 
 msgid "MANUAL DOWNLOAD"
-msgstr ""
+msgstr "DESCÀRREGA MANUAL"
 
 msgid "CORRUPT"
-msgstr ""
+msgstr "CORRUPTE"
 
 msgid "SHALLOW"
-msgstr ""
+msgstr "INFORMAL"
 
 msgid "NOT INSTALLED (NEW)"
-msgstr ""
+msgstr "NO INSTAL·LAT (NOU)"
 
 msgid "NOT INSTALLED"
-msgstr ""
+msgstr "NO INSTAL·LAT"
 
 msgid "LOCAL CHANGES"
-msgstr ""
+msgstr "CANVIS LOCALS"
 
 msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
-msgstr ""
+msgstr "L'ENTRADA D'AQUEST TEMA S'ELIMINARÀ AVIAT"
 
 msgid "CREATED BY"
-msgstr ""
+msgstr "CREAT PER"
 
 msgid "ERROR:"
-msgstr ""
+msgstr "ERROR:"
 
 msgid "COULDN'T DOWNLOAD THEMES LIST"
-msgstr ""
+msgstr "NO S'HA POGUT DESCARREGAR EL LLISTAT DE TEMES"
 
 msgid "DOWNLOADING"
-msgstr ""
+msgstr "DESCARREGANT"
 
 msgid "DOWNLOADING THEMES LIST"
-msgstr ""
+msgstr "DESCARREGANT EL LLISTAT DE TEMES"
 
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
-msgstr ""
+msgstr "AIXÒ ELIMINARÀ COMPLETAMENT EL TEMA"
 
 msgid ""
 "THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
-msgstr ""
+msgstr "AIXÒ ELIMINARÀ COMPLETAMENT EL TEMA I QUALSEVOL PERSONALITZACIÓ LOCAL"
 
 msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
-msgstr ""
+msgstr "NO S'HA POGUT ELIMINAR EL TEMA, PROBLEMES DE PERMISOS?"
 
 msgid "THEME WAS DELETED"
-msgstr ""
+msgstr "S'HA ELIMINAT EL TEMA"
 
 msgid "view screenshots"
-msgstr ""
+msgstr "veure captures de pantalla"
 
 msgid "fetch updates"
-msgstr ""
+msgstr "comprobar actualitzacions"
 
 msgid "delete"
-msgstr ""
+msgstr "esborrar"
 
 msgid "download"
-msgstr ""
+msgstr "descarregar"
 
 msgid ""
 "IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
@@ -1365,9 +1426,14 @@ msgid ""
 "THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
 "DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
 msgstr ""
+"SEMBLA QUE EL REPOSITORI DE LLLSITAT DE TEMES ÉS CORRUPTE, AIXÒ HO PODRIA "
+"HAVER CAUSAT UNA INTERRUPCIÓ DE LA DARRERA DESCÀRREGA O ACTUALITZACIÓ, PER "
+"EXEMPLE, SI ES MATA EL PROCÉS ES-DE. CAL UNA NOVA DESCÀRREGA I ES "
+"REANOMENARÀ EL DIRECTORI ANTERIOR «themes-list%s» COM «themes-"
+"list_CORRUPT_DISABLED»"
 
 msgid "UPDATING THEMES LIST"
-msgstr ""
+msgstr "ACTUALITZANT LLISTAT DE TEMES"
 
 msgid ""
 "IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
@@ -1377,123 +1443,129 @@ msgid ""
 "THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
 "CORRUPTION."
 msgstr ""
+"SEMBLA QUÈ ÉS LA PRIMERA VEGADA QUE UTILITZES EL GESTOR DE TEMES. ES "
+"DESCARREGARÀ EL REPOSITORI DEL LLISTAT DE TEMES, POT TRIGAR UNA MICA. LES "
+"PROPERES VEGADES QUE L'UTILITZIS HAURIA DE SER MOLT MÉS RÀPID JA QUE NOMÉS "
+"ES RECUPERARAN ELS ARXIUS NOUS O MODIFICATS. AIXÒ MATEIX S'APLICA A "
+"QUALSEVOL TEMA QUE DESCARREGUIS. TINGUES EN COMPTE QUE NO POTS ABORTAR UNA "
+"DESCÀRREGA EN CURS JA QUE PODRIA GENERAR CORRUPCIÓ A LES DADES."
 
 msgid "RATING:"
-msgstr ""
+msgstr "VALORACIÓ:"
 
 msgid "RELEASED:"
-msgstr ""
+msgstr "LLANÇAMENT:"
 
 msgid "DEVELOPER:"
-msgstr ""
+msgstr "DESENVOLUPADOR:"
 
 msgid "PUBLISHER:"
-msgstr ""
+msgstr "EDITOR:"
 
 msgid "GENRE:"
-msgstr ""
+msgstr "GÈNERE:"
 
 msgid "PLAYERS:"
-msgstr ""
+msgstr "JUGADORS:"
 
 msgid "NO GAMES FOUND"
-msgstr ""
+msgstr "NO S'HAN TROBAT JOCS"
 
 msgid "RETRY"
-msgstr ""
+msgstr "REINTENTAR"
 
 msgid "SKIP"
-msgstr ""
+msgstr "SALTAR"
 
 msgid "Error downloading thumbnail:"
-msgstr ""
+msgstr "Error al descarregar miniatura:"
 
 msgid "SEARCH"
-msgstr ""
+msgstr "BUSCAR"
 
 msgid "SEARCH USING REFINED NAME?"
-msgstr ""
+msgstr "CERCA REFINADA DEL NOM?"
 
 msgid "skip"
-msgstr ""
+msgstr "saltar"
 
 msgid "accept result"
-msgstr ""
+msgstr "acceptar resultat"
 
 msgid "SCRAPING IN PROGRESS"
-msgstr ""
+msgstr "GARBELLAT DE DADES EN CURS"
 
 msgid "SYSTEM"
-msgstr ""
+msgstr "SISTEMA"
 
 msgid "skip game"
-msgstr ""
+msgstr "saltar joc"
 
 msgid "STOP"
-msgstr ""
+msgstr "PARAR"
 
 msgid "stop"
-msgstr ""
+msgstr "parar"
 
 msgid "GAME"
 msgid_plural "GAMES"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "JOC"
+msgstr[1] "JOCS"
 
 #, c-format
 msgid "GAME %i OF %i"
-msgstr ""
+msgstr "JOC %i DE %i"
 
 msgid "NO GAMES WERE SCRAPED"
-msgstr ""
+msgstr "NO S'HA GARBELLAT CAP JOC"
 
 #, c-format
 msgid "%i GAME SUCCESSFULLY SCRAPED"
 msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "S'HAN GARBELLAT CORRECTAMENT LES DADES D'UN JOC"
+msgstr[1] "S'HAN GARBELLAT CORRECTAMENT LES DADES De %i JOCS"
 
 #, c-format
 msgid "%i GAME SKIPPED"
 msgid_plural "%i GAMES SKIPPED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "S'HA SALTAT UN JOC"
+msgstr[1] "S'HAN SALTAT %i JOCS"
 
 msgid "GAMELIST OPTIONS"
-msgstr ""
+msgstr "OPCIONS DEL LLISTAT DE JOCS"
 
 msgid "JUMP TO..."
-msgstr ""
+msgstr "SALTAR A..."
 
 msgid "SORT GAMES BY"
-msgstr ""
+msgstr "ORDENAR JOCS SEGONS"
 
 msgid "THIS SYSTEM HAS NO GAMES"
-msgstr ""
+msgstr "AQUEST SISTEMA NO TÉ JOCS"
 
 msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
-msgstr ""
+msgstr "AFEGIR/ELIMINAR JOCS D'AQUESTA COL·LECCIÓ"
 
 msgid "EDIT THIS FOLDER'S METADATA"
-msgstr ""
+msgstr "EDITAR LES METADADES D'AQUESTA CARPETA"
 
 msgid "EDIT THIS GAME'S METADATA"
-msgstr ""
+msgstr "EDITAR LES METADADES D'AQUESt JOC"
 
 msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
-msgstr ""
+msgstr "ESCRIU LA CARPETA (SOBREESCRIURE ENLLAÇ DE CARPETA)"
 
 msgid "APPLY"
-msgstr ""
+msgstr "APLICAR"
 
 msgid "apply"
-msgstr ""
+msgstr "aplicar"
 
 msgid "close (apply)"
-msgstr ""
+msgstr "tancar (aplicar)"
 
 msgid "close (cancel)"
-msgstr ""
+msgstr "tancar (cancel·lar)"
 
 msgid ""
 "THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
@@ -1501,6 +1573,10 @@ msgid ""
 "DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
 "LONGER NEEDED."
 msgstr ""
+"AIXÒ ELIMINARÀ TOTS ELS ARXIUS MULTIMÈDIA SENSE RELACIONS AMB UN JOC. "
+"AQUESTS ARXIUS ES MOURAN A UNA CARPETA DE NETEJA DINS LA TEVA CARPETA DE "
+"MITJANS DE JOCS. POTS ESBORRAR MANUALMENT AQUESTA CARPETA QUAN ESTIGUIS "
+"SEGUR QUE NO LA NECESSITES."
 
 msgid ""
 "THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
@@ -1508,6 +1584,11 @@ msgid ""
 "CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
 "FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
 msgstr ""
+"AIXÒ ELIMINARÀ TOTES LES ENTRADES DELS TEUS ARXIUS XML DE LLISTAT DE JOCS ON "
+"NO ES TROBI RELACIONS AMB UN JOC. ES FARAN CÒPIES DE SEGURETAT DELS ARXIUS "
+"ORIGINALS A UNA CARPETA DE NETEJA DINS LA TEVA CARPETA DE LLISTAT DE JOCS. "
+"POTS ESBORRAR MANUALMENT AQUESTA CARPETA QUAN ESTIGUIS SEGUR QUE NO LA "
+"NECESSITES."
 
 msgid ""
 "THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
@@ -1515,414 +1596,445 @@ msgid ""
 "FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
 "ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
 msgstr ""
+"AIXÒ ELIMINARÀ TOTES LES ENTRADES DELS ARXIUS DE CONFIGURACIÓ DE LES "
+"COL·LECCIONS PERSONALITZADES ON NO ES TROBI RELACIONS AMB UN JOC. ES FARAN "
+"CÒPIES DE SEGURETAT DELS ARXIUS ORIGINALS A UNA CARPETA DE NETEJA DINS LA "
+"TEVA CARPETA DE COL·LECCIONS. POTS ESBORRAR MANUALMENT AQUESTA CARPETA QUAN "
+"ESTIGUIS SEGUR QUE NO LA NECESSITES."
 
 msgid "NOT STARTED"
-msgstr ""
+msgstr "SENSE INICIAR"
 
 msgid "DESCRIPTION:"
-msgstr ""
+msgstr "DESCRIPCIÓ:"
 
 msgid "TOTAL ENTRIES REMOVED:"
-msgstr ""
+msgstr "TOTAL D'ENTRADES ELIMINADES:"
 
 msgid "LAST PROCESSED SYSTEM:"
-msgstr ""
+msgstr "DARRER SISTEMA PROCESSAT:"
 
 msgid "LAST ERROR MESSAGE:"
-msgstr ""
+msgstr "DARRER MISSATGE D'ERROR:"
 
 msgid "MEDIA"
-msgstr ""
+msgstr "MULTIMÈDIA"
 
 msgid "start processing"
-msgstr ""
+msgstr "iniciar processat"
 
 msgid "RUNNING MEDIA CLEANUP"
-msgstr ""
+msgstr "NETEJA MULTIMÈDIA EN MARXA"
 
 msgid "stop processing"
-msgstr ""
+msgstr "aturar processat"
 
 msgid "GAMELISTS"
-msgstr ""
+msgstr "LLISTAT DE JOCS"
 
 msgid "RUNNING GAMELISTS CLEANUP"
-msgstr ""
+msgstr "NETEJA DE LLISTAT DE JOCS EN MARXA"
 
 msgid "COLLECTIONS"
-msgstr ""
+msgstr "COL·LECCIONS"
 
 msgid "COLLECTIONS CLEANUP FAILED"
-msgstr ""
+msgstr "HA FALLAT LA NETEJA DE COL·LECCIONS"
 
 msgid "There are no enabled custom collections"
-msgstr ""
+msgstr "No hi ha col·leccions personalitzades habilitades"
 
 msgid "RUNNING COLLECTIONS CLEANUP"
-msgstr ""
+msgstr "NETEJA DE COL·LECCIONS EN MARXA"
 
 msgid "PROCESSING"
-msgstr ""
+msgstr "PROCESSANT"
 
 #, c-format
 msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr ""
+msgstr "S'ha trobat un arxiu flatten.txt, saltant «%s»"
 
 msgid "Couldn't create target directory, permission problems?"
-msgstr ""
+msgstr "No s'ha pogut crear el directori destí, problemes de permisos?"
 
 msgid "Couldn't move media file, permission problems?"
-msgstr ""
+msgstr "No s'ha pogut moure l'arxiu multimèdia, problemes de permisos?"
 
 #, c-format
 msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr ""
+msgstr "No s'ha pogut processar l'arxiu gamelist.xml per «%s»"
 
 #, c-format
 msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr ""
+msgstr "No s'ha tribat una etiqueta gamelist a l'arxiu per «%s»"
 
 msgid "Couldn't delete temporary gamelist file, permission problems?"
 msgstr ""
+"No s'ha pogut esborrar l'arxiu gamelist temporal, problemes de permisos?"
 
 msgid "Couldn't write to temporary gamelist file, permission problems?"
 msgstr ""
+"No s'ha pogut escriure a l'arxiu gamelist temporal, problemes de permisos?"
 
 msgid "Couldn't create backup directory, permission problems?"
 msgstr ""
+"No s'ha pogut crear el directori de còpia de seguretat, problemes de "
+"permisos?"
 
 msgid "Couldn't move old gamelist file, permission problems?"
-msgstr ""
+msgstr "No s'ha pogut moure l'arxiu gamelist antic, problemes de permisos?"
 
 msgid "Couldn't move temporary gamelist file, permission problems?"
-msgstr ""
+msgstr "No s'ha pogut moure l'arxiu gamelist temporal, problemes de permisos?"
 
 msgid "Couldn't find custom collection configuration file"
-msgstr ""
+msgstr "No s'ha trobat l'arxiu de configuració de col·lecció personalitzada"
 
 msgid "Couldn't open custom collection configuration file"
 msgstr ""
+"No s'ha pogut obrir l'arxiu de configuració de col·lecció personalitzada"
 
 msgid "Couldn't delete temporary collection file, permission problems?"
 msgstr ""
+"No s'ha pogut esborrar l'arxiu de col·lecció temporal, problemes de permisos?"
 
 msgid "Couldn't write to temporary collection configuration file"
 msgstr ""
+"No s'ha pogut escriure a l'arxiu de configuració de col·lecció temporal"
 
 msgid "Couldn't move old collection file, permission problems?"
 msgstr ""
+"No s'ha pogut moure l'arxiu de col·lecció antic, problemes de permisos?"
 
 msgid "Couldn't move temporary collection file, permission problems?"
 msgstr ""
+"No s'ha pogut moure l'arxiu de col·lecció temporal, problemes de permisos?"
 
 msgid "ABORTED MEDIA CLEANUP"
-msgstr ""
+msgstr "S'HA ABORTAT LA NETEJA MULTIMÈDIA"
 
 msgid "COMPLETED MEDIA CLEANUP"
-msgstr ""
+msgstr "NETEJA MULTIMÈDIA FINALITZADA"
 
 msgid "ABORTED GAMELIST CLEANUP"
-msgstr ""
+msgstr "S'HA ABORTAT LA NETEJA DE LLISTA DE JOCS"
 
 msgid "COMPLETED GAMELIST CLEANUP"
-msgstr ""
+msgstr "NETEJA DE LLISTA DE JOCS FINALITZADA"
 
 msgid "ABORTED COLLECTIONS CLEANUP"
-msgstr ""
+msgstr "S'HA ABORTAT LA NETEJA DE COL·LECCIONS"
 
 msgid "COMPLETED COLLECTIONS CLEANUP"
-msgstr ""
+msgstr "NETEJA DE COL·LECCIONS FINALITZADA"
 
 msgid "MEDIA CLEANUP FAILED"
-msgstr ""
+msgstr "HA FALLAT LA NETEJA MULTIMÈDIA"
 
 msgid "GAMELISTS CLEANUP FAILED"
-msgstr ""
+msgstr "HA FALLAT LA NETEJA DEL LLISTAT DE JOCS"
 
 msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
-msgstr ""
+msgstr "L'APLICACIÓ ES RECARREGARPA EN TANCAR AQUESTA UTILITAT."
 
 msgid "INVALID ENTRY"
-msgstr ""
+msgstr "ENTRADA INVÀLIDA"
 
 msgid "CLEARED ENTRY"
-msgstr ""
+msgstr "ENTRADA ELIMINADA"
 
 msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr ""
+msgstr "NO S'HAN DEFINIT EMULADORS ALTERNATIUS"
 
 msgid "CLEAR INVALID ENTRY"
-msgstr ""
+msgstr "ENTRADA INVÀLIDA ELIMINADA"
 
 msgid "DEFAULT"
-msgstr ""
+msgstr "PER DEFECTE"
 
 msgid "EDIT METADATA"
-msgstr ""
+msgstr "EDITAR METADADES"
 
 msgid "CLEAR ENTRY"
-msgstr ""
+msgstr "NETEJAR ENTRADA"
 
 msgid "SELECT EMULATOR"
-msgstr ""
+msgstr "ESCOLLIR EMULADOR"
 
 msgid "SYSTEM-WIDE"
-msgstr ""
+msgstr "PER TOT EL SISTEMA"
 
 msgid "unknown"
-msgstr ""
+msgstr "desconegut"
 
 msgid "SCRAPE"
-msgstr ""
+msgstr "GARBELLAR"
 
 msgid "scrape"
-msgstr ""
+msgstr "garbellar"
 
 msgid "save metadata"
-msgstr ""
+msgstr "guardar metadades"
 
 msgid "cancel changes"
-msgstr ""
+msgstr "cancel·lar canvis"
 
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
 "BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
 "ARE YOU SURE?"
 msgstr ""
+"AIXÒ ESBORRARÀ QUALSEVOL ARXIU MULTIMÈDIA I L'ENTRADA A GAMELIST.XML "
+"D'AQUEST DIRECTORI, PERÒ NO S'ESBORRARÀ EL DIRECTORI NI QUALSEVOL CONTINGUT "
+"A L'INTERIOR\n"
+"N'ESTÀS SEGUR?"
 
 msgid "CLEAR"
-msgstr ""
+msgstr "NETEJAR"
 
 msgid "clear folder"
-msgstr ""
+msgstr "netejar la carpeta"
 
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
 "BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
 "ARE YOU SURE?"
 msgstr ""
+"AIXÒ ELIMINARÀ TOTS ELS ARXIUS MULTIMÈDIA I L'ENTRADA D'AQUEST JOC A "
+"GAMELIST.XML, PERÒ L'ARXIU DEL JOC EN SI NO S'ESBORRARÀ\n"
+"ESTÀS SEGUR?"
 
 msgid "clear file"
-msgstr ""
+msgstr "netejar arxiu"
 
 msgid ""
 "THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
 "ARE YOU SURE?"
 msgstr ""
+"AIXÒ ESBORRARÀ L'ARXIU DEL JOC, QUALSEVOL ARXIU MULTIMÈDIA I L'ENTRADA DEL "
+"JOC A GAMELIST.XML. ESTÀS SEGUR?"
 
 msgid "DELETE"
-msgstr ""
+msgstr "ESBORRAR"
 
 msgid "delete game"
-msgstr ""
+msgstr "esborrar joc"
 
 msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr ""
+msgstr "GENERADOR FORA DE LÍNIA DE COMPOSICIÓ D'IMATGES"
 
 #, c-format
 msgid "%i OF %i GAME PROCESSED"
 msgid_plural "%i OF %i GAMES PROCESSED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "S'HA PROCESSAT UN JOC"
+msgstr[1] "S'HAN PROCESSAT %i de %i JOCS"
 
 msgid "Generated:"
-msgstr ""
+msgstr "Generats:"
 
 msgid "Overwritten:"
-msgstr ""
+msgstr "Sobreescrits:"
 
 msgid "Skipped:"
-msgstr ""
+msgstr "Ignorats:"
 
 msgid "Skipped (existing):"
-msgstr ""
+msgstr "Ignorats (existents):"
 
 msgid "Failed:"
-msgstr ""
+msgstr "Fallats:"
 
 msgid "Processing:"
-msgstr ""
+msgstr "Processant:"
 
 msgid "Last error message:"
-msgstr ""
+msgstr "Darrer missatge d'error:"
 
 msgid "PAUSE"
-msgstr ""
+msgstr "PAUSA"
 
 msgid "pause processing"
-msgstr ""
+msgstr "pausar processat"
 
 msgid "close (abort processing)"
-msgstr ""
+msgstr "tancar (abortar processat)"
 
 msgid "RUNNING..."
-msgstr ""
+msgstr "FUNCIONANT..."
 
 msgid "PAUSED"
-msgstr ""
+msgstr "PAUSAT"
 
 msgid "RUNNING"
-msgstr ""
+msgstr "FUNCIONANT"
 
 msgid "COMPLETED"
-msgstr ""
+msgstr "COMPLETAT"
 
 msgid "DONE"
-msgstr ""
+msgstr "FET"
 
 msgid "done (close)"
-msgstr ""
+msgstr "fet (tancar)"
 
 msgid "APPLICATION UPDATER"
-msgstr ""
+msgstr "ACTUALITZADOR D'APLICACIÓ"
 
 msgid "INSTALLATION STEPS:"
-msgstr ""
+msgstr "PROCÉS D'INSTAL·LACIÓ:"
 
 msgid "DOWNLOAD NEW RELEASE"
-msgstr ""
+msgstr "DESCARREGAR NOVA VERSIÓ"
 
 msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
-msgstr ""
+msgstr "DESCARREGAR NOVA VERSIÓ A AQUEST DIRECTORI:"
 
 msgid "INSTALL PACKAGE"
-msgstr ""
+msgstr "INSTAL·LAR PAQUET"
 
 msgid "QUIT AND MANUALLY RESTART ES-DE"
-msgstr ""
+msgstr "SORTIR I REINICIAR ES-DE MANUALMENT"
 
 msgid "QUIT AND MANUALLY UPGRADE ES-DE"
-msgstr ""
+msgstr "SORTIR I ACTUALITZAR ESDE MANUALMENT"
 
 msgid "STATUS MESSAGE:"
-msgstr ""
+msgstr "MISSATGE D'ESTAT:"
 
 msgid "DOWNLOAD"
-msgstr ""
+msgstr "DESCÀRREGA"
 
 msgid "download new release"
-msgstr ""
+msgstr "descarregar nova versió"
 
 msgid "Download directory does not exist"
-msgstr ""
+msgstr "El directori de descàrrega no existeix"
 
 msgid "CHANGE DIRECTORY"
-msgstr ""
+msgstr "CANVIAR DIRECTORI"
 
 msgid "change download directory"
-msgstr ""
+msgstr "canviar directori de descàrrega"
 
 msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr ""
+msgstr "ESCRIU EL DIRECTORI DE DESCÀRREGA"
 
 msgid "DOWNLOAD ABORTED"
-msgstr ""
+msgstr "DESCÀRREGA ABORTADA"
 
 msgid "NO PACKAGE SAVED TO DISK"
-msgstr ""
+msgstr "NO S'HA GUARDAT CAP PAQUET AL DISC"
 
 msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr ""
+msgstr "S'HA DESCARREGAT EL PAQUET I ES POT INSTAL·LAR MANUALMENT"
 
 msgid "DOWNLOADING 100%"
-msgstr ""
+msgstr "DESCARREGANT 100%"
 
 msgid "Downloaded file does not match expected MD5 checksum"
-msgstr ""
+msgstr "El checksum MD% de l'arxiu descarregat no coincideix amb l'esperat"
 
 msgid "Error: Couldn't delete temporary package file, permission problems?"
 msgstr ""
+"Error: No s'ha pogut esborrar l'arxiu temporal del paquet, problemes de "
+"permisos?"
 
 msgid "Error: Couldn't write package file, permission problems?"
 msgstr ""
+"Error: No s'ha pogut escriure a l'arxiu del paquet, problemes de permisos?"
 
 msgid "Error: Couldn't set permissions on AppImage file"
-msgstr ""
+msgstr "Error: No s'han pogut establir permisos a l'arxiu AppImage"
 
 #, c-format
 msgid "Downloaded %s"
-msgstr ""
+msgstr "Descarregat %s"
 
 msgid "Error: Couldn't open AppImage update file for reading"
-msgstr ""
+msgstr "Error: No s'ha pogut obrir l'arxiu d'actualització AppImage"
 
 msgid "Error: Downloaded file does not match expected MD5 checksum"
 msgstr ""
+"Error: El checksum MD5 de l'arxiu descarregat no coincideix amb l'esperat"
 
 msgid "Error: Couldn't rename running AppImage file, permission problems?"
 msgstr ""
+"Error: No s'ha pogut reanomentar l'arxiu AppImage en execució, problemes de "
+"permisos?"
 
 msgid "Error: Couldn't replace running AppImage file, permission problems?"
 msgstr ""
+"Error: No s'ha pogut substituir l'arxiu AppImage en execució, problemes de "
+"permisos?"
 
 #, c-format
 msgid "Successfully installed as %s"
-msgstr ""
+msgstr "Instal·lat correctament com %s"
 
 msgid "INSTALL"
-msgstr ""
+msgstr "INSTAL·LAR"
 
 msgid "install package"
-msgstr ""
+msgstr "instal·lar paquet"
 
 msgid "Find the detailed changelog at"
-msgstr ""
+msgstr "Pots veure el registre de novetats detallat a"
 
 msgid "quit application"
-msgstr ""
+msgstr "sortir de l'aplicació"
 
 msgid "all games"
-msgstr ""
+msgstr "tots els jocs"
 
 msgid "last played"
-msgstr ""
+msgstr "darrera partida"
 
 msgid "favorites"
-msgstr ""
+msgstr "favorits"
 
 msgid "collections"
-msgstr ""
+msgstr "col·leccions"
 
 #, c-format
 msgid "DISABLED '%s' IN '%s'"
-msgstr ""
+msgstr "DESHABILITAT «%s» A «%s»"
 
 #, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr ""
+msgstr "EDITANT LA COL·LECCIÓ «%s», AFEGIR/ELIMINAR JOCS AMB «%s»"
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr ""
+msgstr "S'HA ACABAT D'EDITAR LA COL·LECCIÓ «%s»"
 
 msgid "Favorites"
-msgstr ""
+msgstr "Favorits"
 
 #, c-format
 msgid "ADDED '%s' TO '%s'"
-msgstr ""
+msgstr "S'HA AFEGIT «%s» A «%s»"
 
 #, c-format
 msgid "REMOVED '%s' FROM '%s'"
-msgstr ""
+msgstr "S'HA ELIMINAT «%s» DE «%s»"
 
 msgid "This collection is empty"
-msgstr ""
+msgstr "Aquesta col·lecció està buida"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s [%s]'"
-msgstr ""
+msgstr "Aquesta col·lecció conté un joc: «%s [%s]»"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
-msgstr ""
+msgstr "Aquesta col·lecció conté dos jocs: «%s [%s]» i «%s [%s]»"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
-msgstr ""
+msgstr "Aquesta col·lecció conté tres jocs: «%s [%s]», «%s [%s]» i «%s [%s]»"
 
 #, c-format
 msgctxt "theme"
@@ -1933,232 +2045,242 @@ msgid_plural ""
 "This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
 "others"
 msgstr[0] ""
+"Aquesta col·lecció conté %i jocs: «%s [%s]», «%s [%s]» i «%s [%s]», entre "
+"d'altres"
 msgstr[1] ""
+"Aquesta col·lecció conté %i jocs: «%s [%s]», «%s [%s]» i «%s [%s]», entre "
+"d'altres"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 1 game: '%s'"
-msgstr ""
+msgstr "Aquesta col·lecció conté un joc: «%s»"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 2 games: '%s' and '%s'"
-msgstr ""
+msgstr "Aquesta col·lecció conté dos jocs: «%s» i «%s»"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains 3 games: '%s', '%s' and '%s'"
-msgstr ""
+msgstr "Aquesta col·lecció conté tres jocs: «%s», «%s» i «%s»"
 
 #, c-format
 msgctxt "theme"
 msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
 msgid_plural ""
 "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Aquesta col·lecció conté %i jocs: «%s», «%s» i «%s», entre d'altres"
+msgstr[1] "Aquesta col·lecció conté %i jocs: «%s», «%s» i «%s», entre d'altres"
 
 #, c-format
 msgctxt "theme"
 msgid "'%s' is filtered so there may be more games available"
-msgstr ""
+msgstr "«%s» té filtres, per tant, pot haver disponibles més jocs"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
-msgstr ""
+msgstr "COL·LECCIÓ «%s» ESBORRADA"
 
 msgid "name, ascending"
-msgstr ""
+msgstr "nom, ascendent"
 
 msgid "name, descending"
-msgstr ""
+msgstr "nom, descendent"
 
 msgid "rating, ascending"
-msgstr ""
+msgstr "valoració, ascendent"
 
 msgid "rating, descending"
-msgstr ""
+msgstr "valoració, descendent"
 
 msgid "release date, ascending"
-msgstr ""
+msgstr "llançament, ascendent"
 
 msgid "release date, descending"
-msgstr ""
+msgstr "llançament, descendent"
 
 msgid "developer, ascending"
-msgstr ""
+msgstr "desenvolupador, ascendent"
 
 msgid "developer, descending"
-msgstr ""
+msgstr "desenvolupador, descendent"
 
 msgid "publisher, ascending"
-msgstr ""
+msgstr "editor, ascendent"
 
 msgid "publisher, descending"
-msgstr ""
+msgstr "editor, descendent"
 
 msgid "genre, ascending"
-msgstr ""
+msgstr "gènere, ascendent"
 
 msgid "genre, descending"
-msgstr ""
+msgstr "gènere, descendent"
 
 msgid "players, ascending"
-msgstr ""
+msgstr "jugadors, ascendent"
 
 msgid "players, descending"
-msgstr ""
+msgstr "jugadors, descendent"
 
 msgid "last played, ascending"
-msgstr ""
+msgstr "darrera partida, ascendent"
 
 msgid "last played, descending"
-msgstr ""
+msgstr "darrera partida, descendent"
 
 msgid "times played, ascending"
-msgstr ""
+msgstr "partides, ascendent"
 
 msgid "times played, descending"
-msgstr ""
+msgstr "partides, descendent"
 
 msgid "system, ascending"
-msgstr ""
+msgstr "sistema, ascendent"
 
 msgid "system, descending"
-msgstr ""
+msgstr "sistema, descendent"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr ""
+msgstr "ERROR: FALTA LA CONFIGURACIÓ DE REGLES DE CERCA PRE-COMMAND PER «%s»"
 
 msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "ERROR: nO S'HA TROBAT PRE-COMMAND, ESTÀ INSTAL·LAT CORRECTAMENT?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "ERROR: NO S'HA TROBAT PRE-COMMAND «%s», ESTÀ INSTAL·LAT CORRECTAMENT?"
 
 #, c-format
 msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr ""
+msgstr "ERROR: FALTA LA CONFIGURACIÓ DE REGLES DE CERCA D'EMULADOR PER «%s»"
 
 msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "ERROR: NO S'HA TROBAT L'APP, ESTÀ INSTAL·LADA CORRECTAMENT?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "ERROR: NO S'HA TROBAT L'APP «%s», ESTÀ INSTAL·LADA CORRECTAMENT?"
 
 msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "ERROR: NO S'HA TROBAT L'EMULADOR, ESTÀ INSTAL·LAT CORRECTAMENT?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
+msgstr "ERROR: NO S'HA TROBAT L'EMULADOR «%s», ESTÀ INSTAL·LAT CORRECTAMENT?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr ""
+msgstr "ERROR: NO S'HA TROBAT L'ARXIU DEL NUCLI DE L'EMULADOR «%s»"
 
 msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr ""
+msgstr "ERROR: ENTRADA INVÀLIDA A L'ARXIU DE CONFIGURACIÓ DE SISTEMES"
 
 #, c-format
 msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr ""
+msgstr "ERROR: FALTA LA CONFIGURACIÓ DE NUCLI PER «%s»"
 
 #, c-format
 msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr ""
+msgstr "ERROR: ENTRADA «%s» VARIABLE INVÀLIDA"
 
 #, c-format
 msgid ""
 "ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
 msgstr ""
+"ERROR: NO S'HA POGUT CREAR EL DIRECTORI DEFINIT PER %s, PROBLEMES DE "
+"PERMISOS?"
 
 msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr ""
+msgstr "ERROR: L'APP O L'ARXIU ÀLIES NO EXISTEIX O NO ES POT LLEGIR"
 
 msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr ""
+msgstr "ERROR: L'ARXIU DESKTOP ÉS INVÀLID O NO ES POT LLEGIR"
 
 msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr ""
+msgstr "ERROR: L'ARXIU DESKTOP NO EXISTEIX O NO ES POT LLEGIR"
 
 #, c-format
 msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
-msgstr ""
+msgstr "ERROR EN LLANÇAR EL JOC «%s» (CODI D'ERROR %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr ""
+"NO ES PODEN AFEGIR COL·LECCIONS PERSONALITZADES A LES COL·LECCIONS "
+"PERSONALITZADES"
 
 msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "NO ES PODEN AFEGIR SEPARADORS A LES COL·LECCIONS PERSONALITZADES"
 
 msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
-msgstr ""
+msgstr "NO ES PODEN AFEGIR CARPETES A LES COL·LECCIONS PERSONALITZADES"
 
 #, c-format
 msgid "MARKED FOLDER '%s' AS FAVORITE"
-msgstr ""
+msgstr "LA CARPETA «%s» S'HA MARCAT COM FAVORITA"
 
 #, c-format
 msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
-msgstr ""
+msgstr "LA CARPETA «%s» JA NO ÉS FAVORITA"
 
 msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr ""
+"NO ES PODEN AFEGIR ENTRADES QUE NO SIGUIN JOCS A LES COL·LECCIONS "
+"PERSONALITZADES"
 
 msgid "random"
-msgstr ""
+msgstr "aleatori"
 
 msgid "screensaver"
-msgstr ""
+msgstr "salvapantalles"
 
 #, c-format
 msgctxt "theme"
 msgid "%i game"
 msgid_plural "%i games"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i joc"
+msgstr[1] "%i jocs"
 
 #, c-format
 msgctxt "theme"
 msgid "(%i favorite)"
 msgid_plural "(%i favorites)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(%i favorit)"
+msgstr[1] "(%i favorits)"
 
 #, c-format
 msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i favorit"
+msgstr[1] "%i favorits"
 
 msgctxt "theme"
 msgid "unknown"
-msgstr ""
+msgstr "desconegut"
 
 msgid "system"
-msgstr ""
+msgstr "sistema"
 
 msgid "view media"
-msgstr ""
+msgstr "veure multimèdia"
 
 msgid "options"
-msgstr ""
+msgstr "opcions"
 
 msgid "jump to game"
-msgstr ""
+msgstr "saltar al joc"
 
 msgctxt "theme"
 msgid "yes"
-msgstr ""
+msgstr "si"
 
 msgctxt "theme"
 msgid "no"
-msgstr ""
+msgstr "no"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2167,6 +2289,11 @@ msgid ""
 "UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
 "DIRECTORY."
 msgstr ""
+"SEMBLA QUE S'HA PRODUÏT UNA ACTUALITZACIÓ INSEGURA, PROBABLEMENT "
+"DESENPAQUETANT UNA NOVA VERSIÓ SOBRE LA VELLA? AIXÒ POT PROVOCAR DIVERSOS "
+"PROBLEMES, QUE PODEN PASSAR DESAPARCEBUTS INICIALMENT. ASSEGURA¡T DE SEGUIR "
+"SEMPRE LES INSTRUCCIONS D'ACTUALITZACIÓ A L'ARXIU README.TXT QUE POTS TROBAR "
+"AL DIRECTORI ES-DE."
 
 msgid ""
 "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
@@ -2174,6 +2301,10 @@ msgid ""
 "YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
 "SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
 msgstr ""
+"NO S'HA POGUT PROCESSAR L'ARXIU DE CONFIGURACIÓ DE SISTEMES. SI TENS UN "
+"ARXIU es_systems.xml PERSONALITZAT, LLAVORS SEGURAMENT HI HAGI ALGUN "
+"PROBLEMA AMB LA SINTAXI XML. EN CAS QUE NO EN TINGUIS, LA INSTAL·LACIÓ D'ES-"
+"DE ESTÀ TRENCADA. CONSULTA L'ARXIU DE REGISTRE es_log.txt PER MÉS INFORMACIÓ"
 
 msgid ""
 "NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
@@ -2182,6 +2313,11 @@ msgid ""
 "THE SUPPORTED FILE EXTENSIONS.\n"
 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
+"NO S'HAN TROBAR ARXIUS DE JOCS, COL·LOCA ELS TEUS JOCS A LA CARPETA DE ROMS "
+"CONFIGURADA. OPCIONALMENT, ES POT GENERAR L'ESTRUCTURA DE DIRECTORIS QUE "
+"CREARÀ UN ARXIU DE TEXT PER CADA SISTEMA DONANT MÉS INFORMACIÓ COM LES "
+"EXTENSIONS D'ARXIU SUPORTADES.\n"
+"AQUESTA ÉS LA CARPETA DE ROMS CONFIGURADA ACTUALMENT:\n"
 
 msgid ""
 "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
@@ -2191,28 +2327,36 @@ msgid ""
 "FILE EXTENSIONS.\n"
 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
+"NO S'HAN TROBAR ARXIUS DE JOCS, O BÉ COL·LOQUES ELS TEUS JOCS A LA CARPETA "
+"DE ROMS CONFIGURADA, O EN CANVIES LA RUTA PREMENT EL BOTÓ A CONTINUACIÓ. "
+"OPCIONALMENT, ES POT GENERAR L'ESTRUCTURA DE DIRECTORIS QUE CREARÀ UN ARXIU "
+"DE TEXT PER CADA SISTEMA DONANT MÉS INFORMACIÓ COM LES EXTENSIONS D'ARXIU "
+"SUPORTADES.\n"
+"AQUESTA ÉS LA CARPETA DE ROMS CONFIGURADA ACTUALMENT:\n"
 
 msgid "CHANGE ROM DIRECTORY"
-msgstr ""
+msgstr "CANVIAR CARPETA DE ROMS"
 
 msgid "ENTER ROM DIRECTORY PATH"
-msgstr ""
+msgstr "ESCRIU LA RUTA A LA CARPETA DE ROMS"
 
 msgid ""
 "ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
 msgstr ""
+"S'HA GUARDAT LA CONFIGURACIÓ DE CARPETA DE ROMS, REINICIA L'APLICACIÓ PER "
+"TORNAR A ESCANEJAR ELS SISTEMES"
 
 msgid "Currently configured path:"
-msgstr ""
+msgstr "Ruta configurada actualment:"
 
 msgid "LOAD CURRENTLY CONFIGURED PATH"
-msgstr ""
+msgstr "CARREGA LA RUTA CONFIGURADA ACTUALMENT"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
-msgstr ""
+msgstr "NETEJAR (DEIXA-HO EN BLANC PER REINICIAR A LA RUTA PER DEFECTE)"
 
 msgid "CREATE DIRECTORIES"
-msgstr ""
+msgstr "CREAR DIRECTORIS"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2221,17 +2365,25 @@ msgid ""
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
 "DON'T NEED"
 msgstr ""
+"AIXÒ CREARÀ ELS DIRECTORIS PER TOTS ELS SISTEMES DE JOC DEFINITS A "
+"es_systems.xml.\n"
+"\n"
+"AIXÒ POT CREAR MOLTES CARPETES, ES RECOMANA ELIMINAR LES QUE NO NECESSITIS"
 
 msgid ""
 "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
 "PLACE YOUR GAMES IN THE NEW FOLDERS"
 msgstr ""
+"LES CARPETES DE SISTEMES S'HAN GENERAT CORRECTAMENT, TANCA L'APLICACIÓ I "
+"COL·LOCA ELS TEUS JOCS A LES NOVES CARPETES"
 
 msgid ""
 "ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
 "\n"
 "SEE THE LOG FILE FOR MORE DETAILS"
 msgstr ""
+"ERROR AL CREAR LES CARPETES DE SISTEMES, PROBLEMES DE PERMISOS O DISC PLE? "
+"CONSULTA L'ARXIU DE REGISTRE PER MÉS DETALLS"
 
 msgid ""
 "AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
@@ -2239,9 +2391,13 @@ msgid ""
 "SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
 "MENU"
 msgstr ""
+"COM A MÍNIM UN DELS TEUS SISTEMES TÉ CONFIGURAT UN EMULADOR ALTERNATIU "
+"INVÀLID, SENSE LA CORRESPONENT ENTRADA A L'ARXIU DE CONFIGURACIÓ DE SISTEMA. "
+"REVISA LA TEVA CONFIGURACIÓ AMB LA INTERFÍCIE «EMULADORS ALTERNATIUS» AL "
+"MENÚ «ALTRES OPCIONS»"
 
 msgid "UPDATE"
-msgstr ""
+msgstr "ACTUALITZA"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
@@ -2250,6 +2406,11 @@ msgid ""
 "ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
+"L'ACTUALITZADOR DE L'APLICACIÓ DESCARREGARÀ LA DARRERA VERSIÓ PER WINDOWS "
+"PORTABLE, PERÒ HAURÀS DE FER L'ACTUALITZACIÓ MANUALMENT. CONSULTA L'ARXIU "
+"README.TXT DINS L'ARXIU ZIP DESCARREGAT ON TROBARÀS INSTRUCCIÓ ON COM "
+"ACONSEGUIR-HO. TAMBÉ S'HI EXPLICA QUE DESCOMPRIMIR UNA NOVA VERSIÓ SOBRE LA "
+"VELLA PODRIA TRENCAR L'APLICACIÓ."
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
@@ -2257,463 +2418,473 @@ msgid ""
 "DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
 "UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
 msgstr ""
+"L'ACTUALITZADOR DE L'APLICACIÓ DESCARREGARÀ LA DARRERA VERSIÓ INSTAL·LABLE "
+"PER WINDOWS, PERÒ L'HAURÀS D'EXECUTAR MANUALMENT PER FER L'ACTUALITZACIÓ. "
+"QUAN HO FACIS, RECORDA CONTESTAR SI QUAN PREGUNTI SI VOLS DESINSTAL·LAR LA "
+"VERSIÓ ANTIGA, O PODRIES TRENCAR LA INSTAL·LACIÓ."
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
 "WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
 msgstr ""
+"L'ACTUALITZADOR DE L'APLICACIÓ DESCARREGARÀ LA DARRERA VERSIÓ PER TU, PERÒ "
+"HAURÀS D'INSTAL·LAR MANUALMENT L'ARXIU DMG PER FER L'ACTUALITZACIÓ."
 
 #, c-format
 msgid "LAUNCHING GAME '%s'"
-msgstr ""
+msgstr "INICIANT JOC «%s»"
 
 msgid "menu"
-msgstr ""
+msgstr "menu"
 
 #, c-format
 msgid "PAGE %s OF %s"
-msgstr ""
+msgstr "PÀGINA %s DE %s"
 
 msgid "pan"
-msgstr ""
+msgstr "centrar"
 
 msgid "reset"
-msgstr ""
+msgstr "reiniciar"
 
 msgid "browse"
-msgstr ""
+msgstr "navegar"
 
 msgid "game media"
-msgstr ""
+msgstr "mitjans del joc"
 
 msgid "first"
-msgstr ""
+msgstr "primer"
 
 msgid "last"
-msgstr ""
+msgstr "últim"
 
 msgid "zoom"
-msgstr ""
+msgstr "zoom"
 
 msgid "RATING"
-msgstr ""
+msgstr "VALORACIÓ"
 
 msgid "DEVELOPER"
-msgstr ""
+msgstr "DESENVOLUPADOR"
 
 msgid "PUBLISHER"
-msgstr ""
+msgstr "EDITOR"
 
 msgid "GENRE"
-msgstr ""
+msgstr "GÈNERE"
 
 msgid "PLAYERS"
-msgstr ""
+msgstr "JUGADORS"
 
 msgid "FAVORITE"
-msgstr ""
+msgstr "FAVORIT"
 
 msgid "KIDGAME"
-msgstr ""
+msgstr "INFANTIL"
 
 msgid "HIDDEN"
-msgstr ""
+msgstr "OCULT"
 
 msgid "BROKEN"
-msgstr ""
+msgstr "TRENCAT"
 
 msgid "CONTROLLER"
-msgstr ""
+msgstr "COMANDAMENT"
 
 msgid "ALTERNATIVE EMULATOR"
-msgstr ""
+msgstr "EMULADOR ALTERNATIU"
 
 msgid "FALSE"
-msgstr ""
+msgstr "FALS"
 
 msgid "TRUE"
-msgstr ""
+msgstr "CERT"
 
 msgid "UNKNOWN"
-msgstr ""
+msgstr "DESCONEGUT"
 
 msgid "NONE SELECTED"
-msgstr ""
+msgstr "CAP SELECCIONAT"
 
 msgid "No screenshot found, couldn't generate miximage"
-msgstr ""
+msgstr "No s'ha trobat cap captura, no s'ha pogut generar la composició"
 
 msgid "Screenshot in unknown format, couldn't generate miximage"
 msgstr ""
+"La captura està en un format desconegut, no s'ha pogut generar la composició"
 
 msgid "Screenshot in unsupported format, couldn't generate miximage"
 msgstr ""
+"La captura està en format no suportat, no s'ha pogut generar la composició"
 
 msgid "Error loading screenshot, couldn't generate miximage"
-msgstr ""
+msgstr "Error carregant la captura, no s'ha pogut generar la composició"
 
 msgid "Error loading marquee image, corrupt file?"
-msgstr ""
+msgstr "Error carregant la marquesina, arxiu corrupte?"
 
 msgid "Error loading 3d box image, corrupt file?"
-msgstr ""
+msgstr "Error carregant la caixa 3D, arxiu corrupte?"
 
 msgid "Error loading box cover image, corrupt file?"
-msgstr ""
+msgstr "Error carregant la portada, arxiu corrupte?"
 
 msgid "Error loading physical media image, corrupt file?"
-msgstr ""
+msgstr "Error carregant el mitja físic, arxiu corrupte?"
 
 msgid "pdf manual"
-msgstr ""
+msgstr "manual pdf"
 
 msgid "SCREENSHOT"
-msgstr ""
+msgstr "CAPTURA"
 
 msgid "BOX COVER"
-msgstr ""
+msgstr "PORTADA"
 
 msgid "BOX BACK COVER"
-msgstr ""
+msgstr "CONTRAPORTADA"
 
 msgid "TITLE SCREEN"
-msgstr ""
+msgstr "PANTALLA DE TÍTOL"
 
 msgid "FAN ART"
-msgstr ""
+msgstr "FAN ART"
 
 msgid "MIXIMAGE"
-msgstr ""
+msgstr "COMPOSICIÓ"
 
 msgid "CUSTOM"
-msgstr ""
+msgstr "PERSONALITZAT"
 
 msgid "Searching for games..."
-msgstr ""
+msgstr "Buscant jocs…"
 
 msgid "Loading systems..."
-msgstr ""
+msgstr "Carregant sistemes…"
 
 msgid "Reloading..."
-msgstr ""
+msgstr "Recarregant…"
 
 msgid "Copying resources..."
-msgstr ""
+msgstr "Copiant recursos…"
 
 msgid "Creating system directories..."
-msgstr ""
+msgstr "Creant carpetes de sistema…"
 
 msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr ""
+msgstr "ERROR: NO ES POT RENDERITZAR L'ARXIU PDF"
 
 #, c-format
 msgid "ADDED INPUT DEVICE '%s'"
-msgstr ""
+msgstr "S'HA AFEGIT EL DISPOSITIU D'ENTRADA «%s»"
 
 #, c-format
 msgid "REMOVED INPUT DEVICE '%s'"
-msgstr ""
+msgstr "S'HA ELIMINAT EL DISPOSITIU D'ENTRADA «%s»"
 
 msgid "medium"
-msgstr ""
+msgstr "mitjà"
 
 msgid "large"
-msgstr ""
+msgstr "gran"
 
 msgid "small"
-msgstr ""
+msgstr "petit"
 
 msgid "extra small"
-msgstr ""
+msgstr "molt petit"
 
 msgid "extra large"
-msgstr ""
+msgstr "molt gran"
 
 msgid "automatic"
-msgstr ""
+msgstr "automàtic"
 
 msgid "16:9 vertical"
-msgstr ""
+msgstr "16:9 vertical"
 
 msgid "16:10 vertical"
-msgstr ""
+msgstr "16:10 vertical"
 
 msgid "3:2 vertical"
-msgstr ""
+msgstr "3:2 vertical"
 
 msgid "4:3 vertical"
-msgstr ""
+msgstr "4:3 vertical"
 
 msgid "5:4 vertical"
-msgstr ""
+msgstr "5:4 vertical"
 
 msgid "19.5:9 vertical"
-msgstr ""
+msgstr "19.5:9 vertical"
 
 msgid "20:9 vertical"
-msgstr ""
+msgstr "20:9 vertical"
 
 msgid "21:9 vertical"
-msgstr ""
+msgstr "21:9 vertical"
 
 msgid "32:9 vertical"
-msgstr ""
+msgstr "32:9 vertical"
 
 msgid "edit date"
-msgstr ""
+msgstr "editar data"
 
 msgid "Y-M-D"
-msgstr ""
+msgstr "A-M-D"
 
 msgid "modify"
-msgstr ""
+msgstr "modificar"
 
 #, c-format
 msgid "%i (OF %i)"
-msgstr ""
+msgstr "%i (DE %i)"
 
 #, c-format
 msgid "%s SELECTED"
 msgid_plural "%s SELECTED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s SELECCIONAT"
+msgstr[1] "%s SELECCIONATS"
 
 #, c-format
 msgid "%i SELECTED"
 msgid_plural "%i SELECTED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i SELECCIONAT"
+msgstr[1] "%i SELECCIONATS"
 
 msgid "change value"
-msgstr ""
+msgstr "canviar valor"
 
 msgid "SELECT ALL"
-msgstr ""
+msgstr "SELECCIONAR-HO TOT"
 
 msgid "select all"
-msgstr ""
+msgstr "seleccionar-ho tot"
 
 msgid "SELECT NONE"
-msgstr ""
+msgstr "NETEJAR SELECCIÓ"
 
 msgid "select none"
-msgstr ""
+msgstr "netejar selecció"
 
 msgid "move cursor"
-msgstr ""
+msgstr "moure el cursor"
 
 msgid "edit"
-msgstr ""
+msgstr "editar"
 
 msgid "WORKING..."
-msgstr ""
+msgstr "TREBALLANT…"
 
 msgid "toggle"
-msgstr ""
+msgstr "canvia"
 
 msgid "add half star"
-msgstr ""
+msgstr "afegir mitja estrella"
 
 msgctxt "theme"
 msgid "never"
-msgstr ""
+msgstr "mai"
 
 #, c-format
 msgctxt "theme"
 msgid "%i day ago"
 msgid_plural "%i days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ahir"
+msgstr[1] "fa %i dies"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour ago"
 msgid_plural "%i hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "fa una hora"
+msgstr[1] "fa %i hores"
 
 #, c-format
 msgctxt "theme"
 msgid "%i minute ago"
 msgid_plural "%i minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "fa un minut"
+msgstr[1] "fa %i minuts"
 
 #, c-format
 msgctxt "theme"
 msgid "%i second ago"
 msgid_plural "%i seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "fa un segon"
+msgstr[1] "fa %i segons"
 
 msgid "SPACE"
-msgstr ""
+msgstr "ESPAI"
 
 msgid "LOAD"
-msgstr ""
+msgstr "CARREGAR"
 
 msgid "shift"
-msgstr ""
+msgstr "majús"
 
 msgid "alt"
-msgstr ""
+msgstr "alt"
 
 msgid "newline"
-msgstr ""
+msgstr "entrar"
 
 msgid "backspace"
-msgstr ""
+msgstr "retrocés"
 
 msgid "space"
-msgstr ""
+msgstr "espai"
 
 msgid "WELCOME"
-msgstr ""
+msgstr "HOLA"
 
 msgid "CONFIGURE INPUT DEVICE"
-msgstr ""
+msgstr "CONFIGURA DISPOSITIU D'ENTRADA"
 
 #, c-format
 msgid "%i GAMEPAD DETECTED"
 msgid_plural "%i GAMEPADS DETECTED"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "S'HA DETECTAT UN CONTROLADOR"
+msgstr[1] "S'HAN DETECTAT %i CONTROLADORS"
 
 msgid "NO GAMEPADS DETECTED"
-msgstr ""
+msgstr "NO S'HAN DETECTAT CONTROLADORS"
 
 msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
-msgstr ""
+msgstr "(ACCEPTANT ENTRADES NOMÉS DEL PRIMER CONTROLADOR)"
 
 msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
-msgstr ""
+msgstr "AGUANTA EL BOTÓ A DEL TEU DISPOSITIU PER CONFIGURAR-LO"
 
 msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
-msgstr ""
+msgstr "AGUANTA LA TECLA A DEL TEU TECLAT PER CONFIGURAR-LO"
 
 msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
 msgstr ""
+"PRESIONA ESC PER SALTAR (O LA DRECERA DE SORTIR PER SORTIR EN QUALSEVOL "
+"MOMENT)"
 
 msgid "PRESS ESC TO CANCEL"
-msgstr ""
+msgstr "PRESIONA ESC PER CANCEL·LAR"
 
 msgid "LOAD DEFAULT"
-msgstr ""
+msgstr "CARREGAR PER DEFECTE"
 
 msgid "DISCARD CHANGES"
-msgstr ""
+msgstr "DESCARTAR CANVIS"
 
 msgid "discard changes"
-msgstr ""
+msgstr "descartar canvis"
 
 msgid "CONFIGURING"
-msgstr ""
+msgstr "CONFIGURANT"
 
 msgid "KEYBOARD"
-msgstr ""
+msgstr "TECLAT"
 
 msgid "GAMEPAD"
-msgstr ""
+msgstr "CONTROLADOR"
 
 msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
-msgstr ""
+msgstr "AGUANTA QUALSEVOL BOTÓ DURANT UN SEGON PER SALTAR"
 
 msgid "NOT DEFINED"
-msgstr ""
+msgstr "SENSE DEFINIR"
 
 msgid "ok"
-msgstr ""
+msgstr "ok"
 
 msgid "D-PAD UP"
-msgstr ""
+msgstr "D-PAD AMUNT"
 
 msgid "D-PAD DOWN"
-msgstr ""
+msgstr "D-PAD AVALL"
 
 msgid "D-PAD LEFT"
-msgstr ""
+msgstr "D-PAD ESQUERRA"
 
 msgid "D-PAD RIGHT"
-msgstr ""
+msgstr "D-PAD DRETA"
 
 msgid "MINUS"
-msgstr ""
+msgstr "MENYS"
 
 msgid "PLUS"
-msgstr ""
+msgstr "MÉS"
 
 msgid "CROSS"
-msgstr ""
+msgstr "CREU"
 
 msgid "CIRCLE"
-msgstr ""
+msgstr "CERCLE"
 
 msgid "SQUARE"
-msgstr ""
+msgstr "QUADRAT"
 
 msgid "TRIANGLE"
-msgstr ""
+msgstr "TRIANGLE"
 
 msgid "OPTIONS"
-msgstr ""
+msgstr "OPCIONS"
 
 msgid "VIEW"
-msgstr ""
+msgstr "VEURE"
 
 msgid "MENU"
-msgstr ""
+msgstr "MENÚ"
 
 msgid "LEFT SHOULDER"
-msgstr ""
+msgstr "BOTÓ SUPERIOR ESQUERRE"
 
 msgid "RIGHT SHOULDER"
-msgstr ""
+msgstr "BOTÓ SUPERIOR DRET"
 
 msgid "LEFT TRIGGER"
-msgstr ""
+msgstr "GATELL ESQUERRE"
 
 msgid "RIGHT TRIGGER"
-msgstr ""
+msgstr "GATELL DRET"
 
 msgid "LEFT THUMBSTICK UP"
-msgstr ""
+msgstr "PERA ESQUERRA AMUNT"
 
 msgid "LEFT THUMBSTICK DOWN"
-msgstr ""
+msgstr "PERA ESQUERRA AVALL"
 
 msgid "LEFT THUMBSTICK LEFT"
-msgstr ""
+msgstr "PERA ESQUERRA ESQUERRA"
 
 msgid "LEFT THUMBSTICK RIGHT"
-msgstr ""
+msgstr "PERA ESQUERRA DRETA"
 
 msgid "LEFT THUMBSTICK CLICK"
-msgstr ""
+msgstr "PERA ESQUERRA CLIC"
 
 msgid "RIGHT THUMBSTICK UP"
-msgstr ""
+msgstr "PERA DRETA AMUNT"
 
 msgid "RIGHT THUMBSTICK DOWN"
-msgstr ""
+msgstr "PERA DRETA AVALL"
 
 msgid "RIGHT THUMBSTICK LEFT"
-msgstr ""
+msgstr "PERA DRETA ESQUERRA"
 
 msgid "RIGHT THUMBSTICK RIGHT"
-msgstr ""
+msgstr "PERA DRETA DRETA"
 
 msgid "RIGHT THUMBSTICK CLICK"
-msgstr ""
+msgstr "PERA DRETA CLIC"
 
 msgid "ALREADY TAKEN"
-msgstr ""
+msgstr "JA EN ÚS"
 
 msgid "PRESS ANYTHING"
-msgstr ""
+msgstr "PRESIONA QUALSEVOL COSA"
 
 msgid "You have exceeded your daily scrape quota"
-msgstr ""
+msgstr "Has excedit la teva quota diaria de garbellat"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
-msgstr ""
+msgstr "El servidor ha retornat el codi d'error HTTP %s"
