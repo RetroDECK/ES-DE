@@ -2355,8 +2355,10 @@ void GuiMenu::addVersionInfo()
     mVersion.setAutoCalcExtent(glm::ivec2 {0, 0});
     mVersion.setColor(mMenuColorTertiary);
 
+    const std::string applicationName {"ES-DE"};
+
 #if defined(__RETRODECK__)
-    const std::string applicationName {"RetroDECK"};
+    applicationName = "RetroDECK";
     std::ifstream file("/app/retrodeck/version");
     std::string version;
     if (file.is_open() && std::getline(file, version) && !version.empty()) {
