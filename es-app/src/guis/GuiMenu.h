@@ -47,7 +47,7 @@ private:
     void openUtilities();
     void openQuitMenu();
 
-    if defined(__RETRODECK__)
+    #if defined(__RETRODECK__)
         void openRetroDeckClassicConfigurator();
         void openRetroDeckGodotConfigurator();
         void openESDEConfiguration();
