@@ -2492,6 +2492,8 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
     return prompts;
 }
 
+#if defined(__RETRODECK__)
+
 void GuiMenu::openRetroDeckClassicConfigurator()
 {
     // Launch the configurator.sh script
@@ -2517,3 +2519,5 @@ void GuiMenu::openRetroDeckGodotConfigurator()
     int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
     // You can add any checks for the script's outcome here.
 }
+
+#endif
