@@ -269,9 +269,17 @@ void ViewController::noGamesDialog()
                              "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
                              "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
                              "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n");
-#else
+#elif defined(__RETRODECK__)
     mNoGamesErrorMessage = _("NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
                            "THE RETRODECK ROM DIRECTORY LOCATED IN:\n");
+#else
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
+                             "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
+                             "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM "
+                             "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
+                             "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+                             "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+                             "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n");
 #endif
 
 #if defined(_WIN64)
@@ -283,7 +291,7 @@ void ViewController::noGamesDialog()
 #if defined(__ANDROID__)
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
-#else
+#elif defined(__RETRODECK__)
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory, _("QUIT"),
         [] {
@@ -292,6 +300,128 @@ void ViewController::noGamesDialog()
             SDL_PushEvent(&quit);
         },
         "", nullptr, "", nullptr, nullptr, true, true,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.90f :
+             0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
+#else
+    mNoGamesMessageBox = new GuiMsgBox(
+        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, _("CHANGE ROM DIRECTORY"),
+        [this] {
+            std::string currentROMDirectory;
+#if defined(_WIN64)
+            currentROMDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+#else
+            currentROMDirectory = FileData::getROMDirectory();
+#endif
+            if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    HelpStyle(), 0.0f, _("ENTER ROM DIRECTORY PATH"), currentROMDirectory,
+                    [this, currentROMDirectory](const std::string& newROMDirectory) {
+                        if (currentROMDirectory != newROMDirectory) {
+                            Settings::getInstance()->setString(
+                                "ROMDirectory", Utils::String::trim(newROMDirectory));
+                            Settings::getInstance()->saveFile();
+#if defined(_WIN64)
+                            mRomDirectory =
+                                Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+#else
+                            mRomDirectory = FileData::getROMDirectory();
+#endif
+                            mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
+                            mWindow->pushGui(new GuiMsgBox(
+                                HelpStyle(),
+                                _("ROM DIRECTORY SETTING SAVED, RESTART "
+                                  "THE APPLICATION TO RESCAN THE SYSTEMS"),
+                                _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                                (mRenderer->getIsVerticalOrientation() ?
+                                     0.66f :
+                                     0.42f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                        }
+                    },
+                    false, _("SAVE"), _("SAVE CHANGES?"), _("Currently configured path:"),
+                    currentROMDirectory, _("LOAD CURRENTLY CONFIGURED PATH"),
+                    _("CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)")));
+            }
+            else {
+                mWindow->pushGui(new GuiTextEditPopup(
+                    HelpStyle(), _("ENTER ROM DIRECTORY PATH"), currentROMDirectory,
+                    [this](const std::string& newROMDirectory) {
+                        Settings::getInstance()->setString("ROMDirectory",
+                                                           Utils::String::trim(newROMDirectory));
+                        Settings::getInstance()->saveFile();
+#if defined(_WIN64)
+                        mRomDirectory =
+                            Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+#else
+                        mRomDirectory = FileData::getROMDirectory();
+#endif
+                        mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
+                        mWindow->pushGui(new GuiMsgBox(
+                            HelpStyle(),
+                            _("ROM DIRECTORY SETTING SAVED, RESTART "
+                              "THE APPLICATION TO RESCAN THE SYSTEMS"),
+                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            (mRenderer->getIsVerticalOrientation() ?
+                                 0.66f :
+                                 0.42f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                    },
+                    false, _("SAVE"), _("SAVE CHANGES?"), _("Currently configured path:"),
+                    currentROMDirectory, _("LOAD CURRENTLY CONFIGURED PATH"),
+                    _("CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)")));
+            }
+        },
+#endif // __ANDROID__
+        _("CREATE DIRECTORIES"),
+        [this] {
+            mWindow->pushGui(new GuiMsgBox(
+                HelpStyle(),
+                _("THIS WILL CREATE DIRECTORIES FOR ALL THE "
+                  "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
+                  "THIS MAY CREATE A LOT OF FOLDERS SO IT'S "
+                  "ADVICED TO REMOVE THE ONES YOU DON'T NEED"),
+                _("PROCEED"),
+                [this] {
+                    if (!SystemData::createSystemDirectories()) {
+                        mWindow->pushGui(new GuiMsgBox(
+                            HelpStyle(),
+                            _("THE SYSTEM DIRECTORIES WERE SUCCESSFULLY "
+                              "GENERATED, EXIT THE APPLICATION AND PLACE "
+                              "YOUR GAMES IN THE NEW FOLDERS"),
+                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            (mRenderer->getIsVerticalOrientation() ?
+                                 0.74f :
+                                 0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                    }
+                    else {
+                        mWindow->pushGui(new GuiMsgBox(
+                            HelpStyle(),
+                            _("ERROR CREATING THE SYSTEM DIRECTORIES, "
+                              "PERMISSION PROBLEMS OR DISK FULL?\n\n"
+                              "SEE THE LOG FILE FOR MORE DETAILS"),
+                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            (mRenderer->getIsVerticalOrientation() ?
+                                 0.75f :
+                                 0.47f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                    }
+                },
+                _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
+                (mRenderer->getIsVerticalOrientation() ?
+                     0.78f :
+                     0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
+        },
+        _("QUIT"),
+        [] {
+            SDL_Event quit {};
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
+        },
+#if defined(__ANDROID__)
+        "", nullptr, nullptr, true, false,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.90f :
+             0.58f * (1.778f / mRenderer->getScreenAspectRatio())));
+#else
+        nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
              0.62f * (1.778f / mRenderer->getScreenAspectRatio())));

@@ -694,7 +694,10 @@ int main(int argc, char* argv[])
     Log::init();
     Log::open();
     {
+
+#if defined(__RETRODECK__)
         const std::string applicationName {"RetroDECK"};
+#endif
 #if defined(__ANDROID__)
         LOG(LogInfo) << applicationName << " " << PROGRAM_VERSION_STRING << "-"
                      << ANDROID_VERSION_CODE << " (r" << PROGRAM_RELEASE_NUMBER << "), built "

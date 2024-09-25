@@ -635,11 +635,23 @@ void GuiThemeDownloader::parseThemesList()
         if (latestStableRelease > PROGRAM_RELEASE_NUMBER) {
             LOG(LogWarning) << "Not running the most current application release, theme "
                                "downloading is not recommended";
+
+            #if defined(__RETRODECK__)
             mWindow->pushGui(new GuiMsgBox(
                 getHelpStyle(),
                 _("ES-DE THEME ENGINE WAS UPDATED UPSTREAM. THESE THEMES MAY NOT BE COMPATIBLE WITH THE CURRENT RETRODECK VERSION."
                 "CHECK IF A NEW RETRODECK UPDATE IS AVAILABLE, ELSE PLEASE WAIT FOR IT OR PROCEED AT YOUR OWN RISK."),
                 _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
+            #else
+
+            mWindow->pushGui(new GuiMsgBox(
+                getHelpStyle(),
+                _("IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+                  "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"),
+                _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
+
+            #endif
+
         }
     }
 

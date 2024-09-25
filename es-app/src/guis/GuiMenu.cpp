@@ -54,9 +54,11 @@ GuiMenu::GuiMenu()
 {
     const bool isFullUI {UIModeController::getInstance()->isUIModeFull()};
 
+
     if (isFullUI)
         addEntry(_("SCRAPER"), mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
+#if defined(__RETRODECK__)
     if (isFullUI)
         addEntry(_("RETRODECK CLASSIC CONFIGURATOR"), mMenuColorPrimary, false, [this] { openRetroDeckClassicConfigurator(); });
 
@@ -65,6 +67,25 @@ GuiMenu::GuiMenu()
 
     if (isFullUI)
         addEntry(_("ES-DE CONFIGURATIONS"), mMenuColorPrimary, true, [this] { openESDEConfiguration(); });
+#else // Not RetroDECK
+
+    if (isFullUI)
+        addEntry(_("UI SETTINGS"), mMenuColorPrimary, true, [this] { openUIOptions(); });
+
+    addEntry(_("SOUND SETTINGS"), mMenuColorPrimary, true, [this] { openSoundOptions(); });
+
+    if (isFullUI)
+        addEntry(_("INPUT DEVICE SETTINGS"), mMenuColorPrimary, true,
+                 [this] { openInputDeviceOptions(); });
+
+    if (isFullUI)
+        addEntry(_("GAME COLLECTION SETTINGS"), mMenuColorPrimary, true,
+                 [this] { openCollectionSystemOptions(); });
+
+    if (isFullUI)
+        addEntry(_("OTHER SETTINGS"), mMenuColorPrimary, true, [this] { openOtherOptions(); });
+
+#endif // RetroDECK
 
     if (isFullUI)
         addEntry(_("UTILITIES"), mMenuColorPrimary, true, [this] { openUtilities(); });
@@ -72,15 +93,17 @@ GuiMenu::GuiMenu()
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
 #if defined(__APPLE__)
-        addEntry(_("QUIT RETRODECK")}, mMenuColorPrimary, false, [this] { openQuitMenu(); });
+        addEntry(_("QUIT ES-DE")}, mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #elif defined(__ANDROID__)
         if (!AndroidVariables::sIsHomeApp)
-            addEntry(_("QUIT RETRODECK"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
+            addEntry(_("QUIT ES-DE"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
+#elif defined(__RETRODECK__)
+        addEntry(_("QUIT RETRODECK"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #else
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
             addEntry(_("QUIT"), mMenuColorPrimary, true, [this] { openQuitMenu(); });
         else
-            addEntry(_("QUIT RETRODECK"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
+            addEntry(_("QUIT ES-DE"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #endif
     }
 
@@ -2179,6 +2202,8 @@ void GuiMenu::openUtilities()
     mWindow->pushGui(s);
 }
 
+#if defined(__RETRODECK__)
+
 void GuiMenu::openESDEConfiguration() {
     // RetroDECK: Create a new GuiSettings instance for the ES-DE Configurations menu
     auto s = new GuiSettings(_("ES-DE CONFIGURATIONS"));
@@ -2245,6 +2270,7 @@ void GuiMenu::openESDEConfiguration() {
     mWindow->pushGui(s);
 }
 
+#endif
 
 void GuiMenu::openQuitMenu()
 {
@@ -2329,6 +2355,7 @@ void GuiMenu::addVersionInfo()
     mVersion.setAutoCalcExtent(glm::ivec2 {0, 0});
     mVersion.setColor(mMenuColorTertiary);
 
+#if defined(__RETRODECK__)
     const std::string applicationName {"RetroDECK"};
     std::ifstream file("/app/retrodeck/version");
     std::string version;
@@ -2342,6 +2369,7 @@ void GuiMenu::addVersionInfo()
         // Set a default value in case the file can't be read
         #define PROGRAM_VERSION_STRING "UNKNOWN"
     }
+#else // not RetroDECK
 
 #if defined(IS_PRERELEASE)
 #if defined(__ANDROID__)
@@ -2359,6 +2387,8 @@ void GuiMenu::addVersionInfo()
     mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 #endif
 #endif
+
+#endif //RetroDECK
 }
 
 void GuiMenu::openThemeDownloader(GuiSettings* settings)

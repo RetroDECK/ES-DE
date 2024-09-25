@@ -44,11 +44,14 @@ private:
     void openConfigInput(GuiSettings* settings);
     void openCollectionSystemOptions();
     void openOtherOptions();
-    void openRetroDeckClassicConfigurator();
-    void openRetroDeckGodotConfigurator();
-    void openESDEConfiguration();
     void openUtilities();
     void openQuitMenu();
+
+    if defined(__RETRODECK__)
+        void openRetroDeckClassicConfigurator();
+        void openRetroDeckGodotConfigurator();
+        void openESDEConfiguration();
+    #endif
 
     Renderer* mRenderer;
     MenuComponent mMenu;
