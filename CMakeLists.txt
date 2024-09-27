@@ -348,6 +348,7 @@ endif()
 
 if(RETRODECK)
     add_compile_definitions(RETRODECK)
+    add_compile_definitions(__RETRODECK__)
     message("-- Building for RetroDECK")
 endif()
 
