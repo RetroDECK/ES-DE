@@ -288,21 +288,19 @@ void ViewController::noGamesDialog()
     mRomDirectory = FileData::getROMDirectory();
 #endif
 
-#if defined(__ANDROID__)
+#if defined(__RETRODECK__)
     mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
-#elif defined(__RETRODECK__)
-    mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, _("QUIT"),
+        HelpStyle(), 
+        mNoGamesErrorMessage + mRomDirectory, 
+        _("QUIT"),
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-        "", nullptr, "", nullptr, nullptr, true, true,
-        (mRenderer->getIsVerticalOrientation() ?
-             0.90f :
-             0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
+#elif defined(__ANDROID__)
+    mNoGamesMessageBox = new GuiMsgBox(
+        HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
 #else
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory, _("CHANGE ROM DIRECTORY"),
@@ -419,12 +417,12 @@ void ViewController::noGamesDialog()
         "", nullptr, nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
-             0.58f * (1.778f / mRenderer->getScreenAspectRatio())));
+             0.58f * (1.778f / mRenderer->getScreenAspectRatio()));
 #else
         nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
-             0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
+             0.62f * (1.778f / mRenderer->getScreenAspectRatio()));
 #endif
 
     mWindow->pushGui(mNoGamesMessageBox);
