@@ -16,6 +16,8 @@ git submodule update --init --recursive
 export GITHUB_WORKSPACE="."
 export FOLDER="es-de-build"
 
+chmod a+rwx -R "$FOLDER"
+
 # Initialize the Flatpak repo
 ostree init --mode=archive-z2 --repo=${GITHUB_WORKSPACE}/retrodeck-repo
 
