@@ -695,10 +695,11 @@ int main(int argc, char* argv[])
     Log::open();
     {
 
-    const std::string applicationName {"ES-DE"};
-
+const std::string applicationName =
 #if defined(__RETRODECK__)
-    applicationName = "RetroDECK";
+    "RetroDECK";
+#else
+    "ES-DE";
 #endif
 
 #if defined(__ANDROID__)
