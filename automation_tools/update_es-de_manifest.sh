@@ -12,7 +12,7 @@ command="/app/bin/es-de"
 echo -e "command: $command\n" >> "$manifest_header"
 sed -i '/^[[:space:]]*#/d' "$manifest_header"
 sed -i 's/[[:space:]]*#.*$//' "$manifest_header"
-sed -n '/finish-args:/,${/cleanup:/q;p;}' RetroDECK/net.retrodeck.retrodeck.yml >> "$manifest_header"
+sed -n '/finish-args:/,${/cleanup:/q;p;}' RetroDECK/net.retrodeck.es-de.yml >> "$manifest_header"
 
 sed -i 's/net.retrodeck.retrodeck/net.retrodeck.es-de/' "$manifest_header"
 

@@ -14,12 +14,15 @@ fi
 git submodule update --init --recursive
 
 export GITHUB_WORKSPACE="."
+export FOLDER="es-de-build"
 
 # Initialize the Flatpak repo
 ostree init --mode=archive-z2 --repo=${GITHUB_WORKSPACE}/retrodeck-repo
 
-cp net.retrodeck.retrodeck.appdata.xml net.retrodeck.retrodeck.appdata.xml.bak
-cp net.retrodeck.retrodeck.yml net.retrodeck.retrodeck.yml.bak
+automation_tools/update_es-de_manifest.sh
+
+cp net.retrodeck.es-de.appdata.xml net.retrodeck.es-de.appdata.xml.bak
+cp net.retrodeck.es-de.yml net.retrodeck.es-de.yml.bak
 
 automation_tools/install_dependencies.sh
 #automation_tools/cooker_build_id.sh
@@ -40,7 +43,7 @@ flatpak-builder --user --force-clean \
 
 flatpak build-bundle "${GITHUB_WORKSPACE}/retrodeck-repo" "$GITHUB_WORKSPACE/RetroDECK-ES-DE.flatpak" net.retrodeck.es-de
 
-rm -f net.retrodeck.retrodeck.appdata.xml
-rm -f net.retrodeck.retrodeck.yml
-cp net.retrodeck.retrodeck.appdata.xml.bak net.retrodeck.retrodeck.appdata.xml
-cp net.retrodeck.retrodeck.yml.bak net.retrodeck.retrodeck.yml
+rm -f net.retrodeck.es-de.appdata.xml
+rm -f net.retrodeck.es-de.yml
+cp net.retrodeck.es-de.appdata.xml.bak net.retrodeck.es-de.appdata.xml
+cp net.retrodeck.es-de.yml.bak net.retrodeck.es-de.yml
