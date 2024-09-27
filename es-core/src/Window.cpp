@@ -173,7 +173,7 @@ bool Window::init()
     progressBarRect.barPosY += borderThickness;
     #if defined(__RETRODECK__)
         progressBarRect.color = 0xC858E6FF;
-    else
+    #else
         progressBarRect.color = 0x79010FFF;
     #endif
     mProgressBarRectangles.emplace_back(progressBarRect);
