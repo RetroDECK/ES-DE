@@ -114,3 +114,4 @@ CPackSourceConfig.cmake
 .flatpak-builder
 es-de-build-dir
 es-de-repo
+retrodeck-repo
