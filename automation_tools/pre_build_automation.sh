@@ -38,7 +38,7 @@ set -e
 # url: This is used to calculate a dynamic URL and the value to the $calculated_url environmental variable, for use in other subsequent commands.
 
 # Define paths
-rd_manifest="${GITHUB_WORKSPACE}/net.retrodeck.es-de"
+rd_manifest="${GITHUB_WORKSPACE}/es-de-module.yml"
 automation_task_list="${GITHUB_WORKSPACE}/automation_tools/automation_task_list.cfg"
 
 # Retrieve current git branch
