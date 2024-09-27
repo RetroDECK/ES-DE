@@ -19,6 +19,8 @@ Nils Bonenberger
 
 **English (United Kingdom)** \
 Weestuarty \
+**Catalan** \
+Johnnydement \
 **German** \
 Thorsten \
 Pest \
