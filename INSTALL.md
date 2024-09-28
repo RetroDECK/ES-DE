@@ -449,12 +449,9 @@ Run the following to build the .hpkg package:
 
 ```
 cd ~
-git clone https://github.com/haikuports/haikuports.git --depth=50
-mkdir haikuports/games-emulation/es-de
+git clone https://github.com/leonstyhre/haikuports.git --depth=50
 pkgman install haikuporter
 cp /boot/system/settings/haikuports.conf  ~/config/settings/
-cd emulationstation-de
-cp es-app/assets/es_de-3.1.0.recipe ~/haikuports/games-emulation/es-de
 haikuporter -S --no-source-packages --get-dependencies -j8 es_de
 ```
 
