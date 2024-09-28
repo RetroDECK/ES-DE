@@ -7,6 +7,7 @@
 
     <language>en_US</language>
     <language>en_GB</language>
+    <language>ca_ES</language>
     <language>de_DE</language>
     <language>es_ES</language>
     <language>fr_FR</language>
@@ -31,6 +32,7 @@
     <colorScheme name="dark">
         <label language="en_US">Dark</label>
         <label language="en_GB">Dark</label>
+        <label language="ca_ES">Fosc</label>
         <label language="de_DE">Dunkel</label>
         <label language="es_ES">Oscuro</label>
         <label language="fr_FR">Foncé</label>
@@ -48,6 +50,7 @@
     <colorScheme name="light">
         <label language="en_US">Light</label>
         <label language="en_GB">Light</label>
+        <label language="ca_ES">Clar</label>
         <label language="de_DE">Hell</label>
         <label language="es_ES">Claro</label>
         <label language="fr_FR">Clair</label>
@@ -65,6 +68,7 @@
     <transitions name="slide">
         <label language="en_US">Slide</label>
         <label language="en_GB">Slide</label>
+        <label language="ca_ES">Lliscar</label>
         <label language="de_DE">Gleiten</label>
         <label language="es_ES">Deslizante</label>
         <label language="fr_FR">Glissement</label>
@@ -87,6 +91,7 @@
     <transitions name="instant">
         <label language="en_US">Instant</label>
         <label language="en_GB">Instant</label>
+        <label language="ca_ES">Instantani</label>
         <label language="de_DE">Sofort</label>
         <label language="es_ES">Instantanea</label>
         <label language="fr_FR">Instantané</label>
@@ -111,6 +116,7 @@
     <transitions name="fade">
         <label language="en_US">Fade</label>
         <label language="en_GB">Fade</label>
+        <label language="ca_ES">Desaparèixer</label>
         <label language="de_DE">Überblendung</label>
         <label language="es_ES">Fundido</label>
         <label language="fr_FR">Fondu</label>
@@ -141,6 +147,7 @@
     <variant name="withVideos">
         <label language="en_US">Textlist with videos</label>
         <label language="en_GB">Textlist with videos</label>
+        <label language="ca_ES">Llistat amb vídeos</label>
         <label language="de_DE">Liste mit videos</label>
         <label language="es_ES">Lista con videos</label>
         <label language="fr_FR">Liste avec vidéos</label>
@@ -164,6 +171,7 @@
     <variant name="withoutVideos">
         <label language="en_US">Textlist without videos</label>
         <label language="en_GB">Textlist without videos</label>
+        <label language="ca_ES">Llistat sense vídeos</label>
         <label language="de_DE">Liste ohne videos</label>
         <label language="es_ES">Lista sin videos</label>
         <label language="fr_FR">Liste sans vidéos</label>

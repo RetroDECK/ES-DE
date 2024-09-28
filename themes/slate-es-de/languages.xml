@@ -8,6 +8,16 @@
         <langLabelPlayers>Players</langLabelPlayers>
         <langLabelLastPlayed>Last Played</langLabelLastPlayed>
     </variables>
+    <language name="ca_ES">
+        <variables>
+            <langLabelReleasedate>Llançament</langLabelReleasedate>
+            <langLabelDeveloper>Desenvolupador</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langLabelGenre>Gènere</langLabelGenre>
+            <langLabelPlayers>Jugadors</langLabelPlayers>
+            <langLabelLastPlayed>Última Partida</langLabelLastPlayed>
+        </variables>
+    </language>
     <language name="de_DE">
         <variables>
             <langLabelReleasedate>Veröffentlicht</langLabelReleasedate>
