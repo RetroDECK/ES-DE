@@ -11,6 +11,19 @@
         <langCustomCollections>Custom Collections</langCustomCollections>
         <langYourCollections>Your Collections</langYourCollections>
     </variables>
+    <language name="ca_ES">
+        <variables>
+            <langLabelRating>Valoració</langLabelRating>
+            <langLabelReleasedate>Llançaamemt</langLabelReleasedate>
+            <langLabelPlayers>Jugadors</langLabelPlayers>
+            <langLabelGenre>Gènere</langLabelGenre>
+            <langLabelDeveloper>Desenvolupador</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langLabelLastPlayed>Última partida</langLabelLastPlayed>
+            <langCustomCollections>Col·leccions</langCustomCollections>
+            <langYourCollections>Les teves col·leccions</langYourCollections>
+        </variables>
+    </language>
     <language name="de_DE">
         <variables>
             <langLabelRating>Bewertung</langLabelRating>
