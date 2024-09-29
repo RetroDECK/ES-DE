@@ -344,6 +344,9 @@ void TextEditComponent::onTextChanged()
 
     if (mCursor > static_cast<int>(mText.length()))
         mCursor = static_cast<int>(mText.length());
+
+    if (mCursorShapedText > static_cast<int>(Utils::String::unicodeLength(mText)))
+        mCursorShapedText = static_cast<int>(Utils::String::unicodeLength(mText));
 }
 
 void TextEditComponent::onCursorChanged()
