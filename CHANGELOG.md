@@ -18,10 +18,12 @@
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Improved the experience when running in multi-window mode
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
+* (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
 
 ### Bug fixes
 
+* Pressing the "Clear" button in the text editor and then entering some value in the input field crashed the application
 * (Android) Switching from ES-DE to another app and back again while the "no ROMs" dialog was shown crashed the application
 * (Android) Switching from ES-DE to the home app and back again while the onboarding configurator was running crashed the application
 * There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver
