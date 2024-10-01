@@ -18,6 +18,7 @@
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Improved the experience when running in multi-window mode
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
+* (Linux) Added support for the unofficial AppImage release of Ryujinx
 * (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
 

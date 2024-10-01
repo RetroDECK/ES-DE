@@ -711,6 +711,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | psvita        | Vita3K              | Vita3K*.AppImage               |
 | psx           | DuckStation         | DuckStation*.AppImage          |
 | snes          | Snes9x              | Snes9x*.AppImage               |
+| switch        | Ryujinx             | Ryujinx*.AppImage              |
 | xbox          | xemu                | xemu*.AppImage                 |
 | wii           | Dolphin             | Dolphin_Emulator*.AppImage     |
 | wiiu          | Cemu                | Cemu*.AppImage                 |

@@ -552,6 +552,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
 | Anbernic     | RG Cube                 | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket Micro            | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
