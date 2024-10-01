@@ -855,10 +855,6 @@
             <entry>org.ryujinx.Ryujinx</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/Ryujinx*.AppImage</entry>
-            <entry>~/.local/share/applications/Ryujinx*.AppImage</entry>
-            <entry>~/.local/bin/Ryujinx*.AppImage</entry>
-            <entry>~/bin/Ryujinx*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
             <entry>~/Applications/publish/Ryujinx</entry>
