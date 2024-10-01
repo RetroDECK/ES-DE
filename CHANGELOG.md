@@ -15,10 +15,8 @@
 * Added translations for Dutch (nl_NL)
 * Added translations for Korean (ko_KR)
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
-* (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Improved the experience when running in multi-window mode
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
-* (Linux) Added support for the unofficial AppImage release of Ryujinx
 * (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
 
