@@ -177,21 +177,18 @@ void ViewController::setMenuColors()
 
 void ViewController::legacyAppDataDialog()
 {
-    const std::string upgradeMessage
-    {
+    const std::string upgradeMessage {
         "AS OF ES-DE 3.0 THE APPLICATION DATA DIRECTORY HAS CHANGED FROM \".emulationstation\" "
         "to \"ES-DE\"\nPLEASE RENAME YOUR CURRENT DATA DIRECTORY:\n" +
 #if defined(_WIN64)
-            Utils::String::replace(Utils::FileSystem::getAppDataDirectory(), "/", "\\") +
-            "\nTO THE FOLLOWING:\n" +
-            Utils::String::replace(
-                Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()), "/", "\\") +
-            "\\ES-DE"
-    };
+        Utils::String::replace(Utils::FileSystem::getAppDataDirectory(), "/", "\\") +
+        "\nTO THE FOLLOWING:\n" +
+        Utils::String::replace(
+            Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()), "/", "\\") +
+        "\\ES-DE"};
 #else
-            Utils::FileSystem::getAppDataDirectory() + "\nTO THE FOLLOWING:\n" +
-            Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()) + "/ES-DE"
-    };
+        Utils::FileSystem::getAppDataDirectory() + "\nTO THE FOLLOWING:\n" +
+        Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()) + "/ES-DE"};
 #endif
 
     mWindow->pushGui(new GuiMsgBox(
