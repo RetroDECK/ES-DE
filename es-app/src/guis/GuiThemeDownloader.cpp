@@ -435,8 +435,8 @@ bool GuiThemeDownloader::checkLocalChanges(git_repository* repository)
     // it possible to add custom files to the repository without overwriting these when
     // pulling theme updates.
     statusOptions.show = GIT_STATUS_SHOW_INDEX_AND_WORKDIR;
-    statusOptions.flags =
-        GIT_STATUS_OPT_RENAMES_HEAD_TO_INDEX | GIT_STATUS_OPT_SORT_CASE_SENSITIVELY;
+    statusOptions.flags = GIT_STATUS_OPT_RENAMES_HEAD_TO_INDEX |
+                          GIT_STATUS_OPT_SORT_CASE_SENSITIVELY | GIT_STATUS_OPT_UPDATE_INDEX;
 
     errorCode = git_status_list_new(&status, repository, &statusOptions);
     if (errorCode == 0)
@@ -465,7 +465,8 @@ bool GuiThemeDownloader::checkCorruptRepository(git_repository* repository)
 #endif
     statusOptions.show = GIT_STATUS_SHOW_INDEX_AND_WORKDIR;
     statusOptions.flags = GIT_STATUS_OPT_RENAMES_HEAD_TO_INDEX |
-                          GIT_STATUS_OPT_SORT_CASE_SENSITIVELY | GIT_STATUS_OPT_INCLUDE_UNMODIFIED;
+                          GIT_STATUS_OPT_SORT_CASE_SENSITIVELY | GIT_STATUS_OPT_INCLUDE_UNMODIFIED |
+                          GIT_STATUS_OPT_UPDATE_INDEX;
 
     errorCode = git_status_list_new(&status, repository, &statusOptions);
     if (errorCode == 0)
