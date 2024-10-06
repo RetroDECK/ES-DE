@@ -454,6 +454,7 @@ cd ~
 git clone https://github.com/leonstyhre/haikuports.git --depth=50
 pkgman install haikuporter
 cp /boot/system/settings/haikuports.conf  ~/config/settings/
+haikuporter --purge es_de
 haikuporter -S --no-source-packages --get-dependencies -j8 es_de
 ```
 
