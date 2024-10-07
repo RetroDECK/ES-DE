@@ -16,6 +16,8 @@
 * Added translations for Korean (ko_KR)
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
 * The Git index stat cache is now refreshed for all themes when starting the theme downloader (speeds up the inventory under some circumstances)
+* (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
+* (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
 * (Android) Improved the experience when running in multi-window mode
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
 * (modern-es-de) Replaced some legacy carousel icons
@@ -27,6 +29,7 @@
 * (Android) Switching from ES-DE to another app and back again while the "no ROMs" dialog was shown crashed the application
 * (Android) Switching from ES-DE to the home app and back again while the onboarding configurator was running crashed the application
 * There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver
+* Invalid popup notifications were sometimes shown after a download error message had been displayed in the theme downloader
 * Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos
 * Newly entered ScreenScraper username and password values were positioned incorrectly vertically in the account settings menu
 

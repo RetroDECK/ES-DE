@@ -301,8 +301,9 @@ https://github.com/jtothebell/fake-08/releases
 
 ### Flycast
 
-Flycast is not available on the Play store or the F-Droid store, but it can be downloaded from their GitHub site.
+This emulator can be installed from the Play store or it can be downloaded from their GitHub site.
 
+https://play.google.com/store/apps/details?id=com.flycast.emulator \
 https://github.com/flyinghead/flycast/releases
 
 ### fMSX
