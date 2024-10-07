@@ -1074,6 +1074,7 @@ void GuiThemeDownloader::update(int deltaTime)
                     mWindow->pushGui(new GuiMsgBox(
                         getHelpStyle(), errorMessage, _("OK"), [] { return; }, "", nullptr, "",
                         nullptr, nullptr, true));
+                    mRepositoryError = RepositoryError::NO_REPO_ERROR;
                     mMessage = "";
                     getHelpPrompts();
                 }
