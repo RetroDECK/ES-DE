@@ -64,6 +64,17 @@
             <langUnknown>Sconosciuto</langUnknown>
         </variables>
     </language>
+    <language name="nl_NL">
+        <variables>
+            <langLabelRating>Waardering</langLabelRating>
+            <langLabelReleasedate>Datum van Uitgave</langLabelReleasedate>
+            <langLabelPlayers>Spelers</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Ontwikkelaar</langLabelDeveloper>
+            <langLabelPublisher>Uitgever</langLabelPublisher>
+            <langUnknown>Onbekend</langUnknown>
+        </variables>
+    </language>
     <language name="pl_PL">
         <variables>
             <langLabelRating>Ocena</langLabelRating>
