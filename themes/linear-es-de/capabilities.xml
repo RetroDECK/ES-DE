@@ -12,6 +12,7 @@
     <language>es_ES</language>
     <language>fr_FR</language>
     <language>it_IT</language>
+    <language>nl_NL</language>
     <language>pl_PL</language>
     <language>pt_BR</language>
     <language>ro_RO</language>
@@ -37,6 +38,7 @@
         <label language="es_ES">Oscuro</label>
         <label language="fr_FR">Foncé</label>
         <label language="it_IT">Scuro</label>
+        <label language="nl_NL">Donker</label>
         <label language="pl_PL">Ciemna</label>
         <label language="pt_BR">Escuro</label>
         <label language="ro_RO">Întunecată</label>
@@ -55,6 +57,7 @@
         <label language="es_ES">Claro</label>
         <label language="fr_FR">Clair</label>
         <label language="it_IT">Chiaro</label>
+        <label language="nl_NL">Licht</label>
         <label language="pl_PL">Jasna</label>
         <label language="pt_BR">Claro</label>
         <label language="ru_RU">Светлая</label>
@@ -85,6 +88,7 @@
         <label language="es_ES">Lista</label>
         <label language="fr_FR">Liste</label>
         <label language="it_IT">Lista testi</label>
+        <label language="nl_NL">Tekstlijst</label>
         <label language="pl_PL">Lista tekstowa</label>
         <label language="pt_BR">Lista de texto</label>
         <label language="ro_RO">Listă text</label>
@@ -104,6 +108,7 @@
         <label language="es_ES">Lista sin videos</label>
         <label language="fr_FR">Liste sans vidéos</label>
         <label language="it_IT">Lista testi, no video</label>
+        <label language="nl_NL">Tekstlijst zonder video's</label>
         <label language="pl_PL">Lista tekstowa bez wideo</label>
         <label language="pt_BR">Lista de texto sem vídeos</label>
         <label language="ro_RO">Listă text fără videouri</label>
@@ -123,6 +128,7 @@
         <label language="es_ES">Lista simple</label>
         <label language="fr_FR">Simple liste</label>
         <label language="it_IT">Lista testi semplice</label>
+        <label language="nl_NL">Simpele tekstlijst</label>
         <label language="pl_PL">Prosta lista tekstowa</label>
         <label language="pt_BR">Lista de texto simples</label>
         <label language="ro_RO">Listă text simplă</label>
@@ -142,6 +148,7 @@
         <label language="es_ES">Lista simple sin videos</label>
         <label language="fr_FR">Simple liste sans vidéos</label>
         <label language="it_IT">Lista testi semplice, no video</label>
+        <label language="nl_NL">Simpele tekstlijst zonder video's</label>
         <label language="pl_PL">Prosta lista tekstowa bez wideo</label>
         <label language="pt_BR">Lista de texto simples sem vídeos</label>
         <label language="ro_RO">Listă text simplă fără videouri</label>
@@ -161,6 +168,7 @@
         <label language="es_ES">Carrusel</label>
         <label language="fr_FR">Carrousel</label>
         <label language="it_IT">Carosello</label>
+        <label language="nl_NL">Carousel</label>
         <label language="pl_PL">Karuzela</label>
         <label language="pt_BR">Carrossel</label>
         <label language="ro_RO">Carusel</label>
@@ -178,8 +186,9 @@
         <label language="ca_ES">Carrusel simple</label>
         <label language="de_DE">Einfaches karussell</label>
         <label language="es_ES">Carrusel simple</label>
-        <label language="fr_FR">Simple Carrousel</label>
+        <label language="fr_FR">Simple carrousel</label>
         <label language="it_IT">Carosello semplice</label>
+        <label language="nl_NL">Simpel carousel</label>
         <label language="pl_PL">Prosta karuzela</label>
         <label language="pt_BR">Carrossel simples</label>
         <label language="ro_RO">instant și glisează</label>
@@ -199,6 +208,7 @@
         <label language="es_ES">Instantanea y deslizante</label>
         <label language="fr_FR">Instantané et glissement</label>
         <label language="it_IT">Istantanea e scorri</label>
+        <label language="nl_NL">Direct en glijd</label>
         <label language="pl_PL">Momentalne przesunięcie</label>
         <label language="pt_BR">Instantâneo e deslizar</label>
         <label language="ro_RO">Instant și glisează</label>
@@ -224,6 +234,7 @@
         <label language="es_ES">Instantanea</label>
         <label language="fr_FR">Instantané</label>
         <label language="it_IT">Istantanea</label>
+        <label language="nl_NL">Direct</label>
         <label language="pl_PL">Natychmiastowe</label>
         <label language="pt_BR">Instantâneo</label>
         <label language="ro_RO">Instant</label>
@@ -249,6 +260,7 @@
         <label language="es_ES">Fundido</label>
         <label language="fr_FR">Fondu</label>
         <label language="it_IT">Dissolvi</label>
+        <label language="nl_NL">Fade</label>
         <label language="pl_PL">Zanikanie</label>
         <label language="pt_BR">Esmaecer</label>
         <label language="ro_RO">Estompează</label>

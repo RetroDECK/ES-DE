@@ -76,6 +76,20 @@
             <langYourCollections>Le tue Collezioni</langYourCollections>
         </variables>
     </language>
+    <language name="nl_NL">
+        <variables>
+            <langLabelRating>Waardering</langLabelRating>
+            <langLabelReleasedate>Datum van Uitgave</langLabelReleasedate>
+            <langLabelPlayers>Spelers</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Ontwikkelaar</langLabelDeveloper>
+            <langLabelPublisher>Uitgever</langLabelPublisher>
+            <langLabelPublisher>Uitgever</langLabelPublisher>
+            <langLabelLastPlayed>Laatst Gespeeld</langLabelLastPlayed>
+            <langCustomCollections>Custom Collecties</langCustomCollections>
+            <langYourCollections>Jouw Collecties</langYourCollections>
+        </variables>
+    </language>
     <language name="pl_PL">
         <variables>
             <langLabelRating>Ocena</langLabelRating>
