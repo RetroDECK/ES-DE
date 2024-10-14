@@ -58,6 +58,16 @@
             <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
         </variables>
     </language>
+    <language name="nl_NL">
+        <variables>
+            <langLabelReleasedate>Datum van Uitgave</langLabelReleasedate>
+            <langLabelDeveloper>Ontwikkelaar</langLabelDeveloper>
+            <langLabelPublisher>Uitgever</langLabelPublisher>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelPlayers>Spelers</langLabelPlayers>
+            <langLabelLastPlayed>Laatst Gespeeld</langLabelLastPlayed>
+        </variables>
+    </language>
     <language name="pl_PL">
         <variables>
             <langLabelReleasedate>Wydano</langLabelReleasedate>
