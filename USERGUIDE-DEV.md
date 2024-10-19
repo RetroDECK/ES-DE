@@ -3993,7 +3993,7 @@ The collection will now be created and the collection edit mode will be entered.
 
 Removing a game works the same way, just press _Y_ to remove it if it's already present in your collection. You can do this either from the gamelist where the game was added, or from the collection itself.
 
-Only files can be part of collections, not folders. Games marked as hidden or to not be counted as games can't be added either.
+Only files can be part of collections, not folders. Games marked as hidden or set to not be counted as games can't be added either.
 
 During the time that the collection is being edited, any game that is part of the collection is marked with a leading tick symbol in the game name if a textlist is used, and a _collection_ badge is displayed for the currently selected game as well (assuming the theme support badges).
 
