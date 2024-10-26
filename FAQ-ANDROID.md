@@ -16,7 +16,7 @@ The Android release specifically is not free, it's a paid app available for purc
 
 ## I bought ES-DE on Patreon, how do I get access to future releases?
 
-When a new release is available you will be sent a download link to the email address you used to sign up for Patreon. Note that if you pay once on Patreon and cancel your paid membership you'll get one month of access to all posts and content, and when this month has passed you will no longer have access. This is how the Patreon platform works, and it's the reason why updates are distributed via email. As indicated in the welcome message when you join the ES-DE Patreon it's a good idea to save the download link so you have it available if you need to download the APK again.
+When a new release is available you will be sent a download link to the email address you used to sign up for Patreon. Note that if you pay once on Patreon and cancel your paid membership you'll get one month of access to all posts and content, and when this month has passed you will no longer have access. This is how the Patreon platform works, and it's the reason why updates are distributed via email. As indicated in the welcome message when you join the ES-DE Patreon it's a good idea to save the download link so you have it available if you need to download the APK again, but it's also possible to resend the latest update email to yourself using our https://resend.es-de.org self-service tool.
 
 ## Can I use ES-DE on more than a single Android device or do I need to buy it multiple times?
 
