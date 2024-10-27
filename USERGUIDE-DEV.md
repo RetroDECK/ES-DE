@@ -316,7 +316,7 @@ The Android port of ES-DE is quite different than the other versions, so it has 
 
 ## Specific notes for Haiku
 
-The [Haiku](https://www.haiku-os.org) port of ES-DE is currently experimental as the OS itself is experimental and has some issues. Still most functionality in ES-DE is working and there is support for a quite large number of systems and emulators. If you're interested in Haiku it's for sure worth trying it out. See the dedicated [HAIKU.md](HAIKU.md) document for more details.
+The [Haiku](https://www.haiku-os.org) port of ES-DE is currently experimental as the OS itself is experimental and has some issues. Still most functionality is working and there is support for a quite large number of systems and emulators. If you're interested in Haiku it's for sure worth trying it out as ES-DE can be easily installed via HaikuDepot. See the dedicated [HAIKU.md](HAIKU.md) document for more details.
 
 ## Specific notes for Raspberry Pi
 

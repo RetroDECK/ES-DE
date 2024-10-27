@@ -15,11 +15,12 @@
 * Added translations for Dutch (nl_NL)
 * Added translations for Korean (ko_KR)
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
-* The Git index stat cache is now refreshed for all themes when starting the theme downloader (speeds up the inventory under some circumstances)
+* The Git index stat cache is now refreshed for all themes when starting the theme downloader (this speeds up the inventory under some circumstances)
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
 * (Android) Improved the experience when running in multi-window mode
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
+* (Android) Added a temporary workaround to avoid crashes on non-character keyboard input when editing text (caused by a bug in the SDL library)
 * (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
 
@@ -32,6 +33,8 @@
 * Invalid popup notifications were sometimes shown after a download error message had been displayed in the theme downloader
 * Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos
 * Newly entered ScreenScraper username and password values were positioned incorrectly vertically in the account settings menu
+* (linear-es-de) The carousel icon for tanodragon was incorrectly showing the dragon32 system
+* (modern-es-de) The carousel icon for tanodragon was incorrectly showing the dragon32 system
 
 ## Version 3.1.0 / 3.1.0-32
 
