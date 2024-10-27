@@ -332,8 +332,22 @@ TextCache* Font::buildTextCache(const std::string& text,
             Glyph* glyph {nullptr};
 
             // Invalid character.
-            if (!segment.doShape && character == 0)
+            if (!segment.doShape && character == 0) {
+                if (needGlyphsPos) {
+                    // TODO: This is a temporary workaround for a problem that only seems to be
+                    // present on Android, and that is that non-character input from a physical
+                    // keyboard generates SDL_TEXTINPUT events even though it shouldn't. This
+                    // workaround is not a proper fix, it's only there to prevent ES-DE from
+                    // crashing if such input is received when editing text. The issue has been
+                    // reported to the SDL developers as it needs to be addressed there.
+                    if (glyphPositions.size() > 0)
+                        glyphPositions.emplace_back(glyphPositions.back().x,
+                                                    glyphPositions.back().y);
+                    else
+                        glyphPositions.emplace_back(0.0f, 0.0f);
+                }
                 continue;
+            }
 
             if (!segment.doShape && character == '\n') {
                 x = 0.0f;
