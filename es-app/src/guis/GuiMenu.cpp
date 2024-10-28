@@ -2363,7 +2363,8 @@ void GuiMenu::addVersionInfo()
     #endif
 
 #if defined(__RETRODECK__)
-    // Read version from /app/retrodeck/version if RETRODECK is defined
+    // Only execute this block if RETRODECK is defined
+    LOG(LogInfo) << "Reading /app/retrodeck/version...";
     std::ifstream versionFile("/app/retrodeck/version");
     std::string retroDeckVersion;
 
@@ -2371,31 +2372,33 @@ void GuiMenu::addVersionInfo()
     // also check that the line is not empty to ensure valid version information
     if (versionFile && std::getline(versionFile, retroDeckVersion) && !retroDeckVersion.empty()) {
         mVersion.setText(applicationName + " " + retroDeckVersion);
+        LOG(LogInfo) << "RetroDECK version read OK.";
     } else {
-        std::cerr << "Error: Cannot read version from file or file is empty!" << std::endl;
+        LOG(LogInfo) << "Error: Cannot read version from file or file is empty!";
         retroDeckVersion = "UNKNOWN";
         mVersion.setText(applicationName + " " + retroDeckVersion);
     }
-#else // not RetroDECK
 
-#if defined(IS_PRERELEASE)
-#if defined(__ANDROID__)
-    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
-                     std::to_string(ANDROID_VERSION_CODE) + " (Built " + __DATE__ + ")");
-#else
-    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
-                     " (Built " + __DATE__ + ")");
-#endif
-#else
-#if defined(__ANDROID__)
-    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
-                     std::to_string(ANDROID_VERSION_CODE));
-#else
-    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
-#endif
-#endif
+#else // If RETRODECK is NOT defined, execute this block
 
-#endif //RetroDECK
+    #if defined(IS_PRERELEASE)
+        #if defined(__ANDROID__)
+            mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
+                             std::to_string(ANDROID_VERSION_CODE) + " (Built " + __DATE__ + ")");
+        #else
+            mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
+                             " (Built " + __DATE__ + ")");
+        #endif
+    #else
+        #if defined(__ANDROID__)
+            mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
+                             std::to_string(ANDROID_VERSION_CODE));
+        #else
+            mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+        #endif
+    #endif
+
+#endif // End of RetroDECK logic check
 }
 
 void GuiMenu::openThemeDownloader(GuiSettings* settings)
