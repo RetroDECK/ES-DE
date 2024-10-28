@@ -294,8 +294,7 @@ void ViewController::noGamesDialog()
             SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
-           },
-    )
+           }
 #elif defined(__ANDROID__)
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
