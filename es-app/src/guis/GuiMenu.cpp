@@ -2369,17 +2369,18 @@ void GuiMenu::addVersionInfo()
 
 
 #if defined(__RETRODECK__)
-    std::ifstream file("/app/retrodeck/version");
-    std::string version;
-    if (file.is_open() && std::getline(file, version) && !version.empty()) {
-        file.close();
-        #undef PROGRAM_VERSION_STRING
-        #define PROGRAM_VERSION_STRING version.c_str()
-        std::cout << "Version read from file: " << PROGRAM_VERSION_STRING << std::endl;
+    // Read version from /app/retrodeck/version if RETRODECK is defined
+    std::ifstream versionFile("/app/retrodeck/version");
+    std::string retroDeckVersion;
+
+    // Attempt to open the version file and read a line into retroDeckVersion;
+    // also check that the line is not empty to ensure valid version information
+    if (versionFile && std::getline(versionFile, retroDeckVersion) && !retroDeckVersion.empty()) {
+        mVersion.setText(applicationName + " " + retroDeckVersion);
     } else {
         std::cerr << "Error: Cannot read version from file or file is empty!" << std::endl;
-        // Set a default value in case the file can't be read
-        #define PROGRAM_VERSION_STRING "UNKNOWN"
+        retroDeckVersion = "UNKNOWN";
+        mVersion.setText(applicationName + " " + retroDeckVersion);
     }
 #else // not RetroDECK
 
