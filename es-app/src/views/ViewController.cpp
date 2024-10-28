@@ -300,7 +300,9 @@ void ViewController::noGamesDialog()
             SDL_PushEvent(&quit);
         }
     );
-#elif defined(__ANDROID__)
+#else
+
+#if defined(__ANDROID__)
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
 #else
@@ -426,6 +428,7 @@ void ViewController::noGamesDialog()
              0.90f :
              0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
 #endif
+#endif // RetroDECK
 
     mWindow->pushGui(mNoGamesMessageBox);
 }
