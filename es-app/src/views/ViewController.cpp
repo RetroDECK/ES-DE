@@ -262,16 +262,16 @@ void ViewController::invalidSystemsFileDialog()
 
 void ViewController::noGamesDialog()
 {
-#if defined(__ANDROID__)
+#if defined(__RETRODECK__)
+    mNoGamesErrorMessage = _("NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
+                             "THE RETRODECK ROM DIRECTORY LOCATED IN:\n");
+#elif defined(__ANDROID__)
     mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN "
                              "THE CONFIGURED ROM DIRECTORY. OPTIONALLY THE ROM "
                              "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
                              "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
                              "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
                              "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n");
-#elif defined(__RETRODECK__)
-    mNoGamesErrorMessage = _("NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
-                           "THE RETRODECK ROM DIRECTORY LOCATED IN:\n");
 #else
     mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
                              "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
@@ -289,6 +289,7 @@ void ViewController::noGamesDialog()
 #endif
 
 #if defined(__RETRODECK__)
+    // Show a simple message with a "QUIT" option if RETRODECK is defined
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), 
         mNoGamesErrorMessage + mRomDirectory, 
@@ -297,7 +298,8 @@ void ViewController::noGamesDialog()
             SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
-        },
+        }
+    );
 #elif defined(__ANDROID__)
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
@@ -417,12 +419,12 @@ void ViewController::noGamesDialog()
         "", nullptr, nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
-             0.58f * (1.778f / mRenderer->getScreenAspectRatio()));
+             0.58f * (1.778f / mRenderer->getScreenAspectRatio())));
 #else
         nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
-             0.62f * (1.778f / mRenderer->getScreenAspectRatio()));
+             0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
 #endif
 
     mWindow->pushGui(mNoGamesMessageBox);
