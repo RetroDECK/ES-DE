@@ -8,6 +8,26 @@
         <langLabelPlayers>Players</langLabelPlayers>
         <langLabelLastPlayed>Last Played</langLabelLastPlayed>
     </variables>
+    <language name="ca_ES">
+        <variables>
+            <langLabelReleasedate>Llançament</langLabelReleasedate>
+            <langLabelDeveloper>Desenvolupador</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langLabelGenre>Gènere</langLabelGenre>
+            <langLabelPlayers>Jugadors</langLabelPlayers>
+            <langLabelLastPlayed>Última Partida</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="de_DE">
+        <variables>
+            <langLabelReleasedate>Veröffentlicht</langLabelReleasedate>
+            <langLabelDeveloper>Entwickler</langLabelDeveloper>
+            <langLabelPublisher>Herausgeber</langLabelPublisher>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelPlayers>Spieler</langLabelPlayers>
+            <langLabelLastPlayed>Zuletzt Gespielt</langLabelLastPlayed>
+        </variables>
+    </language>
     <language name="es_ES">
         <variables>
             <langLabelReleasedate>Lanzamiento</langLabelReleasedate>
@@ -36,6 +56,16 @@
             <langLabelGenre>Genere</langLabelGenre>
             <langLabelPlayers>Nr. Giocatori</langLabelPlayers>
             <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="nl_NL">
+        <variables>
+            <langLabelReleasedate>Datum van Uitgave</langLabelReleasedate>
+            <langLabelDeveloper>Ontwikkelaar</langLabelDeveloper>
+            <langLabelPublisher>Uitgever</langLabelPublisher>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelPlayers>Spelers</langLabelPlayers>
+            <langLabelLastPlayed>Laatst Gespeeld</langLabelLastPlayed>
         </variables>
     </language>
     <language name="pl_PL">
@@ -96,6 +126,16 @@
             <langLabelGenre>ジャンル</langLabelGenre>
             <langLabelPlayers>プレイヤー</langLabelPlayers>
             <langLabelLastPlayed>最後に遊んだ日</langLabelLastPlayed>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <langLabelReleasedate>발매일</langLabelReleasedate>
+            <langLabelDeveloper>개발사</langLabelDeveloper>
+            <langLabelPublisher>배급사</langLabelPublisher>
+            <langLabelGenre>장르</langLabelGenre>
+            <langLabelPlayers>플레이어</langLabelPlayers>
+            <langLabelLastPlayed>최근 실행</langLabelLastPlayed>
         </variables>
     </language>
     <language name="zh_CN">

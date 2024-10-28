@@ -7,15 +7,19 @@
 
     <language>en_US</language>
     <language>en_GB</language>
+    <language>ca_ES</language>
+    <language>de_DE</language>
     <language>es_ES</language>
     <language>fr_FR</language>
     <language>it_IT</language>
+    <language>nl_NL</language>
     <language>pl_PL</language>
     <language>pt_BR</language>
     <language>ro_RO</language>
     <language>ru_RU</language>
     <language>sv_SE</language>
     <language>ja_JP</language>
+    <language>ko_KR</language>
     <language>zh_CN</language>
 
     <aspectRatio>16:9</aspectRatio>
@@ -29,30 +33,38 @@
     <colorScheme name="dark">
         <label language="en_US">Dark</label>
         <label language="en_GB">Dark</label>
+        <label language="ca_ES">Fosc</label>
+        <label language="de_DE">Dunkel</label>
         <label language="es_ES">Oscuro</label>
         <label language="fr_FR">Foncé</label>
         <label language="it_IT">Scuro</label>
+        <label language="nl_NL">Donker</label>
         <label language="pl_PL">Ciemna</label>
         <label language="pt_BR">Escuro</label>
         <label language="ro_RO">Întunecată</label>
         <label language="ru_RU">Тёмная</label>
         <label language="sv_SE">Mörkt</label>
         <label language="ja_JP">ダーク</label>
+        <label language="ko_KR">다크</label>
         <label language="zh_CN">暗黑</label>
     </colorScheme>
 
     <colorScheme name="light">
         <label language="en_US">Light</label>
         <label language="en_GB">Light</label>
+        <label language="ca_ES">Clar</label>
+        <label language="de_DE">Hell</label>
         <label language="es_ES">Claro</label>
         <label language="fr_FR">Clair</label>
         <label language="it_IT">Chiaro</label>
+        <label language="nl_NL">Licht</label>
         <label language="pl_PL">Jasna</label>
         <label language="pt_BR">Claro</label>
         <label language="ru_RU">Светлая</label>
         <label language="ro_RO">Luminoasă</label>
         <label language="sv_SE">Ljust</label>
         <label language="ja_JP">ライト</label>
+        <label language="ko_KR">라이트</label>
         <label language="zh_CN">明亮</label>
     </colorScheme>
 
@@ -71,15 +83,19 @@
     <variant name="textlistWithVideos">
         <label language="en_US">Textlist</label>
         <label language="en_GB">Textlist</label>
+        <label language="ca_ES">Llistat</label>
+        <label language="de_DE">Liste</label>
         <label language="es_ES">Lista</label>
         <label language="fr_FR">Liste</label>
         <label language="it_IT">Lista testi</label>
+        <label language="nl_NL">Tekstlijst</label>
         <label language="pl_PL">Lista tekstowa</label>
         <label language="pt_BR">Lista de texto</label>
         <label language="ro_RO">Listă text</label>
         <label language="ru_RU">Текст</label>
         <label language="sv_SE">Textlista</label>
         <label language="ja_JP">テキストリスト</label>
+        <label language="ko_KR">텍스트리스트</label>
         <label language="zh_CN">文字列表</label>
         <selectable>true</selectable>
     </variant>
@@ -87,15 +103,19 @@
     <variant name="textlistWithoutVideos">
         <label language="en_US">Textlist without videos</label>
         <label language="en_GB">Textlist without videos</label>
+        <label language="ca_ES">Llistat sense vídeos</label>
+        <label language="de_DE">Liste ohne videos</label>
         <label language="es_ES">Lista sin videos</label>
         <label language="fr_FR">Liste sans vidéos</label>
         <label language="it_IT">Lista testi, no video</label>
+        <label language="nl_NL">Tekstlijst zonder video's</label>
         <label language="pl_PL">Lista tekstowa bez wideo</label>
         <label language="pt_BR">Lista de texto sem vídeos</label>
         <label language="ro_RO">Listă text fără videouri</label>
         <label language="ru_RU">Текст без видео</label>
         <label language="sv_SE">Textlista utan video</label>
         <label language="ja_JP">ビデオが含まないテキストリスト</label>
+        <label language="ko_KR">텍스트리스트 비디오 없음</label>
         <label language="zh_CN">不带视频的文字列表</label>
         <selectable>true</selectable>
     </variant>
@@ -103,15 +123,19 @@
     <variant name="simpleTextlistWithVideos">
         <label language="en_US">Simple textlist</label>
         <label language="en_GB">Simple textlist</label>
+        <label language="ca_ES">Llistat simple</label>
+        <label language="de_DE">Einfache liste</label>
         <label language="es_ES">Lista simple</label>
         <label language="fr_FR">Simple liste</label>
         <label language="it_IT">Lista testi semplice</label>
+        <label language="nl_NL">Simpele tekstlijst</label>
         <label language="pl_PL">Prosta lista tekstowa</label>
         <label language="pt_BR">Lista de texto simples</label>
         <label language="ro_RO">Listă text simplă</label>
         <label language="ru_RU">Простой текст</label>
         <label language="sv_SE">Enkel textlista</label>
         <label language="ja_JP">簡易なテキストリスト</label>
+        <label language="ko_KR">심플 텍스트리스트</label>
         <label language="zh_CN">简易文字列表</label>
         <selectable>true</selectable>
     </variant>
@@ -119,15 +143,19 @@
     <variant name="simpleTextlistWithoutVideos">
         <label language="en_US">Simple textlist without videos</label>
         <label language="en_GB">Simple textlist without videos</label>
+        <label language="ca_ES">Llistat simple sense vídeos</label>
+        <label language="de_DE">Einfache liste ohne videos</label>
         <label language="es_ES">Lista simple sin videos</label>
         <label language="fr_FR">Simple liste sans vidéos</label>
         <label language="it_IT">Lista testi semplice, no video</label>
+        <label language="nl_NL">Simpele tekstlijst zonder video's</label>
         <label language="pl_PL">Prosta lista tekstowa bez wideo</label>
         <label language="pt_BR">Lista de texto simples sem vídeos</label>
         <label language="ro_RO">Listă text simplă fără videouri</label>
         <label language="ru_RU">Простой текст без видео</label>
         <label language="sv_SE">Enkel textlista utan video</label>
         <label language="ja_JP">ビデオが含まない簡単なテキストリスト</label>
+        <label language="ko_KR">심플 텍스트리스트 비디오 없음</label>
         <label language="zh_CN">不带视频的简易文字列表</label>
         <selectable>true</selectable>
     </variant>
@@ -135,15 +163,19 @@
     <variant name="carousel">
         <label language="en_US">Carousel</label>
         <label language="en_GB">Carousel</label>
+        <label language="ca_ES">Carrusel</label>
+        <label language="de_DE">Karussell</label>
         <label language="es_ES">Carrusel</label>
         <label language="fr_FR">Carrousel</label>
         <label language="it_IT">Carosello</label>
+        <label language="nl_NL">Carousel</label>
         <label language="pl_PL">Karuzela</label>
         <label language="pt_BR">Carrossel</label>
         <label language="ro_RO">Carusel</label>
         <label language="ru_RU">Карусель</label>
         <label language="sv_SE">Karusell</label>
         <label language="ja_JP">カルーセル</label>
+        <label language="ko_KR">캐러셀</label>
         <label language="zh_CN">轮播</label>
         <selectable>true</selectable>
     </variant>
@@ -151,15 +183,19 @@
     <variant name="simpleCarousel">
         <label language="en_US">Simple carousel</label>
         <label language="en_GB">Simple carousel</label>
+        <label language="ca_ES">Carrusel simple</label>
+        <label language="de_DE">Einfaches karussell</label>
         <label language="es_ES">Carrusel simple</label>
-        <label language="fr_FR">Simple Carrousel</label>
+        <label language="fr_FR">Simple carrousel</label>
         <label language="it_IT">Carosello semplice</label>
+        <label language="nl_NL">Simpel carousel</label>
         <label language="pl_PL">Prosta karuzela</label>
         <label language="pt_BR">Carrossel simples</label>
         <label language="ro_RO">instant și glisează</label>
         <label language="ru_RU">Простая карусель</label>
         <label language="sv_SE">Enkel karusell</label>
         <label language="ja_JP">簡単なカルーセル</label>
+        <label language="ko_KR">심플 캐러셀</label>
         <label language="zh_CN">简易轮播</label>
         <selectable>true</selectable>
     </variant>
@@ -167,15 +203,19 @@
     <transitions name="instantAndSlide">
         <label language="en_US">Instant and slide</label>
         <label language="en_GB">Instant and slide</label>
+        <label language="ca_ES">Instantani i lliscar</label>
+        <label language="de_DE">Sofort und gleiten</label>
         <label language="es_ES">Instantanea y deslizante</label>
         <label language="fr_FR">Instantané et glissement</label>
         <label language="it_IT">Istantanea e scorri</label>
+        <label language="nl_NL">Direct en glijd</label>
         <label language="pl_PL">Momentalne przesunięcie</label>
         <label language="pt_BR">Instantâneo e deslizar</label>
         <label language="ro_RO">Instant și glisează</label>
         <label language="ru_RU">Мгновенное скольжение</label>
         <label language="sv_SE">Direkt och glidande</label>
         <label language="ja_JP">インスタントとスライド</label>
+        <label language="ko_KR">즉시 그리고 슬라이드</label>
         <label language="zh_CN">即时与滑动</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -189,15 +229,19 @@
     <transitions name="instant">
         <label language="en_US">Instant</label>
         <label language="en_GB">Instant</label>
+        <label language="ca_ES">Instantani</label>
+        <label language="de_DE">Sofort</label>
         <label language="es_ES">Instantanea</label>
         <label language="fr_FR">Instantané</label>
         <label language="it_IT">Istantanea</label>
+        <label language="nl_NL">Direct</label>
         <label language="pl_PL">Natychmiastowe</label>
         <label language="pt_BR">Instantâneo</label>
         <label language="ro_RO">Instant</label>
         <label language="ru_RU">Мгновенно</label>
         <label language="sv_SE">Direkt</label>
         <label language="ja_JP">インスタント</label>
+        <label language="ko_KR">즉시</label>
         <label language="zh_CN">即时</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
@@ -211,15 +255,19 @@
     <transitions name="fade">
         <label language="en_US">Fade</label>
         <label language="en_GB">Fade</label>
+        <label language="ca_ES">Desaparèixer</label>
+        <label language="de_DE">Überblendung</label>
         <label language="es_ES">Fundido</label>
         <label language="fr_FR">Fondu</label>
         <label language="it_IT">Dissolvi</label>
+        <label language="nl_NL">Fade</label>
         <label language="pl_PL">Zanikanie</label>
         <label language="pt_BR">Esmaecer</label>
         <label language="ro_RO">Estompează</label>
         <label language="ru_RU">Затухание</label>
         <label language="sv_SE">Uttoning</label>
         <label language="ja_JP">フェイド</label>
+        <label language="ko_KR">페이드</label>
         <label language="zh_CN">淡出</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>

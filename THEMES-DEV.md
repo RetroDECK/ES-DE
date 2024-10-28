@@ -276,7 +276,7 @@ Here is a very simple theme that changes the color of the game name text:
 
 ## How it works
 
-All configuration must be contained within a `<theme>` tag pair. That is true for each separate .xml file used to build the completely theme.
+All configuration must be contained within a `<theme>` tag pair. That is true for each separate .xml file used to build the complete theme.
 
 The `<view>` tag pair refers to the available views within ES-DE, which is either _system_ or _gamelist_. There is a special _all_ view available as well, but that is only used for defining the navigation sounds as these are always applied globally to both view types.
 
@@ -714,6 +714,7 @@ Here's an example configuration:
             <gameCounterPos>0.4 0.6437</gameCounterPos>
             <gameNameFontSize>0.006</gameNameFontSize>
         </variables>
+    </fontSize>
     <fontSize name="small, x-small">
         <variables>
             <publisherFontSize>0.011</publisherFontSize>
@@ -726,6 +727,7 @@ Here's an example configuration:
             <size>1 0.056</size>
             <fontSize>${gameCounterFontSize}</fontSize>
         </text>
+    </view>
     <view name="gamelist">
         <text name="gameName">
             <pos>0.2 0.3412</pos>
@@ -755,10 +757,12 @@ The following languages are supported:
 | :------------ | :----------------------- | :----------------------- |
 | en_US         | English (United States)  | English (United States)  |
 | en_GB         | English (United Kingdom) | English (United Kingdom) |
+| ca_ES         | Catalan                  | Català                   |
 | de_DE         | German                   | Deutsch                  |
 | es_ES         | Spanish (Spain)          | Español (España)         |
 | fr_FR         | French                   | Français                 |
 | it_IT         | Italian                  | Italiano                 |
+| nl_NL         | Dutch                    | Nederlands               |
 | pl_PL         | Polish                   | Polski                   |
 | pt_BR         | Portuguese (Brazil)      | Português (Brasil)       |
 | ro_RO         | Romanian                 | Română                   |

@@ -880,8 +880,7 @@ const std::string applicationName =
             }
         }
         if (!Utils::FileSystem::exists(themeDir + "/.nomedia")) {
-            LOG(LogInfo) << "Creating \"no media\" file \"" << themeDir + "/.nomedia"
-                         << "\"...";
+            LOG(LogInfo) << "Creating \"no media\" file \"" << themeDir + "/.nomedia" << "\"...";
             Utils::FileSystem::createEmptyFile(themeDir + "/.nomedia");
             if (!Utils::FileSystem::exists(themeDir + "/.nomedia")) {
                 LOG(LogWarning) << "Couldn't create file, permission problems?";
@@ -1181,8 +1180,7 @@ const std::string applicationName =
 #if defined(__ANDROID__)
         if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
             LOG(LogInfo) << "Creating \"no media\" file \""
-                         << FileData::getROMDirectory() + ".nomedia"
-                         << "\"...";
+                         << FileData::getROMDirectory() + ".nomedia" << "\"...";
             Utils::FileSystem::createEmptyFile(FileData::getROMDirectory() + ".nomedia");
             if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
                 LOG(LogWarning) << "Couldn't create file, permission problems?";

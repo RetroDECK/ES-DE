@@ -274,7 +274,7 @@ Here is a very simple theme that changes the color of the game name text:
 
 ## How it works
 
-All configuration must be contained within a `<theme>` tag pair. That is true for each separate .xml file used to build the completely theme.
+All configuration must be contained within a `<theme>` tag pair. That is true for each separate .xml file used to build the complete theme.
 
 The `<view>` tag pair refers to the available views within ES-DE, which is either _system_ or _gamelist_. There is a special _all_ view available as well, but that is only used for defining the navigation sounds as these are always applied globally to both view types.
 
@@ -712,6 +712,7 @@ Here's an example configuration:
             <gameCounterPos>0.4 0.6437</gameCounterPos>
             <gameNameFontSize>0.006</gameNameFontSize>
         </variables>
+    </fontSize>
     <fontSize name="small, x-small">
         <variables>
             <publisherFontSize>0.011</publisherFontSize>
@@ -724,6 +725,7 @@ Here's an example configuration:
             <size>1 0.056</size>
             <fontSize>${gameCounterFontSize}</fontSize>
         </text>
+    </view>
     <view name="gamelist">
         <text name="gameName">
             <pos>0.2 0.3412</pos>

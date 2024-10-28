@@ -131,7 +131,7 @@
         <!-- <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module apple2 %ROM%</command> -->
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so "apple2e -rompath \"%GAMEDIRRAW%;%ROMPATH%/apple2\" -gameio joy -flop1 \"%ROMRAW%\""</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/apple2 apple2e -gameio joy -flop1 %ROM%</command>
-        <command label="izapple2 (Standalone)">%EMULATOR_IZAPPLE2% %ROM%</command>
+        <!-- <command label="izapple2 (Standalone)">%EMULATOR_IZAPPLE2% %ROM%</command> -->
         <platform>apple2</platform>
         <theme>apple2</theme>
     </system>
@@ -218,10 +218,9 @@
         <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="Stella">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella_libretro.so %ROM%</command>
         <command label="Stella 2014">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella2014_libretro.so %ROM%</command>
-        <command label="Stella 2023">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella2023_libretro.so %ROM%</command>
         <!-- <command label="Stella (Standalone)">%EMULATOR_STELLA% %ROM%</command> -->
         <!-- <command label="Gopher2600 (Standalone)">%EMULATOR_GOPHER2600% %ROM%</command> -->
-        <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Atari 2600" %ROM%</command> -->
+        <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &dash&dashfullscreen &dash&;dashsystem "Atari 2600" %ROM%</command> -->
         <platform>atari2600</platform>
         <theme>atari2600</theme>
     </system>

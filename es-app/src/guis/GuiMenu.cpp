@@ -54,7 +54,6 @@ GuiMenu::GuiMenu()
 {
     const bool isFullUI {UIModeController::getInstance()->isUIModeFull()};
 
-
     if (isFullUI)
         addEntry(_("SCRAPER"), mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
@@ -581,10 +580,12 @@ void GuiMenu::openUIOptions()
                              selectedApplicationLanguage == "en_US");
     applicationLanguage->add("ENGLISH (UNITED KINGDOM)", "en_GB",
                              selectedApplicationLanguage == "en_GB");
+    applicationLanguage->add("CATALÀ", "ca_ES", selectedApplicationLanguage == "ca_ES");
     applicationLanguage->add("DEUTSCH", "de_DE", selectedApplicationLanguage == "de_DE");
     applicationLanguage->add("ESPAÑOL (ESPAÑA)", "es_ES", selectedApplicationLanguage == "es_ES");
     applicationLanguage->add("FRANÇAIS", "fr_FR", selectedApplicationLanguage == "fr_FR");
     applicationLanguage->add("ITALIANO", "it_IT", selectedApplicationLanguage == "it_IT");
+    applicationLanguage->add("NEDERLANDS", "nl_NL", selectedApplicationLanguage == "nl_NL");
     applicationLanguage->add("POLSKI", "pl_PL", selectedApplicationLanguage == "pl_PL");
     applicationLanguage->add("PORTUGUÊS (BRASIL)", "pt_BR", selectedApplicationLanguage == "pt_BR");
     applicationLanguage->add("ROMÂNĂ", "ro_RO", selectedApplicationLanguage == "ro_RO");
@@ -2305,7 +2306,11 @@ void GuiMenu::openQuitMenu()
                 _("NO"), nullptr));
         });
         auto quitText = std::make_shared<TextComponent>(
-            _("QUIT RETRODECK"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+            #if defined(__RETRODECK__)
+                _("QUIT RETRODECK"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+            # else
+                _("QUIT ES-DE"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+            #endif
         quitText->setSelectable(true);
         row.addElement(quitText, true);
         s->addRow(row);

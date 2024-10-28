@@ -726,8 +726,7 @@ std::string getSaveAsPath(const ScraperSearchParams& params,
 
 #if defined(__ANDROID__)
     if (!Utils::FileSystem::exists(path + ".nomedia")) {
-        LOG(LogInfo) << "Creating \"no media\" file \"" << path + ".nomedia"
-                     << "\"...";
+        LOG(LogInfo) << "Creating \"no media\" file \"" << path + ".nomedia" << "\"...";
         Utils::FileSystem::createEmptyFile(path + ".nomedia");
         if (!Utils::FileSystem::exists(path + ".nomedia")) {
             LOG(LogWarning) << "Couldn't create file, permission problems?";

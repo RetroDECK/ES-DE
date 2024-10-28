@@ -4,8 +4,7 @@ This document contains information specific to the Android release, for more gen
 
 It's also generally recommended to read the [Frequently Asked Questions (FAQ) for Android](FAQ-ANDROID.md) document prior to diving into the information in this document.
 
-You can buy the Android APK from our Patreon page: \
-https://www.patreon.com/es_de
+You can buy the Android APK via [Patreon](https://www.patreon.com/es_de), the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy) or [Huawei AppGallery](https://appgallery.huawei.com/#/app/C111315115)
 
 Table of contents:
 
@@ -215,6 +214,12 @@ If you prefer to apply the NetherSX2 patch yourself (i.e. build the APK) then yo
 
 https://github.com/Trixarian/NetherSX2-patch
 
+### Cemu
+
+This emulator can be downloaded from the following GitHub site. Note that this repository is not from the official Cemu project, we consider Cemu as experimental on Android for the time being.
+
+https://github.com/SSimco/Cemu/releases
+
 ### Citra
 
 The original Citra emulator project is no longer alive, but there is a fork that should work as a drop-in replacement. The Citra MMJ fork is also a viable alternative. Both of these emulators are available for download from their GitHub sites.
@@ -302,8 +307,9 @@ https://github.com/jtothebell/fake-08/releases
 
 ### Flycast
 
-Flycast is not available on the Play store or the F-Droid store, but it can be downloaded from their GitHub site.
+This emulator can be installed from the Play store or it can be downloaded from their GitHub site.
 
+https://play.google.com/store/apps/details?id=com.flycast.emulator \
 https://github.com/flyinghead/flycast/releases
 
 ### fMSX
@@ -547,6 +553,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
 | Anbernic     | RG Cube                 | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket Micro            | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
@@ -615,8 +622,8 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Samsung      | Galaxy A71 5G           | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy M52 5G           | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy Note 9           | 10              | Yes       | None                |                            |
-| Samsung      | Galaxy Note 20          | 13              | No        | Fails at configurator/onboarding |                            |
-| Samsung      | Galaxy Note 20 Ultra 5G | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 20          | 13              | Yes       | None                | The configurator/onboarding may fail if the device is in portrait mode, so always use landscape mode when running through the initial setup |
+| Samsung      | Galaxy Note 20 Ultra 5G | 13              | Yes       | None                | The configurator/onboarding may fail if the device is in portrait mode, so always use landscape mode when running through the initial setup |
 | Samsung      | Galaxy S9+              | 10              | Yes       | None                |                            |
 | Samsung      | Galaxy S10              | 12              | Yes       | None                |                            |
 | Samsung      | Galaxy S20              | 13              | Yes       | None                |                            |
@@ -835,7 +842,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vsmile                | VTech V.Smile                                  | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |
-| wiiu                  | Nintendo Wii U                                 | _Placeholder_                     |                                   |              |                                      |
+| wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section in the user guide |
 | windows               | Microsoft Windows                              | Winlator Cmod Glibc **(Standalone)** | Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
 | windows3x             | Microsoft Windows 3.x                          | DOSBox-Pure                       |                                   | No           |                                      |
 | windows9x             | Microsoft Windows 9x                           | DOSBox-Pure                       |                                   | No           |                                      |

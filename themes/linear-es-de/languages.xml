@@ -11,6 +11,32 @@
         <langCustomCollections>Custom Collections</langCustomCollections>
         <langYourCollections>Your Collections</langYourCollections>
     </variables>
+    <language name="ca_ES">
+        <variables>
+            <langLabelRating>Valoració</langLabelRating>
+            <langLabelReleasedate>Llançaamemt</langLabelReleasedate>
+            <langLabelPlayers>Jugadors</langLabelPlayers>
+            <langLabelGenre>Gènere</langLabelGenre>
+            <langLabelDeveloper>Desenvolupador</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langLabelLastPlayed>Última Partida</langLabelLastPlayed>
+            <langCustomCollections>Col·leccions</langCustomCollections>
+            <langYourCollections>Les teves Col·leccions</langYourCollections>
+        </variables>
+    </language>
+    <language name="de_DE">
+        <variables>
+            <langLabelRating>Bewertung</langLabelRating>
+            <langLabelReleasedate>Veröffentlicht</langLabelReleasedate>
+            <langLabelPlayers>Spieler</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Entwickler</langLabelDeveloper>
+            <langLabelPublisher>Herausgeber</langLabelPublisher>
+            <langLabelLastPlayed>Zuletzt Gespielt</langLabelLastPlayed>
+            <langCustomCollections>Benutzerdefinierte Sammlungen</langCustomCollections>
+            <langYourCollections>Deine Sammlungen</langYourCollections>
+        </variables>
+    </language>
     <language name="es_ES">
         <variables>
             <langLabelRating>Valoracion</langLabelRating>
@@ -48,6 +74,20 @@
             <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
             <langCustomCollections>Collezioni Personalizzate</langCustomCollections>
             <langYourCollections>Le tue Collezioni</langYourCollections>
+        </variables>
+    </language>
+    <language name="nl_NL">
+        <variables>
+            <langLabelRating>Waardering</langLabelRating>
+            <langLabelReleasedate>Datum van Uitgave</langLabelReleasedate>
+            <langLabelPlayers>Spelers</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Ontwikkelaar</langLabelDeveloper>
+            <langLabelPublisher>Uitgever</langLabelPublisher>
+            <langLabelPublisher>Uitgever</langLabelPublisher>
+            <langLabelLastPlayed>Laatst Gespeeld</langLabelLastPlayed>
+            <langCustomCollections>Custom Collecties</langCustomCollections>
+            <langYourCollections>Jouw Collecties</langYourCollections>
         </variables>
     </language>
     <language name="pl_PL">
@@ -126,6 +166,19 @@
             <langLabelLastPlayed>最後に遊んだ日</langLabelLastPlayed>
             <langCustomCollections>カスタムコレクション</langCustomCollections>
             <langYourCollections>あなたのコレクション</langYourCollections>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <langLabelRating>평점</langLabelRating>
+            <langLabelReleasedate>발매일</langLabelReleasedate>
+            <langLabelPlayers>플레이어</langLabelPlayers>
+            <langLabelGenre>장르</langLabelGenre>
+            <langLabelDeveloper>개발사</langLabelDeveloper>
+            <langLabelPublisher>배급사</langLabelPublisher>
+            <langLabelLastPlayed>최근 실행</langLabelLastPlayed>
+            <langCustomCollections>커스텀 컬렉션</langCustomCollections>
+            <langYourCollections>너의 컬렉션</langYourCollections>
         </variables>
     </language>
     <language name="zh_CN">

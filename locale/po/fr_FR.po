@@ -866,10 +866,10 @@ msgid "back"
 msgstr "retour"
 
 msgid "SCREENSCRAPER USERNAME"
-msgstr "NOM D'UTILISATEUR"
+msgstr "NOM D'UTILISATEUR SCREENSCRAPER"
 
 msgid "SCREENSCRAPER PASSWORD"
-msgstr "MOT DE PASSE"
+msgstr "MOT DE PASSE SCREENSCRAPER"
 
 msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
 msgstr "UTILISER CE COMPTE POUR SCREENSCRAPER"
@@ -1840,10 +1840,10 @@ msgstr ""
 "ETES-VOUS SÛR?"
 
 msgid "DELETE"
-msgstr "EFFACE"
+msgstr "SUPPRIME"
 
 msgid "delete game"
-msgstr "efface le jeu"
+msgstr "supprimer le jeu"
 
 msgid "MIXIMAGE OFFLINE GENERATOR"
 msgstr "GÉNÉRATEUR OFFLINE DE MIXIMAGE"
