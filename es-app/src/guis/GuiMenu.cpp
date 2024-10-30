@@ -58,7 +58,7 @@ GuiMenu::GuiMenu()
     if (isFullUI)
         addEntry(_("SCRAPER"), mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
-#if defined(__RETRODECK__)
+#if defined(RETRODECK)
     if (isFullUI)
         addEntry(_("RETRODECK CLASSIC CONFIGURATOR"), mMenuColorPrimary, false, [this] { openRetroDeckClassicConfigurator(); });
 
@@ -97,7 +97,7 @@ GuiMenu::GuiMenu()
 #elif defined(__ANDROID__)
         if (!AndroidVariables::sIsHomeApp)
             addEntry(_("QUIT ES-DE"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
-#elif defined(__RETRODECK__)
+#elif defined(RETRODECK)
         addEntry(_("QUIT RETRODECK"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #else
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
@@ -2202,7 +2202,7 @@ void GuiMenu::openUtilities()
     mWindow->pushGui(s);
 }
 
-#if defined(__RETRODECK__)
+#if defined(RETRODECK)
 
 void GuiMenu::openESDEConfiguration() {
     // RetroDECK: Create a new GuiSettings instance for the ES-DE Configurations menu
@@ -2355,14 +2355,7 @@ void GuiMenu::addVersionInfo()
     mVersion.setAutoCalcExtent(glm::ivec2 {0, 0});
     mVersion.setColor(mMenuColorTertiary);
 
-    const std::string applicationName =
-    #if defined(__RETRODECK__)
-        "RetroDECK";
-    #else
-        "ES-DE";
-    #endif
-
-#if defined(__RETRODECK__)
+#if defined(RETRODECK)
     // Only execute this block if RETRODECK is defined
     LOG(LogInfo) << "Reading /app/retrodeck/version...";
     std::ifstream versionFile("/app/retrodeck/version");
@@ -2371,12 +2364,12 @@ void GuiMenu::addVersionInfo()
     // Attempt to open the version file and read a line into retroDeckVersion;
     // also check that the line is not empty to ensure valid version information
     if (versionFile && std::getline(versionFile, retroDeckVersion) && !retroDeckVersion.empty()) {
-        mVersion.setText(applicationName + " " + retroDeckVersion);
+        mVersion.setText("RetroDECK" + " " + retroDeckVersion);
         LOG(LogInfo) << "RetroDECK version read OK.";
     } else {
         LOG(LogInfo) << "Error: Cannot read version from file or file is empty!";
         retroDeckVersion = "UNKNOWN";
-        mVersion.setText(applicationName + " " + retroDeckVersion);
+        mVersion.setText("RetroDECK" + " " + retroDeckVersion);
     }
 
 #else // If RETRODECK is NOT defined, execute this block
@@ -2500,7 +2493,7 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
     return prompts;
 }
 
-#if defined(__RETRODECK__)
+#if defined(RETRODECK)
 
 void GuiMenu::openRetroDeckClassicConfigurator()
 {

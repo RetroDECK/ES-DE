@@ -636,7 +636,7 @@ void GuiThemeDownloader::parseThemesList()
             LOG(LogWarning) << "Not running the most current application release, theme "
                                "downloading is not recommended";
 
-            #if defined(__RETRODECK__)
+            #if defined(RETRODECK)
             mWindow->pushGui(new GuiMsgBox(
                 getHelpStyle(),
                 _("ES-DE THEME ENGINE WAS UPDATED UPSTREAM. THESE THEMES MAY NOT BE COMPATIBLE WITH THE CURRENT RETRODECK VERSION."

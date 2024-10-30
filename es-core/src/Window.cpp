@@ -171,7 +171,7 @@ bool Window::init()
     progressBarRect.barHeight -= borderThickness * 2.0f;
     progressBarRect.barPosX += borderThickness;
     progressBarRect.barPosY += borderThickness;
-    #if defined(__RETRODECK__)
+    #if defined(RETRODECK)
         progressBarRect.color = 0xC858E6FF;
     #else
         progressBarRect.color = 0x79010FFF;

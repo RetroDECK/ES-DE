@@ -262,7 +262,7 @@ void ViewController::invalidSystemsFileDialog()
 
 void ViewController::noGamesDialog()
 {
-#if defined(__RETRODECK__)
+#if defined(RETRODECK)
     mNoGamesErrorMessage = _("NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
                              "THE RETRODECK ROM DIRECTORY LOCATED IN:\n");
 #elif defined(__ANDROID__)
@@ -288,7 +288,7 @@ void ViewController::noGamesDialog()
     mRomDirectory = FileData::getROMDirectory();
 #endif
 
-#if defined(__RETRODECK__)
+#if defined(RETRODECK)
     // Show a simple message with a "QUIT" option if RETRODECK is defined
     mNoGamesMessageBox = new GuiMsgBox(
         HelpStyle(), 
