@@ -382,14 +382,14 @@ copy /Y ffmpeg\lib\swscale.lib ..
 echo:
 echo Setting up OpenSSL
 
-if exist fWin64OpenSSL_Light-1_1_1m.exe (
-  del Win64OpenSSL_Light-1_1_1m.exe
+if exist Win64OpenSSL_Light-3_4_0.exe (
+  del Win64OpenSSL_Light-3_4_0.exe
 )
 
 if not exist "C:\Program Files\OpenSSL-Win64\libcrypto-3-x64.dll" (
-  curl -O https://slproweb.com/download/Win64OpenSSL_Light-3_3_0.exe
+  curl -O https://slproweb.com/download/Win64OpenSSL_Light-3_4_0.exe
   :: Run the installer.
-  .\Win64OpenSSL_Light-3_3_0.exe
+  .\Win64OpenSSL_Light-3_4_0.exe
 )
 
 :: Return to the root of the repository.
