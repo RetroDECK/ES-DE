@@ -2364,12 +2364,12 @@ void GuiMenu::addVersionInfo()
     // Attempt to open the version file and read a line into retroDeckVersion;
     // also check that the line is not empty to ensure valid version information
     if (versionFile && std::getline(versionFile, retroDeckVersion) && !retroDeckVersion.empty()) {
-        mVersion.setText("RetroDECK" + " " + retroDeckVersion);
+        mVersion.setText("RetroDECK " + retroDeckVersion);
         LOG(LogInfo) << "RetroDECK version read OK.";
     } else {
         LOG(LogInfo) << "Error: Cannot read version from file or file is empty!";
         retroDeckVersion = "UNKNOWN";
-        mVersion.setText("RetroDECK" + " " + retroDeckVersion);
+        mVersion.setText("RetroDECK " + retroDeckVersion);
     }
 
 #else // If RETRODECK is NOT defined, execute this block
