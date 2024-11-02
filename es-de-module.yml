@@ -79,7 +79,9 @@ modules:
     buildsystem: cmake-ninja
     config-opts:
       - -DRETRODECK=on
-      - -DCMAKE_PREFIX_PATH=/app
+    build-options:
+      cflags: -I/app/include
+      ldflags: -L/app/lib
     cleanup:
       - es-app
       - es-core
