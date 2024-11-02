@@ -53,7 +53,7 @@ modules:
         commands:
           - sed -i 's|-o root -g root ||' ./Makefile.gnu
           - sed -i 's|/usr|/app|' ./Makefile.gnu
-          - sed -i '1i #include <byteswap.h>' Source/LibJXR/image/decode/segdec.c
+          - sed -i '/#include/a #ifndef _byteswap_ulong\n#define _byteswap_ulong(x) __builtin_bswap32(x)\n#endif' Source/LibJXR/image/decode/segdec.c
 
   - name: libgit2
     buildsystem: cmake-ninja
