@@ -1,41 +1,41 @@
 modules:
 
   # dependency of: CEMU, ES-DE
-  - name: pugixml
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DBUILD_SHARED_LIBS=ON
-    cleanup:
-      - /include
-      - /lib/cmake
-      - /lib/pkgconfig
-    sources:
-      - type: archive
-        url: https://github.com/zeux/pugixml/releases/download/v1.14/pugixml-1.14.tar.gz
-        sha256: 2f10e276870c64b1db6809050a75e11a897a8d7456c4be5c6b2e35a11168a015
-        x-checker-data:
-          type: anitya
-          project-id: 3728
-          url-template: https://github.com/zeux/pugixml/releases/download/v$version/pugixml-$version.tar.gz
+  # - name: pugixml
+  #   buildsystem: cmake-ninja
+  #   config-opts:
+  #     - -DBUILD_SHARED_LIBS=ON
+  #   cleanup:
+  #     - /include
+  #     - /lib/cmake
+  #     - /lib/pkgconfig
+  #   sources:
+  #     - type: archive
+  #       url: https://github.com/zeux/pugixml/releases/download/v1.14/pugixml-1.14.tar.gz
+  #       sha256: 2f10e276870c64b1db6809050a75e11a897a8d7456c4be5c6b2e35a11168a015
+  #       x-checker-data:
+  #         type: anitya
+  #         project-id: 3728
+  #         url-template: https://github.com/zeux/pugixml/releases/download/v$version/pugixml-$version.tar.gz
   
-  # ES-DE - START
-  # https://gitlab.com/es-de/emulationstation-de
+  # # ES-DE - START
+  # # https://gitlab.com/es-de/emulationstation-de
 
-  - name: ffmpeg
-    config-opts:
-      - --disable-static
-      - --disable-programs
-      - --disable-doc
-      - --enable-gpl
-      - --enable-shared
-      - --enable-libvorbis
-      - --enable-libopus
-      - --enable-libvpx
-      - --enable-postproc
-    sources:
-      - type: git
-        url: https://github.com/FFmpeg/FFmpeg.git
-        tag: n5.1.4
+  # - name: ffmpeg
+  #   config-opts:
+  #     - --disable-static
+  #     - --disable-programs
+  #     - --disable-doc
+  #     - --enable-gpl
+  #     - --enable-shared
+  #     - --enable-libvorbis
+  #     - --enable-libopus
+  #     - --enable-libvpx
+  #     - --enable-postproc
+  #   sources:
+  #     - type: git
+  #       url: https://github.com/FFmpeg/FFmpeg.git
+  #       tag: n5.1.4
 
   - name: freeimage
     buildsystem: cmake-ninja
@@ -47,46 +47,46 @@ modules:
         url: https://github.com/danoli3/FreeImage.git
         tag: 3.19.7
 
-  - name: libgit2
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DBUILD_SHARED_LIBS:BOOL=ON
-      - -DTHREADSAFE=ON
-    sources:
-      - type: git
-        url: https://github.com/libgit2/libgit2.git
-        tag: v1.6.3
+  # - name: libgit2
+  #   buildsystem: cmake-ninja
+  #   config-opts:
+  #     - -DCMAKE_BUILD_TYPE=Release
+  #     - -DBUILD_SHARED_LIBS:BOOL=ON
+  #     - -DTHREADSAFE=ON
+  #   sources:
+  #     - type: git
+  #       url: https://github.com/libgit2/libgit2.git
+  #       tag: v1.6.3
 
-  # Needed from ES-DE 2.1.0+
-  - name: libpoppler-glib
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DENABLE_BOOST=OFF
-    sources:
-      - type: archive
-        # original link not working, found a mirror
-        url: https://poppler.freedesktop.org/poppler-22.11.0.tar.xz
-        #url: https://gitlab.freedesktop.org/poppler/poppler/-/archive/poppler-22.11.0/poppler-poppler-22.11.0.tar.bz2
-        sha256: 093ba9844ed774285517361c15e21a31ba4df278a499263d4403cca74f2da828
-    cleanup:
-      - /lib/pkgconfig
-      - /include
-      - '*.a'
-      - '*.la'
+  # # Needed from ES-DE 2.1.0+
+  # - name: libpoppler-glib
+  #   buildsystem: cmake-ninja
+  #   config-opts:
+  #     - -DENABLE_BOOST=OFF
+  #   sources:
+  #     - type: archive
+  #       # original link not working, found a mirror
+  #       url: https://poppler.freedesktop.org/poppler-22.11.0.tar.xz
+  #       #url: https://gitlab.freedesktop.org/poppler/poppler/-/archive/poppler-22.11.0/poppler-poppler-22.11.0.tar.bz2
+  #       sha256: 093ba9844ed774285517361c15e21a31ba4df278a499263d4403cca74f2da828
+  #   cleanup:
+  #     - /lib/pkgconfig
+  #     - /include
+  #     - '*.a'
+  #     - '*.la'
 
-  # When updating this module remember to check those on the main repos:
-  - name: ES-DE
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DRETRODECK=on
-    cleanup:
-      - es-app
-      - es-core
-    sources:
-      - type: git
-        url: THISREPO
-        branch: THISBRANCH
-      - type: shell
+  # # When updating this module remember to check those on the main repos:
+  # - name: ES-DE
+  #   buildsystem: cmake-ninja
+  #   config-opts:
+  #     - -DRETRODECK=on
+  #   cleanup:
+  #     - es-app
+  #     - es-core
+  #   sources:
+  #     - type: git
+  #       url: THISREPO
+  #       branch: THISBRANCH
+  #     - type: shell
 
-  # ES-DE - END
+  # # ES-DE - END
