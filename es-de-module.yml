@@ -17,23 +17,6 @@ modules:
           type: anitya
           project-id: 3728
           url-template: https://github.com/zeux/pugixml/releases/download/v$version/pugixml-$version.tar.gz
-
-  # Needed from ES-DE 2.1.0+
-  - name: libpoppler-glib
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DENABLE_BOOST=OFF
-    sources:
-      - type: archive
-        # original link not working, found a mirror
-        url: https://poppler.freedesktop.org/poppler-22.11.0.tar.xz
-        #url: https://gitlab.freedesktop.org/poppler/poppler/-/archive/poppler-22.11.0/poppler-poppler-22.11.0.tar.bz2
-        sha256: 093ba9844ed774285517361c15e21a31ba4df278a499263d4403cca74f2da828
-    cleanup:
-      - /lib/pkgconfig
-      - /include
-      - '*.a'
-      - '*.la'
   
   # ES-DE - START
   # https://gitlab.com/es-de/emulationstation-de
@@ -58,6 +41,8 @@ modules:
     no-autogen: true
     build-options:
       cxxflags: -std=c++14
+      cflags: -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE
+      ldflags: -lc -lz
     make-args:
       - DESTDIR=/app
     sources:
