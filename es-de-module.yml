@@ -38,22 +38,14 @@ modules:
         tag: n5.1.4
 
   - name: freeimage
-    no-autogen: true
-    build-options:
-      cxxflags: -std=c++14
-      cflags: -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE
-      ldflags: -lc -lz
-    make-args:
-      - DESTDIR=/app
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/app
     sources:
-      - type: archive
-        url: http://downloads.sourceforge.net/freeimage/FreeImage3180.zip
-        sha256: f41379682f9ada94ea7b34fe86bf9ee00935a3147be41b6569c9605a53e438fd
-      - type: shell
-        commands:
-          - sed -i 's|-o root -g root ||' ./Makefile.gnu
-          - sed -i 's|/usr|/app|' ./Makefile.gnu
-          - sed -i '/#include/a #ifndef _byteswap_ulong\n#define _byteswap_ulong(x) __builtin_bswap32(x)\n#endif' Source/LibJXR/image/decode/segdec.c
+      - type: git
+        url: https://github.com/danoli3/FreeImage.git
+        tag: 3.19.7
 
   - name: libgit2
     buildsystem: cmake-ninja
