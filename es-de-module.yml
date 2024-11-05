@@ -38,14 +38,19 @@ modules:
         tag: n5.1.4
 
   - name: freeimage
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DCMAKE_INSTALL_PREFIX=/app
+    no-autogen: true
+    build-options:
+      cxxflags: -std=c++14
+    make-args:
+      - DESTDIR=/app
     sources:
-      - type: git
-        url: https://github.com/danoli3/FreeImage.git
-        tag: 3.19.7
+      - type: archive
+        url: http://downloads.sourceforge.net/freeimage/FreeImage3180.zip
+        sha256: f41379682f9ada94ea7b34fe86bf9ee00935a3147be41b6569c9605a53e438fd
+      - type: shell
+        commands:
+          - sed -i 's|-o root -g root ||' ./Makefile.gnu
+          - sed -i 's|/usr|/app|' ./Makefile.gnu
 
   - name: libgit2
     buildsystem: cmake-ninja
