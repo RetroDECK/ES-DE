@@ -24,6 +24,7 @@
 * (Android) Updated a number of Java and Kotlin dependencies to the latest stable versions
 * (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
+* (Windows) Updated OpenSSL to 3.4.0
 
 ### Bug fixes
 

@@ -694,12 +694,13 @@ Windows 10 SDK (10.0.20348.0)
 
 The Windows SDK version is important, it has to be this precise version or some dependencies may not build correctly.
 
+In addition to the above you need to install Python. Make sure to get it from https://www.python.org as the version in the Microsoft Store does not seem to work correctly. In the installer make sure to include _py launcher_ and also tick the option to add Python to the environment variables. Python is important because otherwise the ICU library will not build correctly.
+
 It's strongly recommended to also install Jom, which is a drop-in replacement for nmake that offers support for building in parallel using multiple CPU cores:\
 https://wiki.qt.io/Jom
 
 As well you may need to install the latest version of Microsoft Visual C++ Redistributable which can be downloaded here:\
 https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redis
-
 
 The way the MSVC environment works is that a specific developer shell is provided where the build environment is properly configured. You open this from the Start menu via `Visual Studio 2022` -> `Visual Studio tools` -> `VC` -> `x64 Native Tools Command Prompt for VS 2022 Current`.
 
