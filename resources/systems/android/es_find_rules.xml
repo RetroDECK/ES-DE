@@ -209,6 +209,12 @@
             <entry>com.seleuco.mame4d2024/com.seleuco.mame4droid.MAME4droid</entry>
         </rule>
     </emulator>
+    <emulator name="MANDARINE">
+        <!-- Nintendo 3DS emulator Mandarine -->
+        <rule type="androidpackage">
+            <entry>io.github.mandarine3ds.mandarine/.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="MASTERGEAR">
         <!-- Sega Game Gear, Master System and SG-1000 emulator MasterGear -->
         <rule type="androidpackage">

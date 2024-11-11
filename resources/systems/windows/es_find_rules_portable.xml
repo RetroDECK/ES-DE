@@ -320,6 +320,13 @@
             <entry>%ESPATH%\..\Emulators\mame\mame.exe</entry>
         </rule>
     </emulator>
+    <emulator name="MANDARINE">
+        <!-- Nintendo 3DS emulator Mandarine -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\mandarine\mandarine-qt.exe</entry>
+            <entry>%ESPATH%\..\Emulators\mandarine\mandarine-qt.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="MEDNAFEN">
         <!-- Multi-system emulator Mednafen -->
         <rule type="staticpath">

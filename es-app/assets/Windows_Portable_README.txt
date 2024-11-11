@@ -87,6 +87,7 @@ Emulators\KEmulator\KEmulator.exe
 Emulators\lime3ds\lime3ds.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
+Emulators\mandarine\mandarine-qt.exe
 Emulators\mednafen\mednafen.exe
 Emulators\melonDS\melonDS.exe
 Emulators\Mesen\Mesen.exe

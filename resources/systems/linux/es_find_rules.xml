@@ -559,6 +559,18 @@
             <entry>~/.local/share/flatpak/exports/bin/org.mamedev.MAME</entry>
         </rule>
     </emulator>
+    <emulator name="MANDARINE">
+        <!-- Nintendo 3DS emulator Mandarine -->
+        <rule type="systempath">
+            <entry>mandarine-qt</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/mandarine-qt.AppImage</entry>
+            <entry>~/.local/share/applications/mandarine-qt.AppImage</entry>
+            <entry>~/.local/bin/mandarine-qt.AppImage</entry>
+            <entry>~/bin/mandarine-qt.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="MEDNAFEN">
         <!-- Multi-system emulator Mednafen -->
         <rule type="systempath">
