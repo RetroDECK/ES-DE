@@ -16,8 +16,10 @@
 * Added translations for Korean (ko_KR)
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
 * The Git index stat cache is now refreshed for all themes when starting the theme downloader (this speeds up the inventory under some circumstances)
+* Added Mandarine standalone as an alternative emulator for the n3ds system
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
+* (Android) Adjusted the layout for the onboarding configurator to look better on screens with wider aspect ratios
 * (Android) Improved the experience when running in multi-window mode
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
 * (Android) Added a temporary workaround to avoid crashes on non-character keyboard input when editing text (caused by a bug in the SDL library)
@@ -29,6 +31,7 @@
 ### Bug fixes
 
 * Pressing the "Clear" button in the text editor and then entering some value in the input field crashed the application
+* Placing a directory with no access permissions inside a system folder crashed the application on startup
 * (Android) Switching from ES-DE to another app and back again while the "no ROMs" dialog was shown crashed the application
 * (Android) Switching from ES-DE to the home app and back again while the onboarding configurator was running crashed the application
 * There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver

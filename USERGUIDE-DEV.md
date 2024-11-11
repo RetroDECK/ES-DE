@@ -702,6 +702,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | macintosh     | SheepShaver         | SheepShaver*.AppImage          |
 | n3ds          | Citra               | citra-qt*.AppImage             |
 | n3ds          | Lime3DS             | lime3ds.AppImage               |
+| n3ds          | Mandarine           | mandarine-qt.AppImage          |
 | n3ds          | Panda3DS            | Alber-*.AppImage               |
 | n64/n64dd     | Rosalie's Mupen GUI | RMG*.AppImage                  |
 | ngage/symbian | EKA2L1              | EKA2L1*.AppImage               |
@@ -4181,7 +4182,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | msxturbor             | MSX Turbo R                                    | blueMSX                           | openMSX **(Standalone)**,<br>openMSX No Machine **(Standalone)** | Yes          |                                      |
 | mugen                 | M.U.G.E.N Game Engine                          | Ikemen GO **(Standalone)**        |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
 | multivision           | Othello Multivision                            | Gearsystem                        | Mesen **(Standalone)** [LW]       | No           | Single archive or ROM file |
-| n3ds                  | Nintendo 3DS                                   | Citra [LW],<br>Citra **(Standalone)** [M] | Citra 2018 [LW],<br>Citra **(Standalone)** [LW],<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)** | No           | Single ROM file       |
+| n3ds                  | Nintendo 3DS                                   | Citra [LW],<br>Citra **(Standalone)** [M] | Citra 2018 [LW],<br>Citra **(Standalone)** [LW]<br>Mandarine **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)** | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | Mupen64Plus **(Standalone)**,<br>ParaLLEl N64,<br>simple64 **(Standalone)** [LW],<br>Rosalie's Mupen GUI **(Standalone)** [LW],<br>Project64 **(Standalone)** [W],<br>ares **(Standalone)**,<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64 [LW],<br>Mupen64Plus-Next [M] | Mupen64Plus-Next [LW],<br>ParaLLEl N64 [M],<br>Rosalie's Mupen GUI **(Standalone)** [LW],<br>ares **(Standalone)** | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul **(Standalone)** [W] | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
