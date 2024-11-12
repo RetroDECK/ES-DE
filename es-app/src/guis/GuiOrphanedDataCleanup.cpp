@@ -304,6 +304,11 @@ GuiOrphanedDataCleanup::~GuiOrphanedDataCleanup()
 
 void GuiOrphanedDataCleanup::cleanupMediaFiles()
 {
+#if defined(_WIN64)
+    // Workaround for a bug in the libintl library.
+    Utils::Localization::setThreadLocale();
+#endif
+
     LOG(LogInfo) << "GuiOrphanedDataCleanup: Starting cleanup of game media";
 
     const std::time_t currentTime {
@@ -492,6 +497,11 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
 
 void GuiOrphanedDataCleanup::cleanupGamelists()
 {
+#if defined(_WIN64)
+    // Workaround for a bug in the libintl library.
+    Utils::Localization::setThreadLocale();
+#endif
+
     LOG(LogInfo) << "GuiOrphanedDataCleanup: Starting cleanup of gamelist.xml files";
 
     if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
@@ -808,6 +818,11 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
 
 void GuiOrphanedDataCleanup::cleanupCollections()
 {
+#if defined(_WIN64)
+    // Workaround for a bug in the libintl library.
+    Utils::Localization::setThreadLocale();
+#endif
+
     LOG(LogInfo)
         << "GuiOrphanedDataCleanup: Starting cleanup of custom collections configuration files";
 

@@ -31,6 +31,11 @@ MiximageGenerator::MiximageGenerator(FileData* game, std::string& resultMessage)
 
 void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
 {
+#if defined(_WIN64)
+    // Workaround for a bug in the libintl library.
+    Utils::Localization::setThreadLocale();
+#endif
+
     mMiximagePromise = miximagePromise;
 
     LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): Creating miximage for \""

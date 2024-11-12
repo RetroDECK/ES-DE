@@ -49,6 +49,9 @@ namespace Utils
 
         std::string sCurrentLocale {"en_US"};
         float sMenuTitleScaleFactor {1.0f};
+#if defined(_WIN64)
+        unsigned long sLocaleID {0};
+#endif
 
         const char* pgettextBuiltin(const char* msgctxt, const char* msgid)
         {
@@ -236,9 +239,9 @@ namespace Utils
 
 #if defined(_WIN64)
             _configthreadlocale(_DISABLE_PER_THREAD_LOCALE);
-            const LCID localeID {LocaleNameToLCID(Utils::String::stringToWideString(locale).c_str(),
-                                                  LOCALE_ALLOW_NEUTRAL_NAMES)};
-            SetThreadLocale(localeID);
+            sLocaleID = LocaleNameToLCID(Utils::String::stringToWideString(locale).c_str(),
+                                         LOCALE_ALLOW_NEUTRAL_NAMES);
+            SetThreadLocale(sLocaleID);
 #else
             setenv("LANGUAGE", locale.c_str(), 1);
             setenv("LANG", locale.c_str(), 1);
@@ -255,6 +258,27 @@ namespace Utils
             bind_textdomain_codeset(locale.c_str(), "UTF-8");
             sCurrentLocale = locale;
         }
+
+#if defined(_WIN64)
+        void setThreadLocale()
+        {
+            // This is essentially a workaround for what seems to be a bug in the libintl library
+            // where _configthreadlocale(_DISABLE_PER_THREAD_LOCALE) does not have the expected
+            // effect. If gettext() is called from a child thread and the string has not been
+            // translated already from the main thread then it will not get translated to the
+            // selected locale. If however the string is first translated on the main thread and
+            // then translated again from the child thread it works correctly. However, if calling
+            // SetThreadLocale() from the child thread before attempting any translations then
+            // everything behaves as expected which feels like a cleaner workaround than having
+            // to make every single translation from the main thread that we want to use in any
+            // child threads.
+
+            if (sLocaleID == 0)
+                return;
+
+            SetThreadLocale(sLocaleID);
+        }
+#endif
 
     } // namespace Localization
 

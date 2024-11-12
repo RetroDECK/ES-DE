@@ -228,6 +228,11 @@ GuiThemeDownloader::~GuiThemeDownloader()
 
 bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool allowReset)
 {
+#if defined(_WIN64)
+    // Workaround for a bug in the libintl library.
+    Utils::Localization::setThreadLocale();
+#endif
+
     int errorCode {0};
     const std::string path {mThemeDirectory + repositoryName};
     mRepositoryError = RepositoryError::NO_REPO_ERROR;
