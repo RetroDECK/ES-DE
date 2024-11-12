@@ -128,7 +128,8 @@ void TextEditComponent::textInput(const std::string& text, const bool pasting)
                          (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text));
             mCursor += static_cast<unsigned int>(
                 (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text).size());
-            ++mCursorShapedText;
+            mCursorShapedText += static_cast<unsigned int>(Utils::String::unicodeLength(
+                (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text)));
         }
     }
 
