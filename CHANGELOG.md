@@ -6,7 +6,9 @@
 
 ### Release overview
 
-3.1 maintenance release.
+3.1 maintenance release which adds support for four more languages, reduces the memory footprint under some circumstances and adds support for a few more emulators.
+
+There are also a number of bug fixes and other minor improvements.
 
 ### Detailed list of changes
 
@@ -24,8 +26,12 @@
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
 * (Android) Added a temporary workaround to avoid crashes on non-character keyboard input when editing text (caused by a bug in the SDL library)
 * (Android) Updated a number of Java and Kotlin dependencies to the latest stable versions
+* (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
 * (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
+* Updated SDL to 2.30.9 on Android, Windows, macOS and the Linux AppImage builds
+* Updated the MAME index files to include ROMs up to MAME version 0.271
+* Bundled the September 2024 release of the Mozilla TLS/SSL certificates
 * (Windows) Updated OpenSSL to 3.4.0
 
 ### Bug fixes
@@ -37,7 +43,9 @@
 * There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver
 * Invalid popup notifications were sometimes shown after a download error message had been displayed in the theme downloader
 * Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos
+* Pasting text into a text edit field would make the cursor jump to an incorrect position
 * Newly entered ScreenScraper username and password values were positioned incorrectly vertically in the account settings menu
+* (Windows) Translations didn't work correctly for some text
 * (linear-es-de) The carousel icon for tanodragon was incorrectly showing the dragon32 system
 * (modern-es-de) The carousel icon for tanodragon was incorrectly showing the dragon32 system
 
