@@ -8,6 +8,7 @@
     <string name="configurator_storage_text">ES-DE requires permission to manage your storage (to have access to all your files) so please enable this setting using the button below</string>
     <string name="configurator_storage_button">Open permission screen</string>
     <string name="configurator_storage_button_legacy">Grant permission</string>
+    <string name="configurator_storage_button_already_granted">Already granted</string>
     <string name="configurator_permission_granted">Permission granted</string>
     <string name="configurator_permission_not_granted">Permission not granted, please try again</string>
 
