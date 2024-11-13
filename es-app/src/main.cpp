@@ -1027,6 +1027,15 @@ int main(int argc, char* argv[])
         Utils::Platform::Android::setupFontFiles();
         Utils::Platform::Android::setupLocalizationFiles();
     }
+
+    {
+        std::string audioDriver {Settings::getInstance()->getString("AudioDriver")};
+        if (audioDriver != "openslES" && audioDriver != "AAudio")
+            audioDriver = "openslES";
+
+        setenv("SDL_AUDIODRIVER", audioDriver.c_str(), 1);
+    }
+
 #endif
 
     Utils::Localization::setLocale();

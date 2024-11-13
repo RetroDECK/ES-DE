@@ -1176,6 +1176,26 @@ void GuiMenu::openSoundOptions()
 {
     auto s = new GuiSettings(_("SOUND SETTINGS"));
 
+#if defined(__ANDROID__)
+    // Audio driver.
+    auto audioDriver = std::make_shared<OptionListComponent<std::string>>(getHelpStyle(),
+                                                                          _("AUDIO DRIVER"), false);
+    std::string selectedDriver {Settings::getInstance()->getString("AudioDriver")};
+    audioDriver->add("OPENSL ES", "openslES", selectedDriver == "openslES");
+    audioDriver->add("AAUDIO", "AAudio", selectedDriver == "AAudio");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the audio driver to "openslES" in this case.
+    if (audioDriver->getSelectedObjects().size() == 0)
+        audioDriver->selectEntry(0);
+    s->addWithLabel(_("AUDIO DRIVER (REQUIRES RESTART)"), audioDriver);
+    s->addSaveFunc([audioDriver, s] {
+        if (audioDriver->getSelected() != Settings::getInstance()->getString("AudioDriver")) {
+            Settings::getInstance()->setString("AudioDriver", audioDriver->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+#endif
+
 // TODO: Implement system volume support for macOS and Android.
 #if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__) && !defined(__HAIKU__)
     // System volume.

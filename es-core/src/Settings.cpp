@@ -233,6 +233,9 @@ void Settings::setDefaults()
     mBoolMap["ShowHelpPrompts"] = {true, true};
 
     // Sound settings.
+#if defined(__ANDROID__)
+    mStringMap["AudioDriver"] = {"openslES", "openslES"};
+#endif
     mIntMap["SoundVolumeNavigation"] = {70, 70};
     mIntMap["SoundVolumeVideos"] = {80, 80};
     mBoolMap["ViewsVideoAudio"] = {true, true};
