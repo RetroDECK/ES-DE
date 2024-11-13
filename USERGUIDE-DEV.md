@@ -3461,6 +3461,10 @@ Whether to use a shader to render a slight horizontal blur which somewhat simula
 
 Various sound settings.
 
+**Audio driver (requires restart)** _(Android only)_
+
+This setting makes it possible to select between the _OpenSL ES_ and _AAudio_ audio drivers. Note that this is a preference only, if OpenSL ES is not available on your device then ES-DE will automatically revert to using AAudio and log that a fallback took place to the es_log.txt file. It's generally recommended to keep the driver set to its default value OpenSL ES as that offers lower audio latency for most devices.
+
 **System volume** _(Linux and Windows only)_
 
 As the name implies, this sets the overall system volume and not the volume specifically for ES-DE. The volume change is applied when leaving the sound settings menu and not immediately when moving the slider.

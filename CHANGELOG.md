@@ -8,7 +8,9 @@
 
 3.1 maintenance release which adds support for four more languages, reduces the memory footprint under some circumstances and adds support for a few more emulators.
 
-There are also a number of bug fixes and other minor improvements.
+On Android the default audio driver was changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There's also a new menu option in the Audio settings menu that makes it possible to easily revert to AAudio in case of issues with using OpenSL ES.
+
+Apart from the above there are also a number of bug fixes and other minor improvements.
 
 ### Detailed list of changes
 
@@ -19,11 +21,14 @@ There are also a number of bug fixes and other minor improvements.
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
 * The Git index stat cache is now refreshed for all themes when starting the theme downloader (this speeds up the inventory under some circumstances)
 * Added Mandarine standalone as an alternative emulator for the n3ds system
+* (Android) Changed the default audio driver from AAudio to OpenSL ES
+* (Android) Added an audio driver menu option to the Sound settings menu
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
 * (Android) Adjusted the layout for the onboarding configurator to look better on screens with wider aspect ratios
 * (Android) Improved the experience when running in multi-window mode
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
+* (Android) The storage permission now only needs to be granted once in the onboarding configurator as indicated with an "Already granted" button
 * (Android) Added a temporary workaround to avoid crashes on non-character keyboard input when editing text (caused by a bug in the SDL library)
 * (Android) Updated a number of Java and Kotlin dependencies to the latest stable versions
 * (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
