@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:05+0100\n"
+"POT-Creation-Date: 2024-11-13 18:27+0100\n"
 "PO-Revision-Date: 2024-09-27 13:02+0200\n"
 "Last-Translator: Josep M <johnnydement@duck.com>\n"
 "Language-Team: Català <info@es-de.org>\n"
@@ -851,6 +851,12 @@ msgstr "HABILITAR ELS FILTRES DE LA LLISTA DE JOCS"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "MOSTRA L'AJUDA EN PANTALLA"
+
+msgid "AUDIO DRIVER"
+msgstr "CONTROLADOR D'ÀUDIO"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "CONTROLADOR D'ÀUDIO (CAL REINICIAR)"
 
 msgid "SYSTEM VOLUME"
 msgstr "VOLUM DEL SISTEMA"

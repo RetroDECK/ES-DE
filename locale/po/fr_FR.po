@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:05+0100\n"
+"POT-Creation-Date: 2024-11-13 18:27+0100\n"
 "PO-Revision-Date: 2024-09-06 17:46+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Français <info@es-de.org>\n"
@@ -867,6 +867,12 @@ msgstr "ACTIVER LES FILTRES DE LA LISTE DE JEUX"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "AFFICHER L'AIDE A L'ÉCRAN"
+
+msgid "AUDIO DRIVER"
+msgstr "PILOTE AUDIO"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "PILOTE AUDIO (REDÉMARRAGE REQUIS)"
 
 msgid "SYSTEM VOLUME"
 msgstr "VOLUME SYSTÈME"

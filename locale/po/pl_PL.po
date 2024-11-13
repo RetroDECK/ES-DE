@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:05+0100\n"
+"POT-Creation-Date: 2024-11-13 18:27+0100\n"
 "PO-Revision-Date: 2024-09-04 23:57+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Polski <info@es-de.org>\n"
@@ -865,6 +865,12 @@ msgstr "WŁĄCZ FILTRY LISTY GIER"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "POKAŻ POMOC EKRANOWĄ"
+
+msgid "AUDIO DRIVER"
+msgstr "STEROWNIK AUDIO"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "STEROWNIK AUDIO (WYMAGA RESTARTU)"
 
 msgid "SYSTEM VOLUME"
 msgstr "GŁOŚNOŚĆ SYSTEMOWA"

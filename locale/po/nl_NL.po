@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:05+0100\n"
+"POT-Creation-Date: 2024-11-13 18:27+0100\n"
 "PO-Revision-Date: 2024-09-22 21:00+0200\n"
 "Last-Translator: Stefan <s.vandenbroekprive@gmail.com>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
@@ -857,6 +857,12 @@ msgstr "GAMELIST-FILTERS INSCHAKELEN"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "WEERGAVE VAN ON-SCREEN HELP"
+
+msgid "AUDIO DRIVER"
+msgstr "AUDIOSTUURPROGRAMMA"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "AUDIOSTUURPROGRAMMA (VEREIST HERSTART)"
 
 msgid "SYSTEM VOLUME"
 msgstr "SYSTEEMVOLUME"

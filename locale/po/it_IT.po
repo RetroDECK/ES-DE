@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:05+0100\n"
+"POT-Creation-Date: 2024-11-13 18:27+0100\n"
 "PO-Revision-Date: 2024-09-02 13:06+0300\n"
 "Last-Translator: Lorenzo Castelletta <lorenzo.castelletta@gmail.com>\n"
 "Language-Team: Italiano <info@es-de.org>\n"
@@ -866,6 +866,12 @@ msgstr "ABILITA I FILTRI DEI FILE GAMELIST"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "MOSTRA L'AIUTO SU SCHERMO"
+
+msgid "AUDIO DRIVER"
+msgstr "AUTISTA AUDIO"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "AUTISTA AUDIO (RIAVVIO NECESSARIO)"
 
 msgid "SYSTEM VOLUME"
 msgstr "VOLUME DI SISTEMA"

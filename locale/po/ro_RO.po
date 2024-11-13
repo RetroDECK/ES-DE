@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:05+0100\n"
+"POT-Creation-Date: 2024-11-13 18:27+0100\n"
 "PO-Revision-Date: 2024-09-01 19:51+0300\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
@@ -861,6 +861,12 @@ msgstr "ACTIVEAZĂ FILTRE LISTĂ DE JOCURI"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "AFIȘEAZĂ AJUTOR PE ECRAN"
+
+msgid "AUDIO DRIVER"
+msgstr "DRIVER AUDIO"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "DRIVER AUDIO (NECESITĂ REPORNIRE)"
 
 msgid "SYSTEM VOLUME"
 msgstr "VOLUM SISTEM"

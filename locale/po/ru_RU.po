@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:05+0100\n"
+"POT-Creation-Date: 2024-11-13 18:27+0100\n"
 "PO-Revision-Date: 2024-09-03 16:34+0400\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
@@ -856,6 +856,12 @@ msgstr "РАЗРЕШИТЬ ФИЛЬТРЫ ГЕЙМЛИСТА"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "ОТОБРАЖЕНИЕ ЭКРАННОЙ СПРАВКИ"
+
+msgid "AUDIO DRIVER"
+msgstr "АУДИО ДРАЙВЕР"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "АУДИО ДРАЙВЕР (НУЖЕН ПЕРЕЗАПУСК)"
 
 msgid "SYSTEM VOLUME"
 msgstr "ГРОМКОСТЬ СИСТЕМЫ"

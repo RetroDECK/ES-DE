@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:05+0100\n"
+"POT-Creation-Date: 2024-11-13 18:27+0100\n"
 "PO-Revision-Date: 2024-09-04 16:44+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
@@ -854,6 +854,12 @@ msgstr "AKTIVERA FILTER FÖR SPELLISTOR"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "VISA HJÄLPPROMPTER"
+
+msgid "AUDIO DRIVER"
+msgstr "LJUDDRIVRUTIN"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "LJUDDRIVRUTIN (KRÄVER OMSTART)"
 
 msgid "SYSTEM VOLUME"
 msgstr "SYSTEMETS LJUDVOLYM"
