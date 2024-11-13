@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-20 14:06+0200\n"
+"POT-Creation-Date: 2024-11-13 18:05+0100\n"
 "PO-Revision-Date: 2024-09-27 13:02+0200\n"
 "Last-Translator: Josep M <johnnydement@duck.com>\n"
 "Language-Team: Català <info@es-de.org>\n"
@@ -30,208 +30,583 @@ msgstr "Hi ha disponible una nova versió:"
 msgid "For more information visit"
 msgstr "Si vols més informació visita"
 
-msgid "No Entries Found"
-msgstr "No s'han trobat entrades"
-
-msgctxt "theme"
-msgid "all"
-msgstr "tots"
-
-msgctxt "theme"
 msgid "all games"
 msgstr "tots els jocs"
 
-msgctxt "theme"
-msgid "recent"
-msgstr "recent"
-
-msgctxt "theme"
 msgid "last played"
 msgstr "última partida"
 
-msgctxt "theme"
 msgid "favorites"
 msgstr "favorits"
 
-msgctxt "theme"
 msgid "collections"
 msgstr "col·leccions"
 
-msgid "ScreenScraper error:"
-msgstr "Error d'ScreenScraper:"
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "DESHABILITAT «%s» A «%s»"
 
-msgid "ScreenScraper: Wrong username or password"
-msgstr "ScreenScraper: nom d'usuari o contrasenya incorrectes"
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "EDITANT LA COL·LECCIÓ «%s», AFEGIR/ELIMINAR JOCS AMB «%s»"
 
-msgid "Network error:"
-msgstr "Error de xarxa:"
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "S'HA ACABAT D'EDITAR LA COL·LECCIÓ «%s»"
 
-msgid "Media directory does not exist and can't be created."
-msgstr "El directori de mitjans ni existeix ni es pot crear."
+msgid "Favorites"
+msgstr "Favorits"
 
-msgid "Permission problems?"
-msgstr "Problemes de permisos?"
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "S'HA AFEGIT «%s» A «%s»"
 
-msgid "Failed to open path for writing media file."
-msgstr "No s'ha pogut obrir la ruta per guardar l'arxiu multimèdia."
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "S'HA ELIMINAT «%s» DE «%s»"
 
-msgid "Couldn't save media file, permission problems or is the disk full?"
+msgid "This collection is empty"
+msgstr "Aquesta col·lecció està buida"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "Aquesta col·lecció conté un joc: «%s [%s]»"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "Aquesta col·lecció conté dos jocs: «%s [%s]» i «%s [%s]»"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "Aquesta col·lecció conté tres jocs: «%s [%s]», «%s [%s]» i «%s [%s]»"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"Aquesta col·lecció conté %i jocs: «%s [%s]», «%s [%s]» i «%s [%s]», entre "
+"d'altres"
+msgstr[1] ""
+"Aquesta col·lecció conté %i jocs: «%s [%s]», «%s [%s]» i «%s [%s]», entre "
+"d'altres"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "Aquesta col·lecció conté un joc: «%s»"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "Aquesta col·lecció conté dos jocs: «%s» i «%s»"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "Aquesta col·lecció conté tres jocs: «%s», «%s» i «%s»"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "Aquesta col·lecció conté %i jocs: «%s», «%s» i «%s», entre d'altres"
+msgstr[1] "Aquesta col·lecció conté %i jocs: «%s», «%s» i «%s», entre d'altres"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "«%s» té filtres, per tant, pot haver disponibles més jocs"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "COL·LECCIÓ «%s» ESBORRADA"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "ERROR: FALTA LA CONFIGURACIÓ DE REGLES DE CERCA PRE-COMMAND PER «%s»"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: nO S'HA TROBAT PRE-COMMAND, ESTÀ INSTAL·LAT CORRECTAMENT?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: NO S'HA TROBAT PRE-COMMAND «%s», ESTÀ INSTAL·LAT CORRECTAMENT?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "ERROR: FALTA LA CONFIGURACIÓ DE REGLES DE CERCA D'EMULADOR PER «%s»"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: NO S'HA TROBAT L'APP, ESTÀ INSTAL·LADA CORRECTAMENT?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: NO S'HA TROBAT L'APP «%s», ESTÀ INSTAL·LADA CORRECTAMENT?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: NO S'HA TROBAT L'EMULADOR, ESTÀ INSTAL·LAT CORRECTAMENT?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: NO S'HA TROBAT L'EMULADOR «%s», ESTÀ INSTAL·LAT CORRECTAMENT?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "ERROR: NO S'HA TROBAT L'ARXIU DEL NUCLI DE L'EMULADOR «%s»"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "ERROR: ENTRADA INVÀLIDA A L'ARXIU DE CONFIGURACIÓ DE SISTEMES"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "ERROR: FALTA LA CONFIGURACIÓ DE NUCLI PER «%s»"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "ERROR: ENTRADA «%s» VARIABLE INVÀLIDA"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
 msgstr ""
-"No s'ha pogut guardar l'arxiu multimèdia, problemes de permisos o està ple "
-"el disc?"
+"ERROR: NO S'HA POGUT CREAR EL DIRECTORI DEFINIT PER %s, PROBLEMES DE "
+"PERMISOS?"
 
-msgid "Couldn't save resized image, permission problems or is the disk full?"
-msgstr ""
-"No s'ha pogut redimensionar la imatge, problemes de permisos o està ple el "
-"disc?"
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "ERROR: L'APP O L'ARXIU ÀLIES NO EXISTEIX O NO ES POT LLEGIR"
 
-msgctxt "metadata"
-msgid "NAME"
-msgstr "NOM"
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "ERROR: L'ARXIU DESKTOP ÉS INVÀLID O NO ES POT LLEGIR"
 
-msgctxt "metadata"
-msgid "ENTER NAME"
-msgstr "ESCRIU EL NOM"
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "ERROR: L'ARXIU DESKTOP NO EXISTEIX O NO ES POT LLEGIR"
 
-msgctxt "metadata"
-msgid "SORTNAME"
-msgstr "NOM D'ORDENACIÓ"
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "ERROR EN LLANÇAR EL JOC «%s» (CODI D'ERROR %i)"
 
-msgctxt "metadata"
-msgid "ENTER SORTNAME"
-msgstr "ESCRIU EL NOM D'ORDENACIÓ"
-
-msgctxt "metadata"
-msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "NOM D'ORDENACIÓ DE COL·LECCIÓ PERSONALITZADA"
-
-msgctxt "metadata"
-msgid "ENTER COLLECTIONS SORTNAME"
-msgstr "ESCRIU EL NOM D'ORDENACIÓ DE LA COL·LECCIÓ"
-
-msgctxt "metadata"
-msgid "DESCRIPTION"
-msgstr "DESCRIPCIÓ"
-
-msgctxt "metadata"
-msgid "ENTER DESCRIPTION"
-msgstr "ESCRIU LA DESCRIPCIÓ"
-
-msgctxt "metadata"
 msgid "RATING"
 msgstr "VALORACIÓ"
 
-msgctxt "metadata"
-msgid "RELEASE DATE"
-msgstr "DATA DE LLANÇAMENT"
-
-msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr "DESENVOLUPADOR"
 
-msgctxt "metadata"
-msgid "ENTER DEVELOPER"
-msgstr "ESCRIU EL DESENVOLUPADOR"
-
-msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr "EDITOR"
 
-msgctxt "metadata"
-msgid "ENTER PUBLISHER"
-msgstr "ESCRIU L'EDITOR"
-
-msgctxt "metadata"
 msgid "GENRE"
 msgstr "GÈNERE"
 
-msgctxt "metadata"
-msgid "ENTER GENRE"
-msgstr "ESCRIU EL GÈNERE"
-
-msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "JUGADORS"
 
-msgctxt "metadata"
-msgid "ENTER NUMBER OF PLAYERS"
-msgstr "ESCRIU EL NÚMERO DE JUGADORS"
-
-msgctxt "metadata"
 msgid "FAVORITE"
 msgstr "FAVORIT"
 
-msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "COMPLETAT"
 
-msgctxt "metadata"
 msgid "KIDGAME"
 msgstr "INFANTIL"
 
-msgctxt "metadata"
-msgid "KIDGAME (ONLY AFFECTS BADGES)"
-msgstr "JOC INFANTIL (NOMÉS AFECTA LES INSÍGNIES)"
-
-msgctxt "metadata"
 msgid "HIDDEN"
 msgstr "OCULT"
 
-msgctxt "metadata"
-msgid "BROKEN/NOT WORKING"
-msgstr "TRENCAT/NO FUNCIONA"
+msgid "BROKEN"
+msgstr "TRENCAT"
 
-msgctxt "metadata"
-msgid "EXCLUDE FROM GAME COUNTER"
-msgstr "EXCLOURE DEL COMPUT DE JOCS"
-
-msgctxt "metadata"
-msgid "EXCLUDE FROM MULTI-SCRAPER"
-msgstr "EXCLOURE DEL MULTI-GARBELLAT"
-
-msgctxt "metadata"
-msgid "HIDE METADATA FIELDS"
-msgstr "AMAGAR CAMPS DE METADADES"
-
-msgctxt "metadata"
-msgid "TIMES PLAYED"
-msgstr "VEGADES JUGAT"
-
-msgctxt "metadata"
-msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr "ESCRIU EL NÚMERO DE VEGADES QUE S'HA JUGAT"
-
-msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "COMANDAMENT"
 
-msgctxt "metadata"
-msgid "SELECT CONTROLLER"
-msgstr "ESCULL COMANDAMENT"
-
-msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr "EMULADOR ALTERNATIU"
 
-msgctxt "metadata"
-msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr "ESCULL UN EMULADOR ALTERNATIU"
+msgid "FALSE"
+msgstr "FALS"
 
-msgctxt "metadata"
-msgid "FOLDER LINK"
-msgstr "ENLLAÇ A LA CARPETA"
+msgid "TRUE"
+msgstr "CERT"
 
-msgctxt "metadata"
-msgid "SELECT FOLDER LINK"
-msgstr "ESCULL L'ENLLAÇ A LA CARPETA"
+msgid "UNKNOWN"
+msgstr "DESCONEGUT"
 
-msgctxt "metadata"
-msgid "LAST PLAYED"
-msgstr "ÚLTIMA PARTIDA"
+msgid "NONE SELECTED"
+msgstr "CAP SELECCIONAT"
 
-msgctxt "metadata"
-msgid "ENTER LAST PLAYED DATE"
-msgstr "ESCRIU LA DATA DE LA ÚLTIMA PARTIDA"
+msgid "name, ascending"
+msgstr "nom, ascendent"
+
+msgid "name, descending"
+msgstr "nom, descendent"
+
+msgid "rating, ascending"
+msgstr "valoració, ascendent"
+
+msgid "rating, descending"
+msgstr "valoració, descendent"
+
+msgid "release date, ascending"
+msgstr "llançament, ascendent"
+
+msgid "release date, descending"
+msgstr "llançament, descendent"
+
+msgid "developer, ascending"
+msgstr "desenvolupador, ascendent"
+
+msgid "developer, descending"
+msgstr "desenvolupador, descendent"
+
+msgid "publisher, ascending"
+msgstr "editor, ascendent"
+
+msgid "publisher, descending"
+msgstr "editor, descendent"
+
+msgid "genre, ascending"
+msgstr "gènere, ascendent"
+
+msgid "genre, descending"
+msgstr "gènere, descendent"
+
+msgid "players, ascending"
+msgstr "jugadors, ascendent"
+
+msgid "players, descending"
+msgstr "jugadors, descendent"
+
+msgid "last played, ascending"
+msgstr "última partida, ascendent"
+
+msgid "last played, descending"
+msgstr "última partida, descendent"
+
+msgid "times played, ascending"
+msgstr "partides, ascendent"
+
+msgid "times played, descending"
+msgstr "partides, descendent"
+
+msgid "system, ascending"
+msgstr "sistema, ascendent"
+
+msgid "system, descending"
+msgstr "sistema, descendent"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "EMULADORS ALTERNATIUS"
+
+msgid "BACK"
+msgstr "TORNAR"
+
+msgid "back"
+msgstr "tornar"
+
+msgid "INVALID ENTRY"
+msgstr "ENTRADA INVÀLIDA"
+
+msgid "CLEARED ENTRY"
+msgstr "ENTRADA ELIMINADA"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "NO S'HAN DEFINIT EMULADORS ALTERNATIUS"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "ENTRADA INVÀLIDA ELIMINADA"
+
+msgid "DEFAULT"
+msgstr "PER DEFECTE"
+
+msgid "select"
+msgstr "escollir"
+
+msgid "APPLICATION UPDATER"
+msgstr "ACTUALITZADOR D'APLICACIÓ"
+
+msgid "INSTALLATION STEPS:"
+msgstr "PROCÉS D'INSTAL·LACIÓ:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "DESCARREGAR NOVA VERSIÓ"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "DESCARREGAR NOVA VERSIÓ A AQUEST DIRECTORI:"
+
+msgid "INSTALL PACKAGE"
+msgstr "INSTAL·LAR PAQUET"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "SORTIR I REINICIAR ES-DE MANUALMENT"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "SORTIR I ACTUALITZAR ESDE MANUALMENT"
+
+msgid "STATUS MESSAGE:"
+msgstr "MISSATGE D'ESTAT:"
+
+msgid "DOWNLOAD"
+msgstr "DESCÀRREGA"
+
+msgid "download new release"
+msgstr "descarregar nova versió"
+
+msgid "Download directory does not exist"
+msgstr "El directori de descàrrega no existeix"
+
+msgid "CHANGE DIRECTORY"
+msgstr "CANVIAR DIRECTORI"
+
+msgid "change download directory"
+msgstr "canviar directori de descàrrega"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "ESCRIU EL DIRECTORI DE DESCÀRREGA"
+
+msgid "CANCEL"
+msgstr "CANCEL·LAR"
+
+msgid "cancel"
+msgstr "cancel·lar"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "DESCÀRREGA ABORTADA"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "NO S'HA GUARDAT CAP PAQUET AL DISC"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "S'HA DESCARREGAT EL PAQUET I ES POT INSTAL·LAR MANUALMENT"
+
+msgid "DOWNLOADING 100%"
+msgstr "DESCARREGANT 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "El checksum MD% de l'arxiu descarregat no coincideix amb l'esperat"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr ""
+"Error: No s'ha pogut esborrar l'arxiu temporal del paquet, problemes de "
+"permisos?"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr ""
+"Error: No s'ha pogut escriure a l'arxiu del paquet, problemes de permisos?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "Error: No s'han pogut establir permisos a l'arxiu AppImage"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "Descarregat %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "Error: No s'ha pogut obrir l'arxiu d'actualització AppImage"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr ""
+"Error: El checksum MD5 de l'arxiu descarregat no coincideix amb l'esperat"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"Error: No s'ha pogut reanomentar l'arxiu AppImage en execució, problemes de "
+"permisos?"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"Error: No s'ha pogut substituir l'arxiu AppImage en execució, problemes de "
+"permisos?"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "Instal·lat correctament com %s"
+
+msgid "DOWNLOADING"
+msgstr "DESCARREGANT"
+
+msgid "INSTALL"
+msgstr "INSTAL·LAR"
+
+msgid "install package"
+msgstr "instal·lar paquet"
+
+msgid "Find the detailed changelog at"
+msgstr "Pots veure el registre de novetats detallat a"
+
+msgid "QUIT"
+msgstr "TANCAR"
+
+msgid "quit application"
+msgstr "sortir de l'aplicació"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "ACABAR D'EDITAR LA COL·LECCIÓ «%s»"
+
+msgid "SELECT COLLECTIONS"
+msgstr "ESCOLLIR COL·LECCIONS"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "COL·LECCIONS DE JOCS AUTOMÀTIQUES"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "COL·LECCIONS DE JOCS A MIDA"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "CREAR NOVA COL·LECCIÓ A PARTIR DEL TEMA"
+
+msgid "SELECT THEME FOLDER"
+msgstr "ESCOLLIR CARPETA DEL TEMA"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "CREAR NOVA COL·LECCIÓ A MIDA"
+
+msgid "NEW COLLECTION NAME"
+msgstr "NOM DE LA NOVA COL·LECCIÓ"
+
+msgid "CREATE"
+msgstr "CREAR"
+
+msgid "CREATE COLLECTION?"
+msgstr "CREAR COL·LECCIÓ?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "ESBORRAR COL·LECCIÓ A MIDA"
+
+msgid "COLLECTION TO DELETE"
+msgstr "COL·LECCIÓ A ESBORRAR"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr "AIXÒ ELIMINARÀ PERMANENTMENT LA COL·LECCIÓ «%s». ESTÀS SEGUR?"
+
+msgid "YES"
+msgstr "SI"
+
+msgid "NO"
+msgstr "NO"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "AGRUPAR COL·LECCIONS A MIDA"
+
+msgid "IF UNTHEMED"
+msgstr "SI NO TENEN TEMA"
+
+msgid "ALWAYS"
+msgstr "SEMPRE"
+
+msgid "NEVER"
+msgstr "MAI"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "POSA ELS FAVORITS A L'INICI DE LES COL·LECCIONS A MIDA"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "MARCA AMB UNA ESTRELLA A LES COL·LECCIONS A MIDA"
+
+msgid "FILTER GAMELIST"
+msgstr "FILTRAR LA LLISTA DE JOCS"
+
+msgid "RESET ALL FILTERS"
+msgstr "REINICIAR TOTS ELS FILTRES"
+
+msgid "GAME NAME"
+msgstr "NOM DEL JOC"
+
+msgid "APPLY CHANGES?"
+msgstr "APLICAR ELS CANVIS?"
+
+msgid "NOTHING TO FILTER"
+msgstr "NO HI HA RES A FILTRAR"
+
+msgid "GAMELIST OPTIONS"
+msgstr "OPCIONS DEL LLISTAT DE JOCS"
+
+msgid "JUMP TO..."
+msgstr "SALTAR A..."
+
+msgid "SORT GAMES BY"
+msgstr "ORDENAR JOCS SEGONS"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "AQUEST SISTEMA NO TÉ JOCS"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "AFEGIR/ELIMINAR JOCS D'AQUESTA COL·LECCIÓ"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "EDITAR LES METADADES D'AQUESTA CARPETA"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "EDITAR LES METADADES D'AQUESt JOC"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "ESCRIU LA CARPETA (SOBREESCRIURE ENLLAÇ DE CARPETA)"
+
+msgid "CLOSE"
+msgstr "TANCAR"
+
+msgid "close"
+msgstr "tancar"
+
+msgid "APPLY"
+msgstr "APLICAR"
+
+msgid "apply"
+msgstr "aplicar"
+
+msgid "close (apply)"
+msgstr "tancar (aplicar)"
+
+msgid "close (cancel)"
+msgstr "tancar (cancel·lar)"
+
+msgid "LAUNCHING GAME"
+msgstr "INICIANT JOC"
+
+msgid "HELP PROMPTS"
+msgstr "MISSATGES D'AJUDA"
+
+msgid "TOP"
+msgstr "SUPERIOR"
+
+msgid "BOTTOM"
+msgstr "INFERIOR"
+
+msgid "DISABLED"
+msgstr "DESHABILITAT"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "MOSTRAR TIPUS DE MITJANS"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "CONTINUAR REPRODUINT VÍDEOS MENTRE ES VISUALITZEN IMATGES"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "AJUSTAR ELS VÍDEOS A LA RESOLUCIÓ DE LA PANTALLA"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "RENDERITZAR SCANLINES PELS VÍDEOS"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "RENDERITZAR DIFUMINAT PELS VÍDEOS"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "RENDERITZAR SCANLINES PER LES CAPTURES I ELS TÍTOLS"
 
 msgid "MAIN MENU"
 msgstr "MENÚ PRINCIPAL"
@@ -259,9 +634,6 @@ msgstr "UTILITATS"
 
 msgid "QUIT ES-DE"
 msgstr "TANCAR ES-DE"
-
-msgid "QUIT"
-msgstr "TANCAR"
 
 msgid "THEME"
 msgstr "TEMA"
@@ -325,9 +697,6 @@ msgstr "GATELLS"
 
 msgid "LEFT/RIGHT"
 msgstr "ESQUERRA/DRETA"
-
-msgid "DISABLED"
-msgstr "DESHABILITAT"
 
 msgid "GAMELIST ON STARTUP"
 msgstr "LLISTAT DE JOCS EN OBRIR"
@@ -437,12 +806,6 @@ msgstr ""
 "PER DESBLOQUEJAR I TORNAR A LA INTERFÍCIE COMPLETA, ESCRIU AQUEST CODI:\n"
 "%s\n"
 "VOLS CONTINUAR?"
-
-msgid "YES"
-msgstr "SI"
-
-msgid "NO"
-msgstr "NO"
 
 msgid "RANDOM ENTRY BUTTON"
 msgstr "BOTÓ D'ENTRADA ALEATÒRIA"
@@ -556,9 +919,6 @@ msgstr ""
 "PODRIES NETEJAR LA MEMÒRIA D'ES-DE A LES OPCIONS DE L'APLICACIÓ ANDROID PER "
 "FORÇAR L'INICI DEL CONFIGURADOR LA PROPERA EXECUCIÓ"
 
-msgid "OK"
-msgstr "OK"
-
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
 msgstr "ACCEPTA ENTRADES NOMÉS DEL PRIMER COMANDAMENT"
 
@@ -582,12 +942,6 @@ msgstr ""
 
 msgid "PROCEED"
 msgstr "PROCEDIR"
-
-msgid "CANCEL"
-msgstr "CANCEL·LAR"
-
-msgid "ALTERNATIVE EMULATORS"
-msgstr "EMULADORS ALTERNATIUS"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "DIRECTORI DE MITJANS DE JOC"
@@ -650,14 +1004,8 @@ msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "QUAN GUARDAR METADADES DE JOC"
 
-msgid "ALWAYS"
-msgstr "SEMPRE"
-
 msgid "ON EXIT"
 msgstr "AL SORTIR"
-
-msgid "NEVER"
-msgstr "MAI"
 
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "QUAN GUARDAR METADADES DE JOC"
@@ -793,23 +1141,303 @@ msgstr "OPCIONS DEL SALVAPANTALLES"
 msgid "choose"
 msgstr "tancar"
 
-msgid "select"
-msgstr "escollir"
-
 msgid "close menu"
 msgstr "tancar menú"
 
-msgid "REFINE SEARCH"
-msgstr "REFINAR CERCA"
+msgid "EDIT METADATA"
+msgstr "EDITAR METADADES"
 
-msgid "refine search"
-msgstr "refinar cerca"
+msgid "CLEAR ENTRY"
+msgstr "NETEJAR ENTRADA"
 
-msgid "cancel"
-msgstr "cancel·lar"
+msgid "SELECT EMULATOR"
+msgstr "ESCOLLIR EMULADOR"
 
-msgid "back (cancel)"
-msgstr "tornar (cancel·lar)"
+msgid "SYSTEM-WIDE"
+msgstr "PER TOT EL SISTEMA"
+
+msgid "unknown"
+msgstr "desconegut"
+
+msgid "SCRAPE"
+msgstr "GARBELLAR"
+
+msgid "scrape"
+msgstr "garbellar"
+
+msgid "save metadata"
+msgstr "guardar metadades"
+
+msgid "cancel changes"
+msgstr "cancel·lar canvis"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"AIXÒ ESBORRARÀ QUALSEVOL ARXIU MULTIMÈDIA I L'ENTRADA A GAMELIST.XML "
+"D'AQUEST DIRECTORI, PERÒ NO S'ESBORRARÀ EL DIRECTORI NI QUALSEVOL CONTINGUT "
+"A L'INTERIOR\n"
+"N'ESTÀS SEGUR?"
+
+msgid "CLEAR"
+msgstr "NETEJAR"
+
+msgid "clear folder"
+msgstr "netejar la carpeta"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"AIXÒ ELIMINARÀ TOTS ELS ARXIUS MULTIMÈDIA I L'ENTRADA D'AQUEST JOC A "
+"GAMELIST.XML, PERÒ L'ARXIU DEL JOC EN SI NO S'ESBORRARÀ\n"
+"ESTÀS SEGUR?"
+
+msgid "clear file"
+msgstr "netejar arxiu"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"AIXÒ ESBORRARÀ L'ARXIU DEL JOC, QUALSEVOL ARXIU MULTIMÈDIA I L'ENTRADA DEL "
+"JOC A GAMELIST.XML. ESTÀS SEGUR?"
+
+msgid "DELETE"
+msgstr "ESBORRAR"
+
+msgid "delete game"
+msgstr "esborrar joc"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "GENERADOR FORA DE LÍNIA DE COMPOSICIÓ D'IMATGES"
+
+msgid "NOT STARTED"
+msgstr "SENSE INICIAR"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "S'HA PROCESSAT UN JOC"
+msgstr[1] "S'HAN PROCESSAT %i de %i JOCS"
+
+msgid "Generated:"
+msgstr "Generats:"
+
+msgid "Overwritten:"
+msgstr "Reemplaçats:"
+
+msgid "Skipped:"
+msgstr "Ignorats:"
+
+msgid "Skipped (existing):"
+msgstr "Ignorats (existents):"
+
+msgid "Failed:"
+msgstr "Fallits:"
+
+msgid "Processing:"
+msgstr "Processant:"
+
+msgid "Last error message:"
+msgstr "Últim missatge d'error:"
+
+msgid "START"
+msgstr "INICIAR"
+
+msgid "start processing"
+msgstr "iniciar processat"
+
+msgid "PAUSE"
+msgstr "PAUSA"
+
+msgid "pause processing"
+msgstr "pausar processat"
+
+msgid "close (abort processing)"
+msgstr "tancar (abortar processat)"
+
+msgid "RUNNING..."
+msgstr "FUNCIONANT..."
+
+msgid "PAUSED"
+msgstr "PAUSAT"
+
+msgid "RUNNING"
+msgstr "FUNCIONANT"
+
+msgid "DONE"
+msgstr "FET"
+
+msgid "done (close)"
+msgstr "fet (tancar)"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"AIXÒ ELIMINARÀ ELS ARXIUS MULTIMÈDIA SENSE RELACIONS AMB UN JOC. ES MOURAN "
+"ELS ARXIUS A UNA CARPETA DE NETEJA DINS LA DE MITJANS DE JOCS. QUAN ESTIGUIS "
+"SEGUR QUE JA NO ET CAL, POTS ESBORRAR-LA."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"AIXÒ ELIMINARÀ LES ENTRADES DELS TEUS ARXIUS XML DE LLISTAT DE JOCS ON NO ES "
+"TROBIN RELACIONS AMB UN JOC. ES FARÀ CÒPIA DE SEGURETAT DELS ORIGINALS A UNA "
+"CARPETA DE NETEJA DINS LA DE LLISTAT DE JOCS. QUAN ESTIGUIS SEGUR QUE JA NO "
+"ET CAL, POTS ESBORRAR-LA."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"AIXÒ ELIMINARÀ TOTES LES ENTRADES DELS ARXIUS DE CONFIGURACIÓ DE LES "
+"COL·LECCIONS A MIDA ON NO ES TROBIN RELACIONS AMB UN JOC. ES FARÀ CÒPIA DE "
+"SEGURETAT DELS ORIGINALS A UNA CARPETA DE NETEJA DINS LA DE COL·LECCIONS. "
+"QUAN ESTIGUIS SEGUR QUE JA NO ET CAL, POTS ESBORRAR-LA."
+
+msgid "DESCRIPTION:"
+msgstr "DESCRIPCIÓ:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "ENTRADES ELIMINADES:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "ÚLTIM SISTEMA REVISAT:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "ÚLTIM MISSATGE D'ERROR:"
+
+msgid "MEDIA"
+msgstr "MULTIMÈDIA"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "NETEJA MULTIMÈDIA EN MARXA"
+
+msgid "STOP"
+msgstr "PARAR"
+
+msgid "stop processing"
+msgstr "aturar processat"
+
+msgid "GAMELISTS"
+msgstr "LLISTAT DE JOCS"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "NETEJA DE LLISTAT DE JOCS EN MARXA"
+
+msgid "COLLECTIONS"
+msgstr "COL·LECCIONS"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "HA FALLAT LA NETEJA DE COL·LECCIONS"
+
+msgid "There are no enabled custom collections"
+msgstr "No hi ha col·leccions personalitzades habilitades"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "NETEJA DE COL·LECCIONS EN MARXA"
+
+msgid "PROCESSING"
+msgstr "PROCESSANT"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "S'ha trobat un arxiu flatten.txt, saltant «%s»"
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "No s'ha pogut crear el directori destí, problemes de permisos?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "No s'ha pogut moure l'arxiu multimèdia, problemes de permisos?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "No s'ha pogut processar l'arxiu gamelist.xml per «%s»"
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "No s'ha tribat una etiqueta gamelist a l'arxiu per «%s»"
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr ""
+"No s'ha pogut esborrar l'arxiu gamelist temporal, problemes de permisos?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr ""
+"No s'ha pogut escriure a l'arxiu gamelist temporal, problemes de permisos?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr ""
+"No s'ha pogut crear el directori de còpia de seguretat, problemes de "
+"permisos?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "No s'ha pogut moure l'arxiu gamelist antic, problemes de permisos?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr "No s'ha pogut moure l'arxiu gamelist temporal, problemes de permisos?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "No s'ha trobat l'arxiu de configuració de col·lecció personalitzada"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr ""
+"No s'ha pogut obrir l'arxiu de configuració de col·lecció personalitzada"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr ""
+"No s'ha pogut esborrar l'arxiu de col·lecció temporal, problemes de permisos?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr ""
+"No s'ha pogut escriure a l'arxiu de configuració de col·lecció temporal"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr ""
+"No s'ha pogut moure l'arxiu de col·lecció antic, problemes de permisos?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr ""
+"No s'ha pogut moure l'arxiu de col·lecció temporal, problemes de permisos?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "S'HA ABORTAT LA NETEJA MULTIMÈDIA"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "NETEJA MULTIMÈDIA FINALITZADA"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "S'HA ABORTAT LA NETEJA DE LLISTA DE JOCS"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "NETEJA DE LLISTA DE JOCS FINALITZADA"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "S'HA ABORTAT LA NETEJA DE COL·LECCIONS"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "NETEJA DE COL·LECCIONS FINALITZADA"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "HA FALLAT LA NETEJA MULTIMÈDIA"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "HA FALLAT LA NETEJA DEL LLISTAT DE JOCS"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "L'APLICACIÓ ES RECARREGARPA EN TANCAR AQUESTA UTILITAT."
 
 msgid "SCRAPE FROM"
 msgstr "GARBELLAR DES DE"
@@ -847,17 +1475,8 @@ msgstr "OPCIONS DE CONTINGUT"
 msgid "MIXIMAGE SETTINGS"
 msgstr "OPCIONS DE COMPOSICIÓ D'IMATGES"
 
-msgid "START"
-msgstr "INICIAR"
-
 msgid "start scraper"
 msgstr "iniciar garbellat de dades"
-
-msgid "BACK"
-msgstr "TORNAR"
-
-msgid "back"
-msgstr "tornar"
 
 msgid "SCREENSCRAPER USERNAME"
 msgstr "USUARI D'SCREENSCRAPER"
@@ -1090,88 +1709,92 @@ msgstr "ESCULL COM A MÍNIM UN TIPUS DE CONTINGUT A GARBELLAR"
 msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
 msgstr "S'HAN FILTRAT TOTS ELS JOCS, NO HI HA RES A GARBELLAR"
 
-msgid "HELP PROMPTS"
-msgstr "MISSATGES D'AJUDA"
+msgid "SCRAPING IN PROGRESS"
+msgstr "GARBELLAT DE DADES EN CURS"
 
-msgid "TOP"
-msgstr "SUPERIOR"
+msgid "SYSTEM"
+msgstr "SISTEMA"
 
-msgid "BOTTOM"
-msgstr "INFERIOR"
+msgid "REFINE SEARCH"
+msgstr "REFINAR CERCA"
 
-msgid "DISPLAY MEDIA TYPES"
-msgstr "MOSTRAR TIPUS DE MITJANS"
+msgid "refine search"
+msgstr "refinar cerca"
 
-msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
-msgstr "CONTINUAR REPRODUINT VÍDEOS MENTRE ES VISUALITZEN IMATGES"
+msgid "SKIP"
+msgstr "SALTAR"
 
-msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
-msgstr "AJUSTAR ELS VÍDEOS A LA RESOLUCIÓ DE LA PANTALLA"
+msgid "skip game"
+msgstr "saltar joc"
 
-msgid "RENDER SCANLINES FOR VIDEOS"
-msgstr "RENDERITZAR SCANLINES PELS VÍDEOS"
+msgid "stop"
+msgstr "parar"
 
-msgid "RENDER BLUR FOR VIDEOS"
-msgstr "RENDERITZAR DIFUMINAT PELS VÍDEOS"
-
-msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
-msgstr "RENDERITZAR SCANLINES PER LES CAPTURES I ELS TÍTOLS"
-
-#, c-format
-msgid "FINISH EDITING '%s' COLLECTION"
-msgstr "ACABAR D'EDITAR LA COL·LECCIÓ «%s»"
-
-msgid "SELECT COLLECTIONS"
-msgstr "ESCOLLIR COL·LECCIONS"
-
-msgid "AUTOMATIC GAME COLLECTIONS"
-msgstr "COL·LECCIONS DE JOCS AUTOMÀTIQUES"
-
-msgid "CUSTOM GAME COLLECTIONS"
-msgstr "COL·LECCIONS DE JOCS A MIDA"
-
-msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr "CREAR NOVA COL·LECCIÓ A PARTIR DEL TEMA"
-
-msgid "SELECT THEME FOLDER"
-msgstr "ESCOLLIR CARPETA DEL TEMA"
-
-msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr "CREAR NOVA COL·LECCIÓ A MIDA"
-
-msgid "NEW COLLECTION NAME"
-msgstr "NOM DE LA NOVA COL·LECCIÓ"
-
-msgid "CREATE"
-msgstr "CREAR"
-
-msgid "CREATE COLLECTION?"
-msgstr "CREAR COL·LECCIÓ?"
-
-msgid "DELETE CUSTOM COLLECTION"
-msgstr "ESBORRAR COL·LECCIÓ A MIDA"
-
-msgid "COLLECTION TO DELETE"
-msgstr "COL·LECCIÓ A ESBORRAR"
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "JOC"
+msgstr[1] "JOCS"
 
 #, c-format
-msgid ""
-"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
-"'%s'\n"
-"ARE YOU SURE?"
-msgstr "AIXÒ ELIMINARÀ PERMANENTMENT LA COL·LECCIÓ «%s». ESTÀS SEGUR?"
+msgid "GAME %i OF %i"
+msgstr "JOC %i DE %i"
 
-msgid "GROUP CUSTOM COLLECTIONS"
-msgstr "AGRUPAR COL·LECCIONS A MIDA"
+msgid "NO GAMES WERE SCRAPED"
+msgstr "NO S'HA GARBELLAT CAP JOC"
 
-msgid "IF UNTHEMED"
-msgstr "SI NO TENEN TEMA"
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "S'HAN GARBELLAT CORRECTAMENT LES DADES D'UN JOC"
+msgstr[1] "S'HAN GARBELLAT CORRECTAMENT LES DADES De %i JOCS"
 
-msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr "POSA ELS FAVORITS A L'INICI DE LES COL·LECCIONS A MIDA"
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "S'HA SALTAT UN JOC"
+msgstr[1] "S'HAN SALTAT %i JOCS"
 
-msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "MARCA AMB UNA ESTRELLA A LES COL·LECCIONS A MIDA"
+msgid "RATING:"
+msgstr "VALORACIÓ:"
+
+msgid "RELEASED:"
+msgstr "LLANÇAMENT:"
+
+msgid "DEVELOPER:"
+msgstr "DESENVOLUPADOR:"
+
+msgid "PUBLISHER:"
+msgstr "EDITOR:"
+
+msgid "GENRE:"
+msgstr "GÈNERE:"
+
+msgid "PLAYERS:"
+msgstr "JUGADORS:"
+
+msgid "NO GAMES FOUND"
+msgstr "NO S'HAN TROBAT JOCS"
+
+msgid "RETRY"
+msgstr "REINTENTAR"
+
+msgid "Error downloading thumbnail:"
+msgstr "Error al descarregar miniatura:"
+
+msgid "SEARCH"
+msgstr "BUSCAR"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "CERCA REFINADA DEL NOM?"
+
+msgid "skip"
+msgstr "saltar"
+
+msgid "accept result"
+msgstr "acceptar resultat"
+
+msgid "back (cancel)"
+msgstr "tornar (cancel·lar)"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
 msgstr "INICIAR SALVAPANTALLES DESPRÉS DE (MINUTS)"
@@ -1234,30 +1857,6 @@ msgstr ""
 
 msgid "RENDER BLUR"
 msgstr "RENDERITZAR DIFUMINAT"
-
-msgid "FILTER GAMELIST"
-msgstr "FILTRAR LA LLISTA DE JOCS"
-
-msgid "RESET ALL FILTERS"
-msgstr "REINICIAR TOTS ELS FILTRES"
-
-msgid "GAME NAME"
-msgstr "NOM DEL JOC"
-
-msgid "APPLY CHANGES?"
-msgstr "APLICAR ELS CANVIS?"
-
-msgid "NOTHING TO FILTER"
-msgstr "NO HI HA RES A FILTRAR"
-
-msgid "LAUNCHING GAME"
-msgstr "INICIANT JOC"
-
-msgid "CLOSE"
-msgstr "TANCAR"
-
-msgid "close"
-msgstr "tancar"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DESCARREGANT EL LLISTAT DE TEMES 100%"
@@ -1390,9 +1989,6 @@ msgstr "ERROR:"
 msgid "COULDN'T DOWNLOAD THEMES LIST"
 msgstr "NO S'HA POGUT DESCARREGAR EL LLISTAT DE TEMES"
 
-msgid "DOWNLOADING"
-msgstr "DESCARREGANT"
-
 msgid "DOWNLOADING THEMES LIST"
 msgstr "DESCARREGANT EL LLISTAT DE TEMES"
 
@@ -1451,759 +2047,283 @@ msgstr ""
 "QUALSEVOL TEMA QUE DESCARREGUIS. TINGUES EN COMPTE QUE NO POTS ABORTAR UNA "
 "DESCÀRREGA EN CURS JA QUE PODRIA GENERAR CORRUPCIÓ A LES DADES."
 
-msgid "RATING:"
-msgstr "VALORACIÓ:"
+msgid "browse"
+msgstr "navegar"
 
-msgid "RELEASED:"
-msgstr "LLANÇAMENT:"
+msgid "pdf manual"
+msgstr "manual pdf"
 
-msgid "DEVELOPER:"
-msgstr "DESENVOLUPADOR:"
+msgid "first"
+msgstr "primer"
 
-msgid "PUBLISHER:"
-msgstr "EDITOR:"
+msgid "last"
+msgstr "últim"
 
-msgid "GENRE:"
-msgstr "GÈNERE:"
+msgid "SCREENSHOT"
+msgstr "CAPTURA"
 
-msgid "PLAYERS:"
-msgstr "JUGADORS:"
+msgid "BOX COVER"
+msgstr "PORTADA"
 
-msgid "NO GAMES FOUND"
-msgstr "NO S'HAN TROBAT JOCS"
+msgid "BOX BACK COVER"
+msgstr "CONTRAPORTADA"
 
-msgid "RETRY"
-msgstr "REINTENTAR"
+msgid "TITLE SCREEN"
+msgstr "PANTALLA DE TÍTOL"
 
-msgid "SKIP"
-msgstr "SALTAR"
+msgid "FAN ART"
+msgstr "FAN ART"
 
-msgid "Error downloading thumbnail:"
-msgstr "Error al descarregar miniatura:"
+msgid "MIXIMAGE"
+msgstr "COMPOSICIÓ"
 
-msgid "SEARCH"
-msgstr "BUSCAR"
+msgid "CUSTOM"
+msgstr "PERSONALITZAT"
 
-msgid "SEARCH USING REFINED NAME?"
-msgstr "CERCA REFINADA DEL NOM?"
+msgctxt "metadata"
+msgid "NAME"
+msgstr "NOM"
 
-msgid "skip"
-msgstr "saltar"
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "ESCRIU EL NOM"
 
-msgid "accept result"
-msgstr "acceptar resultat"
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "NOM D'ORDENACIÓ"
 
-msgid "SCRAPING IN PROGRESS"
-msgstr "GARBELLAT DE DADES EN CURS"
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "ESCRIU EL NOM D'ORDENACIÓ"
 
-msgid "SYSTEM"
-msgstr "SISTEMA"
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "NOM D'ORDENACIÓ DE COL·LECCIÓ PERSONALITZADA"
 
-msgid "skip game"
-msgstr "saltar joc"
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "ESCRIU EL NOM D'ORDENACIÓ DE LA COL·LECCIÓ"
 
-msgid "STOP"
-msgstr "PARAR"
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "DESCRIPCIÓ"
 
-msgid "stop"
-msgstr "parar"
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "ESCRIU LA DESCRIPCIÓ"
 
-msgid "GAME"
-msgid_plural "GAMES"
-msgstr[0] "JOC"
-msgstr[1] "JOCS"
+msgctxt "metadata"
+msgid "RATING"
+msgstr "VALORACIÓ"
 
-#, c-format
-msgid "GAME %i OF %i"
-msgstr "JOC %i DE %i"
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "DATA DE LLANÇAMENT"
 
-msgid "NO GAMES WERE SCRAPED"
-msgstr "NO S'HA GARBELLAT CAP JOC"
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "DESENVOLUPADOR"
 
-#, c-format
-msgid "%i GAME SUCCESSFULLY SCRAPED"
-msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] "S'HAN GARBELLAT CORRECTAMENT LES DADES D'UN JOC"
-msgstr[1] "S'HAN GARBELLAT CORRECTAMENT LES DADES De %i JOCS"
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "ESCRIU EL DESENVOLUPADOR"
 
-#, c-format
-msgid "%i GAME SKIPPED"
-msgid_plural "%i GAMES SKIPPED"
-msgstr[0] "S'HA SALTAT UN JOC"
-msgstr[1] "S'HAN SALTAT %i JOCS"
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "EDITOR"
 
-msgid "GAMELIST OPTIONS"
-msgstr "OPCIONS DEL LLISTAT DE JOCS"
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "ESCRIU L'EDITOR"
 
-msgid "JUMP TO..."
-msgstr "SALTAR A..."
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "GÈNERE"
 
-msgid "SORT GAMES BY"
-msgstr "ORDENAR JOCS SEGONS"
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "ESCRIU EL GÈNERE"
 
-msgid "THIS SYSTEM HAS NO GAMES"
-msgstr "AQUEST SISTEMA NO TÉ JOCS"
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "JUGADORS"
 
-msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
-msgstr "AFEGIR/ELIMINAR JOCS D'AQUESTA COL·LECCIÓ"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "ESCRIU EL NÚMERO DE JUGADORS"
 
-msgid "EDIT THIS FOLDER'S METADATA"
-msgstr "EDITAR LES METADADES D'AQUESTA CARPETA"
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "FAVORIT"
 
-msgid "EDIT THIS GAME'S METADATA"
-msgstr "EDITAR LES METADADES D'AQUESt JOC"
-
-msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
-msgstr "ESCRIU LA CARPETA (SOBREESCRIURE ENLLAÇ DE CARPETA)"
-
-msgid "APPLY"
-msgstr "APLICAR"
-
-msgid "apply"
-msgstr "aplicar"
-
-msgid "close (apply)"
-msgstr "tancar (aplicar)"
-
-msgid "close (cancel)"
-msgstr "tancar (cancel·lar)"
-
-msgid ""
-"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
-"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
-"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
-"LONGER NEEDED."
-msgstr ""
-"AIXÒ ELIMINARÀ ELS ARXIUS MULTIMÈDIA SENSE RELACIONS AMB UN JOC. ES MOURAN "
-"ELS ARXIUS A UNA CARPETA DE NETEJA DINS LA DE MITJANS DE JOCS. QUAN ESTIGUIS "
-"SEGUR QUE JA NO ET CAL, POTS ESBORRAR-LA."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
-"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
-"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
-"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
-msgstr ""
-"AIXÒ ELIMINARÀ LES ENTRADES DELS TEUS ARXIUS XML DE LLISTAT DE JOCS ON NO ES "
-"TROBIN RELACIONS AMB UN JOC. ES FARÀ CÒPIA DE SEGURETAT DELS ORIGINALS A UNA "
-"CARPETA DE NETEJA DINS LA DE LLISTAT DE JOCS. QUAN ESTIGUIS SEGUR QUE JA NO "
-"ET CAL, POTS ESBORRAR-LA."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
-"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
-"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
-"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
-msgstr ""
-"AIXÒ ELIMINARÀ TOTES LES ENTRADES DELS ARXIUS DE CONFIGURACIÓ DE LES "
-"COL·LECCIONS A MIDA ON NO ES TROBIN RELACIONS AMB UN JOC. ES FARÀ CÒPIA DE "
-"SEGURETAT DELS ORIGINALS A UNA CARPETA DE NETEJA DINS LA DE COL·LECCIONS. "
-"QUAN ESTIGUIS SEGUR QUE JA NO ET CAL, POTS ESBORRAR-LA."
-
-msgid "NOT STARTED"
-msgstr "SENSE INICIAR"
-
-msgid "DESCRIPTION:"
-msgstr "DESCRIPCIÓ:"
-
-msgid "TOTAL ENTRIES REMOVED:"
-msgstr "ENTRADES ELIMINADES:"
-
-msgid "LAST PROCESSED SYSTEM:"
-msgstr "ÚLTIM SISTEMA REVISAT:"
-
-msgid "LAST ERROR MESSAGE:"
-msgstr "ÚLTIM MISSATGE D'ERROR:"
-
-msgid "MEDIA"
-msgstr "MULTIMÈDIA"
-
-msgid "start processing"
-msgstr "iniciar processat"
-
-msgid "RUNNING MEDIA CLEANUP"
-msgstr "NETEJA MULTIMÈDIA EN MARXA"
-
-msgid "stop processing"
-msgstr "aturar processat"
-
-msgid "GAMELISTS"
-msgstr "LLISTAT DE JOCS"
-
-msgid "RUNNING GAMELISTS CLEANUP"
-msgstr "NETEJA DE LLISTAT DE JOCS EN MARXA"
-
-msgid "COLLECTIONS"
-msgstr "COL·LECCIONS"
-
-msgid "COLLECTIONS CLEANUP FAILED"
-msgstr "HA FALLAT LA NETEJA DE COL·LECCIONS"
-
-msgid "There are no enabled custom collections"
-msgstr "No hi ha col·leccions personalitzades habilitades"
-
-msgid "RUNNING COLLECTIONS CLEANUP"
-msgstr "NETEJA DE COL·LECCIONS EN MARXA"
-
-msgid "PROCESSING"
-msgstr "PROCESSANT"
-
-#, c-format
-msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr "S'ha trobat un arxiu flatten.txt, saltant «%s»"
-
-msgid "Couldn't create target directory, permission problems?"
-msgstr "No s'ha pogut crear el directori destí, problemes de permisos?"
-
-msgid "Couldn't move media file, permission problems?"
-msgstr "No s'ha pogut moure l'arxiu multimèdia, problemes de permisos?"
-
-#, c-format
-msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr "No s'ha pogut processar l'arxiu gamelist.xml per «%s»"
-
-#, c-format
-msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr "No s'ha tribat una etiqueta gamelist a l'arxiu per «%s»"
-
-msgid "Couldn't delete temporary gamelist file, permission problems?"
-msgstr ""
-"No s'ha pogut esborrar l'arxiu gamelist temporal, problemes de permisos?"
-
-msgid "Couldn't write to temporary gamelist file, permission problems?"
-msgstr ""
-"No s'ha pogut escriure a l'arxiu gamelist temporal, problemes de permisos?"
-
-msgid "Couldn't create backup directory, permission problems?"
-msgstr ""
-"No s'ha pogut crear el directori de còpia de seguretat, problemes de "
-"permisos?"
-
-msgid "Couldn't move old gamelist file, permission problems?"
-msgstr "No s'ha pogut moure l'arxiu gamelist antic, problemes de permisos?"
-
-msgid "Couldn't move temporary gamelist file, permission problems?"
-msgstr "No s'ha pogut moure l'arxiu gamelist temporal, problemes de permisos?"
-
-msgid "Couldn't find custom collection configuration file"
-msgstr "No s'ha trobat l'arxiu de configuració de col·lecció personalitzada"
-
-msgid "Couldn't open custom collection configuration file"
-msgstr ""
-"No s'ha pogut obrir l'arxiu de configuració de col·lecció personalitzada"
-
-msgid "Couldn't delete temporary collection file, permission problems?"
-msgstr ""
-"No s'ha pogut esborrar l'arxiu de col·lecció temporal, problemes de permisos?"
-
-msgid "Couldn't write to temporary collection configuration file"
-msgstr ""
-"No s'ha pogut escriure a l'arxiu de configuració de col·lecció temporal"
-
-msgid "Couldn't move old collection file, permission problems?"
-msgstr ""
-"No s'ha pogut moure l'arxiu de col·lecció antic, problemes de permisos?"
-
-msgid "Couldn't move temporary collection file, permission problems?"
-msgstr ""
-"No s'ha pogut moure l'arxiu de col·lecció temporal, problemes de permisos?"
-
-msgid "ABORTED MEDIA CLEANUP"
-msgstr "S'HA ABORTAT LA NETEJA MULTIMÈDIA"
-
-msgid "COMPLETED MEDIA CLEANUP"
-msgstr "NETEJA MULTIMÈDIA FINALITZADA"
-
-msgid "ABORTED GAMELIST CLEANUP"
-msgstr "S'HA ABORTAT LA NETEJA DE LLISTA DE JOCS"
-
-msgid "COMPLETED GAMELIST CLEANUP"
-msgstr "NETEJA DE LLISTA DE JOCS FINALITZADA"
-
-msgid "ABORTED COLLECTIONS CLEANUP"
-msgstr "S'HA ABORTAT LA NETEJA DE COL·LECCIONS"
-
-msgid "COMPLETED COLLECTIONS CLEANUP"
-msgstr "NETEJA DE COL·LECCIONS FINALITZADA"
-
-msgid "MEDIA CLEANUP FAILED"
-msgstr "HA FALLAT LA NETEJA MULTIMÈDIA"
-
-msgid "GAMELISTS CLEANUP FAILED"
-msgstr "HA FALLAT LA NETEJA DEL LLISTAT DE JOCS"
-
-msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
-msgstr "L'APLICACIÓ ES RECARREGARPA EN TANCAR AQUESTA UTILITAT."
-
-msgid "INVALID ENTRY"
-msgstr "ENTRADA INVÀLIDA"
-
-msgid "CLEARED ENTRY"
-msgstr "ENTRADA ELIMINADA"
-
-msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr "NO S'HAN DEFINIT EMULADORS ALTERNATIUS"
-
-msgid "CLEAR INVALID ENTRY"
-msgstr "ENTRADA INVÀLIDA ELIMINADA"
-
-msgid "DEFAULT"
-msgstr "PER DEFECTE"
-
-msgid "EDIT METADATA"
-msgstr "EDITAR METADADES"
-
-msgid "CLEAR ENTRY"
-msgstr "NETEJAR ENTRADA"
-
-msgid "SELECT EMULATOR"
-msgstr "ESCOLLIR EMULADOR"
-
-msgid "SYSTEM-WIDE"
-msgstr "PER TOT EL SISTEMA"
-
-msgid "unknown"
-msgstr "desconegut"
-
-msgid "SCRAPE"
-msgstr "GARBELLAR"
-
-msgid "scrape"
-msgstr "garbellar"
-
-msgid "save metadata"
-msgstr "guardar metadades"
-
-msgid "cancel changes"
-msgstr "cancel·lar canvis"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
-"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"AIXÒ ESBORRARÀ QUALSEVOL ARXIU MULTIMÈDIA I L'ENTRADA A GAMELIST.XML "
-"D'AQUEST DIRECTORI, PERÒ NO S'ESBORRARÀ EL DIRECTORI NI QUALSEVOL CONTINGUT "
-"A L'INTERIOR\n"
-"N'ESTÀS SEGUR?"
-
-msgid "CLEAR"
-msgstr "NETEJAR"
-
-msgid "clear folder"
-msgstr "netejar la carpeta"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
-"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"AIXÒ ELIMINARÀ TOTS ELS ARXIUS MULTIMÈDIA I L'ENTRADA D'AQUEST JOC A "
-"GAMELIST.XML, PERÒ L'ARXIU DEL JOC EN SI NO S'ESBORRARÀ\n"
-"ESTÀS SEGUR?"
-
-msgid "clear file"
-msgstr "netejar arxiu"
-
-msgid ""
-"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
-"ARE YOU SURE?"
-msgstr ""
-"AIXÒ ESBORRARÀ L'ARXIU DEL JOC, QUALSEVOL ARXIU MULTIMÈDIA I L'ENTRADA DEL "
-"JOC A GAMELIST.XML. ESTÀS SEGUR?"
-
-msgid "DELETE"
-msgstr "ESBORRAR"
-
-msgid "delete game"
-msgstr "esborrar joc"
-
-msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr "GENERADOR FORA DE LÍNIA DE COMPOSICIÓ D'IMATGES"
-
-#, c-format
-msgid "%i OF %i GAME PROCESSED"
-msgid_plural "%i OF %i GAMES PROCESSED"
-msgstr[0] "S'HA PROCESSAT UN JOC"
-msgstr[1] "S'HAN PROCESSAT %i de %i JOCS"
-
-msgid "Generated:"
-msgstr "Generats:"
-
-msgid "Overwritten:"
-msgstr "Reemplaçats:"
-
-msgid "Skipped:"
-msgstr "Ignorats:"
-
-msgid "Skipped (existing):"
-msgstr "Ignorats (existents):"
-
-msgid "Failed:"
-msgstr "Fallits:"
-
-msgid "Processing:"
-msgstr "Processant:"
-
-msgid "Last error message:"
-msgstr "Últim missatge d'error:"
-
-msgid "PAUSE"
-msgstr "PAUSA"
-
-msgid "pause processing"
-msgstr "pausar processat"
-
-msgid "close (abort processing)"
-msgstr "tancar (abortar processat)"
-
-msgid "RUNNING..."
-msgstr "FUNCIONANT..."
-
-msgid "PAUSED"
-msgstr "PAUSAT"
-
-msgid "RUNNING"
-msgstr "FUNCIONANT"
-
+msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "COMPLETAT"
 
-msgid "DONE"
-msgstr "FET"
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "INFANTIL"
 
-msgid "done (close)"
-msgstr "fet (tancar)"
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "JOC INFANTIL (NOMÉS AFECTA LES INSÍGNIES)"
 
-msgid "APPLICATION UPDATER"
-msgstr "ACTUALITZADOR D'APLICACIÓ"
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "OCULT"
 
-msgid "INSTALLATION STEPS:"
-msgstr "PROCÉS D'INSTAL·LACIÓ:"
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "TRENCAT/NO FUNCIONA"
 
-msgid "DOWNLOAD NEW RELEASE"
-msgstr "DESCARREGAR NOVA VERSIÓ"
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "EXCLOURE DEL COMPUT DE JOCS"
 
-msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
-msgstr "DESCARREGAR NOVA VERSIÓ A AQUEST DIRECTORI:"
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "EXCLOURE DEL MULTI-GARBELLAT"
 
-msgid "INSTALL PACKAGE"
-msgstr "INSTAL·LAR PAQUET"
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "AMAGAR CAMPS DE METADADES"
 
-msgid "QUIT AND MANUALLY RESTART ES-DE"
-msgstr "SORTIR I REINICIAR ES-DE MANUALMENT"
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "VEGADES JUGAT"
 
-msgid "QUIT AND MANUALLY UPGRADE ES-DE"
-msgstr "SORTIR I ACTUALITZAR ESDE MANUALMENT"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "ESCRIU EL NÚMERO DE VEGADES QUE S'HA JUGAT"
 
-msgid "STATUS MESSAGE:"
-msgstr "MISSATGE D'ESTAT:"
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "COMANDAMENT"
 
-msgid "DOWNLOAD"
-msgstr "DESCÀRREGA"
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "ESCULL COMANDAMENT"
 
-msgid "download new release"
-msgstr "descarregar nova versió"
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "EMULADOR ALTERNATIU"
 
-msgid "Download directory does not exist"
-msgstr "El directori de descàrrega no existeix"
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "ESCULL UN EMULADOR ALTERNATIU"
 
-msgid "CHANGE DIRECTORY"
-msgstr "CANVIAR DIRECTORI"
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "ENLLAÇ A LA CARPETA"
 
-msgid "change download directory"
-msgstr "canviar directori de descàrrega"
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "ESCULL L'ENLLAÇ A LA CARPETA"
 
-msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr "ESCRIU EL DIRECTORI DE DESCÀRREGA"
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "ÚLTIMA PARTIDA"
 
-msgid "DOWNLOAD ABORTED"
-msgstr "DESCÀRREGA ABORTADA"
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "ESCRIU LA DATA DE LA ÚLTIMA PARTIDA"
 
-msgid "NO PACKAGE SAVED TO DISK"
-msgstr "NO S'HA GUARDAT CAP PAQUET AL DISC"
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "No s'ha trobat cap captura, no s'ha pogut generar la composició"
 
-msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr "S'HA DESCARREGAT EL PAQUET I ES POT INSTAL·LAR MANUALMENT"
-
-msgid "DOWNLOADING 100%"
-msgstr "DESCARREGANT 100%"
-
-msgid "Downloaded file does not match expected MD5 checksum"
-msgstr "El checksum MD% de l'arxiu descarregat no coincideix amb l'esperat"
-
-msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgid "Screenshot in unknown format, couldn't generate miximage"
 msgstr ""
-"Error: No s'ha pogut esborrar l'arxiu temporal del paquet, problemes de "
-"permisos?"
+"La captura està en un format desconegut, no s'ha pogut generar la composició"
 
-msgid "Error: Couldn't write package file, permission problems?"
+msgid "Screenshot in unsupported format, couldn't generate miximage"
 msgstr ""
-"Error: No s'ha pogut escriure a l'arxiu del paquet, problemes de permisos?"
+"La captura està en format no suportat, no s'ha pogut generar la composició"
 
-msgid "Error: Couldn't set permissions on AppImage file"
-msgstr "Error: No s'han pogut establir permisos a l'arxiu AppImage"
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "Error carregant la captura, no s'ha pogut generar la composició"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Error carregant la marquesina, arxiu corrupte?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Error carregant la caixa 3D, arxiu corrupte?"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "Error carregant la portada, arxiu corrupte?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "Error carregant el mitja físic, arxiu corrupte?"
 
 #, c-format
-msgid "Downloaded %s"
-msgstr "Descarregat %s"
+msgid "PAGE %s OF %s"
+msgstr "PÀGINA %s DE %s"
 
-msgid "Error: Couldn't open AppImage update file for reading"
-msgstr "Error: No s'ha pogut obrir l'arxiu d'actualització AppImage"
+msgid "pan"
+msgstr "centrar"
 
-msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgid "reset"
+msgstr "reiniciar"
+
+msgid "game media"
+msgstr "mitjans del joc"
+
+msgid "zoom"
+msgstr "zoom"
+
+msgid "Network error:"
+msgstr "Error de xarxa:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "El directori de mitjans ni existeix ni es pot crear."
+
+msgid "Permission problems?"
+msgstr "Problemes de permisos?"
+
+msgid "Failed to open path for writing media file."
+msgstr "No s'ha pogut obrir la ruta per guardar l'arxiu multimèdia."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
 msgstr ""
-"Error: El checksum MD5 de l'arxiu descarregat no coincideix amb l'esperat"
+"No s'ha pogut guardar l'arxiu multimèdia, problemes de permisos o està ple "
+"el disc?"
 
-msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
-"Error: No s'ha pogut reanomentar l'arxiu AppImage en execució, problemes de "
-"permisos?"
+"No s'ha pogut redimensionar la imatge, problemes de permisos o està ple el "
+"disc?"
 
-msgid "Error: Couldn't replace running AppImage file, permission problems?"
-msgstr ""
-"Error: No s'ha pogut substituir l'arxiu AppImage en execució, problemes de "
-"permisos?"
+msgid "ScreenScraper error:"
+msgstr "Error d'ScreenScraper:"
 
-#, c-format
-msgid "Successfully installed as %s"
-msgstr "Instal·lat correctament com %s"
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: nom d'usuari o contrasenya incorrectes"
 
-msgid "INSTALL"
-msgstr "INSTAL·LAR"
+msgid "No Entries Found"
+msgstr "No s'han trobat entrades"
 
-msgid "install package"
-msgstr "instal·lar paquet"
+msgctxt "theme"
+msgid "all"
+msgstr "tots"
 
-msgid "Find the detailed changelog at"
-msgstr "Pots veure el registre de novetats detallat a"
-
-msgid "quit application"
-msgstr "sortir de l'aplicació"
-
+msgctxt "theme"
 msgid "all games"
 msgstr "tots els jocs"
 
+msgctxt "theme"
+msgid "recent"
+msgstr "recent"
+
+msgctxt "theme"
 msgid "last played"
 msgstr "última partida"
 
+msgctxt "theme"
 msgid "favorites"
 msgstr "favorits"
 
+msgctxt "theme"
 msgid "collections"
 msgstr "col·leccions"
-
-#, c-format
-msgid "DISABLED '%s' IN '%s'"
-msgstr "DESHABILITAT «%s» A «%s»"
-
-#, c-format
-msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr "EDITANT LA COL·LECCIÓ «%s», AFEGIR/ELIMINAR JOCS AMB «%s»"
-
-#, c-format
-msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr "S'HA ACABAT D'EDITAR LA COL·LECCIÓ «%s»"
-
-msgid "Favorites"
-msgstr "Favorits"
-
-#, c-format
-msgid "ADDED '%s' TO '%s'"
-msgstr "S'HA AFEGIT «%s» A «%s»"
-
-#, c-format
-msgid "REMOVED '%s' FROM '%s'"
-msgstr "S'HA ELIMINAT «%s» DE «%s»"
-
-msgid "This collection is empty"
-msgstr "Aquesta col·lecció està buida"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s [%s]'"
-msgstr "Aquesta col·lecció conté un joc: «%s [%s]»"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
-msgstr "Aquesta col·lecció conté dos jocs: «%s [%s]» i «%s [%s]»"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
-msgstr "Aquesta col·lecció conté tres jocs: «%s [%s]», «%s [%s]» i «%s [%s]»"
-
-#, c-format
-msgctxt "theme"
-msgid ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgid_plural ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgstr[0] ""
-"Aquesta col·lecció conté %i jocs: «%s [%s]», «%s [%s]» i «%s [%s]», entre "
-"d'altres"
-msgstr[1] ""
-"Aquesta col·lecció conté %i jocs: «%s [%s]», «%s [%s]» i «%s [%s]», entre "
-"d'altres"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s'"
-msgstr "Aquesta col·lecció conté un joc: «%s»"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s' and '%s'"
-msgstr "Aquesta col·lecció conté dos jocs: «%s» i «%s»"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s', '%s' and '%s'"
-msgstr "Aquesta col·lecció conté tres jocs: «%s», «%s» i «%s»"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgid_plural ""
-"This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr[0] "Aquesta col·lecció conté %i jocs: «%s», «%s» i «%s», entre d'altres"
-msgstr[1] "Aquesta col·lecció conté %i jocs: «%s», «%s» i «%s», entre d'altres"
-
-#, c-format
-msgctxt "theme"
-msgid "'%s' is filtered so there may be more games available"
-msgstr "«%s» té filtres, per tant, pot haver disponibles més jocs"
-
-#, c-format
-msgid "DELETED COLLECTION '%s'"
-msgstr "COL·LECCIÓ «%s» ESBORRADA"
-
-msgid "name, ascending"
-msgstr "nom, ascendent"
-
-msgid "name, descending"
-msgstr "nom, descendent"
-
-msgid "rating, ascending"
-msgstr "valoració, ascendent"
-
-msgid "rating, descending"
-msgstr "valoració, descendent"
-
-msgid "release date, ascending"
-msgstr "llançament, ascendent"
-
-msgid "release date, descending"
-msgstr "llançament, descendent"
-
-msgid "developer, ascending"
-msgstr "desenvolupador, ascendent"
-
-msgid "developer, descending"
-msgstr "desenvolupador, descendent"
-
-msgid "publisher, ascending"
-msgstr "editor, ascendent"
-
-msgid "publisher, descending"
-msgstr "editor, descendent"
-
-msgid "genre, ascending"
-msgstr "gènere, ascendent"
-
-msgid "genre, descending"
-msgstr "gènere, descendent"
-
-msgid "players, ascending"
-msgstr "jugadors, ascendent"
-
-msgid "players, descending"
-msgstr "jugadors, descendent"
-
-msgid "last played, ascending"
-msgstr "última partida, ascendent"
-
-msgid "last played, descending"
-msgstr "última partida, descendent"
-
-msgid "times played, ascending"
-msgstr "partides, ascendent"
-
-msgid "times played, descending"
-msgstr "partides, descendent"
-
-msgid "system, ascending"
-msgstr "sistema, ascendent"
-
-msgid "system, descending"
-msgstr "sistema, descendent"
-
-#, c-format
-msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr "ERROR: FALTA LA CONFIGURACIÓ DE REGLES DE CERCA PRE-COMMAND PER «%s»"
-
-msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: nO S'HA TROBAT PRE-COMMAND, ESTÀ INSTAL·LAT CORRECTAMENT?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: NO S'HA TROBAT PRE-COMMAND «%s», ESTÀ INSTAL·LAT CORRECTAMENT?"
-
-#, c-format
-msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr "ERROR: FALTA LA CONFIGURACIÓ DE REGLES DE CERCA D'EMULADOR PER «%s»"
-
-msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: NO S'HA TROBAT L'APP, ESTÀ INSTAL·LADA CORRECTAMENT?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: NO S'HA TROBAT L'APP «%s», ESTÀ INSTAL·LADA CORRECTAMENT?"
-
-msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: NO S'HA TROBAT L'EMULADOR, ESTÀ INSTAL·LAT CORRECTAMENT?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: NO S'HA TROBAT L'EMULADOR «%s», ESTÀ INSTAL·LAT CORRECTAMENT?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr "ERROR: NO S'HA TROBAT L'ARXIU DEL NUCLI DE L'EMULADOR «%s»"
-
-msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr "ERROR: ENTRADA INVÀLIDA A L'ARXIU DE CONFIGURACIÓ DE SISTEMES"
-
-#, c-format
-msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr "ERROR: FALTA LA CONFIGURACIÓ DE NUCLI PER «%s»"
-
-#, c-format
-msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr "ERROR: ENTRADA «%s» VARIABLE INVÀLIDA"
-
-#, c-format
-msgid ""
-"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
-msgstr ""
-"ERROR: NO S'HA POGUT CREAR EL DIRECTORI DEFINIT PER %s, PROBLEMES DE "
-"PERMISOS?"
-
-msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "ERROR: L'APP O L'ARXIU ÀLIES NO EXISTEIX O NO ES POT LLEGIR"
-
-msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr "ERROR: L'ARXIU DESKTOP ÉS INVÀLID O NO ES POT LLEGIR"
-
-msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "ERROR: L'ARXIU DESKTOP NO EXISTEIX O NO ES POT LLEGIR"
-
-#, c-format
-msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
-msgstr "ERROR EN LLANÇAR EL JOC «%s» (CODI D'ERROR %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr ""
@@ -2229,8 +2349,32 @@ msgstr ""
 "NO ES PODEN AFEGIR ENTRADES QUE NO SIGUIN JOCS A LES COL·LECCIONS "
 "PERSONALITZADES"
 
+msgid "system"
+msgstr "sistema"
+
+msgid "view media"
+msgstr "veure multimèdia"
+
+msgid "options"
+msgstr "opcions"
+
 msgid "random"
 msgstr "aleatori"
+
+msgid "jump to game"
+msgstr "saltar al joc"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "desconegut"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "si"
+
+msgctxt "theme"
+msgid "no"
+msgstr "no"
 
 msgid "screensaver"
 msgstr "salvapantalles"
@@ -2255,30 +2399,6 @@ msgid "%i favorite"
 msgid_plural "%i favorites"
 msgstr[0] "%i favorit"
 msgstr[1] "%i favorits"
-
-msgctxt "theme"
-msgid "unknown"
-msgstr "desconegut"
-
-msgid "system"
-msgstr "sistema"
-
-msgid "view media"
-msgstr "veure multimèdia"
-
-msgid "options"
-msgstr "opcions"
-
-msgid "jump to game"
-msgstr "saltar al joc"
-
-msgctxt "theme"
-msgid "yes"
-msgstr "si"
-
-msgctxt "theme"
-msgid "no"
-msgstr "no"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2436,196 +2556,40 @@ msgstr "INICIANT JOC «%s»"
 msgid "menu"
 msgstr "menu"
 
-#, c-format
-msgid "PAGE %s OF %s"
-msgstr "PÀGINA %s DE %s"
+msgid "WORKING..."
+msgstr "TREBALLANT…"
 
-msgid "pan"
-msgstr "centrar"
-
-msgid "reset"
-msgstr "reiniciar"
-
-msgid "browse"
-msgstr "navegar"
-
-msgid "game media"
-msgstr "mitjans del joc"
-
-msgid "first"
-msgstr "primer"
-
-msgid "last"
-msgstr "últim"
-
-msgid "zoom"
-msgstr "zoom"
-
-msgid "RATING"
-msgstr "VALORACIÓ"
-
-msgid "DEVELOPER"
-msgstr "DESENVOLUPADOR"
-
-msgid "PUBLISHER"
-msgstr "EDITOR"
-
-msgid "GENRE"
-msgstr "GÈNERE"
-
-msgid "PLAYERS"
-msgstr "JUGADORS"
-
-msgid "FAVORITE"
-msgstr "FAVORIT"
-
-msgid "KIDGAME"
-msgstr "INFANTIL"
-
-msgid "HIDDEN"
-msgstr "OCULT"
-
-msgid "BROKEN"
-msgstr "TRENCAT"
-
-msgid "CONTROLLER"
-msgstr "COMANDAMENT"
-
-msgid "ALTERNATIVE EMULATOR"
-msgstr "EMULADOR ALTERNATIU"
-
-msgid "FALSE"
-msgstr "FALS"
-
-msgid "TRUE"
-msgstr "CERT"
-
-msgid "UNKNOWN"
-msgstr "DESCONEGUT"
-
-msgid "NONE SELECTED"
-msgstr "CAP SELECCIONAT"
-
-msgid "No screenshot found, couldn't generate miximage"
-msgstr "No s'ha trobat cap captura, no s'ha pogut generar la composició"
-
-msgid "Screenshot in unknown format, couldn't generate miximage"
-msgstr ""
-"La captura està en un format desconegut, no s'ha pogut generar la composició"
-
-msgid "Screenshot in unsupported format, couldn't generate miximage"
-msgstr ""
-"La captura està en format no suportat, no s'ha pogut generar la composició"
-
-msgid "Error loading screenshot, couldn't generate miximage"
-msgstr "Error carregant la captura, no s'ha pogut generar la composició"
-
-msgid "Error loading marquee image, corrupt file?"
-msgstr "Error carregant la marquesina, arxiu corrupte?"
-
-msgid "Error loading 3d box image, corrupt file?"
-msgstr "Error carregant la caixa 3D, arxiu corrupte?"
-
-msgid "Error loading box cover image, corrupt file?"
-msgstr "Error carregant la portada, arxiu corrupte?"
-
-msgid "Error loading physical media image, corrupt file?"
-msgstr "Error carregant el mitja físic, arxiu corrupte?"
-
-msgid "pdf manual"
-msgstr "manual pdf"
-
-msgid "SCREENSHOT"
-msgstr "CAPTURA"
-
-msgid "BOX COVER"
-msgstr "PORTADA"
-
-msgid "BOX BACK COVER"
-msgstr "CONTRAPORTADA"
-
-msgid "TITLE SCREEN"
-msgstr "PANTALLA DE TÍTOL"
-
-msgid "FAN ART"
-msgstr "FAN ART"
-
-msgid "MIXIMAGE"
-msgstr "COMPOSICIÓ"
-
-msgid "CUSTOM"
-msgstr "PERSONALITZAT"
-
-msgid "Searching for games..."
-msgstr "Buscant jocs…"
-
-msgid "Loading systems..."
-msgstr "Carregant sistemes…"
-
-msgid "Reloading..."
-msgstr "Recarregant…"
-
-msgid "Copying resources..."
-msgstr "Copiant recursos…"
-
-msgid "Creating system directories..."
-msgstr "Creant carpetes de sistema…"
-
-msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr "ERROR: NO ES POT RENDERITZAR L'ARXIU PDF"
+msgctxt "theme"
+msgid "never"
+msgstr "mai"
 
 #, c-format
-msgid "ADDED INPUT DEVICE '%s'"
-msgstr "S'HA AFEGIT EL DISPOSITIU D'ENTRADA «%s»"
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "ahir"
+msgstr[1] "fa %i dies"
 
 #, c-format
-msgid "REMOVED INPUT DEVICE '%s'"
-msgstr "S'HA ELIMINAT EL DISPOSITIU D'ENTRADA «%s»"
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "fa una hora"
+msgstr[1] "fa %i hores"
 
-msgid "medium"
-msgstr "mitjà"
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "fa un minut"
+msgstr[1] "fa %i minuts"
 
-msgid "large"
-msgstr "gran"
-
-msgid "small"
-msgstr "petit"
-
-msgid "extra small"
-msgstr "molt petit"
-
-msgid "extra large"
-msgstr "molt gran"
-
-msgid "automatic"
-msgstr "automàtic"
-
-msgid "16:9 vertical"
-msgstr "16:9 vertical"
-
-msgid "16:10 vertical"
-msgstr "16:10 vertical"
-
-msgid "3:2 vertical"
-msgstr "3:2 vertical"
-
-msgid "4:3 vertical"
-msgstr "4:3 vertical"
-
-msgid "5:4 vertical"
-msgstr "5:4 vertical"
-
-msgid "19.5:9 vertical"
-msgstr "19.5:9 vertical"
-
-msgid "20:9 vertical"
-msgstr "20:9 vertical"
-
-msgid "21:9 vertical"
-msgstr "21:9 vertical"
-
-msgid "32:9 vertical"
-msgstr "32:9 vertical"
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "fa un segon"
+msgstr[1] "fa %i segons"
 
 msgid "edit date"
 msgstr "editar data"
@@ -2667,73 +2631,17 @@ msgstr "NETEJAR SELECCIÓ"
 msgid "select none"
 msgstr "netejar selecció"
 
+msgid "add half star"
+msgstr "afegir mitja estrella"
+
+msgid "toggle"
+msgstr "canvia"
+
 msgid "move cursor"
 msgstr "moure el cursor"
 
 msgid "edit"
 msgstr "editar"
-
-msgid "WORKING..."
-msgstr "TREBALLANT…"
-
-msgid "toggle"
-msgstr "canvia"
-
-msgid "add half star"
-msgstr "afegir mitja estrella"
-
-msgctxt "theme"
-msgid "never"
-msgstr "mai"
-
-#, c-format
-msgctxt "theme"
-msgid "%i day ago"
-msgid_plural "%i days ago"
-msgstr[0] "ahir"
-msgstr[1] "fa %i dies"
-
-#, c-format
-msgctxt "theme"
-msgid "%i hour ago"
-msgid_plural "%i hours ago"
-msgstr[0] "fa una hora"
-msgstr[1] "fa %i hores"
-
-#, c-format
-msgctxt "theme"
-msgid "%i minute ago"
-msgid_plural "%i minutes ago"
-msgstr[0] "fa un minut"
-msgstr[1] "fa %i minuts"
-
-#, c-format
-msgctxt "theme"
-msgid "%i second ago"
-msgid_plural "%i seconds ago"
-msgstr[0] "fa un segon"
-msgstr[1] "fa %i segons"
-
-msgid "SPACE"
-msgstr "ESPAI"
-
-msgid "LOAD"
-msgstr "CARREGAR"
-
-msgid "shift"
-msgstr "majús"
-
-msgid "alt"
-msgstr "alt"
-
-msgid "newline"
-msgstr "entrar"
-
-msgid "backspace"
-msgstr "retrocés"
-
-msgid "space"
-msgstr "espai"
 
 msgid "WELCOME"
 msgstr "HOLA"
@@ -2766,15 +2674,6 @@ msgstr ""
 
 msgid "PRESS ESC TO CANCEL"
 msgstr "PRESIONA ESC PER CANCEL·LAR"
-
-msgid "LOAD DEFAULT"
-msgstr "CARREGAR PER DEFECTE"
-
-msgid "DISCARD CHANGES"
-msgstr "DESCARTAR CANVIS"
-
-msgid "discard changes"
-msgstr "descartar canvis"
 
 msgid "CONFIGURING"
 msgstr "CONFIGURANT"
@@ -2881,9 +2780,110 @@ msgstr "JA EN ÚS"
 msgid "PRESS ANYTHING"
 msgstr "PRESIONA QUALSEVOL COSA"
 
+msgid "SPACE"
+msgstr "ESPAI"
+
+msgid "LOAD"
+msgstr "CARREGAR"
+
+msgid "shift"
+msgstr "majús"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "entrar"
+
+msgid "backspace"
+msgstr "retrocés"
+
+msgid "space"
+msgstr "espai"
+
+msgid "LOAD DEFAULT"
+msgstr "CARREGAR PER DEFECTE"
+
+msgid "DISCARD CHANGES"
+msgstr "DESCARTAR CANVIS"
+
+msgid "discard changes"
+msgstr "descartar canvis"
+
 msgid "You have exceeded your daily scrape quota"
 msgstr "Has excedit la teva quota diaria de garbellat"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "El servidor ha retornat el codi d'error HTTP %s"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "S'HA AFEGIT EL DISPOSITIU D'ENTRADA «%s»"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "S'HA ELIMINAT EL DISPOSITIU D'ENTRADA «%s»"
+
+msgid "medium"
+msgstr "mitjà"
+
+msgid "large"
+msgstr "gran"
+
+msgid "small"
+msgstr "petit"
+
+msgid "extra small"
+msgstr "molt petit"
+
+msgid "extra large"
+msgstr "molt gran"
+
+msgid "automatic"
+msgstr "automàtic"
+
+msgid "16:9 vertical"
+msgstr "16:9 vertical"
+
+msgid "16:10 vertical"
+msgstr "16:10 vertical"
+
+msgid "3:2 vertical"
+msgstr "3:2 vertical"
+
+msgid "4:3 vertical"
+msgstr "4:3 vertical"
+
+msgid "5:4 vertical"
+msgstr "5:4 vertical"
+
+msgid "19.5:9 vertical"
+msgstr "19.5:9 vertical"
+
+msgid "20:9 vertical"
+msgstr "20:9 vertical"
+
+msgid "21:9 vertical"
+msgstr "21:9 vertical"
+
+msgid "32:9 vertical"
+msgstr "32:9 vertical"
+
+msgid "Searching for games..."
+msgstr "Buscant jocs…"
+
+msgid "Loading systems..."
+msgstr "Carregant sistemes…"
+
+msgid "Reloading..."
+msgstr "Recarregant…"
+
+msgid "Copying resources..."
+msgstr "Copiant recursos…"
+
+msgid "Creating system directories..."
+msgstr "Creant carpetes de sistema…"
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "ERROR: NO ES POT RENDERITZAR L'ARXIU PDF"

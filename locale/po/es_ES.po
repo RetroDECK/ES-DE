@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-04 17:44+0200\n"
+"POT-Creation-Date: 2024-11-13 18:05+0100\n"
 "PO-Revision-Date: 2024-09-01 18:27+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Español (España) <info@es-de.org>\n"
@@ -30,208 +30,595 @@ msgstr "Nueva versión disponible:"
 msgid "For more information visit"
 msgstr "Para más información visite"
 
-msgid "No Entries Found"
-msgstr "No se encontraron entradas"
-
-msgctxt "theme"
-msgid "all"
-msgstr "todos"
-
-msgctxt "theme"
 msgid "all games"
 msgstr "todos los juegos"
 
-msgctxt "theme"
-msgid "recent"
-msgstr "recientes"
-
-msgctxt "theme"
 msgid "last played"
 msgstr "ultimos jugados"
 
-msgctxt "theme"
 msgid "favorites"
 msgstr "favoritos"
 
-msgctxt "theme"
 msgid "collections"
 msgstr "colecciones"
 
-msgid "ScreenScraper error:"
-msgstr "Error de ScreenScraper:"
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "DESACTIVADO '%s' EN '%s'"
 
-msgid "ScreenScraper: Wrong username or password"
-msgstr "ScreenScraper: Nombre de usuario o contraseña incorrectos"
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "EDICIÓN DE LA COLECCIÓN '%s', AÑADIR/ELIMINAR JUEGOS CON %s"
 
-msgid "Network error:"
-msgstr "Error de red:"
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "FINALIZADA LA EDICIÓN DE LA COLECCIÓN '%s"
 
-msgid "Media directory does not exist and can't be created."
-msgstr "El directorio de media no existe y no se puede crear."
+msgid "Favorites"
+msgstr "Favoritos"
 
-msgid "Permission problems?"
-msgstr "¿Problemas de permisos?"
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "AÑADIDO '%s' A '%s'"
 
-msgid "Failed to open path for writing media file."
-msgstr "Fallo al abrir la ruta para escribir el fichero de media."
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "ELIMINADO '%s' DE '%s'"
 
-msgid "Couldn't save media file, permission problems or is the disk full?"
+msgid "This collection is empty"
+msgstr "Esta colección está vacía"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "Esta colección contiene 1 juego: '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "Esta colección contiene 2 juegos: '%s [%s]' y '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "Esta colección contiene 3 juegos: '%s [%s]', '%s [%s]' y '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"Esta colección contiene %i juegos: '%s [%s]', '%s [%s]' y '%s [%s]', entre "
+"otros"
+msgstr[1] ""
+"Esta colección contiene %i juegos: '%s [%s]', '%s [%s]' y '%s [%s]', entre "
+"otros"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "Esta colección contiene 1 juego: '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "Esta colección contiene 2 juegos: '%s' y '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "Esta colección contiene 3 juegos: '%s', '%s' y '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "Esta colección contiene %i juegos: '%s', '%s' y '%s', entre otros"
+msgstr[1] "Esta colección contiene %i juegos: '%s', '%s' y '%s', entre otros"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' se filtra por lo que puede haber más juegos disponibles"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "COLECCIÓN ELIMINADA '%s'"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "ERROR: FALTA CONFIGURACIÓN DE REGLAS DE BÚSQUEDA COMANDO PARA '%s'"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: NO SE ENCUENTRA EL COMANDO, ¿SE HA INSTALADO CORRECTAMENTE?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
 msgstr ""
-"No puedo guardar el fichero de media, ¿problema de permisos o esta el disco "
-"lleno?"
+"ERROR: NO SE ENCUENTRA EL COMANDO '%s', ¿SE HA INSTALADO CORRECTAMENTE?"
 
-msgid "Couldn't save resized image, permission problems or is the disk full?"
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
 msgstr ""
-"No puedo guardar la imagen modificada, ¿problema de permisos o esta el disco "
-"lleno?"
+"ERROR: FALTA CONFIGURACIÓN DE REGLAS DE BÚSQUEDA DEL EMULADOR PARA '%s'"
 
-msgctxt "metadata"
-msgid "NAME"
-msgstr "NOMBRE"
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: NO SE ENCUENTRA LA APLICACIÓN, ¿SE HA INSTALADO CORRECTAMENTE?"
 
-msgctxt "metadata"
-msgid "ENTER NAME"
-msgstr "INTRODUZCA NOMBRE"
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"ERROR: NO SE ENCUENTRA LA APLICACIÓN '%s', ¿SE HA INSTALADO CORRECTAMENTE?"
 
-msgctxt "metadata"
-msgid "SORTNAME"
-msgstr "NOMBRE ALTERNATIVO"
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "ERROR: NO SE ENCUENTRA EL EMULADOR, ¿SE HA INSTALADO CORRECTAMENTE?"
 
-msgctxt "metadata"
-msgid "ENTER SORTNAME"
-msgstr "INTRODUZCA NOMBRE ALTERNATIVO"
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"ERROR: NO SE ENCUENTRA EL EMULADOR '%s', ¿SE HA INSTALADO CORRECTAMENTE?"
 
-msgctxt "metadata"
-msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "NOMBRE ALTERNATIVO EN COLECCIONES"
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr ""
+"ERROR: NO SE HA PODIDO ENCONTRAR EL FICHERO DEL NÚCLEO DEL EMULADOR '%s'"
 
-msgctxt "metadata"
-msgid "ENTER COLLECTIONS SORTNAME"
-msgstr "INTRODUZCA NOMBRE ALTERNATIVO EN COLECCIONES"
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "ERROR: ENTRADA NO VÁLIDA EN EL ARCHIVO DE CONFIGURACIÓN DE SISTEMAS"
 
-msgctxt "metadata"
-msgid "DESCRIPTION"
-msgstr "DESCRIPCION"
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "ERROR: FALTA CONFIGURACIÓN DEL NÚCLEO PARA '%s'"
 
-msgctxt "metadata"
-msgid "ENTER DESCRIPTION"
-msgstr "INTRODUCIR DESCRIPCION"
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "ERROR: ENTRADA DE VARIABLE %s NO VÁLIDA"
 
-msgctxt "metadata"
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr ""
+"ERROR: NO SE HA PODIDO CREAR EL DIRECTORIO DEFINIDO POR %s, ¿PROBLEMAS DE "
+"PERMISOS?"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "ERROR: EL ARCHIVO APP O ALIAS NO EXISTE O ES ILEGIBLE"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "ERROR: EL ARCHIVO DE ESCRITORIO NO ES VÁLIDO O ES ILEGIBLE"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "ERROR: EL ARCHIVO DESKTOP NO EXISTE O ES ILEGIBLE"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "ERROR AL INICIAR EL JUEGO '%s' (CÓDIGO DE ERROR %i)"
+
 msgid "RATING"
 msgstr "VALORACION"
 
-msgctxt "metadata"
-msgid "RELEASE DATE"
-msgstr "FECHA DE LANZAMIENTO"
-
-msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr "DESARROLLADOR"
 
-msgctxt "metadata"
-msgid "ENTER DEVELOPER"
-msgstr "INTRODUCIR DESARROLLADOR"
-
-msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr "COMPAÑIA"
 
-msgctxt "metadata"
-msgid "ENTER PUBLISHER"
-msgstr "INTRODUCIR COMPAÑIA"
-
-msgctxt "metadata"
 msgid "GENRE"
 msgstr "GENERO"
 
-msgctxt "metadata"
-msgid "ENTER GENRE"
-msgstr "INTRODUCIR GENERO"
-
-msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "JUGADORES"
 
-msgctxt "metadata"
-msgid "ENTER NUMBER OF PLAYERS"
-msgstr "INTRODUCIR NUMERO DE JUGADORES"
-
-msgctxt "metadata"
 msgid "FAVORITE"
 msgstr "FAVORITO"
 
-msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "COMPLETADO"
 
-msgctxt "metadata"
 msgid "KIDGAME"
-msgstr "JUEGO PARA NIÑOS"
+msgstr "JUEGO DE NIÑOS"
 
-msgctxt "metadata"
-msgid "KIDGAME (ONLY AFFECTS BADGES)"
-msgstr "JUEGO PARA NIÑOS (SOLO AFECTA A LAS INSIGNIAS)"
-
-msgctxt "metadata"
 msgid "HIDDEN"
-msgstr "OCULTO"
+msgstr "ESCONDIDO"
 
-msgctxt "metadata"
-msgid "BROKEN/NOT WORKING"
-msgstr "ROTO/NO FUNCIONA"
+msgid "BROKEN"
+msgstr "ROTO"
 
-msgctxt "metadata"
-msgid "EXCLUDE FROM GAME COUNTER"
-msgstr "EXCLUIR DEL CONTADOR DE JUEGOS"
-
-msgctxt "metadata"
-msgid "EXCLUDE FROM MULTI-SCRAPER"
-msgstr "EXCLUIR DEL MULTI-ESCRAPEADOR"
-
-msgctxt "metadata"
-msgid "HIDE METADATA FIELDS"
-msgstr "OCULTAR CAMPOS DE METADATOS"
-
-msgctxt "metadata"
-msgid "TIMES PLAYED"
-msgstr "PARTIDAS JUGADAS"
-
-msgctxt "metadata"
-msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr "INTRODUCIR NUMERO DE PARTIDAS JUGADAS"
-
-msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "MANDO"
 
-msgctxt "metadata"
-msgid "SELECT CONTROLLER"
-msgstr "ELEGIR MANDO"
-
-msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr "EMULADOR ALTERNATIVO"
 
-msgctxt "metadata"
-msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr "ELEGIR EMULADOR ALTERNATIVO"
+msgid "FALSE"
+msgstr "FALSO"
 
-msgctxt "metadata"
-msgid "FOLDER LINK"
-msgstr "CARPETA DE ENLACE"
+msgid "TRUE"
+msgstr "VERDADERO"
 
-msgctxt "metadata"
-msgid "SELECT FOLDER LINK"
-msgstr "ELEGIR CARPETA DE ENLACE"
+msgid "UNKNOWN"
+msgstr "DESCONOCIDO"
 
-msgctxt "metadata"
-msgid "LAST PLAYED"
-msgstr "ULTIMOS JUGADOS"
+msgid "NONE SELECTED"
+msgstr "NINGUNO SELECCIONADO"
 
-msgctxt "metadata"
-msgid "ENTER LAST PLAYED DATE"
-msgstr "INTRODUCIR FECHA DE ULTIMOS JUGADOS"
+msgid "name, ascending"
+msgstr "nombre, ascendente"
+
+msgid "name, descending"
+msgstr "nombre, descendente"
+
+msgid "rating, ascending"
+msgstr "clasificación, ascendente"
+
+msgid "rating, descending"
+msgstr "clasificación, descendente"
+
+msgid "release date, ascending"
+msgstr "fecha de lanzamiento, ascendente"
+
+msgid "release date, descending"
+msgstr "fecha de publicación, descendente"
+
+msgid "developer, ascending"
+msgstr "desarrollador, ascendente"
+
+msgid "developer, descending"
+msgstr "desarrollador, descendente"
+
+msgid "publisher, ascending"
+msgstr "editor, ascendente"
+
+msgid "publisher, descending"
+msgstr "editor, descendente"
+
+msgid "genre, ascending"
+msgstr "género, ascendente"
+
+msgid "genre, descending"
+msgstr "género, descendente"
+
+msgid "players, ascending"
+msgstr "jugadores, ascendente"
+
+msgid "players, descending"
+msgstr "jugadores, descendente"
+
+msgid "last played, ascending"
+msgstr "último jugado, ascendente"
+
+msgid "last played, descending"
+msgstr "último jugado, descendente"
+
+msgid "times played, ascending"
+msgstr "veces jugadas, ascendente"
+
+msgid "times played, descending"
+msgstr "veces jugadas, descendente"
+
+msgid "system, ascending"
+msgstr "sistema, ascendente"
+
+msgid "system, descending"
+msgstr "sistema, descendente"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "EMULADORES ALTERNATIVOS"
+
+msgid "BACK"
+msgstr "VOLVER"
+
+msgid "back"
+msgstr "atras"
+
+msgid "INVALID ENTRY"
+msgstr "ENTRADA INVÁLIDA"
+
+msgid "CLEARED ENTRY"
+msgstr "ENTRADA BORRADA"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "NO SE HAN DEFINIDO EMULADORES ALTERNATIVOS"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "BORRAR ENTRADA NO VÁLIDA"
+
+msgid "DEFAULT"
+msgstr "DEFECTO"
+
+msgid "select"
+msgstr "seleccionar"
+
+msgid "APPLICATION UPDATER"
+msgstr "ACTUALIZADOR DE APLICACIONES"
+
+msgid "INSTALLATION STEPS:"
+msgstr "PASOS DE INSTALACIÓN:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "DESCARGAR LA NUEVA VERSIÓN"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "DESCARGUE LA NUEVA VERSIÓN EN ESTE DIRECTORIO:"
+
+msgid "INSTALL PACKAGE"
+msgstr "INSTALAR PAQUETE"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "SALIR Y REINICIAR MANUALMENTE DE ES-DE"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "SALIR Y ACTUALIZAR MANUALMENTE ES-DE"
+
+msgid "STATUS MESSAGE:"
+msgstr "MENSAJE DE ESTADO:"
+
+msgid "DOWNLOAD"
+msgstr "DESCARGAR"
+
+msgid "download new release"
+msgstr "descargar la nueva versión"
+
+msgid "Download directory does not exist"
+msgstr "El directorio de descarga no existe"
+
+msgid "CHANGE DIRECTORY"
+msgstr "CAMBIAR DIRECTORIO"
+
+msgid "change download directory"
+msgstr "cambiar el directorio de descarga"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "INTRODUCIR EL DIRECTORIO DE DESCARGA"
+
+msgid "CANCEL"
+msgstr "CANCELAR"
+
+msgid "cancel"
+msgstr "cancelar"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "DESCARGA CANCELADA"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "NINGÚN PAQUETE GUARDADO EN DISCO"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "SE HA DESCARGADO Y PUEDE INSTALARSE MANUALMENTE"
+
+msgid "DOWNLOADING 100%"
+msgstr "DESCARGANDO 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr ""
+"El archivo descargado no coincide con la suma de comprobación MD5 esperada"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr ""
+"Error: No se ha podido eliminar el archivo temporal del paquete, ¿problemas "
+"de permisos?"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr ""
+"Error: No se pudo escribir el archivo del paquete, ¿problemas de permisos?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "Error: No se han podido establecer permisos en el archivo AppImage"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "Descargado %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr ""
+"Error: No se ha podido abrir el archivo de actualización de AppImage para su "
+"lectura"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr ""
+"Error: El archivo descargado no coincide con la suma de comprobación MD5 "
+"esperada"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"Error: No se ha podido renombrar el archivo AppImage en ejecución, "
+"¿problemas de permisos?"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"Error: No se pudo reemplazar el archivo AppImage en ejecución, ¿problemas de "
+"permisos?"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "Instalado correctamente como %s"
+
+msgid "DOWNLOADING"
+msgstr "DESCARGANDO"
+
+msgid "INSTALL"
+msgstr "SE INSTALA"
+
+msgid "install package"
+msgstr "instalar paquete"
+
+msgid "Find the detailed changelog at"
+msgstr "Encontrará el registro de cambios detallado en"
+
+msgid "QUIT"
+msgstr "SALIR"
+
+msgid "quit application"
+msgstr "salir de la aplicacion"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "TERMINAR DE EDITAR LA COLECCION '%s'"
+
+msgid "SELECT COLLECTIONS"
+msgstr "ELEGIR COLECCIONES"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "COLECCION DE JUEGOS AUTOMATICA"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "COLECCION PERSONALIZADA"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "CREAR NUEVA COLECCION PERSONALIZADA DESDE EL TEMA"
+
+msgid "SELECT THEME FOLDER"
+msgstr "ELEGIR CARPETA DE TEMAS"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "CREAR NUEVA COLECCION PERSONALIZADA"
+
+msgid "NEW COLLECTION NAME"
+msgstr "NOMBRE DE COLECCION"
+
+msgid "CREATE"
+msgstr "CREAR"
+
+msgid "CREATE COLLECTION?"
+msgstr "¿CREAR COLECCION?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "BORRAR COLECCION PERSONALIZADA"
+
+msgid "COLLECTION TO DELETE"
+msgstr "COLECCION A BORRAR"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"SE BORRARA PERMANENTEMENTE LA COLECCION\n"
+"'%s'\n"
+"¿ESTAS SEGURO?"
+
+msgid "YES"
+msgstr "SI"
+
+msgid "NO"
+msgstr "NO"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "AGRUPAR COLECCIONES"
+
+msgid "IF UNTHEMED"
+msgstr "SI NO SE MODIFICA"
+
+msgid "ALWAYS"
+msgstr "SIEMPRE"
+
+msgid "NEVER"
+msgstr "NUNCA"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "PONER LOS FAVORITOS EN LA PARTE SUPERIOR"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "MOSTRAR MARCAS DE ESTRELLAS EN COLECCIONES"
+
+msgid "FILTER GAMELIST"
+msgstr "FILTRAR LISTA DE JUEGOS"
+
+msgid "RESET ALL FILTERS"
+msgstr "RESETEAR TODOS LOS FILTROS"
+
+msgid "GAME NAME"
+msgstr "NOMBRE DEL JUEGO"
+
+msgid "APPLY CHANGES?"
+msgstr "¿APLICAR CAMBIOS?"
+
+msgid "NOTHING TO FILTER"
+msgstr "NADA QUE FILTRAR"
+
+msgid "GAMELIST OPTIONS"
+msgstr "OPCIONES DE LISTA DE JUEGOS"
+
+msgid "JUMP TO..."
+msgstr "IR A..."
+
+msgid "SORT GAMES BY"
+msgstr "ORDENAR JUEGOS POR"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "ESTE SISTEMA NO TIENE JUEGOS"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "AÑADIR/ELIMINAR JUEGOS DE ESTA COLECCION"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "EDITAR METADATOS DE ESTA CARPETA"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "EDITAR METADATOS DE ESTE JUEGO"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "INTRODUCIR CARPETA (ANULAR ENLACE DE CARPETA)"
+
+msgid "CLOSE"
+msgstr "CERRAR"
+
+msgid "close"
+msgstr "cerrar"
+
+msgid "APPLY"
+msgstr "APLICAR"
+
+msgid "apply"
+msgstr "aplicar"
+
+msgid "close (apply)"
+msgstr "cerrar(aplicar)"
+
+msgid "close (cancel)"
+msgstr "cerrar(cancelar)"
+
+msgid "LAUNCHING GAME"
+msgstr "LANZANDO JUEGO"
+
+msgid "HELP PROMPTS"
+msgstr "ANUNCIOS DE AYUDA"
+
+msgid "TOP"
+msgstr "ARRIBA"
+
+msgid "BOTTOM"
+msgstr "ABAJO"
+
+msgid "DISABLED"
+msgstr "DESACTIVADO"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "TIPOS DE SOPORTES DE VISUALIZACIÓN"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "MANTENER LOS VÍDEOS EN MARCHA AL VISUALIZAR IMAGENES"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "AJUSTAR VIDEOS AL TAMAÑO DE PANTALLA"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "RENDERIZAR SCANLINES EN VIDEOS"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "RENDERIZAR DIFUMINADO EN VIDEOS"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "RENDERIZAR SCANLINES EN CAPTURAS Y TITULOS"
 
 msgid "MAIN MENU"
 msgstr "MENU PRINCIPAL"
@@ -259,9 +646,6 @@ msgstr "UTILIDADES"
 
 msgid "QUIT ES-DE"
 msgstr "SALIR DE ES-DE"
-
-msgid "QUIT"
-msgstr "SALIR"
 
 msgid "THEME"
 msgstr "TEMA"
@@ -325,9 +709,6 @@ msgstr "GATILLOS"
 
 msgid "LEFT/RIGHT"
 msgstr "IZQUIERDA/DERECHA"
-
-msgid "DISABLED"
-msgstr "DESACTIVADO"
 
 msgid "GAMELIST ON STARTUP"
 msgstr "LISTA DE JUEGOS AL INICIO"
@@ -442,12 +823,6 @@ msgstr ""
 "\n"
 "¿DESEA CONTINUAR?"
 
-msgid "YES"
-msgstr "SI"
-
-msgid "NO"
-msgstr "NO"
-
 msgid "RANDOM ENTRY BUTTON"
 msgstr "BOTÓN DE ENTRADA ALEATORIA"
 
@@ -560,9 +935,6 @@ msgstr ""
 "BORRAR EL ALMACENAMIENTO ES-DE EN LA CONFIGURACIÓN DE LA APLICACIÓN ANDROID "
 "PARA FORZAR QUE EL CONFIGURADOR SE EJECUTE LA PRÓXIMA VEZ QUE SE INICIE"
 
-msgid "OK"
-msgstr "OK"
-
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
 msgstr "ACEPTAR PULSACIONES SOLO DEL PRIMER DISPOSITIVO"
 
@@ -586,12 +958,6 @@ msgstr ""
 
 msgid "PROCEED"
 msgstr "CONTINUAR"
-
-msgid "CANCEL"
-msgstr "CANCELAR"
-
-msgid "ALTERNATIVE EMULATORS"
-msgstr "EMULADORES ALTERNATIVOS"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "CARPETA DE MEDIA"
@@ -654,14 +1020,8 @@ msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "GUARDAR METADATOS DE LOS JUEGOS"
 
-msgid "ALWAYS"
-msgstr "SIEMPRE"
-
 msgid "ON EXIT"
 msgstr "AL SALIR"
-
-msgid "NEVER"
-msgstr "NUNCA"
 
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "GUARDAR METADATOS DE LOS JUEGOS"
@@ -797,23 +1157,317 @@ msgstr "CONFIG. DEL SALVAPANTALLAS"
 msgid "choose"
 msgstr "elegir"
 
-msgid "select"
-msgstr "seleccionar"
-
 msgid "close menu"
 msgstr "cerrar menu"
 
-msgid "REFINE SEARCH"
-msgstr "BUSQUEDA AVANZADA"
+msgid "EDIT METADATA"
+msgstr "EDITAR METADATOS"
 
-msgid "refine search"
-msgstr "busqueda avanzada"
+msgid "CLEAR ENTRY"
+msgstr "BORRAR ENTRADA"
 
-msgid "cancel"
-msgstr "cancelar"
+msgid "SELECT EMULATOR"
+msgstr "SELECCIONAR EMULADOR"
 
-msgid "back (cancel)"
-msgstr "volver (cancelar)"
+msgid "SYSTEM-WIDE"
+msgstr "EN TODO EL SISTEMA"
+
+msgid "unknown"
+msgstr "desconocido"
+
+msgid "SCRAPE"
+msgstr "ESCRAPEAR"
+
+msgid "scrape"
+msgstr "escrapear"
+
+msgid "save metadata"
+msgstr "guardar metadatos"
+
+msgid "cancel changes"
+msgstr "cancelar cambios"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"ESTO ELIMINARÁ TODOS LOS ARCHIVOS MULTIMEDIA Y LA ENTRADA GAMELIST.XML DE "
+"ESTA CARPETA, PERO NO SE ELIMINARÁ NI EL DIRECTORIO EN SÍ NI NINGÚN "
+"CONTENIDO DE SU INTERIOR\n"
+"¿ESTÁS SEGURO?"
+
+msgid "CLEAR"
+msgstr "LIMPIAR"
+
+msgid "clear folder"
+msgstr "borrar carpeta"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"ESTO ELIMINARÁ TODOS LOS ARCHIVOS MULTIMEDIA Y LA ENTRADA GAMELIST.XML DE "
+"ESTE JUEGO, PERO EL ARCHIVO DEL JUEGO EN SÍ NO SE ELIMINARÁ\n"
+"¿ESTÁS SEGURO?"
+
+msgid "clear file"
+msgstr "borrar fichero"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"ESTO BORRARÁ EL ARCHIVO DEL JUEGO, CUALQUIER ARCHIVO MULTIMEDIA Y LA ENTRADA "
+"GAMELIST.XML\n"
+"¿ESTÁS SEGURO?"
+
+msgid "DELETE"
+msgstr "BORRAR"
+
+msgid "delete game"
+msgstr "borrar juego"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "GENERADOR OFFLINE DE MIXIMAGES"
+
+msgid "NOT STARTED"
+msgstr "NO INICIADO"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i DE %i JUEGO PROCESADO"
+msgstr[1] "%i DE %i JUEGOS PROCESADOS"
+
+msgid "Generated:"
+msgstr "Generada:"
+
+msgid "Overwritten:"
+msgstr "Sobrescrito:"
+
+msgid "Skipped:"
+msgstr "Ignorados:"
+
+msgid "Skipped (existing):"
+msgstr "Omitido (existente):"
+
+msgid "Failed:"
+msgstr "Fallido:"
+
+msgid "Processing:"
+msgstr "Procesando:"
+
+msgid "Last error message:"
+msgstr "Último mensaje de error:"
+
+msgid "START"
+msgstr "EMPEZAR"
+
+msgid "start processing"
+msgstr "empezar proceso"
+
+msgid "PAUSE"
+msgstr "PAUSA"
+
+msgid "pause processing"
+msgstr "pausar el procesamiento"
+
+msgid "close (abort processing)"
+msgstr "cerrar (abortar el procesamiento)"
+
+msgid "RUNNING..."
+msgstr "EJECUTANDO..."
+
+msgid "PAUSED"
+msgstr "PAUSADO"
+
+msgid "RUNNING"
+msgstr "FUNCIONANDO"
+
+msgid "DONE"
+msgstr "HECHO"
+
+msgid "done (close)"
+msgstr "hecho (cerrar)"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"ESTO ELIMINARÁ TODOS LOS ARCHIVOS MULTIMEDIA EN LOS QUE NO SE ENCUENTREN "
+"ARCHIVOS DE JUEGO COINCIDENTES. ESTOS ARCHIVOS SE MOVERÁN A UNA CARPETA DE "
+"LIMPIEZA DENTRO DE SU DIRECTORIO MEDIA. PUEDES ELIMINAR MANUALMENTE ESTA "
+"CARPETA CUANDO ESTÉS SEGURO DE QUE YA NO ES NECESARIA."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"ESTO ELIMINARÁ TODAS LAS ENTRADAS DE SUS ARCHIVOS XML DE GAMELIST DONDE NO "
+"SE PUEDEN ENCONTRAR ARCHIVOS DE JUEGO COINCIDENTES. LAS COPIAS DE SEGURIDAD "
+"DE LOS ARCHIVOS ORIGINALES SE GUARDARÁN EN UNA CARPETA DE LIMPIEZA DENTRO DE "
+"SU DIRECTORIO GAMELISTS."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"ESTO ELIMINARÁ TODAS LAS ENTRADAS DE SUS ARCHIVOS DE CONFIGURACIÓN DE "
+"COLECCIONES PERSONALIZADAS EN LAS QUE NO SE ENCUENTREN ARCHIVOS DE JUEGO "
+"COINCIDENTES. SE GUARDARÁN COPIAS DE SEGURIDAD DE LOS ARCHIVOS ORIGINALES EN "
+"UNA CARPETA DE LIMPIEZA DENTRO DE COLECCIONES."
+
+msgid "DESCRIPTION:"
+msgstr "DESCRIPCION:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "ENTRADAS ELIMINADAS:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "ÚLTIMO SISTEMA:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "ÚLTIMO MENS. DE ERROR:"
+
+msgid "MEDIA"
+msgstr "MEDIA"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "LIMPIEZA DE MEDIOS EN EJECUCIÓN"
+
+msgid "STOP"
+msgstr "PARAR"
+
+msgid "stop processing"
+msgstr "dejar de procesar"
+
+msgid "GAMELISTS"
+msgstr "LISTA DE JUEGOS"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "LIMPIEZA DE LISTAS DE JUEGO"
+
+msgid "COLLECTIONS"
+msgstr "COLECCIONES"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "ERROR EN LA LIMPIEZA DE COLECCIONES"
+
+msgid "There are no enabled custom collections"
+msgstr "No hay colecciones personalizadas activadas"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "EJECUCIÓN DE LA LIMPIEZA DE COLECCIONES"
+
+msgid "PROCESSING"
+msgstr "PROCESANDO"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "Se encontró un archivo flatten.txt, omitiendo \"%s\""
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr ""
+"No se ha podido crear el directorio de destino, ¿problemas de permisos?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "No se ha podido mover el archivo multimedia, ¿problemas de permisos?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "No se pudo analizar el archivo gamelist.xml para \"%s\""
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "No se pudo encontrar una etiqueta gamelist en el archivo para \"%s\""
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr ""
+"No se ha podido eliminar el archivo temporal gamelist, ¿problemas de "
+"permisos?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr ""
+"No se ha podido escribir en el archivo temporal gamelist, ¿problemas de "
+"permisos?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr ""
+"No se ha podido crear el directorio de copia de seguridad, ¿problemas de "
+"permisos?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr ""
+"No se ha podido mover el archivo de la lista de juego antigua, ¿problemas de "
+"permisos?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr ""
+"No se ha podido mover el archivo temporal gamelist, ¿problemas de permisos?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr ""
+"No se ha encontrado el archivo de configuración de la colección personalizada"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr ""
+"No se ha podido abrir el archivo de configuración de la colección "
+"personalizada"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr ""
+"No se ha podido eliminar el archivo de recopilación temporal, ¿problemas de "
+"permisos?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr ""
+"No se ha podido escribir en el archivo de configuración de la colección "
+"temporal"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr ""
+"No se ha podido mover el archivo de la colección antigua, ¿problemas de "
+"permisos?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr ""
+"No se ha podido mover el archivo de recopilación temporal, ¿problemas de "
+"permisos?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "LIMPIEZA DE MEDIOS ABORTADA"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "LIMPIEZA DE MEDIOS COMPLETADA"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "LIMPIEZA DE LA LISTA DE JUEGO ABORTADA"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "FINALIZADA LA LIMPIEZA DE LISTA DE JUEGOS"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "LIMPIEZA DE COBROS ABORTADA"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "LIMPIEZA DE COLECCIONES COMPLETADA"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "FALLO EN LA LIMPIEZA DE MEDIOS"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "ERROR EN LA LIMPIEZA DE LISTAS DE JUEGO"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "LA APLICACIÓN SE REINICIARA AL CERRAR ESTA UTILIDAD."
 
 msgid "SCRAPE FROM"
 msgstr "ESCRAPEAR DESDE"
@@ -851,17 +1505,8 @@ msgstr "CONFIG. DE CONTENIDO"
 msgid "MIXIMAGE SETTINGS"
 msgstr "CONFIGURACION DE MIXIMAGE"
 
-msgid "START"
-msgstr "EMPEZAR"
-
 msgid "start scraper"
 msgstr "empezar escrapeo"
-
-msgid "BACK"
-msgstr "VOLVER"
-
-msgid "back"
-msgstr "atras"
 
 msgid "SCREENSCRAPER USERNAME"
 msgstr "USUARIO DE SCREENSCRAPER"
@@ -1095,91 +1740,92 @@ msgstr "POR FAVOR ELIGE AL MENOS UN TIPO DE CONTENIDO PARA ESCRAPEAR"
 msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
 msgstr "TODOS LOS JUEGOS FUERON FILTRADOS, NADA QUE ESCRAPEAR"
 
-msgid "HELP PROMPTS"
-msgstr "ANUNCIOS DE AYUDA"
+msgid "SCRAPING IN PROGRESS"
+msgstr "ESCRAPEO EN MARCHA"
 
-msgid "TOP"
-msgstr "ARRIBA"
+msgid "SYSTEM"
+msgstr "SISTEMA"
 
-msgid "BOTTOM"
-msgstr "ABAJO"
+msgid "REFINE SEARCH"
+msgstr "BUSQUEDA AVANZADA"
 
-msgid "DISPLAY MEDIA TYPES"
-msgstr "TIPOS DE SOPORTES DE VISUALIZACIÓN"
+msgid "refine search"
+msgstr "busqueda avanzada"
 
-msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
-msgstr "MANTENER LOS VÍDEOS EN MARCHA AL VISUALIZAR IMAGENES"
+msgid "SKIP"
+msgstr "SALTAR"
 
-msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
-msgstr "AJUSTAR VIDEOS AL TAMAÑO DE PANTALLA"
+msgid "skip game"
+msgstr "saltar juego"
 
-msgid "RENDER SCANLINES FOR VIDEOS"
-msgstr "RENDERIZAR SCANLINES EN VIDEOS"
+msgid "stop"
+msgstr "parar"
 
-msgid "RENDER BLUR FOR VIDEOS"
-msgstr "RENDERIZAR DIFUMINADO EN VIDEOS"
-
-msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
-msgstr "RENDERIZAR SCANLINES EN CAPTURAS Y TITULOS"
-
-#, c-format
-msgid "FINISH EDITING '%s' COLLECTION"
-msgstr "TERMINAR DE EDITAR LA COLECCION '%s'"
-
-msgid "SELECT COLLECTIONS"
-msgstr "ELEGIR COLECCIONES"
-
-msgid "AUTOMATIC GAME COLLECTIONS"
-msgstr "COLECCION DE JUEGOS AUTOMATICA"
-
-msgid "CUSTOM GAME COLLECTIONS"
-msgstr "COLECCION PERSONALIZADA"
-
-msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr "CREAR NUEVA COLECCION PERSONALIZADA DESDE EL TEMA"
-
-msgid "SELECT THEME FOLDER"
-msgstr "ELEGIR CARPETA DE TEMAS"
-
-msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr "CREAR NUEVA COLECCION PERSONALIZADA"
-
-msgid "NEW COLLECTION NAME"
-msgstr "NOMBRE DE COLECCION"
-
-msgid "CREATE"
-msgstr "CREAR"
-
-msgid "CREATE COLLECTION?"
-msgstr "¿CREAR COLECCION?"
-
-msgid "DELETE CUSTOM COLLECTION"
-msgstr "BORRAR COLECCION PERSONALIZADA"
-
-msgid "COLLECTION TO DELETE"
-msgstr "COLECCION A BORRAR"
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "JUEGO"
+msgstr[1] "JUEGOS"
 
 #, c-format
-msgid ""
-"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
-"'%s'\n"
-"ARE YOU SURE?"
-msgstr ""
-"SE BORRARA PERMANENTEMENTE LA COLECCION\n"
-"'%s'\n"
-"¿ESTAS SEGURO?"
+msgid "GAME %i OF %i"
+msgstr "JUEGO %i DE %i"
 
-msgid "GROUP CUSTOM COLLECTIONS"
-msgstr "AGRUPAR COLECCIONES"
+msgid "NO GAMES WERE SCRAPED"
+msgstr "LOS JUEGOS NO SE ESCRAPEARON"
 
-msgid "IF UNTHEMED"
-msgstr "SI NO SE MODIFICA"
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i JUEGO ESCRAPEADO CORRECTAMENTE"
+msgstr[1] "%i JUEGOS ESCRAPEADOS CORRECTAMENTE"
 
-msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr "PONER LOS FAVORITOS EN LA PARTE SUPERIOR"
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i JUEGO OMITIDO"
+msgstr[1] "%i JUEGOS OMITIDOS"
 
-msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "MOSTRAR MARCAS DE ESTRELLAS EN COLECCIONES"
+msgid "RATING:"
+msgstr "VALORACION:"
+
+msgid "RELEASED:"
+msgstr "FECHA DE LANZ.:"
+
+msgid "DEVELOPER:"
+msgstr "DESARROLLADOR:"
+
+msgid "PUBLISHER:"
+msgstr "COMPAÑIA:"
+
+msgid "GENRE:"
+msgstr "GENERO:"
+
+msgid "PLAYERS:"
+msgstr "JUGADORES:"
+
+msgid "NO GAMES FOUND"
+msgstr "JUEGO NO ENCONTRADO"
+
+msgid "RETRY"
+msgstr "REINTENTAR"
+
+msgid "Error downloading thumbnail:"
+msgstr "Error descargando miniatura:"
+
+msgid "SEARCH"
+msgstr "BUSCAR"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "¿BUSCAR USANDO NOMBRE DEFINIDO?"
+
+msgid "skip"
+msgstr "saltar"
+
+msgid "accept result"
+msgstr "aceptar resultado"
+
+msgid "back (cancel)"
+msgstr "volver (cancelar)"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
 msgstr "ACTIVAR SALVAPANTALLAS DESPUES DE"
@@ -1240,30 +1886,6 @@ msgstr "CAMBIAR VIDEOS DESPUES DE (SEGUNDOS)"
 
 msgid "RENDER BLUR"
 msgstr "RENDERIZAR DIFUMINADO"
-
-msgid "FILTER GAMELIST"
-msgstr "FILTRAR LISTA DE JUEGOS"
-
-msgid "RESET ALL FILTERS"
-msgstr "RESETEAR TODOS LOS FILTROS"
-
-msgid "GAME NAME"
-msgstr "NOMBRE DEL JUEGO"
-
-msgid "APPLY CHANGES?"
-msgstr "¿APLICAR CAMBIOS?"
-
-msgid "NOTHING TO FILTER"
-msgstr "NADA QUE FILTRAR"
-
-msgid "LAUNCHING GAME"
-msgstr "LANZANDO JUEGO"
-
-msgid "CLOSE"
-msgstr "CERRAR"
-
-msgid "close"
-msgstr "cerrar"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DESCARGANDO LISTA DE TEMAS 100%"
@@ -1398,9 +2020,6 @@ msgstr "ERROR:"
 msgid "COULDN'T DOWNLOAD THEMES LIST"
 msgstr "NO SE PUEDE DESCARGAR LA LISTA DE TEMAS"
 
-msgid "DOWNLOADING"
-msgstr "DESCARGANDO"
-
 msgid "DOWNLOADING THEMES LIST"
 msgstr "DESCARGANDO LISTA DE TEMAS"
 
@@ -1459,782 +2078,285 @@ msgstr ""
 "TEMAS QUE DESCARGUE. TENGA EN CUENTA QUE NO PUEDE INTERRUMPIR UNA DESCARGA "
 "EN CURSO, YA QUE PODRÍA DAÑAR LOS DATOS."
 
-msgid "RATING:"
-msgstr "VALORACION:"
+msgid "browse"
+msgstr "navegar"
 
-msgid "RELEASED:"
-msgstr "FECHA DE LANZ.:"
+msgid "pdf manual"
+msgstr "manual en pdf"
 
-msgid "DEVELOPER:"
-msgstr "DESARROLLADOR:"
+msgid "first"
+msgstr "primero"
 
-msgid "PUBLISHER:"
-msgstr "COMPAÑIA:"
+msgid "last"
+msgstr "último"
 
-msgid "GENRE:"
-msgstr "GENERO:"
+msgid "SCREENSHOT"
+msgstr "CAPTURA DEL JUEGO"
 
-msgid "PLAYERS:"
-msgstr "JUGADORES:"
+msgid "BOX COVER"
+msgstr "CARATULA DE LA CAJA"
 
-msgid "NO GAMES FOUND"
-msgstr "JUEGO NO ENCONTRADO"
+msgid "BOX BACK COVER"
+msgstr "CONTRAPORTADA"
 
-msgid "RETRY"
-msgstr "REINTENTAR"
+msgid "TITLE SCREEN"
+msgstr "PANTALLA DEL TITULO"
 
-msgid "SKIP"
-msgstr "SALTAR"
+msgid "FAN ART"
+msgstr "IMAGENES HECHAS POR FANS"
 
-msgid "Error downloading thumbnail:"
-msgstr "Error descargando miniatura:"
+msgid "MIXIMAGE"
+msgstr "MIXIMAGE"
 
-msgid "SEARCH"
-msgstr "BUSCAR"
+msgid "CUSTOM"
+msgstr "PERSONALIZADO"
 
-msgid "SEARCH USING REFINED NAME?"
-msgstr "¿BUSCAR USANDO NOMBRE DEFINIDO?"
+msgctxt "metadata"
+msgid "NAME"
+msgstr "NOMBRE"
 
-msgid "skip"
-msgstr "saltar"
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "INTRODUZCA NOMBRE"
 
-msgid "accept result"
-msgstr "aceptar resultado"
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "NOMBRE ALTERNATIVO"
 
-msgid "SCRAPING IN PROGRESS"
-msgstr "ESCRAPEO EN MARCHA"
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "INTRODUZCA NOMBRE ALTERNATIVO"
 
-msgid "SYSTEM"
-msgstr "SISTEMA"
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "NOMBRE ALTERNATIVO EN COLECCIONES"
 
-msgid "skip game"
-msgstr "saltar juego"
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "INTRODUZCA NOMBRE ALTERNATIVO EN COLECCIONES"
 
-msgid "STOP"
-msgstr "PARAR"
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "DESCRIPCION"
 
-msgid "stop"
-msgstr "parar"
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "INTRODUCIR DESCRIPCION"
 
-msgid "GAME"
-msgid_plural "GAMES"
-msgstr[0] "JUEGO"
-msgstr[1] "JUEGOS"
+msgctxt "metadata"
+msgid "RATING"
+msgstr "VALORACION"
 
-#, c-format
-msgid "GAME %i OF %i"
-msgstr "JUEGO %i DE %i"
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "FECHA DE LANZAMIENTO"
 
-msgid "NO GAMES WERE SCRAPED"
-msgstr "LOS JUEGOS NO SE ESCRAPEARON"
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "DESARROLLADOR"
 
-#, c-format
-msgid "%i GAME SUCCESSFULLY SCRAPED"
-msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] "%i JUEGO ESCRAPEADO CORRECTAMENTE"
-msgstr[1] "%i JUEGOS ESCRAPEADOS CORRECTAMENTE"
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "INTRODUCIR DESARROLLADOR"
 
-#, c-format
-msgid "%i GAME SKIPPED"
-msgid_plural "%i GAMES SKIPPED"
-msgstr[0] "%i JUEGO OMITIDO"
-msgstr[1] "%i JUEGOS OMITIDOS"
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "COMPAÑIA"
 
-msgid "GAMELIST OPTIONS"
-msgstr "OPCIONES DE LISTA DE JUEGOS"
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "INTRODUCIR COMPAÑIA"
 
-msgid "JUMP TO..."
-msgstr "IR A..."
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "GENERO"
 
-msgid "SORT GAMES BY"
-msgstr "ORDENAR JUEGOS POR"
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "INTRODUCIR GENERO"
 
-msgid "THIS SYSTEM HAS NO GAMES"
-msgstr "ESTE SISTEMA NO TIENE JUEGOS"
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "JUGADORES"
 
-msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
-msgstr "AÑADIR/ELIMINAR JUEGOS DE ESTA COLECCION"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "INTRODUCIR NUMERO DE JUGADORES"
 
-msgid "EDIT THIS FOLDER'S METADATA"
-msgstr "EDITAR METADATOS DE ESTA CARPETA"
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "FAVORITO"
 
-msgid "EDIT THIS GAME'S METADATA"
-msgstr "EDITAR METADATOS DE ESTE JUEGO"
-
-msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
-msgstr "INTRODUCIR CARPETA (ANULAR ENLACE DE CARPETA)"
-
-msgid "APPLY"
-msgstr "APLICAR"
-
-msgid "apply"
-msgstr "aplicar"
-
-msgid "close (apply)"
-msgstr "cerrar(aplicar)"
-
-msgid "close (cancel)"
-msgstr "cerrar(cancelar)"
-
-msgid ""
-"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
-"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
-"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
-"LONGER NEEDED."
-msgstr ""
-"ESTO ELIMINARÁ TODOS LOS ARCHIVOS MULTIMEDIA EN LOS QUE NO SE ENCUENTREN "
-"ARCHIVOS DE JUEGO COINCIDENTES. ESTOS ARCHIVOS SE MOVERÁN A UNA CARPETA DE "
-"LIMPIEZA DENTRO DE SU DIRECTORIO MEDIA. PUEDES ELIMINAR MANUALMENTE ESTA "
-"CARPETA CUANDO ESTÉS SEGURO DE QUE YA NO ES NECESARIA."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
-"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
-"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
-"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
-msgstr ""
-"ESTO ELIMINARÁ TODAS LAS ENTRADAS DE SUS ARCHIVOS XML DE GAMELIST DONDE NO "
-"SE PUEDEN ENCONTRAR ARCHIVOS DE JUEGO COINCIDENTES. LAS COPIAS DE SEGURIDAD "
-"DE LOS ARCHIVOS ORIGINALES SE GUARDARÁN EN UNA CARPETA DE LIMPIEZA DENTRO DE "
-"SU DIRECTORIO GAMELISTS."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
-"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
-"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
-"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
-msgstr ""
-"ESTO ELIMINARÁ TODAS LAS ENTRADAS DE SUS ARCHIVOS DE CONFIGURACIÓN DE "
-"COLECCIONES PERSONALIZADAS EN LAS QUE NO SE ENCUENTREN ARCHIVOS DE JUEGO "
-"COINCIDENTES. SE GUARDARÁN COPIAS DE SEGURIDAD DE LOS ARCHIVOS ORIGINALES EN "
-"UNA CARPETA DE LIMPIEZA DENTRO DE COLECCIONES."
-
-msgid "NOT STARTED"
-msgstr "NO INICIADO"
-
-msgid "DESCRIPTION:"
-msgstr "DESCRIPCION:"
-
-msgid "TOTAL ENTRIES REMOVED:"
-msgstr "ENTRADAS ELIMINADAS:"
-
-msgid "LAST PROCESSED SYSTEM:"
-msgstr "ÚLTIMO SISTEMA:"
-
-msgid "LAST ERROR MESSAGE:"
-msgstr "ÚLTIMO MENS. DE ERROR:"
-
-msgid "MEDIA"
-msgstr "MEDIA"
-
-msgid "start processing"
-msgstr "empezar proceso"
-
-msgid "RUNNING MEDIA CLEANUP"
-msgstr "LIMPIEZA DE MEDIOS EN EJECUCIÓN"
-
-msgid "stop processing"
-msgstr "dejar de procesar"
-
-msgid "GAMELISTS"
-msgstr "LISTA DE JUEGOS"
-
-msgid "RUNNING GAMELISTS CLEANUP"
-msgstr "LIMPIEZA DE LISTAS DE JUEGO"
-
-msgid "COLLECTIONS"
-msgstr "COLECCIONES"
-
-msgid "COLLECTIONS CLEANUP FAILED"
-msgstr "ERROR EN LA LIMPIEZA DE COLECCIONES"
-
-msgid "There are no enabled custom collections"
-msgstr "No hay colecciones personalizadas activadas"
-
-msgid "RUNNING COLLECTIONS CLEANUP"
-msgstr "EJECUCIÓN DE LA LIMPIEZA DE COLECCIONES"
-
-msgid "PROCESSING"
-msgstr "PROCESANDO"
-
-#, c-format
-msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr "Se encontró un archivo flatten.txt, omitiendo \"%s\""
-
-msgid "Couldn't create target directory, permission problems?"
-msgstr ""
-"No se ha podido crear el directorio de destino, ¿problemas de permisos?"
-
-msgid "Couldn't move media file, permission problems?"
-msgstr "No se ha podido mover el archivo multimedia, ¿problemas de permisos?"
-
-#, c-format
-msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr "No se pudo analizar el archivo gamelist.xml para \"%s\""
-
-#, c-format
-msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr "No se pudo encontrar una etiqueta gamelist en el archivo para \"%s\""
-
-msgid "Couldn't delete temporary gamelist file, permission problems?"
-msgstr ""
-"No se ha podido eliminar el archivo temporal gamelist, ¿problemas de "
-"permisos?"
-
-msgid "Couldn't write to temporary gamelist file, permission problems?"
-msgstr ""
-"No se ha podido escribir en el archivo temporal gamelist, ¿problemas de "
-"permisos?"
-
-msgid "Couldn't create backup directory, permission problems?"
-msgstr ""
-"No se ha podido crear el directorio de copia de seguridad, ¿problemas de "
-"permisos?"
-
-msgid "Couldn't move old gamelist file, permission problems?"
-msgstr ""
-"No se ha podido mover el archivo de la lista de juego antigua, ¿problemas de "
-"permisos?"
-
-msgid "Couldn't move temporary gamelist file, permission problems?"
-msgstr ""
-"No se ha podido mover el archivo temporal gamelist, ¿problemas de permisos?"
-
-msgid "Couldn't find custom collection configuration file"
-msgstr ""
-"No se ha encontrado el archivo de configuración de la colección personalizada"
-
-msgid "Couldn't open custom collection configuration file"
-msgstr ""
-"No se ha podido abrir el archivo de configuración de la colección "
-"personalizada"
-
-msgid "Couldn't delete temporary collection file, permission problems?"
-msgstr ""
-"No se ha podido eliminar el archivo de recopilación temporal, ¿problemas de "
-"permisos?"
-
-msgid "Couldn't write to temporary collection configuration file"
-msgstr ""
-"No se ha podido escribir en el archivo de configuración de la colección "
-"temporal"
-
-msgid "Couldn't move old collection file, permission problems?"
-msgstr ""
-"No se ha podido mover el archivo de la colección antigua, ¿problemas de "
-"permisos?"
-
-msgid "Couldn't move temporary collection file, permission problems?"
-msgstr ""
-"No se ha podido mover el archivo de recopilación temporal, ¿problemas de "
-"permisos?"
-
-msgid "ABORTED MEDIA CLEANUP"
-msgstr "LIMPIEZA DE MEDIOS ABORTADA"
-
-msgid "COMPLETED MEDIA CLEANUP"
-msgstr "LIMPIEZA DE MEDIOS COMPLETADA"
-
-msgid "ABORTED GAMELIST CLEANUP"
-msgstr "LIMPIEZA DE LA LISTA DE JUEGO ABORTADA"
-
-msgid "COMPLETED GAMELIST CLEANUP"
-msgstr "FINALIZADA LA LIMPIEZA DE LISTA DE JUEGOS"
-
-msgid "ABORTED COLLECTIONS CLEANUP"
-msgstr "LIMPIEZA DE COBROS ABORTADA"
-
-msgid "COMPLETED COLLECTIONS CLEANUP"
-msgstr "LIMPIEZA DE COLECCIONES COMPLETADA"
-
-msgid "MEDIA CLEANUP FAILED"
-msgstr "FALLO EN LA LIMPIEZA DE MEDIOS"
-
-msgid "GAMELISTS CLEANUP FAILED"
-msgstr "ERROR EN LA LIMPIEZA DE LISTAS DE JUEGO"
-
-msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
-msgstr "LA APLICACIÓN SE REINICIARA AL CERRAR ESTA UTILIDAD."
-
-msgid "INVALID ENTRY"
-msgstr "ENTRADA INVÁLIDA"
-
-msgid "CLEARED ENTRY"
-msgstr "ENTRADA BORRADA"
-
-msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr "NO SE HAN DEFINIDO EMULADORES ALTERNATIVOS"
-
-msgid "CLEAR INVALID ENTRY"
-msgstr "BORRAR ENTRADA NO VÁLIDA"
-
-msgid "DEFAULT"
-msgstr "DEFECTO"
-
-msgid "EDIT METADATA"
-msgstr "EDITAR METADATOS"
-
-msgid "CLEAR ENTRY"
-msgstr "BORRAR ENTRADA"
-
-msgid "SELECT EMULATOR"
-msgstr "SELECCIONAR EMULADOR"
-
-msgid "SYSTEM-WIDE"
-msgstr "EN TODO EL SISTEMA"
-
-msgid "unknown"
-msgstr "desconocido"
-
-msgid "SCRAPE"
-msgstr "ESCRAPEAR"
-
-msgid "scrape"
-msgstr "escrapear"
-
-msgid "save metadata"
-msgstr "guardar metadatos"
-
-msgid "cancel changes"
-msgstr "cancelar cambios"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
-"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"ESTO ELIMINARÁ TODOS LOS ARCHIVOS MULTIMEDIA Y LA ENTRADA GAMELIST.XML DE "
-"ESTA CARPETA, PERO NO SE ELIMINARÁ NI EL DIRECTORIO EN SÍ NI NINGÚN "
-"CONTENIDO DE SU INTERIOR\n"
-"¿ESTÁS SEGURO?"
-
-msgid "CLEAR"
-msgstr "LIMPIAR"
-
-msgid "clear folder"
-msgstr "borrar carpeta"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
-"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"ESTO ELIMINARÁ TODOS LOS ARCHIVOS MULTIMEDIA Y LA ENTRADA GAMELIST.XML DE "
-"ESTE JUEGO, PERO EL ARCHIVO DEL JUEGO EN SÍ NO SE ELIMINARÁ\n"
-"¿ESTÁS SEGURO?"
-
-msgid "clear file"
-msgstr "borrar fichero"
-
-msgid ""
-"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
-"ARE YOU SURE?"
-msgstr ""
-"ESTO BORRARÁ EL ARCHIVO DEL JUEGO, CUALQUIER ARCHIVO MULTIMEDIA Y LA ENTRADA "
-"GAMELIST.XML\n"
-"¿ESTÁS SEGURO?"
-
-msgid "DELETE"
-msgstr "BORRAR"
-
-msgid "delete game"
-msgstr "borrar juego"
-
-msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr "GENERADOR OFFLINE DE MIXIMAGES"
-
-#, c-format
-msgid "%i OF %i GAME PROCESSED"
-msgid_plural "%i OF %i GAMES PROCESSED"
-msgstr[0] "%i DE %i JUEGO PROCESADO"
-msgstr[1] "%i DE %i JUEGOS PROCESADOS"
-
-msgid "Generated:"
-msgstr "Generada:"
-
-msgid "Overwritten:"
-msgstr "Sobrescrito:"
-
-msgid "Skipped:"
-msgstr "Ignorados:"
-
-msgid "Skipped (existing):"
-msgstr "Omitido (existente):"
-
-msgid "Failed:"
-msgstr "Fallido:"
-
-msgid "Processing:"
-msgstr "Procesando:"
-
-msgid "Last error message:"
-msgstr "Último mensaje de error:"
-
-msgid "PAUSE"
-msgstr "PAUSA"
-
-msgid "pause processing"
-msgstr "pausar el procesamiento"
-
-msgid "close (abort processing)"
-msgstr "cerrar (abortar el procesamiento)"
-
-msgid "RUNNING..."
-msgstr "EJECUTANDO..."
-
-msgid "PAUSED"
-msgstr "PAUSADO"
-
-msgid "RUNNING"
-msgstr "FUNCIONANDO"
-
+msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "COMPLETADO"
 
-msgid "DONE"
-msgstr "HECHO"
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "JUEGO PARA NIÑOS"
 
-msgid "done (close)"
-msgstr "hecho (cerrar)"
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "JUEGO PARA NIÑOS (SOLO AFECTA A LAS INSIGNIAS)"
 
-msgid "APPLICATION UPDATER"
-msgstr "ACTUALIZADOR DE APLICACIONES"
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "OCULTO"
 
-msgid "INSTALLATION STEPS:"
-msgstr "PASOS DE INSTALACIÓN:"
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "ROTO/NO FUNCIONA"
 
-msgid "DOWNLOAD NEW RELEASE"
-msgstr "DESCARGAR LA NUEVA VERSIÓN"
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "EXCLUIR DEL CONTADOR DE JUEGOS"
 
-msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
-msgstr "DESCARGUE LA NUEVA VERSIÓN EN ESTE DIRECTORIO:"
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "EXCLUIR DEL MULTI-ESCRAPEADOR"
 
-msgid "INSTALL PACKAGE"
-msgstr "INSTALAR PAQUETE"
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "OCULTAR CAMPOS DE METADATOS"
 
-msgid "QUIT AND MANUALLY RESTART ES-DE"
-msgstr "SALIR Y REINICIAR MANUALMENTE DE ES-DE"
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "PARTIDAS JUGADAS"
 
-msgid "QUIT AND MANUALLY UPGRADE ES-DE"
-msgstr "SALIR Y ACTUALIZAR MANUALMENTE ES-DE"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "INTRODUCIR NUMERO DE PARTIDAS JUGADAS"
 
-msgid "STATUS MESSAGE:"
-msgstr "MENSAJE DE ESTADO:"
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "MANDO"
 
-msgid "DOWNLOAD"
-msgstr "DESCARGAR"
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "ELEGIR MANDO"
 
-msgid "download new release"
-msgstr "descargar la nueva versión"
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "EMULADOR ALTERNATIVO"
 
-msgid "Download directory does not exist"
-msgstr "El directorio de descarga no existe"
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "ELEGIR EMULADOR ALTERNATIVO"
 
-msgid "CHANGE DIRECTORY"
-msgstr "CAMBIAR DIRECTORIO"
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "CARPETA DE ENLACE"
 
-msgid "change download directory"
-msgstr "cambiar el directorio de descarga"
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "ELEGIR CARPETA DE ENLACE"
 
-msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr "INTRODUCIR EL DIRECTORIO DE DESCARGA"
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "ULTIMOS JUGADOS"
 
-msgid "DOWNLOAD ABORTED"
-msgstr "DESCARGA CANCELADA"
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "INTRODUCIR FECHA DE ULTIMOS JUGADOS"
 
-msgid "NO PACKAGE SAVED TO DISK"
-msgstr "NINGÚN PAQUETE GUARDADO EN DISCO"
-
-msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr "SE HA DESCARGADO Y PUEDE INSTALARSE MANUALMENTE"
-
-msgid "DOWNLOADING 100%"
-msgstr "DESCARGANDO 100%"
-
-msgid "Downloaded file does not match expected MD5 checksum"
+msgid "No screenshot found, couldn't generate miximage"
 msgstr ""
-"El archivo descargado no coincide con la suma de comprobación MD5 esperada"
+"No se ha encontrado ninguna captura de pantalla, no se ha podido generar "
+"miximage"
 
-msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgid "Screenshot in unknown format, couldn't generate miximage"
 msgstr ""
-"Error: No se ha podido eliminar el archivo temporal del paquete, ¿problemas "
-"de permisos?"
+"Captura de pantalla en formato desconocido, no se pudo generar miximage"
 
-msgid "Error: Couldn't write package file, permission problems?"
+msgid "Screenshot in unsupported format, couldn't generate miximage"
 msgstr ""
-"Error: No se pudo escribir el archivo del paquete, ¿problemas de permisos?"
+"Captura de pantalla en formato no soportado, no se pudo generar miximage"
 
-msgid "Error: Couldn't set permissions on AppImage file"
-msgstr "Error: No se han podido establecer permisos en el archivo AppImage"
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "Error al cargar la captura de pantalla, no se pudo generar miximage"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Error al cargar la imagen del logo, ¿archivo dañado?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Error al cargar imagen de caja 3d, ¿archivo corrupto?"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "Error al cargar la imagen de la caratula, ¿archivo dañado?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "Error al cargar la imagen del soporte físico, ¿archivo dañado?"
 
 #, c-format
-msgid "Downloaded %s"
-msgstr "Descargado %s"
+msgid "PAGE %s OF %s"
+msgstr "PAGINA %s DE %s"
 
-msgid "Error: Couldn't open AppImage update file for reading"
+msgid "pan"
+msgstr "desplazar"
+
+msgid "reset"
+msgstr "reset"
+
+msgid "game media"
+msgstr "media del juego"
+
+msgid "zoom"
+msgstr "ampliar"
+
+msgid "Network error:"
+msgstr "Error de red:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "El directorio de media no existe y no se puede crear."
+
+msgid "Permission problems?"
+msgstr "¿Problemas de permisos?"
+
+msgid "Failed to open path for writing media file."
+msgstr "Fallo al abrir la ruta para escribir el fichero de media."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
 msgstr ""
-"Error: No se ha podido abrir el archivo de actualización de AppImage para su "
-"lectura"
+"No puedo guardar el fichero de media, ¿problema de permisos o esta el disco "
+"lleno?"
 
-msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
-"Error: El archivo descargado no coincide con la suma de comprobación MD5 "
-"esperada"
+"No puedo guardar la imagen modificada, ¿problema de permisos o esta el disco "
+"lleno?"
 
-msgid "Error: Couldn't rename running AppImage file, permission problems?"
-msgstr ""
-"Error: No se ha podido renombrar el archivo AppImage en ejecución, "
-"¿problemas de permisos?"
+msgid "ScreenScraper error:"
+msgstr "Error de ScreenScraper:"
 
-msgid "Error: Couldn't replace running AppImage file, permission problems?"
-msgstr ""
-"Error: No se pudo reemplazar el archivo AppImage en ejecución, ¿problemas de "
-"permisos?"
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: Nombre de usuario o contraseña incorrectos"
 
-#, c-format
-msgid "Successfully installed as %s"
-msgstr "Instalado correctamente como %s"
+msgid "No Entries Found"
+msgstr "No se encontraron entradas"
 
-msgid "INSTALL"
-msgstr "SE INSTALA"
+msgctxt "theme"
+msgid "all"
+msgstr "todos"
 
-msgid "install package"
-msgstr "instalar paquete"
-
-msgid "Find the detailed changelog at"
-msgstr "Encontrará el registro de cambios detallado en"
-
-msgid "quit application"
-msgstr "salir de la aplicacion"
-
+msgctxt "theme"
 msgid "all games"
 msgstr "todos los juegos"
 
+msgctxt "theme"
+msgid "recent"
+msgstr "recientes"
+
+msgctxt "theme"
 msgid "last played"
 msgstr "ultimos jugados"
 
+msgctxt "theme"
 msgid "favorites"
 msgstr "favoritos"
 
+msgctxt "theme"
 msgid "collections"
 msgstr "colecciones"
-
-#, c-format
-msgid "DISABLED '%s' IN '%s'"
-msgstr "DESACTIVADO '%s' EN '%s'"
-
-#, c-format
-msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr "EDICIÓN DE LA COLECCIÓN '%s', AÑADIR/ELIMINAR JUEGOS CON %s"
-
-#, c-format
-msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr "FINALIZADA LA EDICIÓN DE LA COLECCIÓN '%s"
-
-msgid "Favorites"
-msgstr "Favoritos"
-
-#, c-format
-msgid "ADDED '%s' TO '%s'"
-msgstr "AÑADIDO '%s' A '%s'"
-
-#, c-format
-msgid "REMOVED '%s' FROM '%s'"
-msgstr "ELIMINADO '%s' DE '%s'"
-
-msgid "This collection is empty"
-msgstr "Esta colección está vacía"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s [%s]'"
-msgstr "Esta colección contiene 1 juego: '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
-msgstr "Esta colección contiene 2 juegos: '%s [%s]' y '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
-msgstr "Esta colección contiene 3 juegos: '%s [%s]', '%s [%s]' y '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgid_plural ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgstr[0] ""
-"Esta colección contiene %i juegos: '%s [%s]', '%s [%s]' y '%s [%s]', entre "
-"otros"
-msgstr[1] ""
-"Esta colección contiene %i juegos: '%s [%s]', '%s [%s]' y '%s [%s]', entre "
-"otros"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s'"
-msgstr "Esta colección contiene 1 juego: '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s' and '%s'"
-msgstr "Esta colección contiene 2 juegos: '%s' y '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s', '%s' and '%s'"
-msgstr "Esta colección contiene 3 juegos: '%s', '%s' y '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgid_plural ""
-"This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr[0] "Esta colección contiene %i juegos: '%s', '%s' y '%s', entre otros"
-msgstr[1] "Esta colección contiene %i juegos: '%s', '%s' y '%s', entre otros"
-
-#, c-format
-msgctxt "theme"
-msgid "'%s' is filtered so there may be more games available"
-msgstr "'%s' se filtra por lo que puede haber más juegos disponibles"
-
-#, c-format
-msgid "DELETED COLLECTION '%s'"
-msgstr "COLECCIÓN ELIMINADA '%s'"
-
-msgid "name, ascending"
-msgstr "nombre, ascendente"
-
-msgid "name, descending"
-msgstr "nombre, descendente"
-
-msgid "rating, ascending"
-msgstr "clasificación, ascendente"
-
-msgid "rating, descending"
-msgstr "clasificación, descendente"
-
-msgid "release date, ascending"
-msgstr "fecha de lanzamiento, ascendente"
-
-msgid "release date, descending"
-msgstr "fecha de publicación, descendente"
-
-msgid "developer, ascending"
-msgstr "desarrollador, ascendente"
-
-msgid "developer, descending"
-msgstr "desarrollador, descendente"
-
-msgid "publisher, ascending"
-msgstr "editor, ascendente"
-
-msgid "publisher, descending"
-msgstr "editor, descendente"
-
-msgid "genre, ascending"
-msgstr "género, ascendente"
-
-msgid "genre, descending"
-msgstr "género, descendente"
-
-msgid "players, ascending"
-msgstr "jugadores, ascendente"
-
-msgid "players, descending"
-msgstr "jugadores, descendente"
-
-msgid "last played, ascending"
-msgstr "último jugado, ascendente"
-
-msgid "last played, descending"
-msgstr "último jugado, descendente"
-
-msgid "times played, ascending"
-msgstr "veces jugadas, ascendente"
-
-msgid "times played, descending"
-msgstr "veces jugadas, descendente"
-
-msgid "system, ascending"
-msgstr "sistema, ascendente"
-
-msgid "system, descending"
-msgstr "sistema, descendente"
-
-#, c-format
-msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr "ERROR: FALTA CONFIGURACIÓN DE REGLAS DE BÚSQUEDA COMANDO PARA '%s'"
-
-msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: NO SE ENCUENTRA EL COMANDO, ¿SE HA INSTALADO CORRECTAMENTE?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
-"ERROR: NO SE ENCUENTRA EL COMANDO '%s', ¿SE HA INSTALADO CORRECTAMENTE?"
-
-#, c-format
-msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr ""
-"ERROR: FALTA CONFIGURACIÓN DE REGLAS DE BÚSQUEDA DEL EMULADOR PARA '%s'"
-
-msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: NO SE ENCUENTRA LA APLICACIÓN, ¿SE HA INSTALADO CORRECTAMENTE?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
-"ERROR: NO SE ENCUENTRA LA APLICACIÓN '%s', ¿SE HA INSTALADO CORRECTAMENTE?"
-
-msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: NO SE ENCUENTRA EL EMULADOR, ¿SE HA INSTALADO CORRECTAMENTE?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr ""
-"ERROR: NO SE ENCUENTRA EL EMULADOR '%s', ¿SE HA INSTALADO CORRECTAMENTE?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr ""
-"ERROR: NO SE HA PODIDO ENCONTRAR EL FICHERO DEL NÚCLEO DEL EMULADOR '%s'"
-
-msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr "ERROR: ENTRADA NO VÁLIDA EN EL ARCHIVO DE CONFIGURACIÓN DE SISTEMAS"
-
-#, c-format
-msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr "ERROR: FALTA CONFIGURACIÓN DEL NÚCLEO PARA '%s'"
-
-#, c-format
-msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr "ERROR: ENTRADA DE VARIABLE %s NO VÁLIDA"
-
-#, c-format
-msgid ""
-"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
-msgstr ""
-"ERROR: NO SE HA PODIDO CREAR EL DIRECTORIO DEFINIDO POR %s, ¿PROBLEMAS DE "
-"PERMISOS?"
-
-msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "ERROR: EL ARCHIVO APP O ALIAS NO EXISTE O ES ILEGIBLE"
-
-msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr "ERROR: EL ARCHIVO DE ESCRITORIO NO ES VÁLIDO O ES ILEGIBLE"
-
-msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "ERROR: EL ARCHIVO DESKTOP NO EXISTE O ES ILEGIBLE"
-
-#, c-format
-msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
-msgstr "ERROR AL INICIAR EL JUEGO '%s' (CÓDIGO DE ERROR %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr ""
@@ -2260,8 +2382,32 @@ msgstr ""
 "NO SE PUEDEN AÑADIR ENTRADAS QUE NO SE CUENTAN COMO JUEGOS A LAS COLECCIONES "
 "PERSONALIZADAS"
 
+msgid "system"
+msgstr "sistema"
+
+msgid "view media"
+msgstr "ver media"
+
+msgid "options"
+msgstr "opciones"
+
 msgid "random"
 msgstr "aleatorio"
+
+msgid "jump to game"
+msgstr "ir al juego"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "desconocido"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "si"
+
+msgctxt "theme"
+msgid "no"
+msgstr "no"
 
 msgid "screensaver"
 msgstr "salvapantallas"
@@ -2286,30 +2432,6 @@ msgid "%i favorite"
 msgid_plural "%i favorites"
 msgstr[0] "%i favorito"
 msgstr[1] "%i favoritos"
-
-msgctxt "theme"
-msgid "unknown"
-msgstr "desconocido"
-
-msgid "system"
-msgstr "sistema"
-
-msgid "view media"
-msgstr "ver media"
-
-msgid "options"
-msgstr "opciones"
-
-msgid "jump to game"
-msgstr "ir al juego"
-
-msgctxt "theme"
-msgid "yes"
-msgstr "si"
-
-msgctxt "theme"
-msgid "no"
-msgstr "no"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2474,198 +2596,40 @@ msgstr "LANZANDO JUEGO '%s'"
 msgid "menu"
 msgstr "menu"
 
-#, c-format
-msgid "PAGE %s OF %s"
-msgstr "PAGINA %s DE %s"
+msgid "WORKING..."
+msgstr "BUSCANDO..."
 
-msgid "pan"
-msgstr "desplazar"
-
-msgid "reset"
-msgstr "reset"
-
-msgid "browse"
-msgstr "navegar"
-
-msgid "game media"
-msgstr "media del juego"
-
-msgid "first"
-msgstr "primero"
-
-msgid "last"
-msgstr "último"
-
-msgid "zoom"
-msgstr "ampliar"
-
-msgid "RATING"
-msgstr "VALORACION"
-
-msgid "DEVELOPER"
-msgstr "DESARROLLADOR"
-
-msgid "PUBLISHER"
-msgstr "COMPAÑIA"
-
-msgid "GENRE"
-msgstr "GENERO"
-
-msgid "PLAYERS"
-msgstr "JUGADORES"
-
-msgid "FAVORITE"
-msgstr "FAVORITO"
-
-msgid "KIDGAME"
-msgstr "JUEGO DE NIÑOS"
-
-msgid "HIDDEN"
-msgstr "ESCONDIDO"
-
-msgid "BROKEN"
-msgstr "ROTO"
-
-msgid "CONTROLLER"
-msgstr "MANDO"
-
-msgid "ALTERNATIVE EMULATOR"
-msgstr "EMULADOR ALTERNATIVO"
-
-msgid "FALSE"
-msgstr "FALSO"
-
-msgid "TRUE"
-msgstr "VERDADERO"
-
-msgid "UNKNOWN"
-msgstr "DESCONOCIDO"
-
-msgid "NONE SELECTED"
-msgstr "NINGUNO SELECCIONADO"
-
-msgid "No screenshot found, couldn't generate miximage"
-msgstr ""
-"No se ha encontrado ninguna captura de pantalla, no se ha podido generar "
-"miximage"
-
-msgid "Screenshot in unknown format, couldn't generate miximage"
-msgstr ""
-"Captura de pantalla en formato desconocido, no se pudo generar miximage"
-
-msgid "Screenshot in unsupported format, couldn't generate miximage"
-msgstr ""
-"Captura de pantalla en formato no soportado, no se pudo generar miximage"
-
-msgid "Error loading screenshot, couldn't generate miximage"
-msgstr "Error al cargar la captura de pantalla, no se pudo generar miximage"
-
-msgid "Error loading marquee image, corrupt file?"
-msgstr "Error al cargar la imagen del logo, ¿archivo dañado?"
-
-msgid "Error loading 3d box image, corrupt file?"
-msgstr "Error al cargar imagen de caja 3d, ¿archivo corrupto?"
-
-msgid "Error loading box cover image, corrupt file?"
-msgstr "Error al cargar la imagen de la caratula, ¿archivo dañado?"
-
-msgid "Error loading physical media image, corrupt file?"
-msgstr "Error al cargar la imagen del soporte físico, ¿archivo dañado?"
-
-msgid "pdf manual"
-msgstr "manual en pdf"
-
-msgid "SCREENSHOT"
-msgstr "CAPTURA DEL JUEGO"
-
-msgid "BOX COVER"
-msgstr "CARATULA DE LA CAJA"
-
-msgid "BOX BACK COVER"
-msgstr "CONTRAPORTADA"
-
-msgid "TITLE SCREEN"
-msgstr "PANTALLA DEL TITULO"
-
-msgid "FAN ART"
-msgstr "IMAGENES HECHAS POR FANS"
-
-msgid "MIXIMAGE"
-msgstr "MIXIMAGE"
-
-msgid "CUSTOM"
-msgstr "PERSONALIZADO"
-
-msgid "Searching for games..."
-msgstr "Buscando juegos..."
-
-msgid "Loading systems..."
-msgstr "Cargando sistemas..."
-
-msgid "Reloading..."
-msgstr "Cargando de nuevo..."
-
-msgid "Copying resources..."
-msgstr "Copiar recursos..."
-
-msgid "Creating system directories..."
-msgstr "Creación de directorios del sistema..."
-
-msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr "ERROR: NO SE HA PODIDO PROCESAR EL ARCHIVO PDF"
+msgctxt "theme"
+msgid "never"
+msgstr "nunca"
 
 #, c-format
-msgid "ADDED INPUT DEVICE '%s'"
-msgstr "AÑADIDO DISPOSITIVO DE ENTRADA '%s'"
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "hace %i día"
+msgstr[1] "hace %i días"
 
 #, c-format
-msgid "REMOVED INPUT DEVICE '%s'"
-msgstr "ELIMINADO DISPOSITIVO DE ENTRADA '%s'"
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "hace %i hora"
+msgstr[1] "hace %i horas"
 
-msgid "medium"
-msgstr "medio"
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "hace %i minuto"
+msgstr[1] "hace %i minutos"
 
-msgid "large"
-msgstr "grande"
-
-msgid "small"
-msgstr "pequeño"
-
-msgid "extra small"
-msgstr "muy pequeño"
-
-msgid "extra large"
-msgstr "muy grande"
-
-msgid "automatic"
-msgstr "automatico"
-
-msgid "16:9 vertical"
-msgstr "16:9 vertical"
-
-msgid "16:10 vertical"
-msgstr "16:10 vertical"
-
-msgid "3:2 vertical"
-msgstr "3:2 vertical"
-
-msgid "4:3 vertical"
-msgstr "4:3 vertical"
-
-msgid "5:4 vertical"
-msgstr "5:4 vertical"
-
-msgid "19.5:9 vertical"
-msgstr "19.5:9 vertical"
-
-msgid "20:9 vertical"
-msgstr "20:9 vertical"
-
-msgid "21:9 vertical"
-msgstr "21:9 vertical"
-
-msgid "32:9 vertical"
-msgstr "32:9 vertical"
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "hace %i segundo"
+msgstr[1] "hace %i segundos"
 
 msgid "edit date"
 msgstr "fecha de edición"
@@ -2707,73 +2671,17 @@ msgstr "NO SELECCIONAR NADA"
 msgid "select none"
 msgstr "no seleccionar nada"
 
+msgid "add half star"
+msgstr "añadir media estrella"
+
+msgid "toggle"
+msgstr "activar"
+
 msgid "move cursor"
 msgstr "mover cursor"
 
 msgid "edit"
 msgstr "editar"
-
-msgid "WORKING..."
-msgstr "BUSCANDO..."
-
-msgid "toggle"
-msgstr "activar"
-
-msgid "add half star"
-msgstr "añadir media estrella"
-
-msgctxt "theme"
-msgid "never"
-msgstr "nunca"
-
-#, c-format
-msgctxt "theme"
-msgid "%i day ago"
-msgid_plural "%i days ago"
-msgstr[0] "hace %i día"
-msgstr[1] "hace %i días"
-
-#, c-format
-msgctxt "theme"
-msgid "%i hour ago"
-msgid_plural "%i hours ago"
-msgstr[0] "hace %i hora"
-msgstr[1] "hace %i horas"
-
-#, c-format
-msgctxt "theme"
-msgid "%i minute ago"
-msgid_plural "%i minutes ago"
-msgstr[0] "hace %i minuto"
-msgstr[1] "hace %i minutos"
-
-#, c-format
-msgctxt "theme"
-msgid "%i second ago"
-msgid_plural "%i seconds ago"
-msgstr[0] "hace %i segundo"
-msgstr[1] "hace %i segundos"
-
-msgid "SPACE"
-msgstr "ESPACIO"
-
-msgid "LOAD"
-msgstr "CARGAR"
-
-msgid "shift"
-msgstr "mayusculas"
-
-msgid "alt"
-msgstr "alt"
-
-msgid "newline"
-msgstr "tabulador"
-
-msgid "backspace"
-msgstr "borrar"
-
-msgid "space"
-msgstr "espacio"
 
 msgid "WELCOME"
 msgstr "BIENVENIDO"
@@ -2805,15 +2713,6 @@ msgstr ""
 
 msgid "PRESS ESC TO CANCEL"
 msgstr "PULSA ESC PARA CANCELAR"
-
-msgid "LOAD DEFAULT"
-msgstr "CARGAR VALOR POR DEFECTO"
-
-msgid "DISCARD CHANGES"
-msgstr "DESCARTAR CAMBIOS"
-
-msgid "discard changes"
-msgstr "descartar cambios"
 
 msgid "CONFIGURING"
 msgstr "CONFIGURANDO"
@@ -2920,9 +2819,110 @@ msgstr "EN USO"
 msgid "PRESS ANYTHING"
 msgstr "PULSAR CUALQUIER BOTON"
 
+msgid "SPACE"
+msgstr "ESPACIO"
+
+msgid "LOAD"
+msgstr "CARGAR"
+
+msgid "shift"
+msgstr "mayusculas"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "tabulador"
+
+msgid "backspace"
+msgstr "borrar"
+
+msgid "space"
+msgstr "espacio"
+
+msgid "LOAD DEFAULT"
+msgstr "CARGAR VALOR POR DEFECTO"
+
+msgid "DISCARD CHANGES"
+msgstr "DESCARTAR CAMBIOS"
+
+msgid "discard changes"
+msgstr "descartar cambios"
+
 msgid "You have exceeded your daily scrape quota"
 msgstr "Ha superado su cuota diaria de escrapeos"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "El servidor ha devuelto un código de error HTTP %s"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "AÑADIDO DISPOSITIVO DE ENTRADA '%s'"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "ELIMINADO DISPOSITIVO DE ENTRADA '%s'"
+
+msgid "medium"
+msgstr "medio"
+
+msgid "large"
+msgstr "grande"
+
+msgid "small"
+msgstr "pequeño"
+
+msgid "extra small"
+msgstr "muy pequeño"
+
+msgid "extra large"
+msgstr "muy grande"
+
+msgid "automatic"
+msgstr "automatico"
+
+msgid "16:9 vertical"
+msgstr "16:9 vertical"
+
+msgid "16:10 vertical"
+msgstr "16:10 vertical"
+
+msgid "3:2 vertical"
+msgstr "3:2 vertical"
+
+msgid "4:3 vertical"
+msgstr "4:3 vertical"
+
+msgid "5:4 vertical"
+msgstr "5:4 vertical"
+
+msgid "19.5:9 vertical"
+msgstr "19.5:9 vertical"
+
+msgid "20:9 vertical"
+msgstr "20:9 vertical"
+
+msgid "21:9 vertical"
+msgstr "21:9 vertical"
+
+msgid "32:9 vertical"
+msgstr "32:9 vertical"
+
+msgid "Searching for games..."
+msgstr "Buscando juegos..."
+
+msgid "Loading systems..."
+msgstr "Cargando sistemas..."
+
+msgid "Reloading..."
+msgstr "Cargando de nuevo..."
+
+msgid "Copying resources..."
+msgstr "Copiar recursos..."
+
+msgid "Creating system directories..."
+msgstr "Creación de directorios del sistema..."
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "ERROR: NO SE HA PODIDO PROCESAR EL ARCHIVO PDF"

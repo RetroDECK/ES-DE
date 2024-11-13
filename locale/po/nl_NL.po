@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-22 14:58+0200\n"
+"POT-Creation-Date: 2024-11-13 18:05+0100\n"
 "PO-Revision-Date: 2024-09-22 21:00+0200\n"
 "Last-Translator: Stefan <s.vandenbroekprive@gmail.com>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
@@ -31,209 +31,584 @@ msgstr "Nieuwe release beschikbaar:"
 msgid "For more information visit"
 msgstr "Voor meer informatie bezoek"
 
-msgid "No Entries Found"
-msgstr "Geen items gevonden"
-
-msgctxt "theme"
-msgid "all"
-msgstr "alle"
-
-msgctxt "theme"
 msgid "all games"
 msgstr "alle spellen"
 
-msgctxt "theme"
-msgid "recent"
-msgstr "recent"
-
-msgctxt "theme"
 msgid "last played"
 msgstr "laatst gespeeld"
 
-msgctxt "theme"
 msgid "favorites"
 msgstr "favorieten"
 
-msgctxt "theme"
 msgid "collections"
 msgstr "verzamelingen"
 
-msgid "ScreenScraper error:"
-msgstr "ScreenScraper-fout:"
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "UITGESCHAKELD '%s' IN '%s'"
 
-msgid "ScreenScraper: Wrong username or password"
-msgstr "ScreenScraper: Verkeerde gebruikersnaam of wachtwoord"
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "BEWERKEN VAN '%s'-COLLECTIE, SPELLEN TOEVOEGEN/VERWIJDEREN MET %s"
 
-msgid "Network error:"
-msgstr "Netwerkfout:"
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "VOLTOOID BEWERKING '%s' COLLECTIE"
 
-msgid "Media directory does not exist and can't be created."
-msgstr "De mediamap bestaat niet en kan niet worden aangemaakt."
+msgid "Favorites"
+msgstr "Favorieten"
 
-msgid "Permission problems?"
-msgstr "Problemen met toestemming?"
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "TOEGEVOEGD '%s' AAN '%s'"
 
-msgid "Failed to open path for writing media file."
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "'%s' VERWIJDERD VAN '%s'"
+
+msgid "This collection is empty"
+msgstr "Deze collectie is leeg"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "Deze collectie bevat 1 spel: '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "Deze collectie bevat 2 spellen: '%s [%s]' en '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "Deze collectie bevat 3 spellen: '%s [%s]', '%s [%s]' en '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"Deze collectie bevat %i games: '%s [%s]', '%s [%s]' en '%s [%s]', onder "
+"andere"
+msgstr[1] ""
+"Deze collecties bevat %i games: ‘%s [%s]’, ‘%s [%s]’ en ‘%s [%s]’, onder "
+"andere"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "Deze collectie bevat 1 spel: '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "Deze collectie bevat 2 spellen: '%s' en '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "Deze collectie bevat 3 spellen: '%s', '%s' en '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "Deze collectie bevat %i games: '%s', '%s' en '%s', onder andere"
+msgstr[1] "Deze collecties bevat %i games: ‘%s’, ‘%s’ en ‘%s’, onder andere"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' is gefilterd, dus er kunnen meer spellen beschikbaar zijn"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "VERWIJDERDE COLLECTIE '%s'"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "FOUT: ONTBREKENDE PRE-COMMAND FIND RULES CONFIGURATIE VOOR '%s'"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FOUT: KON PRE-COMMAND NIET VINDEN, IS HET GOED GEÏNSTALLEERD?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FOUT: KON PRE-COMMAND '%s' NIET VINDEN, IS HET GOED GEÏNSTALLEERD?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "FOUT: ONTBREKENDE EMULATOR VINDREGELS CONFIGURATIE VOOR '%s'"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FOUT: KAN DE APP NIET VINDEN, IS DEZE GOED GEÏNSTALLEERD?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FOUT: KON APP '%s' NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FOUT: KAN EMULATOR NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "FOUT: KON EMULATOR '%s' NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "FOUT: KON EMULATOR CORE-BESTAND '%s' NIET VINDEN"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "FOUT: ONGELDIGE INVOER IN HET SYSTEEMCONFIGURATIEBESTAND"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "FOUT: ONTBREKENDE KERNCONFIGURATIE VOOR '%s'"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "FOUT: ONGELDIGE %s VARIABELE INVOER"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
 msgstr ""
-"Het openen van het pad voor het schrijven van het mediabestand is mislukt."
+"FOUT: MAP GEDEFINIEERD DOOR %s KON NIET WORDEN AANGEMAAKT, PROBLEMEN MET DE "
+"TOESTEMMING?"
 
-msgid "Couldn't save media file, permission problems or is the disk full?"
-msgstr ""
-"Kan het mediabestand niet opslaan, zijn er problemen met de rechten of is de "
-"schijf vol?"
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "FOUT: APP OF ALIAS-BESTAND BESTAAT NIET OF IS ONLEESBAAR"
 
-msgid "Couldn't save resized image, permission problems or is the disk full?"
-msgstr ""
-"Kan de gewijzigde afbeelding niet opslaan, zijn er rechtenproblemen of is de "
-"schijf vol?"
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "FOUT: DESKTOPBESTAND IS ONGELDIG OF ONLEESBAAR"
 
-msgctxt "metadata"
-msgid "NAME"
-msgstr "NAAM"
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "FOUT: HET DESKTOPBESTAND BESTAAT NIET OF IS ONLEESBAAR"
 
-msgctxt "metadata"
-msgid "ENTER NAME"
-msgstr "VOER NAAM IN"
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "FOUT BIJ HET STARTEN VAN HET SPEL '%s' (FOUTCODE %i)"
 
-msgctxt "metadata"
-msgid "SORTNAME"
-msgstr "SORTEERNAAM"
-
-msgctxt "metadata"
-msgid "ENTER SORTNAME"
-msgstr "VOER SORTNAME IN"
-
-msgctxt "metadata"
-msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "AANGEPASTE COLLECTIES SORTNAME"
-
-msgctxt "metadata"
-msgid "ENTER COLLECTIONS SORTNAME"
-msgstr "VOER COLLECTIES IN SORTNAME"
-
-msgctxt "metadata"
-msgid "DESCRIPTION"
-msgstr "BESCHRIJVING"
-
-msgctxt "metadata"
-msgid "ENTER DESCRIPTION"
-msgstr "VOER BESCHRIJVING IN"
-
-msgctxt "metadata"
 msgid "RATING"
 msgstr "BEOORDELING"
 
-msgctxt "metadata"
-msgid "RELEASE DATE"
-msgstr "PUBLICATIEDATUM"
-
-msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr "ONTWIKKELAAR"
 
-msgctxt "metadata"
-msgid "ENTER DEVELOPER"
-msgstr "ONTWIKKELAAR VOEREN"
-
-msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr "UITGEVER"
 
-msgctxt "metadata"
-msgid "ENTER PUBLISHER"
-msgstr "VOER UITGEVER IN"
-
-msgctxt "metadata"
 msgid "GENRE"
 msgstr "GENRE"
 
-msgctxt "metadata"
-msgid "ENTER GENRE"
-msgstr "VOER GENRE IN"
-
-msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "SPELERS"
 
-msgctxt "metadata"
-msgid "ENTER NUMBER OF PLAYERS"
-msgstr "VOER HET AANTAL SPELERS IN"
-
-msgctxt "metadata"
 msgid "FAVORITE"
 msgstr "FAVORIET"
 
-msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "VOLTOOID"
 
-msgctxt "metadata"
 msgid "KIDGAME"
 msgstr "KINDERSPEL"
 
-msgctxt "metadata"
-msgid "KIDGAME (ONLY AFFECTS BADGES)"
-msgstr "KIDGAME (heeft alleen invloed op BADGES)"
-
-msgctxt "metadata"
 msgid "HIDDEN"
 msgstr "VERBORGEN"
 
-msgctxt "metadata"
-msgid "BROKEN/NOT WORKING"
-msgstr "KAPOT/WERKT NIET"
+msgid "BROKEN"
+msgstr "GEBROKEN"
 
-msgctxt "metadata"
-msgid "EXCLUDE FROM GAME COUNTER"
-msgstr "UITSLUITEN VAN SPELTELLER"
-
-msgctxt "metadata"
-msgid "EXCLUDE FROM MULTI-SCRAPER"
-msgstr "UITSLUITEN VAN MULTI-SCHRAPER"
-
-msgctxt "metadata"
-msgid "HIDE METADATA FIELDS"
-msgstr "METADATA-VELDEN VERBERGEN"
-
-msgctxt "metadata"
-msgid "TIMES PLAYED"
-msgstr "KEER GESPEELD"
-
-msgctxt "metadata"
-msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr "VOER HET AANTAL KEER IN DAT JE GESPEELD HEBT"
-
-msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "CONTROLLER"
 
-msgctxt "metadata"
-msgid "SELECT CONTROLLER"
-msgstr "SELECTEER CONTROLLER"
-
-msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr "ALTERNATIEVE EMULATOR"
 
-msgctxt "metadata"
-msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr "SELECTEER ALTERNATIEVE EMULATOR"
+msgid "FALSE"
+msgstr "ONWAAR"
 
-msgctxt "metadata"
-msgid "FOLDER LINK"
-msgstr "MAP LINK"
+msgid "TRUE"
+msgstr "WAAR"
 
-msgctxt "metadata"
-msgid "SELECT FOLDER LINK"
-msgstr "SELECTEER MAP LINK"
+msgid "UNKNOWN"
+msgstr "ONBEKEND"
 
-msgctxt "metadata"
-msgid "LAST PLAYED"
-msgstr "LAATST GESPEELD"
+msgid "NONE SELECTED"
+msgstr "GEEN GESELECTEERD"
 
-msgctxt "metadata"
-msgid "ENTER LAST PLAYED DATE"
-msgstr "VOER DE LAATSTE SPEELDATUM IN"
+msgid "name, ascending"
+msgstr "naam, oplopend"
+
+msgid "name, descending"
+msgstr "naam, aflopend"
+
+msgid "rating, ascending"
+msgstr "beoordeling, oplopend"
+
+msgid "rating, descending"
+msgstr "beoordeling, aflopend"
+
+msgid "release date, ascending"
+msgstr "releasedatum, oplopend"
+
+msgid "release date, descending"
+msgstr "releasedatum, aflopend"
+
+msgid "developer, ascending"
+msgstr "ontwikkelaar, oplopend"
+
+msgid "developer, descending"
+msgstr "ontwikkelaar, aflopend"
+
+msgid "publisher, ascending"
+msgstr "uitgever, oplopend"
+
+msgid "publisher, descending"
+msgstr "uitgever, aflopend"
+
+msgid "genre, ascending"
+msgstr "genre, oplopend"
+
+msgid "genre, descending"
+msgstr "genre, aflopend"
+
+msgid "players, ascending"
+msgstr "spelers, oplopend"
+
+msgid "players, descending"
+msgstr "spelers, aflopend"
+
+msgid "last played, ascending"
+msgstr "laatst gespeeld, oplopend"
+
+msgid "last played, descending"
+msgstr "laatst gespeeld, aflopend"
+
+msgid "times played, ascending"
+msgstr "keer gespeeld, oplopend"
+
+msgid "times played, descending"
+msgstr "keer gespeeld, aflopend"
+
+msgid "system, ascending"
+msgstr "systeem, oplopend"
+
+msgid "system, descending"
+msgstr "systeem, aflopend"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "ALTERNATIEVE EMULATORS"
+
+msgid "BACK"
+msgstr "TERUG"
+
+msgid "back"
+msgstr "terug"
+
+msgid "INVALID ENTRY"
+msgstr "ONGELDIGE INVOER"
+
+msgid "CLEARED ENTRY"
+msgstr "GEKLEURDE TOEGANG"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "GEEN ALTERNATIEVE EMULATORS GEDEFINIEERD"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "WIS ONGELDIGE INVOER"
+
+msgid "DEFAULT"
+msgstr "STANDAARD"
+
+msgid "select"
+msgstr "selecteren"
+
+msgid "APPLICATION UPDATER"
+msgstr "TOEPASSINGSUPDATER"
+
+msgid "INSTALLATION STEPS:"
+msgstr "INSTALLATIESTAPPEN:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "DOWNLOAD NIEUWE RELEASE"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "DOWNLOAD NIEUWE RELEASE IN DEZE GIDS:"
+
+msgid "INSTALL PACKAGE"
+msgstr "PAKKET INSTALLEREN"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "ES-DE AFSLUITEN EN HANDMATIG OPNIEUW OPSTARTEN"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "STOP EN UPGRADE ES-DE HANDMATIG"
+
+msgid "STATUS MESSAGE:"
+msgstr "STATUSBERICHT:"
+
+msgid "DOWNLOAD"
+msgstr "DOWNLOADEN"
+
+msgid "download new release"
+msgstr "download nieuwe release"
+
+msgid "Download directory does not exist"
+msgstr "Download directory bestaat niet"
+
+msgid "CHANGE DIRECTORY"
+msgstr "WIJZIG DIRECTORY"
+
+msgid "change download directory"
+msgstr "download directory wijzigen"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "GA NAAR DE DOWNLOADGIDS"
+
+msgid "CANCEL"
+msgstr "ANNULEREN"
+
+msgid "cancel"
+msgstr "annuleren"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "DOWNLOAD AFGEBROKEN"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "GEEN PAKKET OPGESLAGEN OP SCHIJF"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "PAKKET IS GEDOWNLOAD EN KAN HANDMATIG WORDEN GEÏNSTALLEERD"
+
+msgid "DOWNLOADING 100%"
+msgstr "DOWNLOADEN 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr ""
+"Het gedownloade bestand komt niet overeen met de verwachte MD5-controlesom"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr ""
+"Fout: Kan tijdelijk pakketbestand niet verwijderen, problemen met rechten?"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr "Fout: Pakketbestand kon niet worden geschreven, machtigingsproblemen?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "Fout: Kan geen machtigingen instellen voor AppImage-bestand"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "Gedownload %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "Fout: Kan AppImage-updatebestand niet openen om te lezen"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr "Fout: gedownload bestand komt niet overeen met verwachte MD5-checksum"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"Fout: Kan de naam van het actieve AppImage-bestand niet wijzigen, problemen "
+"met de rechten?"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"Fout: Kan het actieve AppImage-bestand niet vervangen, problemen met de "
+"machtigingen?"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "Succesvol geïnstalleerd als %s"
+
+msgid "DOWNLOADING"
+msgstr "DOWNLOADEN"
+
+msgid "INSTALL"
+msgstr "INSTALLEREN"
+
+msgid "install package"
+msgstr "pakket installeren"
+
+msgid "Find the detailed changelog at"
+msgstr "Het gedetailleerde changelog vindt u op"
+
+msgid "QUIT"
+msgstr "STOPPEN"
+
+msgid "quit application"
+msgstr "stop met applicatie"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "VOLTOOIEN VAN DE BEWERKING VAN DE '%s'-COLLECTIE"
+
+msgid "SELECT COLLECTIONS"
+msgstr "SELECTEER COLLECTIES"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "AUTOMATISCHE SPELCOLLECTIES"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "AANGEPASTE SPELCOLLECTIES"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "MAAK EEN NIEUWE AANGEPASTE COLLECTIE VANUIT HET THEMA"
+
+msgid "SELECT THEME FOLDER"
+msgstr "SELECTEER THEMAMAP"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "NIEUWE AANGEPASTE COLLECTIE MAKEN"
+
+msgid "NEW COLLECTION NAME"
+msgstr "NIEUWE COLLECTIE NAAM"
+
+msgid "CREATE"
+msgstr "CREËREN"
+
+msgid "CREATE COLLECTION?"
+msgstr "COLLECTIE MAKEN?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "AANGEPASTE COLLECTIE VERWIJDEREN"
+
+msgid "COLLECTION TO DELETE"
+msgstr "VERZAMELING OM TE VERWIJDEREN"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"DIT VERWIJDERT DE COLLECTIE PERMANENT\n"
+"'%s'\n"
+"BENT U ZEKER?"
+
+msgid "YES"
+msgstr "JA"
+
+msgid "NO"
+msgstr "NEE"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "GROEPSCOLLECTIES OP MAAT"
+
+msgid "IF UNTHEMED"
+msgstr "ALS HET NIET THEMA IS"
+
+msgid "ALWAYS"
+msgstr "ALTIJD"
+
+msgid "NEVER"
+msgstr "NOOIT"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "SORTEER FAVORIETEN BOVEN VOOR AANGEPASTE COLLECTIES"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "WEERGAVE VAN STERRENMARKERINGEN VOOR AANGEPASTE COLLECTIES"
+
+msgid "FILTER GAMELIST"
+msgstr "FILTER GAMELIJST"
+
+msgid "RESET ALL FILTERS"
+msgstr "ALLE FILTERS RESETTEN"
+
+msgid "GAME NAME"
+msgstr "NAAM VAN HET SPEL"
+
+msgid "APPLY CHANGES?"
+msgstr "WIJZIGINGEN TOEPASSEN?"
+
+msgid "NOTHING TO FILTER"
+msgstr "NIETS OM TE FILTEREN"
+
+msgid "GAMELIST OPTIONS"
+msgstr "GAMELIST-OPTIES"
+
+msgid "JUMP TO..."
+msgstr "GA NAAR..."
+
+msgid "SORT GAMES BY"
+msgstr "SORTEER SPELLETJES OP"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "DIT SYSTEEM HEEFT GEEN SPELLETJES"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "SPELLEN TOEVOEGEN AAN/VERWIJDEREN UIT DEZE COLLECTIE"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "DE METADATA VAN DEZE MAP BEWERKEN"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "DE METADATA VAN DEZE GAME BEWERKEN"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "VOER MAP IN (OVERSCHRIJD MAP LINK)"
+
+msgid "CLOSE"
+msgstr "SLUIT"
+
+msgid "close"
+msgstr "sluit"
+
+msgid "APPLY"
+msgstr "TOEPASSEN"
+
+msgid "apply"
+msgstr "toepassen"
+
+msgid "close (apply)"
+msgstr "sluiten (toepassen)"
+
+msgid "close (cancel)"
+msgstr "sluiten (annuleren)"
+
+msgid "LAUNCHING GAME"
+msgstr "STARTSPEL"
+
+msgid "HELP PROMPTS"
+msgstr "HULPPROMPTS"
+
+msgid "TOP"
+msgstr "BOVENKANT"
+
+msgid "BOTTOM"
+msgstr "ONDERKANT"
+
+msgid "DISABLED"
+msgstr "GEHANDICAPT"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "WEERGAVEMEDIATYPES"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "HOUD VIDEO'S AAN TIJDENS HET BEKIJKEN VAN AFBEELDINGEN"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "REK VIDEO'S UIT TOT SCHERMRESOLUTIE"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "SCANLIJNEN VOOR VIDEO'S RENDEN"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "RENDER BLUR VOOR VIDEO'S"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "SCANLINES RENDEN VOOR SCREENSHOTS EN TITELS"
 
 msgid "MAIN MENU"
 msgstr "HOOFDMENU"
@@ -261,9 +636,6 @@ msgstr "HULPPROGRAMMA'S"
 
 msgid "QUIT ES-DE"
 msgstr "STOP ES-DE"
-
-msgid "QUIT"
-msgstr "STOPPEN"
 
 msgid "THEME"
 msgstr "THEMA"
@@ -327,9 +699,6 @@ msgstr "TRIGGERS"
 
 msgid "LEFT/RIGHT"
 msgstr "LINKS/RECHTS"
-
-msgid "DISABLED"
-msgstr "GEHANDICAPT"
 
 msgid "GAMELIST ON STARTUP"
 msgstr "GAMELIJST BIJ OPSTARTEN"
@@ -444,12 +813,6 @@ msgstr ""
 "\n"
 "WILT U DOORGAAN?"
 
-msgid "YES"
-msgstr "JA"
-
-msgid "NO"
-msgstr "NEE"
-
 msgid "RANDOM ENTRY BUTTON"
 msgstr "TOEWIJZING KNOP"
 
@@ -563,9 +926,6 @@ msgstr ""
 "WISSEN OM DE CONFIGURATOR TE DWINGEN OM BIJ DE VOLGENDE OPSTART TE WORDEN "
 "UITGEVOERD"
 
-msgid "OK"
-msgstr "OK"
-
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
 msgstr "ACCEPTEER ALLEEN INPUT VAN DE EERSTE CONTROLLER"
 
@@ -589,12 +949,6 @@ msgstr ""
 
 msgid "PROCEED"
 msgstr "DOORGAAN"
-
-msgid "CANCEL"
-msgstr "ANNULEREN"
-
-msgid "ALTERNATIVE EMULATORS"
-msgstr "ALTERNATIEVE EMULATORS"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "GAME MEDIA GIDS"
@@ -657,14 +1011,8 @@ msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "WANNEER MOET JE DE GAMEMETADATA OPSLAAN"
 
-msgid "ALWAYS"
-msgstr "ALTIJD"
-
 msgid "ON EXIT"
 msgstr "BIJ UITGANG"
-
-msgid "NEVER"
-msgstr "NOOIT"
 
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "WANNEER MOET JE DE GAMEMETADATA OPSLAAN"
@@ -800,23 +1148,305 @@ msgstr "SCREENSAVER-INSTELLINGEN"
 msgid "choose"
 msgstr "kiezen"
 
-msgid "select"
-msgstr "selecteren"
-
 msgid "close menu"
 msgstr "menu sluiten"
 
-msgid "REFINE SEARCH"
-msgstr "VERFIJN ZOEKOPDRACHT"
+msgid "EDIT METADATA"
+msgstr "METADATA BEWERKEN"
 
-msgid "refine search"
-msgstr "zoekopdracht verfijnen"
+msgid "CLEAR ENTRY"
+msgstr "DUIDELIJKE INVOER"
 
-msgid "cancel"
-msgstr "annuleren"
+msgid "SELECT EMULATOR"
+msgstr "SELECTEER EMULATOR"
 
-msgid "back (cancel)"
-msgstr "terug (annuleren)"
+msgid "SYSTEM-WIDE"
+msgstr "SYSTEEMBREED"
+
+msgid "unknown"
+msgstr "onbekend"
+
+msgid "SCRAPE"
+msgstr "SCRAPE"
+
+msgid "scrape"
+msgstr "scrape"
+
+msgid "save metadata"
+msgstr "metagegevens opslaan"
+
+msgid "cancel changes"
+msgstr "wijzigingen annuleren"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"DIT VERWIJDERT ALLE MEDIABESTANDEN EN DE GAMELIST.XML-VERMELDING VOOR DEZE "
+"MAP, MAAR NOCH DE MAP ZELF NOCH DE INHOUD ERIN WORDT VERWIJDERD\n"
+"WEET U HET ZEKER?"
+
+msgid "CLEAR"
+msgstr "WIS"
+
+msgid "clear folder"
+msgstr "map wissen"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"DIT VERWIJDERT ALLE MEDIABESTANDEN EN DE GAMELIST.XML-VERMELDING VOOR DEZE "
+"GAME, MAAR HET GAMEBESTAND ZELF WORDT NIET VERWIJDERD\n"
+"WEET U HET ZEKER?"
+
+msgid "clear file"
+msgstr "bestand wissen"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"DIT VERWIJDERT HET GAMEBESTAND, ALLE MEDIABESTANDEN EN DE GAMELIST.XML-"
+"INVOER\n"
+"WEET U HET ZEKER?"
+
+msgid "DELETE"
+msgstr "VERWIJDEREN"
+
+msgid "delete game"
+msgstr "spel verwijderen"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "MIXIMAGE OFFLINE-GENERATOR"
+
+msgid "NOT STARTED"
+msgstr "NIET GESTART"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i VAN %i SPEL VERWERKT"
+msgstr[1] "%i Van %i SPELLEN VERWERKT"
+
+msgid "Generated:"
+msgstr "Gegenereerd:"
+
+msgid "Overwritten:"
+msgstr "Overschreven:"
+
+msgid "Skipped:"
+msgstr "Overgeslagen:"
+
+msgid "Skipped (existing):"
+msgstr "Overgeslagen (bestaand):"
+
+msgid "Failed:"
+msgstr "Mislukt:"
+
+msgid "Processing:"
+msgstr "Verwerken:"
+
+msgid "Last error message:"
+msgstr "Laatste foutmelding:"
+
+msgid "START"
+msgstr "BEGIN"
+
+msgid "start processing"
+msgstr "begin met verwerken"
+
+msgid "PAUSE"
+msgstr "PAUZE"
+
+msgid "pause processing"
+msgstr "pauze verwerking"
+
+msgid "close (abort processing)"
+msgstr "sluiten (verwerking afbreken)"
+
+msgid "RUNNING..."
+msgstr "UITVOEREN..."
+
+msgid "PAUSED"
+msgstr "GEPAUZEERD"
+
+msgid "RUNNING"
+msgstr "UITVOEREN"
+
+msgid "DONE"
+msgstr "KLAAR"
+
+msgid "done (close)"
+msgstr "Klaar (sluiten)"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"DIT VERWIJDERT ALLE MEDIABESTANDEN WAAR GEEN OVEREENKOMSTIGE GAMEBESTANDEN "
+"TE VINDEN ZIJN. DEZE BESTANDEN WORDEN VERPLAATST NAAR EEN OPRUIMINGSMAP IN "
+"JE GAMEMEDIAMAP. JE KUNT DEZE MAP HANDMATIG VERWIJDEREN WANNEER JE ZEKER "
+"WEET DAT JE DEZE NIET MEER NODIG HEBT."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"DIT VERWIJDERT ALLE INVOER UIT JE GAMELIST XML-BESTANDEN WAAR GEEN "
+"OVEREENKOMSTIGE GAMEBESTANDEN TE VINDEN ZIJN. BACKUPS VAN DE ORIGINELE "
+"BESTANDEN WORDEN OPGESLAGEN IN EEN CLEANUP-MAP IN JE GAMELIST-MAP. JE KUNT "
+"DEZE MAP HANDMATIG VERWIJDEREN WANNEER JE ZEKER WEET DAT JE DEZE NIET MEER "
+"NODIG HEBT."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"HIERMEE WORDEN ALLE VERMELDINGEN UIT DE CONFIGURATIEBESTANDEN VAN UW "
+"AANGEPASTE COLLECTIES VERWIJDERD WAAR GEEN OVEREENKOMSTIGE SPELBESTANDEN TE "
+"VINDEN ZIJN. BACK-UPS VAN DE ORIGINELE BESTANDEN WORDEN OPGESLAGEN IN EEN "
+"OPRUIMINGSMAP IN UW COLLECTIES-MAP. ALLEEN DE COLLECTIES DIE OP DIT MOMENT "
+"ZIJN INGESCHAKELD, WORDEN VERWERKT."
+
+msgid "DESCRIPTION:"
+msgstr "BESCHRIJVING:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "TOTAAL AANTAL VERWIJDERDE INZENDINGEN:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "LAATSTE VERWERKTE SYSTEEM:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "LAATSTE FOUTMELDING:"
+
+msgid "MEDIA"
+msgstr "MEDIA"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "BEZIG MET MEDIA CLEANUP"
+
+msgid "STOP"
+msgstr "STOP"
+
+msgid "stop processing"
+msgstr "stop met verwerken"
+
+msgid "GAMELISTS"
+msgstr "SPELLIJSTEN"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "OPRUIMING VAN LOPENDE SPELLIJSTEN"
+
+msgid "COLLECTIONS"
+msgstr "COLLECTIES"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "COLLECTIES OPRUIMEN MISLUKT"
+
+msgid "There are no enabled custom collections"
+msgstr "Er zijn geen aangepaste collecties ingeschakeld"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "LOPENDE COLLECTIES OPRUIMEN"
+
+msgid "PROCESSING"
+msgstr "VERWERKING"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "Er is een flatten.txt-bestand gevonden, waarbij \"%s\" is overgeslagen"
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "Kan de doelmap niet aanmaken, problemen met rechten?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "Kan mediabestand niet verplaatsen, problemen met rechten?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "Kan gamelist.xml-bestand voor \"%s\" niet parseren"
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "Kon geen gamelist-tag vinden in het bestand voor \"%s\""
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr ""
+"Het tijdelijke gamelijstbestand kon niet worden verwijderd, problemen met de "
+"rechten?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr ""
+"Kon niet naar het tijdelijke gamelijstbestand schrijven, problemen met "
+"rechten?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr "Kan geen back-upmap aanmaken, problemen met rechten?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "Kan het oude gamelistbestand niet verplaatsen, problemen met rechten?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr ""
+"Kon het tijdelijke gamelijstbestand niet verplaatsen, problemen met rechten?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "Kon het aangepaste verzamelingsconfiguratiebestand niet vinden"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "Kan het aangepaste verzamelingsconfiguratiebestand niet openen"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr ""
+"Kan het tijdelijke verzamelbestand niet verwijderen, problemen met de "
+"rechten?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "Kon niet schrijven naar tijdelijke verzameling configuratiebestand"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr "Kan het oude collectiebestand niet verplaatsen, problemen met rechten?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr ""
+"Kan het tijdelijke verzamelbestand niet verplaatsen, problemen met rechten?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "GEBROKEN MEDIA-OPRUIMING"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "VOLTOOIDE MEDIA-OPRUIMING"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "AFGEBROKEN GAMELIST OPRUIMEN"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "VOLTOOIDE GAMELIST OPRUIMEN"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "OPRUIMING VAN AFGEBROKEN COLLECTIES"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "VOLTOOIDE COLLECTIES OPRUIMEN"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "MEDIA OPRUIMEN MISLUKT"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "GAMELISTS CLEANUP MISLUKT"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "DE TOEPASSING WORDT OPNIEUW GELADEN WANNEER U DIT HULPPROGRAMMA SLUIT."
 
 msgid "SCRAPE FROM"
 msgstr "SCHRAPEN VAN"
@@ -854,17 +1484,8 @@ msgstr "INHOUDSINSTELLINGEN"
 msgid "MIXIMAGE SETTINGS"
 msgstr "MIXIMAGE-INSTELLINGEN"
 
-msgid "START"
-msgstr "BEGIN"
-
 msgid "start scraper"
 msgstr "start schraper"
-
-msgid "BACK"
-msgstr "TERUG"
-
-msgid "back"
-msgstr "terug"
 
 msgid "SCREENSCRAPER USERNAME"
 msgstr "SCREENSCRAPER GEBRUIKERSNAAM"
@@ -1097,91 +1718,92 @@ msgstr "Selecteer ten minste één inhoudstype om te schrapen"
 msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
 msgstr "ALLE SPELLETJES ZIJN GEFILTERD, ER IS NIETS TE SCHRAPEN"
 
-msgid "HELP PROMPTS"
-msgstr "HULPPROMPTS"
+msgid "SCRAPING IN PROGRESS"
+msgstr "SCRAPING IN UITVOERING"
 
-msgid "TOP"
-msgstr "BOVENKANT"
+msgid "SYSTEM"
+msgstr "SYSTEEM"
 
-msgid "BOTTOM"
-msgstr "ONDERKANT"
+msgid "REFINE SEARCH"
+msgstr "VERFIJN ZOEKOPDRACHT"
 
-msgid "DISPLAY MEDIA TYPES"
-msgstr "WEERGAVEMEDIATYPES"
+msgid "refine search"
+msgstr "zoekopdracht verfijnen"
 
-msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
-msgstr "HOUD VIDEO'S AAN TIJDENS HET BEKIJKEN VAN AFBEELDINGEN"
+msgid "SKIP"
+msgstr "OVERSLAAN"
 
-msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
-msgstr "REK VIDEO'S UIT TOT SCHERMRESOLUTIE"
+msgid "skip game"
+msgstr "spel overslaan"
 
-msgid "RENDER SCANLINES FOR VIDEOS"
-msgstr "SCANLIJNEN VOOR VIDEO'S RENDEN"
+msgid "stop"
+msgstr "stop"
 
-msgid "RENDER BLUR FOR VIDEOS"
-msgstr "RENDER BLUR VOOR VIDEO'S"
-
-msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
-msgstr "SCANLINES RENDEN VOOR SCREENSHOTS EN TITELS"
-
-#, c-format
-msgid "FINISH EDITING '%s' COLLECTION"
-msgstr "VOLTOOIEN VAN DE BEWERKING VAN DE '%s'-COLLECTIE"
-
-msgid "SELECT COLLECTIONS"
-msgstr "SELECTEER COLLECTIES"
-
-msgid "AUTOMATIC GAME COLLECTIONS"
-msgstr "AUTOMATISCHE SPELCOLLECTIES"
-
-msgid "CUSTOM GAME COLLECTIONS"
-msgstr "AANGEPASTE SPELCOLLECTIES"
-
-msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr "MAAK EEN NIEUWE AANGEPASTE COLLECTIE VANUIT HET THEMA"
-
-msgid "SELECT THEME FOLDER"
-msgstr "SELECTEER THEMAMAP"
-
-msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr "NIEUWE AANGEPASTE COLLECTIE MAKEN"
-
-msgid "NEW COLLECTION NAME"
-msgstr "NIEUWE COLLECTIE NAAM"
-
-msgid "CREATE"
-msgstr "CREËREN"
-
-msgid "CREATE COLLECTION?"
-msgstr "COLLECTIE MAKEN?"
-
-msgid "DELETE CUSTOM COLLECTION"
-msgstr "AANGEPASTE COLLECTIE VERWIJDEREN"
-
-msgid "COLLECTION TO DELETE"
-msgstr "VERZAMELING OM TE VERWIJDEREN"
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "SPEL"
+msgstr[1] "SPELLEN"
 
 #, c-format
-msgid ""
-"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
-"'%s'\n"
-"ARE YOU SURE?"
-msgstr ""
-"DIT VERWIJDERT DE COLLECTIE PERMANENT\n"
-"'%s'\n"
-"BENT U ZEKER?"
+msgid "GAME %i OF %i"
+msgstr "SPEL %i VAN %i"
 
-msgid "GROUP CUSTOM COLLECTIONS"
-msgstr "GROEPSCOLLECTIES OP MAAT"
+msgid "NO GAMES WERE SCRAPED"
+msgstr "GEEN SPELLETJES WERDEN GESCHRAPT"
 
-msgid "IF UNTHEMED"
-msgstr "ALS HET NIET THEMA IS"
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i GAME SUCCESVOL GESCHRAPT"
+msgstr[1] "%i GAMES SUCCESVOL GESCHRAPT"
 
-msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr "SORTEER FAVORIETEN BOVEN VOOR AANGEPASTE COLLECTIES"
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i SPEL OVERGESLAGEN"
+msgstr[1] "%i SPELLEN OVERGESLAGEN"
 
-msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "WEERGAVE VAN STERRENMARKERINGEN VOOR AANGEPASTE COLLECTIES"
+msgid "RATING:"
+msgstr "BEOORDELING:"
+
+msgid "RELEASED:"
+msgstr "UITGEGEVEN:"
+
+msgid "DEVELOPER:"
+msgstr "ONTWIKKELAAR:"
+
+msgid "PUBLISHER:"
+msgstr "UITGEVER:"
+
+msgid "GENRE:"
+msgstr "GENRE:"
+
+msgid "PLAYERS:"
+msgstr "SPELERS:"
+
+msgid "NO GAMES FOUND"
+msgstr "GEEN SPELLETJES GEVONDEN"
+
+msgid "RETRY"
+msgstr "OPNIEUW PROBEREN"
+
+msgid "Error downloading thumbnail:"
+msgstr "Fout bij het downloaden van de miniatuur:"
+
+msgid "SEARCH"
+msgstr "ZOEKOPDRACHT"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "ZOEKEN MET VERFIJNDE NAAM?"
+
+msgid "skip"
+msgstr "overslaan"
+
+msgid "accept result"
+msgstr "accepteer resultaat"
+
+msgid "back (cancel)"
+msgstr "terug (annuleren)"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
 msgstr "SCREENSAVER STARTEN NA (MINUTEN)"
@@ -1242,30 +1864,6 @@ msgstr "VIDEO'S WISSELEN NA (SECONDEN)"
 
 msgid "RENDER BLUR"
 msgstr "WISSEN WISSEN"
-
-msgid "FILTER GAMELIST"
-msgstr "FILTER GAMELIJST"
-
-msgid "RESET ALL FILTERS"
-msgstr "ALLE FILTERS RESETTEN"
-
-msgid "GAME NAME"
-msgstr "NAAM VAN HET SPEL"
-
-msgid "APPLY CHANGES?"
-msgstr "WIJZIGINGEN TOEPASSEN?"
-
-msgid "NOTHING TO FILTER"
-msgstr "NIETS OM TE FILTEREN"
-
-msgid "LAUNCHING GAME"
-msgstr "STARTSPEL"
-
-msgid "CLOSE"
-msgstr "SLUIT"
-
-msgid "close"
-msgstr "sluit"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DOWNLOAD THEMA LIJST 100%"
@@ -1399,9 +1997,6 @@ msgstr "FOUT:"
 msgid "COULDN'T DOWNLOAD THEMES LIST"
 msgstr "KON DE THEMA'SLIJST NIET DOWNLOADEN"
 
-msgid "DOWNLOADING"
-msgstr "DOWNLOADEN"
-
 msgid "DOWNLOADING THEMES LIST"
 msgstr "DOWNLOADEN VAN THEMA'SLIJST"
 
@@ -1460,759 +2055,283 @@ msgstr ""
 "JE DOWNLOADT. LET OP: JE KUNT EEN LOPENDE DOWNLOAD NIET AFBREKEN, WANT DAT "
 "KAN LEIDEN TOT GEGEVENSVERBORGENHEID."
 
-msgid "RATING:"
-msgstr "BEOORDELING:"
+msgid "browse"
+msgstr "bladeren"
 
-msgid "RELEASED:"
-msgstr "UITGEGEVEN:"
+msgid "pdf manual"
+msgstr "pdf-handleiding"
 
-msgid "DEVELOPER:"
-msgstr "ONTWIKKELAAR:"
+msgid "first"
+msgstr "eerst"
 
-msgid "PUBLISHER:"
-msgstr "UITGEVER:"
+msgid "last"
+msgstr "laatst"
 
-msgid "GENRE:"
-msgstr "GENRE:"
+msgid "SCREENSHOT"
+msgstr "SCHERMAFDRUK"
 
-msgid "PLAYERS:"
-msgstr "SPELERS:"
+msgid "BOX COVER"
+msgstr "DOOS DEKSEL"
 
-msgid "NO GAMES FOUND"
-msgstr "GEEN SPELLETJES GEVONDEN"
+msgid "BOX BACK COVER"
+msgstr "DOOS ACHTERKANT"
 
-msgid "RETRY"
-msgstr "OPNIEUW PROBEREN"
+msgid "TITLE SCREEN"
+msgstr "TITELSCHERM"
 
-msgid "SKIP"
-msgstr "OVERSLAAN"
+msgid "FAN ART"
+msgstr "FAN ART"
 
-msgid "Error downloading thumbnail:"
-msgstr "Fout bij het downloaden van de miniatuur:"
+msgid "MIXIMAGE"
+msgstr "MIXAFBEELDING"
 
-msgid "SEARCH"
-msgstr "ZOEKOPDRACHT"
+msgid "CUSTOM"
+msgstr "AANGEPAST"
 
-msgid "SEARCH USING REFINED NAME?"
-msgstr "ZOEKEN MET VERFIJNDE NAAM?"
+msgctxt "metadata"
+msgid "NAME"
+msgstr "NAAM"
 
-msgid "skip"
-msgstr "overslaan"
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "VOER NAAM IN"
 
-msgid "accept result"
-msgstr "accepteer resultaat"
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "SORTEERNAAM"
 
-msgid "SCRAPING IN PROGRESS"
-msgstr "SCRAPING IN UITVOERING"
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "VOER SORTNAME IN"
 
-msgid "SYSTEM"
-msgstr "SYSTEEM"
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "AANGEPASTE COLLECTIES SORTNAME"
 
-msgid "skip game"
-msgstr "spel overslaan"
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "VOER COLLECTIES IN SORTNAME"
 
-msgid "STOP"
-msgstr "STOP"
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "BESCHRIJVING"
 
-msgid "stop"
-msgstr "stop"
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "VOER BESCHRIJVING IN"
 
-msgid "GAME"
-msgid_plural "GAMES"
-msgstr[0] "SPEL"
-msgstr[1] "SPELLEN"
+msgctxt "metadata"
+msgid "RATING"
+msgstr "BEOORDELING"
 
-#, c-format
-msgid "GAME %i OF %i"
-msgstr "SPEL %i VAN %i"
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "PUBLICATIEDATUM"
 
-msgid "NO GAMES WERE SCRAPED"
-msgstr "GEEN SPELLETJES WERDEN GESCHRAPT"
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "ONTWIKKELAAR"
 
-#, c-format
-msgid "%i GAME SUCCESSFULLY SCRAPED"
-msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] "%i GAME SUCCESVOL GESCHRAPT"
-msgstr[1] "%i GAMES SUCCESVOL GESCHRAPT"
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "ONTWIKKELAAR VOEREN"
 
-#, c-format
-msgid "%i GAME SKIPPED"
-msgid_plural "%i GAMES SKIPPED"
-msgstr[0] "%i SPEL OVERGESLAGEN"
-msgstr[1] "%i SPELLEN OVERGESLAGEN"
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "UITGEVER"
 
-msgid "GAMELIST OPTIONS"
-msgstr "GAMELIST-OPTIES"
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "VOER UITGEVER IN"
 
-msgid "JUMP TO..."
-msgstr "GA NAAR..."
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "GENRE"
 
-msgid "SORT GAMES BY"
-msgstr "SORTEER SPELLETJES OP"
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "VOER GENRE IN"
 
-msgid "THIS SYSTEM HAS NO GAMES"
-msgstr "DIT SYSTEEM HEEFT GEEN SPELLETJES"
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "SPELERS"
 
-msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
-msgstr "SPELLEN TOEVOEGEN AAN/VERWIJDEREN UIT DEZE COLLECTIE"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "VOER HET AANTAL SPELERS IN"
 
-msgid "EDIT THIS FOLDER'S METADATA"
-msgstr "DE METADATA VAN DEZE MAP BEWERKEN"
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "FAVORIET"
 
-msgid "EDIT THIS GAME'S METADATA"
-msgstr "DE METADATA VAN DEZE GAME BEWERKEN"
-
-msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
-msgstr "VOER MAP IN (OVERSCHRIJD MAP LINK)"
-
-msgid "APPLY"
-msgstr "TOEPASSEN"
-
-msgid "apply"
-msgstr "toepassen"
-
-msgid "close (apply)"
-msgstr "sluiten (toepassen)"
-
-msgid "close (cancel)"
-msgstr "sluiten (annuleren)"
-
-msgid ""
-"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
-"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
-"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
-"LONGER NEEDED."
-msgstr ""
-"DIT VERWIJDERT ALLE MEDIABESTANDEN WAAR GEEN OVEREENKOMSTIGE GAMEBESTANDEN "
-"TE VINDEN ZIJN. DEZE BESTANDEN WORDEN VERPLAATST NAAR EEN OPRUIMINGSMAP IN "
-"JE GAMEMEDIAMAP. JE KUNT DEZE MAP HANDMATIG VERWIJDEREN WANNEER JE ZEKER "
-"WEET DAT JE DEZE NIET MEER NODIG HEBT."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
-"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
-"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
-"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
-msgstr ""
-"DIT VERWIJDERT ALLE INVOER UIT JE GAMELIST XML-BESTANDEN WAAR GEEN "
-"OVEREENKOMSTIGE GAMEBESTANDEN TE VINDEN ZIJN. BACKUPS VAN DE ORIGINELE "
-"BESTANDEN WORDEN OPGESLAGEN IN EEN CLEANUP-MAP IN JE GAMELIST-MAP. JE KUNT "
-"DEZE MAP HANDMATIG VERWIJDEREN WANNEER JE ZEKER WEET DAT JE DEZE NIET MEER "
-"NODIG HEBT."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
-"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
-"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
-"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
-msgstr ""
-"HIERMEE WORDEN ALLE VERMELDINGEN UIT DE CONFIGURATIEBESTANDEN VAN UW "
-"AANGEPASTE COLLECTIES VERWIJDERD WAAR GEEN OVEREENKOMSTIGE SPELBESTANDEN TE "
-"VINDEN ZIJN. BACK-UPS VAN DE ORIGINELE BESTANDEN WORDEN OPGESLAGEN IN EEN "
-"OPRUIMINGSMAP IN UW COLLECTIES-MAP. ALLEEN DE COLLECTIES DIE OP DIT MOMENT "
-"ZIJN INGESCHAKELD, WORDEN VERWERKT."
-
-msgid "NOT STARTED"
-msgstr "NIET GESTART"
-
-msgid "DESCRIPTION:"
-msgstr "BESCHRIJVING:"
-
-msgid "TOTAL ENTRIES REMOVED:"
-msgstr "TOTAAL AANTAL VERWIJDERDE INZENDINGEN:"
-
-msgid "LAST PROCESSED SYSTEM:"
-msgstr "LAATSTE VERWERKTE SYSTEEM:"
-
-msgid "LAST ERROR MESSAGE:"
-msgstr "LAATSTE FOUTMELDING:"
-
-msgid "MEDIA"
-msgstr "MEDIA"
-
-msgid "start processing"
-msgstr "begin met verwerken"
-
-msgid "RUNNING MEDIA CLEANUP"
-msgstr "BEZIG MET MEDIA CLEANUP"
-
-msgid "stop processing"
-msgstr "stop met verwerken"
-
-msgid "GAMELISTS"
-msgstr "SPELLIJSTEN"
-
-msgid "RUNNING GAMELISTS CLEANUP"
-msgstr "OPRUIMING VAN LOPENDE SPELLIJSTEN"
-
-msgid "COLLECTIONS"
-msgstr "COLLECTIES"
-
-msgid "COLLECTIONS CLEANUP FAILED"
-msgstr "COLLECTIES OPRUIMEN MISLUKT"
-
-msgid "There are no enabled custom collections"
-msgstr "Er zijn geen aangepaste collecties ingeschakeld"
-
-msgid "RUNNING COLLECTIONS CLEANUP"
-msgstr "LOPENDE COLLECTIES OPRUIMEN"
-
-msgid "PROCESSING"
-msgstr "VERWERKING"
-
-#, c-format
-msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr "Er is een flatten.txt-bestand gevonden, waarbij \"%s\" is overgeslagen"
-
-msgid "Couldn't create target directory, permission problems?"
-msgstr "Kan de doelmap niet aanmaken, problemen met rechten?"
-
-msgid "Couldn't move media file, permission problems?"
-msgstr "Kan mediabestand niet verplaatsen, problemen met rechten?"
-
-#, c-format
-msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr "Kan gamelist.xml-bestand voor \"%s\" niet parseren"
-
-#, c-format
-msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr "Kon geen gamelist-tag vinden in het bestand voor \"%s\""
-
-msgid "Couldn't delete temporary gamelist file, permission problems?"
-msgstr ""
-"Het tijdelijke gamelijstbestand kon niet worden verwijderd, problemen met de "
-"rechten?"
-
-msgid "Couldn't write to temporary gamelist file, permission problems?"
-msgstr ""
-"Kon niet naar het tijdelijke gamelijstbestand schrijven, problemen met "
-"rechten?"
-
-msgid "Couldn't create backup directory, permission problems?"
-msgstr "Kan geen back-upmap aanmaken, problemen met rechten?"
-
-msgid "Couldn't move old gamelist file, permission problems?"
-msgstr "Kan het oude gamelistbestand niet verplaatsen, problemen met rechten?"
-
-msgid "Couldn't move temporary gamelist file, permission problems?"
-msgstr ""
-"Kon het tijdelijke gamelijstbestand niet verplaatsen, problemen met rechten?"
-
-msgid "Couldn't find custom collection configuration file"
-msgstr "Kon het aangepaste verzamelingsconfiguratiebestand niet vinden"
-
-msgid "Couldn't open custom collection configuration file"
-msgstr "Kan het aangepaste verzamelingsconfiguratiebestand niet openen"
-
-msgid "Couldn't delete temporary collection file, permission problems?"
-msgstr ""
-"Kan het tijdelijke verzamelbestand niet verwijderen, problemen met de "
-"rechten?"
-
-msgid "Couldn't write to temporary collection configuration file"
-msgstr "Kon niet schrijven naar tijdelijke verzameling configuratiebestand"
-
-msgid "Couldn't move old collection file, permission problems?"
-msgstr "Kan het oude collectiebestand niet verplaatsen, problemen met rechten?"
-
-msgid "Couldn't move temporary collection file, permission problems?"
-msgstr ""
-"Kan het tijdelijke verzamelbestand niet verplaatsen, problemen met rechten?"
-
-msgid "ABORTED MEDIA CLEANUP"
-msgstr "GEBROKEN MEDIA-OPRUIMING"
-
-msgid "COMPLETED MEDIA CLEANUP"
-msgstr "VOLTOOIDE MEDIA-OPRUIMING"
-
-msgid "ABORTED GAMELIST CLEANUP"
-msgstr "AFGEBROKEN GAMELIST OPRUIMEN"
-
-msgid "COMPLETED GAMELIST CLEANUP"
-msgstr "VOLTOOIDE GAMELIST OPRUIMEN"
-
-msgid "ABORTED COLLECTIONS CLEANUP"
-msgstr "OPRUIMING VAN AFGEBROKEN COLLECTIES"
-
-msgid "COMPLETED COLLECTIONS CLEANUP"
-msgstr "VOLTOOIDE COLLECTIES OPRUIMEN"
-
-msgid "MEDIA CLEANUP FAILED"
-msgstr "MEDIA OPRUIMEN MISLUKT"
-
-msgid "GAMELISTS CLEANUP FAILED"
-msgstr "GAMELISTS CLEANUP MISLUKT"
-
-msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
-msgstr "DE TOEPASSING WORDT OPNIEUW GELADEN WANNEER U DIT HULPPROGRAMMA SLUIT."
-
-msgid "INVALID ENTRY"
-msgstr "ONGELDIGE INVOER"
-
-msgid "CLEARED ENTRY"
-msgstr "GEKLEURDE TOEGANG"
-
-msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr "GEEN ALTERNATIEVE EMULATORS GEDEFINIEERD"
-
-msgid "CLEAR INVALID ENTRY"
-msgstr "WIS ONGELDIGE INVOER"
-
-msgid "DEFAULT"
-msgstr "STANDAARD"
-
-msgid "EDIT METADATA"
-msgstr "METADATA BEWERKEN"
-
-msgid "CLEAR ENTRY"
-msgstr "DUIDELIJKE INVOER"
-
-msgid "SELECT EMULATOR"
-msgstr "SELECTEER EMULATOR"
-
-msgid "SYSTEM-WIDE"
-msgstr "SYSTEEMBREED"
-
-msgid "unknown"
-msgstr "onbekend"
-
-msgid "SCRAPE"
-msgstr "SCRAPE"
-
-msgid "scrape"
-msgstr "scrape"
-
-msgid "save metadata"
-msgstr "metagegevens opslaan"
-
-msgid "cancel changes"
-msgstr "wijzigingen annuleren"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
-"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"DIT VERWIJDERT ALLE MEDIABESTANDEN EN DE GAMELIST.XML-VERMELDING VOOR DEZE "
-"MAP, MAAR NOCH DE MAP ZELF NOCH DE INHOUD ERIN WORDT VERWIJDERD\n"
-"WEET U HET ZEKER?"
-
-msgid "CLEAR"
-msgstr "WIS"
-
-msgid "clear folder"
-msgstr "map wissen"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
-"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"DIT VERWIJDERT ALLE MEDIABESTANDEN EN DE GAMELIST.XML-VERMELDING VOOR DEZE "
-"GAME, MAAR HET GAMEBESTAND ZELF WORDT NIET VERWIJDERD\n"
-"WEET U HET ZEKER?"
-
-msgid "clear file"
-msgstr "bestand wissen"
-
-msgid ""
-"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
-"ARE YOU SURE?"
-msgstr ""
-"DIT VERWIJDERT HET GAMEBESTAND, ALLE MEDIABESTANDEN EN DE GAMELIST.XML-"
-"INVOER\n"
-"WEET U HET ZEKER?"
-
-msgid "DELETE"
-msgstr "VERWIJDEREN"
-
-msgid "delete game"
-msgstr "spel verwijderen"
-
-msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr "MIXIMAGE OFFLINE-GENERATOR"
-
-#, c-format
-msgid "%i OF %i GAME PROCESSED"
-msgid_plural "%i OF %i GAMES PROCESSED"
-msgstr[0] "%i VAN %i SPEL VERWERKT"
-msgstr[1] "%i Van %i SPELLEN VERWERKT"
-
-msgid "Generated:"
-msgstr "Gegenereerd:"
-
-msgid "Overwritten:"
-msgstr "Overschreven:"
-
-msgid "Skipped:"
-msgstr "Overgeslagen:"
-
-msgid "Skipped (existing):"
-msgstr "Overgeslagen (bestaand):"
-
-msgid "Failed:"
-msgstr "Mislukt:"
-
-msgid "Processing:"
-msgstr "Verwerken:"
-
-msgid "Last error message:"
-msgstr "Laatste foutmelding:"
-
-msgid "PAUSE"
-msgstr "PAUZE"
-
-msgid "pause processing"
-msgstr "pauze verwerking"
-
-msgid "close (abort processing)"
-msgstr "sluiten (verwerking afbreken)"
-
-msgid "RUNNING..."
-msgstr "UITVOEREN..."
-
-msgid "PAUSED"
-msgstr "GEPAUZEERD"
-
-msgid "RUNNING"
-msgstr "UITVOEREN"
-
+msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "VOLTOOID"
 
-msgid "DONE"
-msgstr "KLAAR"
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "KINDERSPEL"
 
-msgid "done (close)"
-msgstr "Klaar (sluiten)"
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "KIDGAME (heeft alleen invloed op BADGES)"
 
-msgid "APPLICATION UPDATER"
-msgstr "TOEPASSINGSUPDATER"
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "VERBORGEN"
 
-msgid "INSTALLATION STEPS:"
-msgstr "INSTALLATIESTAPPEN:"
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "KAPOT/WERKT NIET"
 
-msgid "DOWNLOAD NEW RELEASE"
-msgstr "DOWNLOAD NIEUWE RELEASE"
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "UITSLUITEN VAN SPELTELLER"
 
-msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
-msgstr "DOWNLOAD NIEUWE RELEASE IN DEZE GIDS:"
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "UITSLUITEN VAN MULTI-SCHRAPER"
 
-msgid "INSTALL PACKAGE"
-msgstr "PAKKET INSTALLEREN"
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "METADATA-VELDEN VERBERGEN"
 
-msgid "QUIT AND MANUALLY RESTART ES-DE"
-msgstr "ES-DE AFSLUITEN EN HANDMATIG OPNIEUW OPSTARTEN"
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "KEER GESPEELD"
 
-msgid "QUIT AND MANUALLY UPGRADE ES-DE"
-msgstr "STOP EN UPGRADE ES-DE HANDMATIG"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "VOER HET AANTAL KEER IN DAT JE GESPEELD HEBT"
 
-msgid "STATUS MESSAGE:"
-msgstr "STATUSBERICHT:"
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "CONTROLLER"
 
-msgid "DOWNLOAD"
-msgstr "DOWNLOADEN"
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "SELECTEER CONTROLLER"
 
-msgid "download new release"
-msgstr "download nieuwe release"
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "ALTERNATIEVE EMULATOR"
 
-msgid "Download directory does not exist"
-msgstr "Download directory bestaat niet"
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "SELECTEER ALTERNATIEVE EMULATOR"
 
-msgid "CHANGE DIRECTORY"
-msgstr "WIJZIG DIRECTORY"
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "MAP LINK"
 
-msgid "change download directory"
-msgstr "download directory wijzigen"
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "SELECTEER MAP LINK"
 
-msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr "GA NAAR DE DOWNLOADGIDS"
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "LAATST GESPEELD"
 
-msgid "DOWNLOAD ABORTED"
-msgstr "DOWNLOAD AFGEBROKEN"
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "VOER DE LAATSTE SPEELDATUM IN"
 
-msgid "NO PACKAGE SAVED TO DISK"
-msgstr "GEEN PAKKET OPGESLAGEN OP SCHIJF"
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "Geen screenshot gevonden, kon geen miximage genereren"
 
-msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr "PAKKET IS GEDOWNLOAD EN KAN HANDMATIG WORDEN GEÏNSTALLEERD"
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr "Screenshot in onbekend formaat, kon geen miximage genereren"
 
-msgid "DOWNLOADING 100%"
-msgstr "DOWNLOADEN 100%"
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr "Screenshot in niet-ondersteund formaat, kon geen miximage genereren"
 
-msgid "Downloaded file does not match expected MD5 checksum"
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "Fout bij het laden van screenshot, kon geen miximage genereren"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Fout bij het laden van de marquee-afbeelding, beschadigd bestand?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Fout bij het laden van 3D-box-afbeelding, beschadigd bestand?"
+
+msgid "Error loading box cover image, corrupt file?"
 msgstr ""
-"Het gedownloade bestand komt niet overeen met de verwachte MD5-controlesom"
+"Fout bij het laden van de afbeelding van de doosomslag, beschadigd bestand?"
 
-msgid "Error: Couldn't delete temporary package file, permission problems?"
-msgstr ""
-"Fout: Kan tijdelijk pakketbestand niet verwijderen, problemen met rechten?"
-
-msgid "Error: Couldn't write package file, permission problems?"
-msgstr "Fout: Pakketbestand kon niet worden geschreven, machtigingsproblemen?"
-
-msgid "Error: Couldn't set permissions on AppImage file"
-msgstr "Fout: Kan geen machtigingen instellen voor AppImage-bestand"
+msgid "Error loading physical media image, corrupt file?"
+msgstr "Fout bij het laden van fysieke media-afbeelding, beschadigd bestand?"
 
 #, c-format
-msgid "Downloaded %s"
-msgstr "Gedownload %s"
+msgid "PAGE %s OF %s"
+msgstr "PAGINA %s VAN %s"
 
-msgid "Error: Couldn't open AppImage update file for reading"
-msgstr "Fout: Kan AppImage-updatebestand niet openen om te lezen"
+msgid "pan"
+msgstr "pan"
 
-msgid "Error: Downloaded file does not match expected MD5 checksum"
-msgstr "Fout: gedownload bestand komt niet overeen met verwachte MD5-checksum"
+msgid "reset"
+msgstr "opnieuw instellen"
 
-msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgid "game media"
+msgstr "spelmedia"
+
+msgid "zoom"
+msgstr "zoom"
+
+msgid "Network error:"
+msgstr "Netwerkfout:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "De mediamap bestaat niet en kan niet worden aangemaakt."
+
+msgid "Permission problems?"
+msgstr "Problemen met toestemming?"
+
+msgid "Failed to open path for writing media file."
 msgstr ""
-"Fout: Kan de naam van het actieve AppImage-bestand niet wijzigen, problemen "
-"met de rechten?"
+"Het openen van het pad voor het schrijven van het mediabestand is mislukt."
 
-msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgid "Couldn't save media file, permission problems or is the disk full?"
 msgstr ""
-"Fout: Kan het actieve AppImage-bestand niet vervangen, problemen met de "
-"machtigingen?"
+"Kan het mediabestand niet opslaan, zijn er problemen met de rechten of is de "
+"schijf vol?"
 
-#, c-format
-msgid "Successfully installed as %s"
-msgstr "Succesvol geïnstalleerd als %s"
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr ""
+"Kan de gewijzigde afbeelding niet opslaan, zijn er rechtenproblemen of is de "
+"schijf vol?"
 
-msgid "INSTALL"
-msgstr "INSTALLEREN"
+msgid "ScreenScraper error:"
+msgstr "ScreenScraper-fout:"
 
-msgid "install package"
-msgstr "pakket installeren"
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: Verkeerde gebruikersnaam of wachtwoord"
 
-msgid "Find the detailed changelog at"
-msgstr "Het gedetailleerde changelog vindt u op"
+msgid "No Entries Found"
+msgstr "Geen items gevonden"
 
-msgid "quit application"
-msgstr "stop met applicatie"
+msgctxt "theme"
+msgid "all"
+msgstr "alle"
 
+msgctxt "theme"
 msgid "all games"
 msgstr "alle spellen"
 
+msgctxt "theme"
+msgid "recent"
+msgstr "recent"
+
+msgctxt "theme"
 msgid "last played"
 msgstr "laatst gespeeld"
 
+msgctxt "theme"
 msgid "favorites"
 msgstr "favorieten"
 
+msgctxt "theme"
 msgid "collections"
 msgstr "verzamelingen"
-
-#, c-format
-msgid "DISABLED '%s' IN '%s'"
-msgstr "UITGESCHAKELD '%s' IN '%s'"
-
-#, c-format
-msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr "BEWERKEN VAN '%s'-COLLECTIE, SPELLEN TOEVOEGEN/VERWIJDEREN MET %s"
-
-#, c-format
-msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr "VOLTOOID BEWERKING '%s' COLLECTIE"
-
-msgid "Favorites"
-msgstr "Favorieten"
-
-#, c-format
-msgid "ADDED '%s' TO '%s'"
-msgstr "TOEGEVOEGD '%s' AAN '%s'"
-
-#, c-format
-msgid "REMOVED '%s' FROM '%s'"
-msgstr "'%s' VERWIJDERD VAN '%s'"
-
-msgid "This collection is empty"
-msgstr "Deze collectie is leeg"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s [%s]'"
-msgstr "Deze collectie bevat 1 spel: '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
-msgstr "Deze collectie bevat 2 spellen: '%s [%s]' en '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
-msgstr "Deze collectie bevat 3 spellen: '%s [%s]', '%s [%s]' en '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgid_plural ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgstr[0] ""
-"Deze collectie bevat %i games: '%s [%s]', '%s [%s]' en '%s [%s]', onder "
-"andere"
-msgstr[1] ""
-"Deze collecties bevat %i games: ‘%s [%s]’, ‘%s [%s]’ en ‘%s [%s]’, onder "
-"andere"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s'"
-msgstr "Deze collectie bevat 1 spel: '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s' and '%s'"
-msgstr "Deze collectie bevat 2 spellen: '%s' en '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s', '%s' and '%s'"
-msgstr "Deze collectie bevat 3 spellen: '%s', '%s' en '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgid_plural ""
-"This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr[0] "Deze collectie bevat %i games: '%s', '%s' en '%s', onder andere"
-msgstr[1] "Deze collecties bevat %i games: ‘%s’, ‘%s’ en ‘%s’, onder andere"
-
-#, c-format
-msgctxt "theme"
-msgid "'%s' is filtered so there may be more games available"
-msgstr "'%s' is gefilterd, dus er kunnen meer spellen beschikbaar zijn"
-
-#, c-format
-msgid "DELETED COLLECTION '%s'"
-msgstr "VERWIJDERDE COLLECTIE '%s'"
-
-msgid "name, ascending"
-msgstr "naam, oplopend"
-
-msgid "name, descending"
-msgstr "naam, aflopend"
-
-msgid "rating, ascending"
-msgstr "beoordeling, oplopend"
-
-msgid "rating, descending"
-msgstr "beoordeling, aflopend"
-
-msgid "release date, ascending"
-msgstr "releasedatum, oplopend"
-
-msgid "release date, descending"
-msgstr "releasedatum, aflopend"
-
-msgid "developer, ascending"
-msgstr "ontwikkelaar, oplopend"
-
-msgid "developer, descending"
-msgstr "ontwikkelaar, aflopend"
-
-msgid "publisher, ascending"
-msgstr "uitgever, oplopend"
-
-msgid "publisher, descending"
-msgstr "uitgever, aflopend"
-
-msgid "genre, ascending"
-msgstr "genre, oplopend"
-
-msgid "genre, descending"
-msgstr "genre, aflopend"
-
-msgid "players, ascending"
-msgstr "spelers, oplopend"
-
-msgid "players, descending"
-msgstr "spelers, aflopend"
-
-msgid "last played, ascending"
-msgstr "laatst gespeeld, oplopend"
-
-msgid "last played, descending"
-msgstr "laatst gespeeld, aflopend"
-
-msgid "times played, ascending"
-msgstr "keer gespeeld, oplopend"
-
-msgid "times played, descending"
-msgstr "keer gespeeld, aflopend"
-
-msgid "system, ascending"
-msgstr "systeem, oplopend"
-
-msgid "system, descending"
-msgstr "systeem, aflopend"
-
-#, c-format
-msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr "FOUT: ONTBREKENDE PRE-COMMAND FIND RULES CONFIGURATIE VOOR '%s'"
-
-msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "FOUT: KON PRE-COMMAND NIET VINDEN, IS HET GOED GEÏNSTALLEERD?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "FOUT: KON PRE-COMMAND '%s' NIET VINDEN, IS HET GOED GEÏNSTALLEERD?"
-
-#, c-format
-msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr "FOUT: ONTBREKENDE EMULATOR VINDREGELS CONFIGURATIE VOOR '%s'"
-
-msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "FOUT: KAN DE APP NIET VINDEN, IS DEZE GOED GEÏNSTALLEERD?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "FOUT: KON APP '%s' NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
-
-msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "FOUT: KAN EMULATOR NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "FOUT: KON EMULATOR '%s' NIET VINDEN, IS DEZE CORRECT GEÏNSTALLEERD?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr "FOUT: KON EMULATOR CORE-BESTAND '%s' NIET VINDEN"
-
-msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr "FOUT: ONGELDIGE INVOER IN HET SYSTEEMCONFIGURATIEBESTAND"
-
-#, c-format
-msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr "FOUT: ONTBREKENDE KERNCONFIGURATIE VOOR '%s'"
-
-#, c-format
-msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr "FOUT: ONGELDIGE %s VARIABELE INVOER"
-
-#, c-format
-msgid ""
-"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
-msgstr ""
-"FOUT: MAP GEDEFINIEERD DOOR %s KON NIET WORDEN AANGEMAAKT, PROBLEMEN MET DE "
-"TOESTEMMING?"
-
-msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "FOUT: APP OF ALIAS-BESTAND BESTAAT NIET OF IS ONLEESBAAR"
-
-msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr "FOUT: DESKTOPBESTAND IS ONGELDIG OF ONLEESBAAR"
-
-msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "FOUT: HET DESKTOPBESTAND BESTAAT NIET OF IS ONLEESBAAR"
-
-#, c-format
-msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
-msgstr "FOUT BIJ HET STARTEN VAN HET SPEL '%s' (FOUTCODE %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr "KAN GEEN AANGEPASTE COLLECTIES TOEVOEGEN AAN AANGEPASTE COLLECTIES"
@@ -2236,8 +2355,32 @@ msgstr ""
 "KUNNEN GEEN INZENDINGEN TOEVOEGEN DIE NIET ALS SPELLEN WORDEN GETELD AAN "
 "AANGEPASTE COLLECTIES"
 
+msgid "system"
+msgstr "systeem"
+
+msgid "view media"
+msgstr "media bekijken"
+
+msgid "options"
+msgstr "opties"
+
 msgid "random"
 msgstr "willekeurig"
+
+msgid "jump to game"
+msgstr "ga naar spel"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "onbekend"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "Ja "
+
+msgctxt "theme"
+msgid "no"
+msgstr "Nee "
 
 msgid "screensaver"
 msgstr "schermbeveiliging"
@@ -2262,30 +2405,6 @@ msgid "%i favorite"
 msgid_plural "%i favorites"
 msgstr[0] "%i favoriet"
 msgstr[1] "%i favorieten"
-
-msgctxt "theme"
-msgid "unknown"
-msgstr "onbekend"
-
-msgid "system"
-msgstr "systeem"
-
-msgid "view media"
-msgstr "media bekijken"
-
-msgid "options"
-msgstr "opties"
-
-msgid "jump to game"
-msgstr "ga naar spel"
-
-msgctxt "theme"
-msgid "yes"
-msgstr "Ja "
-
-msgctxt "theme"
-msgid "no"
-msgstr "Nee "
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2445,195 +2564,40 @@ msgstr "SPEL '%s' STARTEN"
 msgid "menu"
 msgstr "menu"
 
-#, c-format
-msgid "PAGE %s OF %s"
-msgstr "PAGINA %s VAN %s"
+msgid "WORKING..."
+msgstr "BEZIG..."
 
-msgid "pan"
-msgstr "pan"
-
-msgid "reset"
-msgstr "opnieuw instellen"
-
-msgid "browse"
-msgstr "bladeren"
-
-msgid "game media"
-msgstr "spelmedia"
-
-msgid "first"
-msgstr "eerst"
-
-msgid "last"
-msgstr "laatst"
-
-msgid "zoom"
-msgstr "zoom"
-
-msgid "RATING"
-msgstr "BEOORDELING"
-
-msgid "DEVELOPER"
-msgstr "ONTWIKKELAAR"
-
-msgid "PUBLISHER"
-msgstr "UITGEVER"
-
-msgid "GENRE"
-msgstr "GENRE"
-
-msgid "PLAYERS"
-msgstr "SPELERS"
-
-msgid "FAVORITE"
-msgstr "FAVORIET"
-
-msgid "KIDGAME"
-msgstr "KINDERSPEL"
-
-msgid "HIDDEN"
-msgstr "VERBORGEN"
-
-msgid "BROKEN"
-msgstr "GEBROKEN"
-
-msgid "CONTROLLER"
-msgstr "CONTROLLER"
-
-msgid "ALTERNATIVE EMULATOR"
-msgstr "ALTERNATIEVE EMULATOR"
-
-msgid "FALSE"
-msgstr "ONWAAR"
-
-msgid "TRUE"
-msgstr "WAAR"
-
-msgid "UNKNOWN"
-msgstr "ONBEKEND"
-
-msgid "NONE SELECTED"
-msgstr "GEEN GESELECTEERD"
-
-msgid "No screenshot found, couldn't generate miximage"
-msgstr "Geen screenshot gevonden, kon geen miximage genereren"
-
-msgid "Screenshot in unknown format, couldn't generate miximage"
-msgstr "Screenshot in onbekend formaat, kon geen miximage genereren"
-
-msgid "Screenshot in unsupported format, couldn't generate miximage"
-msgstr "Screenshot in niet-ondersteund formaat, kon geen miximage genereren"
-
-msgid "Error loading screenshot, couldn't generate miximage"
-msgstr "Fout bij het laden van screenshot, kon geen miximage genereren"
-
-msgid "Error loading marquee image, corrupt file?"
-msgstr "Fout bij het laden van de marquee-afbeelding, beschadigd bestand?"
-
-msgid "Error loading 3d box image, corrupt file?"
-msgstr "Fout bij het laden van 3D-box-afbeelding, beschadigd bestand?"
-
-msgid "Error loading box cover image, corrupt file?"
-msgstr ""
-"Fout bij het laden van de afbeelding van de doosomslag, beschadigd bestand?"
-
-msgid "Error loading physical media image, corrupt file?"
-msgstr "Fout bij het laden van fysieke media-afbeelding, beschadigd bestand?"
-
-msgid "pdf manual"
-msgstr "pdf-handleiding"
-
-msgid "SCREENSHOT"
-msgstr "SCHERMAFDRUK"
-
-msgid "BOX COVER"
-msgstr "DOOS DEKSEL"
-
-msgid "BOX BACK COVER"
-msgstr "DOOS ACHTERKANT"
-
-msgid "TITLE SCREEN"
-msgstr "TITELSCHERM"
-
-msgid "FAN ART"
-msgstr "FAN ART"
-
-msgid "MIXIMAGE"
-msgstr "MIXAFBEELDING"
-
-msgid "CUSTOM"
-msgstr "AANGEPAST"
-
-msgid "Searching for games..."
-msgstr "Op zoek naar spellen..."
-
-msgid "Loading systems..."
-msgstr "Systemen laden..."
-
-msgid "Reloading..."
-msgstr "Opnieuw laden..."
-
-msgid "Copying resources..."
-msgstr "Bronnen kopiëren..."
-
-msgid "Creating system directories..."
-msgstr "Systeemmappen maken..."
-
-msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr "FOUT: PDF-BESTAND KAN NIET WEERGEVEN"
+msgctxt "theme"
+msgid "never"
+msgstr "nooit"
 
 #, c-format
-msgid "ADDED INPUT DEVICE '%s'"
-msgstr "TOEGEVOEGD INVOERAPPARAAT '%s'"
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "%i dag geleden"
+msgstr[1] "%i dagen geleden"
 
 #, c-format
-msgid "REMOVED INPUT DEVICE '%s'"
-msgstr "VERWIJDERD INVOERAPPARAAT '%s'"
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "%i uur geleden"
+msgstr[1] "%i uren geleden"
 
-msgid "medium"
-msgstr "medium"
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "%i minuut geleden"
+msgstr[1] "%i minuten geleden"
 
-msgid "large"
-msgstr "groot"
-
-msgid "small"
-msgstr "klein"
-
-msgid "extra small"
-msgstr "extra klein"
-
-msgid "extra large"
-msgstr "extra groot"
-
-msgid "automatic"
-msgstr "automatisch"
-
-msgid "16:9 vertical"
-msgstr "16:9 verticaal"
-
-msgid "16:10 vertical"
-msgstr "16:10 verticaal"
-
-msgid "3:2 vertical"
-msgstr "3:2 verticaal"
-
-msgid "4:3 vertical"
-msgstr "4:3 verticaal"
-
-msgid "5:4 vertical"
-msgstr "5:4 verticaal"
-
-msgid "19.5:9 vertical"
-msgstr "19.5:9 verticaal"
-
-msgid "20:9 vertical"
-msgstr "20:9 verticaal"
-
-msgid "21:9 vertical"
-msgstr "21:9 verticaal"
-
-msgid "32:9 vertical"
-msgstr "32:9 verticaal"
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "%i seconde geleden"
+msgstr[1] "%i seconden geleden"
 
 msgid "edit date"
 msgstr "datum bewerken"
@@ -2675,73 +2639,17 @@ msgstr "SELECTEER GEEN"
 msgid "select none"
 msgstr "selecteer geen"
 
+msgid "add half star"
+msgstr "halve ster toevoegen"
+
+msgid "toggle"
+msgstr "schakelaar"
+
 msgid "move cursor"
 msgstr "cursor verplaatsen"
 
 msgid "edit"
 msgstr "bewerking"
-
-msgid "WORKING..."
-msgstr "BEZIG..."
-
-msgid "toggle"
-msgstr "schakelaar"
-
-msgid "add half star"
-msgstr "halve ster toevoegen"
-
-msgctxt "theme"
-msgid "never"
-msgstr "nooit"
-
-#, c-format
-msgctxt "theme"
-msgid "%i day ago"
-msgid_plural "%i days ago"
-msgstr[0] "%i dag geleden"
-msgstr[1] "%i dagen geleden"
-
-#, c-format
-msgctxt "theme"
-msgid "%i hour ago"
-msgid_plural "%i hours ago"
-msgstr[0] "%i uur geleden"
-msgstr[1] "%i uren geleden"
-
-#, c-format
-msgctxt "theme"
-msgid "%i minute ago"
-msgid_plural "%i minutes ago"
-msgstr[0] "%i minuut geleden"
-msgstr[1] "%i minuten geleden"
-
-#, c-format
-msgctxt "theme"
-msgid "%i second ago"
-msgid_plural "%i seconds ago"
-msgstr[0] "%i seconde geleden"
-msgstr[1] "%i seconden geleden"
-
-msgid "SPACE"
-msgstr "SPACE"
-
-msgid "LOAD"
-msgstr "LADEN"
-
-msgid "shift"
-msgstr "shift"
-
-msgid "alt"
-msgstr "alt"
-
-msgid "newline"
-msgstr "nieuwe regel"
-
-msgid "backspace"
-msgstr "backspace"
-
-msgid "space"
-msgstr "space"
 
 msgid "WELCOME"
 msgstr "WELKOM"
@@ -2774,15 +2682,6 @@ msgstr ""
 
 msgid "PRESS ESC TO CANCEL"
 msgstr "Druk op ESC om te annuleren"
-
-msgid "LOAD DEFAULT"
-msgstr "LAAD STANDAARD"
-
-msgid "DISCARD CHANGES"
-msgstr "VERANDERINGEN VERWERPEN"
-
-msgid "discard changes"
-msgstr "wijzigingen negeren"
 
 msgid "CONFIGURING"
 msgstr "CONFIGUREREN"
@@ -2889,9 +2788,110 @@ msgstr "AL GENOMEN"
 msgid "PRESS ANYTHING"
 msgstr "Druk op IETS"
 
+msgid "SPACE"
+msgstr "SPACE"
+
+msgid "LOAD"
+msgstr "LADEN"
+
+msgid "shift"
+msgstr "shift"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "nieuwe regel"
+
+msgid "backspace"
+msgstr "backspace"
+
+msgid "space"
+msgstr "space"
+
+msgid "LOAD DEFAULT"
+msgstr "LAAD STANDAARD"
+
+msgid "DISCARD CHANGES"
+msgstr "VERANDERINGEN VERWERPEN"
+
+msgid "discard changes"
+msgstr "wijzigingen negeren"
+
 msgid "You have exceeded your daily scrape quota"
 msgstr "U hebt uw dagelijkse scrape-quotum overschreden"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Server retourneerde HTTP-foutcode %s"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "TOEGEVOEGD INVOERAPPARAAT '%s'"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "VERWIJDERD INVOERAPPARAAT '%s'"
+
+msgid "medium"
+msgstr "medium"
+
+msgid "large"
+msgstr "groot"
+
+msgid "small"
+msgstr "klein"
+
+msgid "extra small"
+msgstr "extra klein"
+
+msgid "extra large"
+msgstr "extra groot"
+
+msgid "automatic"
+msgstr "automatisch"
+
+msgid "16:9 vertical"
+msgstr "16:9 verticaal"
+
+msgid "16:10 vertical"
+msgstr "16:10 verticaal"
+
+msgid "3:2 vertical"
+msgstr "3:2 verticaal"
+
+msgid "4:3 vertical"
+msgstr "4:3 verticaal"
+
+msgid "5:4 vertical"
+msgstr "5:4 verticaal"
+
+msgid "19.5:9 vertical"
+msgstr "19.5:9 verticaal"
+
+msgid "20:9 vertical"
+msgstr "20:9 verticaal"
+
+msgid "21:9 vertical"
+msgstr "21:9 verticaal"
+
+msgid "32:9 vertical"
+msgstr "32:9 verticaal"
+
+msgid "Searching for games..."
+msgstr "Op zoek naar spellen..."
+
+msgid "Loading systems..."
+msgstr "Systemen laden..."
+
+msgid "Reloading..."
+msgstr "Opnieuw laden..."
+
+msgid "Copying resources..."
+msgstr "Bronnen kopiëren..."
+
+msgid "Creating system directories..."
+msgstr "Systeemmappen maken..."
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "FOUT: PDF-BESTAND KAN NIET WEERGEVEN"

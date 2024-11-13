@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-04 17:44+0200\n"
+"POT-Creation-Date: 2024-11-13 18:05+0100\n"
 "PO-Revision-Date: 2024-09-24 14:56+0900\n"
 "Last-Translator: wakeboxer <ljhmd0825@gmail.com>\n"
 "Language-Team: 한국어 <info@es-de.org>\n"
@@ -30,205 +30,575 @@ msgstr "새로운 릴리스 이용 가능:"
 msgid "For more information visit"
 msgstr "자세한 내용은 방문하십시오"
 
-msgid "No Entries Found"
-msgstr "항목 없음"
-
-msgctxt "theme"
-msgid "all"
-msgstr "모두"
-
-msgctxt "theme"
 msgid "all games"
 msgstr "모든 게임"
 
-msgctxt "theme"
-msgid "recent"
-msgstr "최근"
-
-msgctxt "theme"
 msgid "last played"
 msgstr "최근 실행"
 
-msgctxt "theme"
 msgid "favorites"
 msgstr "즐겨찾기"
 
-msgctxt "theme"
 msgid "collections"
 msgstr "컬렉션"
 
-msgid "ScreenScraper error:"
-msgstr "스크린스크래퍼 오류:"
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "'%s'/'%s' 개를 비활성화"
 
-msgid "ScreenScraper: Wrong username or password"
-msgstr "스크린스크래퍼: 잘못된 사용자이름 또는 비밀번호"
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "'%s' 컬렉션 편집 중, %s로 게임 추가/제거"
 
-msgid "Network error:"
-msgstr "네트워크 오류:"
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "'%s' 컬렉션 편집 완료"
 
-msgid "Media directory does not exist and can't be created."
-msgstr "미디어 디렉터리가 존재하지 않으며 생성할 수 없습니다."
+msgid "Favorites"
+msgstr "즐겨찾기"
 
-msgid "Permission problems?"
-msgstr "권한 문제가 있습니까?"
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "'%s'을(를) '%s'에 추가함"
 
-msgid "Failed to open path for writing media file."
-msgstr "미디어 파일을 쓰기 위한 경로를 열지 못했습니다."
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "'%s'을(를) '%s'에서 제거함"
 
-msgid "Couldn't save media file, permission problems or is the disk full?"
-msgstr "미디어 파일을 저장할 수 없음. 권한 문제 또는 디스크가 가득 찼습니까?"
+msgid "This collection is empty"
+msgstr "현재 컬렉션은 비어 있습니다"
 
-msgid "Couldn't save resized image, permission problems or is the disk full?"
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "현재 컬렉션에 1개의 게임이 포함: '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "현재 컬렉션에 2개의 게임이 포함: '%s [%s]', '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "현재 컬렉션에 3개의 게임이 포함: '%s [%s]', '%s [%s]', '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"현재 컬렉션에 %i개의 게임이 포함: '%s [%s]', '%s [%s]', '%s [%s]', 기타"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "현재 컬렉션에 1개의 게임이 포함: '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "현재 컬렉션에 2개의 게임이 포함: '%s', '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "현재 컬렉션에 3개의 게임이 포함: '%s', '%s', '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "현재 컬렉션에 %i개의 게임이 포함: '%s', '%s', '%s', 기타"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s'이(가) 필터되었으므로 이용 가능한 게임이 더 있을 수 있습니다"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "컬렉션 '%s' 이 삭제됨"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "오류: '%s'에 대한 사전 명령 찾기 규칙 구성이 누락되었습니다"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "오류: 사전 명령을 찾을 수 없습니다. 올바르게 설치되었습니까?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "오류: 사전 명령 '%s'을(를) 찾을 수 없습니다. 올바르게 설치되었습니까?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "오류: '%s'에 대한 에뮬레이터 찾기 규칙 구성이 누락되었습니다"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "오류: 앱을 찾을 수 없습니다. 제대로 설치되었나요?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "오류: '%s' 앱을 찾을 수 없습니다. 제대로 설치되었습니까?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "오류: 에뮬레이터를 찾을 수 없습니다. 제대로 설치되었습니까?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "오류: 에뮬레이터 '%s'을(를) 찾을 수 없습니다. 올바르게 설치되었습니까?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "오류: 에뮬레이터 코어 파일 '%s'을(를) 찾을 수 없습니다"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "오류: 시스템 구성 파일의 항목이 잘못되었습니다"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "오류: '%s'에 대한 코어 구성이 누락되었습니다."
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "오류: 잘못된 %s 변수 항목"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
 msgstr ""
-"리사이즈된 이미지를 저장할 수 없음. 권한 문제 또는 디스크가 가득 찼습니까?"
+"오류: %s이(가) 정의한 디렉터리를 생성할 수 없습니다. 권한 문제가 있습니까?"
 
-msgctxt "metadata"
-msgid "NAME"
-msgstr "이름"
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "오류: 앱 또는 별칭 파일이 존재하지 않거나 읽을 수 없습니다"
 
-msgctxt "metadata"
-msgid "ENTER NAME"
-msgstr "이름 입력"
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "오류: 데스크톱 파일이 잘못되었거나 읽을 수 없습니다"
 
-msgctxt "metadata"
-msgid "SORTNAME"
-msgstr "정렬이름"
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "오류: 데스크톱 파일이 존재하지 않거나 읽을 수 없습니다"
 
-msgctxt "metadata"
-msgid "ENTER SORTNAME"
-msgstr "정렬이름 입력"
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "게임 '%s' 시작 중 오류 발생 (오류 코드 %i)"
 
-msgctxt "metadata"
-msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "커스텀 컬렉션 정렬이름"
-
-msgctxt "metadata"
-msgid "ENTER COLLECTIONS SORTNAME"
-msgstr "커스텀 컬렉션 정렬이름 입력"
-
-msgctxt "metadata"
-msgid "DESCRIPTION"
-msgstr "설명"
-
-msgctxt "metadata"
-msgid "ENTER DESCRIPTION"
-msgstr "설명 입력"
-
-msgctxt "metadata"
 msgid "RATING"
 msgstr "평점"
 
-msgctxt "metadata"
-msgid "RELEASE DATE"
-msgstr "발매일"
-
-msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr "개발사"
 
-msgctxt "metadata"
-msgid "ENTER DEVELOPER"
-msgstr "개발사 입력"
-
-msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr "배급사"
 
-msgctxt "metadata"
-msgid "ENTER PUBLISHER"
-msgstr "배급사 입력"
-
-msgctxt "metadata"
 msgid "GENRE"
 msgstr "장르"
 
-msgctxt "metadata"
-msgid "ENTER GENRE"
-msgstr "장르 입력"
-
-msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "플레이어"
 
-msgctxt "metadata"
-msgid "ENTER NUMBER OF PLAYERS"
-msgstr "플레이어 수 입력"
-
-msgctxt "metadata"
 msgid "FAVORITE"
 msgstr "즐겨찾기"
 
-msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "완료됨"
 
-msgctxt "metadata"
 msgid "KIDGAME"
 msgstr "아동용 게임"
 
-msgctxt "metadata"
-msgid "KIDGAME (ONLY AFFECTS BADGES)"
-msgstr "아동용 게임 (배지에만 영향)"
-
-msgctxt "metadata"
 msgid "HIDDEN"
 msgstr "숨김"
 
-msgctxt "metadata"
-msgid "BROKEN/NOT WORKING"
-msgstr "손상됨/작동하지 않음"
+msgid "BROKEN"
+msgstr "손상됨"
 
-msgctxt "metadata"
-msgid "EXCLUDE FROM GAME COUNTER"
-msgstr "게임 카운터에서 제외"
-
-msgctxt "metadata"
-msgid "EXCLUDE FROM MULTI-SCRAPER"
-msgstr "멀티-스크래퍼에서 제외"
-
-msgctxt "metadata"
-msgid "HIDE METADATA FIELDS"
-msgstr "메타데이터 필드 숨기기"
-
-msgctxt "metadata"
-msgid "TIMES PLAYED"
-msgstr "실행 횟수"
-
-msgctxt "metadata"
-msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr "실행 횟수 입력"
-
-msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "컨트롤러"
 
-msgctxt "metadata"
-msgid "SELECT CONTROLLER"
-msgstr "컨트롤러 선택"
-
-msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr "대체 에뮬레이터"
 
-msgctxt "metadata"
-msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr "대체 에뮬레이터 선택"
+msgid "FALSE"
+msgstr "거짓"
 
-msgctxt "metadata"
-msgid "FOLDER LINK"
-msgstr "폴더 링크"
+msgid "TRUE"
+msgstr "참"
 
-msgctxt "metadata"
-msgid "SELECT FOLDER LINK"
-msgstr "폴더 링크 선택"
+msgid "UNKNOWN"
+msgstr "알수없음"
 
-msgctxt "metadata"
-msgid "LAST PLAYED"
-msgstr "최근 실행"
+msgid "NONE SELECTED"
+msgstr "선택되지 않음"
 
-msgctxt "metadata"
-msgid "ENTER LAST PLAYED DATE"
-msgstr "최근 실행일 입력"
+msgid "name, ascending"
+msgstr "이름, 오름차순"
+
+msgid "name, descending"
+msgstr "이름, 내림차순"
+
+msgid "rating, ascending"
+msgstr "평점, 높은순"
+
+msgid "rating, descending"
+msgstr "평점, 낮은순"
+
+msgid "release date, ascending"
+msgstr "발매일, 오름차순"
+
+msgid "release date, descending"
+msgstr "발매일, 내림차순"
+
+msgid "developer, ascending"
+msgstr "개발사, 오름차순"
+
+msgid "developer, descending"
+msgstr "개발사, 내림차순"
+
+msgid "publisher, ascending"
+msgstr "배급사, 오름차순"
+
+msgid "publisher, descending"
+msgstr "배급사, 내림차순"
+
+msgid "genre, ascending"
+msgstr "장르, 오름차순"
+
+msgid "genre, descending"
+msgstr "장르, 내림차순"
+
+msgid "players, ascending"
+msgstr "플레이어 수, 높은순"
+
+msgid "players, descending"
+msgstr "플레이어 수, 낮은순"
+
+msgid "last played, ascending"
+msgstr "최근 플레이, 높은순"
+
+msgid "last played, descending"
+msgstr "최근 플레이, 낮은순"
+
+msgid "times played, ascending"
+msgstr "플레이 시간, 높은순"
+
+msgid "times played, descending"
+msgstr "플레이 시간, 낮은순"
+
+msgid "system, ascending"
+msgstr "시스템, 오름차순"
+
+msgid "system, descending"
+msgstr "시스템, 내림차순"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "대체 에뮬레이터"
+
+msgid "BACK"
+msgstr "뒤로 가기"
+
+msgid "back"
+msgstr "뒤로 가기"
+
+msgid "INVALID ENTRY"
+msgstr "잘못된 항목"
+
+msgid "CLEARED ENTRY"
+msgstr "삭제된 항목"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "대체 에뮬레이터 정의되지 않음"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "잘못된 항목 삭제"
+
+msgid "DEFAULT"
+msgstr "기본"
+
+msgid "select"
+msgstr "선택"
+
+msgid "APPLICATION UPDATER"
+msgstr "어플리케이션 업데이터"
+
+msgid "INSTALLATION STEPS:"
+msgstr "설치 단계:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "새 릴리스 다운로드"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "새 릴리스를 이 디렉터리에 다운로드:"
+
+msgid "INSTALL PACKAGE"
+msgstr "패키지 설치"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "ES-DE를 종료하고 수동으로 재부팅"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "ES-DE를 종료하고 수동으로 업데이트"
+
+msgid "STATUS MESSAGE:"
+msgstr "상태 메시지:"
+
+msgid "DOWNLOAD"
+msgstr "다운로드"
+
+msgid "download new release"
+msgstr "새 릴리스 다운로드"
+
+msgid "Download directory does not exist"
+msgstr "다운로드 디렉터리가 존재하지 않음"
+
+msgid "CHANGE DIRECTORY"
+msgstr "디렉터리 변경"
+
+msgid "change download directory"
+msgstr "다운로드 디렉터리 변경"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "다운로드 디렉터리 입력"
+
+msgid "CANCEL"
+msgstr "취소"
+
+msgid "cancel"
+msgstr "취소"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "다운로드가 중단됨"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "디스크에 저장된 패키지가 없음"
+
+msgid "OK"
+msgstr "확인"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "패키지가 다운로드되었으며 수동으로 설치할 수 있습니다"
+
+msgid "DOWNLOADING 100%"
+msgstr "다운로드 중 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "다운로드한 파일이 예상 MD5 체크섬과 일치하지 않습니다"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr "오류: 임시 패키지 파일을 삭제할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr "오류: 패키지 파일에 쓰기를 할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "오류: AppImage 파일에 대한 권한을 설정할 수 없습니다"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "%s 다운로드됨"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "오류: 읽기 위해 AppImage 업데이트 파일을 열 수 없습니다"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr "오류: 다운로드한 파일이 예상 MD5 체크섬과 일치하지 않습니다"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"오류: 실행 중인 AppImage 파일의 이름을 바꿀 수 없습니다. 권한 문제가 있습니"
+"까?"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"오류: 실행 중인 AppImage 파일을 대체할 수 없습니다. 권한 문제가 있습니까?"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "%s(으)로 성공적으로 설치됨"
+
+msgid "DOWNLOADING"
+msgstr "다운로드중"
+
+msgid "INSTALL"
+msgstr "설치"
+
+msgid "install package"
+msgstr "패키지 설치"
+
+msgid "Find the detailed changelog at"
+msgstr "자세한 변경 로그는 다음에서 확인"
+
+msgid "QUIT"
+msgstr "종료"
+
+msgid "quit application"
+msgstr "어플리케이션 종료"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "'%s' 컬렉션 편집을 끝냄"
+
+msgid "SELECT COLLECTIONS"
+msgstr "컬렉션 선택"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "자동 게임 컬렉션"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "커스텀 게임 컬렉션"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "테마에서 새로운 커스텀 컬렉션 생성"
+
+msgid "SELECT THEME FOLDER"
+msgstr "테마 폴더 선택"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "새로운 커스텀 컬렉션 생성"
+
+msgid "NEW COLLECTION NAME"
+msgstr "새로운 컬렉션 이름"
+
+msgid "CREATE"
+msgstr "생성"
+
+msgid "CREATE COLLECTION?"
+msgstr "컬렉션을 생성할까요?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "커스텀 컬렉션 삭제"
+
+msgid "COLLECTION TO DELETE"
+msgstr "삭제할 컬렉션"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"컬렉션이 영구적으로 삭제됩니다.\n"
+"'%s'\n"
+"확실합니까?"
+
+msgid "YES"
+msgstr "예"
+
+msgid "NO"
+msgstr "아니오"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "커스텀 컬렉션 그룹"
+
+msgid "IF UNTHEMED"
+msgstr "테마에 없는 경우"
+
+msgid "ALWAYS"
+msgstr "항상"
+
+msgid "NEVER"
+msgstr "사용안함"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "커스텀 컬렉션에서 즐겨찾기를 최상단에 표시"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "커스텀 컬렉션에서 별 표시하기"
+
+msgid "FILTER GAMELIST"
+msgstr "게임리스트 필터"
+
+msgid "RESET ALL FILTERS"
+msgstr "모든 필터 초기화"
+
+msgid "GAME NAME"
+msgstr "게임 이름"
+
+msgid "APPLY CHANGES?"
+msgstr "변경을 적용할까요?"
+
+msgid "NOTHING TO FILTER"
+msgstr "필터 대상 없음"
+
+msgid "GAMELIST OPTIONS"
+msgstr "게임리스트 옵션"
+
+msgid "JUMP TO..."
+msgstr "이동..."
+
+msgid "SORT GAMES BY"
+msgstr "게임 정렬"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "현재 시스템에는 게임이 없습니다"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "현재 게임 컬렉션에 게임 추가/삭제"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "현재 폴더 메타데이터 편집"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "현재 게임 메타데이터 편집"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "폴더 들어가기 (폴더 링크 오버라이드)"
+
+msgid "CLOSE"
+msgstr "닫기"
+
+msgid "close"
+msgstr "닫기"
+
+msgid "APPLY"
+msgstr "적용"
+
+msgid "apply"
+msgstr "적용"
+
+msgid "close (apply)"
+msgstr "닫기 (적용)"
+
+msgid "close (cancel)"
+msgstr "닫기 (취소)"
+
+msgid "LAUNCHING GAME"
+msgstr "게임 시작"
+
+msgid "HELP PROMPTS"
+msgstr "헬프 프롬프트"
+
+msgid "TOP"
+msgstr "상단"
+
+msgid "BOTTOM"
+msgstr "하단"
+
+msgid "DISABLED"
+msgstr "비활성화"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "디스플레이 미디어 유형"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "이미지를 볼 때 비디오를 계속 실행"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "비디오를 화면 해상도로 늘이기"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "비디오에 스캔라인 렌더링 적용"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "비디오에 블러 렌더링 적용"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "스크린샷과 타이틀에 스캔라인 렌더링 적용"
 
 msgid "MAIN MENU"
 msgstr "메인 메뉴"
@@ -256,9 +626,6 @@ msgstr "유틸리티"
 
 msgid "QUIT ES-DE"
 msgstr "ES-DE 종료"
-
-msgid "QUIT"
-msgstr "종료"
 
 msgid "THEME"
 msgstr "테마"
@@ -322,9 +689,6 @@ msgstr "트리거버튼"
 
 msgid "LEFT/RIGHT"
 msgstr "좌/우 버튼"
-
-msgid "DISABLED"
-msgstr "비활성화"
 
 msgid "GAMELIST ON STARTUP"
 msgstr "게임목록에서 시작"
@@ -437,12 +801,6 @@ msgstr ""
 "\n"
 "계속하시겠습니까?"
 
-msgid "YES"
-msgstr "예"
-
-msgid "NO"
-msgstr "아니오"
-
 msgid "RANDOM ENTRY BUTTON"
 msgstr "무작위 엔트리 버튼"
 
@@ -554,9 +912,6 @@ msgstr ""
 "로 연결하여 이 설정을 다시 활성화해야 하거나 Android 앱 설정에서 ES-DE 저장소"
 "를 지워 다음 시작 시 구성자가 강제로 실행되도록 할 수 있습니다"
 
-msgid "OK"
-msgstr "확인"
-
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
 msgstr "첫 번째 컨트롤러의 입력만 허용"
 
@@ -579,12 +934,6 @@ msgstr ""
 
 msgid "PROCEED"
 msgstr "진행하기"
-
-msgid "CANCEL"
-msgstr "취소"
-
-msgid "ALTERNATIVE EMULATORS"
-msgstr "대체 에뮬레이터"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "게임 미디어 디렉터리"
@@ -647,14 +996,8 @@ msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "메타데이터 저장 시기"
 
-msgid "ALWAYS"
-msgstr "항상"
-
 msgid "ON EXIT"
 msgstr "종료시"
-
-msgid "NEVER"
-msgstr "사용안함"
 
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "게임 메타데이터 저장 시기"
@@ -789,23 +1132,290 @@ msgstr "화면보호기 설정"
 msgid "choose"
 msgstr "이동"
 
-msgid "select"
-msgstr "선택"
-
 msgid "close menu"
 msgstr "메뉴 닫기"
 
-msgid "REFINE SEARCH"
-msgstr "개선 검색"
+msgid "EDIT METADATA"
+msgstr "메타데이터 편집"
 
-msgid "refine search"
-msgstr "개선 검색"
+msgid "CLEAR ENTRY"
+msgstr "항목 삭제"
 
-msgid "cancel"
-msgstr "취소"
+msgid "SELECT EMULATOR"
+msgstr "에뮬레이터 선택"
 
-msgid "back (cancel)"
-msgstr "뒤로 가기 (취소)"
+msgid "SYSTEM-WIDE"
+msgstr "시스템-전체"
+
+msgid "unknown"
+msgstr "알수없음"
+
+msgid "SCRAPE"
+msgstr "스크랩"
+
+msgid "scrape"
+msgstr "스크랩"
+
+msgid "save metadata"
+msgstr "메타데이터 저장"
+
+msgid "cancel changes"
+msgstr "변경 취소"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"이렇게 하면 이 폴더의 모든 미디어 파일과 GAMELIST.XML 항목이 삭제되지만 디렉"
+"터리 자체나 그 안에 있는 콘텐츠는 삭제되지 않습니다.\n"
+"확실합니까?"
+
+msgid "CLEAR"
+msgstr "삭제"
+
+msgid "clear folder"
+msgstr "폴더 삭제"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"이렇게 하면 이 게임의 모든 미디어 파일과 GAMELIST.XML 항목이 삭제되지만 게임 "
+"파일 자체는 삭제되지 않습니다.\n"
+"확실합니까?"
+
+msgid "clear file"
+msgstr "파일 삭제"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"이렇게 하면 게임 파일, 모든 미디어 파일 및 GAMELIST.XML 항목이 삭제됩니다.\n"
+"확실합니까?"
+
+msgid "DELETE"
+msgstr "삭제"
+
+msgid "delete game"
+msgstr "게임 삭제"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "믹스이미지 오프라인 생성기"
+
+msgid "NOT STARTED"
+msgstr "시작되지 않음"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i / %i 게임 프로세스됨"
+
+msgid "Generated:"
+msgstr "생성됨:"
+
+msgid "Overwritten:"
+msgstr "덮어씀:"
+
+msgid "Skipped:"
+msgstr "건너뜀:"
+
+msgid "Skipped (existing):"
+msgstr "건너뜀 (존재함)"
+
+msgid "Failed:"
+msgstr "실패:"
+
+msgid "Processing:"
+msgstr "프로세스중:"
+
+msgid "Last error message:"
+msgstr "마지막 오류 메시지:"
+
+msgid "START"
+msgstr "시작"
+
+msgid "start processing"
+msgstr "프로세스 시작"
+
+msgid "PAUSE"
+msgstr "일시정지"
+
+msgid "pause processing"
+msgstr "프로세스 일시정지"
+
+msgid "close (abort processing)"
+msgstr "닫기 (프로세스 중단)"
+
+msgid "RUNNING..."
+msgstr "실행중..."
+
+msgid "PAUSED"
+msgstr "일시중단됨"
+
+msgid "RUNNING"
+msgstr "실행중"
+
+msgid "DONE"
+msgstr "완료"
+
+msgid "done (close)"
+msgstr "완료 (닫기)"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"일치하는 게임 파일을 찾을 수 없는 모든 미디어 파일이 제거됩니다. 이 파일은 게"
+"임 미디어 디렉터리 내의 정리 폴더로 이동됩니다. 더 이상 필요하지 않다고 확신"
+"하는 경우 이 폴더를 수동으로 삭제할 수 있습니다."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"일치하는 게임 파일을 찾을 수 없는 GAMELIST XML 파일에서 모든 항목이 제거됩니"
+"다. 원본 파일의 백업은 GAMELISTS 디렉터리 내의 정리 폴더에 저장됩니다. 더 이"
+"상 필요하지 않다고 확신하는 경우 이 폴더를 수동으로 삭제할 수 있습니다."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"이렇게 하면 일치하는 게임 파일을 찾을 수 없는 커스텀 컬렉션 구성 파일의 모든 "
+"항목이 제거됩니다. 원본 파일의 백업은 컬렉션 디렉터리 내의 정리 폴더에 저장됩"
+"니다. 현재 활성화된 컬렉션만 처리됩니다."
+
+msgid "DESCRIPTION:"
+msgstr "설명:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "삭제된 총 항목 수:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "마지막 처리된 시스템:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "마지막 오류 메시지:"
+
+msgid "MEDIA"
+msgstr "미디어"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "미디어 정리 실행중"
+
+msgid "STOP"
+msgstr "중지"
+
+msgid "stop processing"
+msgstr "프로세스 중지"
+
+msgid "GAMELISTS"
+msgstr "게임리스트"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "실행 중인 게임리스트 정리"
+
+msgid "COLLECTIONS"
+msgstr "컬렉션"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "컬렉션 정리 실패"
+
+msgid "There are no enabled custom collections"
+msgstr "활성화된 커스텀 컬렉션이 없습니다"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "실행 중인 컬렉션 정리"
+
+msgid "PROCESSING"
+msgstr "프로세스중"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "flatten.txt 파일이 발견되었습니다. \"%s\"을(를) 건너뛰었습니다."
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "대상 디렉터리를 생성할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "미디어 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "\"%s\"에 대한 gamelist.xml 파일을 구문 분석할 수 없습니다."
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "\"%s\"에 대한 파일에서 게임 목록 태그를 찾을 수 없습니다."
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr "임시 게임리스트 파일을 삭제할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr "임시 게임 목록 파일에 쓸 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr "백업 디렉터리를 생성할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "이전 게임 목록 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr "임시 게임 목록 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "커스텀 컬렉션 구성 파일을 찾을 수 없습니다"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "커스텀 컬렉션 구성 파일을 열 수 없습니다"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr "임시 컬렉션 파일을 삭제할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "임시 컬렉션 구성 파일에 쓰기를 할 수 없습니다"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr "이전 컬렉션 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr "임시 컬렉션 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "중단된 미디어 정리"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "완료된 미디어 정리"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "중단된 게임리스트 정리"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "완료된 게임리스트 정리"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "중단된 컬렉션 정리"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "완료된 컬렉션 정리"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "미디어 정리 실패"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "게임리스트 정리 실패"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "이 유틸리티를 닫으면 애플리케이션이 다시 로드됩니다."
 
 msgid "SCRAPE FROM"
 msgstr "스크랩 출처"
@@ -843,17 +1453,8 @@ msgstr "콘텐츠 설정"
 msgid "MIXIMAGE SETTINGS"
 msgstr "믹스이미지 설정"
 
-msgid "START"
-msgstr "시작"
-
 msgid "start scraper"
 msgstr "스크래퍼 시작"
-
-msgid "BACK"
-msgstr "뒤로 가기"
-
-msgid "back"
-msgstr "뒤로 가기"
 
 msgid "SCREENSCRAPER USERNAME"
 msgstr "스크린스크래퍼 사용자이름"
@@ -1085,91 +1686,89 @@ msgstr "스크랩할 콘텐츠 유형을 하나 이상 선택하세요"
 msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
 msgstr "모든 게임이 필터링되었으며 스크랩할 것이 없습니다"
 
-msgid "HELP PROMPTS"
-msgstr "헬프 프롬프트"
+msgid "SCRAPING IN PROGRESS"
+msgstr "스크랩 진행중"
 
-msgid "TOP"
-msgstr "상단"
+msgid "SYSTEM"
+msgstr "시스템"
 
-msgid "BOTTOM"
-msgstr "하단"
+msgid "REFINE SEARCH"
+msgstr "개선 검색"
 
-msgid "DISPLAY MEDIA TYPES"
-msgstr "디스플레이 미디어 유형"
+msgid "refine search"
+msgstr "개선 검색"
 
-msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
-msgstr "이미지를 볼 때 비디오를 계속 실행"
+msgid "SKIP"
+msgstr "건너뛰기"
 
-msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
-msgstr "비디오를 화면 해상도로 늘이기"
+msgid "skip game"
+msgstr "게임 건너뛰기"
 
-msgid "RENDER SCANLINES FOR VIDEOS"
-msgstr "비디오에 스캔라인 렌더링 적용"
+msgid "stop"
+msgstr "중지"
 
-msgid "RENDER BLUR FOR VIDEOS"
-msgstr "비디오에 블러 렌더링 적용"
-
-msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
-msgstr "스크린샷과 타이틀에 스캔라인 렌더링 적용"
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "게임"
 
 #, c-format
-msgid "FINISH EDITING '%s' COLLECTION"
-msgstr "'%s' 컬렉션 편집을 끝냄"
+msgid "GAME %i OF %i"
+msgstr "게임 %i / %i"
 
-msgid "SELECT COLLECTIONS"
-msgstr "컬렉션 선택"
-
-msgid "AUTOMATIC GAME COLLECTIONS"
-msgstr "자동 게임 컬렉션"
-
-msgid "CUSTOM GAME COLLECTIONS"
-msgstr "커스텀 게임 컬렉션"
-
-msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr "테마에서 새로운 커스텀 컬렉션 생성"
-
-msgid "SELECT THEME FOLDER"
-msgstr "테마 폴더 선택"
-
-msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr "새로운 커스텀 컬렉션 생성"
-
-msgid "NEW COLLECTION NAME"
-msgstr "새로운 컬렉션 이름"
-
-msgid "CREATE"
-msgstr "생성"
-
-msgid "CREATE COLLECTION?"
-msgstr "컬렉션을 생성할까요?"
-
-msgid "DELETE CUSTOM COLLECTION"
-msgstr "커스텀 컬렉션 삭제"
-
-msgid "COLLECTION TO DELETE"
-msgstr "삭제할 컬렉션"
+msgid "NO GAMES WERE SCRAPED"
+msgstr "스크랩된 게임 없음"
 
 #, c-format
-msgid ""
-"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
-"'%s'\n"
-"ARE YOU SURE?"
-msgstr ""
-"컬렉션이 영구적으로 삭제됩니다.\n"
-"'%s'\n"
-"확실합니까?"
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i 게임 스크랩됨"
 
-msgid "GROUP CUSTOM COLLECTIONS"
-msgstr "커스텀 컬렉션 그룹"
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i 게임 건너뜀"
 
-msgid "IF UNTHEMED"
-msgstr "테마에 없는 경우"
+msgid "RATING:"
+msgstr "평점:"
 
-msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr "커스텀 컬렉션에서 즐겨찾기를 최상단에 표시"
+msgid "RELEASED:"
+msgstr "발매:"
 
-msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "커스텀 컬렉션에서 별 표시하기"
+msgid "DEVELOPER:"
+msgstr "개발사:"
+
+msgid "PUBLISHER:"
+msgstr "배급사:"
+
+msgid "GENRE:"
+msgstr "장르:"
+
+msgid "PLAYERS:"
+msgstr "플레이어:"
+
+msgid "NO GAMES FOUND"
+msgstr "게임을 찾을 수 없음"
+
+msgid "RETRY"
+msgstr "재시도"
+
+msgid "Error downloading thumbnail:"
+msgstr "썸네일 다운로드 오류:"
+
+msgid "SEARCH"
+msgstr "검색"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "개선된 이름을 이용하여 검색하시겠습니까?"
+
+msgid "skip"
+msgstr "건너뛰기"
+
+msgid "accept result"
+msgstr "결과를 받아들임"
+
+msgid "back (cancel)"
+msgstr "뒤로 가기 (취소)"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
 msgstr "화면보호기 시작 (분)"
@@ -1230,30 +1829,6 @@ msgstr "비디오 교체 시간 (초)"
 
 msgid "RENDER BLUR"
 msgstr "블러 랜더링 적용"
-
-msgid "FILTER GAMELIST"
-msgstr "게임리스트 필터"
-
-msgid "RESET ALL FILTERS"
-msgstr "모든 필터 초기화"
-
-msgid "GAME NAME"
-msgstr "게임 이름"
-
-msgid "APPLY CHANGES?"
-msgstr "변경을 적용할까요?"
-
-msgid "NOTHING TO FILTER"
-msgstr "필터 대상 없음"
-
-msgid "LAUNCHING GAME"
-msgstr "게임 시작"
-
-msgid "CLOSE"
-msgstr "닫기"
-
-msgid "close"
-msgstr "닫기"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "테마 리스트 다운로드 중 100%"
@@ -1383,9 +1958,6 @@ msgstr "오류:"
 msgid "COULDN'T DOWNLOAD THEMES LIST"
 msgstr "테마 목록을 다운로드할 수 없습니다"
 
-msgid "DOWNLOADING"
-msgstr "다운로드중"
-
 msgid "DOWNLOADING THEMES LIST"
 msgstr "테마 목록 다운로드중"
 
@@ -1442,732 +2014,279 @@ msgstr ""
 "가지입니다. 진행 중인 다운로드는 데이터 손상으로 이어질 수 있으므로 중단할 "
 "수 없습니다."
 
-msgid "RATING:"
-msgstr "평점:"
+msgid "browse"
+msgstr "보기"
 
-msgid "RELEASED:"
-msgstr "발매:"
+msgid "pdf manual"
+msgstr "pdf 메뉴얼"
 
-msgid "DEVELOPER:"
-msgstr "개발사:"
+msgid "first"
+msgstr "처음"
 
-msgid "PUBLISHER:"
-msgstr "배급사:"
+msgid "last"
+msgstr "마지막"
 
-msgid "GENRE:"
-msgstr "장르:"
+msgid "SCREENSHOT"
+msgstr "스크린샷"
 
-msgid "PLAYERS:"
-msgstr "플레이어:"
+msgid "BOX COVER"
+msgstr "박스 커버"
 
-msgid "NO GAMES FOUND"
-msgstr "게임을 찾을 수 없음"
+msgid "BOX BACK COVER"
+msgstr "박스 후면 커버"
 
-msgid "RETRY"
-msgstr "재시도"
+msgid "TITLE SCREEN"
+msgstr "타이틀 스크린"
 
-msgid "SKIP"
-msgstr "건너뛰기"
+msgid "FAN ART"
+msgstr "팬아트"
 
-msgid "Error downloading thumbnail:"
-msgstr "썸네일 다운로드 오류:"
+msgid "MIXIMAGE"
+msgstr "믹스이미지"
 
-msgid "SEARCH"
-msgstr "검색"
+msgid "CUSTOM"
+msgstr "커스텀"
 
-msgid "SEARCH USING REFINED NAME?"
-msgstr "개선된 이름을 이용하여 검색하시겠습니까?"
+msgctxt "metadata"
+msgid "NAME"
+msgstr "이름"
 
-msgid "skip"
-msgstr "건너뛰기"
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "이름 입력"
 
-msgid "accept result"
-msgstr "결과를 받아들임"
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "정렬이름"
 
-msgid "SCRAPING IN PROGRESS"
-msgstr "스크랩 진행중"
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "정렬이름 입력"
 
-msgid "SYSTEM"
-msgstr "시스템"
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "커스텀 컬렉션 정렬이름"
 
-msgid "skip game"
-msgstr "게임 건너뛰기"
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "커스텀 컬렉션 정렬이름 입력"
 
-msgid "STOP"
-msgstr "중지"
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "설명"
 
-msgid "stop"
-msgstr "중지"
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "설명 입력"
 
-msgid "GAME"
-msgid_plural "GAMES"
-msgstr[0] "게임"
+msgctxt "metadata"
+msgid "RATING"
+msgstr "평점"
 
-#, c-format
-msgid "GAME %i OF %i"
-msgstr "게임 %i / %i"
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "발매일"
 
-msgid "NO GAMES WERE SCRAPED"
-msgstr "스크랩된 게임 없음"
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "개발사"
 
-#, c-format
-msgid "%i GAME SUCCESSFULLY SCRAPED"
-msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] "%i 게임 스크랩됨"
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "개발사 입력"
 
-#, c-format
-msgid "%i GAME SKIPPED"
-msgid_plural "%i GAMES SKIPPED"
-msgstr[0] "%i 게임 건너뜀"
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "배급사"
 
-msgid "GAMELIST OPTIONS"
-msgstr "게임리스트 옵션"
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "배급사 입력"
 
-msgid "JUMP TO..."
-msgstr "이동..."
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "장르"
 
-msgid "SORT GAMES BY"
-msgstr "게임 정렬"
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "장르 입력"
 
-msgid "THIS SYSTEM HAS NO GAMES"
-msgstr "현재 시스템에는 게임이 없습니다"
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "플레이어"
 
-msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
-msgstr "현재 게임 컬렉션에 게임 추가/삭제"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "플레이어 수 입력"
 
-msgid "EDIT THIS FOLDER'S METADATA"
-msgstr "현재 폴더 메타데이터 편집"
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "즐겨찾기"
 
-msgid "EDIT THIS GAME'S METADATA"
-msgstr "현재 게임 메타데이터 편집"
-
-msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
-msgstr "폴더 들어가기 (폴더 링크 오버라이드)"
-
-msgid "APPLY"
-msgstr "적용"
-
-msgid "apply"
-msgstr "적용"
-
-msgid "close (apply)"
-msgstr "닫기 (적용)"
-
-msgid "close (cancel)"
-msgstr "닫기 (취소)"
-
-msgid ""
-"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
-"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
-"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
-"LONGER NEEDED."
-msgstr ""
-"일치하는 게임 파일을 찾을 수 없는 모든 미디어 파일이 제거됩니다. 이 파일은 게"
-"임 미디어 디렉터리 내의 정리 폴더로 이동됩니다. 더 이상 필요하지 않다고 확신"
-"하는 경우 이 폴더를 수동으로 삭제할 수 있습니다."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
-"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
-"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
-"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
-msgstr ""
-"일치하는 게임 파일을 찾을 수 없는 GAMELIST XML 파일에서 모든 항목이 제거됩니"
-"다. 원본 파일의 백업은 GAMELISTS 디렉터리 내의 정리 폴더에 저장됩니다. 더 이"
-"상 필요하지 않다고 확신하는 경우 이 폴더를 수동으로 삭제할 수 있습니다."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
-"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
-"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
-"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
-msgstr ""
-"이렇게 하면 일치하는 게임 파일을 찾을 수 없는 커스텀 컬렉션 구성 파일의 모든 "
-"항목이 제거됩니다. 원본 파일의 백업은 컬렉션 디렉터리 내의 정리 폴더에 저장됩"
-"니다. 현재 활성화된 컬렉션만 처리됩니다."
-
-msgid "NOT STARTED"
-msgstr "시작되지 않음"
-
-msgid "DESCRIPTION:"
-msgstr "설명:"
-
-msgid "TOTAL ENTRIES REMOVED:"
-msgstr "삭제된 총 항목 수:"
-
-msgid "LAST PROCESSED SYSTEM:"
-msgstr "마지막 처리된 시스템:"
-
-msgid "LAST ERROR MESSAGE:"
-msgstr "마지막 오류 메시지:"
-
-msgid "MEDIA"
-msgstr "미디어"
-
-msgid "start processing"
-msgstr "프로세스 시작"
-
-msgid "RUNNING MEDIA CLEANUP"
-msgstr "미디어 정리 실행중"
-
-msgid "stop processing"
-msgstr "프로세스 중지"
-
-msgid "GAMELISTS"
-msgstr "게임리스트"
-
-msgid "RUNNING GAMELISTS CLEANUP"
-msgstr "실행 중인 게임리스트 정리"
-
-msgid "COLLECTIONS"
-msgstr "컬렉션"
-
-msgid "COLLECTIONS CLEANUP FAILED"
-msgstr "컬렉션 정리 실패"
-
-msgid "There are no enabled custom collections"
-msgstr "활성화된 커스텀 컬렉션이 없습니다"
-
-msgid "RUNNING COLLECTIONS CLEANUP"
-msgstr "실행 중인 컬렉션 정리"
-
-msgid "PROCESSING"
-msgstr "프로세스중"
-
-#, c-format
-msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr "flatten.txt 파일이 발견되었습니다. \"%s\"을(를) 건너뛰었습니다."
-
-msgid "Couldn't create target directory, permission problems?"
-msgstr "대상 디렉터리를 생성할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "Couldn't move media file, permission problems?"
-msgstr "미디어 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
-
-#, c-format
-msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr "\"%s\"에 대한 gamelist.xml 파일을 구문 분석할 수 없습니다."
-
-#, c-format
-msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr "\"%s\"에 대한 파일에서 게임 목록 태그를 찾을 수 없습니다."
-
-msgid "Couldn't delete temporary gamelist file, permission problems?"
-msgstr "임시 게임리스트 파일을 삭제할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "Couldn't write to temporary gamelist file, permission problems?"
-msgstr "임시 게임 목록 파일에 쓸 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "Couldn't create backup directory, permission problems?"
-msgstr "백업 디렉터리를 생성할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "Couldn't move old gamelist file, permission problems?"
-msgstr "이전 게임 목록 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "Couldn't move temporary gamelist file, permission problems?"
-msgstr "임시 게임 목록 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "Couldn't find custom collection configuration file"
-msgstr "커스텀 컬렉션 구성 파일을 찾을 수 없습니다"
-
-msgid "Couldn't open custom collection configuration file"
-msgstr "커스텀 컬렉션 구성 파일을 열 수 없습니다"
-
-msgid "Couldn't delete temporary collection file, permission problems?"
-msgstr "임시 컬렉션 파일을 삭제할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "Couldn't write to temporary collection configuration file"
-msgstr "임시 컬렉션 구성 파일에 쓰기를 할 수 없습니다"
-
-msgid "Couldn't move old collection file, permission problems?"
-msgstr "이전 컬렉션 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "Couldn't move temporary collection file, permission problems?"
-msgstr "임시 컬렉션 파일을 이동할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "ABORTED MEDIA CLEANUP"
-msgstr "중단된 미디어 정리"
-
-msgid "COMPLETED MEDIA CLEANUP"
-msgstr "완료된 미디어 정리"
-
-msgid "ABORTED GAMELIST CLEANUP"
-msgstr "중단된 게임리스트 정리"
-
-msgid "COMPLETED GAMELIST CLEANUP"
-msgstr "완료된 게임리스트 정리"
-
-msgid "ABORTED COLLECTIONS CLEANUP"
-msgstr "중단된 컬렉션 정리"
-
-msgid "COMPLETED COLLECTIONS CLEANUP"
-msgstr "완료된 컬렉션 정리"
-
-msgid "MEDIA CLEANUP FAILED"
-msgstr "미디어 정리 실패"
-
-msgid "GAMELISTS CLEANUP FAILED"
-msgstr "게임리스트 정리 실패"
-
-msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
-msgstr "이 유틸리티를 닫으면 애플리케이션이 다시 로드됩니다."
-
-msgid "INVALID ENTRY"
-msgstr "잘못된 항목"
-
-msgid "CLEARED ENTRY"
-msgstr "삭제된 항목"
-
-msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr "대체 에뮬레이터 정의되지 않음"
-
-msgid "CLEAR INVALID ENTRY"
-msgstr "잘못된 항목 삭제"
-
-msgid "DEFAULT"
-msgstr "기본"
-
-msgid "EDIT METADATA"
-msgstr "메타데이터 편집"
-
-msgid "CLEAR ENTRY"
-msgstr "항목 삭제"
-
-msgid "SELECT EMULATOR"
-msgstr "에뮬레이터 선택"
-
-msgid "SYSTEM-WIDE"
-msgstr "시스템-전체"
-
-msgid "unknown"
-msgstr "알수없음"
-
-msgid "SCRAPE"
-msgstr "스크랩"
-
-msgid "scrape"
-msgstr "스크랩"
-
-msgid "save metadata"
-msgstr "메타데이터 저장"
-
-msgid "cancel changes"
-msgstr "변경 취소"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
-"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"이렇게 하면 이 폴더의 모든 미디어 파일과 GAMELIST.XML 항목이 삭제되지만 디렉"
-"터리 자체나 그 안에 있는 콘텐츠는 삭제되지 않습니다.\n"
-"확실합니까?"
-
-msgid "CLEAR"
-msgstr "삭제"
-
-msgid "clear folder"
-msgstr "폴더 삭제"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
-"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"이렇게 하면 이 게임의 모든 미디어 파일과 GAMELIST.XML 항목이 삭제되지만 게임 "
-"파일 자체는 삭제되지 않습니다.\n"
-"확실합니까?"
-
-msgid "clear file"
-msgstr "파일 삭제"
-
-msgid ""
-"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
-"ARE YOU SURE?"
-msgstr ""
-"이렇게 하면 게임 파일, 모든 미디어 파일 및 GAMELIST.XML 항목이 삭제됩니다.\n"
-"확실합니까?"
-
-msgid "DELETE"
-msgstr "삭제"
-
-msgid "delete game"
-msgstr "게임 삭제"
-
-msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr "믹스이미지 오프라인 생성기"
-
-#, c-format
-msgid "%i OF %i GAME PROCESSED"
-msgid_plural "%i OF %i GAMES PROCESSED"
-msgstr[0] "%i / %i 게임 프로세스됨"
-
-msgid "Generated:"
-msgstr "생성됨:"
-
-msgid "Overwritten:"
-msgstr "덮어씀:"
-
-msgid "Skipped:"
-msgstr "건너뜀:"
-
-msgid "Skipped (existing):"
-msgstr "건너뜀 (존재함)"
-
-msgid "Failed:"
-msgstr "실패:"
-
-msgid "Processing:"
-msgstr "프로세스중:"
-
-msgid "Last error message:"
-msgstr "마지막 오류 메시지:"
-
-msgid "PAUSE"
-msgstr "일시정지"
-
-msgid "pause processing"
-msgstr "프로세스 일시정지"
-
-msgid "close (abort processing)"
-msgstr "닫기 (프로세스 중단)"
-
-msgid "RUNNING..."
-msgstr "실행중..."
-
-msgid "PAUSED"
-msgstr "일시중단됨"
-
-msgid "RUNNING"
-msgstr "실행중"
-
+msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "완료됨"
 
-msgid "DONE"
-msgstr "완료"
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "아동용 게임"
 
-msgid "done (close)"
-msgstr "완료 (닫기)"
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "아동용 게임 (배지에만 영향)"
 
-msgid "APPLICATION UPDATER"
-msgstr "어플리케이션 업데이터"
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "숨김"
 
-msgid "INSTALLATION STEPS:"
-msgstr "설치 단계:"
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "손상됨/작동하지 않음"
 
-msgid "DOWNLOAD NEW RELEASE"
-msgstr "새 릴리스 다운로드"
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "게임 카운터에서 제외"
 
-msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
-msgstr "새 릴리스를 이 디렉터리에 다운로드:"
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "멀티-스크래퍼에서 제외"
 
-msgid "INSTALL PACKAGE"
-msgstr "패키지 설치"
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "메타데이터 필드 숨기기"
 
-msgid "QUIT AND MANUALLY RESTART ES-DE"
-msgstr "ES-DE를 종료하고 수동으로 재부팅"
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "실행 횟수"
 
-msgid "QUIT AND MANUALLY UPGRADE ES-DE"
-msgstr "ES-DE를 종료하고 수동으로 업데이트"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "실행 횟수 입력"
 
-msgid "STATUS MESSAGE:"
-msgstr "상태 메시지:"
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "컨트롤러"
 
-msgid "DOWNLOAD"
-msgstr "다운로드"
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "컨트롤러 선택"
 
-msgid "download new release"
-msgstr "새 릴리스 다운로드"
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "대체 에뮬레이터"
 
-msgid "Download directory does not exist"
-msgstr "다운로드 디렉터리가 존재하지 않음"
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "대체 에뮬레이터 선택"
 
-msgid "CHANGE DIRECTORY"
-msgstr "디렉터리 변경"
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "폴더 링크"
 
-msgid "change download directory"
-msgstr "다운로드 디렉터리 변경"
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "폴더 링크 선택"
 
-msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr "다운로드 디렉터리 입력"
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "최근 실행"
 
-msgid "DOWNLOAD ABORTED"
-msgstr "다운로드가 중단됨"
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "최근 실행일 입력"
 
-msgid "NO PACKAGE SAVED TO DISK"
-msgstr "디스크에 저장된 패키지가 없음"
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "스크린샷을 찾을 수 없습니다. 혼합 이미지를 생성할 수 없습니다"
 
-msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr "패키지가 다운로드되었으며 수동으로 설치할 수 있습니다"
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr "알 수 없는 형식의 스크린샷으로 인해 혼합 이미지를 생성할 수 없습니다"
 
-msgid "DOWNLOADING 100%"
-msgstr "다운로드 중 100%"
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr ""
+"지원되지 않는 형식의 스크린샷으로 인해 혼합 이미지를 생성할 수 없습니다"
 
-msgid "Downloaded file does not match expected MD5 checksum"
-msgstr "다운로드한 파일이 예상 MD5 체크섬과 일치하지 않습니다"
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "스크린샷을 로딩 오류 발생, 혼합 이미지를 생성할 수 없습니다"
 
-msgid "Error: Couldn't delete temporary package file, permission problems?"
-msgstr "오류: 임시 패키지 파일을 삭제할 수 없습니다. 권한 문제가 있습니까?"
+msgid "Error loading marquee image, corrupt file?"
+msgstr "마퀴 이미지 로딩 오류 발생, 파일이 손상되었나요?"
 
-msgid "Error: Couldn't write package file, permission problems?"
-msgstr "오류: 패키지 파일에 쓰기를 할 수 없습니다. 권한 문제가 있습니까?"
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "3d 박스 이미지 로딩 오류 발생, 파일이 손상되었나요?"
 
-msgid "Error: Couldn't set permissions on AppImage file"
-msgstr "오류: AppImage 파일에 대한 권한을 설정할 수 없습니다"
+msgid "Error loading box cover image, corrupt file?"
+msgstr "박스 커버 이미지 로딩 오류 발생, 파일이 손상되었나요?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "피지컬 미디어 이미지 로딩 오류 발생, 파일이 손상되었나요?"
 
 #, c-format
-msgid "Downloaded %s"
-msgstr "%s 다운로드됨"
+msgid "PAGE %s OF %s"
+msgstr "페이지E %s / %s"
 
-msgid "Error: Couldn't open AppImage update file for reading"
-msgstr "오류: 읽기 위해 AppImage 업데이트 파일을 열 수 없습니다"
+msgid "pan"
+msgstr "화면이동"
 
-msgid "Error: Downloaded file does not match expected MD5 checksum"
-msgstr "오류: 다운로드한 파일이 예상 MD5 체크섬과 일치하지 않습니다"
+msgid "reset"
+msgstr "재설정"
 
-msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgid "game media"
+msgstr "게임 미디어"
+
+msgid "zoom"
+msgstr "줌"
+
+msgid "Network error:"
+msgstr "네트워크 오류:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "미디어 디렉터리가 존재하지 않으며 생성할 수 없습니다."
+
+msgid "Permission problems?"
+msgstr "권한 문제가 있습니까?"
+
+msgid "Failed to open path for writing media file."
+msgstr "미디어 파일을 쓰기 위한 경로를 열지 못했습니다."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr "미디어 파일을 저장할 수 없음. 권한 문제 또는 디스크가 가득 찼습니까?"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
-"오류: 실행 중인 AppImage 파일의 이름을 바꿀 수 없습니다. 권한 문제가 있습니"
-"까?"
+"리사이즈된 이미지를 저장할 수 없음. 권한 문제 또는 디스크가 가득 찼습니까?"
 
-msgid "Error: Couldn't replace running AppImage file, permission problems?"
-msgstr ""
-"오류: 실행 중인 AppImage 파일을 대체할 수 없습니다. 권한 문제가 있습니까?"
+msgid "ScreenScraper error:"
+msgstr "스크린스크래퍼 오류:"
 
-#, c-format
-msgid "Successfully installed as %s"
-msgstr "%s(으)로 성공적으로 설치됨"
+msgid "ScreenScraper: Wrong username or password"
+msgstr "스크린스크래퍼: 잘못된 사용자이름 또는 비밀번호"
 
-msgid "INSTALL"
-msgstr "설치"
+msgid "No Entries Found"
+msgstr "항목 없음"
 
-msgid "install package"
-msgstr "패키지 설치"
+msgctxt "theme"
+msgid "all"
+msgstr "모두"
 
-msgid "Find the detailed changelog at"
-msgstr "자세한 변경 로그는 다음에서 확인"
-
-msgid "quit application"
-msgstr "어플리케이션 종료"
-
+msgctxt "theme"
 msgid "all games"
 msgstr "모든 게임"
 
+msgctxt "theme"
+msgid "recent"
+msgstr "최근"
+
+msgctxt "theme"
 msgid "last played"
 msgstr "최근 실행"
 
+msgctxt "theme"
 msgid "favorites"
 msgstr "즐겨찾기"
 
+msgctxt "theme"
 msgid "collections"
 msgstr "컬렉션"
-
-#, c-format
-msgid "DISABLED '%s' IN '%s'"
-msgstr "'%s'/'%s' 개를 비활성화"
-
-#, c-format
-msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr "'%s' 컬렉션 편집 중, %s로 게임 추가/제거"
-
-#, c-format
-msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr "'%s' 컬렉션 편집 완료"
-
-msgid "Favorites"
-msgstr "즐겨찾기"
-
-#, c-format
-msgid "ADDED '%s' TO '%s'"
-msgstr "'%s'을(를) '%s'에 추가함"
-
-#, c-format
-msgid "REMOVED '%s' FROM '%s'"
-msgstr "'%s'을(를) '%s'에서 제거함"
-
-msgid "This collection is empty"
-msgstr "현재 컬렉션은 비어 있습니다"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s [%s]'"
-msgstr "현재 컬렉션에 1개의 게임이 포함: '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
-msgstr "현재 컬렉션에 2개의 게임이 포함: '%s [%s]', '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
-msgstr "현재 컬렉션에 3개의 게임이 포함: '%s [%s]', '%s [%s]', '%s [%s]'"
-
-#, c-format
-msgctxt "theme"
-msgid ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgid_plural ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgstr[0] ""
-"현재 컬렉션에 %i개의 게임이 포함: '%s [%s]', '%s [%s]', '%s [%s]', 기타"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s'"
-msgstr "현재 컬렉션에 1개의 게임이 포함: '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s' and '%s'"
-msgstr "현재 컬렉션에 2개의 게임이 포함: '%s', '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s', '%s' and '%s'"
-msgstr "현재 컬렉션에 3개의 게임이 포함: '%s', '%s', '%s'"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgid_plural ""
-"This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr[0] "현재 컬렉션에 %i개의 게임이 포함: '%s', '%s', '%s', 기타"
-
-#, c-format
-msgctxt "theme"
-msgid "'%s' is filtered so there may be more games available"
-msgstr "'%s'이(가) 필터되었으므로 이용 가능한 게임이 더 있을 수 있습니다"
-
-#, c-format
-msgid "DELETED COLLECTION '%s'"
-msgstr "컬렉션 '%s' 이 삭제됨"
-
-msgid "name, ascending"
-msgstr "이름, 오름차순"
-
-msgid "name, descending"
-msgstr "이름, 내림차순"
-
-msgid "rating, ascending"
-msgstr "평점, 높은순"
-
-msgid "rating, descending"
-msgstr "평점, 낮은순"
-
-msgid "release date, ascending"
-msgstr "발매일, 오름차순"
-
-msgid "release date, descending"
-msgstr "발매일, 내림차순"
-
-msgid "developer, ascending"
-msgstr "개발사, 오름차순"
-
-msgid "developer, descending"
-msgstr "개발사, 내림차순"
-
-msgid "publisher, ascending"
-msgstr "배급사, 오름차순"
-
-msgid "publisher, descending"
-msgstr "배급사, 내림차순"
-
-msgid "genre, ascending"
-msgstr "장르, 오름차순"
-
-msgid "genre, descending"
-msgstr "장르, 내림차순"
-
-msgid "players, ascending"
-msgstr "플레이어 수, 높은순"
-
-msgid "players, descending"
-msgstr "플레이어 수, 낮은순"
-
-msgid "last played, ascending"
-msgstr "최근 플레이, 높은순"
-
-msgid "last played, descending"
-msgstr "최근 플레이, 낮은순"
-
-msgid "times played, ascending"
-msgstr "플레이 시간, 높은순"
-
-msgid "times played, descending"
-msgstr "플레이 시간, 낮은순"
-
-msgid "system, ascending"
-msgstr "시스템, 오름차순"
-
-msgid "system, descending"
-msgstr "시스템, 내림차순"
-
-#, c-format
-msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr "오류: '%s'에 대한 사전 명령 찾기 규칙 구성이 누락되었습니다"
-
-msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "오류: 사전 명령을 찾을 수 없습니다. 올바르게 설치되었습니까?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "오류: 사전 명령 '%s'을(를) 찾을 수 없습니다. 올바르게 설치되었습니까?"
-
-#, c-format
-msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr "오류: '%s'에 대한 에뮬레이터 찾기 규칙 구성이 누락되었습니다"
-
-msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "오류: 앱을 찾을 수 없습니다. 제대로 설치되었나요?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "오류: '%s' 앱을 찾을 수 없습니다. 제대로 설치되었습니까?"
-
-msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "오류: 에뮬레이터를 찾을 수 없습니다. 제대로 설치되었습니까?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "오류: 에뮬레이터 '%s'을(를) 찾을 수 없습니다. 올바르게 설치되었습니까?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr "오류: 에뮬레이터 코어 파일 '%s'을(를) 찾을 수 없습니다"
-
-msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr "오류: 시스템 구성 파일의 항목이 잘못되었습니다"
-
-#, c-format
-msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr "오류: '%s'에 대한 코어 구성이 누락되었습니다."
-
-#, c-format
-msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr "오류: 잘못된 %s 변수 항목"
-
-#, c-format
-msgid ""
-"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
-msgstr ""
-"오류: %s이(가) 정의한 디렉터리를 생성할 수 없습니다. 권한 문제가 있습니까?"
-
-msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "오류: 앱 또는 별칭 파일이 존재하지 않거나 읽을 수 없습니다"
-
-msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr "오류: 데스크톱 파일이 잘못되었거나 읽을 수 없습니다"
-
-msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "오류: 데스크톱 파일이 존재하지 않거나 읽을 수 없습니다"
-
-#, c-format
-msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
-msgstr "게임 '%s' 시작 중 오류 발생 (오류 코드 %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr "커스텀 컬렉션에 커스텀 컬렉션을 추가할 수 없습니다"
@@ -2189,8 +2308,32 @@ msgstr "폴더 '%s'에 대한 즐겨찾기 표시가 제거함"
 msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr "게임으로 간주되지 않는 항목은 커스텀 컬렉션에 추가할 수 없습니다"
 
+msgid "system"
+msgstr "시스템"
+
+msgid "view media"
+msgstr "미디어 보기"
+
+msgid "options"
+msgstr "옵션"
+
 msgid "random"
 msgstr "무작위"
+
+msgid "jump to game"
+msgstr "게임으로 이동"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "알수없음"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "예"
+
+msgctxt "theme"
+msgid "no"
+msgstr "아니오"
 
 msgid "screensaver"
 msgstr "화면보호기"
@@ -2212,30 +2355,6 @@ msgctxt "theme"
 msgid "%i favorite"
 msgid_plural "%i favorites"
 msgstr[0] "%i 즐겨찾기"
-
-msgctxt "theme"
-msgid "unknown"
-msgstr "알수없음"
-
-msgid "system"
-msgstr "시스템"
-
-msgid "view media"
-msgstr "미디어 보기"
-
-msgid "options"
-msgstr "옵션"
-
-msgid "jump to game"
-msgstr "게임으로 이동"
-
-msgctxt "theme"
-msgid "yes"
-msgstr "예"
-
-msgctxt "theme"
-msgid "no"
-msgstr "아니오"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2390,195 +2509,36 @@ msgstr "게임 '%s' 시작 중"
 msgid "menu"
 msgstr "메뉴"
 
-#, c-format
-msgid "PAGE %s OF %s"
-msgstr "페이지E %s / %s"
+msgid "WORKING..."
+msgstr "실행 중..."
 
-msgid "pan"
-msgstr "화면이동"
-
-msgid "reset"
-msgstr "재설정"
-
-msgid "browse"
-msgstr "보기"
-
-msgid "game media"
-msgstr "게임 미디어"
-
-msgid "first"
-msgstr "처음"
-
-msgid "last"
-msgstr "마지막"
-
-msgid "zoom"
-msgstr "줌"
-
-msgid "RATING"
-msgstr "평점"
-
-msgid "DEVELOPER"
-msgstr "개발사"
-
-msgid "PUBLISHER"
-msgstr "배급사"
-
-msgid "GENRE"
-msgstr "장르"
-
-msgid "PLAYERS"
-msgstr "플레이어"
-
-msgid "FAVORITE"
-msgstr "즐겨찾기"
-
-msgid "KIDGAME"
-msgstr "아동용 게임"
-
-msgid "HIDDEN"
-msgstr "숨김"
-
-msgid "BROKEN"
-msgstr "손상됨"
-
-msgid "CONTROLLER"
-msgstr "컨트롤러"
-
-msgid "ALTERNATIVE EMULATOR"
-msgstr "대체 에뮬레이터"
-
-msgid "FALSE"
-msgstr "거짓"
-
-msgid "TRUE"
-msgstr "참"
-
-msgid "UNKNOWN"
-msgstr "알수없음"
-
-msgid "NONE SELECTED"
-msgstr "선택되지 않음"
-
-msgid "No screenshot found, couldn't generate miximage"
-msgstr "스크린샷을 찾을 수 없습니다. 혼합 이미지를 생성할 수 없습니다"
-
-msgid "Screenshot in unknown format, couldn't generate miximage"
-msgstr "알 수 없는 형식의 스크린샷으로 인해 혼합 이미지를 생성할 수 없습니다"
-
-msgid "Screenshot in unsupported format, couldn't generate miximage"
-msgstr ""
-"지원되지 않는 형식의 스크린샷으로 인해 혼합 이미지를 생성할 수 없습니다"
-
-msgid "Error loading screenshot, couldn't generate miximage"
-msgstr "스크린샷을 로딩 오류 발생, 혼합 이미지를 생성할 수 없습니다"
-
-msgid "Error loading marquee image, corrupt file?"
-msgstr "마퀴 이미지 로딩 오류 발생, 파일이 손상되었나요?"
-
-msgid "Error loading 3d box image, corrupt file?"
-msgstr "3d 박스 이미지 로딩 오류 발생, 파일이 손상되었나요?"
-
-msgid "Error loading box cover image, corrupt file?"
-msgstr "박스 커버 이미지 로딩 오류 발생, 파일이 손상되었나요?"
-
-msgid "Error loading physical media image, corrupt file?"
-msgstr "피지컬 미디어 이미지 로딩 오류 발생, 파일이 손상되었나요?"
-
-msgid "pdf manual"
-msgstr "pdf 메뉴얼"
-
-msgid "SCREENSHOT"
-msgstr "스크린샷"
-
-msgid "BOX COVER"
-msgstr "박스 커버"
-
-msgid "BOX BACK COVER"
-msgstr "박스 후면 커버"
-
-msgid "TITLE SCREEN"
-msgstr "타이틀 스크린"
-
-msgid "FAN ART"
-msgstr "팬아트"
-
-msgid "MIXIMAGE"
-msgstr "믹스이미지"
-
-msgid "CUSTOM"
-msgstr "커스텀"
-
-msgid "Searching for games..."
-msgstr "게임 검색 중..."
-
-msgid "Loading systems..."
-msgstr "시스템 로드 중..."
-
-msgid "Reloading..."
-msgstr "리로딩 중..."
-
-msgid "Copying resources..."
-msgstr "리소스 복사 중..."
-
-msgid "Creating system directories..."
-msgstr "시스템 디렉터리 생성 중..."
-
-msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr "오류: PDF 파일을 렌더링할 수 없습니다"
+msgctxt "theme"
+msgid "never"
+msgstr "사용안함"
 
 #, c-format
-msgid "ADDED INPUT DEVICE '%s'"
-msgstr "입력 장치 '%s'이(가) 추가됨"
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "%i 일전"
 
 #, c-format
-msgid "REMOVED INPUT DEVICE '%s'"
-msgstr "입력 장치 '%s'이(가) 제거됨"
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "%i 시간전"
 
-msgid "medium"
-msgstr "미디엄"
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "%i 분전"
 
-msgid "large"
-msgstr "라지"
-
-msgid "small"
-msgstr "스몰"
-
-msgid "extra small"
-msgstr "엑스트라 스몰"
-
-msgid "extra large"
-msgstr "엑스트라 라지"
-
-msgid "automatic"
-msgstr "자동"
-
-msgid "16:9 vertical"
-msgstr "16:9 수직"
-
-msgid "16:10 vertical"
-msgstr "16:10 수직"
-
-msgid "3:2 vertical"
-msgstr "3:2 수직"
-
-msgid "4:3 vertical"
-msgstr "4:3 수직"
-
-msgid "5:4 vertical"
-msgstr "5:4 수직"
-
-msgid "19.5:9 vertical"
-msgstr "19.5:9 수직"
-
-msgid "20:9 vertical"
-msgstr "20:9 수직"
-
-msgid "21:9 vertical"
-msgstr "21:9 수직"
-
-msgid "32:9 vertical"
-msgstr "32:9 수직"
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "%i 초전"
 
 msgid "edit date"
 msgstr "날짜 수정"
@@ -2618,69 +2578,17 @@ msgstr "선택 해제"
 msgid "select none"
 msgstr "선택 해제"
 
+msgid "add half star"
+msgstr "하프스타 추가"
+
+msgid "toggle"
+msgstr "토글"
+
 msgid "move cursor"
 msgstr "커서 이동"
 
 msgid "edit"
 msgstr "편집"
-
-msgid "WORKING..."
-msgstr "실행 중..."
-
-msgid "toggle"
-msgstr "토글"
-
-msgid "add half star"
-msgstr "하프스타 추가"
-
-msgctxt "theme"
-msgid "never"
-msgstr "사용안함"
-
-#, c-format
-msgctxt "theme"
-msgid "%i day ago"
-msgid_plural "%i days ago"
-msgstr[0] "%i 일전"
-
-#, c-format
-msgctxt "theme"
-msgid "%i hour ago"
-msgid_plural "%i hours ago"
-msgstr[0] "%i 시간전"
-
-#, c-format
-msgctxt "theme"
-msgid "%i minute ago"
-msgid_plural "%i minutes ago"
-msgstr[0] "%i 분전"
-
-#, c-format
-msgctxt "theme"
-msgid "%i second ago"
-msgid_plural "%i seconds ago"
-msgstr[0] "%i 초전"
-
-msgid "SPACE"
-msgstr "스페이스"
-
-msgid "LOAD"
-msgstr "로드"
-
-msgid "shift"
-msgstr "쉬프트"
-
-msgid "alt"
-msgstr "알트"
-
-msgid "newline"
-msgstr "새줄"
-
-msgid "backspace"
-msgstr "백스페이스"
-
-msgid "space"
-msgstr "스페이스"
 
 msgid "WELCOME"
 msgstr "환영합니다"
@@ -2711,15 +2619,6 @@ msgstr ""
 
 msgid "PRESS ESC TO CANCEL"
 msgstr "취소하려면 ESC를 누르세요"
-
-msgid "LOAD DEFAULT"
-msgstr "기본 설정 로드"
-
-msgid "DISCARD CHANGES"
-msgstr "변경사항 취소"
-
-msgid "discard changes"
-msgstr "변경사항 취소"
 
 msgid "CONFIGURING"
 msgstr "구성 중"
@@ -2826,9 +2725,110 @@ msgstr "이미 사용 중"
 msgid "PRESS ANYTHING"
 msgstr "아무 버튼이나 누름"
 
+msgid "SPACE"
+msgstr "스페이스"
+
+msgid "LOAD"
+msgstr "로드"
+
+msgid "shift"
+msgstr "쉬프트"
+
+msgid "alt"
+msgstr "알트"
+
+msgid "newline"
+msgstr "새줄"
+
+msgid "backspace"
+msgstr "백스페이스"
+
+msgid "space"
+msgstr "스페이스"
+
+msgid "LOAD DEFAULT"
+msgstr "기본 설정 로드"
+
+msgid "DISCARD CHANGES"
+msgstr "변경사항 취소"
+
+msgid "discard changes"
+msgstr "변경사항 취소"
+
 msgid "You have exceeded your daily scrape quota"
 msgstr "일일 스크랩 할당량을 초과했습니다"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "서버에서 HTTP 오류 코드 %s을(를) 반환했습니다"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "입력 장치 '%s'이(가) 추가됨"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "입력 장치 '%s'이(가) 제거됨"
+
+msgid "medium"
+msgstr "미디엄"
+
+msgid "large"
+msgstr "라지"
+
+msgid "small"
+msgstr "스몰"
+
+msgid "extra small"
+msgstr "엑스트라 스몰"
+
+msgid "extra large"
+msgstr "엑스트라 라지"
+
+msgid "automatic"
+msgstr "자동"
+
+msgid "16:9 vertical"
+msgstr "16:9 수직"
+
+msgid "16:10 vertical"
+msgstr "16:10 수직"
+
+msgid "3:2 vertical"
+msgstr "3:2 수직"
+
+msgid "4:3 vertical"
+msgstr "4:3 수직"
+
+msgid "5:4 vertical"
+msgstr "5:4 수직"
+
+msgid "19.5:9 vertical"
+msgstr "19.5:9 수직"
+
+msgid "20:9 vertical"
+msgstr "20:9 수직"
+
+msgid "21:9 vertical"
+msgstr "21:9 수직"
+
+msgid "32:9 vertical"
+msgstr "32:9 수직"
+
+msgid "Searching for games..."
+msgstr "게임 검색 중..."
+
+msgid "Loading systems..."
+msgstr "시스템 로드 중..."
+
+msgid "Reloading..."
+msgstr "리로딩 중..."
+
+msgid "Copying resources..."
+msgstr "리소스 복사 중..."
+
+msgid "Creating system directories..."
+msgstr "시스템 디렉터리 생성 중..."
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "오류: PDF 파일을 렌더링할 수 없습니다"
