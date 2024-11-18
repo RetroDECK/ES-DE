@@ -596,6 +596,13 @@ bool SystemData::loadConfig()
                     sStartupExitSignal = true;
                     return true;
                 }
+#if defined(__ANDROID__)
+                if (event.type == SDL_WINDOWEVENT &&
+                    event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+                    ViewController::getInstance()->setWindowSizeChanged(
+                        static_cast<int>(event.window.data1), static_cast<int>(event.window.data2));
+                }
+#endif
             };
 
             std::string name;

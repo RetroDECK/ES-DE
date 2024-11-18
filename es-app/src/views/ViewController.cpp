@@ -13,6 +13,7 @@
 #include "views/ViewController.h"
 
 #include "ApplicationUpdater.h"
+#include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "InputManager.h"
@@ -35,6 +36,10 @@
 #include "views/GamelistView.h"
 #include "views/SystemView.h"
 
+#if defined(__ANDROID__)
+#include "utils/PlatformUtilAndroid.h"
+#endif
+
 ViewController::ViewController() noexcept
     : mRenderer {Renderer::getInstance()}
     , mNoGamesMessageBox {nullptr}
@@ -49,6 +54,8 @@ ViewController::ViewController() noexcept
     , mFadeOpacity {0}
     , mCancelledTransition {false}
     , mNextSystem {false}
+    , mWindowChangedWidth {0}
+    , mWindowChangedHeight {0}
 {
     mState.viewing = ViewMode::NOTHING;
     mState.previouslyViewed = ViewMode::NOTHING;
@@ -1373,6 +1380,13 @@ void ViewController::preload()
                 SystemData::sStartupExitSignal = true;
                 return;
             }
+#if defined(__ANDROID__)
+            if (event.type == SDL_WINDOWEVENT &&
+                event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+                setWindowSizeChanged(static_cast<int>(event.window.data1),
+                                     static_cast<int>(event.window.data2));
+            }
+#endif
         };
 
         const std::string entryType {(*it)->isCustomCollection() ? "custom collection" : "system"};
@@ -1549,6 +1563,71 @@ void ViewController::reloadAll()
 
     mCurrentView->onShow();
     updateHelpPrompts();
+}
+
+void ViewController::setWindowSizeChanged(const int width, const int height)
+{
+#if defined(__ANDROID__)
+    const std::pair<int, int> windowSize {Utils::Platform::Android::getWindowSize()};
+
+    if (windowSize.first == static_cast<int>(mRenderer->getScreenWidth()) &&
+        windowSize.second == static_cast<int>(mRenderer->getScreenHeight())) {
+        mWindowChangedWidth = 0;
+        mWindowChangedHeight = 0;
+    }
+    else {
+        mWindowChangedWidth = windowSize.first;
+        mWindowChangedHeight = windowSize.second;
+    }
+#endif
+}
+
+void ViewController::checkWindowSizeChanged()
+{
+    if (mWindowChangedWidth == 0 || mWindowChangedHeight == 0)
+        return;
+
+    LOG(LogInfo) << "Window size has changed from " << mRenderer->getScreenWidth() << "x"
+                 << mRenderer->getScreenHeight() << " to " << mWindowChangedWidth << "x"
+                 << mWindowChangedHeight << ", reloading...";
+
+    mWindowChangedWidth = 0;
+    mWindowChangedHeight = 0;
+
+    mWindow->stopInfoPopup();
+
+    if (mState.viewing != ViewController::ViewMode::NOTHING) {
+        mWindow->stopScreensaver();
+        mWindow->stopMediaViewer();
+        mWindow->stopPDFViewer();
+    }
+
+    // This is done quite ungracefully, essentially forcekilling all open windows.
+    while (mWindow->getGuiStackSize() > 1)
+        mWindow->removeGui(mWindow->peekGui());
+
+    AudioManager::getInstance().deinit();
+    mWindow->deinit();
+    SDL_Delay(20);
+    AudioManager::getInstance().init();
+    mWindow->init(true);
+
+    mWindow->setLaunchedGame(false);
+    mWindow->invalidateCachedBackground();
+    mWindow->renderSplashScreen(Window::SplashScreenState::RELOADING, 0.0f);
+
+    if (mState.viewing != ViewController::ViewMode::NOTHING) {
+        reloadAll();
+        goToStart(false);
+        resetCamera();
+    }
+    else {
+        noGamesDialog();
+    }
+
+#if defined(__ANDROID__)
+    InputOverlay::getInstance().init();
+#endif
 }
 
 void ViewController::rescanROMDirectory()

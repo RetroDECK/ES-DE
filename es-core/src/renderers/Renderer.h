@@ -183,6 +183,7 @@ public:
     const glm::mat4& getProjectionMatrix() { return mProjectionMatrix; }
     const glm::mat4& getProjectionMatrixNormal() { return mProjectionMatrixNormal; }
     SDL_Window* getSDLWindow() { return mSDLWindow; }
+    const int getDisplayIndex() { return mDisplayIndex; }
     const int getScreenRotation() { return mScreenRotation; }
     static const bool getIsVerticalOrientation() { return sIsVerticalOrientation; }
     static const float getScreenWidth() { return static_cast<float>(sScreenWidth); }
@@ -249,6 +250,7 @@ private:
 
     static inline int sScreenWidth {0};
     static inline int sScreenHeight {0};
+    int mDisplayIndex {0};
     int mScreenRotation {0};
     bool mInitialCursorState {true};
     static inline bool sIsVerticalOrientation {false};

@@ -118,6 +118,16 @@ std::shared_ptr<Font> Font::get(float size, const std::string& path)
     return font;
 }
 
+void Font::updateFontSizes()
+{
+    getMiniFont(true);
+    getSmallFont(true);
+    getMediumFont(true);
+    getMediumFixedFont(true);
+    getLargeFont(true);
+    getLargeFixedFont(true);
+}
+
 glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 {
     if (text == "")
