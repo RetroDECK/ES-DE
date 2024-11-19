@@ -93,7 +93,7 @@ GuiMenu::GuiMenu()
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
 #if defined(__APPLE__)
-        addEntry(_("QUIT ES-DE")}, mMenuColorPrimary, false, [this] { openQuitMenu(); });
+        addEntry(_("QUIT ES-DE"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #elif defined(__ANDROID__)
         if (!AndroidVariables::sIsHomeApp)
             addEntry(_("QUIT ES-DE"), mMenuColorPrimary, false, [this] { openQuitMenu(); });
@@ -2305,7 +2305,11 @@ void GuiMenu::openQuitMenu()
                 _("NO"), nullptr));
         });
         auto quitText = std::make_shared<TextComponent>(
+	#if not defined RETRODECK
+	     ("QUIT ES-DE"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+	# else // RetroDECK is defined
             _("QUIT RETRODECK"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+        #endif
         quitText->setSelectable(true);
         row.addElement(quitText, true);
         s->addRow(row);
@@ -2351,28 +2355,12 @@ void GuiMenu::openQuitMenu()
 
 void GuiMenu::addVersionInfo()
 {
+
     mVersion.setFont(Font::get(FONT_SIZE_SMALL));
     mVersion.setAutoCalcExtent(glm::ivec2 {0, 0});
     mVersion.setColor(mMenuColorTertiary);
 
-#if defined(RETRODECK)
-    // Only execute this block if RETRODECK is defined
-    LOG(LogInfo) << "Reading /app/retrodeck/version...";
-    std::ifstream versionFile("/app/retrodeck/version");
-    std::string retroDeckVersion;
-
-    // Attempt to open the version file and read a line into retroDeckVersion;
-    // also check that the line is not empty to ensure valid version information
-    if (versionFile && std::getline(versionFile, retroDeckVersion) && !retroDeckVersion.empty()) {
-        mVersion.setText("RetroDECK " + retroDeckVersion);
-        LOG(LogInfo) << "RetroDECK version read OK.";
-    } else {
-        LOG(LogInfo) << "Error: Cannot read version from file or file is empty!";
-        retroDeckVersion = "UNKNOWN";
-        mVersion.setText("RetroDECK " + retroDeckVersion);
-    }
-
-#else // If RETRODECK is NOT defined, execute this block
+    const std::string applicationName {"ES-DE"};
 
     #if defined(IS_PRERELEASE)
         #if defined(__ANDROID__)
@@ -2391,7 +2379,26 @@ void GuiMenu::addVersionInfo()
         #endif
     #endif
 
-#endif // End of RetroDECK logic check
+    #if defined(RETRODECK)
+        // Only execute this block if RETRODECK is defined
+        LOG(LogInfo) << "Reading /app/retrodeck/version...";
+        std::ifstream versionFile("/app/retrodeck/version");
+        std::string retroDeckVersion;
+
+        // Attempt to open the version file and read a line into retroDeckVersion;
+        // also check that the line is not empty to ensure valid version information
+        if (versionFile && std::getline(versionFile, retroDeckVersion) && !retroDeckVersion.empty()) {
+            LOG(LogInfo) << "RetroDECK version read OK. Version: " + retroDeckVersion;
+            mVersion.setText("RetroDECK " + retroDeckVersion);
+        } else {
+            LOG(LogInfo) << "Error: Cannot read version from file or file is empty!";
+            retroDeckVersion = "UNKNOWN";
+            mVersion.setText("RetroDECK " + retroDeckVersion);
+        }
+    #endif
+
+    mVersion.setHorizontalAlignment(ALIGN_CENTER);
+    addChild(&mVersion);
 }
 
 void GuiMenu::openThemeDownloader(GuiSettings* settings)
