@@ -175,10 +175,12 @@
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
             <entry>%ESPATH%\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
-            <entry>%ESPATH%\..\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe</entry>
+            <entry>%ESPATH%\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
             <entry>%ESPATH%\..\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\..\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe</entry>
+            <entry>%ESPATH%\..\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
         </rule>
     </emulator>
     <emulator name="EASYRPG">

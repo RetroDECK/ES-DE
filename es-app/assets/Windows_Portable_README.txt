@@ -64,8 +64,8 @@ Emulators\demul\demul.exe
 Emulators\Dolphin-x64\Dolphin.exe
 Emulators\dosbox-staging\dosbox.exe
 Emulators\DOSBox-X\dosbox-x.exe
-Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
+Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe
 Emulators\EasyRPG\Player.exe
 Emulators\EKA2L1\eka2l1_qt.exe
 Emulators\fbneo\fbneo64.exe
