@@ -8,7 +8,7 @@
 
 3.1 maintenance release which adds support for four more languages, reduces the memory footprint under some circumstances and adds support for a few more emulators.
 
-On Android the default audio driver was changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There's also a new menu option in the Audio settings menu that makes it possible to easily revert to AAudio in case of issues with using OpenSL ES.
+On Android the default audio driver was changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There's also a new menu option in the Sound settings menu that makes it possible to easily revert to AAudio in case of issues with using OpenSL ES. For Android there is now also experimental support for running ES-DE in multi-window mode on tablets and other devices that support this.
 
 Apart from the above there are also a number of bug fixes and other minor improvements.
 
@@ -23,10 +23,10 @@ Apart from the above there are also a number of bug fixes and other minor improv
 * Added Mandarine standalone as an alternative emulator for the n3ds system
 * (Android) Changed the default audio driver from AAudio to OpenSL ES
 * (Android) Added an audio driver menu option to the Sound settings menu
+* (Android) Added experimental support for running in multi-window mode
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
 * (Android) Adjusted the layout for the onboarding configurator to look better on screens with wider aspect ratios
-* (Android) Improved the experience when running in multi-window mode
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
 * (Android) The storage permission now only needs to be granted once in the onboarding configurator as indicated with an "Already granted" button
 * (Android) Added a temporary workaround to avoid crashes on non-character keyboard input when editing text (caused by a bug in the SDL library)
@@ -45,6 +45,7 @@ Apart from the above there are also a number of bug fixes and other minor improv
 * Placing a directory with no access permissions inside a system folder crashed the application on startup
 * (Android) Switching from ES-DE to another app and back again while the "no ROMs" dialog was shown crashed the application
 * (Android) Switching from ES-DE to the home app and back again while the onboarding configurator was running crashed the application
+* (Windows) The video and slideshow screensavers didn't work if a custom game media directory had been configured
 * There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver
 * Invalid popup notifications were sometimes shown after a download error message had been displayed in the theme downloader
 * Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos

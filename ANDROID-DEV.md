@@ -185,6 +185,14 @@ Also be aware that the version check that runs on app startup may not be able to
 
 It's generally a very good idea to import your native Android apps into ES-DE prior to setting it as the home app, this way you can easily access things like the Settings app. Note however that even if you somehow lock yourself out of the system by setting ES-DE as the home app and not having any native apps added you can still always access the Settings app via the Android notification shade. On most devices you access this by swiping down from the top of the screen. After swiping down, just select the cogwheel icon to start the Settings app. From there you can change the home app to something else than ES-DE, should you need to.
 
+## Running ES-DE in multi-window mode
+
+On tablets and other devices that support it, ES-DE can be run in multi-window mode. This does come with some caveats though, most importantly that changing to or from multi-window mode or changing the size of the ES-DE window when running in multi-window mode will trigger a reload of the application. When this happens any menu that is open will get unceremoniously closed, so make sure to never do this when for instance the scraper or theme downloader is running as they will get instantly stopped.
+
+Also be aware that running in multi-window mode obviously changes the ES-DE window size and therefore likely the window aspect ratio as well, so it may not look good with some themes that do not support the new aspect ratio.
+
+Finally, multi-window mode doesn't work when ES-DE has been set as the home app as Android does not allow that.
+
 ## Known ES-DE problems
 
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
