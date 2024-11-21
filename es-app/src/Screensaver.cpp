@@ -410,26 +410,31 @@ void Screensaver::generateImageList()
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
-        // This method of building an inventory of all image files isn't pretty, but to use the
-        // FileData::getImagePath() function leads to unacceptable performance issues on some
-        // platforms like Android that offer very poor disk I/O performance. To instead list
-        // all files recursively is much faster as this avoids stat() function calls which are
-        // very expensive on such problematic platforms.
+#if defined(_WIN64)
+        const std::string mediaBaseDir {
+            Utils::String::replace(FileData::getMediaDirectory(), "\\", "/")};
+#else
+        const std::string mediaBaseDir {FileData::getMediaDirectory()};
+#endif
         const std::string mediaDirMiximages {
-            FileData::getMediaDirectory() + (*it)->getRootFolder()->getSystemName() + "/miximages"};
-        const std::string mediaDirScreenshots {FileData::getMediaDirectory() +
-                                               (*it)->getRootFolder()->getSystemName() +
-                                               "/screenshots"};
-        const std::string mediaDirTitlescreens {FileData::getMediaDirectory() +
-                                                (*it)->getRootFolder()->getSystemName() +
-                                                "/titlescreens"};
-        const std::string mediaDirCovers {FileData::getMediaDirectory() +
-                                          (*it)->getRootFolder()->getSystemName() + "/covers"};
+            mediaBaseDir + (*it)->getRootFolder()->getSystemName() + "/miximages"};
+        const std::string mediaDirScreenshots {
+            mediaBaseDir + (*it)->getRootFolder()->getSystemName() + "/screenshots"};
+        const std::string mediaDirTitlescreens {
+            mediaBaseDir + (*it)->getRootFolder()->getSystemName() + "/titlescreens"};
+        const std::string mediaDirCovers {mediaBaseDir + (*it)->getRootFolder()->getSystemName() +
+                                          "/covers"};
 
         Utils::FileSystem::StringList dirContentMiximages;
         Utils::FileSystem::StringList dirContentScreenshots;
         Utils::FileSystem::StringList dirContentTitlescreens;
         Utils::FileSystem::StringList dirContentCovers;
+
+        // This method of building an inventory of all image files isn't pretty, but to use the
+        // FileData::getImagePath() function leads to unacceptable performance issues on some
+        // platforms like Android that offer very poor disk I/O performance. To instead list
+        // all files recursively is much faster as this avoids stat() function calls which are
+        // very expensive on such problematic platforms.
 
 #if defined(_WIN64) || defined(__APPLE__) || defined(__ANDROID__)
         // Although macOS may have filesystem case-sensitivity enabled it's rare and the impact
@@ -535,14 +540,21 @@ void Screensaver::generateVideoList()
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
+#if defined(_WIN64)
+        const std::string mediaBaseDir {
+            Utils::String::replace(FileData::getMediaDirectory(), "\\", "/")};
+#else
+        const std::string mediaBaseDir {FileData::getMediaDirectory()};
+#endif
+        const std::string mediaDir {mediaBaseDir + (*it)->getRootFolder()->getSystemName() +
+                                    "/videos"};
+        Utils::FileSystem::StringList dirContent;
+
         // This method of building an inventory of all video files isn't pretty, but to use the
         // FileData::getVideoPath() function leads to unacceptable performance issues on some
         // platforms like Android that offer very poor disk I/O performance. To instead list
         // all files recursively is much faster as this avoids stat() function calls which are
         // very expensive on such problematic platforms.
-        const std::string mediaDir {FileData::getMediaDirectory() +
-                                    (*it)->getRootFolder()->getSystemName() + "/videos"};
-        Utils::FileSystem::StringList dirContent;
 
 #if defined(_WIN64) || defined(__APPLE__) || defined(__ANDROID__)
         // Although macOS may have filesystem case-sensitivity enabled it's rare and the impact
