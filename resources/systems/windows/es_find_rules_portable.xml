@@ -706,6 +706,13 @@
             <entry>%ESPATH%\..\Emulators\xroar\xroar.exe</entry>
         </rule>
     </emulator>
+    <emulator name="YABASANSHIRO-2">
+        <!-- Sega Saturn emulator Yaba Sanshiro 2 -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\yabasanshiro\yabasanshiro.exe</entry>
+            <entry>%ESPATH%\..\Emulators\yabasanshiro\yabasanshiro.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ZESARUX">
         <!-- Sinclair ZX Spectrum emulator ZEsarUX -->
         <rule type="staticpath">
