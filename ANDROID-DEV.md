@@ -582,7 +582,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Google       | Pixel 7 Pro             | 13              | Yes       | None                |                            |
 | Google       | Pixel 8 Pro             | 14              | Yes       | None                |                            |
 | Google       | Pixel Fold              | 14              | Yes       | None                |                            |
-| Google       | Pixel Tablet            | 14              | Yes       | None                |                            |
+| Google       | Pixel Tablet            | 14, 15          | Yes       | None                |                            |
 | GPD          | XD Plus                 | 11              | Yes       | None                | LineageOS                  |
 | Honor        | 20 lite                 | 10              | Yes       | None                |                            |
 | Honor        | Magic5 Pro              | 13              | Yes       | None                |                            |

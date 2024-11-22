@@ -8,7 +8,7 @@
 
 3.1 maintenance release which adds support for four more languages, reduces the memory footprint under some circumstances and adds support for a few more emulators.
 
-On Android the default audio driver was changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There's also a new menu option in the Sound settings menu that makes it possible to easily revert to AAudio in case of issues with using OpenSL ES. For Android there is now also experimental support for running ES-DE in multi-window mode on tablets and other devices that support this.
+On Android the default audio driver has been changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There's also a new menu option in the Sound settings menu that makes it possible to easily revert to AAudio in case of issues with using OpenSL ES. For Android there is now also experimental support for running ES-DE in multi-window mode on tablets and other devices that support this.
 
 Apart from the above there are also a number of bug fixes and other minor improvements.
 
@@ -32,6 +32,8 @@ Apart from the above there are also a number of bug fixes and other minor improv
 * (Android) Added a temporary workaround to avoid crashes on non-character keyboard input when editing text (caused by a bug in the SDL library)
 * (Android) Updated a number of Java and Kotlin dependencies to the latest stable versions
 * (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
+* (Windows) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
+* (Windows) Added a find rule for the SSE2 build of DuckStation
 * (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
 * Updated SDL to 2.30.9 on Android, Windows, macOS and the Linux AppImage builds
@@ -43,6 +45,7 @@ Apart from the above there are also a number of bug fixes and other minor improv
 
 * Pressing the "Clear" button in the text editor and then entering some value in the input field crashed the application
 * Placing a directory with no access permissions inside a system folder crashed the application on startup
+* (Android) Audio was not working correctly on some Android 15 devices (fixed by updating SDL to 2.30.9)
 * (Android) Switching from ES-DE to another app and back again while the "no ROMs" dialog was shown crashed the application
 * (Android) Switching from ES-DE to the home app and back again while the onboarding configurator was running crashed the application
 * (Windows) The video and slideshow screensavers didn't work if a custom game media directory had been configured
