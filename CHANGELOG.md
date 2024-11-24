@@ -24,6 +24,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Changed the default audio driver from AAudio to OpenSL ES
 * (Android) Added an audio driver menu option to the Sound settings menu
 * (Android) Added experimental support for running in multi-window mode
+* (Android) Directories for corrupt themes are now automatically removed when the theme downloader is started
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
 * (Android) Adjusted the layout for the onboarding configurator to look better on screens with wider aspect ratios
@@ -34,6 +35,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
 * (Windows) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Windows) Added a find rule for the SSE2 build of DuckStation
+* Added support to the theme downloader for detecting and handling theme repository URL changes
 * Added a "textBackgroundCornerRadius" property to the carousel element
 * Added a "textBackgroundCornerRadius" property to the grid element
 * Made the "backgroundCornerRadius" and "selectorCornerRadius" properties for the grid element apply also to colored rectangles
