@@ -70,8 +70,9 @@ private:
         bool newEntry;
         bool deprecated;
         bool invalidRepository;
-        bool corruptRepository;
         bool shallowRepository;
+        bool corruptRepository;
+        bool wrongUrl;
         bool manuallyDownloaded;
         bool hasLocalChanges;
         bool isCloned;
@@ -79,8 +80,9 @@ private:
             : newEntry {false}
             , deprecated {false}
             , invalidRepository {false}
-            , corruptRepository {false}
             , shallowRepository {false}
+            , corruptRepository {false}
+            , wrongUrl {false}
             , manuallyDownloaded {false}
             , hasLocalChanges {false}
             , isCloned {false}
@@ -163,7 +165,7 @@ private:
     std::shared_ptr<TextComponent> mViewerIndicatorLeft;
     std::shared_ptr<TextComponent> mViewerIndicatorRight;
     std::shared_ptr<TextComponent> mDownloadStatus;
-    std::shared_ptr<TextComponent> mLocalChanges;
+    std::shared_ptr<TextComponent> mInfoField;
     std::shared_ptr<TextComponent> mTitle;
     std::shared_ptr<TextComponent> mVariantsLabel;
     std::shared_ptr<TextComponent> mColorSchemesLabel;

@@ -97,9 +97,9 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
                                                       mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mDownloadStatus, glm::ivec2 {1, 2}, false, true, glm::ivec2 {2, 1});
 
-    mLocalChanges = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
-                                                    mMenuColorTitle, ALIGN_LEFT);
-    mCenterGrid->setEntry(mLocalChanges, glm::ivec2 {3, 2}, false, true, glm::ivec2 {2, 1});
+    mInfoField = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
+                                                 mMenuColorTitle, ALIGN_LEFT);
+    mCenterGrid->setEntry(mInfoField, glm::ivec2 {3, 2}, false, true, glm::ivec2 {2, 1});
 
     mScreenshot = std::make_shared<ImageComponent>();
     mScreenshot->setLinearInterpolation(true);
@@ -498,8 +498,9 @@ void GuiThemeDownloader::makeInventory()
         const auto themeInventoryTime {std::chrono::system_clock::now()};
         const std::string path {mThemeDirectory + theme.reponame};
         theme.invalidRepository = false;
-        theme.corruptRepository = false;
         theme.shallowRepository = false;
+        theme.corruptRepository = false;
+        theme.wrongUrl = false;
         theme.manuallyDownloaded = false;
         theme.hasLocalChanges = false;
         theme.isCloned = false;
@@ -537,6 +538,17 @@ void GuiThemeDownloader::makeInventory()
             }
 
             theme.isCloned = true;
+
+            git_remote* gitRemote {nullptr};
+            if (git_remote_lookup(&gitRemote, repository, "origin") == 0) {
+                const std::string clonedUrl {git_remote_url(gitRemote)};
+                git_remote_free(gitRemote);
+                if (theme.url != clonedUrl) {
+                    theme.wrongUrl = true;
+                    git_repository_free(repository);
+                    continue;
+                }
+            }
 
             if (checkLocalChanges(repository))
                 theme.hasLocalChanges = true;
@@ -759,7 +771,7 @@ void GuiThemeDownloader::populateGUI()
         if (theme.isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (theme.manuallyDownloaded || theme.invalidRepository || theme.corruptRepository ||
-            theme.shallowRepository)
+            theme.shallowRepository || theme.wrongUrl)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
         if (theme.hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
@@ -866,6 +878,35 @@ void GuiThemeDownloader::populateGUI()
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
             }
+            else if (theme.wrongUrl) {
+                mWindow->pushGui(new GuiMsgBox(
+                    getHelpStyle(),
+                    Utils::String::format(
+                        _("THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY "
+                          "MEANS THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS "
+                          "REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
+                          "\"%s_WRONG_URL_DISABLED\""),
+                        std::string {theme.reponame + theme.manualExtension}.c_str(),
+                        std::string {theme.reponame + theme.manualExtension}.c_str()),
+                    _("PROCEED"),
+                    [this, theme] {
+                        if (renameDirectory(mThemeDirectory + theme.reponame +
+                                                theme.manualExtension,
+                                            "_WRONG_URL_DISABLED")) {
+                            return;
+                        }
+                        std::promise<bool>().swap(mPromise);
+                        mFuture = mPromise.get_future();
+                        mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
+                                                   theme.reponame, theme.url);
+                        mStatusType = StatusType::STATUS_DOWNLOADING;
+                        mStatusText = _("DOWNLOADING THEME");
+                    },
+                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
+                    (mRenderer->getIsVerticalOrientation() ?
+                         0.75f :
+                         0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
+            }
             else if (theme.hasLocalChanges) {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
@@ -927,7 +968,7 @@ void GuiThemeDownloader::updateGUI()
         if (mThemes[i].isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (mThemes[i].manuallyDownloaded || mThemes[i].invalidRepository ||
-            mThemes[i].corruptRepository || mThemes[i].shallowRepository)
+            mThemes[i].corruptRepository || mThemes[i].shallowRepository || mThemes[i].wrongUrl)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
         if (mThemes[i].hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
@@ -984,12 +1025,16 @@ void GuiThemeDownloader::updateInfoPane()
         mDownloadStatus->setColor(mMenuColorPrimary);
         mDownloadStatus->setOpacity(0.7f);
     }
-    if (mThemes[mList->getCursorId()].hasLocalChanges) {
-        mLocalChanges->setText(ViewController::EXCLAMATION_CHAR + " " + _("LOCAL CHANGES"));
-        mLocalChanges->setColor(mMenuColorRed);
+    if (mThemes[mList->getCursorId()].wrongUrl) {
+        mInfoField->setText(ViewController::CROSSEDCIRCLE_CHAR + " " + _("WRONG URL"));
+        mInfoField->setColor(mMenuColorRed);
+    }
+    else if (mThemes[mList->getCursorId()].hasLocalChanges) {
+        mInfoField->setText(ViewController::EXCLAMATION_CHAR + " " + _("LOCAL CHANGES"));
+        mInfoField->setColor(mMenuColorRed);
     }
     else {
-        mLocalChanges->setText("");
+        mInfoField->setText("");
     }
 
     mVariantCount->setText(std::to_string(mThemes[mList->getCursorId()].variants.size()));
@@ -1314,7 +1359,7 @@ std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
         if (mGrid.getSelectedComponent() == mCenterGrid)
             prompts.push_back(HelpPrompt("x", _("view screenshots")));
 
-        if (mThemes[mList->getCursorId()].isCloned) {
+        if (mThemes[mList->getCursorId()].isCloned && !mThemes[mList->getCursorId()].wrongUrl) {
             prompts.push_back(HelpPrompt("a", _("fetch updates")));
             if (mGrid.getSelectedComponent() == mCenterGrid)
                 prompts.push_back(HelpPrompt("y", _("delete")));
