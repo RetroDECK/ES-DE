@@ -90,6 +90,7 @@ private:
         }
     };
 
+    void removeDisabledRepositories();
     bool fetchThemesList();
     bool fetchRepository(const std::string& repositoryName, bool allowReset = false);
     bool cloneRepository(const std::string& repositoryName, const std::string& url);

@@ -1100,6 +1100,9 @@ void GuiThemeDownloader::setupFullscreenViewer()
 void GuiThemeDownloader::update(int deltaTime)
 {
     if (!mAttemptedFetch) {
+#if defined(__ANDROID__)
+        removeDisabledRepositories();
+#endif
         // We need to run this here instead of from the constructor so that GuiMsgBox will be
         // on top of the GUI stack if it needs to be displayed.
         mAttemptedFetch = true;
@@ -1373,6 +1376,32 @@ std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
     }
 
     return prompts;
+}
+
+void GuiThemeDownloader::removeDisabledRepositories()
+{
+    const Utils::FileSystem::StringList& dirContent {
+        Utils::FileSystem::getDirContent(mThemeDirectory)};
+
+    std::vector<std::string> disabledDirs;
+
+    for (auto& directory : dirContent) {
+        if (Utils::FileSystem::isRegularFile(directory))
+            continue;
+        if (Utils::FileSystem::getFileName(directory).length() > 9) {
+            if (directory.substr(directory.length() - 9, 9) == "_DISABLED")
+                disabledDirs.emplace_back(directory);
+        }
+    }
+
+    if (disabledDirs.empty())
+        return;
+
+    for (auto& directory : disabledDirs) {
+        LOG(LogInfo) << "GuiThemeDownloader: Removing disabled theme directory \"" << directory
+                     << "\"";
+        Utils::FileSystem::removeDirectory(directory, true);
+    }
 }
 
 bool GuiThemeDownloader::fetchThemesList()
