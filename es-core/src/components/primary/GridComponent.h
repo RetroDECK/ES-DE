@@ -773,9 +773,11 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             // If a selector color is set but no selector image, then render a rectangle.
             const float sizeX {mItemSize.x * scale * mSelectorRelativeScale};
             const float sizeY {mItemSize.y * scale * mSelectorRelativeScale};
-            mRenderer->setMatrix(trans);
-            mRenderer->drawRect(position.x, position.y, sizeX, sizeY, mSelectorColor,
-                                mSelectorColorEnd, mSelectorColorGradientHorizontal, opacity);
+            const glm::mat4 drawTrans {
+                glm::translate(trans, glm::round(glm::vec3 {position.x, position.y, 0.0f}))};
+            mRenderer->setMatrix(drawTrans);
+            mRenderer->drawRect(0.0f, 0.0f, sizeX, sizeY, mSelectorColor, mSelectorColorEnd,
+                                mSelectorColorGradientHorizontal, opacity);
         }
     };
 
