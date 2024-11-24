@@ -186,6 +186,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"gradientType", STRING},
        {"text", STRING},
        {"textRelativeScale", FLOAT},
+       {"textBackgroundCornerRadius", FLOAT},
        {"textColor", COLOR},
        {"textBackgroundColor", COLOR},
        {"textSelectedColor", COLOR},

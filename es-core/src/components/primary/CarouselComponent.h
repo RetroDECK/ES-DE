@@ -198,6 +198,7 @@ private:
     unsigned int mCarouselColorEnd;
     bool mColorGradientHorizontal;
     float mTextRelativeScale;
+    float mTextBackgroundCornerRadius;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
     unsigned int mTextSelectedColor;
@@ -276,6 +277,7 @@ CarouselComponent<T>::CarouselComponent()
     , mCarouselColorEnd {0}
     , mColorGradientHorizontal {true}
     , mTextRelativeScale {1.0f}
+    , mTextBackgroundCornerRadius {0.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
     , mTextSelectedColor {0x000000FF}
@@ -386,6 +388,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             mTextHorizontalScrollDelay, mTextHorizontalScrollGap);
         if (!mGamelistView)
             text->setValue(entry.name);
+        text->setBackgroundCornerRadius(mTextBackgroundCornerRadius);
         text->setColor(mTextColor);
         text->setBackgroundColor(mTextBackgroundColor);
         text->setRenderBackground(true);
@@ -1707,6 +1710,12 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("textRelativeScale"))
         mTextRelativeScale = glm::clamp(elem->get<float>("textRelativeScale"), 0.2f, 1.0f);
+
+    if (elem->has("textBackgroundCornerRadius")) {
+        mTextBackgroundCornerRadius =
+            glm::clamp(elem->get<float>("textBackgroundCornerRadius"), 0.0f, 0.5f) *
+            (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
+    }
 
     if (elem->has("textColor"))
         mTextColor = elem->get<unsigned int>("textColor");
