@@ -500,8 +500,8 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
                                         const BlendFactor srcBlendFactor,
                                         const BlendFactor dstBlendFactor)
 {
-    const float width {vertices[3].position[0]};
-    const float height {vertices[3].position[1]};
+    const float width {vertices[3].position[0] - vertices[1].position[0]};
+    const float height {vertices[3].position[1] - vertices[2].position[1]};
 
     GL_CHECK_ERROR(
         glBlendFunc(convertBlendFactor(srcBlendFactor), convertBlendFactor(dstBlendFactor)));
