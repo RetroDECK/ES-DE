@@ -6,11 +6,11 @@
 
 ### Release overview
 
-3.1 maintenance release which adds support for four more languages, reduces the memory footprint under some circumstances and adds support for a few more emulators.
+This release adds support for four more languages, reduces the memory footprint under some circumstances and enables a few more emulators.
 
-On Android the default audio driver has been changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There's also a new menu option in the Sound settings menu that makes it possible to easily revert to AAudio in case of issues with using OpenSL ES. For Android there is now also experimental support for running ES-DE in multi-window mode on tablets and other devices that support this.
+On Android the default audio driver has been changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There is however a new menu entry in the Sound settings menu that makes it possible to easily revert to AAudio in case of issues with the OpenSL ES driver. For Android there is now also experimental support for running ES-DE in multi-window mode on tablets and other devices that support this.
 
-Apart from the above there are also a number of bug fixes and other minor improvements.
+In addition to the above there are a number of bug fixes and other minor improvements.
 
 ### Detailed list of changes
 
@@ -34,6 +34,9 @@ Apart from the above there are also a number of bug fixes and other minor improv
 * (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
 * (Windows) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Windows) Added a find rule for the SSE2 build of DuckStation
+* Added a "textBackgroundCornerRadius" property to the carousel element
+* Added a "textBackgroundCornerRadius" property to the grid element
+* Made the "backgroundCornerRadius" and "selectorCornerRadius" properties for the grid element apply also to colored rectangles
 * (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
 * Updated SDL to 2.30.9 on Android, Windows, macOS and the Linux AppImage builds
