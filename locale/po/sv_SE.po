@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-13 18:27+0100\n"
-"PO-Revision-Date: 2024-09-04 16:44+0200\n"
+"POT-Creation-Date: 2024-11-24 17:33+0100\n"
+"PO-Revision-Date: 2024-11-24 17:37+0100\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -1933,6 +1933,17 @@ msgstr ""
 
 #, c-format
 msgid ""
+"THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
+"THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
+"THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
+msgstr ""
+"DET LOKALT KLONADE ARKIVET INNEHÅLLER EN FELAKTIG URL VILKET NORMALT BETYDER "
+"ATT TEMAT HAR FLYTTATS TILL EN NY GIT SITE. EN NY NEDLADDNING KRÄVS OCH DEN "
+"GAMLA TEMAKATALOGEN KOMMER DÖPAS OM FRÅN \"%s\" TILL "
+"\"%s_WRONG_URL_DISABLED\""
+
+#, c-format
+msgid ""
 "THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
 "CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
 msgstr ""
@@ -1972,6 +1983,9 @@ msgstr "INTE INSTALLERAD (NY)"
 
 msgid "NOT INSTALLED"
 msgstr "INTE INSTALLERAD"
+
+msgid "WRONG URL"
+msgstr "FEL URL"
 
 msgid "LOCAL CHANGES"
 msgstr "LOKALA ÄNDRINGAR"
