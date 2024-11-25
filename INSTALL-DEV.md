@@ -80,13 +80,6 @@ pkg install llvm-devel git pkgconf cmake gettext harfbuzz icu sdl2 ffmpeg freeim
 
 Clang/LLVM and curl should already be included in the base OS installation.
 
-Note that there is a strange issue specifically on FreeBSD 14.1 where the rlottie library refuses to build. This can be resolved by the following workaround:
-```
-echo > external/rlottie/format
-```
-
-It's not clear yet whether this is a compiler bug or some other issue.
-
 **Cloning and compiling ES-DE**
 
 To clone the source repository, run the following:
