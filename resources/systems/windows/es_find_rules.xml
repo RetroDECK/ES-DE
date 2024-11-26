@@ -135,6 +135,16 @@
             <entry>%ESPATH%\..\Emulators\BasiliskII\BasiliskII.exe</entry>
         </rule>
     </emulator>
+    <emulator name="BEEBEM">
+        <!-- Acorn Computers BBC Micro emulator BeebEm -->
+        <rule type="systempath">
+            <entry>BeebEm.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\BeebEm\BeebEm.exe</entry>
+            <entry>%ESPATH%\..\Emulators\BeebEm\BeebEm.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="BIGPEMU">
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="systempath">

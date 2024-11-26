@@ -326,6 +326,7 @@
         <path>%ROMPATH%\bbcmicro</path>
         <extension>.dsd .DSD .img .IMG .ssd .SSD .7z .7Z .zip .ZIP</extension>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\bbcmicro bbcb -autoboot_delay "2" -autoboot_command "*cat\n\n*exec !boot\n" -analogue acornjoy -flop1 %ROM%</command>
+        <command label="BeebEm (Standalone)">%EMULATOR_BEEBEM% %INJECT%=%BASENAME%.commands -FullScreen %ROM%</command>
         <platform>bbcmicro</platform>
         <theme>bbcmicro</theme>
     </system>
