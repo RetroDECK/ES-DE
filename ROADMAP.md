@@ -15,7 +15,6 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 **User interface**
 
 * Menu reorganization, possibly adding basic/advanced modes
-* Animated menu elements like switches and tick boxes
 * Simple file browsing component
 
 **Theme engine**

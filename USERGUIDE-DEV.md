@@ -707,6 +707,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | n3ds          | Mandarine           | mandarine-qt.AppImage          |
 | n3ds          | Panda3DS            | Alber-*.AppImage               |
 | n64/n64dd     | Rosalie's Mupen GUI | RMG*.AppImage                  |
+| nds           | melonDS             | melonDS*.AppImage              |
 | ngage/symbian | EKA2L1              | EKA2L1*.AppImage               |
 | ps2           | PCSX2               | pcsx2*.AppImage                |
 | ps2           | Play!               | Play!*.AppImage                |
@@ -2534,17 +2535,15 @@ As the Nokia N-Gage was running Symbian it may seem like the _ngage_ and _symbia
 
 **Android**
 
-For the symbian system it's possible to launch individual games directly from ES-DE, but for the ngage system this is unfortunately not possible. Instead the EKA2L1 user interface will open on game launch and you need to manually start your game from inside the emulator. For both the symbian and ngage systems all games need to be installed upfront in EKA2L1.
+For both the ngage and symbian systems it's possible to launch individual games directly from ES-DE, although they need to be installed upfront in EKA2L1.
 
-For N-Gage games it's a good idea to just create empty dummy files with the .ngage file extensions inside the ROMs/ngage directory. These will then appear as indvidual games inside ES-DE and you can add metadata to them, scrape them etc.
-
-For Symbian games you can export JSON launch files from EKA2L1 that can be run directly from ES-DE. Just open EKA2L1, long press the game icon and select _Create launch file_ from the popup list. Then just select the ROMs/symbian directory and the file will be saved there and game launching from ES-DE will work as expected.
+After installing the games in EKA2L1, long press the game icon and select _Create launch file_ from the popup list which will export a JSON file for the game. Then select the directory where the file should be saved, i.e. ROMs/ngage or ROMs/symbian. Following this, game launching from ES-DE will work as expected.
 
 Here's an example setup:
 ```
-/storage/emulated/0/ROMs/ngage/Asphalt 2.ngage
-/storage/emulated/0/ROMs/ngage/Bomberman.ngage
-/storage/emulated/0/ROMs/ngage/CallofDuty.ngage
+/storage/emulated/0/ROMs/ngage/Asphalt 2.json
+/storage/emulated/0/ROMs/ngage/Bomberman.json
+/storage/emulated/0/ROMs/ngage/CallofDuty.json
 /storage/emulated/0/ROMs/symbian/Animal Farm.json
 /storage/emulated/0/ROMs/symbian/AnotherWorld.json
 ```
@@ -4118,7 +4117,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            | Hatari **(Standalone)**           | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          | Atari800 **(Standalone)**,<br>Altirra **(Standalone)** [W] | Yes except for Altirra |                                      |
 | atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul **(Standalone)** [W] | Depends      | Single archive  file                 |
-| bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
+| bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             | BeebEm **(Standalone)** [W]       | Yes          | Single archive (MAME only) or diskette image file |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64sc Accurate **(Standalone)**,<br>VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015 @,<br>MAME **(Standalone)** | Yes          | Single .bin/.cue pair                |
 | cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [LM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
