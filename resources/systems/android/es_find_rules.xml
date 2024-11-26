@@ -103,12 +103,6 @@
             <entry>com.github.eka2l1/.emu.EmulatorActivity</entry>
         </rule>
     </emulator>
-    <emulator name="EKA2L1-GUI">
-        <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
-        <rule type="androidpackage">
-            <entry>com.github.eka2l1/.MainActivity</entry>
-        </rule>
-    </emulator>
     <emulator name="EPSXE">
         <!-- Sony PlayStation 1 emulator ePSXe -->
         <rule type="androidpackage">
