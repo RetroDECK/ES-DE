@@ -1243,8 +1243,8 @@
         <name>ngage</name>
         <fullname>Nokia N-Gage</fullname>
         <path>%ROMPATH%/ngage</path>
-        <extension>.ngage .zip .ZIP</extension>
-        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1-GUI% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP%</command>
+        <extension>.json .JSON</extension>
+        <command label="EKA2L1 (Standalone)">%EMULATOR_EKA2L1% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>ngage</platform>
         <theme>ngage</theme>
     </system>
