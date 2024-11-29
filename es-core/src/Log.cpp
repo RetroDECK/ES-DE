@@ -11,6 +11,10 @@
 #include "Settings.h"
 #include "utils/StringUtil.h"
 
+#if defined(RETRODECK)
+#include <algorithm>
+#endif
+
 LogLevel Log::getReportingLevel()
 {
     std::unique_lock<std::mutex> lock {sLogMutex};
@@ -25,7 +29,7 @@ void Log::setReportingLevel(LogLevel level)
 
 void Log::init()
 {
-#if defined(RetroDECK)
+#if defined(RETRODECK)
     // Check for the rd_logs_folder environment variable
     const char* logFolder = std::getenv("rd_logs_folder");
     if (logFolder && std::strlen(logFolder) > 0)
@@ -86,7 +90,7 @@ std::ostringstream& Log::get(LogLevel level)
 #endif
     std::unique_lock<std::mutex> lock {sLogMutex};
 
-#if defined(RetroDECK)
+#if defined(RETRODECK)
     // Convert log level to uppercase for RetroDECK
     std::string levelUpper = mLogLevelMap[level];
     std::transform(levelUpper.begin(), levelUpper.end(), levelUpper.begin(), ::toupper);
@@ -149,14 +153,14 @@ Log::~Log()
         std::cerr << mOutStringStream.str();
 #endif
 
-#if defined(RetroDECK)
+#if defined(RETRODECK)
     // Always write logs to the terminal as well when RetroDECK is defined
     std::cout << mOutStringStream.str();
 #endif
 }
 
 // RetroDECK specific function
-#if defined(RetroDECK)
+#if defined(RETRODECK)
 void Log::setReportingLevelFromEnv()
 {
     // Check for the logging_level environment variable
