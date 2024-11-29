@@ -25,10 +25,24 @@ void Log::setReportingLevel(LogLevel level)
 
 void Log::init()
 {
+#if defined(RetroDECK)
+    // Check for the rd_logs_folder environment variable
+    const char* logFolder = std::getenv("rd_logs_folder");
+    if (logFolder && std::strlen(logFolder) > 0)
+    {
+        sLogPath = std::string(logFolder) + "/retrodeck.log";
+    }
+    else
+    {
+        // Default to the existing location if rd_logs_folder is not defined
+        sLogPath = Utils::FileSystem::getAppDataDirectory() + "/retrodeck.log";
+    }
+#else
     if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
         sLogPath = Utils::FileSystem::getAppDataDirectory() + "/es_log.txt";
     else
         sLogPath = Utils::FileSystem::getAppDataDirectory() + "/logs/es_log.txt";
+#endif
 
     Utils::FileSystem::removeFile(sLogPath + ".bak");
     // Rename the previous log file.
@@ -134,4 +148,29 @@ Log::~Log()
     if (mMessageLevel == LogError || sReportingLevel >= LogDebug)
         std::cerr << mOutStringStream.str();
 #endif
+
+#if defined(RetroDECK)
+    // Always write logs to the terminal as well when RetroDECK is defined
+    std::cout << mOutStringStream.str();
+#endif
 }
+
+// RetroDECK specific function
+#if defined(RetroDECK)
+void Log::setReportingLevelFromEnv()
+{
+    // Check for the logging_level environment variable
+    const char* logLevelEnv = std::getenv("logging_level");
+    std::string logLevel = logLevelEnv ? logLevelEnv : "info";
+
+    // Map string to LogLevel
+    if (logLevel == "debug")
+        sReportingLevel = LogDebug;
+    else if (logLevel == "warning")
+        sReportingLevel = LogWarning;
+    else if (logLevel == "error")
+        sReportingLevel = LogError;
+    else
+        sReportingLevel = LogInfo; // Default is Info
+}
+#endif
