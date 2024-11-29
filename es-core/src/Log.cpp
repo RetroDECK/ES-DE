@@ -71,9 +71,20 @@ std::ostringstream& Log::get(LogLevel level)
     localtime_r(&t, &tm);
 #endif
     std::unique_lock<std::mutex> lock {sLogMutex};
+
+#if defined(RetroDECK)
+    // Convert log level to uppercase for RetroDECK
+    std::string levelUpper = mLogLevelMap[level];
+    std::transform(levelUpper.begin(), levelUpper.end(), levelUpper.begin(), ::toupper);
+
+    mOutStringStream << "[" << std::put_time(&tm, "%Y-%m-%d %H:%M:%S")
+                     << "] [" << levelUpper << "] [ES-DE] ";
+#else
     mOutStringStream << std::put_time(&tm, "%b %d %H:%M:%S ") << mLogLevelMap[level]
                      << (level == LogLevel::LogInfo || level == LogLevel::LogWarning ? ":   " :
                                                                                        ":  ");
+#endif
+
     mMessageLevel = level;
 
     return mOutStringStream;
