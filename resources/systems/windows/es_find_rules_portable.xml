@@ -86,6 +86,13 @@
             <entry>%ESPATH%\..\Emulators\BasiliskII\BasiliskII.exe</entry>
         </rule>
     </emulator>
+    <emulator name="BEEBEM">
+        <!-- Acorn Computers BBC Micro emulator BeebEm -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\BeebEm\BeebEm.exe</entry>
+            <entry>%ESPATH%\..\Emulators\BeebEm\BeebEm.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="BIGPEMU">
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="staticpath">
@@ -175,10 +182,12 @@
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
             <entry>%ESPATH%\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
-            <entry>%ESPATH%\..\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe</entry>
+            <entry>%ESPATH%\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
             <entry>%ESPATH%\..\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\..\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe</entry>
+            <entry>%ESPATH%\..\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
         </rule>
     </emulator>
     <emulator name="EASYRPG">
@@ -318,6 +327,13 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\mame\mame.exe</entry>
             <entry>%ESPATH%\..\Emulators\mame\mame.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="MANDARINE">
+        <!-- Nintendo 3DS emulator Mandarine -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\mandarine\mandarine-qt.exe</entry>
+            <entry>%ESPATH%\..\Emulators\mandarine\mandarine-qt.exe</entry>
         </rule>
     </emulator>
     <emulator name="MEDNAFEN">
@@ -695,6 +711,13 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\xroar\xroar.exe</entry>
             <entry>%ESPATH%\..\Emulators\xroar\xroar.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="YABASANSHIRO-2">
+        <!-- Sega Saturn emulator Yaba Sanshiro 2 -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\yabasanshiro\yabasanshiro.exe</entry>
+            <entry>%ESPATH%\..\Emulators\yabasanshiro\yabasanshiro.exe</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">

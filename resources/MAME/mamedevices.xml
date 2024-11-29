@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0269.xml -->
+<!-- Last updated with information from MAME driver file mame0271.xml -->
 <device>22vp931</device>
 <device>3c505</device>
 <device>3xtwin</device>
@@ -309,6 +309,7 @@
 <device>bbc_weddb3</device>
 <device>betadisk</device>
 <device>bingoct</device>
+<device>bk_kmd</device>
 <device>bluechip</device>
 <device>bml3kanji</device>
 <device>bml3mp1802</device>
@@ -426,6 +427,7 @@
 <device>comx_pl80</device>
 <device>comx_prn</device>
 <device>comx_thm</device>
+<device>concept_kbd</device>
 <device>cp2024</device>
 <device>cp31</device>
 <device>cp400_fdc</device>
@@ -792,6 +794,7 @@
 <device>mvme181</device>
 <device>mvme187</device>
 <device>mvme327a</device>
+<device>mvme328</device>
 <device>mvme350</device>
 <device>mzr8105</device>
 <device>nabupc_keyboard</device>
@@ -804,6 +807,11 @@
 <device>namco58</device>
 <device>namco59</device>
 <device>namco62</device>
+<device>namco_amc</device>
+<device>namco_asca1</device>
+<device>namco_asca3a</device>
+<device>namco_asca3</device>
+<device>namco_asca5</device>
 <device>namcoc65</device>
 <device>namcoc67</device>
 <device>namcoc68</device>
@@ -812,6 +820,16 @@
 <device>namcoc74</device>
 <device>namcoc75</device>
 <device>namcoc76</device>
+<device>namco_csz1</device>
+<device>namco_cyberleada</device>
+<device>namco_cyberlead</device>
+<device>namco_cyberlead_led</device>
+<device>namco_emio102</device>
+<device>namco_fca10</device>
+<device>namco_fca11</device>
+<device>namco_fcb</device>
+<device>namco_tssio</device>
+<device>namco_xmiu1</device>
 <device>nanoreseau_mo</device>
 <device>nanoreseau_to</device>
 <device>nb_48gc</device>
@@ -836,6 +854,7 @@
 <device>nb_wspt</device>
 <device>ncr53c825_pci</device>
 <device>neogs</device>
+<device>neon250</device>
 <device>nes_rob</device>
 <device>newbrain_eim</device>
 <device>newbrain_fdc</device>
@@ -905,6 +924,7 @@
 <device>ps2_keybc</device>
 <device>psion_3fax</device>
 <device>psion_3link_ser</device>
+<device>psion_parallel</device>
 <device>psx_cd</device>
 <device>psxgboost</device>
 <device>pvga1a</device>
@@ -951,6 +971,7 @@
 <device>rivatnt2_m64</device>
 <device>rivatnt2_ultra</device>
 <device>rivatnt</device>
+<device>rm_mq2</device>
 <device>robotron_k7070</device>
 <device>robotron_k7071</device>
 <device>rolm_pdc</device>
@@ -1133,11 +1154,15 @@
 <device>ti99_whtscsi</device>
 <device>ti_hx5102</device>
 <device>tiki100_8088</device>
+<device>tim011_kbd</device>
 <device>tk02</device>
 <device>tms32030</device>
 <device>tms32031</device>
 <device>tms32032</device>
 <device>tms32033</device>
+<device>to8_kbd</device>
+<device>to9_kbd</device>
+<device>to9p_kbd</device>
 <device>tp881v</device>
 <device>trs80m2kb</device>
 <device>turbogx</device>
@@ -1150,6 +1175,7 @@
 <device>ultra12f</device>
 <device>ultra14f</device>
 <device>ultra24f</device>
+<device>umc6650</device>
 <device>uni800</device>
 <device>unidisk</device>
 <device>upd7220a</device>

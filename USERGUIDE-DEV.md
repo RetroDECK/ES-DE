@@ -243,6 +243,8 @@ Just make sure to never place games or other resources on network shares using t
 
 Also make sure that you don't use the exFAT filesystem as its very poor disk I/O performance will make ES-DE run really slowly. Using this filesystem will make the theme downloader fail as well.
 
+There is also a limitation in Windows where the complete file path can't exceed 260 characters. So if you have files with extremely long names ES-DE may state that there are file permission problems for various operations such as when scraping or when running the orphaned data cleanup utility. In this case simply renaming the problematic game files to use shorter names should resolve the situation. If you use the portable release of ES-DE you could also relocate the entire application directory closer to the root of the filesystem to have shorter overall paths.
+
 In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start. For really old graphics cards the available drivers may not provide an OpenGL version that is modern enough for ES-DE to work, and in this case a last resort solution would be to install the _Mesa3D for Windows_ library which provides software-based OpenGL rendering. The 64-bit version of this library can be downloaded from https://fdossena.com/?p=mesa/index.frag and you simply extract the opengl32.dll file into the ES-DE installation directory. Just be aware that the performance may be quite bad.
 
 On some GPUs with buggy drivers, ES-DE may only display a black screen on startup or when launching a game. The problem can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for example:
@@ -314,7 +316,7 @@ The Android port of ES-DE is quite different than the other versions, so it has 
 
 ## Specific notes for Haiku
 
-The [Haiku](https://www.haiku-os.org) port of ES-DE is currently experimental as the OS itself is experimental and has some issues. Still most functionality in ES-DE is working and there is support for a quite large number of systems and emulators. If you're interested in Haiku it's for sure worth trying it out. See the dedicated [HAIKU.md](HAIKU.md) document for more details.
+The [Haiku](https://www.haiku-os.org) port of ES-DE is currently experimental as the OS itself is experimental and has some issues. Still most functionality is working and there is support for a quite large number of systems and emulators. If you're interested in Haiku it's for sure worth trying it out as ES-DE can be easily installed via HaikuDepot. See the dedicated [HAIKU.md](HAIKU.md) document for more details.
 
 ## Specific notes for Raspberry Pi
 
@@ -600,6 +602,8 @@ Themes are downloaded from their respective GitHub or GitLab sites using _Git_ (
 
 If you have manually downloaded any of the themes from the [official themes list](https://gitlab.com/es-de/themes/themes-list) then these would need to be downloaded again as they will not contain the necessary information required by the theme downloader. A dialog will be presented to inform you about this and the theme directory will be renamed by adding the _DISABLED extension to its name. To conserve disk space it's a good idea to manually delete these _DISABLED directories outside of ES-DE. Alternatively you could just completely delete the theme from the user interface using the _Y_ button and start a fresh download.
 
+On Android specifically all theme directories that were previously renamed with the _DISABLED suffix are automatically deleted every time the theme downloader is started. This is the case as Android prevents direct access to the theme directory due to it being located on application-internal storage, meaning it's not possible to manually delete these directories.
+
 If you have customized a theme by for instance modifying any of its XML files, then this will be highlighted with an exclamation mark and the text _LOCAL CHANGES_ in the theme downloader interface. If you attempt to fetch updates for such a theme you will be asked a question of whether to overwrite your local changes, or whether to cancel. If you have however added additional files to the theme that are not included in the theme repository, then these will not interfere and you can go ahead and fetch theme updates without any risk of having your local files being deleted. But there is a special (although unlikely) situation, if you add files that are not part of the theme repository but that are later added by the theme developer as well, then your local copies of any such files will be ovewritten when fetching theme updates.
 
 In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. The latter is named _themes-list_ so by just deleting this directory (i.e. `~/ES-DE/themes/themes-list`) you'll reset the theme downloader to its initial state.
@@ -700,8 +704,10 @@ The following emulators are supported in AppImage format when using the bundled 
 | macintosh     | SheepShaver         | SheepShaver*.AppImage          |
 | n3ds          | Citra               | citra-qt*.AppImage             |
 | n3ds          | Lime3DS             | lime3ds.AppImage               |
+| n3ds          | Mandarine           | mandarine-qt.AppImage          |
 | n3ds          | Panda3DS            | Alber-*.AppImage               |
 | n64/n64dd     | Rosalie's Mupen GUI | RMG*.AppImage                  |
+| nds           | melonDS             | melonDS*.AppImage              |
 | ngage/symbian | EKA2L1              | EKA2L1*.AppImage               |
 | ps2           | PCSX2               | pcsx2*.AppImage                |
 | ps2           | Play!               | Play!*.AppImage                |
@@ -2529,17 +2535,15 @@ As the Nokia N-Gage was running Symbian it may seem like the _ngage_ and _symbia
 
 **Android**
 
-For the symbian system it's possible to launch individual games directly from ES-DE, but for the ngage system this is unfortunately not possible. Instead the EKA2L1 user interface will open on game launch and you need to manually start your game from inside the emulator. For both the symbian and ngage systems all games need to be installed upfront in EKA2L1.
+For both the ngage and symbian systems it's possible to launch individual games directly from ES-DE, although they need to be installed upfront in EKA2L1.
 
-For N-Gage games it's a good idea to just create empty dummy files with the .ngage file extensions inside the ROMs/ngage directory. These will then appear as indvidual games inside ES-DE and you can add metadata to them, scrape them etc.
-
-For Symbian games you can export JSON launch files from EKA2L1 that can be run directly from ES-DE. Just open EKA2L1, long press the game icon and select _Create launch file_ from the popup list. Then just select the ROMs/symbian directory and the file will be saved there and game launching from ES-DE will work as expected.
+After installing the games in EKA2L1, long press the game icon and select _Create launch file_ from the popup list which will export a JSON file for the game. Then select the directory where the file should be saved, i.e. ROMs/ngage or ROMs/symbian. Following this, game launching from ES-DE will work as expected.
 
 Here's an example setup:
 ```
-/storage/emulated/0/ROMs/ngage/Asphalt 2.ngage
-/storage/emulated/0/ROMs/ngage/Bomberman.ngage
-/storage/emulated/0/ROMs/ngage/CallofDuty.ngage
+/storage/emulated/0/ROMs/ngage/Asphalt 2.json
+/storage/emulated/0/ROMs/ngage/Bomberman.json
+/storage/emulated/0/ROMs/ngage/CallofDuty.json
 /storage/emulated/0/ROMs/symbian/Animal Farm.json
 /storage/emulated/0/ROMs/symbian/AnotherWorld.json
 ```
@@ -3458,6 +3462,10 @@ Whether to use a shader to render a slight horizontal blur which somewhat simula
 
 Various sound settings.
 
+**Audio driver (requires restart)** _(Android only)_
+
+This setting makes it possible to select between the _OpenSL ES_ and _AAudio_ audio drivers. Note that this is a preference only, if OpenSL ES is not available on your device then ES-DE will automatically revert to using AAudio and log that a fallback took place to the es_log.txt file. It's generally recommended to keep the driver set to its default value OpenSL ES as that offers lower audio latency for most devices.
+
 **System volume** _(Linux and Windows only)_
 
 As the name implies, this sets the overall system volume and not the volume specifically for ES-DE. The volume change is applied when leaving the sound settings menu and not immediately when moving the slider.
@@ -3991,7 +3999,7 @@ The collection will now be created and the collection edit mode will be entered.
 
 Removing a game works the same way, just press _Y_ to remove it if it's already present in your collection. You can do this either from the gamelist where the game was added, or from the collection itself.
 
-Only files can be part of collections, not folders. Games marked as hidden or to not be counted as games can't be added either.
+Only files can be part of collections, not folders. Games marked as hidden or set to not be counted as games can't be added either.
 
 During the time that the collection is being edited, any game that is part of the collection is marked with a leading tick symbol in the game name if a textlist is used, and a _collection_ badge is displayed for the currently selected game as well (assuming the theme support badges).
 
@@ -4109,7 +4117,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            | Hatari **(Standalone)**           | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          | Atari800 **(Standalone)**,<br>Altirra **(Standalone)** [W] | Yes except for Altirra |                                      |
 | atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul **(Standalone)** [W] | Depends      | Single archive  file                 |
-| bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
+| bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             | BeebEm **(Standalone)** [W]       | Yes          | Single archive (MAME only) or diskette image file |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64sc Accurate **(Standalone)**,<br>VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015 @,<br>MAME **(Standalone)** | Yes          | Single .bin/.cue pair                |
 | cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021,<br>FS-UAE **(Standalone)**,<br>Amiberry **(Standalone)** [LM] | Yes          | See the specific _Commodore Amiga and CDTV_ section elsewhere in this guide |
@@ -4179,7 +4187,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | msxturbor             | MSX Turbo R                                    | blueMSX                           | openMSX **(Standalone)**,<br>openMSX No Machine **(Standalone)** | Yes          |                                      |
 | mugen                 | M.U.G.E.N Game Engine                          | Ikemen GO **(Standalone)**        |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
 | multivision           | Othello Multivision                            | Gearsystem                        | Mesen **(Standalone)** [LW]       | No           | Single archive or ROM file |
-| n3ds                  | Nintendo 3DS                                   | Citra [LW],<br>Citra **(Standalone)** [M] | Citra 2018 [LW],<br>Citra **(Standalone)** [LW],<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)** | No           | Single ROM file       |
+| n3ds                  | Nintendo 3DS                                   | Citra [LW],<br>Citra **(Standalone)** [M] | Citra 2018 [LW],<br>Citra **(Standalone)** [LW]<br>Mandarine **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)** | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | Mupen64Plus **(Standalone)**,<br>ParaLLEl N64,<br>simple64 **(Standalone)** [LW],<br>Rosalie's Mupen GUI **(Standalone)** [LW],<br>Project64 **(Standalone)** [W],<br>ares **(Standalone)**,<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64 [LW],<br>Mupen64Plus-Next [M] | Mupen64Plus-Next [LW],<br>ParaLLEl N64 [M],<br>Rosalie's Mupen GUI **(Standalone)** [LW],<br>ares **(Standalone)** | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Demul **(Standalone)** [W] | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
@@ -4218,8 +4226,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero],<br>vitaQuake 3 [LW],<br> _Shortcut or script_ | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | SimCoupé **(Standalone)**         |                                   | No           | Single archive or ROM file |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [LW],<br>Mesen-S,<br>Mesen **(Standalone)** [LW],<br>ares **(Standalone)** |              |                                      |
-| saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [LW],<br>YabaSanshiro [LW],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
-| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [LW],<br>YabaSanshiro [LW],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [LW],<br>YabaSanshiro [LW],<br>Yaba Sanshiro 2 **(Standalone)** [W],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [LW],<br>YabaSanshiro [LW],<br>Yaba Sanshiro 2 **(Standalone)** [W],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | scummvm               | ScummVM Game Engine                            | ScummVM                           | ScummVM **(Standalone)**          | No           | See the specific _ScummVM_ section elsewhere in this guide |
 | scv                   | Epoch Super Cassette Vision                    | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file |
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         | ares **(Standalone)**             | No           | Single archive or ROM file |

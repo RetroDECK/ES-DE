@@ -93,7 +93,7 @@ public:
     int getGuiStackSize() { return static_cast<int>(mGuiStack.size()); }
     bool isBackgroundDimmed();
 
-    bool init();
+    bool init(bool resized = false);
     void deinit();
 
     void input(InputConfig* config, Input input);

@@ -410,29 +410,67 @@ void Screensaver::generateImageList()
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
+#if defined(_WIN64)
+        const std::string mediaBaseDir {
+            Utils::String::replace(FileData::getMediaDirectory(), "\\", "/")};
+#else
+        const std::string mediaBaseDir {FileData::getMediaDirectory()};
+#endif
+        const std::string mediaDirMiximages {
+            mediaBaseDir + (*it)->getRootFolder()->getSystemName() + "/miximages"};
+        const std::string mediaDirScreenshots {
+            mediaBaseDir + (*it)->getRootFolder()->getSystemName() + "/screenshots"};
+        const std::string mediaDirTitlescreens {
+            mediaBaseDir + (*it)->getRootFolder()->getSystemName() + "/titlescreens"};
+        const std::string mediaDirCovers {mediaBaseDir + (*it)->getRootFolder()->getSystemName() +
+                                          "/covers"};
+
+        Utils::FileSystem::StringList dirContentMiximages;
+        Utils::FileSystem::StringList dirContentScreenshots;
+        Utils::FileSystem::StringList dirContentTitlescreens;
+        Utils::FileSystem::StringList dirContentCovers;
+
         // This method of building an inventory of all image files isn't pretty, but to use the
         // FileData::getImagePath() function leads to unacceptable performance issues on some
         // platforms like Android that offer very poor disk I/O performance. To instead list
         // all files recursively is much faster as this avoids stat() function calls which are
         // very expensive on such problematic platforms.
-        const std::string mediaDirMiximages {
-            FileData::getMediaDirectory() + (*it)->getRootFolder()->getSystemName() + "/miximages"};
-        const std::string mediaDirScreenshots {FileData::getMediaDirectory() +
-                                               (*it)->getRootFolder()->getSystemName() +
-                                               "/screenshots"};
-        const std::string mediaDirTitlescreens {FileData::getMediaDirectory() +
-                                                (*it)->getRootFolder()->getSystemName() +
-                                                "/titlescreens"};
-        const std::string mediaDirCovers {FileData::getMediaDirectory() +
-                                          (*it)->getRootFolder()->getSystemName() + "/covers"};
-        const Utils::FileSystem::StringList dirContentMiximages {
-            Utils::FileSystem::getDirContent(mediaDirMiximages, true)};
-        const Utils::FileSystem::StringList dirContentScreenshots {
-            Utils::FileSystem::getDirContent(mediaDirScreenshots, true)};
-        const Utils::FileSystem::StringList dirContentTitlescreens {
-            Utils::FileSystem::getDirContent(mediaDirTitlescreens, true)};
-        const Utils::FileSystem::StringList dirContentCovers {
-            Utils::FileSystem::getDirContent(mediaDirCovers, true)};
+
+#if defined(_WIN64) || defined(__APPLE__) || defined(__ANDROID__)
+        // Although macOS may have filesystem case-sensitivity enabled it's rare and the impact
+        // would not be severe in this case anyway.
+        const bool caseSensitiveFilesystem {false};
+#else
+        const bool caseSensitiveFilesystem {true};
+#endif
+
+        for (auto& entry : Utils::FileSystem::getDirContent(mediaDirMiximages, true)) {
+            if (caseSensitiveFilesystem)
+                dirContentMiximages.emplace_back(entry);
+            else
+                dirContentMiximages.emplace_back(Utils::String::toLower(entry));
+        }
+
+        for (auto& entry : Utils::FileSystem::getDirContent(mediaDirScreenshots, true)) {
+            if (caseSensitiveFilesystem)
+                dirContentScreenshots.emplace_back(entry);
+            else
+                dirContentScreenshots.emplace_back(Utils::String::toLower(entry));
+        }
+
+        for (auto& entry : Utils::FileSystem::getDirContent(mediaDirTitlescreens, true)) {
+            if (caseSensitiveFilesystem)
+                dirContentTitlescreens.emplace_back(entry);
+            else
+                dirContentTitlescreens.emplace_back(Utils::String::toLower(entry));
+        }
+
+        for (auto& entry : Utils::FileSystem::getDirContent(mediaDirCovers, true)) {
+            if (caseSensitiveFilesystem)
+                dirContentCovers.emplace_back(entry);
+            else
+                dirContentCovers.emplace_back(Utils::String::toLower(entry));
+        }
 
         std::string subFolders;
 
@@ -450,26 +488,38 @@ void Screensaver::generateImageList()
             const std::string gamePath {subFolders + "/" + (*it2)->getDisplayName()};
 
             for (auto& extension : FileData::sImageExtensions) {
-                if (std::find(dirContentMiximages.cbegin(), dirContentMiximages.cend(),
-                              mediaDirMiximages + gamePath + extension) !=
+                if (std::find(
+                        dirContentMiximages.cbegin(), dirContentMiximages.cend(),
+                        (caseSensitiveFilesystem ?
+                             mediaDirMiximages + gamePath + extension :
+                             Utils::String::toLower(mediaDirMiximages + gamePath + extension))) !=
                     dirContentMiximages.cend()) {
                     mImageFiles.push_back((*it2));
                     break;
                 }
-                if (std::find(dirContentScreenshots.cbegin(), dirContentScreenshots.cend(),
-                              mediaDirScreenshots + gamePath + extension) !=
+                if (std::find(
+                        dirContentScreenshots.cbegin(), dirContentScreenshots.cend(),
+                        (caseSensitiveFilesystem ?
+                             mediaDirScreenshots + gamePath + extension :
+                             Utils::String::toLower(mediaDirScreenshots + gamePath + extension))) !=
                     dirContentScreenshots.cend()) {
                     mImageFiles.push_back((*it2));
                     break;
                 }
                 if (std::find(dirContentTitlescreens.cbegin(), dirContentTitlescreens.cend(),
-                              mediaDirTitlescreens + gamePath + extension) !=
+                              (caseSensitiveFilesystem ?
+                                   mediaDirTitlescreens + gamePath + extension :
+                                   Utils::String::toLower(mediaDirTitlescreens + gamePath +
+                                                          extension))) !=
                     dirContentTitlescreens.cend()) {
                     mImageFiles.push_back((*it2));
                     break;
                 }
                 if (std::find(dirContentCovers.cbegin(), dirContentCovers.cend(),
-                              mediaDirCovers + gamePath + extension) != dirContentCovers.cend()) {
+                              (caseSensitiveFilesystem ?
+                                   mediaDirCovers + gamePath + extension :
+                                   Utils::String::toLower(mediaDirCovers + gamePath +
+                                                          extension))) != dirContentCovers.cend()) {
                     mImageFiles.push_back((*it2));
                     break;
                 }
@@ -490,15 +540,35 @@ void Screensaver::generateVideoList()
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
+#if defined(_WIN64)
+        const std::string mediaBaseDir {
+            Utils::String::replace(FileData::getMediaDirectory(), "\\", "/")};
+#else
+        const std::string mediaBaseDir {FileData::getMediaDirectory()};
+#endif
+        const std::string mediaDir {mediaBaseDir + (*it)->getRootFolder()->getSystemName() +
+                                    "/videos"};
+        Utils::FileSystem::StringList dirContent;
+
         // This method of building an inventory of all video files isn't pretty, but to use the
         // FileData::getVideoPath() function leads to unacceptable performance issues on some
         // platforms like Android that offer very poor disk I/O performance. To instead list
         // all files recursively is much faster as this avoids stat() function calls which are
         // very expensive on such problematic platforms.
-        const std::string mediaDir {FileData::getMediaDirectory() +
-                                    (*it)->getRootFolder()->getSystemName() + "/videos"};
-        const Utils::FileSystem::StringList dirContent {
-            Utils::FileSystem::getDirContent(mediaDir, true)};
+
+#if defined(_WIN64) || defined(__APPLE__) || defined(__ANDROID__)
+        // Although macOS may have filesystem case-sensitivity enabled it's rare and the impact
+        // would not be severe in this case anyway.
+        const bool caseSensitiveFilesystem {false};
+#else
+        const bool caseSensitiveFilesystem {true};
+#endif
+        for (auto& entry : Utils::FileSystem::getDirContent(mediaDir, true)) {
+            if (caseSensitiveFilesystem)
+                dirContent.emplace_back(entry);
+            else
+                dirContent.emplace_back(Utils::String::toLower(entry));
+        }
 
         std::string subFolders;
 
@@ -517,7 +587,10 @@ void Screensaver::generateVideoList()
 
             for (auto& extension : FileData::sVideoExtensions) {
                 if (std::find(dirContent.cbegin(), dirContent.cend(),
-                              mediaDir + gamePath + extension) != dirContent.cend()) {
+                              (caseSensitiveFilesystem ?
+                                   mediaDir + gamePath + extension :
+                                   Utils::String::toLower(mediaDir + gamePath + extension))) !=
+                    dirContent.cend()) {
                     mVideoFiles.push_back((*it2));
                     break;
                 }

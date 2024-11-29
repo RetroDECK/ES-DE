@@ -241,6 +241,8 @@ Just make sure to never place games or other resources on network shares using t
 
 Also make sure that you don't use the exFAT filesystem as its very poor disk I/O performance will make ES-DE run really slowly. Using this filesystem will make the theme downloader fail as well.
 
+There is also a limitation in Windows where the complete file path can't exceed 260 characters. So if you have files with extremely long names ES-DE may state that there are file permission problems for various operations such as when scraping or when running the orphaned data cleanup utility. In this case simply renaming the problematic game files to use shorter names should resolve the situation. If you use the portable release of ES-DE you could also relocate the entire application directory closer to the root of the filesystem to have shorter overall paths.
+
 In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start. For really old graphics cards the available drivers may not provide an OpenGL version that is modern enough for ES-DE to work, and in this case a last resort solution would be to install the _Mesa3D for Windows_ library which provides software-based OpenGL rendering. The 64-bit version of this library can be downloaded from https://fdossena.com/?p=mesa/index.frag and you simply extract the opengl32.dll file into the ES-DE installation directory. Just be aware that the performance may be quite bad.
 
 On some GPUs with buggy drivers, ES-DE may only display a black screen on startup or when launching a game. The problem can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for example:
@@ -312,7 +314,7 @@ The Android port of ES-DE is quite different than the other versions, so it has 
 
 ## Specific notes for Haiku
 
-The [Haiku](https://www.haiku-os.org) port of ES-DE is currently experimental as the OS itself is experimental and has some issues. Still most functionality in ES-DE is working and there is support for a quite large number of systems and emulators. If you're interested in Haiku it's for sure worth trying it out. See the dedicated [HAIKU.md](HAIKU.md) document for more details.
+The [Haiku](https://www.haiku-os.org) port of ES-DE is currently experimental as the OS itself is experimental and has some issues. Still most functionality is working and there is support for a quite large number of systems and emulators. If you're interested in Haiku it's for sure worth trying it out as ES-DE can be easily installed via HaikuDepot. See the dedicated [HAIKU.md](HAIKU.md) document for more details.
 
 ## Specific notes for Raspberry Pi
 
@@ -3989,7 +3991,7 @@ The collection will now be created and the collection edit mode will be entered.
 
 Removing a game works the same way, just press _Y_ to remove it if it's already present in your collection. You can do this either from the gamelist where the game was added, or from the collection itself.
 
-Only files can be part of collections, not folders. Games marked as hidden or to not be counted as games can't be added either.
+Only files can be part of collections, not folders. Games marked as hidden or set to not be counted as games can't be added either.
 
 During the time that the collection is being edited, any game that is part of the collection is marked with a leading tick symbol in the game name if a textlist is used, and a _collection_ badge is displayed for the currently selected game as well (assuming the theme support badges).
 

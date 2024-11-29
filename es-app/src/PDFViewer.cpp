@@ -156,9 +156,8 @@ bool PDFViewer::startPDFViewer(FileData* game)
 
 #if (DEBUG_PDF_CONVERSION)
         LOG(LogDebug) << "Page " << i << ": Orientation: " << mPages[i].orientation << " / "
-                      << "crop box width: " << width << " / "
-                      << "crop box height: " << height << " / "
-                      << "size ratio: " << width / height << " / "
+                      << "crop box width: " << width << " / " << "crop box height: " << height
+                      << " / " << "size ratio: " << width / height << " / "
                       << "texture size: " << mPages[i].width << "x" << mPages[i].height;
 #endif
     }

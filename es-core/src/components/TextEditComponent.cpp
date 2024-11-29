@@ -128,7 +128,8 @@ void TextEditComponent::textInput(const std::string& text, const bool pasting)
                          (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text));
             mCursor += static_cast<unsigned int>(
                 (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text).size());
-            ++mCursorShapedText;
+            mCursorShapedText += static_cast<unsigned int>(Utils::String::unicodeLength(
+                (pasting && !mMultiLine ? Utils::String::replace(text, "\n", " ") : text)));
         }
     }
 
@@ -344,6 +345,9 @@ void TextEditComponent::onTextChanged()
 
     if (mCursor > static_cast<int>(mText.length()))
         mCursor = static_cast<int>(mText.length());
+
+    if (mCursorShapedText > static_cast<int>(Utils::String::unicodeLength(mText)))
+        mCursorShapedText = static_cast<int>(Utils::String::unicodeLength(mText));
 }
 
 void TextEditComponent::onCursorChanged()

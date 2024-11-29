@@ -177,6 +177,7 @@ private:
     std::unique_ptr<ImageComponent> mBackgroundImage;
     std::string mBackgroundImagePath;
     float mBackgroundRelativeScale;
+    float mBackgroundCornerRadius;
     unsigned int mBackgroundColor;
     unsigned int mBackgroundColorEnd;
     bool mBackgroundColorGradientHorizontal;
@@ -185,11 +186,13 @@ private:
     std::string mSelectorImagePath;
     float mSelectorRelativeScale;
     SelectorLayer mSelectorLayer;
+    float mSelectorCornerRadius;
     unsigned int mSelectorColor;
     unsigned int mSelectorColorEnd;
     bool mSelectorColorGradientHorizontal;
     bool mHasSelectorColor;
     float mTextRelativeScale;
+    float mTextBackgroundCornerRadius;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
     unsigned int mTextSelectedColor;
@@ -254,17 +257,20 @@ GridComponent<T>::GridComponent()
     , mImageBrightness {0.0f}
     , mImageSaturation {1.0f}
     , mBackgroundRelativeScale {1.0f}
+    , mBackgroundCornerRadius {0.0f}
     , mBackgroundColor {0xFFFFFFFF}
     , mBackgroundColorEnd {0xFFFFFFFF}
     , mBackgroundColorGradientHorizontal {true}
     , mHasBackgroundColor {false}
     , mSelectorRelativeScale {1.0f}
     , mSelectorLayer {SelectorLayer::TOP}
+    , mSelectorCornerRadius {0.0f}
     , mSelectorColor {0xFFFFFFFF}
     , mSelectorColorEnd {0xFFFFFFFF}
     , mSelectorColorGradientHorizontal {true}
     , mHasSelectorColor {false}
     , mTextRelativeScale {1.0f}
+    , mTextBackgroundCornerRadius {0.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
     , mTextSelectedColor {0x000000FF}
@@ -385,6 +391,7 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             0x00000000, mLineSpacing, 1.0f, mTextHorizontalScrolling, mTextHorizontalScrollSpeed,
             mTextHorizontalScrollDelay, mTextHorizontalScrollGap);
         text->setOrigin(0.5f, 0.5f);
+        text->setBackgroundCornerRadius(mTextBackgroundCornerRadius);
         text->setColor(mTextColor);
         text->setBackgroundColor(mTextBackgroundColor);
         text->setRenderBackground(true);
@@ -773,9 +780,13 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             // If a selector color is set but no selector image, then render a rectangle.
             const float sizeX {mItemSize.x * scale * mSelectorRelativeScale};
             const float sizeY {mItemSize.y * scale * mSelectorRelativeScale};
-            mRenderer->setMatrix(trans);
-            mRenderer->drawRect(position.x, position.y, sizeX, sizeY, mSelectorColor,
-                                mSelectorColorEnd, mSelectorColorGradientHorizontal, opacity);
+            const glm::mat4 drawTrans {
+                glm::translate(trans, glm::round(glm::vec3 {position.x, position.y, 0.0f}))};
+            mRenderer->setMatrix(drawTrans);
+            mRenderer->drawRect(0.0f, 0.0f, sizeX, sizeY, mSelectorColor, mSelectorColorEnd,
+                                mSelectorColorGradientHorizontal, opacity, 1.0f,
+                                Renderer::BlendFactor::SRC_ALPHA,
+                                Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA, mSelectorCornerRadius);
         }
     };
 
@@ -885,9 +896,13 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             // If a background color is set but no background image, then render a rectangle.
             const float sizeX {mItemSize.x * scale * mBackgroundRelativeScale};
             const float sizeY {mItemSize.y * scale * mBackgroundRelativeScale};
-            mRenderer->setMatrix(trans);
-            mRenderer->drawRect(backgroundPos.x, backgroundPos.y, sizeX, sizeY, mBackgroundColor,
-                                mBackgroundColorEnd, mBackgroundColorGradientHorizontal, opacity);
+            const glm::mat4 drawTrans {glm::translate(
+                trans, glm::round(glm::vec3 {backgroundPos.x, backgroundPos.y, 0.0f}))};
+            mRenderer->setMatrix(drawTrans);
+            mRenderer->drawRect(
+                0.0f, 0.0f, sizeX, sizeY, mBackgroundColor, mBackgroundColorEnd,
+                mBackgroundColorGradientHorizontal, opacity, 1.0f, Renderer::BlendFactor::SRC_ALPHA,
+                Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA, mBackgroundCornerRadius);
         }
 
         if (cursorEntry && mSelectorLayer == SelectorLayer::MIDDLE)
@@ -1160,10 +1175,11 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 }
             }
             float backgroundCornerRadius {0.0f};
-            if (elem->has("backgroundCornerRadius"))
+            if (elem->has("backgroundCornerRadius")) {
                 backgroundCornerRadius =
                     glm::clamp(elem->get<float>("backgroundCornerRadius"), 0.0f, 0.5f) *
                     (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
+            }
             mBackgroundImage->setCornerRadius(backgroundCornerRadius);
             mBackgroundImage->setImage(elem->get<std::string>("backgroundImage"));
             mBackgroundImagePath = path;
@@ -1173,6 +1189,11 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                "\"backgroundImage\" for element \""
                             << element.substr(5) << "\", image does not exist: \"" << path << "\"";
         }
+    }
+    else if (elem->has("backgroundCornerRadius")) {
+        mBackgroundCornerRadius =
+            glm::clamp(elem->get<float>("backgroundCornerRadius"), 0.0f, 0.5f) *
+            (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
     }
 
     if (elem->has("selectorImage")) {
@@ -1192,10 +1213,11 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 }
             }
             float selectorCornerRadius {0.0f};
-            if (elem->has("selectorCornerRadius"))
+            if (elem->has("selectorCornerRadius")) {
                 selectorCornerRadius =
                     glm::clamp(elem->get<float>("selectorCornerRadius"), 0.0f, 0.5f) *
                     (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
+            }
             mSelectorImage->setCornerRadius(selectorCornerRadius);
             mSelectorImage->setImage(elem->get<std::string>("selectorImage"));
             mSelectorImagePath = path;
@@ -1205,6 +1227,11 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                "\"selectorImage\" for element \""
                             << element.substr(5) << "\", image does not exist: \"" << path << "\"";
         }
+    }
+    else if (elem->has("selectorCornerRadius")) {
+        mSelectorCornerRadius = glm::clamp(elem->get<float>("selectorCornerRadius"), 0.0f, 0.5f) *
+                                (mItemScale >= 1.0f ? mItemScale : 1.0f) *
+                                mRenderer->getScreenWidth();
     }
 
     if (elem->has("selectorLayer")) {
@@ -1364,6 +1391,12 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("textRelativeScale"))
         mTextRelativeScale = glm::clamp(elem->get<float>("textRelativeScale"), 0.2f, 1.0f);
+
+    if (elem->has("textBackgroundCornerRadius")) {
+        mTextBackgroundCornerRadius =
+            glm::clamp(elem->get<float>("textBackgroundCornerRadius"), 0.0f, 0.5f) *
+            (mItemScale >= 1.0f ? mItemScale : 1.0f) * mRenderer->getScreenWidth();
+    }
 
     if (elem->has("textColor"))
         mTextColor = elem->get<unsigned int>("textColor");

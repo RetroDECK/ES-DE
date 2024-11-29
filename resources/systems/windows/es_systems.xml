@@ -326,6 +326,7 @@
         <path>%ROMPATH%\bbcmicro</path>
         <extension>.dsd .DSD .img .IMG .ssd .SSD .7z .7Z .zip .ZIP</extension>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\bbcmicro bbcb -autoboot_delay "2" -autoboot_command "*cat\n\n*exec !boot\n" -analogue acornjoy -flop1 %ROM%</command>
+        <command label="BeebEm (Standalone)">%EMULATOR_BEEBEM% %INJECT%=%BASENAME%.commands -FullScreen %ROM%</command>
         <platform>bbcmicro</platform>
         <theme>bbcmicro</theme>
     </system>
@@ -1230,6 +1231,7 @@
         <command label="Citra">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\citra_libretro.dll %ROM%</command>
         <command label="Citra 2018">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\citra2018_libretro.dll %ROM%</command>
         <command label="Citra (Standalone)">%EMULATOR_CITRA% %ROM%</command>
+        <command label="Mandarine (Standalone)">%EMULATOR_MANDARINE% %ROM%</command>
         <command label="Lime3DS (Standalone)">%EMULATOR_LIME3DS% %ROM%</command>
         <command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %ROM%</command>
         <platform>n3ds</platform>
@@ -1304,7 +1306,7 @@
         <extension>.app .APP .bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
         <command label="melonDS DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\melondsds_libretro.dll %ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\melonds_libretro.dll %ROM%</command>
-        <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>
+        <command label="melonDS (Standalone)">%EMULATOR_MELONDS% -f %ROM%</command>
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\desmume_libretro.dll %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\desmume2015_libretro.dll %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
@@ -1688,6 +1690,7 @@
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_saturn_libretro.dll %ROM%</command>
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\kronos_libretro.dll %ROM%</command>
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\yabasanshiro_libretro.dll %ROM%</command>
+        <command label="Yaba Sanshiro 2 (Standalone)">%EMULATOR_YABASANSHIRO-2% -a -i %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\yabause_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
         <command label="SSF (Standalone)">%EMULATOR_SSF% %ROM%</command>
@@ -1702,6 +1705,7 @@
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_saturn_libretro.dll %ROM%</command>
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\kronos_libretro.dll %ROM%</command>
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\yabasanshiro_libretro.dll %ROM%</command>
+        <command label="Yaba Sanshiro 2 (Standalone)">%EMULATOR_YABASANSHIRO-2% -a -i %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\yabause_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
         <command label="SSF (Standalone)">%EMULATOR_SSF% %ROM%</command>

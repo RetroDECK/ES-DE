@@ -1,8 +1,8 @@
 # ES-DE Frontend - Haiku documentation
 
-Note that support for Haiku is currently experimental as the operating system itself is experimental.
+ES-DE is available via HaikuDepot but if you still want to build it yourself then you can find detailed instructions in the _Building on Haiku_ section of the [INSTALL.md](INSTALL.md#building-on-haiku) document.
 
-There are currently no pre-built packages available so you'll need to build ES-DE yourself. Detailed instructions are available in the _Building on Haiku_ section of the [INSTALL-DEV.md](INSTALL-DEV.md#building-on-haiku) document.
+Note that support for Haiku is currently experimental as the operating system itself is experimental.
 
 Table of contents:
 
@@ -13,6 +13,8 @@ Table of contents:
 * Key repeat doesn't work in text editing fields (but it works elsewhere in the application)
 
 * There is no 3D acceleration as the operating system does not support that
+
+* ES-DE may crash or behave strange when used on Haiku Nightly (i.e. it's due to operating system issues, make sure to run R1/beta5 which should work fine)
 
 ## Emulator problems
 

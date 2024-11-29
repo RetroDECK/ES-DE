@@ -25,6 +25,9 @@ namespace Utils
     {
         extern const std::vector<std::pair<std::string, std::string>> sSupportedLocales;
         extern std::string sCurrentLocale;
+#if defined(_WIN64)
+        extern unsigned long sLocaleID;
+#endif
         extern float sMenuTitleScaleFactor;
 
         const char* pgettextBuiltin(const char* msgctxt, const char* msgid);
@@ -34,6 +37,9 @@ namespace Utils
                                      unsigned long int n);
         std::pair<std::string, std::string> getLocale();
         void setLocale();
+#if defined(_WIN64)
+        void setThreadLocale();
+#endif
 
     } // namespace Localization
 

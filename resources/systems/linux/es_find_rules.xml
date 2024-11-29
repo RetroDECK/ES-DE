@@ -563,6 +563,18 @@
             <entry>~/.local/share/flatpak/exports/bin/org.mamedev.MAME</entry>
         </rule>
     </emulator>
+    <emulator name="MANDARINE">
+        <!-- Nintendo 3DS emulator Mandarine -->
+        <rule type="systempath">
+            <entry>mandarine-qt</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/mandarine-qt.AppImage</entry>
+            <entry>~/.local/share/applications/mandarine-qt.AppImage</entry>
+            <entry>~/.local/bin/mandarine-qt.AppImage</entry>
+            <entry>~/bin/mandarine-qt.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="MEDNAFEN">
         <!-- Multi-system emulator Mednafen -->
         <rule type="systempath">
@@ -581,6 +593,10 @@
             <entry>net.kuribo64.melonDS</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/melonDS*.AppImage</entry>
+            <entry>~/.local/share/applications/melonDS*.AppImage</entry>
+            <entry>~/.local/bin/melonDS*.AppImage</entry>
+            <entry>~/bin/melonDS*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/net.kuribo64.melonDS</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.kuribo64.melonDS</entry>
         </rule>

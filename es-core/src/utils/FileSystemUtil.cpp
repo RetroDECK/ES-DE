@@ -67,29 +67,42 @@ namespace Utils
             if (!isDirectory(genericPath))
                 return contentList;
 
-            if (recursive) {
+            try {
+                if (recursive) {
 #if defined(_WIN64)
-                for (auto& entry : std::filesystem::recursive_directory_iterator(
-                         Utils::String::stringToWideString(genericPath))) {
-                    contentList.emplace_back(
-                        Utils::String::wideStringToString(entry.path().generic_wstring()));
+                    for (auto& entry : std::filesystem::recursive_directory_iterator(
+                             Utils::String::stringToWideString(genericPath))) {
+                        contentList.emplace_back(
+                            Utils::String::wideStringToString(entry.path().generic_wstring()));
 #else
-                for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
-                    contentList.emplace_back(entry.path().generic_string());
+                    for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
+                        contentList.emplace_back(entry.path().generic_string());
 #endif
+                    }
+                }
+                else {
+#if defined(_WIN64)
+                    for (auto& entry : std::filesystem::directory_iterator(
+                             Utils::String::stringToWideString(genericPath))) {
+                        contentList.emplace_back(
+                            Utils::String::wideStringToString(entry.path().generic_wstring()));
+#else
+                    for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
+                        contentList.emplace_back(entry.path().generic_string());
+#endif
+                    }
                 }
             }
-            else {
+            catch (...) {
 #if defined(_WIN64)
-                for (auto& entry : std::filesystem::directory_iterator(
-                         Utils::String::stringToWideString(genericPath))) {
-                    contentList.emplace_back(
-                        Utils::String::wideStringToString(entry.path().generic_wstring()));
+                LOG(LogError) << "FileSystemUtil::getDirContent(): Couldn't read directory " << "\""
+                              << Utils::String::replace(path, "/", "\\")
+                              << "\", permission problems?";
 #else
-                for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
-                    contentList.emplace_back(entry.path().generic_string());
+                LOG(LogError) << "FileSystemUtil::getDirContent(): Couldn't read directory " << "\""
+                              << path << "\", permission problems?";
 #endif
-                }
+                return contentList;
             }
 
             contentList.sort();

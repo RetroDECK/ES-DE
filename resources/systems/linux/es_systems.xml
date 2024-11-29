@@ -1248,8 +1248,8 @@
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
         <command label="Citra">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra_libretro.so %ROM%</command>
         <command label="Citra 2018">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra2018_libretro.so %ROM%</command>
-        <command label="Citra (via Ponzu)">%EMULATOR_CITRA% %ROM%</command>
-        <!--<command label="Lime3DS (Standalone)">%EMULATOR_LIME3DS% %ROM%</command>-->
+        <command label="Citra (Standalone) (via Ponzu)">%EMULATOR_CITRA% %ROM%</command>
+        <!--<command label="Mandarine (Standalone)">%EMULATOR_MANDARINE% %ROM%</command>-->
         <!--<command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %ROM%</command>-->
         <platform>n3ds</platform>
         <theme>n3ds</theme>
@@ -1320,6 +1320,7 @@
         <extension>.app .APP .bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume_libretro.so %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.so %ROM%</command>
+        <command label="melonDS DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melondsds_libretro.so %ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melonds_libretro.so %ROM%</command>
         <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>
         <!-- <command label="DeSmuME (Standalone)">%EMULATOR_DESMUME% %ROM%</command> -->

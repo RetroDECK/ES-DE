@@ -31,19 +31,23 @@ The following options are included:
 - 4:3
 - 21:9
 
-12 languages:
+16 languages:
 
 - English (United States)
 - English (United Kingdom)
+- Català
+- Deutsch
 - Español (España)
 - Français
 - Italiano
+- Nederlands
 - Polski
 - Português (Brasil)
 - Română
 - Русский
 - Svenska
 - 日本語
+- 한국어
 - 简体中文
 
 3 transitions:

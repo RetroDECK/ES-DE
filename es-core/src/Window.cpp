@@ -107,7 +107,7 @@ GuiComponent* Window::peekGui()
     return mGuiStack.back();
 }
 
-bool Window::init()
+bool Window::init(bool resized)
 {
     if (!mRenderer->init()) {
         LOG(LogError) << "Renderer failed to initialize.";
@@ -132,6 +132,9 @@ bool Window::init()
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE));
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE_FIXED));
     }
+
+    if (resized)
+        Font::updateFontSizes();
 
     if (mRenderer->getIsVerticalOrientation())
         mSplash->setResize(mRenderer->getScreenWidth() * 0.8f, 0.0f);

@@ -37,45 +37,64 @@ class Font : public IReloadable
 public:
     virtual ~Font();
     static std::shared_ptr<Font> get(float size, const std::string& path = getDefaultPath());
-    static float getMiniFont()
+    static float getMiniFont(bool forceUpdate = false)
     {
         static float sMiniFont {0.030f *
                                 std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        if (forceUpdate)
+            sMiniFont = 0.030f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth());
         return sMiniFont;
     }
-    static float getSmallFont()
+    static float getSmallFont(bool forceUpdate = false)
     {
         static float sSmallFont {0.035f *
                                  std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        if (forceUpdate)
+            sSmallFont = 0.035f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth());
         return sSmallFont;
     }
-    static float getMediumFont()
+    static float getMediumFont(bool forceUpdate = false)
     {
         static float sMediumFont {
             (Renderer::getIsVerticalOrientation() ? 0.040f : 0.045f) *
             std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        if (forceUpdate)
+            sMediumFont = (Renderer::getIsVerticalOrientation() ? 0.040f : 0.045f) *
+                          std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth());
         return sMediumFont;
     }
-    static float getMediumFixedFont()
+    static float getMediumFixedFont(bool forceUpdate = false)
     {
         // Fixed size regardless of screen orientation.
         static float sMediumFixedFont {
             0.045f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        if (forceUpdate)
+            sMediumFixedFont =
+                0.045f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth());
         return sMediumFixedFont;
     }
-    static float getLargeFont()
+    static float getLargeFont(bool forceUpdate = false)
     {
         static float sLargeFont {(Renderer::getIsVerticalOrientation() ? 0.080f : 0.085f) *
                                  std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        if (forceUpdate)
+            sLargeFont = (Renderer::getIsVerticalOrientation() ? 0.080f : 0.085f) *
+                         std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth());
         return sLargeFont;
     }
-    static float getLargeFixedFont()
+    static float getLargeFixedFont(bool forceUpdate = false)
     {
         // Fixed size regardless of screen orientation.
         static float sLargeFixedFont {
             0.085f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        if (forceUpdate)
+            sLargeFixedFont =
+                0.085f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth());
         return sLargeFixedFont;
     }
+
+    // Needed for when the application window has been resized.
+    static void updateFontSizes();
 
     // Returns the size of shaped text without applying any wrapping or abbreviations.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);

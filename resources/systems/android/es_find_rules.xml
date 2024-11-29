@@ -28,6 +28,12 @@
             <entry>com.explusalpha.C64Emu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="CEMU">
+        <!-- Nintendo Wii U emulator Cemu -->
+        <rule type="androidpackage">
+            <entry>info.cemu.Cemu/info.cemu.Cemu.emulation.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="androidpackage">
@@ -95,12 +101,6 @@
         <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
         <rule type="androidpackage">
             <entry>com.github.eka2l1/.emu.EmulatorActivity</entry>
-        </rule>
-    </emulator>
-    <emulator name="EKA2L1-GUI">
-        <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
-        <rule type="androidpackage">
-            <entry>com.github.eka2l1/.MainActivity</entry>
         </rule>
     </emulator>
     <emulator name="EPSXE">
@@ -201,6 +201,12 @@
         <!-- Arcade emulator MAME4droid 2024 -->
         <rule type="androidpackage">
             <entry>com.seleuco.mame4d2024/com.seleuco.mame4droid.MAME4droid</entry>
+        </rule>
+    </emulator>
+    <emulator name="MANDARINE">
+        <!-- Nintendo 3DS emulator Mandarine -->
+        <rule type="androidpackage">
+            <entry>io.github.mandarine3ds.mandarine/.activities.EmulationActivity</entry>
         </rule>
     </emulator>
     <emulator name="MASTERGEAR">

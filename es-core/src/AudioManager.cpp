@@ -36,10 +36,28 @@ void AudioManager::init()
 {
     LOG(LogInfo) << "Setting up AudioManager...";
 
+#if defined(__ANDROID__)
     if (SDL_InitSubSystem(SDL_INIT_AUDIO) != 0) {
-        LOG(LogError) << "Error initializing SDL audio!\n" << SDL_GetError();
+        if (Settings::getInstance()->getString("AudioDriver") != "AAudio") {
+            LOG(LogWarning) << "Requested OpenSL ES audio driver does not seem to be available, "
+                               "reverting to AAudio";
+            setenv("SDL_AUDIODRIVER", "AAudio", 1);
+            if (SDL_InitSubSystem(SDL_INIT_AUDIO) != 0) {
+                LOG(LogError) << "Couldn't initialize SDL audio: " << SDL_GetError();
+                return;
+            }
+        }
+        else {
+            LOG(LogError) << "Couldn't initialize SDL audio: " << SDL_GetError();
+            return;
+        }
+    }
+#else
+    if (SDL_InitSubSystem(SDL_INIT_AUDIO) != 0) {
+        LOG(LogError) << "Couldn't initialize SDL audio: " << SDL_GetError();
         return;
     }
+#endif
 
     LOG(LogInfo) << "Audio driver: " << SDL_GetCurrentAudioDriver();
 

@@ -31,6 +31,11 @@ MiximageGenerator::MiximageGenerator(FileData* game, std::string& resultMessage)
 
 void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
 {
+#if defined(_WIN64)
+    // Workaround for a bug in the libintl library.
+    Utils::Localization::setThreadLocale();
+#endif
+
     mMiximagePromise = miximagePromise;
 
     LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): Creating miximage for \""
@@ -898,8 +903,7 @@ std::string MiximageGenerator::getSavePath() const
 
 #if defined(__ANDROID__)
     if (!Utils::FileSystem::exists(path + ".nomedia")) {
-        LOG(LogInfo) << "Creating \"no media\" file \"" << path + ".nomedia"
-                     << "\"...";
+        LOG(LogInfo) << "Creating \"no media\" file \"" << path + ".nomedia" << "\"...";
         Utils::FileSystem::createEmptyFile(path + ".nomedia");
         if (!Utils::FileSystem::exists(path + ".nomedia")) {
             LOG(LogWarning) << "Couldn't create file, permission problems?";

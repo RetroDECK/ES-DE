@@ -51,6 +51,7 @@ Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
 Emulators\ares\ares.exe
 Emulators\atari800\atari800.exe
 Emulators\BasiliskII\BasiliskII.exe
+Emulators\BeebEm\BeebEm.exe
 Emulators\BigPEmu\BigPEmu.exe
 Emulators\bsnes\bsnes.exe
 Emulators\cemu\Cemu.exe
@@ -64,8 +65,8 @@ Emulators\demul\demul.exe
 Emulators\Dolphin-x64\Dolphin.exe
 Emulators\dosbox-staging\dosbox.exe
 Emulators\DOSBox-X\dosbox-x.exe
-Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
+Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe
 Emulators\EasyRPG\Player.exe
 Emulators\EKA2L1\eka2l1_qt.exe
 Emulators\fbneo\fbneo64.exe
@@ -87,6 +88,7 @@ Emulators\KEmulator\KEmulator.exe
 Emulators\lime3ds\lime3ds.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
+Emulators\mandarine\mandarine-qt.exe
 Emulators\mednafen\mednafen.exe
 Emulators\melonDS\melonDS.exe
 Emulators\Mesen\Mesen.exe
@@ -143,4 +145,5 @@ Emulators\xenia\xenia.exe
 Emulators\xenia_canary\xenia_canary.exe
 Emulators\XM6 Pro-68k\XM6.exe
 Emulators\xroar\xroar.exe
+Emulators\yabasanshiro\yabasanshiro.exe
 Emulators\ZEsarUX\zesarux.exe

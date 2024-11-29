@@ -1170,6 +1170,7 @@
         <path>%ROMPATH%/n3ds</path>
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
         <command label="Citra (Standalone)">%EMULATOR_CITRA% %ROM%</command>
+        <command label="Mandarine (Standalone)">%EMULATOR_MANDARINE% %ROM%</command>
         <command label="Lime3DS (Standalone)">%EMULATOR_LIME3DS% %ROM%</command>
         <command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %ROM%</command>
         <platform>n3ds</platform>
@@ -1241,7 +1242,7 @@
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.dylib %ROM%</command>
         <command label="melonDS DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melondsds_libretro.dylib %ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melonds_libretro.dylib %ROM%</command>
-        <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>
+        <command label="melonDS (Standalone)">%EMULATOR_MELONDS% -f %ROM%</command>
         <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>

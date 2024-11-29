@@ -299,10 +299,10 @@ namespace GamelistFileParser
                 // application restart.
                 if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
                     if (file->getHidden()) {
-                        LOG(LogDebug) << "GamelistFileParser::parseGamelist(): Skipping hidden "
-                                      << (type == GAME ? "file" : "folder") << " entry \""
-                                      << file->getName() << "\""
-                                      << " (\"" << file->getPath() << "\")";
+                        LOG(LogDebug)
+                            << "GamelistFileParser::parseGamelist(): Skipping hidden "
+                            << (type == GAME ? "file" : "folder") << " entry \"" << file->getName()
+                            << "\"" << " (\"" << file->getPath() << "\")";
                         FileData* parent {file->getParent()};
                         delete file;
                         // In case there are no entries left in the folder.

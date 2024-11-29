@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-09-04 17:44+0200\n"
-"PO-Revision-Date: 2024-09-01 19:51+0300\n"
+"POT-Creation-Date: 2024-11-24 17:33+0100\n"
+"PO-Revision-Date: 2024-11-25 23:56+0200\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
 "Language: ro_RO\n"
@@ -31,208 +31,590 @@ msgstr "O nouă versiune este disponibilă:"
 msgid "For more information visit"
 msgstr "Pentru mai multe informații vizitează"
 
-msgid "No Entries Found"
-msgstr "Nu s-au găsit intrări"
-
-msgctxt "theme"
-msgid "all"
-msgstr "toate"
-
-msgctxt "theme"
 msgid "all games"
 msgstr "toate jocurile"
 
-msgctxt "theme"
-msgid "recent"
-msgstr "recente"
-
-msgctxt "theme"
 msgid "last played"
 msgstr "jucat ultima dată"
 
-msgctxt "theme"
 msgid "favorites"
 msgstr "favorite"
 
-msgctxt "theme"
 msgid "collections"
 msgstr "colecții"
 
-msgid "ScreenScraper error:"
-msgstr "Eroare ScreenScraper:"
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "S-A DEZACTIVAT „%s” ÎN „%s”"
 
-msgid "ScreenScraper: Wrong username or password"
-msgstr "ScreenScraper: Nume utilizator sau parolă greșite"
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "SE EDITEAZĂ COLECȚIA „%s”, ADAUGĂ/ELIMINĂ JOCURI CU %s"
 
-msgid "Network error:"
-msgstr "Eroare rețea:"
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "S-A FINALIZAT EDITAREA COLECȚIEI „%s”"
 
-msgid "Media directory does not exist and can't be created."
-msgstr "Dosarul de fișiere media nu există și nu poate fi creat."
+msgid "Favorites"
+msgstr "Favorite"
 
-msgid "Permission problems?"
-msgstr "Probleme cu permisiunile?"
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "S-A ADĂUGAT „%s” LA „%s”"
 
-msgid "Failed to open path for writing media file."
-msgstr "A eșuat deschiderea căii pentru scrierea fișierului media."
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "S-A ELIMINAT „%s” DIN „%s”"
 
-msgid "Couldn't save media file, permission problems or is the disk full?"
+msgid "This collection is empty"
+msgstr "Această colecție este goală"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "Această colecție conține 1 joc: „%s [%s]”"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "Această colecție conține 2 jocuri: „%s [%s]” și „%s [%s]”"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "Această colecție conține 3 jocuri: „%s [%s]”, „%s [%s]” și „%s [%s]”"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"Această colecție conține %i joc: „%s [%s]”, „%s [%s]” și „%s [%s]”, printre "
+"altele"
+msgstr[1] ""
+"Această colecție conține %i jocuri: „%s [%s]”, „%s [%s]” și „%s [%s]”, "
+"printre altele"
+msgstr[2] ""
+"Această colecție conține %i de jocuri: „%s [%s]”, „%s [%s]” și „%s [%s]”, "
+"printre altele"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "Această colecție conține 1 joc: „%s”"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "Această colecție conține 2 jocuri: „%s” și „%s”"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "Această colecție conține 3 jocuri: „%s”, „%s” și „%s”"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "Această colecție conține %i joc: „%s”, „%s” și „%s”, printre altele"
+msgstr[1] ""
+"Această colecție conține %i jocuri: „%s”, „%s” și „%s”, printre altele"
+msgstr[2] ""
+"Această colecție conține %i de jocuri: „%s”, „%s” și „%s”, printre altele"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' este filtrată, așadar pot fi mai multe jocuri disponibile"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "S-A ȘTERS COLECȚIA „%s”"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "EROARE: LIPSĂ CONFIGURAȚIE REGULI DE GĂSIRE PRE-COMANDĂ PENTRU „%s”"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "EROARE: NU S-A GĂSIT PRE-COMANDA. A FOST INSTALATĂ CORESPUNZĂTOR?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "EROARE: NU S-A GĂSIT PRE-COMANDA „%s”. A FOST INSTALATĂ CORESPUNZĂTOR?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "EROARE: LIPSĂ CONFIGURAȚIE REGULI GĂSIRE EMULATOR PENTRU „%s”"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "EROARE: NU S-A GĂSIT APLICAȚIA. A FOST INSTALATĂ CORESPUNZĂTOR?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "EROARE: NU S-A GĂSIT APLICAȚIA „%s”. A FOST INSTALATĂ CORESPUNZĂTOR?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "EROARE: NU S-A GĂSIT EMULATORUL. A FOST INSTALAT CORESPUNZĂTOR?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "EROARE: NU S-A GĂSIT EMULATORUL „%s”. A FOST INSTALAT CORESPUNZĂTOR?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "EROARE: NU S-A GĂSIT FIȘIERUL CU NUCLEUL EMULATORULUI „%s”"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "EROARE: INTRARE INVALIDĂ ÎN FIȘIERUL DE CONFIGURARE AL SISTEMELOR"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "EROARE: LIPSĂ CONFIGURAȚIE NUCLEU PENTRU „%s”"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "EROARE: INTRARE VARIABILĂ %s INVALIDĂ"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
 msgstr ""
-"Nu s-a putut salva fișierul media. Probleme cu permisiunea sau discul este "
-"plin?"
+"EROARE: DOSARUL DEFINIT DE %s NU A PUTUT FI CREAT. PROBLEMĂ DE PERMISIUNE?"
 
-msgid "Couldn't save resized image, permission problems or is the disk full?"
-msgstr ""
-"Nu s-a putut salva imaginea redimensionată. Probleme cu permisiunea sau "
-"discul este plin?"
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "EROARE: APLICAȚIA SAU FIȘIERUL ALIAS NU EXISTĂ SAU NU SE POATE CITI"
 
-msgctxt "metadata"
-msgid "NAME"
-msgstr "NUME"
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "EROARE: FIȘIER DESKTOP INVALID SAU NU SE POATE CITI"
 
-msgctxt "metadata"
-msgid "ENTER NAME"
-msgstr "INTRODU NUME"
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "EROARE: FIȘIER DESKTOP NU EXISTĂ SAU NU SE POATE CITI"
 
-msgctxt "metadata"
-msgid "SORTNAME"
-msgstr "NUME PT. SORTARE"
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "EROARE LA LANSAREA JOCULUI „%s” (COD EROARE %i)"
 
-msgctxt "metadata"
-msgid "ENTER SORTNAME"
-msgstr "INTRODU NUME PT. SORTARE"
-
-msgctxt "metadata"
-msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "NUME PT. SORTARE COLECȚIE PERSONALIZATĂ"
-
-msgctxt "metadata"
-msgid "ENTER COLLECTIONS SORTNAME"
-msgstr "INTRODU NUME PT. SORTARE COLECȚIE"
-
-msgctxt "metadata"
-msgid "DESCRIPTION"
-msgstr "DESCRIERE"
-
-msgctxt "metadata"
-msgid "ENTER DESCRIPTION"
-msgstr "INTRODU DESCRIERE"
-
-msgctxt "metadata"
 msgid "RATING"
 msgstr "SCOR"
 
-msgctxt "metadata"
-msgid "RELEASE DATE"
-msgstr "DATĂ LANSARE"
-
-msgctxt "metadata"
 msgid "DEVELOPER"
 msgstr "DEZVOLTATOR"
 
-msgctxt "metadata"
-msgid "ENTER DEVELOPER"
-msgstr "INTRODU DEZVOLTATOR"
-
-msgctxt "metadata"
 msgid "PUBLISHER"
 msgstr "EDITOR"
 
-msgctxt "metadata"
-msgid "ENTER PUBLISHER"
-msgstr "INTRODU EDITOR"
-
-msgctxt "metadata"
 msgid "GENRE"
 msgstr "GEN"
 
-msgctxt "metadata"
-msgid "ENTER GENRE"
-msgstr "INTRODU GEN"
-
-msgctxt "metadata"
 msgid "PLAYERS"
 msgstr "NUMĂR DE JUCĂTORI"
 
-msgctxt "metadata"
-msgid "ENTER NUMBER OF PLAYERS"
-msgstr "INTRODU NUMĂRUL DE JUCĂTORI"
-
-msgctxt "metadata"
 msgid "FAVORITE"
 msgstr "FAVORIT"
 
-msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "FINALIZAT"
 
-msgctxt "metadata"
 msgid "KIDGAME"
 msgstr "JOC PENTRU COPII"
 
-msgctxt "metadata"
-msgid "KIDGAME (ONLY AFFECTS BADGES)"
-msgstr "JOC PENTRU COPII (INFLUENȚEAZĂ DOAR INSIGNA)"
-
-msgctxt "metadata"
 msgid "HIDDEN"
 msgstr "ASCUNS"
 
-msgctxt "metadata"
-msgid "BROKEN/NOT WORKING"
-msgstr "STRICAT/NEFUNCȚIONAL"
+msgid "BROKEN"
+msgstr "STRICAT"
 
-msgctxt "metadata"
-msgid "EXCLUDE FROM GAME COUNTER"
-msgstr "EXCLUDE DIN NUMĂRĂTORUL DE JOCURI"
-
-msgctxt "metadata"
-msgid "EXCLUDE FROM MULTI-SCRAPER"
-msgstr "EXCLUDE DIN MULTI-PRELUATOR INFORMAȚII"
-
-msgctxt "metadata"
-msgid "HIDE METADATA FIELDS"
-msgstr "ASCUNDE CÂMPURILE DE METADATE"
-
-msgctxt "metadata"
-msgid "TIMES PLAYED"
-msgstr "NUMĂR PARTIDE JUCATE"
-
-msgctxt "metadata"
-msgid "ENTER NUMBER OF TIMES PLAYED"
-msgstr "INTRODU NUMĂR DE PARTIDE"
-
-msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "CONTROLER"
 
-msgctxt "metadata"
-msgid "SELECT CONTROLLER"
-msgstr "SELECTEAZĂ CONTROLER"
-
-msgctxt "metadata"
 msgid "ALTERNATIVE EMULATOR"
 msgstr "EMULATOR ALTERNATIV"
 
-msgctxt "metadata"
-msgid "SELECT ALTERNATIVE EMULATOR"
-msgstr "SELECTEAZĂ EMULATOR ALTERNATIV"
+msgid "FALSE"
+msgstr "FALS"
 
-msgctxt "metadata"
-msgid "FOLDER LINK"
-msgstr "LEGĂTURĂ DOSAR"
+msgid "TRUE"
+msgstr "ADEVĂRAT"
 
-msgctxt "metadata"
-msgid "SELECT FOLDER LINK"
-msgstr "ALEGE LEGĂTURĂ DOSAR"
+msgid "UNKNOWN"
+msgstr "NECUNOSCUT"
 
-msgctxt "metadata"
-msgid "LAST PLAYED"
-msgstr "JUCAT ULTIMA DATĂ"
+msgid "NONE SELECTED"
+msgstr "NICIUNUL SELECTAT"
 
-msgctxt "metadata"
-msgid "ENTER LAST PLAYED DATE"
-msgstr "INTRODU DATA ULTIMEI PARTIDE"
+msgid "name, ascending"
+msgstr "nume, ascendent"
+
+msgid "name, descending"
+msgstr "nume, descendent"
+
+msgid "rating, ascending"
+msgstr "scor, ascendent"
+
+msgid "rating, descending"
+msgstr "scor, descendent"
+
+msgid "release date, ascending"
+msgstr "data lansării, ascendent"
+
+msgid "release date, descending"
+msgstr "data lansării, descendent"
+
+msgid "developer, ascending"
+msgstr "dezvoltator, ascendent"
+
+msgid "developer, descending"
+msgstr "dezvoltator, descendent"
+
+msgid "publisher, ascending"
+msgstr "editor, ascendent"
+
+msgid "publisher, descending"
+msgstr "editor, descendent"
+
+msgid "genre, ascending"
+msgstr "gen, ascendent"
+
+msgid "genre, descending"
+msgstr "gen, descendent"
+
+msgid "players, ascending"
+msgstr "număr jucători, ascendent"
+
+msgid "players, descending"
+msgstr "număr jucători, descendent"
+
+msgid "last played, ascending"
+msgstr "jucat ultima dată, ascendent"
+
+msgid "last played, descending"
+msgstr "jucat ultima dată, descendent"
+
+msgid "times played, ascending"
+msgstr "nr. partide jucate, ascendent"
+
+msgid "times played, descending"
+msgstr "nr. partide jucate, descendent"
+
+msgid "system, ascending"
+msgstr "sistem, ascendent"
+
+msgid "system, descending"
+msgstr "sistem, descendent"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "EMULATOARE ALTERNATIVE"
+
+msgid "BACK"
+msgstr "ÎNAPOI"
+
+msgid "back"
+msgstr "înapoi"
+
+msgid "INVALID ENTRY"
+msgstr "INTRARE INVALIDĂ"
+
+msgid "CLEARED ENTRY"
+msgstr "INTRARE CURĂȚATĂ"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "NICIUN EMULATOR ALTERNATIV DEFINIT"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "CURĂȚĂ INTRAREA INVALIDĂ"
+
+msgid "DEFAULT"
+msgstr "IMPLICIT"
+
+msgid "select"
+msgstr "selectează"
+
+msgid "APPLICATION UPDATER"
+msgstr "ACTUALIZATOR APLICAȚIE"
+
+msgid "INSTALLATION STEPS:"
+msgstr "PAȘI INSTALARE:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "DESCARCĂ NOUA VERSIUNE"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "DESCARCĂ NOUA VERSIUNE ÎN ACEST DOSAR:"
+
+msgid "INSTALL PACKAGE"
+msgstr "INSTALEAZĂ PACHETUL"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "IEȘI ȘI REPORNEȘTE MANUAL ES-DE"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "IEȘI ȘI ACTUALIZEAZĂ MANUAL ES-DE"
+
+msgid "STATUS MESSAGE:"
+msgstr "MESAJ STARE:"
+
+msgid "DOWNLOAD"
+msgstr "DESCARCĂ"
+
+msgid "download new release"
+msgstr "descarcă noua versiune"
+
+msgid "Download directory does not exist"
+msgstr "Dosarul pentru descărcare nu există"
+
+msgid "CHANGE DIRECTORY"
+msgstr "SCHIMBĂ DOSARUL"
+
+msgid "change download directory"
+msgstr "schimbă dosarul pentru descărcare"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "INTRODU DOSARUL PENTRU DESCĂRCARE"
+
+msgid "CANCEL"
+msgstr "ANULEAZĂ"
+
+msgid "cancel"
+msgstr "anulează"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "DESCĂRCARE ANULATĂ"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "NICIUN PACHET SALVAT PE DISC"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "PACHETUL A FOST DESCĂRCAT ȘI POATE FI INSTALAT MANUAL"
+
+msgid "DOWNLOADING 100%"
+msgstr "SE DESCARCĂ 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "Fișierul descărcat nu se potrivește cu suma MD5"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr ""
+"Eroare: Nu s-a putut șterge fișierul pachet temporar. Probleme cu "
+"permisiunea?"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr "Eroare: Nu s-a putut scrie fișierul pachet. Probleme cu permisiunea?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "Eroare: Nu s-au putut seta permisiunile pe fișierul AppImage"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "S-a descărcat %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr ""
+"Eroare: Nu s-a putut deschide fișierul de actualizare AppImage pentru citire"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr "Eroare: Fișierul descărcat nu se potrivește cu suma de control MD5"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"Eroare: Nu s-a putut redenumi fișierul AppImage care rulează. Probleme cu "
+"permisiunea?"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"Eroare: Nu s-a putut înlocui fișierul AppImage care rulează. Probleme cu "
+"permisiunea?"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "S-a instalat cu succes ca %s"
+
+msgid "DOWNLOADING"
+msgstr "SE DESCARCĂ"
+
+msgid "INSTALL"
+msgstr "INSTALEAZĂ"
+
+msgid "install package"
+msgstr "instalează pachetul"
+
+msgid "Find the detailed changelog at"
+msgstr "Găsește lista de noutăți detaliată la"
+
+msgid "QUIT"
+msgstr "IEȘIRE"
+
+msgid "quit application"
+msgstr "ieși din aplicație"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "TERMINĂ DE EDITAT COLECȚIA „%s”"
+
+msgid "SELECT COLLECTIONS"
+msgstr "SELECTEAZĂ COLECȚIILE"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "COLECȚII DE JOCURI AUTOMATE"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "COLECȚII DE JOCURI PERSONALIZATE"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "CREEAZĂ O NOUĂ COLECȚIE PERSONALIZATĂ DIN TEMĂ"
+
+msgid "SELECT THEME FOLDER"
+msgstr "SELECTEAZĂ DOSARUL TEMEI"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "CREEAZĂ O NOUĂ COLECȚIE PERSONALIZATĂ"
+
+msgid "NEW COLLECTION NAME"
+msgstr "DENUMEȘTE NOUA COLECȚIE"
+
+msgid "CREATE"
+msgstr "CREEAZĂ"
+
+msgid "CREATE COLLECTION?"
+msgstr "CREEZI COLECȚIA?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "ȘTERGE O COLECȚIE PERSONALIZATĂ"
+
+msgid "COLLECTION TO DELETE"
+msgstr "COLECȚIA DE ȘTERS"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"ACEST LUCRU VA ȘTERGE PERMANENT COLECȚIA\n"
+"'%s'\n"
+"EȘTI SIGUR?"
+
+msgid "YES"
+msgstr "DA"
+
+msgid "NO"
+msgstr "NU"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "GRUPEAZĂ COLECȚIILE PERSONALIZATE"
+
+msgid "IF UNTHEMED"
+msgstr "FĂRĂ TEMĂ"
+
+msgid "ALWAYS"
+msgstr "MEREU"
+
+msgid "NEVER"
+msgstr "NICIODATĂ"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "AFIȘEAZĂ FAVORITELE LA ÎNCEPUT PENTRU COLECȚII"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "AFIȘEAZĂ O STEA PENTRU COLECȚIILE PERSONALIZATE"
+
+msgid "FILTER GAMELIST"
+msgstr "FILTREAZĂ LISTA DE JOCURI"
+
+msgid "RESET ALL FILTERS"
+msgstr "RESETEAZĂ TOATE FILTRELE"
+
+msgid "GAME NAME"
+msgstr "NUME JOC"
+
+msgid "APPLY CHANGES?"
+msgstr "APLICI MODIFICĂRILE?"
+
+msgid "NOTHING TO FILTER"
+msgstr "NIMIC DE FILTRAT"
+
+msgid "GAMELIST OPTIONS"
+msgstr "OPȚIUNI LISTĂ DE JOCURI"
+
+msgid "JUMP TO..."
+msgstr "SARI LA..."
+
+msgid "SORT GAMES BY"
+msgstr "SORTEAZĂ JOCURILE DUPĂ"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "ACEST SISTEM NU ARE JOCURI"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "ADAUGĂ/ELIMINĂ JOCURI LA ACEASTĂ COLECȚIE"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "EDITEAZĂ METADATELE ACESTUI DOSAR"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "EDITEAZĂ METADATELE ACESTUI JOC"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "INTRODU DOSAR (SUPRASCRIE LEGĂTURA DE DOSAR)"
+
+msgid "CLOSE"
+msgstr "ÎNCHIDE"
+
+msgid "close"
+msgstr "închide"
+
+msgid "APPLY"
+msgstr "APLICĂ"
+
+msgid "apply"
+msgstr "aplică"
+
+msgid "close (apply)"
+msgstr "închide (aplică)"
+
+msgid "close (cancel)"
+msgstr "închide (anulează)"
+
+msgid "LAUNCHING GAME"
+msgstr "SE LANSEAZĂ JOCUL"
+
+msgid "HELP PROMPTS"
+msgstr "MESAJE DE AJUTOR"
+
+msgid "TOP"
+msgstr "SUS"
+
+msgid "BOTTOM"
+msgstr "JOS"
+
+msgid "DISABLED"
+msgstr "DEZACTIVAT"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "AFIȘEAZĂ TIPURILE DE MEDIA"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "LASĂ VIDEOURILE SĂ RULEZE LA AFIȘAREA IMAGINILOR"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "ÎNTINDE VIDEOCLIPURILE LA REZOLUȚIA ECRANULUI"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "REDĂ LINII SCANARE PENTRU VIDEOCLIPURI"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "REDĂ BLUR PENTRU VIDEOCLIPURI"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "REDĂ LINII SCANARE PT. CAPTURI ECRAN ȘI TITLURI"
 
 msgid "MAIN MENU"
 msgstr "MENIU PRINCIPAL"
@@ -260,9 +642,6 @@ msgstr "UTILITARE"
 
 msgid "QUIT ES-DE"
 msgstr "IEȘI DIN ES-DE"
-
-msgid "QUIT"
-msgstr "IEȘIRE"
 
 msgid "THEME"
 msgstr "TEMĂ"
@@ -326,9 +705,6 @@ msgstr "TRĂGACE"
 
 msgid "LEFT/RIGHT"
 msgstr "STÂNGA/DREAPTA"
-
-msgid "DISABLED"
-msgstr "DEZACTIVAT"
 
 msgid "GAMELIST ON STARTUP"
 msgstr "LISTA DE JOCURI LA LANSARE"
@@ -441,12 +817,6 @@ msgstr ""
 "\n"
 "DOREȘTI SĂ CONTINUI?"
 
-msgid "YES"
-msgstr "DA"
-
-msgid "NO"
-msgstr "NU"
-
 msgid "RANDOM ENTRY BUTTON"
 msgstr "BUTON ALEGERE ALEATORIE"
 
@@ -491,6 +861,12 @@ msgstr "ACTIVEAZĂ FILTRE LISTĂ DE JOCURI"
 
 msgid "DISPLAY ON-SCREEN HELP"
 msgstr "AFIȘEAZĂ AJUTOR PE ECRAN"
+
+msgid "AUDIO DRIVER"
+msgstr "DRIVER AUDIO"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "DRIVER AUDIO (NECESITĂ REPORNIRE)"
 
 msgid "SYSTEM VOLUME"
 msgstr "VOLUM SISTEM"
@@ -559,9 +935,6 @@ msgstr ""
 "SETARE DIN NOU SAU POȚI ȘTERGE DATELE APLICAȚIEI DIN SETĂRILE APLICAȚIEI "
 "ANDROID PENTRU A FORȚA REINIȚIALIZAREA SETĂRILOR LA URMĂTOAREA PORNIRE"
 
-msgid "OK"
-msgstr "OK"
-
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
 msgstr "ACCEPTĂ INTRARE DOAR DE LA PRIMUL CONTROLER"
 
@@ -585,12 +958,6 @@ msgstr ""
 
 msgid "PROCEED"
 msgstr "CONTINUĂ"
-
-msgid "CANCEL"
-msgstr "ANULEAZĂ"
-
-msgid "ALTERNATIVE EMULATORS"
-msgstr "EMULATOARE ALTERNATIVE"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "DOSAR FIȘIERE MEDIA JOC"
@@ -653,14 +1020,8 @@ msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "MOMENT SALVARE METADATE"
 
-msgid "ALWAYS"
-msgstr "MEREU"
-
 msgid "ON EXIT"
 msgstr "LA IEȘIRE"
-
-msgid "NEVER"
-msgstr "NICIODATĂ"
 
 msgid "WHEN TO SAVE GAME METADATA"
 msgstr "CÂND SE SALVEAZĂ METADATELE JOCULUI"
@@ -796,23 +1157,303 @@ msgstr "SETĂRI ECONOMIZOR ECRAN"
 msgid "choose"
 msgstr "alege"
 
-msgid "select"
-msgstr "selectează"
-
 msgid "close menu"
 msgstr "închide meniul"
 
-msgid "REFINE SEARCH"
-msgstr "RAFINEAZĂ CĂUTAREA"
+msgid "EDIT METADATA"
+msgstr "EDITEAZĂ METADATELE"
 
-msgid "refine search"
-msgstr "rafinează căutarea"
+msgid "CLEAR ENTRY"
+msgstr "CURĂȚĂ INTRAREA"
 
-msgid "cancel"
-msgstr "anulează"
+msgid "SELECT EMULATOR"
+msgstr "SELECTEAZĂ EMULATORUL"
 
-msgid "back (cancel)"
-msgstr "înapoi (anulează)"
+msgid "SYSTEM-WIDE"
+msgstr "PER SISTEM"
+
+msgid "unknown"
+msgstr "necunoscut"
+
+msgid "SCRAPE"
+msgstr "PREIA INFO"
+
+msgid "scrape"
+msgstr "preia info"
+
+msgid "save metadata"
+msgstr "salvează metadatele"
+
+msgid "cancel changes"
+msgstr "anulează modificările"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"ACEST LUCRU VA ȘTERGE ORICE FIȘIERE MEDIA ȘI INTRĂRILE DIN GAMELIST.XML "
+"PENTRU ACEST DOSAR, DAR NICI DIRECTORUL, NICI CONȚINUTUL DIN ACESTA NU VOR "
+"FI ȘTERSE\n"
+"EȘTI SIGUR?"
+
+msgid "CLEAR"
+msgstr "CURĂȚĂ"
+
+msgid "clear folder"
+msgstr "curăță dosarul"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"ACEST LUCRU VA ȘTERGE ORICE FIȘIERE MEDIA ȘI INTRAREA DIN GAMELIST.XML "
+"PENTRU ACEST JOC, DAR FIȘIERUL DE JOC ÎN SINE NU VA FI ȘTERS\n"
+"EȘTI SIGUR?"
+
+msgid "clear file"
+msgstr "curăță fișierul"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"ACEST LUCRU VA ȘTERGE FIȘIERUL DE JOC, ORICE FIȘIERE MEDIA ȘI INTRAREA DIN "
+"GAMELIST.XML\n"
+"EȘTI SIGUR?"
+
+msgid "DELETE"
+msgstr "ȘTERGE"
+
+msgid "delete game"
+msgstr "șterge jocul"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "GENERATOR OFFLINE DE IMAGINI MIX"
+
+msgid "NOT STARTED"
+msgstr "NU S-A ÎNCEPUT"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i DIN %i JOC PROCESAT"
+msgstr[1] "%i DIN %i JOCURI PROCESATE"
+msgstr[2] "%i DIN %i DE JOCURI PROCESATE"
+
+msgid "Generated:"
+msgstr "Generate:"
+
+msgid "Overwritten:"
+msgstr "Suprascrise:"
+
+msgid "Skipped:"
+msgstr "Omise:"
+
+msgid "Skipped (existing):"
+msgstr "Omise (existente):"
+
+msgid "Failed:"
+msgstr "Eșuate:"
+
+msgid "Processing:"
+msgstr "Se procesează:"
+
+msgid "Last error message:"
+msgstr "Ultimul mesaj de eroare:"
+
+msgid "START"
+msgstr "START"
+
+msgid "start processing"
+msgstr "începe procesarea"
+
+msgid "PAUSE"
+msgstr "SUSPENDĂ"
+
+msgid "pause processing"
+msgstr "suspendă procesarea"
+
+msgid "close (abort processing)"
+msgstr "închide (anulează procesarea)"
+
+msgid "RUNNING..."
+msgstr "RULEAZĂ..."
+
+msgid "PAUSED"
+msgstr "SUSPENDAT"
+
+msgid "RUNNING"
+msgstr "RULEAZĂ"
+
+msgid "DONE"
+msgstr "GATA"
+
+msgid "done (close)"
+msgstr "gata (închide)"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"ACEST LUCRU VA ELIMINA TOATE FIȘIERELE MEDIA PENTRU CARE NU SE GĂSEȘTE "
+"NICIUN FIȘIER DE JOC ASOCIAT. ACESTE FIȘIERE VOR FI MUTATE ÎNTR-UN DOSAR DE "
+"CURĂȚENIE ÎN INTERIORUL DOSARULUI MEDIA. POȚI ȘTERGE MANUAL ACEST DOSAR."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"ACEST LUCRU VA ELIMINA TOATE INTRĂRILE DIN FIȘIERELE TALE GAMELIST.XML CARE "
+"NU AU NICIUN FIȘIER DE JOC ASOCIAT. COPII DE SIGURANȚĂ ALE FIȘIERELOR "
+"ORIGINALE VOR FI SALVATE ÎNTR-UN DOSAR DE CURĂȚENIE ÎN INTERIORUL DOSARULUI "
+"CU LISTELE DE JOCURI. POȚI ȘTERGE MANUAL ACEST DOSAR."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"ACEST LUCRU VA ELIMINA TOATE INTRĂRILE DIN FIȘIERELE DE CONFIGURARE ALE "
+"COLECȚIILOR PERSONALIZATE PENTRU CARE NU SE GĂSESC FIȘIERE DE JOC ASOCIATE. "
+"COPII DE SIGURANȚĂ ALE FIȘIERELOR ORIGINALE VOR FI SALVATE ÎN DOSARUL "
+"COLECȚIILOR. DOAR COLECȚIILE ÎN PREZENT ACTIVATE VOR FI PROCESATE."
+
+msgid "DESCRIPTION:"
+msgstr "DESCRIERE:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "INTRĂRI TOTALE ELIMINATE:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "ULTIMUL SISTEM PARCURS:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "ULTIMUL MESAJ DE EROARE:"
+
+msgid "MEDIA"
+msgstr "MEDIA"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "SE RULEAZĂ CURĂȚAREA MEDIA"
+
+msgid "STOP"
+msgstr "STOP"
+
+msgid "stop processing"
+msgstr "oprește procesarea"
+
+msgid "GAMELISTS"
+msgstr "LISTE DE JOCURI"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "SE RULEAZĂ CURĂȚAREA LISTELOR DE JOCURI"
+
+msgid "COLLECTIONS"
+msgstr "COLECȚII"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "CURĂȚAREA COLECȚIILOR A EȘUAT"
+
+msgid "There are no enabled custom collections"
+msgstr "Nu există colecții personalizate activate"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "SE RULEAZĂ CURĂȚAREA COLECȚIILOR"
+
+msgid "PROCESSING"
+msgstr "SE PROCESEAZĂ"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "A fost găsit un fișier flatten.txt, se omite „%s”"
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "Nu s-a putut crea dosarul destinație. Probleme cu permisiunea?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "Nu s-a putut muta fișierul media. Probleme cu permisiunea?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "Nu s-a putut parcurge fișierul gamelist.xml pentru „%s”"
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "Nu s-a putut găsi o etichetă gamelist în fișier pentru „%s”"
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr ""
+"Nu s-a putut șterge fișierul temporar gamelist. Probleme cu permisiunea?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr ""
+"Nu s-a putut scrie în fișierul temporar gamelist. Probleme cu permisiunea?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr ""
+"Nu s-a putut crea dosarul pentru copia de siguranță. Probleme cu permisiunea?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "Nu s-a putut muta vechiul fișier gamelist. Probleme cu permisiunea?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr "Nu s-a putut muta fișierul temporar gamelist. Probleme cu permisiunea?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "Nu s-a găsit fișierul de configurare al colecției personalizate"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr ""
+"Nu s-a putut deschide fișierul de configurare al colecției personalizate"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr ""
+"Nu s-a putut șterge fișierul temporar al colecției. Probleme cu permisiunea?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "Nu s-a putut scrie în fișierul temporar de configurație al colecției"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr ""
+"Nu s-a putut muta fișierul vechi al colecției. Probleme cu permisiunea?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr ""
+"Nu s-a putut musta fișierul temporar al colecției. Probleme cu permisiunea?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "CURĂȚAREA MEDIA A FOST ANULATĂ"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "CURĂȚAREA MEDIA A FOST FINALIZATĂ"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "CURĂȚAREA LISTELOR DE JOCURI A FOST ANULATĂ"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "CURĂȚAREA LISTELOR DE JOCURI A FOST FINALIZATĂ"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "CURĂȚAREA COLECȚIILOR FOST ANULATĂ"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "CURĂȚAREA COLECȚIILOR FOST FINALIZATĂ"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "CURĂȚAREA MEDIA A EȘUAT"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "CURĂȚAREA LISTELOR DE JOCURI A EȘUAT"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "APLICAȚIA VA FI REPORNITĂ DUPĂ ÎNCHIDEREA ACESTUI UTILITAR."
 
 msgid "SCRAPE FROM"
 msgstr "PREIA INFORMAȚIILE DE LA"
@@ -850,17 +1491,8 @@ msgstr "SETĂRI CONȚINUT"
 msgid "MIXIMAGE SETTINGS"
 msgstr "SETĂRI IMAGINE MIX"
 
-msgid "START"
-msgstr "START"
-
 msgid "start scraper"
 msgstr "începe preluarea"
-
-msgid "BACK"
-msgstr "ÎNAPOI"
-
-msgid "back"
-msgstr "înapoi"
 
 msgid "SCREENSCRAPER USERNAME"
 msgstr "UTILIZATOR SCREENSCRAPER"
@@ -1093,91 +1725,95 @@ msgstr "TE ROG ALEGE CEL PUȚIN UN TIP DE CONȚINUT PENTRU PRELUARE"
 msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
 msgstr "TOATE JOCURILE AU FOST FILTRATE. NIMIC DE PRELUAT"
 
-msgid "HELP PROMPTS"
-msgstr "MESAJE DE AJUTOR"
+msgid "SCRAPING IN PROGRESS"
+msgstr "PRELUARE ÎN CURS"
 
-msgid "TOP"
-msgstr "SUS"
+msgid "SYSTEM"
+msgstr "SISTEM"
 
-msgid "BOTTOM"
-msgstr "JOS"
+msgid "REFINE SEARCH"
+msgstr "RAFINEAZĂ CĂUTAREA"
 
-msgid "DISPLAY MEDIA TYPES"
-msgstr "AFIȘEAZĂ TIPURILE DE MEDIA"
+msgid "refine search"
+msgstr "rafinează căutarea"
 
-msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
-msgstr "LASĂ VIDEOURILE SĂ RULEZE LA AFIȘAREA IMAGINILOR"
+msgid "SKIP"
+msgstr "OMITE"
 
-msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
-msgstr "ÎNTINDE VIDEOCLIPURILE LA REZOLUȚIA ECRANULUI"
+msgid "skip game"
+msgstr "omite jocul"
 
-msgid "RENDER SCANLINES FOR VIDEOS"
-msgstr "REDĂ LINII SCANARE PENTRU VIDEOCLIPURI"
+msgid "stop"
+msgstr "stop"
 
-msgid "RENDER BLUR FOR VIDEOS"
-msgstr "REDĂ BLUR PENTRU VIDEOCLIPURI"
-
-msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
-msgstr "REDĂ LINII SCANARE PT. CAPTURI ECRAN ȘI TITLURI"
-
-#, c-format
-msgid "FINISH EDITING '%s' COLLECTION"
-msgstr "TERMINĂ DE EDITAT COLECȚIA „%s”"
-
-msgid "SELECT COLLECTIONS"
-msgstr "SELECTEAZĂ COLECȚIILE"
-
-msgid "AUTOMATIC GAME COLLECTIONS"
-msgstr "COLECȚII DE JOCURI AUTOMATE"
-
-msgid "CUSTOM GAME COLLECTIONS"
-msgstr "COLECȚII DE JOCURI PERSONALIZATE"
-
-msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
-msgstr "CREEAZĂ O NOUĂ COLECȚIE PERSONALIZATĂ DIN TEMĂ"
-
-msgid "SELECT THEME FOLDER"
-msgstr "SELECTEAZĂ DOSARUL TEMEI"
-
-msgid "CREATE NEW CUSTOM COLLECTION"
-msgstr "CREEAZĂ O NOUĂ COLECȚIE PERSONALIZATĂ"
-
-msgid "NEW COLLECTION NAME"
-msgstr "DENUMEȘTE NOUA COLECȚIE"
-
-msgid "CREATE"
-msgstr "CREEAZĂ"
-
-msgid "CREATE COLLECTION?"
-msgstr "CREEZI COLECȚIA?"
-
-msgid "DELETE CUSTOM COLLECTION"
-msgstr "ȘTERGE O COLECȚIE PERSONALIZATĂ"
-
-msgid "COLLECTION TO DELETE"
-msgstr "COLECȚIA DE ȘTERS"
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "JOC"
+msgstr[1] "JOCURI"
+msgstr[2] "DE JOCURI"
 
 #, c-format
-msgid ""
-"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
-"'%s'\n"
-"ARE YOU SURE?"
-msgstr ""
-"ACEST LUCRU VA ȘTERGE PERMANENT COLECȚIA\n"
-"'%s'\n"
-"EȘTI SIGUR?"
+msgid "GAME %i OF %i"
+msgstr "JOCUL %i DIN %i"
 
-msgid "GROUP CUSTOM COLLECTIONS"
-msgstr "GRUPEAZĂ COLECȚIILE PERSONALIZATE"
+msgid "NO GAMES WERE SCRAPED"
+msgstr "NICIO INFORMAȚIE NU A FOST PRELUATĂ"
 
-msgid "IF UNTHEMED"
-msgstr "FĂRĂ TEMĂ"
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "INFORMAȚIE PENTRU %i JOC A FOST PRELUATĂ"
+msgstr[1] "INFORMAȚII PENTRU %i JOCURI AU FOST PRELUATE"
+msgstr[2] "INFORMAȚII PENTRU %i DE JOCURI AU FOST PRELUATE"
 
-msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr "AFIȘEAZĂ FAVORITELE LA ÎNCEPUT PENTRU COLECȚII"
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i JOC A FOST OMIS"
+msgstr[1] "%i JOCURI AU FOST OMISE"
+msgstr[2] "%i DE JOCURI AU FOST OMISE"
 
-msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "AFIȘEAZĂ O STEA PENTRU COLECȚIILE PERSONALIZATE"
+msgid "RATING:"
+msgstr "SCOR:"
+
+msgid "RELEASED:"
+msgstr "LANSAT:"
+
+msgid "DEVELOPER:"
+msgstr "DEZVOLTATOR:"
+
+msgid "PUBLISHER:"
+msgstr "EDITOR:"
+
+msgid "GENRE:"
+msgstr "GEN:"
+
+msgid "PLAYERS:"
+msgstr "NR. JUCĂTORI:"
+
+msgid "NO GAMES FOUND"
+msgstr "NU S-AU GĂSIT JOCURI"
+
+msgid "RETRY"
+msgstr "REÎNCEARCĂ"
+
+msgid "Error downloading thumbnail:"
+msgstr "Eroare la descărcarea miniaturii:"
+
+msgid "SEARCH"
+msgstr "CAUTĂ"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "CAUȚI FOLOSIND NUME RAFINAT?"
+
+msgid "skip"
+msgstr "omite"
+
+msgid "accept result"
+msgstr "acceptă rezultatul"
+
+msgid "back (cancel)"
+msgstr "înapoi (anulează)"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
 msgstr "INTERVAL PORNIRE ECONOMIZOR ECRAN"
@@ -1238,30 +1874,6 @@ msgstr "SCHIMBĂ VIDEOCLIPUL DUPĂ"
 
 msgid "RENDER BLUR"
 msgstr "REDĂ BLUR"
-
-msgid "FILTER GAMELIST"
-msgstr "FILTREAZĂ LISTA DE JOCURI"
-
-msgid "RESET ALL FILTERS"
-msgstr "RESETEAZĂ TOATE FILTRELE"
-
-msgid "GAME NAME"
-msgstr "NUME JOC"
-
-msgid "APPLY CHANGES?"
-msgstr "APLICI MODIFICĂRILE?"
-
-msgid "NOTHING TO FILTER"
-msgstr "NIMIC DE FILTRAT"
-
-msgid "LAUNCHING GAME"
-msgstr "SE LANSEAZĂ JOCUL"
-
-msgid "CLOSE"
-msgstr "ÎNCHIDE"
-
-msgid "close"
-msgstr "închide"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "SE DESCARCĂ LISTA DE TEME 100%"
@@ -1340,6 +1952,17 @@ msgstr ""
 
 #, c-format
 msgid ""
+"THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
+"THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
+"THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
+msgstr ""
+"REPOSITORY-UL CLONAT LOCAL CONȚINE URL-UL GREȘIT, CEEA CE ÎN MOD NORMAL "
+"ÎNSEAMNĂ CĂ TEMA A FOST MUTATĂ PE UN NOU SITE GIT. O DESCĂRCARE NOUĂ ESTE "
+"NECESARĂ ȘI VECHIUL DOSAR AL TEMEI „%s” VA FI REDENUMIT LA "
+"„%s_WRONG_URL_DISABLED”"
+
+#, c-format
+msgid ""
 "THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
 "CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
 msgstr ""
@@ -1380,6 +2003,9 @@ msgstr "NEINSTALATĂ (NOUĂ)"
 msgid "NOT INSTALLED"
 msgstr "NEINSTALATĂ"
 
+msgid "WRONG URL"
+msgstr "URL GREȘIT"
+
 msgid "LOCAL CHANGES"
 msgstr "MODIFICĂRI LOCALE"
 
@@ -1394,9 +2020,6 @@ msgstr "EROARE:"
 
 msgid "COULDN'T DOWNLOAD THEMES LIST"
 msgstr "NU S-A PUTUT DESCĂRCA LISTA DE TEME"
-
-msgid "DOWNLOADING"
-msgstr "SE DESCARCĂ"
 
 msgid "DOWNLOADING THEMES LIST"
 msgstr "SE DESCARCĂ LISTA DE TEME"
@@ -1455,766 +2078,286 @@ msgstr ""
 "TEMĂ VEI DESCĂRCA. IA AMINTE CĂ NU POȚI OPRI O DESCĂRCARE ÎN CURS DEOARECE "
 "ACEST LUCRU POATE DUCE LA CORUPERE DE DATE."
 
-msgid "RATING:"
-msgstr "SCOR:"
+msgid "browse"
+msgstr "răsfoiește"
 
-msgid "RELEASED:"
-msgstr "LANSAT:"
+msgid "pdf manual"
+msgstr "manual pdf"
 
-msgid "DEVELOPER:"
-msgstr "DEZVOLTATOR:"
+msgid "first"
+msgstr "început"
 
-msgid "PUBLISHER:"
-msgstr "EDITOR:"
+msgid "last"
+msgstr "final"
 
-msgid "GENRE:"
-msgstr "GEN:"
+msgid "SCREENSHOT"
+msgstr "CAPTURĂ DE ECRAN"
 
-msgid "PLAYERS:"
-msgstr "NR. JUCĂTORI:"
+msgid "BOX COVER"
+msgstr "COPERTĂ CUTIE"
 
-msgid "NO GAMES FOUND"
-msgstr "NU S-AU GĂSIT JOCURI"
+msgid "BOX BACK COVER"
+msgstr "COPERTĂ SPATE CUTIE"
 
-msgid "RETRY"
-msgstr "REÎNCEARCĂ"
+msgid "TITLE SCREEN"
+msgstr "ECRAN TITLU"
 
-msgid "SKIP"
-msgstr "OMITE"
+msgid "FAN ART"
+msgstr "FAN ART"
 
-msgid "Error downloading thumbnail:"
-msgstr "Eroare la descărcarea miniaturii:"
+msgid "MIXIMAGE"
+msgstr "IMAGINE MIX"
 
-msgid "SEARCH"
-msgstr "CAUTĂ"
+msgid "CUSTOM"
+msgstr "PERSONALIZAT"
 
-msgid "SEARCH USING REFINED NAME?"
-msgstr "CAUȚI FOLOSIND NUME RAFINAT?"
+msgctxt "metadata"
+msgid "NAME"
+msgstr "NUME"
 
-msgid "skip"
-msgstr "omite"
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "INTRODU NUME"
 
-msgid "accept result"
-msgstr "acceptă rezultatul"
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "NUME PT. SORTARE"
 
-msgid "SCRAPING IN PROGRESS"
-msgstr "PRELUARE ÎN CURS"
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "INTRODU NUME PT. SORTARE"
 
-msgid "SYSTEM"
-msgstr "SISTEM"
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "NUME PT. SORTARE COLECȚIE PERSONALIZATĂ"
 
-msgid "skip game"
-msgstr "omite jocul"
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "INTRODU NUME PT. SORTARE COLECȚIE"
 
-msgid "STOP"
-msgstr "STOP"
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "DESCRIERE"
 
-msgid "stop"
-msgstr "stop"
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "INTRODU DESCRIERE"
 
-msgid "GAME"
-msgid_plural "GAMES"
-msgstr[0] "JOC"
-msgstr[1] "JOCURI"
-msgstr[2] "DE JOCURI"
+msgctxt "metadata"
+msgid "RATING"
+msgstr "SCOR"
 
-#, c-format
-msgid "GAME %i OF %i"
-msgstr "JOCUL %i DIN %i"
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "DATĂ LANSARE"
 
-msgid "NO GAMES WERE SCRAPED"
-msgstr "NICIO INFORMAȚIE NU A FOST PRELUATĂ"
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "DEZVOLTATOR"
 
-#, c-format
-msgid "%i GAME SUCCESSFULLY SCRAPED"
-msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] "INFORMAȚIE PENTRU %i JOC A FOST PRELUATĂ"
-msgstr[1] "INFORMAȚII PENTRU %i JOCURI AU FOST PRELUATE"
-msgstr[2] "INFORMAȚII PENTRU %i DE JOCURI AU FOST PRELUATE"
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "INTRODU DEZVOLTATOR"
 
-#, c-format
-msgid "%i GAME SKIPPED"
-msgid_plural "%i GAMES SKIPPED"
-msgstr[0] "%i JOC A FOST OMIS"
-msgstr[1] "%i JOCURI AU FOST OMISE"
-msgstr[2] "%i DE JOCURI AU FOST OMISE"
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "EDITOR"
 
-msgid "GAMELIST OPTIONS"
-msgstr "OPȚIUNI LISTĂ DE JOCURI"
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "INTRODU EDITOR"
 
-msgid "JUMP TO..."
-msgstr "SARI LA..."
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "GEN"
 
-msgid "SORT GAMES BY"
-msgstr "SORTEAZĂ JOCURILE DUPĂ"
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "INTRODU GEN"
 
-msgid "THIS SYSTEM HAS NO GAMES"
-msgstr "ACEST SISTEM NU ARE JOCURI"
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "NUMĂR DE JUCĂTORI"
 
-msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
-msgstr "ADAUGĂ/ELIMINĂ JOCURI LA ACEASTĂ COLECȚIE"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "INTRODU NUMĂRUL DE JUCĂTORI"
 
-msgid "EDIT THIS FOLDER'S METADATA"
-msgstr "EDITEAZĂ METADATELE ACESTUI DOSAR"
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "FAVORIT"
 
-msgid "EDIT THIS GAME'S METADATA"
-msgstr "EDITEAZĂ METADATELE ACESTUI JOC"
-
-msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
-msgstr "INTRODU DOSAR (SUPRASCRIE LEGĂTURA DE DOSAR)"
-
-msgid "APPLY"
-msgstr "APLICĂ"
-
-msgid "apply"
-msgstr "aplică"
-
-msgid "close (apply)"
-msgstr "închide (aplică)"
-
-msgid "close (cancel)"
-msgstr "închide (anulează)"
-
-msgid ""
-"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
-"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
-"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
-"LONGER NEEDED."
-msgstr ""
-"ACEST LUCRU VA ELIMINA TOATE FIȘIERELE MEDIA PENTRU CARE NU SE GĂSEȘTE "
-"NICIUN FIȘIER DE JOC ASOCIAT. ACESTE FIȘIERE VOR FI MUTATE ÎNTR-UN DOSAR DE "
-"CURĂȚENIE ÎN INTERIORUL DOSARULUI MEDIA. POȚI ȘTERGE MANUAL ACEST DOSAR."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
-"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
-"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
-"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
-msgstr ""
-"ACEST LUCRU VA ELIMINA TOATE INTRĂRILE DIN FIȘIERELE TALE GAMELIST.XML CARE "
-"NU AU NICIUN FIȘIER DE JOC ASOCIAT. COPII DE SIGURANȚĂ ALE FIȘIERELOR "
-"ORIGINALE VOR FI SALVATE ÎNTR-UN DOSAR DE CURĂȚENIE ÎN INTERIORUL DOSARULUI "
-"CU LISTELE DE JOCURI. POȚI ȘTERGE MANUAL ACEST DOSAR."
-
-msgid ""
-"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
-"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
-"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
-"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
-msgstr ""
-"ACEST LUCRU VA ELIMINA TOATE INTRĂRILE DIN FIȘIERELE DE CONFIGURARE ALE "
-"COLECȚIILOR PERSONALIZATE PENTRU CARE NU SE GĂSESC FIȘIERE DE JOC ASOCIATE. "
-"COPII DE SIGURANȚĂ ALE FIȘIERELOR ORIGINALE VOR FI SALVATE ÎN DOSARUL "
-"COLECȚIILOR. DOAR COLECȚIILE ÎN PREZENT ACTIVATE VOR FI PROCESATE."
-
-msgid "NOT STARTED"
-msgstr "NU S-A ÎNCEPUT"
-
-msgid "DESCRIPTION:"
-msgstr "DESCRIERE:"
-
-msgid "TOTAL ENTRIES REMOVED:"
-msgstr "INTRĂRI TOTALE ELIMINATE:"
-
-msgid "LAST PROCESSED SYSTEM:"
-msgstr "ULTIMUL SISTEM PARCURS:"
-
-msgid "LAST ERROR MESSAGE:"
-msgstr "ULTIMUL MESAJ DE EROARE:"
-
-msgid "MEDIA"
-msgstr "MEDIA"
-
-msgid "start processing"
-msgstr "începe procesarea"
-
-msgid "RUNNING MEDIA CLEANUP"
-msgstr "SE RULEAZĂ CURĂȚAREA MEDIA"
-
-msgid "stop processing"
-msgstr "oprește procesarea"
-
-msgid "GAMELISTS"
-msgstr "LISTE DE JOCURI"
-
-msgid "RUNNING GAMELISTS CLEANUP"
-msgstr "SE RULEAZĂ CURĂȚAREA LISTELOR DE JOCURI"
-
-msgid "COLLECTIONS"
-msgstr "COLECȚII"
-
-msgid "COLLECTIONS CLEANUP FAILED"
-msgstr "CURĂȚAREA COLECȚIILOR A EȘUAT"
-
-msgid "There are no enabled custom collections"
-msgstr "Nu există colecții personalizate activate"
-
-msgid "RUNNING COLLECTIONS CLEANUP"
-msgstr "SE RULEAZĂ CURĂȚAREA COLECȚIILOR"
-
-msgid "PROCESSING"
-msgstr "SE PROCESEAZĂ"
-
-#, c-format
-msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr "A fost găsit un fișier flatten.txt, se omite „%s”"
-
-msgid "Couldn't create target directory, permission problems?"
-msgstr "Nu s-a putut crea dosarul destinație. Probleme cu permisiunea?"
-
-msgid "Couldn't move media file, permission problems?"
-msgstr "Nu s-a putut muta fișierul media. Probleme cu permisiunea?"
-
-#, c-format
-msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr "Nu s-a putut parcurge fișierul gamelist.xml pentru „%s”"
-
-#, c-format
-msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr "Nu s-a putut găsi o etichetă gamelist în fișier pentru „%s”"
-
-msgid "Couldn't delete temporary gamelist file, permission problems?"
-msgstr ""
-"Nu s-a putut șterge fișierul temporar gamelist. Probleme cu permisiunea?"
-
-msgid "Couldn't write to temporary gamelist file, permission problems?"
-msgstr ""
-"Nu s-a putut scrie în fișierul temporar gamelist. Probleme cu permisiunea?"
-
-msgid "Couldn't create backup directory, permission problems?"
-msgstr ""
-"Nu s-a putut crea dosarul pentru copia de siguranță. Probleme cu permisiunea?"
-
-msgid "Couldn't move old gamelist file, permission problems?"
-msgstr "Nu s-a putut muta vechiul fișier gamelist. Probleme cu permisiunea?"
-
-msgid "Couldn't move temporary gamelist file, permission problems?"
-msgstr "Nu s-a putut muta fișierul temporar gamelist. Probleme cu permisiunea?"
-
-msgid "Couldn't find custom collection configuration file"
-msgstr "Nu s-a găsit fișierul de configurare al colecției personalizate"
-
-msgid "Couldn't open custom collection configuration file"
-msgstr ""
-"Nu s-a putut deschide fișierul de configurare al colecției personalizate"
-
-msgid "Couldn't delete temporary collection file, permission problems?"
-msgstr ""
-"Nu s-a putut șterge fișierul temporar al colecției. Probleme cu permisiunea?"
-
-msgid "Couldn't write to temporary collection configuration file"
-msgstr "Nu s-a putut scrie în fișierul temporar de configurație al colecției"
-
-msgid "Couldn't move old collection file, permission problems?"
-msgstr ""
-"Nu s-a putut muta fișierul vechi al colecției. Probleme cu permisiunea?"
-
-msgid "Couldn't move temporary collection file, permission problems?"
-msgstr ""
-"Nu s-a putut musta fișierul temporar al colecției. Probleme cu permisiunea?"
-
-msgid "ABORTED MEDIA CLEANUP"
-msgstr "CURĂȚAREA MEDIA A FOST ANULATĂ"
-
-msgid "COMPLETED MEDIA CLEANUP"
-msgstr "CURĂȚAREA MEDIA A FOST FINALIZATĂ"
-
-msgid "ABORTED GAMELIST CLEANUP"
-msgstr "CURĂȚAREA LISTELOR DE JOCURI A FOST ANULATĂ"
-
-msgid "COMPLETED GAMELIST CLEANUP"
-msgstr "CURĂȚAREA LISTELOR DE JOCURI A FOST FINALIZATĂ"
-
-msgid "ABORTED COLLECTIONS CLEANUP"
-msgstr "CURĂȚAREA COLECȚIILOR FOST ANULATĂ"
-
-msgid "COMPLETED COLLECTIONS CLEANUP"
-msgstr "CURĂȚAREA COLECȚIILOR FOST FINALIZATĂ"
-
-msgid "MEDIA CLEANUP FAILED"
-msgstr "CURĂȚAREA MEDIA A EȘUAT"
-
-msgid "GAMELISTS CLEANUP FAILED"
-msgstr "CURĂȚAREA LISTELOR DE JOCURI A EȘUAT"
-
-msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
-msgstr "APLICAȚIA VA FI REPORNITĂ DUPĂ ÎNCHIDEREA ACESTUI UTILITAR."
-
-msgid "INVALID ENTRY"
-msgstr "INTRARE INVALIDĂ"
-
-msgid "CLEARED ENTRY"
-msgstr "INTRARE CURĂȚATĂ"
-
-msgid "NO ALTERNATIVE EMULATORS DEFINED"
-msgstr "NICIUN EMULATOR ALTERNATIV DEFINIT"
-
-msgid "CLEAR INVALID ENTRY"
-msgstr "CURĂȚĂ INTRAREA INVALIDĂ"
-
-msgid "DEFAULT"
-msgstr "IMPLICIT"
-
-msgid "EDIT METADATA"
-msgstr "EDITEAZĂ METADATELE"
-
-msgid "CLEAR ENTRY"
-msgstr "CURĂȚĂ INTRAREA"
-
-msgid "SELECT EMULATOR"
-msgstr "SELECTEAZĂ EMULATORUL"
-
-msgid "SYSTEM-WIDE"
-msgstr "PER SISTEM"
-
-msgid "unknown"
-msgstr "necunoscut"
-
-msgid "SCRAPE"
-msgstr "PREIA INFO"
-
-msgid "scrape"
-msgstr "preia info"
-
-msgid "save metadata"
-msgstr "salvează metadatele"
-
-msgid "cancel changes"
-msgstr "anulează modificările"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
-"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"ACEST LUCRU VA ȘTERGE ORICE FIȘIERE MEDIA ȘI INTRĂRILE DIN GAMELIST.XML "
-"PENTRU ACEST DOSAR, DAR NICI DIRECTORUL, NICI CONȚINUTUL DIN ACESTA NU VOR "
-"FI ȘTERSE\n"
-"EȘTI SIGUR?"
-
-msgid "CLEAR"
-msgstr "CURĂȚĂ"
-
-msgid "clear folder"
-msgstr "curăță dosarul"
-
-msgid ""
-"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
-"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
-"ARE YOU SURE?"
-msgstr ""
-"ACEST LUCRU VA ȘTERGE ORICE FIȘIERE MEDIA ȘI INTRAREA DIN GAMELIST.XML "
-"PENTRU ACEST JOC, DAR FIȘIERUL DE JOC ÎN SINE NU VA FI ȘTERS\n"
-"EȘTI SIGUR?"
-
-msgid "clear file"
-msgstr "curăță fișierul"
-
-msgid ""
-"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
-"ARE YOU SURE?"
-msgstr ""
-"ACEST LUCRU VA ȘTERGE FIȘIERUL DE JOC, ORICE FIȘIERE MEDIA ȘI INTRAREA DIN "
-"GAMELIST.XML\n"
-"EȘTI SIGUR?"
-
-msgid "DELETE"
-msgstr "ȘTERGE"
-
-msgid "delete game"
-msgstr "șterge jocul"
-
-msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr "GENERATOR OFFLINE DE IMAGINI MIX"
-
-#, c-format
-msgid "%i OF %i GAME PROCESSED"
-msgid_plural "%i OF %i GAMES PROCESSED"
-msgstr[0] "%i DIN %i JOC PROCESAT"
-msgstr[1] "%i DIN %i JOCURI PROCESATE"
-msgstr[2] "%i DIN %i DE JOCURI PROCESATE"
-
-msgid "Generated:"
-msgstr "Generate:"
-
-msgid "Overwritten:"
-msgstr "Suprascrise:"
-
-msgid "Skipped:"
-msgstr "Omise:"
-
-msgid "Skipped (existing):"
-msgstr "Omise (existente):"
-
-msgid "Failed:"
-msgstr "Eșuate:"
-
-msgid "Processing:"
-msgstr "Se procesează:"
-
-msgid "Last error message:"
-msgstr "Ultimul mesaj de eroare:"
-
-msgid "PAUSE"
-msgstr "SUSPENDĂ"
-
-msgid "pause processing"
-msgstr "suspendă procesarea"
-
-msgid "close (abort processing)"
-msgstr "închide (anulează procesarea)"
-
-msgid "RUNNING..."
-msgstr "RULEAZĂ..."
-
-msgid "PAUSED"
-msgstr "SUSPENDAT"
-
-msgid "RUNNING"
-msgstr "RULEAZĂ"
-
+msgctxt "metadata"
 msgid "COMPLETED"
 msgstr "FINALIZAT"
 
-msgid "DONE"
-msgstr "GATA"
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "JOC PENTRU COPII"
 
-msgid "done (close)"
-msgstr "gata (închide)"
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "JOC PENTRU COPII (INFLUENȚEAZĂ DOAR INSIGNA)"
 
-msgid "APPLICATION UPDATER"
-msgstr "ACTUALIZATOR APLICAȚIE"
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "ASCUNS"
 
-msgid "INSTALLATION STEPS:"
-msgstr "PAȘI INSTALARE:"
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "STRICAT/NEFUNCȚIONAL"
 
-msgid "DOWNLOAD NEW RELEASE"
-msgstr "DESCARCĂ NOUA VERSIUNE"
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "EXCLUDE DIN NUMĂRĂTORUL DE JOCURI"
 
-msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
-msgstr "DESCARCĂ NOUA VERSIUNE ÎN ACEST DOSAR:"
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "EXCLUDE DIN MULTI-PRELUATOR INFORMAȚII"
 
-msgid "INSTALL PACKAGE"
-msgstr "INSTALEAZĂ PACHETUL"
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "ASCUNDE CÂMPURILE DE METADATE"
 
-msgid "QUIT AND MANUALLY RESTART ES-DE"
-msgstr "IEȘI ȘI REPORNEȘTE MANUAL ES-DE"
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "NUMĂR PARTIDE JUCATE"
 
-msgid "QUIT AND MANUALLY UPGRADE ES-DE"
-msgstr "IEȘI ȘI ACTUALIZEAZĂ MANUAL ES-DE"
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "INTRODU NUMĂR DE PARTIDE"
 
-msgid "STATUS MESSAGE:"
-msgstr "MESAJ STARE:"
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "CONTROLER"
 
-msgid "DOWNLOAD"
-msgstr "DESCARCĂ"
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "SELECTEAZĂ CONTROLER"
 
-msgid "download new release"
-msgstr "descarcă noua versiune"
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "EMULATOR ALTERNATIV"
 
-msgid "Download directory does not exist"
-msgstr "Dosarul pentru descărcare nu există"
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "SELECTEAZĂ EMULATOR ALTERNATIV"
 
-msgid "CHANGE DIRECTORY"
-msgstr "SCHIMBĂ DOSARUL"
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "LEGĂTURĂ DOSAR"
 
-msgid "change download directory"
-msgstr "schimbă dosarul pentru descărcare"
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "ALEGE LEGĂTURĂ DOSAR"
 
-msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr "INTRODU DOSARUL PENTRU DESCĂRCARE"
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "JUCAT ULTIMA DATĂ"
 
-msgid "DOWNLOAD ABORTED"
-msgstr "DESCĂRCARE ANULATĂ"
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "INTRODU DATA ULTIMEI PARTIDE"
 
-msgid "NO PACKAGE SAVED TO DISK"
-msgstr "NICIUN PACHET SALVAT PE DISC"
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "Nu s-au găsit capturi de ecran. Nu se poate genera o imagine mix"
 
-msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr "PACHETUL A FOST DESCĂRCAT ȘI POATE FI INSTALAT MANUAL"
-
-msgid "DOWNLOADING 100%"
-msgstr "SE DESCARCĂ 100%"
-
-msgid "Downloaded file does not match expected MD5 checksum"
-msgstr "Fișierul descărcat nu se potrivește cu suma MD5"
-
-msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgid "Screenshot in unknown format, couldn't generate miximage"
 msgstr ""
-"Eroare: Nu s-a putut șterge fișierul pachet temporar. Probleme cu "
-"permisiunea?"
+"Captura de ecran este într-un format necunoscut. Nu se poate genera imaginea "
+"mix"
 
-msgid "Error: Couldn't write package file, permission problems?"
-msgstr "Eroare: Nu s-a putut scrie fișierul pachet. Probleme cu permisiunea?"
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr ""
+"Captura de ecran este într-un format nesuportat. Nu se poate genera imaginea "
+"mix"
 
-msgid "Error: Couldn't set permissions on AppImage file"
-msgstr "Eroare: Nu s-au putut seta permisiunile pe fișierul AppImage"
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr ""
+"Eroare la încărcarea capturii de ecran. Nu se poate genera imaginea mix"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Eroare la încărcarea imaginii banner. Fișier corupt?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Eroare la încărcarea imaginii cutiei 3D. Fișier corupt?"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "Eroare la încărcarea imaginii cutiei. Fișier corupt?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "Eroare la încărcarea imaginii suportului fizic. Fișier corupt?"
 
 #, c-format
-msgid "Downloaded %s"
-msgstr "S-a descărcat %s"
+msgid "PAGE %s OF %s"
+msgstr "PAGINA %s DIN %s"
 
-msgid "Error: Couldn't open AppImage update file for reading"
+msgid "pan"
+msgstr "panoramează"
+
+msgid "reset"
+msgstr "resetează"
+
+msgid "game media"
+msgstr "fișiere media joc"
+
+msgid "zoom"
+msgstr "mărește"
+
+msgid "Network error:"
+msgstr "Eroare rețea:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "Dosarul de fișiere media nu există și nu poate fi creat."
+
+msgid "Permission problems?"
+msgstr "Probleme cu permisiunile?"
+
+msgid "Failed to open path for writing media file."
+msgstr "A eșuat deschiderea căii pentru scrierea fișierului media."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
 msgstr ""
-"Eroare: Nu s-a putut deschide fișierul de actualizare AppImage pentru citire"
+"Nu s-a putut salva fișierul media. Probleme cu permisiunea sau discul este "
+"plin?"
 
-msgid "Error: Downloaded file does not match expected MD5 checksum"
-msgstr "Eroare: Fișierul descărcat nu se potrivește cu suma de control MD5"
-
-msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr ""
-"Eroare: Nu s-a putut redenumi fișierul AppImage care rulează. Probleme cu "
-"permisiunea?"
+"Nu s-a putut salva imaginea redimensionată. Probleme cu permisiunea sau "
+"discul este plin?"
 
-msgid "Error: Couldn't replace running AppImage file, permission problems?"
-msgstr ""
-"Eroare: Nu s-a putut înlocui fișierul AppImage care rulează. Probleme cu "
-"permisiunea?"
+msgid "ScreenScraper error:"
+msgstr "Eroare ScreenScraper:"
 
-#, c-format
-msgid "Successfully installed as %s"
-msgstr "S-a instalat cu succes ca %s"
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: Nume utilizator sau parolă greșite"
 
-msgid "INSTALL"
-msgstr "INSTALEAZĂ"
+msgid "No Entries Found"
+msgstr "Nu s-au găsit intrări"
 
-msgid "install package"
-msgstr "instalează pachetul"
+msgctxt "theme"
+msgid "all"
+msgstr "toate"
 
-msgid "Find the detailed changelog at"
-msgstr "Găsește lista de noutăți detaliată la"
-
-msgid "quit application"
-msgstr "ieși din aplicație"
-
+msgctxt "theme"
 msgid "all games"
 msgstr "toate jocurile"
 
+msgctxt "theme"
+msgid "recent"
+msgstr "recente"
+
+msgctxt "theme"
 msgid "last played"
 msgstr "jucat ultima dată"
 
+msgctxt "theme"
 msgid "favorites"
 msgstr "favorite"
 
+msgctxt "theme"
 msgid "collections"
 msgstr "colecții"
-
-#, c-format
-msgid "DISABLED '%s' IN '%s'"
-msgstr "S-A DEZACTIVAT „%s” ÎN „%s”"
-
-#, c-format
-msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr "SE EDITEAZĂ COLECȚIA „%s”, ADAUGĂ/ELIMINĂ JOCURI CU %s"
-
-#, c-format
-msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr "S-A FINALIZAT EDITAREA COLECȚIEI „%s”"
-
-msgid "Favorites"
-msgstr "Favorite"
-
-#, c-format
-msgid "ADDED '%s' TO '%s'"
-msgstr "S-A ADĂUGAT „%s” LA „%s”"
-
-#, c-format
-msgid "REMOVED '%s' FROM '%s'"
-msgstr "S-A ELIMINAT „%s” DIN „%s”"
-
-msgid "This collection is empty"
-msgstr "Această colecție este goală"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s [%s]'"
-msgstr "Această colecție conține 1 joc: „%s [%s]”"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
-msgstr "Această colecție conține 2 jocuri: „%s [%s]” și „%s [%s]”"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
-msgstr "Această colecție conține 3 jocuri: „%s [%s]”, „%s [%s]” și „%s [%s]”"
-
-#, c-format
-msgctxt "theme"
-msgid ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgid_plural ""
-"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
-"others"
-msgstr[0] ""
-"Această colecție conține %i joc: „%s [%s]”, „%s [%s]” și „%s [%s]”, printre "
-"altele"
-msgstr[1] ""
-"Această colecție conține %i jocuri: „%s [%s]”, „%s [%s]” și „%s [%s]”, "
-"printre altele"
-msgstr[2] ""
-"Această colecție conține %i de jocuri: „%s [%s]”, „%s [%s]” și „%s [%s]”, "
-"printre altele"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 1 game: '%s'"
-msgstr "Această colecție conține 1 joc: „%s”"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 2 games: '%s' and '%s'"
-msgstr "Această colecție conține 2 jocuri: „%s” și „%s”"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains 3 games: '%s', '%s' and '%s'"
-msgstr "Această colecție conține 3 jocuri: „%s”, „%s” și „%s”"
-
-#, c-format
-msgctxt "theme"
-msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
-msgid_plural ""
-"This collection contains %i games: '%s', '%s' and '%s', among others"
-msgstr[0] "Această colecție conține %i joc: „%s”, „%s” și „%s”, printre altele"
-msgstr[1] ""
-"Această colecție conține %i jocuri: „%s”, „%s” și „%s”, printre altele"
-msgstr[2] ""
-"Această colecție conține %i de jocuri: „%s”, „%s” și „%s”, printre altele"
-
-#, c-format
-msgctxt "theme"
-msgid "'%s' is filtered so there may be more games available"
-msgstr "'%s' este filtrată, așadar pot fi mai multe jocuri disponibile"
-
-#, c-format
-msgid "DELETED COLLECTION '%s'"
-msgstr "S-A ȘTERS COLECȚIA „%s”"
-
-msgid "name, ascending"
-msgstr "nume, ascendent"
-
-msgid "name, descending"
-msgstr "nume, descendent"
-
-msgid "rating, ascending"
-msgstr "scor, ascendent"
-
-msgid "rating, descending"
-msgstr "scor, descendent"
-
-msgid "release date, ascending"
-msgstr "data lansării, ascendent"
-
-msgid "release date, descending"
-msgstr "data lansării, descendent"
-
-msgid "developer, ascending"
-msgstr "dezvoltator, ascendent"
-
-msgid "developer, descending"
-msgstr "dezvoltator, descendent"
-
-msgid "publisher, ascending"
-msgstr "editor, ascendent"
-
-msgid "publisher, descending"
-msgstr "editor, descendent"
-
-msgid "genre, ascending"
-msgstr "gen, ascendent"
-
-msgid "genre, descending"
-msgstr "gen, descendent"
-
-msgid "players, ascending"
-msgstr "număr jucători, ascendent"
-
-msgid "players, descending"
-msgstr "număr jucători, descendent"
-
-msgid "last played, ascending"
-msgstr "jucat ultima dată, ascendent"
-
-msgid "last played, descending"
-msgstr "jucat ultima dată, descendent"
-
-msgid "times played, ascending"
-msgstr "nr. partide jucate, ascendent"
-
-msgid "times played, descending"
-msgstr "nr. partide jucate, descendent"
-
-msgid "system, ascending"
-msgstr "sistem, ascendent"
-
-msgid "system, descending"
-msgstr "sistem, descendent"
-
-#, c-format
-msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr "EROARE: LIPSĂ CONFIGURAȚIE REGULI DE GĂSIRE PRE-COMANDĂ PENTRU „%s”"
-
-msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "EROARE: NU S-A GĂSIT PRE-COMANDA. A FOST INSTALATĂ CORESPUNZĂTOR?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "EROARE: NU S-A GĂSIT PRE-COMANDA „%s”. A FOST INSTALATĂ CORESPUNZĂTOR?"
-
-#, c-format
-msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr "EROARE: LIPSĂ CONFIGURAȚIE REGULI GĂSIRE EMULATOR PENTRU „%s”"
-
-msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "EROARE: NU S-A GĂSIT APLICAȚIA. A FOST INSTALATĂ CORESPUNZĂTOR?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "EROARE: NU S-A GĂSIT APLICAȚIA „%s”. A FOST INSTALATĂ CORESPUNZĂTOR?"
-
-msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "EROARE: NU S-A GĂSIT EMULATORUL. A FOST INSTALAT CORESPUNZĂTOR?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "EROARE: NU S-A GĂSIT EMULATORUL „%s”. A FOST INSTALAT CORESPUNZĂTOR?"
-
-#, c-format
-msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr "EROARE: NU S-A GĂSIT FIȘIERUL CU NUCLEUL EMULATORULUI „%s”"
-
-msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr "EROARE: INTRARE INVALIDĂ ÎN FIȘIERUL DE CONFIGURARE AL SISTEMELOR"
-
-#, c-format
-msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr "EROARE: LIPSĂ CONFIGURAȚIE NUCLEU PENTRU „%s”"
-
-#, c-format
-msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr "EROARE: INTRARE VARIABILĂ %s INVALIDĂ"
-
-#, c-format
-msgid ""
-"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
-msgstr ""
-"EROARE: DOSARUL DEFINIT DE %s NU A PUTUT FI CREAT. PROBLEMĂ DE PERMISIUNE?"
-
-msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "EROARE: APLICAȚIA SAU FIȘIERUL ALIAS NU EXISTĂ SAU NU SE POATE CITI"
-
-msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr "EROARE: FIȘIER DESKTOP INVALID SAU NU SE POATE CITI"
-
-msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "EROARE: FIȘIER DESKTOP NU EXISTĂ SAU NU SE POATE CITI"
-
-#, c-format
-msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
-msgstr "EROARE LA LANSAREA JOCULUI „%s” (COD EROARE %i)"
 
 msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
 msgstr ""
@@ -2239,8 +2382,32 @@ msgstr ""
 "NU SE POT ADĂUGA INTRĂRI CARE NU SUNT NUMĂRATE CA JOCURI ÎN COLECȚIILE "
 "PERSONALIZATE"
 
+msgid "system"
+msgstr "sistem"
+
+msgid "view media"
+msgstr "media"
+
+msgid "options"
+msgstr "opțiuni"
+
 msgid "random"
 msgstr "aleator"
+
+msgid "jump to game"
+msgstr "sări la joc"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "necunoscut"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "da"
+
+msgctxt "theme"
+msgid "no"
+msgstr "nu"
 
 msgid "screensaver"
 msgstr "economizor ecran"
@@ -2268,30 +2435,6 @@ msgid_plural "%i favorites"
 msgstr[0] "%i favorit"
 msgstr[1] "%i favorite"
 msgstr[2] "%i favorite"
-
-msgctxt "theme"
-msgid "unknown"
-msgstr "necunoscut"
-
-msgid "system"
-msgstr "sistem"
-
-msgid "view media"
-msgstr "media"
-
-msgid "options"
-msgstr "opțiuni"
-
-msgid "jump to game"
-msgstr "sări la joc"
-
-msgctxt "theme"
-msgid "yes"
-msgstr "da"
-
-msgctxt "theme"
-msgid "no"
-msgstr "nu"
 
 msgid ""
 "IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
@@ -2453,199 +2596,44 @@ msgstr "SE LANSEAZĂ JOCUL „%s”"
 msgid "menu"
 msgstr "meniu"
 
-#, c-format
-msgid "PAGE %s OF %s"
-msgstr "PAGINA %s DIN %s"
+msgid "WORKING..."
+msgstr "SE LUCREAZĂ..."
 
-msgid "pan"
-msgstr "panoramează"
-
-msgid "reset"
-msgstr "resetează"
-
-msgid "browse"
-msgstr "răsfoiește"
-
-msgid "game media"
-msgstr "fișiere media joc"
-
-msgid "first"
-msgstr "început"
-
-msgid "last"
-msgstr "final"
-
-msgid "zoom"
-msgstr "mărește"
-
-msgid "RATING"
-msgstr "SCOR"
-
-msgid "DEVELOPER"
-msgstr "DEZVOLTATOR"
-
-msgid "PUBLISHER"
-msgstr "EDITOR"
-
-msgid "GENRE"
-msgstr "GEN"
-
-msgid "PLAYERS"
-msgstr "NUMĂR DE JUCĂTORI"
-
-msgid "FAVORITE"
-msgstr "FAVORIT"
-
-msgid "KIDGAME"
-msgstr "JOC PENTRU COPII"
-
-msgid "HIDDEN"
-msgstr "ASCUNS"
-
-msgid "BROKEN"
-msgstr "STRICAT"
-
-msgid "CONTROLLER"
-msgstr "CONTROLER"
-
-msgid "ALTERNATIVE EMULATOR"
-msgstr "EMULATOR ALTERNATIV"
-
-msgid "FALSE"
-msgstr "FALS"
-
-msgid "TRUE"
-msgstr "ADEVĂRAT"
-
-msgid "UNKNOWN"
-msgstr "NECUNOSCUT"
-
-msgid "NONE SELECTED"
-msgstr "NICIUNUL SELECTAT"
-
-msgid "No screenshot found, couldn't generate miximage"
-msgstr "Nu s-au găsit capturi de ecran. Nu se poate genera o imagine mix"
-
-msgid "Screenshot in unknown format, couldn't generate miximage"
-msgstr ""
-"Captura de ecran este într-un format necunoscut. Nu se poate genera imaginea "
-"mix"
-
-msgid "Screenshot in unsupported format, couldn't generate miximage"
-msgstr ""
-"Captura de ecran este într-un format nesuportat. Nu se poate genera imaginea "
-"mix"
-
-msgid "Error loading screenshot, couldn't generate miximage"
-msgstr ""
-"Eroare la încărcarea capturii de ecran. Nu se poate genera imaginea mix"
-
-msgid "Error loading marquee image, corrupt file?"
-msgstr "Eroare la încărcarea imaginii banner. Fișier corupt?"
-
-msgid "Error loading 3d box image, corrupt file?"
-msgstr "Eroare la încărcarea imaginii cutiei 3D. Fișier corupt?"
-
-msgid "Error loading box cover image, corrupt file?"
-msgstr "Eroare la încărcarea imaginii cutiei. Fișier corupt?"
-
-msgid "Error loading physical media image, corrupt file?"
-msgstr "Eroare la încărcarea imaginii suportului fizic. Fișier corupt?"
-
-msgid "pdf manual"
-msgstr "manual pdf"
-
-msgid "SCREENSHOT"
-msgstr "CAPTURĂ DE ECRAN"
-
-msgid "BOX COVER"
-msgstr "COPERTĂ CUTIE"
-
-msgid "BOX BACK COVER"
-msgstr "COPERTĂ SPATE CUTIE"
-
-msgid "TITLE SCREEN"
-msgstr "ECRAN TITLU"
-
-msgid "FAN ART"
-msgstr "FAN ART"
-
-msgid "MIXIMAGE"
-msgstr "IMAGINE MIX"
-
-msgid "CUSTOM"
-msgstr "PERSONALIZAT"
-
-msgid "Searching for games..."
-msgstr "Se caută jocuri..."
-
-msgid "Loading systems..."
-msgstr "Se încarcă sistemele..."
-
-msgid "Reloading..."
-msgstr "Se reîncarcă..."
-
-msgid "Copying resources..."
-msgstr "Se copiază resursele..."
-
-msgid "Creating system directories..."
-msgstr "Se creează dosarele sistemelor..."
-
-msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr "EROARE: NU SE POATE AFIȘA FIȘIERUL PDF"
+msgctxt "theme"
+msgid "never"
+msgstr "niciodată"
 
 #, c-format
-msgid "ADDED INPUT DEVICE '%s'"
-msgstr "S-A ADĂUGAT DISPOZITIVUL DE INTRARE „%s”"
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "acum %i zi"
+msgstr[1] "acum %i zile"
+msgstr[2] "acum %i de zile"
 
 #, c-format
-msgid "REMOVED INPUT DEVICE '%s'"
-msgstr "S-A ELIMINAT DISPOZITIVUL DE INTRARE „%s”"
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "acum %i oră"
+msgstr[1] "acum %i ore"
+msgstr[2] "acum %i de ore"
 
-msgid "medium"
-msgstr "mediu"
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "acum %i minut"
+msgstr[1] "acum %i minute"
+msgstr[2] "acum %i de minute"
 
-msgid "large"
-msgstr "mare"
-
-msgid "small"
-msgstr "mic"
-
-msgid "extra small"
-msgstr "foarte mic"
-
-msgid "extra large"
-msgstr "foarte mare"
-
-msgid "automatic"
-msgstr "automat"
-
-msgid "16:9 vertical"
-msgstr "16:9 vertical"
-
-msgid "16:10 vertical"
-msgstr "16:10 vertical"
-
-msgid "3:2 vertical"
-msgstr "3:2 vertical"
-
-msgid "4:3 vertical"
-msgstr "4:3 vertical"
-
-msgid "5:4 vertical"
-msgstr "5:4 vertical"
-
-msgid "19.5:9 vertical"
-msgstr "19.5:9 vertical"
-
-msgid "20:9 vertical"
-msgstr "20:9 vertical"
-
-msgid "21:9 vertical"
-msgstr "21:9 vertical"
-
-msgid "32:9 vertical"
-msgstr "32:9 vertical"
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "acum %i secundă"
+msgstr[1] "acum %i secunde"
+msgstr[2] "acum %i de secunde"
 
 msgid "edit date"
 msgstr "editează data"
@@ -2689,77 +2677,17 @@ msgstr "NU SELECTA NIMIC"
 msgid "select none"
 msgstr "nu selecta nimic"
 
+msgid "add half star"
+msgstr "adaugă jumătate de stea"
+
+msgid "toggle"
+msgstr "comută"
+
 msgid "move cursor"
 msgstr "mută cursorul"
 
 msgid "edit"
 msgstr "editează"
-
-msgid "WORKING..."
-msgstr "SE LUCREAZĂ..."
-
-msgid "toggle"
-msgstr "comută"
-
-msgid "add half star"
-msgstr "adaugă jumătate de stea"
-
-msgctxt "theme"
-msgid "never"
-msgstr "niciodată"
-
-#, c-format
-msgctxt "theme"
-msgid "%i day ago"
-msgid_plural "%i days ago"
-msgstr[0] "acum %i zi"
-msgstr[1] "acum %i zile"
-msgstr[2] "acum %i de zile"
-
-#, c-format
-msgctxt "theme"
-msgid "%i hour ago"
-msgid_plural "%i hours ago"
-msgstr[0] "acum %i oră"
-msgstr[1] "acum %i ore"
-msgstr[2] "acum %i de ore"
-
-#, c-format
-msgctxt "theme"
-msgid "%i minute ago"
-msgid_plural "%i minutes ago"
-msgstr[0] "acum %i minut"
-msgstr[1] "acum %i minute"
-msgstr[2] "acum %i de minute"
-
-#, c-format
-msgctxt "theme"
-msgid "%i second ago"
-msgid_plural "%i seconds ago"
-msgstr[0] "acum %i secundă"
-msgstr[1] "acum %i secunde"
-msgstr[2] "acum %i de secunde"
-
-msgid "SPACE"
-msgstr "SPAȚIU"
-
-msgid "LOAD"
-msgstr "ÎNCARCĂ"
-
-msgid "shift"
-msgstr "shift"
-
-msgid "alt"
-msgstr "alt"
-
-msgid "newline"
-msgstr "linie nouă"
-
-msgid "backspace"
-msgstr "backspace"
-
-msgid "space"
-msgstr "spațiu"
 
 msgid "WELCOME"
 msgstr "BUN VENIT"
@@ -2793,15 +2721,6 @@ msgstr ""
 
 msgid "PRESS ESC TO CANCEL"
 msgstr "APASĂ ESC PENTRU A ANULA"
-
-msgid "LOAD DEFAULT"
-msgstr "ÎNCARCĂ IMPLICITELE"
-
-msgid "DISCARD CHANGES"
-msgstr "ANULEAZĂ MODIFICĂRILE"
-
-msgid "discard changes"
-msgstr "anulează modificările"
 
 msgid "CONFIGURING"
 msgstr "SE CONFIGUREAZĂ"
@@ -2908,9 +2827,110 @@ msgstr "DEJA ASOCIAT"
 msgid "PRESS ANYTHING"
 msgstr "APASĂ ORICE"
 
+msgid "SPACE"
+msgstr "SPAȚIU"
+
+msgid "LOAD"
+msgstr "ÎNCARCĂ"
+
+msgid "shift"
+msgstr "shift"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "linie nouă"
+
+msgid "backspace"
+msgstr "backspace"
+
+msgid "space"
+msgstr "spațiu"
+
+msgid "LOAD DEFAULT"
+msgstr "ÎNCARCĂ IMPLICITELE"
+
+msgid "DISCARD CHANGES"
+msgstr "ANULEAZĂ MODIFICĂRILE"
+
+msgid "discard changes"
+msgstr "anulează modificările"
+
 msgid "You have exceeded your daily scrape quota"
 msgstr "Ai depășit numărul zilnic maxim de informații preluate"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Serverul a returnat codul de eroare HTTP %s"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "S-A ADĂUGAT DISPOZITIVUL DE INTRARE „%s”"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "S-A ELIMINAT DISPOZITIVUL DE INTRARE „%s”"
+
+msgid "medium"
+msgstr "mediu"
+
+msgid "large"
+msgstr "mare"
+
+msgid "small"
+msgstr "mic"
+
+msgid "extra small"
+msgstr "foarte mic"
+
+msgid "extra large"
+msgstr "foarte mare"
+
+msgid "automatic"
+msgstr "automat"
+
+msgid "16:9 vertical"
+msgstr "16:9 vertical"
+
+msgid "16:10 vertical"
+msgstr "16:10 vertical"
+
+msgid "3:2 vertical"
+msgstr "3:2 vertical"
+
+msgid "4:3 vertical"
+msgstr "4:3 vertical"
+
+msgid "5:4 vertical"
+msgstr "5:4 vertical"
+
+msgid "19.5:9 vertical"
+msgstr "19.5:9 vertical"
+
+msgid "20:9 vertical"
+msgstr "20:9 vertical"
+
+msgid "21:9 vertical"
+msgstr "21:9 vertical"
+
+msgid "32:9 vertical"
+msgstr "32:9 vertical"
+
+msgid "Searching for games..."
+msgstr "Se caută jocuri..."
+
+msgid "Loading systems..."
+msgstr "Se încarcă sistemele..."
+
+msgid "Reloading..."
+msgstr "Se reîncarcă..."
+
+msgid "Copying resources..."
+msgstr "Se copiază resursele..."
+
+msgid "Creating system directories..."
+msgstr "Se creează dosarele sistemelor..."
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "EROARE: NU SE POATE AFIȘA FIȘIERUL PDF"

@@ -9,6 +9,28 @@
         <langLabelPublisher>Publisher</langLabelPublisher>
         <langUnknown>Unknown</langUnknown>
     </variables>
+    <language name="ca_ES">
+        <variables>
+            <langLabelRating>Valoració</langLabelRating>
+            <langLabelReleasedate>Llançament</langLabelReleasedate>
+            <langLabelPlayers>Jugadors</langLabelPlayers>
+            <langLabelGenre>Gènere</langLabelGenre>
+            <langLabelDeveloper>Desenvolupador</langLabelDeveloper>
+            <langLabelPublisher>Editor</langLabelPublisher>
+            <langUnknown>Desconegut</langUnknown>
+        </variables>
+    </language>
+    <language name="de_DE">
+        <variables>
+            <langLabelRating>Bewertung</langLabelRating>
+            <langLabelReleasedate>Veröffentlicht</langLabelReleasedate>
+            <langLabelPlayers>Spieler</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Entwickler</langLabelDeveloper>
+            <langLabelPublisher>Herausgeber</langLabelPublisher>
+            <langUnknown>Unbekannt</langUnknown>
+        </variables>
+    </language>
     <language name="es_ES">
         <variables>
             <langLabelRating>Valoracion</langLabelRating>
@@ -40,6 +62,17 @@
             <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
             <langLabelPublisher>Casa Editrice</langLabelPublisher>
             <langUnknown>Sconosciuto</langUnknown>
+        </variables>
+    </language>
+    <language name="nl_NL">
+        <variables>
+            <langLabelRating>Waardering</langLabelRating>
+            <langLabelReleasedate>Datum van Uitgave</langLabelReleasedate>
+            <langLabelPlayers>Spelers</langLabelPlayers>
+            <langLabelGenre>Genre</langLabelGenre>
+            <langLabelDeveloper>Ontwikkelaar</langLabelDeveloper>
+            <langLabelPublisher>Uitgever</langLabelPublisher>
+            <langUnknown>Onbekend</langUnknown>
         </variables>
     </language>
     <language name="pl_PL">
@@ -106,6 +139,17 @@
             <langLabelDeveloper>開発者</langLabelDeveloper>
             <langLabelPublisher>発行者</langLabelPublisher>
             <langUnknown>未知</langUnknown>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <langLabelRating>평점</langLabelRating>
+            <langLabelReleasedate>발매일</langLabelReleasedate>
+            <langLabelPlayers>플레이어</langLabelPlayers>
+            <langLabelGenre>장르</langLabelGenre>
+            <langLabelDeveloper>개발사</langLabelDeveloper>
+            <langLabelPublisher>배급사</langLabelPublisher>
+            <langUnknown>알수없음</langUnknown>
         </variables>
     </language>
     <language name="zh_CN">

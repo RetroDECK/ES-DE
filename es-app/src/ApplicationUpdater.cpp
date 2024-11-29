@@ -116,6 +116,11 @@ void ApplicationUpdater::checkForUpdates()
 
 void ApplicationUpdater::updaterThread()
 {
+#if defined(_WIN64)
+    // Workaround for a bug in the libintl library.
+    Utils::Localization::setThreadLocale();
+#endif
+
     if (!downloadFile())
         compareVersions();
 

@@ -503,6 +503,15 @@ void applicationLoop()
         if (SDL_PollEvent(&event)) {
             do {
 #if defined(__ANDROID__)
+                if (event.type == SDL_WINDOWEVENT &&
+                    event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+                    // This covers switching to/from multi-window mode. Note that the reload
+                    // mechanism is rather ungraceful as it just forcekills any open windows, which
+                    // is problematic if the scraper or theme downloader is running for instance.
+                    ViewController::getInstance()->setWindowSizeChanged(
+                        static_cast<int>(event.window.data1), static_cast<int>(event.window.data2));
+                    ViewController::getInstance()->checkWindowSizeChanged();
+                }
                 // Prevent that button presses get registered immediately when entering the
                 // foreground (which most commonly mean we're returning from a game).
                 // Also perform some other tasks on resume such as resetting timers.
@@ -695,13 +704,6 @@ int main(int argc, char* argv[])
     Log::open();
     {
 
-// const std::string applicationName =
-// #if defined(RETRODECK)
-//     "RetroDECK";
-// #else
-//     "ES-DE";
-// #endif
-
 const std::string applicationName = "ES-DE";
 
 #if defined(__ANDROID__)
@@ -882,8 +884,7 @@ const std::string applicationName = "ES-DE";
             }
         }
         if (!Utils::FileSystem::exists(themeDir + "/.nomedia")) {
-            LOG(LogInfo) << "Creating \"no media\" file \"" << themeDir + "/.nomedia"
-                         << "\"...";
+            LOG(LogInfo) << "Creating \"no media\" file \"" << themeDir + "/.nomedia" << "\"...";
             Utils::FileSystem::createEmptyFile(themeDir + "/.nomedia");
             if (!Utils::FileSystem::exists(themeDir + "/.nomedia")) {
                 LOG(LogWarning) << "Couldn't create file, permission problems?";
@@ -1037,6 +1038,15 @@ const std::string applicationName = "ES-DE";
         Utils::Platform::Android::setupFontFiles();
         Utils::Platform::Android::setupLocalizationFiles();
     }
+
+    {
+        std::string audioDriver {Settings::getInstance()->getString("AudioDriver")};
+        if (audioDriver != "openslES" && audioDriver != "AAudio")
+            audioDriver = "openslES";
+
+        setenv("SDL_AUDIODRIVER", audioDriver.c_str(), 1);
+    }
+
 #endif
 
     Utils::Localization::setLocale();
@@ -1102,7 +1112,16 @@ const std::string applicationName = "ES-DE";
     if (Settings::getInstance()->getBool("SplashScreen"))
         window->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
 
+#if defined(__ANDROID__)
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+            ViewController::getInstance()->setWindowSizeChanged(
+                static_cast<int>(event.window.data1), static_cast<int>(event.window.data2));
+        }
+    };
+#else
     while (SDL_PollEvent(&event)) {};
+#endif
 
 #if defined(_WIN64)
     // Hide taskbar if the setting for this is enabled.
@@ -1183,8 +1202,7 @@ const std::string applicationName = "ES-DE";
 #if defined(__ANDROID__)
         if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
             LOG(LogInfo) << "Creating \"no media\" file \""
-                         << FileData::getROMDirectory() + ".nomedia"
-                         << "\"...";
+                         << FileData::getROMDirectory() + ".nomedia" << "\"...";
             Utils::FileSystem::createEmptyFile(FileData::getROMDirectory() + ".nomedia");
             if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
                 LOG(LogWarning) << "Couldn't create file, permission problems?";
@@ -1250,6 +1268,11 @@ const std::string applicationName = "ES-DE";
         }
 
         // Main application loop.
+
+#if defined(__ANDROID__)
+        // If the window size changed during startup then we need to resize and reload.
+        ViewController::getInstance()->checkWindowSizeChanged();
+#endif
 
         if (!SystemData::sStartupExitSignal) {
 #if defined(__EMSCRIPTEN__)

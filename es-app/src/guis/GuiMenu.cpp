@@ -581,10 +581,12 @@ void GuiMenu::openUIOptions()
                              selectedApplicationLanguage == "en_US");
     applicationLanguage->add("ENGLISH (UNITED KINGDOM)", "en_GB",
                              selectedApplicationLanguage == "en_GB");
+    applicationLanguage->add("CATALÀ", "ca_ES", selectedApplicationLanguage == "ca_ES");
     applicationLanguage->add("DEUTSCH", "de_DE", selectedApplicationLanguage == "de_DE");
     applicationLanguage->add("ESPAÑOL (ESPAÑA)", "es_ES", selectedApplicationLanguage == "es_ES");
     applicationLanguage->add("FRANÇAIS", "fr_FR", selectedApplicationLanguage == "fr_FR");
     applicationLanguage->add("ITALIANO", "it_IT", selectedApplicationLanguage == "it_IT");
+    applicationLanguage->add("NEDERLANDS", "nl_NL", selectedApplicationLanguage == "nl_NL");
     applicationLanguage->add("POLSKI", "pl_PL", selectedApplicationLanguage == "pl_PL");
     applicationLanguage->add("PORTUGUÊS (BRASIL)", "pt_BR", selectedApplicationLanguage == "pt_BR");
     applicationLanguage->add("ROMÂNĂ", "ro_RO", selectedApplicationLanguage == "ro_RO");
@@ -1189,6 +1191,26 @@ void GuiMenu::openUIOptions()
 void GuiMenu::openSoundOptions()
 {
     auto s = new GuiSettings(_("SOUND SETTINGS"));
+
+#if defined(__ANDROID__)
+    // Audio driver.
+    auto audioDriver = std::make_shared<OptionListComponent<std::string>>(getHelpStyle(),
+                                                                          _("AUDIO DRIVER"), false);
+    std::string selectedDriver {Settings::getInstance()->getString("AudioDriver")};
+    audioDriver->add("OPENSL ES", "openslES", selectedDriver == "openslES");
+    audioDriver->add("AAUDIO", "AAudio", selectedDriver == "AAudio");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the audio driver to "openslES" in this case.
+    if (audioDriver->getSelectedObjects().size() == 0)
+        audioDriver->selectEntry(0);
+    s->addWithLabel(_("AUDIO DRIVER (REQUIRES RESTART)"), audioDriver);
+    s->addSaveFunc([audioDriver, s] {
+        if (audioDriver->getSelected() != Settings::getInstance()->getString("AudioDriver")) {
+            Settings::getInstance()->setString("AudioDriver", audioDriver->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+#endif
 
 // TODO: Implement system volume support for macOS and Android.
 #if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(__FreeBSD__) && !defined(__HAIKU__)
@@ -2306,7 +2328,7 @@ void GuiMenu::openQuitMenu()
         });
         auto quitText = std::make_shared<TextComponent>(
 	#if not defined RETRODECK
-	     ("QUIT ES-DE"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+	     _("QUIT ES-DE"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
 	# else // RetroDECK is defined
             _("QUIT RETRODECK"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         #endif
@@ -2362,22 +2384,22 @@ void GuiMenu::addVersionInfo()
 
     const std::string applicationName {"ES-DE"};
 
-    #if defined(IS_PRERELEASE)
-        #if defined(__ANDROID__)
-            mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
-                             std::to_string(ANDROID_VERSION_CODE) + " (Built " + __DATE__ + ")");
-        #else
-            mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
-                             " (Built " + __DATE__ + ")");
-        #endif
-    #else
-        #if defined(__ANDROID__)
-            mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
-                             std::to_string(ANDROID_VERSION_CODE));
-        #else
-            mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
-        #endif
-    #endif
+#if defined(IS_PRERELEASE)
+#if defined(__ANDROID__)
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
+                     std::to_string(ANDROID_VERSION_CODE) + " (Built " + __DATE__ + ")");
+#else
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
+                     " (Built " + __DATE__ + ")");
+#endif
+#else
+#if defined(__ANDROID__)
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + "-" +
+                     std::to_string(ANDROID_VERSION_CODE));
+#else
+    mVersion.setText(applicationName + "  " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+#endif
+#endif
 
     #if defined(RETRODECK)
         // Only execute this block if RETRODECK is defined

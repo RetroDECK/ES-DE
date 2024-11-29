@@ -56,6 +56,10 @@ public:
     // Reload everything with a theme, used when the "Theme" setting changes.
     void reloadAll();
 
+    // On window size changes we need to deinit/init the application, reload the systems etc.
+    void setWindowSizeChanged(const int width, const int height);
+    void checkWindowSizeChanged();
+
     // Rescan the ROM directory for any changes to games and systems.
     void rescanROMDirectory();
 
@@ -86,7 +90,11 @@ public:
     void pauseViewVideos() override { mCurrentView->pauseViewVideos(); }
     void muteViewVideos() override { mCurrentView->muteViewVideos(); }
     // Needed on Android to reset the static image delay timer on activity resume.
-    void resetViewVideosTimer() override { mCurrentView->resetViewVideosTimer(); }
+    void resetViewVideosTimer() override
+    {
+        if (mCurrentView != nullptr)
+            mCurrentView->resetViewVideosTimer();
+    }
 
     void onFileChanged(FileData* file, bool reloadGamelist);
     void triggerGameLaunch(FileData* game)
@@ -195,6 +203,8 @@ private:
     float mFadeOpacity;
     bool mCancelledTransition; // Needed only for the Fade transition style.
     bool mNextSystem;
+    int mWindowChangedWidth;
+    int mWindowChangedHeight;
 };
 
 #endif // ES_APP_VIEWS_VIEW_CONTROLLER_H

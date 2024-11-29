@@ -15,6 +15,10 @@
 #include "renderers/ShaderOpenGL.h"
 #include "resources/ResourceManager.h"
 
+#if defined(__ANDROID__)
+#include "utils/PlatformUtilAndroid.h"
+#endif
+
 #if defined(_WIN64)
 #include <windows.h>
 #endif
@@ -101,12 +105,26 @@ bool Renderer::createWindow()
     displayMode.h = displayBounds.h;
 #endif
 
+#if defined(__ANDROID__)
+    const std::pair<int, int> windowSize {Utils::Platform::Android::getWindowSize()};
+
+    if (windowSize.first != 0 && windowSize.second != 0) {
+        sScreenWidth = windowSize.first;
+        sScreenHeight = windowSize.second;
+    }
+    else {
+        sScreenWidth = displayMode.w;
+        sScreenHeight = displayMode.h;
+    }
+#else
     sScreenWidth = Settings::getInstance()->getInt("ScreenWidth") ?
                        Settings::getInstance()->getInt("ScreenWidth") :
                        displayMode.w;
     sScreenHeight = Settings::getInstance()->getInt("ScreenHeight") ?
                         Settings::getInstance()->getInt("ScreenHeight") :
                         displayMode.h;
+#endif
+
     mScreenOffsetX = glm::clamp((Settings::getInstance()->getInt("ScreenOffsetX") ?
                                      Settings::getInstance()->getInt("ScreenOffsetX") :
                                      0),
@@ -227,6 +245,8 @@ bool Renderer::createWindow()
         LOG(LogError) << "Couldn't create SDL window. " << SDL_GetError();
         return false;
     }
+
+    mDisplayIndex = displayIndex;
 
 #if defined(__APPLE__)
     // The code below is required as the high DPI scaling on macOS is very bizarre and is

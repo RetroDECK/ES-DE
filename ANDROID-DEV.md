@@ -4,8 +4,7 @@ This document contains information specific to the Android release, for more gen
 
 It's also generally recommended to read the [Frequently Asked Questions (FAQ) for Android](FAQ-ANDROID.md) document prior to diving into the information in this document.
 
-You can buy the Android APK from our Patreon page: \
-https://www.patreon.com/es_de
+You can buy the Android APK via [Patreon](https://www.patreon.com/es_de), the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy) or [Huawei AppGallery](https://appgallery.huawei.com/#/app/C111315115)
 
 Table of contents:
 
@@ -186,6 +185,14 @@ Also be aware that the version check that runs on app startup may not be able to
 
 It's generally a very good idea to import your native Android apps into ES-DE prior to setting it as the home app, this way you can easily access things like the Settings app. Note however that even if you somehow lock yourself out of the system by setting ES-DE as the home app and not having any native apps added you can still always access the Settings app via the Android notification shade. On most devices you access this by swiping down from the top of the screen. After swiping down, just select the cogwheel icon to start the Settings app. From there you can change the home app to something else than ES-DE, should you need to.
 
+## Running ES-DE in multi-window mode
+
+On tablets and other devices that support it, ES-DE can be run in multi-window mode. This does come with some caveats though, most importantly that changing to or from multi-window mode or changing the size of the ES-DE window when running in multi-window mode will trigger a reload of the application. When this happens any menu that is open will get unceremoniously closed, so make sure to never do this when for instance the scraper or theme downloader is running as they will get instantly stopped.
+
+Also be aware that running in multi-window mode obviously changes the ES-DE window size and therefore likely the window aspect ratio as well, so it may not look good with some themes that do not support the new aspect ratio.
+
+Finally, multi-window mode doesn't work when ES-DE has been set as the home app as Android does not allow that.
+
 ## Known ES-DE problems
 
 * Poor performance/low frame rate after startup on some devices, which seems to happen randomly and is usually resolved by itself within 10 to 30 seconds.
@@ -214,6 +221,12 @@ Although the emulator entry is named AetherSX2 the recommended release of this e
 If you prefer to apply the NetherSX2 patch yourself (i.e. build the APK) then you can find all relevant information here:
 
 https://github.com/Trixarian/NetherSX2-patch
+
+### Cemu
+
+This emulator can be downloaded from the following GitHub site. Note that this repository is not from the official Cemu project, we consider Cemu as experimental on Android for the time being.
+
+https://github.com/SSimco/Cemu/releases
 
 ### Citra
 
@@ -302,8 +315,9 @@ https://github.com/jtothebell/fake-08/releases
 
 ### Flycast
 
-Flycast is not available on the Play store or the F-Droid store, but it can be downloaded from their GitHub site.
+This emulator can be installed from the Play store or it can be downloaded from their GitHub site.
 
+https://play.google.com/store/apps/details?id=com.flycast.emulator \
 https://github.com/flyinghead/flycast/releases
 
 ### fMSX
@@ -370,6 +384,12 @@ If using a physical controller for mouse input (via the thumbstick) then you wil
 For some systems you will need to explictly set the _Start_ and _Select_ buttons in the same fashion as when configuring the mouse buttons. Otherwise you'll not be able to start any games.
 
 There are a few more things that you may need to configure for some systems, but that's beyond the scope of this document and should be covered by the MAME emulator documentation.
+
+### Mandarine
+
+This emulator which is forked from Citra can be downloaded from their GitHub site.
+
+https://github.com/mandarine3ds/mandarine/releases
 
 ### MasterGear
 
@@ -547,6 +567,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
 | Anbernic     | RG Cube                 | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket Micro            | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
@@ -561,7 +582,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Google       | Pixel 7 Pro             | 13              | Yes       | None                |                            |
 | Google       | Pixel 8 Pro             | 14              | Yes       | None                |                            |
 | Google       | Pixel Fold              | 14              | Yes       | None                |                            |
-| Google       | Pixel Tablet            | 14              | Yes       | None                |                            |
+| Google       | Pixel Tablet            | 14, 15          | Yes       | None                |                            |
 | GPD          | XD Plus                 | 11              | Yes       | None                | LineageOS                  |
 | Honor        | 20 lite                 | 10              | Yes       | None                |                            |
 | Honor        | Magic5 Pro              | 13              | Yes       | None                |                            |
@@ -615,8 +636,8 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Samsung      | Galaxy A71 5G           | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy M52 5G           | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy Note 9           | 10              | Yes       | None                |                            |
-| Samsung      | Galaxy Note 20          | 13              | No        | Fails at configurator/onboarding |                            |
-| Samsung      | Galaxy Note 20 Ultra 5G | 13              | Yes       | None                |                            |
+| Samsung      | Galaxy Note 20          | 13              | Yes       | None                | The configurator/onboarding may fail if the device is in portrait mode, so always use landscape mode when running through the initial setup |
+| Samsung      | Galaxy Note 20 Ultra 5G | 13              | Yes       | None                | The configurator/onboarding may fail if the device is in portrait mode, so always use landscape mode when running through the initial setup |
 | Samsung      | Galaxy S9+              | 10              | Yes       | None                |                            |
 | Samsung      | Galaxy S10              | 12              | Yes       | None                |                            |
 | Samsung      | Galaxy S20              | 13              | Yes       | None                |                            |
@@ -758,7 +779,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
-| n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
+| n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Mandarine **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)**,<br>NooDS **(Standalone)** | No           | Single archive or ROM file |
@@ -835,7 +856,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vsmile                | VTech V.Smile                                  | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |
-| wiiu                  | Nintendo Wii U                                 | _Placeholder_                     |                                   |              |                                      |
+| wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section in the user guide |
 | windows               | Microsoft Windows                              | Winlator Cmod Glibc **(Standalone)** | Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
 | windows3x             | Microsoft Windows 3.x                          | DOSBox-Pure                       |                                   | No           |                                      |
 | windows9x             | Microsoft Windows 9x                           | DOSBox-Pure                       |                                   | No           |                                      |
