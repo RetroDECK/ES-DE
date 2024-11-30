@@ -31,7 +31,8 @@ void Log::init()
 {
 #if defined(RETRODECK)
     // Check for the rd_logs_folder environment variable
-    const char* logFolder = std::getenv("rd_logs_folder");
+    //const char* logFolder = std::getenv("rd_logs_folder");
+    const char* logFolder = "/var/config/retrodeck/logs";
     if (logFolder && std::strlen(logFolder) > 0)
     {
         sLogPath = std::string(logFolder) + "/retrodeck.log";
