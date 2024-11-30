@@ -53,6 +53,10 @@ public:
     static void flush();
     static void close();
 
+    #if defined(RETRODECK)
+    static void setReportingLevelFromEnv();
+    #endif
+
 protected:
     std::ostringstream mOutStringStream;
 
