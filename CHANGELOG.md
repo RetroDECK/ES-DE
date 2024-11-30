@@ -57,6 +57,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Audio was not working correctly on some Android 15 devices (fixed by updating SDL to 2.30.9)
 * (Android) Switching from ES-DE to another app and back again while the "no ROMs" dialog was shown crashed the application
 * (Android) Switching from ES-DE to the home app and back again while the onboarding configurator was running crashed the application
+* (Android) On some devices, disabling the "Blur background when menu is open" option led to rendering issues
 * (Windows) The video and slideshow screensavers didn't work if a custom game media directory had been configured
 * There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver
 * Invalid popup notifications were sometimes shown after a download error message had been displayed in the theme downloader
