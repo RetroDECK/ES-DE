@@ -356,12 +356,14 @@ https://github.com/Lime3DS/Lime3DS/releases
 
 ### MAME4droid 2024 and MAME4droid
 
-These emulators can be installed from the Play store. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a recent MAME release while the older _MAME4droid_ is using an ancient MAME release.
+These emulators can be installed from the Play store or from their GitHub sites. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a recent MAME release while the older _MAME4droid_ is using an ancient MAME release.
 
 Note that for MAME4droid 2024 there's an exception when it comes to setting up the ROM path. Instead of selecting each separate system directory (as is done on most other standalone emulators) you must select the root of the ROMs directory tree. To change the ROM path open _Settings_ in MAME4droid 2024, then select _General_ and then _Change ROMs path_. After restarting the emulator choose _External storage_ and then the ROMs directory which contains all your ES-DE system directories. If you instead choose a specific system directory like ROMs/arcade or ROMs/neogeo then only that specific system will work when launching games from ES-DE.
 
 https://play.google.com/store/apps/details?id=com.seleuco.mame4d2024 \
-https://play.google.com/store/apps/details?id=com.seleuco.mame4droid
+https://play.google.com/store/apps/details?id=com.seleuco.mame4droid \
+https://github.com/seleuco/MAME4droid-2024/releases \
+https://github.com/seleuco/MAME4droid-0.139u1-/releases
 
 Be aware that MAME4droid 2024 requires specific input configuration for some systems. For instance to navigate the mouse cursor when using touch input you'll need to got into the _Settings_ menu, then _Input_, then _Touch controller_ and change _Mode_ to _Analog Stick_.
 

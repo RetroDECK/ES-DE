@@ -370,12 +370,14 @@ https://github.com/Lime3DS/Lime3DS/releases
 
 ### MAME4droid 2024 and MAME4droid
 
-These emulators can be installed from the Play store. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a recent MAME release while the older _MAME4droid_ is using an ancient MAME release.
+These emulators can be installed from the Play store or from their GitHub sites. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a recent MAME release while the older _MAME4droid_ is using an ancient MAME release.
 
 Note that for MAME4droid 2024 there's an exception when it comes to setting up the ROM path. Instead of selecting each separate system directory (as is done on most other standalone emulators) you must select the root of the ROMs directory tree. To change the ROM path open _Settings_ in MAME4droid 2024, then select _General_ and then _Change ROMs path_. After restarting the emulator choose _External storage_ and then the ROMs directory which contains all your ES-DE system directories. If you instead choose a specific system directory like ROMs/arcade or ROMs/neogeo then only that specific system will work when launching games from ES-DE.
 
 https://play.google.com/store/apps/details?id=com.seleuco.mame4d2024 \
-https://play.google.com/store/apps/details?id=com.seleuco.mame4droid
+https://play.google.com/store/apps/details?id=com.seleuco.mame4droid \
+https://github.com/seleuco/MAME4droid-2024/releases \
+https://github.com/seleuco/MAME4droid-0.139u1-/releases
 
 Be aware that MAME4droid 2024 requires specific input configuration for some systems. For instance to navigate the mouse cursor when using touch input you'll need to got into the _Settings_ menu, then _Input_, then _Touch controller_ and change _Mode_ to _Analog Stick_.
 
@@ -617,6 +619,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Oppo         | A15                     | 10              | Yes       | None                |                            |
 | Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
 | Oppo         | Reno5                   | 12              | Yes       | None                |                            |
+| Orange Pi    | Pi 5                    | 12 (TV)         | Yes       | None                |                            |
 | Raspberry    | Pi 4/400                | 13, 14          | Yes       | None                | Low-power GPU so ES-DE may run a bit sluggish |
 | Raspberry    | Pi 5                    | 15              | Yes       | None                | Very poor GPU performance, runs at almost double speed in Raspberry Pi OS so likely a driver issue |
 | Razer        | Edge                    | 13              | Yes       | None                |                            |
@@ -784,8 +787,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)**,<br>NooDS **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
-| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>MAME4droid 2024 **(Standalone)** | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
-| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>MAME4droid 2024 **(Standalone)** | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
+| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | MAME4droid 2024 **(Standalone)**  | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
+| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | MAME4droid 2024 **(Standalone)**  | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |
 | ngage                 | Nokia N-Gage                                   | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |

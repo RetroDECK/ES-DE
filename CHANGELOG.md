@@ -28,6 +28,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
 * (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
 * (Android) Added support for launching individual games directly with EKA2L1 for the ngage system
+* (Android) Removed the FinalBurn Neo RetroArch core as an alternative emulator for the neogeocd and neogeocdjp systems as it didn't work correctly
 * (Android) Adjusted the layout for the onboarding configurator to look better on screens with wider aspect ratios
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
 * (Android) The storage permission now only needs to be granted once in the onboarding configurator as indicated with an "Already granted" button
@@ -35,6 +36,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Updated a number of Java and Kotlin dependencies to the latest stable versions
 * (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
 * (Linux) Added support for the AppImage release of melonDS
+* (Windows) Added FinalBurn Neo standalone as an alternative emulator for the neogeocd and neogeocdjp systems
 * (Windows) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Windows) Added BeebEm standalone as an alternative emulator for the bbcmicro system
 * (Windows) Added a find rule for the SSE2 build of DuckStation
