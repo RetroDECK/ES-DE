@@ -42,26 +42,33 @@ void Log::init()
         // Default to the existing location if rd_logs_folder is not defined
         sLogPath = Utils::FileSystem::getAppDataDirectory() + "/retrodeck.log";
     }
+    // Skip renaming to .bak for RetroDECK
 #else
     if (Settings::getInstance()->getBool("LegacyAppDataDirectory"))
         sLogPath = Utils::FileSystem::getAppDataDirectory() + "/es_log.txt";
     else
         sLogPath = Utils::FileSystem::getAppDataDirectory() + "/logs/es_log.txt";
-#endif
 
     Utils::FileSystem::removeFile(sLogPath + ".bak");
     // Rename the previous log file.
     Utils::FileSystem::renameFile(sLogPath, sLogPath + ".bak", true);
     return;
+#endif
 }
 
 void Log::open()
 {
     std::unique_lock<std::mutex> lock {sLogMutex};
+
+    std::ios_base::openmode mode = std::ios::out;
+#if defined(RETRODECK)
+    mode |= std::ios::app; // Append to the log file if RetroDECK is defined
+#endif
+
 #if defined(_WIN64)
-    sFile.open(Utils::String::stringToWideString(sLogPath).c_str());
+    sFile.open(Utils::String::stringToWideString(sLogPath).c_str(), mode);
 #else
-    sFile.open(sLogPath.c_str());
+    sFile.open(sLogPath.c_str(), mode);
 #endif
 }
 
