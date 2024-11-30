@@ -1333,6 +1333,7 @@
         <extension>.chd .CHD .cue .CUE</extension>
         <command label="NeoCD">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\neocd_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% --subsystem neocd -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
+        <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% neocdz -cd %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeocd neocdz -cdrm %ROM%</command>
         <platform>neogeocd</platform>
         <theme>neogeocd</theme>
@@ -1344,6 +1345,7 @@
         <extension>.chd .CHD .cue .CUE</extension>
         <command label="NeoCD">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\neocd_libretro.dll %ROM%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% --subsystem neocd -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
+        <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% neocdz -cd %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeocdjp neocdz -cdrm %ROM%</command>
         <platform>neogeocd</platform>
         <theme>neogeocdjp</theme>
