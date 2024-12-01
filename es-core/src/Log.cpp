@@ -139,6 +139,10 @@ Log::~Log()
 
     sFile << mOutStringStream.str();
 
+    #if defined(RETRODECK)
+        sFile.flush();
+    #endif
+
 #if defined(__ANDROID__)
     if (mMessageLevel == LogError) {
         __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID, "%s",
