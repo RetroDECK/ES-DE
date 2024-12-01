@@ -59,11 +59,12 @@ GuiMenu::GuiMenu()
         addEntry(_("SCRAPER"), mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
 #if defined(RETRODECK)
-    if (isFullUI)
-        addEntry(_("RETRODECK CLASSIC CONFIGURATOR"), mMenuColorPrimary, false, [this] { openRetroDeckClassicConfigurator(); });
 
     if (isFullUI)
-        addEntry(_("RETRODECK GODOT CONFIGURATOR"), mMenuColorPrimary, false, [this] { openRetroDeckGodotConfigurator(); });
+        addEntry(_("RETRODECK CONFIGURATOR"), mMenuColorPrimary, false, [this] { openRetroDeckGodotConfigurator(); });
+
+    if (isFullUI)
+        addEntry(_("RETRODECK LEGACY CONFIGURATOR"), mMenuColorPrimary, false, [this] { openRetroDeckClassicConfigurator(); });
 
     if (isFullUI)
         addEntry(_("ES-DE CONFIGURATIONS"), mMenuColorPrimary, true, [this] { openESDEConfiguration(); });
