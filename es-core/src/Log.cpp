@@ -103,10 +103,25 @@ std::ostringstream& Log::get(LogLevel level)
     std::string levelUpper = mLogLevelMap[level];
     std::transform(levelUpper.begin(), levelUpper.end(), levelUpper.begin(), ::toupper);
 
+    // Get current time with milliseconds
+    auto now = std::chrono::system_clock::now();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+    auto time = std::chrono::system_clock::to_time_t(now);
+    tm = *std::localtime(&time);
+
     mOutStringStream << "[" << std::put_time(&tm, "%Y-%m-%d %H:%M:%S")
+                     << "." << std::setfill('0') << std::setw(3) << ms.count() // Add milliseconds
                      << "] [" << levelUpper << "] [ES-DE] ";
 #else
-    mOutStringStream << std::put_time(&tm, "%b %d %H:%M:%S ") << mLogLevelMap[level]
+    // Get current time with milliseconds
+    auto now = std::chrono::system_clock::now();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+    auto time = std::chrono::system_clock::to_time_t(now);
+    tm = *std::localtime(&time);
+
+    mOutStringStream << "[" << std::put_time(&tm, "%b %d %H:%M:%S")
+                     << "." << std::setfill('0') << std::setw(3) << ms.count() // Add milliseconds
+                     << "] " << mLogLevelMap[level]
                      << (level == LogLevel::LogInfo || level == LogLevel::LogWarning ? ":   " :
                                                                                        ":  ");
 #endif
