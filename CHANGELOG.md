@@ -41,6 +41,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Windows) Added BeebEm standalone as an alternative emulator for the bbcmicro system
 * (Windows) Added a find rule for the SSE2 build of DuckStation
 * Added the -f flag for fullscreen mode for melonDS standalone on Linux, macOS and Windows
+* Various translation updates for multiple languages
 * Added support to the theme downloader for detecting and handling theme repository URL changes
 * Added a "textBackgroundCornerRadius" property to the carousel element
 * Added a "textBackgroundCornerRadius" property to the grid element
@@ -62,6 +63,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) On some devices, disabling the "Blur background when menu is open" option led to rendering issues
 * (Windows) The video and slideshow screensavers didn't work if a custom game media directory had been configured
 * There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver
+* Some metadata values were sometimes not saved by the single-game scraper if overwriting was disabled and the language was not set to English
 * Invalid popup notifications were sometimes shown after a download error message had been displayed in the theme downloader
 * Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos
 * Pasting text into a text edit field would make the cursor jump to an incorrect position
