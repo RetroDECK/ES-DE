@@ -388,6 +388,12 @@
             <entry>com.explusalpha.SwanEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="VIRTUAL-VIRTUAL-BOY">
+        <!-- Nintendo Virtual Boy emulator Virtual Virtual Boy -->
+        <rule type="androidpackage">
+            <entry>com.simongellis.vvb/.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="VISUAL-PINBALL">
         <!-- Pinball simulator Visual Pinball -->
         <rule type="androidpackage">

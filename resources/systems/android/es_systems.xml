@@ -1922,6 +1922,7 @@
         <path>%ROMPATH%/virtualboy</path>
         <extension>.bin .BIN .vb .VB .vboy .VBOY .7z .7Z .zip .ZIP</extension>
         <command label="Beetle VB">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_vb_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Virtual Virtual Boy (Standalone)">%EMULATOR_VIRTUAL-VIRTUAL-BOY% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>virtualboy</platform>
         <theme>virtualboy</theme>
     </system>
