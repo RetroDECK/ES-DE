@@ -55,17 +55,25 @@ Some emulators like RetroArch are still using an older storage access method and
 The following emulators are configured for FileProvider access:
 * 2600.emu
 * DroidArcadia
+* EKA2L1
 * FPseNG (still needs scoped storage to be setup in emulator)
 * FPse (still needs scoped storage to be setup in emulator)
 * GBA.emu
 * GBC.emu
+* J2ME Loader
+* JL-Mod
 * Lynx.emu
+* MAME4droid 2024 (for most systems)
+* MAME4droid
 * MD.emu (genesis, mastersystem, megadrive, megadrivejp)
 * NES.emu
 * NGP.emu
+* Panda3DS
 * PCE.emu (pcengine, supergrafx and tg16 systems)
 * Ruffle
+* Skyline
 * Swan.emu
+* Virtual Virtual Boy
 
 Some of these emulators require BIOS files, so they still need to be configured before they can be used with ES-DE.
 
@@ -522,6 +530,13 @@ Although this emulator supports both the Sinclar ZX Spectrum and MGT SAM Coupé 
 https://play.google.com/store/apps/details?id=com.fms.speccy \
 https://play.google.com/store/apps/details?id=com.fms.speccy.deluxe
 
+### Virtual Virtual Boy
+
+This emulator can be installed from the Play store or from their GitHub site.
+
+https://play.google.com/store/apps/details?id=com.simongellis.vvb \
+https://github.com/SupernaviX/vvb/releases
+
 ### Visual Pinball
 
 Although Visual Pinball is working fine on Android it's not possible to properly integrate it with a frontend, you'll instead need to install your tables inside the app and create dummy .vpinball files for your games in ROMs/vpinball and after launching a table from ES-DE you need to manually start it from inside the Visual Pinball GUI. There are more detailed setup instructions in the Visual Pinball section of the User guide.
@@ -854,7 +869,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vectrex               | GCE Vectrex                                    | vecx                              | MAME4droid 2024 **(Standalone)**  | Yes for MAME4droid 2024 | Single archive or ROM file           |
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   | No           | Single archive or tape, cartridge or diskette image file |
 | videopac              | Philips Videopac G7000                         | O2EM                              | MAME4droid 2024 **(Standalone)**  | Yes          | Single archive or ROM file           |
-| virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         |                                   | No           |                                      |
+| virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Virtual Virtual Boy **(Standalone)** | No           | Single archive or ROM file           |
 | vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | See the specific _Visual Pinball_ section in the user guide |
 | vsmile                | VTech V.Smile                                  | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
