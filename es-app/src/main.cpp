@@ -1288,6 +1288,7 @@ int main(int argc, char* argv[])
         delete window->peekGui();
     window->deinit();
 
+    HttpReq::cleanupCurlMulti();
     TextureResource::setExit();
     CollectionSystemsManager::getInstance()->deinit(true);
     SystemData::deleteSystems();
