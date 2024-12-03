@@ -292,6 +292,18 @@
             <entry>~/.local/share/flatpak/exports/bin/com.dosbox_x.DOSBox-X</entry>
         </rule>
     </emulator>
+    <emulator name="DREAMM">
+        <!-- LucasArts game engine DREAMM -->
+        <rule type="systempath">
+            <entry>dreamm</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/dreamm/dreamm</entry>
+            <entry>~/.local/share/applications/dreamm/dreamm</entry>
+            <entry>~/.local/bin/dreamm/dreamm</entry>
+            <entry>~/bin/dreamm/dreamm</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="systempath">

@@ -65,6 +65,7 @@ Emulators\demul\demul.exe
 Emulators\Dolphin-x64\Dolphin.exe
 Emulators\dosbox-staging\dosbox.exe
 Emulators\DOSBox-X\dosbox-x.exe
+Emulators\dreamm\dreamm.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe
 Emulators\EasyRPG\Player.exe

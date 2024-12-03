@@ -101,6 +101,12 @@
             <entry>/usr/local/bin/dosbox-x</entry>
         </rule>
     </emulator>
+    <emulator name="DREAMM">
+        <!-- LucasArts game engine DREAMM -->
+        <rule type="staticpath">
+            <entry>/Applications/dreamm.app/Contents/MacOS/dreamm</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="staticpath">

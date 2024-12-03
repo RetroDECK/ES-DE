@@ -275,6 +275,16 @@
             <entry>%ESPATH%\..\Emulators\DOSBox-X\dosbox-x.exe</entry>
         </rule>
     </emulator>
+    <emulator name="DREAMM">
+        <!-- LucasArts game engine DREAMM -->
+        <rule type="systempath">
+            <entry>dreamm.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\dreamm\dreamm.exe</entry>
+            <entry>%ESPATH%\..\Emulators\dreamm\dreamm.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="systempath">
