@@ -187,8 +187,7 @@ namespace Utils
             // Convert to hex string.
             char buf[33];
             for (int i {0}; i < 16; ++i)
-                snprintf(buf + i * 2, 16, "%02x", digest[i]);
-            buf[32] = 0;
+                snprintf(buf + i * 2, 3, "%02x", digest[i]);
 
             return std::string(buf);
         }
