@@ -86,6 +86,7 @@ Emulators\Hypseus Singe\hypseus.exe
 Emulators\izapple2\izapple2sdl_windows_amd64.exe
 Emulators\jgenesis\jgenesis-cli.exe
 Emulators\KEmulator\KEmulator.exe
+Emulators\kronos\kronos.exe
 Emulators\lime3ds\lime3ds.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe

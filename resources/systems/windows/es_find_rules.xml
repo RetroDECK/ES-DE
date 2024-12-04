@@ -465,6 +465,16 @@
             <entry>%ESPATH%\..\Emulators\KEmulator\KEmulator.exe</entry>
         </rule>
     </emulator>
+    <emulator name="KRONOS">
+        <!-- Sega Saturn emulator Kronos -->
+        <rule type="systempath">
+            <entry>kronos.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\kronos\kronos.exe</entry>
+            <entry>%ESPATH%\..\Emulators\kronos\kronos.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="systempath">
