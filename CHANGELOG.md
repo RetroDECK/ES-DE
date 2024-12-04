@@ -22,6 +22,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * The Git index stat cache is now refreshed for all themes when starting the theme downloader (this speeds up the inventory under some circumstances)
 * Added Mandarine standalone as an alternative emulator for the n3ds system
 * Added DREAMM standalone as an alternative emulator for the dos, pc and scummvm systems on Linux, macOS and Windows
+* Added Kronos standalone as an alternative emulator for the saturn and saturnjp systems on Linux and Windows
 * (Android) Changed the default audio driver from AAudio to OpenSL ES
 * (Android) Added an audio driver menu option to the Sound settings menu
 * (Android) Added experimental support for running in multi-window mode
