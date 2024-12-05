@@ -73,6 +73,7 @@ The following emulators are configured for FileProvider access:
 * Ruffle
 * Skyline
 * Swan.emu
+* SWF Player
 * Virtual Virtual Boy
 
 Some of these emulators require BIOS files, so they still need to be configured before they can be used with ES-DE.
@@ -530,6 +531,13 @@ Although this emulator supports both the Sinclar ZX Spectrum and MGT SAM Coupé 
 https://play.google.com/store/apps/details?id=com.fms.speccy \
 https://play.google.com/store/apps/details?id=com.fms.speccy.deluxe
 
+### SWF Player
+
+This emulator which is essentially a GUI for Ruffle can be installed for free from the Play store. There's a paid Pro version as well.
+
+https://play.google.com/store/apps/details?id=com.issess.flashplayer \
+https://play.google.com/store/apps/details?id=com.issess.flashplayerpro
+
 ### Virtual Virtual Boy
 
 This emulator can be installed from the Play store or from their GitHub site.
@@ -752,7 +760,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          |                                |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          |                                      |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>FCEUmm,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | Yes          | Single archive or ROM file |
-| flash                 | Adobe Flash                                    | Ruffle **(Standalone)**           |                                   | No           | Single .swf file                     |
+| flash                 | Adobe Flash                                    | Ruffle **(Standalone)**           | SWF Player **(Standalone)**       | No           | Single .swf file                     |
 | fm7                   | Fujitsu FM-7                                   | MAME4droid 2024 [FM-7 Diskette] **(Standalone)** | MAME4droid 2024 [FM-7 Tape] **(Standalone)**,<br>MAME4droid 2024 [FM-7 Software list] **(Standalone)**,<br>MAME4droid 2024 [FM77AV Diskette] **(Standalone)**,<br>MAME4droid 2024 [FM77AV Tape] **(Standalone)**,<br>MAME4droid 2024 [FM77AV Software list] **(Standalone)** | Yes          | For tape files you need to manually start the cassette player from the MAME menu after the "load" command, as well as entering the "run" command after loading is complete |
 | fmtowns               | Fujitsu FM Towns                               | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | See the specific _Fujitsu FM Towns_ section in the user guide |
 | fpinball              | Future Pinball                                 | _Placeholder_                     |                                   |              |                                      |

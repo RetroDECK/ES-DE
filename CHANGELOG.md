@@ -28,6 +28,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Added experimental support for running in multi-window mode
 * (Android) Directories for corrupt themes are now automatically removed when the theme downloader is started
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
+* (Android) Added SWF Player standalone as an alternative emulator for the flash system
 * (Android) Added Virtual Virtual Boy standalone as an alternative emulator for the virtualboy system
 * (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
 * (Android) Added support for launching individual games directly with EKA2L1 for the ngage system
