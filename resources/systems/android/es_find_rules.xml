@@ -388,6 +388,13 @@
             <entry>com.explusalpha.SwanEmu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SWF-PLAYER">
+        <!-- Adobe Flash player SWF Player -->
+        <rule type="androidpackage">
+            <entry>com.issess.flashplayerpro/com.issess.flashplayer.player.FlashPlayerActivity</entry>
+            <entry>com.issess.flashplayer/.player.FlashPlayerActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="VIRTUAL-VIRTUAL-BOY">
         <!-- Nintendo Virtual Boy emulator Virtual Virtual Boy -->
         <rule type="androidpackage">
