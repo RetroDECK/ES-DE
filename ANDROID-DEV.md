@@ -60,6 +60,7 @@ The following emulators are configured for FileProvider access:
 * FPse (still needs scoped storage to be setup in emulator)
 * GBA.emu
 * GBC.emu
+* Infinity
 * J2ME Loader
 * JL-Mod
 * Lynx.emu
@@ -348,6 +349,14 @@ https://play.google.com/store/apps/details?id=com.emulator.fpse
 This emulator can be installed from the Play store.
 
 https://play.google.com/store/apps/details?id=com.fms.ines.free
+
+### Infinity
+
+This PICO-8 game engine/emulator can be installed from the Play store.
+
+https://play.google.com/store/apps/details?id=me.dt2dev.infinity
+
+Note that this emulator has a strange behavior where it will return to the home app whenever you exit a game, so unless ES-DE is set as your home app you'll need to manually focus back to it after exiting Infinity.
 
 ### IrataJaguar
 
@@ -827,7 +836,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   | Yes          |                                      |
-| pico8                 | PICO-8 Fantasy Console                         | Fake-08                           | Retro8                            | No           | See the specific _PICO-8_ section in the User guide |
+| pico8                 | PICO-8 Fantasy Console                         | Fake-08                           | Retro8,<br>Infinity **(Standalone)** | No           | See the specific _PICO-8_ section in the User guide |
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | NXEngine (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War | Yes for ECWolf |                                      |
