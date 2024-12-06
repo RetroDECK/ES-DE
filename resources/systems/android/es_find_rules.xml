@@ -153,6 +153,12 @@
             <entry>com.fms.ines.free/com.fms.emulib.TVActivity</entry>
         </rule>
     </emulator>
+    <emulator name="INFINITY">
+        <!-- PICO-8 Fantasy Console game engine Infinity -->
+        <rule type="androidpackage">
+            <entry>me.dt2dev.infinity/.SchemeActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="IRATAJAGUAR">
         <!-- Atari Jaguar emulator IrataJaguar -->
         <rule type="androidpackage">
