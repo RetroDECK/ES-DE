@@ -544,16 +544,21 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Anbernic     | RG353V                  | 11              | Yes       | None                |                            |
 | Anbernic     | RG405M                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG405V                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG406H                  | 13              | Yes       | None                |                            |
+| Anbernic     | RG406V                  | 13              | Yes       | None                |                            |
 | Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG556                   | 13              | Yes       | None                |                            |
 | Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
 | Anbernic     | RG Cube                 | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket DMG              | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Micro            | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
 | Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Minor audio issues  |                            |
+| Ayn          | Odin 2 Mini             | 13              | Yes       | None                |                            |
+| Ayn          | Odin 2 Portal           | 13              | Yes       | None                |                            |
 | Google       | Pixel 2 XL              | 11              | Yes       | None                |                            |
 | Google       | Pixel 3 XL              | 12              | Yes       | None                |                            |
 | Google       | Pixel 4a                | 13              | Yes       | None                |                            |
@@ -609,7 +614,9 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Retroid      | Pocket 3+               | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 4                | 13              | Yes       | None                |                            |
 | Retroid      | Pocket 4 Pro            | 13              | Yes       | None                |                            |
+| Retroid      | Pocket 5                | 13              | Yes       | None                |                            |
 | Retroid      | Pocket Flip             | 11              | Yes       | None                |                            |
+| Retroid      | Pocket Mini             | 10              | Yes       | None                |                            |
 | Samsung      | Galaxy A17              | 11              | Yes       | None                |                            |
 | Samsung      | Galaxy A20              | 10              | Yes       | No write access to SD card | ROMs folder can be moved to SD card after setup and be used in read-only mode |
 | Samsung      | Galaxy A52              | 13              | Yes       | None                |                            |
