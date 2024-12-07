@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.1.1-alpha
+3.1.1
 
 The latest version can be downloaded from https://es-de.org
 
