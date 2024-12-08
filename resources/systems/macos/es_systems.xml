@@ -1536,8 +1536,8 @@
         <name>psvita</name>
         <fullname>Sony PlayStation Vita</fullname>
         <path>%ROMPATH%/psvita</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.psvita</extension>
+        <command label="Vita3K (Standalone)">%EMULATOR_VITA3K% -r %INJECT%=%BASENAME%.psvita</command>
         <platform>psvita</platform>
         <theme>psvita</theme>
     </system>

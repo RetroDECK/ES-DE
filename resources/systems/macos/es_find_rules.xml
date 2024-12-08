@@ -408,6 +408,12 @@
             <entry>/Applications/VPinballX_GL.app/Contents/MacOS/VPinballX_GL</entry>
         </rule>
     </emulator>
+    <emulator name="VITA3K">
+        <!-- Sony PlayStation Vita emulator Vita3K -->
+        <rule type="staticpath">
+            <entry>/Applications/Vita3K.app/Contents/MacOS/Vita3K</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="staticpath">
