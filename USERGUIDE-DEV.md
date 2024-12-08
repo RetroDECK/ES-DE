@@ -2491,9 +2491,7 @@ When using this setup method you need to set the alternative emulator to _RPCS3 
 There is also a video on the official ES-DE YouTube channel on how to setup Vita3K:\
 https://www.youtube.com/watch?v=4U8yAUJ9-Tk
 
-On Android and Windows the Vita3K installation is straightforward, but on Linux you may need to place the emulator in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details. If using a Linux distribution that provides Vita3K via the repository (such as the AUR on Arch/Manjaro) then you can skip this step and install the emulator using your OS package manager.
-
-Although a macOS release of Vita3K seems to be in the works this does not seem to be readily available for download so there is currently no macOS support for this system in ES-DE.
+On Android, macOS and Windows the Vita3K installation is straightforward, but on Linux you may need to place the emulator in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details. If using a Linux distribution that provides Vita3K via the repository (such as the AUR on Arch/Manjaro) then you can skip this step and install the emulator using your OS package manager.
 
 After you've installed Vita3K, add your games via the GUI and make sure that they work correctly when launched from inside the emulator.
 
@@ -4232,7 +4230,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ps3                   | Sony PlayStation 3                             | RPCS3 Shortcut **(Standalone)**   | RPCS3 Directory **(Standalone)** | Yes    | See the specific _Sony PlayStation 3_ section elsewhere in this guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file      |
-| psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)** [LW]      |                                   | Yes          | See the specific _Sony PlayStation Vita_ section elsewhere in this guide |
+| psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           |                                   | Yes          | See the specific _Sony PlayStation Vita_ section elsewhere in this guide |
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)**,<br>Mednafen **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | pv1000                | Casio PV-1000                                  | MAME - Current                    | MAME **(Standalone)**             | No           | Single archive or ROM file |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero],<br>vitaQuake 3 [LW],<br> _Shortcut or script_ | No           |                                      |

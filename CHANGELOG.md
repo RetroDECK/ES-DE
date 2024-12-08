@@ -41,6 +41,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Updated a number of Java and Kotlin dependencies to the latest stable versions
 * (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
 * (Linux) Added support for the AppImage release of melonDS
+* (macOS) Added support for the Sony PlayStation Vita (psvita) game system
 * (Windows) Added FinalBurn Neo standalone as an alternative emulator for the neogeocd and neogeocdjp systems
 * (Windows) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Windows) Added BeebEm standalone as an alternative emulator for the bbcmicro system
