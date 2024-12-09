@@ -1,6 +1,6 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.1.1 (in development)
+## Version 3.1.1 / 3.1.1-39 (in development)
 
 **Release date:** TBD
 
@@ -42,6 +42,7 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
 * (Linux) Added support for the AppImage release of melonDS
 * (macOS) Added support for the Sony PlayStation Vita (psvita) game system
+* (macOS) Added the %RUNINBACKGROUND% variable for RPCS3 to work around an emulator issue where ES-DE would directly resume on game launch
 * (Windows) Added FinalBurn Neo standalone as an alternative emulator for the neogeocd and neogeocdjp systems
 * (Windows) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Windows) Added BeebEm standalone as an alternative emulator for the bbcmicro system

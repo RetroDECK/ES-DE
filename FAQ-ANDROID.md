@@ -36,7 +36,7 @@ There seems to be an issue with Gmail (both web version and app) that a few peop
 
 ## Will I lose any settings or data when upgrading to a new release?
 
-No, you will not lose any settings or data when you upgrade. Just download the latest version and sideload it on your device to apply the update.
+No, you will not lose any settings or data when you upgrade, everything will stay intact.
 
 ## Why do I get a "There was a problem parsing the package" error when I attempt to install ES-DE?
 
