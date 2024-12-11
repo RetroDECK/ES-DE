@@ -593,14 +593,14 @@ This is clearly not a complete list of Android devices, but rather those we know
 | :----------- | :---------------------- | :-------------- | :-------- | :------------------ | :------------------------- |
 | Abxylute     | One                     | 12              | Yes       | None                |                            |
 | Alldocube    | iPlay50 mini Pro        | 13              | Yes       | None                |                            |
-| Anbernic     | RG353V                  | 11              | Yes       | None                |                            |
-| Anbernic     | RG405M                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
-| Anbernic     | RG405V                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG353V                  | 11,<br>GammaOS 12,<br>GammaOS 13 TV | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG405M                  | 12,<br>GammaOS 12  | Yes       | None                |                            |
+| Anbernic     | RG405V                  | 12,<br>GammaOS 12  | Yes       | None                |                            |
 | Anbernic     | RG406H                  | 13              | Yes       | None                |                            |
 | Anbernic     | RG406V                  | 13              | Yes       | None                |                            |
-| Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG505                   | 12,<br>GammaOS 12 | Yes       | None                |                            |
 | Anbernic     | RG556                   | 13              | Yes       | None                |                            |
-| Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
+| Anbernic     | RG ARC                  | LineageOS 12,<br>GammaOS 12,<br>GammaOS 13 TV | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG Cube                 | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
 | AYANEO       | Pocket DMG              | 13              | Yes       | None                |                            |
@@ -611,6 +611,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Minor audio issues  |                            |
 | Ayn          | Odin 2 Mini             | 13              | Yes       | None                |                            |
 | Ayn          | Odin 2 Portal           | 13              | Yes       | None                |                            |
+| GKD          | Bubble                  | GammaOS 13 TV   | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Google       | Pixel 2 XL              | 11              | Yes       | None                |                            |
 | Google       | Pixel 3 XL              | 12              | Yes       | None                |                            |
 | Google       | Pixel 4a                | 13              | Yes       | None                |                            |
@@ -631,6 +632,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
 | Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
 | Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | None                | Custom 64-bit Android TV OS |
+| KTPocket     | KT-R1                   | GammaOS 12      | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |
 | Lenovo       | Xiaoxin Pad Pro 2021    | 11              | Yes       | None                |                            |
@@ -657,6 +659,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
 | Oppo         | Reno5                   | 12              | Yes       | None                |                            |
 | Orange Pi    | Pi 5                    | 12 (TV)         | Yes       | None                |                            |
+| Powkiddy     | RGB (RK3566) series     | GammaOS 13 TV   | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Raspberry    | Pi 4/400                | 13, 14          | Yes       | None                | Low-power GPU so ES-DE may run a bit sluggish |
 | Raspberry    | Pi 5                    | 15              | Yes       | None                | Very poor GPU performance, runs at almost double speed in Raspberry Pi OS so likely a driver issue |
 | Razer        | Edge                    | 13              | Yes       | None                |                            |
