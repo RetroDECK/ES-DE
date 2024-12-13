@@ -1,8 +1,8 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.1.1 / 3.1.1-39 (in development)
+## Version 3.1.1 / 3.1.1-39
 
-**Release date:** TBD
+**Release date:** 2024-12-13
 
 ### Release overview
 
@@ -10,7 +10,7 @@ This release adds support for four more languages, reduces the memory footprint 
 
 On Android the default audio driver has been changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There is however a new menu entry in the Sound settings menu that makes it possible to easily revert to AAudio in case of issues with the OpenSL ES driver. Also for Android there is now experimental support for running ES-DE in multi-window mode on tablets and other devices that support this.
 
-In addition to the above there are a number of bug fixes and other minor improvements.
+In addition to the above there are a number of bug fixes and other improvements.
 
 ### Detailed list of changes
 
