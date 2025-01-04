@@ -629,6 +629,7 @@
         <path>%ROMPATH%/flash</path>
         <extension>.swf .SWF</extension>
         <command label="Ruffle (Standalone)">%EMULATOR_RUFFLE% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
+        <command label="SWF Player (Standalone)">%EMULATOR_SWF-PLAYER% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>flash</platform>
         <theme>flash</theme>
     </system>
@@ -1208,7 +1209,6 @@
         <path>%ROMPATH%/neogeocd</path>
         <extension>.chd .CHD .cue .CUE</extension>
         <command label="NeoCD">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=neocd_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/neogeocd' -cdrm '%ROMRAW%'" %DATA%=neocdz</command>
         <platform>neogeocd</platform>
         <theme>neogeocd</theme>
@@ -1219,7 +1219,6 @@
         <path>%ROMPATH%/neogeocdjp</path>
         <extension>.chd .CHD .cue .CUE</extension>
         <command label="NeoCD">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=neocd_libretro_android.so %EXTRA_ROM%=%ROM%</command>
-        <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid 2024 (Standalone)">%EMULATOR_MAME4DROID-2024% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/neogeocdjp' -cdrm '%ROMRAW%'" %DATA%=neocdz</command>
         <platform>neogeocd</platform>
         <theme>neogeocdjp</theme>
@@ -1388,6 +1387,7 @@
         <extension>.p8 .P8 .png .PNG</extension>
         <command label="Fake-08">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=fake08_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Retro8">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=retro8_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Infinity (Standalone)">%EMULATOR_INFINITY% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>pico8</platform>
         <theme>pico8</theme>
     </system>
@@ -1924,6 +1924,7 @@
         <path>%ROMPATH%/virtualboy</path>
         <extension>.bin .BIN .vb .VB .vboy .VBOY .7z .7Z .zip .ZIP</extension>
         <command label="Beetle VB">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=/storage/emulated/0/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=mednafen_vb_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Virtual Virtual Boy (Standalone)">%EMULATOR_VIRTUAL-VIRTUAL-BOY% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>virtualboy</platform>
         <theme>virtualboy</theme>
     </system>

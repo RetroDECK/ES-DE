@@ -1290,6 +1290,7 @@ const std::string applicationName = "ES-DE";
         delete window->peekGui();
     window->deinit();
 
+    HttpReq::cleanupCurlMulti();
     TextureResource::setExit();
     CollectionSystemsManager::getInstance()->deinit(true);
     SystemData::deleteSystems();

@@ -55,17 +55,27 @@ Some emulators like RetroArch are still using an older storage access method and
 The following emulators are configured for FileProvider access:
 * 2600.emu
 * DroidArcadia
+* EKA2L1
 * FPseNG (still needs scoped storage to be setup in emulator)
 * FPse (still needs scoped storage to be setup in emulator)
 * GBA.emu
 * GBC.emu
+* Infinity
+* J2ME Loader
+* JL-Mod
 * Lynx.emu
+* MAME4droid 2024 (for most systems)
+* MAME4droid
 * MD.emu (genesis, mastersystem, megadrive, megadrivejp)
 * NES.emu
 * NGP.emu
+* Panda3DS
 * PCE.emu (pcengine, supergrafx and tg16 systems)
 * Ruffle
+* Skyline
 * Swan.emu
+* SWF Player
+* Virtual Virtual Boy
 
 Some of these emulators require BIOS files, so they still need to be configured before they can be used with ES-DE.
 
@@ -340,6 +350,14 @@ This emulator can be installed from the Play store.
 
 https://play.google.com/store/apps/details?id=com.fms.ines.free
 
+### Infinity
+
+This PICO-8 game engine/emulator can be installed from the Play store.
+
+https://play.google.com/store/apps/details?id=me.dt2dev.infinity
+
+Note that this emulator has a strange behavior where it will return to the home app whenever you exit a game, so unless ES-DE is set as your home app you'll need to manually switch back to it after exiting Infinity.
+
 ### IrataJaguar
 
 This Atari Jaguar emulator can be downloaded from their website. Just be aware that it's very old and has not been updated for modern Android releases, so it may be finicky on some devices or it may not work at all.
@@ -370,12 +388,14 @@ https://github.com/Lime3DS/Lime3DS/releases
 
 ### MAME4droid 2024 and MAME4droid
 
-These emulators can be installed from the Play store. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a recent MAME release while the older _MAME4droid_ is using an ancient MAME release.
+These emulators can be installed from the Play store or from their GitHub sites. It's strongly recommended to go for the _MAME4droid 2024_ version as this is updated with a recent MAME release while the older _MAME4droid_ is using an ancient MAME release.
 
 Note that for MAME4droid 2024 there's an exception when it comes to setting up the ROM path. Instead of selecting each separate system directory (as is done on most other standalone emulators) you must select the root of the ROMs directory tree. To change the ROM path open _Settings_ in MAME4droid 2024, then select _General_ and then _Change ROMs path_. After restarting the emulator choose _External storage_ and then the ROMs directory which contains all your ES-DE system directories. If you instead choose a specific system directory like ROMs/arcade or ROMs/neogeo then only that specific system will work when launching games from ES-DE.
 
 https://play.google.com/store/apps/details?id=com.seleuco.mame4d2024 \
-https://play.google.com/store/apps/details?id=com.seleuco.mame4droid
+https://play.google.com/store/apps/details?id=com.seleuco.mame4droid \
+https://github.com/seleuco/MAME4droid-2024/releases \
+https://github.com/seleuco/MAME4droid-0.139u1-/releases
 
 Be aware that MAME4droid 2024 requires specific input configuration for some systems. For instance to navigate the mouse cursor when using touch input you'll need to got into the _Settings_ menu, then _Input_, then _Touch controller_ and change _Mode_ to _Analog Stick_.
 
@@ -520,6 +540,20 @@ Although this emulator supports both the Sinclar ZX Spectrum and MGT SAM Coupé 
 https://play.google.com/store/apps/details?id=com.fms.speccy \
 https://play.google.com/store/apps/details?id=com.fms.speccy.deluxe
 
+### SWF Player
+
+This emulator which is essentially a GUI for Ruffle can be installed for free from the Play store. There's a paid Pro version as well.
+
+https://play.google.com/store/apps/details?id=com.issess.flashplayer \
+https://play.google.com/store/apps/details?id=com.issess.flashplayerpro
+
+### Virtual Virtual Boy
+
+This emulator can be installed from the Play store or from their GitHub site.
+
+https://play.google.com/store/apps/details?id=com.simongellis.vvb \
+https://github.com/SupernaviX/vvb/releases
+
 ### Visual Pinball
 
 Although Visual Pinball is working fine on Android it's not possible to properly integrate it with a frontend, you'll instead need to install your tables inside the app and create dummy .vpinball files for your games in ROMs/vpinball and after launching a table from ES-DE you need to manually start it from inside the Visual Pinball GUI. There are more detailed setup instructions in the Visual Pinball section of the User guide.
@@ -559,19 +593,25 @@ This is clearly not a complete list of Android devices, but rather those we know
 | :----------- | :---------------------- | :-------------- | :-------- | :------------------ | :------------------------- |
 | Abxylute     | One                     | 12              | Yes       | None                |                            |
 | Alldocube    | iPlay50 mini Pro        | 13              | Yes       | None                |                            |
-| Anbernic     | RG353V                  | 11              | Yes       | None                |                            |
-| Anbernic     | RG405M                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
-| Anbernic     | RG405V                  | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
-| Anbernic     | RG505                   | 12              | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG353V                  | 11,<br>GammaOS 12,<br>GammaOS 13 TV | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
+| Anbernic     | RG405M                  | 12,<br>GammaOS 12  | Yes       | None                |                            |
+| Anbernic     | RG405V                  | 12,<br>GammaOS 12  | Yes       | None                |                            |
+| Anbernic     | RG406H                  | 13              | Yes       | None                |                            |
+| Anbernic     | RG406V                  | 13              | Yes       | None                |                            |
+| Anbernic     | RG505                   | 12,<br>GammaOS 12 | Yes       | None                |                            |
 | Anbernic     | RG556                   | 13              | Yes       | None                |                            |
-| Anbernic     | RG ARC                  | 12              | Yes       | None                | LineageOS                  |
+| Anbernic     | RG ARC                  | LineageOS 12,<br>GammaOS 12,<br>GammaOS 13 TV | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Anbernic     | RG Cube                 | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Air              | 12              | Yes       | None                |                            |
+| AYANEO       | Pocket DMG              | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket Micro            | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
 | Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
 | Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Minor audio issues  |                            |
+| Ayn          | Odin 2 Mini             | 13              | Yes       | None                |                            |
+| Ayn          | Odin 2 Portal           | 13              | Yes       | None                |                            |
+| GKD          | Bubble                  | GammaOS 13 TV   | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Google       | Pixel 2 XL              | 11              | Yes       | None                |                            |
 | Google       | Pixel 3 XL              | 12              | Yes       | None                |                            |
 | Google       | Pixel 4a                | 13              | Yes       | None                |                            |
@@ -592,6 +632,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
 | Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
 | Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | None                | Custom 64-bit Android TV OS |
+| KTPocket     | KT-R1                   | GammaOS 12      | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |
 | Lenovo       | Xiaoxin Pad Pro 2021    | 11              | Yes       | None                |                            |
@@ -617,6 +658,8 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Oppo         | A15                     | 10              | Yes       | None                |                            |
 | Oppo         | Find X5 Pro             | 14              | Yes       | None                |                            |
 | Oppo         | Reno5                   | 12              | Yes       | None                |                            |
+| Orange Pi    | Pi 5                    | 12 (TV)         | Yes       | None                |                            |
+| Powkiddy     | RGB (RK3566) series     | GammaOS 13 TV   | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Raspberry    | Pi 4/400                | 13, 14          | Yes       | None                | Low-power GPU so ES-DE may run a bit sluggish |
 | Raspberry    | Pi 5                    | 15              | Yes       | None                | Very poor GPU performance, runs at almost double speed in Raspberry Pi OS so likely a driver issue |
 | Razer        | Edge                    | 13              | Yes       | None                |                            |
@@ -627,7 +670,9 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Retroid      | Pocket 3+               | 11              | Yes       | None                |                            |
 | Retroid      | Pocket 4                | 13              | Yes       | None                |                            |
 | Retroid      | Pocket 4 Pro            | 13              | Yes       | None                |                            |
+| Retroid      | Pocket 5                | 13              | Yes       | None                |                            |
 | Retroid      | Pocket Flip             | 11              | Yes       | None                |                            |
+| Retroid      | Pocket Mini             | 10              | Yes       | None                |                            |
 | Samsung      | Galaxy A17              | 11              | Yes       | None                |                            |
 | Samsung      | Galaxy A20              | 10              | Yes       | No write access to SD card | ROMs folder can be moved to SD card after setup and be used in read-only mode |
 | Samsung      | Galaxy A52              | 13              | Yes       | None                |                            |
@@ -734,7 +779,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          |                                |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          |                                      |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>FCEUmm,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | Yes          | Single archive or ROM file |
-| flash                 | Adobe Flash                                    | Ruffle **(Standalone)**           |                                   | No           | Single .swf file                     |
+| flash                 | Adobe Flash                                    | Ruffle **(Standalone)**           | SWF Player **(Standalone)**       | No           | Single .swf file                     |
 | fm7                   | Fujitsu FM-7                                   | MAME4droid 2024 [FM-7 Diskette] **(Standalone)** | MAME4droid 2024 [FM-7 Tape] **(Standalone)**,<br>MAME4droid 2024 [FM-7 Software list] **(Standalone)**,<br>MAME4droid 2024 [FM77AV Diskette] **(Standalone)**,<br>MAME4droid 2024 [FM77AV Tape] **(Standalone)**,<br>MAME4droid 2024 [FM77AV Software list] **(Standalone)** | Yes          | For tape files you need to manually start the cassette player from the MAME menu after the "load" command, as well as entering the "run" command after loading is complete |
 | fmtowns               | Fujitsu FM Towns                               | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | See the specific _Fujitsu FM Towns_ section in the user guide |
 | fpinball              | Future Pinball                                 | _Placeholder_                     |                                   |              |                                      |
@@ -784,8 +829,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>DraStic **(Standalone)**,<br>NooDS **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid 2024 **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
-| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>MAME4droid 2024 **(Standalone)** | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
-| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>MAME4droid 2024 **(Standalone)** | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
+| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | MAME4droid 2024 **(Standalone)**  | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
+| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | MAME4droid 2024 **(Standalone)**  | Yes          | .chd (NeoCD and MAME4droid 2024 only) or .cue file |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |
 | ngage                 | Nokia N-Gage                                   | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>NGP.emu **(Standalone)** | No           | Single archive or ROM file           |
@@ -801,7 +846,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   | Yes          |                                      |
-| pico8                 | PICO-8 Fantasy Console                         | Fake-08                           | Retro8                            | No           | See the specific _PICO-8_ section in the User guide |
+| pico8                 | PICO-8 Fantasy Console                         | Fake-08                           | Retro8,<br>Infinity **(Standalone)** | No           | See the specific _PICO-8_ section in the User guide |
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | NXEngine (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War | Yes for ECWolf |                                      |
@@ -851,7 +896,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vectrex               | GCE Vectrex                                    | vecx                              | MAME4droid 2024 **(Standalone)**  | Yes for MAME4droid 2024 | Single archive or ROM file           |
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   | No           | Single archive or tape, cartridge or diskette image file |
 | videopac              | Philips Videopac G7000                         | O2EM                              | MAME4droid 2024 **(Standalone)**  | Yes          | Single archive or ROM file           |
-| virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         |                                   | No           |                                      |
+| virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Virtual Virtual Boy **(Standalone)** | No           | Single archive or ROM file           |
 | vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | See the specific _Visual Pinball_ section in the user guide |
 | vsmile                | VTech V.Smile                                  | MAME4droid 2024 **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |

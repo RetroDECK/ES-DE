@@ -1133,6 +1133,12 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
             metadata.set(key, result.mdl.get(key));
             metadataUpdated = true;
         }
+        // We need to check against a translated "unknown" for keys that have this default value.
+        else if ((key == "developer" || key == "publisher" || key == "genre" || key == "players") &&
+                 metadata.get(key) == _("unknown")) {
+            metadata.set(key, result.mdl.get(key));
+            metadataUpdated = true;
+        }
         // Else only update the value if it is set to the default metadata value.
         else if (metadata.get(key) == mMetaDataDecl.at(i).defaultValue) {
             metadata.set(key, result.mdl.get(key));

@@ -1586,7 +1586,11 @@ void ViewController::reloadAll()
 void ViewController::setWindowSizeChanged(const int width, const int height)
 {
 #if defined(__ANDROID__)
-    const std::pair<int, int> windowSize {Utils::Platform::Android::getWindowSize()};
+    std::pair<int, int> windowSize {Utils::Platform::Android::getWindowSize()};
+    const int screenRotation {Settings::getInstance()->getInt("ScreenRotate")};
+
+    if (screenRotation == 90 || screenRotation == 270)
+        windowSize = std::make_pair(windowSize.second, windowSize.first);
 
     if (windowSize.first == static_cast<int>(mRenderer->getScreenWidth()) &&
         windowSize.second == static_cast<int>(mRenderer->getScreenHeight())) {

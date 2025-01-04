@@ -153,6 +153,12 @@
             <entry>com.fms.ines.free/com.fms.emulib.TVActivity</entry>
         </rule>
     </emulator>
+    <emulator name="INFINITY">
+        <!-- PICO-8 Fantasy Console game engine Infinity -->
+        <rule type="androidpackage">
+            <entry>me.dt2dev.infinity/.SchemeActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="IRATAJAGUAR">
         <!-- Atari Jaguar emulator IrataJaguar -->
         <rule type="androidpackage">
@@ -386,6 +392,19 @@
         <!-- Bandai WonderSwan emulator Swan.emu -->
         <rule type="androidpackage">
             <entry>com.explusalpha.SwanEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="SWF-PLAYER">
+        <!-- Adobe Flash player SWF Player -->
+        <rule type="androidpackage">
+            <entry>com.issess.flashplayerpro/com.issess.flashplayer.player.FlashPlayerActivity</entry>
+            <entry>com.issess.flashplayer/.player.FlashPlayerActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="VIRTUAL-VIRTUAL-BOY">
+        <!-- Nintendo Virtual Boy emulator Virtual Virtual Boy -->
+        <rule type="androidpackage">
+            <entry>com.simongellis.vvb/.MainActivity</entry>
         </rule>
     </emulator>
     <emulator name="VISUAL-PINBALL">

@@ -179,6 +179,13 @@
             <entry>%ESPATH%\..\Emulators\DOSBox-X\dosbox-x.exe</entry>
         </rule>
     </emulator>
+    <emulator name="DREAMM">
+        <!-- LucasArts game engine DREAMM -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\dreamm\dreamm.exe</entry>
+            <entry>%ESPATH%\..\Emulators\dreamm\dreamm.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="staticpath">
@@ -302,6 +309,13 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\KEmulator\KEmulator.exe</entry>
             <entry>%ESPATH%\..\Emulators\KEmulator\KEmulator.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="KRONOS">
+        <!-- Sega Saturn emulator Kronos -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\kronos\kronos.exe</entry>
+            <entry>%ESPATH%\..\Emulators\kronos\kronos.exe</entry>
         </rule>
     </emulator>
     <emulator name="LIME3DS">

@@ -755,16 +755,20 @@ The following languages are supported:
 | :------------ | :----------------------- | :----------------------- |
 | en_US         | English (United States)  | English (United States)  |
 | en_GB         | English (United Kingdom) | English (United Kingdom) |
+| ca_ES         | Catalan                  | Català                   |
+| de_DE         | German                   | Deutsch                  |
 | es_ES         | Spanish (Spain)          | Español (España)         |
 | fr_FR         | French                   | Français                 |
 | it_IT         | Italian                  | Italiano                 |
+| nl_NL         | Dutch                    | Nederlands               |
 | pl_PL         | Polish                   | Polski                   |
 | pt_BR         | Portuguese (Brazil)      | Português (Brasil)       |
 | ro_RO         | Romanian                 | Română                   |
 | ru_RU         | Russian                  | Русский                  |
 | sv_SE         | Swedish                  | Svenska                  |
-| ja_JP         | Japanese                 | 日本語                    |
-| zh_CN         | Simplified Chinese       | 简体中文                  |
+| ja_JP         | Japanese                 | 日本語                   |
+| ko_KR         | Korean                   | 한국어                   |
+| zh_CN         | Simplified Chinese       | 简体中文                 |
 
 Note that the native name is what is shown inside the _UI Settings_ menu for the _Theme Language_ and _Application Language_ settings.
 
@@ -1895,6 +1899,11 @@ Properties:
     - This property makes it possible to size the text relative to the overall item size. If using this and also defining a text background color using `textBackgroundColor` or `textSelectedBackgroundColor` then this color will still fill the entire item size.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `textBackgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the text background, assuming it has a color set. The radius is a percentage of the screen width. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the text background height.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+    - This property can only be used if `textBackgroundColor` has a value defined.
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
@@ -2101,7 +2110,7 @@ Properties:
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
 * `backgroundCornerRadius` - type: FLOAT
-    - Setting this property higher than zero applies rounded corners to the image defined by `backgroundImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `backgroundRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Setting this property higher than zero applies rounded corners to the image defined by `backgroundImage`, or to the colored rectangle if `backgroundColor` has been defined without using a background image. The radius is a percentage of the screen width and not directly related to the background size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `backgroundRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square background into a perfectly round one.
     - Minimum value is `0` and maximum value is `0.5`
     - Default is `0` (corners are not rounded)
 * `backgroundColor` - type: COLOR
@@ -2124,7 +2133,7 @@ Properties:
     - Valid values are `bottom`, `middle` or `top`
     - Default is `top`
 * `selectorCornerRadius` - type: FLOAT
-    - Setting this property higher than zero applies rounded corners to the image defined by `backgroundImage`. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `selectorRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
+    - Setting this property higher than zero applies rounded corners to the image defined by `selectorImage`, or to the colored rectangle if `selectorColor` has been defined without using a selector image. The radius is a percentage of the screen width and not directly related to the selector size. This makes it possible to apply identically sized corners regardless of image dimensions. The size is calculated internally with `itemScale` and `selectorRelativeScale` set to `1`. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square selector into a perfectly round one.
     - Minimum value is `0` and maximum value is `0.5`
     - Default is `0` (corners are not rounded)
 * `selectorColor` - type: COLOR
@@ -2144,6 +2153,11 @@ Properties:
     - This property makes it possible to size the text relative to the overall item size.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `textBackgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the text background, assuming it has a color set. The radius is a percentage of the screen width. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the text background height.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+    - This property can only be used if `textBackgroundColor` has a value defined.
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR

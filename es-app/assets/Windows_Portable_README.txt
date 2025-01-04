@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.1.1-alpha
+3.1.1
 
 The latest version can be downloaded from https://es-de.org
 
@@ -65,6 +65,7 @@ Emulators\demul\demul.exe
 Emulators\Dolphin-x64\Dolphin.exe
 Emulators\dosbox-staging\dosbox.exe
 Emulators\DOSBox-X\dosbox-x.exe
+Emulators\dreamm\dreamm.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe
 Emulators\EasyRPG\Player.exe
@@ -85,6 +86,7 @@ Emulators\Hypseus Singe\hypseus.exe
 Emulators\izapple2\izapple2sdl_windows_amd64.exe
 Emulators\jgenesis\jgenesis-cli.exe
 Emulators\KEmulator\KEmulator.exe
+Emulators\kronos\kronos.exe
 Emulators\lime3ds\lime3ds.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe

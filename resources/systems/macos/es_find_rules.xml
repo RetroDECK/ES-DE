@@ -101,6 +101,12 @@
             <entry>/usr/local/bin/dosbox-x</entry>
         </rule>
     </emulator>
+    <emulator name="DREAMM">
+        <!-- LucasArts game engine DREAMM -->
+        <rule type="staticpath">
+            <entry>/Applications/dreamm.app/Contents/MacOS/dreamm</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="staticpath">
@@ -400,6 +406,12 @@
         <!-- Pinball simulator Visual Pinball -->
         <rule type="staticpath">
             <entry>/Applications/VPinballX_GL.app/Contents/MacOS/VPinballX_GL</entry>
+        </rule>
+    </emulator>
+    <emulator name="VITA3K">
+        <!-- Sony PlayStation Vita emulator Vita3K -->
+        <rule type="staticpath">
+            <entry>/Applications/Vita3K.app/Contents/MacOS/Vita3K</entry>
         </rule>
     </emulator>
     <emulator name="XEMU">

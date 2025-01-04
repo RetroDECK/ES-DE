@@ -1,16 +1,16 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.1.1 (in development)
+## Version 3.1.1 / 3.1.1-39
 
-**Release date:** TBD
+**Release date:** 2024-12-13
 
 ### Release overview
 
-This release adds support for four more languages, reduces the memory footprint under some circumstances and enables a few more emulators.
+This release adds support for four more languages, reduces the memory footprint under some circumstances and enables a number of new emulators.
 
 On Android the default audio driver has been changed from AAudio to OpenSL ES which should decrease audio latency on many devices. There is however a new menu entry in the Sound settings menu that makes it possible to easily revert to AAudio in case of issues with the OpenSL ES driver. Also for Android there is now experimental support for running ES-DE in multi-window mode on tablets and other devices that support this.
 
-In addition to the above there are a number of bug fixes and other minor improvements.
+In addition to the above there are a number of bug fixes and other improvements.
 
 ### Detailed list of changes
 
@@ -21,13 +21,19 @@ In addition to the above there are a number of bug fixes and other minor improve
 * Decreased the memory footprint under some circumstances by completely freeing up video player resources after finishing view transitions
 * The Git index stat cache is now refreshed for all themes when starting the theme downloader (this speeds up the inventory under some circumstances)
 * Added Mandarine standalone as an alternative emulator for the n3ds system
+* Added DREAMM standalone as an alternative emulator for the dos, pc and scummvm systems on Linux, macOS and Windows
+* Added Kronos standalone as an alternative emulator for the saturn and saturnjp systems on Linux and Windows
 * (Android) Changed the default audio driver from AAudio to OpenSL ES
 * (Android) Added an audio driver menu option to the Sound settings menu
 * (Android) Added experimental support for running in multi-window mode
 * (Android) Directories for corrupt themes are now automatically removed when the theme downloader is started
 * (Android) Added experimental support for the Nintendo Wii U (wiiu) game system
+* (Android) Added SWF Player standalone as an alternative emulator for the flash system
+* (Android) Added Infinity standalone as an alternative emulator for the pico8 system
+* (Android) Added Virtual Virtual Boy standalone as an alternative emulator for the virtualboy system
 * (Android) Changed Flycast standalone to use %ROMSAF% instead of %ROM% as the latter caused game launching to fail on some devices
 * (Android) Added support for launching individual games directly with EKA2L1 for the ngage system
+* (Android) Removed the FinalBurn Neo RetroArch core as an alternative emulator for the neogeocd and neogeocdjp systems as it didn't work correctly
 * (Android) Adjusted the layout for the onboarding configurator to look better on screens with wider aspect ratios
 * (Android) Added exception handling to the onboarding configurator for broken devices where the SAF directory picker is missing
 * (Android) The storage permission now only needs to be granted once in the onboarding configurator as indicated with an "Already granted" button
@@ -35,14 +41,19 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Updated a number of Java and Kotlin dependencies to the latest stable versions
 * (Android) Removed the built-in application update check for the Samsung Galaxy Store and Huawei AppGallery builds
 * (Linux) Added support for the AppImage release of melonDS
+* (macOS) Added support for the Sony PlayStation Vita (psvita) game system
+* (macOS) Added the %RUNINBACKGROUND% variable for RPCS3 to work around an emulator issue where ES-DE would directly resume on game launch
+* (Windows) Added FinalBurn Neo standalone as an alternative emulator for the neogeocd and neogeocdjp systems
 * (Windows) Added Yaba Sanshiro 2 standalone as an alternative emulator for the saturn and saturnjp systems
 * (Windows) Added BeebEm standalone as an alternative emulator for the bbcmicro system
 * (Windows) Added a find rule for the SSE2 build of DuckStation
 * Added the -f flag for fullscreen mode for melonDS standalone on Linux, macOS and Windows
+* Various translation updates for multiple languages
 * Added support to the theme downloader for detecting and handling theme repository URL changes
 * Added a "textBackgroundCornerRadius" property to the carousel element
 * Added a "textBackgroundCornerRadius" property to the grid element
 * Made the "backgroundCornerRadius" and "selectorCornerRadius" properties for the grid element apply also to colored rectangles
+* Changed an snprintf call in MathUtil as it could cause false positives for buffer overflow checks when building with GCC fortification
 * (modern-es-de) Replaced some legacy carousel icons
 * Added the Nanum Square Neo Korean font
 * Updated SDL to 2.30.9 on Android, Windows, macOS and the Linux AppImage builds
@@ -57,8 +68,10 @@ In addition to the above there are a number of bug fixes and other minor improve
 * (Android) Audio was not working correctly on some Android 15 devices (fixed by updating SDL to 2.30.9)
 * (Android) Switching from ES-DE to another app and back again while the "no ROMs" dialog was shown crashed the application
 * (Android) Switching from ES-DE to the home app and back again while the onboarding configurator was running crashed the application
+* (Android) On some devices, disabling the "Blur background when menu is open" option led to rendering issues
 * (Windows) The video and slideshow screensavers didn't work if a custom game media directory had been configured
 * There was a regression where filesystem case-sensitivity was not considered when looking for media files for the screensaver
+* Some metadata values were sometimes not saved by the single-game scraper if overwriting was disabled and the language was not set to English
 * Invalid popup notifications were sometimes shown after a download error message had been displayed in the theme downloader
 * Attempting to view media for a game that had no downloaded media paused the playback of all static theme videos
 * Pasting text into a text edit field would make the cursor jump to an incorrect position

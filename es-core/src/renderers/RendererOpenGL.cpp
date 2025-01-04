@@ -669,6 +669,19 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     if (shaders & Shader::SCANLINES)
         shaderList.push_back(Shader::SCANLINES);
 
+#if defined(__ANDROID__)
+    // For unknown reasons some specific Android devices won't be able to render directly
+    // from screen to a texture using one FBO and then read the pixels from there, instead
+    // they need to render twice to both FBOs. This hack simply adds another core shader pass
+    // to work around this issue. It only happens when the background is dimmed, i.e. when
+    // opening a menu and when the blur has also been disabled.
+    bool renderHack {false};
+    if (textureRGBA && shaderList.size() == 1) {
+        renderHack = true;
+        shaderList.push_back(Shader::CORE);
+    }
+#endif
+
     setMatrix(getIdentity());
     bindTexture(mPostProcTexture1, 0);
 
@@ -754,6 +767,12 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
             drawTriangleStrips(vertices, 4, BlendFactor::SRC_ALPHA,
                                BlendFactor::ONE_MINUS_SRC_ALPHA);
 
+#if defined(__ANDROID__)
+            if (renderHack) {
+                vertices->dimming = 1.0f;
+                vertices->shaderFlags ^= ShaderFlags::CONVERT_PIXEL_FORMAT;
+            }
+#endif
             if (shaderCalls == 1)
                 break;
 
