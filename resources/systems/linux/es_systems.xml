@@ -1249,6 +1249,7 @@
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
         <command label="Citra">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra_libretro.so %ROM%</command>
         <command label="Citra 2018">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra2018_libretro.so %ROM%</command>
+        <command label="Panda3DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/panda3ds_libretro.so %ROM%</command>
         <command label="Citra (Standalone) (via Ponzu)">%EMULATOR_CITRA% %ROM%</command>
         <!--<command label="Mandarine (Standalone)">%EMULATOR_MANDARINE% %ROM%</command>-->
         <!--<command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %ROM%</command>-->
