@@ -6,11 +6,6 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.llvm18
 command: /app/bin/es-de
 
-add-extensions:
-  org.freedesktop.Platform.ffmpeg-full:
-    directory: lib/ffmpeg
-    version: *runtime-version
-
 cleanup:
   - /include
   - /share/ffmpeg
@@ -81,21 +76,21 @@ modules:
   
   # https://gitlab.com/es-de/emulationstation-de
 
-  # - name: ffmpeg
-  #   config-opts:
-  #     - --disable-static
-  #     - --disable-programs
-  #     - --disable-doc
-  #     - --enable-gpl
-  #     - --enable-shared
-  #     - --enable-libvorbis
-  #     - --enable-libopus
-  #     - --enable-libvpx
-  #     - --enable-postproc
-  #   sources:
-  #     - type: git
-  #       url: https://github.com/FFmpeg/FFmpeg.git
-  #       tag: n6.1
+  - name: ffmpeg
+    config-opts:
+      - --disable-static
+      - --disable-programs
+      - --disable-doc
+      - --enable-gpl
+      - --enable-shared
+      - --enable-libvorbis
+      - --enable-libopus
+      - --enable-libvpx
+      - --enable-postproc
+    sources:
+      - type: git
+        url: https://github.com/FFmpeg/FFmpeg.git
+        tag: n5.1.6
 
   - name: freeimage
     no-autogen: true
