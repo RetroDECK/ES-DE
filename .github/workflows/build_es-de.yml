@@ -26,9 +26,6 @@ jobs:
       - name: Run pre-build automation tasks
         run : "/bin/bash ${GITHUB_WORKSPACE}/automation_tools/pre_build_automation.sh"
 
-      - name: "Creating ES-DE manifest"
-        run: "/bin/bash ${GITHUB_WORKSPACE}/automation_tools/update_es-de_manifest.sh"
-
       - name: "[DEBUG] Outputting manifest"
         run: cat net.retrodeck.es-de.yml
 
