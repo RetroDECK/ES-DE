@@ -4,7 +4,7 @@ git clone https://github.com/RetroDECK/RetroDECK --depth=1 RetroDECK
 
 # Creating ES-DE manifest
 manifest_header="manifest-header.yml"
-esde_module="es-de-module.yml"
+esde_module="net.retrodeck.es-de.yml"
 esde_manifest="net.retrodeck.es-de.yml"
 command="/app/bin/es-de" 
 
