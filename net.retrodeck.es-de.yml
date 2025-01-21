@@ -88,8 +88,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/FFmpeg/FFmpeg.git
-        tag: n5.1.4
-        #tag: n6.1    # Working but got weird video issues (speedup, glitching)
+        tag: n6.1    # Working but got weird video issues (speedup, glitching)
         #tag: n5.1.6 # Not working on flatpak KDE runtime 6.7
 
   - name: freeimage
