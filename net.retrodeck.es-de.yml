@@ -2,8 +2,6 @@ app-id: net.retrodeck.es-de
 runtime: org.kde.Platform
 runtime-version: &runtime-version "6.7"
 sdk: org.kde.Sdk
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm18
 command: /app/bin/es-de
 
 cleanup:
@@ -90,7 +88,9 @@ modules:
     sources:
       - type: git
         url: https://github.com/FFmpeg/FFmpeg.git
-        tag: n5.1.6
+        tag: n5.1.4
+        #tag: n6.1    # Working but got weird video issues (speedup, glitching)
+        #tag: n5.1.6 # Not working on flatpak KDE runtime 6.7
 
   - name: freeimage
     no-autogen: true
