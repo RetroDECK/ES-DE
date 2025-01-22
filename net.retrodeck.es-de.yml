@@ -4,6 +4,14 @@ runtime-version: &runtime-version "6.7"
 sdk: org.kde.Sdk
 command: /app/bin/es-de
 
+add-extensions:
+  org.freedesktop.Platform.ffmpeg-full:
+    directory: lib/ffmpeg
+    add-ld-path: .
+    version: *runtime-version
+cleanup-commands:
+  - mkdir -p ${FLATPAK_DEST}/lib/ffmpeg
+
 cleanup:
   - /include
   - /share/ffmpeg
@@ -71,26 +79,24 @@ modules:
           type: anitya
           project-id: 3728
           url-template: https://github.com/zeux/pugixml/releases/download/v$version/pugixml-$version.tar.gz
-  
-  # https://gitlab.com/es-de/emulationstation-de
 
-  - name: ffmpeg
-    config-opts:
-      - --disable-static
-      - --disable-programs
-      - --disable-doc
-      - --enable-gpl
-      - --enable-shared
-      - --enable-libvorbis
-      - --enable-libopus
-      - --enable-libvpx
-      - --enable-postproc
-    sources:
-      - type: git
-        url: https://github.com/FFmpeg/FFmpeg.git
-        tag: n7.1
-        #tag: n6.1    # Working but got weird video issues (speedup, glitching)
-        #tag: n5.1.6 # Not working on flatpak KDE runtime 6.7
+  # - name: ffmpeg
+  #   config-opts:
+  #     - --disable-static
+  #     - --disable-programs
+  #     - --disable-doc
+  #     - --enable-gpl
+  #     - --enable-shared
+  #     - --enable-libvorbis
+  #     - --enable-libopus
+  #     - --enable-libvpx
+  #     - --enable-postproc
+  #   sources:
+  #     - type: git
+  #       url: https://github.com/FFmpeg/FFmpeg.git
+  #       #tag: n7.1    # Not working on flatpak KDE runtime 6.7
+  #       tag: n6.1    # Working but got weird video issues (speedup, glitching)
+  #       #tag: n5.1.6  # Not working on flatpak KDE runtime 6.7
 
   - name: freeimage
     no-autogen: true
