@@ -9,8 +9,6 @@ add-extensions:
     directory: lib/ffmpeg
     add-ld-path: .
     version: *runtime-version
-cleanup-commands:
-  - mkdir -p ${FLATPAK_DEST}/lib/ffmpeg
 
 cleanup:
   - /include
