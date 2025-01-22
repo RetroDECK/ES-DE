@@ -1176,6 +1176,13 @@
             <entry>~/bin/Wine/wine*.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="XENIA-CANARY">
+        <!-- Microsoft Xbox 360 emulator xenia -->
+        <!-- RetroDECK -->
+        <rule type="systempath">
+            <entry>xenia-canary</entry>
+        </rule>
+    </emulator>
     <emulator name="XENIA-WINDOWS">
         <!-- Microsoft Xbox 360 emulator xenia -->
         <rule type="staticpath">
