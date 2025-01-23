@@ -112,9 +112,10 @@ CPackSourceConfig.cmake
 .vscode/
 
 .flatpak-builder
-es-de-build-dir
-es-de-repo
+builddir
+esde-repo
 retrodeck-repo
 net.retrodeck.es-de.yml.bak
 net.retrodeck.es-de.appdata.xml.bak
 ./RetroDECK
+RetroDECK-Artifact-cooker.sha
