@@ -8,7 +8,9 @@ add-extensions:
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
     add-ld-path: .
-    version: *runtime-version
+    version: 23.08
+cleanup-commands:
+  - mkdir -p ${FLATPAK_DEST}/lib/ffmpeg
 
 cleanup:
   - /include
