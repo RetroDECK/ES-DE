@@ -1665,7 +1665,7 @@
         <command label="Beetle PSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_psx_libretro.so %ROM%</command>
         <command label="Beetle PSX HW">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_psx_hw_libretro.so %ROM%</command>
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx_rearmed_libretro.so %ROM%</command>
-        <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% -batch %ROM%</command>
+        <command label="DuckStation (Legacy) (Standalone)">%EMULATOR_DUCKSTATION% -batch %ROM%</command>
         <!-- <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module psx %ROM%</command>-->
         <platform>psx</platform>
         <theme>psx</theme>
@@ -2005,7 +2005,7 @@
         <fullname>Nintendo Switch</fullname>
         <path>%ROMPATH%/switch</path>
         <extension>.nca .NCA .nro .NRO .nso .NSO .nsp .NSP .xci .XCI</extension>
-        <command label="Ryujinx (Standalone)">%EMULATOR_RYUJINX% %ROM%</command>
+        <command label="Ryujinx (Legacy) (Standalone)">%EMULATOR_RYUJINX% %ROM%</command>
         <command label="Yuzu (via Ponzu)">%INJECT%=%BASENAME%.esprefix %EMULATOR_YUZU% -f -g %ROM%</command>
         <platform>switch</platform>
         <theme>switch</theme>
