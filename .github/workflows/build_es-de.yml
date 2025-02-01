@@ -20,8 +20,9 @@ jobs:
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
           fetch-depth: 1
 
-      - name: "Install dependencies"
-        run: "automation_tools/install_dependencies.sh"
+      # Install Dependencies
+      - name: Install dependencies
+        run: curl "https://raw.githubusercontent.com/RetroDECK/components-template/main/automation_tools/install_dependencies.sh" | bash
 
       - name: Run pre-build automation tasks
         run : "/bin/bash ${GITHUB_WORKSPACE}/automation_tools/pre_build_automation.sh"
