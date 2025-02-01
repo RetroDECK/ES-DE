@@ -2415,12 +2415,11 @@ void GuiMenu::addVersionInfo()
         // also check that the line is not empty to ensure valid version information
         if (versionFile && std::getline(versionFile, retroDeckVersion) && !retroDeckVersion.empty()) {
             LOG(LogInfo) << "RetroDECK version read OK. Version: " + retroDeckVersion;
-            mVersion.setText("RetroDECK " + retroDeckVersion);
         } else {
             LOG(LogInfo) << "Error: Cannot read version from file or file is empty!";
             retroDeckVersion = "UNKNOWN";
-            mVersion.setText("RetroDECK " + retroDeckVersion);
         }
+        mVersion.setText("RetroDECK " + retroDeckVersion + " | ES-DE " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
     #endif
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
