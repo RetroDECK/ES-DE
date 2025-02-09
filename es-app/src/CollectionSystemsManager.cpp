@@ -718,6 +718,9 @@ const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
         bool adding {true};
         std::string name {file->getName()};
         std::string sysName {mEditingCollection};
+        #if defined(RETRODECK)
+            std::string gameEntry = name + "^" + file->getFullPath();
+        #endif
         if (mIsEditingCustom) {
             SystemData* sysData {mEditingCollectionSystemData->system};
 
@@ -774,10 +777,48 @@ const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
             std::string value {md->get("favorite")};
             if (value == "false") {
                 md->set("favorite", "true");
+                #if defined(RETRODECK)
+                    std::ofstream outFile("/tmp/retrodeck/favorites/to_add", std::ios::app);
+                    if (outFile.is_open()) {
+                        outFile << gameEntry << std::endl;
+                        outFile.close();
+                    }
+                    std::ifstream inFile("/tmp/retrodeck/favorites/to_remove");
+                    std::ofstream tempFile("/tmp/retrodeck/favorites/temp");
+                    std::string line;
+                    while (std::getline(inFile, line)) {
+                        if (line != gameEntry) {
+                            tempFile << line << std::endl;
+                        }
+                    }
+                    inFile.close();
+                    tempFile.close();
+                    std::remove("/tmp/retrodeck/favorites/to_remove");
+                    std::rename("/tmp/retrodeck/favorites/temp", "/tmp/retrodeck/favorites/to_remove");
+                #endif
             }
             else {
                 adding = false;
                 md->set("favorite", "false");
+                #if defined(RETRODECK)
+                    std::ofstream outFile("/tmp/retrodeck/favorites/to_remove", std::ios::app);
+                    if (outFile.is_open()) {
+                        outFile << gameEntry << std::endl;
+                        outFile.close();
+                    }
+                    std::ifstream inFile("/tmp/retrodeck/favorites/to_add");
+                    std::ofstream tempFile("/tmp/retrodeck/favorites/temp");
+                    std::string line;
+                    while (std::getline(inFile, line)) {
+                        if (line != gameEntry) {
+                            tempFile << line << std::endl;
+                        }
+                    }
+                    inFile.close();
+                    tempFile.close();
+                    std::remove("/tmp/retrodeck/favorites/to_add");
+                    std::rename("/tmp/retrodeck/favorites/temp", "/tmp/retrodeck/favorites/to_add");
+                #endif
             }
 
             file->getSourceFileData()->getSystem()->getIndex()->addToIndex(
