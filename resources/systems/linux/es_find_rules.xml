@@ -261,6 +261,7 @@
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
+            <entry>dolphin-emu-wrapper</entry> <!-- RetroDECK -->
             <entry>dolphin-emu</entry>
             <entry>dolphin-emulator.dolphin-emu</entry>
             <entry>org.DolphinEmu.dolphin-emu</entry>
@@ -792,6 +793,7 @@
     <emulator name="PRIMEHACK">
         <!-- PrimeHack, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
+            <entry>primehack-wrapper</entry>
             <entry>primehack</entry>
             <entry>io.github.shiiion.primehack</entry>
         </rule>
