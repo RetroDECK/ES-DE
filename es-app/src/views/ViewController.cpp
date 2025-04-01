@@ -293,7 +293,6 @@ void ViewController::noGamesDialog()
 #if defined(RETRODECK)
     // Show a simple message with a "QUIT" option if RETRODECK is defined
     mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), 
         mNoGamesErrorMessage + mRomDirectory, 
         _("QUIT"),
         [] {

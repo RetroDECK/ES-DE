@@ -661,9 +661,8 @@ void GuiThemeDownloader::parseThemesList()
 
             #if defined(RETRODECK)
             mWindow->pushGui(new GuiMsgBox(
-                getHelpStyle(),
-                _("ES-DE THEME ENGINE WAS UPDATED UPSTREAM. THESE THEMES MAY NOT BE COMPATIBLE WITH THE CURRENT RETRODECK VERSION."
-                "CHECK IF A NEW RETRODECK UPDATE IS AVAILABLE, ELSE PLEASE WAIT FOR IT OR PROCEED AT YOUR OWN RISK."),
+                _("ES-DE THEME ENGINE WAS UPDATED UPSTREAM. THESE THEMES MAY NOT BE COMPATIBLE WITH THE CURRENT RETRODECK VERSION. "
+                  "CHECK IF A NEW RETRODECK UPDATE IS AVAILABLE, ELSE PLEASE WAIT FOR IT OR PROCEED AT YOUR OWN RISK."),
                 _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
             #else
 

@@ -49,10 +49,6 @@
 #include "InputOverlay.h"
 #endif
 
-#if defined(RETRODECK)
-#include "HelpStyle.h"
-#endif
-
 #include <SDL2/SDL_events.h>
 #include <algorithm>
 
@@ -2316,8 +2312,6 @@ void GuiMenu::openUtilities()
 void GuiMenu::openESDEConfiguration() {
     // RetroDECK: Create a new GuiSettings instance for the ES-DE Configurations menu
     auto s = new GuiSettings(_("ES-DE CONFIGURATIONS"));
-
-    HelpStyle style{getHelpStyle()};
 
     // UI SETTINGS
     ComponentListRow row;
