@@ -49,6 +49,10 @@
 #include "InputOverlay.h"
 #endif
 
+#if defined(RETRODECK)
+#include "HelpStyle.h"
+#endif
+
 #include <SDL2/SDL_events.h>
 #include <algorithm>
 
