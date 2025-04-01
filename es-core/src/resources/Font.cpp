@@ -204,7 +204,8 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          const std::shared_ptr<Font>& orig,
                                          const float maxHeight,
                                          const float sizeMultiplier,
-                                         const bool fontSizeDimmed)
+                                         const bool fontSizeDimmed,
+                                         const bool helpComponent)
 {
     using namespace ThemeFlags;
     if (!(properties & FONT_PATH) && !(properties & FONT_SIZE))
@@ -220,11 +221,21 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
     if (fontSizeDimmed && properties & FONT_SIZE && elem->has("fontSizeDimmed")) {
         size = glm::clamp(screenSize * elem->get<float>("fontSizeDimmed"), screenSize * 0.001f,
                           screenSize * 1.5f);
+        // This is used by HelpComponent to set the relative size of the font compared to the icons.
+        size *= sizeMultiplier;
     }
     else if (properties & FONT_SIZE && elem->has("fontSize")) {
         size = glm::clamp(screenSize * elem->get<float>("fontSize"), screenSize * 0.001f,
                           screenSize * 1.5f);
-        // This is used by the carousel where the itemScale property also scales the font size.
+        // This is used by the carousel where the itemScale property also scales the font size, as
+        // well as by HelpComponent to set the relative size of the font compared to the icons.
+        size *= sizeMultiplier;
+    }
+    else if (helpComponent && sizeMultiplier != 1.0f && fontSizeDimmed &&
+             !elem->has("fontSizeDimmed")) {
+        size *= sizeMultiplier;
+    }
+    else if (helpComponent && sizeMultiplier != 1.0f && !fontSizeDimmed && !elem->has("fontSize")) {
         size *= sizeMultiplier;
     }
 

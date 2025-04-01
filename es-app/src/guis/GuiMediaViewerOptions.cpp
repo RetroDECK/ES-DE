@@ -19,8 +19,8 @@ GuiMediaViewerOptions::GuiMediaViewerOptions(const std::string& title)
 {
 
     // Help prompts.
-    auto mediaViewerHelpPrompts = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("HELP PROMPTS"), false);
+    auto mediaViewerHelpPrompts =
+        std::make_shared<OptionListComponent<std::string>>(_("HELP PROMPTS"), false);
     std::string selectedHelpPrompts {Settings::getInstance()->getString("MediaViewerHelpPrompts")};
     mediaViewerHelpPrompts->add(_("TOP"), "top", selectedHelpPrompts == "top");
     mediaViewerHelpPrompts->add(_("BOTTOM"), "bottom", selectedHelpPrompts == "bottom");

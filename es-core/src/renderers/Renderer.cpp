@@ -69,6 +69,9 @@ bool Renderer::createWindow()
 
     mInitialCursorState = (SDL_ShowCursor(0) != 0);
 
+#if defined(__IOS__)
+    int displayIndex {0};
+#else
     int displayIndex {Settings::getInstance()->getInt("DisplayIndex")};
     // Check that an invalid value has not been manually entered in the es_settings.xml file.
     if (displayIndex != 1 && displayIndex != 2 && displayIndex != 3 && displayIndex != 4) {
@@ -88,6 +91,7 @@ bool Renderer::createWindow()
     else {
         LOG(LogInfo) << "Using display: " << std::to_string(displayIndex + 1);
     }
+#endif
 
     SDL_DisplayMode displayMode;
     SDL_GetDesktopDisplayMode(displayIndex, &displayMode);
@@ -217,6 +221,8 @@ bool Renderer::createWindow()
     else
         // If the resolution has been manually set from the command line, then keep the border.
         windowFlags = SDL_WINDOW_OPENGL;
+#elif defined(__IOS__)
+    windowFlags = SDL_WINDOW_FULLSCREEN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_OPENGL;
 #elif defined(__APPLE__)
     // Not sure if this could be a useful setting.
     //        SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "0");
@@ -249,19 +255,22 @@ bool Renderer::createWindow()
     mDisplayIndex = displayIndex;
 
 #if defined(__APPLE__)
-    // The code below is required as the high DPI scaling on macOS is very bizarre and is
-    // measured in "points" rather than pixels (even though the naming convention sure looks
-    // like pixels). For example there could be a 1920x1080 entry in the OS display settings
-    // that actually corresponds to something like 3840x2160 pixels while at the same time
-    // there is a separate 1080p entry which corresponds to a "real" 1920x1080 resolution.
+    // The code below is required as the high DPI scaling on macOS and iOS is measured in "points"
+    // rather than pixels. For example there could be a 1920x1080 entry in the macOS display
+    // settings that actually corresponds to something like 3840x2160 pixels while at the same
+    // time there is a separate 1080p entry which corresponds to a "real" 1920x1080 resolution.
     // Therefore the --resolution flag results in different things depending on whether a high
-    // DPI screen is used. E.g. 1280x720 on a 4K display would actually end up as 2560x1440
-    // which is incredibly strange. No point in struggling with this strangeness though,
-    // instead we simply indicate the physical pixel dimensions in parenthesis in the log
-    // file and make sure to double the window and screen sizes in case of a high DPI
-    // display so that the full application window is used for rendering.
+    // DPI screen is used. E.g. 1280x720 on a 4K display would actually end up as 2560x1440 pixels.
+    // The scale factor on macOS and iOS can be 1, 2 or 3 and we use this factor to calculate the
+    // actual physical pixel dimensions. We indicate these numbers inside parenthesis in the log
+    // file and we multiply the internal pixel resolution accordingly so that the full display
+    // or window size is always used for rendering.
     int width {0};
+#if defined(__IOS__)
+    SDL_GetWindowSizeInPixels(mSDLWindow, &width, nullptr);
+#else
     SDL_GL_GetDrawableSize(mSDLWindow, &width, nullptr);
+#endif
     int scaleFactor {static_cast<int>(width / mWindowWidth)};
 
     LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"

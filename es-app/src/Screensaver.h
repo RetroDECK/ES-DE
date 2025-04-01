@@ -43,6 +43,7 @@ private:
     void pickRandomVideo(std::string& path);
     void pickRandomCustomImage(std::string& path);
     void generateOverlayInfo();
+    void triggerCustomEvent();
 
     Renderer* mRenderer;
     Window* mWindow;

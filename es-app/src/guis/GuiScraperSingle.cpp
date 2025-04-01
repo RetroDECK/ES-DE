@@ -23,7 +23,6 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
                                    bool& savedMediaAndAborted)
     : mClose {false}
     , mRenderer {Renderer::getInstance()}
-    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {2, 6}}
     , mSearchParams {params}
     , mSavedMediaAndAborted {savedMediaAndAborted}

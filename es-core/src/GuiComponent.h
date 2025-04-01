@@ -10,9 +10,9 @@
 #define ES_CORE_GUI_COMPONENT_H
 
 #include "HelpPrompt.h"
-#include "HelpStyle.h"
 #include "InputConfig.h"
 #include "animations/AnimationController.h"
+#include "utils/MathUtil.h"
 
 #include <functional>
 #include <memory>
@@ -63,6 +63,13 @@ enum class Stationary {
     ALWAYS,
     WITHIN_VIEW,
     BETWEEN_VIEWS
+};
+
+enum class ComponentScope {
+    SHARED,
+    VIEW,
+    MENU,
+    NONE
 };
 
 class GuiComponent
@@ -118,6 +125,7 @@ public:
     void setRotationOrigin(glm::vec2 origin) { setRotationOrigin(origin.x, origin.y); }
 
     const Stationary getStationary() const { return mStationary; }
+    const ComponentScope getComponentScope() const { return mComponentScope; }
     const bool getRenderDuringTransitions() const { return mRenderDuringTransitions; }
 
     virtual glm::vec2 getSize() const { return mSize; }
@@ -321,8 +329,8 @@ public:
     // Used by TextComponent.
     virtual void setHorizontalScrolling(bool state) {}
 
-    // Default implementation just handles <pos> and <size> tags as normalized float pairs.
-    // You probably want to keep this behavior for any derived classes as well as add your own.
+    // Applies basic theme configuration, element-specific configuration is applied by
+    // each component's applyTheme() function.
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,
                             const std::string& element,
@@ -334,12 +342,12 @@ public:
     // Called whenever help prompts change.
     void updateHelpPrompts();
 
-    virtual HelpStyle getHelpStyle() { return HelpStyle(); }
+    virtual void setHelpComponentsVisibility(const bool state) {};
 
     // Returns true if the component is busy doing background processing (e.g. HTTP downloads).
     const bool isProcessing() const { return mIsProcessing; }
 
-    const static unsigned char MAX_ANIMATIONS = 4;
+    const static unsigned char MAX_ANIMATIONS {4};
 
 protected:
     void updateSelf(int deltaTime); // Updates animations.
@@ -367,7 +375,7 @@ protected:
     // Default values are for the "light" color scheme.
     static inline unsigned int mMenuColorFrame {0xEFEFEFFF};
     static inline unsigned int mMenuColorFrameLaunchScreen {0xDFDFDFFF};
-    static inline unsigned int mMenuColorFrameBusyComponent {0xFFFFFFFF};
+    static inline unsigned int mMenuColorFrameBusyComponent {0xF5F5F5FF};
     static inline unsigned int mMenuColorPanelDimmed {0x00000009};
 
     static inline unsigned int mMenuColorTitle {0x555555FF};
@@ -406,6 +414,7 @@ protected:
     glm::vec2 mRotationOrigin;
     glm::vec2 mSize;
     Stationary mStationary;
+    ComponentScope mComponentScope;
     bool mRenderDuringTransitions;
 
     float mBrightness;

@@ -58,6 +58,8 @@ public:
         mGoToSystem = goToSystem;
     };
     void setNeedsGoToGroupedCollections() { mNeedsGoToGroupedCollections = true; }
+    void setNeedsUpdateStatusComponents() { mNeedsUpdateStatusComponents = true; }
+    void setNeedsClearHelpPromptsImageCache() { mNeedsClearHelpPromptsImageCache = true; }
     void setNeedsCloseMenu(std::function<void()> closeFunction)
     {
         mCloseMenuFunction = closeFunction;
@@ -66,7 +68,6 @@ public:
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     Renderer* mRenderer;
@@ -85,6 +86,8 @@ private:
     bool mNeedsGoToStart;
     bool mNeedsGoToSystem;
     bool mNeedsGoToGroupedCollections;
+    bool mNeedsUpdateStatusComponents;
+    bool mNeedsClearHelpPromptsImageCache;
     bool mInvalidateCachedBackground;
 };
 

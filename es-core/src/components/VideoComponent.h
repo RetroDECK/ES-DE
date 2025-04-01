@@ -73,13 +73,19 @@ public:
 
     void update(int deltaTime) override;
 
-    // Resize the video to be as large as possible but fit within a box of this size.
-    // This can be set before or after a video is loaded.
-    // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
+    // Resize the video to be as large as possible within the defined size without breaking
+    // its aspect ratio. This can be set before or after a video is loaded.
+    // setMaxSize() and setResize() are mutually exclusive.
     virtual void setMaxSize(float width, float height) = 0;
     void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
     // Resize and crop the video so it fills the entire area.
     virtual void setCroppedSize(const glm::vec2& size) = 0;
+
+    // Specific size functions for the static image.
+    virtual void setImageResize(const float width, const float height) = 0;
+    virtual void setImageMaxSize(float width, float height) = 0;
+    void setImageMaxSize(const glm::vec2& size) { setImageMaxSize(size.x, size.y); }
+    virtual void setImageCroppedSize(const glm::vec2& size) = 0;
 
     // Basic video controls.
     void startVideoPlayer();
@@ -114,11 +120,14 @@ protected:
     unsigned int mColorShiftEnd;
     float mVideoCornerRadius;
     bool mColorGradientHorizontal;
+    bool mRenderBlackFrame;
     glm::vec2 mTargetSize;
     glm::vec2 mCropPos;
+    glm::vec2 mImageCropPos;
     glm::vec2 mCropOffset;
     glm::vec2 mVideoAreaPos;
     glm::vec2 mVideoAreaSize;
+    glm::vec2 mImageAreaSize;
     glm::vec2 mTopLeftCrop;
     glm::vec2 mBottomRightCrop;
     glm::vec2 mPillarboxThreshold;
@@ -126,9 +135,9 @@ protected:
     std::string mStaticImagePath;
     std::string mDefaultImagePath;
 
-    static inline std::vector<std::string> supportedImageTypes {
-        "image", "miximage",  "marquee", "screenshot",    "titlescreen",
-        "cover", "backcover", "3dbox",   "physicalmedia", "fanart"};
+    static inline std::vector<std::string> sSupportedImageTypes {
+        "image",     "miximage", "marquee",       "screenshot", "titlescreen", "cover",
+        "backcover", "3dbox",    "physicalmedia", "fanart",     "none"};
 
     std::string mVideoPath;
     OnIterationsDone mOnIterationsDone;
@@ -136,6 +145,7 @@ protected:
     std::atomic<bool> mIsPlaying;
     std::atomic<bool> mIsActuallyPlaying;
     std::atomic<bool> mPaused;
+    bool mImageTypeNone;
     bool mMediaViewerMode;
     bool mScreensaverMode;
     bool mTargetIsMax;

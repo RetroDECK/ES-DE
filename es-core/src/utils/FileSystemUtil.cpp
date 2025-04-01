@@ -260,7 +260,10 @@ namespace Utils
         {
 #if defined(__ANDROID__)
             return getHomePath();
-#else
+#elif defined(__IOS__)
+            return getHomePath() + "/Documents/ES-DE";
+#endif
+
             if (FileSystemVariables::sAppDataDirectory.empty()) {
 #if !defined(_WIN64)
                 if (getenv("ESDE_APPDATA_DIR") != nullptr) {
@@ -282,7 +285,6 @@ namespace Utils
             }
 
             return FileSystemVariables::sAppDataDirectory;
-#endif
         }
 
         std::string getInternalAppDataDirectory()

@@ -38,6 +38,27 @@
 
     <variant name="all">
         <view name="system, gamelist">
+            <systemstatus name="systemStatus">
+                <pos>0.985 0.014</pos>
+                <height>0.035</height>
+                <textRelativeScale>0.8</textRelativeScale>
+                <color>${statusColor}</color>
+                <backgroundColor>00000066</backgroundColor>
+                <backgroundHorizontalPadding>0.004 0.005</backgroundHorizontalPadding>
+                <backgroundVerticalPadding>0.004 0.004</backgroundVerticalPadding>
+                <backgroundCornerRadius>0.003</backgroundCornerRadius>
+                <entrySpacing>0.005</entrySpacing>
+            </systemstatus>
+            <clock name="clock">
+                <pos>0.018 0.014</pos>
+                <fontSize>0.033</fontSize>
+                <color>${statusColor}</color>
+                <backgroundColor>00000066</backgroundColor>
+                <backgroundHorizontalPadding>0.004 0.004</backgroundHorizontalPadding>
+                <backgroundVerticalPadding>0.004 0.004</backgroundVerticalPadding>
+                <backgroundCornerRadius>0.003</backgroundCornerRadius>
+                <format>%H:%M</format>
+            </clock>
             <image name="background">
                 <pos>0 0</pos>
                 <size>1 1</size>

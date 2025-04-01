@@ -44,7 +44,8 @@ namespace Utils
                                                                                   {{"sv"}, {"SE"}},
                                                                                   {{"ja"}, {"JP"}},
                                                                                   {{"ko"}, {"KR"}},
-                                                                                  {{"zh"}, {"CN"}}};
+                                                                                  {{"zh"}, {"CN"}},
+                                                                                  {{"zh"}, {"TW"}}};
         // clang-format on
 
         std::string sCurrentLocale {"en_US"};
@@ -243,8 +244,8 @@ namespace Utils
                                          LOCALE_ALLOW_NEUTRAL_NAMES);
             SetThreadLocale(sLocaleID);
 #else
-            setenv("LANGUAGE", locale.c_str(), 1);
-            setenv("LANG", locale.c_str(), 1);
+            setenv("LANGUAGE", std::string {locale + ".UTF-8"}.c_str(), 1);
+            setenv("LANG", std::string {locale + ".UTF-8"}.c_str(), 1);
             // For some bizarre reason we need to first set the locale to en_US.UTF-8 before
             // we set it to the requested locale as some specific locales like pt_BR and zh_CN
             // otherwise won't work consistently. This must be some kind of library or OS bug as

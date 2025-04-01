@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Microsoft</text>
+        </text>
+        <text name="info2">
+            <text>Released:  2013</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  58 million</text>
+        </text>
+        <text name="info4">
+            <text>CPU:  8-core AMD APU @ 1.75 to 2.3 GHz</text>
+        </text>
+        <text name="info5">
+            <text>RAM:  8 GB DDR3 to 12 GB GDDR5</text>
+        </text>
+        <text name="info6">
+            <text>Graphics:  AMD Radeon (built into APU)</text>
+        </text>
+        <text name="info7">
+            <text>Resolution: 720p, 1080p, 1440p, 4K</text>
+        </text>
+        <text name="info8">
+            <text>Sound:  7.1 surround sound, Dolby Atmos, DTS:X</text>
+        </text>
+        <text name="info9">
+            <text>Media:  Blu-ray, digital distribution</text>
+        </text>
+    </view>
+</theme>

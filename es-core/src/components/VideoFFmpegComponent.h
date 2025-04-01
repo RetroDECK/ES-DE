@@ -42,12 +42,17 @@ public:
     // setMaxSize() and setResize() are mutually exclusive.
     void setResize(const float width, const float height) override;
 
-    // Resize the video to be as large as possible but fit within a box of this size.
-    // This can be set before or after a video is loaded.
-    // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
+    // Resize the video to be as large as possible within the defined size without breaking
+    // its aspect ratio. This can be set before or after a video is loaded.
+    // setMaxSize() and setResize() are mutually exclusive.
     void setMaxSize(float width, float height) override;
     // Resize and crop the video so it fills the entire area.
     void setCroppedSize(const glm::vec2& size) override;
+
+    // Specific size functions for the static image.
+    void setImageResize(const float width, const float height) override;
+    void setImageMaxSize(float width, float height) override;
+    void setImageCroppedSize(const glm::vec2& size) override;
 
     // Basic video controls.
     void stopVideoPlayer(bool muteAudio = true) override;

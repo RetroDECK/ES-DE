@@ -7,27 +7,27 @@
 #
 
 # This makes it possible to set options in subprojects.
-set (CMAKE_POLICY_DEFAULT_CMP0077 NEW)
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 
 # Suppress warnings about cmake_minimum_required() defining deprecated versions.
 set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
 
-if (WIN32)
+if(WIN32)
     # On Windows the build type needs to match the main binary.
-    if (CMAKE_BUILD_TYPE MATCHES Profiling)
-        set (CMAKE_BUILD_TYPE Release)
+    if(CMAKE_BUILD_TYPE MATCHES Profiling)
+        set(CMAKE_BUILD_TYPE Release)
     elseif(NOT CMAKE_BUILD_TYPE MATCHES Debug)
-        set (CMAKE_BUILD_TYPE Release)
+        set(CMAKE_BUILD_TYPE Release)
     endif()
 else()
     # Always build with optimizations enabled and without debug info.
-    set (CMAKE_BUILD_TYPE Release)
+    set(CMAKE_BUILD_TYPE Release)
 endif()
 
 unset(CMAKE_CXX_FLAGS)
 unset(CMAKE_EXE_LINKER_FLAGS)
 
-if (WIN32)
+if(WIN32)
     set(BUILD_SHARED_LIBS ON)
 else()
     set(BUILD_SHARED_LIBS OFF)
@@ -41,14 +41,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
 endif()
 
 if(ANDROID)
-    if(ANDROID_LITE_RELEASE)
-        set_target_properties(lunasvg PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
-                              ${PROJECT_SOURCE_DIR}/android_lite_${ANDROID_ABI})
-    else()
-        set_target_properties(lunasvg PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
-                              ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
-    endif()
+    set_target_properties(lunasvg PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                          ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
 endif()
+
 
 # Disable threading support for rlottie as this functionality actually leads to far worse
 # performance. As well there is a bug on Windows that makes rlottie hang forever on application
@@ -71,13 +67,8 @@ else()
 endif()
 
 if(ANDROID)
-    if(ANDROID_LITE_RELEASE)
-        set_target_properties(rlottie PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
-                              ${PROJECT_SOURCE_DIR}/android_lite_${ANDROID_ABI})
-    else()
-        set_target_properties(rlottie PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
-                              ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
-    endif()
+    set_target_properties(rlottie PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                          ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
 endif()
 
 # Build LunaSVG before rlottie.

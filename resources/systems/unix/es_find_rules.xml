@@ -144,6 +144,7 @@
         <rule type="systempath">
             <entry>duckstation-nogui</entry>
             <entry>duckstation-qt</entry>
+            <entry>duckstation</entry>
         </rule>
     </emulator>
     <emulator name="EASYRPG">
@@ -616,6 +617,12 @@
         <!-- Commodore 8-bit computer emulator VICE (xvic) -->
         <rule type="systempath">
             <entry>xvic</entry>
+        </rule>
+    </emulator>
+    <emulator name="VIRCON32">
+        <!-- Vircon32 Virtual Console -->
+        <rule type="systempath">
+            <entry>Vircon32</entry>
         </rule>
     </emulator>
     <emulator name="VISUAL-PINBALL">

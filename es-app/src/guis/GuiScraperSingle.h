@@ -12,7 +12,7 @@
 #define ES_APP_GUIS_GUI_SCRAPER_SINGLE_H
 
 #include "GuiComponent.h"
-#include "components/NinePatchComponent.h"
+#include "components/BackgroundComponent.h"
 #include "components/ScrollIndicatorComponent.h"
 #include "guis/GuiScraperSearch.h"
 #include "views/ViewController.h"
@@ -30,14 +30,13 @@ public:
     void update(int deltaTime) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     bool mClose;
     void close();
 
     Renderer* mRenderer;
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mGameName;

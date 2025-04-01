@@ -24,7 +24,6 @@ public:
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     void close(bool closeAllWindows);
@@ -37,6 +36,7 @@ private:
     void openScraperOptions();
     void openUIOptions();
     void openThemeDownloader(GuiSettings* settings);
+    void openSystemStatusOptions();
     void openMediaViewerOptions();
     void openScreensaverOptions();
     void openSoundOptions();

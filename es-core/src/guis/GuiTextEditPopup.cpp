@@ -15,8 +15,7 @@
 #include "components/MenuComponent.h"
 #include "guis/GuiMsgBox.h"
 
-GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
-                                   const std::string& title,
+GuiTextEditPopup::GuiTextEditPopup(const std::string& title,
                                    const std::string& initValue,
                                    const std::function<void(const std::string&)>& okCallback,
                                    bool multiLine,
@@ -27,9 +26,7 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
                                    const std::string& loadBtnHelpText,
                                    const std::string& clearBtnHelpText,
                                    const std::string& cancelBtnHelpText)
-    : mBackground {":/graphics/frame.svg"}
-    , mGrid {glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 5 : 3)}}
-    , mHelpStyle {helpstyle}
+    : mGrid {glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 5 : 3)}}
     , mInitValue {initValue}
     , mAcceptBtnText {acceptBtnText}
     , mSaveConfirmationText {saveConfirmationText}
@@ -191,7 +188,7 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
-                mHelpStyle, mSaveConfirmationText, _("YES"),
+                mSaveConfirmationText, _("YES"),
                 [this] {
                     this->mOkCallback(mText->getValue());
                     delete this;

@@ -251,6 +251,26 @@ git remote add system-logos https://gitlab.com/es-de/themes/system-logos.git
 ```
 After doing this you'll be able to pull repository updates as described above.
 
+### External repositories
+
+In addition to the official asset repositories there are some external theme resources that are not maintained by the ES-DE project.
+
+System icon set by Zoidburg:
+
+https://github.com/Zoidburg13/ES-DE-System-Icon-Set
+
+Console/system logos by Dan Patrick (GitHub mirror, not officially maintained by Patrick):
+
+https://github.com/PRO100BYTE/console-logos
+
+High-resolution photos of classic gaming hardware:
+
+https://commons.wikimedia.org/wiki/User:Evan-Amos
+
+Large set of controller and game cartridge images in SVG and PNG formats:
+
+https://archive.org/details/@pineapple_graphics
+
 ## Simple example theme
 
 Here is a very simple theme that changes the color of the game name text:

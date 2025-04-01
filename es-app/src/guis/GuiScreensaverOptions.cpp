@@ -38,8 +38,8 @@ GuiScreensaverOptions::GuiScreensaverOptions(const std::string& title)
     });
 
     // Screensaver type.
-    auto screensaverType = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("SCREENSAVER TYPE"), false);
+    auto screensaverType =
+        std::make_shared<OptionListComponent<std::string>>(_("SCREENSAVER TYPE"), false);
     std::string selectedScreensaver {Settings::getInstance()->getString("ScreensaverType")};
     screensaverType->add(_("DIM"), "dim", selectedScreensaver == "dim");
     screensaverType->add(_("BLACK"), "black", selectedScreensaver == "black");
@@ -224,14 +224,14 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
                                               initValueMediaDir, updateValMediaDir] {
         if (Settings::getInstance()->getBool("VirtualKeyboard")) {
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                getHelpStyle(), s->getMenu().getPosition().y, titleCustomImageDir,
+                s->getMenu().getPosition().y, titleCustomImageDir,
                 Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
                 updateValMediaDir, false, _("SAVE"), _("SAVE CHANGES?"), defaultImageDirStaticText,
                 defaultImageDirText, _("load default directory")));
         }
         else {
             mWindow->pushGui(new GuiTextEditPopup(
-                getHelpStyle(), titleCustomImageDir,
+                titleCustomImageDir,
                 Settings::getInstance()->getString("ScreensaverSlideshowCustomDir"),
                 updateValMediaDir, false, _("SAVE"), _("SAVE CHANGES?"), defaultImageDirStaticText,
                 defaultImageDirText, _("load default directory")));

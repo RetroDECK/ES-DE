@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-11-24 17:37+0100\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-02 16:07+0100\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Swedish <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -16,16 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 msgid "Network error (status:"
 msgstr "Network error (status:"
 
 msgid "New prerelease available:"
-msgstr "Ny prerelease tillgänglig:"
+msgstr "Ny förhandsutgåva tillgänglig:"
 
 msgid "New release available:"
-msgstr "Ny release tillgänglig:"
+msgstr "Ny utgåva tillgänglig:"
 
 msgid "For more information visit"
 msgstr "För mer information besök"
@@ -44,15 +44,15 @@ msgstr "samlingar"
 
 #, c-format
 msgid "DISABLED '%s' IN '%s'"
-msgstr "DEAKTIVERADE '%s' I '%s'"
+msgstr "INAKTIVERADE '%s' I '%s'"
 
 #, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr "REDIGERAR '%s' SAMLINGEN, LÄGG TILL/TA BORT SPEL MED %s"
+msgstr "REDIGERAR '%s'-SAMLINGEN, LÄGG TILL/TA BORT SPEL MED %s"
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr "AVSLUTADE REDIGERINGEN AV '%s' SAMLINGEN"
+msgstr "AVSLUTADE REDIGERINGEN AV '%s'-SAMLINGEN"
 
 msgid "Favorites"
 msgstr "Favoriter"
@@ -131,7 +131,7 @@ msgstr "'%s' är filtrerad så det kan finnas fler spel tillgängliga"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
-msgstr "RADERADE SAMLINGEN '%s'"
+msgstr "TOG BORT SAMLINGEN '%s'"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -177,22 +177,22 @@ msgstr "FEL: SAKNAR KÄRN-KONFIGURATION FÖR '%s'"
 
 #, c-format
 msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr "FEL: OGILTIG %s VARIABELPOST"
+msgstr "FEL: OGILTIG VARIABELPOST FÖR %s"
 
 #, c-format
 msgid ""
 "ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
 msgstr ""
-"FEL: KATALOGEN SOM DEFINIERATS VIA %s KUNDE INTE SKAPAS, ÅTKOMSTPROBLEM?"
+"FEL: KATALOGEN SOM DEFINIERATS VIA %s KUNDE INTE SKAPAS, BEHÖRIGHETSPROBLEM?"
 
 msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "FEL: APP- ELLER ALIASFIL EXISTERAR INTE ELLER ÄR OLÄSBAR"
+msgstr "FEL: APP- ELLER ALIASFIL FINNS INTE ELLER ÄR OLÄSBAR"
 
 msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr "FEL: DESKTOP FILEN ÄR OGILTIG ELLER OLÄSBAR"
+msgstr "FEL: SKRIVBORDSFILEN ÄR OGILTIG ELLER OLÄSBAR"
 
 msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "FEL: DESKTOP FILEN EXISTERAR INTE ELLER ÄR OLÄSBAR"
+msgstr "FEL: SKRIVBORDSFILEN FINNS INTE ELLER ÄR OLÄSBAR"
 
 #, c-format
 msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
@@ -316,16 +316,16 @@ msgid "back"
 msgstr "tillbaka"
 
 msgid "INVALID ENTRY"
-msgstr "OGILTIGT VÄRDE"
+msgstr "OGILTIG POST"
 
 msgid "CLEARED ENTRY"
-msgstr "RENSADE VÄRDET"
+msgstr "RENSADE POSTEN"
 
 msgid "NO ALTERNATIVE EMULATORS DEFINED"
 msgstr "INGA ALTERNATIVA EMULATORER DEFINIERADE"
 
 msgid "CLEAR INVALID ENTRY"
-msgstr "RENSA OGILTIGT VÄRDE"
+msgstr "RENSA OGILTIG POST"
 
 msgid "DEFAULT"
 msgstr "STANDARDVÄRDE"
@@ -340,10 +340,10 @@ msgid "INSTALLATION STEPS:"
 msgstr "INSTALLATIONSSTEG:"
 
 msgid "DOWNLOAD NEW RELEASE"
-msgstr "LADDA NER NY RELEASE"
+msgstr "HÄMTA NER NY UTGÅVA"
 
 msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
-msgstr "LADDA NER NY RELEASE TILL DEN HÄR KATALOGEN:"
+msgstr "HÄMTA NER NY UTGÅVA TILL DEN HÄR KATALOGEN:"
 
 msgid "INSTALL PACKAGE"
 msgstr "INSTALLERA PAKET"
@@ -358,22 +358,22 @@ msgid "STATUS MESSAGE:"
 msgstr "STATUSMEDDELANDE:"
 
 msgid "DOWNLOAD"
-msgstr "LADDA NER"
+msgstr "HÄMTA NER"
 
 msgid "download new release"
-msgstr "ladda ner ny release"
+msgstr "hämta ner ny utgåva"
 
 msgid "Download directory does not exist"
-msgstr "Nedladdningskatalogen existerar inte"
+msgstr "Hämtningskatalogen finns inte"
 
 msgid "CHANGE DIRECTORY"
 msgstr "BYT KATALOG"
 
 msgid "change download directory"
-msgstr "byt nedladdningskatalog"
+msgstr "byt hämtningskatalog"
 
 msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr "SKRIV IN NEDLADDNINGSKATALOG"
+msgstr "SKRIV IN HÄMTNINGSKATALOG"
 
 msgid "CANCEL"
 msgstr "AVBRYT"
@@ -382,7 +382,7 @@ msgid "cancel"
 msgstr "avbryt"
 
 msgid "DOWNLOAD ABORTED"
-msgstr "NEDLADDNING AVBRUTEN"
+msgstr "HÄMTNINGEN AVBRUTEN"
 
 msgid "NO PACKAGE SAVED TO DISK"
 msgstr "INGET PAKET SPARAT TILL DISK"
@@ -391,45 +391,45 @@ msgid "OK"
 msgstr "OK"
 
 msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr "PAKETET LADDADES NER OCH KAN INSTALLERAS MANUELLT"
+msgstr "PAKETET HÄMTADES NER OCH KAN INSTALLERAS MANUELLT"
 
 msgid "DOWNLOADING 100%"
-msgstr "LADDAR NER 100%"
+msgstr "HÄMTAR NER 100%"
 
 msgid "Downloaded file does not match expected MD5 checksum"
-msgstr "Den nedladdade filen stämmer inte överens med MD5 checksumvärdet"
+msgstr "Den hämtade filen stämmer inte överens med MD5-kontrollsumman"
 
 msgid "Error: Couldn't delete temporary package file, permission problems?"
-msgstr "Fel: Kunde inte radera temporär paketfil, åtkomstproblem?"
+msgstr "Fel: Kunde inte ta bort temporär paketfil, behörighetsproblem?"
 
 msgid "Error: Couldn't write package file, permission problems?"
-msgstr "Fel: Kunde inte skriva ner paketfil, åtkomstproblem?"
+msgstr "Fel: Kunde inte skriva paketfilen, behörighetsproblem?"
 
 msgid "Error: Couldn't set permissions on AppImage file"
-msgstr "Fel: Kunde inte sätta rättigheterna på AppImage filen"
+msgstr "Fel: Kunde inte ställa in rättigheterna på AppImage-filen"
 
 #, c-format
 msgid "Downloaded %s"
-msgstr "Laddade ner %s"
+msgstr "Hämtade ner %s"
 
 msgid "Error: Couldn't open AppImage update file for reading"
-msgstr "Fel: Kunde inte läsa från AppImage uppdateringsfilen"
+msgstr "Fel: Kunde inte öppna AppImage-uppdateringsfilen för läsning"
 
 msgid "Error: Downloaded file does not match expected MD5 checksum"
-msgstr "Fel: Nedladdad fil stämmer inte överens med MD5 checksum"
+msgstr "Fel: Hämtad fil stämmer inte överens med MD5-kontrollsumman"
 
 msgid "Error: Couldn't rename running AppImage file, permission problems?"
-msgstr "Fel: Kunde inte byta namn på körande AppImage file, åtkomstproblem?"
+msgstr "Fel: Kunde inte byta namn på körande AppImage-fil, behörighetsproblem?"
 
 msgid "Error: Couldn't replace running AppImage file, permission problems?"
-msgstr "Fel: Kunde inte ersätta körande AppImage fil, åtkomstproblem?"
+msgstr "Fel: Kunde inte ersätta körande AppImage-fil, behörighetsproblem?"
 
 #, c-format
 msgid "Successfully installed as %s"
 msgstr "Installerades som %s"
 
 msgid "DOWNLOADING"
-msgstr "LADDAR NER"
+msgstr "HÄMTAR NER"
 
 msgid "INSTALL"
 msgstr "INSTALLERA"
@@ -448,7 +448,7 @@ msgstr "avsluta applikationen"
 
 #, c-format
 msgid "FINISH EDITING '%s' COLLECTION"
-msgstr "AVSLUTA REDIGERING AV '%s' SAMLINGEN"
+msgstr "AVSLUTA REDIGERING AV '%s'"
 
 msgid "SELECT COLLECTIONS"
 msgstr "VÄLJ SAMLINGAR"
@@ -478,10 +478,10 @@ msgid "CREATE COLLECTION?"
 msgstr "SKAPA SAMLING?"
 
 msgid "DELETE CUSTOM COLLECTION"
-msgstr "RADERA ANPASSAD SAMLING"
+msgstr "TA BORT ANPASSAD SAMLING"
 
 msgid "COLLECTION TO DELETE"
-msgstr "SAMLING ATT RADERA"
+msgstr "SAMLING ATT TA BORT"
 
 #, c-format
 msgid ""
@@ -527,7 +527,7 @@ msgid "GAME NAME"
 msgstr "SPELNAMN"
 
 msgid "APPLY CHANGES?"
-msgstr "TILLÄMPA ÄNDRINGARNA?"
+msgstr "TILLÄMPA ÄNDRINGAR?"
 
 msgid "NOTHING TO FILTER"
 msgstr "INGET ATT FILTRERA"
@@ -554,7 +554,7 @@ msgid "EDIT THIS GAME'S METADATA"
 msgstr "REDIGERA DET HÄR SPELETS METADATA"
 
 msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
-msgstr "GÅ IN I MAPP (OVERRIDE AV MAPPLÄNK)"
+msgstr "GÅ IN I MAPP (ÅSIDOSÄTT MAPPLÄNK)"
 
 msgid "CLOSE"
 msgstr "STÄNG"
@@ -614,7 +614,7 @@ msgid "SCRAPER"
 msgstr "SCRAPER"
 
 msgid "UI SETTINGS"
-msgstr "UI INSTÄLLNINGAR"
+msgstr "INSTÄLLNINGAR FÖR GRÄNSSNITT"
 
 msgid "SOUND SETTINGS"
 msgstr "LJUDINSTÄLLNINGAR"
@@ -623,7 +623,7 @@ msgid "INPUT DEVICE SETTINGS"
 msgstr "INPUTINSTÄLLNINGAR"
 
 msgid "GAME COLLECTION SETTINGS"
-msgstr "SPELSAMLINGSINSTÄLLNINGAR"
+msgstr "INSTÄLLNINGAR FÖR SPELSAMLING"
 
 msgid "OTHER SETTINGS"
 msgstr "ANDRA INSTÄLLNINGAR"
@@ -638,31 +638,31 @@ msgid "THEME"
 msgstr "TEMA"
 
 msgid "THEME DOWNLOADER"
-msgstr "TEMANEDLADDARE"
+msgstr "TEMAHÄMTARE"
 
 msgid "THEME VARIANT"
-msgstr "TEMA VARIANT"
+msgstr "TEMAVARIANT"
 
 msgid "NONE DEFINED"
 msgstr "INGET DEFINIERAT"
 
 msgid "THEME COLOR SCHEME"
-msgstr "TEMA FÄRGSCHEMA"
+msgstr "FÄRGSCHEMA FÖR TEMA"
 
 msgid "THEME FONT SIZE"
-msgstr "TEMA FONTSTORLEK"
+msgstr "TYPSNITTSSTORLEK FÖR TEMA"
 
 msgid "THEME ASPECT RATIO"
-msgstr "TEMA BILDFÖRHÅLLANDE"
+msgstr "BILDFÖRHÅLLANDE FÖR TEMA"
 
 msgid "THEME TRANSITIONS"
-msgstr "TEMA ÖVERGÅNGAR"
+msgstr "TEMAÖVERGÅNGAR"
 
 msgid "AUTOMATIC"
 msgstr "AUTOMATISKT"
 
 msgid "THEME PROFILE"
-msgstr "TEMA PROFIL"
+msgstr "TEMAPROFIL"
 
 msgid "INSTANT (BUILT-IN)"
 msgstr "DIREKT (INBYGGD)"
@@ -674,7 +674,7 @@ msgid "FADE (BUILT-IN)"
 msgstr "UTTONING (INBYGGD)"
 
 msgid "THEME LANGUAGE"
-msgstr "TEMA SPRÅK"
+msgstr "TEMASPRÅK"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "APPLIKATIONENS SPRÅK"
@@ -686,13 +686,13 @@ msgid "LEFT/RIGHT OR SHOULDERS"
 msgstr "VÄ/HÖ ELLER AXELKNAPPAR"
 
 msgid "LEFT/RIGHT OR TRIGGERS"
-msgstr "VÄ/HÖ ELLER TRIGGERS"
+msgstr "VÄ/HÖ ELLER AVTRYCKARE"
 
 msgid "SHOULDERS"
 msgstr "AXELKNAPPAR"
 
 msgid "TRIGGERS"
-msgstr "TRIGGERS"
+msgstr "AVTRYCKARE"
 
 msgid "LEFT/RIGHT"
 msgstr "VÄNSTER/HÖGER"
@@ -723,13 +723,13 @@ msgstr "TILLVK, HÅRDVTYP, UTGIVNINGSÅR"
 
 msgctxt "short"
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr "SPEL STANDARDSORTERING"
+msgstr "STANDARDSORTERING FÖR SPEL"
 
 msgid "GAMES DEFAULT SORT ORDER"
-msgstr "SPEL STANDARDSORTERING"
+msgstr "STANDARDSORTERING FÖR SPEL"
 
 msgid "MENU COLOR SCHEME"
-msgstr "MENY FÄRGSCHEMA"
+msgstr "FÄRGSCHEMA FÖR MENY"
 
 msgid "DARK"
 msgstr "MÖRKT"
@@ -741,7 +741,7 @@ msgid "LIGHT"
 msgstr "LJUST"
 
 msgid "MENU OPENING ANIMATION"
-msgstr "MENY ÖPPNINGSANIMERING"
+msgstr "ÖPPNINGSANIMERING FÖR MENY"
 
 msgid "SCALE-UP"
 msgstr "UPPSKALNING"
@@ -758,8 +758,11 @@ msgstr "KORT"
 msgid "LONG"
 msgstr "LÅNG"
 
+msgid "POPUP"
+msgstr "POPUP"
+
 msgid "UI MODE"
-msgstr "UI-LÄGE"
+msgstr "GRÄNSSNITTSLÄGE"
 
 msgid "FULL"
 msgstr "FULLT"
@@ -819,6 +822,9 @@ msgstr "ENBART SPEL"
 msgid "GAMES AND SYSTEMS"
 msgstr "SPEL OCH SYSTEM"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "INSTÄLLNINGAR FÖR SYSTEMSTATUS"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "INSTÄLLNINGAR FÖR MEDIAVISARE"
 
@@ -826,13 +832,16 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "INSTÄLLNINGAR FÖR SKÄRMSLÄCKARE"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
-msgstr "AKTIVERA VARIANTTRIGGERS FÖR TEMAN"
+msgstr "AKTIVERA VARIANTUTLÖSARE FÖR TEMAN"
+
+msgid "DISPLAY CLOCK"
+msgstr "VISA KLOCKA"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
-msgstr "RENDERA OSKARP BAKGRUND NÄR MENYN VISAS"
+msgstr "OSKARP BAKGRUND NÄR MENYN ÄR ÖPPEN"
 
 msgid "SORT FOLDERS ON TOP OF GAMELISTS"
-msgstr "SORTERA MAPPAR LÄNGST UPP PÅ SPELLISTORNA"
+msgstr "SORTERA MAPPAR LÄNGST UPP I SPELLISTORNA"
 
 msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
 msgstr "SORTERA FAVORITSPEL OVANFÖR ICKE-FAVORITER"
@@ -841,7 +850,7 @@ msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
 msgstr "LÄGG TILL STJÄRNSYMBOL TILL FAVORITSPEL"
 
 msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
-msgstr "AKTIVERA SNABBSCROLLNINGS-OVERLAY FÖR TEXTLISTOR"
+msgstr "AKTIVERA SNABBSRULLNINGSÖVERLÄGG FÖR TEXTLISTOR"
 
 msgid "ENABLE VIRTUAL KEYBOARD"
 msgstr "AKTIVERA VIRTUELLT TANGENTBORD"
@@ -880,13 +889,13 @@ msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
 msgstr "LJUD FÖR VIDEOR I SKÄRMSLÄCKAREN"
 
 msgid "ENABLE NAVIGATION SOUNDS"
-msgstr "NAVIGERINGSLJUD"
+msgstr "AKTIVERA NAVIGERINGSLJUD"
 
 msgid "CONTROLLER TYPE"
 msgstr "TYP AV HANDKONTROLL"
 
 msgid "TOUCH OVERLAY SIZE"
-msgstr "TOUCH OVERLAY STORLEK"
+msgstr "STORLEK FÖR TOUCH-ÖVERLÄGG"
 
 msgid "MEDIUM"
 msgstr "MEDIUM"
@@ -901,7 +910,7 @@ msgid "EXTRA SMALL"
 msgstr "EXTRA LITEN"
 
 msgid "TOUCH OVERLAY OPACITY"
-msgstr "TOUCH OVERLAY OPACITET"
+msgstr "OPACITET FÖR TOUCH-ÖVERLÄGG"
 
 msgid "LOW"
 msgstr "LÅG"
@@ -910,10 +919,10 @@ msgid "VERY LOW"
 msgstr "VÄLDIGT LÅG"
 
 msgid "TOUCH OVERLAY FADE-OUT TIME"
-msgstr "TOUCH OVERLAY UTTONINGSTID"
+msgstr "UTTONINGSTID FÖR TOUCH-ÖVERLÄGG"
 
 msgid "ENABLE TOUCH OVERLAY"
-msgstr "AKTIVERA TOUCH OVERLAY"
+msgstr "AKTIVERA TOUCH-ÖVERLÄGG"
 
 msgid ""
 "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
@@ -922,7 +931,7 @@ msgid ""
 "OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
 "THE CONFIGURATOR TO RUN ON NEXT STARTUP"
 msgstr ""
-"DEAKTIVERA INTE TOUCH OVERLAY SÅVIDA DU INTE ANVÄNDER EN HANDKONTROLL FÖR "
+"INAKTIVERA INTE TOUCH-ÖVERLÄGG SÅVIDA DU INTE ANVÄNDER EN HANDKONTROLL FÖR "
 "ANNARS LÅSER DU DIG UTE FRÅN APPEN. OM DETTA HÄNDER SÅ MÅSTE DU TEMPORÄRT "
 "KOPPLA IN EN HANDKONTROLL ELLER ETT TANGENTBORD FÖR ATT AKTIVERA DENNA "
 "INSTÄLLNING IGEN, ELLER SÅ KAN DU RENSA LAGRINGSUTRYMMET FÖR ES-DE I "
@@ -930,13 +939,13 @@ msgstr ""
 "UPPSTART"
 
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
-msgstr "ENBART INPUT FRÅN DEN FÖRSTA HANDKONTROLLEN"
+msgstr "ENBART INMATNING FRÅN FÖRSTA HANDKONTROLLEN"
 
 msgid "SWAP THE A/B AND X/Y BUTTONS"
-msgstr "BYT PLATS PÅ A/B OCH X/Y KNAPPARNA"
+msgstr "BYT PLATS PÅ A/B OCH X/Y-KNAPPARNA"
 
 msgid "IGNORE KEYBOARD INPUT"
-msgstr "IGNORERA INPUT FRÅN TANGENTBORDET"
+msgstr "IGNORERA TANGENTBORDSINMATNING"
 
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "KONFIGURERA TANGENTBORD OCH HANDKONTROLLER"
@@ -947,8 +956,8 @@ msgid ""
 "HELP PROMPTS)"
 msgstr ""
 "TANGENTBORD OCH HANDKONTROLLER KONFIGURERAS AUTOMATISKT, MEN VIA DET HÄR "
-"VERKTYGET SÅ KAN DU GÖRA OVERRIDES FÖR KNAPPARNAS STANDARDMAPPNINGAR (DETTA "
-"PÅVERKAR INTE HJÄLPPROMPTERNA)"
+"VERKTYGET SÅ KAN DU GÖRA ÅSIDOSÄTTNINGAR FÖR KNAPPARNAS STANDARDMAPPNINGAR "
+"(DETTA PÅVERKAR INTE HJÄLPPROMPTERNA)"
 
 msgid "PROCEED"
 msgstr "FORTSÄTT"
@@ -966,16 +975,16 @@ msgid "SAVE"
 msgstr "SPARA"
 
 msgid "SAVE CHANGES?"
-msgstr "SPARA ÄNDRINGARNA?"
+msgstr "SPARA ÄNDRINGAR?"
 
 msgid "load default directory"
 msgstr "läs in standardkatalog"
 
 msgid "VRAM LIMIT"
-msgstr "VRAM MAXVÄRDE"
+msgstr "VRAM-GRÄNS"
 
 msgid "ANTI-ALIASING (MSAA)"
-msgstr "ANTI-ALIASING (MSAA)"
+msgstr "KANTUTJÄMNING (MSAA)"
 
 msgid "2X"
 msgstr "2X"
@@ -984,13 +993,13 @@ msgid "4X"
 msgstr "4X"
 
 msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
-msgstr "ANTI-ALIASING (MSAA) (KRÄVER OMSTART)"
+msgstr "KANTUTJÄMNING (MSAA) (KRÄVER OMSTART)"
 
 msgid "DISPLAY/MONITOR INDEX"
-msgstr "DISPLAY/SKÄRM INDEX"
+msgstr "DISPLAY/SKÄRMINDEX"
 
 msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
-msgstr "DISPLAY/SKÄRM INDEX (KRÄVER OMSTART)"
+msgstr "DISPLAY/SKÄRMINDEX (KRÄVER OMSTART)"
 
 msgid "ROTATE SCREEN"
 msgstr "ROTERA SKÄRMEN"
@@ -1012,13 +1021,13 @@ msgstr "TANGENTER FÖR ATT STÄNGA NER"
 
 msgctxt "short"
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr "NÄR SPEL-METADATA SKA SPARAS"
+msgstr "NÄR METADATA SKA SPARAS"
 
 msgid "ON EXIT"
 msgstr "VID AVSLUT"
 
 msgid "WHEN TO SAVE GAME METADATA"
-msgstr "NÄR SPEL-METADATA SKA SPARAS"
+msgstr "NÄR METADATA FÖR SPEL SKA SPARAS"
 
 msgid "APPLICATION UPDATES"
 msgstr "APPLIKATIONSUPPDATERINGAR"
@@ -1045,10 +1054,10 @@ msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
 msgstr "KÖR I BAKGRUNDEN (NÄR SPEL ÄR STARTAT)"
 
 msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
-msgstr "VIDEO HÅRDVARUAVKODNING (EXPERIMENTELLT)"
+msgstr "HÅRDVARUAVKODNING FÖR VIDEO (EXPERIMENTELLT)"
 
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
-msgstr "UPPSKALNING AV VIDEO FRAME RATE TILL 60 FPS"
+msgstr "UPPSKALNING AV VIDEOBILDFREKVENS TILL 60 BILDER/S"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "AKTIVERA ALTERNATIVA EMULATORER PER SPEL"
@@ -1060,13 +1069,16 @@ msgid "SHOW HIDDEN GAMES"
 msgstr "VISA DOLDA SPEL"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
-msgstr "AKTIVERA ANPASSADE EVENT-SCRIPT"
+msgstr "AKTIVERA ANPASSADE HÄNDELSESKRIPT"
+
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "ANPASSAD HÄNDELSE VID BLÄDDRING"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
-msgstr "VISA BARA SPEL FRÅN GAMELIST.XML FILERNA"
+msgstr "VISA BARA SPEL FRÅN GAMELIST.XML-FILERNA"
 
 msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
-msgstr "TA BORT EXTRA MAME NAMNINFO (KRÄVER OMSTART)"
+msgstr "TA BORT EXTRA MAME-NAMNINFO (KRÄVER OMSTART)"
 
 msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
 msgstr "INAKTIVERA DESKTOP COMPOSITION (KRÄVER OMSTART)"
@@ -1075,16 +1087,16 @@ msgid "BACK BUTTON/BACK SWIPE EXITS APP"
 msgstr "BAKÅTKNAPPEN/SVEPA BAKÅT AVSLUTAR APPLIKATIONEN"
 
 msgid "DEBUG MODE"
-msgstr "DEBUG LÄGE"
+msgstr "FELSÖKNINGSLÄGE"
 
 msgid "DISPLAY GPU STATISTICS OVERLAY"
-msgstr "VISA GPU STATISTIK-OVERLAY"
+msgstr "VISA ÖVERLÄGG MED GPU-STATISTIK"
 
 msgid "ENABLE MENU IN KID MODE"
-msgstr "VISA MENYN I BARNLÄGE"
+msgstr "AKTIVERA MENY I BARNLÄGE"
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
-msgstr "VISA AVSLUTA-MENYN (OMSTART OCH STÄNG AV POSTER)"
+msgstr "VISA AVSLUTA-MENYN (OMSTART OCH STÄNG NER)"
 
 msgid "ORPHANED DATA CLEANUP"
 msgstr "UPPRENSNING AV AVSKUREN DATA"
@@ -1099,11 +1111,11 @@ msgid ""
 "TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
 "RUNNING THIS UTILITY"
 msgstr ""
-"DET HÄR SKAPAR ALLA SYSTEMKATALOGERNA I DIN ROM MAPP OCH DET UPPDATERAR ÄVEN "
-"SYSTEMINFO.TXT FILERNA. DETTA ÄR EN SÄKER OPERATION SOM INTE KOMMER RADERA "
-"ELLER MODIFIERA DINA SPELFILER. FÖR ATT MINSKA UPPSTARTSTIDEN FÖR "
-"APPLIKATIONEN SÅ ÄR DET REKOMMENDERAT ATT RADERA DE SYSTEMKATALOGER DU INTE "
-"BEHÖVER EFTER ATT DU KÖRT DETTA VERKTYG"
+"DET HÄR SKAPAR ALLA SYSTEMKATALOGERNA I DIN ROM-MAPP OCH DET UPPDATERAR ÄVEN "
+"SYSTEMINFO.TXT-FILERNA. DETTA ÄR EN SÄKER ÅTGÄRD SOM INTE KOMMER RADERA "
+"ELLER ÄNDRA DINA SPELFILER. FÖR ATT MINSKA UPPSTARTSTIDEN FÖR APPLIKATIONEN "
+"SÅ ÄR DET REKOMMENDERAT ATT RADERA DE SYSTEMKATALOGER DU INTE BEHÖVER EFTER "
+"ATT DU KÖRT DETTA VERKTYG"
 
 msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
 msgstr "SYSTEMKATALOGERNA SKAPADES UTAN PROBLEM"
@@ -1112,17 +1124,17 @@ msgid ""
 "ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
 "LOG FILE FOR MORE DETAILS"
 msgstr ""
-"KUNDE INTE SKAPA SYSTEMKATALOGERNA, PROBLEM MED ÅTKOMST ELLER ÄR DISKEN "
+"KUNDE INTE SKAPA SYSTEMKATALOGERNA, PROBLEM MED BEHÖRIGHET ELLER ÄR DISKEN "
 "FULL? SE LOGGFILEN FÖR MER INFORMATION"
 
 msgid "RESCAN ROM DIRECTORY"
-msgstr "SKANNA OM ROM KATALOGEN"
+msgstr "SKANNA OM ROM-KATALOGEN"
 
 msgid ""
 "THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
 "GAMES AND SYSTEMS"
 msgstr ""
-"DET HÄR SKANNAR OM DIN ROM KATALOG FÖR ÄNDRINGAR SÅSOM TILLAGDA ELLER "
+"DET HÄR SKANNAR OM DIN ROM-KATALOG FÖR ÄNDRINGAR SÅSOM TILLAGDA ELLER "
 "BORTTAGNA SPEL OCH SYSTEM"
 
 msgid "REALLY QUIT?"
@@ -1135,10 +1147,14 @@ msgid "REBOOT SYSTEM"
 msgstr "STARTA OM SYSTEMET"
 
 msgid "REALLY POWER OFF?"
-msgstr "VERKLIGEN STÄNGA AV?"
+msgstr "VERKLIGEN STÄNGA NER?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "STÄNG AV SYSTEMET"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "INSTÄLLNINGAR SYSTEMSTATUS"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1186,7 +1202,7 @@ msgid ""
 "BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
 "ARE YOU SURE?"
 msgstr ""
-"DET HÄR RADERAR ALLA MEDIAFILER OCH GAMELIST.XML POSTEN FÖR MAPPEN, MEN "
+"DET HÄR RADERAR ALLA MEDIAFILER OCH GAMELIST.XML-POSTEN FÖR MAPPEN, MEN "
 "VARKEN SJÄLVA KATALOGEN ELLER NÅGOT AV DESS INNEHÅLL KOMMER ATT TAS BORT\n"
 "ÄR DU SÄKER?"
 
@@ -1201,7 +1217,7 @@ msgid ""
 "BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
 "ARE YOU SURE?"
 msgstr ""
-"DET HÄR RADERAR ALLA MEDIAFILER OCH GAMELIST.XML POSTEN FÖR SPELET, MEN "
+"DET HÄR RADERAR ALLA MEDIAFILER OCH GAMELIST.XML-POSTEN FÖR SPELET, MEN "
 "SJÄLVA SPELFILEN KOMMER INTE TAS BORT\n"
 "ÄR DU SÄKER?"
 
@@ -1212,7 +1228,7 @@ msgid ""
 "THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
 "ARE YOU SURE?"
 msgstr ""
-"DET HÄR RADERAR SPELFILEN, ALLA DESS MEDIAFILER SAMT GAMELIST.XML POSTEN\n"
+"DET HÄR RADERAR SPELFILEN, ALLA DESS MEDIAFILER SAMT GAMELIST.XML-POSTEN\n"
 "ÄR DU SÄKER?"
 
 msgid "DELETE"
@@ -1222,7 +1238,7 @@ msgid "delete game"
 msgstr "radera spel"
 
 msgid "MIXIMAGE OFFLINE GENERATOR"
-msgstr "MIXBILD OFFLINEGENERATOR"
+msgstr "OFFLINE-GENERATOR FÖR MIXBILD"
 
 msgid "NOT STARTED"
 msgstr "INTE STARTAD"
@@ -1230,8 +1246,8 @@ msgstr "INTE STARTAD"
 #, c-format
 msgid "%i OF %i GAME PROCESSED"
 msgid_plural "%i OF %i GAMES PROCESSED"
-msgstr[0] "%i AV %i SPEL PROCESSAT"
-msgstr[1] "%i AV %i SPEL PROCESSADE"
+msgstr[0] "%i AV %i SPEL BEARBETAT"
+msgstr[1] "%i AV %i SPEL BEARBETADE"
 
 msgid "Generated:"
 msgstr "Genererade:"
@@ -1240,10 +1256,10 @@ msgid "Overwritten:"
 msgstr "Överskrivna:"
 
 msgid "Skipped:"
-msgstr "Hoppat över:"
+msgstr "Hoppade över:"
 
 msgid "Skipped (existing):"
-msgstr "Hoppat över (exist.):"
+msgstr "Hoppade över (finns):"
 
 msgid "Failed:"
 msgstr "Misslyckade:"
@@ -1258,7 +1274,7 @@ msgid "START"
 msgstr "STARTA"
 
 msgid "start processing"
-msgstr "påbörja processning"
+msgstr "starta bearbetning"
 
 msgid "PAUSE"
 msgstr "PAUSA"
@@ -1282,7 +1298,7 @@ msgid "DONE"
 msgstr "KLAR"
 
 msgid "done (close)"
-msgstr "klar(stäng)"
+msgstr "klar (stäng)"
 
 msgid ""
 "THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
@@ -1291,7 +1307,7 @@ msgid ""
 "LONGER NEEDED."
 msgstr ""
 "DET HÄR TAR BORT ALLA MEDIAFILER DÄR DET INTE FINNS NÅGRA MATCHANDE "
-"SPELFILER. FILERNA FLYTTAS TILL EN CLEANUP MAPP INUTI DIN SPELMEDIA KATALOG. "
+"SPELFILER. FILERNA FLYTTAS TILL EN CLEANUP-MAPP INUTI DIN SPELMEDIAKATALOG. "
 "DU KAN MANUELLT TA BORT DENNA MAPP NÄR DU ÄR SÄKER PÅ ATT DU INTE LÄNGRE "
 "BEHÖVER DEN."
 
@@ -1301,9 +1317,9 @@ msgid ""
 "CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
 "FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
 msgstr ""
-"DET HÄR TAR BORT ALLA POSTER FRÅN DINA GAMELIST.XML FILER DÄR DET INTE FINNS "
-"NÅGRA MATCHANDE SPELFILER. BACKUPER AV ORIGINALFILERNA SPARAS TILL EN "
-"CLEANUP MAPP INUTI DIN GAMELISTS KATALOG. DU KAN MANUELLT TA BORT DENNA MAPP "
+"DET HÄR TAR BORT ALLA POSTER FRÅN DINA GAMELIST.XML-FILER DÄR DET INTE FINNS "
+"NÅGRA MATCHANDE SPELFILER. SÄKERHETSKOPIOR AV ORIGINALFILERNA SPARAS TILL EN "
+"CLEANUP-MAPP INUTI DIN GAMELISTS-KATALOG. DU KAN MANUELLT TA BORT DENNA MAPP "
 "NÄR DU ÄR SÄKER PÅ ATT DU INTE LÄNGRE BEHÖVER DEN."
 
 msgid ""
@@ -1313,8 +1329,8 @@ msgid ""
 "ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
 msgstr ""
 "DET HÄR TAR BORT ALLA POSTER FRÅN DINA ANPASSADE SAMLINGAR DÄR DET INTE "
-"FINNS NÅGRA MATCHANDE SPELFILER. BACKUPER AV ORIGINALFILERNA SPARAS TILL EN "
-"CLEANUP MAPP INUTI DIN COLLECTIONS KATALOG. BARA SAMLINGAR SOM FÖR "
+"FINNS NÅGRA MATCHANDE SPELFILER. SÄKERHETSKOPIOR AV ORIGINALFILERNA SPARAS "
+"TILL EN CLEANUP-MAPP INUTI DIN SAMLINGSKATALOG. BARA SAMLINGAR SOM FÖR "
 "NÄRVARANDE ÄR AKTIVERADE KOMMER ATT HANTERAS."
 
 msgid "DESCRIPTION:"
@@ -1339,7 +1355,7 @@ msgid "STOP"
 msgstr "STOPPA"
 
 msgid "stop processing"
-msgstr "stoppa processning"
+msgstr "stoppa bearbetning"
 
 msgid "GAMELISTS"
 msgstr "SPELLISTOR"
@@ -1360,40 +1376,40 @@ msgid "RUNNING COLLECTIONS CLEANUP"
 msgstr "KÖR UPPRENSNING AV SAMLINGAR"
 
 msgid "PROCESSING"
-msgstr "PROCESSAR"
+msgstr "BEARBETAR"
 
 #, c-format
 msgid "A flatten.txt file was found, skipping \"%s\""
-msgstr "En flatten.txt fil hittades, hoppar över \"%s\""
+msgstr "En flatten.txt-fil hittades, hoppar över \"%s\""
 
 msgid "Couldn't create target directory, permission problems?"
-msgstr "Kunde inte skapa målkatalog, åtkomstproblem?"
+msgstr "Kunde inte skapa målkatalog, behörighetsproblem?"
 
 msgid "Couldn't move media file, permission problems?"
-msgstr "Kunde inte flytta mediafil, åtkomstproblem?"
+msgstr "Kunde inte flytta mediafil, behörighetsproblem?"
 
 #, c-format
 msgid "Couldn't parse gamelist.xml file for \"%s\""
-msgstr "Kunde inte tolka gamelist.xml filen för \"%s\""
+msgstr "Kunde inte tolka gamelist.xml-filen för \"%s\""
 
 #, c-format
 msgid "Couldn't find a gamelist tag in file for \"%s\""
-msgstr "Kunde inte hitta en gamelist tagg i filen för \"%s\""
+msgstr "Kunde inte hitta en gamelist-tagg i filen för \"%s\""
 
 msgid "Couldn't delete temporary gamelist file, permission problems?"
-msgstr "Kunde inte radera temporär spellist-fil, åtkomstproblem?"
+msgstr "Kunde inte ta bort temporär spellistfil, behörighetsproblem?"
 
 msgid "Couldn't write to temporary gamelist file, permission problems?"
-msgstr "Kunde inte skriva till temporär spellist-fil, åtkomstproblem?"
+msgstr "Kunde inte skriva till temporär spellistfil, behörighetsproblem?"
 
 msgid "Couldn't create backup directory, permission problems?"
-msgstr "Kunde inte skapa backupkatalog, åtkomstproblem?"
+msgstr "Kunde inte skapa backupkatalog, behörighetsproblem?"
 
 msgid "Couldn't move old gamelist file, permission problems?"
-msgstr "Kunde inte flytta den gamla spellist-filen, åtkomstproblem?"
+msgstr "Kunde inte flytta den gamla spellistfilen, behörighetsproblem?"
 
 msgid "Couldn't move temporary gamelist file, permission problems?"
-msgstr "Kunde inte flytta den temporära spellist-filen, åtkomstproblem?"
+msgstr "Kunde inte flytta den temporära spellistfilen, behörighetsproblem?"
 
 msgid "Couldn't find custom collection configuration file"
 msgstr "Kunde inte hitta konfigurationsfilen för den anpassade samlingen"
@@ -1402,16 +1418,16 @@ msgid "Couldn't open custom collection configuration file"
 msgstr "Kunde inte öppna konfigurationsfilen för den anpassade samlingen"
 
 msgid "Couldn't delete temporary collection file, permission problems?"
-msgstr "Kunde inte radera den temporära samlings-filen, åtkomstproblem?"
+msgstr "Kunde inte ta bort den temporära samlingsfilen, behörighetsproblem?"
 
 msgid "Couldn't write to temporary collection configuration file"
-msgstr "Kunde inte skriva till den temporära samlings-filen"
+msgstr "Kunde inte skriva till den temporära samlingens konfigurationsfil"
 
 msgid "Couldn't move old collection file, permission problems?"
-msgstr "Kunde inte flytta den gamla samlings-filen, åtkomstproblem?"
+msgstr "Kunde inte flytta den gamla samlingsfilen, behörighetsproblem?"
 
 msgid "Couldn't move temporary collection file, permission problems?"
-msgstr "Kunde inte flytta den temporära samlings-filen, åtkomstproblem?"
+msgstr "Kunde inte flytta den temporära samlingsfilen, behörighetsproblem?"
 
 msgid "ABORTED MEDIA CLEANUP"
 msgstr "AVBRÖT UPPRENSNING AV MEDIA"
@@ -1438,7 +1454,7 @@ msgid "GAMELISTS CLEANUP FAILED"
 msgstr "UPPRENSNING AV SPELLISTOR MISSLYCKADES"
 
 msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
-msgstr "APPLIKATIONEN KOMMER LADDAS OM NÄR DETTA VERKTYG STÄNGS."
+msgstr "APPLIKATIONEN KOMMER LÄSAS OM NÄR DETTA VERKTYG STÄNGS."
 
 msgid "SCRAPE FROM"
 msgstr "SCRAPING FRÅN"
@@ -1474,16 +1490,16 @@ msgid "CONTENT SETTINGS"
 msgstr "INNEHÅLLSINSTÄLLNINGAR"
 
 msgid "MIXIMAGE SETTINGS"
-msgstr "MIXBILDINSTÄLLNINGAR"
+msgstr "INSTÄLLNINGAR FÖR MIXBILD"
 
 msgid "start scraper"
 msgstr "starta scrapern"
 
 msgid "SCREENSCRAPER USERNAME"
-msgstr "SCREENSCRAPER ANVÄNDARE"
+msgstr "ANVÄNDARE FÖR SCREENSCRAPER"
 
 msgid "SCREENSCRAPER PASSWORD"
-msgstr "SCREENSCRAPER LÖSENORD"
+msgstr "LÖSENORD FÖR SCREENSCRAPER"
 
 msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
 msgstr "ANVÄND DET HÄR KONTOT FÖR SCREENSCRAPER"
@@ -1501,25 +1517,25 @@ msgid "VIDEOS"
 msgstr "VIDEOR"
 
 msgid "SCREENSHOT IMAGES"
-msgstr "SKÄRMDUMP BILDER"
+msgstr "SKÄRMDUMPSBILDER"
 
 msgid "TITLE SCREEN IMAGES"
-msgstr "TITELSKÄRM BILDER"
+msgstr "BILDER FÖR TITELSKÄRM"
 
 msgid "BOX COVER IMAGES"
-msgstr "LÅDA OMSLAG BILDER"
+msgstr "BILDER FÖR LÅDOMSLAG"
 
 msgid "BOX BACK COVER IMAGES"
-msgstr "LÅDA BAKSIDA BILDER"
+msgstr "OMSLAGSBILDER FÖR LÅDBAKSIDA"
 
 msgid "MARQUEE (WHEEL) IMAGES"
-msgstr "MARQUEE (HJUL) BILDER"
+msgstr "MARQUEE-BILDER (HJUL)"
 
 msgid "3D BOX IMAGES"
-msgstr "3D LÅDA BILDER"
+msgstr "3D-LÅDBILDER"
 
 msgid "PHYSICAL MEDIA IMAGES"
-msgstr "FYSISKT MEDIA BILDER"
+msgstr "FYSISKA MEDIABILDER"
 
 msgid "FAN ART IMAGES"
 msgstr "FAN-SKAPADE BILDER"
@@ -1528,7 +1544,7 @@ msgid "GAME MANUALS"
 msgstr "SPELMANUALER"
 
 msgid "MIXIMAGE RESOLUTION"
-msgstr "MIXBILD UPPLÖSNING"
+msgstr "UPPLÖSNING FÖR MIXBILD"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1589,37 +1605,37 @@ msgid "BOX SIZE"
 msgstr "STORLEK FÖR LÅDA"
 
 msgid "PHYSICAL MEDIA SIZE"
-msgstr "STORLEK FÖR FYSISK MEDIA"
+msgstr "STORLEK FÖR FYSISKT MEDIA"
 
 msgid "GENERATE MIXIMAGES WHEN SCRAPING"
 msgstr "GENERERA MIXBILDER VID SCRAPING"
 
 msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
-msgstr "SKRIV ÖVER MIXBILDER (SCRAPER/OFFLINEGENERATOR)"
+msgstr "SKRIV ÖVER MIXBILDER (SCRAPER/OFFLINE-GENERATOR)"
 
 msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
-msgstr "TA BORT LETTERBOXES FRÅN SKÄRMDUMPAR"
+msgstr "TA BORT LETTERBOXAR FRÅN SKÄRMDUMPAR"
 
 msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
-msgstr "TA BORT PILLARBOXES FRÅN SKÄRMDUMPAR"
+msgstr "TA BORT PILLARBOXAR FRÅN SKÄRMDUMPAR"
 
 msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
 msgstr "ROTERA HORISONTELLT ORIENTERADE LÅDOR"
 
 msgid "INCLUDE MARQUEE IMAGE"
-msgstr "INKLUDERA MARQUEE BILD"
+msgstr "INKLUDERA MARQUEE-BILD"
 
 msgid "INCLUDE BOX IMAGE"
 msgstr "INKLUDERA BILD PÅ LÅDA"
 
 msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
-msgstr "ANVÄND OMSLAG IFALL 3D LÅDA SAKNAS"
+msgstr "ANVÄND OMSLAG IFALL 3D-LÅDA SAKNAS"
 
 msgid "INCLUDE PHYSICAL MEDIA IMAGE"
 msgstr "INKLUDERA BILD PÅ FYSISKT MEDIA"
 
 msgid "OFFLINE GENERATOR"
-msgstr "OFFLINEGENERATOR"
+msgstr "OFFLINE-GENERATOR"
 
 msgid ""
 "THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
@@ -1650,7 +1666,7 @@ msgid "AUTOMATIC RETRIES ON ERROR"
 msgstr "AUTOMATISKA FÖRSÖK VID FEL"
 
 msgid "RETRY ATTEMPT TIMER"
-msgstr "TIMER FÖR UPPREPADE FÖRSÖK"
+msgstr "TIDSGRÄNS FÖR UPPREPADE FÖRSÖK"
 
 msgid "HASH SEARCHES MAX FILE SIZE"
 msgstr "MAX FILSTORLEK VID HASHSÖKNING"
@@ -1662,7 +1678,7 @@ msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
 msgstr "SÖK VIA FILHASHER (ICKE-INTERAKTIVT LÄGE)"
 
 msgid "SEARCH USING METADATA NAMES"
-msgstr "SÖK MED METADATA NAMN"
+msgstr "SÖK MED METADATANAMN"
 
 msgid "SCRAPE ACTUAL FOLDERS"
 msgstr "SCRAPING AV KATALOGER"
@@ -1677,7 +1693,7 @@ msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
 msgstr "RESPEKTERA SCRAPERNS PER-FIL EXKLUDERINGAR"
 
 msgid "EXCLUDE FOLDERS RECURSIVELY"
-msgstr "EXKLUDERA KATALOGER REKURSIVT"
+msgstr "EXKLUDERA MAPPAR REKURSIVT"
 
 msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
 msgstr "BYT UNDERSTRECK TILL BLANKSTEG VID SÖKNING"
@@ -1780,7 +1796,7 @@ msgid "RETRY"
 msgstr "FÖRSÖK IGEN"
 
 msgid "Error downloading thumbnail:"
-msgstr "Fel vid nedladdning av miniatyrbild:"
+msgstr "Fel vid hämtning av miniatyrbild:"
 
 msgid "SEARCH"
 msgstr "SÖK"
@@ -1834,7 +1850,7 @@ msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
 msgstr "STRÄCK UT BILDERNA TILL SKÄRMENS UPPLÖSNING"
 
 msgid "DISPLAY GAME INFO OVERLAY"
-msgstr "VISA SPELINFO OVERLAY"
+msgstr "VISA ÖVERLÄGG MED SPELINFO"
 
 msgid "RENDER SCANLINES"
 msgstr "RENDERA SCANLINES"
@@ -1843,7 +1859,7 @@ msgid "USE CUSTOM IMAGES"
 msgstr "ANVÄND ANPASSADE BILDER"
 
 msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
-msgstr "REKURSIV SÖKNING EFTER ANPASSADE BILDER"
+msgstr "REKURSIV SÖKNING FÖR ANPASSAD BILDKATALOG"
 
 msgid "CUSTOM IMAGE DIRECTORY"
 msgstr "KATALOG FÖR ANPASSADE BILDER"
@@ -1857,8 +1873,23 @@ msgstr "BYT VIDEOR EFTER (SEKUNDER)"
 msgid "RENDER BLUR"
 msgstr "RENDERA OSKÄRPA"
 
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "VISA STATUSINDIKATOR FÖR BLUETOOTH"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "VISA STATUSINDIKATOR FÖR WI-FI"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "VISA STATUSINDIKATOR FÖR MOBILTRAFIK"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "VISA STATUSINDIKATOR FÖR BATTERI"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "VISA BATTERIETS LADDNIVÅ I PROCENT"
+
 msgid "DOWNLOADING THEMES LIST 100%"
-msgstr "LADDAR NER TEMALISTAN 100%"
+msgstr "HÄMTAR NER TEMALISTAN 100%"
 
 msgid "THEME ALREADY UP TO DATE"
 msgstr "TEMAT ÄR REDAN UPPDATERAT"
@@ -1871,8 +1902,8 @@ msgid ""
 "COULDN'T RENAME DIRECTORY \"%s\"\n"
 "PERMISSION PROBLEMS?"
 msgstr ""
-"KUNDE INTE DÖPA OM KATALOGEN \"%s\"\n"
-"ÅTKOMSTPROBLEM?"
+"KUNDE INTE BYTA NAMN PÅ KATALOGEN \"%s\"\n"
+"BEHÖRIGHETSPROBLEM?"
 
 msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
 msgstr "KUNDE INTE HITTA TEMALISTANS KONFIGURATIONSFIL"
@@ -1882,7 +1913,7 @@ msgid ""
 "REPOSITORY IS CORRUPT?"
 msgstr ""
 "KUNDE INTE TOLKA TEMALISTANS KONFIGURATIONSFIL, KANSKE ÄR DET LOKALA ARKIVET "
-"KORRUPT?"
+"SKADAT?"
 
 msgid ""
 "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
@@ -1900,12 +1931,12 @@ msgid ""
 "THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
 "\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
 msgstr ""
-"DET VERKAR SOM ATT DET HÄR TEMAT HAR LADDATS NER MANUELLT ISTÄLLET FÖR VIA "
-"TEMANEDLADDAREN. EN NY NEDLADDNING KRÄVS OCH DEN GAMLA TEMAKATALOGEN KOMMER "
-"DÖPAS OM FRÅN \"%s\" TILL \"%s_DISABLED\""
+"DET VERKAR SOM ATT DET HÄR TEMAT HAR HÄMTATS NER MANUELLT ISTÄLLET FÖR VIA "
+"TEMAHÄMTAREN. EN NY HÄMTNING KRÄVS OCH DEN GAMLA TEMAKATALOGEN KOMMER DÖPAS "
+"OM FRÅN \"%s\" TILL \"%s_DISABLED\""
 
 msgid "DOWNLOADING THEME"
-msgstr "LADDAR NER TEMAT"
+msgstr "HÄMTAR NER TEMAT"
 
 #, c-format
 msgid ""
@@ -1914,10 +1945,10 @@ msgid ""
 "THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
 "DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
 msgstr ""
-"DET VERKAR SOM ATT DET HÄR TEMA-ARKIVET ÄR KORRUPT, VILKET KAN BERO PÅ ATT "
-"EN TIDIGARE NEDLADDNING ELLER UPPDATERING BLEV AVBRUTEN, T.EX. OM ES-DE "
-"PROCESSEN DÖDADES. EN NY NEDLADDNING KRÄVS OCH DEN GAMLA TEMAKATALOGEN "
-"KOMMER DÖPAS OM FRÅN \"%s\" TILL \"%s_CORRUPT_DISABLED\""
+"DET VERKAR SOM ATT DET HÄR TEMAARKIVET ÄR SKADAT, VILKET KAN BERO PÅ ATT EN "
+"TIDIGARE HÄMTNING ELLER UPPDATERING BLEV AVBRUTEN, T.EX. OM ES-DE-PROCESSEN "
+"DÖDADES. EN NY HÄMTNING KRÄVS OCH DEN GAMLA TEMAKATALOGEN KOMMER DÖPAS OM "
+"FRÅN \"%s\" TILL \"%s_CORRUPT_DISABLED\""
 
 #, c-format
 msgid ""
@@ -1927,9 +1958,9 @@ msgid ""
 "\"%s_DISABLED\""
 msgstr ""
 "DET VERKAR SOM ATT DET HÄR ÄR ETT GRUNT TEMA-ARKIV VILKET BETYDER ATT DET "
-"HAR LADDATS NED MED ETT ANNAT VERKTYG ÄN DEN HÄR TEMANEDLADDAREN. EN NY "
-"NEDLADDNING KRÄVS OCH DEN GAMLA TEMAKATALOGEN KOMMER DÖPAS OM FRÅN \"%s\" "
-"TILL \"%s_DISABLED\""
+"HAR HÄMTATS NED MED ETT ANNAT VERKTYG ÄN DEN HÄR TEMAHÄMTAREN. EN NY "
+"HÄMTNING KRÄVS OCH DEN GAMLA TEMAKATALOGEN KOMMER DÖPAS OM FRÅN \"%s\" TILL "
+"\"%s_DISABLED\""
 
 #, c-format
 msgid ""
@@ -1938,7 +1969,7 @@ msgid ""
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
 msgstr ""
 "DET LOKALT KLONADE ARKIVET INNEHÅLLER EN FELAKTIG URL VILKET NORMALT BETYDER "
-"ATT TEMAT HAR FLYTTATS TILL EN NY GIT SITE. EN NY NEDLADDNING KRÄVS OCH DEN "
+"ATT TEMAT HAR FLYTTATS TILL EN NY GIT-SITE. EN NY HÄMTNING KRÄVS OCH DEN "
 "GAMLA TEMAKATALOGEN KOMMER DÖPAS OM FRÅN \"%s\" TILL "
 "\"%s_WRONG_URL_DISABLED\""
 
@@ -1947,7 +1978,7 @@ msgid ""
 "THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
 "CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
 msgstr ""
-"TEMA-ARKIVET \"%s\" INNEHÅLLER LOKALA MODIFIERINGAR. VÄLJ FORTSÄTT FÖR ATT "
+"TEMA-ARKIVET \"%s\" INNEHÅLLER LOKALA ÄNDRINGAR. VÄLJ FORTSÄTT FÖR ATT "
 "SKRIVA ÖVER DINA ÄNDRINGAR ELLER AVBRYT FÖR ATT HOPPA ÖVER ALLA "
 "UPPDATERINGAR FÖR DET HÄR TEMAT"
 
@@ -1970,7 +2001,7 @@ msgid "INSTALLED"
 msgstr "INSTALLERAD"
 
 msgid "MANUAL DOWNLOAD"
-msgstr "MANUELL NEDLADDNING"
+msgstr "MANUELL HÄMTNING"
 
 msgid "CORRUPT"
 msgstr "KORRUPT"
@@ -2000,10 +2031,10 @@ msgid "ERROR:"
 msgstr "FEL:"
 
 msgid "COULDN'T DOWNLOAD THEMES LIST"
-msgstr "KUNDE INTE LADDA NER TEMALISTAN"
+msgstr "KUNDE INTE HÄMTA NER TEMALISTAN"
 
 msgid "DOWNLOADING THEMES LIST"
-msgstr "LADDAR NER TEMALISTAN"
+msgstr "HÄMTAR NER TEMALISTAN"
 
 msgid "THIS WILL COMPLETELY DELETE THE THEME"
 msgstr "DET HÄR KOMMER HELT OCH HÅLLET TA BORT TEMAT"
@@ -2014,22 +2045,22 @@ msgstr ""
 "DET HÄR KOMMER HELT OCH HÅLLET TA BORT TEMAT INKLUSIVE ALLA LOKALA ÄNDRINGAR"
 
 msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
-msgstr "KUNDE INTE RADERA TEMAT, PROBLEM MED ÅTKOMST?"
+msgstr "KUNDE INTE TA BORT TEMAT, PROBLEM MED BEHÖRIGHET?"
 
 msgid "THEME WAS DELETED"
-msgstr "TEMAT RADERADES"
+msgstr "TEMAT TOGS BORT"
 
 msgid "view screenshots"
-msgstr "se skärmdumpar"
+msgstr "visa skärmdumpar"
 
 msgid "fetch updates"
 msgstr "hämta uppdateringar"
 
 msgid "delete"
-msgstr "radera"
+msgstr "ta bort"
 
 msgid "download"
-msgstr "ladda ner"
+msgstr "hämta ner"
 
 msgid ""
 "IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
@@ -2037,10 +2068,10 @@ msgid ""
 "THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
 "DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
 msgstr ""
-"DET VERKAR SOM ATT ARKIVET FÖR TEMALISTAN ÄR KORRUPT, VILKET KAN HA ORSAKATS "
-"AV ATT FÖREGÅENDE NEDLADDNING BLEV AVBRUTEN, T.EX. ATT ES-DE PROCESSEN "
-"DÖDADES. EN NY NEDLADDNING KRÄVS OCH DEN GAMLA KATALOGEN \"themes-list\" "
-"KOMMER DÖPAS OM TILL \"themes-list_CORRUPT_DISABLED\""
+"DET VERKAR SOM ATT ARKIVET FÖR TEMALISTAN ÄR SKADAT, VILKET KAN HA ORSAKATS "
+"AV ATT FÖREGÅENDE HÄMTNING BLEV AVBRUTEN, T.EX. ATT ES-DE-PROCESSEN DÖDADES. "
+"EN NY HÄMTNING KRÄVS OCH DEN GAMLA KATALOGEN \"themes-list\" KOMMER DÖPAS OM "
+"TILL \"themes-list_CORRUPT_DISABLED\""
 
 msgid "UPDATING THEMES LIST"
 msgstr "UPPDATERAR TEMALISTAN"
@@ -2053,18 +2084,17 @@ msgid ""
 "THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
 "CORRUPTION."
 msgstr ""
-"DET VERKAR SOM ATT DU KÖR TEMANEDLADDAREN FÖR FÖRSTA GÅNGEN. DÄRFÖR BEHÖVS "
-"TEMALISTANS ARKIV LADDAS NER VILKET TAR EN LITEN STUND. EFTERFÖLJANDE "
-"NEDLADDNINGAR KOMMER DOCK GÅ MYCKET SNABBARE DÅ ENBART NYA OCH MODIFIERADE "
-"FILER HÄMTAS. DETSAMMA ÄR FALLET FÖR DE TEMAN DU LADDAR NER. NOTERA ATT DU "
-"INTE KAN AVBRYTA EN PÅGÅENDE NEDLADDNING DÅ DETTA SKULLE KUNNA LEDA TILL "
-"DATAKORRUPTION."
+"DET VERKAR SOM ATT DU KÖR TEMAHÄMTAREN FÖR FÖRSTA GÅNGEN. DÄRFÖR BEHÖVS "
+"TEMALISTANS ARKIV HÄMTAS NER VILKET TAR EN LITEN STUND. EFTERFÖLJANDE "
+"HÄMTNINGAR KOMMER DOCK GÅ MYCKET SNABBARE DÅ ENBART NYA OCH ÄNDRADE FILER "
+"HÄMTAS. DETSAMMA ÄR FALLET FÖR DE TEMAN DU HÄMTAR NER. NOTERA ATT DU INTE "
+"KAN AVBRYTA EN PÅGÅENDE HÄMTNING DÅ DETTA SKULLE KUNNA LEDA TILL SKADAT DATA."
 
 msgid "browse"
 msgstr "bläddra"
 
 msgid "pdf manual"
-msgstr "pdf manual"
+msgstr "pdf-manual"
 
 msgid "first"
 msgstr "första"
@@ -2076,10 +2106,10 @@ msgid "SCREENSHOT"
 msgstr "SKÄRMDUMP"
 
 msgid "BOX COVER"
-msgstr "LÅDA OMSLAG"
+msgstr "LÅDOMSLAG"
 
 msgid "BOX BACK COVER"
-msgstr "LÅDA BAKSIDA"
+msgstr "OMSLAG FÖR LÅDBAKSIDA"
 
 msgid "TITLE SCREEN"
 msgstr "TITELSKÄRM"
@@ -2115,7 +2145,7 @@ msgstr "SORTERING ANPASSADE SAMLINGAR"
 
 msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
-msgstr "SKRIV IN SORTERINGSNAMN"
+msgstr "SKRIV IN SORTERINGSNAMN FÖR SAMLINGAR"
 
 msgctxt "metadata"
 msgid "DESCRIPTION"
@@ -2187,7 +2217,7 @@ msgstr "DOLD"
 
 msgctxt "metadata"
 msgid "BROKEN/NOT WORKING"
-msgstr "TRASIGT/FUNGERAR INTE"
+msgstr "TRASIG/FUNGERAR INTE"
 
 msgctxt "metadata"
 msgid "EXCLUDE FROM GAME COUNTER"
@@ -2248,22 +2278,22 @@ msgid "Screenshot in unknown format, couldn't generate miximage"
 msgstr "Skärmdump i okänt format, kunde inte generera mixbild"
 
 msgid "Screenshot in unsupported format, couldn't generate miximage"
-msgstr "Skärmdump i icke supportat format, kunde inte generera mixbild"
+msgstr "Skärmdump i icke-supportat format, kunde inte generera mixbild"
 
 msgid "Error loading screenshot, couldn't generate miximage"
 msgstr "Fel vid läsning av skärmdump, kunde inte generera mixbild"
 
 msgid "Error loading marquee image, corrupt file?"
-msgstr "Fel vid läsning av marquee bild, korrupt fil?"
+msgstr "Fel vid läsning av marquee-bild, skadad fil?"
 
 msgid "Error loading 3d box image, corrupt file?"
-msgstr "Fel vid läsning av 3D låda bild, korrupt fil?"
+msgstr "Fel vid läsning av 3D-lådsbild, skadad fil?"
 
 msgid "Error loading box cover image, corrupt file?"
-msgstr "Fel vid läsning av låda omslag bild, korrupt fil?"
+msgstr "Fel vid läsning av lådomslagsbild, skadad fil?"
 
 msgid "Error loading physical media image, corrupt file?"
-msgstr "Fel vid läsning av fysiskt media bild, korrupt fil?"
+msgstr "Fel vid läsning av fysisk mediabild, skadad fil?"
 
 #, c-format
 msgid "PAGE %s OF %s"
@@ -2285,28 +2315,30 @@ msgid "Network error:"
 msgstr "Nätverksfel:"
 
 msgid "Media directory does not exist and can't be created."
-msgstr "Mediakatalogen existerar inte och kunde inte skapas."
+msgstr "Mediakatalogen finns inte och kunde inte skapas."
 
 msgid "Permission problems?"
-msgstr "Åtkomstproblem?"
+msgstr "Behörighetsproblem?"
 
 msgid "Failed to open path for writing media file."
 msgstr "Kunde inte öppna sökvägen för skrivning av mediafilen."
 
 msgid "Couldn't save media file, permission problems or is the disk full?"
-msgstr "Kunde inte spara mediafil, åtkomstproblem eller är disken full?"
+msgstr "Kunde inte spara mediafil, behörighetsproblem eller är disken full?"
 
 msgid "Couldn't save resized image, permission problems or is the disk full?"
-msgstr "Kunde inte spara skalad bild, åtkomstproblem eller är disken full?"
+msgstr ""
+"Kunde inte spara storleksändrad bild, behörighetsproblem eller är disken "
+"full?"
 
 msgid "ScreenScraper error:"
-msgstr "ScreenScraper fel:"
+msgstr "ScreenScraper-fel:"
 
 msgid "ScreenScraper: Wrong username or password"
 msgstr "ScreenScraper: Fel användarnamn eller lösenord"
 
 msgid "No Entries Found"
-msgstr "Inga Poster"
+msgstr "Inga poster hittades"
 
 msgctxt "theme"
 msgid "all"
@@ -2343,11 +2375,11 @@ msgstr "KAN INTE LÄGGA TILL MAPPAR TILL ANPASSADE SAMLINGAR"
 
 #, c-format
 msgid "MARKED FOLDER '%s' AS FAVORITE"
-msgstr "MARKERADE MAPP '%s' SOM FAVORIT"
+msgstr "MARKERADE MAPPEN '%s' SOM FAVORIT"
 
 #, c-format
 msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
-msgstr "TOG BORT FAVORITMARKERING FÖR MAPP '%s'"
+msgstr "TOG BORT FAVORITMARKERING FÖR MAPPEN '%s'"
 
 msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr ""
@@ -2412,9 +2444,9 @@ msgid ""
 "DIRECTORY."
 msgstr ""
 "DET VERKAR SOM ATT EN OSÄKER UPPGRADERING HAR GENOMFÖRTS, MÖJLIGEN GENOM ATT "
-"DEN NYA RELEASEN PACKADES UPP OVANPÅ DEN GAMLA? DETTA KAN SKAPA EN RAD "
+"DEN NYA UTGÅVAN PACKADES UPP OVANPÅ DEN GAMLA? DETTA KAN SKAPA EN RAD "
 "PROBLEM, VARAV EN DEL INTE ÄR DIREKT UPPENBARA. SÄKERSTÄLL ATT DU ALLTID "
-"FÖLJER INSTRUKTIONERNA FÖR UPPGRADERINGAR I README.TXT FILEN SOM DU KAN "
+"FÖLJER INSTRUKTIONERNA FÖR UPPGRADERINGAR I README.TXT-FILEN SOM DU KAN "
 "HITTA I ES-DE KATALOGEN."
 
 msgid ""
@@ -2424,7 +2456,7 @@ msgid ""
 "SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
 msgstr ""
 "KUNDE INTE TOLKA SYSTEM-KONFIGURATIONSFILEN. OM DU HAR EN ANPASSAD "
-"es_systems.xml FIL SÅ ÄR NÅGONTING SANNOLIKT FEL MED DIN XML SYNTAX. OM DU "
+"es_systems.xml FIL SÅ ÄR NÅGONTING SANNOLIKT FEL MED DIN XML-SYNTAX. OM DU "
 "INTE HAR EN ANPASSAD SYSTEMFIL SÅ ÄR ES-DE INSTALLATIONEN TRASIG. SE "
 "APPLIKATIONENS LOGGFIL es_log.txt FÖR MER INFORMATION"
 
@@ -2435,11 +2467,11 @@ msgid ""
 "THE SUPPORTED FILE EXTENSIONS.\n"
 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"INGA SPELFILER HITTADES. PLACERA DINA SPEL I DEN KONFIGURERADE ROM "
+"INGA SPELFILER HITTADES. PLACERA DINA SPEL I DEN KONFIGURERADE ROM-"
 "KATALOGEN. ALTERNATIVT SÅ KAN DU GENERERA KATALOGSTRUKTUREN VILKET SKAPAR EN "
 "TEXTFIL FÖR VARJE SYSTEM SOM INNEHÅLLER INFORMATION SÅSOM VILKA FILÄNDELSER "
 "SOM STÖDS.\n"
-"DET HÄR ÄR DEN KONFIGURERADE ROM KATALOGEN:\n"
+"DET HÄR ÄR DEN KONFIGURERADE ROM-KATALOGEN:\n"
 
 msgid ""
 "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
@@ -2449,23 +2481,23 @@ msgid ""
 "FILE EXTENSIONS.\n"
 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"INGA SPELFILER HITTADES. PLACERA ANTINGEN DINA SPEL I DEN KONFIGURERADE ROM "
+"INGA SPELFILER HITTADES. PLACERA ANTINGEN DINA SPEL I DEN KONFIGURERADE ROM-"
 "KATALOGEN ELLER ÄNDRA DESS SÖKVÄG MED KNAPPEN HÄR NEDANFÖR. ALTERNATIVT SÅ "
 "KAN DU GENERERA KATALOGSTRUKTUREN VILKET SKAPAR EN TEXTFIL FÖR VARJE SYSTEM "
 "SOM INNEHÅLLER INFORMATION SÅSOM VILKA FILÄNDELSER SOM STÖDS.\n"
-"DET HÄR ÄR DEN KONFIGURERADE ROM KATALOGEN:\n"
+"DET HÄR ÄR DEN KONFIGURERADE ROM-KATALOGEN:\n"
 
 msgid "CHANGE ROM DIRECTORY"
-msgstr "ÄNDRA ROM KATALOGEN"
+msgstr "ÄNDRA ROM-KATALOG"
 
 msgid "ENTER ROM DIRECTORY PATH"
-msgstr "ROM KATALOGENS SÖKVÄG"
+msgstr "ANGE ROM-KATALOGENS SÖKVÄG"
 
 msgid ""
 "ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
 msgstr ""
-"INSTÄLLNINGEN FÖR ROM KATALOGEN SPARADES, STARTA OM APPLIKATIONEN FÖR ATT "
-"SKANNA OM SYSTEMEN"
+"INSTÄLLNINGEN FÖR ROM-KATALOGEN SPARADES, STARTA OM APPLIKATIONEN FÖR ATT "
+"SÖKA IGENOM SYSTEMEN"
 
 msgid "Currently configured path:"
 msgstr "Nuvarande konfigurerad sökväg:"
@@ -2477,7 +2509,7 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "RENSA (LÄMNA TOMT FÖR STANDARDSÖKVÄG)"
 
 msgid "CREATE DIRECTORIES"
-msgstr "SKAPA KATALOGERNA"
+msgstr "SKAPA KATALOGER"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2504,7 +2536,7 @@ msgid ""
 "\n"
 "SEE THE LOG FILE FOR MORE DETAILS"
 msgstr ""
-"KUNDE INTE SKAPA SYSTEMKATALOGERNA, PROBLEM MED ÅTKOMST ELLER ÄR DISKEN "
+"KUNDE INTE SKAPA SYSTEMKATALOGERNA, PROBLEM MED BEHÖRIGHET ELLER ÄR DISKEN "
 "FULL?\n"
 "\n"
 "SE LOGGFILEN FÖR MER INFORMATION"
@@ -2517,8 +2549,8 @@ msgid ""
 msgstr ""
 "MINST ETT AV DINA SYSTEM HAR EN OGILTIG ALTERNATIV EMULATOR KONFIGURERAD SOM "
 "SAKNAR EN MATCHANDE POST I SYSTEM-KONFIGURATIONSFILEN, SE ÖVER DIN "
-"KONFIGURATION MED HJÄLP AV 'ALTERNATIVA EMULATORER' INTERFACET I 'ANDRA "
-"INSTÄLLNINGAR' MENYN"
+"KONFIGURATION MED HJÄLP AV 'ALTERNATIVA EMULATORER' I MENYN 'ANDRA "
+"INSTÄLLNINGAR'"
 
 msgid "UPDATE"
 msgstr "UPPDATERA"
@@ -2530,11 +2562,11 @@ msgid ""
 "ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
-"APPLIKATIONSUPPDATERAREN KOMMER LADDA NER DEN SENASTE PORTABLA WINDOWS "
+"APPLIKATIONSUPPDATERAREN KOMMER HÄMTA NER DEN SENASTE PORTABLA WINDOWS-"
 "VERSIONEN ÅT DIG, MEN DU MÅSTE MANUELLT GENOMFÖRA UPPGRADERINGEN. SE README."
-"TXT FILEN I DEN NEDLADDADE ZIP FILEN FÖR INSTRUKTIONER OM HUR DETTA GÅR "
+"TXT FILEN I DEN HÄMTADE ZIP-FILEN FÖR INSTRUKTIONER OM HUR DETTA GÅR "
 "TILLVÄGA. SOM ÄVEN BESKRIVS I DETTA DOKUMENT SÅ SKA DU ALDRIG PACKA UPP DEN "
-"NYA RELEASEN OVANPÅ DEN GAMLA DÅ DETTA KAN FÖRSTÖRA APPLIKATIONEN."
+"NYA UTGÅVAN OVANPÅ DEN GAMLA DÅ DETTA KAN FÖRSTÖRA APPLIKATIONEN."
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
@@ -2542,7 +2574,7 @@ msgid ""
 "DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
 "UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
 msgstr ""
-"APPLIKATIONSUPPDATERAREN KOMMER LADDA NER DEN SENASTE WINDOWS INSTALLER "
+"APPLIKATIONSUPPDATERAREN KOMMER HÄMTA NER DEN SENASTE WINDOWS INSTALLER-"
 "VERSIONEN ÅT DIG, MEN DU MÅSTE GENOMFÖRA UPPGRADERINGEN MANUELLT. NÄR DU GÖR "
 "DETTA SÅ SÄKERSTÄLL ATT DU SVARAR JA PÅ FRÅGAN OM DU VILL AVINSTALLERA DEN "
 "GAMLA VERSIONEN, ANNARS KAN DU FÅ EN TRASIG INSTALLATION."
@@ -2551,8 +2583,8 @@ msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
 "WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
 msgstr ""
-"APPLIKATIONSUPPDATERAREN KOMMER LADDA NER DEN SENASTE VERSIONEN ÅT DIG, MEN "
-"DU MÅSTE INSTALLERA DMG FILEN MANUELLT FÖR ATT GENOMFÖRA UPPGRADERINGEN."
+"APPLIKATIONSUPPDATERAREN KOMMER HÄMTA NER DEN SENASTE VERSIONEN ÅT DIG, MEN "
+"DU MÅSTE INSTALLERA DMG-FILEN MANUELLT FÖR ATT GENOMFÖRA UPPGRADERINGEN."
 
 #, c-format
 msgid "LAUNCHING GAME '%s'"
@@ -2603,7 +2635,7 @@ msgid "Y-M-D"
 msgstr "Å-M-D"
 
 msgid "modify"
-msgstr "modifiera"
+msgstr "ändra"
 
 #, c-format
 msgid "%i (OF %i)"
@@ -2637,7 +2669,7 @@ msgid "select none"
 msgstr "välj inga"
 
 msgid "add half star"
-msgstr "addera halv stjärna"
+msgstr "lägg till halv stjärna"
 
 msgid "toggle"
 msgstr "växla"
@@ -2652,19 +2684,19 @@ msgid "WELCOME"
 msgstr "VÄLKOMMEN"
 
 msgid "CONFIGURE INPUT DEVICE"
-msgstr "KONFIGURERA INPUTENHET"
+msgstr "KONFIGURERA INMATNINGSENHET"
 
 #, c-format
 msgid "%i GAMEPAD DETECTED"
 msgid_plural "%i GAMEPADS DETECTED"
-msgstr[0] "%i HANDKONTROLL DETEKTERAD"
-msgstr[1] "%i HANDKONTROLLER DETEKTERADE"
+msgstr[0] "%i HANDKONTROLL IDENTIFIERAD"
+msgstr[1] "%i HANDKONTROLLER IDENTIFIERADE"
 
 msgid "NO GAMEPADS DETECTED"
-msgstr "INGA HANDKONTROLLER DETEKTERADE"
+msgstr "INGA HANDKONTROLLER IDENTIFIERADES"
 
 msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
-msgstr "(ACCEPTERAR ENBART INPUT FRÅN DEN FÖRSTA HANDKONTROLLEN)"
+msgstr "(ACCEPTERAR ENBART INMATNING FRÅN FÖRSTA HANDKONTROLLEN)"
 
 msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
 msgstr "HÅLL INNE EN KNAPP PÅ DIN ENHET FÖR ATT KONFIGURERA DEN"
@@ -2699,16 +2731,16 @@ msgid "ok"
 msgstr "ok"
 
 msgid "D-PAD UP"
-msgstr "D-PAD UPP"
+msgstr "RIKTNINGSKNAPP UPP"
 
 msgid "D-PAD DOWN"
-msgstr "D-PAD NER"
+msgstr "RIKTNINGSKNAPP NER"
 
 msgid "D-PAD LEFT"
-msgstr "D-PAD VÄNSTER"
+msgstr "RIKTNINGSKNAPP VÄNSTER"
 
 msgid "D-PAD RIGHT"
-msgstr "D-PAD HÖGER"
+msgstr "RIKTNINGSKNAPP HÖGER"
 
 msgid "MINUS"
 msgstr "MINUS"
@@ -2744,10 +2776,10 @@ msgid "RIGHT SHOULDER"
 msgstr "HÖGER AXELKNAPP"
 
 msgid "LEFT TRIGGER"
-msgstr "VÄNSTER TRIGGER"
+msgstr "VÄNSTER AVTRYCKARE"
 
 msgid "RIGHT TRIGGER"
-msgstr "HÖGER TRIGGER"
+msgstr "HÖGER AVTRYCKARE"
 
 msgid "LEFT THUMBSTICK UP"
 msgstr "VÄNSTER STYRSPAK UPP"
@@ -2807,28 +2839,28 @@ msgid "space"
 msgstr "blanksteg"
 
 msgid "LOAD DEFAULT"
-msgstr "LADDA STANDARDVÄRDEN"
+msgstr "LÄS IN STANDARDVÄRDEN"
 
 msgid "DISCARD CHANGES"
-msgstr "KASSERA ÄNDRINGARNA"
+msgstr "FÖRKASTA ÄNDRINGAR"
 
 msgid "discard changes"
-msgstr "kassera ändringarna"
+msgstr "förkasta ändringar"
 
 msgid "You have exceeded your daily scrape quota"
-msgstr "Du har överskridit din dagliga scraping kvot"
+msgstr "Du har överskridit din dagliga scraping-kvot"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
-msgstr "Servern returnerade HTTP felkod %s"
+msgstr "Servern returnerade HTTP-felkoden %s"
 
 #, c-format
 msgid "ADDED INPUT DEVICE '%s'"
-msgstr "LADE TILL INPUT ENHET '%s'"
+msgstr "LADE TILL INMATNINGSENHETEN '%s'"
 
 #, c-format
 msgid "REMOVED INPUT DEVICE '%s'"
-msgstr "TOG BORT INPUT ENHET '%s'"
+msgstr "TOG BORT INMATNINGSENHETEN '%s'"
 
 msgid "medium"
 msgstr "medium"
@@ -2863,6 +2895,9 @@ msgstr "4:3 vertikal"
 msgid "5:4 vertical"
 msgstr "5:4 vertikal"
 
+msgid "8:7 vertical"
+msgstr "8:7 vertikal"
+
 msgid "19.5:9 vertical"
 msgstr "19.5:9 vertikal"
 
@@ -2879,10 +2914,10 @@ msgid "Searching for games..."
 msgstr "Söker efter spel..."
 
 msgid "Loading systems..."
-msgstr "Laddar system..."
+msgstr "Läser in system..."
 
 msgid "Reloading..."
-msgstr "Laddar om..."
+msgstr "Läser om..."
 
 msgid "Copying resources..."
 msgstr "Kopierar resurser..."
@@ -2891,4 +2926,4 @@ msgid "Creating system directories..."
 msgstr "Skapar systemkataloger..."
 
 msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr "FEL: KUNDE INTE RENDERA PDF FIL"
+msgstr "FEL: KUNDE INTE RENDERA PDF-FIL"

@@ -10,10 +10,11 @@
 #define ES_APP_GUIS_GUI_INFO_POPUP_H
 
 #include "GuiComponent.h"
+#include "components/BackgroundComponent.h"
 #include "renderers/Renderer.h"
 
 class ComponentGrid;
-class NinePatchComponent;
+class BackgroundComponent;
 
 class GuiInfoPopup : public GuiComponent
 {
@@ -30,7 +31,7 @@ private:
 
     Renderer* mRenderer;
     ComponentGrid* mGrid;
-    NinePatchComponent* mFrame;
+    BackgroundComponent* mBackground;
 
     std::string mMessage;
     int mDuration;

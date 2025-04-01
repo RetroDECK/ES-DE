@@ -33,6 +33,7 @@
 #include "guis/GuiOrphanedDataCleanup.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
+#include "guis/GuiSystemStatusOptions.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "guis/GuiThemeDownloader.h"
@@ -42,6 +43,10 @@
 #if defined(__ANDROID__)
 #include "InputOverlay.h"
 #include "utils/PlatformUtilAndroid.h"
+#endif
+
+#if defined(__IOS__)
+#include "InputOverlay.h"
 #endif
 
 #include <SDL2/SDL_events.h>
@@ -147,8 +152,7 @@ void GuiMenu::openUIOptions()
     std::map<std::string, ThemeData::Theme, ThemeData::StringComparator>::const_iterator
         selectedTheme;
 
-    auto theme =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("THEME"), false);
+    auto theme = std::make_shared<OptionListComponent<std::string>>(_("THEME"), false);
 
     ComponentListRow themeDownloaderInputRow;
     themeDownloaderInputRow.elements.clear();
@@ -213,20 +217,22 @@ void GuiMenu::openUIOptions()
                 s->setNeedsReloading();
                 s->setNeedsGoToStart();
                 s->setNeedsCollectionsUpdate();
+                s->setNeedsClearHelpPromptsImageCache();
                 s->setInvalidateCachedBackground();
             }
         });
     }
 
     // Theme variants.
-    auto themeVariant = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("THEME VARIANT"), false);
+    auto themeVariant =
+        std::make_shared<OptionListComponent<std::string>>(_("THEME VARIANT"), false);
     s->addWithLabel(_("THEME VARIANT"), themeVariant);
     s->addSaveFunc([themeVariant, s] {
         if (themeVariant->getSelected() != Settings::getInstance()->getString("ThemeVariant")) {
             Settings::getInstance()->setString("ThemeVariant", themeVariant->getSelected());
             s->setNeedsSaving();
             s->setNeedsReloading();
+            s->setNeedsClearHelpPromptsImageCache();
             s->setInvalidateCachedBackground();
         }
     });
@@ -278,8 +284,8 @@ void GuiMenu::openUIOptions()
                       Settings::getInstance()->getString("ThemeVariant"));
 
     // Theme color schemes.
-    auto themeColorScheme = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("THEME COLOR SCHEME"), false);
+    auto themeColorScheme =
+        std::make_shared<OptionListComponent<std::string>>(_("THEME COLOR SCHEME"), false);
     s->addWithLabel(_("THEME COLOR SCHEME"), themeColorScheme);
     s->addSaveFunc([themeColorScheme, s] {
         if (themeColorScheme->getSelected() !=
@@ -287,6 +293,7 @@ void GuiMenu::openUIOptions()
             Settings::getInstance()->setString("ThemeColorScheme", themeColorScheme->getSelected());
             s->setNeedsSaving();
             s->setNeedsReloading();
+            s->setNeedsClearHelpPromptsImageCache();
             s->setInvalidateCachedBackground();
         }
     });
@@ -331,14 +338,15 @@ void GuiMenu::openUIOptions()
                           Settings::getInstance()->getString("ThemeColorScheme"));
 
     // Theme font sizes.
-    auto themeFontSize = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("THEME FONT SIZE"), false);
+    auto themeFontSize =
+        std::make_shared<OptionListComponent<std::string>>(_("THEME FONT SIZE"), false);
     s->addWithLabel(_("THEME FONT SIZE"), themeFontSize);
     s->addSaveFunc([themeFontSize, s] {
         if (themeFontSize->getSelected() != Settings::getInstance()->getString("ThemeFontSize")) {
             Settings::getInstance()->setString("ThemeFontSize", themeFontSize->getSelected());
             s->setNeedsSaving();
             s->setNeedsReloading();
+            s->setNeedsClearHelpPromptsImageCache();
             s->setInvalidateCachedBackground();
         }
     });
@@ -373,8 +381,8 @@ void GuiMenu::openUIOptions()
                       Settings::getInstance()->getString("ThemeFontSize"));
 
     // Theme aspect ratios.
-    auto themeAspectRatio = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("THEME ASPECT RATIO"), false);
+    auto themeAspectRatio =
+        std::make_shared<OptionListComponent<std::string>>(_("THEME ASPECT RATIO"), false);
     s->addWithLabel(_("THEME ASPECT RATIO"), themeAspectRatio);
     s->addSaveFunc([themeAspectRatio, s] {
         if (themeAspectRatio->getSelected() !=
@@ -382,6 +390,7 @@ void GuiMenu::openUIOptions()
             Settings::getInstance()->setString("ThemeAspectRatio", themeAspectRatio->getSelected());
             s->setNeedsSaving();
             s->setNeedsReloading();
+            s->setNeedsClearHelpPromptsImageCache();
             s->setInvalidateCachedBackground();
         }
     });
@@ -417,8 +426,8 @@ void GuiMenu::openUIOptions()
                           Settings::getInstance()->getString("ThemeAspectRatio"));
 
     // Theme transitions.
-    auto themeTransitions = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("THEME TRANSITIONS"), false);
+    auto themeTransitions =
+        std::make_shared<OptionListComponent<std::string>>(_("THEME TRANSITIONS"), false);
     std::string selectedThemeTransitions {Settings::getInstance()->getString("ThemeTransitions")};
     themeTransitions->add(_("AUTOMATIC"), "automatic", selectedThemeTransitions == "automatic");
     // If there are no objects returned, then there must be a manually modified entry in the
@@ -532,14 +541,15 @@ void GuiMenu::openUIOptions()
                          Settings::getInstance()->getString("ThemeTransitions"));
 
     // Theme language.
-    auto themeLanguage = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("THEME LANGUAGE"), false);
+    auto themeLanguage =
+        std::make_shared<OptionListComponent<std::string>>(_("THEME LANGUAGE"), false);
     s->addWithLabel(_("THEME LANGUAGE"), themeLanguage);
     s->addSaveFunc([themeLanguage, s] {
         if (themeLanguage->getSelected() != Settings::getInstance()->getString("ThemeLanguage")) {
             Settings::getInstance()->setString("ThemeLanguage", themeLanguage->getSelected());
             s->setNeedsSaving();
             s->setNeedsReloading();
+            s->setNeedsClearHelpPromptsImageCache();
             s->setInvalidateCachedBackground();
         }
     });
@@ -575,8 +585,8 @@ void GuiMenu::openUIOptions()
                       Settings::getInstance()->getString("ThemeLanguage"));
 
     // Application language.
-    auto applicationLanguage = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("APPLICATION LANGUAGE"), false);
+    auto applicationLanguage =
+        std::make_shared<OptionListComponent<std::string>>(_("APPLICATION LANGUAGE"), false);
     std::string selectedApplicationLanguage {
         Settings::getInstance()->getString("ApplicationLanguage")};
     applicationLanguage->add(_("AUTOMATIC"), "automatic",
@@ -599,6 +609,7 @@ void GuiMenu::openUIOptions()
     applicationLanguage->add("日本語", "ja_JP", selectedApplicationLanguage == "ja_JP");
     applicationLanguage->add("한국어", "ko_KR", selectedApplicationLanguage == "ko_KR");
     applicationLanguage->add("简体中文", "zh_CN", selectedApplicationLanguage == "zh_CN");
+    applicationLanguage->add("繁體中文", "zh_TW", selectedApplicationLanguage == "zh_TW");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the application langauge to "automatic" in this case.
     if (applicationLanguage->getSelectedObjects().size() == 0)
@@ -616,12 +627,13 @@ void GuiMenu::openUIOptions()
             s->setNeedsRescanROMDirectory();
             s->setNeedsReloading();
             s->setNeedsCollectionsUpdate();
+            s->setNeedsClearHelpPromptsImageCache();
         }
     });
 
     // Quick system select (navigate between systems in the gamelist view).
-    auto quickSystemSelect = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("QUICK SYSTEM SELECT"), false);
+    auto quickSystemSelect =
+        std::make_shared<OptionListComponent<std::string>>(_("QUICK SYSTEM SELECT"), false);
     std::string selectedQuickSelect {Settings::getInstance()->getString("QuickSystemSelect")};
     quickSystemSelect->add(_("LEFT/RIGHT OR SHOULDERS"), "leftrightshoulders",
                            selectedQuickSelect == "leftrightshoulders");
@@ -646,8 +658,8 @@ void GuiMenu::openUIOptions()
     });
 
     // Optionally start in selected system/gamelist.
-    auto startupSystem = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("GAMELIST ON STARTUP"), false);
+    auto startupSystem =
+        std::make_shared<OptionListComponent<std::string>>(_("GAMELIST ON STARTUP"), false);
     startupSystem->add(_("NONE"), "", Settings::getInstance()->getString("StartupSystem") == "");
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
@@ -675,8 +687,8 @@ void GuiMenu::openUIOptions()
     });
 
     // Systems sorting.
-    auto systemsSorting = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("SYSTEMS SORTING"), false);
+    auto systemsSorting =
+        std::make_shared<OptionListComponent<std::string>>(_("SYSTEMS SORTING"), false);
     std::string selectedSystemsSorting {Settings::getInstance()->getString("SystemsSorting")};
     systemsSorting->add(_("FULL NAMES OR CUSTOM"), "default", selectedSystemsSorting == "default");
     systemsSorting->add(_("RELEASE YEAR"), "year", selectedSystemsSorting == "year");
@@ -706,7 +718,7 @@ void GuiMenu::openUIOptions()
     // Default gamelist sort order.
     std::string sortOrder;
     auto defaultSortOrder = std::make_shared<OptionListComponent<const FileData::SortType*>>(
-        getHelpStyle(), _p("short", "GAMES DEFAULT SORT ORDER"), false);
+        _p("short", "GAMES DEFAULT SORT ORDER"), false);
     // Exclude the System sort options.
     unsigned int numSortTypes {static_cast<unsigned int>(FileSorts::SortTypes.size() - 2)};
     for (unsigned int i {0}; i < numSortTypes; ++i) {
@@ -744,8 +756,8 @@ void GuiMenu::openUIOptions()
     });
 
     // Menu color scheme.
-    auto menuColorScheme = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("MENU COLOR SCHEME"), false);
+    auto menuColorScheme =
+        std::make_shared<OptionListComponent<std::string>>(_("MENU COLOR SCHEME"), false);
     const std::string selectedMenuColor {Settings::getInstance()->getString("MenuColorScheme")};
     menuColorScheme->add(_("DARK"), "dark", selectedMenuColor == "dark");
     menuColorScheme->add(_("DARK AND RED"), "darkred", selectedMenuColor == "darkred");
@@ -769,8 +781,8 @@ void GuiMenu::openUIOptions()
     });
 
     // Open menu effect.
-    auto menuOpeningEffect = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("MENU OPENING ANIMATION"), false);
+    auto menuOpeningEffect =
+        std::make_shared<OptionListComponent<std::string>>(_("MENU OPENING ANIMATION"), false);
     std::string selectedMenuEffect {Settings::getInstance()->getString("MenuOpeningEffect")};
     menuOpeningEffect->add(_("SCALE-UP"), "scale-up", selectedMenuEffect == "scale-up");
     menuOpeningEffect->add(_("NONE"), "none", selectedMenuEffect == "none");
@@ -789,12 +801,13 @@ void GuiMenu::openUIOptions()
     });
 
     // Launch screen duration.
-    auto launchScreenDuration = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("LAUNCH SCREEN DURATION"), false);
+    auto launchScreenDuration =
+        std::make_shared<OptionListComponent<std::string>>(_("LAUNCH SCREEN DURATION"), false);
     std::string selectedDuration {Settings::getInstance()->getString("LaunchScreenDuration")};
     launchScreenDuration->add(_("NORMAL"), "normal", selectedDuration == "normal");
     launchScreenDuration->add(_("BRIEF"), "brief", selectedDuration == "brief");
     launchScreenDuration->add(_("LONG"), "long", selectedDuration == "long");
+    launchScreenDuration->add(_("POPUP"), "popup", selectedDuration == "popup");
     launchScreenDuration->add(_("DISABLED"), "disabled", selectedDuration == "disabled");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the duration to "normal" in this case.
@@ -811,8 +824,7 @@ void GuiMenu::openUIOptions()
     });
 
     // UI mode.
-    auto uiMode =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("UI MODE"), false);
+    auto uiMode = std::make_shared<OptionListComponent<std::string>>(_("UI MODE"), false);
     std::string setMode;
     if (Settings::getInstance()->getBool("ForceKiosk"))
         setMode = "kiosk";
@@ -857,7 +869,7 @@ void GuiMenu::openUIOptions()
                     UIModeController::getInstance()->getFormattedPassKeyStr().c_str());
             }
             mWindow->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), msg, _("YES"),
+                msg, _("YES"),
                 [this, selectedMode] {
                     LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '"
                                   << selectedMode << "'.";
@@ -905,8 +917,8 @@ void GuiMenu::openUIOptions()
     });
 
     // Random entry button.
-    auto randomEntryButton = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("RANDOM ENTRY BUTTON"), false);
+    auto randomEntryButton =
+        std::make_shared<OptionListComponent<std::string>>(_("RANDOM ENTRY BUTTON"), false);
     const std::string selectedRandomEntryButton {
         Settings::getInstance()->getString("RandomEntryButton")};
     randomEntryButton->add(_("GAMES ONLY"), "games", selectedRandomEntryButton == "games");
@@ -926,6 +938,19 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
         }
     });
+
+#if !defined(__FreeBSD__) && !defined(__HAIKU__)
+    // System status.
+    ComponentListRow systemStatusRow;
+    systemStatusRow.elements.clear();
+    systemStatusRow.addElement(std::make_shared<TextComponent>(_("SYSTEM STATUS SETTINGS"),
+                                                               Font::get(FONT_SIZE_MEDIUM),
+                                                               mMenuColorPrimary),
+                               true);
+    systemStatusRow.addElement(mMenu.makeArrow(), false);
+    systemStatusRow.makeAcceptInputHandler(std::bind(&GuiMenu::openSystemStatusOptions, this));
+    s->addRow(systemStatusRow);
+#endif
 
     // Media viewer.
     ComponentListRow mediaViewerRow;
@@ -961,6 +986,17 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
             s->setNeedsReloading();
             s->setInvalidateCachedBackground();
+        }
+    });
+
+    // Display clock.
+    auto displayClock = std::make_shared<SwitchComponent>();
+    displayClock->setState(Settings::getInstance()->getBool("DisplayClock"));
+    s->addWithLabel(_("DISPLAY CLOCK"), displayClock);
+    s->addSaveFunc([displayClock, s] {
+        if (displayClock->getState() != Settings::getInstance()->getBool("DisplayClock")) {
+            Settings::getInstance()->setBool("DisplayClock", displayClock->getState());
+            s->setNeedsSaving();
         }
     });
 
@@ -1198,8 +1234,7 @@ void GuiMenu::openSoundOptions()
 
 #if defined(__ANDROID__)
     // Audio driver.
-    auto audioDriver = std::make_shared<OptionListComponent<std::string>>(getHelpStyle(),
-                                                                          _("AUDIO DRIVER"), false);
+    auto audioDriver = std::make_shared<OptionListComponent<std::string>>(_("AUDIO DRIVER"), false);
     std::string selectedDriver {Settings::getInstance()->getString("AudioDriver")};
     audioDriver->add("OPENSL ES", "openslES", selectedDriver == "openslES");
     audioDriver->add("AAUDIO", "AAudio", selectedDriver == "AAudio");
@@ -1327,8 +1362,8 @@ void GuiMenu::openInputDeviceOptions()
     auto s = new GuiSettings(_("INPUT DEVICE SETTINGS"));
 
     // Controller type.
-    auto inputControllerType = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("CONTROLLER TYPE"), false);
+    auto inputControllerType =
+        std::make_shared<OptionListComponent<std::string>>(_("CONTROLLER TYPE"), false);
     std::string selectedPlayer {Settings::getInstance()->getString("InputControllerType")};
     inputControllerType->add("XBOX", "xbox", selectedPlayer == "xbox");
     inputControllerType->add("XBOX 360", "xbox360", selectedPlayer == "xbox360");
@@ -1348,13 +1383,14 @@ void GuiMenu::openInputDeviceOptions()
             Settings::getInstance()->setString("InputControllerType",
                                                inputControllerType->getSelected());
             s->setNeedsSaving();
+            s->setNeedsClearHelpPromptsImageCache();
         }
     });
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     // Touch overlay size.
-    auto touchOverlaySize = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("TOUCH OVERLAY SIZE"), false);
+    auto touchOverlaySize =
+        std::make_shared<OptionListComponent<std::string>>(_("TOUCH OVERLAY SIZE"), false);
     std::string selectedOverlaySize {Settings::getInstance()->getString("InputTouchOverlaySize")};
     touchOverlaySize->add(_("MEDIUM"), "medium", selectedOverlaySize == "medium");
     touchOverlaySize->add(_("LARGE"), "large", selectedOverlaySize == "large");
@@ -1376,8 +1412,8 @@ void GuiMenu::openInputDeviceOptions()
     });
 
     // Touch overlay opacity.
-    auto touchOverlayOpacity = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("TOUCH OVERLAY OPACITY"), false);
+    auto touchOverlayOpacity =
+        std::make_shared<OptionListComponent<std::string>>(_("TOUCH OVERLAY OPACITY"), false);
     std::string selectedOverlayOpacity {
         Settings::getInstance()->getString("InputTouchOverlayOpacity")};
     touchOverlayOpacity->add(_("NORMAL"), "normal", selectedOverlayOpacity == "normal");
@@ -1460,12 +1496,11 @@ void GuiMenu::openInputDeviceOptions()
                   "CONFIGURATOR TO RUN ON NEXT STARTUP")};
 
             Window* window {mWindow};
-            window->pushGui(
-                new GuiMsgBox(getHelpStyle(), message, _("OK"), nullptr, "", nullptr, "", nullptr,
-                              nullptr, true, true,
-                              (mRenderer->getIsVerticalOrientation() ?
-                                   0.84f :
-                                   0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
+            window->pushGui(new GuiMsgBox(
+                message, _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                (mRenderer->getIsVerticalOrientation() ?
+                     0.84f :
+                     0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
         }
 
         if (touchOverlaySize->getEnabled()) {
@@ -1580,7 +1615,7 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
 
     Window* window {mWindow};
     window->pushGui(new GuiMsgBox(
-        getHelpStyle(), message, _("PROCEED"),
+        message, _("PROCEED"),
         [window] { window->pushGui(new GuiDetectDevice(false, false, nullptr)); }, _("CANCEL"),
         nullptr, "", nullptr, nullptr, false, true,
         (mRenderer->getIsVerticalOrientation() ?
@@ -1604,6 +1639,7 @@ void GuiMenu::openOtherOptions()
         std::bind([this] { mWindow->pushGui(new GuiAlternativeEmulators); }));
     s->addRow(alternativeEmulatorsRow);
 
+#if !defined(__IOS__)
     // Game media directory.
     ComponentListRow rowMediaDir;
     auto mediaDirectory = std::make_shared<TextComponent>(
@@ -1632,19 +1668,20 @@ void GuiMenu::openOtherOptions()
                                         multiLineMediaDir] {
         if (Settings::getInstance()->getBool("VirtualKeyboard")) {
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                getHelpStyle(), s->getMenu().getPosition().y, titleMediaDir,
+                s->getMenu().getPosition().y, titleMediaDir,
                 Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
                 multiLineMediaDir, _("SAVE"), _("SAVE CHANGES?"), mediaDirectoryStaticText,
                 defaultDirectoryText, _("load default directory")));
         }
         else {
             mWindow->pushGui(new GuiTextEditPopup(
-                getHelpStyle(), titleMediaDir, Settings::getInstance()->getString("MediaDirectory"),
+                titleMediaDir, Settings::getInstance()->getString("MediaDirectory"),
                 updateValMediaDir, multiLineMediaDir, _("SAVE"), _("SAVE CHANGES?"),
                 mediaDirectoryStaticText, defaultDirectoryText, _("load default directory")));
         }
     });
     s->addRow(rowMediaDir);
+#endif
 
     // Maximum VRAM.
     auto maxVram = std::make_shared<SliderComponent>(128.0f, 2048.0f, 16.0f, "MiB");
@@ -1660,8 +1697,8 @@ void GuiMenu::openOtherOptions()
 
 #if !defined(USE_OPENGLES)
     // Anti-aliasing (MSAA).
-    auto antiAliasing = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("ANTI-ALIASING (MSAA)"), false);
+    auto antiAliasing =
+        std::make_shared<OptionListComponent<std::string>>(_("ANTI-ALIASING (MSAA)"), false);
     const std::string& selectedAntiAliasing {
         std::to_string(Settings::getInstance()->getInt("AntiAliasing"))};
     antiAliasing->add(_("DISABLED"), "0", selectedAntiAliasing == "0");
@@ -1682,9 +1719,10 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
+#if !defined(__IOS__)
     // Display/monitor.
-    auto displayIndex = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("DISPLAY/MONITOR INDEX"), false);
+    auto displayIndex =
+        std::make_shared<OptionListComponent<std::string>>(_("DISPLAY/MONITOR INDEX"), false);
     std::vector<std::string> displayIndexEntry;
     displayIndexEntry.push_back("1");
     displayIndexEntry.push_back("2");
@@ -1702,10 +1740,11 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
+#endif
 
     // Screen contents rotation.
-    auto screenRotate = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("ROTATE SCREEN"), false);
+    auto screenRotate =
+        std::make_shared<OptionListComponent<std::string>>(_("ROTATE SCREEN"), false);
     const std::string& selectedScreenRotate {
         std::to_string(Settings::getInstance()->getInt("ScreenRotate"))};
     screenRotate->add(_("DISABLED"), "0", selectedScreenRotate == "0");
@@ -1727,8 +1766,8 @@ void GuiMenu::openOtherOptions()
     });
 
     // Keyboard quit shortcut.
-    auto keyboardQuitShortcut = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("KEYBOARD QUIT SHORTCUT"), false);
+    auto keyboardQuitShortcut =
+        std::make_shared<OptionListComponent<std::string>>(_("KEYBOARD QUIT SHORTCUT"), false);
     std::string selectedShortcut {Settings::getInstance()->getString("KeyboardQuitShortcut")};
 #if defined(_WIN64) || defined(__unix__) || defined(__HAIKU__)
     keyboardQuitShortcut->add("ALT + F4", "AltF4", selectedShortcut == "AltF4");
@@ -1757,7 +1796,7 @@ void GuiMenu::openOtherOptions()
 
     // When to save game metadata.
     auto saveGamelistsMode = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _p("short", "WHEN TO SAVE GAME METADATA"), false);
+        _p("short", "WHEN TO SAVE GAME METADATA"), false);
     saveGamelistsMode->add(_("ALWAYS"), "always",
                            Settings::getInstance()->getString("SaveGamelistsMode") == "always");
     saveGamelistsMode->add(_("ON EXIT"), "on exit",
@@ -1787,8 +1826,8 @@ void GuiMenu::openOtherOptions()
 
 #if defined(APPLICATION_UPDATER)
     // Application updater frequency.
-    auto applicationUpdaterFrequency = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("APPLICATION UPDATES"), false);
+    auto applicationUpdaterFrequency =
+        std::make_shared<OptionListComponent<std::string>>(_("APPLICATION UPDATES"), false);
     const std::string& selectedUpdaterFrequency {
         Settings::getInstance()->getString("ApplicationUpdaterFrequency")};
     applicationUpdaterFrequency->add(_("ALWAYS"), "always", selectedUpdaterFrequency == "always");
@@ -1937,6 +1976,7 @@ void GuiMenu::openOtherOptions()
         }
     });
 
+#if !defined(__IOS__)
     // Custom event scripts, fired using Scripting::fireEvent().
     auto customEventScripts = std::make_shared<SwitchComponent>();
     customEventScripts->setState(Settings::getInstance()->getBool("CustomEventScripts"));
@@ -1948,6 +1988,30 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
+
+    // Custom event scripts when browsing games and systems, fired using Scripting::fireEvent().
+    auto customEventScriptsBrowsing = std::make_shared<SwitchComponent>();
+    customEventScriptsBrowsing->setState(
+        Settings::getInstance()->getBool("CustomEventScriptsBrowsing"));
+    s->addWithLabel(_("BROWSING CUSTOM EVENTS"), customEventScriptsBrowsing);
+    s->addSaveFunc([customEventScriptsBrowsing, s] {
+        if (customEventScriptsBrowsing->getState() !=
+            Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
+            Settings::getInstance()->setBool("CustomEventScriptsBrowsing",
+                                             customEventScriptsBrowsing->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // If custom event scripts are disabled, then gray out this option.
+    if (!Settings::getInstance()->getBool("CustomEventScripts")) {
+        customEventScriptsBrowsing->setEnabled(false);
+        customEventScriptsBrowsing->setOpacity(DISABLED_OPACITY);
+        customEventScriptsBrowsing->getParent()
+            ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+#endif
 
     // Only show games included in the gamelist.xml files.
     auto parseGamelistOnly = std::make_shared<SwitchComponent>();
@@ -2115,6 +2179,27 @@ void GuiMenu::openOtherOptions()
     applicationUpdaterFrequency->setCallback(applicationUpdaterFrequencyFunc);
 #endif
 
+#if !defined(__IOS__)
+    auto browsingEventsToggleFunc = [customEventScriptsBrowsing]() {
+        if (customEventScriptsBrowsing->getEnabled()) {
+            customEventScriptsBrowsing->setEnabled(false);
+            customEventScriptsBrowsing->setOpacity(DISABLED_OPACITY);
+            customEventScriptsBrowsing->getParent()
+                ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            customEventScriptsBrowsing->setEnabled(true);
+            customEventScriptsBrowsing->setOpacity(1.0f);
+            customEventScriptsBrowsing->getParent()
+                ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+    };
+
+    customEventScripts->setCallback(browsingEventsToggleFunc);
+#endif
+
     s->setSize(mSize);
     mWindow->pushGui(s);
 }
@@ -2122,8 +2207,6 @@ void GuiMenu::openOtherOptions()
 void GuiMenu::openUtilities()
 {
     auto s = new GuiSettings(_("UTILITIES"));
-
-    HelpStyle style {getHelpStyle()};
 
     ComponentListRow row;
     row.addElement(std::make_shared<TextComponent>(_("ORPHANED DATA CLEANUP"),
@@ -2146,7 +2229,6 @@ void GuiMenu::openUtilities()
 
     row.makeAcceptInputHandler([this] {
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(),
             _("THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT WILL "
               "ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT WILL NOT DELETE "
               "OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP TIMES IT'S RECOMMENDED "
@@ -2155,8 +2237,7 @@ void GuiMenu::openUtilities()
             [this] {
                 if (!SystemData::createSystemDirectories()) {
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(), _("THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"),
-                        _("OK"),
+                        _("THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"), _("OK"),
                         [this] {
                             if (CollectionSystemsManager::getInstance()->isEditing())
                                 CollectionSystemsManager::getInstance()->exitEditMode();
@@ -2174,7 +2255,6 @@ void GuiMenu::openUtilities()
                 }
                 else {
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(),
                         _("ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
                           "DISK FULL? SEE THE LOG FILE FOR MORE DETAILS"),
                         _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
@@ -2201,7 +2281,6 @@ void GuiMenu::openUtilities()
 
     row.makeAcceptInputHandler([this] {
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(),
             _("THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED GAMES AND "
               "SYSTEMS"),
             _("PROCEED"),
@@ -2306,7 +2385,7 @@ void GuiMenu::openQuitMenu()
     if (!Settings::getInstance()->getBool("ShowQuitMenu")) {
 #endif
         mWindow->pushGui(new GuiMsgBox(
-            this->getHelpStyle(), _("REALLY QUIT?"), _("YES"),
+            _("REALLY QUIT?"), _("YES"),
             [this] {
                 close(true);
                 Utils::Platform::quitES();
@@ -2317,13 +2396,12 @@ void GuiMenu::openQuitMenu()
         auto s = new GuiSettings(_("QUIT"));
 
         Window* window {mWindow};
-        HelpStyle style {getHelpStyle()};
 
         ComponentListRow row;
 
         row.makeAcceptInputHandler([window, this] {
             window->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), _("REALLY QUIT?"), _("YES"),
+                _("REALLY QUIT?"), _("YES"),
                 [this] {
                     close(true);
                     Utils::Platform::quitES();
@@ -2341,9 +2419,9 @@ void GuiMenu::openQuitMenu()
         s->addRow(row);
 
         row.elements.clear();
-        row.makeAcceptInputHandler([window, this] {
+        row.makeAcceptInputHandler([window] {
             window->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), _("REALLY REBOOT?"), _("YES"),
+                _("REALLY REBOOT?"), _("YES"),
                 [] {
                     if (Utils::Platform::quitES(Utils::Platform::QuitMode::REBOOT) != 0) {
                         LOG(LogWarning) << "Reboot terminated with non-zero result!";
@@ -2358,9 +2436,9 @@ void GuiMenu::openQuitMenu()
         s->addRow(row);
 
         row.elements.clear();
-        row.makeAcceptInputHandler([window, this] {
+        row.makeAcceptInputHandler([window] {
             window->pushGui(new GuiMsgBox(
-                this->getHelpStyle(), _("REALLY POWER OFF?"), _("YES"),
+                _("REALLY POWER OFF?"), _("YES"),
                 [] {
                     if (Utils::Platform::quitES(Utils::Platform::QuitMode::POWEROFF) != 0) {
                         LOG(LogWarning) << "Power off terminated with non-zero result!";
@@ -2437,11 +2515,17 @@ void GuiMenu::openThemeDownloader(GuiSettings* settings)
         }
         else {
             openUIOptions();
+            mWindow->clearHelpPromptsImageCache();
             mWindow->invalidateCachedBackground();
         }
     };
 
     mWindow->pushGui(new GuiThemeDownloader(updateFunc));
+}
+
+void GuiMenu::openSystemStatusOptions()
+{
+    mWindow->pushGui(new GuiSystemStatusOptions(_p("short", "SYSTEM STATUS SETTINGS")));
 }
 
 void GuiMenu::openMediaViewerOptions()

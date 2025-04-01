@@ -94,8 +94,24 @@
                 <textColor>${primaryColor}</textColor>
                 <iconColor>${primaryColor}</iconColor>
                 <fontPath>${primaryFont}</fontPath>
+                <entryRelativeScale>0.9</entryRelativeScale>
                 <letterCase>capitalize</letterCase>
             </helpsystem>
+            <systemstatus name="systemStatus">
+                <pos>0.985 0.014</pos>
+                <height>0.035</height>
+                <fontPath>${primaryFont}</fontPath>
+                <textRelativeScale>0.8</textRelativeScale>
+                <color>${primaryColor}</color>
+                <entrySpacing>0.005</entrySpacing>
+            </systemstatus>
+            <clock name="clock">
+                <pos>0.018 0.014</pos>
+                <fontPath>${primaryFont}</fontPath>
+                <fontSize>0.029</fontSize>
+                <color>${primaryColor}</color>
+                <format>%H:%M</format>
+            </clock>
         </view>
 
         <view name="system">
@@ -170,7 +186,7 @@
                 <zIndex>12</zIndex>
             </image>
             <text name="gameCounter">
-                <pos>0.986 0.025</pos>
+                <pos>0.98 0.32</pos>
                 <size>0.2 0.031</size>
                 <origin>1 0</origin>
                 <systemdata>gamecountGames</systemdata>
@@ -619,7 +635,7 @@
                 <itemMargin>0.005 0.005</itemMargin>
             </badges>
             <gamelistinfo name="gamelistInfo">
-                <pos>0.97 0.035</pos>
+                <pos>0.96 0.105</pos>
                 <size>0.25 0.031</size>
                 <origin>1 0</origin>
                 <fontPath>${primaryFont}</fontPath>
@@ -792,7 +808,7 @@
                 <visible>false</visible>
             </text>
             <gamelistinfo name="gamelistInfo">
-                <pos>0.986 0.025</pos>
+                <pos>0.97 0.08</pos>
                 <size>0.25 0.031</size>
                 <origin>1 0</origin>
                 <fontPath>${primaryFont}</fontPath>

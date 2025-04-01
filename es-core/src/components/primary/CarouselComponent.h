@@ -938,24 +938,24 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         }
 
         float itemHorizontalOffset {0.0f};
-        float itemVerticallOffset {0.0f};
+        float itemVerticalOffset {0.0f};
 
         if ((mSelectedItemOffset.x != 0.0f || mSelectedItemOffset.y != 0.0f) &&
             std::fabs(distance) < 1.0f) {
             itemHorizontalOffset = (1.0f - std::fabs(distance)) * mSelectedItemOffset.x;
-            itemVerticallOffset = (1.0f - std::fabs(distance)) * mSelectedItemOffset.y;
+            itemVerticalOffset = (1.0f - std::fabs(distance)) * mSelectedItemOffset.y;
         }
 
         glm::mat4 itemTrans {carouselTrans};
         if (singleEntry)
-            itemTrans = glm::translate(carouselTrans, glm::vec3 {xOff, yOff, 0.0f});
+            itemTrans = glm::translate(carouselTrans, glm::vec3 {xOff + itemHorizontalOffset,
+                                                                 yOff + itemVerticalOffset, 0.0f});
         else
             itemTrans = glm::translate(
                 itemTrans,
-                glm::vec3 {(i * itemSpacing.x) + xOff + itemHorizontalOffset +
-                               selectedItemMargins.x,
-                           (i * itemSpacing.y) + yOff + itemVerticallOffset + selectedItemMargins.y,
-                           0.0f});
+                glm::vec3 {
+                    (i * itemSpacing.x) + xOff + itemHorizontalOffset + selectedItemMargins.x,
+                    (i * itemSpacing.y) + yOff + itemVerticalOffset + selectedItemMargins.y, 0.0f});
 
         if (mType == CarouselType::HORIZONTAL_WHEEL)
             itemTrans = glm::rotate(itemTrans, glm::radians(-90.0f), glm::vec3 {0.0f, 0.0f, 1.0f});
@@ -1704,7 +1704,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("fastScrolling") && elem->get<bool>("fastScrolling"))
         List::mTierList = IList<CarouselEntry, T>::LIST_SCROLL_STYLE_MEDIUM;
 
-    // Ccale the font size with the itemScale property value.
+    // Scale the font size with the itemScale property value.
     mFont =
         Font::getFromTheme(elem, properties, mFont, 0.0f, (mItemScale >= 1.0f ? mItemScale : 1.0f));
 

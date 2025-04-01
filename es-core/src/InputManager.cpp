@@ -30,6 +30,10 @@
 #include "utils/PlatformUtilAndroid.h"
 #endif
 
+#if defined(__IOS__)
+#define TOUCH_GUID_STRING "-3"
+#endif
+
 namespace
 {
     int SDL_USER_CECBUTTONDOWN {-1};
@@ -38,7 +42,7 @@ namespace
 
 InputManager::InputManager() noexcept
     : mWindow {Window::getInstance()}
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     , mInputOverlay {InputOverlay::getInstance()}
 #endif
     , mKeyboardInputConfig {nullptr}
@@ -92,7 +96,7 @@ void InputManager::init()
         LOG(LogInfo) << "Added keyboard with default configuration";
     }
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     mTouchInputConfig = std::make_unique<InputConfig>(DEVICE_TOUCH, "Touch", TOUCH_GUID_STRING);
     loadTouchConfig();
 #endif
@@ -301,7 +305,7 @@ int InputManager::getNumConfiguredDevices()
     if (mKeyboardInputConfig->isConfigured())
         ++num;
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     if (mTouchInputConfig->isConfigured())
         ++num;
 #endif
@@ -335,7 +339,7 @@ std::string InputManager::getDeviceGUIDString(int deviceId)
 {
     if (deviceId == DEVICE_KEYBOARD)
         return KEYBOARD_GUID_STRING;
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     else if (deviceId == DEVICE_TOUCH)
         return TOUCH_GUID_STRING;
 #endif
@@ -358,7 +362,7 @@ InputConfig* InputManager::getInputConfigByDevice(int device)
 {
     if (device == DEVICE_KEYBOARD)
         return mKeyboardInputConfig.get();
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     else if (device == DEVICE_TOUCH)
         return mTouchInputConfig.get();
 #endif
@@ -542,7 +546,7 @@ bool InputManager::parseEvent(const SDL_Event& event)
                            Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 0, false));
             return true;
         }
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
         case SDL_FINGERDOWN: {
             if (!Settings::getInstance()->getBool("InputTouchOverlay"))
                 return false;
@@ -736,7 +740,7 @@ void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
 
 void InputManager::loadTouchConfig()
 {
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     InputConfig* cfg {mTouchInputConfig.get()};
 
     if (cfg->isConfigured())

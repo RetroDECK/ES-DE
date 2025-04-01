@@ -290,11 +290,10 @@ https://play.google.com/store/apps/details?id=com.github.stenzek.duckstation
 
 ### EKA2L1
 
-This emulator can be downloaded from their GitHub site.
+This emulator can be installed from the Play store or it can be downloaded from their GitHub site.
 
+https://play.google.com/store/apps/details?id=com.github.eka2l1 \
 https://github.com/EKA2L1/EKA2L1/releases
-
-There does not seem to be a way to launch individual EKA2L1 games from a frontend application on Android, instead ES-DE will simply launch the EKA2L1 user interface and you'll have to manually start your game from there.
 
 ### ePSXe
 
@@ -356,7 +355,7 @@ This PICO-8 game engine/emulator can be installed from the Play store.
 
 https://play.google.com/store/apps/details?id=me.dt2dev.infinity
 
-Note that this emulator has a strange behavior where it will return to the home app whenever you exit a game, so unless ES-DE is set as your home app you'll need to manually switch back to it after exiting Infinity.
+Note that since a recent emulator update it seems like individual games can no longer be launched from ES-DE, instead you'll just see the list of carts and you need to manually start the game from inside Infinity.
 
 ### IrataJaguar
 
@@ -520,7 +519,7 @@ https://play.google.com/store/apps/details?id=io.recompiled.redream
 
 ### ScummVM
 
-ScummVM can be installed from the Play store. There are also daily builds available on their GitHub site. Such a build may be required to be able to launch games from ES-DE until the Play store version has been updated.
+ScummVM can be installed from the Play store. There are also daily builds available on their GitHub site.
 
 https://play.google.com/store/apps/details?id=org.scummvm.scummvm\
 https://buildbot.scummvm.org/#/dailybuilds
@@ -585,6 +584,8 @@ This emulator can be installed from the Play store. Note that only the paid Pro 
 
 https://play.google.com/store/apps/details?id=org.devmiyax.yabasanshioro2.pro
 
+**Note:** At the time of writing this emulator is broken on some devices and will simply display the error message _Cannot initialize SH2_ on game launch. The issue was apparently introduced in a recent update and is awaiting a fix from the developer.
+
 ## Device compatibility
 
 This is clearly not a complete list of Android devices, but rather those we know have been tested with ES-DE and for which there is a known status.
@@ -630,8 +631,6 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Huawei       | Mate 20 Pro             | 10              | Yes       | None                |                            |
 | Huawei       | MatePad 11 (2021)       | 13              | Yes       | None                |                            |
 | Infinix      | Zero 30 5G              | 13              | Yes       | None                |                            |
-| Kinhank      | G1                      | 11              | No        | Unable to install   | Possibly 32-bit operating system? |
-| Kinhank      | Super Console X5 Pro    | 12 (TV)         | No        | None                | Custom 64-bit Android TV OS |
 | KTPocket     | KT-R1                   | GammaOS 12      | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2022)      | 12              | Yes       | None                |                            |
 | Lenovo       | Legion Y700 (2023)      | 13              | Yes       | None                |                            |

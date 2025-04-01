@@ -14,9 +14,17 @@
 #include <chrono>
 #endif
 
+#if defined(__IOS__)
+#include <SDL2/SDL_syswm.h>
+#endif
+
 RendererOpenGL::RendererOpenGL() noexcept
     : mShaderFBO1 {0}
     , mShaderFBO2 {0}
+    , mFramebuffer {0}
+#if defined(__IOS__)
+    , mColorbuffer {0}
+#endif
     , mVertexBuffer1 {0}
     , mVertexBuffer2 {0}
     , mSDLContext {nullptr}
@@ -112,7 +120,7 @@ GLenum RendererOpenGL::convertTextureType(const TextureType type)
 #else
         case TextureType::BGRA:  { return GL_BGRA;            } break;
 #endif
-#if defined(__EMSCRIPTEN__) || defined(__ANDROID__)
+#if defined(__EMSCRIPTEN__) || defined(__ANDROID__) || defined(__IOS__)
         case TextureType::RED:   { return GL_LUMINANCE;       } break;
 #else
         case TextureType::RED:   { return GL_RED;             } break;
@@ -251,6 +259,28 @@ bool RendererOpenGL::createContext()
 #endif
 #endif
 
+#if defined(__IOS__)
+    SDL_SysWMinfo info {};
+    SDL_VERSION(&info.version);
+
+    UIWindow* uiWindow {nullptr};
+    if (SDL_GetWindowWMInfo(getSDLWindow(), &info) && info.subsystem == SDL_SYSWM_UIKIT)
+        uiWindow = reinterpret_cast<UIWindow*>(info.info.uikit.window);
+
+    if (uiWindow) {
+        mFramebuffer = info.info.uikit.framebuffer;
+        mColorbuffer = info.info.uikit.colorbuffer;
+    }
+
+    GL_CHECK_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer));
+    GL_CHECK_ERROR(glBindRenderbuffer(GL_RENDERBUFFER, mColorbuffer));
+    GLenum status {glCheckFramebufferStatus(GL_FRAMEBUFFER)};
+
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
+        LOG(LogError) << "Couldn't setup framebuffer: " << status;
+    }
+#endif
+
     GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
     GL_CHECK_ERROR(glActiveTexture(GL_TEXTURE0));
     GL_CHECK_ERROR(glEnable(GL_BLEND));
@@ -306,7 +336,7 @@ bool RendererOpenGL::createContext()
     GL_CHECK_ERROR(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
                                           mPostProcTexture2, 0));
 
-    GL_CHECK_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+    GL_CHECK_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer));
 
     return true;
 }
@@ -379,7 +409,7 @@ void RendererOpenGL::setSwapInterval()
 
 void RendererOpenGL::swapBuffers()
 {
-#if defined(__APPLE__)
+#if defined(__APPLE__) && !defined(__IOS__)
     // On macOS when running in the background, the OpenGL driver apparently does not swap
     // the frames which leads to a very fast swap time. This makes ES-DE use a lot of CPU
     // resources which slows down the games significantly on slower machines. By introducing
@@ -444,8 +474,17 @@ unsigned int RendererOpenGL::createTexture(const unsigned int texUnit,
                                     GL_UNSIGNED_BYTE, data));
     }
     else {
+#if defined(__IOS__)
+        if (type == TextureType::RED)
+            GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0,
+                                        textureType, GL_UNSIGNED_BYTE, data));
+        else
+            GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, textureType,
+                                        GL_UNSIGNED_BYTE, data));
+#else
         GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
                                     GL_UNSIGNED_BYTE, data));
+#endif
     }
 #else
     GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, textureType,
@@ -756,7 +795,7 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
 
         for (int p {0}; p < shaderPasses; ++p) {
             if (!textureRGBA && i == shaderList.size() - 1 && p == shaderPasses - 1) {
-                GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
+                GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mFramebuffer));
                 if (offsetOrPadding)
                     setViewport(mViewport);
                 drawTriangleStrips(vertices, 4, BlendFactor::SRC_ALPHA,
@@ -818,10 +857,10 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
             GL_CHECK_ERROR(
                 glReadPixels(0, 0, height, width, GL_BGRA, GL_UNSIGNED_BYTE, textureRGBA));
 #endif
-        GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
+        GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mFramebuffer));
     }
 
-    GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
+    GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, mFramebuffer));
 
     if (offsetOrPadding)
         setViewport(mViewport);

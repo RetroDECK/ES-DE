@@ -21,6 +21,7 @@
     <language>ja_JP</language>
     <language>ko_KR</language>
     <language>zh_CN</language>
+    <language>zh_TW</language>
 
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>16:9_vertical</aspectRatio>
@@ -47,6 +48,7 @@
         <label language="ja_JP">ダーク</label>
         <label language="ko_KR">다크</label>
         <label language="zh_CN">暗黑</label>
+        <label language="zh_TW">暗黑</label>
     </colorScheme>
 
     <colorScheme name="light">
@@ -66,6 +68,7 @@
         <label language="ja_JP">ライト</label>
         <label language="ko_KR">라이트</label>
         <label language="zh_CN">明亮</label>
+        <label language="zh_TW">明亮</label>
     </colorScheme>
 
     <transitions name="slide">
@@ -85,6 +88,7 @@
         <label language="ja_JP">スライド</label>
         <label language="ko_KR">슬라이드</label>
         <label language="zh_CN">滑动</label>
+        <label language="zh_TW">滑動</label>
         <selectable>true</selectable>
         <systemToSystem>slide</systemToSystem>
         <systemToGamelist>slide</systemToGamelist>
@@ -109,6 +113,7 @@
         <label language="ja_JP">インスタント</label>
         <label language="ko_KR">즉시</label>
         <label language="zh_CN">即时</label>
+        <label language="zh_TW">即時</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>instant</systemToGamelist>
@@ -135,6 +140,7 @@
         <label language="ja_JP">フェイド</label>
         <label language="ko_KR">페이드</label>
         <label language="zh_CN">淡出</label>
+        <label language="zh_TW">淡出</label>
         <selectable>true</selectable>
         <systemToSystem>fade</systemToSystem>
         <systemToGamelist>fade</systemToGamelist>
@@ -167,6 +173,7 @@
         <label language="ja_JP">ビデオが含まるテキストリスト</label>
         <label language="ko_KR">텍스트리스트 비디오 포함</label>
         <label language="zh_CN">带视频的文字列表</label>
+        <label language="zh_TW">帶影片的文字列表</label>
         <selectable>true</selectable>
         <override>
             <trigger>noMedia</trigger>
@@ -192,6 +199,7 @@
         <label language="ja_JP">ビデオが含まないテキストリスト</label>
         <label language="ko_KR">텍스트리스트 비디오 없음</label>
         <label language="zh_CN">不带视频的文字列表</label>
+        <label language="zh_TW">不帶影片的文字列表</label>
         <selectable>true</selectable>
         <override>
             <trigger>noMedia</trigger>

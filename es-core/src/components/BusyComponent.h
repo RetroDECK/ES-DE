@@ -10,8 +10,8 @@
 #define ES_CORE_COMPONENTS_BUSY_COMPONENT_H
 
 #include "GuiComponent.h"
+#include "components/BackgroundComponent.h"
 #include "components/ComponentGrid.h"
-#include "components/NinePatchComponent.h"
 #include "components/TextComponent.h"
 
 class AnimatedImageComponent;
@@ -25,10 +25,9 @@ public:
     void setText(const std::string& text) { mText->setText(text, true); }
     void onSizeChanged() override;
 
-    void reset(); // Reset to frame 0.
-
 private:
-    NinePatchComponent mBackground;
+    Renderer* mRenderer;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
 
     std::shared_ptr<AnimatedImageComponent> mAnimation;

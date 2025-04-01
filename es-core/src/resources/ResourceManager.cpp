@@ -16,6 +16,10 @@
 
 #include <fstream>
 
+#if defined(__IOS__)
+#include "utils/PlatformUtilIOS.h"
+#endif
+
 ResourceManager& ResourceManager::getInstance()
 {
     static ResourceManager instance;
@@ -32,14 +36,21 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
         if (Utils::FileSystem::exists(testHome))
             return testHome;
 
-#if defined(__APPLE__)
+#if defined(__IOS__)
+        const std::string iOSPackagePath {Utils::Platform::iOS::getPackagePath() + &path[2]};
+
+        if (Utils::FileSystem::exists(iOSPackagePath))
+            return iOSPackagePath;
+#endif
+
+#if defined(__APPLE__) && !defined(__IOS__)
         // For macOS, check in the ../Resources directory relative to the executable directory.
         std::string applePackagePath {Utils::FileSystem::getExePath() + "/../Resources/resources/" +
                                       &path[2]};
 
-        if (Utils::FileSystem::exists(applePackagePath)) {
+        if (Utils::FileSystem::exists(applePackagePath))
             return applePackagePath;
-        }
+
 #elif (defined(__unix__) && !defined(APPIMAGE_BUILD)) || defined(__ANDROID__) || defined(__HAIKU__)
         // Check in the program data directory.
         std::string testDataPath {Utils::FileSystem::getProgramDataPath() + "/resources/" +
@@ -71,10 +82,12 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
                 LOG(LogError) << "Program resource missing: " << path;
                 LOG(LogError) << "Tried to find the resource in the following locations:";
                 LOG(LogError) << testHome;
-#if defined(__APPLE__)
+#if defined(__IOS__)
+                LOG(LogError) << iOSPackagePath;
+#elif defined(__APPLE__)
                 LOG(LogError) << applePackagePath;
 #elif defined(__unix__) && !defined(APPIMAGE_BUILD)
-                LOG(LogError) << testDataPath;
+            LOG(LogError) << testDataPath;
 #endif
 #if !defined(__ANDROID__)
                 LOG(LogError) << testExePath;

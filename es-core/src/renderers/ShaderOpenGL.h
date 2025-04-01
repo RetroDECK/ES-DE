@@ -14,13 +14,21 @@
 #include "renderers/Renderer.h"
 #include "utils/MathUtil.h"
 
+#if defined(__IOS__)
+#define GLES_SILENCE_DEPRECATION
+#endif
+
 #if defined(_WIN64)
 #include <GL/glew.h>
 #endif
 
 #include <SDL2/SDL.h>
 #if defined(USE_OPENGLES)
+#if defined(__IOS__)
+#include <OpenGLES/ES3/gl.h>
+#else
 #include <GLES3/gl3.h>
+#endif
 #include <SDL2/SDL_opengles.h>
 #else
 #include <SDL2/SDL_opengl.h>

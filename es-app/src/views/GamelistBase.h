@@ -20,6 +20,7 @@
 #include "components/LottieAnimComponent.h"
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
+#include "components/SystemStatusComponent.h"
 #include "components/TextComponent.h"
 #include "components/VideoFFmpegComponent.h"
 #include "components/primary/CarouselComponent.h"

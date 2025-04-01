@@ -9,6 +9,7 @@
 #include "views/SystemView.h"
 
 #include "Log.h"
+#include "Scripting.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "UIModeController.h"
@@ -111,6 +112,7 @@ bool SystemView::input(InputConfig* config, Input input)
         if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
             LOG(LogDebug) << "SystemView::input(): Reloading all";
+            mWindow->clearHelpPromptsImageCache();
             TextureResource::manualUnloadAll();
             ViewController::getInstance()->reloadAll();
             return true;
@@ -211,7 +213,13 @@ void SystemView::onThemeChanged(const std::shared_ptr<ThemeData>& /*theme*/)
 
 std::vector<HelpPrompt> SystemView::getHelpPrompts()
 {
+    if (mSystemElements[mPrimary->getCursor()].helpComponents.empty())
+        mWindow->passHelpComponents(nullptr);
+    else
+        mWindow->passHelpComponents(&mSystemElements[mPrimary->getCursor()].helpComponents);
+
     std::vector<HelpPrompt> prompts;
+
     if (mCarousel != nullptr) {
         if (mCarousel->getType() == CarouselComponent<SystemData*>::CarouselType::VERTICAL ||
             mCarousel->getType() == CarouselComponent<SystemData*>::CarouselType::VERTICAL_WHEEL)
@@ -239,6 +247,25 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 
 void SystemView::onCursorChanged(const CursorState& state)
 {
+    mWindow->passHelpComponents(nullptr);
+    mWindow->passClockComponents(&mSystemElements[mPrimary->getCursor()].clockComponents);
+    mWindow->passSystemStatusComponents(
+        &mSystemElements[mPrimary->getCursor()].systemStatusComponents);
+
+    if (Settings::getInstance()->getBool("CustomEventScripts") &&
+        Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
+        Scripting::fireEvent(
+            "system-select", mSystemElements[mPrimary->getCursor()].system->getName(),
+            mSystemElements[mPrimary->getCursor()].system->getFullName(),
+            mSystemElements[mPrimary->getCursor()].system->getRootFolder()->getFullPath());
+    }
+
+    for (auto& clock : mSystemElements[mPrimary->getCursor()].clockComponents)
+        clock->update(1000);
+
+    for (auto& systemstatus : mSystemElements[mPrimary->getCursor()].systemStatusComponents)
+        systemstatus->update(SystemStatus::updateTime);
+
     // Reset horizontally scrolling text.
     for (auto& text : mSystemElements[mPrimary->getCursor()].gameCountComponents)
         text->resetComponent();
@@ -714,7 +741,40 @@ void SystemView::populate()
                         elements.ratingComponents.back()->getOpacity());
                     elements.children.emplace_back(elements.ratingComponents.back().get());
                 }
+                else if (element.second.type == "helpsystem") {
+                    elements.helpComponents.emplace_back(std::make_unique<HelpComponent>());
+                    elements.helpComponents.back()->applyTheme(theme, "system", element.first,
+                                                               ThemeFlags::ALL);
+                }
+                else if (element.second.type == "clock") {
+                    elements.clockComponents.emplace_back(std::make_unique<DateTimeComponent>());
+                    elements.clockComponents.back()->applyTheme(theme, "system", element.first,
+                                                                ThemeFlags::ALL);
+                }
+                else if (element.second.type == "systemstatus") {
+                    elements.systemStatusComponents.emplace_back(
+                        std::make_unique<SystemStatusComponent>());
+                    elements.systemStatusComponents.back()->applyTheme(
+                        theme, "system", element.first, ThemeFlags::ALL);
+                    elements.systemStatusComponents.back()->updateGrid();
+                }
             }
+        }
+
+        if (elements.clockComponents.empty()) {
+            // Apply a default clock if the theme does not contain any configuration for it.
+            elements.clockComponents.emplace_back(std::make_unique<DateTimeComponent>());
+            elements.clockComponents.back()->applyTheme(theme, "system", "clock_default",
+                                                        ThemeFlags::ALL);
+            elements.clockComponents.back()->update(1000);
+        }
+
+        if (elements.systemStatusComponents.empty()) {
+            // Apply a default systemstatus if the theme does not contain any configuration for it.
+            elements.systemStatusComponents.emplace_back(std::make_unique<SystemStatusComponent>());
+            elements.systemStatusComponents.back()->applyTheme(
+                theme, "system", "systemstatus_default", ThemeFlags::ALL);
+            elements.systemStatusComponents.back()->updateGrid();
         }
 
         std::stable_sort(
@@ -737,7 +797,6 @@ void SystemView::populate()
                 return b->getZIndex() > a->getZIndex();
             });
         mSystemElements.emplace_back(std::move(elements));
-        mSystemElements.back().helpStyle.applyTheme(theme, "system");
 
         if (mPrimary == nullptr) {
             mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
@@ -876,6 +935,15 @@ void SystemView::populate()
             }
         }
     }
+
+    if (mSystemElements[mPrimary->getCursor()].helpComponents.empty())
+        mWindow->passHelpComponents(nullptr);
+    else
+        mWindow->passHelpComponents(&mSystemElements[mPrimary->getCursor()].helpComponents);
+
+    mWindow->passClockComponents(&mSystemElements[mPrimary->getCursor()].clockComponents);
+    mWindow->passSystemStatusComponents(
+        &mSystemElements[mPrimary->getCursor()].systemStatusComponents);
 
     mFadeTransitions = (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
                             "TransitionsSystemToSystem")) == ViewTransitionAnimation::FADE);

@@ -143,6 +143,7 @@ namespace PlatformIds
         "uzebox",               // Uzebox Open Source Console
         "vectrex",              // GCE Vectrex
         "vic20",                // Commodore VIC-20
+        "vircon32",             // Vircon32 Virtual Console
         "virtualboy",           // Nintendo Virtual Boy
         "vpinball",             // Visual Pinball
         "vsmile",               // VTech V.Smile
@@ -156,6 +157,7 @@ namespace PlatformIds
         "x68000",               // Sharp X68000
         "xbox",                 // Microsoft Xbox
         "xbox360",              // Microsoft Xbox 360
+        "xboxone",              // Microsoft Xbox One
         "zmachine",             // Infocom Z-machine
         "zx81",                 // Sinclair ZX81
         "zxnext",               // Sinclair ZX Spectrum Next

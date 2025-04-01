@@ -103,7 +103,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
                 mCurrentFirstCharacter = Utils::String::getFirstCharacter(file->getSortName());
         }
 
-        mJumpToLetterList = std::make_shared<LetterList>(getHelpStyle(), _("JUMP TO..."), false);
+        mJumpToLetterList = std::make_shared<LetterList>(_("JUMP TO..."), false);
 
         // Enable key repeat so that the left or right button can be held to cycle through
         // the letters.
@@ -122,7 +122,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         // Add the sorting entry, unless this is the grouped custom collections list.
         if (!mIsCustomCollectionGroup) {
             // Sort list by selected sort type (persistent throughout the program session).
-            mListSort = std::make_shared<SortList>(getHelpStyle(), _("SORT GAMES BY"), false);
+            mListSort = std::make_shared<SortList>(_("SORT GAMES BY"), false);
             FileData* root {nullptr};
             if (mIsCustomCollection)
                 root = getGamelist()->getCursor()->getSystem()->getRootFolder();

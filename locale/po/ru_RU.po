@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-12-02 17:56+0400\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-05 19:28+0400\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
 "Language: ru_RU\n"
@@ -762,6 +762,9 @@ msgstr "КОРОТКАЯ"
 msgid "LONG"
 msgstr "ДЛИННАЯ"
 
+msgid "POPUP"
+msgstr "ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ"
+
 msgid "UI MODE"
 msgstr "РЕЖИМ ИНТЕРФЕЙСА"
 
@@ -821,6 +824,9 @@ msgstr "ТОЛЬКО ИГРЫ"
 msgid "GAMES AND SYSTEMS"
 msgstr "ИГРЫ И СИСТЕМЫ"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "НАСТРОЙКИ СТАТУСА СИСТЕМЫ"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "НАСТРОЙКИ ПРОСМОТРЩИКА МЕДИА"
 
@@ -829,6 +835,9 @@ msgstr "НАСТРОЙКИ ЗАСТАВКИ"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "РАЗРЕШИТЬ СМЕНУ ВАРИАНТОВ ТЕМ ТРИГГЕРАМИ"
+
+msgid "DISPLAY CLOCK"
+msgstr "ОТОБРАЖАТЬ ЧАСЫ"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "РАЗМЫТИЕ ФОНА ПРИ ОТКРЫТИИ МЕНЮ"
@@ -1064,6 +1073,9 @@ msgstr "ПОКАЗЫВАТЬ СКРЫТЫЕ ИГРЫ"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "РАЗРЕШИТЬ ПОЛЬЗ. СЦЕНАРИИ СОБЫТИЙ"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "ПОЛЬЗ. СОБЫТИЯ ПРИ НАВИГАЦИИ"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "ПОКАЗЫВАТЬ  ИГРЫ ТОЛЬКО ИЗ GAMELIST.XML"
 
@@ -1141,6 +1153,10 @@ msgstr "ДЕЙСТВИТЕЛЬНО ЗАВЕРШИТЬ РАБОТУ СИСТЕМ�
 
 msgid "POWER OFF SYSTEM"
 msgstr "ВЫКЛЮЧИТЬ ПИТАНИЕ СИСТЕМЫ"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "НАСТРОЙКИ СТАТУСА СИСТЕМЫ"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1867,6 +1883,21 @@ msgstr "СМЕНА ВИДЕО ЧЕРЕЗ (В СЕКУНДАХ)"
 
 msgid "RENDER BLUR"
 msgstr "РЕНДЕРИНГ РАЗМЫТИЯ"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "ОТОБРАЖАТЬ СТАТУС BLUETOOTH"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "ОТОБРАЖАТЬ СТАТУС WI-FI"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "ОТОБРАЖАТЬ СТАТУС СЕТИ"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "ОТОБРАЖАТЬ СТАТУС БАТАРЕИ"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "ОТОБРАЖАТЬ ПРОЦЕНТ ЗАРЯДА БАТАРЕИ"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "ЗАГРУЗКА СПИСКА ТЕМ 100%"
@@ -2895,6 +2926,9 @@ msgstr "4:3 вертикальный"
 
 msgid "5:4 vertical"
 msgstr "5:4 вертикальный"
+
+msgid "8:7 vertical"
+msgstr "8:7 вертикальный"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 вертикальный"

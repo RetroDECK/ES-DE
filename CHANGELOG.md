@@ -1,5 +1,92 @@
 # ES-DE Frontend - Changelog
 
+## Version 3.2.0 / 3.2.0-xx (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+* Added a system status element showing the Blueooth, Wi-Fi, cellular and battery status on screen
+* Added a "Display clock" setting to the UI settings menu to display an on screen clock (disabled by default)
+* Added translations for Traditional Chinese (zh_TW)
+* Added support for the Sony PlayStation 4 (ps4) game system on Linux, macOS and Windows using the shadPS4 emulator
+* Added support for the Vircon32 Virtual Console (vircon32) game system
+* Added support for the Sega Mark III (mark3) game system
+* Increased the roundness for all corners in the menu system and for the notification popups
+* Increased the background blur slightly when a menu is open
+* Added an option to completely disable the game launch screen (via the UI settings menu)
+* Made the menu and launch screen scale up at the same speed regardless of the display refresh rate
+* Added a screensaver-game-select custom event
+* Added game-select and system-select custom events and a corresponding "Browsing custom events" menu option
+* Added RPCS3 Game Serial as an alternative emulator for the consolearcade and ps3 systems on Linux, macOS and Windows
+* Added the NooDS RetroArch core as an alternative emulator for the gba and nds systems
+* Added the bsnes-jg RetroArch core as an alternative emulator for the satellaview, sfc, snes, snesna and sufami systems
+* Added the Holani RetroArch core as an alternative emulator for the atarilynx system
+* Added the b2 RetroArch core as an alternative emulator for the bbcmicro system
+* Added the CannonBall RetroArch core as an alternative emulator for the ports system
+* Added the Mr.Boom RetroArch core as an alternative emulator for the ports system
+* Added Mesen standalone as an alternative emulator for the colecovision, wonderswan and wonderswancolor systems on Linux and Windows
+* Added Azahar standalone as an alternative emulator for the n3ds system
+* Added A7800 standalone as an alternative emulator for the atari7800 system on Linux and Windows
+* (Android) Changed from MAME4droid 2024 to MAME4droid Current for all systems where only this emulator was supported
+* (Android) Added a find rule entry for the new Cemu package name
+* (Android) Added MAME4droid Current emulator entries for all systems where MAME4droid 2024 was supported
+* (Android) Added SkyEmu standalone as an alternative emulator for the gb, gba, gbc and nds systems
+* (Android) Added Pizza Boy SC standalone as an alternative emulator for the gamegear, genesis, mastersystem, megadrive and megadrivejp systems
+* (Android) Changed all RetroArch core entries to use absolute paths (this makes the ancient Play store release work correctly)
+* (Windows) Added MFME standalone (fruit machine emulator) as an alternative emulator for the arcade and mame systems
+* (Windows) Added XM6 TypeG standalone as an alternative emulator for the x68000 system
+* (Linux) Added MFME Wine and MFME Proton as alternative emulators for the arcade and mame systems
+* (Linux) Added XM6 TypeG Wine and XM6 TypeG Proton as alternative emulators for the x68000 system
+* (Linux) Added a find rule entry for the new PCSX2 binary name (pcsx2)
+* (Linux) Added a find rule entry for the new DuckStation binary name (duckstation)
+* (Linux) Added support for the Flatpak release of Ruffle
+* (Linux) Added support for the manually downloaded release of Mesen
+* (Linux) Changed the AppImage find rule for Mandarine to mandarine-qt*.AppImage
+* Enabled directories interpreted as files with MAME RetroArch for the apple2, apple2gs and fmtowns systems on Linux, macOS and Windows
+* Added the .gam file extension to the arcade system on Linux and Windows
+* Added the .m3u file extension to the sega32x, sega32xjp and sega32xna systems
+* Added the .ruf file extension to the flash system
+* Added initial support for the Microsoft Xbox One (xboxone) game system (still awaiting emulator support)
+* Added a %ROMRAWWIN% variable to pass the game ROM path with Windows-style backslash directory separators
+* Refactored the helpsystem code and added support for using an arbitrary amount of helpsystem elements
+* Added support for specifying which specific entries to display for the helpsystem elements
+* Added an "entryLayout" property to the helpsystem element to control the display order for the icons and text
+* Added an "entryRelativeScale" property to the helpsystem element to control the relative scale between the icons and text
+* Added "rotation", "rotationOrigin", "backgroundColor" and "backgroundColorEnd" properties to the helpsystem element
+* Added "backgroundHorizontalPadding" and "backgroundVerticalPadding properties to the helpsystem element
+* Added "backgroundGradientType" and "backgroundCornerRadius" properties to the helpsystem element
+* Added a "clock" element to make it possible to customize the layout and position of the clock
+* Added "imageSize", "imageMaxSize", "imageCropSize" and "imageCropPos" properties to the video element
+* Added a "fadeInType" property to the video element to fade in from black or from transparency
+* Added support for a "none" value to the video element imageType property
+* Added a BackgroundComponent to replace NinePatchComponent for rendering menu and popup backgrounds
+* (Android) Changed the target SDK version to 35 (Android 15)
+* The LANG and LANGUAGE variables are now set explicitly to the UTF-8 character encoding on Linux, macOS and Android
+* Added support for the 8:7 display aspect ratio
+* (macOS) Added a build script for cross-compiling for x86_64 when using an ARM processor
+* (Linux) Added the BlueZ library as a dependency
+* Added support for building against libgit2 v1.9.0 and later
+* Added support for building against ICU 76.1 and later
+* Updated SDL to 2.32.2 on Android, Windows, macOS and the Linux AppImage builds
+* Updated the MAME index files to include ROMs up to MAME version 0.275
+* Bundled the February 2025 release of the Mozilla TLS/SSL certificates
+* Made a small adjustment to the button_y_PS helpsystem button
+* Translation updates for multiple languages
+
+### Bug fixes
+
+* The text element containerStartDelay timer was sometimes not reset which made vertical text scrolling start too early under some circumstances
+* The selectedItemOffset property did not work correctly for carousels with a single item
+* Returning from a game when running in the background ignored the video element delay property for the first playback
+* A double free in GuiLaunchScreen could cause an unclean application shutdown
+* Applying rounded corners caused rendering artfifacts if the texture did not use premultiplied alpha
+* The menus would sometimes contain fractional rows at extreme resolutions such as 1080x1920
+* (Windows) There could be double quotation marks added to the launch command under some special circumstances
+* (Android) There was a PLACEHOLDER entry present for the consolearcade system in the es_systems.xml file
+
 ## Version 3.1.1 / 3.1.1-39
 
 **Release date:** 2024-12-13

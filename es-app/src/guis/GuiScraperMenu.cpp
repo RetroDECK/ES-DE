@@ -25,8 +25,7 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
     , mMenu {title}
 {
     // Scraper service.
-    mScraper =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("SCRAPE FROM"), false);
+    mScraper = std::make_shared<OptionListComponent<std::string>>(_("SCRAPE FROM"), false);
     std::vector<std::string> scrapers = getScraperList();
     // Select either the first entry or the one read from the settings,
     // just in case the scraper from settings has vanished.
@@ -42,8 +41,8 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
 
     // Search filters, getSearches() will generate a queue of games to scrape
     // based on the outcome of the checks below.
-    mFilters = std::make_shared<OptionListComponent<GameFilterFunc>>(
-        getHelpStyle(), _("SCRAPE THESE GAMES"), false);
+    mFilters =
+        std::make_shared<OptionListComponent<GameFilterFunc>>(_("SCRAPE THESE GAMES"), false);
     mFilters->add(
         _("ALL GAMES"),
         [](SystemData*, FileData*) -> bool {
@@ -103,8 +102,7 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
     });
 
     // Add systems (all systems with an existing platform ID are listed).
-    mSystems = std::make_shared<OptionListComponent<SystemData*>>(getHelpStyle(),
-                                                                  _("SCRAPE THESE SYSTEMS"), true);
+    mSystems = std::make_shared<OptionListComponent<SystemData*>>(_("SCRAPE THESE SYSTEMS"), true);
     for (unsigned int i {0}; i < SystemData::sSystemVector.size(); ++i) {
         if (!SystemData::sSystemVector[i]->hasPlatformId(PlatformIds::PLATFORM_IGNORE)) {
             mSystems->add(Utils::String::toUpper(SystemData::sSystemVector[i]->getFullName()),
@@ -462,8 +460,8 @@ void GuiScraperMenu::openMiximageOptions()
     auto s = new GuiSettings(_("MIXIMAGE SETTINGS"));
 
     // Miximage resolution.
-    auto miximageResolution = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("MIXIMAGE RESOLUTION"), false);
+    auto miximageResolution =
+        std::make_shared<OptionListComponent<std::string>>(_("MIXIMAGE RESOLUTION"), false);
     std::string selectedResolution {Settings::getInstance()->getString("MiximageResolution")};
     miximageResolution->add("1280X960", "1280x960", selectedResolution == "1280x960");
     miximageResolution->add("1920X1440", "1920x1440", selectedResolution == "1920x1440");
@@ -484,7 +482,7 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Horizontally oriented screenshots fit.
     auto miximageHorizontalFit = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _p("short", "HORIZONTAL SCREENSHOT FIT"), false);
+        _p("short", "HORIZONTAL SCREENSHOT FIT"), false);
     const std::string selectedHorizontalFit {
         Settings::getInstance()->getString("MiximageScreenshotHorizontalFit")};
     miximageHorizontalFit->add(_("CONTAIN"), "contain", selectedHorizontalFit == "contain");
@@ -506,7 +504,7 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Vertically oriented screenshots fit.
     auto miximageVerticalFit = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _p("short", "VERTICAL SCREENSHOT FIT"), false);
+        _p("short", "VERTICAL SCREENSHOT FIT"), false);
     const std::string selectedVerticalFit {
         Settings::getInstance()->getString("MiximageScreenshotVerticalFit")};
     miximageVerticalFit->add(_("CONTAIN"), "contain", selectedVerticalFit == "contain");
@@ -528,7 +526,7 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Screenshots aspect ratio threshold.
     auto miximageAspectThreshold = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _p("short", "SCREENSHOT ASPECT RATIO THRESHOLD"), false);
+        _p("short", "SCREENSHOT ASPECT RATIO THRESHOLD"), false);
     const std::string selectedAspectThreshold {
         Settings::getInstance()->getString("MiximageScreenshotAspectThreshold")};
     miximageAspectThreshold->add(_("HIGH"), "high", selectedAspectThreshold == "high");
@@ -548,8 +546,8 @@ void GuiScraperMenu::openMiximageOptions()
     });
 
     // Blank areas fill color.
-    auto miximageBlankAreasColor = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("BLANK AREAS FILL COLOR"), false);
+    auto miximageBlankAreasColor =
+        std::make_shared<OptionListComponent<std::string>>(_("BLANK AREAS FILL COLOR"), false);
     const std::string selectedBlankAreasColor {
         Settings::getInstance()->getString("MiximageScreenshotBlankAreasColor")};
     miximageBlankAreasColor->add(_("BLACK"), "black", selectedBlankAreasColor == "black");
@@ -570,7 +568,7 @@ void GuiScraperMenu::openMiximageOptions()
 
     // Screenshot scaling method.
     auto miximageScaling = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _p("short", "SCREENSHOT SCALING METHOD"), false);
+        _p("short", "SCREENSHOT SCALING METHOD"), false);
     std::string selectedScaling {Settings::getInstance()->getString("MiximageScreenshotScaling")};
     miximageScaling->add(_("SHARP"), "sharp", selectedScaling == "sharp");
     miximageScaling->add(_("SMOOTH"), "smooth", selectedScaling == "smooth");
@@ -589,8 +587,7 @@ void GuiScraperMenu::openMiximageOptions()
     });
 
     // Box/cover size.
-    auto miximageBoxSize =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("BOX SIZE"), false);
+    auto miximageBoxSize = std::make_shared<OptionListComponent<std::string>>(_("BOX SIZE"), false);
     std::string selectedBoxSize {Settings::getInstance()->getString("MiximageBoxSize")};
     miximageBoxSize->add(_("SMALL"), "small", selectedBoxSize == "small");
     miximageBoxSize->add(_("MEDIUM"), "medium", selectedBoxSize == "medium");
@@ -609,8 +606,8 @@ void GuiScraperMenu::openMiximageOptions()
     });
 
     // Physical media size.
-    auto miximagePhysicalMediaSize = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("PHYSICAL MEDIA SIZE"), false);
+    auto miximagePhysicalMediaSize =
+        std::make_shared<OptionListComponent<std::string>>(_("PHYSICAL MEDIA SIZE"), false);
     std::string selectedPhysicalMediaSize {
         Settings::getInstance()->getString("MiximagePhysicalMediaSize")};
     miximagePhysicalMediaSize->add(_("SMALL"), "small", selectedPhysicalMediaSize == "small");
@@ -765,8 +762,7 @@ void GuiScraperMenu::openMiximageOptions()
 void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
 {
     if (mSystems->getSelectedObjects().empty()) {
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
-                                       _("THE OFFLINE GENERATOR USES THE SAME SYSTEM "
+        mWindow->pushGui(new GuiMsgBox(_("THE OFFLINE GENERATOR USES THE SAME SYSTEM "
                                          "SELECTIONS AS THE SCRAPER, SO PLEASE SELECT "
                                          "AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"),
                                        _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, false,
@@ -807,8 +803,7 @@ void GuiScraperMenu::openOtherOptions()
     auto s = new GuiSettings(_("OTHER SETTINGS"));
 
     // Scraper region.
-    auto scraperRegion =
-        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), _("REGION"), false);
+    auto scraperRegion = std::make_shared<OptionListComponent<std::string>>(_("REGION"), false);
     std::string selectedScraperRegion {Settings::getInstance()->getString("ScraperRegion")};
     // clang-format off
     scraperRegion->add(_("EUROPE"), "eu",  selectedScraperRegion == "eu");
@@ -838,8 +833,8 @@ void GuiScraperMenu::openOtherOptions()
     }
 
     // Scraper language.
-    auto scraperLanguage = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("PREFERRED LANGUAGE"), false);
+    auto scraperLanguage =
+        std::make_shared<OptionListComponent<std::string>>(_("PREFERRED LANGUAGE"), false);
     std::string selectedScraperLanguage {Settings::getInstance()->getString("ScraperLanguage")};
     // clang-format off
     scraperLanguage->add("ENGLISH",    "en", selectedScraperLanguage == "en");
@@ -1242,7 +1237,7 @@ void GuiScraperMenu::pressedStart()
                                   "SET, RESULTS MAY BE INACCURATE");
             }
             mWindow->pushGui(
-                new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(warningString), _("PROCEED"),
+                new GuiMsgBox(Utils::String::toUpper(warningString), _("PROCEED"),
                               std::bind(&GuiScraperMenu::start, this), _("CANCEL"), nullptr, "",
                               nullptr, nullptr, false, true,
                               (mRenderer->getIsVerticalOrientation() ?
@@ -1257,8 +1252,7 @@ void GuiScraperMenu::pressedStart()
 void GuiScraperMenu::start()
 {
     if (mSystems->getSelectedObjects().empty()) {
-        mWindow->pushGui(
-            new GuiMsgBox(getHelpStyle(), _("PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE")));
+        mWindow->pushGui(new GuiMsgBox(_("PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE")));
         return;
     }
 
@@ -1332,16 +1326,14 @@ void GuiScraperMenu::start()
     } while (0);
 
     if (!contentToScrape) {
-        mWindow->pushGui(
-            new GuiMsgBox(getHelpStyle(), _("PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE")));
+        mWindow->pushGui(new GuiMsgBox(_("PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE")));
         return;
     }
 
     auto searches = getSearches(mSystems->getSelectedObjects(), mFilters->getSelected());
 
     if (searches.first.empty()) {
-        mWindow->pushGui(
-            new GuiMsgBox(getHelpStyle(), _("ALL GAMES WERE FILTERED, NOTHING TO SCRAPE")));
+        mWindow->pushGui(new GuiMsgBox(_("ALL GAMES WERE FILTERED, NOTHING TO SCRAPE")));
     }
     else {
         GuiScraperMulti* gsm {

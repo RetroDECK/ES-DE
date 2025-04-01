@@ -370,7 +370,7 @@ void GuiScraperSearch::search(ScraperSearchParams& params)
 
     mMD5Hash = "";
     params.md5Hash = "";
-    if (!Utils::FileSystem::isDirectory(params.game->getPath()))
+    if (!Utils::FileSystem::isDirectory(params.game->getPath()) && mSearchType != MANUAL_MODE)
         params.fileSize = Utils::FileSystem::getFileSize(params.game->getPath());
 
     // Only use MD5 file hash searching when in automatic mode.
@@ -419,7 +419,6 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
         // Check if the scraper used is still valid.
         if (!isValidConfiguredScraper()) {
             mWindow->pushGui(new GuiMsgBox(
-                getHelpStyle(),
                 Utils::String::toUpper("Configured scraper is no longer available.\n"
                                        "Please change the scraping source in the settings."),
                 "FINISH", mSkipCallback));
@@ -559,8 +558,8 @@ void GuiScraperSearch::onSearchError(const std::string& error,
 {
     if (fatalError) {
         LOG(LogWarning) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), _("OK"),
-                                       mCancelCallback, "", nullptr, "", nullptr, nullptr, true));
+        mWindow->pushGui(new GuiMsgBox(Utils::String::toUpper(error), _("OK"), mCancelCallback, "",
+                                       nullptr, "", nullptr, nullptr, true));
         return;
     }
 
@@ -580,14 +579,14 @@ void GuiScraperSearch::onSearchError(const std::string& error,
 
     if (mScrapeCount > 1) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), _("RETRY"),
+        mWindow->pushGui(new GuiMsgBox(Utils::String::toUpper(error), _("RETRY"),
                                        std::bind(&GuiScraperSearch::search, this, mLastSearch),
                                        _("SKIP"), mSkipCallback, _("CANCEL"), mCancelCallback,
                                        nullptr, true));
     }
     else {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), Utils::String::toUpper(error), _("RETRY"),
+        mWindow->pushGui(new GuiMsgBox(Utils::String::toUpper(error), _("RETRY"),
                                        std::bind(&GuiScraperSearch::search, this, mLastSearch),
                                        _("CANCEL"), mCancelCallback, "", nullptr, nullptr, true));
     }
@@ -1049,14 +1048,13 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         searchString = Utils::String::replace(searchString, "_", " ");
 
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
-        mWindow->pushGui(new GuiTextEditKeyboardPopup(
-            getHelpStyle(), 0.0f, _("REFINE SEARCH"), searchString, searchForFunc, false,
-            _("SEARCH"), _("SEARCH USING REFINED NAME?")));
+        mWindow->pushGui(new GuiTextEditKeyboardPopup(0.0f, _("REFINE SEARCH"), searchString,
+                                                      searchForFunc, false, _("SEARCH"),
+                                                      _("SEARCH USING REFINED NAME?")));
     }
     else {
-        mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), _("REFINE SEARCH"), searchString,
-                                              searchForFunc, false, _("SEARCH"),
-                                              _("SEARCH USING REFINED NAME?")));
+        mWindow->pushGui(new GuiTextEditPopup(_("REFINE SEARCH"), searchString, searchForFunc,
+                                              false, _("SEARCH"), _("SEARCH USING REFINED NAME?")));
     }
 }
 

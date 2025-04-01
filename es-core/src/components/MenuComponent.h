@@ -9,11 +9,11 @@
 #ifndef ES_CORE_COMPONENTS_MENU_COMPONENT_H
 #define ES_CORE_COMPONENTS_MENU_COMPONENT_H
 
+#include "components/BackgroundComponent.h"
 #include "components/ButtonComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/ComponentList.h"
 #include "components/ImageComponent.h"
-#include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"
 #include "components/TextComponent.h"
 #include "utils/LocalizationUtil.h"
@@ -85,7 +85,7 @@ private:
     float getButtonGridHeight() const;
 
     Renderer* mRenderer;
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mTitle;

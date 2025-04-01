@@ -21,6 +21,7 @@
     <language>ja_JP</language>
     <language>ko_KR</language>
     <language>zh_CN</language>
+    <language>zh_TW</language>
 
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>16:10</aspectRatio>
@@ -47,6 +48,7 @@
         <label language="ja_JP">ダーク</label>
         <label language="ko_KR">다크</label>
         <label language="zh_CN">暗黑</label>
+        <label language="zh_TW">暗黑</label>
     </colorScheme>
 
     <colorScheme name="light">
@@ -66,6 +68,7 @@
         <label language="ja_JP">ライト</label>
         <label language="ko_KR">라이트</label>
         <label language="zh_CN">明亮</label>
+        <label language="zh_TW">明亮</label>
     </colorScheme>
 
     <colorScheme name="nso">
@@ -97,6 +100,7 @@
         <label language="ja_JP">テキストリスト</label>
         <label language="ko_KR">텍스트리스트</label>
         <label language="zh_CN">文字列表</label>
+        <label language="zh_TW">文字列表</label>
         <selectable>true</selectable>
     </variant>
 
@@ -117,6 +121,7 @@
         <label language="ja_JP">ビデオが含まないテキストリスト</label>
         <label language="ko_KR">텍스트리스트 비디오 없음</label>
         <label language="zh_CN">不带视频的文字列表</label>
+        <label language="zh_TW">不帶影片的文字列表</label>
         <selectable>true</selectable>
     </variant>
 
@@ -137,6 +142,7 @@
         <label language="ja_JP">簡易なテキストリスト</label>
         <label language="ko_KR">심플 텍스트리스트</label>
         <label language="zh_CN">简易文字列表</label>
+        <label language="zh_TW">簡易文字列表</label>
         <selectable>true</selectable>
     </variant>
 
@@ -157,6 +163,7 @@
         <label language="ja_JP">ビデオが含まない簡単なテキストリスト</label>
         <label language="ko_KR">심플 텍스트리스트 비디오 없음</label>
         <label language="zh_CN">不带视频的简易文字列表</label>
+        <label language="zh_TW">不帶影片的文字列表</label>
         <selectable>true</selectable>
     </variant>
 
@@ -177,6 +184,7 @@
         <label language="ja_JP">カルーセル</label>
         <label language="ko_KR">캐러셀</label>
         <label language="zh_CN">轮播</label>
+        <label language="zh_TW">輪播</label>
         <selectable>true</selectable>
     </variant>
 
@@ -197,6 +205,7 @@
         <label language="ja_JP">簡単なカルーセル</label>
         <label language="ko_KR">심플 캐러셀</label>
         <label language="zh_CN">简易轮播</label>
+        <label language="zh_TW">簡易輪播</label>
         <selectable>true</selectable>
     </variant>
 
@@ -217,6 +226,7 @@
         <label language="ja_JP">インスタントとスライド</label>
         <label language="ko_KR">즉시 그리고 슬라이드</label>
         <label language="zh_CN">即时与滑动</label>
+        <label language="zh_TW">即時與滑動</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>slide</systemToGamelist>
@@ -243,6 +253,7 @@
         <label language="ja_JP">インスタント</label>
         <label language="ko_KR">즉시</label>
         <label language="zh_CN">即时</label>
+        <label language="zh_TW">即時</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>instant</systemToGamelist>
@@ -269,6 +280,7 @@
         <label language="ja_JP">フェイド</label>
         <label language="ko_KR">페이드</label>
         <label language="zh_CN">淡出</label>
+        <label language="zh_TW">淡出</label>
         <selectable>true</selectable>
         <systemToSystem>instant</systemToSystem>
         <systemToGamelist>fade</systemToGamelist>

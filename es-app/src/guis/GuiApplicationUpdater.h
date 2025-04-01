@@ -38,18 +38,11 @@ public:
 private:
     void onSizeChanged() override;
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override
-    {
-        if (ViewController::getInstance()->getState().viewing == ViewController::ViewMode::NOTHING)
-            return HelpStyle();
-        else
-            return ViewController::getInstance()->getViewHelpStyle();
-    }
 
     Renderer* mRenderer;
     BusyComponent mBusyAnim;
 
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
     std::shared_ptr<ComponentGrid> mButtons;
     std::shared_ptr<ButtonComponent> mButton1;

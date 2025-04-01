@@ -124,16 +124,15 @@ void GuiGamelistFilter::addFiltersToMenu()
         row.makeAcceptInputHandler([this, updateVal] {
             const float verticalPosition {
                 Renderer::getIsVerticalOrientation() ? mMenu.getPosition().y : 0.0f};
-            mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                getHelpStyle(), verticalPosition, _("GAME NAME"), mTextFilterField->getValue(),
-                updateVal, false, _("OK"), _("APPLY CHANGES?")));
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(verticalPosition, _("GAME NAME"),
+                                                          mTextFilterField->getValue(), updateVal,
+                                                          false, _("OK"), _("APPLY CHANGES?")));
         });
     }
     else {
         row.makeAcceptInputHandler([this, updateVal] {
-            mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), _("GAME NAME"),
-                                                  mTextFilterField->getValue(), updateVal, false,
-                                                  _("OK"), _("APPLY CHANGES?")));
+            mWindow->pushGui(new GuiTextEditPopup(_("GAME NAME"), mTextFilterField->getValue(),
+                                                  updateVal, false, _("OK"), _("APPLY CHANGES?")));
         });
     }
 
@@ -172,11 +171,9 @@ void GuiGamelistFilter::addFiltersToMenu()
         // For bool values, make the selection exclusive so that both True and False can't be
         // selected at the same time. This should be changed to a SwitchComponent at some point.
         if (exclusiveSelect)
-            optionList = std::make_shared<OptionListComponent<std::string>>(getHelpStyle(),
-                                                                            menuLabel, true, true);
+            optionList = std::make_shared<OptionListComponent<std::string>>(menuLabel, true, true);
         else
-            optionList = std::make_shared<OptionListComponent<std::string>>(getHelpStyle(),
-                                                                            menuLabel, true, false);
+            optionList = std::make_shared<OptionListComponent<std::string>>(menuLabel, true, false);
 
         // Still display fields that can't be filtered in the menu, but notify the user and set
         // the OptionListComponent as disabled.

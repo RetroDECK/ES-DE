@@ -136,6 +136,7 @@ protected:
     std::string mText;
     std::string mHiddenText;
     std::shared_ptr<Font> mFont;
+    float mBackgroundCornerRadius;
 
 private:
     void onColorChanged();
@@ -176,7 +177,6 @@ private:
     unsigned int mColor;
     unsigned int mBgColor;
     glm::vec2 mBackgroundMargins;
-    float mBackgroundCornerRadius;
     float mColorOpacity;
     float mBgColorOpacity;
     bool mRenderBackground;

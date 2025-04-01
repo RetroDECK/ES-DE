@@ -460,7 +460,7 @@ The first time you run haikuporter it will take a while as dependencies for all 
 
 Following this you can install the package into the running system:
 ```
-cp ~/haikuports/packages/es_de-3.1.0-1-x86_64.hpkg /boot/system/packages
+cp ~/haikuports/packages/es_de-3.1.1-1-x86_64.hpkg /boot/system/packages
 ```
 
 ## Building on macOS

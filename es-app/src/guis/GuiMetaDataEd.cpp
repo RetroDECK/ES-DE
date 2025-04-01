@@ -44,7 +44,6 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
     : mRenderer {Renderer::getInstance()}
-    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {2, 6}}
     , mScraperParams {scraperParams}
     , mControllerBadges {BadgeComponent::getGameControllers()}
@@ -626,14 +625,14 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         const float verticalPosition {
                             mRenderer->getIsVerticalOrientation() ? mPosition.y : 0.0f};
                         mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                            getHelpStyle(), verticalPosition, title, ed->getValue(), updateVal,
-                            multiLine, _("APPLY"), _("APPLY CHANGES?"), "", ""));
+                            verticalPosition, title, ed->getValue(), updateVal, multiLine,
+                            _("APPLY"), _("APPLY CHANGES?"), "", ""));
                     });
                 }
                 else {
                     row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
-                        mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), title, ed->getValue(),
-                                                              updateVal, multiLine, _("APPLY"),
+                        mWindow->pushGui(new GuiTextEditPopup(title, ed->getValue(), updateVal,
+                                                              multiLine, _("APPLY"),
                                                               _("APPLY CHANGES?")));
                     });
                 }
@@ -689,7 +688,6 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             };
             auto clearSelfBtnFunc = [this, clearSelf] {
                 mWindow->pushGui(new GuiMsgBox(
-                    getHelpStyle(),
                     _("THIS WILL DELETE ANY MEDIA FILES AND "
                       "THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
                       "BUT NEITHER THE DIRECTORY ITSELF OR ANY "
@@ -711,7 +709,6 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             };
             auto clearSelfBtnFunc = [this, clearSelf] {
                 mWindow->pushGui(new GuiMsgBox(
-                    getHelpStyle(),
                     _("THIS WILL DELETE ANY MEDIA FILES "
                       "AND THE GAMELIST.XML ENTRY FOR "
                       "THIS GAME, BUT THE GAME FILE "
@@ -734,8 +731,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             };
             auto deleteGameBtnFunc = [this, deleteFilesAndSelf] {
                 mWindow->pushGui(
-                    new GuiMsgBox(getHelpStyle(),
-                                  _("THIS WILL DELETE THE GAME "
+                    new GuiMsgBox(_("THIS WILL DELETE THE GAME "
                                     "FILE, ANY MEDIA FILES AND "
                                     "THE GAMELIST.XML ENTRY\nARE YOU SURE?"),
                                   _("YES"), deleteFilesAndSelf, _("NO"), nullptr, "", nullptr,
@@ -1039,7 +1035,7 @@ void GuiMetaDataEd::close()
     if (metadataUpdated) {
         // Changes were made, ask if the user wants to save them.
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(), _("SAVE CHANGES?"), _("YES"),
+            _("SAVE CHANGES?"), _("YES"),
             [this, closeFunc] {
                 save();
                 closeFunc();

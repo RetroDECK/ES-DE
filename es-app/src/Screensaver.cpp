@@ -11,6 +11,7 @@
 
 #include "FileData.h"
 #include "Log.h"
+#include "Scripting.h"
 #include "SystemData.h"
 #include "UIModeController.h"
 #include "components/VideoFFmpegComponent.h"
@@ -88,6 +89,7 @@ void Screensaver::startScreensaver(bool generateMediaList)
         if (Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages")) {
             if (generateMediaList)
                 generateCustomImageList();
+
             pickRandomCustomImage(path);
 
             // We've cycled through all games, so start from the beginning again.
@@ -103,7 +105,9 @@ void Screensaver::startScreensaver(bool generateMediaList)
         else {
             if (generateMediaList)
                 generateImageList();
+
             pickRandomImage(path);
+            triggerCustomEvent();
         }
 
         // We've cycled through all games, so start from the beginning again.
@@ -151,7 +155,9 @@ void Screensaver::startScreensaver(bool generateMediaList)
         // Load a random video.
         if (generateMediaList)
             generateVideoList();
+
         pickRandomVideo(path);
+        triggerCustomEvent();
 
         // We've cycled through all games, so start from the beginning again.
         if (mVideoFiles.size() == 0 && mFilesInventory.size() > 0)
@@ -782,4 +788,14 @@ void Screensaver::generateOverlayInfo()
     mGameOverlayRectangleCoords.push_back(posY);
     mGameOverlayRectangleCoords.push_back(mGameOverlay->getSize().x + marginX * 2.0f);
     mGameOverlayRectangleCoords.push_back(mGameOverlay->getSize().y);
+}
+
+void Screensaver::triggerCustomEvent()
+{
+    if (mCurrentGame == nullptr)
+        return;
+
+    Scripting::fireEvent("screensaver-game-select", mCurrentGame->getPath(),
+                         mCurrentGame->metadata.get("name"), mCurrentGame->getSystem()->getName(),
+                         mCurrentGame->getSystem()->getFullName());
 }

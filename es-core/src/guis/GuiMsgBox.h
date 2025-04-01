@@ -11,8 +11,8 @@
 #define ES_CORE_GUIS_GUI_MSG_BOX_H
 
 #include "GuiComponent.h"
+#include "components/BackgroundComponent.h"
 #include "components/ComponentGrid.h"
-#include "components/NinePatchComponent.h"
 #include "utils/LocalizationUtil.h"
 
 class ButtonComponent;
@@ -21,8 +21,7 @@ class TextComponent;
 class GuiMsgBox : public GuiComponent
 {
 public:
-    GuiMsgBox(const HelpStyle& helpstyle,
-              const std::string& text,
+    GuiMsgBox(const std::string& text,
               const std::string& name1 = _("OK"),
               const std::function<void()>& func1 = nullptr,
               const std::string& name2 = "",
@@ -42,16 +41,14 @@ public:
     void onSizeChanged() override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
     void deleteMeAndCall(const std::function<void()>& func);
 
     Renderer* mRenderer;
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
 
-    HelpStyle mHelpStyle;
     std::shared_ptr<TextComponent> mMsg;
     std::vector<std::shared_ptr<ButtonComponent>> mButtons;
     std::shared_ptr<ComponentGrid> mButtonGrid;

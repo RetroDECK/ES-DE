@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-11-25 18:29+0900\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-17 18:10+0900\n"
 "Last-Translator: wakeboxer <ljhmd0825@gmail.com>\n"
 "Language-Team: 한국어 <info@es-de.org>\n"
 "Language: ko_KR\n"
@@ -309,13 +309,13 @@ msgid "INVALID ENTRY"
 msgstr "잘못된 항목"
 
 msgid "CLEARED ENTRY"
-msgstr "삭제된 항목"
+msgstr "비운 항목"
 
 msgid "NO ALTERNATIVE EMULATORS DEFINED"
 msgstr "대체 에뮬레이터 정의되지 않음"
 
 msgid "CLEAR INVALID ENTRY"
-msgstr "잘못된 항목 삭제"
+msgstr "잘못된 항목 비우기"
 
 msgid "DEFAULT"
 msgstr "기본"
@@ -538,7 +538,7 @@ msgid "THIS SYSTEM HAS NO GAMES"
 msgstr "현재 시스템에는 게임이 없습니다"
 
 msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
-msgstr "현재 게임 컬렉션에 게임 추가/삭제"
+msgstr "현재 게임 컬렉션에 게임 추가/제거"
 
 msgid "EDIT THIS FOLDER'S METADATA"
 msgstr "현재 폴더 메타데이터 편집"
@@ -751,6 +751,9 @@ msgstr "짧게"
 msgid "LONG"
 msgstr "길게"
 
+msgid "POPUP"
+msgstr "팝업"
+
 msgid "UI MODE"
 msgstr "UI 모드"
 
@@ -810,6 +813,9 @@ msgstr "게임만"
 msgid "GAMES AND SYSTEMS"
 msgstr "게임과 시스템"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "시스템 상태 설정"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "미디어 뷰어 설정"
 
@@ -818,6 +824,9 @@ msgstr "화면보호기 설정"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "테마 변형 트리거 활성화"
+
+msgid "DISPLAY CLOCK"
+msgstr "시계 표시"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "메뉴 오픈시 배경 흐려짐 효과"
@@ -916,7 +925,7 @@ msgstr ""
 "컨트롤러를 사용하지 않는 한 터치 오버레이를 비활성화하지 마십시오. 그렇지 않"
 "으면 앱이 잠기게 됩니다. 이런 일이 발생하는 경우 컨트롤러나 키보드를 일시적으"
 "로 연결하여 이 설정을 다시 활성화해야 하거나 Android 앱 설정에서 ES-DE 저장소"
-"를 지워 다음 시작 시 구성자가 강제로 실행되도록 할 수 있습니다"
+"를 비워 다음 시작 시 구성자가 강제로 실행되도록 할 수 있습니다"
 
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
 msgstr "첫 번째 컨트롤러의 입력만 허용"
@@ -1039,7 +1048,7 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "60FPS까지 비디오 프레임 레이트 업스케일링"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
-msgstr "게임별 대체 에뮬레이터 사용가능"
+msgstr "게임별 대체 에뮬레이터 사용 가능"
 
 msgid "SHOW HIDDEN FILES AND FOLDERS"
 msgstr "숨긴 파일 및 폴더 보이기"
@@ -1048,7 +1057,10 @@ msgid "SHOW HIDDEN GAMES"
 msgstr "숨긴 게임 보이기"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
-msgstr "커스텀 이벤트 스크립트 사용가능"
+msgstr "커스텀 이벤트 스크립트 사용 가능"
+
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "커스텀 이벤트 탐색"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "GAMELIST.XML 파일에 있는 게임만 보이기"
@@ -1069,7 +1081,7 @@ msgid "DISPLAY GPU STATISTICS OVERLAY"
 msgstr "GPU 통계 오버레이 표시"
 
 msgid "ENABLE MENU IN KID MODE"
-msgstr "아동용 모드에서 메뉴 사용가능"
+msgstr "아동용 모드에서 메뉴 사용 가능"
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "종료 메뉴에 리부트와 전원오프 엔트리 보이기"
@@ -1128,6 +1140,10 @@ msgid "POWER OFF SYSTEM"
 msgstr "시스템 전원 오프"
 
 msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "시스템 상태 설정"
+
+msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "미디어 뷰어 설정"
 
@@ -1145,7 +1161,7 @@ msgid "EDIT METADATA"
 msgstr "메타데이터 편집"
 
 msgid "CLEAR ENTRY"
-msgstr "항목 삭제"
+msgstr "항목 비우기"
 
 msgid "SELECT EMULATOR"
 msgstr "에뮬레이터 선택"
@@ -1174,14 +1190,14 @@ msgid ""
 "ARE YOU SURE?"
 msgstr ""
 "이렇게 하면 이 폴더의 모든 미디어 파일과 GAMELIST.XML 항목이 삭제되지만 디렉"
-"터리 자체나 그 안에 있는 콘텐츠는 삭제되지 않습니다.\n"
+"터리 자체나 그 안에 있는 콘텐츠는 제거되지 않습니다.\n"
 "확실합니까?"
 
 msgid "CLEAR"
-msgstr "삭제"
+msgstr "비우기"
 
 msgid "clear folder"
-msgstr "폴더 삭제"
+msgstr "폴더 비우기"
 
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
@@ -1189,11 +1205,11 @@ msgid ""
 "ARE YOU SURE?"
 msgstr ""
 "이렇게 하면 이 게임의 모든 미디어 파일과 GAMELIST.XML 항목이 삭제되지만 게임 "
-"파일 자체는 삭제되지 않습니다.\n"
+"파일 자체는 제거되지 않습니다.\n"
 "확실합니까?"
 
 msgid "clear file"
-msgstr "파일 삭제"
+msgstr "파일 비우기"
 
 msgid ""
 "THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
@@ -1304,7 +1320,7 @@ msgid "DESCRIPTION:"
 msgstr "설명:"
 
 msgid "TOTAL ENTRIES REMOVED:"
-msgstr "삭제된 총 항목 수:"
+msgstr "제거된 총 항목 수:"
 
 msgid "LAST PROCESSED SYSTEM:"
 msgstr "마지막 처리된 시스템:"
@@ -1835,6 +1851,21 @@ msgstr "비디오 교체 시간 (초)"
 
 msgid "RENDER BLUR"
 msgstr "블러 랜더링 적용"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "블루투스 상태 표시"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "와이파이 상태 표시"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "셀룰러 상태 표시"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "배터리 상태 표시"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "배터리 충전 상태 표시"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "테마 리스트 다운로드 중 100%"
@@ -2443,7 +2474,7 @@ msgid "LOAD CURRENTLY CONFIGURED PATH"
 msgstr "현재 구성된 경로 로드"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
-msgstr "지우기 (기본 경로로 재설정 위해 공란으로 비우기)"
+msgstr "비우기 (기본 경로로 재설정 위해 공란으로 비우기)"
 
 msgid "CREATE DIRECTORIES"
 msgstr "디렉터리 생성"
@@ -2821,6 +2852,9 @@ msgstr "4:3 수직"
 
 msgid "5:4 vertical"
 msgstr "5:4 수직"
+
+msgid "8:7 vertical"
+msgstr "8:7 수직"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 수직"

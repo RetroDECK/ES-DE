@@ -14,7 +14,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/AudioManager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CECInput.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GuiComponent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/HelpStyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HttpReq.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ImageIO.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/InputConfig.h
@@ -23,6 +22,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MameNames.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Settings.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Sound.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemStatus.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ThemeData.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Window.h
 
@@ -40,6 +40,7 @@ set(CORE_HEADERS
 
     # Secondary GUI components
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BackgroundComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgeComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ButtonComponent.h
@@ -62,6 +63,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ScrollIndicatorComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/SliderComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/SwitchComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/SystemStatusComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextEditComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoComponent.h
@@ -101,7 +103,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/AudioManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CECInput.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GuiComponent.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/HelpStyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HttpReq.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ImageIO.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/InputConfig.cpp
@@ -111,6 +112,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Scripting.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Settings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Sound.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemStatus.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ThemeData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Window.cpp
 
@@ -119,6 +121,7 @@ set(CORE_SOURCES
 
     # Secondary GUI components
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BackgroundComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgeComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ButtonComponent.cpp
@@ -137,6 +140,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ScrollableContainer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/SliderComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/SwitchComponent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/SystemStatusComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextEditComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoComponent.cpp
@@ -177,6 +181,17 @@ if(ANDROID)
     set(CORE_HEADERS ${CORE_HEADERS} ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtilAndroid.h)
     set(CORE_HEADERS ${CORE_HEADERS} ${CMAKE_CURRENT_SOURCE_DIR}/src/InputOverlay.cpp)
     set(CORE_SOURCES ${CORE_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtilAndroid.cpp)
+endif()
+
+if(APPLE AND NOT IOS)
+    set(CORE_HEADERS ${CORE_HEADERS} ${CMAKE_CURRENT_SOURCE_DIR}/src/BluetoothStatusApple.m)
+endif()
+
+if(IOS)
+    set(CORE_HEADERS ${CORE_HEADERS} ${CMAKE_CURRENT_SOURCE_DIR}/src/InputOverlay.h)
+    set(CORE_HEADERS ${CORE_HEADERS} ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtilIOS.h)
+    set(CORE_HEADERS ${CORE_HEADERS} ${CMAKE_CURRENT_SOURCE_DIR}/src/InputOverlay.cpp)
+    set(CORE_SOURCES ${CORE_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtilIOS.cpp)
 endif()
 
 #---------------------------------------------------------------------------------------------------

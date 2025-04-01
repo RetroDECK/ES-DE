@@ -24,7 +24,6 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
     : mFirstRun {firstRun}
     , mForcedConfig {forcedConfig}
     , mRenderer {Renderer::getInstance()}
-    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {1, 5}}
 {
     mHoldingConfig = nullptr;

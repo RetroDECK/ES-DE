@@ -8,7 +8,9 @@
 
 add_custom_target(localization ALL COMMENT Compiling localization message catalogs)
 
-if(APPLE)
+if(IOS)
+    set(MSGFMT_BINARY ${PROJECT_SOURCE_DIR}/external/macos/local_install/bin/msgfmt)
+elseif(APPLE)
     set(MSGFMT_BINARY ${PROJECT_SOURCE_DIR}/external/local_install/bin/msgfmt)
 elseif(WIN32)
     set(MSGFMT_BINARY ${PROJECT_SOURCE_DIR}/external/gettext/bin/msgfmt.exe)
@@ -25,9 +27,9 @@ file(GLOB PO_FILES ${PROJECT_SOURCE_DIR}/locale/po/*.po)
 foreach (PO_FILE ${PO_FILES})
     get_filename_component(PO_FILENAME ${PO_FILE} NAME)
     get_filename_component(PO_BASENAME ${PO_FILENAME} NAME_WE)
-    add_custom_command(TARGET localization COMMAND echo Compiling message catalog for locale ${PO_BASENAME})
+    add_custom_command(TARGET localization POST_BUILD COMMAND echo Compiling message catalog for locale ${PO_BASENAME})
     file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/resources/locale/${PO_BASENAME}/LC_MESSAGES)
-    add_custom_command(TARGET localization COMMAND ${MSGFMT_BINARY} -c --statistics -o ${PROJECT_SOURCE_DIR}/resources/locale/${PO_BASENAME}/LC_MESSAGES/${PO_BASENAME}.mo ${PO_FILE})
+    add_custom_command(TARGET localization POST_BUILD COMMAND ${MSGFMT_BINARY} -c --statistics -o ${PROJECT_SOURCE_DIR}/resources/locale/${PO_BASENAME}/LC_MESSAGES/${PO_BASENAME}.mo ${PO_FILE})
 endforeach()
 
-add_custom_command(TARGET localization COMMAND echo)
+add_custom_command(TARGET localization POST_BUILD COMMAND echo)

@@ -42,19 +42,25 @@ SilverGreen93 \
 Lulzee \
 **Swedish** \
 Leon Styhre \
+Daniel Nylander \
 **Japanese** \
 冰棍 \
 **Korean** \
 wakeboxer \
 **Simplified Chinese** \
 邻家小熊 \
-冰棍
+冰棍 \
+**Traditional Chinese** \
+Hsin Chiang
 
 # Licenses
 
 Please find the individual license files inside the [licenses](https://gitlab.com/es-de/emulationstation-de/-/tree/master/licenses) directory. There is also additional license information in the headers of most source files.
 
 # Libraries
+
+BlueZ \
+https://github.com/bluez/bluez
 
 CImg \
 https://www.cimg.eu
@@ -130,6 +136,9 @@ https://batocera.org
 The MD5 hash functions were adapted from code by the BZFlag project \
 https://www.bzflag.org
 
+Some battery detection functionality for macOS was based on code from Battery Percentage Notifier \
+https://github.com/Abhigyan126/Custom_Low_Battery_Warning
+
 The scanline GLSL shader was adapted from code by the RetroArch project \
 https://www.retroarch.com
 
@@ -161,6 +170,9 @@ https://fonts.google.com/noto/specimen/Noto+Emoji
 
 Ubuntu font \
 https://design.ubuntu.com/font
+
+System status icons (some customizations have been made) \
+https://phosphoricons.com
 
 MAME ROM information \
 https://www.mamedev.org

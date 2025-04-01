@@ -21,6 +21,10 @@
 #include <algorithm>
 #include <pugixml.hpp>
 
+#if defined(__IOS__)
+#include "utils/PlatformUtilIOS.h"
+#endif
+
 // clang-format off
 std::vector<std::string> ThemeData::sSupportedViews {
     {"all"},
@@ -71,6 +75,8 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRati
     {"4:3_vertical", "4:3 vertical"},
     {"5:4", "5:4"},
     {"5:4_vertical", "5:4 vertical"},
+    {"8:7", "8:7"},
+    {"8:7_vertical", "8:7 vertical"},
     {"19.5:9", "19.5:9"},
     {"19.5:9_vertical", "19.5:9 vertical"},
     {"20:9", "20:9"},
@@ -92,6 +98,8 @@ std::map<std::string, float> ThemeData::sAspectRatioMap {
     {"4:3_vertical", 0.75f},
     {"5:4", 1.25f},
     {"5:4_vertical", 0.8f},
+    {"8:7", 1.1429f},
+    {"8:7_vertical", 0.875f},
     {"19.5:9", 2.1667f},
     {"19.5:9_vertical", 0.4615f},
     {"20:9", 2.2222f},
@@ -119,7 +127,8 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedLanguages 
     {"sv_SE", "SVENSKA"},
     {"ja_JP", "日本語"},
     {"ko_KR", "한국어"},
-    {"zh_CN", "简体中文"}};
+    {"zh_CN", "简体中文"},
+    {"zh_TW", "繁體中文"}};
 
 std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
     // The data type is defined by the parent property.
@@ -129,6 +138,8 @@ std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAt
        {"customControllerIcon", "controller"}}},
      {"helpsystem",
       {{"customButtonIcon", "button"}}},
+     {"systemstatus",
+      {{"customIcon", "icon"}}},
     };
 
 std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
@@ -350,6 +361,10 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"maxSize", NORMALIZED_PAIR},
        {"cropSize", NORMALIZED_PAIR},
        {"cropPos", NORMALIZED_PAIR},
+       {"imageSize", NORMALIZED_PAIR},
+       {"imageMaxSize", NORMALIZED_PAIR},
+       {"imageCropSize", NORMALIZED_PAIR},
+       {"imageCropPos", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
@@ -374,6 +389,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"pillarboxThreshold", NORMALIZED_PAIR},
        {"scanlines", BOOLEAN},
        {"delay", FLOAT},
+       {"fadeInType", STRING},
        {"fadeInTime", FLOAT},
        {"scrollFadeIn", BOOLEAN},
        {"brightness", FLOAT},
@@ -542,6 +558,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"posDimmed", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"originDimmed", NORMALIZED_PAIR},
+       {"rotation", FLOAT},
+       {"rotationOrigin", NORMALIZED_PAIR},
        {"textColor", COLOR},
        {"textColorDimmed", COLOR},
        {"iconColor", COLOR},
@@ -549,14 +567,64 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"fontSizeDimmed", FLOAT},
+       {"scope", STRING},
+       {"entries", STRING},
+       {"entryLayout", STRING},
+       {"entryRelativeScale", FLOAT},
        {"entrySpacing", FLOAT},
        {"entrySpacingDimmed", FLOAT},
        {"iconTextSpacing", FLOAT},
        {"iconTextSpacingDimmed", FLOAT},
        {"letterCase", STRING},
+       {"backgroundColor", COLOR},
+       {"backgroundColorEnd", COLOR},
+       {"backgroundGradientType", STRING},
+       {"backgroundHorizontalPadding", NORMALIZED_PAIR},
+       {"backgroundVerticalPadding", NORMALIZED_PAIR},
+       {"backgroundCornerRadius", FLOAT},
        {"opacity", FLOAT},
        {"opacityDimmed", FLOAT},
        {"customButtonIcon", PATH}}},
+     {"systemstatus",
+      {{"pos", NORMALIZED_PAIR},
+       {"height", FLOAT},
+       {"origin", NORMALIZED_PAIR},
+       {"rotation", FLOAT},
+       {"rotationOrigin", NORMALIZED_PAIR},
+       {"scope", STRING},
+       {"fontPath", PATH},
+       {"textRelativeScale", FLOAT},
+       {"color", COLOR},
+       {"backgroundColor", COLOR},
+       {"backgroundColorEnd", COLOR},
+       {"backgroundGradientType", STRING},
+       {"backgroundHorizontalPadding", NORMALIZED_PAIR},
+       {"backgroundVerticalPadding", NORMALIZED_PAIR},
+       {"backgroundCornerRadius", FLOAT},
+       {"entries", STRING},
+       {"entrySpacing", FLOAT},
+       {"customIcon", PATH},
+       {"opacity", FLOAT}}},
+     {"clock",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"rotation", FLOAT},
+       {"rotationOrigin", NORMALIZED_PAIR},
+       {"scope", STRING},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"horizontalAlignment", STRING},
+       {"verticalAlignment", STRING},
+       {"color", COLOR},
+       {"backgroundColor", COLOR},
+       {"backgroundColorEnd", COLOR},
+       {"backgroundGradientType", STRING},
+       {"backgroundHorizontalPadding", NORMALIZED_PAIR},
+       {"backgroundVerticalPadding", NORMALIZED_PAIR},
+       {"backgroundCornerRadius", FLOAT},
+       {"format", STRING},
+       {"opacity", FLOAT}}},
      {"sound",
       {{"path", PATH}}}};
 // clang-format on
@@ -769,6 +837,8 @@ void ThemeData::populateThemes()
 #if defined(__ANDROID__)
     const std::string userThemeDirectory {Utils::FileSystem::getInternalAppDataDirectory() +
                                           "/themes"};
+#elif defined(__IOS__)
+    const std::string userThemeDirectory;
 #else
     const std::string defaultUserThemeDir {Utils::FileSystem::getAppDataDirectory() + "/themes"};
     const std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
@@ -800,6 +870,10 @@ void ThemeData::populateThemes()
     const std::vector<std::string> themePaths {Utils::FileSystem::getProgramDataPath() + "/themes",
                                                Utils::FileSystem::getAppDataDirectory() + "/themes",
                                                userThemeDirectory};
+#elif defined(__IOS__)
+    const std::vector<std::string> themePaths {Utils::Platform::iOS::getPackagePath() + "themes",
+                                               Utils::FileSystem::getAppDataDirectory() +
+                                                   "/themes"};
 #elif defined(__APPLE__)
     const std::vector<std::string> themePaths {
         Utils::FileSystem::getExePath() + "/themes",
@@ -2341,6 +2415,7 @@ void ThemeData::gettextMessageCatalogEntries()
     _("3:2 vertical");
     _("4:3 vertical");
     _("5:4 vertical");
+    _("8:7 vertical");
     _("19.5:9 vertical");
     _("20:9 vertical");
     _("21:9 vertical");

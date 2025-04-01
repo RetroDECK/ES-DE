@@ -10,12 +10,12 @@
 #define ES_APP_GUIS_GUI_THEME_DOWNLOADER_H
 
 #include "GuiComponent.h"
+#include "components/BackgroundComponent.h"
 #include "components/BusyComponent.h"
 #include "components/ButtonComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/ComponentList.h"
 #include "components/ImageComponent.h"
-#include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"
 #include "components/TextComponent.h"
 #include "renderers/Renderer.h"
@@ -47,7 +47,6 @@ public:
     bool input(InputConfig* config, Input input) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     struct Screenshot {
@@ -108,7 +107,7 @@ private:
     void setupFullscreenViewer();
 
     Renderer* mRenderer;
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
     std::shared_ptr<ComponentGrid> mCenterGrid;
     std::shared_ptr<ComponentList> mList;

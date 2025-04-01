@@ -30,6 +30,9 @@ namespace Scripting
                    const std::string& arg3,
                    const std::string& arg4)
     {
+#if defined(__IOS__)
+        return;
+#endif
         if (!Settings::getInstance()->getBool("CustomEventScripts"))
             return;
 

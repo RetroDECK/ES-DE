@@ -18,6 +18,7 @@
 #include "MameNames.h"
 #include "Scripting.h"
 #include "SystemData.h"
+#include "SystemStatus.h"
 #include "UIModeController.h"
 #include "Window.h"
 #include "utils/FileSystemUtil.h"
@@ -156,6 +157,9 @@ const std::string FileData::getROMDirectory()
 {
 #if defined(__ANDROID__)
     return AndroidVariables::sROMDirectory;
+#elif defined(__IOS__)
+    std::string dir {Utils::FileSystem::getHomePath() + "/Documents/ROMs"};
+    return dir;
 #endif
 
     const std::string& romDirSetting {Settings::getInstance()->getString("ROMDirectory")};
@@ -187,6 +191,10 @@ const std::string FileData::getROMDirectory()
 
 const std::string FileData::getMediaDirectory()
 {
+#if defined(__IOS__)
+    return Utils::FileSystem::getAppDataDirectory() + "/downloaded_media/";
+#endif
+
     const std::string& mediaDirSetting {Settings::getInstance()->getString("MediaDirectory")};
     std::string mediaDirPath;
 
@@ -896,6 +904,10 @@ void FileData::launchGame()
     std::string romPath {Utils::FileSystem::getEscapedPath(mPath)};
     std::string baseName {Utils::FileSystem::getStem(mPath)};
     std::string romRaw {Utils::FileSystem::getPreferredPath(mPath)};
+#if !defined(_WIN64)
+    std::string romRawWindows {
+        Utils::String::replace(Utils::FileSystem::getPreferredPath(mPath), "/", "\\")};
+#endif
 
     // For the special case where a directory has a supported file extension and is therefore
     // interpreted as a file, check if there is a matching filename inside the directory.
@@ -1772,6 +1784,9 @@ void FileData::launchGame()
     command = Utils::String::replace(command, "%BASENAME%", baseName);
     command = Utils::String::replace(command, "%FILENAME%", fileName);
     command = Utils::String::replace(command, "%ROMRAW%", romRaw);
+#if !defined(_WIN64)
+    command = Utils::String::replace(command, "%ROMRAWWIN%", romRawWindows);
+#endif
     command = Utils::String::replace(command, "%ROMPATH%",
                                      Utils::FileSystem::getEscapedPath(getROMDirectory()));
 #else
@@ -1901,6 +1916,8 @@ void FileData::launchGame()
                         extraValue =
                             Utils::String::replace(extraValue, "%ROMPATHRAW%", getROMDirectory());
                         extraValue = Utils::String::replace(extraValue, "%ROMRAW%", romRaw);
+                        extraValue =
+                            Utils::String::replace(extraValue, "%ROMRAWWIN%", romRawWindows);
                         extraValue = Utils::String::replace(extraValue, "%BASENAME%", baseName);
                         extraValue = Utils::String::replace(extraValue, "//", "/");
 
@@ -1926,6 +1943,12 @@ void FileData::launchGame()
 #endif
 
 #if defined(_WIN64)
+    // Hack to remove double quotation marks as these can occur under some special circumstances.
+    const int quotationCount {static_cast<int>(
+        std::count_if(command.cbegin(), command.cend(), [](char c) { return c == '\"'; }))};
+    if (quotationCount % 2 != 0)
+        command = Utils::String::replace(command, "\"\"", "\"");
+
     command = Utils::String::replace(
         command, "%ESPATH%", Utils::String::replace(Utils::FileSystem::getExePath(), "/", "\\"));
     command = Utils::String::replace(command, "%EMUDIR%",
@@ -2096,10 +2119,12 @@ returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBack
     }
 
     // Unless we're running in the background while the game is launched, re-enable the text
-    // scrolling that was disabled in ViewController.
+    // scrolling that was disabled in ViewController. Also poll the system status immediately
+    // in case something changed while the game was running.
     if (!runInBackground) {
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
+        SystemStatus::getInstance().setPollImmediately(true);
     }
 
     // Update number of times the game has been launched.

@@ -27,13 +27,11 @@
 template <typename T> class OptionListComponent : public GuiComponent
 {
 public:
-    OptionListComponent(const HelpStyle& helpstyle,
-                        const std::string& name,
+    OptionListComponent(const std::string& name,
                         bool multiSelect = false,
                         bool multiExclusiveSelect = false,
                         bool multiShowTotal = false)
-        : mHelpStyle {helpstyle}
-        , mMultiSelect {multiSelect}
+        : mMultiSelect {multiSelect}
         , mMultiExclusiveSelect {multiExclusiveSelect}
         , mMultiShowTotal {multiShowTotal}
         , mKeyRepeat {false}
@@ -297,8 +295,6 @@ public:
         GuiComponent::update(deltaTime);
     }
 
-    HelpStyle getHelpStyle() override { return mHelpStyle; }
-
 private:
     struct OptionListData {
         std::string name;
@@ -307,13 +303,12 @@ private:
         float maxNameLength;
     };
 
-    HelpStyle mHelpStyle;
     std::function<void(const T& object)> mSelectedChangedCallback;
 
     void open()
     {
         // Open the list popup.
-        mWindow->pushGui(new OptionListPopup(getHelpStyle(), this, mName));
+        mWindow->pushGui(new OptionListPopup(this, mName));
     }
 
     void onSelectedChanged()
@@ -417,12 +412,9 @@ private:
     class OptionListPopup : public GuiComponent
     {
     public:
-        OptionListPopup(const HelpStyle& helpstyle,
-                        OptionListComponent<T>* parent,
-                        const std::string& title)
+        OptionListPopup(OptionListComponent<T>* parent, const std::string& title)
             : mMenu(title.c_str())
             , mParent(parent)
-            , mHelpStyle(helpstyle)
         {
             auto font = Font::get(FONT_SIZE_MEDIUM);
             ComponentListRow row;
@@ -579,12 +571,9 @@ private:
             return prompts;
         }
 
-        HelpStyle getHelpStyle() override { return mHelpStyle; }
-
     private:
         MenuComponent mMenu;
         OptionListComponent<T>* mParent;
-        HelpStyle mHelpStyle;
     };
 };
 

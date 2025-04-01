@@ -9,7 +9,6 @@
 #include "guis/GuiInfoPopup.h"
 
 #include "components/ComponentGrid.h"
-#include "components/NinePatchComponent.h"
 #include "components/TextComponent.h"
 
 #include <SDL2/SDL_timer.h>
@@ -21,7 +20,7 @@ GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
     , mAlpha {1.0f}
     , mRunning {true}
 {
-    mFrame = new NinePatchComponent;
+    mBackground = new BackgroundComponent(glm::vec2 {24.0f, 24.0f});
     float maxWidth {Renderer::getScreenWidth() * 0.9f};
     float maxHeight {Renderer::getScreenHeight() * 0.2f};
 
@@ -54,9 +53,8 @@ GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
 
     setPosition(posX, posY, 0);
 
-    mFrame->setImagePath(":/graphics/frame.svg");
-    mFrame->fitTo(mSize);
-    addChild(mFrame);
+    mBackground->fitTo(mSize);
+    addChild(mBackground);
 
     // We only initialize the actual time when we first start to render.
     mStartTime = 0;
@@ -71,7 +69,7 @@ GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
 GuiInfoPopup::~GuiInfoPopup()
 {
     delete mGrid;
-    delete mFrame;
+    delete mBackground;
 }
 
 void GuiInfoPopup::render(const glm::mat4& /*parentTrans*/)
@@ -116,7 +114,7 @@ bool GuiInfoPopup::updateState()
     mGrid->setOpacity(mAlpha);
 
     // Apply fade-in effect to popup frame.
-    mFrame->setFrameColor((mMenuColorFrame & 0xFFFFFF00) |
-                          static_cast<unsigned char>(mAlpha * 255.0f));
+    mBackground->setFrameColor((mMenuColorFrame & 0xFFFFFF00) |
+                               static_cast<unsigned char>(mAlpha * 255.0f));
     return true;
 }

@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-11-24 17:35+0100\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-01 10:02+0100\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: English (United Kingdom) <info@es-de.org>\n"
 "Language: en_GB\n"
@@ -755,6 +755,9 @@ msgstr "BRIEF"
 msgid "LONG"
 msgstr "LONG"
 
+msgid "POPUP"
+msgstr "POPUP"
+
 msgid "UI MODE"
 msgstr "UI MODE"
 
@@ -814,6 +817,9 @@ msgstr "GAMES ONLY"
 msgid "GAMES AND SYSTEMS"
 msgstr "GAMES AND SYSTEMS"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "SYSTEM STATUS SETTINGS"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "MEDIA VIEWER SETTINGS"
 
@@ -822,6 +828,9 @@ msgstr "SCREENSAVER SETTINGS"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "ENABLE THEME VARIANT TRIGGERS"
+
+msgid "DISPLAY CLOCK"
+msgstr "DISPLAY CLOCK"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "BLUR BACKGROUND WHEN MENU IS OPEN"
@@ -1056,6 +1065,9 @@ msgstr "SHOW HIDDEN GAMES"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ENABLE CUSTOM EVENT SCRIPTS"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "BROWSING CUSTOM EVENTS"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 
@@ -1133,6 +1145,10 @@ msgstr "REALLY POWER OFF?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "POWER OFF SYSTEM"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "SYSTEM STATUS SETTINGS"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1849,6 +1865,21 @@ msgstr "SWAP VIDEOS AFTER (SECONDS)"
 
 msgid "RENDER BLUR"
 msgstr "RENDER BLUR"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "DISPLAY BLUETOOTH STATUS INDICATOR"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "DISPLAY WI-FI STATUS INDICATOR"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "DISPLAY CELLULAR STATUS INDICATOR"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "DISPLAY BATTERY STATUS INDICATOR"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "DISPLAY BATTERY CHARGE PERCENTAGE"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DOWNLOADING THEMES LIST 100%"
@@ -2849,6 +2880,9 @@ msgstr "4:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"
+
+msgid "8:7 vertical"
+msgstr "8:7 vertical"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 vertical"

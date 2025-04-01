@@ -30,8 +30,7 @@ static InputConfigStructure sGuiInputConfigList[inputCount];
 GuiInputConfig::GuiInputConfig(InputConfig* target,
                                bool reconfigureAll,
                                const std::function<void()>& okCallback)
-    : mBackground {":/graphics/frame.svg"}
-    , mGrid {glm::ivec2 {1, 7}}
+    : mGrid {glm::ivec2 {1, 7}}
     , mTargetConfig {target}
     , mHoldingInput {false}
 {

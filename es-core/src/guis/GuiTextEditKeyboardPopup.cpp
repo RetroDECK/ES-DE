@@ -41,7 +41,6 @@
 #include "utils/StringUtil.h"
 
 GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
-    const HelpStyle& helpstyle,
     const float verticalPosition,
     const std::string& title,
     const std::string& initValue,
@@ -55,9 +54,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     const std::string& clearBtnHelpText,
     const std::string& cancelBtnHelpText)
     : mRenderer {Renderer::getInstance()}
-    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 8 : 6)}}
-    , mHelpStyle {helpstyle}
     , mInitValue {initValue}
     , mAcceptBtnHelpText {acceptBtnHelpText}
     , mSaveConfirmationText {saveConfirmationText}
@@ -365,7 +362,7 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
-                mHelpStyle, mSaveConfirmationText, _("YES"),
+                mSaveConfirmationText, _("YES"),
                 [this] {
                     this->mOkCallback(mText->getValue());
                     delete this;

@@ -70,11 +70,10 @@ bool MediaViewer::startMediaViewer(FileData* game)
     ViewController::getInstance()->pauseViewVideos();
     Window::getInstance()->stopInfoPopup();
 
-    HelpStyle style;
-    style.font = Font::get(FONT_SIZE_MINI);
-    style.origin = {0.5f, 0.5f};
-    style.iconColor = 0xAAAAAAFF;
-    style.textColor = 0xAAAAAAFF;
+    mHelp = std::make_unique<HelpComponent>(Font::get(FONT_SIZE_MINI));
+    mHelp->setHelpOrigin(glm::vec2 {0.5, 0.5f});
+    mHelp->setHelpTextColor(0xAAAAAAFF);
+    mHelp->setHelpIconColor(0xAAAAAAFF);
 
     mEntryCount = std::to_string(mImages.size() + (mVideo == nullptr ? 0 : 1));
 
@@ -85,17 +84,15 @@ bool MediaViewer::startMediaViewer(FileData* game)
 
     if (mHelpInfoPosition == HelpInfoPosition::TOP) {
         mMediaType->setPosition(mRenderer->getScreenWidth() * 0.01f, mFrameHeight / 2.0f);
-        style.position = glm::vec2 {mRenderer->getScreenWidth() / 2.0f, mFrameHeight / 2.0f};
+        mHelp->setHelpPosition(glm::vec2 {mRenderer->getScreenWidth() / 2.0f, mFrameHeight / 2.0f});
     }
     else if (mHelpInfoPosition == HelpInfoPosition::BOTTOM) {
         mMediaType->setPosition(mRenderer->getScreenWidth() * 0.01f,
                                 mRenderer->getScreenHeight() - (mFrameHeight / 2.0f));
-        style.position = glm::vec2 {mRenderer->getScreenWidth() / 2.0f,
-                                    mRenderer->getScreenHeight() - (mFrameHeight / 2.0f)};
+        mHelp->setHelpPosition(glm::vec2 {mRenderer->getScreenWidth() / 2.0f,
+                                          mRenderer->getScreenHeight() - (mFrameHeight / 2.0f)});
     }
 
-    mHelp = std::make_unique<HelpComponent>();
-    mHelp->setStyle(style);
     mHelp->setPrompts(getHelpPrompts());
 
     return true;

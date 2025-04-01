@@ -52,6 +52,12 @@
             <entry>/usr/local/bin/atari800</entry>
         </rule>
     </emulator>
+    <emulator name="AZAHAR">
+        <!-- Nintendo 3DS emulator Azahar -->
+        <rule type="staticpath">
+            <entry>/Applications/azahar.app/Contents/MacOS/azahar</entry>
+        </rule>
+    </emulator>
     <emulator name="BASILISKII">
         <!-- Macintosh 68k emulator Basilisk II -->
         <rule type="staticpath">
@@ -322,6 +328,12 @@
             <entry>/Applications/ScummVM.app/Contents/MacOS/scummvm</entry>
             <entry>/opt/homebrew/bin/scummvm</entry>
             <entry>/usr/local/bin/scummvm</entry>
+        </rule>
+    </emulator>
+    <emulator name="SHADPS4">
+        <!-- Sony PlayStation 4 emulator shadPS4 -->
+        <rule type="staticpath">
+            <entry>/Applications/shadps4.app/Contents/MacOS/shadps4</entry>
         </rule>
     </emulator>
     <emulator name="SHEEPSHAVER">

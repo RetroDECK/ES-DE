@@ -19,7 +19,7 @@
 #include "resources/Font.h"
 #include "utils/LocalizationUtil.h"
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
 #include "InputOverlay.h"
 #endif
 
@@ -30,6 +30,9 @@
 
 Window::Window() noexcept
     : mRenderer {Renderer::getInstance()}
+    , mHelpComponents {nullptr}
+    , mClockComponents {nullptr}
+    , mSystemStatusComponents {nullptr}
     , mSplashTextPositions {0.0f, 0.0f, 0.0f, 0.0f}
     , mBackgroundOverlayOpacity {1.0f}
     , mScreensaver {nullptr}
@@ -57,6 +60,7 @@ Window::Window() noexcept
     , mInvalidateCacheTimer {0}
     , mVideoPlayerCount {0}
     , mTopScale {0.5f}
+    , mScaleAccumulator {0}
     , mRenderedHelpPrompts {false}
     , mChangedTheme {false}
 {
@@ -181,10 +185,21 @@ bool Window::init(bool resized)
     #endif
     mProgressBarRectangles.emplace_back(progressBarRect);
 
-    mBackgroundOverlay->setImage(":/graphics/frame.png");
     mBackgroundOverlay->setResize(mRenderer->getScreenWidth(), mRenderer->getScreenHeight());
-
     mPostprocessedBackground = TextureResource::get("", false, false, false, false, false);
+
+    // This doesn't really do anything useful per se, but initializing the texture takes a bit
+    // longer the first time so doing it here even with null data avoids some potential stutter
+    // the first time the menu is opened.
+    const std::vector<unsigned char> processedTexture(
+        static_cast<size_t>(mRenderer->getScreenWidth()) *
+            static_cast<size_t>(mRenderer->getScreenHeight()) * 4,
+        0);
+    mPostprocessedBackground->initFromPixels(&processedTexture[0],
+                                             static_cast<size_t>(mRenderer->getScreenWidth()),
+                                             static_cast<size_t>(mRenderer->getScreenHeight()));
+
+    mScaleAccumulator = 0;
 
     mListScrollText = std::make_unique<TextComponent>("", Font::get(FONT_SIZE_LARGE));
     mGPUStatisticsText = std::make_unique<TextComponent>(
@@ -206,6 +221,20 @@ void Window::deinit()
         (*it)->onHide();
 
     mPostprocessedBackground.reset();
+    sHelpPromptsImageCache.clear();
+    mHelp.reset();
+    if (mHelpComponents != nullptr) {
+        mHelpComponents->clear();
+        mHelpComponents = nullptr;
+    }
+    if (mClockComponents != nullptr) {
+        mClockComponents->clear();
+        mClockComponents = nullptr;
+    }
+    if (mSystemStatusComponents != nullptr) {
+        mSystemStatusComponents->clear();
+        mSystemStatusComponents = nullptr;
+    }
 
     InputManager::getInstance().deinit();
     ResourceManager::getInstance().unloadAll();
@@ -297,6 +326,7 @@ void Window::input(InputConfig* config, Input input)
         // up. So scale it to full size so it won't be stuck at a smaller size when returning
         // from the submenu.
         mTopScale = 1.0f;
+        mScaleAccumulator = 0;
         GuiComponent* menu {mGuiStack.back()};
         glm::vec2 menuCenter {menu->getCenter()};
         menu->setOrigin(0.5f, 0.5f);
@@ -351,8 +381,13 @@ void Window::logInput(InputConfig* config, Input input)
 
 void Window::update(int deltaTime)
 {
-    if (mInvalidateCacheTimer > 0)
+    if (mInvalidateCacheTimer > 0) {
         mInvalidateCacheTimer = glm::clamp(mInvalidateCacheTimer - deltaTime, 0, 500);
+        if (mHelpComponents != nullptr) {
+            for (auto& helpComponent : *mHelpComponents)
+                helpComponent->setVisible(false);
+        }
+    }
 
     if (mNormalizeNextUpdate) {
         mNormalizeNextUpdate = false;
@@ -360,6 +395,10 @@ void Window::update(int deltaTime)
         if (deltaTime > mAverageDeltaTime)
             deltaTime = mAverageDeltaTime;
     }
+
+    if (mGuiStack.size() > 1 && mTopScale < 1.0f &&
+        Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up")
+        mScaleAccumulator += deltaTime;
 
     mFrameTimeElapsed += deltaTime;
     ++mFrameCountElapsed;
@@ -440,7 +479,17 @@ void Window::update(int deltaTime)
     if (mScreensaver && mRenderScreensaver)
         mScreensaver->update(deltaTime);
 
-#if defined(__ANDROID__)
+    if (mClockComponents != nullptr) {
+        for (auto& clockComponent : *mClockComponents)
+            clockComponent->update(deltaTime);
+    }
+
+    if (mSystemStatusComponents != nullptr) {
+        for (auto& systemStatusComponent : *mSystemStatusComponents)
+            systemStatusComponent->update(deltaTime);
+    }
+
+#if defined(__ANDROID__) || defined(__IOS__)
     if (Settings::getInstance()->getBool("InputTouchOverlay"))
         InputOverlay::getInstance().update(deltaTime);
 #endif
@@ -463,6 +512,7 @@ void Window::render()
     glm::mat4 trans {mRenderer->getIdentity()};
 
     mRenderedHelpPrompts = false;
+    bool menuIsOpen {false};
 
     // Draw only bottom and top of GuiStack (if they are different).
     if (!mGuiStack.empty()) {
@@ -503,6 +553,8 @@ void Window::render()
             bottom->render(trans);
 
         if (bottom != top || mRenderLaunchScreen) {
+            if (!mRenderLaunchScreen)
+                menuIsOpen = true;
             if (!mCachedBackground && mInvalidateCacheTimer == 0) {
                 // Generate a cache texture of the shaded background when opening the menu, which
                 // will remain valid until the menu is closed. This is way faster than having to
@@ -525,7 +577,7 @@ void Window::render()
 
                     // We run two passes to make the blur smoother.
                     backgroundParameters.blurPasses = 2;
-                    backgroundParameters.blurStrength = 1.35f;
+                    backgroundParameters.blurStrength = 1.75f;
 
                     // Also dim the background slightly.
                     if (Settings::getInstance()->getString("MenuColorScheme") == "light")
@@ -593,18 +645,34 @@ void Window::render()
             mBackgroundOverlay->render(trans);
 
             // Scale-up menu opening effect.
-            if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
-                if (mTopScale < 1.0f) {
-                    mTopScale = glm::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
-                    glm::vec2 topCenter {top->getCenter()};
-                    top->setOrigin(0.5f, 0.5f);
-                    top->setPosition(topCenter.x, topCenter.y, 0.0f);
-                    top->setScale(mTopScale);
-                }
+            if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up" &&
+                mTopScale < 1.0f) {
+                mTopScale =
+                    glm::clamp(glm::mix(0.5f, 1.0f, static_cast<float>(mScaleAccumulator) / 110.0f),
+                               0.5f, 1.0f);
+                glm::vec2 topCenter {top->getCenter()};
+                top->setOrigin(0.5f, 0.5f);
+                top->setPosition(topCenter.x, topCenter.y, 0.0f);
+                top->setScale(mTopScale);
+                if (mTopScale == 1.0f)
+                    mScaleAccumulator = 0;
             }
 
-            if (!mRenderedHelpPrompts)
-                mHelp->render(trans);
+            if (!mRenderedHelpPrompts) {
+                if (mHelpComponents != nullptr) {
+                    for (auto& helpComponent : *mHelpComponents) {
+                        if (helpComponent->getComponentScope() == ComponentScope::NONE)
+                            continue;
+                        if (helpComponent->getComponentScope() != ComponentScope::VIEW) {
+                            helpComponent->setVisible(true);
+                            helpComponent->render(trans);
+                        }
+                    }
+                }
+                else {
+                    mHelp->render(trans);
+                }
+            }
 
             if (!mRenderLaunchScreen)
                 top->render(trans);
@@ -646,6 +714,30 @@ void Window::render()
             startScreensaver(true);
     }
 
+    if (mClockComponents != nullptr) {
+        for (auto& clockComponent : *mClockComponents) {
+            if (clockComponent->getComponentScope() == ComponentScope::NONE)
+                continue;
+            if (menuIsOpen && clockComponent->getComponentScope() == ComponentScope::VIEW)
+                continue;
+            if (!menuIsOpen && clockComponent->getComponentScope() == ComponentScope::MENU)
+                continue;
+            clockComponent->render(trans);
+        }
+    }
+
+    if (mSystemStatusComponents != nullptr) {
+        for (auto& systemStatusComponent : *mSystemStatusComponents) {
+            if (systemStatusComponent->getComponentScope() == ComponentScope::NONE)
+                continue;
+            if (menuIsOpen && systemStatusComponent->getComponentScope() == ComponentScope::VIEW)
+                continue;
+            if (!menuIsOpen && systemStatusComponent->getComponentScope() == ComponentScope::MENU)
+                continue;
+            systemStatusComponent->render(trans);
+        }
+    }
+
     if (mInfoPopup)
         mInfoPopup->render(trans);
 
@@ -661,7 +753,7 @@ void Window::render()
     if (mRenderScreensaver)
         mScreensaver->renderScreensaver();
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     if (Settings::getInstance()->getBool("InputTouchOverlay"))
         InputOverlay::getInstance().render(mRenderer->getIdentity());
 #endif
@@ -758,15 +850,24 @@ void Window::renderListScrollOverlay(const float opacity, const std::string& tex
 
 void Window::renderHelpPromptsEarly()
 {
-    mHelp->render(mRenderer->getIdentity());
+    if (mHelpComponents != nullptr) {
+        for (auto& helpComponent : *mHelpComponents) {
+            if (helpComponent->getComponentScope() == ComponentScope::NONE)
+                continue;
+            if (helpComponent->getComponentScope() != ComponentScope::MENU) {
+                helpComponent->setVisible(true);
+                helpComponent->render(mRenderer->getIdentity());
+            }
+        }
+    }
+    else {
+        mHelp->render(mRenderer->getIdentity());
+    }
     mRenderedHelpPrompts = true;
 }
 
-void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style)
+void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts)
 {
-    mHelp->clearPrompts();
-    mHelp->setStyle(style);
-
     std::vector<HelpPrompt> addPrompts;
 
     std::map<std::string, bool> inputSeenMap;
@@ -798,10 +899,13 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
         }
     }
 
-    // Sort prompts so it goes [dpad_all] [dpad_u/d] [dpad_l/r] [a/b/x/y/l/r] [start/back].
+    // Sort the prompts so that they are always displayed in the same order on screen.
     std::sort(addPrompts.begin(), addPrompts.end(),
               [](const HelpPrompt& a, const HelpPrompt& b) -> bool {
-                  static const std::vector<std::string> map {"up/down/left/right",
+                  static const std::vector<std::string> map {"thumbstickclick",
+                                                             "lr",
+                                                             "ltrt",
+                                                             "up/down/left/right",
                                                              "up/down",
                                                              "up",
                                                              "down",
@@ -830,7 +934,21 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
                   return aVal > bVal;
               });
 
-    mHelp->setPrompts(addPrompts);
+    if (mHelpComponents != nullptr) {
+        for (auto& helpComponent : *mHelpComponents) {
+            if (helpComponent->getComponentScope() == ComponentScope::NONE)
+                continue;
+            if (mGuiStack.size() == 1 && helpComponent->getComponentScope() == ComponentScope::MENU)
+                continue;
+            if (mGuiStack.size() > 1 && helpComponent->getComponentScope() == ComponentScope::VIEW)
+                continue;
+            helpComponent->clearPrompts();
+            helpComponent->setPrompts(addPrompts);
+        }
+    }
+    else if (mHelp != nullptr) {
+        mHelp->setPrompts(addPrompts);
+    }
 }
 
 void Window::stopInfoPopup()

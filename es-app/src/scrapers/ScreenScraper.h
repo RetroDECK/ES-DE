@@ -67,6 +67,8 @@ public:
         const std::string platformIdentifier {" P"};
 #elif defined(__linux__)
         const std::string platformIdentifier {" L"};
+#elif defined(__IOS__)
+        const std::string platformIdentifier {" I"};
 #elif defined(__APPLE__)
         const std::string platformIdentifier {" M"};
 #elif defined(_WIN64)

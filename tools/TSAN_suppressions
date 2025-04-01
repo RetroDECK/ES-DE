@@ -1,2 +1,3 @@
 race:libpulsecommon
 race:radeonsi_dri
+race:libgallium

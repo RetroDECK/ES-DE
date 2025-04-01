@@ -12,6 +12,7 @@
 
 #include "GuiComponent.h"
 #include "MiximageGenerator.h"
+#include "components/BackgroundComponent.h"
 #include "components/ButtonComponent.h"
 #include "components/ComponentGrid.h"
 #include "views/ViewController.h"
@@ -31,7 +32,6 @@ private:
     void update(int deltaTime) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
     std::queue<FileData*> mGameQueue;
 
@@ -55,7 +55,7 @@ private:
     unsigned int mGamesFailed;
 
     Renderer* mRenderer;
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mTitle;

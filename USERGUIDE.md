@@ -118,6 +118,8 @@ _This is the dialog shown if no game files were found. It lets you configure the
 
 ## Upgrading to a newer release
 
+**Linux, macOS and Windows**
+
 **Note:** Before upgrading ES-DE, make sure that you have not made any system customizations anywhere in the installation directory structure as these files will be overwritten during the upgrade process. All customizations should go into ~/ES-DE/custom_systems/ as described elsewhere in this guide. None of the upgrade methods mentioned below will ever touch any files inside your ES-DE directory tree.
 
 There is a built-in application updater that can automatically upgrade the Linux AppImages, and for Windows and macOS there is support for downloading the packages directly inside ES-DE. Just be aware that these will need to be manually installed. Using the application updater is straightforward, just follow the on-screen instructions. For the AppImage releases the old file is retained by renaming it, adding its version to the filename followed by the .OLD extension, for example `ES-DE_x64_SteamDeck.AppImage_3.0.0.OLD`
@@ -126,7 +128,20 @@ Note that the updater will keep whatever filename you had for your running AppIm
 
 On Windows and macOS you can specify to which directory you want to save the downloaded file. The default is `C:\Users\myusername\Downloads` on Windows and `/Users/myusername/Downloads` on macOS.
 
-On Android the update process differs depending on whether you have the Patreon release or a release from either the Samsung Galaxy Store or Huawei AppGallery. For the store versions you simply update via the store app. For the Patreon release you'll get an email (sent to the address you used when buying ES-DE there) whenever there is a new version. For all Android releases, unless you have modifed the option _Check for application updates_ you'll see a popup on application startup whenever there's a new release available.
+To perform the upgrade on macOS simply open the .dmg file and install ES-DE on top of the old installation (i.e. replacing it).
+
+For the Windows installer release simply run the .exe file and select uninstallation of the old version before installing the new version. For the Windows portable release refer to the README.txt file in the zip archive for instructions on how to perform the update.
+
+**Android**
+
+On Android the update process differs depending on whether you have the Patreon release or a release from either the Samsung Galaxy Store or Huawei AppGallery. For the store versions you simply update via the store app. For the Patreon release you'll get an email (sent to the address you used on Patreon) whenever there is a new version. This email contains a download link to the latest APK, and to apply the update you simply run this APK file. This is a safe operation that will not change or remove any of your data such as settings, scraped media etc.
+
+Also for the Patreon release you'll see a popup on application startup whenever there's a new version available, unless you have modifed the option _Check for application updates_ in the _Other settings_ menu. Note that such notifications are not shown for the Galaxy Store and AppGallery releases as those store apps have their built-in update notifications.
+
+For the Patreon release you can also resend the latest update email to yourself using the self-service resend tool:\
+https://resend.es-de.org
+
+**After the upgrade**
 
 Regardless of package format and operating system it's a good idea to update the ROM directory tree after upgrading to a new version. It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed. The easiest way to do this is via the _Create/update system directories_ entry in the _Utilities_ menu. Alternatively the _--create-system-dirs_ command line option can be used. Both methods work identically and will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
 
@@ -250,6 +265,10 @@ On some GPUs with buggy drivers, ES-DE may only display a black screen on startu
 ES-DE.exe --resolution 1281 800
 ```
 
+Another potential workaround for some buggy drivers is to set ES-DE to compatibility mode and/or select _Disable full-screen optimizations_. These options are available when right-clicking on ES-DE.exe in the file manager and chosing _Properties_ and then selecting the _Compatibility_ tab.
+
+Yet another issue with buggy GPU drivers is that for computers with multiple GPUs such as gaming laptops with integrated Intel graphics in addition to a discrete GPU (e.g. from Nvidia) there may be issues when window switching between ES-DE and other applications. In such cases severe screen flickering may get introduced. This is normally worked around by explicitly setting ES-DE to use the discrete GPU in the Windows graphics settings.
+
 Some computers using Intel Iris Xe GPUs refuse to start ES-DE or display excessive graphics corruption. These problems are seemingly caused by driver bugs and do not occur when using Linux with the same hardware. There is no known solution or workaround to this issue other than switching to Linux or waiting for Intel to resolve the problem with a driver update.
 
 Some older games (and possibly emulators too) may not work correctly or even start at all if ES-DE is set to run in the background while a game is launched. So if you experience strange issues with some games, make sure that the setting _Run in background (while game is launched)_ is disabled. If launching any of these problematic games from the _desktop_ system, also make sure to use the default emulator entry _Suspend ES-DE_ and not the alternative emulator _Keep ES-DE running_.
@@ -279,8 +298,6 @@ Lack of controller support is a bit of a problem on macOS, and in some instances
 There is a very annoying default configuration when using Sony controllers like the DualShock 4 and DualSense (and possibly others) where double tapping the Share button starts the screen recording functionality of the operating system. This normally presents a popup window for whether to approve the screen recording. To disable this functionality you need to create a custom controller profile and assign that to your specific controller. This is done via _System Settings_ and then the _Game Controllers_ entry. You'll find the relevant setting under the _Share Gestures_ section of the controller profile configuration screen. Refer to your operating system documentation for more details about this topic.
 
 One macOS-specific requirement is that the RetroArch setting _Start in Fullscreen mode_ is enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. This issue has not been observed with any other emulators.
-
-At the time of writing there is an additional issue with the ARM release of RetroArch where ES-DE will not be able to consistently switch to its window on game launch if the setting _Close windows when quitting an application_ under the _Desktop & Dock_ entry in the macOS _System Settings_ has been set to disabled. This error does not occur for the Intel/x86 release of RetroArch or with any other standalone emulators (including those built specifically for the ARM architecture).
 
 The first time you launch a RetroArch-emulated game from within ES-DE the operating system will present you with a security option with the following description:
 
@@ -625,12 +642,12 @@ If ES-DE is unable to find an emulator when a game is launched, a notification p
 
 ## Using the Steam release of RetroArch
 
-As this release of RetroArch is executed via the Steam application it's behaving a bit glitchy and strange with ES-DE (which is due to the nature of Steam). In addition to this there seem to be some bugs in either Steam or RetroArch, or both. The following issues have been observed:
+As this release of RetroArch is executed via the Steam application it's behaving a bit glitchy and strange with ES-DE (which is due to the nature of Steam). The following issues have been observed:
 
 * ES-DE will continue to run in the background due to the way that Steam works
-* Game launching is not seamless and there will be some flickering
-* If the Steam GUI is visible, focus may not return to ES-DE when exiting a game. Minimizing Steam increases the chances of this working properly but it's not guaranteed to completely fix the problem
-* Filenames containing apostrophes do not work, you need to rename these game files to be able to launch them
+* Game launching may not be seamless, with screen flickering and similar on some devices and operating systems
+* If the Steam GUI is visible, focus may not return to ES-DE when exiting a game (this seems to be caused by the Steam overlay)
+* There may be additional focusing and window switching issues caused by the Steam overlay
 * Core searches will not work, if an emulator core is missing there will be no error notification inside ES-DE and game launching will just silently fail
 * Logging output from emulators is not possible due to ES-DE running in the background
 
@@ -641,7 +658,7 @@ Simply add alternative emulator entries such as the following example (which ena
 <command label="Nestopia UE (Steam)">%RUNINBACKGROUND% %EMULATOR_STEAM% -applaunch 1118310 -L nestopia_libretro %ROM%</command>
 ```
 
-This will work on both Linux and Windows.
+This will work on both Linux and Windows (and possibly macOS too).
 
 A complete entry for the nes system could look like the following:
 ```xml
@@ -2503,6 +2520,11 @@ To add an installed game to ES-DE, create an empty file in `~/ROMs/psvita` and n
 Then add the game Title ID to this file. This ID can be found inside the Vita3K GUI, in the _Title ID_ column. For example the game _WipEout 2048_ has an ID that is PCSF00007. So simply add the string PCSF00007 to the `WipEout 2048.psvita` file and the setup for this game is complete.
 
 Game launching and scraping should now work fine in ES-DE.
+
+To simplify the setup described above there is a convenient archive of .psvita files available that covers most of the game library for this console. It can be downloaded from here:\
+https://github.com/Jetup13/Retroid-Pocket-5-Wiki/wiki/Emulators-and-Formats#vita3k-frontend-support
+
+Just extract the corresponding file for any game you have installed in Vita3K and place it in ~/ROMs/psvita and you're good to go.
 
 ### Steam
 

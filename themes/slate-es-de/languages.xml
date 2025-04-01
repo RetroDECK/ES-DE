@@ -148,4 +148,14 @@
             <langLabelLastPlayed>最后游玩</langLabelLastPlayed>
         </variables>
     </language>
+    <language name="zh_TW">
+        <variables>
+            <langLabelReleasedate>發行日</langLabelReleasedate>
+            <langLabelDeveloper>開發者</langLabelDeveloper>
+            <langLabelPublisher>發行者</langLabelPublisher>
+            <langLabelGenre>類別</langLabelGenre>
+            <langLabelPlayers>玩家</langLabelPlayers>
+            <langLabelLastPlayed>最後遊玩</langLabelLastPlayed>
+        </variables>
+    </language>
 </theme>
