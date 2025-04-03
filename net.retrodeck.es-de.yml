@@ -192,24 +192,16 @@ modules:
         url: https://github.com/webmproject/libvpx/archive/refs/tags/v1.15.0.tar.gz
         sha256: e935eded7d81631a538bfae703fd1e293aad1c7fd3407ba00440c95105d2011e
 
-  # Needed from ES-DE 3.2.0+
-  - name: icu
-    buildsystem: autotools
-    builddir: true
-    subdir: icu/source
-    sources:
-      - type: archive
-        url: https://github.com/unicode-org/icu/releases/download/release-74-2/icu4c-74_2-src.tgz
-        sha256: 68db082212a96d6f53e35d60f47d38b962e9f9d207a74cfac78029ae8ff5e08c
-        dest: icu
-
   - name: ES-DE
     buildsystem: cmake-ninja
     config-opts:
       - -DRETRODECK=on
+      - -DCMAKE_PREFIX_PATH=/app
+      - -DICU_USE_STATIC_LIBS=ON
+      - -DICU_ROOT=/app
     build-options:
       cflags: -I/app/include
-      ldflags: -L/app/lib
+      ldflags: -L/app/lib -licuuc -licudata
     cleanup:
       - es-app
       - es-core
