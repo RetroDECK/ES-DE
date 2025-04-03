@@ -194,18 +194,14 @@ modules:
 
   # Needed from ES-DE 3.2.0+
   - name: icu
-    buildsystem: simple
-    build-commands:
-      - |
-          cd source
-          chmod +x runConfigureICU configure install-sh
-          ./runConfigureICU Linux --prefix=/app --disable-strict
-          make -j$(nproc)
-          make install
+    buildsystem: autotools
+    builddir: true
+    subdir: icu/source
     sources:
       - type: archive
         url: https://github.com/unicode-org/icu/releases/download/release-74-2/icu4c-74_2-src.tgz
         sha256: 68db082212a96d6f53e35d60f47d38b962e9f9d207a74cfac78029ae8ff5e08c
+        dest: icu
 
   - name: ES-DE
     buildsystem: cmake-ninja
