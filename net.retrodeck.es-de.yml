@@ -194,12 +194,14 @@ modules:
 
   # Needed from ES-DE 3.2.0+
   - name: icu
-    buildsystem: autotools
+    buildsystem: simple
     build-commands:
-      - cd source
-      - ./configure --prefix=/app
-      - make -j$(nproc)
-      - make install
+      - |
+          cd source
+          chmod +x runConfigureICU configure install-sh
+          ./runConfigureICU Linux --prefix=/app --disable-strict
+          make -j$(nproc)
+          make install
     sources:
       - type: archive
         url: https://github.com/unicode-org/icu/releases/download/release-74-2/icu4c-74_2-src.tgz
