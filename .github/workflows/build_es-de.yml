@@ -104,3 +104,50 @@ jobs:
           allowUpdates: true
           makeLatest: ${{ contains(needs.Set_Release_Metadata.outputs.branch_name, 'feat/') && 'false' || 'true' }}
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+
+  Check_And_Delete_Empty_Release:
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs:
+      - Set_Release_Metadata
+      - Building_RetroDECK-ES-DE
+      - Create_AppImage_RetroDECK
+    steps:
+      - name: Check if all required jobs succeeded
+        id: check_status
+        run: |
+          echo "build1: ${{ needs.Building_RetroDECK-ES-DE.result }}"
+          echo "build2: ${{ needs.Create_AppImage_RetroDECK.result }}"
+          
+          if [ "${{ needs.Building_RetroDECK-ES-DE.result }}" = "success" ] || [ "${{ needs.Create_AppImage_RetroDECK.result }}" = "success" ]; then
+            echo "At least one build succeeded, skipping release deletion."
+            echo "proceed=false" >> $GITHUB_OUTPUT
+          else
+            echo "All builds failed. Proceeding to check for empty release."
+            echo "proceed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Delete release if empty and all builds failed
+        if: steps.check_status.outputs.proceed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          REPO: ${{ github.repository }}
+          TAG_NAME: "${{ needs.Set_Release_Metadata.outputs.branch_name }}-${{ needs.Set_Release_Metadata.outputs.date }}"
+        run: |
+          echo "Checking release $TAG_NAME on $REPO"
+
+          RELEASE_JSON=$(gh api repos/$REPO/releases/tags/$TAG_NAME)
+          ASSET_COUNT=$(echo "$RELEASE_JSON" | jq '.assets | length')
+
+          echo "Assets in release: $ASSET_COUNT"
+          
+          if [ "$ASSET_COUNT" -le 2 ]; then
+            RELEASE_ID=$(echo "$RELEASE_JSON" | jq -r '.id')
+            echo "Deleting empty release (ID: $RELEASE_ID)..."
+            gh api --method DELETE repos/$REPO/releases/$RELEASE_ID
+            git push origin --delete "$TAG_NAME"
+            echo "✅ Empty release deleted: $TAG_NAME"
+          else
+            echo "🛑 Release has assets. Not deleting."
+          fi
+        
