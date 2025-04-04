@@ -61,8 +61,9 @@ jobs:
           tag: "${{ needs.Set_Release_Metadata.outputs.branch_name }}-${{ needs.Set_Release_Metadata.outputs.date }}"
           name: "${{ needs.Set_Release_Metadata.outputs.branch_name }} Build"
           body: |
-            Build of RetroDECK ES-DE from `${{ github.repository }}@${{ github.sha }}`
-            - Branch: [${{ needs.Set_Release_Metadata.outputs.branch_name }}](https://github.com/${{ github.repository }}/tree/${{ needs.Set_Release_Metadata.outputs.branch_name }})
+            # Release Notes
+            These are the artifact of RetroDECK ES-DE, commit: ${{ github.event.repository.full_name }}@${{github.sha}}.
+            On branch [${{ needs.Set_Release_Metadata.outputs.branch_name }}](https://github.com/${{ github.repository }}/tree/${{ needs.Set_Release_Metadata.outputs.branch_name }}).
           artifacts: |
             RetroDECK-ES-DE-Artifact.tar.gz
             tree.html
@@ -97,8 +98,9 @@ jobs:
           tag: "${{ needs.Set_Release_Metadata.outputs.branch_name }}-${{ needs.Set_Release_Metadata.outputs.date }}"
           name: "${{ needs.Set_Release_Metadata.outputs.branch_name }} Build"
           body: |
-            AppImage build for RetroDECK.
-            Branch: [${{ needs.Set_Release_Metadata.outputs.branch_name }}](https://github.com/${{ github.repository }}/tree/${{ needs.Set_Release_Metadata.outputs.branch_name }})
+            # Release Notes
+            These are the artifact of RetroDECK ES-DE, commit: ${{ github.event.repository.full_name }}@${{github.sha}}.
+            On branch [${{ needs.Set_Release_Metadata.outputs.branch_name }}](https://github.com/${{ github.repository }}/tree/${{ needs.Set_Release_Metadata.outputs.branch_name }}).
           artifacts: |
             RetroDECK-AppImage.tar.gz
           allowUpdates: true
