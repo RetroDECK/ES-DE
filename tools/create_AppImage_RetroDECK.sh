@@ -2,9 +2,9 @@
 #  SPDX-License-Identifier: MIT
 #
 #  ES-DE Frontend
-#  create_AppImage_SteamDeck.sh
+#  create_AppImage_RetroDECK.sh
 #
-#  Runs the complete process of building a Linux AppImage specific to the Valve Steam Deck.
+#  Runs the complete process of building a Linux AppImage specific for RetroDECK.
 #  The SDL library is also built and included in the AppImage.
 #
 #  This script has only been tested on Ubuntu 20.04 LTS and 22.04 LTS.
@@ -16,7 +16,7 @@ JOBS=4
 SDL_RELEASE_TAG=release-2.32.2
 SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.3200.2
 
-echo "Building Steam Deck AppImage..."
+echo "Building RetroDECK AppImage..."
 
 if [ ! -f .clang-format ]; then
   echo "You need to run this script from the root of the repository."
