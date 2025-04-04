@@ -102,7 +102,7 @@ jobs:
             These are the artifact of RetroDECK ES-DE, commit: ${{ github.event.repository.full_name }}@${{github.sha}}.
             On branch [${{ needs.Set_Release_Metadata.outputs.branch_name }}](https://github.com/${{ github.repository }}/tree/${{ needs.Set_Release_Metadata.outputs.branch_name }}).
           artifacts: |
-            RetroDECK-AppImage.tar.gz
+            ES-DE_x64_RetroDECK.AppImage
           allowUpdates: true
           makeLatest: ${{ contains(needs.Set_Release_Metadata.outputs.branch_name, 'feat/') && 'false' || 'true' }}
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}

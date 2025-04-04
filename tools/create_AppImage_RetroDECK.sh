@@ -85,5 +85,7 @@ cd ../../..
 cp external/SDL/build/${SDL_SHARED_LIBRARY} AppDir/usr/lib/libSDL2-2.0.so.0
 ./appimagetool-x86_64.AppImage AppDir
 
-mv ES-DE-x86_64.AppImage ES-DE_x64_SteamDeck.AppImage && \
-echo -e "\nCreated AppImage ES-DE_x64_SteamDeck.AppImage"
+ls -lah # DEBUG
+
+mv ES-DE-x86_64.AppImage ES-DE_x64_RetroDECK.AppImage && \
+echo -e "\nCreated AppImage ES-DE_x64_RetroDECK.AppImage"
