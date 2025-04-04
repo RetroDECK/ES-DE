@@ -81,6 +81,11 @@ jobs:
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
           fetch-depth: 1
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpipewire-0.3-dev
+
       - name: Build AppImage
         run: |
           chmod +x tools/create_AppImage_RetroDECK.sh
