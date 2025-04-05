@@ -789,6 +789,7 @@ The following languages are supported:
 | ja_JP         | Japanese                 | 日本語                   |
 | ko_KR         | Korean                   | 한국어                   |
 | zh_CN         | Simplified Chinese       | 简体中文                 |
+| zh_TW         | Traditional Chinese      | 繁體中文                 |
 
 Note that the native name is what is shown inside the _UI Settings_ menu for the _Theme Language_ and _Application Language_ settings.
 
@@ -1206,6 +1207,7 @@ Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary
 | 3:2              | 3:2_vertical    | 2160x1440                                      |
 | 4:3              | 4:3_vertical    | 320x240, 640x480, 800x600, 1024x768, 1600x1200 |
 | 5:4              | 5:4_vertical    | 1280x1024                                      |
+| 8:7              | 8:7_vertical    | 1240x1080                                      |
 | 19.5:9           | 19.5:9_vertical | 2340x1080, 2532x1170                           |
 | 20:9             | 20:9_vertical   | 2400x1080, 1600x720                            |
 | 21:9             | 21:9_vertical   | 2560x1080, 3840x1600, 5120x2160                |
@@ -1953,7 +1955,7 @@ Properties:
     - Default is `1.5`
     - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
-    - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
+    - Path to a TrueType or OpenType font (.ttf or .otf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area. This property value is effectively multiplied by the `itemScale` value for the currently selected item (but if this property is omitted then the default value will not get multiplied by `itemScale`).
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
@@ -2207,7 +2209,7 @@ Properties:
     - Default is `1.5`
     - This property can only be used when `textHorizontalScrolling` has been set to `true`
 * `fontPath` - type: PATH
-    - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
+    - Path to a TrueType or OpenType font (.ttf or .otf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
@@ -2312,7 +2314,7 @@ Properties:
     - Default is the same value as `selectedColor`
 * `selectedBackgroundColor` - type: COLOR
     - Background color of the highlighted entry for the primary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
-    - Default is `00000000`
+    - Default is `00000000` (no background is drawn)
 * `selectedSecondaryBackgroundColor` - type: COLOR
     - Background color of the highlighted entry for the secondary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
     - Default is the same value as `selectedBackgroundColor`
@@ -2568,6 +2570,23 @@ Properties:
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5` (texture is centered)
     - This property can only be used if `cropSize` is used.
+* `imageSize` - type: NORMALIZED_PAIR
+    - This property works exactly the same as `size` but applies only to the static image.
+    - Minimum value per axis is `0.01` and maximum value per axis is `2`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
+    - Default is the same value as `size`
+* `imageMaxSize` - type: NORMALIZED_PAIR
+    - This property works exactly the same as `maxSize` but applies only to the static image.
+    - Minimum value per axis is `0.01` and maximum value per axis is `2`
+    - Default is the same value as `maxSize`
+* `imageCropSize` - type: NORMALIZED_PAIR
+     - This property works exactly the same as `cropSize` but applies only to the static image.
+    - Minimum value per axis is `0.01` and maximum value per axis is `2`
+    - Default is the same value as `cropSize`
+* `imageCropPos` - type: NORMALIZED_PAIR
+    - If the static image has been cropped using `imageCropSize` then this property makes it possible to position the texture within the cropped area. The first value of the pair is the X axis where `0` means align to the left and `1` means align to the right, and the second value of the pair is the Y axis where `0` means align on top and `1` means align at the bottom. Any arbitrary floating point values between 0 and 1 can be used for granular positioning.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5` (texture is centered)
+    - This property can only be used if `imageCropSize` is used.
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2593,7 +2612,7 @@ Properties:
 * `defaultImage` - type: PATH
     - Path to a default image file. If the `imageType` property has a value set, then the default image will be displayed if the selected game does not have an image for any of the defined types. If `imageType` is not defined, then the default image will be shown if there is no video file found and if `default` has not been set. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `imageType` - type: STRING
-    - This displays a game image of a certain media type, either before the video starts to play if `delay` is set to a non-zero value, or if there is no video file found and `default` has not been defined. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, then the space will be left blank unless either the `default` or `defaultImage` properties have been set. To use this property from the `system` view, you will first need to add a `gameselector` element. If `delay` is set to zero, then this property has no effect. Defining duplicate values is considered an error and will result in the property getting ignored.
+    - This displays a game image of a certain media type, either before the video starts to play if `delay` is set to a non-zero value, or if there is no video file found and `default` has not been defined. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, then the space will be left blank unless either the `default` or `defaultImage` properties have been set. To use this property from the `system` view, you will first need to add a `gameselector` element. If `delay` is set to zero, then this property has no effect. There is also a special type named `none` which will display no game media, but that will still enable the `delay` property as if game media was present. This makes it possible to leave the space blank during the delay period, or to display an image defined using the `defaultImage` property. Defining duplicate values is considered an error and will result in the property getting ignored.
     - Valid values:
     - `image` - This will look for a `miximage`, and if that is not found `screenshot` is tried next, then `titlescreen` and finally `cover`. This is just a convenient shortcut and it's equivalent to explicitly defining `miximage, screenshot, titlescreen, cover`
     - `miximage` - This will look for a miximage.
@@ -2605,6 +2624,7 @@ Properties:
     - `3dbox` - This will look for a 3D box image.
     - `physicalmedia` - This will look for a physical media image.
     - `fanart` - This will look for a fan art image.
+    - `none` - This will not display any game media, but it will still enable the `defaultImage` and `delay` properties.
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define static video elements that should be treated as if they were game media files. This property is ignored if `path` is not set.
     - Default is `false`
@@ -2650,8 +2670,9 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `pillarboxes` - type: BOOLEAN
-    - Whether to render black pillarboxes (and to a lesses extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
+    - Whether to render black pillarboxes (and to a lesser extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
     - Default is `true`
+    - This property can only be used if `fadeInType` is set to `black`
 * `pillarboxThreshold` - type: NORMALIZED_PAIR
     - Normally it doesn't look very good to add really narrow pillarboxes or letterboxes, so by default they are skipped if the actual video size is not reaching a threshold value as compared to the overall defined video area size. By modifying this property it's possible to control that threshold, as for some theme designs it will look better with the consistency of always rendering the pillarboxes/letterboxes even if they are narrow. To clarify, the default X axis value of 0.85 means that if the video width is 85% or less as compared to the X axis defined by the `size` property, then pillarboxes will be rendered. So setting the `pillarboxThreshold` value to `1 1` will always apply pillarboxes/letterboxes regardless of the video file dimension.
     - Minimum value per axis is `0.2` and maximum value per axis is `1`
@@ -2663,8 +2684,12 @@ Properties:
     - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageType` property will be displayed. If that property is not set, then the `delay` property will be ignored.
     - Minimum value is `0` and maximum value is `15`
     - Default is `1.5`
+* `fadeInType` - type: STRING
+    - The method to use when fading in the video. If set to `black` then a black frame is rendered behind the video and the video is faded in on top of this frame. If set to `transparent` then the video is faded in from transparency. The latter will however remove the black frame completely, which also disables the `pillarboxes` property.
+    - Valid values are `black` or `transparent`
+    - Default is `black`
 * `fadeInTime` - type: FLOAT
-    - Time in seconds to fade in the video from pure black. This is completely unrelated to the `scrollFadeIn` property. Note that if this is set to zero it may seem as if the property doesn't work correctly as many ScreenScraper videos have a fade-in baked into the actual video stream. Setting this property to lower than 0.3 seconds or so is generally a bad idea for videos that don't have a fade-in baked in as transitions from the static image will then look like a bad jump cut.
+    - Time in seconds to fade in the video from pure black, or from transparency depending on what value `fadeInType` is set to. This is completely unrelated to the `scrollFadeIn` property. Note that if this is set to zero it may seem as if the property doesn't work correctly as many ScreenScraper videos have a fade-in baked into the actual video stream. Setting this property to lower than 0.3 seconds or so is generally a bad idea for videos that don't have a fade-in baked in as transitions from the static image will then look like a bad jump cut.
     - Minimum value is `0` and maximum value is `8`
     - Default is `1`
 * `scrollFadeIn` - type: BOOLEAN
@@ -2855,9 +2880,10 @@ Properties:
     - Minimum value is `0.1` and maximum value is `2`
     - Default is `0.5`
 * `customBadgeIcon` - type: PATH
-    - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are the ones listed above.
+    - A badge icon override. Specify the badge type using the `badge` attribute, such as `<customBadgeIcon badge="favorite">./assets/favorite.svg</customBadgeIcon>`
+    - The available badges are the ones listed above.
 * `customControllerIcon` - type: PATH
-    - A controller icon override. Specify the controller type in the attribute `controller`.
+    - A controller icon override. Specify the controller type using the `controller` attribute, such as `<customControllerIcon controller="gamepad_xbox">./assets/gamepad_xbox.svg</customControllerIcon>`
     - These are the available types:
     - `gamepad_generic`,
     `gamepad_nintendo_nes`,
@@ -3078,7 +3104,7 @@ Properties:
     - Default is `1.5`
     - This property can only be used when `containerType` is `horizontal`
 * `fontPath` - type: PATH
-    - Path to a TrueType font (.ttf).
+    - Path to a TrueType or OpenType font (.ttf or .otf)
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
@@ -3095,7 +3121,7 @@ Properties:
 * `color` - type: COLOR
     - Default is `000000FF`
 * `backgroundColor` - type: COLOR
-    - Default is `00000000`
+    - Default is `00000000` (no background is drawn)
 * `backgroundMargins` - type: NORMALIZED_PAIR
     - Adds margins to the text background, assuming it has a color set. The first value of the pair is the left margin and the second value is the right margin, which means it's possible to set these margins completely independently. Margins are applied after all other positioning and sizing calculations and they are rendered outside the text debug rectangle boundaries.
     - Minimum value per axis is `0` and maximum value per axis is `0.5`
@@ -3174,7 +3200,7 @@ Properties:
     - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
     - Default is `0`
 * `fontPath` - type: PATH
-    - Path to a TrueType font (.ttf).
+    - Path to a TrueType or OpenType font (.ttf or .otf)
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
@@ -3265,7 +3291,7 @@ Properties:
     - `never` - Don't set element as stationary during any transitions.
     - Default is `never`
 * `fontPath` - type: PATH
-    - Path to a TrueType font (.ttf).
+    - Path to a TrueType or OpenType font (.ttf or .otf)
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
@@ -3393,58 +3419,103 @@ Properties:
 
 #### helpsystem
 
-The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements. It also has to have its name attribute set to `help` or the configuration will not get loaded.
+The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements (but below the menu).
 
 It's possible to set this element as right-aligned or center-aligned using a combination of the `pos` and `origin` properties. For example `<pos>1 1</pos>` and `<origin>1 1</origin>` will place it in the lower right corner of the screen.
 
 Keep in mind that the width of this element can vary depending on a number of factors, for example the _Toggle favorites_ and _Random system or game_ buttons can be enabled or disabled via the _UI Settings_ menu. Test extensively with the menu system as well, especially the virtual keyboard which displays a number of helpsystem entries.
+
+Using the `entries` property it's possible to restrict which help entries to display, and it's also possible to create multiple helpsystem elements and split up the entries between them.
+
+Note however that you can't display the same icon file for multiple elements, if you attempt to do this then the icon will only be shown for one of the elements. This is due to internal optimizations to reduce latency when updating the helpsystem. But there is a workaround available by using separate icon files and loading them via the `customButtonIcon` property. As long as they are separate files it will be possible to load them and make it seem like the same icon file is displayed for multiple elements.
 
 Supported views:
 * `system`
 * `gamelist`
 
 Instances per view:
-* `single`
+* `unlimited`
 
 Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0.012 0.9515` for horizontally oriented screens and `0.012 0.975` for vertically oriented screens
 * `posDimmed` - type: NORMALIZED_PAIR
-    - Position when a menu is open (background is dimmed).
+    - Position when a menu is open (background is dimmed). This property mostly exists for backward compatibility purposes, the recommended approach is to setup a separate helpsystem element with `scope` set to `menu`
     - Default is the same value as `pos`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `originDimmed` - type: NORMALIZED_PAIR
-    - Origin when a menu is open (background is dimmed).
+    - Origin when a menu is open (background is dimmed). This property mostly exists for backward compatibility purposes, the recommended approach is to setup a separate helpsystem element with `scope` set to `menu`
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is the same value as `origin`
+* `rotation` - type: FLOAT
+    - Angle in degrees that the element should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Default is `0`
+* `rotationOrigin` - type: NORMALIZED_PAIR
+    - Point around which the element will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5`
 * `textColor` - type: COLOR
     - Default is `777777FF`
 * `textColorDimmed` - type: COLOR
-    - Text color when a menu is open (background is dimmed).
+    - Text color when a menu is open (background is dimmed). This property mostly exists for backward compatibility purposes, the recommended approach is to setup a separate helpsystem element with `scope` set to `menu`
     - Default is the same value as `textColor`
 * `iconColor` - type: COLOR
     - Default is `777777FF`
 * `iconColorDimmed` - type: COLOR
-    - Icon color when a menu is open (background is dimmed).
+    - Icon color when a menu is open (background is dimmed). This property mostly exists for backward compatibility purposes, the recommended approach is to setup a separate helpsystem element with `scope` set to `menu`
     - Default is the same value as `iconColor`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
-    - This property implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element. This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - This property implicitly sets the text and icon size and is therefore the means to change the overall size of the helpsystem element. This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is `0.035` for horizontally oriented screens and `0.025` for vertically oriented screens
 * `fontSizeDimmed` - type: FLOAT
-    - Font size when a menu is open (background is dimmed).
+    - Font size when a menu is open (background is dimmed). This property mostly exists for backward compatibility purposes, the recommended approach is to setup a separate helpsystem element with `scope` set to `menu`
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is the same value as `fontSize`
+* `scope` - type: STRING
+    - This property makes it possible to specify when the helpsystem element should be displayed. If it's set to `view` then it will only be displayed in the system and gamelist views and will be hidden when the menu is open. The opposite is true if it's set to `menu`, in this case the element will only be shown when the menu is open. Setting the property to `shared` will display the element both in the system and gamelist views and when the menu is open. Finally, setting it to `none` will not display the element at all, which is useful for special cases where there is shared configuration between multiple elements and you wish to disable one or more of these elements per view.
+    - Valid values are `shared`, `view`, `menu` or `none`
+    - Default is `shared`
+* `entries` - type: STRING
+   - This property controls which help entries that should be displayed, which can for instance be useful for narrow aspect ratio displays where all entries would otherwise not fit on screen. The entries are specified as a list of strings delimited by commas or by whitespace characters (tabs, spaces or line breaks). These are the available entries:\
+      `all`,
+      `back`,
+      `start`,
+      `a`,
+      `b`,
+      `x`,
+      `y`,
+      `l`,
+      `r`,
+      `lt`,
+      `rt`,
+      `left/right`,
+      `down`,
+      `up`,
+      `up/down`,
+      `up/down/left/right`,
+      `ltrt`,
+      `lr`,
+      `thumbstickclick`
+    - Default is `all` which displays all entries
+* `entryLayout` - type: STRING
+    - Controls the layout of the individual help element pairs. If set to `iconFirst` then the icon is shown to the left followed by the text, and if set to `textFirst` then the text is shown to the left followed by the icon.
+    - Valid values are `iconFirst` or `textFirst`
+    - Default is `iconFirst`
+* `entryRelativeScale` - type: FLOAT
+    - Defines the relative scale between the text and icons. If set to a value higher than `1` then the text will maintain its default size and the icons will be scaled down, and if set to a value lower than `1` then the icons will maintain their default size and the text will be scaled down. Note that regardless of what value this property is set to, the overall height of the element will always be defined by the `fontSize` property.
+    - Minimum value is `0.2` and maximum value is `3`
+    - Default is `1` (text and icons are set to the same scale)
 * `entrySpacing` - type: FLOAT
     - Spacing between the help element pairs.
     - Minimum value is `0` and maximum value is `0.04`
     - Default is `0.00833`
 * `entrySpacingDimmed` - type: FLOAT
-    - Spacing between the help element pairs when a menu is open (background is dimmed).
+    - Spacing between the help element pairs when a menu is open (background is dimmed). This property mostly exists for backward compatibility purposes, the recommended approach is to setup a separate helpsystem element with `scope` set to `menu`
     - Minimum value is `0` and maximum value is `0.04`
     - Default is the same value as `entrySpacing`
 * `iconTextSpacing` - type: FLOAT
@@ -3452,22 +3523,46 @@ Properties:
     - Minimum value is `0` and maximum value is `0.04`
     - Default is `0.00416`
 * `iconTextSpacingDimmed` - type: FLOAT
-    - Spacing between the icon and text within a help element pair when a menu is open (background is dimmed).
+    - Spacing between the icon and text within a help element pair when a menu is open (background is dimmed). This property mostly exists for backward compatibility purposes, the recommended approach is to setup a separate helpsystem element with `scope` set to `menu`
     - Minimum value is `0` and maximum value is `0.04`
     - Default is the same value as `iconTextSpacing`
 * `letterCase` - type: STRING
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
+* `backgroundColor` - type: COLOR
+    - Default is `00000000` (no background is drawn)
+* `backgroundColorEnd` - type: COLOR
+    - Works in the exact same way as `backgroundColor` but can be set as the end color to apply a color gradient.
+    - Default is the same value as `backgroundColor`
+* `backgroundGradientType` - type: STRING
+    - The direction to apply the color gradient if both `backgroundColor` and `backgroundColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `backgroundHorizontalPadding` - type: NORMALIZED_PAIR
+    - This property makes it possible to apply a horizontal padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundHorizontalPadding` property value will not change the position of the overall element. The first value of the pair is the padding to the left of the element and the second value of the pair is the padding to the right of the element.
+    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
+* `backgroundVerticalPadding` - type: NORMALIZED_PAIR
+    - This property makes it possible to apply a vertical padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundVerticalPadding` property value will not change the position of the overall element. The first value of the pair is the padding at the top of the element and the second value of the pair is the padding at the bottom of the element.
+    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
+* `backgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the element background, assuming it has a color set. The radius is a percentage of the screen width. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the background height. It means that setting this property sufficiently high will produce perfectly rounded sides for the background. You normally want to combine this property with `backgroundHorizontalPadding` and `backgroundVerticalPadding` to first add some extra space around the helpsystem.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+    - This property can only be used if `backgroundColor` has a value defined.
 * `opacity` - type: FLOAT
     - Controls the level of transparency.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
 * `opacityDimmed` - type: FLOAT
-    - Controls the level of transparency when a menu is open (background is dimmed).
+    - Controls the level of transparency when a menu is open (background is dimmed). This property mostly exists for backward compatibility purposes, the recommended approach is to setup a separate helpsystem element with `scope` set to `menu`
     - Minimum value is `0.2` and maximum value is `1`
     - Default is the same value as `opacity`
 * `customButtonIcon` - type: PATH
-    - A button icon override. Specify the button type in the attribute `button`.
+    - A button icon override. Specify the button type using the `button` attribute, such as `<customButtonIcon button="button_a_XBOX">./assets/button_a_XBOX.svg</customButtonIcon>`
     - The available buttons are: \
       `dpad_updown`,
       `dpad_leftright`,
@@ -3509,3 +3604,195 @@ Properties:
       `button_y_SNES`,
       `button_back_SNES`,
       `button_start_SNES`
+
+#### systemstatus
+
+Displays system status indicators, more specifically Bluetooth, Wi-Fi, cellular and battery status.
+
+Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements and it's also rendered when the menu is open. In addition to this it's stationary and will not move during slide transitions or fade out during fade transitions.
+
+You can define multiple elements to split up the indicators.
+
+During theme development you can force-enable all the system indicators by setting SystemStatusDisplayAll to true in es_settings.xml, you can read more about this option in the [INSTALL.md](INSTALL.md#settings-not-configurable-via-the-gui) document.
+
+Supported views:
+* `system`
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
+* `pos` - type: NORMALIZED_PAIR
+    - Default is `0.982 0.016`
+* `height` - type: FLOAT
+    - The sizing for this element works a bit different compared to most other elements as the width is automatically calculated based on the aspect ratio of the indicator icons plus the value set for the `entrySpacing` property. And in order to keep sizing consistent across horizontal and vertical screen orientations and to also align with the sizing logic used by the `helpsystem` and `clock` elements, the `height` property works similarly to the `fontSize` property used by those elements. This means the actual height calculation in pixels is made as a percentage of the screen height for horizontally oriented screens or the screen width for vertically oriented screens.
+    - Minimum value is `0.01` and maximum value is `0.5`
+    - Default is `0.035`
+* `origin` - type: NORMALIZED_PAIR
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `1 0`
+* `rotation` - type: FLOAT
+    - Angle in degrees that the element should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Default is `0`
+* `rotationOrigin` - type: NORMALIZED_PAIR
+    - Point around which the element will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5`.
+* `scope` - type: STRING
+    - This property makes it possible to specify when the systemstatus element should be displayed. If it's set to `view` then it will only be displayed in the system and gamelist views and will be hidden when the menu is open. The opposite is true if it's set to `menu`, in this case the element will only be shown when the menu is open. Setting the property to `shared` will display the element both in the system and gamelist views and when the menu is open. Finally, setting it to `none` will not display the element at all, which is useful for special cases where there is shared configuration between multiple elements and you wish to disable one or more of these elements per view.
+    - Valid values are `shared`, `view`, `menu` or `none`
+    - Default is `shared`
+* `fontPath` - type: PATH
+    - Path to a TrueType or OpenType font (.ttf or .otf) which is used for the battery percentage indicator.
+* `textRelativeScale` - type: FLOAT.
+    - This property makes it possible to size the battery percentage text relative to the overall element height, or in other words relative to the height of the indicator icons.
+    - Minimum value is `0.5` and maximum value is `1`
+    - Default is `0.9`
+* `color` - type: COLOR
+    - Color of the icons and battery percentage text.
+    - Default is `FFFFFFFF`
+* `backgroundColor` - type: COLOR
+    - If this property is defined then a colored rectangle is drawn behind the entire element.
+    - Default is `00000000` (no background is drawn)
+* `backgroundColorEnd` - type: COLOR
+    - Works in the exact same way as `backgroundColor` but can be set as the end color to apply a color gradient.
+    - Default is the same value as `backgroundColor`
+* `backgroundGradientType` - type: STRING
+    - The direction to apply the color gradient if both `backgroundColor` and `backgroundColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `backgroundHorizontalPadding` - type: NORMALIZED_PAIR
+    - This property makes it possible to apply a horizontal padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundHorizontalPadding` property value will not change the position of the overall element. The first value of the pair is the padding to the left of the element and the second value of the pair is the padding to the right of the element.
+    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
+* `backgroundVerticalPadding` - type: NORMALIZED_PAIR
+    - This property makes it possible to apply a vertical padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundVerticalPadding` property value will not change the position of the overall element. The first value of the pair is the padding at the top of the element and the second value of the pair is the padding at the bottom of the element.
+    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
+* `backgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the element background, assuming `backgroundColor` has been defined. The radius is a percentage of the screen width. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the background height. It means that setting this property sufficiently high will produce perfectly rounded sides for the element background. You normally want to combine this property with `backgroundHorizontalPadding` and `backgroundVerticalPadding` to first add some extra space around the system indicators.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+    - This property can only be used if `backgroundColor` has a value defined.
+* `entries` - type: STRING
+    - The system indicators that should be displayed. Make sure to always display all entries as it's up to the user to disable any unwanted indicators from the UI settings menu. The sole purpose of this property is to be able to split up the indicators across multiple elements. The entries are specified as a list of strings delimited by commas or by whitespace characters (tabs, spaces or line breaks). The order in which the entries are defined has no effect as they will always be displayed in the default order. Available values are:
+    - `bluetooth` - Indicates whether there's a Bluetooth adapter enabled on the device
+    - `wifi` - Indicates whether Wi-Fi is enabled on the device
+    - `cellular` - Indicates whether cellular traffic is enabled on the device (Android only)
+    - `battery` - Indicates whether there's a battery available in the device, in which case different icons will be displayed if the battery is charging or not, and if not charging there are discreet icons for different capacity levels (low, medium, high and full). A capacity percentage text is also displayed next to the battery icon unless the user has disabled this in the UI settings menu.
+    - `all` - Including this value will enable all system indicators.
+    - Default is `all`
+* `entrySpacing` - type: FLOAT
+    - Spacing between the system indicators. Note that this spacing is not applied between the battery icon and the battery percentage text.
+    - Minimum value is `0` and maximum value is `0.04`
+    - Default is `0.005`
+ * `customIcon` - type: PATH
+    - An icon override. Specify the icon type using the `icon` attribute, such as `<customIcon icon="icon_wifi">./assets/wifi.svg</customIcon>`
+    - The available icons are: \
+      `icon_bluetooth`,
+      `icon_wifi`,
+      `icon_cellular`,
+      `icon_battery_charging`,
+      `icon_battery_low`,
+      `icon_battery_medium`,
+      `icon_battery_high`,
+      `icon_battery_full`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
+
+#### clock
+
+Displays the current time and/or date as a text string. The format is HH:MM by default, but this can be changed using the `format` property. It's strongly recommended to configure the clock identically for both the system and gamelist views to make the user experience coherent.
+
+Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements and it's also rendered when the menu is open. In addition to this it's stationary and will not move during slide transitions or fade out during fade transitions.
+
+You can define multiple elements to for instance display the date on one side of the screen and the time on the other side of the screen.
+
+Supported views:
+* `system`
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
+* `pos` - type: NORMALIZED_PAIR
+    - Default is `0.018 0.016`
+* `size` - type: NORMALIZED_PAIR
+    - Possible combinations:
+    - `0 0` - automatically size so text fits on one line (expanding horizontally).
+    - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an ellipsis (...)
+* `origin` - type: NORMALIZED_PAIR
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0 0`
+* `rotation` - type: FLOAT
+    - Angle in degrees that the element should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Default is `0`
+* `rotationOrigin` - type: NORMALIZED_PAIR
+    - Point around which the element will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0.5 0.5`.
+* `scope` - type: STRING
+    - This property makes it possible to specify when the clock element should be displayed. If it's set to `view` then it will only be displayed in the system and gamelist views and will be hidden when the menu is open. The opposite is true if it's set to `menu`, in this case the element will only be shown when the menu is open. Setting the property to `shared` will display the element both in the system and gamelist views and when the menu is open. Finally, setting it to `none` will not display the element at all, which is useful for special cases where there is shared configuration between multiple elements and you wish to disable one or more of these elements per view.
+    - Valid values are `shared`, `view`, `menu` or `none`
+    - Default is `shared`
+* `fontPath` - type: PATH
+    - Path to a TrueType or OpenType font (.ttf or .otf)
+* `fontSize` - type: FLOAT
+    - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
+    - Default is `0.035`
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
+* `verticalAlignment` - type: STRING
+    - Controls alignment on the Y axis.
+    - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
+* `color` - type: COLOR
+    - Default is `FFFFFFFF`
+* `backgroundColor` - type: COLOR
+    - Default is `00000000` (no background is drawn)
+* `backgroundColorEnd` - type: COLOR
+    - Works in the exact same way as `backgroundColor` but can be set as the end color to apply a color gradient.
+    - Default is the same value as `backgroundColor`
+* `backgroundGradientType` - type: STRING
+    - The direction to apply the color gradient if both `backgroundColor` and `backgroundColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `backgroundHorizontalPadding` - type: NORMALIZED_PAIR
+    - This property makes it possible to apply a horizontal padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundHorizontalPadding` property value will not change the position of the overall element. The first value of the pair is the padding to the left of the element and the second value of the pair is the padding to the right of the element.
+    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
+* `backgroundVerticalPadding` - type: NORMALIZED_PAIR
+    - This property makes it possible to apply a vertical padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundVerticalPadding` property value will not change the position of the overall element. The first value of the pair is the padding at the top of the element and the second value of the pair is the padding at the bottom of the element.
+    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Default is `0 0`
+    - This property can only be used if `backgroundColor` has a value defined.
+* `backgroundCornerRadius` - type: FLOAT
+    - Setting this property higher than zero applies rounded corners to the element background, assuming it has a color set. The radius is a percentage of the screen width. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the background height. It means that setting this property sufficiently high will produce perfectly rounded sides for the background. You normally want to combine this property with `backgroundHorizontalPadding` and `backgroundVerticalPadding` to first add some extra space around the clock.
+    - Minimum value is `0` and maximum value is `0.5`
+    - Default is `0` (corners are not rounded)
+    - This property can only be used if `backgroundColor` has a value defined.
+* `format` - type: STRING
+    - %Y: The year, including the century (1900)
+    - %m: The month number [01,12]
+    - %d: The day of the month [01,31]
+    - %H: The hour (24-hour clock) [00,23]
+    - %M: The minute [00,59]
+    - %S: The second [00,59]
+    - Default is `%H:%M`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`

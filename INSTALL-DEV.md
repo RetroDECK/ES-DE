@@ -1168,7 +1168,7 @@ Normally the scraper will stop whenever an HTTP error code with value 400 or abo
 
 **SystemStatusDisplayAll**
 
-If setting this to true then all system status indicators (Bluetooth icon, Wi-Fi icon, cellular icon, battery icon and battery percentage indicator) will always be displayed, assuming they have been enabled in the _UI settings_ menu and via the `entries` property for the `systemstatus` element. The only purpose of this setting is for theme developers to be able to see all indicators when working on their theme design.
+If setting this to true then all system status indicators (Bluetooth icon, Wi-Fi icon, cellular icon, battery icon and battery percentage text) will always be displayed, assuming they have been enabled in the _UI settings_ menu and via the `entries` property for the `systemstatus` element. The only purpose of this setting is for theme developers to be able to see all indicators when working on their theme design.
 
 **UIMode_passkey**
 

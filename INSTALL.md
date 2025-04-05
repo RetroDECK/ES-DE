@@ -23,7 +23,7 @@ There are some dependencies that need to be fulfilled in order to build ES-DE. T
 All of the required packages can be installed with apt-get:
 
 ```
-sudo apt-get install build-essential clang-format git cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev libpoppler-cpp-dev
+sudo apt-get install build-essential clang-format git cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libbluetooth-dev libgl1-mesa-dev libpoppler-cpp-dev
 ```
 
 **Fedora**
@@ -38,7 +38,7 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 Then you can use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake gettext harfbuzz-devel libicu-devel libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel poppler-cpp-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake gettext harfbuzz-devel libicu-devel libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel bluez-libs-devel mesa-libGL-devel poppler-cpp-devel
 ```
 
 **Manjaro**
@@ -53,7 +53,7 @@ sudo pacman -S gcc clang make cmake gettext harfbuzz icu pkgconf sdl2 ffmpeg fre
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install clang-format cmake gettext libharfbuzz-dev libicu-dev libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
+sudo apt-get install clang-format cmake gettext libharfbuzz-dev libicu-dev libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libbluetooth-dev libpoppler-cpp-dev
 ```
 
 For a 64-bit build it's very important that you include libraspberrypi-dev because if this package is not installed then the file /usr/include/bcm_host.h is not present on the filesystem. This leads to CMake not detecting that it's indeed a Raspberry Pi and it will attempt to make a regular Linux build instead.
@@ -77,13 +77,6 @@ pkg install llvm-devel git pkgconf cmake gettext harfbuzz icu sdl2 ffmpeg freeim
 ```
 
 Clang/LLVM and curl should already be included in the base OS installation.
-
-Note that there is a strange issue specifically on FreeBSD 14.1 where the rlottie library refuses to build. This can be resolved by the following workaround:
-```
-echo > external/rlottie/format
-```
-
-It's not clear yet whether this is a compiler bug or some other issue.
 
 **Cloning and compiling ES-DE**
 
@@ -584,6 +577,19 @@ export ASAN_OPTIONS=detect_container_overflow=0
 ```
 
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
+
+**Cross-compiling for x86_64**
+
+To cross-compile for x86_64 using an ARM processor you only need to change two things.
+
+First you need to run `tools/macOS_dependencies_build_x86_cross.sh` instead of `tools/macOS_dependencies_build.sh`
+
+Second you need to pass the target architecture using the CMAKE_OSX_ARCHITECTURES variable such as this:
+```
+cmake -DCMAKE_OSX_ARCHITECTURES=x86_64 .
+```
+
+Following this you can just build and package the application in the same way as a native ARM build.
 
 **Code signing**
 
@@ -1158,6 +1164,10 @@ Sets the transfer timeout per HTTPS request. Minimum value is 0 seconds (infinit
 
 Normally the scraper will stop whenever an HTTP error code with value 400 or above is returned from the scraper service, but by default there is an exception for 404 errors (resource not found). Changing this setting to _false_ will make the scraper handle 404 errors as all other error codes, meaning it will run through the configured retry attempts and then display an error notification dialog if the resource could not be retrieved.
 
+**SystemStatusDisplayAll**
+
+If setting this to true then all system status indicators (Bluetooth icon, Wi-Fi icon, cellular icon, battery icon and battery percentage text) will always be displayed, assuming they have been enabled in the _UI settings_ menu and via the `entries` property for the `systemstatus` element. The only purpose of this setting is for theme developers to be able to see all indicators when working on their theme design.
+
 **UIMode_passkey**
 
 The passkey to use to change from the _Kiosk_ or _Kid_ UI modes to the _Full_ UI mode.
@@ -1582,7 +1592,9 @@ The following variables are expanded for the `command` tag:
 
 `%ROM%` - Replaced with the absolute path to the selected ROM, with most special characters escaped with a backslash.
 
-`%ROMRAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
+`%ROMRAW%` - Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
+
+`%ROMRAWWIN%` - Works just like `%ROMRAW%` except that the forward slashes as directory separators are replaced with backslashes (which is the directory separator used on the Windows operating system). This variable is not available on Windows.
 
 `%ROMPATH%` - Replaced with the path defined in the setting ROMDirectory in es_settings.xml. If combined with a path that contains blankspaces, then it must be surrounded by quotation marks, for example `%ROMPATH%"\Arcade Games"`. Note that the quotation mark must be located before the directory separator in this case.
 
@@ -1783,9 +1795,9 @@ The es_systems.xml file on Android utilizes variables heavily to implement the _
 There are two main ways to pass options to emulators, using _extras_ or using the _data_ URI. There can only be a single data URI but there can be an arbitrary amount of extras. To understand more about the way this works, you can read about the _putExtra()_ and and _setData()_ functions here:\
 https://developer.android.com/reference/android/content/Intent
 
-`%EXTRA_` - This passes an _extra_ which contains any additional information that the emulator may support. This is provided as a key/value pair where you define the key name following the literal %EXTRA_ string and terminate it with a % sign and then assign the value using an equal sign. For example %EXTRA_LIBRETRO%=puae_libretro_android.so will pass the extra named _LIBRETRO_ with its value set to _puae_libretro_android.so_. You can pass an unlimited number of extras and you can also use various ROM variables in combination with this as described below. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%` and `%ROMRAW%` variables inside an `%EXTRA_` variable definition, which will expand to the basename of the game file, the directory of the game file, the ROM directory and the path to the game file respectively.
+`%EXTRA_` - This passes an _extra_ which contains any additional information that the emulator may support. This is provided as a key/value pair where you define the key name following the literal %EXTRA_ string and terminate it with a % sign and then assign the value using an equal sign. For example %EXTRA_LIBRETRO%=puae_libretro_android.so will pass the extra named _LIBRETRO_ with its value set to _puae_libretro_android.so_. You can pass an unlimited number of extras and you can also use various ROM variables in combination with this as described below. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%`, `%ROMRAW%` and `%ROMRAWWIN%` variables inside an `%EXTRA_` variable definition. This will expand to the basename of the game file, the directory of the game file, the ROM directory, the path to the game file with standard forward slashes as directory separators, and the path to the game file with Windows backslashes as directory separators, respectively.
 
-`%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings and special variables are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%` and `%ROMRAW%` variables inside an `%EXTRAARRAY_` variable definition, which will expand to the basename of the game file, the directory of the game file, the ROM directory and the path to the game file respectively.
+`%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings and special variables are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%`, `%ROMRAW%` and `%ROMRAWWIN%` variables inside an `%EXTRAARRAY_` variable definition. This will expand to the basename of the game file, the directory of the game file, the ROM directory, the path to the game file with standard forward slashes as directory separators, and the path to the game file with Windows backslashes as directory separators, respectively.
 
 `%EXTRABOOL_` - Sets an extra with a boolean value, i.e. true/1 or false/0.
 
@@ -2163,22 +2175,29 @@ On Windows it's also possible to place .lnk shortcut files in the event director
 
 There are up to four parameters that will be passed to these scripts, as detailed below:
 
-| Event                    | Parameters*                                        | Description                                                                 |
-| :----------------------- | :------------------------------------------------- | :-------------------------------------------------------------------------- |
-| startup                  |                                                    | Application startup                                                         |
-| quit                     |                                                    | Application quit/shutdown                                                   |
-| reboot                   |                                                    | System reboot (quit event triggered as well)                                |
-| poweroff                 |                                                    | System power off (quit event triggered as well)                             |
-| config-changed           |                                                    | On saving application settings or controller configuration                  |
-| settings-changed         |                                                    | On saving application settings (config-changed event triggered as well)     |
-| controls-changed         |                                                    | On saving controller configuration (config-changed event triggered as well) |
-| theme-changed            | New theme name, old theme name                     | When manually changing themes in the UI Settings menu                       |
-| game-start               | ROM path, game name, system name, system full name | On game launch                                                              |
-| game-end                 | ROM path, game name, system name, system full name | On game end (or on application wakeup if running in the background)         |
-| screensaver-start        | _timer_ or _manual_                                | Screensaver started via timer or manually                                   |
-| screensaver-end          | _cancel_ or _game-jump_ or _game-start_            | Screensaver ended via cancellation, jump to game or start/launch of game    |
+| Event                    | Parameters*                                        | Description                                                                                       |
+| :----------------------- | :------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| startup                  |                                                    | Application startup                                                                               |
+| quit                     |                                                    | Application quit/shutdown                                                                         |
+| reboot                   |                                                    | System reboot (quit event triggered as well)                                                      |
+| poweroff                 |                                                    | System power off (quit event triggered as well)                                                   |
+| config-changed           |                                                    | On saving application settings or controller configuration                                        |
+| settings-changed         |                                                    | On saving application settings (config-changed event triggered as well)                           |
+| controls-changed         |                                                    | On saving controller configuration (config-changed event triggered as well)                       |
+| theme-changed            | New theme name, old theme name                     | When manually changing themes in the UI Settings menu                                             |
+| game-start               | ROM path, game name, system name, system full name | On game launch                                                                                    |
+| game-end                 | ROM path, game name, system name, system full name | On game end (or on application wakeup if running in the background)                               |
+| screensaver-start        | _timer_ or _manual_                                | Screensaver started via timer or manually                                                         |
+| screensaver-end          | _cancel_ or _game-jump_ or _game-start_            | Screensaver ended via cancellation, jump to game or start/launch of game                          |
+| screensaver-game-select  | ROM path, game name, system name, system full name | Screensaver selected a new random game                                                            |
+| game-select              | ROM path, game name, system name, system full name | On browsing games in the gamelist view, requires enabling of the _Browsing custom events_ setting |
+| system-select            | System name, system full name, system     ROM path | On browsing systems in the system view, requires enabling of the _Browsing custom events_ setting |
 
 ***)** Parameters in _italics_ are literal strings.
+
+Note that the _game-select_ and _system-select_ events require that the _Browsing custom events_ option in the Other settings menu is enabled. Also note that enabling this could lead to a lot of latency in the application as the event is triggered so frequently. So only enable these events if you really need them. And if you do, then make sure to execute scripts that run their activities in the background and immediately return to ES-DE, rather than blocking ES-DE during the script execution.
+
+For the _game-select_ event, when starting to fast scroll in the gamelist view, an event containing blank parameters will be triggered so that you can detect this state.
 
 We'll go through two examples:
 * Creating a log file that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming

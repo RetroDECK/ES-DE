@@ -31,7 +31,7 @@ Visit https://es-de.org to download the latest ES-DE release or go to the [packa
 
 The Android port of ES-DE is a paid app, which you can get on [Patreon](https://www.patreon.com/es_de), the [Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.es_de.frontend.galaxy) and [Huawei AppGallery](https://appgallery.huawei.com/#/app/C111315115).
 
-If you're using a Raspberry Pi or if you run Haiku, then you need to compile from source code as no prebuilt packages are provided for these platforms. A detailed build guide is available in [INSTALL.md](INSTALL.md).
+If you're using a Raspberry Pi, then you need to compile from source code as no prebuilt package is provided for this platform. A detailed build guide is available in [INSTALL.md](INSTALL.md).
 
 If your run FreeBSD then ES-DE is available as an [official port](https://www.freshports.org/emulators/es-de).
 

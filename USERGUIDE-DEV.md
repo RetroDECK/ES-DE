@@ -2510,6 +2510,9 @@ First install your games inside RPCS3, then create an empty file in `~/ROMs/ps3`
 
 Then add the game serial to this file. This ID can be found inside the RPCS3 GUI, in the _Serial_ column. For example the game _Braid_ has a serial that is NPUB30133. So simply add the string NPUB30133 to the `Braid.ps3` file using a text editor or similar and the setup for this game is complete.
 
+To simplify the setup described above there is a convenient archive of .ps3 files available that covers most of the game library for this console. It can be downloaded from here:\
+https://raw.githubusercontent.com/Jetup13/Retroid-Pocket-4-Pro-Wiki/main/Files/ps3serials.zip
+
 Be aware that you need to change to the alternative emulator entry _RPCS3 Game Serial (Standalone)_ for this to work.
 
 **Method 3, directories**

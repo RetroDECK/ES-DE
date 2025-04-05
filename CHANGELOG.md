@@ -1,14 +1,22 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.2.0 / 3.2.0-xx (in development)
+## Version 3.2.0 / 3.2.0-45
 
-**Release date:** TBD
+**Release date:** 2025-04-04
 
 ### Release overview
 
+This release brings support for themeable system status indicators showing the Bluetooth, Wi-Fi, cellular and battery status for devices where such hardware is available. There is also a themeable clock added which can be enabled from the UI settings menu. For all platforms the game systems  Vircon32 Virtual Console (vircon32) and Sega Mark III (mark3) have been added, and for Linux, macOS and Windows support has also been added for the Sony PlayStation 4 (ps4) system using the shadPS4 emulator.
+
+There is also support for a lot of new emulators, both standalone and RetroArch cores, and some find rules have been added or updated to enable additional package formats and binary names for some previously supported emulators.
+
+There are large internal changes to the application to improve the theme engine, most notably for the helpsystem element which has been largely rewritten. This leads to much more granular control by the theme developers, and together with numerous other theme engine improvements this opens up more flexibility as far as theme design is concerned.
+
+The game launch screen can also be completely disabled as of this release, and there are a couple of new custom events that could be useful for arcade cabinets, virtual pinball tables and such. Additionally there are a number of minor improvements and bug fixes, see the full list below for all details.
+
 ### Detailed list of changes
 
-* Added a system status element showing the Blueooth, Wi-Fi, cellular and battery status on screen
+* Added a system status element showing the Bluetooth, Wi-Fi, cellular and battery status on screen
 * Added a "Display clock" setting to the UI settings menu to display an on screen clock (disabled by default)
 * Added translations for Traditional Chinese (zh_TW)
 * Added support for the Sony PlayStation 4 (ps4) game system on Linux, macOS and Windows using the shadPS4 emulator
@@ -20,9 +28,8 @@
 * Made the menu and launch screen scale up at the same speed regardless of the display refresh rate
 * Added a screensaver-game-select custom event
 * Added game-select and system-select custom events and a corresponding "Browsing custom events" menu option
-* Added RPCS3 Game Serial as an alternative emulator for the consolearcade and ps3 systems on Linux, macOS and Windows
-* Added the NooDS RetroArch core as an alternative emulator for the gba and nds systems
 * Added the bsnes-jg RetroArch core as an alternative emulator for the satellaview, sfc, snes, snesna and sufami systems
+* Added the NooDS RetroArch core as an alternative emulator for the gba and nds systems
 * Added the Holani RetroArch core as an alternative emulator for the atarilynx system
 * Added the b2 RetroArch core as an alternative emulator for the bbcmicro system
 * Added the CannonBall RetroArch core as an alternative emulator for the ports system
@@ -30,9 +37,10 @@
 * Added Mesen standalone as an alternative emulator for the colecovision, wonderswan and wonderswancolor systems on Linux and Windows
 * Added Azahar standalone as an alternative emulator for the n3ds system
 * Added A7800 standalone as an alternative emulator for the atari7800 system on Linux and Windows
+* Added RPCS3 Game Serial as an alternative emulator for the consolearcade and ps3 systems on Linux, macOS and Windows
 * (Android) Changed from MAME4droid 2024 to MAME4droid Current for all systems where only this emulator was supported
-* (Android) Added a find rule entry for the new Cemu package name
 * (Android) Added MAME4droid Current emulator entries for all systems where MAME4droid 2024 was supported
+* (Android) Added a find rule entry for the new Cemu package name
 * (Android) Added SkyEmu standalone as an alternative emulator for the gb, gba, gbc and nds systems
 * (Android) Added Pizza Boy SC standalone as an alternative emulator for the gamegear, genesis, mastersystem, megadrive and megadrivejp systems
 * (Android) Changed all RetroArch core entries to use absolute paths (this makes the ancient Play store release work correctly)
@@ -46,7 +54,7 @@
 * (Linux) Added support for the manually downloaded release of Mesen
 * (Linux) Changed the AppImage find rule for Mandarine to mandarine-qt*.AppImage
 * Enabled directories interpreted as files with MAME RetroArch for the apple2, apple2gs and fmtowns systems on Linux, macOS and Windows
-* Added the .gam file extension to the arcade system on Linux and Windows
+* Added the .gam file extension to the arcade and mame systems on Linux and Windows
 * Added the .m3u file extension to the sega32x, sega32xjp and sega32xna systems
 * Added the .ruf file extension to the flash system
 * Added initial support for the Microsoft Xbox One (xboxone) game system (still awaiting emulator support)
@@ -63,11 +71,12 @@
 * Added a "fadeInType" property to the video element to fade in from black or from transparency
 * Added support for a "none" value to the video element imageType property
 * Added a BackgroundComponent to replace NinePatchComponent for rendering menu and popup backgrounds
+* Added support for the 8:7 display aspect ratio
 * (Android) Changed the target SDK version to 35 (Android 15)
 * The LANG and LANGUAGE variables are now set explicitly to the UTF-8 character encoding on Linux, macOS and Android
-* Added support for the 8:7 display aspect ratio
-* (macOS) Added a build script for cross-compiling for x86_64 when using an ARM processor
-* (Linux) Added the BlueZ library as a dependency
+* (linear-es-de) Added translations for the system hardware types
+* (macOS) Added a dependency build script for cross-compiling for x86_64 when using an ARM processor
+* (Linux) Added the BlueZ library (libbluetooth) as a dependency
 * Added support for building against libgit2 v1.9.0 and later
 * Added support for building against ICU 76.1 and later
 * Updated SDL to 2.32.2 on Android, Windows, macOS and the Linux AppImage builds
