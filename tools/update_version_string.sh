@@ -53,7 +53,7 @@ mv $TEMPFILE $MODIFYFILE
 ##### ES-DE_Info.plist
 
 MODIFYFILE=../es-app/assets/ES-DE_Info.plist
-MODIFYSTRING=$(grep "<string>ES-DE " $MODIFYFILE)
+MODIFYSTRING=$(grep "<string>ES-DE [[:digit:]]" $MODIFYFILE)
 OLDVERSION=$(echo $MODIFYSTRING | cut -f4 -d" " | sed s/".........$"//)
 MODIFYSTRING=$(echo $MODIFYSTRING | sed s/".........$"//)
 NEWSTRING="<string>ES-DE ${1}.${2}.${3}"

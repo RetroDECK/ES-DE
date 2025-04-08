@@ -194,4 +194,17 @@
             <langYourCollections>您的收藏</langYourCollections>
         </variables>
     </language>
+    <language name="zh_TW">
+        <variables>
+            <langLabelRating>評分</langLabelRating>
+            <langLabelReleasedate>發行日</langLabelReleasedate>
+            <langLabelPlayers>玩家</langLabelPlayers>
+            <langLabelGenre>分類</langLabelGenre>
+            <langLabelDeveloper>開發者</langLabelDeveloper>
+            <langLabelPublisher>發行商</langLabelPublisher>
+            <langLabelLastPlayed>最後遊玩</langLabelLastPlayed>
+            <langCustomCollections>自定義收藏</langCustomCollections>
+            <langYourCollections>您的收藏</langYourCollections>
+        </variables>
+    </language>
 </theme>

@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0271.xml -->
+<!-- Last updated with information from MAME driver file mame0275.xml -->
 <bios>3dobios</bios>
 <bios>airlbios</bios>
 <bios>aleck64</bios>
@@ -26,6 +26,7 @@
 <bios>coh1001l</bios>
 <bios>coh1002e</bios>
 <bios>coh1002m</bios>
+<bios>coh1002t</bios>
 <bios>coh1002v</bios>
 <bios>coh3002c</bios>
 <bios>coh3002t</bios>

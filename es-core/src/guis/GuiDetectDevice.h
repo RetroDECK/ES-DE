@@ -10,8 +10,8 @@
 #define ES_CORE_GUIS_GUI_DETECT_DEVICE_H
 
 #include "GuiComponent.h"
+#include "components/BackgroundComponent.h"
 #include "components/ComponentGrid.h"
-#include "components/NinePatchComponent.h"
 
 class TextComponent;
 
@@ -31,7 +31,7 @@ private:
     int mHoldTime;
 
     Renderer* mRenderer;
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mTitle;

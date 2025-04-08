@@ -307,29 +307,29 @@ cd ..
 echo:
 echo Setting up SDL
 
-if exist SDL2-2.30.9\ (
-  rmdir /S /Q SDL2-2.30.9
+if exist SDL2-2.32.2\ (
+  rmdir /S /Q SDL2-2.32.2
 )
 
 if exist SDL2\ (
   rmdir /S /Q SDL2
 )
 
-if exist SDL2-devel-2.30.9-VC.zip (
-  del SDL2-devel-2.30.9-VC.zip
+if exist SDL2-devel-2.32.2-VC.zip (
+  del SDL2-devel-2.32.2-VC.zip
 )
 
-curl -LO https://libsdl.org/release/SDL2-devel-2.30.9-VC.zip
+curl -LO https://libsdl.org/release/SDL2-devel-2.32.2-VC.zip
 
-7z x SDL2-devel-2.30.9-VC.zip
+7z x SDL2-devel-2.32.2-VC.zip
 
-if not exist SDL2-2.30.9\ (
+if not exist SDL2-2.32.2\ (
   echo SDL directory is missing, aborting.
   cd ..
   goto end
 )
 
-rename SDL2-2.30.9 SDL2
+rename SDL2-2.32.2 SDL2
 
 cd SDL2
 rename include SDL2

@@ -15,7 +15,7 @@
 export MACOSX_DEPLOYMENT_TARGET=11.0
 
 # How many CPU threads to use for the compilation.
-JOBS=4
+JOBS=8
 
 if [ ! -f .clang-format ]; then
   echo "You need to run this script from the root of the repository."

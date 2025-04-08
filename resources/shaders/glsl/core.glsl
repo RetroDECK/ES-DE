@@ -107,8 +107,10 @@ void main()
             else
                 pixelValue = 1.0;
 
-            sampledColor.a *= pixelValue;
-            sampledColor.rgb *= pixelValue;
+            if (0x0u != (shaderFlags & 0x01u))
+                sampledColor *= pixelValue;
+            else
+                sampledColor.a *= pixelValue;
         }
     }
 

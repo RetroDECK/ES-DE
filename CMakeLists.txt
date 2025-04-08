@@ -9,7 +9,10 @@
 #
 
 cmake_minimum_required(VERSION 3.13)
-if(APPLE)
+
+if(CMAKE_SYSTEM_NAME MATCHES iOS)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 14.0 CACHE STRING "iOS deployment target")
+elseif(APPLE)
     # Set this to the minimum supported macOS version, and also update
     # es-app/assets/ES-DE_Info.plist accordingly.
     set(CMAKE_OSX_DEPLOYMENT_TARGET 11.0 CACHE STRING "macOS deployment target")
@@ -19,7 +22,7 @@ endif()
 project(es-de)
 
 # Application version, update this when making a new release.
-set(ES_VERSION 3.1.1)
+set(ES_VERSION 3.2.0)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
@@ -91,6 +94,15 @@ if(EXISTS /usr/include/bcm_host.h)
     message("-- Building on a Raspberry Pi (64-bit OS)")
 endif()
 
+# iOS.
+if(IOS)
+    message("-- Building for iOS (arm64)")
+    set(GLES ON)
+    set(BUNDLED_CERTS ON)
+    add_compile_definitions(__IOS__)
+    include(${CMAKE_SOURCE_DIR}/ios/cmake/variables.cmake)
+endif()
+
 #---------------------------------------------------------------------------------------------------
 # Emscripten WebAssembly build.
 
@@ -118,12 +130,12 @@ if(GLSYSTEM MATCHES "Desktop OpenGL")
     find_package(OpenGL REQUIRED)
 elseif(ANDROID)
     find_package(OpenGLES3 REQUIRED)
-elseif(GLES AND NOT EMSCRIPTEN)
+elseif(GLES AND NOT IOS AND NOT EMSCRIPTEN)
     find_package(OpenGLES2 REQUIRED)
 endif()
 
-# On macOS and Windows all dependencies are kept in-tree in the "external" directory.
-if(APPLE)
+# On macOS, iOS and Windows all dependencies are kept in-tree in the "external" directory.
+if(APPLE AND NOT IOS)
     if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/FFmpeg)
         message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
     endif()
@@ -132,7 +144,7 @@ elseif(WIN32)
     if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)
         message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
     endif()
-elseif(NOT EMSCRIPTEN AND NOT ANDROID)
+elseif(NOT EMSCRIPTEN AND NOT ANDROID AND NOT IOS)
     find_package(CURL REQUIRED)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
@@ -150,9 +162,10 @@ if(CEC)
     find_package(libCEC REQUIRED)
 endif()
 
-# Add ALSA for Linux.
+# Add ALSA and BlueZ for Linux.
 if(CMAKE_SYSTEM_NAME MATCHES Linux)
     find_package(ALSA REQUIRED)
+    find_package(Bluez REQUIRED)
 endif()
 
 #---------------------------------------------------------------------------------------------------
@@ -279,8 +292,8 @@ if(ASAN OR UBSAN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_ASSERTIONS -D_FORTIFY_SOURCE=3")
 endif()
 
-# The following removes half of the ranlib warnings on macOS regarding no symbols for files
-# that are #ifdef'ed away. There must be a way to remove the other half as well?
+# The following removes the ranlib warnings on macOS regarding missing symbols for files that have
+# been #ifdef'ed away.
 if(APPLE)
     SET(CMAKE_C_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
     SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
@@ -378,7 +391,7 @@ if(DEINIT_ON_LAUNCH)
     endif()
 endif()
 
-if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI OR HAIKU OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
+if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI OR HAIKU OR IOS OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
     set(APPLICATION_UPDATER OFF)
 endif()
 
@@ -462,8 +475,19 @@ set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
                         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src
                         ${CMAKE_CURRENT_SOURCE_DIR}/es-pdf-converter/src)
-
-if(APPLE)
+if(IOS)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-kit/src/ffmpeg
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Source
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/gettext/gettext-runtime/intl
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/harfbuzz/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/icu/icu4c/source/common
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL)
+elseif(APPLE)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FFmpeg
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freeimage/FreeImage/Source
@@ -508,6 +532,7 @@ elseif(ANDROID)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_Android)
 else()
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${BLUEZ_INCLUDE_DIRS}
                             ${FFMPEG_INCLUDE_DIRS}
                             ${FreeImage_INCLUDE_DIRS}
                             ${FREETYPE_INCLUDE_DIRS}
@@ -538,7 +563,30 @@ endif()
 #---------------------------------------------------------------------------------------------------
 # Dependency libraries.
 
-if(APPLE)
+if(IOS)
+    set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libavcodec.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libavfilter.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libavformat.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libavutil.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libswresample.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libswscale.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libcurl.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libfontconfig.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libfreeimage.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libfreetype.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libgit.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libharfbuzz.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libicudata.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libicui18n.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libicuuc.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libintl.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libopenjpeg.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libpoppler.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libpoppler-cpp.xcframework
+                         ${PROJECT_SOURCE_DIR}/Frameworks/libSDL.xcframework
+                         ${PROJECT_SOURCE_DIR}/libpugixml.a)
+elseif(APPLE)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                          ${CURL_LIBRARIES}
                          ${PROJECT_SOURCE_DIR}/libavcodec.60.dylib
@@ -579,6 +627,8 @@ elseif(WIN32)
                             ${PROJECT_SOURCE_DIR}/rlottie.lib
                             ${PROJECT_SOURCE_DIR}/SDL2main.lib
                             ${PROJECT_SOURCE_DIR}/SDL2.lib
+                            iphlpapi.dll
+                            bthprops.lib
                             Winmm.dll)
 elseif(ANDROID)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
@@ -639,7 +689,8 @@ elseif(EMSCRIPTEN)
                          ${PROJECT_SOURCE_DIR}/libfreetype.a
                          ${PROJECT_SOURCE_DIR}/libpugixml.a)
 else()
-    set(COMMON_LIBRARIES ${CURL_LIBRARIES}
+    set(COMMON_LIBRARIES ${BLUEZ_LIBRARIES}
+                         ${CURL_LIBRARIES}
                          ${FFMPEG_LIBRARIES}
                          ${FreeImage_LIBRARIES}
                          ${FREETYPE_LIBRARIES}
@@ -660,13 +711,16 @@ if(NOT WIN32)
     if(ANDROID)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/liblunasvg.a)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/librlottie.a)
+    elseif(IOS)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/liblunasvg.a)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/librlottie.a)
     else()
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/liblunasvg.a)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/librlottie.a)
     endif()
 endif()
 
-if(APPLE)
+if(APPLE AND NOT IOS)
     # See es-app/CMakeLists.txt for an explation for why an extra "Resources" directory
     # has been added to the install prefix.
     set(CMAKE_INSTALL_PREFIX "/Applications/ES-DE.app/Contents/Resources")

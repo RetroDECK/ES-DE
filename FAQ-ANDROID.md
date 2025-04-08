@@ -74,7 +74,7 @@ RetroArch on Android is very unforgiving, if you haven't installed the necessary
 
 Another reason for the black screen is if you have multiple users configured on your device and attempt to run RetroArch from a non-primary user while having your ROMs on internal storage. At the time of writing RetroArch does not support external game launching for any other user than the primary user as it can't parse paths such as /storage/emulated/10/.
 
-Also note that the RetroArch release on the Google Play store is not working correctly on most devices. It can be used on its own but game launching fails from ES-DE. These issues are resolved by using a current release from the [RetroArch](https://retroarch.com) website.
+As a side note, the RetroArch release on the Google Play store has not been updated in a very long time, so it's instead strongly recommended to download a current release from the [RetroArch](https://retroarch.com) website.
 
 ## When I launch a game using a standalone emulator, why does it say the game file could not be opened?
 

@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.1.1
+3.2.0
 
 The latest version can be downloaded from https://es-de.org
 
@@ -42,6 +42,7 @@ Preconfigured emulator locations:
 Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
 Emulators\3dSen\3dSen.exe
+Emulators\a7800\a7800.exe
 Emulators\AceDL\AceDL.exe
 Emulators\AdvanceMAME\advmame.exe
 Emulators\Altirra\Altirra64.exe
@@ -50,6 +51,7 @@ Emulators\AppleWin\AppleWin.exe
 Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
 Emulators\ares\ares.exe
 Emulators\atari800\atari800.exe
+Emulators\azahar\azahar.exe
 Emulators\BasiliskII\BasiliskII.exe
 Emulators\BeebEm\BeebEm.exe
 Emulators\BigPEmu\BigPEmu.exe
@@ -94,6 +96,7 @@ Emulators\mandarine\mandarine-qt.exe
 Emulators\mednafen\mednafen.exe
 Emulators\melonDS\melonDS.exe
 Emulators\Mesen\Mesen.exe
+Emulators\MFME\MFME.exe
 Emulators\mGBA\mGBA.exe
 Emulators\mupen64plus\mupen64plus-ui-console.exe
 Emulators\noods\noods.exe
@@ -119,6 +122,7 @@ Emulators\ryujinx\Ryujinx.Ava.exe
 Emulators\sameboy\sameboy.exe
 Emulators\scummvm\scummvm.exe
 Emulators\sdl2trs\sdl2trs64.exe
+Emulators\shadPS4\shadPS4.exe
 Emulators\SheepShaver\SheepShaver.exe
 Emulators\SimCoupe\SimCoupe.exe
 Emulators\simple64\simple64-gui.exe
@@ -138,6 +142,7 @@ Emulators\VICE\xplus4.exe
 Emulators\VICE\bin\xplus4.exe
 Emulators\VICE\xvic.exe
 Emulators\VICE\bin\xvic.exe
+Emulators\Vircon32\Emulator\Vircon32.exe
 Emulators\VPinballX\VPinballX_GL64.exe
 Emulators\VPinballX\VPinballX64.exe
 Emulators\Vita3K\Vita3K.exe
@@ -146,6 +151,7 @@ Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
 Emulators\xenia_canary\xenia_canary.exe
 Emulators\XM6 Pro-68k\XM6.exe
+Emulators\xm6_typeg\xm6g.exe
 Emulators\xroar\xroar.exe
 Emulators\yabasanshiro\yabasanshiro.exe
 Emulators\ZEsarUX\zesarux.exe

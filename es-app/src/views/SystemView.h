@@ -19,6 +19,7 @@
 #include "components/LottieAnimComponent.h"
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
+#include "components/SystemStatusComponent.h"
 #include "components/TextComponent.h"
 #include "components/VideoFFmpegComponent.h"
 #include "components/primary/CarouselComponent.h"
@@ -103,8 +104,13 @@ public:
 
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 
+    void setHelpComponentsVisibility(const bool state) override
+    {
+        for (auto& helpComponent : mSystemElements[mPrimary->getCursor()].helpComponents)
+            helpComponent->setVisible(state);
+    }
+
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return mSystemElements[mPrimary->getCursor()].helpStyle; }
 
 protected:
     void onCursorChanged(const CursorState& state);
@@ -117,7 +123,6 @@ private:
 
     struct SystemViewElements {
         SystemData* system;
-        HelpStyle helpStyle;
         std::string name;
         std::string fullName;
         std::vector<std::unique_ptr<GameSelectorComponent>> gameSelectors;
@@ -133,6 +138,9 @@ private:
         std::vector<std::unique_ptr<TextComponent>> textComponents;
         std::vector<std::unique_ptr<DateTimeComponent>> dateTimeComponents;
         std::vector<std::unique_ptr<RatingComponent>> ratingComponents;
+        std::vector<std::unique_ptr<HelpComponent>> helpComponents;
+        std::vector<std::unique_ptr<DateTimeComponent>> clockComponents;
+        std::vector<std::unique_ptr<SystemStatusComponent>> systemStatusComponents;
     };
 
     Renderer* mRenderer;

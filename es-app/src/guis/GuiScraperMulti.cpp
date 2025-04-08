@@ -28,7 +28,6 @@ GuiScraperMulti::GuiScraperMulti(
     const std::pair<std::queue<ScraperSearchParams>, std::map<SystemData*, int>>& searches,
     bool approveResults)
     : mRenderer {Renderer::getInstance()}
-    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {2, 6}}
     , mSearchQueue {searches.first}
     , mApproveResults {approveResults}
@@ -327,7 +326,7 @@ void GuiScraperMulti::finish()
 
     // Pressing either OK or using the back button should delete us.
     mWindow->pushGui(new GuiMsgBox(
-        getHelpStyle(), ss.str(), _("OK"),
+        ss.str(), _("OK"),
         [&] {
             mIsProcessing = false;
             delete this;

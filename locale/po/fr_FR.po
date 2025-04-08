@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-12-04 20:29+0100\n"
-"PO-Revision-Date: 2024-12-04 18:55+0100\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-03 21:39+0100\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Français <info@es-de.org>\n"
 "Language: fr_FR\n"
@@ -773,6 +773,9 @@ msgstr "BREF"
 msgid "LONG"
 msgstr "LONG"
 
+msgid "POPUP"
+msgstr "FENÊTRE CONTEXTUELLE"
+
 msgid "UI MODE"
 msgstr "TYPE D'INTERFACE"
 
@@ -832,6 +835,9 @@ msgstr "JEUX UNIQUEMENT"
 msgid "GAMES AND SYSTEMS"
 msgstr "JEUX ET SYSTÈMES"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "PARAMÈTRES D’ÉTAT DU SYSTÈME"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "PARAMÈTRES DU VISIONNEUR DE MÉDIA"
 
@@ -840,6 +846,9 @@ msgstr "PARAMÈTRES DE L'ÉCRAN DE VEILLE"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "ACTIVER LES VARIANTE DE THÈME AVEC LES GÂCHETTES"
+
+msgid "DISPLAY CLOCK"
+msgstr "AFFICHER L'HORLOGE"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "ESTOMPER L'ARRIÈRE-PLAN LORSQUE LE MENU EST OUVERT"
@@ -1075,6 +1084,9 @@ msgstr "AFFICHER LES JEUX CACHÉS"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ACTIVER LES SCRIPTS PERSO"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "NAVIGATION DANS LES ÉVÉNEMENTS PERSONNALISÉS"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "MONTRER UNIQUEMENT LES JEUX DES FICHIERS GAMELIST.XML"
 
@@ -1155,6 +1167,10 @@ msgstr "VOULEZ-VOUS VRAIMENT ÉTEINDRE?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "ARRÊT DU SYSTÈME"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "CONFIGURATION BARRE D'ÉTAT"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1896,6 +1912,21 @@ msgstr "CHANGER DE VIDEOS APRÈS (SECONDES)"
 
 msgid "RENDER BLUR"
 msgstr "RENDU FLOU"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "AFFICHAGE DE L’INDICATEUR D’ÉTAT BLUETOOTH"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "AFFICHAGE DE L’INDICATEUR D’ÉTAT WI-FI"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "AFFICHAGE DE L’INDICATEUR D’ÉTAT CELLULAIRE"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "AFFICHAGE DE L’INDICATEUR D’ÉTAT DE LA BATTERIE"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "AFFICHER LE POURCENTAGE DE CHARGE DE LA BATTERIE"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "TÉLÉCHARGEMENT LISTE DES THÈMES 100%"
@@ -2919,6 +2950,9 @@ msgstr "4:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"
+
+msgid "8:7 vertical"
+msgstr "8:7 vertical"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 vertical"

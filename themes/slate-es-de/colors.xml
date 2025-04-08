@@ -19,6 +19,7 @@
         <variables>
             <!-- Both system and gamelist views -->
             <backgroundColor>404040</backgroundColor>
+            <statusColor>FFFFFF</statusColor>
 
             <!-- System view -->
             <systemCarouselColor>747474D8</systemCarouselColor>
@@ -51,6 +52,7 @@
         <variables>
             <!-- Both system and gamelist views -->
             <backgroundColor>707070</backgroundColor>
+            <statusColor>FFFFFF</statusColor>
 
             <!-- System view -->
             <systemCarouselColor>FFFFFFD8</systemCarouselColor>

@@ -187,7 +187,7 @@ namespace Utils
 #else
             localtime_r(&time, &timeStruct);
 #endif
-            char buf[256] = {'\0'};
+            char buf[256] {'\0'};
             char* s = buf;
 
             while (*f) {
@@ -197,7 +197,7 @@ namespace Utils
                     switch (*f++) {
                         // Year, including century [1970,xxxx]
                         case 'Y': {
-                            const int year = timeStruct.tm_year + 1900;
+                            const int year {timeStruct.tm_year + 1900};
                             *s++ = static_cast<char>((year - (year % 1000)) / 1000) + '0';
                             *s++ = static_cast<char>(((year % 1000) - (year % 100)) / 100) + '0';
                             *s++ = static_cast<char>(((year % 100) - (year % 10)) / 10) + '0';
@@ -206,7 +206,7 @@ namespace Utils
 
                         // Month number [00,11]
                         case 'm': {
-                            const int mon = timeStruct.tm_mon + 1;
+                            const int mon {timeStruct.tm_mon + 1};
                             *s++ = static_cast<char>(mon / 10) + '0';
                             *s++ = static_cast<char>(mon % 10) + '0';
                         } break;

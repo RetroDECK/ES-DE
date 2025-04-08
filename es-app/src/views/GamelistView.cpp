@@ -9,6 +9,7 @@
 #include "views/GamelistView.h"
 
 #include "CollectionSystemsManager.h"
+#include "Scripting.h"
 #include "UIModeController.h"
 #include "animations/LambdaAnimation.h"
 #include "utils/LocalizationUtil.h"
@@ -20,6 +21,8 @@ GamelistView::GamelistView(FileData* root)
     : GamelistBase {root}
     , mRenderer {Renderer::getInstance()}
     , mStaticVideoAudio {false}
+    , mTriggerEvent {false}
+    , mTriggeredEventFastScroll {false}
 {
 }
 
@@ -87,6 +90,15 @@ void GamelistView::onShow()
 
     for (auto& video : mStaticVideoComponents)
         video->stopVideoPlayer();
+
+    mWindow->passClockComponents(&mClockComponents);
+    mWindow->passSystemStatusComponents(&mSystemStatusComponents);
+
+    for (auto& clock : mClockComponents)
+        clock->update(500);
+
+    for (auto& systemstatus : mSystemStatusComponents)
+        systemstatus->update(SystemStatus::updateTime);
 
     mLastUpdated = nullptr;
     GuiComponent::onShow();
@@ -349,9 +361,35 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mRatingComponents.back()->setOpacity(mRatingComponents.back()->getOpacity());
                 addChild(mRatingComponents.back().get());
             }
+            else if (element.second.type == "helpsystem") {
+                mHelpComponents.emplace_back(std::make_unique<HelpComponent>());
+                mHelpComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
+            }
+            else if (element.second.type == "clock") {
+                mClockComponents.emplace_back(std::make_unique<DateTimeComponent>());
+                mClockComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
+            }
+            else if (element.second.type == "systemstatus") {
+                mSystemStatusComponents.emplace_back(std::make_unique<SystemStatusComponent>());
+                mSystemStatusComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
+                mSystemStatusComponents.back()->updateGrid();
+            }
         }
+    }
 
-        mHelpStyle.applyTheme(mTheme, "gamelist");
+    if (mClockComponents.empty()) {
+        // Apply a default clock if the theme does not contain any configuration for it.
+        mClockComponents.emplace_back(std::make_unique<DateTimeComponent>());
+        mClockComponents.back()->applyTheme(theme, "gamelist", "clock_default", ThemeFlags::ALL);
+        mClockComponents.back()->update(1000);
+    }
+
+    if (mSystemStatusComponents.empty()) {
+        // Apply a default systemstatus if the theme does not contain any configuration for it.
+        mSystemStatusComponents.emplace_back(std::make_unique<SystemStatusComponent>());
+        mSystemStatusComponents.back()->applyTheme(theme, "gamelist", "systemstatus_default",
+                                                   ThemeFlags::ALL);
+        mSystemStatusComponents.back()->updateGrid();
     }
 
     if (mPrimary == nullptr) {
@@ -404,6 +442,17 @@ void GamelistView::update(int deltaTime)
     for (auto& anim : mGIFAnimComponents) {
         if (anim->isAnimationPlaying(0))
             anim->advanceAnimation(0, deltaTime);
+    }
+
+    if (mTriggerEvent) {
+        mTriggerEvent = false;
+        FileData* file {mPrimary->size() > 0 ? mPrimary->getSelected() : nullptr};
+        if (file) {
+            Scripting::fireEvent("game-select", file->getPath(),
+                                 file->getSourceFileData()->metadata.get("name"),
+                                 file->getSourceFileData()->getSystem()->getName(),
+                                 file->getSourceFileData()->getSystem()->getFullName());
+        }
     }
 
     updateChildren(deltaTime);
@@ -512,6 +561,11 @@ void GamelistView::render(const glm::mat4& parentTrans)
 
 std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 {
+    if (mHelpComponents.empty())
+        mWindow->passHelpComponents(nullptr);
+    else
+        mWindow->passHelpComponents(&mHelpComponents);
+
     std::vector<HelpPrompt> prompts;
 
     if (Settings::getInstance()->getString("QuickSystemSelect") != "disabled") {
@@ -572,6 +626,7 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 void GamelistView::updateView(const CursorState& state)
 {
     bool loadedTexture {false};
+    mTriggerEvent = false;
 
     if (mPrimary->isScrolling()) {
         onDemandTextureLoad();
@@ -584,8 +639,21 @@ void GamelistView::updateView(const CursorState& state)
 
     // If the game data has already been rendered to the view, then skip it this time.
     // This also happens when fast-scrolling.
-    if (file == mLastUpdated)
+    if (file == mLastUpdated) {
+        if (!mTriggeredEventFastScroll && state == CursorState::CURSOR_SCROLLING &&
+            Settings::getInstance()->getBool("CustomEventScripts") &&
+            Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
+            mTriggeredEventFastScroll = true;
+            Scripting::fireEvent("game-select");
+        }
         return;
+    }
+
+    if (Settings::getInstance()->getBool("CustomEventScripts") &&
+        Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
+        mTriggerEvent = true;
+        mTriggeredEventFastScroll = false;
+    }
 
     if (!loadedTexture)
         onDemandTextureLoad();

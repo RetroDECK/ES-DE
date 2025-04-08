@@ -106,7 +106,6 @@ void ComponentGrid::setEntry(const std::shared_ptr<GuiComponent>& comp,
 {
     assert(pos.x >= 0 && pos.x < mGridSize.x && pos.y >= 0 && pos.y < mGridSize.y);
     assert(comp != nullptr);
-    assert(comp->getParent() == nullptr);
     comp->setAutoCalcExtent(autoCalcExtent);
 
     GridEntry entry {pos, size, comp, canFocus, resize, updateType, border};

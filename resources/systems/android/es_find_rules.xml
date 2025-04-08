@@ -22,6 +22,12 @@
             <entry>xyz.aethersx2.android/.EmulationActivity</entry>
         </rule>
     </emulator>
+    <emulator name="AZAHAR">
+        <!-- Nintendo 3DS emulator Azahar -->
+        <rule type="androidpackage">
+            <entry>io.github.lime3ds.android/org.citra.citra_emu.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="C64-EMU">
         <!-- Commodore 8-bit computer emulator C64.emu -->
         <rule type="androidpackage">
@@ -31,6 +37,7 @@
     <emulator name="CEMU">
         <!-- Nintendo Wii U emulator Cemu -->
         <rule type="androidpackage">
+            <entry>info.cemu.cemu/info.cemu.cemu.emulation.EmulationActivity</entry>
             <entry>info.cemu.Cemu/info.cemu.Cemu.emulation.EmulationActivity</entry>
         </rule>
     </emulator>
@@ -197,6 +204,12 @@
             <entry>org.mupen64plusae.v3.fzurita/paulscode.android.mupen64plusae.SplashActivity</entry>
         </rule>
     </emulator>
+    <emulator name="MAME4DROID-CURRENT">
+        <!-- Arcade emulator MAME4droid Current -->
+        <rule type="androidpackage">
+            <entry>com.seleuco.mame4d2024/com.seleuco.mame4droid.MAME4droid</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME4DROID">
         <!-- Arcade emulator MAME4droid -->
         <rule type="androidpackage">
@@ -325,6 +338,13 @@
             <entry>it.dbtecno.pizzaboy/it.dbtecno.pizzaboy.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="PIZZA-BOY-SC">
+        <!-- Sega multi-system emulator Pizza Boy SC -->
+        <rule type="androidpackage">
+            <entry>it.dbtecno.pizzaboyscpro/.MainActivity</entry>
+            <entry>it.dbtecno.pizzaboyscbasic/.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="PLAY!">
         <!-- Sony PlayStation 2 emulator Play! -->
         <rule type="androidpackage">
@@ -367,6 +387,12 @@
         <rule type="androidpackage">
             <entry>org.scummvm.scummvm.debug/org.scummvm.scummvm.SplashActivity</entry>
             <entry>org.scummvm.scummvm/org.scummvm.scummvm.SplashActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="SKYEMU">
+        <!-- Nintendo Game Boy, Game Boy Color, Game Boy Advance and DS emulator SkyEmu -->
+        <rule type="androidpackage">
+            <entry>com.sky.SkyEmu/.EnhancedNativeActivity</entry>
         </rule>
     </emulator>
     <emulator name="SKYLINE">

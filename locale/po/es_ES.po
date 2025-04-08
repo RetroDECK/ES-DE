@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-11-29 19:08+0100\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-04 22:15+0100\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Español (España) <info@es-de.org>\n"
 "Language: es_ES\n"
@@ -771,6 +771,9 @@ msgstr "BREVE"
 msgid "LONG"
 msgstr "LARGO"
 
+msgid "POPUP"
+msgstr "POPUP"
+
 msgid "UI MODE"
 msgstr "MODO INTERFAZ"
 
@@ -832,6 +835,9 @@ msgstr "SOLO JUEGOS"
 msgid "GAMES AND SYSTEMS"
 msgstr "JUEGOS Y SISTEMAS"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "CONFIGURACIÓN DEL ESTADO DEL SISTEMA"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "CONFIGURACION DEL VISOR DE MEDIOS"
 
@@ -840,6 +846,9 @@ msgstr "CONFIGURACION DEL SALVAPANTALLAS"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "ACTIVAR VARIANTES DE TEMA"
+
+msgid "DISPLAY CLOCK"
+msgstr "MOSTRAR RELOJ"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "DIFUMINAR EL FONDO CUANDO EL MENÚ ESTÁ ABIERTO"
@@ -1074,6 +1083,9 @@ msgstr "MOSTRAR JUEGOS OCULTOS"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ACTIVAR SCRIPTS DE EVENTO PERSONALIZADOS"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "NAVEGACIÓN POR EVENTOS PERSONALIZADOS"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "SOLO MOSTRAR JUEGOS DE LOS FICHEROS GAMELIST.XML"
 
@@ -1151,6 +1163,10 @@ msgstr "¿APAGAR?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "APAGAR SISTEMA"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "CONF. DEL ESTADO DEL SISTEMA"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1892,6 +1908,21 @@ msgstr "CAMBIAR VIDEOS DESPUES DE (SEGUNDOS)"
 
 msgid "RENDER BLUR"
 msgstr "RENDERIZAR DIFUMINADO"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "MOSTRAR INDICADOR ESTADO BLUETOOTH"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "MOSTRAR INDICADOR ESTADO WI-FI"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "MOSTRAR INDICADOR ESTADO RED MÓVIL"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "MOSTRAR INDICADOR ESTADO DE LA BATERÍA"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "MOSTRAR PORCENTAJE DE CARGA DE LA BATERÍA"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DESCARGANDO LISTA DE TEMAS 100%"
@@ -2916,6 +2947,9 @@ msgstr "4:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"
+
+msgid "8:7 vertical"
+msgstr "8:7 vertical"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 vertical"

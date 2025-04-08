@@ -69,7 +69,8 @@ void VideoFFmpegComponent::setResize(const float width, const float height)
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = false;
     mTargetIsCrop = false;
-    mStaticImage.setResize(mTargetSize);
+    if (mImageAreaSize == glm::vec2 {0.0f, 0.0f})
+        mStaticImage.setResize(mTargetSize);
     resize();
 }
 
@@ -80,7 +81,8 @@ void VideoFFmpegComponent::setMaxSize(float width, float height)
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = true;
     mTargetIsCrop = false;
-    mStaticImage.setMaxSize(width, height);
+    if (mImageAreaSize == glm::vec2 {0.0f, 0.0f})
+        mStaticImage.setMaxSize(width, height);
     resize();
 }
 
@@ -89,9 +91,27 @@ void VideoFFmpegComponent::setCroppedSize(const glm::vec2& size)
     mTargetSize = size;
     mTargetIsMax = false;
     mTargetIsCrop = true;
-    mStaticImage.setCropPos(mCropPos);
-    mStaticImage.setCroppedSize(size);
+    if (mImageAreaSize == glm::vec2 {0.0f, 0.0f}) {
+        mStaticImage.setCropPos(mCropPos);
+        mStaticImage.setCroppedSize(size);
+    }
     resize();
+}
+
+void VideoFFmpegComponent::setImageResize(const float width, const float height)
+{
+    mStaticImage.setResize(glm::vec2 {width, height});
+}
+
+void VideoFFmpegComponent::setImageMaxSize(float width, float height)
+{
+    mStaticImage.setMaxSize(width, height);
+}
+
+void VideoFFmpegComponent::setImageCroppedSize(const glm::vec2& size)
+{
+    mStaticImage.setCropPos(mImageCropPos);
+    mStaticImage.setCroppedSize(size);
 }
 
 void VideoFFmpegComponent::resize()
@@ -197,7 +217,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             mRenderer->setMatrix(parentTrans);
         }
 
-        if (!mScreensaverMode && !mMediaViewerMode) {
+        if (!mScreensaverMode && !mMediaViewerMode && mRenderBlackFrame) {
             mBlackFrame.setOpacity(mOpacity * mThemeOpacity);
             mBlackFrame.render(trans);
         }

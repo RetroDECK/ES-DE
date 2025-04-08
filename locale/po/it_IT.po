@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-12-03 23:46+0200\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-03 23:16+0200\n"
 "Last-Translator: Lorenzo Castelletta <lorenzo.castelletta@gmail.com>\n"
 "Language-Team: Italiano <info@es-de.org>\n"
 "Language: it_IT\n"
@@ -771,6 +771,9 @@ msgstr "BREVE"
 msgid "LONG"
 msgstr "LUNGA"
 
+msgid "POPUP"
+msgstr "POPUP"
+
 msgid "UI MODE"
 msgstr "MODALITÀ INTERFACCIA UTENTE"
 
@@ -831,6 +834,9 @@ msgstr "SOLO GIOCHI"
 msgid "GAMES AND SYSTEMS"
 msgstr "GIOCHI E SISTEMI"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "IMPOSTAZIONI STATO SISTEMA"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "IMPOSTAZIONI VISUALIZZIAZIONE MEDIA"
 
@@ -839,6 +845,9 @@ msgstr "IMPOSTAZIONI SCREENSAVER"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "ABILITA GLI ATTIVATORI DELLE VARIANTI DEL TEMA"
+
+msgid "DISPLAY CLOCK"
+msgstr "OROLOGIO"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "OFFUSCA LO SFONDO QUANDO IL MENÙ È APERTO"
@@ -1074,6 +1083,9 @@ msgstr "MOSTRA GIOCHI NASCOSTI"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ABILITA GLI SCRIPT DEGLI EVENTI PERSONALIZZATI"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "SCORRIMENTO EVENTI PERS."
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "MOSTRA SOLO GIOCHI PRESENTI NEI GAMELIST.XML"
 
@@ -1152,6 +1164,10 @@ msgstr "VUOI DAVVERO SPEGNERE?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "SPEGNI IL SISTEMA"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "IMPOSTAZIONI STATO SISTEMA"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1886,6 +1902,21 @@ msgstr "CAMBIA VIDEO DOPO (SECONDI)"
 
 msgid "RENDER BLUR"
 msgstr "RENDERIZZA L'OFFUSCAMENTO"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "MOSTRA INDICATORE STATO BLUETOOTH"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "MOSTRA INDICATORE STATO WI-FI"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "MOSTRA INDICATORE STATO CELLULARE"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "MOSTRA INDICATORE STATO BATTERIA"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "MOSTRA PERCENTUALE CARICA BATTERIA"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "STO SCARICANDO LA LISTA DEI TEMI 100%"
@@ -2911,6 +2942,9 @@ msgstr "4:3 verticale"
 
 msgid "5:4 vertical"
 msgstr "5:4 verticale"
+
+msgid "8:7 vertical"
+msgstr "8:7 verticale"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 verticale"

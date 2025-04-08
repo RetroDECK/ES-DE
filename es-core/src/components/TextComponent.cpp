@@ -16,11 +16,11 @@
 
 TextComponent::TextComponent()
     : mFont {Font::get(FONT_SIZE_MEDIUM)}
+    , mBackgroundCornerRadius {0.0f}
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
     , mBackgroundMargins {0.0f, 0.0f}
-    , mBackgroundCornerRadius {0.0f}
     , mColorOpacity {1.0f}
     , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
@@ -69,11 +69,11 @@ TextComponent::TextComponent(const std::string& text,
                              float scrollGap,
                              float maxLength)
     : mFont {nullptr}
+    , mBackgroundCornerRadius {0.0f}
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
     , mBackgroundMargins {0.0f, 0.0f}
-    , mBackgroundCornerRadius {0.0f}
     , mColorOpacity {1.0f}
     , mBgColorOpacity {0.0f}
     , mRenderBackground {false}

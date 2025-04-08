@@ -40,6 +40,16 @@ es-de.worker.js
 es-core/src/InputOverlay.*
 es-core/src/utils/PlatformUtilAndroid.*
 
+# iOS
+ios/
+Frameworks/
+CMakeScripts
+*.xcodeproj/
+es-de.xcarchive/
+es-app/src/UIKitMain.cpp
+es-core/src/InputOverlay.*
+es-core/src/utils/PlatformUtilIOS.*
+
 # AppImage
 AppDir
 *.AppImage
@@ -110,7 +120,9 @@ CPackSourceConfig.cmake
 
 # VSCode
 .vscode/
+.continueignore
 
+# RetroDECK
 .flatpak-builder
 builddir
 esde-repo

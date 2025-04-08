@@ -83,7 +83,7 @@ public:
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
+
     void onSizeChanged() override;
 
     void decreaseScrapeCount()

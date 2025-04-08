@@ -141,13 +141,67 @@ modules:
       - '*.a'
       - '*.la'
 
+  # Needed from ES-DE 3.2.0+
+  - name: dav1d
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://download.videolan.org/videolan/dav1d/1.5.1/dav1d-1.5.1.tar.xz
+        sha256: 401813f1f89fa8fd4295805aa5284d9aed9bc7fc1fdbe554af4292f64cbabe21
+        x-checker-data:
+          type: anitya
+          project-id: 18920
+          url-template: https://download.videolan.org/videolan/dav1d/$version/dav1d-$version.tar.xz
+
+  # Needed from ES-DE 3.2.0+
+  - name: bluez
+    config-opts:
+    - "--disable-datafiles"
+    - "--disable-manpages"
+    - "--disable-systemd"
+    - "--enable-experimental"
+    - "--enable-library"
+    - "--disable-client"
+    - "--disable-mesh"
+    - "--disable-tools"
+    - "--disable-monitor"
+    - "--disable-udev"
+    - "--prefix=/app"
+    - "--sysconfdir=/app/etc"
+    sources:
+    - type: archive
+      url: https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-5.64.tar.xz
+      sha256: ae437e65b6b3070c198bc5b0109fe9cdeb9eaa387380e2072f9de65fe8a1de34
+
+  # Needed from ES-DE 3.2.0+
+  - name: libvpx
+    config-opts:
+      - "--enable-runtime-cpu-detect"
+      - "--enable-shared"
+      - "--disable-static"
+      - "--enable-pic"
+      - "--disable-install-bins"
+      - "--disable-install-docs"
+      - "--disable-install-srcs"
+      - "--enable-vp8"
+      - "--enable-postproc"
+      - "--enable-vp9"
+      - "--enable-vp9-highbitdepth"
+    sources:
+      - type: archive
+        url: https://github.com/webmproject/libvpx/archive/refs/tags/v1.15.0.tar.gz
+        sha256: e935eded7d81631a538bfae703fd1e293aad1c7fd3407ba00440c95105d2011e
+
   - name: ES-DE
     buildsystem: cmake-ninja
     config-opts:
       - -DRETRODECK=on
+      - -DCMAKE_PREFIX_PATH=/app
+      - -DICU_USE_STATIC_LIBS=ON
+      - -DICU_ROOT=/app
     build-options:
       cflags: -I/app/include
-      ldflags: -L/app/lib
+      ldflags: -L/app/lib -licuuc -licudata
     cleanup:
       - es-app
       - es-core

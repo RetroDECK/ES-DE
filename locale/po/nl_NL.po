@@ -1,15 +1,15 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 # Stefan <s.vandenbroekprive@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-11-30 15:24+0100\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-03 20:53+0100\n"
 "Last-Translator: Stefan <s.vandenbroekprive@gmail.com>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
 "Language: nl_NL\n"
@@ -761,6 +761,9 @@ msgstr "KORT"
 msgid "LONG"
 msgstr "LANG"
 
+msgid "POPUP"
+msgstr "POPUP"
+
 msgid "UI MODE"
 msgstr "UI-MODUS"
 
@@ -822,6 +825,9 @@ msgstr "ALLEEN SPELLETJES"
 msgid "GAMES AND SYSTEMS"
 msgstr "SPELLEN EN SYSTEMEN"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "INSTELLINGEN SYSTEEMSTATUS"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "MEDIA VIEWER-INSTELLINGEN"
 
@@ -830,6 +836,9 @@ msgstr "SCREENSAVER-INSTELLINGEN"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "THEMA VARIANT TRIGGERS INSCHAKELEN"
+
+msgid "DISPLAY CLOCK"
+msgstr "KLOK WEERGEVEN"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "ACHTERGROND VERVAGEN ALS HET MENU GEOPEND IS"
@@ -1065,6 +1074,9 @@ msgstr "VERBORGEN SPELLETJES TONEN"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "AANGEPASTE EVENEMENTEN-SCRIPTS INSCHAKELEN"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "BLADEREN DOOR AANGEPASTE EVENEMENTEN"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "ALLEEN GAMES UIT GAMELIST.XML-BESTANDEN TONEN"
 
@@ -1142,6 +1154,10 @@ msgstr "ECHT UITSCHAKELEN?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "SCHAKEL SYSTEEM UIT"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "INSTELLINGEN SYSTEEMSTATUS"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1871,6 +1887,21 @@ msgstr "VIDEO'S WISSELEN NA (SECONDEN)"
 msgid "RENDER BLUR"
 msgstr "WISSEN WISSEN"
 
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "BLUETOOTH-STATUSINDICATOR WEERGEVEN"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "WI-FI STATUSINDICATOR WEERGEVEN"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "CELLULAIRE STATUSINDICATOR WEERGEVEN"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "WEERGAVE BATTERIJSTATUSINDICATOR"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "PERCENTAGE BATTERIJLADING WEERGEVEN"
+
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DOWNLOAD THEMA LIJST 100%"
 
@@ -2034,7 +2065,7 @@ msgid "THEME WAS DELETED"
 msgstr "THEMA IS VERWIJDERD"
 
 msgid "view screenshots"
-msgstr "bekijk screenshots "
+msgstr "bekijk screenshots"
 
 msgid "fetch updates"
 msgstr "updates ophalen"
@@ -2579,7 +2610,7 @@ msgstr ""
 
 #, c-format
 msgid "LAUNCHING GAME '%s'"
-msgstr "SPEL '%s' STARTEN"
+msgstr "SPEL '%s' OPSTARTEN"
 
 msgid "menu"
 msgstr "menu"
@@ -2885,6 +2916,9 @@ msgstr "4:3 verticaal"
 
 msgid "5:4 vertical"
 msgstr "5:4 verticaal"
+
+msgid "8:7 vertical"
+msgstr "8:7 verticaal"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 verticaal"

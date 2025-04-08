@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-12-05 20:20+0100\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-04 21:21+0100\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Deutsch <info@es-de.org>\n"
 "Language: de_DE\n"
@@ -771,6 +771,9 @@ msgstr "KURZ"
 msgid "LONG"
 msgstr "LANG"
 
+msgid "POPUP"
+msgstr "POPUP"
+
 msgid "UI MODE"
 msgstr "UI MODUS"
 
@@ -830,6 +833,9 @@ msgstr "NUR SPIELE"
 msgid "GAMES AND SYSTEMS"
 msgstr "SPIELE UND PLATTFORMEN"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "SYSTEMSTATUS-EINSTELLUNGEN"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "MEDIENBETRACHTER-EINSTELLUNGEN"
 
@@ -838,6 +844,9 @@ msgstr "BILDSCHIRMSCHONER-EINSTELLUNGEN"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "THEMEN-VARIANTEN-TRIGGER AKTIVIEREN"
+
+msgid "DISPLAY CLOCK"
+msgstr "UHR ANZEIGEN"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "HINTERGRUND TRÜBEN WENN MENÜ GEÖFFNET IST"
@@ -1072,6 +1081,9 @@ msgstr "VERSTECKTE SPIELE ZEIGEN"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "BENUTZERDEFINIERTE EREIGNIS-SKRIPTE AKTIVIEREN"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "BENUTZERDEFINIERTE EVENTS DURCSUCHEN"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "NUR SPIELE AUS DER GAMELIST.XML-DATEI ANZEIGEN"
 
@@ -1149,6 +1161,10 @@ msgstr "WIRKLICH HERUNTERFAHREN?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "SYSTEM HERUNTERFAHREN"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "SYSTEMSTATUS-EINSTELLUNGEN"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1887,6 +1903,21 @@ msgstr "VIDEOS TAUSCHEN NACH (SEKUNDEN)"
 
 msgid "RENDER BLUR"
 msgstr "RENDER BLUR"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "ANZEIGE DES BT STATUS"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "ANZEIGE DES WIFI STATUS"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "ANZEIGE DES MOBILFUNKSTATUS"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "ANZEIGE DES AKKUSTATUS"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "ANZEIGE DER AKKULADUNG IN PROZENT"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "HERUNTERLADEN DER THEMELISTE 100%"
@@ -2910,6 +2941,9 @@ msgstr "4:3 vertikal"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertikal"
+
+msgid "8:7 vertical"
+msgstr "8:7 vertikal"
 
 msgid "19.5:9 vertical"
 msgstr "19,5:9 vertikal"

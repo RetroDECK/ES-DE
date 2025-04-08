@@ -26,11 +26,14 @@ VideoComponent::VideoComponent()
     , mColorShiftEnd {0xFFFFFFFF}
     , mVideoCornerRadius {0.0f}
     , mColorGradientHorizontal {true}
+    , mRenderBlackFrame {true}
     , mTargetSize {0.0f, 0.0f}
     , mCropPos {0.5f, 0.5f}
+    , mImageCropPos {0.5f, 0.5f}
     , mCropOffset {0.0f, 0.0f}
     , mVideoAreaPos {0.0f, 0.0f}
     , mVideoAreaSize {0.0f, 0.0f}
+    , mImageAreaSize {0.0f, 0.0f}
     , mTopLeftCrop {0.0f, 0.0f}
     , mBottomRightCrop {1.0f, 1.0f}
     , mPillarboxThreshold {0.85f, 0.90f}
@@ -39,6 +42,7 @@ VideoComponent::VideoComponent()
     , mIsPlaying {false}
     , mIsActuallyPlaying {false}
     , mPaused {false}
+    , mImageTypeNone {false}
     , mMediaViewerMode {false}
     , mScreensaverMode {false}
     , mTargetIsMax {false}
@@ -136,6 +140,41 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     glm::vec2 scale {getParent() ?
                          getParent()->getSize() :
                          glm::vec2 {mRenderer->getScreenWidth(), mRenderer->getScreenHeight()}};
+
+    if (properties & ThemeFlags::SIZE) {
+        if (elem->has("imageSize")) {
+            glm::vec2 imageSize {elem->get<glm::vec2>("imageSize")};
+            if (imageSize == glm::vec2 {0.0f, 0.0f}) {
+                LOG(LogWarning)
+                    << "VideoComponent: Invalid theme configuration, property \"imageSize\" "
+                       "for element \""
+                    << element.substr(6) << "\" is set to zero";
+                imageSize = {0.01f, 0.01f};
+            }
+            if (imageSize.x > 0.0f)
+                imageSize.x = glm::clamp(imageSize.x, 0.01f, 2.0f);
+            if (imageSize.y > 0.0f)
+                imageSize.y = glm::clamp(imageSize.y, 0.01f, 2.0f);
+            setImageResize(imageSize.x * scale.x, imageSize.y * scale.y);
+            mImageAreaSize = imageSize * scale;
+        }
+        else if (elem->has("imageMaxSize")) {
+            glm::vec2 imageMaxSize {elem->get<glm::vec2>("imageMaxSize")};
+            imageMaxSize.x = glm::clamp(imageMaxSize.x, 0.01f, 2.0f);
+            imageMaxSize.y = glm::clamp(imageMaxSize.y, 0.01f, 2.0f);
+            setImageMaxSize(imageMaxSize * scale);
+            mImageAreaSize = imageMaxSize * scale;
+        }
+        else if (elem->has("imageCropSize")) {
+            glm::vec2 imageCropSize {elem->get<glm::vec2>("imageCropSize")};
+            imageCropSize.x = glm::clamp(imageCropSize.x, 0.01f, 2.0f);
+            imageCropSize.y = glm::clamp(imageCropSize.y, 0.01f, 2.0f);
+            if (elem->has("imageCropPos"))
+                mImageCropPos = glm::clamp(elem->get<glm::vec2>("imageCropPos"), 0.0f, 1.0f);
+            setImageCroppedSize(imageCropSize * scale);
+            mImageAreaSize = imageCropSize * scale;
+        }
+    }
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {
@@ -290,6 +329,21 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (mConfig.startDelay != 0)
         mConfig.showStaticImageDelay = true;
 
+    if (elem->has("fadeInType")) {
+        const std::string& fadeInType {elem->get<std::string>("fadeInType")};
+        if (fadeInType == "black") {
+            mRenderBlackFrame = true;
+        }
+        else if (fadeInType == "transparent") {
+            mRenderBlackFrame = false;
+        }
+        else {
+            LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property "
+                               "\"fadeInType\" for element \""
+                            << element.substr(6) << "\" defined as \"" << fadeInType << "\"";
+        }
+    }
+
     if (properties && elem->has("fadeInTime"))
         mFadeInTime = glm::clamp(elem->get<float>("fadeInTime"), 0.0f, 8.0f) * 1000.0f;
 
@@ -309,8 +363,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         for (std::string& type : mThemeImageTypes) {
-            if (std::find(supportedImageTypes.cbegin(), supportedImageTypes.cend(), type) ==
-                supportedImageTypes.cend()) {
+            if (std::find(sSupportedImageTypes.cbegin(), sSupportedImageTypes.cend(), type) ==
+                sSupportedImageTypes.cend()) {
                 LOG(LogError)
                     << "VideoComponent: Invalid theme configuration, property \"imageType\" "
                        "for element \""
@@ -318,6 +372,11 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 mThemeImageTypes.clear();
                 break;
             }
+        }
+
+        if (std::find(mThemeImageTypes.cbegin(), mThemeImageTypes.cend(), "none") !=
+            mThemeImageTypes.cend()) {
+            mImageTypeNone = true;
         }
 
         std::vector<std::string> sortedTypes {mThemeImageTypes};
@@ -423,7 +482,7 @@ void VideoComponent::update(int deltaTime)
     if (mWindow->getGameLaunchedState())
         return;
 
-    if (!mIsPlaying && (mConfig.startDelay == 0 || mStaticImagePath == "")) {
+    if (!mIsPlaying && (mConfig.startDelay == 0 || (mStaticImagePath == "" && !mImageTypeNone))) {
         startVideoStream();
     }
     else if (mStartTime == 0 || SDL_GetTicks() > mStartTime) {
@@ -464,6 +523,9 @@ void VideoComponent::startVideoPlayer()
     if (mConfig.showStaticImageDelay && mConfig.startDelay != 0 && mStaticImagePath != "") {
         mStartTime = SDL_GetTicks() + mConfig.startDelay;
         setImage(mStaticImagePath);
+    }
+    else if (mConfig.showStaticImageDelay && mConfig.startDelay != 0 && mImageTypeNone) {
+        mStartTime = SDL_GetTicks() + mConfig.startDelay;
     }
 
     mPaused = false;

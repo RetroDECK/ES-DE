@@ -11,9 +11,9 @@
 
 #include "GuiComponent.h"
 #include "Window.h"
+#include "components/BackgroundComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/ImageComponent.h"
-#include "components/NinePatchComponent.h"
 #include "components/TextComponent.h"
 
 class FileData;
@@ -34,8 +34,8 @@ public:
 
 private:
     Renderer* mRenderer;
-    NinePatchComponent mBackground;
-    ComponentGrid* mGrid;
+    BackgroundComponent mBackground;
+    ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mTitle;
     std::shared_ptr<TextComponent> mGameName;
@@ -45,6 +45,7 @@ private:
     std::string mImagePath;
 
     float mScaleUp;
+    int mScaleAccumulator;
 };
 
 #endif // ES_APP_GUIS_GUI_LAUNCH_SCREEN_H

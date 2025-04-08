@@ -24,7 +24,7 @@ The following options are included:
 - 4:3
 - 4:3 vertical
 
-16 languages:
+17 languages:
 
 - English (United States)
 - English (United Kingdom)
@@ -42,6 +42,7 @@ The following options are included:
 - 日本語
 - 한국어
 - 简体中文
+- 繁體中文
 
 3 transitions:
 

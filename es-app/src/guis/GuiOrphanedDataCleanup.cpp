@@ -19,7 +19,6 @@
 
 GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallback)
     : mRenderer {Renderer::getInstance()}
-    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {4, 11}}
     , mReloadCallback {reloadCallback}
     , mCursorPos {0}

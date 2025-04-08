@@ -10,8 +10,8 @@
 #define ES_CORE_GUIS_GUI_INPUT_CONFIG_H
 
 #include "GuiComponent.h"
+#include "components/BackgroundComponent.h"
 #include "components/ComponentGrid.h"
-#include "components/NinePatchComponent.h"
 
 class ComponentList;
 class TextComponent;
@@ -46,7 +46,7 @@ private:
     bool assign(Input input, int inputId);
     void clearAssignment(int inputId);
 
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mTitle;

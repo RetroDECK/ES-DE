@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-11-25 23:56+0200\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-05 00:20+0200\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
 "Language: ro_RO\n"
@@ -767,6 +767,9 @@ msgstr "SCURTĂ"
 msgid "LONG"
 msgstr "LUNGĂ"
 
+msgid "POPUP"
+msgstr "POPUP"
+
 msgid "UI MODE"
 msgstr "MOD INTERFAȚĂ"
 
@@ -826,6 +829,9 @@ msgstr "DOAR JOCURI"
 msgid "GAMES AND SYSTEMS"
 msgstr "JOCURI ȘI SISTEME"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "SETĂRI INDICATORI SISTEM"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "SETĂRI VIZUALIZATOR MEDIA"
 
@@ -834,6 +840,9 @@ msgstr "SETĂRI ECONOMIZOR DE ECRAN"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "ACTIVEAZĂ DECLANȘATORI VARIANTE TEMĂ"
+
+msgid "DISPLAY CLOCK"
+msgstr "AFIȘEAZĂ CEASUL"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "BLUREAZĂ FUNDALUL CÂND MENIUL ESTE DESCHIS"
@@ -1066,7 +1075,10 @@ msgid "SHOW HIDDEN GAMES"
 msgstr "AFIȘEAZĂ JOCURILE ASCUNSE"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
-msgstr "ACTIVEAZĂ SCRIPTURI EVENIMENTE PERSONALIZATE"
+msgstr "ACTIVEAZĂ SCRIPT EVENIMENTE PERSONALIZATE"
+
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "EVENIMENTE PERSONALIZATE LA NAVIGARE"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "AFIȘEAZĂ DOAR JOCURILE DIN FIȘIERELE GAMELIST.XML"
@@ -1145,6 +1157,10 @@ msgstr "CHIAR ÎNCHIZI?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "ÎNCHIDE SISTEMUL"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "SETĂRI INDICATORI SISTEM"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1762,16 +1778,16 @@ msgstr "NICIO INFORMAȚIE NU A FOST PRELUATĂ"
 #, c-format
 msgid "%i GAME SUCCESSFULLY SCRAPED"
 msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
-msgstr[0] "INFORMAȚIE PENTRU %i JOC A FOST PRELUATĂ"
-msgstr[1] "INFORMAȚII PENTRU %i JOCURI AU FOST PRELUATE"
-msgstr[2] "INFORMAȚII PENTRU %i DE JOCURI AU FOST PRELUATE"
+msgstr[0] "AU FOST PRELUATE INFORMAȚII PENTRU 1 JOC"
+msgstr[1] "AU FOST PRELUATE INFORMAȚII PENTRU %i JOCURI"
+msgstr[2] "AU FOST PRELUATE INFORMAȚII PENTRU %i DE JOCURI"
 
 #, c-format
 msgid "%i GAME SKIPPED"
 msgid_plural "%i GAMES SKIPPED"
-msgstr[0] "%i JOC A FOST OMIS"
-msgstr[1] "%i JOCURI AU FOST OMISE"
-msgstr[2] "%i DE JOCURI AU FOST OMISE"
+msgstr[0] "A FOST OMIS %i JOC"
+msgstr[1] "AU FOST OMISE %i JOCURI"
+msgstr[2] "AU FOST OMISE %i DE JOCURI"
 
 msgid "RATING:"
 msgstr "SCOR:"
@@ -1874,6 +1890,21 @@ msgstr "SCHIMBĂ VIDEOCLIPUL DUPĂ"
 
 msgid "RENDER BLUR"
 msgstr "REDĂ BLUR"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "AFIȘEAZĂ INDICATOR STARE BLUETOOTH"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "AFIȘEAZĂ INDICATOR STARE WI-FI"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "AFIȘEAZĂ INDICATOR STARE DATE MOBILE"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "AFIȘEAZĂ INDICATOR STARE BATERIE"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "AFIȘEAZĂ PROCENT ÎNCĂRCARE BATERIE"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "SE DESCARCĂ LISTA DE TEME 100%"
@@ -2904,6 +2935,9 @@ msgstr "4:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"
+
+msgid "8:7 vertical"
+msgstr "8:7 vertical"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 vertical"

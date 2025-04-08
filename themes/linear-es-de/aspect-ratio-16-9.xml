@@ -1,13 +1,13 @@
 <theme>
     <fontSize name="medium">
         <variables>
-            <helpsystemFontSize>0.032</helpsystemFontSize>
+            <helpsystemFontSize>0.034</helpsystemFontSize>
             <helpsystemPanelSize>1 0.06</helpsystemPanelSize>
         </variables>
     </fontSize>
     <fontSize name="large">
         <variables>
-            <helpsystemFontSize>0.038</helpsystemFontSize>
+            <helpsystemFontSize>0.040</helpsystemFontSize>
             <helpsystemPanelSize>1 0.064</helpsystemPanelSize>
         </variables>
     </fontSize>

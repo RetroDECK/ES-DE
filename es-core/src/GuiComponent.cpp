@@ -31,6 +31,7 @@ GuiComponent::GuiComponent()
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
     , mStationary {Stationary::NEVER}
+    , mComponentScope {ComponentScope::SHARED}
     , mRenderDuringTransitions {true}
     , mBrightness {0.0f}
     , mOpacity {1.0f}
@@ -420,7 +421,7 @@ void GuiComponent::updateHelpPrompts()
     std::vector<HelpPrompt> prompts {getHelpPrompts()};
 
     if (mWindow->peekGui() == this)
-        mWindow->setHelpPrompts(prompts, getHelpStyle());
+        mWindow->setHelpPrompts(prompts);
 }
 
 void GuiComponent::updateSelf(int deltaTime)

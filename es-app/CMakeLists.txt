@@ -44,6 +44,7 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSingle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScreensaverOptions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSystemStatusOptions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiThemeDownloader.h
 
     # Scrapers
@@ -95,6 +96,7 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSingle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScreensaverOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSystemStatusOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiThemeDownloader.cpp
 
     # Scrapers
@@ -111,17 +113,21 @@ set(ES_SOURCES
 )
 
 if(WIN32)
-    LIST(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE.rc)
+    list(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE.rc)
 endif()
 
 #---------------------------------------------------------------------------------------------------
 # OS-specific installation and package generation setup.
 
 # Define target.
-if(APPLE)
+if(IOS)
+    include(${CMAKE_SOURCE_DIR}/ios/cmake/ios.cmake)
+elseif(APPLE)
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_executable(ES-DE ${ES_SOURCES} ${ES_HEADERS})
-    target_link_libraries(ES-DE ${COMMON_LIBRARIES} es-core)
+    target_link_libraries(ES-DE ${COMMON_LIBRARIES} "-framework CoreFoundation -framework IOKit"
+                                                    "-framework SystemConfiguration"
+                                                    "-framework IOBluetooth" es-core)
     set_target_properties(ES-DE PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
     if(CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 15.0.0)
         target_link_options(ES-DE PRIVATE LINKER:-no_warn_duplicate_libraries)
@@ -202,7 +208,7 @@ if(WIN32)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de DESTINATION themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de DESTINATION themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION .)
-elseif(APPLE)
+elseif(APPLE AND NOT IOS)
     # For completely unknown reasons, when generating a Bundle using cpack, an extra 'Resources'
     # directory is added to the target path. Simply adding the two dots as a prefix fixes the
     # problem, but doing so would break 'make install' which was actually behaving correctly.
@@ -288,7 +294,7 @@ elseif(HAIKU)
         DESTINATION data/es-de/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
         DESTINATION data/es-de)
-elseif(NOT ANDROID)
+elseif(NOT ANDROID AND NOT IOS)
     install(TARGETS es-de RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     install(TARGETS es-pdf-convert RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME MATCHES FreeBSD)
@@ -350,6 +356,11 @@ endif()
 
 # Settings per operating system and generator type.
 if(APPLE)
+    # In case we're cross-compiling for x86_64 using an ARM processor.
+    if(CPU_ARCHITECTURE MATCHES arm64 AND CMAKE_OSX_ARCHITECTURES MATCHES x86_64)
+        set(CPU_ARCHITECTURE x64)
+    endif()
+
     set(CPACK_GENERATOR Bundle)
     set(CPACK_PACKAGE_FILE_NAME ES-DE_${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE})
     set(CPACK_DMG_VOLUME_NAME "ES-DE ${CPACK_PACKAGE_VERSION}")

@@ -14,6 +14,7 @@
 #include "FileFilterIndex.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "SystemStatus.h"
 #include "Window.h"
 #include "components/HelpComponent.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
@@ -36,6 +37,8 @@ GuiSettings::GuiSettings(std::string title)
     , mNeedsGoToStart {false}
     , mNeedsGoToSystem {false}
     , mNeedsGoToGroupedCollections {false}
+    , mNeedsUpdateStatusComponents {false}
+    , mNeedsClearHelpPromptsImageCache {false}
     , mInvalidateCachedBackground {false}
 {
     addChild(&mMenu);
@@ -143,6 +146,18 @@ void GuiSettings::save()
             ViewController::getInstance()->goToSystem(SystemData::sSystemVector.front(), false);
     }
 
+    if (mNeedsUpdateStatusComponents) {
+        SystemStatus::getInstance().setCheckFlags();
+        SystemStatus::getInstance().setPollImmediately(true);
+        // If we're not done within this time window it's not the end of the world,
+        // the indicators will still get updated shortly.
+        SDL_Delay(100);
+        mWindow->updateSystemStatusComponents();
+    }
+
+    if (mNeedsClearHelpPromptsImageCache)
+        mWindow->clearHelpPromptsImageCache();
+
     if (mNeedsCollectionsUpdate) {
         auto state = ViewController::getInstance()->getState();
         // If we're in any view other than the grouped custom collections, always jump to the
@@ -241,24 +256,23 @@ void GuiSettings::addEditableTextComponent(const std::string label,
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             // Never display the value if it's a password, instead set it to blank.
             if (isPassword)
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    getHelpStyle(), getMenu().getPosition().y, label, "", updateVal, false,
-                    _("SAVE"), _("SAVE CHANGES?")));
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(getMenu().getPosition().y, label, "",
+                                                              updateVal, false, _("SAVE"),
+                                                              _("SAVE CHANGES?")));
             else
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    getHelpStyle(), getMenu().getPosition().y, label, ed->getValue(), updateVal,
-                    false, _("SAVE"), _("SAVE CHANGES?")));
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(getMenu().getPosition().y, label,
+                                                              ed->getValue(), updateVal, false,
+                                                              _("SAVE"), _("SAVE CHANGES?")));
         });
     }
     else {
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             if (isPassword)
-                mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), label, "", updateVal, false,
-                                                      _("SAVE"), _("SAVE CHANGES?")));
-            else
-                mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), label, ed->getValue(),
-                                                      updateVal, false, _("SAVE"),
+                mWindow->pushGui(new GuiTextEditPopup(label, "", updateVal, false, _("SAVE"),
                                                       _("SAVE CHANGES?")));
+            else
+                mWindow->pushGui(new GuiTextEditPopup(label, ed->getValue(), updateVal, false,
+                                                      _("SAVE"), _("SAVE CHANGES?")));
         });
     }
 

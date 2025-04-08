@@ -11,6 +11,7 @@
 #define ES_CORE_GUIS_GUI_TEXT_EDIT_POPUP_H
 
 #include "GuiComponent.h"
+#include "components/BackgroundComponent.h"
 #include "components/ButtonComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/TextComponent.h"
@@ -20,8 +21,7 @@
 class GuiTextEditPopup : public GuiComponent
 {
 public:
-    GuiTextEditPopup(const HelpStyle& helpstyle,
-                     const std::string& title,
+    GuiTextEditPopup(const std::string& title,
                      const std::string& initValue,
                      const std::function<void(const std::string&)>& okCallback,
                      bool multiLine,
@@ -38,14 +38,12 @@ public:
     void update(int deltaTime) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
     void updateDeleteRepeat(int deltaTime);
 
-    NinePatchComponent mBackground;
+    BackgroundComponent mBackground;
     ComponentGrid mGrid;
-    HelpStyle mHelpStyle;
 
     std::shared_ptr<TextComponent> mTitle;
     std::shared_ptr<TextComponent> mInfoString;

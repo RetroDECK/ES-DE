@@ -41,6 +41,9 @@ namespace Utils
     {
         int runRebootCommand()
         {
+#if defined(__IOS__)
+            return 0;
+#else
 #if defined(_WIN64)
             return system("shutdown -r -t 0");
 #elif defined(__APPLE__) || defined(__FreeBSD__)
@@ -49,10 +52,14 @@ namespace Utils
 #else
             return system("shutdown --reboot now");
 #endif
+#endif
         }
 
         int runPoweroffCommand()
         {
+#if defined(__IOS__)
+            return 0;
+#else
 #if defined(_WIN64)
             return system("shutdown -s -t 0");
 #elif defined(__APPLE__)
@@ -63,10 +70,14 @@ namespace Utils
 #else
             return system("shutdown --poweroff now");
 #endif
+#endif
         }
 
         int runSystemCommand(const std::string& cmd_utf8)
         {
+#if defined(__IOS__)
+            return 0;
+#else
 #if defined(_WIN64)
             // On Windows we use _wsystem to support non-ASCII paths
             // which requires converting from UTF-8 to a wstring.
@@ -74,6 +85,7 @@ namespace Utils
             return _wsystem(wchar_str.c_str());
 #else
             return system(cmd_utf8.c_str());
+#endif
 #endif
         }
 
@@ -102,7 +114,11 @@ namespace Utils
                 LOG(LogDebug)
                     << "Platform::launchGameUnix(): Launching game while keeping ES-DE running "
                        "in the background, no command output will be written to the log file";
+#if defined(__IOS__)
+                return 0;
+#else
                 return system(command.c_str());
+#endif
             }
 
             FILE* commandPipe;
@@ -371,6 +387,9 @@ namespace Utils
             LOG(LogError) << "Critical - Performing emergency shutdown...";
             Scripting::fireEvent("quit");
 
+            while (Window::getInstance()->getGuiStackSize() > 1 &&
+                   Window::getInstance()->peekGui() != nullptr)
+                delete Window::getInstance()->peekGui();
             Window::getInstance()->deinit();
             Log::flush();
 

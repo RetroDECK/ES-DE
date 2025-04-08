@@ -27,8 +27,6 @@ MenuComponent::MenuComponent(std::string title, const std::shared_ptr<Font>& tit
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mBackground.setImagePath(":/graphics/frame.svg");
-
     // Set up title.
     mTitle = std::make_shared<TextComponent>();
     mTitle->setAutoCalcExtent(glm::ivec2 {0, 0});

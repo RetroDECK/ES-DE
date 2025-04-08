@@ -72,7 +72,7 @@ void ViewController::setMenuColors()
     if (Settings::getInstance()->getString("MenuColorScheme") == "light") {
         mMenuColorFrame = 0xEFEFEFFF;
         mMenuColorFrameLaunchScreen = 0xDFDFDFFF;
-        mMenuColorFrameBusyComponent = 0xFFFFFFFF;
+        mMenuColorFrameBusyComponent = 0xF5F5F5FF;
         mMenuColorPanelDimmed = 0x00000009;
 
         mMenuColorTitle = 0x555555FF;
@@ -109,7 +109,7 @@ void ViewController::setMenuColors()
     else if (Settings::getInstance()->getString("MenuColorScheme") == "darkred") {
         mMenuColorFrame = 0x191919FF;
         mMenuColorFrameLaunchScreen = 0x121212FF;
-        mMenuColorFrameBusyComponent = 0x090909FF;
+        mMenuColorFrameBusyComponent = 0x000000FF;
         mMenuColorPanelDimmed = 0x00000024;
 
         mMenuColorTitle = 0x909090FF;
@@ -146,7 +146,7 @@ void ViewController::setMenuColors()
     else {
         mMenuColorFrame = 0x191919FF;
         mMenuColorFrameLaunchScreen = 0x121212FF;
-        mMenuColorFrameBusyComponent = 0x090909FF;
+        mMenuColorFrameBusyComponent = 0x000000FF;
         mMenuColorPanelDimmed = 0x00000024;
 
         mMenuColorTitle = 0x909090FF;
@@ -199,8 +199,7 @@ void ViewController::legacyAppDataDialog()
 #endif
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr,
-        true, true,
+        upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr, true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -213,7 +212,7 @@ void ViewController::migratedAppDataFilesDialog()
                                "THE CONFIGURATION"};
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), message.c_str(), "QUIT",
+        message.c_str(), "QUIT",
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
@@ -235,8 +234,7 @@ void ViewController::unsafeUpgradeDialog()
           "README.TXT FILE THAT CAN BE FOUND IN THE ES-DE DIRECTORY.")};
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr,
-        true, true,
+        upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr, true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -252,7 +250,7 @@ void ViewController::invalidSystemsFileDialog()
                                       "LOG FILE es_log.txt FOR ADDITIONAL INFO")};
 
     mWindow->pushGui(new GuiMsgBox(
-        HelpStyle(), errorMessage.c_str(), _("QUIT"),
+        errorMessage.c_str(), _("QUIT"),
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
@@ -269,7 +267,7 @@ void ViewController::noGamesDialog()
 #if defined(RETRODECK)
     mNoGamesErrorMessage = _("NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
                              "THE RETRODECK ROM DIRECTORY LOCATED IN:\n");
-#elif defined(__ANDROID__)
+#elif defined(__ANDROID__) || defined(__IOS__)
     mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN "
                              "THE CONFIGURED ROM DIRECTORY. OPTIONALLY THE ROM "
                              "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
@@ -295,7 +293,6 @@ void ViewController::noGamesDialog()
 #if defined(RETRODECK)
     // Show a simple message with a "QUIT" option if RETRODECK is defined
     mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), 
         mNoGamesErrorMessage + mRomDirectory, 
         _("QUIT"),
         [] {
@@ -306,12 +303,12 @@ void ViewController::noGamesDialog()
     );
 #else
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
+        mNoGamesErrorMessage + mRomDirectory,
 #else
     mNoGamesMessageBox = new GuiMsgBox(
-        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, _("CHANGE ROM DIRECTORY"),
+        mNoGamesErrorMessage + mRomDirectory, _("CHANGE ROM DIRECTORY"),
         [this] {
             std::string currentROMDirectory;
 #if defined(_WIN64)
@@ -321,7 +318,7 @@ void ViewController::noGamesDialog()
 #endif
             if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    HelpStyle(), 0.0f, _("ENTER ROM DIRECTORY PATH"), currentROMDirectory,
+                    0.0f, _("ENTER ROM DIRECTORY PATH"), currentROMDirectory,
                     [this, currentROMDirectory](const std::string& newROMDirectory) {
                         if (currentROMDirectory != newROMDirectory) {
                             Settings::getInstance()->setString(
@@ -335,7 +332,6 @@ void ViewController::noGamesDialog()
 #endif
                             mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
                             mWindow->pushGui(new GuiMsgBox(
-                                HelpStyle(),
                                 _("ROM DIRECTORY SETTING SAVED, RESTART "
                                   "THE APPLICATION TO RESCAN THE SYSTEMS"),
                                 _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
@@ -350,7 +346,7 @@ void ViewController::noGamesDialog()
             }
             else {
                 mWindow->pushGui(new GuiTextEditPopup(
-                    HelpStyle(), _("ENTER ROM DIRECTORY PATH"), currentROMDirectory,
+                    _("ENTER ROM DIRECTORY PATH"), currentROMDirectory,
                     [this](const std::string& newROMDirectory) {
                         Settings::getInstance()->setString("ROMDirectory",
                                                            Utils::String::trim(newROMDirectory));
@@ -363,7 +359,6 @@ void ViewController::noGamesDialog()
 #endif
                         mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
                         mWindow->pushGui(new GuiMsgBox(
-                            HelpStyle(),
                             _("ROM DIRECTORY SETTING SAVED, RESTART "
                               "THE APPLICATION TO RESCAN THE SYSTEMS"),
                             _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
@@ -380,7 +375,6 @@ void ViewController::noGamesDialog()
         _("CREATE DIRECTORIES"),
         [this] {
             mWindow->pushGui(new GuiMsgBox(
-                HelpStyle(),
                 _("THIS WILL CREATE DIRECTORIES FOR ALL THE "
                   "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
                   "THIS MAY CREATE A LOT OF FOLDERS SO IT'S "
@@ -389,7 +383,6 @@ void ViewController::noGamesDialog()
                 [this] {
                     if (!SystemData::createSystemDirectories()) {
                         mWindow->pushGui(new GuiMsgBox(
-                            HelpStyle(),
                             _("THE SYSTEM DIRECTORIES WERE SUCCESSFULLY "
                               "GENERATED, EXIT THE APPLICATION AND PLACE "
                               "YOUR GAMES IN THE NEW FOLDERS"),
@@ -400,7 +393,6 @@ void ViewController::noGamesDialog()
                     }
                     else {
                         mWindow->pushGui(new GuiMsgBox(
-                            HelpStyle(),
                             _("ERROR CREATING THE SYSTEM DIRECTORIES, "
                               "PERMISSION PROBLEMS OR DISK FULL?\n\n"
                               "SEE THE LOG FILE FOR MORE DETAILS"),
@@ -421,7 +413,7 @@ void ViewController::noGamesDialog()
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
         "", nullptr, nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
@@ -440,8 +432,7 @@ void ViewController::noGamesDialog()
 void ViewController::invalidAlternativeEmulatorDialog()
 {
     cancelViewTransitions();
-    mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
-                                   _("AT LEAST ONE OF YOUR SYSTEMS HAS AN "
+    mWindow->pushGui(new GuiMsgBox(_("AT LEAST ONE OF YOUR SYSTEMS HAS AN "
                                      "INVALID ALTERNATIVE EMULATOR CONFIGURED "
                                      "WITH NO MATCHING ENTRY IN THE SYSTEMS "
                                      "CONFIGURATION FILE, PLEASE REVIEW YOUR "
@@ -469,7 +460,7 @@ void ViewController::updateAvailableDialog()
                       << "\"";
 
         mWindow->pushGui(new GuiMsgBox(
-            getHelpStyle(), results, _("UPDATE"),
+            results, _("UPDATE"),
             [this, package] {
                 mWindow->pushGui(new GuiApplicationUpdater());
 
@@ -499,8 +490,8 @@ void ViewController::updateAvailableDialog()
                               "THE UPGRADE.");
                     }
                     mWindow->pushGui(new GuiMsgBox(
-                        getHelpStyle(), upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "",
-                        nullptr, nullptr, true, true,
+                        upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr,
+                        true, true,
                         (mRenderer->getIsVerticalOrientation() ?
                              0.85f :
                              0.535f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -517,8 +508,8 @@ void ViewController::updateAvailableDialog()
                  0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
     }
     else {
-        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, _("OK"), nullptr, "", nullptr, "",
-                                       nullptr, nullptr, true, true,
+        mWindow->pushGui(new GuiMsgBox(results, _("OK"), nullptr, "", nullptr, "", nullptr, nullptr,
+                                       true, true,
                                        (mRenderer->getIsVerticalOrientation() ?
                                             0.70f :
                                             0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1048,11 +1039,10 @@ void ViewController::launch(FileData* game)
     mWindow->stopInfoPopup(); // Make sure we disable any existing info popup.
 
     int duration {0};
-    std::string durationString {Settings::getInstance()->getString("LaunchScreenDuration")};
+    const std::string durationString {Settings::getInstance()->getString("LaunchScreenDuration")};
 
-    if (durationString == "disabled") {
-        // If the game launch screen has been set as disabled, show a simple info popup
-        // notification instead.
+    if (durationString == "popup") {
+        // Show a simple info popup notification instead of the launch screen.
         mWindow->queueInfoPopup(
             Utils::String::format(_("LAUNCHING GAME '%s'"),
                                   Utils::String::toUpper(game->metadata.get("name")).c_str()),
@@ -1065,21 +1055,35 @@ void ViewController::launch(FileData* game)
     else if (durationString == "long") {
         duration = 4500;
     }
+    else if (durationString == "disabled") {
+        duration = 0;
+    }
     else {
         // Normal duration.
         duration = 3000;
     }
 
-    if (durationString != "disabled")
+    if (durationString != "disabled" && durationString != "popup")
         mWindow->displayLaunchScreen(game->getSourceFileData());
 
+#if defined(__ANDROID__) || defined(DEINIT_ON_LAUNCH)
+    if (durationString != "disabled")
+        NavigationSounds::getInstance().playThemeNavigationSound(LAUNCHSOUND);
+#else
     NavigationSounds::getInstance().playThemeNavigationSound(LAUNCHSOUND);
+#endif
 
     // This is just a dummy animation in order for the launch screen or notification popup
     // to be displayed briefly, and for the navigation sound playing to be able to complete.
     // During this time period, all user input is blocked.
     setAnimation(new LambdaAnimation([](float t) {}, duration), 0, [this, game] {
         game->launchGame();
+#if defined(__ANDROID__)
+        AudioManager::getInstance().stop();
+#else
+        if (!Settings::getInstance()->getBool("RunInBackground"))
+            AudioManager::getInstance().stop();
+#endif
         // If the launch screen is disabled then this will do nothing.
         mWindow->closeLaunchScreen();
         onFileChanged(game, true);
@@ -1248,6 +1252,7 @@ bool ViewController::input(InputConfig* config, Input input)
         mWindow->setAllowTextScrolling(true);
         mWindow->setAllowFileAnimation(true);
         mWindow->setLaunchedGame(false);
+        resetViewVideosTimer();
         // Filter out the "a" button so the game is not restarted if there was such a button press
         // queued when leaving the game.
         if (config->isMappedTo("a", input) && input.value != 0)
@@ -1266,6 +1271,9 @@ bool ViewController::input(InputConfig* config, Input input)
     if (!(UIModeController::getInstance()->isUIModeKid() &&
           !Settings::getInstance()->getBool("EnableMenuKidMode")) &&
         config->isMappedTo("start", input) && input.value != 0 && mCurrentView != nullptr) {
+
+        setHelpComponentsVisibility(false);
+
         // If we don't stop the scrolling here, it will continue to
         // run after closing the menu.
         if (mSystemListView->isScrolling())
@@ -1679,6 +1687,9 @@ void ViewController::rescanROMDirectory()
         // It's possible that there are no longer any games.
         mWindow->setBlockInput(false);
         mWindow->invalidateCachedBackground();
+        mWindow->passHelpComponents(nullptr);
+        mWindow->passClockComponents(nullptr);
+        mWindow->passSystemStatusComponents(nullptr);
         noGamesDialog();
     }
     else {
@@ -1705,20 +1716,4 @@ std::vector<HelpPrompt> ViewController::getHelpPrompts()
           !Settings::getInstance()->getBool("EnableMenuKidMode")))
         prompts.push_back(HelpPrompt("start", _("menu")));
     return prompts;
-}
-
-HelpStyle ViewController::getHelpStyle()
-{
-    if (!mCurrentView)
-        return GuiComponent::getHelpStyle();
-
-    return mCurrentView->getHelpStyle();
-}
-
-HelpStyle ViewController::getViewHelpStyle()
-{
-    if (mState.viewing == ViewMode::GAMELIST)
-        return getGamelistView(mState.getSystem())->getHelpStyle();
-    else
-        return getSystemListView()->getHelpStyle();
 }

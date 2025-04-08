@@ -122,7 +122,8 @@ public:
                                               const std::shared_ptr<Font>& orig,
                                               const float maxHeight = 0.0f,
                                               const float sizeMultiplier = 1.0f,
-                                              const bool fontSizeDimmed = false);
+                                              const bool fontSizeDimmed = false,
+                                              const bool helpComponent = false);
 
     // Returns an approximation of VRAM used by the glyph atlas textures for this font object.
     size_t getMemUsage() const;

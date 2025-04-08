@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-11-26 21:59+0800\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-06 23:38+0800\n"
 "Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
 "Language: ja_JP\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 msgid "Network error (status:"
 msgstr "ネットワークエラー（ステータス："
@@ -769,6 +769,9 @@ msgstr "簡単"
 msgid "LONG"
 msgstr "長い"
 
+msgid "POPUP"
+msgstr "ポップアップ"
+
 msgid "UI MODE"
 msgstr "UIモード"
 
@@ -828,6 +831,9 @@ msgstr "ゲームのみ"
 msgid "GAMES AND SYSTEMS"
 msgstr "ゲームとシステム"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "システム状態設定"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "メディアビューアー設定"
 
@@ -836,6 +842,9 @@ msgstr "スクリーンセーバー設定"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "テーマバリエーショントリガーを有効に"
+
+msgid "DISPLAY CLOCK"
+msgstr "時計を表示"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "メニューが開いているときに背景をぼかす"
@@ -1070,6 +1079,9 @@ msgstr "非表示中のゲームを表示"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "カスタムイベントスクリプトを有効に"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "カスタムイベントを閲覧"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "GAMELIST.XML ファイルにあるゲームのみを表示"
 
@@ -1148,6 +1160,10 @@ msgstr "本当に電源を切りますか？"
 
 msgid "POWER OFF SYSTEM"
 msgstr "電源を切る"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "システム状態設定"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1881,6 +1897,21 @@ msgstr "（秒）経過後にビデオを交換"
 
 msgid "RENDER BLUR"
 msgstr "ぼかしをレンダリング"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "Bluetoothの状態インジケーターを表示"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "WI-FIの状態インジケーターを表示"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "CELLULARの状態インジケーターを表示"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "バッテリーの状態インジケーターを表示"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "バッテリーの残量パーセンテージを表示"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "テーマリストのダウンロードが100% 完了しました"
@@ -2883,6 +2914,9 @@ msgstr "4:3 垂直"
 
 msgid "5:4 vertical"
 msgstr "5:4 垂直"
+
+msgid "8:7 vertical"
+msgstr "8:7 垂直"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:5 垂直"

@@ -15,7 +15,7 @@ Each file provides the following metadata variables:
 - `systemColor` - A hex value to represent a systems primary color (can be used for things like backgrounds or navigation highlights)
 - `systemColorPalette1...4` - 4 different hex values to represent other colors that can be used for a system (useful for things like color bands)
 - `systemCoverSize` - Represents the common aspect ratio for a given system's cover artwork.  Can be used to customize the size of grids and carousels that display cover art.  
-   - Current set of sizes: `4-3`, `1-1`, `3-4`, `1-2`, `3-5`, `5-7`, `243-340`, `257-229`
+   - Current set of sizes: `landscape`, `square`, `portrait`, `1-2`, `3-5`, `5-7`.
    - Using these values you can define width/height for just this set and those sizes will apply automatically to a given system.
 
 ## **Usage**

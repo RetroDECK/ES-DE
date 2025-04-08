@@ -841,6 +841,19 @@
         <theme>mame-advmame</theme>
     </system>
     <system>
+        <name>mark3</name>
+        <fullname>Sega Mark III</fullname>
+        <path>%ROMPATH%/mark3</path>
+        <extension>.68k .68K .bin .BIN .bms .BMS .chd .CHD .col .COL .cue .CUE .gen .GEN .gg .GG .iso .ISO .m3u .M3U .md .MD .mdx .MDX .rom .ROM .sg .SG .sgd .SGD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <command label="Genesis Plus GX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.so %ROM%</command>
+        <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.so %ROM%</command>
+        <command label="Gearsystem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearsystem_libretro.so %ROM%</command>
+        <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module sms %ROM%</command>
+        <platform>mastersystem</platform>
+        <theme>mark3</theme>
+    </system>
+    <system>
         <name>mastersystem</name>
         <fullname>Sega Master System</fullname>
         <path>%ROMPATH%/mastersystem</path>
@@ -1434,7 +1447,7 @@
         <name>sega32x</name>
         <fullname>Sega Mega Drive 32X</fullname>
         <path>%ROMPATH%/sega32x</path>
-        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .m3u .M3U .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
         <platform>sega32x</platform>
         <theme>sega32x</theme>
@@ -1443,7 +1456,7 @@
         <name>sega32xjp</name>
         <fullname>Sega Super 32X</fullname>
         <path>%ROMPATH%/sega32xjp</path>
-        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .m3u .M3U .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
         <platform>sega32x</platform>
         <theme>sega32xjp</theme>
@@ -1452,7 +1465,7 @@
         <name>sega32xna</name>
         <fullname>Sega Genesis 32X</fullname>
         <path>%ROMPATH%/sega32xna</path>
-        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <extension>.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .m3u .M3U .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
         <platform>sega32x</platform>
         <theme>sega32xna</theme>
@@ -1888,6 +1901,15 @@
         <command>PLACEHOLDER %ROM%</command>
         <platform>xbox360</platform>
         <theme>xbox360</theme>
+    </system>
+    <system>
+        <name>xboxone</name>
+        <fullname>Microsoft Xbox One</fullname>
+        <path>%ROMPATH%/xboxone</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>xboxone</platform>
+        <theme>xboxone</theme>
     </system>
     <system>
         <name>zmachine</name>

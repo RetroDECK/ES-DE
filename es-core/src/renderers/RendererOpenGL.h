@@ -13,7 +13,11 @@
 #include "renderers/ShaderOpenGL.h"
 
 #if defined(USE_OPENGLES)
+#if defined(__IOS__)
+#include <OpenGLES/ES3/gl.h>
+#else
 #include <GLES3/gl3.h>
+#endif
 #include <SDL2/SDL_opengles.h>
 #else
 #include <SDL2/SDL.h>
@@ -78,6 +82,10 @@ private:
     std::vector<std::shared_ptr<ShaderOpenGL>> mShaderProgramVector;
     GLuint mShaderFBO1;
     GLuint mShaderFBO2;
+    GLuint mFramebuffer;
+#if defined(__IOS__)
+    GLuint mColorbuffer;
+#endif
     GLuint mVertexBuffer1;
     GLuint mVertexBuffer2;
 

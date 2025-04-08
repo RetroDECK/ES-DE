@@ -13,7 +13,7 @@
 
 #include "CECInput.h"
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
 #include "InputOverlay.h"
 #endif
 
@@ -68,7 +68,7 @@ private:
 
     Window* mWindow;
     CECInput mCECInput;
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     InputOverlay& mInputOverlay;
 #endif
 

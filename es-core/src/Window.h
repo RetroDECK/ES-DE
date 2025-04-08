@@ -12,11 +12,13 @@
 
 #include "GuiComponent.h"
 #include "HelpPrompt.h"
-#include "HelpStyle.h"
 #include "InputConfig.h"
 #include "Settings.h"
+#include "SystemStatus.h"
+#include "components/DateTimeComponent.h"
 #include "components/HelpComponent.h"
 #include "components/ImageComponent.h"
+#include "components/SystemStatusComponent.h"
 #include "components/TextComponent.h"
 #include "guis/GuiInfoPopup.h"
 #include "resources/Font.h"
@@ -119,7 +121,13 @@ public:
     void renderListScrollOverlay(const float opacity, const std::string& text);
 
     void renderHelpPromptsEarly(); // Used to render HelpPrompts before a fade.
-    void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
+    void setHelpPrompts(const std::vector<HelpPrompt>& prompts);
+
+    std::map<std::string, std::shared_ptr<ImageComponent>>& getHelpPromptsImageCache()
+    {
+        return sHelpPromptsImageCache;
+    }
+    void clearHelpPromptsImageCache() { sHelpPromptsImageCache.clear(); }
 
     // GuiInfoPopup notifications.
     void queueInfoPopup(const std::string& message, const int& duration)
@@ -169,6 +177,30 @@ public:
     void setChangedTheme() { mChangedTheme = true; }
     bool getChangedTheme() { return mChangedTheme; }
 
+    void passHelpComponents(std::vector<std::unique_ptr<HelpComponent>>* helpComponents)
+    {
+        mHelpComponents = helpComponents;
+    }
+
+    void passClockComponents(std::vector<std::unique_ptr<DateTimeComponent>>* clockComponents)
+    {
+        mClockComponents = clockComponents;
+    }
+
+    void passSystemStatusComponents(
+        std::vector<std::unique_ptr<SystemStatusComponent>>* systemstatusComponents)
+    {
+        mSystemStatusComponents = systemstatusComponents;
+    }
+
+    void updateSystemStatusComponents()
+    {
+        if (mSystemStatusComponents != nullptr) {
+            for (auto& systemStatusComponent : *mSystemStatusComponents)
+                systemStatusComponent->update(SystemStatus::pollingTime);
+        }
+    }
+
 private:
     Window() noexcept;
     ~Window();
@@ -184,8 +216,13 @@ private:
         unsigned int color;
     };
 
+    static inline std::map<std::string, std::shared_ptr<ImageComponent>> sHelpPromptsImageCache;
+
     Renderer* mRenderer;
+    std::vector<std::unique_ptr<HelpComponent>>* mHelpComponents;
     std::unique_ptr<HelpComponent> mHelp;
+    std::vector<std::unique_ptr<DateTimeComponent>>* mClockComponents;
+    std::vector<std::unique_ptr<SystemStatusComponent>>* mSystemStatusComponents;
     std::unique_ptr<ImageComponent> mBackgroundOverlay;
     std::unique_ptr<ImageComponent> mSplash;
     std::unique_ptr<TextComponent> mSplashTextScanning;
@@ -238,6 +275,7 @@ private:
     std::atomic<int> mVideoPlayerCount;
 
     float mTopScale;
+    int mScaleAccumulator;
     bool mRenderedHelpPrompts;
     bool mChangedTheme;
 };

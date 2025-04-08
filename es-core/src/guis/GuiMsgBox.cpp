@@ -15,8 +15,7 @@
 #define HORIZONTAL_PADDING_PX 20.0f
 #define VERTICAL_PADDING_MODIFIER 1.225f
 
-GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
-                     const std::string& text,
+GuiMsgBox::GuiMsgBox(const std::string& text,
                      const std::string& name1,
                      const std::function<void()>& func1,
                      const std::string& name2,
@@ -28,9 +27,7 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
                      const bool deleteOnButtonPress,
                      const float maxWidthMultiplier)
     : mRenderer {Renderer::getInstance()}
-    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {1, 2}}
-    , mHelpStyle {helpstyle}
     , mBackFunc {backFunc}
     , mDisableBackButton {disableBackButton}
     , mDeleteOnButtonPress {deleteOnButtonPress}

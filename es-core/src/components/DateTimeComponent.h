@@ -29,6 +29,7 @@ public:
                       glm::vec2 size = {0.0f, 0.0f},
                       unsigned int bgcolor = 0x00000000);
 
+    void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
 
     void setValue(const std::string& val) override;
@@ -49,10 +50,17 @@ private:
     std::string getDisplayString() const;
 
     Renderer* mRenderer;
+    int mClockAccumulator;
     std::string mDefaultValue;
     Utils::Time::DateTime mTime;
     std::string mFormat;
+    bool mClockMode;
     bool mDisplayRelative;
+    glm::vec2 mBackgroundHorizontalPadding;
+    glm::vec2 mBackgroundVerticalPadding;
+    unsigned int mClockBgColor;
+    unsigned int mClockBgColorEnd;
+    bool mClockColorGradientHorizontal;
 };
 
 #endif // ES_CORE_COMPONENTS_DATE_TIME_COMPONENT_H

@@ -89,7 +89,6 @@ public:
     void stopViewVideos() override { mCurrentView->stopViewVideos(); }
     void pauseViewVideos() override { mCurrentView->pauseViewVideos(); }
     void muteViewVideos() override { mCurrentView->muteViewVideos(); }
-    // Needed on Android to reset the static image delay timer on activity resume.
     void resetViewVideosTimer() override
     {
         if (mCurrentView != nullptr)
@@ -132,8 +131,12 @@ public:
     const State& getState() const { return mState; }
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
-    HelpStyle getViewHelpStyle();
+
+    void setHelpComponentsVisibility(const bool state) override
+    {
+        if (mCurrentView != nullptr)
+            mCurrentView->setHelpComponentsVisibility(state);
+    }
 
     std::shared_ptr<GamelistView> getGamelistView(SystemData* system);
     std::shared_ptr<SystemView> getSystemListView();

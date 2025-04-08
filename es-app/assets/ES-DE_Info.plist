@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>3.1.1</string>
+    <string>3.2.0</string>
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
     <key>CFBundleDisplayName</key>
@@ -11,7 +11,7 @@
     <key>CFBundleExecutable</key>
     <string>ES-DE</string>
     <key>CFBundleGetInfoString</key>
-    <string>ES-DE 3.1.1</string>
+    <string>ES-DE 3.2.0</string>
     <key>CFBundleIconFile</key>
     <string>ES-DE.icns</string>
     <key>CFBundleName</key>
@@ -21,9 +21,9 @@
     <key>CFBundleSignature</key>
     <string>ESDE</string>
     <key>CFBundleShortVersionString</key>
-    <string>3.1.1</string>
+    <string>3.2.0</string>
     <key>CFBundleVersion</key>
-    <string>3.1.1</string>
+    <string>3.2.0</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>LSApplicationCategoryType</key>
@@ -38,8 +38,10 @@
     <string>NSApplication</string>
     <key>NSMainNibFile</key>
     <string>ES-DE</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>ES-DE checks the status of the Bluetooth adapter in order to display the corresponding system status indicator on screen</string>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright (c) 2024 Northwestern Software AB
+    <string>Copyright (c) 2024-2025 Northwestern Software AB
 Copyright (c) 2020-2024 Leon Styhre
 Copyright (c) 2014 Alec Lofquist
 Licensed under the MIT license</string>

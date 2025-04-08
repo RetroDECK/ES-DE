@@ -1,14 +1,14 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024 Northwestern Software AB
+# Copyright (c) 2024-2025 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024.
+# Northwestern Software <info@es-de.org>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2024-11-24 17:33+0100\n"
-"PO-Revision-Date: 2024-11-25 09:36-0300\n"
+"POT-Creation-Date: 2025-03-18 18:28+0100\n"
+"PO-Revision-Date: 2025-03-03 18:27-0300\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Português (Brasil) <info@es-de.org>\n"
 "Language: pt_BR\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 msgid "Network error (status:"
-msgstr "Erro de rede (status:"
+msgstr "Erro de rede (estado:"
 
 msgid "New prerelease available:"
 msgstr "Nova versão prévia disponível:"
@@ -352,7 +352,7 @@ msgid "QUIT AND MANUALLY UPGRADE ES-DE"
 msgstr "SAIR E ATUALIZAR MANUALMENTE O ES-DE"
 
 msgid "STATUS MESSAGE:"
-msgstr "MENSAGEM DE STATUS:"
+msgstr "MENSAGEM DE ESTADO:"
 
 msgid "DOWNLOAD"
 msgstr "BAIXAR"
@@ -761,6 +761,9 @@ msgstr "BREVE"
 msgid "LONG"
 msgstr "DEMORADO"
 
+msgid "POPUP"
+msgstr "POPUP"
+
 msgid "UI MODE"
 msgstr "MODO DA INTERFACE"
 
@@ -820,6 +823,9 @@ msgstr "APENAS NOS JOGOS"
 msgid "GAMES AND SYSTEMS"
 msgstr "JOGOS E SISTEMAS"
 
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "AJUSTES DOS ESTADOS DO SISTEMA"
+
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "AJUSTES DO VISUALIZADOR DE MÍDIAS"
 
@@ -828,6 +834,9 @@ msgstr "AJUSTES DO PROTETOR DE TELA"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "ATIVAR ACIONADORES DAS VARIANTES DO TEMA"
+
+msgid "DISPLAY CLOCK"
+msgstr "MOSTRAR O RELÓGIO"
 
 msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "DESFOCAR O FUNDO AO ABRIR O MENU"
@@ -1062,6 +1071,9 @@ msgstr "EXIBIR JOGOS OCULTOS"
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ATIVAR SCRIPTS DE EVENTOS ADAPTADOS"
 
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "PESQUISANDO EVENTOS ADAPTADOS"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "EXIBIR APENAS OS JOGOS NOS ARQUIVOS GAMELIST.XML"
 
@@ -1139,6 +1151,10 @@ msgstr "DESEJA MESMO DESLIGAR?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "DESLIGAR O SISTEMA"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "CONFIG. DOS EST. DO SISTEMA"
 
 msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
@@ -1869,6 +1885,21 @@ msgstr "TROCAR VÍDEOS APÓS (SEGUNDOS)"
 
 msgid "RENDER BLUR"
 msgstr "RENDERIZAR DESFOQUE"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "EXIBIR INDICADOR DE ESTADO DO BLUETOOTH"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "EXIBIR INDICADOR DE ESTADO DO WI-FI"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "EXIBIR INDICADOR DE ESTADO DA REDE MÓVEL"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "EXIBIR INDICADOR DE ESTADO DA BATERIA"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "EXIBIR PORCENTAGEM DA CARGA DA BATERIA"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "BAIXANDO LISTA DE TEMAS 100%"
@@ -2887,6 +2918,9 @@ msgstr "4:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"
+
+msgid "8:7 vertical"
+msgstr "8:7 vertical"
 
 msgid "19.5:9 vertical"
 msgstr "19.5:9 vertical"

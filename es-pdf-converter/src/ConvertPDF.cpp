@@ -32,7 +32,7 @@
 #if defined(_WIN64)
 int ConvertPDF::processFile(
     const std::wstring path, const std::wstring mode, int pageNum, int width, int height)
-#elif defined(__ANDROID__)
+#elif defined(__ANDROID__) || defined(__IOS__)
 int ConvertPDF::processFile(const std::string path,
                             const std::string mode,
                             int pageNum,
@@ -120,7 +120,7 @@ int ConvertPDF::processFile(
             pageInfo.emplace_back(pageRow);
         }
         for (auto& row : pageInfo) {
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
             result.append(row).append("\n");
 #else
             std::cout << row << std::endl;
@@ -176,7 +176,7 @@ int ConvertPDF::processFile(
         return (-1);
     }
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
     result.insert(0, std::move(image.data()), width * height * 4);
 #else
     // Necessary as the image data stream may contain null characters.

@@ -45,8 +45,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     }
 
     // Automatic collections.
-    mCollectionSystemsAuto = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("SELECT COLLECTIONS"), true);
+    mCollectionSystemsAuto =
+        std::make_shared<OptionListComponent<std::string>>(_("SELECT COLLECTIONS"), true);
     std::map<std::string, CollectionSystemData, StringComparator> autoSystems {
         CollectionSystemsManager::getInstance()->getAutoCollectionSystems()};
     // Add automatic systems.
@@ -95,8 +95,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     });
 
     // Custom collections.
-    mCollectionSystemsCustom = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("SELECT COLLECTIONS"), true);
+    mCollectionSystemsCustom =
+        std::make_shared<OptionListComponent<std::string>>(_("SELECT COLLECTIONS"), true);
     std::map<std::string, CollectionSystemData, StringComparator> customSystems {
         CollectionSystemsManager::getInstance()->getCustomCollectionSystems()};
     // Add custom systems.
@@ -178,8 +178,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
         row.makeAcceptInputHandler([this, unusedFolders] {
             auto ss = new GuiSettings(_("SELECT THEME FOLDER"));
             std::shared_ptr<OptionListComponent<std::string>> folderThemes {
-                std::make_shared<OptionListComponent<std::string>>(getHelpStyle(),
-                                                                   _("SELECT THEME FOLDER"), true)};
+                std::make_shared<OptionListComponent<std::string>>(_("SELECT THEME FOLDER"), true)};
             // Add custom systems.
             for (auto it = unusedFolders.cbegin(); it != unusedFolders.cend(); ++it) {
                 ComponentListRow row;
@@ -224,13 +223,13 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             const float verticalPosition {
                 mRenderer->getIsVerticalOrientation() ? getMenu().getPosition().y : 0.0f};
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                getHelpStyle(), verticalPosition, _("NEW COLLECTION NAME"), "",
-                createCollectionCall, false, _("CREATE"), _("CREATE COLLECTION?")));
+                verticalPosition, _("NEW COLLECTION NAME"), "", createCollectionCall, false,
+                _("CREATE"), _("CREATE COLLECTION?")));
         });
     }
     else {
         row.makeAcceptInputHandler([this, createCollectionCall] {
-            mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), _("NEW COLLECTION NAME"), "",
+            mWindow->pushGui(new GuiTextEditPopup(_("NEW COLLECTION NAME"), "",
                                                   createCollectionCall, false, _("CREATE"),
                                                   _("CREATE COLLECTION?")));
         });
@@ -251,7 +250,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     row.makeAcceptInputHandler([this, customSystems] {
         auto ss = new GuiSettings(_("COLLECTION TO DELETE"));
         std::shared_ptr<OptionListComponent<std::string>> customCollections {
-            std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "", true)};
+            std::make_shared<OptionListComponent<std::string>>("", true)};
         for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
                  customSystems.cbegin();
              it != customSystems.cend(); ++it) {
@@ -259,7 +258,6 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             std::string name {(*it).first};
             std::function<void()> deleteCollectionCall = [this, name] {
                 mWindow->pushGui(new GuiMsgBox(
-                    getHelpStyle(),
                     Utils::String::format(
                         _("THIS WILL PERMANENTLY DELETE THE COLLECTION\n'%s'\nARE YOU SURE?"),
                         Utils::String::toUpper(name).c_str()),
@@ -318,8 +316,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     addRow(row);
 
     // Custom collections grouping.
-    auto collectionCustomGrouping = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), _("GROUP CUSTOM COLLECTIONS"), false);
+    auto collectionCustomGrouping =
+        std::make_shared<OptionListComponent<std::string>>(_("GROUP CUSTOM COLLECTIONS"), false);
     const std::string& selectedCustomGrouping {
         Settings::getInstance()->getString("CollectionCustomGrouping")};
     collectionCustomGrouping->add(_("IF UNTHEMED"), "unthemed",

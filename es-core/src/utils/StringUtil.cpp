@@ -219,20 +219,18 @@ namespace Utils
             icu::UnicodeString iterateString {
                 icu::UnicodeString::fromUTF8(stringArg.c_str()).toLower()};
 
-            if (iterateString != nullptr) {
-                iterator->setText(iterateString);
-                int32_t pos {iterator->first()};
-                int32_t lastPos {pos};
-
-                while (pos != icu::BreakIterator::DONE) {
-                    iterateString.replace(lastPos, 1,
-                                          icu::UnicodeString(iterateString, pos, 1).toUpper());
-                    pos = iterator->next();
-                    lastPos = pos;
-                }
-            }
-            else {
+            if (iterateString.isBogus())
                 return stringArg;
+
+            iterator->setText(iterateString);
+            int32_t pos {iterator->first()};
+            int32_t lastPos {pos};
+
+            while (pos != icu::BreakIterator::DONE) {
+                iterateString.replace(lastPos, 1,
+                                      icu::UnicodeString(iterateString, pos, 1).toUpper());
+                pos = iterator->next();
+                lastPos = pos;
             }
 
             std::string stringCapitalized;

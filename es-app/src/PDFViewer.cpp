@@ -21,7 +21,7 @@
 #include <windows.h>
 #endif
 
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) || defined(__IOS__)
 #include "ConvertPDF.h"
 #endif
 
@@ -56,7 +56,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
 {
     ViewController::getInstance()->pauseViewVideos();
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__IOS__)
 #if defined(_WIN64)
     const std::string convertBinary {"/es-pdf-converter/es-pdf-convert.exe"};
 #else
@@ -176,11 +176,10 @@ bool PDFViewer::startPDFViewer(FileData* game)
     else
         mFrameHeight = Font::get(FONT_SIZE_MINI)->getLetterHeight() * 1.9f;
 
-    HelpStyle style;
-    style.font = Font::get(FONT_SIZE_MINI);
-    style.origin = {0.5f, 0.5f};
-    style.iconColor = 0xAAAAAAFF;
-    style.textColor = 0xAAAAAAFF;
+    mHelp = std::make_unique<HelpComponent>(Font::get(FONT_SIZE_MINI));
+    mHelp->setHelpOrigin(glm::vec2 {0.5, 0.5f});
+    mHelp->setHelpTextColor(0xAAAAAAFF);
+    mHelp->setHelpIconColor(0xAAAAAAFF);
 
     mEntryCount = std::to_string(mPages.size());
 
@@ -191,17 +190,15 @@ bool PDFViewer::startPDFViewer(FileData* game)
 
     if (mHelpInfoPosition == HelpInfoPosition::TOP) {
         mEntryNumText->setPosition(mRenderer->getScreenWidth() * 0.01f, mFrameHeight / 2.0f);
-        style.position = glm::vec2 {mRenderer->getScreenWidth() / 2.0f, mFrameHeight / 2.0f};
+        mHelp->setHelpPosition(glm::vec2 {mRenderer->getScreenWidth() / 2.0f, mFrameHeight / 2.0f});
     }
     else if (mHelpInfoPosition == HelpInfoPosition::BOTTOM) {
         mEntryNumText->setPosition(mRenderer->getScreenWidth() * 0.01f,
                                    mRenderer->getScreenHeight() - (mFrameHeight / 2.0f));
-        style.position = glm::vec2 {mRenderer->getScreenWidth() / 2.0f,
-                                    mRenderer->getScreenHeight() - (mFrameHeight / 2.0f)};
+        mHelp->setHelpPosition(glm::vec2 {mRenderer->getScreenWidth() / 2.0f,
+                                          mRenderer->getScreenHeight() - (mFrameHeight / 2.0f)});
     }
 
-    mHelp = std::make_unique<HelpComponent>();
-    mHelp->setStyle(style);
     mHelp->setPrompts(getHelpPrompts());
 
     convertPage(mCurrentPage);
@@ -305,7 +302,7 @@ bool PDFViewer::getDocumentInfo()
     // Close process and thread handles.
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
-#elif defined(__ANDROID__)
+#elif defined(__ANDROID__) || defined(__IOS__)
     if (ConvertPDF::processFile(mManualPath, "-fileinfo", 0, 0, 0, commandOutput) == -1)
         return false;
 #else
@@ -449,7 +446,7 @@ void PDFViewer::convertPage(int pageNum)
         CloseHandle(childStdoutRead);
         WaitForSingleObject(pi.hThread, INFINITE);
         WaitForSingleObject(pi.hProcess, INFINITE);
-#elif (__ANDROID__)
+#elif (__ANDROID__) || defined(__IOS__)
         ConvertPDF::processFile(mManualPath, "-convert", pageNum,
                                 static_cast<int>(mPages[pageNum].width),
                                 static_cast<int>(mPages[pageNum].height), imageData);
@@ -478,7 +475,7 @@ void PDFViewer::convertPage(int pageNum)
 #if defined(_WIN64)
         if (!processReturnValue || (static_cast<int>(imageDataSize) <
                                     mPages[pageNum].width * mPages[pageNum].height * 4)) {
-#elif defined(__ANDROID__)
+#elif defined(__ANDROID__) || defined(__IOS__)
         if (static_cast<int>(imageDataSize) < mPages[pageNum].width * mPages[pageNum].height * 4) {
 #else
         if (returnValue != 0 || (static_cast<int>(imageDataSize) <

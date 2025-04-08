@@ -52,6 +52,16 @@
             <entry>%ESPATH%\..\Emulators\3dSen\3dSen.exe</entry>
         </rule>
     </emulator>
+    <emulator name="A7800">
+        <!-- Atari 7800 emulator A7800 -->
+        <rule type="systempath">
+            <entry>a7800.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\a7800\a7800.exe</entry>
+            <entry>%ESPATH%\..\Emulators\a7800\a7800.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ACE-DL">
         <!-- Amstrad CPC emulator ACE-DL -->
         <rule type="systempath">
@@ -123,6 +133,16 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\atari800\atari800.exe</entry>
             <entry>%ESPATH%\..\Emulators\atari800\atari800.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="AZAHAR">
+        <!-- Nintendo 3DS emulator Azahar -->
+        <rule type="systempath">
+            <entry>azahar.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\azahar\azahar.exe</entry>
+            <entry>%ESPATH%\..\Emulators\azahar\azahar.exe</entry>
         </rule>
     </emulator>
     <emulator name="BASILISKII">
@@ -551,6 +571,16 @@
             <entry>%ESPATH%\..\Emulators\Mesen\Mesen.exe</entry>
         </rule>
     </emulator>
+    <emulator name="MFME">
+        <!-- Fruit machine emulator MFME -->
+        <rule type="systempath">
+            <entry>MFME.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\MFME\MFME.exe</entry>
+            <entry>%ESPATH%\..\Emulators\MFME\MFME.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="MGBA">
         <!-- Nintendo Game Boy Advance emulator mGBA -->
         <rule type="winregistryvalue">
@@ -820,6 +850,16 @@
             <entry>%ESPATH%\..\Emulators\sdl2trs\sdl2trs64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SHADPS4">
+        <!-- Sony PlayStation 4 emulator shadPS4 -->
+        <rule type="systempath">
+            <entry>shadPS4.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\shadPS4\shadPS4.exe</entry>
+            <entry>%ESPATH%\..\Emulators\shadPS4\shadPS4.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SHEEPSHAVER">
         <!-- Apple Macintosh PowerPC emulator SheepShaver -->
         <rule type="systempath">
@@ -1002,6 +1042,16 @@
             <entry>%ESPATH%\..\Emulators\VICE\bin\xvic.exe</entry>
         </rule>
     </emulator>
+    <emulator name="VIRCON32">
+        <!-- Vircon32 Virtual Console -->
+        <rule type="systempath">
+            <entry>Vircon32.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Vircon32\Emulator\Vircon32.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Vircon32\Emulator\Vircon32.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VISUAL-PINBALL">
         <!-- Pinball simulator Visual Pinball -->
         <rule type="systempath">
@@ -1069,6 +1119,16 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\XM6 Pro-68k\XM6.exe</entry>
             <entry>%ESPATH%\..\Emulators\XM6 Pro-68k\XM6.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="XM6TYPEG">
+        <!-- Sharp X68000 emulator XM6 TypeG -->
+        <rule type="systempath">
+            <entry>xm6g.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\xm6_typeg\xm6g.exe</entry>
+            <entry>%ESPATH%\..\Emulators\xm6_typeg\xm6g.exe</entry>
         </rule>
     </emulator>
     <emulator name="XROAR">
