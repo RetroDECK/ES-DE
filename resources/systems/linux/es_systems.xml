@@ -1252,7 +1252,7 @@
     </system>
     <system>
         <name>muds</name>
-        <fullname>Mudlet</fullname>
+        <fullname>Multi-User Dungeons</fullname>
         <path>%ROMPATH%/muds</path>
         <extension>.mud .MUD</extension>
         <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% --steammode "%ROM%"</command>
@@ -1678,8 +1678,8 @@
         <command label="shadPS4 Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="shadPS4 Game Serial (Standalone)">%EMULATOR_SHADPS4% -g %INJECT%=%BASENAME%.ps4</command>
         <command label="shadPS4 eboot.bin (Standalone)">%EMULATOR_SHADPS4% %ROM%</command>
-        <command label="shadPS4 Game Serial (Standalone)">%EMULATOR_SHADPS4PLUS% -g %INJECT%=%BASENAME%.ps4</command>
-        <command label="shadPS4 eboot.bin (Standalone)">%EMULATOR_SHADPS4PLUS% %ROM%</command>
+        <command label="shadPS4 Plus Game Serial (Standalone)">%EMULATOR_SHADPS4PLUS% -g %INJECT%=%BASENAME%.ps4</command>
+        <command label="shadPS4 Plus eboot.bin (Standalone)">%EMULATOR_SHADPS4PLUS% %ROM%</command>
         <platform>ps4</platform>
         <theme>ps4</theme>
     </system>
