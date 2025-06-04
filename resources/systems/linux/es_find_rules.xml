@@ -801,6 +801,16 @@
             <entry>/app/retrodeck/components/mgba/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="MUDLET">
+        <!-- Mudlet - Mud Client -->
+        <rule type="systempath">
+            <entry>mudlet</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/mudlet/component_launcher.sh</entry>
+        </rule>
+    </emulator>
     <emulator name="MUPEN64PLUS">
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="systempath">

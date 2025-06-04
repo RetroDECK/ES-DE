@@ -1251,6 +1251,15 @@
         <theme>msxturbor</theme>
     </system>
     <system>
+        <name>muds</name>
+        <fullname>Mudlet</fullname>
+        <path>%ROMPATH%/muds</path>
+        <extension>.mud .MUD</extension>
+        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% --steammode "%ROM%"</command>
+        <platform>muds</platform>
+        <theme>muds</theme>
+    </system>
+    <system>
         <name>mugen</name>
         <fullname>M.U.G.E.N Game Engine</fullname>
         <path>%ROMPATH%/mugen</path>
@@ -1279,6 +1288,7 @@
         <command label="Panda3DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/panda3ds_libretro.so %ROM%</command>
         <command label="Citra (Standalone) (via Ponzu)">%EMULATOR_CITRA% %ROM%</command>
         <!-- <command label="Azahar (Standalone)">%EMULATOR_AZAHAR% %ROM%</command> -->
+        <!-- <command label="Azahar Plus (Standalone)">%EMULATOR_AZAHARPLUS% %ROM%</command> -->
         <!-- <command label="Mandarine (Standalone)">%EMULATOR_MANDARINE% %ROM%</command> -->
         <!-- <command label="Lime3DS (Standalone)">%EMULATOR_LIME3DS% %ROM%</command> -->
         <!-- <command label="Panda3DS (Standalone)">%EMULATOR_PANDA3DS% %ROM%</command> -->
@@ -1668,6 +1678,8 @@
         <command label="shadPS4 Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="shadPS4 Game Serial (Standalone)">%EMULATOR_SHADPS4% -g %INJECT%=%BASENAME%.ps4</command>
         <command label="shadPS4 eboot.bin (Standalone)">%EMULATOR_SHADPS4% %ROM%</command>
+        <command label="shadPS4 Game Serial (Standalone)">%EMULATOR_SHADPS4PLUS% -g %INJECT%=%BASENAME%.ps4</command>
+        <command label="shadPS4 eboot.bin (Standalone)">%EMULATOR_SHADPS4PLUS% %ROM%</command>
         <platform>ps4</platform>
         <theme>ps4</theme>
     </system>
@@ -2227,7 +2239,6 @@
         <platform>virtualboy</platform>
         <theme>virtualboy</theme>
     </system>
-<!--
     <system>
         <name>vpinball</name>
         <fullname>Visual Pinball</fullname>
@@ -2237,7 +2248,6 @@
         <platform>vpinball</platform>
         <theme>vpinball</theme>
     </system>
--->
     <system>
         <name>vsmile</name>
         <fullname>VTech V.Smile</fullname>
