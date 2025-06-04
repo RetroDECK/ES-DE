@@ -20,11 +20,14 @@
             <entry>~/bin/RetroArch-Linux*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.libretro.RetroArch</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/retroarch/component_launcher.sh</entry>
         </rule>
     </emulator>
     <core name="RETROARCH">
         <rule type="corepath">
-            <entry>/app/share/libretro/cores</entry> <!-- RetroDECK -->
+            <!-- RetroDECK -->
+            <entry>/app/share/libretro/cores</entry>
             <!-- Non-portable AppImage and compiled from source -->
             <entry>~/.config/retroarch/cores</entry>
             <!-- Portable AppImage -->
@@ -60,6 +63,8 @@
             <entry>~/.local/share/applications/a7800-linux/a7800</entry>
             <entry>~/.local/bin/a7800-linux/a7800</entry>
             <entry>~/bin/a7800-linux/a7800</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/a7800/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ACE-DL">
@@ -72,6 +77,8 @@
             <entry>~/.local/share/applications/AceDL/AceDL</entry>
             <entry>~/.local/bin/AceDL/AceDL</entry>
             <entry>~/bin/AceDL/AceDL</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/acedl/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ADVANCEMAME">
@@ -96,6 +103,8 @@
             <entry>~/.local/share/applications/amiberry/amiberry</entry>
             <entry>~/.local/bin/amiberry/amiberry</entry>
             <entry>~/bin/amiberry/amiberry</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/amiberry/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ARES">
@@ -107,6 +116,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/dev.ares.ares</entry>
             <entry>~/.local/share/flatpak/exports/bin/dev.ares.ares</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/ares/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ATARI800">
@@ -123,6 +134,19 @@
             <entry>~/.local/share/applications/azahar*.AppImage</entry>
             <entry>~/.local/bin/azahar*.AppImage</entry>
             <entry>~/bin/azahar*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/azahar/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="AZAHARPLUS">
+        <!-- Nintendo 3DS emulator Azahar Plus-->
+        <rule type="staticpath">
+            <entry>~/Applications/azahar*.AppImage</entry>
+            <entry>~/.local/share/applications/azahar*.AppImage</entry>
+            <entry>~/.local/bin/azahar*.AppImage</entry>
+            <entry>~/bin/azahar*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/azaharplus/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="BASILISKII">
@@ -138,6 +162,8 @@
             <entry>~/bin/BasiliskII*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/net.cebix.basilisk</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/basilisk/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="BIGPEMU">
@@ -150,6 +176,8 @@
             <entry>~/.local/share/applications/bigpemu/bigpemu</entry>
             <entry>~/.local/bin/bigpemu/bigpemu</entry>
             <entry>~/bin/bigpemu/bigpemu</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/bigpemu/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="BIGPEMU-WINDOWS">
@@ -186,9 +214,10 @@
     <emulator name="CEMU">
         <!-- Nintendo Wii U emulator Cemu -->
         <rule type="systempath">
-            <entry>Cemu-wrapper</entry> <!-- RetroDECK -->
             <entry>cemu</entry>
             <entry>Cemu</entry>
+             <!-- RetroDECK -->
+            <entry>Cemu-wrapper</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/Cemu*.AppImage</entry>
@@ -201,15 +230,18 @@
             <entry>~/bin/Cemu/Cemu</entry>
             <entry>/var/lib/flatpak/exports/bin/info.cemu.Cemu</entry>
             <entry>~/.local/share/flatpak/exports/bin/info.cemu.Cemu</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/cemu/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="systempath">
-            <entry>citra-qt</entry> <!-- RetroDECK -->
             <entry>citra</entry>
             <entry>citra-emu.citra-nightly</entry>
             <entry>org.citra_emu.citra</entry>
+            <!-- RetroDECK -->
+            <entry>citra-qt</entry>
         </rule>
         <rule type="staticpath">
             <entry>/var/data/ponzu/Citra/bin/citra-qt</entry> <!-- RetroDECK, ponzu -->
@@ -221,6 +253,8 @@
             <entry>~/.citra/nightly/citra-qt.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.citra_emu.citra</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.citra_emu.citra</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/citra/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="COLEM">
@@ -233,6 +267,8 @@
             <entry>~/.local/share/applications/colem/colem</entry>
             <entry>~/.local/bin/colem/colem</entry>
             <entry>~/bin/colem/colem</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/colem/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="CPCEMU">
@@ -245,6 +281,8 @@
             <entry>~/.local/share/applications/cpcemu/cpcemu</entry>
             <entry>~/.local/bin/cpcemu/cpcemu</entry>
             <entry>~/bin/cpcemu/cpcemu</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/cpcemu/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="CSPECT">
@@ -274,6 +312,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.desmume.DeSmuME</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.desmume.DeSmuME</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/desmume/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="DOLPHIN">
@@ -291,6 +331,8 @@
             <entry>~/bin/Dolphin_Emulator*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/dolphin/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-STAGING">
@@ -302,6 +344,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.dosbox-staging</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/dosbox-staging/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-X">
@@ -313,6 +357,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/com.dosbox_x.DOSBox-X</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.dosbox_x.DOSBox-X</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/dosbox-x/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="DREAMM">
@@ -325,6 +371,8 @@
             <entry>~/.local/share/applications/dreamm/dreamm</entry>
             <entry>~/.local/bin/dreamm/dreamm</entry>
             <entry>~/bin/dreamm/dreamm</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/dreamm/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="DUCKSTATION">
@@ -350,6 +398,8 @@
             <entry>~/bin/duckstation-qt*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.duckstation.DuckStation</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.duckstation.DuckStation</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/duckstation/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="EASYRPG">
@@ -362,6 +412,8 @@
             <entry>~/.local/share/applications/easyrpg/easyrpg-player</entry>
             <entry>~/.local/bin/easyrpg/easyrpg-player</entry>
             <entry>~/bin/easyrpg/easyrpg-player</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/easyrpg/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="EKA2L1">
@@ -374,6 +426,8 @@
             <entry>~/.local/share/applications/EKA2L1*.AppImage</entry>
             <entry>~/.local/bin/EKA2L1*.AppImage</entry>
             <entry>~/bin/EKA2L1*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/eka2l1/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="EKA2L1-WINDOWS">
@@ -395,6 +449,8 @@
             <entry>~/.local/share/applications/fbneo/fbneo</entry>
             <entry>~/.local/bin/fbneo/fbneo</entry>
             <entry>~/bin/fbneo/fbneo</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/fbneo/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="FLYCAST">
@@ -410,6 +466,8 @@
             <entry>~/bin/flycast-x86*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.flycast.Flycast</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.flycast.Flycast</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/flycast/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="FLYCAST-DOJO">
@@ -422,6 +480,8 @@
             <entry>~/.local/share/applications/flycast-dojo*.AppImage</entry>
             <entry>~/.local/bin/flycast-dojo*.AppImage</entry>
             <entry>~/bin/flycast-dojo*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/flycast-dojo/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="FS-UAE">
@@ -433,6 +493,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/fsuae/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="FUSE">
@@ -444,6 +506,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.sf.fuse_emulator</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.sf.fuse_emulator</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/fuse/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="GARGOYLE">
@@ -459,6 +523,8 @@
             <entry>~/bin/Gargoyle*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/io.github.garglk.Gargoyle</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.garglk.Gargoyle</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/gargoyle/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="GEARBOY">
@@ -471,6 +537,8 @@
             <entry>~/.local/share/applications/gearboy/gearboy</entry>
             <entry>~/.local/bin/gearboy/gearboy</entry>
             <entry>~/bin/gearboy/gearboy</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/gearboy/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="GOPHER2600">
@@ -480,6 +548,8 @@
             <entry>~/.local/share/applications/gopher2600/gopher2600_linux_amd64</entry>
             <entry>~/.local/bin/gopher2600/gopher2600_linux_amd64</entry>
             <entry>~/bin/gopher2600/gopher2600_linux_amd64</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/gopher2600/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="HATARI">
@@ -491,6 +561,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.tuxfamily.hatari</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.tuxfamily.hatari</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/hatari/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="HYPSEUS-SINGE">
@@ -503,6 +575,8 @@
             <entry>~/.local/share/applications/hypseus-singe/hypseus.bin</entry>
             <entry>~/.local/bin/hypseus-singe/hypseus.bin</entry>
             <entry>~/bin/hypseus-singe/hypseus.bin</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/hypseus/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="IZAPPLE2">
@@ -512,6 +586,8 @@
             <entry>~/.local/share/applications/izapple2/izapple2sdl_linux_amd64</entry>
             <entry>~/.local/bin/izapple2/izapple2sdl_linux_amd64</entry>
             <entry>~/bin/izapple2/izapple2sdl_linux_amd64</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/izapple2/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="JGENESIS">
@@ -521,6 +597,8 @@
             <entry>~/.local/share/applications/jgenesis-cli*.AppImage</entry>
             <entry>~/.local/bin/jgenesis-cli*.AppImage</entry>
             <entry>~/bin/jgenesis-cli*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/jgenesis/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="KRONOS">
@@ -533,6 +611,8 @@
             <entry>~/.local/share/applications/kronos/kronos</entry>
             <entry>~/.local/bin/kronos/kronos</entry>
             <entry>~/bin/kronos/kronos</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/kronos/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="LIGHTSPARK">
@@ -545,6 +625,8 @@
             <entry>~/.local/share/applications/lightspark/lightspark</entry>
             <entry>~/.local/bin/lightspark/lightspark</entry>
             <entry>~/bin/lightspark/lightspark</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/lightspark/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="LIME3DS">
@@ -573,6 +655,8 @@
             <entry>~/bin/lime3ds*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.lime3ds.Lime3DS</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/lime3ds/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="LINAPPLE">
@@ -585,6 +669,8 @@
             <entry>~/.local/share/applications/linapple/linapple</entry>
             <entry>~/.local/bin/linapple/linapple</entry>
             <entry>~/bin/linapple/linapple</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/linapple/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="LINDBERGH-LOADER">
@@ -600,6 +686,8 @@
             <entry>~/bin/lindbergh/lindbergh</entry>
             <entry>/var/lib/flatpak/exports/bin/com.github.lindberghloader</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.github.lindberghloader</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/lindbergh/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="M2EMULATOR-WINDOWS">
@@ -620,6 +708,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.mamedev.MAME</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.mamedev.MAME</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/mame/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="MANDARINE">
@@ -632,6 +722,8 @@
             <entry>~/.local/share/applications/mandarine-qt*.AppImage</entry>
             <entry>~/.local/bin/mandarine-qt*.AppImage</entry>
             <entry>~/bin/mandarine-qt*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/mandarine/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="MEDNAFEN">
@@ -642,6 +734,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/mednafen/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="MELONDS">
@@ -658,6 +752,8 @@
             <entry>~/bin/melonDS*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/net.kuribo64.melonDS</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.kuribo64.melonDS</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/melonds/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="MESEN">
@@ -674,6 +770,8 @@
             <entry>~/.local/share/applications/Mesen/Mesen</entry>
             <entry>~/.local/bin/Mesen/Mesen</entry>
             <entry>~/bin/Mesen/Mesen</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/Mesen/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="MFME-WINDOWS">
@@ -699,6 +797,8 @@
             <entry>~/bin/mGBA*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/io.mgba.mGBA</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.mgba.mGBA</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/mgba/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="MUPEN64PLUS">
@@ -710,6 +810,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.m64p.m64p</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.m64p.m64p</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/m64p/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="NESTOPIA-UE">
@@ -721,6 +823,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
             <entry>~/.local/share/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/nestopia/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="NOODS">
@@ -738,6 +842,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.openmsx.openMSX</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.openmsx.openMSX</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/openmsx/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ORICUTRON">
@@ -750,6 +856,8 @@
             <entry>~/.local/share/applications/oricutron/Oricutron</entry>
             <entry>~/.local/bin/oricutron/Oricutron</entry>
             <entry>~/bin/oricutron/Oricutron</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/oricutron/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PANDA3DS">
@@ -762,6 +870,8 @@
             <entry>~/.local/share/applications/Alber-*.AppImage</entry>
             <entry>~/.local/bin/Alber-*.AppImage</entry>
             <entry>~/bin/Alber-*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/panda3ds/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2">
@@ -778,6 +888,8 @@
             <entry>~/bin/pcsx2*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/pcsx2/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2-LEGACY">
@@ -802,6 +914,8 @@
             <entry>~/.local/share/applications/pico-8/pico8</entry>
             <entry>~/.local/bin/pico-8/pico8</entry>
             <entry>~/bin/pico-8/pico8</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/pico8/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PLAY!">
@@ -830,6 +944,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/ppsspp/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PRBOOM-PLUS">
@@ -848,6 +964,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.shiiion.primehack</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.shiiion.primehack</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/primehack/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PROTON">
@@ -871,6 +989,8 @@
             <entry>~/bin/punes/punes</entry>
             <entry>/var/lib/flatpak/exports/bin/io.github.punesemu.puNES</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.punesemu.puNES</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/punes/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="QUASI88">
@@ -883,6 +1003,8 @@
             <entry>~/.local/share/applications/quasi88/quasi88</entry>
             <entry>~/.local/bin/quasi88/quasi88</entry>
             <entry>~/bin/quasi88/quasi88</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/quasi88/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="REDREAM">
@@ -895,6 +1017,8 @@
             <entry>~/.local/share/applications/redream/redream</entry>
             <entry>~/.local/bin/redream/redream</entry>
             <entry>~/bin/redream/redream</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/redream/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ROSALIES-MUPEN-GUI">
@@ -910,6 +1034,8 @@
             <entry>~/bin/RMG*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/com.github.Rosalie241.RMG</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.github.Rosalie241.RMG</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/rmg/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="RPCS3">
@@ -926,6 +1052,8 @@
             <entry>~/bin/rpcs3*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/net.rpcs3.RPCS3</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.rpcs3.RPCS3</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/rpcs3/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="RUFFLE">
@@ -941,6 +1069,8 @@
             <entry>~/bin/ruffle/ruffle</entry>
             <entry>/var/lib/flatpak/exports/bin/rs.ruffle.Ruffle</entry>
             <entry>~/.local/share/flatpak/exports/bin/rs.ruffle.Ruffle</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/ruffle/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="RYUJINX">
@@ -966,6 +1096,8 @@
             <entry>~/.local/share/applications/publish/Ryujinx.Ava</entry>
             <entry>~/.local/bin/publish/Ryujinx.Ava</entry>
             <entry>~/bin/publish/Ryujinx.Ava</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/pancakes/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SAMEBOY">
@@ -977,6 +1109,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.sameboy.SameBoy</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.sameboy.SameBoy</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/sameboy/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SCUMMVM">
@@ -988,6 +1122,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.scummvm.ScummVM</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.scummvm.ScummVM</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/scummvm/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SDL2TRS">
@@ -1000,6 +1136,8 @@
             <entry>~/.local/share/applications/sdl2trs/sdl2trs</entry>
             <entry>~/.local/bin/sdl2trs/sdl2trs</entry>
             <entry>~/bin/sdl2trs/sdl2trs</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/sdl2trs/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SHADPS4">
@@ -1020,6 +1158,30 @@
             <entry>~/.local/share/applications/shadps4/shadps4</entry>
             <entry>~/.local/bin/shadps4/shadps4</entry>
             <entry>~/bin/shadps4/shadps4</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/shadps4/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="SHADPS4PLUS">
+        <!-- Sony PlayStation 4 emulator shadPS4 -->
+        <rule type="systempath">
+            <entry>shadps4</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Shadps4-qt*.AppImage</entry>
+            <entry>~/.local/share/applications/Shadps4-qt*.AppImage</entry>
+            <entry>~/.local/bin/Shadps4-qt*.AppImage</entry>
+            <entry>~/bin/Shadps4-qt*.AppImage</entry>
+            <entry>~/Applications/Shadps4-sdl*.AppImage</entry>
+            <entry>~/.local/share/applications/Shadps4-sdl*.AppImage</entry>
+            <entry>~/.local/bin/Shadps4-sdl*.AppImage</entry>
+            <entry>~/bin/Shadps4-sdl*.AppImage</entry>
+            <entry>~/Applications/shadps4/shadps4</entry>
+            <entry>~/.local/share/applications/shadps4/shadps4</entry>
+            <entry>~/.local/bin/shadps4/shadps4</entry>
+            <entry>~/bin/shadps4/shadps4</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/shadps4plus/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SHEEPSHAVER">
@@ -1032,6 +1194,8 @@
             <entry>~/.local/share/applications/SheepShaver*.AppImage</entry>
             <entry>~/.local/bin/SheepShaver*.AppImage</entry>
             <entry>~/bin/SheepShaver*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/sheepshaver/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SIMCOUPE">
@@ -1044,6 +1208,8 @@
             <entry>~/.local/share/applications/simcoupe/simcoupe</entry>
             <entry>~/.local/bin/simcoupe/simcoupe</entry>
             <entry>~/bin/simcoupe/simcoupe</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/simcoupe/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SIMPLE64">
@@ -1055,6 +1221,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.simple64.simple64</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.simple64.simple64</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/simple64/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SKYEMU">
@@ -1067,6 +1235,8 @@
             <entry>~/.local/share/applications/SkyEmu/SkyEmu</entry>
             <entry>~/.local/bin/SkyEmu/SkyEmu</entry>
             <entry>~/bin/SkyEmu/SkyEmu</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/skyemu/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SNES9X">
@@ -1083,6 +1253,8 @@
             <entry>~/bin/Snes9x*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/com.snes9x.Snes9x</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.snes9x.Snes9x</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/snes9x/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SOLARUS">
@@ -1094,6 +1266,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/solarus/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="STEAM">
@@ -1111,6 +1285,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.stella_emu.Stella</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.stella_emu.Stella</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/stella/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SUPERMODEL">
@@ -1125,6 +1301,8 @@
             <entry>~/bin/Supermodel/supermodel</entry>
             <entry>/var/lib/flatpak/exports/bin/com.supermodel3.Supermodel</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.supermodel3.Supermodel</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/supermodel/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="TIC-80">
@@ -1136,6 +1314,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/com.tic80.TIC_80</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.tic80.TIC_80</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/tic80/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="TRIFORCE">
@@ -1148,6 +1328,8 @@
             <entry>~/.local/share/applications/dolphin-emu-triforce*.AppImage</entry>
             <entry>~/.local/bin/dolphin-emu-triforce*.AppImage</entry>
             <entry>~/bin/dolphin-emu-triforce*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/triforce/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="TSUGARU">
@@ -1157,6 +1339,8 @@
             <entry>~/.local/share/applications/tsugaru/Tsugaru_CUI</entry>
             <entry>~/.local/bin/tsugaru/Tsugaru_CUI</entry>
             <entry>~/bin/tsugaru/Tsugaru_CUI</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/tsugaru/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="VBA-M">
@@ -1175,6 +1359,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.sf.VICE</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/vice-x64sc/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="VICE-XPLUS4">
@@ -1186,6 +1372,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4 net.sf.VICE</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4 net.sf.VICE</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/vice-xplus4/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="VICE-XVIC">
@@ -1197,6 +1385,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/vice-xvic/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="VIRCON32">
@@ -1209,12 +1399,15 @@
         <!-- Pinball simulator Visual Pinball -->
         <rule type="systempath">
             <entry>VPinballX_GL</entry>
+            <entry>VPinballX_BGFX</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/VPinballX/VPinballX_GL</entry>
             <entry>~/.local/share/applications/VPinballX/VPinballX_GL</entry>
             <entry>~/.local/bin/VPinballX/VPinballX_GL</entry>
             <entry>~/bin/VPinballX/VPinballX_GL</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/vpinballx-bgfx/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="VITA3K">
@@ -1232,6 +1425,8 @@
             <entry>~/.local/share/applications/Vita3K/Vita3K</entry>
             <entry>~/.local/bin/Vita3K/Vita3K</entry>
             <entry>~/bin/Vita3K/Vita3K</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/vita3k/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="WINE">
@@ -1241,6 +1436,8 @@
             <entry>~/.local/share/applications/Wine/wine*.AppImage</entry>
             <entry>~/.local/bin/Wine/wine*.AppImage</entry>
             <entry>~/bin/Wine/wine*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/wine/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="XEMU">
@@ -1256,6 +1453,8 @@
             <entry>~/bin/xemu*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/app.xemu.xemu</entry>
             <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/xemu/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="XENIA-WINDOWS">
@@ -1299,6 +1498,8 @@
             <entry>~/.local/share/applications/xroar/xroar</entry>
             <entry>~/.local/bin/xroar/xroar</entry>
             <entry>~/bin/xroar/xroar</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/xroar/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="YUZU"> <!-- RetroDECK -->
@@ -1315,6 +1516,8 @@
             <entry>~/bin/yuzu*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/yuzu/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">
@@ -1327,6 +1530,8 @@
             <entry>~/.local/share/applications/ZEsarUX/zesarux</entry>
             <entry>~/.local/bin/ZEsarUX/zesarux</entry>
             <entry>~/bin/ZEsarUX/zesarux</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/zesarux/component_launcher.sh</entry>
         </rule>
     </emulator>
 </ruleList>
