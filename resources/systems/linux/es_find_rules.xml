@@ -28,6 +28,7 @@
         <rule type="corepath">
             <!-- RetroDECK -->
             <entry>/app/share/libretro/cores</entry>
+            <entry>/app/retrodeck/components/retroarch/cores/</entry>
             <!-- Non-portable AppImage and compiled from source -->
             <entry>~/.config/retroarch/cores</entry>
             <!-- Portable AppImage -->
