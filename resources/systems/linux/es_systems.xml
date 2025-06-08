@@ -1477,7 +1477,7 @@
         <name>openbor</name>
         <fullname>OpenBOR Game Engine</fullname>
         <path>%ROMPATH%/openbor</path>
-        <extension>.AppImage .openbor .openBOR .OPENBOR </extension>
+        <extension>.openbor .OPENBOR</extension>
         <command label="OpenBOR (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_OPENBOR% -c "%ROM%"</command>
        <!-- <command label="OpenBOR (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
         <platform>openbor</platform>
