@@ -844,6 +844,16 @@
             <entry>noods</entry>
         </rule>
     </emulator>
+    <emulator name="OPENBOR">
+        <!-- OpenBOR Game Engine -->
+        <rule type="systempath">
+            <entry>openbor</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/openbor/component_launcher.sh</entry>
+        </rule>
+    </emulator>
     <emulator name="OPENMSX">
         <!-- MSX home computer emulator openMSX -->
         <rule type="systempath">
