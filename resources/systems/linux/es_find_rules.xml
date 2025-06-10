@@ -1120,6 +1120,27 @@
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/pancakes/component_launcher.sh</entry>
         </rule>
+    <emulator name="RYUBING">
+            <!-- Nintendo Switch emulator Ryubing -->
+        <rule type="systempath">
+            <entry>Ryujinx.sh</entry>
+            <entry>ryubing</entry>
+            <entry>io.github.ryubing.Ryujinx</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/ryubing/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="EDEN">
+        <!-- Nintendo Switch emulator Eden -->
+        <rule type="systempath">
+            <entry>eden</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/eden/component_launcher.sh</entry>
+        </rule>
     </emulator>
     <emulator name="SAMEBOY">
         <!-- Nintendo Game Boy and Game Boy Color emulator SameBoy -->

@@ -1251,7 +1251,7 @@
         <fullname>Multi-User Dungeons</fullname>
         <path>%ROMPATH%/muds</path>
         <extension>.mud .MUD</extension>
-        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% --steammode "%ROM%"</command>
+        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% --steammode --profile="%BASENAME%"</command>
         <platform>muds</platform>
         <theme>muds</theme>
     </system>
@@ -2055,6 +2055,8 @@
         <path>%ROMPATH%/switch</path>
         <extension>.nca .NCA .nro .NRO .nso .NSO .nsp .NSP .xci .XCI</extension>
         <command label="Ryujinx (Legacy) (Standalone)">%EMULATOR_RYUJINX% %ROM%</command>
+        <command label="Ryubing (Standalone)">%EMULATOR_RYUBING% %ROM%</command>
+        <command label="Eden (Standalone)">%EMULATOR_EDEN% %ROM%</command>
         <command label="Yuzu (via Ponzu)">%INJECT%=%BASENAME%.esprefix %EMULATOR_YUZU% -f -g %ROM%</command>
         <platform>switch</platform>
         <theme>switch</theme>
