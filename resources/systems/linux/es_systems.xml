@@ -430,7 +430,7 @@
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so %ROM%</command>
         <command label="MAME (Standalone)">%EMULATOR_MAME% -inipath /var/config/mame/ini -rompath %GAMEDIR%\;%ROMPATH%/consolearcade %BASENAME%</command>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
-        <!--<command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>-->
+        <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <!--<command label="Flycast Dojo (Standalone)">%EMULATOR_FLYCAST-DOJO% %ROM%</command>-->
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/kronos_libretro.so %ROM%</command>
         <!--<command label="Mednafen [Sega Saturn] (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>-->
@@ -533,7 +533,7 @@
         <path>%ROMPATH%/daphne</path>
         <extension>.daphne .dirksimple .ogv .OGV .singe .7z .7Z .zip .ZIP</extension>
         <!--<command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%/%BASENAME%.txt %INJECT%=%BASENAME%.commands</command>-->
-        <!--<command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%/%BASENAME%.txt -script %GAMEDIR%/%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>-->
+        <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%/%BASENAME%.txt -script %GAMEDIR%/%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so %ROM%</command>
         <command label="MAME (Standalone)">%EMULATOR_MAME% -inipath /var/config/mame/ini -rompath %GAMEDIR%\;%ROMPATH%/daphne %BASENAME%</command>
         <command label="DirkSimple">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dirksimple_libretro.so %ROM%</command>
@@ -574,7 +574,7 @@
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
-        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command> -->
+        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
         <!-- <command label="DOSBox Staging (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%</command> -->
         <!-- <command label="DREAMM (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DREAMM% .</command> -->
         <command label="VirtualXT">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/virtualxt_libretro.so %ROM%</command>
@@ -1424,7 +1424,7 @@
         <platform>nes</platform>
         <theme>nes</theme>
     </system>
-<!--
+
     <system>
         <name>ngage</name>
         <fullname>Nokia N-Gage</fullname>
@@ -1432,12 +1432,12 @@
         <extension>.ngage .zip .ZIP</extension>
         <command label="EKA2L1 [Mounted] (Standalone)">%EMULATOR_EKA2L1% &ndash;&ndash;fullscreen &ndash;&ndash;device RH-29 &ndash;&ndash;mount %ROM% &ndash;&ndash;run "%BASENAME%"</command>
         <command label="EKA2L1 [Installed] (Standalone)">%EMULATOR_EKA2L1% &ndash;&ndash;fullscreen &ndash;&ndash;device RH-29 &ndash;&ndash;run "%BASENAME%"</command>
-        <command label="EKA2L1 [Mounted] (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_EKA2L1-WINDOWS% &ndash;&ndash;fullscreen &ndash;&ndash;device RH-29 &ndash;&ndash;mount %ROM% &ndash;&ndash;run "%BASENAME%"</command>
-        <command label="EKA2L1 [Installed] (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_EKA2L1-WINDOWS% &ndash;&ndash;fullscreen &ndash;&ndash;device RH-29 &ndash;&ndash;run "%BASENAME%"</command>
+     <!--   <command label="EKA2L1 [Mounted] (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_EKA2L1-WINDOWS% &ndash;&ndash;fullscreen &ndash;&ndash;device RH-29 &ndash;&ndash;mount %ROM% &ndash;&ndash;run "%BASENAME%"</command>
+        <command label="EKA2L1 [Installed] (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_EKA2L1-WINDOWS% &ndash;&ndash;fullscreen &ndash;&ndash;device RH-29 &ndash;&ndash;run "%BASENAME%"</command> -->
         <platform>ngage</platform>
         <theme>ngage</theme>
     </system>
--->
+
     <system>
         <name>ngp</name>
         <fullname>SNK Neo Geo Pocket</fullname>
@@ -1483,7 +1483,6 @@
         <platform>openbor</platform>
         <theme>openbor</theme>
     </system>
-<!--
     <system>
         <name>oric</name>
         <fullname>Tangerine Computer Systems Oric</fullname>
@@ -1494,7 +1493,6 @@
         <platform>oric</platform>
         <theme>oric</theme>
     </system>
--->
     <system>
         <name>palm</name>
         <fullname>Palm OS</fullname>
@@ -1666,7 +1664,7 @@
         <platform>ps3</platform>
         <theme>ps3</theme>
     </system>
-<!--
+
     <system>
         <name>ps4</name>
         <fullname>Sony PlayStation 4</fullname>
@@ -1675,12 +1673,13 @@
         <command label="shadPS4 Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="shadPS4 Game Serial (Standalone)">%EMULATOR_SHADPS4% -g %INJECT%=%BASENAME%.ps4</command>
         <command label="shadPS4 eboot.bin (Standalone)">%EMULATOR_SHADPS4% %ROM%</command>
+    <!-- <command label="shadPS4 Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="shadPS4 Plus Game Serial (Standalone)">%EMULATOR_SHADPS4PLUS% -g %INJECT%=%BASENAME%.ps4</command>
-        <command label="shadPS4 Plus eboot.bin (Standalone)">%EMULATOR_SHADPS4PLUS% %ROM%</command>
+        <command label="shadPS4 Plus eboot.bin (Standalone)">%EMULATOR_SHADPS4PLUS% %ROM%</command>  -->
         <platform>ps4</platform>
         <theme>ps4</theme>
     </system>
- -->
+
     <system>
         <name>psp</name>
         <fullname>Sony PlayStation Portable</fullname>
@@ -1739,7 +1738,6 @@
         <platform>pc, pcwindows</platform>
         <theme>quake</theme>
     </system>
-<!--
     <system>
         <name>samcoupe</name>
         <fullname>MGT SAM Coupé</fullname>
@@ -1749,7 +1747,6 @@
         <platform>samcoupe</platform>
         <theme>samcoupe</theme>
     </system>
--->
     <system>
         <name>satellaview</name>
         <fullname>Nintendo Satellaview</fullname>
@@ -1803,7 +1800,7 @@
         <path>%ROMPATH%/scummvm</path>
         <extension>.scummvm .SCUMMVM .svm .SVM</extension>
         <command label="ScummVM">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/scummvm_libretro.so %ROM%</command>
-        <!-- <command label="ScummVM (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SCUMMVM% %BASENAME%</command> -->
+        <command label="ScummVM (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SCUMMVM% %BASENAME%</command>
         <!-- <command label="DREAMM (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DREAMM% .</command> -->
         <platform>scummvm</platform>
         <theme>scummvm</theme>
@@ -2061,7 +2058,6 @@
         <platform>switch</platform>
         <theme>switch</theme>
     </system>
-<!--
     <system>
         <name>symbian</name>
         <fullname>Symbian</fullname>
@@ -2074,7 +2070,6 @@
         <platform>ngage</platform>
         <theme>symbian</theme>
     </system>
--->
     <system>
         <name>tanodragon</name>
         <fullname>Tano Dragon</fullname>
@@ -2301,12 +2296,12 @@
         <fullname>Microsoft Windows 3.x</fullname>
         <path>%ROMPATH%/windows3x</path>
         <extension>.AppImage .bat .BAT .desktop .dosz .DOSZ .sh .7z .7Z .zip .ZIP</extension>
-        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command> -->
+        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
-        <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
-        <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
+      <!--     <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
+      <!--     <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
+      <!--     <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
+        <!--   <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
         <platform>windows3x</platform>
         <theme>windows3x</theme>
     </system>
@@ -2315,12 +2310,12 @@
         <fullname>Microsoft Windows 9x</fullname>
         <path>%ROMPATH%/windows9x</path>
         <extension>.AppImage .bat .BAT .desktop .dosz .DOSZ .sh .7z .7Z .zip .ZIP</extension>
-        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command> -->
+        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
-        <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
-        <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
+      <!--   <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
+        <!--   <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
+        <!--   <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
+        <!--   <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
         <platform>pcwindows</platform>
         <theme>windows9x</theme>
     </system>
@@ -2383,20 +2378,20 @@
         <platform>xbox</platform>
         <theme>xbox</theme>
     </system>
-<!--
+
     <system>
         <name>xbox360</name>
         <fullname>Microsoft Xbox 360</fullname>
         <path>%ROMPATH%/xbox360</path>
         <extension>. .desktop .iso .ISO .sh .xex .XEX .zar .ZAR</extension>
-        <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
+      <command label="xenia (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% %INJECT%=%BASENAME%.commands %ROM%</command>
+      <!--       <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
         <command label="xenia (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
         <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <platform>xbox360</platform>
+        <platform>xbox360</platform>   -->
         <theme>xbox360</theme>
     </system>
--->
-<!--
+    <!--
     <system>
         <name>xboxone</name>
         <fullname>Microsoft Xbox One</fullname>
@@ -2406,6 +2401,7 @@
         <platform>xboxone</platform>
         <theme>xboxone</theme>
     </system>
+  -->
     <system>
         <name>zmachine</name>
         <fullname>Infocom Z-machine</fullname>
@@ -2416,7 +2412,6 @@
         <platform>zmachine</platform>
         <theme>zmachine</theme>
     </system>
--->
     <system>
         <name>zx81</name>
         <fullname>Sinclair ZX81</fullname>
