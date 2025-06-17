@@ -223,7 +223,7 @@
         <command label="Stella 2023">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella2023_libretro.so %ROM%</command>
         <!-- <command label="Stella (Standalone)">%EMULATOR_STELLA% %ROM%</command> -->
         <!-- <command label="Gopher2600 (Standalone)">%EMULATOR_GOPHER2600% %ROM%</command> -->
-        <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Atari 2600" %ROM%</command> -->
+        <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Atari 2600" %ROM%</command>
         <platform>atari2600</platform>
         <theme>atari2600</theme>
     </system>
@@ -1279,11 +1279,11 @@
         <fullname>Nintendo 3DS</fullname>
         <path>%ROMPATH%/n3ds</path>
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
+        <command label="Azahar (Standalone)">%EMULATOR_AZAHAR% %ROM%</command>
         <command label="Citra">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra_libretro.so %ROM%</command>
         <command label="Citra 2018">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra2018_libretro.so %ROM%</command>
         <command label="Panda3DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/panda3ds_libretro.so %ROM%</command>
         <command label="Citra (Standalone) (via Ponzu)">%EMULATOR_CITRA% %ROM%</command>
-        <!-- <command label="Azahar (Standalone)">%EMULATOR_AZAHAR% %ROM%</command> -->
         <!-- <command label="Azahar Plus (Standalone)">%EMULATOR_AZAHARPLUS% %ROM%</command> -->
         <!-- <command label="Mandarine (Standalone)">%EMULATOR_MANDARINE% %ROM%</command> -->
         <!-- <command label="Lime3DS (Standalone)">%EMULATOR_LIME3DS% %ROM%</command> -->
@@ -1510,7 +1510,7 @@
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
-        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command> -->
+        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
         <!-- <command label="DOSBox Staging (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%</command> -->
         <!-- <command label="DREAMM (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DREAMM% .</command> -->
         <command label="VirtualXT">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/virtualxt_libretro.so %ROM%</command>
@@ -2385,10 +2385,10 @@
         <path>%ROMPATH%/xbox360</path>
         <extension>. .desktop .iso .ISO .sh .xex .XEX .zar .ZAR</extension>
       <command label="xenia (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% %INJECT%=%BASENAME%.commands %ROM%</command>
-      <!--       <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
-        <command label="xenia (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_XENIA-WINDOWS% %ROM%</command>
-        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <platform>xbox360</platform>   -->
+      <!--    <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>  -->
+    <!--      <command label="xenia (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_XENIA-WINDOWS% %ROM%</command> -->
+      <!--    <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
+        <platform>xbox360</platform>
         <theme>xbox360</theme>
     </system>
     <!--
