@@ -1576,4 +1576,9 @@
             <entry>/app/retrodeck/components/zesarux/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="FLATPAKSPAWN">
+        <rule type="systempath">
+            <entry>flatpak-spawn</entry>
+        </rule>
+    </emulator>
 </ruleList>
