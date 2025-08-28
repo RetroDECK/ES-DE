@@ -1119,6 +1119,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.so %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/blastem_libretro.so %ROM%</command>
+        <command label="Genesis Plus GX [Expanded Rom Size] (Paprium)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis-plus-gx-expanded-rom-size-paprium_libretro.so %ROM%</command>
         <!-- <command label="BlastEm (Standalone)">%EMULATOR_BLASTEM% -m gen %ROM%</command> -->
         <!-- <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module md %ROM%</command> -->
         <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Mega Drive" %ROM%</command> -->
