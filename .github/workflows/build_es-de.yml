@@ -27,11 +27,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: Set_Release_Metadata
     steps:
+
+
+      - name: Generate a token for Rekku
+        id: generate-rekku-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.REKKU_APP_ID }}
+          private-key: ${{ secrets.REKKU_PRIVATE_KEY }}
+          repositories: "RetroDECK,Cooker"
+          owner: "RetroDECK"
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: 'recursive'
-          token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          token: ${{ steps.generate-rekku-token.outputs.token }}
           fetch-depth: 1
 
       - name: Install dependencies
@@ -69,7 +80,7 @@ jobs:
             tree.html
           allowUpdates: true
           makeLatest: ${{ contains(needs.Set_Release_Metadata.outputs.branch_name, 'feat/') && 'false' || 'true' }}
-          token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          token: ${{ steps.generate-rekku-token.outputs.token }}
 
   Create_AppImage_RetroDECK:
     runs-on: ubuntu-latest
@@ -79,7 +90,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: 'recursive'
-          token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          token: ${{ steps.generate-rekku-token.outputs.token }}
           fetch-depth: 1
 
       - name: Install dependencies
@@ -105,7 +116,7 @@ jobs:
             ES-DE_x64_RetroDECK.AppImage
           allowUpdates: true
           makeLatest: ${{ contains(needs.Set_Release_Metadata.outputs.branch_name, 'feat/') && 'false' || 'true' }}
-          token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          token: ${{ steps.generate-rekku-token.outputs.token }}
 
   Check_And_Delete_Empty_Release:
     runs-on: ubuntu-latest
@@ -132,7 +143,7 @@ jobs:
       - name: Delete release if empty and all builds failed
         if: steps.check_status.outputs.proceed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          GH_token: ${{ steps.generate-rekku-token.outputs.token }}
           REPO: ${{ github.repository }}
           TAG_NAME: "${{ needs.Set_Release_Metadata.outputs.branch_name }}-${{ needs.Set_Release_Metadata.outputs.date }}"
         run: |
