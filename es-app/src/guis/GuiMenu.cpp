@@ -2655,7 +2655,7 @@ void GuiMenu::openESDEConfiguration()
     auto s = new GuiSettings(_("ES-DE CONFIGURATIONS"));
 
     // Logging level setting for RetroDECK
-    auto loggingLevel = std::make_shared<OptionListComponent<std::string>>();
+    auto loggingLevel = std::make_shared<OptionListComponent<std::string>>(_("LOGGING LEVEL"), false);
     loggingLevel->add(_("DEBUG"), "debug", Settings::getInstance()->getString("LoggingLevel") == "debug");
     loggingLevel->add(_("INFO"), "info", Settings::getInstance()->getString("LoggingLevel") == "info");
     loggingLevel->add(_("WARNING"), "warning", Settings::getInstance()->getString("LoggingLevel") == "warning");
