@@ -10,14 +10,16 @@
 
 * Added support for play time tracking
 * Added support for sorting the gamelist by play time
+* Added play time tracking to the Linear, Modern and Slate themes
 * Changed the "last played" metadata value to always reset when returning from a game rather than when launching a game
 * Removed the "EmulationStation Desktop Edition" subtitle from the splash screen
 * Removed the logic to check for and handle the legacy application data directory ~/.emulationstation
 * Added Asia, Australia, Brazil, Canada, China, Germany, France, Italy and Korea as additional ScreenScraper regions
 * Added Netherlands, Russia, Sweden, Spain, Taiwan and United Kingdom as additional ScreenScraper regions
 * Changed the media and release date fallback order for the scraper to place Europe prior to Japan, so it matches the game name fallback order
+* Added translations for Arabic (ar_SA)
 * (Android) Added an %EXTRAINTEGER_% launch command variable
-* (Android) Added two new %INTERNALDATA% and %EXTERNALDATA% variables to support launching RetroArch in multi-user setups
+* (Android) Added two new %INTERNALDATA% and %EXTERNALDATA% variables to support launching of RetroArch in multi-user setups
 * (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the Opera core for the 3do system and the PUAE 2021 core for the amiga system
 * (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the MAME 2003-Plus core for the arcade system and the Stella 2023 core for the atari2600 system
 * (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the DOSBox-Core core for the dos system and the Genesis Plus GX Wide core for the gamegear system
@@ -26,13 +28,13 @@
 * (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the bsnes core for the snes and snesna systems and the Vircon32 core for the vircon32 system
 * Added a "Suspend system" entry to the quit menu on Linux, FreeBSD and Windows (thanks Emma for the patch)
 * Added a suspend custom event
-* Added translations for Arabic (ar_SA)
 * Added .webp as a supported image file extension for scraped media
 * Added .webp as a supported file extension for the gameOverridePath property for the image element
 * Added a menu option for generating miximages in the PNG or WebP file format
 * Added support for the AV1 video codec on Android and macOS
 * (Android) Added miximages as a media target type for the game importer
 * (Linux) Added a "Strip special characters" setting to the game importer to enable imports to FAT-based filesystems
+* Added import rules for the epic system
 * (Linux) Added desktopshortcut import rules for the ps3 system
 * (Linux) Added a ~/Desktop import rule entry for the desktop system
 * (macOS) Added a ~/Applications import rule entry for the steam system
@@ -49,11 +51,10 @@
 * Added Gopher64 standalone as an alternative emulator for the n64 system on Linux and Windows
 * Added "Native port" as an alternative emulator for the n64 system (for running N64 recompilations)
 * Added "Shortcut or script" as an alternative emulator for the n64 system on Linux, macOS and Windows
-* Added import rules for the epic system
-* (Linux) Added find rule entries for the Ryubing Flatpak
 * (Android) Added an import rule for the n64 system
 * (Android) Added the .app file extension to the n64 system
 * (Linux) Added the .AppImage, .desktop and .sh file extensions to the n64 system
+* (Linux) Added find rule entries for the Ryubing Flatpak
 * (macOS) Added the .app file extension to the n64 system
 * (Windows) Added the .exe and .LNK file extensions to the n64 system
 * Added ares [Mega LD] standalone (Pioneer LaserActive) as an alternative emulator for the daphne and laserdisc systems on Linux, macOS and Windows

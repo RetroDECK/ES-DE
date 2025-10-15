@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2025-10-09 22:35+0200\n"
-"PO-Revision-Date: 2025-06-25 19:27+0200\n"
+"PO-Revision-Date: 2025-10-14 19:26+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Español (España) <info@es-de.org>\n"
 "Language: es_ES\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.7\n"
 
 msgid "Network error (status:"
 msgstr "Error de red (estado:"
@@ -138,15 +138,15 @@ msgstr "desconocido"
 msgctxt "theme"
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i minuto"
+msgstr[1] "%i minutos"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i hora"
+msgstr[1] "%i horas"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -320,10 +320,10 @@ msgid "times played, descending"
 msgstr "veces jugadas, descendente"
 
 msgid "play time, ascending"
-msgstr ""
+msgstr "tiempo de juego, ascendente"
 
 msgid "play time, descending"
-msgstr ""
+msgstr "tiempo de juego, descendente"
 
 msgid "system, ascending"
 msgstr "sistema, ascendente"
@@ -567,7 +567,7 @@ msgid "ALL UNSELECTED"
 msgstr "SIN SELECCIONAR"
 
 msgid "STRIP SPECIAL CHARACTERS"
-msgstr ""
+msgstr "QUITAR CARACTERES ESPECIALES"
 
 msgid "MEDIA TARGET TYPE"
 msgstr "TIPO DE DESTINO MULTIMEDIA"
@@ -597,7 +597,7 @@ msgid "FAN ART"
 msgstr "IMAGENES HECHAS POR FANS"
 
 msgid "MIXIMAGES"
-msgstr ""
+msgstr "MIXIMAGES"
 
 msgid "IMPORT MEDIA"
 msgstr "IMPORTAR MEDIA"
@@ -1138,7 +1138,7 @@ msgid "load default directory"
 msgstr "cargar directorio por defecto"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr ""
+msgstr "MAX. SEGUIMIENTO DE TIEMPO DE JUEGO"
 
 msgid "VRAM LIMIT"
 msgstr "LIMITE DE VRAM"
@@ -1316,10 +1316,10 @@ msgid "POWER OFF SYSTEM"
 msgstr "APAGAR SISTEMA"
 
 msgid "REALLY SUSPEND?"
-msgstr ""
+msgstr "SUSPENDER REALMENTE?"
 
 msgid "SUSPEND SYSTEM"
-msgstr ""
+msgstr "SUSPENDER SISTEMA"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1740,7 +1740,7 @@ msgid "MIXIMAGE RESOLUTION"
 msgstr "RESOLUCION DEL MIXIMAGE"
 
 msgid "MIXIMAGE FILE FORMAT"
-msgstr ""
+msgstr "FORMATO DE MIXIMAGE"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1857,49 +1857,49 @@ msgid "WORLD"
 msgstr "GLOBAL"
 
 msgid "ASIA"
-msgstr ""
+msgstr "ASIA"
 
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "AUSTRALIA"
 
 msgid "BRAZIL"
-msgstr ""
+msgstr "BRASIL"
 
 msgid "CANADA"
-msgstr ""
+msgstr "CANADA"
 
 msgid "CHINA"
-msgstr ""
+msgstr "CHINA"
 
 msgid "GERMANY"
-msgstr ""
+msgstr "ALEMANIA"
 
 msgid "FRANCE"
-msgstr ""
+msgstr "FRANCIA"
 
 msgid "ITALY"
-msgstr ""
+msgstr "ITALIA"
 
 msgid "KOREA"
-msgstr ""
+msgstr "KOREA"
 
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "PAISES BAJOS"
 
 msgid "RUSSIA"
-msgstr ""
+msgstr "RUSIA"
 
 msgid "SWEDEN"
-msgstr ""
+msgstr "SUECIA"
 
 msgid "SPAIN"
-msgstr ""
+msgstr "ESPAÑA"
 
 msgid "TAIWAN"
-msgstr ""
+msgstr "TAIWAN"
 
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "REINO UNIDO"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "IDIOMA PREFERIDO"
@@ -2507,11 +2507,11 @@ msgstr "INTRODUCIR NUMERO DE PARTIDAS JUGADAS"
 
 msgctxt "metadata"
 msgid "PLAY TIME"
-msgstr ""
+msgstr "TIEMPO DE JUEGO"
 
 msgctxt "metadata"
 msgid "ENTER PLAY TIME"
-msgstr ""
+msgstr "INTRO. TIEMPO DE JUEGO"
 
 msgctxt "metadata"
 msgid "CONTROLLER"
