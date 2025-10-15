@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-17 18:10+0900\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-10-13 20:58+0200\n"
 "Last-Translator: wakeboxer <ljhmd0825@gmail.com>\n"
 "Language-Team: 한국어 <info@es-de.org>\n"
 "Language: ko_KR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
 msgid "Network error (status:"
 msgstr "네트워크 오류 (상태:"
@@ -124,6 +124,22 @@ msgstr "'%s'이(가) 필터되었으므로 이용 가능한 게임이 더 있을
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "컬렉션 '%s' 이 삭제됨"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "알수없음"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i 분"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i 시간"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -289,6 +305,12 @@ msgstr "플레이 시간, 높은순"
 
 msgid "times played, descending"
 msgstr "플레이 시간, 낮은순"
+
+msgid "play time, ascending"
+msgstr "플레이 시간, 오름차순"
+
+msgid "play time, descending"
+msgstr "플레이 시간, 내림차순"
 
 msgid "system, ascending"
 msgstr "시스템, 오름차순"
@@ -510,6 +532,113 @@ msgstr "커스텀 컬렉션에서 즐겨찾기를 최상단에 표시"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "커스텀 컬렉션에서 별 표시하기"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "시스템으로 가져오기"
+
+msgid "NO CONFIGURATION"
+msgstr "구성 없음"
+
+msgid "REMOVE ENTRIES"
+msgstr "항목 제거"
+
+msgid "ALL UNSELECTED"
+msgstr "선택되지 않은 모두"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr "스트립 스페셜 캐릭터"
+
+msgid "MEDIA TARGET TYPE"
+msgstr "미디어 타겟 유형"
+
+msgid "SCREENSHOTS"
+msgstr "스크린샷"
+
+msgid "TITLE SCREENS"
+msgstr "타이틀 스크린"
+
+msgid "COVERS"
+msgstr "커버"
+
+msgid "BACK COVERS"
+msgstr "백 커버"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "마퀴 (휠)"
+
+msgid "3D BOXES"
+msgstr "3D 박스"
+
+msgid "PHYSICAL MEDIA"
+msgstr "피지컬 미디어"
+
+msgid "FAN ART"
+msgstr "팬아트"
+
+msgid "MIXIMAGES"
+msgstr "믹스이미지"
+
+msgid "IMPORT MEDIA"
+msgstr "미디어 가져오기"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "배너 또는 로고 이용 가능하면 가져오기"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "미디어 파일 덮어쓰기"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "게임으로 분류된 앱만 포함"
+
+msgid "START"
+msgstr "시작"
+
+msgid "start importer"
+msgstr "임포터 시작"
+
+msgid "WORKING..."
+msgstr "실행 중..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "가져오기할 것을 찾을 수 없었습니다"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"선택하지 않은 모든 항목을 제거하도록 선택했습니다. 이렇게 하면 \"%s\" 시스템 "
+"디렉터리에서 \"%s\" 파일 확장자를 가진 모든 게임 파일이 삭제되고, 다음 화면에"
+"서 선택한 항목을 가져옵니다.\n"
+"확실합니까?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "선택하세요"
+
+msgid "IMPORT"
+msgstr "가져오기"
+
+msgid "import"
+msgstr "가져오기"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "가져옴 %i 개 항목"
+
+msgid "SELECT ALL"
+msgstr "모두 선택"
+
+msgid "select all"
+msgstr "모두 선택"
+
+msgid "SELECT NONE"
+msgstr "선택 해제"
+
+msgid "select none"
+msgstr "선택 해제"
+
 msgid "FILTER GAMELIST"
 msgstr "게임리스트 필터"
 
@@ -690,11 +819,17 @@ msgstr "트리거버튼"
 msgid "LEFT/RIGHT"
 msgstr "좌/우 버튼"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "게임목록에서 시작"
+msgid "SYSTEM ON STARTUP"
+msgstr "스타트업 시스템"
 
-msgid "NONE"
-msgstr "없음"
+msgid "STARTUP VIEW"
+msgstr "스타트업 뷰"
+
+msgid "SYSTEM"
+msgstr "시스템"
+
+msgid "GAMELIST"
+msgstr "게임리스트"
 
 msgid "SYSTEMS SORTING"
 msgstr "시스템 정렬"
@@ -738,6 +873,9 @@ msgstr "메뉴 열기 애니메이션"
 
 msgid "SCALE-UP"
 msgstr "스케일-업"
+
+msgid "NONE"
+msgstr "없음"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "시작 화면 지속시간"
@@ -832,7 +970,7 @@ msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "메뉴 오픈시 배경 흐려짐 효과"
 
 msgid "SORT FOLDERS ON TOP OF GAMELISTS"
-msgstr "폴더를 최상단에 표시"
+msgstr "폴더를 게임리스트 최상단에 표시"
 
 msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
 msgstr "즐겨찾기를 다른 게임보다 상단에 표시"
@@ -936,6 +1074,9 @@ msgstr "A/B 및 X/Y 버튼 전환"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "키보드 입력 무시"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "입력 장치 알림"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "키보드와 컨트롤러 구성"
 
@@ -967,6 +1108,9 @@ msgstr "변경사항을 저장할까요?"
 
 msgid "load default directory"
 msgstr "기본 디렉터리를 로드"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr "최대 플레이 시간 추적"
 
 msgid "VRAM LIMIT"
 msgstr "VRAM 리미트"
@@ -1086,6 +1230,9 @@ msgstr "아동용 모드에서 메뉴 사용 가능"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "종료 메뉴에 리부트와 전원오프 엔트리 보이기"
 
+msgid "GAME IMPORTER"
+msgstr "게임 임포터"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "게임파일이 없는 데이터 정리"
 
@@ -1138,6 +1285,16 @@ msgstr "정말로 전원을 끌까요?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "시스템 전원 오프"
+
+msgid "REALLY SUSPEND?"
+msgstr "정말로 일시 중단하시겠습니까?"
+
+msgid "SUSPEND SYSTEM"
+msgstr "시스템 일시 중단"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "시스템 상태 설정"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1255,9 +1412,6 @@ msgstr "프로세스중:"
 
 msgid "Last error message:"
 msgstr "마지막 오류 메시지:"
-
-msgid "START"
-msgstr "시작"
 
 msgid "start processing"
 msgstr "프로세스 시작"
@@ -1515,7 +1669,7 @@ msgid "MARQUEE (WHEEL) IMAGES"
 msgstr "마퀴 (휠) 이미지"
 
 msgid "3D BOX IMAGES"
-msgstr "3d 박스 이미지"
+msgstr "3D 박스 이미지"
 
 msgid "PHYSICAL MEDIA IMAGES"
 msgstr "피지컬 미디어 이미지"
@@ -1528,6 +1682,9 @@ msgstr "게임 메뉴얼"
 
 msgid "MIXIMAGE RESOLUTION"
 msgstr "믹스이미지 해상도"
+
+msgid "MIXIMAGE FILE FORMAT"
+msgstr "믹스이미지 파일 형식"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1612,7 +1769,7 @@ msgid "INCLUDE BOX IMAGE"
 msgstr "박스 이미지 포함"
 
 msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
-msgstr "3d 박스 없을시 커버 이미지 사용"
+msgstr "3D 박스 없을시 커버 이미지 사용"
 
 msgid "INCLUDE PHYSICAL MEDIA IMAGE"
 msgstr "피지컬 미디어 이미지 포함"
@@ -1641,6 +1798,51 @@ msgstr "미국"
 
 msgid "WORLD"
 msgstr "세계"
+
+msgid "ASIA"
+msgstr "아시아"
+
+msgid "AUSTRALIA"
+msgstr "호주"
+
+msgid "BRAZIL"
+msgstr "브라질"
+
+msgid "CANADA"
+msgstr "캐나다"
+
+msgid "CHINA"
+msgstr "중국"
+
+msgid "GERMANY"
+msgstr "독일"
+
+msgid "FRANCE"
+msgstr "프랑스"
+
+msgid "ITALY"
+msgstr "이탈리아"
+
+msgid "KOREA"
+msgstr "한국"
+
+msgid "NETHERLANDS"
+msgstr "네덜란드"
+
+msgid "RUSSIA"
+msgstr "러시아 제국"
+
+msgid "SWEDEN"
+msgstr "스웨덴"
+
+msgid "SPAIN"
+msgstr "스페인"
+
+msgid "TAIWAN"
+msgstr "대만"
+
+msgid "UNITED KINGDOM"
+msgstr "영국"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "선호되는 언어"
@@ -1711,9 +1913,6 @@ msgstr "모든 게임이 필터링되었으며 스크랩할 것이 없습니다"
 msgid "SCRAPING IN PROGRESS"
 msgstr "스크랩 진행중"
 
-msgid "SYSTEM"
-msgstr "시스템"
-
 msgid "REFINE SEARCH"
 msgstr "개선 검색"
 
@@ -1770,6 +1969,14 @@ msgstr "플레이어:"
 
 msgid "NO GAMES FOUND"
 msgstr "게임을 찾을 수 없음"
+
+msgid "API CALLS:"
+msgstr "API 호출:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "%i 남음"
 
 msgid "RETRY"
 msgstr "재시도"
@@ -1870,6 +2077,9 @@ msgstr "배터리 충전 상태 표시"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "테마 리스트 다운로드 중 100%"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "저장소가 원본으로부터 분기되었습니다"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "테마가 이미 최신 상태입니다"
 
@@ -1941,6 +2151,17 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"이 저장소가 분기된 것 같습니다. 이는 일반적으로 테마 개발자가 해결해야 할 업"
+"스트림 병합 충돌이 있음을 의미합니다. 새로 다운로드해야 하며, 이전 테마 디렉"
+"터리 \"%s\"의 이름이 \"%s_DIVERGED_DISABLED\"로 변경됩니다."
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -1980,6 +2201,9 @@ msgstr "수동 다운로드"
 
 msgid "CORRUPT"
 msgstr "손상됨"
+
+msgid "DIVERGED"
+msgstr "분기됨"
 
 msgid "SHALLOW"
 msgstr "쉘로우"
@@ -2068,7 +2292,7 @@ msgid "browse"
 msgstr "보기"
 
 msgid "pdf manual"
-msgstr "pdf 메뉴얼"
+msgstr "PDF 메뉴얼"
 
 msgid "first"
 msgstr "처음"
@@ -2087,9 +2311,6 @@ msgstr "박스 후면 커버"
 
 msgid "TITLE SCREEN"
 msgstr "타이틀 스크린"
-
-msgid "FAN ART"
-msgstr "팬아트"
 
 msgid "MIXIMAGE"
 msgstr "믹스이미지"
@@ -2214,6 +2435,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "실행 횟수 입력"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr "놀이 시간"
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr "플레이 타임 입력"
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "컨트롤러"
 
@@ -2262,7 +2491,7 @@ msgid "Error loading marquee image, corrupt file?"
 msgstr "마퀴 이미지 로딩 오류 발생, 파일이 손상되었나요?"
 
 msgid "Error loading 3d box image, corrupt file?"
-msgstr "3d 박스 이미지 로딩 오류 발생, 파일이 손상되었나요?"
+msgstr "3D 박스 이미지 로딩 오류 발생, 파일이 손상되었나요?"
 
 msgid "Error loading box cover image, corrupt file?"
 msgstr "박스 커버 이미지 로딩 오류 발생, 파일이 손상되었나요?"
@@ -2285,6 +2514,9 @@ msgstr "게임 미디어"
 
 msgid "zoom"
 msgstr "줌"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "일일 스크랩 할당량을 초과했습니다"
 
 msgid "Network error:"
 msgstr "네트워크 오류:"
@@ -2374,10 +2606,6 @@ msgid "jump to game"
 msgstr "게임으로 이동"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "알수없음"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "예"
 
@@ -2430,33 +2658,31 @@ msgstr ""
 "txt를 참조하세요"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"게임 파일을 찾을 수 없습니다. 구성된 롬 디렉터리에 게임을 넣으십시오. 선택적"
-"으로 지원되는 파일 확장자와 같은 일부 정보를 제공하는 각 시스템에 대한 텍스"
-"트 파일을 생성하는 롬 디렉터리 구조를 생성할 수 있습니다.\n"
-"현재 구성된 롬 디렉터리는 다음과 같습니다:\n"
+"게임 파일을 찾을 수 없습니다. 일부 게임을 가져오거나 구성된 롬 디렉터리에 수"
+"동으로 넣으세요. 롬 디렉터리 구조를 직접 생성하여 각 시스템별로 지원되는 파"
+"일 확장자 등의 정보를 제공하는 텍스트 파일을 생성할 수도 있습니다. 구성된 롬 "
+"디렉터리는 다음과 같습니다.\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"게임 파일을 찾을 수 없습니다. 현재 구성된 롬 디렉터리에 게임을 넣거나 아래 버"
-"튼을 사용하여 경로를 변경하세요. 선택적으로 지원되는 파일 확장자와 같은 일부 "
-"정보를 제공하는 각 시스템에 대한 텍스트 파일을 생성하는 롬 디렉터리 구조를 생"
-"성할 수 있습니다.\n"
-"현재 구성된 롬 디렉터리는 다음과 같습니다:\n"
+"게임 파일을 찾을 수 없습니다. 일부 게임을 가져오거나 현재 구성된 롬 디렉터리"
+"에 수동으로 넣으세요. 롬 경로를 변경하고, 원하는 경우 롬 디렉터리 구조를 생성"
+"할 수도 있습니다. 이 구조는 각 시스템별로 지원되는 파일 확장자 등의 정보를 제"
+"공하는 텍스트 파일을 생성합니다. 구성된 롬 디렉터리는 다음과 같습니다.\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "롬 디렉터리 변경"
+msgid "CHANGE"
+msgstr "변경"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "롬 디렉터리 경로 입력"
@@ -2475,9 +2701,6 @@ msgstr "현재 구성된 경로 로드"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "비우기 (기본 경로로 재설정 위해 공란으로 비우기)"
-
-msgid "CREATE DIRECTORIES"
-msgstr "디렉터리 생성"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2559,9 +2782,6 @@ msgstr "게임 '%s' 시작 중"
 msgid "menu"
 msgstr "메뉴"
 
-msgid "WORKING..."
-msgstr "실행 중..."
-
 msgctxt "theme"
 msgid "never"
 msgstr "사용안함"
@@ -2615,18 +2835,6 @@ msgstr[0] "%i 선택"
 
 msgid "change value"
 msgstr "값 변경"
-
-msgid "SELECT ALL"
-msgstr "모두 선택"
-
-msgid "select all"
-msgstr "모두 선택"
-
-msgid "SELECT NONE"
-msgstr "선택 해제"
-
-msgid "select none"
-msgstr "선택 해제"
 
 msgid "add half star"
 msgstr "하프스타 추가"
@@ -2805,9 +3013,6 @@ msgstr "변경사항 취소"
 msgid "discard changes"
 msgstr "변경사항 취소"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "일일 스크랩 할당량을 초과했습니다"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "서버에서 HTTP 오류 코드 %s을(를) 반환했습니다"
@@ -2849,6 +3054,9 @@ msgstr "3:2 수직"
 
 msgid "4:3 vertical"
 msgstr "4:3 수직"
+
+msgid "5:3 vertical"
+msgstr "5:3 수직"
 
 msgid "5:4 vertical"
 msgstr "5:4 수직"

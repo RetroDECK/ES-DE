@@ -343,6 +343,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
                 git_object_free(object);
                 mPromise.set_value(true);
                 mRepositoryError = RepositoryError::HAS_DIVERGED;
+                mMessage = _("REPOSITORY HAS DIVERGED FROM ORIGIN");
                 return true;
             }
         }
@@ -489,6 +490,43 @@ bool GuiThemeDownloader::checkCorruptRepository(git_repository* repository)
     return (statusEntryCount == 0);
 }
 
+bool GuiThemeDownloader::checkDivergedRepository(git_repository* repository)
+{
+    int errorCode {0};
+    bool status {false};
+
+    git_annotated_commit* annotated {nullptr};
+    git_object* object {nullptr};
+
+    // If there is no FETCH_HEAD reference then it's a freshly cloned repository and in this
+    // case it can't possibly be diverged.
+    errorCode = git_revparse_single(&object, repository, "FETCH_HEAD");
+    if (errorCode != 0)
+        return false;
+
+    errorCode = git_annotated_commit_lookup(&annotated, repository, git_object_id(object));
+
+    git_merge_analysis_t mergeAnalysis {};
+    git_merge_preference_t mergePreference {};
+
+    errorCode = git_merge_analysis(&mergeAnalysis, &mergePreference, repository,
+                                   (const git_annotated_commit**)(&annotated), 1);
+
+    if (errorCode != 0) {
+        // Not sure if this can even happen in practice.
+        status = false;
+    }
+    else if (!(mergeAnalysis & GIT_MERGE_ANALYSIS_UP_TO_DATE) &&
+             !(mergeAnalysis & GIT_MERGE_ANALYSIS_FASTFORWARD)) {
+        status = true;
+    }
+
+    git_object_free(object);
+    git_annotated_commit_free(annotated);
+
+    return status;
+}
+
 void GuiThemeDownloader::resetRepository(git_repository* repository)
 {
     git_object* objectHead {nullptr};
@@ -507,6 +545,7 @@ void GuiThemeDownloader::makeInventory()
         theme.invalidRepository = false;
         theme.shallowRepository = false;
         theme.corruptRepository = false;
+        theme.divergedRepository = false;
         theme.wrongUrl = false;
         theme.manuallyDownloaded = false;
         theme.hasLocalChanges = false;
@@ -540,6 +579,12 @@ void GuiThemeDownloader::makeInventory()
 
             if (checkCorruptRepository(repository)) {
                 theme.corruptRepository = true;
+                git_repository_free(repository);
+                continue;
+            }
+
+            if (checkDivergedRepository(repository)) {
+                theme.divergedRepository = true;
                 git_repository_free(repository);
                 continue;
             }
@@ -610,7 +655,7 @@ bool GuiThemeDownloader::renameDirectory(const std::string& path, const std::str
         mWindow->pushGui(new GuiMsgBox(
             Utils::String::format(_("COULDN'T RENAME DIRECTORY \"%s\"\nPERMISSION PROBLEMS?"),
                                   path.c_str()),
-            _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
+            _("OK"), [] { return; }, "", nullptr, "", nullptr, "", nullptr, nullptr, true));
         return true;
     }
     else {
@@ -632,7 +677,7 @@ void GuiThemeDownloader::parseThemesList()
         LOG(LogError) << "GuiThemeDownloader: No themes.json file found";
         mWindow->pushGui(new GuiMsgBox(
             _("COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"), _("OK"), [] { return; }, "",
-            nullptr, "", nullptr, nullptr, true));
+            nullptr, "", nullptr, "", nullptr, nullptr, true));
         mGrid.removeEntry(mCenterGrid);
         mGrid.setCursorTo(mButtons);
         return;
@@ -647,7 +692,7 @@ void GuiThemeDownloader::parseThemesList()
         mWindow->pushGui(new GuiMsgBox(
             _("COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL REPOSITORY IS "
               "CORRUPT?"),
-            _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
+            _("OK"), [] { return; }, "", nullptr, "", nullptr, "", nullptr, nullptr, true));
         mGrid.removeEntry(mCenterGrid);
         mGrid.setCursorTo(mButtons);
         return;
@@ -669,10 +714,7 @@ void GuiThemeDownloader::parseThemesList()
             mWindow->pushGui(new GuiMsgBox(
                 _("IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
                   "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"),
-                _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr, true));
-
-            #endif
-
+                _("OK"), [] { return; }, "", nullptr, "", nullptr, "", nullptr, nullptr, true));
         }
     }
 
@@ -786,7 +828,7 @@ void GuiThemeDownloader::populateGUI()
         if (theme.isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (theme.manuallyDownloaded || theme.invalidRepository || theme.corruptRepository ||
-            theme.shallowRepository || theme.wrongUrl)
+            theme.divergedRepository || theme.shallowRepository || theme.wrongUrl)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
         if (theme.hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
@@ -829,7 +871,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = _("DOWNLOADING THEME");
                     },
-                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -857,7 +899,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = _("DOWNLOADING THEME");
                     },
-                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -885,7 +927,35 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = _("DOWNLOADING THEME");
                     },
-                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, "", nullptr, nullptr, false, true,
+                    (mRenderer->getIsVerticalOrientation() ?
+                         0.75f :
+                         0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
+            }
+            else if (theme.divergedRepository) {
+                mWindow->pushGui(new GuiMsgBox(
+                    Utils::String::format(
+                        _("IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE "
+                          "IS AN UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME "
+                          "DEVELOPER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+                          "\"%s\" WILL BE RENAMED TO \"%s_DIVERGED_DISABLED\""),
+                        std::string {theme.reponame + theme.manualExtension}.c_str(),
+                        std::string {theme.reponame + theme.manualExtension}.c_str()),
+                    _("PROCEED"),
+                    [this, theme] {
+                        if (renameDirectory(mThemeDirectory + theme.reponame +
+                                                theme.manualExtension,
+                                            "_DIVERGED_DISABLED")) {
+                            return;
+                        }
+                        std::promise<bool>().swap(mPromise);
+                        mFuture = mPromise.get_future();
+                        mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
+                                                   theme.reponame, theme.url);
+                        mStatusType = StatusType::STATUS_DOWNLOADING;
+                        mStatusText = _("DOWNLOADING THEME");
+                    },
+                    _("CANCEL"), [] { return; }, "", nullptr, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -913,7 +983,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_DOWNLOADING;
                         mStatusText = _("DOWNLOADING THEME");
                     },
-                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -933,7 +1003,7 @@ void GuiThemeDownloader::populateGUI()
                         mStatusType = StatusType::STATUS_UPDATING;
                         mStatusText = _("UPDATING THEME");
                     },
-                    _("CANCEL"), [] { return; }, "", nullptr, nullptr, false, true,
+                    _("CANCEL"), [] { return; }, "", nullptr, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
                          0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -978,7 +1048,8 @@ void GuiThemeDownloader::updateGUI()
         if (mThemes[i].isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (mThemes[i].manuallyDownloaded || mThemes[i].invalidRepository ||
-            mThemes[i].corruptRepository || mThemes[i].shallowRepository || mThemes[i].wrongUrl)
+            mThemes[i].corruptRepository || mThemes[i].divergedRepository ||
+            mThemes[i].shallowRepository || mThemes[i].wrongUrl)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
         if (mThemes[i].hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
@@ -1019,6 +1090,11 @@ void GuiThemeDownloader::updateInfoPane()
     }
     else if (mThemes[mList->getCursorId()].corruptRepository) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " " + _("CORRUPT"));
+        mDownloadStatus->setColor(mMenuColorRed);
+        mDownloadStatus->setOpacity(1.0f);
+    }
+    else if (mThemes[mList->getCursorId()].divergedRepository) {
+        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " " + _("DIVERGED"));
         mDownloadStatus->setColor(mMenuColorRed);
         mDownloadStatus->setOpacity(1.0f);
     }
@@ -1135,8 +1211,8 @@ void GuiThemeDownloader::update(int deltaTime)
                     }
                     errorMessage.append(" ").append(Utils::String::toUpper(mMessage));
                     mWindow->pushGui(new GuiMsgBox(
-                        errorMessage, _("OK"), [] { return; }, "", nullptr, "", nullptr, nullptr,
-                        true));
+                        errorMessage, _("OK"), [] { return; }, "", nullptr, "", nullptr, "",
+                        nullptr, nullptr, true));
                     mRepositoryError = RepositoryError::NO_REPO_ERROR;
                     mMessage = "";
                     getHelpPrompts();
@@ -1341,7 +1417,7 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
                 if (!Utils::FileSystem::removeDirectory(themeDirectory, true)) {
                     mWindow->pushGui(new GuiMsgBox(
                         _("COULDN'T DELETE THEME, PERMISSION PROBLEMS?"), _("OK"), [] { return; },
-                        "", nullptr, "", nullptr, nullptr, true));
+                        "", nullptr, "", nullptr, "", nullptr, nullptr, true));
                 }
                 else {
                     mMessage = _("THEME WAS DELETED");
@@ -1350,7 +1426,7 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
                 makeInventory();
                 updateGUI();
             },
-            _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
+            _("CANCEL"), nullptr, "", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.70f :
                  0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1449,7 +1525,7 @@ bool GuiThemeDownloader::fetchThemesList()
                     delete this;
                     return false;
                 },
-                "", nullptr, nullptr, true, true,
+                "", nullptr, "", nullptr, nullptr, true, true,
                 (mRenderer->getIsVerticalOrientation() ?
                      0.75f :
                      0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1486,7 +1562,7 @@ bool GuiThemeDownloader::fetchThemesList()
                 delete this;
                 return false;
             },
-            "", nullptr, nullptr, true, true,
+            "", nullptr, "", nullptr, nullptr, true, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.85f :
                  0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));

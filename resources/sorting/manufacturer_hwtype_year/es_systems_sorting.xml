@@ -330,6 +330,10 @@
         <systemsortname>AdvanceMAME - Emulator - 1998</systemsortname>
     </system>
     <system>
+        <name>mark3</name>
+        <systemsortname>Sega - Console - 1985</systemsortname>
+    </system>
+    <system>
         <name>mastersystem</name>
         <systemsortname>Sega - Console - 1986</systemsortname>
     </system>
@@ -698,6 +702,10 @@
         <systemsortname>Philips - Console - 1978</systemsortname>
     </system>
     <system>
+        <name>vircon32</name>
+        <systemsortname>Carra - Engine - 2021</systemsortname>
+    </system>
+    <system>
         <name>virtualboy</name>
         <systemsortname>Nintendo - Portable - 1995</systemsortname>
     </system>
@@ -756,6 +764,10 @@
     <system>
         <name>xbox360</name>
         <systemsortname>Microsoft - Console - 2005</systemsortname>
+    </system>
+    <system>
+        <name>xboxone</name>
+        <systemsortname>Microsoft - Console - 2013</systemsortname>
     </system>
     <system>
         <name>zmachine</name>

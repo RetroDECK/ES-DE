@@ -142,6 +142,12 @@
             <entry>com.emulator.fpse64/.Main</entry>
         </rule>
     </emulator>
+    <emulator name="GAMENATIVE">
+        <!-- Steam client GameNative -->
+        <rule type="androidpackage">
+            <entry>app.gamenative/.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="GBA-EMU">
         <!-- Nintendo Game Boy Advance emulator GBA.emu -->
         <rule type="androidpackage">
@@ -184,10 +190,22 @@
             <entry>ru.woesss.j2meloader/ru.playsoftware.j2meloader.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="KENJI-NX">
+        <!-- Nintendo Switch emulator Kenji-NX -->
+        <rule type="androidpackage">
+            <entry>org.kenjinx.android/.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="LIME3DS">
         <!-- Nintendo 3DS emulator Lime3DS -->
         <rule type="androidpackage">
             <entry>io.github.lime3ds.android/.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="LINKBOY">
+        <!-- Nintendo Game Boy, Game Boy Color and Game Boy Advance emulator Linkboy -->
+        <rule type="androidpackage">
+            <entry>com.pixelrespawn.linkboy/.EmulatorActivity</entry>
         </rule>
     </emulator>
     <emulator name="LYNX-EMU">
@@ -436,6 +454,7 @@
     <emulator name="VISUAL-PINBALL">
         <!-- Pinball simulator Visual Pinball -->
         <rule type="androidpackage">
+            <entry>org.vpinball.vpinball_bgfx/org.vpinball.app.VPinballActivity</entry>
             <entry>org.vpinball.app/.VpxLauncherActivity</entry>
         </rule>
     </emulator>
@@ -443,6 +462,12 @@
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="androidpackage">
             <entry>org.vita3k.emulator/.Emulator</entry>
+        </rule>
+    </emulator>
+    <emulator name="WINLATOR-CMOD">
+        <!-- Microsoft Windows emulator Winlator Cmod -->
+        <rule type="androidpackage">
+            <entry>com.winlator.cmod/.XServerDisplayActivity</entry>
         </rule>
     </emulator>
     <emulator name="WINLATOR-GLIBC">

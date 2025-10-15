@@ -296,7 +296,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                         CollectionSystemsManager::getInstance()->deleteCustomCollection(name);
                         return true;
                     },
-                    _("NO"), [] { return false; }, "", nullptr, nullptr, false, true,
+                    _("NO"), [] { return false; }, "", nullptr, "", nullptr, nullptr, false, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.43f :
                          0.28f * (1.778f / mRenderer->getScreenAspectRatio()))));

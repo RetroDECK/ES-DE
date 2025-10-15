@@ -795,7 +795,12 @@ void Screensaver::triggerCustomEvent()
     if (mCurrentGame == nullptr)
         return;
 
+#if defined(_WIN64)
+    Scripting::fireEvent("screensaver-game-select",
+                         Utils::String::replace(mCurrentGame->getPath(), "/", "\\"),
+#else
     Scripting::fireEvent("screensaver-game-select", mCurrentGame->getPath(),
+#endif
                          mCurrentGame->metadata.get("name"), mCurrentGame->getSystem()->getName(),
                          mCurrentGame->getSystem()->getFullName());
 }

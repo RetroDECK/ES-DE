@@ -124,6 +124,7 @@ namespace PlatformIds
         EPOCH_SCV,
         SEGA_32X,
         SEGA_CD,
+        SEGA_PICO,
         SEGA_SG1000,
         NINTENDO_SUPER_GAME_BOY,
         SUPER_NINTENDO,

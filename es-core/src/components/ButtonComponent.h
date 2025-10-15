@@ -35,6 +35,12 @@ public:
     void setPressedFunc(std::function<void()> f) { mPressedFunc = f; }
     void setEnabled(bool state) override;
 
+    void setOpacity(float opacity) override
+    {
+        mOpacity = opacity;
+        mBox.setOpacity(opacity);
+    }
+
     void setPadding(const glm::vec4 padding);
     glm::vec4 getPadding() { return mPadding; }
 

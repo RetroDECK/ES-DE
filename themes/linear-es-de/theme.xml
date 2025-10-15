@@ -270,8 +270,8 @@
     <variant name="textlistWithVideos, textlistWithoutVideos">
         <view name="gamelist">
             <image name="systemWatermarkLogo">
-                <pos>0.88 0.845</pos>
-                <maxSize>0.14 0.10</maxSize>
+                <pos>0.88 0.887</pos>
+                <maxSize>0.145 0.07</maxSize>
                 <origin>0.5 0.5</origin>
                 <path>./system/logos/${system.theme}.svg</path>
                 <color>${gamelistWatermarkLogoColor}</color>
@@ -563,6 +563,39 @@
                 <letterCase>capitalize</letterCase>
                 <lineSpacing>1</lineSpacing>
             </datetime>
+            <image name="panelPlayTime">
+                <pos>0.88 0.7545</pos>
+                <size>0.17 0.08</size>
+                <origin>0.5 0</origin>
+                <path>${pixelImage}</path>
+                <color>${gamelistMetadataPanelColor}</color>
+                <zIndex>14</zIndex>
+            </image>
+            <text name="labelPlayTime">
+                <pos>0.88 0.7595</pos>
+                <size>0.165 0.03</size>
+                <origin>0.5 0</origin>
+                <text>${langLabelPlayTime}</text>
+                <metadataElement>true</metadataElement>
+                <fontPath>${primaryFont}</fontPath>
+                <fontSize>${metadataFontSize}</fontSize>
+                <horizontalAlignment>center</horizontalAlignment>
+                <color>${gamelistMetadataLabelColor}</color>
+                <lineSpacing>1</lineSpacing>
+            </text>
+            <text name="playtime">
+                <pos>0.88 0.798</pos>
+                <size>0.165 0.03</size>
+                <origin>0.5 0</origin>
+                <metadata>playtime</metadata>
+                <defaultValue>:space:</defaultValue>
+                <fontPath>${primaryFont}</fontPath>
+                <fontSize>${metadataFontSize}</fontSize>
+                <horizontalAlignment>center</horizontalAlignment>
+                <color>${primaryColor}</color>
+                <lineSpacing>1</lineSpacing>
+                <letterCase>capitalize</letterCase>
+            </text>
             <badges name="badges">
                 <pos>0.974 0.164</pos>
                 <size>0.035 0.54</size>

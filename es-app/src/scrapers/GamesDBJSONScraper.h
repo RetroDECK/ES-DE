@@ -3,7 +3,7 @@
 //  ES-DE Frontend
 //  GamesDBJSONScraper.h
 //
-//  Functions specifically for scraping from thegamesdb.net
+//  Functions for scraping from TheGamesDB (thegamesdb.net).
 //  Called from Scraper.
 //
 
@@ -47,7 +47,6 @@ public:
 protected:
     void process(const std::unique_ptr<HttpReq>& req,
                  std::vector<ScraperSearchResult>& results) override;
-    bool isGameRequest() { return !mRequestQueue; }
 
     std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;
 };

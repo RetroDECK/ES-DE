@@ -175,6 +175,16 @@
             <entry>%ESPATH%\..\Emulators\BigPEmu\BigPEmu.exe</entry>
         </rule>
     </emulator>
+    <emulator name="BLASTEM">
+        <!-- Sega Mega Drive/Genesis emulator BlastEm -->
+        <rule type="systempath">
+            <entry>blastem.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\blastem\blastem.exe</entry>
+            <entry>%ESPATH%\..\Emulators\blastem\blastem.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="BSNES">
         <!-- Super Nintendo/Super Famicom emulator bsnes -->
         <rule type="systempath">
@@ -405,6 +415,20 @@
             <entry>%ESPATH%\..\Emulators\Future Pinball\Future Pinball.exe</entry>
         </rule>
     </emulator>
+    <emulator name="FUTURE-PINBALL-FPLOADER">
+        <!-- Pinball simulator Future Pinball (FPLoader) -->
+        <rule type="systempath">
+            <entry>FPLoader.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Future Pinball\BAM\FPLoader.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Future Pinball\BAM\FPLoader.exe</entry>
+            <entry>%ESPATH%\Emulators\Future Pinball\BAM-OpenVR\FPLoader.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Future Pinball\BAM-OpenVR\FPLoader.exe</entry>
+            <entry>%ESPATH%\Emulators\Future Pinball\BAM-OpenVR-OC\FPLoader.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Future Pinball\BAM-OpenVR-OC\FPLoader.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="GARGOYLE">
         <!-- Interactive fiction player Gargoyle -->
         <rule type="systempath">
@@ -433,6 +457,16 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\gopher2600\gopher2600_windows_amd64.exe</entry>
             <entry>%ESPATH%\..\Emulators\gopher2600\gopher2600_windows_amd64.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="GOPHER64">
+        <!-- Nintendo 64 emulator Gopher64 -->
+        <rule type="systempath">
+            <entry>gopher64-windows-x86_64.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\gopher64\gopher64-windows-x86_64.exe</entry>
+            <entry>%ESPATH%\..\Emulators\gopher64\gopher64-windows-x86_64.exe</entry>
         </rule>
     </emulator>
     <emulator name="HATARI">
@@ -644,6 +678,18 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\Panda3DS\Alber.exe</entry>
             <entry>%ESPATH%\..\Emulators\Panda3DS\Alber.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="PARALLEL-LAUNCHER">
+        <!-- Nintendo 64 emulator Parallel Launcher  -->
+        <rule type="systempath">
+            <entry>parallel-launcher.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>C:\Program Files (x86)\parallel-launcher\parallel-launcher.exe</entry>
+            <entry>D:\Program Files (x86)\parallel-launcher\parallel-launcher.exe</entry>
+            <entry>%ESPATH%\Emulators\parallel-launcher\parallel-launcher.exe</entry>
+            <entry>%ESPATH%\..\Emulators\parallel-launcher\parallel-launcher.exe</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2">
@@ -966,6 +1012,16 @@
             <entry>%ESPATH%\..\Emulators\Supermodel\Supermodel.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SUPERMODEL-DOJO">
+        <!-- Sega Model 3 emulator Supermodel Dojo -->
+        <rule type="systempath">
+            <entry>supermodel.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Supermodel-Dojo\supermodel.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Supermodel-Dojo\supermodel.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="TIC-80">
         <!-- TIC-80 Fantasy Computer (game engine) -->
         <rule type="systempath">
@@ -1055,11 +1111,14 @@
     <emulator name="VISUAL-PINBALL">
         <!-- Pinball simulator Visual Pinball -->
         <rule type="systempath">
+            <entry>VPinballX_BGFX64.exe</entry>
             <entry>VPinballX_GL64.exe</entry>
             <entry>VPinballX64.exe</entry>
             <entry>VPinballX.exe</entry>
         </rule>
         <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\VPinballX\VPinballX_BGFX64.exe</entry>
+            <entry>%ESPATH%\..\Emulators\VPinballX\VPinballX_BGFX64.exe</entry>
             <entry>%ESPATH%\Emulators\VPinballX\VPinballX_GL64.exe</entry>
             <entry>%ESPATH%\..\Emulators\VPinballX\VPinballX_GL64.exe</entry>
             <entry>%ESPATH%\Emulators\VPinballX\VPinballX64.exe</entry>
@@ -1149,6 +1208,16 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\yabasanshiro\yabasanshiro.exe</entry>
             <entry>%ESPATH%\..\Emulators\yabasanshiro\yabasanshiro.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="YMIR">
+        <!-- Sega Saturn emulator Ymir -->
+        <rule type="systempath">
+            <entry>ymir-sdl3.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\ymir\ymir-sdl3.exe</entry>
+            <entry>%ESPATH%\..\Emulators\ymir\ymir-sdl3.exe</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">

@@ -40,6 +40,7 @@ Window::Window() noexcept
     , mPDFViewer {nullptr}
     , mLaunchScreen {nullptr}
     , mInfoPopup {nullptr}
+    , mGameLaunched {nullptr}
     , mListScrollOpacity {0.0f}
     , mFrameTimeElapsed {0}
     , mFrameCountElapsed {0}
@@ -1010,6 +1011,9 @@ void Window::stopMediaViewer()
     }
 
     mRenderMediaViewer = false;
+
+    if (!mGuiStack.empty())
+        mGuiStack.back()->updateHelpPrompts();
 }
 
 void Window::startPDFViewer(FileData* game)

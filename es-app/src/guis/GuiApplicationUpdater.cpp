@@ -181,7 +181,7 @@ GuiApplicationUpdater::GuiApplicationUpdater()
         if (mDownloading) {
             mWindow->pushGui(
                 new GuiMsgBox(_("DOWNLOAD ABORTED") + "\n" + _("NO PACKAGE SAVED TO DISK"), _("OK"),
-                              nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                              nullptr, "", nullptr, "", nullptr, "", nullptr, nullptr, true, true,
                               (mRenderer->getIsVerticalOrientation() ?
                                    0.70f :
                                    0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -189,7 +189,7 @@ GuiApplicationUpdater::GuiApplicationUpdater()
         else if (mHasDownloaded || mReadyToInstall) {
             mWindow->pushGui(
                 new GuiMsgBox(_("PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"), _("OK"),
-                              nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                              nullptr, "", nullptr, "", nullptr, "", nullptr, nullptr, true, true,
                               (mRenderer->getIsVerticalOrientation() ?
                                    0.60f :
                                    0.35f * (1.778f / mRenderer->getScreenAspectRatio()))));

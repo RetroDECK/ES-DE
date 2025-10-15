@@ -2,7 +2,7 @@
 
 ES-DE (EmulationStation Desktop Edition) is a frontend for browsing and launching games from your multi-platform collection.
 
-It's officially supported on Linux, macOS, Windows and Android but can also be used on Haiku and the Raspberry Pi if you build it yourself from source code. There is also an ES-DE package in the FreeBSD ports collection.
+It's officially supported on Android, Linux, macOS and Windows, and semi-officially supported on Haiku. It can also be used on the Raspberry Pi and similar devices if you build it yourself from source code. There is also a ES-DE package in the FreeBSD ports collection.
 
 Website:\
 https://es-de.org
@@ -80,4 +80,4 @@ _In addition to the scraper there is a fully-featured metadata editor that can b
 _There are four built-in screensavers, including a slideshow and a video screensaver that display random games from your collection._
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_ES-DE is fully themeable, in case you prefer another look than what the default theme Linear offers. The screenshot above shows the Slate theme that is also bundled with the application._
+_ES-DE is fully themeable, in case you prefer another look than what the default theme Linear offers. The screenshot above shows the Slate theme that is bundled with the application for the desktop ports._

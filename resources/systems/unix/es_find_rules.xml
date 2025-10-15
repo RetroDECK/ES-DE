@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for BSD Unix -->
+<!-- This is the ES-DE find rules configuration file for FreeBSD -->
 <ruleList>
     <emulator name="OS-SHELL">
         <!-- Operating system shell -->
@@ -358,6 +358,12 @@
             <entry>panda3ds</entry>
         </rule>
     </emulator>
+    <emulator name="PARALLEL-LAUNCHER">
+        <!-- Nintendo 64 emulator Parallel Launcher  -->
+        <rule type="systempath">
+            <entry>parallel-launcher</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">
@@ -628,9 +634,14 @@
     <emulator name="VISUAL-PINBALL">
         <!-- Pinball simulator Visual Pinball -->
         <rule type="systempath">
+            <entry>VPinballX_BGFX</entry>
             <entry>VPinballX_GL</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/VPinballX/VPinballX_BGFX</entry>
+            <entry>~/.local/share/applications/VPinballX/VPinballX_BGFX</entry>
+            <entry>~/.local/bin/VPinballX/VPinballX_BGFX</entry>
+            <entry>~/bin/VPinballX/VPinballX_BGFX</entry>
             <entry>~/Applications/VPinballX/VPinballX_GL</entry>
             <entry>~/.local/share/applications/VPinballX/VPinballX_GL</entry>
             <entry>~/.local/bin/VPinballX/VPinballX_GL</entry>

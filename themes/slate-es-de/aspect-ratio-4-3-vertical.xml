@@ -143,7 +143,8 @@
                 <fontSize>0.04</fontSize>
             </text>
             <text name="labelReleasedate, labelDeveloper, labelPublisher, labelGenre,
-                        labelPlayers, labelLastplayed, developer, publisher, genre, players">
+                        labelPlayers, labelPlaytime, developer, publisher, genre, players,
+                        playtime">
                 <size>0.155 0.02</size>
                 <fontSize>${metadataFontSize}</fontSize>
             </text>
@@ -179,13 +180,17 @@
             <text name="players">
                 <pos>0.62 0.613</pos>
             </text>
-            <text name="labelLastplayed">
+            <text name="labelPlaytime">
                 <pos>0.79 0.59</pos>
             </text>
-            <datetime name="lastplayed">
+            <text name="playtime">
                 <pos>0.79 0.613</pos>
-                <size>0.155 0.02</size>
-                <fontSize>${metadataFontSize}</fontSize>
+            </text>
+            <text name="labelLastplayed">
+                <visible>false</visible>
+            </text>
+            <datetime name="lastplayed">
+                <visible>false</visible>
             </datetime>
             <text name="description">
                 <pos>0.454 0.655</pos>

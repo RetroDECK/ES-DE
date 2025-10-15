@@ -201,12 +201,12 @@
                 <visible>false</visible>
             </text>
             <text name="labelReleasedate, labelDeveloper, labelPublisher,
-                        labelGenre, labelPlayers, labelLastplayed">
+                        labelGenre, labelPlayers, labelLastplayed, labelPlaytime">
                 <fontPath>${boldFont}</fontPath>
                 <color>${gamelistDefaultTextColor}</color>
                 <letterCase>uppercase</letterCase>
             </text>
-            <text name="developer, publisher, genre, players">
+            <text name="developer, publisher, genre, players, playtime">
                 <fontPath>${regularFont}</fontPath>
                 <color>${gamelistDefaultTextColor}</color>
                 <letterCase>uppercase</letterCase>
@@ -270,6 +270,13 @@
             <datetime name="lastplayed">
                 <metadata>lastplayed</metadata>
             </datetime>
+            <text name="labelPlaytime">
+                <text>${langLabelPlayTime}:</text>
+                <metadataElement>true</metadataElement>
+            </text>
+            <text name="playtime">
+                <metadata>playtime</metadata>
+            </text>
             <rating name="rating">
                 <pos>0.453 0.203</pos>
                 <interpolation>nearest</interpolation>
@@ -357,7 +364,8 @@
                 <visible>false</visible>
             </text>
             <text name="labelReleasedate, labelDeveloper, labelPublisher, labelGenre, labelPlayers,
-                        labelLastplayed, developer, publisher, genre, players, description">
+                        labelLastplayed, labelPlaytime, developer, publisher, genre, players,
+                        playtime, description">
                 <visible>false</visible>
             </text>
             <datetime name="releasedate, lastplayed">

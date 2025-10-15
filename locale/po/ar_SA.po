@@ -1,0 +1,3180 @@
+# ES-DE Frontend translation strings.
+# Copyright (c) 2024-2025 Northwestern Software AB
+# This file is distributed under the same license as the ES-DE Frontend package.
+# Northwestern Software <info@es-de.org>, 2024-2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ES-DE Frontend\n"
+"Report-Msgid-Bugs-To: info@es-de.org\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-09-17 14:34+0300\n"
+"Last-Translator: Northwestern Software <info@es-de.org>\n"
+"Language-Team: Arabic (Classical Arabic) <info@es-de.org>\n"
+"Language: ar_SA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100 >= 3 "
+"&& n%100<=10 ? 3 : n%100 >= 11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Poedit 3.7\n"
+
+msgid "Network error (status:"
+msgstr "خطأ في الشبكة (الحالة:"
+
+msgid "New prerelease available:"
+msgstr "إصدار مسبق جديد متاح:"
+
+msgid "New release available:"
+msgstr "إصدار جديد متاح:"
+
+msgid "For more information visit"
+msgstr "لمزيد من المعلومات تفضل بزيارة"
+
+msgid "all games"
+msgstr "جميع الألعاب"
+
+msgid "last played"
+msgstr "لعب آخر مرة"
+
+msgid "favorites"
+msgstr "المفضلة"
+
+msgid "collections"
+msgstr "مجموعات"
+
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "إيقاف '%s' من '%s'"
+
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "تحرير '%s' مجموعة، إضافة/إزالة الألعاب مع %s"
+
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "تم الانتهاء من التحرير '%s' مجموعة"
+
+msgid "Favorites"
+msgstr "المفضلة"
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "تمت الإضافة '%s' لـ '%s'"
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "تم حذف '%s' من '%s'"
+
+msgid "This collection is empty"
+msgstr "هذه المجموعة فارغة"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "تحتوي هذه المجموعة على لعبة 1: '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "تحتوي هذه المجموعة على لعبتين: '%s [%s]' و '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "تحتوي هذه المجموعة على 3 ألعاب: '%s [%s]' و '%s [%s]' و '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"تحتوي هذه المجموعة على %i ألعاب: '%s [%s]', '%s [%s]' and '%s [%s]', وغيرها"
+msgstr[1] ""
+"تحتوي هذه المجموعة على %i ألعاب: '%s [%s]', '%s [%s]' and '%s [%s]', وغيرها"
+msgstr[2] ""
+"تحتوي هذه المجموعة على %i ألعاب: '%s [%s]', '%s [%s]' and '%s [%s]', وغيرها"
+msgstr[3] ""
+"تحتوي هذه المجموعة على %i ألعاب: '%s [%s]', '%s [%s]' and '%s [%s]', وغيرها"
+msgstr[4] ""
+"تحتوي هذه المجموعة على %i لعبة: '%s [%s]', '%s [%s]' and '%s [%s]', وغيرها"
+msgstr[5] ""
+"تحتوي هذه المجموعة على %i لعبة: '%s [%s]', '%s [%s]' and '%s [%s]', وغيرها"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "تحتوي هذه المجموعة على لعبة 1: '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "تحتوي هذه المجموعة على لعبتين: '%s' و '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "تحتوي هذه المجموعة على 3 ألعاب: '%s' و '%s' و '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "تحتوي هذه المجموعة على %i ألعاب: '%s', '%s' and '%s', وغيرها"
+msgstr[1] "تحتوي هذه المجموعة على %i ألعاب: '%s', '%s' and '%s', وغيرها"
+msgstr[2] "تحتوي هذه المجموعة على %i ألعاب: '%s', '%s' and '%s', وغيرها"
+msgstr[3] "تحتوي هذه المجموعة على %i ألعاب: '%s', '%s' and '%s', وغيرها"
+msgstr[4] "تحتوي هذه المجموعة على %i لعبة: '%s', '%s' and '%s', وغيرها"
+msgstr[5] "تحتوي هذه المجموعة على %i لعبة: '%s', '%s' and '%s', وغيرها"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' تم تصفيتها حتى يكون هناك المزيد من الألعاب المتاحة"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "'%s' مجموعة المحذوفة"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "مجهول"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "دقيقة %i"
+msgstr[1] "%i دقيقة"
+msgstr[2] "دقيقتين"
+msgstr[3] "دقائق %i"
+msgstr[4] "دقيقة %i"
+msgstr[5] "دقيقة %i"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "ساعة %i"
+msgstr[1] "%i ساعة"
+msgstr[2] "ساعتين"
+msgstr[3] "ساعات %i"
+msgstr[4] "%i ساعة"
+msgstr[5] "%i ساعة"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "خطأ: تكوين قواعد البحث المسبق مفقود لـ '%s'"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "خطأ: لم يتم العثور على الأمر المسبق، هل تم تثبيته بشكل صحيح؟"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "خطأ: تعذر العثور على الأمر المسبق '%s'، هل تم تثبيته بشكل صحيح؟"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "خطأ: تكوين قواعد البحث عن المحاكي مفقود '%s'"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "خطأ: لم يتم العثور على التطبيق، هل تم تثبيته بشكل صحيح؟"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "خطأ: تعذر العثور على التطبيق '%s'، هل تم تثبيته بشكل صحيح؟"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "خطأ: لم يتم العثور على المحاكي، هل تم تثبيته بشكل صحيح؟"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "خطأ: تعذر العثور على المحاكي '%s'، هل تم تثبيته بشكل صحيح؟"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "خطأ: تعذر العثور على ملف نواة المحاكي '%s'"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "خطأ: إدخال غير صالح في ملف تكوين النظام"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "خطأ: تكوين أساسي مفقود لـ '%s'"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "خطأ: إدخال متغير %s غير صالح"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr "خطأ: لا يمكن إنشاء الدليل المحدد بواسطة %s، مشاكل الأذونات؟"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "خطأ: ملف التطبيق أو الاسم المستعار غير موجود أو غير قابل للقراءة"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "خطأ: ملف سطح المكتب غير صالح أو غير قابل للقراءة"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "خطأ: ملف سطح المكتب غير موجود أو غير قابل للقراءة"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "خطأ في تشغيل اللعبة '%s' (رمز الخطأ %i)"
+
+msgid "RATING"
+msgstr "التقيم"
+
+msgid "DEVELOPER"
+msgstr "المطور"
+
+msgid "PUBLISHER"
+msgstr "الناشر"
+
+msgid "GENRE"
+msgstr "النوع"
+
+msgid "PLAYERS"
+msgstr "اللاعبون"
+
+msgid "FAVORITE"
+msgstr "مفضل"
+
+msgid "COMPLETED"
+msgstr "مكتمل"
+
+msgid "KIDGAME"
+msgstr "لعبة أطفال"
+
+msgid "HIDDEN"
+msgstr "مختفي"
+
+msgid "BROKEN"
+msgstr "تالف"
+
+msgid "CONTROLLER"
+msgstr "وحدة تحكم"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "المحاكي البديل"
+
+msgid "FALSE"
+msgstr "خطأ شنيع"
+
+msgid "TRUE"
+msgstr "حقيقي"
+
+msgid "UNKNOWN"
+msgstr "مجهول"
+
+msgid "NONE SELECTED"
+msgstr "لا شيء محدد"
+
+msgid "name, ascending"
+msgstr "الاسم، تصاعدي"
+
+msgid "name, descending"
+msgstr "الاسم، تنازلي"
+
+msgid "rating, ascending"
+msgstr "تقييم، تصاعدي"
+
+msgid "rating, descending"
+msgstr "تقييم، تنازلي"
+
+msgid "release date, ascending"
+msgstr "تاريخ الإصدار، تصاعدي"
+
+msgid "release date, descending"
+msgstr "تاريخ الإصدار، تنازلي"
+
+msgid "developer, ascending"
+msgstr "مطور، تصاعدي"
+
+msgid "developer, descending"
+msgstr "مطور، تنازلي"
+
+msgid "publisher, ascending"
+msgstr "الناشر، تصاعدي"
+
+msgid "publisher, descending"
+msgstr "الناشر، تنازلي"
+
+msgid "genre, ascending"
+msgstr "النوع، تصاعدي"
+
+msgid "genre, descending"
+msgstr "النوع، تنازلي"
+
+msgid "players, ascending"
+msgstr "اللاعبون، تصاعدي"
+
+msgid "players, descending"
+msgstr "اللاعبون، تنازلي"
+
+msgid "last played, ascending"
+msgstr "لعب آخر مرة، تصاعدي"
+
+msgid "last played, descending"
+msgstr "لعب آخر مرة، تنازلي"
+
+msgid "times played, ascending"
+msgstr "مرات اللعب، تصاعدي"
+
+msgid "times played, descending"
+msgstr "مرات اللعب، تنازلي"
+
+msgid "play time, ascending"
+msgstr "وقت اللعب, تصاعدي"
+
+msgid "play time, descending"
+msgstr "وقت اللعب, تنازلي"
+
+msgid "system, ascending"
+msgstr "النظام ، تصاعدي"
+
+msgid "system, descending"
+msgstr "النظام ، تنازلي"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "المحاكيات البديلة"
+
+msgid "BACK"
+msgstr "رجوع"
+
+msgid "back"
+msgstr "رجوع"
+
+msgid "INVALID ENTRY"
+msgstr "إدخال غير صالح"
+
+msgid "CLEARED ENTRY"
+msgstr "مسح الدخول"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "لم يتم تعريف أي محاكيات بديلة"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "مسح إدخال غير صالح"
+
+msgid "DEFAULT"
+msgstr "الإعدادات الافتراضية"
+
+msgid "select"
+msgstr "تحديد"
+
+msgid "APPLICATION UPDATER"
+msgstr "تحديث التطبيق"
+
+msgid "INSTALLATION STEPS:"
+msgstr "خطوات التثبيت:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "تنزيل إصدار جديد"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "تنزيل إصدار جديد لهذا المسار:"
+
+msgid "INSTALL PACKAGE"
+msgstr "تثبيت الحزمة"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "خروج وإعادة تشغيل ES-DE يدويًا"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "خروج وتحديث ES-DE يدويًا"
+
+msgid "STATUS MESSAGE:"
+msgstr "رسالة الحالة:"
+
+msgid "DOWNLOAD"
+msgstr "تنزيل"
+
+msgid "download new release"
+msgstr "تنزيل إصدار جديد"
+
+msgid "Download directory does not exist"
+msgstr "مسار التنزيل غير موجود"
+
+msgid "CHANGE DIRECTORY"
+msgstr "تغيير المسار"
+
+msgid "change download directory"
+msgstr "تغيير مسار التنزيل"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "أدخل مسار التنزيل"
+
+msgid "CANCEL"
+msgstr "إلغاء"
+
+msgid "cancel"
+msgstr "إلغاء"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "تم إلغاء التنزيل"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "لم يتم حفظ أي حزمة على القرص"
+
+msgid "OK"
+msgstr "موفق"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "تم تنزيل الحزمة ويمكن تثبيتها يدويًا"
+
+msgid "DOWNLOADING 100%"
+msgstr "تنزيل 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "الملف الذي تم تنزيله لا يتطابق مع مجموع الاختبار MD5 المتوقع"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr "خطأ: لا يمكن حذف ملف الحزمة المؤقت، مشاكل الأذونات؟"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr "خطأ: لا يمكن كتابة ملف الحزمة، مشاكل الأذونات?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "خطأ: لا يمكن تعيين أذونات على ملف AppImage"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "تنزيل %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "خطأ: تعذر فتح ملف تحديث AppImage للقراءة"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr "خطأ: الملف الذي تم تنزيله لا يتطابق مع مجموع الاختبار MD5 المتوقع"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr "خطأ: تعذر إعادة تسمية ملف AppImage قيد التشغيل، مشاكل الأذونات؟"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr "تعذر استبدال ملف AppImage قيد التشغيل، هل تواجه مشاكل في الأذونات؟"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "تم التثبيت بنجاح مثل %s"
+
+msgid "DOWNLOADING"
+msgstr "جاي التنزيل"
+
+msgid "INSTALL"
+msgstr "تثبيت"
+
+msgid "install package"
+msgstr "تثبيت الحزمة"
+
+msgid "Find the detailed changelog at"
+msgstr "ابحث عن سجل التغييرات المفصل في"
+
+msgid "QUIT"
+msgstr "إغلاق"
+
+msgid "quit application"
+msgstr "الخروج من تطبيق"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "إنهاء تحرير المجموعة '%s'"
+
+msgid "SELECT COLLECTIONS"
+msgstr "حدد المجموعات"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "مجموعات الألعاب التلقائية"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "مجموعات الألعاب المخصصة"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "قم بإنشاء مجموعة مخصصة جديدة من الثيمة"
+
+msgid "SELECT THEME FOLDER"
+msgstr "حدد مجلد الثيمة"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "إنشاء مجموعة مخصصة جديدة"
+
+msgid "NEW COLLECTION NAME"
+msgstr "اسم مجموعة جديد"
+
+msgid "CREATE"
+msgstr "إنشاء"
+
+msgid "CREATE COLLECTION?"
+msgstr "إنشاء مجموعة؟"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "حذف مجموعة مخصصة"
+
+msgid "COLLECTION TO DELETE"
+msgstr "مجموعة للحذف"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"سيؤدي هذا إلى حذف المجموعة بشكل دائم\n"
+"'%s'\n"
+"هل أنت متأكد؟"
+
+msgid "YES"
+msgstr "نعم"
+
+msgid "NO"
+msgstr "لا"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "مجموعات مخصصة للمجموعة"
+
+msgid "IF UNTHEMED"
+msgstr "إذا لم تتأثر"
+
+msgid "ALWAYS"
+msgstr "دائماً"
+
+msgid "NEVER"
+msgstr "أبداً"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "فرز المفضلة في الأعلى للمجموعات المخصصة"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "عرض علامات النجوم للمجموعات المخصصة"
+
+msgid "IMPORT TO SYSTEM"
+msgstr "الاستيراد إلى النظام"
+
+msgid "NO CONFIGURATION"
+msgstr "لا تكوين"
+
+msgid "REMOVE ENTRIES"
+msgstr "إزالة الإدخالات"
+
+msgid "ALL UNSELECTED"
+msgstr "جميعها غير محددة"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr "تجريد الشخصيات الخاصة"
+
+msgid "MEDIA TARGET TYPE"
+msgstr "نوع هدف الوسائط"
+
+msgid "SCREENSHOTS"
+msgstr "لقطات الشاشة"
+
+msgid "TITLE SCREENS"
+msgstr "شاشات العنوان"
+
+msgid "COVERS"
+msgstr "أغطية"
+
+msgid "BACK COVERS"
+msgstr "الأغطية الخلفية"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "(عجلات) ماركي"
+
+msgid "3D BOXES"
+msgstr "3D صناديق"
+
+msgid "PHYSICAL MEDIA"
+msgstr "الوسائط المادية"
+
+msgid "FAN ART"
+msgstr "فن المعجبين"
+
+msgid "MIXIMAGES"
+msgstr "الصور المخطلطة"
+
+msgid "IMPORT MEDIA"
+msgstr "استيراد وسائط"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "استيراد لافتات أو شعارات إذا كانت متوفرة"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "الكتابة فوق ملفات الوسائط"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "فقط تضمين التطبيقات المصنفة كألعاب"
+
+msgid "START"
+msgstr "أبدا"
+
+msgid "start importer"
+msgstr "ابدأ الأستراد"
+
+msgid "WORKING..."
+msgstr "...عمل"
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "لا يمكن العثور على أي شيء للاستيراد"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"لقد اخترت إزالة جميع الإدخالات غير المحددة، سيؤدي هذا إلى حذف جميع ملفات "
+"اللعبة ذات امتداد الملف \"%s\" من دليل النظام \"%s\" ثم استيراد الإدخالات "
+"التي تحددها على الشاشة التالية\n"
+"هل أنت متأكد؟"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "قم باختيارك"
+
+msgid "IMPORT"
+msgstr "استيراد"
+
+msgid "import"
+msgstr "استيراد"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "تم استيراد %i إدخال"
+msgstr[1] "تم استيراد إدخال %i"
+msgstr[2] "تم استيراد إدخالان"
+msgstr[3] "تم استيراد %i إدخالات"
+msgstr[4] "تم استيراد %i إدخالاً"
+msgstr[5] "تم استيراد %i إدخالاً"
+
+msgid "SELECT ALL"
+msgstr "حدد كل شيء"
+
+msgid "select all"
+msgstr "حدد كل شيء"
+
+msgid "SELECT NONE"
+msgstr "لا تحدد شيء"
+
+msgid "select none"
+msgstr "لا تحدد شيء"
+
+msgid "FILTER GAMELIST"
+msgstr "تصفية قائمة الألعاب"
+
+msgid "RESET ALL FILTERS"
+msgstr "إعادة ضبط جميع المرشحات"
+
+msgid "GAME NAME"
+msgstr "اسم اللعبة"
+
+msgid "APPLY CHANGES?"
+msgstr "تطبيق التغييرات؟"
+
+msgid "NOTHING TO FILTER"
+msgstr "لا شيء للتصفية"
+
+msgid "GAMELIST OPTIONS"
+msgstr "خيارات قائمة الألعاب"
+
+msgid "JUMP TO..."
+msgstr "...قفز إلى"
+
+msgid "SORT GAMES BY"
+msgstr "فرز الألعاب بواسطة"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "هذا النظام ليس لديه ألعاب"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "إضافة/إزالة الألعاب إلى هذه المجموعة"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "تحرير بيانات تعريف هذا المجلد"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "تحرير بيانات تعريف هذه اللعبة"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "(رابط المجلد تجاوز) أدخل المجلد"
+
+msgid "CLOSE"
+msgstr "إغلاق"
+
+msgid "close"
+msgstr "إغلاق"
+
+msgid "APPLY"
+msgstr "تطبيق"
+
+msgid "apply"
+msgstr "تطبيق"
+
+msgid "close (apply)"
+msgstr "(تطبيق) إغلاق"
+
+msgid "close (cancel)"
+msgstr "(إلغاء) إغلاق"
+
+msgid "LAUNCHING GAME"
+msgstr "تشغيل لعبة"
+
+msgid "HELP PROMPTS"
+msgstr "مطالبات المساعدة"
+
+msgid "TOP"
+msgstr "أعلي"
+
+msgid "BOTTOM"
+msgstr "أسفل"
+
+msgid "DISABLED"
+msgstr "إيقاف"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "عرض أنواع الوسائط"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "استمر في تشغيل مقاطع الفيديو عند عرض الصور"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "تمديد مقاطع الفيديو إلى دقة الشاشة"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "عرض خطوط في الفيديو"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "عرض ضبابية لمقاطع الفيديو"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "عرض خطوط في للقطات الشاشة والعناوين"
+
+msgid "MAIN MENU"
+msgstr "القائمة الرئيسية"
+
+msgid "SCRAPER"
+msgstr "مكشطة"
+
+msgid "UI SETTINGS"
+msgstr "إعدادات واجهة المستخدم"
+
+msgid "SOUND SETTINGS"
+msgstr "إعدادات الصوت"
+
+msgid "INPUT DEVICE SETTINGS"
+msgstr "إعدادات جهاز الإدخال"
+
+msgid "GAME COLLECTION SETTINGS"
+msgstr "إعدادات مجموعة الألعاب"
+
+msgid "OTHER SETTINGS"
+msgstr "إعدادات أخرى"
+
+msgid "UTILITIES"
+msgstr "الفحص"
+
+msgid "QUIT ES-DE"
+msgstr "إغلاق ES-DE"
+
+msgid "THEME"
+msgstr "الثيمة"
+
+msgid "THEME DOWNLOADER"
+msgstr "تنزيل الثيمة"
+
+msgid "THEME VARIANT"
+msgstr "متغير الثيمة"
+
+msgid "NONE DEFINED"
+msgstr "لا شيء محدد"
+
+msgid "THEME COLOR SCHEME"
+msgstr "نظام ألوان الثيمة"
+
+msgid "THEME FONT SIZE"
+msgstr "حجم الخط"
+
+msgid "THEME ASPECT RATIO"
+msgstr "نسبة العرض إلى الارتفاع"
+
+msgid "THEME TRANSITIONS"
+msgstr "انتقالات الثيمة"
+
+msgid "AUTOMATIC"
+msgstr "تلقائي"
+
+msgid "THEME PROFILE"
+msgstr "ملف تعريف الثيمة"
+
+msgid "INSTANT (BUILT-IN)"
+msgstr "(مدمجة) فوري"
+
+msgid "SLIDE (BUILT-IN)"
+msgstr "(مدمجة) شريحة"
+
+msgid "FADE (BUILT-IN)"
+msgstr "(مدمج) تلاشي"
+
+msgid "THEME LANGUAGE"
+msgstr "لغة الثيمة"
+
+msgid "APPLICATION LANGUAGE"
+msgstr "لغة التطبيق"
+
+msgid "QUICK SYSTEM SELECT"
+msgstr "اختيار النظام السريع"
+
+msgid "LEFT/RIGHT OR SHOULDERS"
+msgstr "يسار ويمين أو أزرار العلوية"
+
+msgid "LEFT/RIGHT OR TRIGGERS"
+msgstr "يسار ويمين أو أزرار الزناد"
+
+msgid "SHOULDERS"
+msgstr "أزرار العلوية"
+
+msgid "TRIGGERS"
+msgstr "أزرار الزناد"
+
+msgid "LEFT/RIGHT"
+msgstr "يسار ويمين"
+
+msgid "SYSTEM ON STARTUP"
+msgstr "النظام عند بدء التشغيل"
+
+msgid "STARTUP VIEW"
+msgstr "عرض بدء التشغيل"
+
+msgid "SYSTEM"
+msgstr "نظام"
+
+msgid "GAMELIST"
+msgstr "قائمة الألعاب"
+
+msgid "SYSTEMS SORTING"
+msgstr "فرز الأنظمة"
+
+msgid "FULL NAMES OR CUSTOM"
+msgstr "أسماء كاملة أو مخصصة"
+
+msgid "RELEASE YEAR"
+msgstr "سنة الإصدار"
+
+msgid "MANUFACTURER, RELEASE YEAR"
+msgstr "الشركة المصنعة ، سنة الإصدار"
+
+msgid "HW TYPE, RELEASE YEAR"
+msgstr "نوع الجهاز ، سنة الإصدار"
+
+msgid "MANUFACTURER, HW TYPE, REL. YEAR"
+msgstr "الشركة المصنعة , نوع الجهاز , سنة الإصدار"
+
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "ترتيب الألعاب الافتراضي"
+
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "ترتيب الفرز الافتراضي للألعاب"
+
+msgid "MENU COLOR SCHEME"
+msgstr "مخطط ألوان القائمة"
+
+msgid "DARK"
+msgstr "داكن"
+
+msgid "DARK AND RED"
+msgstr "داكن وأحمر"
+
+msgid "LIGHT"
+msgstr "فاتح"
+
+msgid "MENU OPENING ANIMATION"
+msgstr "رسوم متحركة لفتح القائمة"
+
+msgid "SCALE-UP"
+msgstr "توسع"
+
+msgid "NONE"
+msgstr "بدون"
+
+msgid "LAUNCH SCREEN DURATION"
+msgstr "مدة إطلاق الشاشة"
+
+msgid "NORMAL"
+msgstr "عادي"
+
+msgid "BRIEF"
+msgstr "مختصر"
+
+msgid "LONG"
+msgstr "طويل"
+
+msgid "POPUP"
+msgstr "يظهر فجأة"
+
+msgid "UI MODE"
+msgstr "وضع واجهة المستخدم"
+
+msgid "FULL"
+msgstr "كامل"
+
+msgid "KIOSK"
+msgstr "كشك"
+
+msgid "KID"
+msgstr "طفل"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"سيؤدي هذا إلى تغيير واجهة المستخدم إلى الوضع المقيد\n"
+"'كشك'\n"
+"سيؤدي هذا إلى إخفاء معظم خيارات القائمة\n"
+"لفتح القفل والعودة إلى واجهة المستخدم الكاملة، أدخل هذا الرمز:\n"
+"%s\n"
+"\n"
+"هل تريد المتابعة؟"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"يؤدي هذا إلى تغيير واجهة المستخدم إلى الوضع المقيد\n"
+"'طفل'\n"
+"هذا يُمكّن فقط الألعاب التي تم وضع علامة عليها\n"
+"مناسب للأطفال\n"
+"لفتح القفل والعودة إلى واجهة المستخدم الكاملة، أدخل هذا الرمز:\n"
+"%s\n"
+"\n"
+"هل تريد المتابعة؟"
+
+msgid "RANDOM ENTRY BUTTON"
+msgstr "زر الدخول العشوائي"
+
+msgid "GAMES ONLY"
+msgstr "الألعاب فقط"
+
+msgid "GAMES AND SYSTEMS"
+msgstr "الألعاب والأنظمة"
+
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "إعدادات حالة النظام"
+
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "إعدادات عارض الوسائط"
+
+msgid "SCREENSAVER SETTINGS"
+msgstr "إعدادات شاشة توقف"
+
+msgid "ENABLE THEME VARIANT TRIGGERS"
+msgstr "تمكين مشغلات متغيرات الثيمة"
+
+msgid "DISPLAY CLOCK"
+msgstr "عرض الساعة"
+
+msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
+msgstr "خلفية ضبابية عندما تكون القائمة مفتوحة"
+
+msgid "SORT FOLDERS ON TOP OF GAMELISTS"
+msgstr "فرز المجلدات الموجودة أعلى قوائم الألعاب"
+
+msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+msgstr "فرز الألعاب المفضلة فوق الألعاب غير المفضلة"
+
+msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
+msgstr "أضف علامات النجوم إلى الألعاب المفضلة"
+
+msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+msgstr "تمكين التمرير السريع لقائمة النصوص"
+
+msgid "ENABLE VIRTUAL KEYBOARD"
+msgstr "تمكين لوحة المفاتيح الافتراضية"
+
+msgid "ENABLE TOGGLE FAVORITES BUTTON"
+msgstr "تمكين زر تبديل المفضلة"
+
+msgid "ENABLE GAMELIST FILTERS"
+msgstr "تمكين مرشحات قائمة الألعاب"
+
+msgid "DISPLAY ON-SCREEN HELP"
+msgstr "عرض المساعدة على الشاشة"
+
+msgid "AUDIO DRIVER"
+msgstr "برنامج تشغيل الصوت"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "(إعادة التشغيل) برنامج تشغيل الصوت"
+
+msgid "SYSTEM VOLUME"
+msgstr "صوت النظام"
+
+msgid "NAVIGATION SOUNDS VOLUME"
+msgstr "صوات ملاحة"
+
+msgid "VIDEO PLAYER VOLUME"
+msgstr "صوت مشغل الفيديو"
+
+msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+msgstr "تشغيل الصوت لقائمة الألعاب وعرض الفيديو للنظام"
+
+msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+msgstr "تشغيل الصوت لمقاطع فيديو عارض الوسائط"
+
+msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+msgstr "تشغيل الصوت فيديو شاشة توقف"
+
+msgid "ENABLE NAVIGATION SOUNDS"
+msgstr "تمكين أصوات الملاحة"
+
+msgid "CONTROLLER TYPE"
+msgstr "نوع وحدة التحكم"
+
+msgid "TOUCH OVERLAY SIZE"
+msgstr "لمس حجم التراكب"
+
+msgid "MEDIUM"
+msgstr "وسط"
+
+msgid "LARGE"
+msgstr "كبير"
+
+msgid "SMALL"
+msgstr "صغير"
+
+msgid "EXTRA SMALL"
+msgstr "صغير جدًا"
+
+msgid "TOUCH OVERLAY OPACITY"
+msgstr "المس تراكب العتامة"
+
+msgid "LOW"
+msgstr "منخفض"
+
+msgid "VERY LOW"
+msgstr "منخفض جدا"
+
+msgid "TOUCH OVERLAY FADE-OUT TIME"
+msgstr "لمس التراكب الوقت في وقت التلاشي"
+
+msgid "ENABLE TOUCH OVERLAY"
+msgstr "تمكين لمسة تراكب"
+
+msgid ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+msgstr ""
+"لا تُعطّل خاصية اللمس إلا إذا كنت تستخدم وحدة تحكم وإلا ستُمنع من الوصول إلى "
+"التطبيق إذا حدث ذالك ستحتاج إلى توصيل وحدة تحكم أو لوحة مفاتيح مؤقتًا لتفعيل "
+"هذا الإعداد مجددًا، أو يمكنك مسح مساحة تخزين ES-DE في إعدادات تطبيق أندرويد "
+"لإجبار المُهيئ على التشغيل عند بدء التشغيل التالي"
+
+msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+msgstr "قبول الإدخال من وحدة التحكم الأولى فقط"
+
+msgid "SWAP THE A/B AND X/Y BUTTONS"
+msgstr "X/Y و A/B تبديل أزرار"
+
+msgid "IGNORE KEYBOARD INPUT"
+msgstr "تجاهل مدخلات لوحة المفاتيح"
+
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "إشعارات جهاز الإدخال"
+
+msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
+msgstr "تكوين لوحة المفاتيح ووحدات التحكم"
+
+msgid ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
+"HELP PROMPTS)"
+msgstr ""
+"يتم تكوين لوحة المفاتيح وعناصر التحكم تلقائيًا، ولكن باستخدام هذه الأداة "
+"يمكنك تجاوز تعيينات الأزرار الافتراضية (لن يؤثر على مطالبات المساعدة)"
+
+msgid "PROCEED"
+msgstr "متابعة"
+
+msgid "GAME MEDIA DIRECTORY"
+msgstr "مسار وسائط الألعاب"
+
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr "أدخل مسار وسائط اللعبة"
+
+msgid "Default directory:"
+msgstr "المسار الافتراضي:"
+
+msgid "SAVE"
+msgstr "حفظ"
+
+msgid "SAVE CHANGES?"
+msgstr "حفظ التغييرات؟"
+
+msgid "load default directory"
+msgstr "تحميل المسار الافتراضي"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr "تتبع أقصى وقت للعب"
+
+msgid "VRAM LIMIT"
+msgstr "VRAM حد"
+
+msgid "ANTI-ALIASING (MSAA)"
+msgstr "(MSAA) مكافحة التعرجات"
+
+msgid "2X"
+msgstr "2x"
+
+msgid "4X"
+msgstr "4x"
+
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr "(MSAA) (إعادة التشغيل) مكافحة التعرجات"
+
+msgid "DISPLAY/MONITOR INDEX"
+msgstr "مؤشر العرض/الشاشة"
+
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr "(إعادة التشغيل) مؤشر العرض/الشاشة"
+
+msgid "ROTATE SCREEN"
+msgstr "تدوير الشاشة"
+
+msgid "90 DEGREES"
+msgstr "90 درجة"
+
+msgid "180 DEGREES"
+msgstr "180 درجة"
+
+msgid "270 DEGREES"
+msgstr "270 درجة"
+
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr "(إعادة التشغيل) تدوير الشاشة"
+
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr "اختصار الخروج في لوحة المفاتيح"
+
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "متى يتم حفظ بيانات اللعبة الوصفية"
+
+msgid "ON EXIT"
+msgstr "عند الخروج"
+
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "متى يتم حفظ بيانات اللعبة الوصفية"
+
+msgid "APPLICATION UPDATES"
+msgstr "تحديثات التطبيق"
+
+msgid "DAILY"
+msgstr "يوميًا"
+
+msgid "WEEKLY"
+msgstr "أسبوعي"
+
+msgid "MONTHLY"
+msgstr "شهريا"
+
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "تحقق من وجود تحديثات التطبيق"
+
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr "تضمين الإصدارات المسبقة عند التحقق من التحديث"
+
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr "(إعادة التشغيل) إخفاء شريط المهام"
+
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr "(أثناء إطلاق اللعبة) تشغيل في الخلفية"
+
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr "(تجريبي) فك تشفير أجهزة الفيديو"
+
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr "إطارًا في الثانية 60 رفع معدل إطارات الفيديو إلى"
+
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr "تمكين المحاكيات البديلة لكل لعبة"
+
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr "إظهار الملفات والمجلدات المخفية"
+
+msgid "SHOW HIDDEN GAMES"
+msgstr "إظهار الألعاب المخفية"
+
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "تمكين نصوص الأحداث المخصصة"
+
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "تصفح الأحداث المخصصة"
+
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr "gamelist.xml عرض الألعاب فقط من ملفات"
+
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr "(إعادة التشغيل) الإضافية MAME إزالة معلومات اسم"
+
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr "(إعادة التشغيل) تعطيل تكوين سطح المكتب"
+
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr "زر العودة/الظهر يخرج من التطبيق"
+
+msgid "DEBUG MODE"
+msgstr "وضع التصحيح"
+
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr "عرض تراكب إحصائيات وحدة معالجة الرسومات"
+
+msgid "ENABLE MENU IN KID MODE"
+msgstr "تمكين القائمة في وضع الأطفال"
+
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr "(إيقاف وإعادة تشغيل الإدخالات) إظهر قائمة الخروج"
+
+msgid "GAME IMPORTER"
+msgstr "مستورد اللعبة"
+
+msgid "ORPHANED DATA CLEANUP"
+msgstr "تنظيف البيانات اليتيمة"
+
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr "إنشاء/تحديث أدلة النظام"
+
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+"سيؤدي هذا إلى إنشاء جميع مجلدات نظام اللعبة داخل مجلد الروم الخاص بك كما "
+"سيُحدّث جميع ملفات SYSTEMINFO.TXT. هذه عملية آمنة هذه عملية آمنة لن تحذف أو "
+"تُعدّل ملفات اللعبة. لتقليل أوقات بدء تشغيل التطبيق يُنصح بحذف مجلدات النظام "
+"غير الضرورية بعد تشغيل هذه الأداة."
+
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr "تم إنشاء أدلة النظام بنجاح"
+
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+"هل تواجه مشكلة في إنشاء مجلدات النظام أو مشاكل في الأذونات أو امتلاء القرص؟ "
+"راجع ملف السجل لمزيد من التفاصيل"
+
+msgid "RESCAN ROM DIRECTORY"
+msgstr "إعادة مسح مسار الروم"
+
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr ""
+"سيؤدي هذا إلى إعادة فحص مسار الروم الخاص بك بحثًا عن تغييرات مثل الألعاب "
+"والأنظمة المضافة أو المحذوفة"
+
+msgid "REALLY QUIT?"
+msgstr "متأكد من خروج؟"
+
+msgid "REALLY REBOOT?"
+msgstr "متأكد من إعادة التشغيل؟"
+
+msgid "REBOOT SYSTEM"
+msgstr "إعادة تشغيل النظام"
+
+msgid "REALLY POWER OFF?"
+msgstr "متأكد من إيقاف التشغيل حقًا؟"
+
+msgid "POWER OFF SYSTEM"
+msgstr "إيقاف التشغيل النظام"
+
+msgid "REALLY SUSPEND?"
+msgstr "متأكد من تعليق النظام؟"
+
+msgid "SUSPEND SYSTEM"
+msgstr "تعليق النظام"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "إعدادات حالة النظام"
+
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "إعدادات عارض الوسائط"
+
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
+msgstr "إعدادات شاشة توقف"
+
+msgid "choose"
+msgstr "اختيار"
+
+msgid "close menu"
+msgstr "إغلاق القائمة"
+
+msgid "EDIT METADATA"
+msgstr "تحرير البيانات الوصفية"
+
+msgid "CLEAR ENTRY"
+msgstr "دخول نظيف"
+
+msgid "SELECT EMULATOR"
+msgstr "حدد المحاكي"
+
+msgid "SYSTEM-WIDE"
+msgstr "على مستوى النظام"
+
+msgid "unknown"
+msgstr "مجهول"
+
+msgid "SCRAPE"
+msgstr "كشط"
+
+msgid "scrape"
+msgstr "كشط"
+
+msgid "save metadata"
+msgstr "حفظ البيانات الوصفية"
+
+msgid "cancel changes"
+msgstr "إلغاء التغييرات"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"سيؤدي هذا إلى حذف أي ملفات وسائط ومدخل GAMELIST.XML لهذا المجلد، ولكن لن يتم "
+"إزالة المسار نفسه أو أي محتوى بداخله\n"
+"هل أنت متأكد؟"
+
+msgid "CLEAR"
+msgstr "مسح الكل"
+
+msgid "clear folder"
+msgstr "تنظيف مجلد"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"سيؤدي هذا إلى حذف أي ملفات وسائط ومدخل GAMELIST.XML لهذه اللعبة، ولكن لن يتم "
+"إزالة ملف اللعبة نفسه\n"
+"هل أنت متأكد؟"
+
+msgid "clear file"
+msgstr "مسح ملف"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"سيؤدي هذا إلى حذف ملف اللعبة وأي ملفات وسائط وإدخال GAMELIST.XML\n"
+"هل أنت متأكد؟"
+
+msgid "DELETE"
+msgstr "حذف"
+
+msgid "delete game"
+msgstr "حذف اللعبة"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "مولد الصور المخطلطة غير متصل بالإنترنت"
+
+msgid "NOT STARTED"
+msgstr "لم تبدأ"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "تمت معالجة %i لعبة من أصل %i"
+msgstr[1] "تمت معالجة لعبة %i من أصل %i"
+msgstr[2] "تمت معالجة لعبتين من أصل %i"
+msgstr[3] "تمت معالجة %i ألعاب من أصل %i"
+msgstr[4] "تمت معالجة %i اللعبة من أصل %i"
+msgstr[5] "تمت معالجة %i اللعبة من أصل %i"
+
+msgid "Generated:"
+msgstr "تم توليده:"
+
+msgid "Overwritten:"
+msgstr "تم الكتابة فوقه:"
+
+msgid "Skipped:"
+msgstr "تم تخطيه:"
+
+msgid "Skipped (existing):"
+msgstr "(موجود): تم تخطيه"
+
+msgid "Failed:"
+msgstr "فشل:"
+
+msgid "Processing:"
+msgstr "معالجة:"
+
+msgid "Last error message:"
+msgstr "آخر رسالة الخطأ:"
+
+msgid "start processing"
+msgstr "بدء المعالجة"
+
+msgid "PAUSE"
+msgstr "إيقاف"
+
+msgid "pause processing"
+msgstr "إيقاف المعالجة"
+
+msgid "close (abort processing)"
+msgstr "(إلغاء المعالجة) إغلاق"
+
+msgid "RUNNING..."
+msgstr "...جري"
+
+msgid "PAUSED"
+msgstr "متوقف"
+
+msgid "RUNNING"
+msgstr "جري"
+
+msgid "DONE"
+msgstr "إنتهي"
+
+msgid "done (close)"
+msgstr "(إغلاق) تم"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"سيؤدي هذا إلى حذف جميع ملفات الوسائط التي لا تحتوي على ملفات ألعاب مطابقة "
+"سيتم نقل هذه الملفات إلى مجلد التنظيف داخل مجلد وسائط اللعبة الخاصة بك يمكنك "
+"حذف هذا المجلد يدويًا عند التأكد من عدم الحاجة إليه"
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"سيؤدي هذا إلى حذف جميع الإدخالات من ملفات XML لقائمة الألعاب التي لا تحتوي "
+"على ملفات مطابقة النسخ الاحتياطية من الملفات الأصلية سيتم حفظ في مجلد "
+"التنظيف داخل دليل قوائم الألعاب الخاص بك يمكنك حذف هذا المجلد يدويًا عند "
+"التأكد من عدم الحاجة إليه"
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"سيؤدي هذا إلى حذف جميع الإدخالات من ملفات تكوين مجموعاتك المخصصة لديك التي "
+"لا تحتوي على ملفات ألعاب مطابقة سيتم عمل نسخ احتياطية من ملفات الأصلية وسيتم "
+"حفظها في مجلد التنظيف داخل مجلد مجموعاتك ستتم معالجة المجموعات المفعّلة حاليًا "
+"فقط"
+
+msgid "DESCRIPTION:"
+msgstr "وصف:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "الإدخالات المحذوفة:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "آخر نظام تمت معالجته:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "آخر رسالة الخطأ:"
+
+msgid "MEDIA"
+msgstr "وسائط"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "تشغيل تنظيف الوسائط"
+
+msgid "STOP"
+msgstr "إيقاف"
+
+msgid "stop processing"
+msgstr "إلغاء المعالجة"
+
+msgid "GAMELISTS"
+msgstr "قائمة الألعاب"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "تشغيل منظيف قائمة الألعاب"
+
+msgid "COLLECTIONS"
+msgstr "مجموعات"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "فشل تنظيف المجموعات"
+
+msgid "There are no enabled custom collections"
+msgstr "لا توجد مجموعات مخصصة ممكّنة"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "تشغيل منظيف المجموعات"
+
+msgid "PROCESSING"
+msgstr "معالجة"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "تم العثور على ملف flatten.txt، متخطيًا \"%s\""
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "تعذر إنشاء مسار الهدف، مشاكل الأذونات؟"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "تعذر نقل ملف الوسائط، مشاكل الأذونات؟"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "لم نتمكن من تحليل ملف gamelist.xml لـ \"%s\""
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "تعذر العثور على علامة قائمة الألعاب في الملف لـ \"%s\""
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr "تعذر حذف ملف قائمة الألعاب المؤقتة، مشاكل الأذونات؟"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr "تعذر الكتابة إلى ملف قائمة الألعاب المؤقتة، مشاكل الأذونات؟"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr "تعذر إنشاء دليل النسخ الاحتياطي، مشاكل الأذونات؟"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr "تعذر نقل ملف قائمة الألعاب القديمة، مشاكل الأذونات؟"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr "تعذر نقل ملف قائمة الألعاب المؤقتة، مشاكل الأذونات؟"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "لم يتم العثور على ملف تكوين المجموعة المخصصة"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "تعذر فتح ملف تكوين المجموعة المخصصة"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr "تعذر حذف ملف المجموعة المؤقتة، مشاكل الأذونات؟"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "تعذر الكتابة إلى ملف تكوين المجموعة المؤقتة"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr "تعذر نقل ملف المجموعة القديم، مشاكل الأذونات؟"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr "تعذر نقل ملف المجموعة المؤقتة، مشاكل الأذونات؟"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "تم إلغاء عملية تنظيف الوسائط"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "تم الانتهاء من تنظيف الوسائط"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "تم إلغاء عملية تنظيف قائمة الألعاب"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "تم الانتهاء من تنظيف قائمة الألعاب"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "تنظيف المجموعات الملغاة"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "تم الانتهاء من تنظيف المجموعات"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "فشل تنظيف الوسائط"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "فشل تنظيف قائمة الألعاب"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "سيتم إعادة تحميل التطبيق عند إغلاق هذه الأداة."
+
+msgid "SCRAPE FROM"
+msgstr "كشط من"
+
+msgid "SCRAPE THESE GAMES"
+msgstr "كشط هذه الألعاب"
+
+msgid "ALL GAMES"
+msgstr "جميع الألعاب"
+
+msgid "FAVORITE GAMES"
+msgstr "الألعاب المفضلة"
+
+msgid "NO METADATA"
+msgstr "لا توجد بيانات تعريف"
+
+msgid "NO GAME IMAGE"
+msgstr "لا توجد صورة لعبة"
+
+msgid "NO GAME VIDEO"
+msgstr "لا توجد فيديو لعبة"
+
+msgid "FOLDERS ONLY"
+msgstr "المجلدات فقط"
+
+msgid "SCRAPE THESE SYSTEMS"
+msgstr "كشط هذه الأنظمة"
+
+msgid "ACCOUNT SETTINGS"
+msgstr "إعدادات الحساب"
+
+msgid "CONTENT SETTINGS"
+msgstr "إعدادات المحتوى"
+
+msgid "MIXIMAGE SETTINGS"
+msgstr "إعدادات الصور"
+
+msgid "start scraper"
+msgstr "بدء مكشطة"
+
+msgid "SCREENSCRAPER USERNAME"
+msgstr "SCREENSCRAPER اسم المستخدم"
+
+msgid "SCREENSCRAPER PASSWORD"
+msgstr "SCREENSCRAPER كلمة مرور"
+
+msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
+msgstr "SCREENSCRAPER استخدم هذا الحساب لـ"
+
+msgid "GAME NAMES"
+msgstr "أسماء الألعاب"
+
+msgid "RATINGS"
+msgstr "التقييمات"
+
+msgid "OTHER METADATA"
+msgstr "بيانات تعريف أخرى"
+
+msgid "VIDEOS"
+msgstr "مقاطع الفيديو"
+
+msgid "SCREENSHOT IMAGES"
+msgstr "صور لقطة الشاشة"
+
+msgid "TITLE SCREEN IMAGES"
+msgstr "صور شاشة العنوان"
+
+msgid "BOX COVER IMAGES"
+msgstr "صور غلاف الصندوق"
+
+msgid "BOX BACK COVER IMAGES"
+msgstr "صور الغلاف الخلفي للصندوق"
+
+msgid "MARQUEE (WHEEL) IMAGES"
+msgstr "(عجلة) صور ماركي"
+
+msgid "3D BOX IMAGES"
+msgstr "3D صور الصندوق"
+
+msgid "PHYSICAL MEDIA IMAGES"
+msgstr "صور الوسائط المادية"
+
+msgid "FAN ART IMAGES"
+msgstr "صور فن المعجبين"
+
+msgid "GAME MANUALS"
+msgstr "دليل اللعبة"
+
+msgid "MIXIMAGE RESOLUTION"
+msgstr "دقة الصور"
+
+msgid "MIXIMAGE FILE FORMAT"
+msgstr "تنسيق الملف الصور المخطلطة"
+
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "ملاءمة لقطة الشاشة الأفقية"
+
+msgid "CONTAIN"
+msgstr "أحتواء"
+
+msgid "CROP"
+msgstr "قص"
+
+msgid "STRETCH"
+msgstr "تمتد"
+
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "ملاءمة لقطة الشاشة الأفقية"
+
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "ملاءمة لقطة الشاشة الرأسية"
+
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "ملاءمة لقطة الشاشة الرأسية"
+
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "عتبة نسبة العرض إلى الارتفاع في لقطة الشاشة"
+
+msgid "HIGH"
+msgstr "عالي"
+
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "عتبة نسبة العرض إلى ارتفاع لقطة الشاشة"
+
+msgid "BLANK AREAS FILL COLOR"
+msgstr "املأ المناطق الفارغة بالألوان"
+
+msgid "BLACK"
+msgstr "أسود"
+
+msgid "FRAME"
+msgstr "إطار"
+
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "طريقة قياس لقطة الشاشة"
+
+msgid "SHARP"
+msgstr "حاد"
+
+msgid "SMOOTH"
+msgstr "سلس"
+
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "طريقة قياس لقطة الشاشة"
+
+msgid "BOX SIZE"
+msgstr "حجم الصندوق"
+
+msgid "PHYSICAL MEDIA SIZE"
+msgstr "حجم الوسائط المادية"
+
+msgid "GENERATE MIXIMAGES WHEN SCRAPING"
+msgstr "توليد الصور المخطلطة عند الكشط"
+
+msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
+msgstr "(مكشطة/مولد غير متصل) استبدال الصور المخطلطة"
+
+msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
+msgstr "إزالة صناديق الخطاب من لقطات الشاشة"
+
+msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
+msgstr "إزالة صناديق الأعمدة من لقطات الشاشة"
+
+msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
+msgstr "تدوير الصناديق ذات الاتجاه الأفقي"
+
+msgid "INCLUDE MARQUEE IMAGE"
+msgstr "تضمين صورة ماركي"
+
+msgid "INCLUDE BOX IMAGE"
+msgstr "تضمين صورة صندوق"
+
+msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
+msgstr "مفقودًا 3D استخدم صورة الغلاف إذا كان الصندوق"
+
+msgid "INCLUDE PHYSICAL MEDIA IMAGE"
+msgstr "تضمين صورة الوسائط المادية"
+
+msgid "OFFLINE GENERATOR"
+msgstr "مولد غير متصل"
+
+msgid ""
+"THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
+"PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
+msgstr ""
+"يستخدم المولد غير المتصل بالإنترنت نفس اختيارات النظام مثل الكاشطة، لذا يرجى "
+"تحديد نظام واحد على الأقل لتوليد الصور"
+
+msgid "REGION"
+msgstr "منطقة"
+
+msgid "EUROPE"
+msgstr "أوروبا"
+
+msgid "JAPAN"
+msgstr "اليابان"
+
+msgid "USA"
+msgstr "الولايات المتحدة الأمريكية"
+
+msgid "WORLD"
+msgstr "العالم"
+
+msgid "ASIA"
+msgstr "آسيا"
+
+msgid "AUSTRALIA"
+msgstr "أستراليا"
+
+msgid "BRAZIL"
+msgstr "البرازيل"
+
+msgid "CANADA"
+msgstr "كندا"
+
+msgid "CHINA"
+msgstr "الصين"
+
+msgid "GERMANY"
+msgstr "ألمانيا"
+
+msgid "FRANCE"
+msgstr "فرنسا"
+
+msgid "ITALY"
+msgstr "إيطاليا"
+
+msgid "KOREA"
+msgstr "كوريا"
+
+msgid "NETHERLANDS"
+msgstr "هولندا"
+
+msgid "RUSSIA"
+msgstr "روسيا"
+
+msgid "SWEDEN"
+msgstr "السويد"
+
+msgid "SPAIN"
+msgstr "إسبانيا"
+
+msgid "TAIWAN"
+msgstr "تايوان"
+
+msgid "UNITED KINGDOM"
+msgstr "المملكة المتحدة"
+
+msgid "PREFERRED LANGUAGE"
+msgstr "اللغة المفضلة"
+
+msgid "AUTOMATIC RETRIES ON ERROR"
+msgstr "إعادة المحاولة تلقائيًا عند حدوث خطأ"
+
+msgid "RETRY ATTEMPT TIMER"
+msgstr "مؤقت إعادة المحاولة"
+
+msgid "HASH SEARCHES MAX FILE SIZE"
+msgstr "أقصى حد لحجم الملف في عمليات هاش"
+
+msgid "OVERWRITE FILES AND DATA"
+msgstr "استبدال الملفات والبيانات"
+
+msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
+msgstr "(الوضع غير التفاعلي) بحث ملفات باستخدام هاشات"
+
+msgid "SEARCH USING METADATA NAMES"
+msgstr "البحث باستخدام أسماء البيانات الوصفية"
+
+msgid "SCRAPE ACTUAL FOLDERS"
+msgstr "كشط المجلدات الفعلية"
+
+msgid "INTERACTIVE MODE"
+msgstr "الوضع التفاعلي"
+
+msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
+msgstr "قبول تلقائي لمباريات اللعبة الفردية"
+
+msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
+msgstr "احترم استثناءات أداة الكشط لكل ملف"
+
+msgid "EXCLUDE FOLDERS RECURSIVELY"
+msgstr "استبعاد المجلدات بشكل متكرر"
+
+msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
+msgstr "تحويل الشرطات السفلية إلى مسافات عند البحث"
+
+msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
+msgstr "إزالة النقاط من عمليات البحث عند الكشط التلقائي"
+
+msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
+msgstr "تمكين الرجوع إلى مناطق إضافية"
+
+msgid ""
+"THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
+msgstr "النظام المحدد ليس لديه مجموعة منصات، قد تكون النتائج غير دقيقة"
+
+msgid ""
+"AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
+"MAY BE INACCURATE"
+msgstr ""
+"على الأقل أحد الأنظمة المحددة لديك لا يحتوي على مجموعة منصات، وقد تكون "
+"النتائج غير دقيقة"
+
+msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
+msgstr "يرجى تحديد نظام واحد على الأقل لكشط"
+
+msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
+msgstr "يرجى تحديد نوع محتوى واحد على الأقل لكشط"
+
+msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
+msgstr "تم ترشيح جميع الألعاب، لا شيء لكشط"
+
+msgid "SCRAPING IN PROGRESS"
+msgstr "الكشط في تقدم"
+
+msgid "REFINE SEARCH"
+msgstr "تحسين البحث"
+
+msgid "refine search"
+msgstr "تحسين البحث"
+
+msgid "SKIP"
+msgstr "تخطى"
+
+msgid "skip game"
+msgstr "تخطي اللعبة"
+
+msgid "stop"
+msgstr "إيقاف"
+
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "لعبة"
+msgstr[1] "لعبة"
+msgstr[2] "لعبتين"
+msgstr[3] "ألعاب"
+msgstr[4] "لعبة"
+msgstr[5] "لعبة"
+
+#, c-format
+msgid "GAME %i OF %i"
+msgstr "%i من أصل %i ألعاب"
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr "لم يتم كشط أي ألعاب"
+
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "تم كشط %i لعبة بنجاح"
+msgstr[1] "تم كشط لعبة %i بنجاح"
+msgstr[2] "تم كشط لعبتين بنجاح"
+msgstr[3] "تم كشط %i ألعاب بنجاح"
+msgstr[4] "تم كشط %i لعبة بنجاح"
+msgstr[5] "تم كشط %i لعبة بنجاح"
+
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "تم تخطي %i لعبة"
+msgstr[1] "تم تخطي لعبة %i"
+msgstr[2] "تم تخطي لعبتين"
+msgstr[3] "تم تخطي %i ألعاب"
+msgstr[4] "تم تخطي %i لعبة"
+msgstr[5] "تم تخطي %i لعبة"
+
+msgid "RATING:"
+msgstr "التقيم:"
+
+msgid "RELEASED:"
+msgstr "تاريخ الإصدار:"
+
+msgid "DEVELOPER:"
+msgstr "المطور:"
+
+msgid "PUBLISHER:"
+msgstr "الناشر:"
+
+msgid "GENRE:"
+msgstr "النوع:"
+
+msgid "PLAYERS:"
+msgstr "اللاعبون:"
+
+msgid "NO GAMES FOUND"
+msgstr "لم يتم العثور على ألعاب"
+
+msgid "API CALLS:"
+msgstr "ستدعاءات واجهة برمجة التطبيقات:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "متبقي %i لعبة"
+msgstr[1] "متبقي لعبة %i"
+msgstr[2] "متبقي لعبتين"
+msgstr[3] "متبقي %i ألعاب"
+msgstr[4] "متبقي %i لعبة"
+msgstr[5] "متبقي %i لعبة"
+
+msgid "RETRY"
+msgstr "إعادة المحاولة"
+
+msgid "Error downloading thumbnail:"
+msgstr "خطأ في تنزيل الصورة المصغرة:"
+
+msgid "SEARCH"
+msgstr "بحث"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "البحث باستخدام الاسم المكرر؟"
+
+msgid "skip"
+msgstr "تخطى"
+
+msgid "accept result"
+msgstr "قبول النتيجة"
+
+msgid "back (cancel)"
+msgstr "(إلغاء) العودة"
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr "(دقائق) ابدأ شاشة توقف بعد"
+
+msgid "SCREENSAVER TYPE"
+msgstr "نوع شاشة توقف"
+
+msgid "DIM"
+msgstr "خافت"
+
+msgid "SLIDESHOW"
+msgstr "عرض شرائح"
+
+msgid "VIDEO"
+msgstr "فيديو"
+
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr "تمكين عناصر التحكم في شاشة توقف"
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr "إعدادات عرض الشرائح في شاشة توقف"
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr "إعدادات فيديو شاشة توقف"
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr "عرض الشرائح شاشة توقف"
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr "(ثواني) تبديل الصور بعد"
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr "تضمين الألعاب المفضلة فقط"
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr "تمتد الصور إلى دقة الشاشة"
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr "عرض معلومات اللعبة"
+
+msgid "RENDER SCANLINES"
+msgstr "عرض خطوط"
+
+msgid "USE CUSTOM IMAGES"
+msgstr "استخدم صور مخصصة"
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr "البحث المتكرر في مسار الصور المخصص"
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr "مسار الصور المخصصة"
+
+msgid "VIDEO SCREENSAVER"
+msgstr "الفيديو شاشة توقف"
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr "(ثواني) تبادل الفيديو بعد"
+
+msgid "RENDER BLUR"
+msgstr "عرض ضبابي"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "عرض مؤشر حالة البلوتوث"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "عرض مؤشر حالة واي فاي"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "عرض مؤشر حالة الشبكة الخلوية"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "عرض مؤشر حالة البطارية"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "عرض نسبة شحن البطارية"
+
+msgid "DOWNLOADING THEMES LIST 100%"
+msgstr "قائمة الثيمات تنزيل 100 ٪"
+
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "تباعد المستودع من الأصل"
+
+msgid "THEME ALREADY UP TO DATE"
+msgstr "موضوع محدث بالفعل"
+
+msgid "THEME HAS BEEN UPDATED"
+msgstr "تم تحديث الثيمة"
+
+#, c-format
+msgid ""
+"COULDN'T RENAME DIRECTORY \"%s\"\n"
+"PERMISSION PROBLEMS?"
+msgstr ""
+"لم أتمكن من إعادة تسمية الدليل \"%s\"\n"
+"مشاكل الأذونات؟"
+
+msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
+msgstr "لا يمكن العثور على ملف تكوين قائمة الثيمات"
+
+msgid ""
+"COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
+"REPOSITORY IS CORRUPT?"
+msgstr "تعذز تحليل ملف تكوين قائمة الثيمات، ربما يكون المستودع المحلي تالفًا؟"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+"BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
+msgstr ""
+"يبدو أنك لا تستخدم أحدث إصدار من ES-DE، يرجى الترقية قبل المتابعة لأن هذه "
+"الثيمات قد لا تكون متوافقة مع الإصدار الخاص بك"
+
+msgid "and"
+msgstr "و"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA THIS "
+"THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+"\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
+msgstr ""
+"يبدو كما لو أن هذا الثيمة تم تنزيله يدويًا بدلاً من تنزيله عبر أداة تنزيل "
+"الثيمات يلزم تنزيل من جديد، وسيتم تغيير اسم مجلد الثيم القديم \"%s\" إلي "
+"\"%s_DISABLED\""
+
+msgid "DOWNLOADING THEME"
+msgstr "تنزيل الثيمة"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
+"DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
+msgstr ""
+"يبدو أن مستودع الثيمات هذا تالف، وقد يكون السبب انقطاع عملية تنزيل أو تحديث "
+"سابقة، على سبيل المثال إذا توقفت عملية ES-DE يلزم تنزيل جديد، وسيتم تغيير "
+"اسم مجلد الثيمات القديم DIRECTORY \"%s\" إلي \"%s_CORRUPT_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
+"DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH "
+"DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
+"\"%s_DISABLED\""
+msgstr ""
+"يبدو أن هذا مستودع سطحي مما يعني أنه تم تنزيله باستخدام أداة أخرى غير أداة "
+"تنزيل الثيمات هذه يلزم تنزيل جديد وسيتم تغيير اسم مجلد الثيمات القديم \"%s\" "
+"إلى \"%s_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"يبدو أن هذا مستودع مُشتَّت مما يعني عادةً وجود تعارض في عملية دمج المنبع ويتعين "
+"على مطور الثيمة حلّ هذا التعارض يلزم تنزيل جديد، وسيتم تغيير اسم دليل القالب "
+"القديم \"%s\" إلى \"%s_DIVERGED_DISABLED\""
+
+#, c-format
+msgid ""
+"THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
+"THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
+"THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
+msgstr ""
+"يحتوي المستودع المُستنسخ محليًا على عنوان URL خاطئ، مما يعني عادةً أن القالب قد "
+"نُقل إلى موقع GIT جديد يلزم تنزيل جديد وسيتم تغيير اسم دليل القالب القديم "
+"\"%s\" إلى \"%s_WRONG_URL_DISABLED\""
+
+#, c-format
+msgid ""
+"THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
+"CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
+msgstr ""
+"يحتوي مستودع الثيمات \"%s\" على تغييرات محلية يمكنك استبدال تغييراتك أو "
+"إلغاء العملية لتخطي جميع التحديثات لهذا الثيمة"
+
+msgid "UPDATING THEME"
+msgstr "تحديث الثيمة"
+
+msgid "VARIANTS:"
+msgstr "المتغيرات:"
+
+msgid "COLOR SCHEMES:"
+msgstr "مخططات الألوان:"
+
+msgid "ASPECT RATIOS:"
+msgstr "نسب الارتفاع:"
+
+msgid "FONT SIZES:"
+msgstr "أحجام الخطوط:"
+
+msgid "INSTALLED"
+msgstr "مثبت"
+
+msgid "MANUAL DOWNLOAD"
+msgstr "تحميل يدوي"
+
+msgid "CORRUPT"
+msgstr "فاسد"
+
+msgid "DIVERGED"
+msgstr "تباعدت"
+
+msgid "SHALLOW"
+msgstr "أجوف"
+
+msgid "NOT INSTALLED (NEW)"
+msgstr "(جديد) غير مثبت"
+
+msgid "NOT INSTALLED"
+msgstr "غير مثبت"
+
+msgid "WRONG URL"
+msgstr "عنوان URL خاطئ"
+
+msgid "LOCAL CHANGES"
+msgstr "التغييرات المحلية"
+
+msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
+msgstr "سيتم إزالة إدخال هذا الثيمة في المستقبل القريب"
+
+msgid "CREATED BY"
+msgstr "تم إنشاؤه بواسطة"
+
+msgid "ERROR:"
+msgstr "خطأ:"
+
+msgid "COULDN'T DOWNLOAD THEMES LIST"
+msgstr "تعذر تنزيل قائمة الثيمات"
+
+msgid "DOWNLOADING THEMES LIST"
+msgstr "تنزيل قائمة الثيمات"
+
+msgid "THIS WILL COMPLETELY DELETE THE THEME"
+msgstr "هذا سوف يحذف الثيمة بالكامل"
+
+msgid ""
+"THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
+msgstr "سيؤدي هذا إلى حذف الثيمة بالكامل بما في ذلك أي تخصيصات محلية"
+
+msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
+msgstr "تعذر حذف الثيمة، مشاكل الأذونات؟"
+
+msgid "THEME WAS DELETED"
+msgstr "تم حذف الثيمة"
+
+msgid "view screenshots"
+msgstr "عرض لقطات الشاشة"
+
+msgid "fetch updates"
+msgstr "جلب التحديثات"
+
+msgid "delete"
+msgstr "حذف"
+
+msgid "download"
+msgstr "تحميل"
+
+msgid ""
+"IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
+"DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
+msgstr ""
+"يبدو أن مستودع قائمة الثيمات تالف، وقد يكون السبب انقطاع عملية تنزيل أو "
+"تحديث سابقة، على سبيل المثال إذا توقف ES-DE فجأة عن عمل يلزم تنزيل جديد، "
+"وسيتم تغيير اسم المجلد القديم DIRECTORY \"themes-list\" إلي \"themes-"
+"list_CORRUPT_DISABLED\""
+
+msgid "UPDATING THEMES LIST"
+msgstr "تحديث قائمة الثيمات"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
+"THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+"WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED "
+"FILES WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE "
+"THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
+"CORRUPTION."
+msgstr ""
+"يبدو أنك تستخدم أداة تنزيل الثيمات لأول مرة لذا سيتم تنزيل مستودع قائمة "
+"الثيمات، وهو أمر سيستغرق بعض الوقت مع ذلك ستكون عمليات التشغيل اللاحقة أسرع "
+"بكثير حيث سيتم جلب الملفات الجديدة أو المعدلة فقط وينطبق الأمر نفسه على أي "
+"ثبمات تقوم بتنزيلها يُرجى العلم أنه لا يمكنك إيقاف عملية التنزيل الجارية، فقد "
+"يؤدي ذلك إلى تلف البيانات"
+
+msgid "browse"
+msgstr "تصفح"
+
+msgid "pdf manual"
+msgstr "دليل بي دي أف"
+
+msgid "first"
+msgstr "البداية"
+
+msgid "last"
+msgstr "النهاية"
+
+msgid "SCREENSHOT"
+msgstr "لقطة شاشة"
+
+msgid "BOX COVER"
+msgstr "غطاء الصندوق"
+
+msgid "BOX BACK COVER"
+msgstr "غطاء خلفي المربع"
+
+msgid "TITLE SCREEN"
+msgstr "شاشة العنوان"
+
+msgid "MIXIMAGE"
+msgstr "الصور المخطلطة"
+
+msgid "CUSTOM"
+msgstr "مخصص"
+
+msgctxt "metadata"
+msgid "NAME"
+msgstr "الاسم"
+
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "أدخل الاسم"
+
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "sortname"
+
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "أدخل SortName"
+
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "مجموعات مخصصة sortname"
+
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "أدخل مجموعات SORTNAME"
+
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "الوصف"
+
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "أدخل الوصف"
+
+msgctxt "metadata"
+msgid "RATING"
+msgstr "التقيم"
+
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "تاريخ الإصدار"
+
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "المطور"
+
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "أدخل المطور"
+
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "الناشر"
+
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "أدخل الناشر"
+
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "النوع"
+
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "أدخل النوع"
+
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "اللاعبون"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "أدخل عدد اللاعبين"
+
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "مفضل"
+
+msgctxt "metadata"
+msgid "COMPLETED"
+msgstr "مكتمل"
+
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "لعبة أطفال"
+
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "(يؤثر فقط على الشارات) لعبة أطفال"
+
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "إخفاء"
+
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "معطلة/لا تعمل"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "استبعاد من عداد اللعبة"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "استبعاد من مكشطة متعددة"
+
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "إخفاء حقول البيانات الوصفية"
+
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "لعبت الأوقات"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "أدخل عدد المرات التي لعبت"
+
+msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr "وقت اللعب"
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr "أدخل وقت اللعب"
+
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "وحدة تحكم"
+
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "حدد وحدة التحكم"
+
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "المحاكي البديل"
+
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "حدد المحاكي البديل"
+
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "رابط المجلد"
+
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "حدد رابط المجلد"
+
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "لعب آخر مرة"
+
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "أدخل آخر تاريخ لعب"
+
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "لم يتم العثور على لقطة شاشة، لا يمكن توليد الصور المخطلطة"
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr "لقطة شاشة بتنسيق غير معروف، لم تستطع توليد miximage"
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr "لقطة شاشة في تنسيق غير مدعوم، لم تستطع توليد miximage"
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "خطأ في تحميل لقطة الشاشة، لا يمكن توليد miximage"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "خطأ في تحميل صورة ماركي، ملف تالف؟"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "خطأ في تحميل صورة مربع ثلاثي الأبعاد، ملف تالف؟"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "خطأ في مربع تحميل صورة، ملف تالف؟"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "خطأ في تحميل صورة الوسائط الفعلية، ملف تالف؟"
+
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr "%s صفحة من أصل %s"
+
+msgid "pan"
+msgstr "مِقلاة"
+
+msgid "reset"
+msgstr "إعادة ضبط"
+
+msgid "game media"
+msgstr "وسائل الإعلام لعبة"
+
+msgid "zoom"
+msgstr "تكبير"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "لقد تجاوزت حصتك الكشط اليومية"
+
+msgid "Network error:"
+msgstr "خطأ في الشبكة:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "مسار الوسائط غير موجود ولا يمكن إنشاؤه"
+
+msgid "Permission problems?"
+msgstr "مشاكل إذن؟"
+
+msgid "Failed to open path for writing media file."
+msgstr "فشل في فتح المسار لكتابة ملف الوسائط"
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr "لا يمكن حفظ ملف الوسائط أو مشاكل الإذن أم أن القرص ممتلئ؟"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr "لا يمكن حفظ الصورة المُقيّنة أو مشاكل الإذن أم أن القرص ممتلئ؟"
+
+msgid "ScreenScraper error:"
+msgstr "خطأ شاشات الشاشة:"
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr "شاشات الشاشة: اسم مستخدم أو كلمة مرور خاطئ"
+
+msgid "No Entries Found"
+msgstr "لم يتم العثور على إدخالات"
+
+msgctxt "theme"
+msgid "all"
+msgstr "الجميع"
+
+msgctxt "theme"
+msgid "all games"
+msgstr "جميع الألعاب"
+
+msgctxt "theme"
+msgid "recent"
+msgstr "مؤخرًا"
+
+msgctxt "theme"
+msgid "last played"
+msgstr "لعب آخر مرة"
+
+msgctxt "theme"
+msgid "favorites"
+msgstr "المفضلة"
+
+msgctxt "theme"
+msgid "collections"
+msgstr "مجموعات"
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr "لا يمكن إضافة مجموعات مخصصة إلى مجموعات مخصصة"
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr "لا يمكن إضافة أصحاب نائبة إلى مجموعات مخصصة"
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr "لا يمكن إضافة مجلدات إلى مجموعات مخصصة"
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr "تم وضع علامة على المجلد '%s' كمفضل"
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr "تمت إزالة هذا اللمجلد '%s' كمفضل"
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
+msgstr "لا يمكن إضافة إدخالات لا يتم احتسابها كألعاب إلى مجموعات مخصصة"
+
+msgid "system"
+msgstr "نظام"
+
+msgid "view media"
+msgstr "عرض الوسائط"
+
+msgid "options"
+msgstr "خيارات"
+
+msgid "random"
+msgstr "عشوائي"
+
+msgid "jump to game"
+msgstr "القفز إلى اللعبة"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "نعم"
+
+msgctxt "theme"
+msgid "no"
+msgstr "لا"
+
+msgid "screensaver"
+msgstr "شاشة توقف"
+
+#, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "لعبة %i"
+msgstr[1] "%i لعبة"
+msgstr[2] "لعبتين"
+msgstr[3] "ألعاب %i"
+msgstr[4] "لعبة %i"
+msgstr[5] "لعبة %i"
+
+#, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "(%i مفضلة)"
+msgstr[1] "(%i مفضلة)"
+msgstr[2] "(%i مفضلة)"
+msgstr[3] "(%i مفضلة)"
+msgstr[4] "(%i مفضلة)"
+msgstr[5] "(%i مفضلة)"
+
+#, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "%i مفضلة"
+msgstr[1] "%i مفضلة"
+msgstr[2] "%i مفضلة"
+msgstr[3] "%i مفضلة"
+msgstr[4] "%i مفضلة"
+msgstr[5] "%i مفضلة"
+
+msgid ""
+"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
+"NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE VARIOUS PROBLEMS, SOME OF "
+"WHICH MAY NOT BE APPARENT IMMEDIATELY. MAKE SURE TO ALWAYS FOLLOW THE "
+"UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
+"DIRECTORY."
+msgstr ""
+"يبدو ترقية غير آمنة قد أُجريت، ربما عن طريق فك ضغط الإصدار الجديد فوق واحد "
+"القديم؟ قد يُسبب هذا مشاكل مختلفة، بعضها قد لا يظهر فورًا تأكد دائمًا من اتباع "
+"تعليمات الترقية في ملف README.TXT الموجود في مجلد ES-DE"
+
+msgid ""
+"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
+"es_systems.xml FILE, THEN SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. IF "
+"YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
+"SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
+msgstr ""
+"تعذر تحليل ملف تهيئة النظام. إذا كان لديك ملف es_systems.xml  مُخصَّص, فمن "
+"المُرجَّح وجود خطأ في بناء جملة XML. إذا  لم يكن لديك ملف أنظمة مُخصَّص، فهذا يعني "
+"أن تثبيت ES-DE معطل يُرجى مراجعة ملف سجل التطبيق es_log.txt لمزيد من المعلومات"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
+msgstr ""
+"لم يتم العثور على أي ملفات ألعاب استورد بعض الألعاب أو ضعها يدويًا في مجلد "
+"الروم المُهيأ يمكنك اختياريًا إنشاء بنية مجلد الروم لإنشاء ملف نصي لكل نظام "
+"يُوفر بعض معلومات مثل امتدادات الملفات المدعومة هذا هو مجلد الروم المُهيأ:\n"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"لم يتم العثور على أي ملفات ألعاب استورد بعض الألعاب أو ضعها يدويًا في مجلد "
+"الروم المُهيأ حاليًا يمكنك أيضًا تغيير مسار الروم ويمكنك اختياريًا إنشاء بنية "
+"مجلد الروم والتي ستُنشئ ملفًا نصيًا لكل نظام يُوفر معلومات مثل امتدادات الملفات "
+"المدعومة هذا هو مجلد الروم المُهيأ:\n"
+
+msgid "CHANGE"
+msgstr "تغير"
+
+msgid "ENTER ROM DIRECTORY PATH"
+msgstr "أدخل مسار الروم"
+
+msgid ""
+"ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
+msgstr "تم حفظ إعدادات مسار الروم، أعد تشغيل التطبيق لإعادة فحص الأنظمة"
+
+msgid "Currently configured path:"
+msgstr "المسار الذي تم تكوينه حاليًا:"
+
+msgid "LOAD CURRENTLY CONFIGURED PATH"
+msgstr "تحميل المسار الذي تم تكوينه حاليًا"
+
+msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
+msgstr "(اترك فارغًا لإعادة التعيين إلى المسار الافتراضي) فارغ"
+
+msgid ""
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
+"xml\n"
+"\n"
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"DON'T NEED"
+msgstr ""
+"سيؤدي هذا إلى إنشاء مسارات لجميع أنظمة es_systems.xml الألعاب المحددة في\n"
+"\n"
+"قد يؤدي هذا إلى إنشاء الكثير من المجلدات لذا يُنصح بإزالة المجلدات التي لا "
+"تحتاجها"
+
+msgid ""
+"THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
+"PLACE YOUR GAMES IN THE NEW FOLDERS"
+msgstr ""
+"تم إنشاء أدلة النظام بنجاح، اخرج من التطبيق وضع ألعابك في المجلدات الجديدة"
+
+msgid ""
+"ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
+"\n"
+"SEE THE LOG FILE FOR MORE DETAILS"
+msgstr ""
+"خطأ في إنشاء أدلة النظام أو مشاكل في الأذونات أو القرص ممتلئ؟\n"
+"\n"
+"راجع ملف السجل لمزيد من التفاصيل"
+
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+"يحتوي أحد أنظمتك على الأقل على محاكي بديل غير صالح تم تكوينه بدون إدخال "
+"مطابق في ملف تكوين النظام، يرجى مراجعة إعداداتك باستخدام واجهة 'المحاكيات "
+"البديلة' في قائمة 'الإعدادات الأخرى'"
+
+msgid "UPDATE"
+msgstr "تحديث"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
+"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
+"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
+msgstr ""
+"سيقوم مُحدِّث التطبيق بتنزيل أحدث إصدار محمول للويندوز لأجلك، ولكن ستحتاج إلى "
+"إجراء الترقية يدويًا راجع ملف README .TXT داخل ملف ZIP الذي تم تنزيله للاطلاع "
+"على كيفية فعل ذالك كما هو موضح أيضًا في تلك الوثيقة، لا تقم أبدًا بفك ضغط "
+"الإصدار جديد فوق تثبيت قديم، فقد يؤدي ذلك إلى تعطل التطبيق"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM THE UPGRADE. WHEN "
+"DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
+"UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
+msgstr ""
+"سيقوم مُحدِّث التطبيق بتنزيل أحدث إصدار من مُثبِّت للويندوز لأجلك, ولكن ستحتاج إلى "
+"تشغيله يدويًا لإجراء الترقية عند القيام بذلك، تأكد من إجابتك بنعم على سؤال هل "
+"تريد إلغاء تثبيت الإصدار القديم، وإلا قد ينتهي بك الأمر مع تثبيت معطل"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
+"WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
+msgstr ""
+"سيقوم مُحدِّث التطبيق بتنزيل الإصدار الأحدث لك، ولكنك ستحتاج إلى تثبيت ملف DMG "
+"يدويًا لإجراء الترقية"
+
+#, c-format
+msgid "LAUNCHING GAME '%s'"
+msgstr "تشغيل لعبة '%s'"
+
+msgid "menu"
+msgstr "قائمة"
+
+msgctxt "theme"
+msgid "never"
+msgstr "أبداً"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "منذ %i يوم"
+msgstr[1] "منذ يوم"
+msgstr[2] "منذ يومين"
+msgstr[3] "منذ %i أيام"
+msgstr[4] "منذ %i يوم"
+msgstr[5] "منذ %i يوم"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "منذ %i ساعة"
+msgstr[1] "منذ ساعة"
+msgstr[2] "منذ ساعتين"
+msgstr[3] "منذ %i ساعات"
+msgstr[4] "منذ %i ساعة"
+msgstr[5] "منذ %i ساعة"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "منذ %i دقيقة"
+msgstr[1] "منذ دقيقة"
+msgstr[2] "منذ دقيقتين"
+msgstr[3] "منذ %i دقائق"
+msgstr[4] "منذ %i دقيقة"
+msgstr[5] "منذ %i دقيقة"
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "منذ %i ثانية"
+msgstr[1] "منذ ثانية"
+msgstr[2] "منذ ثانيتين"
+msgstr[3] "منذ %i ثواني"
+msgstr[4] "منذ %i ثانية"
+msgstr[5] "منذ %i ثانية"
+
+msgid "edit date"
+msgstr "تحرير التاريخ"
+
+msgid "Y-M-D"
+msgstr "يوم-شهر-سنة"
+
+msgid "modify"
+msgstr "تعديل"
+
+#, c-format
+msgid "%i (OF %i)"
+msgstr "%i (لـ %i)"
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] "%s محدد"
+msgstr[1] "محدد %s"
+msgstr[2] "محددين %s"
+msgstr[3] "محددات %s"
+msgstr[4] "محددا %s"
+msgstr[5] "محددا %s"
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] "%i محدد "
+msgstr[1] "محدد %i"
+msgstr[2] "محددين 2"
+msgstr[3] "محددات %i"
+msgstr[4] "محددا %i"
+msgstr[5] "محددا %i"
+
+msgid "change value"
+msgstr "تغيير القيمة"
+
+msgid "add half star"
+msgstr "أضافة نصف نجمة"
+
+msgid "toggle"
+msgstr "تبديل"
+
+msgid "move cursor"
+msgstr "تحريك المؤشر"
+
+msgid "edit"
+msgstr "تعديل"
+
+msgid "WELCOME"
+msgstr "مرحباً"
+
+msgid "CONFIGURE INPUT DEVICE"
+msgstr "تكوين جهاز الإدخال"
+
+#, c-format
+msgid "%i GAMEPAD DETECTED"
+msgid_plural "%i GAMEPADS DETECTED"
+msgstr[0] "تم اكتشاف %i وحدة تحكم"
+msgstr[1] "تم اكتشاف وحدة تحكم %i"
+msgstr[2] "تم اكتشاف وحدتين تحكّم"
+msgstr[3] "تم اكتشاف %i وحدات تحكم"
+msgstr[4] "تم اكتشاف %i وحدة تحكم"
+msgstr[5] "تم اكتشاف %i وحدة تحكم"
+
+msgid "NO GAMEPADS DETECTED"
+msgstr "لم يتم اكتشاف وحدة تحكم"
+
+msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
+msgstr "(فقط قبول المدخلات من أول وحدة تحكم)"
+
+msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
+msgstr "اضغط باستمرار على أحد الأزرار الموجودة على جهازك لتكوينه"
+
+msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
+msgstr "اضغط باستمرار على أحد الأزرار الموجودة على لوحة المفاتيح لتكوينه"
+
+msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
+msgstr "(أو اختصار الخروج للخروج في أي وقت) اضغط على ESC لتخطي"
+
+msgid "PRESS ESC TO CANCEL"
+msgstr "اضغط على ESC للإلغاء"
+
+msgid "CONFIGURING"
+msgstr "تكوين"
+
+msgid "KEYBOARD"
+msgstr "لوحة المفاتيح"
+
+msgid "GAMEPAD"
+msgstr "لوحة لعب"
+
+msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
+msgstr "اضغط على أي زر لمدة ثانية 1 للتخطي"
+
+msgid "NOT DEFINED"
+msgstr "غير محدد"
+
+msgid "ok"
+msgstr "نعم"
+
+msgid "D-PAD UP"
+msgstr "لوحة الاتجاهات أعلى"
+
+msgid "D-PAD DOWN"
+msgstr "لوحة الاتجاهات أسفل"
+
+msgid "D-PAD LEFT"
+msgstr "لوحة الاتجاهات يسار"
+
+msgid "D-PAD RIGHT"
+msgstr "لوحة الاتجاهات يمين"
+
+msgid "MINUS"
+msgstr "ناقص"
+
+msgid "PLUS"
+msgstr "زائد"
+
+msgid "CROSS"
+msgstr "إكس"
+
+msgid "CIRCLE"
+msgstr "دائرة"
+
+msgid "SQUARE"
+msgstr "مربع"
+
+msgid "TRIANGLE"
+msgstr "مثلث"
+
+msgid "OPTIONS"
+msgstr "خيارات"
+
+msgid "VIEW"
+msgstr "منظر"
+
+msgid "MENU"
+msgstr "قائمة"
+
+msgid "LEFT SHOULDER"
+msgstr "الكتف الأيسر"
+
+msgid "RIGHT SHOULDER"
+msgstr "الكتف الأيمن"
+
+msgid "LEFT TRIGGER"
+msgstr "الزناد الأيسر"
+
+msgid "RIGHT TRIGGER"
+msgstr "الزناد الأيمن"
+
+msgid "LEFT THUMBSTICK UP"
+msgstr "عصا الإبهام الأيسر لأعلي"
+
+msgid "LEFT THUMBSTICK DOWN"
+msgstr "عصا الإبهام الأيسر لأسفل"
+
+msgid "LEFT THUMBSTICK LEFT"
+msgstr "عصا الإبهام الأيسر لليسار"
+
+msgid "LEFT THUMBSTICK RIGHT"
+msgstr "عصا الإبهام الأيسر لليمين"
+
+msgid "LEFT THUMBSTICK CLICK"
+msgstr "زر عصا الإبهام الأيسر"
+
+msgid "RIGHT THUMBSTICK UP"
+msgstr "عصا الإبهام الأيمن لأعلي"
+
+msgid "RIGHT THUMBSTICK DOWN"
+msgstr "عصا الإبهام الأيمن لأسفل"
+
+msgid "RIGHT THUMBSTICK LEFT"
+msgstr "عصا الإبهام الأيمن لليسار"
+
+msgid "RIGHT THUMBSTICK RIGHT"
+msgstr "عصا الإبهام الأيمن لليمين"
+
+msgid "RIGHT THUMBSTICK CLICK"
+msgstr "زر عصا الإبهام الأيمن"
+
+msgid "ALREADY TAKEN"
+msgstr "مأخوذة بالفعل"
+
+msgid "PRESS ANYTHING"
+msgstr "اضغط على أي شيء"
+
+msgid "SPACE"
+msgstr "مسافة"
+
+msgid "LOAD"
+msgstr "أستراد"
+
+msgid "shift"
+msgstr "تكبير الحروف"
+
+msgid "alt"
+msgstr "تغير للرموز"
+
+msgid "newline"
+msgstr "سطر جديد"
+
+msgid "backspace"
+msgstr "حذف"
+
+msgid "space"
+msgstr "مسافة"
+
+msgid "LOAD DEFAULT"
+msgstr "تحميل الافتراضي"
+
+msgid "DISCARD CHANGES"
+msgstr "تجاهل التغييرات"
+
+msgid "discard changes"
+msgstr "تجاهل التغييرات"
+
+#, c-format
+msgid "Server returned HTTP error code %s"
+msgstr "أعاد الخادم رمز الخطأ HTTP %s"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "تمت إضافة جهاز الإدخال '%s'"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "تمت إزالة جهاز الإدخال '%s'"
+
+msgid "medium"
+msgstr "وسط"
+
+msgid "large"
+msgstr "كبير"
+
+msgid "small"
+msgstr "صغير"
+
+msgid "extra small"
+msgstr "صغير جدًا"
+
+msgid "extra large"
+msgstr "كبير جدا"
+
+msgid "automatic"
+msgstr "تلقائي"
+
+msgid "16:9 vertical"
+msgstr "16: 9 عمودي"
+
+msgid "16:10 vertical"
+msgstr "16:10 عمودي"
+
+msgid "3:2 vertical"
+msgstr "3: 2 عمودي"
+
+msgid "4:3 vertical"
+msgstr "4: 3 عمودي"
+
+msgid "5:3 vertical"
+msgstr "5: 3 عمودي"
+
+msgid "5:4 vertical"
+msgstr "5: 4 عمودي"
+
+msgid "8:7 vertical"
+msgstr "8: 7 عمودي"
+
+msgid "19.5:9 vertical"
+msgstr "19.5: 9 عمودي"
+
+msgid "20:9 vertical"
+msgstr "20: 9 عمودي"
+
+msgid "21:9 vertical"
+msgstr "21: 9 عمودي"
+
+msgid "32:9 vertical"
+msgstr "32: 9 عمودي"
+
+msgid "Searching for games..."
+msgstr "...البحث عن الألعاب"
+
+msgid "Loading systems..."
+msgstr "...تحميل الأنظمة"
+
+msgid "Reloading..."
+msgstr "...إعادة تحميل"
+
+msgid "Copying resources..."
+msgstr "...نسخ الموارد"
+
+msgid "Creating system directories..."
+msgstr "...إنشاء أدلة النظام"
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "خطأ: لا يمكن تقديم ملف pdf"

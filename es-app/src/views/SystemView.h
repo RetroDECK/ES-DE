@@ -159,6 +159,7 @@ private:
     float mCamOffset;
     float mFadeOpacity;
     int mPreviousScrollVelocity;
+    int mPreviousSelectEvent;
 
     bool mUpdatedGameCount;
     bool mViewNeedsReload;

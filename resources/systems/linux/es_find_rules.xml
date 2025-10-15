@@ -30,6 +30,8 @@
             <entry>/var/config/retroarch/cores</entry>
             <!-- Non-portable AppImage and compiled from source -->
             <entry>~/.config/retroarch/cores</entry>
+            <!-- Alternative location used on some distributions such as Debian -->
+            <entry>~/.config/retroarch/libretro</entry>
             <!-- Portable AppImage -->
             <entry>~/Applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
             <entry>~/.local/share/applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
@@ -38,6 +40,7 @@
             <!-- Flatpak package -->
             <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
             <!-- Snap package -->
+            <entry>~/snap/retroarch/common/.config/retroarch/cores</entry>
             <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
             <!-- Ubuntu and Linux Mint repository -->
             <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
@@ -145,6 +148,8 @@
             <entry>~/.local/share/applications/azahar*.AppImage</entry>
             <entry>~/.local/bin/azahar*.AppImage</entry>
             <entry>~/bin/azahar*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.azahar_emu.Azahar</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.azahar_emu.Azahar</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/azaharplus/component_launcher.sh</entry>
         </rule>
@@ -196,6 +201,10 @@
             <entry>com.retrodev.blastem</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/blastem/blastem</entry>
+            <entry>~/.local/share/applications/blastem/blastem</entry>
+            <entry>~/.local/bin/blastem/blastem</entry>
+            <entry>~/bin/blastem/blastem</entry>
             <entry>/var/lib/flatpak/exports/bin/com.retrodev.blastem</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.retrodev.blastem</entry>
         </rule>
@@ -552,6 +561,26 @@
             <entry>/app/retrodeck/components/gopher2600/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="GOPHER64">
+        <!-- Nintendo 64 emulator Gopher64 -->
+        <rule type="systempath">
+            <entry>gopher64-linux-x86_64</entry>
+            <entry>gopher64-linux-aarch64</entry>
+            <entry>io.github.gopher64.gopher64</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/gopher64/gopher64-linux-x86_64</entry>
+            <entry>~/.local/share/applications/gopher64/gopher64-linux-x86_64</entry>
+            <entry>~/.local/bin/gopher64/gopher64-linux-x86_64</entry>
+            <entry>~/bin/gopher64/gopher64-linux-x86_64</entry>
+            <entry>~/Applications/gopher64/gopher64-linux-aarch64</entry>
+            <entry>~/.local/share/applications/gopher64/gopher64-linux-aarch64</entry>
+            <entry>~/.local/bin/gopher64/gopher64-linux-aarch64</entry>
+            <entry>~/bin/gopher64/gopher64-linux-aarch64</entry>
+            <entry>/var/lib/flatpak/exports/bin/io.github.gopher64.gopher64</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.gopher64.gopher64</entry>
+        </rule>
+    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="systempath">
@@ -688,6 +717,25 @@
             <entry>~/.local/share/flatpak/exports/bin/com.github.lindberghloader</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/lindbergh/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="LINDBERGH-LOADER">
+        <!-- Sega Lindbergh emulator Lindbergh Loader -->
+        <rule type="systempath">
+            <entry>lindbergh</entry>
+            <entry>com.github.lindberghloader</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/lindbergh-loader*.AppImage</entry>
+            <entry>~/.local/share/applications/lindbergh-loader*.AppImage</entry>
+            <entry>~/.local/bin/lindbergh-loader*.AppImage</entry>
+            <entry>~/bin/lindbergh-loader*.AppImage</entry>
+            <entry>~/Applications/lindbergh/lindbergh</entry>
+            <entry>~/.local/share/applications/lindbergh/lindbergh</entry>
+            <entry>~/.local/bin/lindbergh/lindbergh</entry>
+            <entry>~/bin/lindbergh/lindbergh</entry>
+            <entry>/var/lib/flatpak/exports/bin/com.github.lindberghloader</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.github.lindberghloader</entry>
         </rule>
     </emulator>
     <emulator name="M2EMULATOR-WINDOWS">
@@ -894,6 +942,17 @@
             <entry>/app/retrodeck/components/panda3ds/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="PARALLEL-LAUNCHER">
+        <!-- Nintendo 64 emulator Parallel Launcher  -->
+        <rule type="systempath">
+            <entry>parallel-launcher</entry>
+            <entry>ca.parallel_launcher.ParallelLauncher</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/ca.parallel_launcher.ParallelLauncher</entry>
+            <entry>~/.local/share/flatpak/exports/bin/ca.parallel_launcher.ParallelLauncher</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">
@@ -962,6 +1021,10 @@
             <entry>org.ppsspp.PPSSPP</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/PPSSPP*.AppImage</entry>
+            <entry>~/.local/share/applications/PPSSPP*.AppImage</entry>
+            <entry>~/.local/bin/PPSSPP*.AppImage</entry>
+            <entry>~/bin/PPSSPP*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
             <!-- RetroDECK -->
@@ -1099,6 +1162,7 @@
             <entry>Ryujinx.sh</entry>
             <entry>Ryujinx.Ava</entry>
             <entry>ryujinx</entry>
+            <entry>io.github.ryubing.Ryujinx</entry>
             <entry>org.ryujinx.Ryujinx</entry>
         </rule>
         <rule type="staticpath">
@@ -1106,6 +1170,8 @@
             <entry>~/.local/share/applications/*yujinx*.AppImage</entry>
             <entry>~/.local/bin/*yujinx*.AppImage</entry>
             <entry>~/bin/*yujinx*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/io.github.ryubing.Ryujinx</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.ryubing.Ryujinx</entry>
             <entry>/var/lib/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
             <entry>~/Applications/publish/Ryujinx</entry>
@@ -1224,6 +1290,26 @@
             <entry>~/bin/shadps4/shadps4</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/shadps4plus/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="SHADPS4">
+        <!-- Sony PlayStation 4 emulator shadPS4 -->
+        <rule type="systempath">
+            <entry>shadps4</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Shadps4-qt*.AppImage</entry>
+            <entry>~/.local/share/applications/Shadps4-qt*.AppImage</entry>
+            <entry>~/.local/bin/Shadps4-qt*.AppImage</entry>
+            <entry>~/bin/Shadps4-qt*.AppImage</entry>
+            <entry>~/Applications/Shadps4-sdl*.AppImage</entry>
+            <entry>~/.local/share/applications/Shadps4-sdl*.AppImage</entry>
+            <entry>~/.local/bin/Shadps4-sdl*.AppImage</entry>
+            <entry>~/bin/Shadps4-sdl*.AppImage</entry>
+            <entry>~/Applications/shadps4/shadps4</entry>
+            <entry>~/.local/share/applications/shadps4/shadps4</entry>
+            <entry>~/.local/bin/shadps4/shadps4</entry>
+            <entry>~/bin/shadps4/shadps4</entry>
         </rule>
     </emulator>
     <emulator name="SHEEPSHAVER">
@@ -1437,13 +1523,24 @@
             <entry>Vircon32</entry>
         </rule>
     </emulator>
+    <emulator name="VIRCON32">
+        <!-- Vircon32 Virtual Console -->
+        <rule type="systempath">
+            <entry>Vircon32</entry>
+        </rule>
+    </emulator>
     <emulator name="VISUAL-PINBALL">
         <!-- Pinball simulator Visual Pinball -->
         <rule type="systempath">
+            <entry>VPinballX_BGFX</entry>
             <entry>VPinballX_GL</entry>
             <entry>VPinballX_BGFX</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/VPinballX/VPinballX_BGFX</entry>
+            <entry>~/.local/share/applications/VPinballX/VPinballX_BGFX</entry>
+            <entry>~/.local/bin/VPinballX/VPinballX_BGFX</entry>
+            <entry>~/bin/VPinballX/VPinballX_BGFX</entry>
             <entry>~/Applications/VPinballX/VPinballX_GL</entry>
             <entry>~/.local/share/applications/VPinballX/VPinballX_GL</entry>
             <entry>~/.local/bin/VPinballX/VPinballX_GL</entry>
@@ -1482,6 +1579,15 @@
             <entry>/app/retrodeck/components/wine/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="WINE">
+        <!-- Microsoft Windows compatibility layer Wine -->
+        <rule type="staticpath">
+            <entry>~/Applications/Wine/wine*.AppImage</entry>
+            <entry>~/.local/share/applications/Wine/wine*.AppImage</entry>
+            <entry>~/.local/bin/Wine/wine*.AppImage</entry>
+            <entry>~/bin/Wine/wine*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
@@ -1497,6 +1603,19 @@
             <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/xemu/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="XENIA">
+        <!-- Microsoft Xbox 360 emulator xenia -->
+        <rule type="staticpath">
+            <entry>~/Applications/xenia/xenia</entry>
+            <entry>~/.local/share/applications/xenia/xenia</entry>
+            <entry>~/.local/bin/xenia/xenia</entry>
+            <entry>~/bin/xenia/xenia</entry>
+            <entry>~/Applications/xenia/xenia_canary</entry>
+            <entry>~/.local/share/applications/xenia/xenia_canary</entry>
+            <entry>~/.local/bin/xenia/xenia_canary</entry>
+            <entry>~/bin/xenia/xenia_canary</entry>
         </rule>
     </emulator>
     <emulator name="XENIA-WINDOWS">
@@ -1560,6 +1679,18 @@
             <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/yuzu/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="YMIR">
+        <!-- Sega Saturn emulator Ymir -->
+        <rule type="systempath">
+            <entry>ymir-sdl3</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/ymir/ymir-sdl3</entry>
+            <entry>~/.local/share/applications/ymir/ymir-sdl3</entry>
+            <entry>~/.local/bin/ymir/ymir-sdl3</entry>
+            <entry>~/bin/ymir/ymir-sdl3</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">

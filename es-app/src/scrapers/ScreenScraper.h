@@ -3,7 +3,7 @@
 //  ES-DE Frontend
 //  ScreenScraper.h
 //
-//  Functions specifically for scraping from screenscraper.fr
+//  Functions for scraping from ScreenScraper (screenscraper.fr).
 //  Called from Scraper.
 //
 
@@ -46,38 +46,14 @@ public:
                                      const long fileSize) const;
 
         // Access to the API.
-        const std::string API_DEV_U = {15, 21, 39, 22, 42, 40};
-        const std::string API_DEV_P = {32, 70, 46, 54, 12, 5, 13, 120, 50, 66, 25};
-        const std::string API_DEV_KEY = {67, 112, 72, 120, 121, 77, 119, 74,  84,  56,
-                                         75, 122, 78, 98,  69,  86, 56,  120, 120, 49};
-        const std::string API_URL_BASE = "https://api.screenscraper.fr/api2";
-#if defined(__FreeBSD__)
-        const std::string platformIdentifier {" B"};
-#elif defined(__HAIKU__)
-        const std::string platformIdentifier {" H"};
-#elif defined(STEAM_DECK)
-        const std::string platformIdentifier {" S"};
-#elif defined(RETRODECK)
-        const std::string platformIdentifier {" R"};
-#elif defined(__ANDROID__)
-        const std::string platformIdentifier {" G"};
-#elif defined(APPIMAGE_BUILD)
-        const std::string platformIdentifier {" A"};
-#elif defined(__linux__) && defined(RASPBERRY_PI)
-        const std::string platformIdentifier {" P"};
-#elif defined(__linux__)
-        const std::string platformIdentifier {" L"};
-#elif defined(__IOS__)
-        const std::string platformIdentifier {" I"};
-#elif defined(__APPLE__)
-        const std::string platformIdentifier {" M"};
-#elif defined(_WIN64)
-        const std::string platformIdentifier {" W"};
-#else
-        const std::string platformIdentifier {" O"};
-#endif
-        const std::string API_SOFT_NAME =
-            "ES-DE " + static_cast<std::string>(PROGRAM_VERSION_STRING) + platformIdentifier;
+        const std::string API_DEV_U {15, 21, 39, 22, 42, 40};
+        const std::string API_DEV_P {32, 70, 46, 54, 12, 5, 13, 120, 50, 66, 25};
+        const std::string API_DEV_KEY {67, 112, 72, 120, 121, 77, 119, 74,  84,  56,
+                                       75, 122, 78, 98,  69,  86, 56,  120, 120, 49};
+        const std::string API_URL_BASE {"https://api.screenscraper.fr/api2"};
+        const std::string API_SOFT_NAME {"ES-DE " +
+                                         static_cast<std::string>(PROGRAM_VERSION_STRING) + " " +
+                                         HttpReq::sPlatformIdentifier};
 
         // Which type of image artwork we need. Possible values (not a comprehensive list):
         // - ss: in-game screenshot
@@ -133,7 +109,6 @@ protected:
                      std::string& fileURL,
                      std::string& fileFormat,
                      const std::string& region);
-    bool isGameRequest() { return !mRequestQueue; }
 
     std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;
 };

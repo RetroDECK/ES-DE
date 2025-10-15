@@ -11,10 +11,10 @@
 #
 
 # How many CPU threads to use for the compilation.
-JOBS=4
+JOBS=$(nproc 2>/dev/null || echo 8)
 
-SDL_RELEASE_TAG=release-2.32.2
-SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.3200.2
+SDL_RELEASE_TAG=release-2.32.10
+SDL_SHARED_LIBRARY=libSDL2-2.0.so.0.3200.10
 
 echo "Building AppImage..."
 
@@ -25,7 +25,7 @@ fi
 
 if [ ! -f appimagetool-x86_64.AppImage ]; then
   echo -e "Can't find appimagetool-x86_64.AppImage, downloading the latest version...\n"
-  wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+  wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
 fi
 
 chmod a+x appimagetool-x86_64.AppImage

@@ -34,6 +34,8 @@ namespace FileSorts
     bool compareLastPlayedDescending(const FileData* file1, const FileData* file2);
     bool compareTimesPlayed(const FileData* file1, const FileData* fil2);
     bool compareTimesPlayedDescending(const FileData* file1, const FileData* fil2);
+    bool comparePlayTime(const FileData* file1, const FileData* fil2);
+    bool comparePlayTimeDescending(const FileData* file1, const FileData* fil2);
     bool compareSystem(const FileData* file1, const FileData* file2);
     bool compareSystemDescending(const FileData* file1, const FileData* file2);
 

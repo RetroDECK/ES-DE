@@ -31,17 +31,22 @@ namespace Utils
         // When adding a new locale, then make sure to also update ThemeData::sSupportedLanguages.
         const std::vector<std::pair<std::string, std::string>> sSupportedLocales {{{"en"}, {"US"}},
                                                                                   {{"en"}, {"GB"}},
+                                                                                  {{"bs"}, {"BA"}},
                                                                                   {{"ca"}, {"ES"}},
                                                                                   {{"de"}, {"DE"}},
                                                                                   {{"es"}, {"ES"}},
                                                                                   {{"fr"}, {"FR"}},
+                                                                                  {{"hr"}, {"HR"}},
                                                                                   {{"it"}, {"IT"}},
                                                                                   {{"nl"}, {"NL"}},
                                                                                   {{"pl"}, {"PL"}},
                                                                                   {{"pt"}, {"BR"}},
+                                                                                  {{"pt"}, {"PT"}},
                                                                                   {{"ro"}, {"RO"}},
                                                                                   {{"ru"}, {"RU"}},
+                                                                                  {{"sr"}, {"RS"}},
                                                                                   {{"sv"}, {"SE"}},
+                                                                                  {{"ar"}, {"SA"}},
                                                                                   {{"ja"}, {"JP"}},
                                                                                   {{"ko"}, {"KR"}},
                                                                                   {{"zh"}, {"CN"}},
@@ -194,12 +199,16 @@ namespace Utils
             // Language-specific menu title scale factor.
             if (localePair.first == "ca")
                 sMenuTitleScaleFactor = 0.92f;
+            else if (localePair.first == "bs")
+                sMenuTitleScaleFactor = 0.92f;
             else if (localePair.first == "de")
                 sMenuTitleScaleFactor = 0.92f;
             else if (localePair.first == "es")
                 sMenuTitleScaleFactor = 0.90f;
             else if (localePair.first == "fr")
                 sMenuTitleScaleFactor = 0.90f;
+            else if (localePair.first == "hr")
+                sMenuTitleScaleFactor = 0.92f;
             else if (localePair.first == "it")
                 sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "nl")
@@ -212,8 +221,12 @@ namespace Utils
                 sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "ru")
                 sMenuTitleScaleFactor = 0.94f;
+            else if (localePair.first == "sr")
+                sMenuTitleScaleFactor = 0.92f;
             else if (localePair.first == "sv")
                 sMenuTitleScaleFactor = 0.87f;
+            else if (localePair.first == "ar")
+                sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "ja")
                 sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "ko")
@@ -240,7 +253,16 @@ namespace Utils
 
 #if defined(_WIN64)
             _configthreadlocale(_DISABLE_PER_THREAD_LOCALE);
-            sLocaleID = LocaleNameToLCID(Utils::String::stringToWideString(locale).c_str(),
+            // Some workarounds as Windows can apparently never follow standards.
+            std::string localeTemp;
+            if (locale == "bs_BA")
+                localeTemp = "bs-Latn-BA";
+            else if (locale == "sr_RS")
+                localeTemp = "sr-Latn-RS";
+            else
+                localeTemp = locale;
+
+            sLocaleID = LocaleNameToLCID(Utils::String::stringToWideString(localeTemp).c_str(),
                                          LOCALE_ALLOW_NEUTRAL_NAMES);
             SetThreadLocale(sLocaleID);
 #else

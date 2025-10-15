@@ -159,7 +159,7 @@ void HelpComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("backgroundHorizontalPadding")) {
         const glm::vec2 backgroundHorizontalPadding {
-            glm::clamp(elem->get<glm::vec2>("backgroundHorizontalPadding"), 0.0f, 0.2f)};
+            glm::clamp(elem->get<glm::vec2>("backgroundHorizontalPadding"), 0.0f, 1.0f)};
         mBackgroundHorizontalPadding.x =
             backgroundHorizontalPadding.x * mRenderer->getScreenWidth();
         mBackgroundHorizontalPadding.y =
@@ -168,7 +168,7 @@ void HelpComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("backgroundVerticalPadding")) {
         const glm::vec2 backgroundVerticalPadding {
-            glm::clamp(elem->get<glm::vec2>("backgroundVerticalPadding"), 0.0f, 0.2f)};
+            glm::clamp(elem->get<glm::vec2>("backgroundVerticalPadding"), 0.0f, 1.0f)};
         mBackgroundVerticalPadding.x = backgroundVerticalPadding.x * mRenderer->getScreenHeight();
         mBackgroundVerticalPadding.y = backgroundVerticalPadding.y * mRenderer->getScreenHeight();
     }

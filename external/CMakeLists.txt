@@ -71,5 +71,9 @@ if(ANDROID)
                           ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
 endif()
 
+if(NOT WIN32)
+    add_dependencies(plutovg lunasvg)
+endif()
+
 # Build LunaSVG before rlottie.
 add_dependencies(rlottie lunasvg)

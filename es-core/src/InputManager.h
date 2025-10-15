@@ -36,10 +36,7 @@ public:
     void deinit();
 
     void writeDeviceConfig(InputConfig* config);
-    void doOnFinish();
-
     static std::string getConfigPath();
-    static std::string getTemporaryConfigPath();
 
     int getNumConfiguredDevices();
     int getAxisCountByDevice(int deviceId);

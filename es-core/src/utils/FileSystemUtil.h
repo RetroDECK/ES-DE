@@ -52,7 +52,7 @@ namespace Utils
         std::string getStem(const std::string& path);
         std::string getExtension(const std::string& path);
         long getFileSize(const std::filesystem::path& path);
-        std::string expandHomePath(const std::string& path);
+        std::string expandHomePath(const std::string& path, const bool systemHome = false);
         std::string resolveRelativePath(const std::string& path,
                                         const std::string& relativeTo,
                                         const bool allowHome);
@@ -70,6 +70,8 @@ namespace Utils
                         const std::string& destinationPath,
                         bool overwrite);
         bool createEmptyFile(const std::filesystem::path& path);
+        bool createSymlink(const std::filesystem::path& source,
+                           const std::filesystem::path& target);
         bool removeFile(const std::string& path);
         bool removeDirectory(const std::string& path, bool recursive);
         bool createDirectory(const std::string& path);

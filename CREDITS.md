@@ -19,6 +19,8 @@ Nils Bonenberger
 
 **English (United Kingdom)** \
 Weestuarty \
+**Bosnian** \
+SecularSteve \
 **Catalan** \
 Johnnydement \
 **German** \
@@ -28,6 +30,8 @@ Pest \
 Dani (stshunz) \
 **French** \
 Fredy27 (neuromancer974) \
+**Croatian** \
+SecularSteve \
 **Italian** \
 Viler \
 **Dutch**\
@@ -36,13 +40,21 @@ Stefan VDB\
 kycho \
 **Portuguese (Brazil)** \
 MrVictorFull \
+**Portuguese (Portugal)** \
+Luís Torres (Naprosnia) \
 **Romanian** \
 SilverGreen93 \
 **Russian** \
 Lulzee \
+**Serbian** \
+SecularSteve \
 **Swedish** \
 Leon Styhre \
 Daniel Nylander \
+**Arabic** \
+fotonom243 \
+**Vietnamese** \
+dungtrinh25 \
 **Japanese** \
 冰棍 \
 **Korean** \
@@ -71,6 +83,9 @@ https://curl.se
 FFmpeg \
 https://ffmpeg.org
 
+Fontconfig \
+https://www.freedesktop.org/wiki/Software/fontconfig
+
 FreeImage \
 http://www.freeimage.sourceforge.net
 
@@ -92,17 +107,32 @@ https://icu.unicode.org
 libgit2 \
 https://libgit2.org
 
+libiconv \
+https://www.gnu.org/software/libiconv
+
 libintl (gettext) \
 https://www.gnu.org/software/gettext
 
-libvpx \
-https://github.com/webmproject/libvpx
+libjpeg-turbo \
+https://www.libjpeg-turbo.org
+
+libpng \
+http://www.libpng.org
+
+LibTIFF \
+https://libtiff.gitlab.io/libtiff
 
 LunaSVG \
 https://github.com/sammycage/lunasvg
 
 Ogg \
 https://github.com/xiph/ogg
+
+OpenJPEG \
+https://www.openjpeg.org
+
+OpenSSL \
+https://www.openssl.org
 
 Opus \
 https://gitlab.xiph.org/xiph/opus

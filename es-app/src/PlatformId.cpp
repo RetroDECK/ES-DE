@@ -125,6 +125,7 @@ namespace PlatformIds
         "scv",                  // Epoch Super Cassette Vision
         "sega32x",              // Sega Mega Drive 32X
         "segacd",               // Sega CD
+        "segapico",             // Sega Pico
         "sg-1000",              // Sega SG-1000
         "sgb",                  // Nintendo Super Game Boy
         "snes",                 // Nintendo SNES (Super Nintendo)

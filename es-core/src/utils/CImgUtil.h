@@ -16,6 +16,10 @@
 #include <sys/time.h>
 #endif
 
+#if defined(__IOS__)
+#define cimg_no_system_calls
+#endif
+
 #include "CImg.h"
 
 #include <vector>

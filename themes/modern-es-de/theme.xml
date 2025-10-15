@@ -29,12 +29,13 @@
             <descriptionLineSpacing>1.2</descriptionLineSpacing>
             <metadataLabelFontSize>0.02</metadataLabelFontSize>
             <metadataValueFontSize>0.03</metadataValueFontSize>
-            <publisherLabelPos>0.70 0.532</publisherLabelPos>
-            <developerLabelPos>0.8453 0.532</developerLabelPos>
-            <releaseDateLabelPos>0.70 0.608</releaseDateLabelPos>
-            <playersLabelPos>0.8453 0.608</playersLabelPos>
-            <genreLabelPos>0.70 0.684</genreLabelPos>
-            <ratingLabelPos>0.70 0.760</ratingLabelPos>
+            <publisherLabelPos>0.70 0.512</publisherLabelPos>
+            <developerLabelPos>0.8453 0.512</developerLabelPos>
+            <releaseDateLabelPos>0.70 0.578</releaseDateLabelPos>
+            <playersLabelPos>0.8453 0.578</playersLabelPos>
+            <genreLabelPos>0.70 0.646</genreLabelPos>
+            <playTimeLabelPos>0.70 0.712</playTimeLabelPos>
+            <ratingLabelPos>0.70 0.796</ratingLabelPos>
             <ratingSize>0.04 0.03</ratingSize>
             <badgesSize>0.1267 0.185</badgesSize>
         </variables>
@@ -53,12 +54,13 @@
             <descriptionLineSpacing>1.15</descriptionLineSpacing>
             <metadataLabelFontSize>0.025</metadataLabelFontSize>
             <metadataValueFontSize>0.036</metadataValueFontSize>
-            <publisherLabelPos>0.70 0.527</publisherLabelPos>
-            <developerLabelPos>0.8453 0.527</developerLabelPos>
-            <releaseDateLabelPos>0.70 0.602</releaseDateLabelPos>
-            <playersLabelPos>0.8453 0.602</playersLabelPos>
-            <genreLabelPos>0.70 0.679</genreLabelPos>
-            <ratingLabelPos>0.70 0.760</ratingLabelPos>
+            <publisherLabelPos>0.70 0.507</publisherLabelPos>
+            <developerLabelPos>0.8453 0.507</developerLabelPos>
+            <releaseDateLabelPos>0.70 0.573</releaseDateLabelPos>
+            <playersLabelPos>0.8453 0.573</playersLabelPos>
+            <genreLabelPos>0.70 0.642</genreLabelPos>
+            <playTimeLabelPos>0.70 0.707</playTimeLabelPos>
+            <ratingLabelPos>0.70 0.794</ratingLabelPos>
             <ratingSize>0 0.035</ratingSize>
             <badgesSize>0.1267 0.205</badgesSize>
         </variables>
@@ -318,7 +320,7 @@
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="publisher">
-                <pos>0.70 0.552</pos>
+                <pos>0.70 0.532</pos>
                 <size>0.13125 0.03</size>
                 <metadata>publisher</metadata>
                 <defaultValue>${langUnknown}</defaultValue>
@@ -332,7 +334,7 @@
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="developer">
-                <pos>0.8453 0.552</pos>
+                <pos>0.8453 0.532</pos>
                 <size>0.13125 0.03</size>
                 <metadata>developer</metadata>
                 <defaultValue>${langUnknown}</defaultValue>
@@ -346,7 +348,7 @@
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <datetime name="releasedate">
-                <pos>0.70 0.628</pos>
+                <pos>0.70 0.598</pos>
                 <size>0.13125 0.03</size>
                 <metadata>releasedate</metadata>
                 <defaultValue>${langUnknown}</defaultValue>
@@ -360,7 +362,7 @@
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="players">
-                <pos>0.8453 0.628</pos>
+                <pos>0.8453 0.598</pos>
                 <size>0.13125 0.03</size>
                 <metadata>players</metadata>
                 <defaultValue>${langUnknown}</defaultValue>
@@ -374,9 +376,23 @@
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="genre">
-                <pos>0.70 0.704</pos>
+                <pos>0.70 0.665</pos>
                 <size>0.13125 0.03</size>
                 <metadata>genre</metadata>
+                <defaultValue>${langUnknown}</defaultValue>
+                <fontSize>${metadataValueFontSize}</fontSize>
+            </text>
+            <text name="labelPlayTime">
+                <pos>${playTimeLabelPos}</pos>
+                <size>0.13125 0.04</size>
+                <text>${langLabelPlayTime}:</text>
+                <metadataElement>true</metadataElement>
+                <fontSize>${metadataLabelFontSize}</fontSize>
+            </text>
+            <text name="playTime">
+                <pos>0.70 0.741</pos>
+                <size>0.13125 0.03</size>
+                <metadata>playtime</metadata>
                 <defaultValue>${langUnknown}</defaultValue>
                 <fontSize>${metadataValueFontSize}</fontSize>
             </text>
@@ -388,23 +404,23 @@
                 <fontSize>${metadataLabelFontSize}</fontSize>
             </text>
             <text name="labelPublisher, labelDeveloper, labelReleasedate, labelPlayers,
-                    labelGenre, labelRating">
+                    labelGenre, labelPlayTime, labelRating">
                 <color>${tertiaryColor}</color>
             </text>
-            <text name="publisher, developer, players, genre, description">
+            <text name="publisher, developer, players, genre, playTime, description">
                 <color>${secondaryColor}</color>
             </text>
             <datetime name="releasedate">
                 <color>${secondaryColor}</color>
             </datetime>
             <rating name="rating">
-                <pos>0.70 0.785</pos>
+                <pos>0.70 0.818</pos>
                 <size>${ratingSize}</size>
                 <filledPath>./assets/star-filled.svg</filledPath>
                 <unfilledPath>./assets/${colorSchemeName}/star-unfilled.svg</unfilledPath>
             </rating>
             <badges name="badges">
-                <pos>0.8423 0.685</pos>
+                <pos>0.8423 0.652</pos>
                 <size>${badgesSize}</size>
                 <origin>0 0</origin>
                 <direction>column</direction>
@@ -497,8 +513,8 @@
                 <visible>false</visible>
             </badges>
             <text name="labelPublisher, labelDeveloper, labelReleasedate, labelPlayers,
-                        labelGenre, labelRating, publisher, developer, players,
-                        genre, description">
+                        labelGenre, labelRating, labelPlayTime, publisher, developer, players,
+                        genre, playTime, description">
                 <visible>false</visible>
             </text>
             <datetime name="releasedate">

@@ -127,6 +127,13 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount, in
     mMD_Grid =
         std::make_shared<ComponentGrid>(glm::ivec2 {2, static_cast<int>(mMD_Pairs.size() * 2 - 1)});
     unsigned int i {0};
+
+    if (mSearchType == AUTOMATIC_MODE) {
+        mAPIStatistics = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI),
+                                                         mMenuColorPrimary, ALIGN_LEFT);
+        mGrid.setEntry(mAPIStatistics, glm::ivec2 {1, 2}, false, true, glm::ivec2 {2, 1});
+    }
+
     for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); ++it) {
         mMD_Grid->setEntry(it->first, glm::ivec2 {0, i}, false, true);
         mMD_Grid->setEntry(it->second, glm::ivec2 {1, i}, false, it->resize);
@@ -438,6 +445,23 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
         }
     }
     else {
+        if (mSearchType == AUTOMATIC_MODE) {
+            if (Settings::getInstance()->getString("Scraper") == "screenscraper") {
+                const unsigned int maxAllowance {results.back().scraperRequestMaxAllowance};
+                const unsigned int usedAllowance {maxAllowance -
+                                                  results.back().scraperRequestAllowance};
+                mAPIStatistics->setValue(_("API CALLS:") + " " + std::to_string(usedAllowance) +
+                                         "/" + std::to_string(maxAllowance));
+            }
+            else {
+                mAPIStatistics->setValue(
+                    _("API CALLS:") + " " +
+                    Utils::String::format(
+                        _n("%i REMAINING", "%i REMAINING", results.back().scraperRequestAllowance),
+                        results.back().scraperRequestAllowance));
+            }
+        }
+
         mFoundGame = true;
         ComponentListRow row;
 
@@ -449,23 +473,38 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
             std::string otherPlatforms;
 
             if (mMD5Hash != "") {
-                const std::string entryText {
-                    results.size() > 1 ? "Result entry " + std::to_string(i) + ": " : ""};
-                if (results[i].md5Hash == mMD5Hash) {
-                    mAutomaticModeGameEntry = static_cast<int>(i);
-                    LOG(LogDebug)
-                        << "GuiScraperSearch::onSearchDone(): " << entryText
-                        << "Perfect match, MD5 digest in server response identical to file hash";
+                if (Settings::getInstance()->getString("Scraper") != "screenscraper") {
+                    if (results[i].md5Hash == "match") {
+                        LOG(LogDebug)
+                            << "GuiScraperSearch::onSearchDone(): Perfect match, scraper service "
+                               "has indicated that the game was matched using the MD5 digest";
+                    }
+                    else {
+                        LOG(LogDebug)
+                            << "GuiScraperSearch::onSearchDone(): Not a perfect match, scraper "
+                               "service has indicated that the game was matched using its name";
+                    }
                 }
-                else if (results[i].md5Hash != "") {
-                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): " << entryText
-                                  << "Not a perfect match, MD5 digest in server response not "
-                                     "identical to file hash";
-                }
-                else {
-                    LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): " << entryText
-                                  << "Server did not return an MD5 digest, can't tell whether this "
-                                     "is a perfect match";
+                if (Settings::getInstance()->getString("Scraper") == "screenscraper") {
+                    const std::string entryText {
+                        results.size() > 1 ? "Result entry " + std::to_string(i) + ": " : ""};
+                    if (results[i].md5Hash == mMD5Hash) {
+                        mAutomaticModeGameEntry = static_cast<int>(i);
+                        LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): " << entryText
+                                      << "Perfect match, MD5 digest in server response identical "
+                                         "to file hash";
+                    }
+                    else if (results[i].md5Hash != "") {
+                        LOG(LogDebug) << "GuiScraperSearch::onSearchDone(): " << entryText
+                                      << "Not a perfect match, MD5 digest in server response not "
+                                         "identical to file hash";
+                    }
+                    else {
+                        LOG(LogDebug)
+                            << "GuiScraperSearch::onSearchDone(): " << entryText
+                            << "Server did not return an MD5 digest, can't tell whether this "
+                               "is a perfect match";
+                    }
                 }
             }
 
@@ -559,7 +598,7 @@ void GuiScraperSearch::onSearchError(const std::string& error,
     if (fatalError) {
         LOG(LogWarning) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(Utils::String::toUpper(error), _("OK"), mCancelCallback, "",
-                                       nullptr, "", nullptr, nullptr, true));
+                                       nullptr, "", nullptr, "", nullptr, nullptr, true));
         return;
     }
 
@@ -581,14 +620,15 @@ void GuiScraperSearch::onSearchError(const std::string& error,
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(Utils::String::toUpper(error), _("RETRY"),
                                        std::bind(&GuiScraperSearch::search, this, mLastSearch),
-                                       _("SKIP"), mSkipCallback, _("CANCEL"), mCancelCallback,
-                                       nullptr, true));
+                                       _("SKIP"), mSkipCallback, _("CANCEL"), mCancelCallback, "",
+                                       nullptr, nullptr, true));
     }
     else {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(Utils::String::toUpper(error), _("RETRY"),
                                        std::bind(&GuiScraperSearch::search, this, mLastSearch),
-                                       _("CANCEL"), mCancelCallback, "", nullptr, nullptr, true));
+                                       _("CANCEL"), mCancelCallback, "", nullptr, "", nullptr,
+                                       nullptr, true));
     }
 }
 
@@ -966,6 +1006,13 @@ void GuiScraperSearch::updateThumbnail()
             mResultThumbnail->setImage(content.data(), content.length());
             mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
         }
+    }
+    else if (it != mThumbnailReqMap.end() &&
+             it->second->status() == HttpReq::REQ_RESOURCE_NOT_FOUND) {
+        LOG(LogWarning)
+            << "GuiScraperSearch::updateThumbnail): Server returned HTTP error code 404 "
+               "(resource not found)";
+        mScraperResults[mResultList->getCursorId()].thumbnailDownloadStatus = COMPLETED;
     }
     else {
         mResultThumbnail->setImage("");

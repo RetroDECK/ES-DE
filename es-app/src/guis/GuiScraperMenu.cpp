@@ -26,12 +26,9 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
 {
     // Scraper service.
     mScraper = std::make_shared<OptionListComponent<std::string>>(_("SCRAPE FROM"), false);
-    std::vector<std::string> scrapers = getScraperList();
-    // Select either the first entry or the one read from the settings,
-    // just in case the scraper from settings has vanished.
-    for (auto it = scrapers.cbegin(); it != scrapers.cend(); ++it)
-        mScraper->add(Utils::String::toUpper(*it), *it,
-                      *it == Settings::getInstance()->getString("Scraper"));
+    const std::string selectedScraper {Settings::getInstance()->getString("Scraper")};
+    mScraper->add(("SCREENSCRAPER"), "screenscraper", selectedScraper == "screenscraper");
+    mScraper->add(("THEGAMESDB"), "thegamesdb", selectedScraper == "thegamesdb");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the scraper to "screenscraper" in this case.
     if (mScraper->getSelectedObjects().size() == 0)
@@ -480,6 +477,26 @@ void GuiScraperMenu::openMiximageOptions()
         }
     });
 
+    // Miximage file format.
+    auto miximageFileFormat =
+        std::make_shared<OptionListComponent<std::string>>(_("MIXIMAGE FILE FORMAT"), false);
+    std::string selectedFileFormat {Settings::getInstance()->getString("MiximageFileFormat")};
+    miximageFileFormat->add("PNG", "png", selectedFileFormat == "png");
+    miximageFileFormat->add("WEBP", "webp", selectedFileFormat == "webp");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the file format to "png" in this case.
+    if (miximageFileFormat->getSelectedObjects().size() == 0)
+        miximageFileFormat->selectEntry(0);
+    s->addWithLabel(_("MIXIMAGE FILE FORMAT"), miximageFileFormat);
+    s->addSaveFunc([miximageFileFormat, s] {
+        if (miximageFileFormat->getSelected() !=
+            Settings::getInstance()->getString("MiximageFileFormat")) {
+            Settings::getInstance()->setString("MiximageFileFormat",
+                                               miximageFileFormat->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
     // Horizontally oriented screenshots fit.
     auto miximageHorizontalFit = std::make_shared<OptionListComponent<std::string>>(
         _p("short", "HORIZONTAL SCREENSHOT FIT"), false);
@@ -765,8 +782,8 @@ void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
         mWindow->pushGui(new GuiMsgBox(_("THE OFFLINE GENERATOR USES THE SAME SYSTEM "
                                          "SELECTIONS AS THE SCRAPER, SO PLEASE SELECT "
                                          "AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"),
-                                       _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, false,
-                                       true,
+                                       _("OK"), nullptr, "", nullptr, "", nullptr, "", nullptr,
+                                       nullptr, false, true,
                                        (mRenderer->getIsVerticalOrientation() ?
                                             0.80f :
                                             0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -806,10 +823,25 @@ void GuiScraperMenu::openOtherOptions()
     auto scraperRegion = std::make_shared<OptionListComponent<std::string>>(_("REGION"), false);
     std::string selectedScraperRegion {Settings::getInstance()->getString("ScraperRegion")};
     // clang-format off
-    scraperRegion->add(_("EUROPE"), "eu",  selectedScraperRegion == "eu");
-    scraperRegion->add(_("JAPAN"),  "jp",  selectedScraperRegion == "jp");
-    scraperRegion->add(_("USA"),    "us",  selectedScraperRegion == "us");
-    scraperRegion->add(_("WORLD"),  "wor", selectedScraperRegion == "wor");
+    scraperRegion->add(_("EUROPE"),         "eu",  selectedScraperRegion == "eu");
+    scraperRegion->add(_("JAPAN"),          "jp",  selectedScraperRegion == "jp");
+    scraperRegion->add(_("USA"),            "us",  selectedScraperRegion == "us");
+    scraperRegion->add(_("WORLD"),          "wor", selectedScraperRegion == "wor");
+    scraperRegion->add(_("ASIA"),           "asi", selectedScraperRegion == "asi");
+    scraperRegion->add(_("AUSTRALIA"),      "au",  selectedScraperRegion == "au");
+    scraperRegion->add(_("BRAZIL"),         "br",  selectedScraperRegion == "br");
+    scraperRegion->add(_("CANADA"),         "ca",  selectedScraperRegion == "ca");
+    scraperRegion->add(_("CHINA"),          "cn",  selectedScraperRegion == "cn");
+    scraperRegion->add(_("GERMANY"),        "de",  selectedScraperRegion == "de");
+    scraperRegion->add(_("FRANCE"),         "fr",  selectedScraperRegion == "fr");
+    scraperRegion->add(_("ITALY"),          "it",  selectedScraperRegion == "it");
+    scraperRegion->add(_("KOREA"),          "kr",  selectedScraperRegion == "kr");
+    scraperRegion->add(_("NETHERLANDS"),    "nl",  selectedScraperRegion == "nl");
+    scraperRegion->add(_("RUSSIA"),         "ru",  selectedScraperRegion == "ru");
+    scraperRegion->add(_("SWEDEN"),         "se",  selectedScraperRegion == "se");
+    scraperRegion->add(_("SPAIN"),          "sp",  selectedScraperRegion == "sp");
+    scraperRegion->add(_("TAIWAN"),         "tw",  selectedScraperRegion == "tw");
+    scraperRegion->add(_("UNITED KINGDOM"), "uk",  selectedScraperRegion == "uk");
     // clang-format on
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the region to "Europe" in this case.
@@ -1239,7 +1271,7 @@ void GuiScraperMenu::pressedStart()
             mWindow->pushGui(
                 new GuiMsgBox(Utils::String::toUpper(warningString), _("PROCEED"),
                               std::bind(&GuiScraperMenu::start, this), _("CANCEL"), nullptr, "",
-                              nullptr, nullptr, false, true,
+                              nullptr, "", nullptr, nullptr, false, true,
                               (mRenderer->getIsVerticalOrientation() ?
                                    0.80f :
                                    0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));

@@ -28,6 +28,7 @@
 #include "guis/GuiAlternativeEmulators.h"
 #include "guis/GuiCollectionSystemsOptions.h"
 #include "guis/GuiDetectDevice.h"
+#include "guis/GuiGameImporter.h"
 #include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOrphanedDataCleanup.h"
@@ -595,17 +596,23 @@ void GuiMenu::openUIOptions()
                              selectedApplicationLanguage == "en_US");
     applicationLanguage->add("ENGLISH (UNITED KINGDOM)", "en_GB",
                              selectedApplicationLanguage == "en_GB");
+    applicationLanguage->add("BOSANSKI", "bs_BA", selectedApplicationLanguage == "bs_BA");
     applicationLanguage->add("CATALÀ", "ca_ES", selectedApplicationLanguage == "ca_ES");
     applicationLanguage->add("DEUTSCH", "de_DE", selectedApplicationLanguage == "de_DE");
     applicationLanguage->add("ESPAÑOL (ESPAÑA)", "es_ES", selectedApplicationLanguage == "es_ES");
     applicationLanguage->add("FRANÇAIS", "fr_FR", selectedApplicationLanguage == "fr_FR");
+    applicationLanguage->add("HRVATSKI", "hr_HR", selectedApplicationLanguage == "hr_HR");
     applicationLanguage->add("ITALIANO", "it_IT", selectedApplicationLanguage == "it_IT");
     applicationLanguage->add("NEDERLANDS", "nl_NL", selectedApplicationLanguage == "nl_NL");
     applicationLanguage->add("POLSKI", "pl_PL", selectedApplicationLanguage == "pl_PL");
     applicationLanguage->add("PORTUGUÊS (BRASIL)", "pt_BR", selectedApplicationLanguage == "pt_BR");
+    applicationLanguage->add("PORTUGUÊS (PORTUGAL)", "pt_PT",
+                             selectedApplicationLanguage == "pt_PT");
     applicationLanguage->add("ROMÂNĂ", "ro_RO", selectedApplicationLanguage == "ro_RO");
     applicationLanguage->add("РУССКИЙ", "ru_RU", selectedApplicationLanguage == "ru_RU");
+    applicationLanguage->add("SRPSKI", "sr_RS", selectedApplicationLanguage == "sr_RS");
     applicationLanguage->add("SVENSKA", "sv_SE", selectedApplicationLanguage == "sv_SE");
+    applicationLanguage->add("العربية", "ar_SA", selectedApplicationLanguage == "ar_SA");
     applicationLanguage->add("日本語", "ja_JP", selectedApplicationLanguage == "ja_JP");
     applicationLanguage->add("한국어", "ko_KR", selectedApplicationLanguage == "ko_KR");
     applicationLanguage->add("简体中文", "zh_CN", selectedApplicationLanguage == "zh_CN");
@@ -657,10 +664,10 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    // Optionally start in selected system/gamelist.
+    // Start at the selected system.
     auto startupSystem =
-        std::make_shared<OptionListComponent<std::string>>(_("GAMELIST ON STARTUP"), false);
-    startupSystem->add(_("NONE"), "", Settings::getInstance()->getString("StartupSystem") == "");
+        std::make_shared<OptionListComponent<std::string>>(_("SYSTEM ON STARTUP"), false);
+    startupSystem->add(_("DEFAULT"), "", Settings::getInstance()->getString("StartupSystem") == "");
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
         // If required, abbreviate the system name so it doesn't overlap the setting name.
@@ -674,14 +681,31 @@ void GuiMenu::openUIOptions()
                            Settings::getInstance()->getString("StartupSystem") == (*it)->getName(),
                            maxNameLength);
     }
-    // This can probably not happen but as an extra precaution select the "NONE" entry if no
-    // entry is selected.
+    // If there are no objects returned, then the configured system is probably no longer present.
+    // Simply set the startup system to default in this case.
     if (startupSystem->getSelectedObjects().size() == 0)
         startupSystem->selectEntry(0);
-    s->addWithLabel(_("GAMELIST ON STARTUP"), startupSystem);
+    s->addWithLabel(_("SYSTEM ON STARTUP"), startupSystem);
     s->addSaveFunc([startupSystem, s] {
         if (startupSystem->getSelected() != Settings::getInstance()->getString("StartupSystem")) {
             Settings::getInstance()->setString("StartupSystem", startupSystem->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to start in the system or gamelist view.
+    auto startupView = std::make_shared<OptionListComponent<std::string>>(_("STARTUP VIEW"), false);
+    const std::string selectedStartupView {Settings::getInstance()->getString("StartupView")};
+    startupView->add(_("SYSTEM"), "system", selectedStartupView == "system");
+    startupView->add(_("GAMELIST"), "gamelist", selectedStartupView == "gamelist");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the startup view to "system" in this case.
+    if (startupView->getSelectedObjects().size() == 0)
+        startupView->selectEntry(0);
+    s->addWithLabel(_("STARTUP VIEW"), startupView);
+    s->addSaveFunc([startupView, s] {
+        if (startupView->getSelected() != Settings::getInstance()->getString("StartupView")) {
+            Settings::getInstance()->setString("StartupView", startupView->getSelected());
             s->setNeedsSaving();
         }
     });
@@ -896,7 +920,7 @@ void GuiMenu::openUIOptions()
                                                               false);
                     mWindow->invalidateCachedBackground();
                 },
-                _("NO"), nullptr, "", nullptr, nullptr, true));
+                _("NO"), nullptr, "", nullptr, "", nullptr, nullptr, true));
         }
         else {
             LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '" << selectedMode
@@ -1496,11 +1520,12 @@ void GuiMenu::openInputDeviceOptions()
                   "CONFIGURATOR TO RUN ON NEXT STARTUP")};
 
             Window* window {mWindow};
-            window->pushGui(new GuiMsgBox(
-                message, _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
-                (mRenderer->getIsVerticalOrientation() ?
-                     0.84f :
-                     0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
+            window->pushGui(
+                new GuiMsgBox(message, _("OK"), nullptr, "", nullptr, "", nullptr, "", nullptr,
+                              nullptr, true, true,
+                              (mRenderer->getIsVerticalOrientation() ?
+                                   0.84f :
+                                   0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
         }
 
         if (touchOverlaySize->getEnabled()) {
@@ -1584,6 +1609,20 @@ void GuiMenu::openInputDeviceOptions()
         }
     });
 
+    // Whether to display notifications when plugging in and removing input devices.
+    auto inputDeviceNotifications = std::make_shared<SwitchComponent>();
+    inputDeviceNotifications->setState(
+        Settings::getInstance()->getBool("InputDeviceNotifications"));
+    s->addWithLabel(_("INPUT DEVICE NOTIFICATIONS"), inputDeviceNotifications);
+    s->addSaveFunc([inputDeviceNotifications, s] {
+        if (Settings::getInstance()->getBool("InputDeviceNotifications") !=
+            inputDeviceNotifications->getState()) {
+            Settings::getInstance()->setBool("InputDeviceNotifications",
+                                             inputDeviceNotifications->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Configure keyboard and controllers.
     ComponentListRow configureInputRow;
     configureInputRow.elements.clear();
@@ -1617,7 +1656,7 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
     window->pushGui(new GuiMsgBox(
         message, _("PROCEED"),
         [window] { window->pushGui(new GuiDetectDevice(false, false, nullptr)); }, _("CANCEL"),
-        nullptr, "", nullptr, nullptr, false, true,
+        nullptr, "", nullptr, "", nullptr, nullptr, false, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.84f :
              0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -1682,6 +1721,21 @@ void GuiMenu::openOtherOptions()
     });
     s->addRow(rowMediaDir);
 #endif
+
+    // Maximum play time tracking.
+    auto maxPlayTimeTracking = std::make_shared<SliderComponent>(0.0f, 24.0f, 1.0f, "h");
+    maxPlayTimeTracking->setValue(static_cast<float>(
+        glm::clamp(Settings::getInstance()->getInt("MaxPlayTimeTracking"), 0, 24)));
+    s->addWithLabel(_("MAX PLAY TIME TRACKING"), maxPlayTimeTracking);
+    s->addSaveFunc([maxPlayTimeTracking, s] {
+        if (maxPlayTimeTracking->getValue() !=
+            Settings::getInstance()->getInt("MaxPlayTimeTracking")) {
+            Settings::getInstance()->setInt(
+                "MaxPlayTimeTracking",
+                static_cast<int>(std::round(maxPlayTimeTracking->getValue())));
+            s->setNeedsSaving();
+        }
+    });
 
     // Maximum VRAM.
     auto maxVram = std::make_shared<SliderComponent>(128.0f, 2048.0f, 16.0f, "MiB");
@@ -2208,7 +2262,24 @@ void GuiMenu::openUtilities()
 {
     auto s = new GuiSettings(_("UTILITIES"));
 
+    auto gameImporterUpdateFunc = [&, s]() {
+        delete s;
+        delete this;
+        ViewController::getInstance()->rescanROMDirectory();
+        ViewController::getInstance()->goToStart(false);
+    };
+
     ComponentListRow row;
+    row.addElement(std::make_shared<TextComponent>(_("GAME IMPORTER"), Font::get(FONT_SIZE_MEDIUM),
+                                                   mMenuColorPrimary),
+                   true);
+    row.addElement(mMenu.makeArrow(), false);
+    row.makeAcceptInputHandler(std::bind([this, gameImporterUpdateFunc] {
+        mWindow->pushGui(new GuiGameImporter(_("GAME IMPORTER"), gameImporterUpdateFunc));
+    }));
+    s->addRow(row);
+
+    row.elements.clear();
     row.addElement(std::make_shared<TextComponent>(_("ORPHANED DATA CLEANUP"),
                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
@@ -2251,19 +2322,20 @@ void GuiMenu::openUtilities()
                             }
                             ViewController::getInstance()->rescanROMDirectory();
                         },
-                        "", nullptr, "", nullptr, nullptr, true));
+                        "", nullptr, "", nullptr, "", nullptr, nullptr, true));
                 }
                 else {
-                    mWindow->pushGui(new GuiMsgBox(
-                        _("ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
-                          "DISK FULL? SEE THE LOG FILE FOR MORE DETAILS"),
-                        _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
-                        (mRenderer->getIsVerticalOrientation() ?
-                             0.70f :
-                             0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                    mWindow->pushGui(
+                        new GuiMsgBox(_("ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR "
+                                        "DISK FULL? SEE THE LOG FILE FOR MORE DETAILS"),
+                                      _("OK"), nullptr, "", nullptr, "", nullptr, "", nullptr,
+                                      nullptr, true, true,
+                                      (mRenderer->getIsVerticalOrientation() ?
+                                           0.70f :
+                                           0.44f * (1.778f / mRenderer->getScreenAspectRatio()))));
                 }
             },
-            _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
+            _("CANCEL"), nullptr, "", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.80f :
                  0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -2296,7 +2368,7 @@ void GuiMenu::openUtilities()
                 }
                 ViewController::getInstance()->rescanROMDirectory();
             },
-            _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
+            _("CANCEL"), nullptr, "", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.76f :
                  0.52f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -2422,7 +2494,7 @@ void GuiMenu::openQuitMenu()
                 _("REALLY REBOOT?"), _("YES"),
                 [] {
                     if (Utils::Platform::quitES(Utils::Platform::QuitMode::REBOOT) != 0) {
-                        LOG(LogWarning) << "Reboot terminated with non-zero result!";
+                        LOG(LogWarning) << "Couldn't reboot system";
                     }
                 },
                 _("NO"), nullptr));
@@ -2439,7 +2511,7 @@ void GuiMenu::openQuitMenu()
                 _("REALLY POWER OFF?"), _("YES"),
                 [] {
                     if (Utils::Platform::quitES(Utils::Platform::QuitMode::POWEROFF) != 0) {
-                        LOG(LogWarning) << "Power off terminated with non-zero result!";
+                        LOG(LogWarning) << "Couldn't power off system";
                     }
                 },
                 _("NO"), nullptr));
@@ -2449,6 +2521,30 @@ void GuiMenu::openQuitMenu()
         powerOffText->setSelectable(true);
         row.addElement(powerOffText, true);
         s->addRow(row);
+
+#if !defined(__HAIKU__)
+        row.elements.clear();
+        row.makeAcceptInputHandler([window, this] {
+            window->pushGui(new GuiMsgBox(
+                _("REALLY SUSPEND?"), _("YES"),
+                [this] {
+                    LOG(LogInfo) << "Suspending system";
+                    Scripting::fireEvent("suspend");
+                    if (Utils::Platform::runSuspendCommand() != 0) {
+                        LOG(LogWarning) << "Couldn't suspend system";
+                    }
+                    else {
+                        this->close(true);
+                    }
+                },
+                _("NO"), nullptr));
+        });
+        auto suspendText = std::make_shared<TextComponent>(
+            _("SUSPEND SYSTEM"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+        suspendText->setSelectable(true);
+        row.addElement(suspendText, true);
+        s->addRow(row);
+#endif
 
         s->setSize(mSize);
         mWindow->pushGui(s);

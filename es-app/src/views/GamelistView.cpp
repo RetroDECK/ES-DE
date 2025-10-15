@@ -137,8 +137,9 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     assert(selectedTheme != themes.cend());
 
     mStaticVideoAudio = false;
-    const bool isStartupSystem {Settings::getInstance()->getString("StartupSystem") ==
-                                mRoot->getSystem()->getName()};
+    const bool isStartupSystem {Settings::getInstance()->getString("StartupView") == "gamelist" &&
+                                Settings::getInstance()->getString("StartupSystem") ==
+                                    mRoot->getSystem()->getName()};
 
     using namespace ThemeFlags;
 
@@ -448,7 +449,11 @@ void GamelistView::update(int deltaTime)
         mTriggerEvent = false;
         FileData* file {mPrimary->size() > 0 ? mPrimary->getSelected() : nullptr};
         if (file) {
+#if defined(_WIN64)
+            Scripting::fireEvent("game-select", Utils::String::replace(file->getPath(), "/", "\\"),
+#else
             Scripting::fireEvent("game-select", file->getPath(),
+#endif
                                  file->getSourceFileData()->metadata.get("name"),
                                  file->getSourceFileData()->getSystem()->getName(),
                                  file->getSourceFileData()->getSystem()->getFullName());
@@ -1022,6 +1027,8 @@ void GamelistView::updateView(const CursorState& state)
                 return file->getManualPath() != "" ? _p("theme", "yes") : _p("theme", "no");
             else if (metadata == "playcount")
                 return file->metadata.get("playcount");
+            else if (metadata == "playtime")
+                return file->getPlayTimeString(file->metadata.get("playtime"));
             else if (metadata == "altemulator")
                 return file->metadata.get("altemulator");
             else if (metadata == "emulator")

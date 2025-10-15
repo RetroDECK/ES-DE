@@ -31,6 +31,7 @@ SystemView::SystemView()
     , mCamOffset {0.0f}
     , mFadeOpacity {0.0f}
     , mPreviousScrollVelocity {0}
+    , mPreviousSelectEvent {-1}
     , mUpdatedGameCount {false}
     , mViewNeedsReload {true}
     , mNavigated {false}
@@ -48,6 +49,7 @@ void SystemView::onShow()
     stopViewVideos();
     mFadeOpacity = 0.0f;
     mTransitionAnim = false;
+    mPreviousSelectEvent = -1;
     mPrimary->onShowPrimary();
 }
 
@@ -58,6 +60,8 @@ void SystemView::onHide()
 
     for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
         video->stopVideoPlayer(false);
+
+    mPreviousSelectEvent = -1;
 }
 
 void SystemView::onTransition()
@@ -254,10 +258,20 @@ void SystemView::onCursorChanged(const CursorState& state)
 
     if (Settings::getInstance()->getBool("CustomEventScripts") &&
         Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
-        Scripting::fireEvent(
-            "system-select", mSystemElements[mPrimary->getCursor()].system->getName(),
-            mSystemElements[mPrimary->getCursor()].system->getFullName(),
-            mSystemElements[mPrimary->getCursor()].system->getRootFolder()->getFullPath());
+        if (!(state == CursorState::CURSOR_STOPPED &&
+              mPreviousSelectEvent == mPrimary->getCursor())) {
+            Scripting::fireEvent(
+                "system-select", mSystemElements[mPrimary->getCursor()].system->getName(),
+                mSystemElements[mPrimary->getCursor()].system->getFullName(),
+#if defined(_WIN64)
+                Utils::String::replace(
+                    mSystemElements[mPrimary->getCursor()].system->getRootFolder()->getFullPath(),
+                    "/", "\\"));
+#else
+                mSystemElements[mPrimary->getCursor()].system->getRootFolder()->getFullPath());
+#endif
+            mPreviousSelectEvent = mPrimary->getCursor();
+        }
     }
 
     for (auto& clock : mSystemElements[mPrimary->getCursor()].clockComponents)
@@ -1410,6 +1424,10 @@ void SystemView::updateGameSelectors()
                 text->setValue(games.at(gameSelectorEntry)->getManualPath() != "" ? "yes" : "no");
             else if (metadata == "playcount")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("playcount"));
+            else if (metadata == "playtime")
+                text->setValue(
+                    games.at(gameSelectorEntry)
+                        ->getPlayTimeString(games.at(gameSelectorEntry)->metadata.get("playtime")));
             else if (metadata == "altemulator")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("altemulator"));
             else if (metadata == "emulator")

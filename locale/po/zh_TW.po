@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-13 22:26+0800\n"
+"POT-Creation-Date: 2025-10-13 22:03+0200\n"
+"PO-Revision-Date: 2025-10-13 22:04+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 繁體中文 <info@es-de.org>\n"
 "Language: zh_TW\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.7\n"
 
 msgid "Network error (status:"
 msgstr "網路錯誤（狀態："
@@ -123,6 +123,22 @@ msgstr "'%s' 個遊戲被篩選，現新增了更多可遊玩的遊戲"
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "已刪除收藏'%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "未知"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i 分"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i 小時"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -287,6 +303,12 @@ msgstr "遊玩次數, 升序"
 
 msgid "times played, descending"
 msgstr "遊玩次數, 降序"
+
+msgid "play time, ascending"
+msgstr "遊玩時間，升序"
+
+msgid "play time, descending"
+msgstr "遊玩時間，降序"
 
 msgid "system, ascending"
 msgstr "平台, 升序"
@@ -505,6 +527,112 @@ msgstr "將喜愛的遊戲排序在頂部以進行自定義收藏"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "顯示自定義收藏的星形標記"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "導入系統"
+
+msgid "NO CONFIGURATION"
+msgstr "無配置"
+
+msgid "REMOVE ENTRIES"
+msgstr "刪除選項"
+
+msgid "ALL UNSELECTED"
+msgstr "所有未選擇的"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr "刪除特殊字符"
+
+msgid "MEDIA TARGET TYPE"
+msgstr "媒體目標類型"
+
+msgid "SCREENSHOTS"
+msgstr "截圖"
+
+msgid "TITLE SCREENS"
+msgstr "標題畫面"
+
+msgid "COVERS"
+msgstr "封面"
+
+msgid "BACK COVERS"
+msgstr "背封"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "遊戲標誌"
+
+msgid "3D BOXES"
+msgstr "3D盒子"
+
+msgid "PHYSICAL MEDIA"
+msgstr "實體卡帶"
+
+msgid "FAN ART"
+msgstr "粉絲自制"
+
+msgid "MIXIMAGES"
+msgstr "混合影像"
+
+msgid "IMPORT MEDIA"
+msgstr "導入媒體"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "如有可能匯入橫幅或LOGO"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "覆寫媒體文件"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "僅包含歸類為遊戲的應用"
+
+msgid "START"
+msgstr "開始"
+
+msgid "start importer"
+msgstr "啟動導入器"
+
+msgid "WORKING..."
+msgstr "正在執行……"
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "無法找到可導入內容"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"你已選擇移除所有未選中項目，此操作將刪除\"%s\"系統目錄中所有擴展名為\"%s\"的"
+"遊戲文件，隨後導入你在下一屏幕選定的項目。\n"
+"確定繼續嗎？"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "請選擇"
+
+msgid "IMPORT"
+msgstr "導入"
+
+msgid "import"
+msgstr "導入"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "已導入%i個項目"
+
+msgid "SELECT ALL"
+msgstr "選擇全部"
+
+msgid "select all"
+msgstr "選擇全部"
+
+msgid "SELECT NONE"
+msgstr "取消選擇"
+
+msgid "select none"
+msgstr "取消選擇"
+
 msgid "FILTER GAMELIST"
 msgstr "過濾遊戲列表"
 
@@ -685,11 +813,17 @@ msgstr "扳機鍵"
 msgid "LEFT/RIGHT"
 msgstr "左/右鍵"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "啟動時顯示遊戲列表"
+msgid "SYSTEM ON STARTUP"
+msgstr "初始系統"
 
-msgid "NONE"
-msgstr "無"
+msgid "STARTUP VIEW"
+msgstr "初始瀏覽"
+
+msgid "SYSTEM"
+msgstr "平台"
+
+msgid "GAMELIST"
+msgstr "遊戲列表"
 
 msgid "SYSTEMS SORTING"
 msgstr "平台分類"
@@ -733,6 +867,9 @@ msgstr "選單展開動畫"
 
 msgid "SCALE-UP"
 msgstr "放大"
+
+msgid "NONE"
+msgstr "無"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "啟動畫面時長"
@@ -814,7 +951,7 @@ msgid "MEDIA VIEWER SETTINGS"
 msgstr "媒體播放器設定"
 
 msgid "SCREENSAVER SETTINGS"
-msgstr "屏保設定"
+msgstr "螢幕保護設定"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "啟用主題變體觸發器"
@@ -871,7 +1008,7 @@ msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
 msgstr "播放媒體檢視器影片的音訊"
 
 msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
-msgstr "播放屏保影片的音訊"
+msgstr "播放螢幕保護影片的音訊"
 
 msgid "ENABLE NAVIGATION SOUNDS"
 msgstr "啟用導航聲音"
@@ -929,6 +1066,9 @@ msgstr "交換 A/B 和 X/Y 按鍵"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "忽略鍵盤輸入"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "輸入設備通知"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "配置鍵盤和控制器"
 
@@ -960,6 +1100,9 @@ msgstr "要儲存更改嗎？"
 
 msgid "load default directory"
 msgstr "載入預設目錄"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr "最長遊戲時間追蹤"
 
 msgid "VRAM LIMIT"
 msgstr "視訊記憶體限制"
@@ -1053,7 +1196,7 @@ msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "啟用自定義事件指令碼"
 
 msgid "BROWSING CUSTOM EVENTS"
-msgstr "瀏覽自訂事件"
+msgstr "瀏覽自定義事件"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "僅顯示 gamelist.xml 檔案中的遊戲"
@@ -1078,6 +1221,9 @@ msgstr "在兒童模式下啟用選單"
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "顯示退出選單（包含重啟和關機選項）"
+
+msgid "GAME IMPORTER"
+msgstr "遊戲導入器"
 
 msgid "ORPHANED DATA CLEANUP"
 msgstr "資料清理"
@@ -1129,6 +1275,12 @@ msgstr "真的要關機嗎？"
 msgid "POWER OFF SYSTEM"
 msgstr "關機"
 
+msgid "REALLY SUSPEND?"
+msgstr "真的要暫停嗎？"
+
+msgid "SUSPEND SYSTEM"
+msgstr "暫停系統"
+
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
 msgstr "系統狀態設定"
@@ -1139,7 +1291,7 @@ msgstr "媒體播放器設定"
 
 msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
-msgstr "屏保設定"
+msgstr "螢幕保護設定"
 
 msgid "choose"
 msgstr "選擇"
@@ -1244,9 +1396,6 @@ msgstr "處理："
 
 msgid "Last error message:"
 msgstr "最後一條錯誤訊息："
-
-msgid "START"
-msgstr "開始"
 
 msgid "start processing"
 msgstr "開始處理"
@@ -1517,6 +1666,9 @@ msgstr "遊戲手冊"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "混合影象解析度"
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr "混合影像檔案格式"
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "水平截圖適配"
@@ -1629,6 +1781,51 @@ msgstr "美國"
 msgid "WORLD"
 msgstr "世界"
 
+msgid "ASIA"
+msgstr "亞洲"
+
+msgid "AUSTRALIA"
+msgstr "澳洲"
+
+msgid "BRAZIL"
+msgstr "巴西"
+
+msgid "CANADA"
+msgstr "加拿大"
+
+msgid "CHINA"
+msgstr "中國"
+
+msgid "GERMANY"
+msgstr "德國"
+
+msgid "FRANCE"
+msgstr "法國"
+
+msgid "ITALY"
+msgstr "義大利"
+
+msgid "KOREA"
+msgstr "韓國"
+
+msgid "NETHERLANDS"
+msgstr "荷蘭"
+
+msgid "RUSSIA"
+msgstr "俄羅斯"
+
+msgid "SWEDEN"
+msgstr "瑞典"
+
+msgid "SPAIN"
+msgstr "西班牙"
+
+msgid "TAIWAN"
+msgstr "中國台灣"
+
+msgid "UNITED KINGDOM"
+msgstr "英國"
+
 msgid "PREFERRED LANGUAGE"
 msgstr "後設資料首選語言"
 
@@ -1695,9 +1892,6 @@ msgstr "所有遊戲都經過過濾，無需抓取"
 msgid "SCRAPING IN PROGRESS"
 msgstr "抓取正在進行中"
 
-msgid "SYSTEM"
-msgstr "平台"
-
 msgid "REFINE SEARCH"
 msgstr "完善搜尋"
 
@@ -1755,6 +1949,14 @@ msgstr "玩家數："
 msgid "NO GAMES FOUND"
 msgstr "未找到遊戲"
 
+msgid "API CALLS:"
+msgstr "API回應："
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "剩餘%i個"
+
 msgid "RETRY"
 msgstr "重試"
 
@@ -1777,10 +1979,10 @@ msgid "back (cancel)"
 msgstr "返回（取消）"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
-msgstr "屏保啟動時間（分鐘）"
+msgstr "螢幕保護啟動時間（分鐘）"
 
 msgid "SCREENSAVER TYPE"
-msgstr "屏保型別"
+msgstr "螢幕保護型別"
 
 msgid "DIM"
 msgstr "暗淡"
@@ -1792,16 +1994,16 @@ msgid "VIDEO"
 msgstr "影片"
 
 msgid "ENABLE SCREENSAVER CONTROLS"
-msgstr "啟用屏保控制"
+msgstr "啟用螢幕保護控制"
 
 msgid "SLIDESHOW SCREENSAVER SETTINGS"
-msgstr "幻燈片屏保設定"
+msgstr "幻燈片螢幕保護設定"
 
 msgid "VIDEO SCREENSAVER SETTINGS"
-msgstr "影片屏保設定"
+msgstr "影片螢幕保護設定"
 
 msgid "SLIDESHOW SCREENSAVER"
-msgstr "幻燈片屏保"
+msgstr "幻燈片螢幕保護"
 
 msgid "SWAP IMAGES AFTER (SECONDS)"
 msgstr "幾秒後更換影象"
@@ -1828,7 +2030,7 @@ msgid "CUSTOM IMAGE DIRECTORY"
 msgstr "自定義影象目錄"
 
 msgid "VIDEO SCREENSAVER"
-msgstr "影片屏保"
+msgstr "影片螢幕保護"
 
 msgid "SWAP VIDEOS AFTER (SECONDS)"
 msgstr "幾秒後更換影片"
@@ -1837,10 +2039,10 @@ msgid "RENDER BLUR"
 msgstr "渲染模糊"
 
 msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
-msgstr "顯示藍牙狀態圖示"
+msgstr "顯示藍芽狀態圖示"
 
 msgid "DISPLAY WI-FI STATUS INDICATOR"
-msgstr "顯示WI-FI狀態圖標"
+msgstr "顯示WI-FI狀態圖示"
 
 msgid "DISPLAY CELLULAR STATUS INDICATOR"
 msgstr "顯示行動網路狀態圖示"
@@ -1853,6 +2055,9 @@ msgstr "顯示電量百分比"
 
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "正在下載主題列表 100%"
+
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "本地倉庫與遠端倉庫已分叉"
 
 msgid "THEME ALREADY UP TO DATE"
 msgstr "主題已是最新版本"
@@ -1920,6 +2125,17 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"看起來這是一個分叉倉庫，這通常意味著存在上游合併衝突，這需要由主題開發者解"
+"決。必須重新下載最新版本，原有的主題目錄 \"%s\" 將會重新命名為 "
+"\"%s_DIVERGED_DISABLED\"。"
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -1957,6 +2173,9 @@ msgstr "手冊下載"
 
 msgid "CORRUPT"
 msgstr "損壞"
+
+msgid "DIVERGED"
+msgstr "已分叉"
 
 msgid "SHALLOW"
 msgstr "淺"
@@ -2061,9 +2280,6 @@ msgstr "盒裝後蓋"
 
 msgid "TITLE SCREEN"
 msgstr "標題"
-
-msgid "FAN ART"
-msgstr "粉絲自制"
 
 msgid "MIXIMAGE"
 msgstr "混合影象"
@@ -2188,6 +2404,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "請輸入遊戲次數"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr "遊玩時間"
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr "輸入遊玩時間"
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "控制器"
 
@@ -2258,6 +2482,9 @@ msgstr "遊戲媒體"
 
 msgid "zoom"
 msgstr "zoom"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "您已超出每日抓取配額"
 
 msgid "Network error:"
 msgstr "網路錯誤："
@@ -2346,10 +2573,6 @@ msgid "jump to game"
 msgstr "跳轉到遊戲"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "未知"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "是"
 
@@ -2358,7 +2581,7 @@ msgid "no"
 msgstr "否"
 
 msgid "screensaver"
-msgstr "屏保"
+msgstr "螢幕保護"
 
 #, c-format
 msgctxt "theme"
@@ -2400,31 +2623,29 @@ msgstr ""
 "件 es_log.txt 以獲取更多資訊"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"未找到遊戲檔案，請將您的遊戲放在已配置的 ROM 目錄中。可選擇生成 ROM 目錄結"
-"構，這將為每個系統建立一個文字檔案，提供一些資訊，例如支援的副檔名。\n"
-"這是當前配置的 ROM 目錄：\n"
+"未找到任何遊戲檔案。請匯入遊戲檔案或將其手動放置到配置的遊戲目錄中。你也可以"
+"選擇產生遊戲目錄結構，該操作會為每個遊戲系統創建一個文字說明文件，其中包含支"
+"援的文件副檔名等關鍵資訊。目前配置的遊戲目錄為：\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"未找到遊戲檔案。請將您的遊戲放入當前配置的 ROM 目錄中，或使用下面的按鍵更改其"
-"路徑。也可以選擇生成 ROM 目錄結構，這將為每個系統建立一個文字檔案，提供一些信"
-"息，例如支援的副檔名。\n"
-"這是當前配置的 ROM 目錄：\n"
+"未找到任何遊戲檔案。請匯入遊戲檔案或將其手動放置到目前配置的ROM目錄中。你也可"
+"以更改ROM路徑，並可選地產生ROM目錄結構，該操作將為每個系統建立說明文字文件，"
+"其中包含支援的文件副檔名等資訊。目前配置的ROM目錄為：\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "更改 ROM 目錄"
+msgid "CHANGE"
+msgstr "變更"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "輸入 ROM 目錄路徑"
@@ -2441,9 +2662,6 @@ msgstr "載入當前配置的路徑"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "清除（留空則重置為預設路徑）"
-
-msgid "CREATE DIRECTORIES"
-msgstr "建立目錄"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2516,9 +2734,6 @@ msgstr "正在啟動遊戲 '%s'"
 msgid "menu"
 msgstr "選單"
 
-msgid "WORKING..."
-msgstr "正在執行……"
-
 msgctxt "theme"
 msgid "never"
 msgstr "從不"
@@ -2572,18 +2787,6 @@ msgstr[0] "已選擇 %i"
 
 msgid "change value"
 msgstr "更改數值"
-
-msgid "SELECT ALL"
-msgstr "選擇全部"
-
-msgid "select all"
-msgstr "選擇全部"
-
-msgid "SELECT NONE"
-msgstr "取消選擇"
-
-msgid "select none"
-msgstr "取消選擇"
 
 msgid "add half star"
 msgstr "加半顆星"
@@ -2761,9 +2964,6 @@ msgstr "放棄更改"
 msgid "discard changes"
 msgstr "放棄更改"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "您已超出每日抓取配額"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "伺服器返回 HTTP 錯誤程式碼 %s"
@@ -2805,6 +3005,9 @@ msgstr "垂直方向 3:2"
 
 msgid "4:3 vertical"
 msgstr "垂直方向 4:3"
+
+msgid "5:3 vertical"
+msgstr "垂直方向 5:3"
 
 msgid "5:4 vertical"
 msgstr "垂直方向 5:4"

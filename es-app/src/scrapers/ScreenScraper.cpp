@@ -3,7 +3,7 @@
 //  ES-DE Frontend
 //  ScreenScraper.cpp
 //
-//  Functions specifically for scraping from screenscraper.fr
+//  Functions for scraping from ScreenScraper (screenscraper.fr).
 //  Called from Scraper.
 //
 
@@ -128,6 +128,7 @@ namespace
         {SEGA_GENESIS, 1},
         {SEGA_MASTER_SYSTEM, 2},
         {SEGA_MEGA_DRIVE, 1},
+        {SEGA_PICO, 250},
         {SEGA_SATURN, 22},
         {SEGA_SG1000, 109},
         {SHARP_X1, 220},
@@ -273,7 +274,7 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
     pugi::xml_document doc;
 
     // It seems as if screenscraper.fr has changed their API slightly and now just returns
-    // a simple text messsage upon not finding any matching game. If we don't return here,
+    // a simple text message upon not finding any matching game. If we don't return here,
     // we will get a pugixml error trying to process this string as an XML message.
     if (req->getContent().find("Erreur : Rom") == 0)
         return;
@@ -400,6 +401,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         ScraperSearchResult result;
         ScreenScraperRequest::ScreenScraperConfig ssConfig;
 
+        result.scraperRequestMaxAllowance = maxRequestsPerDay;
         result.scraperRequestAllowance = scraperRequestAllowance;
         result.gameID = game.attribute("id").as_string();
 
@@ -478,10 +480,10 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             result.mdl.set("desc", description);
         }
 
-        // Get the date proper. The API returns multiple 'date' children nodes to the 'dates'
-        // main child of 'jeu'. Date fallback: WOR(LD), US, SS, JP, EU.
+        // Release date, for which the API may return multiple values for different regions.
+        // If the selected region is not present then we look for the fallback regions.
         std::string date {find_child_by_attribute_list(game.child("dates"), "date", "region",
-                                                       {region, "wor", "us", "ss", "jp", "eu"})
+                                                       {region, "wor", "us", "ss", "eu", "jp"})
                               .text()
                               .get()};
 
@@ -734,9 +736,9 @@ int ScreenScraperRequest::processMedia(ScraperSearchResult& result,
                 // region which adds media for unofficial games (e.g. for OpenBOR and PICO-8).
                 otherRegion = results.first().node().attribute("region").as_string();
             }
-            // Region fallback: world, USA, Japan, EU and custom.
+            // The fallback regions are world, USA, EU, Japan and custom.
             for (auto regionEntry :
-                 std::vector<std::string> {region, "wor", "us", "jp", "eu", "cus", otherRegion}) {
+                 std::vector<std::string> {region, "wor", "us", "eu", "jp", "cus", otherRegion}) {
                 if (art)
                     break;
 

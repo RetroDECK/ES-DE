@@ -12,6 +12,7 @@ lunasvg/*.vcxproj
 lunasvg/*.vcxproj.filters
 lunasvg/Makefile
 lunasvg/lunasvg.sln
+lunasvg/lunasvg.pc
 !rapidjson
 !rapidjson/*
 !rlottie

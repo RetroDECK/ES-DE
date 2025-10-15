@@ -5,7 +5,6 @@
 //
 //  Main scraper logic.
 //  Called from GuiScraperSearch.
-//  Calls either GamesDBJSONScraper or ScreenScraper.
 //
 
 #ifndef ES_APP_SCRAPERS_SCRAPER_H
@@ -52,6 +51,7 @@ struct ScraperSearchParams {
 struct ScraperSearchResult {
     ScraperSearchResult()
         : mdl(GAME_METADATA)
+        , scraperRequestMaxAllowance {0}
         , scraperRequestAllowance {0}
         , mediaURLFetch {NOT_STARTED}
         , thumbnailDownloadStatus {NOT_STARTED}
@@ -67,6 +67,7 @@ struct ScraperSearchResult {
 
     // How many more objects the scraper service allows to be downloaded
     // within a given time period.
+    unsigned int scraperRequestMaxAllowance;
     unsigned int scraperRequestAllowance;
 
     enum downloadStatus mediaURLFetch;
@@ -156,9 +157,6 @@ protected:
 std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParams& params);
 
 std::unique_ptr<ScraperSearchHandle> startMediaURLsFetch(const std::string& gameIDs);
-
-// Returns a list of valid scraper names.
-std::vector<std::string> getScraperList();
 
 // Returns true if the scraper configured in the settings is still valid.
 bool isValidConfiguredScraper();

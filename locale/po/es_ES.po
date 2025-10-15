@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-04 22:15+0100\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-06-25 19:27+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Español (España) <info@es-de.org>\n"
 "Language: es_ES\n"
@@ -129,6 +129,24 @@ msgstr "'%s' se filtra por lo que puede haber más juegos disponibles"
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "COLECCIÓN ELIMINADA '%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "desconocido"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -300,6 +318,12 @@ msgstr "veces jugadas, ascendente"
 
 msgid "times played, descending"
 msgstr "veces jugadas, descendente"
+
+msgid "play time, ascending"
+msgstr ""
+
+msgid "play time, descending"
+msgstr ""
 
 msgid "system, ascending"
 msgstr "sistema, ascendente"
@@ -530,6 +554,115 @@ msgstr "PONER LOS FAVORITOS EN LA PARTE SUPERIOR"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "MOSTRAR MARCAS DE ESTRELLAS EN COLECCIONES"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "IMPORTAR AL SISTEMA"
+
+msgid "NO CONFIGURATION"
+msgstr "SIN CONFIGURACIÓN"
+
+msgid "REMOVE ENTRIES"
+msgstr "ELIMINAR ENTRADAS"
+
+msgid "ALL UNSELECTED"
+msgstr "SIN SELECCIONAR"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr ""
+
+msgid "MEDIA TARGET TYPE"
+msgstr "TIPO DE DESTINO MULTIMEDIA"
+
+msgid "SCREENSHOTS"
+msgstr "CAPTURAS DE PANTALLA"
+
+msgid "TITLE SCREENS"
+msgstr "PANTALLAS DE TÍTULO"
+
+msgid "COVERS"
+msgstr "CARATULAS"
+
+msgid "BACK COVERS"
+msgstr "CONTRAPORTADAS"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "LOGO (RUEDA)"
+
+msgid "3D BOXES"
+msgstr "CARATULAS 3D"
+
+msgid "PHYSICAL MEDIA"
+msgstr "FORMATOS FISICOS"
+
+msgid "FAN ART"
+msgstr "IMAGENES HECHAS POR FANS"
+
+msgid "MIXIMAGES"
+msgstr ""
+
+msgid "IMPORT MEDIA"
+msgstr "IMPORTAR MEDIA"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "IMPORTAR BANNERS O LOGOS SI ESTAN DISPONIBLES"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "SOBRESCRIBIR ARCHIVOS MULTIMEDIA"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "INCLUIR SOLO APLICACIONES DE JUEGOS"
+
+msgid "START"
+msgstr "EMPEZAR"
+
+msgid "start importer"
+msgstr "iniciar importador"
+
+msgid "WORKING..."
+msgstr "BUSCANDO..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "NO SE ENCONTRO NADA PARA IMPORTAR"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"HA ELEGIDO ELIMINAR TODAS LAS ENTRADAS NO SELECCIONADAS, ESTO ELIMINARÁ "
+"TODOS LOS ARCHIVOS DE JUEGO CON LA EXTENSIÓN DE ARCHIVO \"%s\" DEL "
+"DIRECTORIO DEL SISTEMA \"%s\" Y, A CONTINUACIÓN, IMPORTARÁ LAS ENTRADAS QUE "
+"SELECCIONE EN LA SIGUIENTE PANTALLA\n"
+"¿ESTÁ SEGURO?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "HAGA SU SELECCIÓN"
+
+msgid "IMPORT"
+msgstr "IMPORTAR"
+
+msgid "import"
+msgstr "importar"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "%i ENTRADA IMPORTADA"
+msgstr[1] " %i ENTRADAS IMPORTADAS"
+
+msgid "SELECT ALL"
+msgstr "SELEC. TODO"
+
+msgid "select all"
+msgstr "seleccionar todo"
+
+msgid "SELECT NONE"
+msgstr "NO SELEC. NADA"
+
+msgid "select none"
+msgstr "no seleccionar nada"
+
 msgid "FILTER GAMELIST"
 msgstr "FILTRAR LISTA DE JUEGOS"
 
@@ -710,11 +843,17 @@ msgstr "GATILLOS"
 msgid "LEFT/RIGHT"
 msgstr "IZQUIERDA/DERECHA"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "LISTA DE JUEGOS AL INICIO"
+msgid "SYSTEM ON STARTUP"
+msgstr "SISTEMA AL ARRANCAR"
 
-msgid "NONE"
-msgstr "NINGUNO"
+msgid "STARTUP VIEW"
+msgstr "VISTA INICIAL"
+
+msgid "SYSTEM"
+msgstr "SISTEMA"
+
+msgid "GAMELIST"
+msgstr "LISTA DE JUEGOS"
 
 msgid "SYSTEMS SORTING"
 msgstr "ORDENAR SISTEMAS"
@@ -758,6 +897,9 @@ msgstr "ANIMACIÓN DE APERTURA DEL MENÚ"
 
 msgid "SCALE-UP"
 msgstr "A ESCALA"
+
+msgid "NONE"
+msgstr "NINGUNO"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "DURACIÓN DE LA PANTALLA DE INICIO"
@@ -959,6 +1101,9 @@ msgstr "INTERCAMBIAR LOS BOTONES A/B Y X/Y"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "IGNORAR PULSACIONES DE TECLADO"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "NOTIFICACIONES DE DISPOSITIVOS DE ENTRADA"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "CONFIGURAR TECLADO Y MANDOS"
 
@@ -991,6 +1136,9 @@ msgstr "¿GUARDAR CAMBIOS?"
 
 msgid "load default directory"
 msgstr "cargar directorio por defecto"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr ""
 
 msgid "VRAM LIMIT"
 msgstr "LIMITE DE VRAM"
@@ -1110,6 +1258,9 @@ msgstr "ACTIVAR MENU EN MODO NIÑOS"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "MOSTRAR MENU SALIR (OPCIONES DE REINICIO Y APAGADO)"
 
+msgid "GAME IMPORTER"
+msgstr "IMPORTADOR DE JUEGOS"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "LIMPIAR DATOS HUERFANOS"
 
@@ -1163,6 +1314,16 @@ msgstr "¿APAGAR?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "APAGAR SISTEMA"
+
+msgid "REALLY SUSPEND?"
+msgstr ""
+
+msgid "SUSPEND SYSTEM"
+msgstr ""
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "CONF. DEL ESTADO DEL SISTEMA"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1283,9 +1444,6 @@ msgstr "Procesando:"
 
 msgid "Last error message:"
 msgstr "Último mensaje de error:"
-
-msgid "START"
-msgstr "EMPEZAR"
 
 msgid "start processing"
 msgstr "empezar proceso"
@@ -1581,6 +1739,9 @@ msgstr "MANUALES DE JUEGO"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "RESOLUCION DEL MIXIMAGE"
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr ""
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "AJUSTAR CAPTURA HORIZON."
@@ -1695,6 +1856,51 @@ msgstr "EEUU"
 msgid "WORLD"
 msgstr "GLOBAL"
 
+msgid "ASIA"
+msgstr ""
+
+msgid "AUSTRALIA"
+msgstr ""
+
+msgid "BRAZIL"
+msgstr ""
+
+msgid "CANADA"
+msgstr ""
+
+msgid "CHINA"
+msgstr ""
+
+msgid "GERMANY"
+msgstr ""
+
+msgid "FRANCE"
+msgstr ""
+
+msgid "ITALY"
+msgstr ""
+
+msgid "KOREA"
+msgstr ""
+
+msgid "NETHERLANDS"
+msgstr ""
+
+msgid "RUSSIA"
+msgstr ""
+
+msgid "SWEDEN"
+msgstr ""
+
+msgid "SPAIN"
+msgstr ""
+
+msgid "TAIWAN"
+msgstr ""
+
+msgid "UNITED KINGDOM"
+msgstr ""
+
 msgid "PREFERRED LANGUAGE"
 msgstr "IDIOMA PREFERIDO"
 
@@ -1765,9 +1971,6 @@ msgstr "TODOS LOS JUEGOS FUERON FILTRADOS, NADA QUE ESCRAPEAR"
 msgid "SCRAPING IN PROGRESS"
 msgstr "ESCRAPEO EN MARCHA"
 
-msgid "SYSTEM"
-msgstr "SISTEMA"
-
 msgid "REFINE SEARCH"
 msgstr "BUSQUEDA AVANZADA"
 
@@ -1827,6 +2030,15 @@ msgstr "JUGADORES:"
 
 msgid "NO GAMES FOUND"
 msgstr "JUEGO NO ENCONTRADO"
+
+msgid "API CALLS:"
+msgstr "LLAMADAS A LA API:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "%i DISPONIBLE"
+msgstr[1] "%i DISPONIBLES"
 
 msgid "RETRY"
 msgstr "REINTENTAR"
@@ -1927,6 +2139,9 @@ msgstr "MOSTRAR PORCENTAJE DE CARGA DE LA BATERÍA"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DESCARGANDO LISTA DE TEMAS 100%"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "EL REPOSITORIO SE HA DESVIADO DEL ORIGEN"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "EL TEMA YA ESTA ACTUALIZADO"
 
@@ -2002,6 +2217,18 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"PARECE COMO SI SE TRATARA DE UN REPOSITORIO DIVERGENTE, POR LO GENERAL "
+"SIGNIFICA QUE HAY UN CONFLICTO DE FUSION ASCENDENTE QUE DEBE SER RESUELTO "
+"POR EL DESARROLLADOR DEL TEMA. SE REQUIERE UNA NUEVA DESCARGA Y EL ANTIGUO "
+"DIRECTORIO DE TEMAS \"%s\" SERÁ RENOMBRADO A \"%s_DIVERGED_DISABLED\""
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -2043,6 +2270,9 @@ msgstr "DESCARGA MANUAL"
 
 msgid "CORRUPT"
 msgstr "CORRUPTO"
+
+msgid "DIVERGED"
+msgstr "DESVIADO"
 
 msgid "SHALLOW"
 msgstr "SUPERFICIAL"
@@ -2152,9 +2382,6 @@ msgstr "CONTRAPORTADA"
 
 msgid "TITLE SCREEN"
 msgstr "PANTALLA DEL TITULO"
-
-msgid "FAN ART"
-msgstr "IMAGENES HECHAS POR FANS"
 
 msgid "MIXIMAGE"
 msgstr "MIXIMAGE"
@@ -2279,6 +2506,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "INTRODUCIR NUMERO DE PARTIDAS JUGADAS"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "MANDO"
 
@@ -2353,6 +2588,9 @@ msgstr "media del juego"
 
 msgid "zoom"
 msgstr "ampliar"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Ha superado su cuota diaria de escrapeos"
 
 msgid "Network error:"
 msgstr "Error de red:"
@@ -2449,10 +2687,6 @@ msgid "jump to game"
 msgstr "ir al juego"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "desconocido"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "si"
 
@@ -2510,36 +2744,34 @@ msgstr ""
 "aplicación es_log.txt para obtener información adicional"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"NO SE ENCONTRARON ARCHIVOS DE JUEGOS, POR FAVOR COLOQUE SUS JUEGOS EN EL "
-"DIRECTORIO ROM CONFIGURADO. OPCIONALMENTE SE PUEDE GENERAR LA ESTRUCTURA DEL "
-"DIRECTORIO ROM QUE CREARÁ UN ARCHIVO DE TEXTO PARA CADA SISTEMA "
-"PROPORCIONANDO ALGUNA INFORMACIÓN COMO LAS EXTENSIONES DE ARCHIVO "
-"SOPORTADAS.\n"
-"ESTE ES EL DIRECTORIO ROM CONFIGURADO ACTUALMENTE:\n"
+"NO SE HAN ENCONTRADO ARCHIVOS DE JUEGOS. PUEDE IMPORTAR ALGUNOS JUEGOS O "
+"COLOCARLOS MANUALMENTE EN EL DIRECTORIO ROM CONFIGURADO. OPCIONALMENTE PUEDE "
+"GENERAR LA ESTRUCTURA DEL DIRECTORIO ROM QUE CREARÁ UN ARCHIVO DE TEXTO PARA "
+"CADA SISTEMA PROPORCIONANDO ALGUNA INFORMACIÓN COMO LAS EXTENSIONES DE "
+"ARCHIVO SOPORTADAS. ESTE ES EL DIRECTORIO ROM CONFIGURADO:\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"NO SE HAN ENCONTRADO ARCHIVOS DE JUEGOS. COLOQUE SUS JUEGOS EN EL DIRECTORIO "
-"ROM ACTUALMENTE CONFIGURADO O CAMBIE SU RUTA UTILIZANDO EL BOTÓN DE ABAJO. "
-"OPCIONALMENTE SE PUEDE GENERAR LA ESTRUCTURA DEL DIRECTORIO ROM QUE CREARÁ "
-"UN ARCHIVO DE TEXTO PARA CADA SISTEMA PROPORCIONANDO ALGUNA INFORMACIÓN COMO "
-"LAS EXTENSIONES DE ARCHIVO SOPORTADAS.\n"
-"ESTE ES EL DIRECTORIO ROM ACTUALMENTE CONFIGURADO:\n"
+"NO SE HAN ENCONTRADO ARCHIVOS DE JUEGOS. PUEDE IMPORTAR ALGUNOS JUEGOS O "
+"COLOCARLOS MANUALMENTE EN EL DIRECTORIO ROM ACTUALMENTE CONFIGURADO. TAMBIÉN "
+"PUEDE CAMBIAR LA RUTA DE LA ROM Y, OPCIONALMENTE, GENERAR LA ESTRUCTURA DEL "
+"DIRECTORIO DE LA ROM, LO QUE CREARÁ UN ARCHIVO DE TEXTO PARA CADA SISTEMA "
+"QUE PROPORCIONARÁ ALGUNA INFORMACIÓN, COMO LAS EXTENSIONES DE ARCHIVO "
+"ADMITIDAS. ESTE ES EL DIRECTORIO ROM CONFIGURADO:\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "CAMBIAR DIRECTORIO DE LAS ROMS"
+msgid "CHANGE"
+msgstr "CAMBIAR"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "INTRODUZCA LA RUTA DEL DIRECTORIO DE LAS ROMS"
@@ -2558,9 +2790,6 @@ msgstr "CARGAR LA RUTA CONFIGURADA ACTUALMENTE"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "BORRAR (DEJAR EN BLANCO PARA RESTABLECER LA RUTA POR DEFECTO)"
-
-msgid "CREATE DIRECTORIES"
-msgstr "CREAR DIRECTORIOS"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2647,9 +2876,6 @@ msgstr "LANZANDO JUEGO '%s'"
 msgid "menu"
 msgstr "menu"
 
-msgid "WORKING..."
-msgstr "BUSCANDO..."
-
 msgctxt "theme"
 msgid "never"
 msgstr "nunca"
@@ -2709,18 +2935,6 @@ msgstr[1] "%i SELECCIONADOS"
 
 msgid "change value"
 msgstr "cambiar valor"
-
-msgid "SELECT ALL"
-msgstr "SELECCIONAR TODO"
-
-msgid "select all"
-msgstr "seleccionar todo"
-
-msgid "SELECT NONE"
-msgstr "NO SELECCIONAR NADA"
-
-msgid "select none"
-msgstr "no seleccionar nada"
 
 msgid "add half star"
 msgstr "añadir media estrella"
@@ -2900,9 +3114,6 @@ msgstr "DESCARTAR CAMBIOS"
 msgid "discard changes"
 msgstr "descartar cambios"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "Ha superado su cuota diaria de escrapeos"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "El servidor ha devuelto un código de error HTTP %s"
@@ -2944,6 +3155,9 @@ msgstr "3:2 vertical"
 
 msgid "4:3 vertical"
 msgstr "4:3 vertical"
+
+msgid "5:3 vertical"
+msgstr "5:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"

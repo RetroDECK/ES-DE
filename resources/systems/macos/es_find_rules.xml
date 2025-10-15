@@ -247,6 +247,12 @@
             <entry>/Applications/Alber.app/Contents/MacOS/Alber</entry>
         </rule>
     </emulator>
+    <emulator name="PARALLEL-LAUNCHER">
+        <!-- Nintendo 64 emulator Parallel Launcher  -->
+        <rule type="staticpath">
+            <entry>/Applications/parallel-launcher.app/Contents/MacOS/parallel-launcher</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="staticpath">
@@ -417,6 +423,7 @@
     <emulator name="VISUAL-PINBALL">
         <!-- Pinball simulator Visual Pinball -->
         <rule type="staticpath">
+            <entry>/Applications/VPinballX_BGFX.app/Contents/MacOS/VPinballX_BGFX</entry>
             <entry>/Applications/VPinballX_GL.app/Contents/MacOS/VPinballX_GL</entry>
         </rule>
     </emulator>

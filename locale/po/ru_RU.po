@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-05 19:28+0400\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-07-02 16:34+0400\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
 "Language: ru_RU\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid "Network error (status:"
 msgstr "Ошибка сети (статус:"
@@ -133,6 +133,26 @@ msgstr "'%s' отфильтрован - без фильтра может быт�
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "УДАЛЕНА КОЛЛЕКЦИЯ '%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "неизвестно"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -299,6 +319,12 @@ msgstr "сыграно раз, по возрастанию"
 
 msgid "times played, descending"
 msgstr "сыграно раз, по убыванию"
+
+msgid "play time, ascending"
+msgstr ""
+
+msgid "play time, descending"
+msgstr ""
 
 msgid "system, ascending"
 msgstr "система, по возрастанию"
@@ -493,7 +519,7 @@ msgid ""
 "'%s'\n"
 "ARE YOU SURE?"
 msgstr ""
-"ЭТО ПРИВЕДЕТ К БЕЗВОЗВРАТНОМУ УДАЛЕНИЮ КОЛЛЕКЦИИ\n"
+"ЭТО ПРИВЕДЕТ К БЕЗВОЗВРАТНОМУ УДАЛЕНИЮ КОЛЛЕКЦИИ.\n"
 "'%s'\n"
 "ВЫ УВЕРЕНЫ?"
 
@@ -520,6 +546,115 @@ msgstr "ИЗБРАННОЕ СВЕРХУ ДЛЯ ПОЛЬЗ. КОЛЛЕКЦИЙ"
 
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "ВКЛ. ОЦЕНКУ ЗВЁЗДАМИ ДЛЯ ПОЛЬЗ. КОЛЛЕКЦИЙ"
+
+msgid "IMPORT TO SYSTEM"
+msgstr "ИМПОРТИРОВАТЬ В СИСТЕМУ"
+
+msgid "NO CONFIGURATION"
+msgstr "НЕТ КОНФИГУРАЦИИ"
+
+msgid "REMOVE ENTRIES"
+msgstr "УДАЛИТЬ ЗАПИСИ"
+
+msgid "ALL UNSELECTED"
+msgstr "ВСЕ НЕ ВЫБРАННЫЕ"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr ""
+
+msgid "MEDIA TARGET TYPE"
+msgstr "ТИП МЕДИА"
+
+msgid "SCREENSHOTS"
+msgstr "СКРИНШОТЫ"
+
+msgid "TITLE SCREENS"
+msgstr "СКРИНШОТЫ ГЛАВНОГО МЕНЮ"
+
+msgid "COVERS"
+msgstr "ПЕРЕДНИЕ ОБЛОЖКИ"
+
+msgid "BACK COVERS"
+msgstr "ЗАДНИЕ ОБЛОЖКИ"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "ЛОГО (БАННЕРЫ)"
+
+msgid "3D BOXES"
+msgstr "3D-ОБЛОЖКИ"
+
+msgid "PHYSICAL MEDIA"
+msgstr "ФИЗИЧЕСКИЕ НОСИТЕЛИ"
+
+msgid "FAN ART"
+msgstr "ФАН-АРТ"
+
+msgid "MIXIMAGES"
+msgstr ""
+
+msgid "IMPORT MEDIA"
+msgstr "ИМПОРТИРОВАТЬ МЕДИА"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "ИМПОРТИРОВАТЬ БАННЕРЫ ИЛИ ЛОГОТИПЫ ЕСЛИ ДОСТУПНО"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "ПЕРЕЗАПИСЫВАТЬ МЕДИАФАЙЛЫ"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "ВКЛЮЧАТЬ ТОЛЬКО ПРИЛОЖЕНИЯ ИЗ КАТЕГОРИИ ИГР"
+
+msgid "START"
+msgstr "СТАРТ"
+
+msgid "start importer"
+msgstr "запуск импорта"
+
+msgid "WORKING..."
+msgstr "ВЫПОЛНЕНИЕ..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "НЕ НАЙДЕНО НИЧЕГО ДЛЯ ИМПОРТА"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"ВЫ ВЫБРАЛИ УДАЛИТЬ ВСЕ НЕВЫБРАННЫЕ ЗАПИСИ, ЭТО УДАЛИТ ВСЕ ИГРОВЫЕ ФАЙЛЫ С "
+"РАСШИРЕНИЕМ ФАЙЛА \"%s\" ИЗ СИСТЕМНОЙ ДИРЕКТОРИИ \"%s\" И ЗАТЕМ ИМПОРТИРУЕТ "
+"ФАЙЛЫ, ВЫБРАННЫЕ ВАМИ НА СЛЕДУЮЩЕМ ЭКРАНЕ\n"
+"ВЫ УВЕРЕНЫ?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "СДЕЛАЙТЕ ВЫБОР"
+
+msgid "IMPORT"
+msgstr "ИМПОРТ"
+
+msgid "import"
+msgstr "импорт"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "ИМПОРТИРОВАНА %i ЗАПИСЬ"
+msgstr[1] "ИМПОРТИРОВАНО %i ЗАПИСИ"
+msgstr[2] "ИМПОРТИРОВАНО %i ЗАПИСЕЙ"
+
+msgid "SELECT ALL"
+msgstr "ВЫБРАТЬ ВСЁ"
+
+msgid "select all"
+msgstr "выбрать всё"
+
+msgid "SELECT NONE"
+msgstr "НЕ ВЫБИРАТЬ НИЧЕГО"
+
+msgid "select none"
+msgstr "не выбирать"
 
 msgid "FILTER GAMELIST"
 msgstr "ФИЛЬТР ГЕЙМЛИСТА"
@@ -701,11 +836,17 @@ msgstr "ТРИГГЕРЫ"
 msgid "LEFT/RIGHT"
 msgstr "ВЛЕВО/ВПРАВО"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "ГЕЙМЛИСТ ПРИ ЗАПУСКЕ"
+msgid "SYSTEM ON STARTUP"
+msgstr "СИСТЕМА ПРИ ЗАПУСКЕ"
 
-msgid "NONE"
-msgstr "НЕТ"
+msgid "STARTUP VIEW"
+msgstr "ВИД ПРИ ЗАПУСКЕ"
+
+msgid "SYSTEM"
+msgstr "СИСТЕМА"
+
+msgid "GAMELIST"
+msgstr "ГЕЙМЛИСТ"
 
 msgid "SYSTEMS SORTING"
 msgstr "СОРТИРОВКА СИСТЕМ"
@@ -749,6 +890,9 @@ msgstr "АНИМАЦИЯ ОТКРЫТИЯ МЕНЮ"
 
 msgid "SCALE-UP"
 msgstr "УВЕЛИЧЕНИЕ"
+
+msgid "NONE"
+msgstr "НЕТ"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "ПРОДОЛЖИТЕЛЬНОСТЬ ЭКРАНА ЗАПУСКА"
@@ -949,6 +1093,9 @@ msgstr "ПОМЕНЯТЬ A/B И X/Y МЕСТАМИ"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "ИГНОРИРОВАТЬ ВВОД С КЛАВИАТУРЫ"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "УВЕДОМЛЕНИЯ УСТРОЙСТВ ВВОДА"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "НАСТРОЙКА КЛАВИАТУРЫ И КОНТРОЛЛЕРОВ"
 
@@ -981,6 +1128,9 @@ msgstr "СОХРАНИТЬ ИЗМЕНЕНИЯ?"
 
 msgid "load default directory"
 msgstr "загрузить каталог по умолчанию"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr ""
 
 msgid "VRAM LIMIT"
 msgstr "ЛИМИТ VRAM"
@@ -1100,6 +1250,9 @@ msgstr "РАЗРЕШИТЬ МЕНЮ В ДЕТСКОМ РЕЖИМЕ"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "МЕНЮ ВЫХОДА (ПУНКТЫ ПЕРЕЗАГРУЗКИ И ВЫКЛ.)"
 
+msgid "GAME IMPORTER"
+msgstr "ИМПОРТ ИГР"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "ОЧИСТКА НЕАКТУАЛЬНЫХ ДАННЫХ"
 
@@ -1153,6 +1306,16 @@ msgstr "ДЕЙСТВИТЕЛЬНО ЗАВЕРШИТЬ РАБОТУ СИСТЕМ�
 
 msgid "POWER OFF SYSTEM"
 msgstr "ВЫКЛЮЧИТЬ ПИТАНИЕ СИСТЕМЫ"
+
+msgid "REALLY SUSPEND?"
+msgstr ""
+
+msgid "SUSPEND SYSTEM"
+msgstr ""
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "НАСТРОЙКИ СТАТУСА СИСТЕМЫ"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1273,9 +1436,6 @@ msgstr "Обработка:"
 
 msgid "Last error message:"
 msgstr "Последнее сообщение об ошибке:"
-
-msgid "START"
-msgstr "СТАРТ"
 
 msgid "start processing"
 msgstr "начать обработку"
@@ -1554,6 +1714,9 @@ msgstr "РУКОВОДСТВА"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "РАЗРЕШЕНИЕ МИКС-ИЗОБРАЖЕНИЯ"
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr ""
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "ГОРИЗ. ПОДГОНКА СКРИНШОТОВ"
@@ -1667,6 +1830,51 @@ msgstr "США"
 msgid "WORLD"
 msgstr "МИР"
 
+msgid "ASIA"
+msgstr ""
+
+msgid "AUSTRALIA"
+msgstr ""
+
+msgid "BRAZIL"
+msgstr ""
+
+msgid "CANADA"
+msgstr ""
+
+msgid "CHINA"
+msgstr ""
+
+msgid "GERMANY"
+msgstr ""
+
+msgid "FRANCE"
+msgstr ""
+
+msgid "ITALY"
+msgstr ""
+
+msgid "KOREA"
+msgstr ""
+
+msgid "NETHERLANDS"
+msgstr ""
+
+msgid "RUSSIA"
+msgstr ""
+
+msgid "SWEDEN"
+msgstr ""
+
+msgid "SPAIN"
+msgstr ""
+
+msgid "TAIWAN"
+msgstr ""
+
+msgid "UNITED KINGDOM"
+msgstr ""
+
 msgid "PREFERRED LANGUAGE"
 msgstr "ПРЕДПОЧИТАЕМЫЙ ЯЗЫК"
 
@@ -1736,9 +1944,6 @@ msgstr "ВСЕ ИГРЫ БЫЛИ ОТФИЛЬТРОВАНЫ, НЕЧЕГО СКР
 msgid "SCRAPING IN PROGRESS"
 msgstr "СКРЕЙПИНГ В ПРОЦЕССЕ"
 
-msgid "SYSTEM"
-msgstr "СИСТЕМА"
-
 msgid "REFINE SEARCH"
 msgstr "УТОЧНИТЬ ПОИСК"
 
@@ -1801,6 +2006,16 @@ msgstr "ИГРОКИ:"
 
 msgid "NO GAMES FOUND"
 msgstr "НЕ НАЙДЕНО ИГР"
+
+msgid "API CALLS:"
+msgstr "ВЫЗОВЫ API:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "%i ОСТАЛОСЬ"
+msgstr[1] "%i ОСТАЛОСЬ"
+msgstr[2] "%i ОСТАЛОСЬ"
 
 msgid "RETRY"
 msgstr "ПОВТОР"
@@ -1902,6 +2117,9 @@ msgstr "ОТОБРАЖАТЬ ПРОЦЕНТ ЗАРЯДА БАТАРЕИ"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "ЗАГРУЗКА СПИСКА ТЕМ 100%"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "РЕПОЗИТОРИЙ РАСХОДИТСЯ С ИСТОЧНИКОМ"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "ТЕМА УЖЕ АКТУАЛЬНАЯ"
 
@@ -1976,6 +2194,18 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"ПОХОЖЕ, ЧТО ЭТО РАСХОДЯЩИЙСЯ РЕПОЗИТОРИЙ, ЧТО ОБЫЧНО ОЗНАЧАЕТ НАЛИЧИЕ "
+"КОНФЛИКТА СЛИЯНИЯ, КОТОРЫЙ ДОЛЖЕН БЫТЬ ИСПРАВЛЕН РАЗРАБОТЧИКОМ ТЕМЫ. ТЕМУ "
+"НЕОБХОДИМО ЗАГРУЗИТЬ ПОВТОРНО, А КАТАЛОГ СТАРОЙ ТЕМЫ \"%s\" БУДЕТ "
+"ПЕРЕИМЕНОВАН В \"%s_DIVERGED_DISABLED\""
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -2017,6 +2247,9 @@ msgstr "РУЧНАЯ ЗАГРУЗКА"
 
 msgid "CORRUPT"
 msgstr "ИСКАЖЁННЫЕ"
+
+msgid "DIVERGED"
+msgstr "РАЗОШЛИСЬ"
 
 msgid "SHALLOW"
 msgstr "ПОВЕРХНОСТНЫХ"
@@ -2126,9 +2359,6 @@ msgstr "ЗАДНЯЯ ОБЛОЖКА"
 
 msgid "TITLE SCREEN"
 msgstr "ГЛАВНОЕ МЕНЮ"
-
-msgid "FAN ART"
-msgstr "ФАН-АРТ"
 
 msgid "MIXIMAGE"
 msgstr "МИКС-ИЗОБРАЖЕНИЕ"
@@ -2253,6 +2483,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "ВВЕДИТЕ ЧИСЛО СЫГРАННЫХ РАЗ"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "КОНТРОЛЛЕР"
 
@@ -2329,6 +2567,9 @@ msgstr "игровые медиа"
 
 msgid "zoom"
 msgstr "масштаб"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Вы превысили суточную норму скрейпинга"
 
 msgid "Network error:"
 msgstr "Ошибка сети:"
@@ -2422,10 +2663,6 @@ msgid "jump to game"
 msgstr "к игре"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "неизвестно"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "да"
 
@@ -2486,35 +2723,33 @@ msgstr ""
 "ДОПОЛНИТЕЛЬНОЙ ИНФОРМАЦИИ"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"ФАЙЛЫ ИГР НЕ НАЙДЕНЫ. ПОЖАЛУЙСТА, ПОМЕСТИТЕ СВОИ ИГРЫ В РАНЕЕ УКАЗАННЫЙ "
-"КАТАЛОГ РОМОВ. ОПЦИОНАЛЬНО, МОЖНО СГЕНЕРИРОВАТЬ СТРУКТУРУ ПАПОК КАТАЛОГА "
-"РОМОВ, ЧТО ТАКЖЕ СОЗДАСТ ТЕКСТОВЫЙ ФАЙЛ ДЛЯ КАЖДОЙ СИСТЕМЫ, СОДЕРЖАЩИЙ "
-"НЕКОТОРУЮ ИНФОРМАЦИЮ - НАПРИМЕР, О ПОДДЕРЖИВАЕМЫХ РАСШИРЕНИЯХ ФАЙЛОВ.\n"
-"ЭТО ТЕКУЩАЯ ДИРЕКТОРИЯ РОМОВ:\n"
+"НЕ НАЙДЕНО ИГРОВЫХ ФАЙЛОВ. ИМПОРТИРУЙТЕ ИГРЫ ИЛИ ПОМЕСТИТЕ ИХ ВРУЧНУЮ В "
+"КАТАЛОГ РОМОВ. ОПЦИОНАЛЬНО ВЫ МОЖЕТЕ СГЕНЕРИРОВАТЬ СТРУКТУРУ КАТАЛОГОВ "
+"РОМОВ, ЧТО СОЗДАСТ ТЕКСТОВЫЙ ФАЙЛ ДЛЯ КАЖДОЙ СИСТЕМЫ, ДАЮЩИЙ НЕКОТОРУЮ "
+"ИНФОРМАЦИЮ, НАПРИМЕР, ПОДДЕРЖИВАЕМЫЕ РАСШИРЕНИЯ ФАЙЛОВ. ТЕКУЩИЙ КАТАЛОГ "
+"РОМОВ:\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"ФАЙЛЫ ИГР НЕ НАЙДЕНЫ. ПОМЕСТИТЕ СВОИ ИГРЫ В ТЕКУЩИЙ КАТАЛОГ РОМОВ ИЛИ "
-"ИЗМЕНИТЕ ПУТЬ К НЕМУ С ПОМОЩЬЮ КНОПКИ НИЖЕ. ОПЦИОНАЛЬНО, МОЖНО СГЕНЕРИРОВАТЬ "
-"СТРУКТУРУ ПАПОК КАТАЛОГА РОМОВ, ЧТО ТАКЖЕ СОЗДАСТ ТЕКСТОВЫЙ ФАЙЛ ДЛЯ КАЖДОЙ "
-"СИСТЕМЫ, СОДЕРЖАЩИЙ НЕКОТОРУЮ ИНФОРМАЦИЮ - НАПРИМЕР, ПОДДЕРЖИВАЕМЫЕ "
-"РАСШИРЕНИЯ ФАЙЛОВ.\n"
-"ЭТО ТЕКУЩАЯ ДИРЕКТОРИЯ РОМОВ:\n"
+"НЕ НАЙДЕНО ИГРОВЫХ ФАЙЛОВ. ИМПОРТИРУЙТЕ ИГРЫ ИЛИ ПОМЕСТИТЕ ИХ ВРУЧНУЮ В "
+"КАТАЛОГ РОМОВ. ВЫ ТАКЖЕ МОЖЕТЕ СМЕНИТЬ ПУТЬ К РОМАМ И ОПЦИОНАЛЬНО "
+"СГЕНЕРИРОВАТЬ СТРУКТУРУ КАТАЛОГОВ РОМОВ, ЧТО СОЗДАСТ ТЕКСТОВЫЙ ФАЙЛ ДЛЯ "
+"КАЖДОЙ СИСТЕМЫ, ДАЮЩИЙ НЕКОТОРУЮ ИНФОРМАЦИЮ, НАПРИМЕР, ПОДДЕРЖИВАЕМЫЕ "
+"РАСШИРЕНИЯ ФАЙЛОВ. ТЕКУЩИЙ КАТАЛОГ РОМОВ:\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "СМЕНИТЬ КАТАЛОГ РОМОВ"
+msgid "CHANGE"
+msgstr "ИЗМЕНИТЬ"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "ВВЕДИТЕ ПУТЬ К КАТАЛОГУ РОМОВ"
@@ -2533,9 +2768,6 @@ msgstr "ЗАГРУЗИТЬ ТЕКУЩИЙ ПУТЬ"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "ОЧИСТИТЬ (ОСТАВЬТЕ ПУСТЫМ, ЧТОБЫ СБРОСИТЬ ПУТЬ ПО УМОЛЧАНИЮ)"
-
-msgid "CREATE DIRECTORIES"
-msgstr "СОЗДАТЬ ПАПКИ"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2619,9 +2851,6 @@ msgstr "ЗАПУСК ИГРЫ '%s'"
 msgid "menu"
 msgstr "меню"
 
-msgid "WORKING..."
-msgstr "ВЫПОЛНЕНИЕ..."
-
 msgctxt "theme"
 msgid "never"
 msgstr "никогда"
@@ -2687,18 +2916,6 @@ msgstr[2] "%i ВЫБРАНО"
 
 msgid "change value"
 msgstr "изменить значение"
-
-msgid "SELECT ALL"
-msgstr "ВЫБРАТЬ ВСЁ"
-
-msgid "select all"
-msgstr "выбрать всё"
-
-msgid "SELECT NONE"
-msgstr "НЕ ВЫБИРАТЬ НИЧЕГО"
-
-msgid "select none"
-msgstr "не выбирать"
 
 msgid "add half star"
 msgstr "добавить ползвезды"
@@ -2879,9 +3096,6 @@ msgstr "ОТМЕНИТЬ ИЗМЕНЕНИЯ"
 msgid "discard changes"
 msgstr "отменить изменения"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "Вы превысили суточную норму скрейпинга"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Сервер вернул код ошибки HTTP %s"
@@ -2923,6 +3137,9 @@ msgstr "3:2 вертикальный"
 
 msgid "4:3 vertical"
 msgstr "4:3 вертикальный"
+
+msgid "5:3 vertical"
+msgstr "5:3 вертикальный"
 
 msgid "5:4 vertical"
 msgstr "5:4 вертикальный"

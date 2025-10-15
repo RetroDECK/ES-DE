@@ -24,7 +24,7 @@ struct InputConfigStructure {
     std::string icon;
 };
 
-static const int inputCount = 24;
+static const int inputCount {24};
 static InputConfigStructure sGuiInputConfigList[inputCount];
 
 GuiInputConfig::GuiInputConfig(InputConfig* target,

@@ -30,6 +30,7 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiApplicationUpdater.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameImporter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiLaunchScreen.h
@@ -82,6 +83,7 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiApplicationUpdater.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameImporter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiLaunchScreen.cpp
@@ -127,7 +129,7 @@ elseif(APPLE)
     add_executable(ES-DE ${ES_SOURCES} ${ES_HEADERS})
     target_link_libraries(ES-DE ${COMMON_LIBRARIES} "-framework CoreFoundation -framework IOKit"
                                                     "-framework SystemConfiguration"
-                                                    "-framework IOBluetooth" es-core)
+                                                    "-framework IOBluetooth" es-core lunasvg::lunasvg)
     set_target_properties(ES-DE PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
     if(CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 15.0.0)
         target_link_options(ES-DE PRIVATE LINKER:-no_warn_duplicate_libraries)
@@ -135,16 +137,17 @@ elseif(APPLE)
 elseif(WIN32)
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_executable(ES-DE WIN32 ${ES_SOURCES} ${ES_HEADERS})
-    target_link_libraries(ES-DE ${COMMON_LIBRARIES} es-core)
+    target_link_libraries(ES-DE ${COMMON_LIBRARIES} es-core lunasvg::lunasvg)
     set_target_properties(ES-DE PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
 elseif(ANDROID)
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_library(main MODULE ${ES_SOURCES} ${ES_HEADERS})
-    target_link_libraries(main PRIVATE ${COMMON_LIBRARIES} ${CMAKE_DL_LIBS} es-core es-pdf-convert)
+    target_link_libraries(main PRIVATE ${COMMON_LIBRARIES} ${CMAKE_DL_LIBS}
+                          es-core es-pdf-convert lunasvg::lunasvg)
 else()
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_executable(es-de ${ES_SOURCES} ${ES_HEADERS})
-    target_link_libraries(es-de ${COMMON_LIBRARIES} ${CMAKE_DL_LIBS} es-core)
+    target_link_libraries(es-de ${COMMON_LIBRARIES} ${CMAKE_DL_LIBS} es-core lunasvg::lunasvg)
     set_target_properties(es-de PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
@@ -156,27 +159,28 @@ if(WIN32)
     if(CMAKE_BUILD_TYPE MATCHES Debug)
         set(CMAKE_INSTALL_DEBUG_LIBRARIES TRUE)
     endif()
-    install(FILES ../avcodec-60.dll
-                  ../avfilter-9.dll
-                  ../avformat-60.dll
-                  ../avutil-58.dll
-                  ../postproc-57.dll
-                  ../swresample-4.dll
-                  ../swscale-7.dll
+    install(FILES ../avcodec-61.dll
+                  ../avfilter-10.dll
+                  ../avformat-61.dll
+                  ../avutil-59.dll
+                  ../postproc-58.dll
+                  ../swresample-5.dll
+                  ../swscale-8.dll
                   ../FreeImage.dll
                   ../freetype.dll
                   ../git2.dll
                   ../glew32.dll
                   ../harfbuzz.dll
-                  ../icudt75.dll
-                  ../icuin75.dll
-                  ../icuuc75.dll
+                  ../icudt77.dll
+                  ../icuin77.dll
+                  ../icuuc77.dll
                   ../libcrypto-3-x64.dll
                   ../libcurl-x64.dll
                   ../libiconv-2.dll
                   ../libintl-8.dll
                   ../libssl-3-x64.dll
                   ../lunasvg.dll
+                  ../plutovg.dll
                   ../pugixml.dll
                   ../rlottie.dll
                   ../SDL2.dll
@@ -224,37 +228,35 @@ elseif(APPLE AND NOT IOS)
                                 GROUP_READ GROUP_EXECUTE
                                 WORLD_READ WORLD_EXECUTE)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.60.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.61.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.9.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.10.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.60.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.61.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.58.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.59.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.57.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.58.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libswresample.4.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libswresample.5.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.7.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.8.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libvorbis.0.4.9.dylib
-        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libvorbisenc.2.0.12.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libdav1d.7.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libfontconfig.1.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libgit2.1.7.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libgit2.1.9.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libharfbuzz.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libicudata.75.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libicudata.77.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libicui18n.75.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libicui18n.77.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libicuuc.75.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libicuuc.77.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libintl.8.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
@@ -262,9 +264,9 @@ elseif(APPLE AND NOT IOS)
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libopenjp2.7.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler-cpp.0.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler-cpp.2.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler.129.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler.148.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libtiff.6.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)

@@ -8,7 +8,7 @@ Yes it's the exact same application, with only some minor differences. This mean
 
 ## Why is it named ES-DE as in "Desktop Edition" if this is a release for a mobile operating system?
 
-First it's branding, it would be very confusing to have different names for the same application when it's available cross-platform. Second, the _Desktop Edition_ part is now basically legacy. Actually the entire _EmulationStation Desktop Edition_ subtitle used on the splash screen is only temporary during a transition period and it will be removed at some point. The official name of the project is already ES-DE Frontend or ES-DE for short.
+First it's branding, it would be very confusing to have different names for the same application when it's available cross-platform. Second, the _Desktop Edition_ part is now basically legacy. Actually the entire _EmulationStation Desktop Edition_ subtitle used on the splash screen is only temporary during a transition period and it will be removed at some point. The official name of the project is already ES-DE Frontend or ES-DE for short. There's also an interesting diagram available at https://gist.github.com/anthonycaccese/53d72260f5e3c2c72defd77fe216bd1b which provides a visual overview of the EmulationStation history and where ES-DE fits into this.
 
 ## Is it available for free, and is it open source?
 
@@ -32,7 +32,7 @@ There are some Android developer options that break ES-DE (and probably many oth
 
 ## I received an update email to my Gmail account but the APK download link doesn't seem to work?
 
-There seems to be an issue with Gmail (both web version and app) that a few people have run into. Clicking on some external download links will result in extremely slow downloads or the download failing completely. The solution is to copy the download link from the email and paste it into the address bar of a web browser, i.e. outside of the Gmail web interface or outside the Gmail app. That should resolve the issue and the APK should download correctly.
+There seems to be an issue with Gmail (both web version and app) that some people have run into. Clicking on some external download links will result in extremely slow downloads or the download failing completely. The solution is to copy the download link from the email and paste it into the address bar of a web browser, i.e. outside of the Gmail web interface or outside the Gmail app. That should resolve the issue and the APK should download correctly.
 
 ## Will I lose any settings or data when upgrading to a new release?
 
@@ -42,7 +42,7 @@ No, you will not lose any settings or data when you upgrade, everything will sta
 
 There are two possible reasons for this, the first and most common issue is that your device does not fulfill the basic requirements for ES-DE, which is that it has to run a 64-bit version of Android 10 or later.
 
-The second reason is that the APK is corrupt or not complete. When we make releases we include an MD5 hash value with the download link, and it's recommended to check the hash of the downloaded file before you attempt to install it. This will also ensure that you actually have the real release and not some third party scam or fake app or similar. A recommended app for generating the MD5 checksums is [Hash Checker](https://play.google.com/store/apps/details?id=com.smlnskgmail.jaman.hashchecker) from the Google Play store.
+The second reason is that the APK is corrupt or not complete. When we make releases we include an MD5 hash value with the download link, and it's recommended to check the hash of the downloaded file before you attempt to install it. This will also ensure that you actually have the real release and not some third party scam or fake app or similar. A recommended app for generating the MD5 checksums is [Simple Hash Checker](https://play.google.com/store/apps/details?id=com.appcraft.hashchecker) from the Google Play store.
 
 ## Can I set ES-DE as my home app/launcher?
 
@@ -50,7 +50,7 @@ Yes, read the _Running ES-DE as the Android home app_ section of the [Android do
 
 ## Can I launch Android apps and games from inside ES-DE?
 
-Yes, as of ES-DE 3.0.2 there is experimental support for launching native Android apps and games. Read the _Launching native Android apps and games_ section of the [Android documentation](ANDROID.md#launching-native-android-apps-and-games) to see how this is accomplished. As you can read there a separate app is needed to import your games into ES-DE, but this functionality will be built into ES-DE itself in a future release.
+Yes, this is supported. Read the _Launching native Android apps and games_ section of the [Android documentation](ANDROID.md#launching-native-android-apps-and-games) to see how this is accomplished.
 
 ## Every time I reboot my device ES-DE is starting the onboarding process, why is this happening?
 
@@ -59,6 +59,11 @@ If you have set ES-DE as your home app then for some devices the onboarding conf
 ## Can I use ES-DE with Samsung DeX?
 
 While ES-DE would in theory work fine with DeX this is unfortunately not supported as Samsung has a policy to not allow apps that can be set as home apps/launchers to run via DeX. This is a Samsung limitation that they would need to resolve.
+
+## Can I play frontend music inside ES-DE?
+
+Music support is on the roadmap, but until that's been implemented you can use Tasker to get music playback working. Detailed instructions on how to set this up can be found at this GitHub repository:\
+https://github.com/RobZombie9043/bgmusic-android-es-de
 
 ## What game systems/platforms and emulators are supported by ES-DE?
 
@@ -92,6 +97,10 @@ ERROR CODE -1 is a general failure mode which could be caused by multiple things
 
 A black screen on game launch is also a possible variation of this failure mode, it depends on how the emulator handles errors whether there will be a black screen or whether it will abort and report the launch failure to ES-DE.
 
+## Why aren't my controllers working in RetroArch when launching Nintendo 64 games?
+
+There's an issue in RetroArch that causes this problem when launching games from frontends. To resolve it open RetroArch and go to _Settings -> Input -> Polling Behavior_ and change this to _Early_. Make sure to save your RetroArch settings after making this change. A related problem is that rumble support could break, and this is resolved by starting a game, then opening the RetroArch quick menu and going to _Core Options -> GLideN64_ and enabling _Threaded Renderer_.
+
 ## Sometimes after I return from a game ES-DE is restarting, did it crash?
 
 No Android may stop applications that are not currently focused if it needs to recover the RAM that those applications were using. This is an integral part of the operating system design, there's really no way to prevent this behavior. ES-DE is a complex application that is more akin to a game engine than a regular Android application, and if you are using a demanding theme with lots of game media it can consume quite a lot of memory. If you are using a device with limited RAM, say 4 GB or so, it's almost unavoidable that ES-DE will get stopped if you are running an emulator that also uses a lot of memory. You could switch to a more lightweight theme though, this sometimes prevents these restarts from occuring.
@@ -115,7 +124,11 @@ https://www.youtube.com/watch?v=k5WWacfIn6Y
 
 ## What type of Android devices are supported
 
-ES-DE runs on a wide range on devices, for example handheld consoles like the Ayn Odin and the Retroid Pocket models, on mobile phones, on tablets and on Android TV devices like the Nvidia Shield Pro. It supports a wide range of screen resolutions and aspect ratios. A 64-bit version of Android 10 or later is required.
+ES-DE runs on a wide range on devices, for example handheld consoles like the Ayn Odin and the Retroid Pocket models, on mobile phones, on tablets and on some Android TV devices like the Nvidia Shield. It supports a wide range of screen resolutions and aspect ratios. A 64-bit version of Android 10 or later is required.
+
+## Why aren't most Android TV devices supported
+
+The Nvidia Shield is supported, and some GammaOS releases based on Android TV are also supported, so ES-DE does technically run on Android TV. But it's true that it won't work on most Android TV / Google TV devices. There are two reasons for this, the first is that those unsupported devices run a 32-bit version of Android, and ES-DE requires a 64-bit OS to work. The second issue is that most such devices (including official products from Google) are crippled so that the Storage Access Framework (SAF) directory picker is not included. This package, also known as DocumentsUI, is required by both ES-DE and most emulators as you will not be able to use the SAF functionality without it. Hopefully Google and other vendors will at some point in the future update their TV offerings to use a proper 64-bit operating system that includes all the necessary components.
 
 ## Can I use the Android soft keyboard to enter text using touch and swiping
 
@@ -127,4 +140,4 @@ ES-DE is not a good match for gesture navigation, there are a lot of contextual 
 
 ## Why does ES-DE need to have permissions to manage my storage?
 
-ES-DE needs the storage permissions (MANAGE_EXTERNAL_STORAGE) to manage storage because it's well.. a storage manager. It handles your library of games and media which can easily be tens or even hundreds of thousands of files, and this may span across multiple storage devices as for instance scraped media could be relocated to an SD card or the ROMs moved to another device than the application data directory. During development substantial work was spent on attempting to work around the Android security model without having storage manager permission. Although this was partially successful it never worked 100% due to additional restrictions introduced in Android 13. The approach was to pipe file operations from the native C++ code via JNI to Java and translate them to SAF/MediaStore file operations. And be aware that ES-DE depends on a large amount of C and C++ libraries that have no awareness of or support for the Storage Access Framework or Media Store subsystems in Android. Even if it would have worked 100% this would have lead to unacceptable performance issues as a lot of translations were needed, for instance Java uses "filtered" UTF8 Unicode while C++ doesn't so everything would need to be translated by the UTF8-CPP library. In addition to this an undocumented feature of the FileProvider API is that you can't provide access to files you don't own, even if you have read/write access to them using scoped storage permissions. As the FileProvider API is very useful for emulator launching since it removes the need to setup scoped storage access individually in each emulator, it would break a very important feature to not have storage manager access. There are more issues on top of what has just been described, but these are the most important considerations.
+ES-DE needs the storage permissions (MANAGE_EXTERNAL_STORAGE) to manage storage because it's well.. a storage manager. It handles your library of games and media which can easily be tens of thousands or even hundreds of thousands of files, and this may span across multiple storage devices as for instance scraped media could be relocated to an SD card or the ROMs moved to another device than the application data directory. During development substantial work was spent on attempting to work around the Android security model without having storage manager permission. Although this was partially successful it never worked 100% due to additional restrictions introduced in Android 13. The approach was to pipe file operations from the native C++ code via JNI to Java and translate them to SAF/MediaStore file operations. And be aware that ES-DE depends on a large amount of C and C++ libraries that have no awareness of or support for the Storage Access Framework or Media Store subsystems in Android. Even if it would have worked 100% this would have lead to unacceptable performance issues as a lot of translations were needed, for instance Java uses "filtered" UTF8 Unicode while C++ doesn't, so everything would need to be translated by the UTF8-CPP library. In addition to this an undocumented feature of the FileProvider API is that you can't provide access to files you don't own, even if you have read/write access to them using scoped storage permissions. As the FileProvider API is very useful for emulator launching since it removes the need to setup scoped storage access individually in each emulator, it would break a very important feature to not have storage manager access. There are more issues on top of what has just been described, but these are the most important considerations.

@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-02 16:07+0100\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-10-09 22:50+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
-"Language-Team: Swedish <info@es-de.org>\n"
+"Language-Team: Svenska <info@es-de.org>\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
 msgid "Network error (status:"
 msgstr "Network error (status:"
@@ -132,6 +132,24 @@ msgstr "'%s' är filtrerad så det kan finnas fler spel tillgängliga"
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "TOG BORT SAMLINGEN '%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "okänd"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i minut"
+msgstr[1] "%i minuter"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i timme"
+msgstr[1] "%i timmar"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -299,6 +317,12 @@ msgstr "speltillfällen, stigande"
 
 msgid "times played, descending"
 msgstr "speltillfällen, fallande"
+
+msgid "play time, ascending"
+msgstr "speltid, stigande"
+
+msgid "play time, descending"
+msgstr "speltid, fallande"
 
 msgid "system, ascending"
 msgstr "system, stigande"
@@ -517,6 +541,114 @@ msgstr "FAVORITER LÄNGST UPP FÖR ANPASSADE SAMLINGAR"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "VISA STJÄRNSYMBOL FÖR ANPASSADE SAMLINGAR"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "IMPORTERA TILL SYSTEM"
+
+msgid "NO CONFIGURATION"
+msgstr "INGEN KONFIGURATION"
+
+msgid "REMOVE ENTRIES"
+msgstr "TA BORT POSTER"
+
+msgid "ALL UNSELECTED"
+msgstr "ALLA AVMARKERADE"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr "FILTRERA BORT SPECIALTECKEN"
+
+msgid "MEDIA TARGET TYPE"
+msgstr "MÅLTYP FÖR MEDIA"
+
+msgid "SCREENSHOTS"
+msgstr "SKÄRMDUMPAR"
+
+msgid "TITLE SCREENS"
+msgstr "TITELSKÄRMAR"
+
+msgid "COVERS"
+msgstr "LÅDOMSLAG"
+
+msgid "BACK COVERS"
+msgstr "LÅDBAKSIDOR"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "MARQUEES (HJUL)"
+
+msgid "3D BOXES"
+msgstr "3D-LÅDOR"
+
+msgid "PHYSICAL MEDIA"
+msgstr "FYSISK MEDIA"
+
+msgid "FAN ART"
+msgstr "FAN-SKAPAT"
+
+msgid "MIXIMAGES"
+msgstr "MIXBILDER"
+
+msgid "IMPORT MEDIA"
+msgstr "IMPORTERA MEDIA"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "IMPORTERA TILLGÄNGLIGA BANNERS OCH LOGOTYPER"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "SKRIV ÖVER MEDIAFILER"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "INKLUDERA ENBART APPAR KATEGORISERADE SOM SPEL"
+
+msgid "START"
+msgstr "STARTA"
+
+msgid "start importer"
+msgstr "starta importeraren"
+
+msgid "WORKING..."
+msgstr "ARBETAR..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "KUNDE INTE HITTA NÅGOT ATT IMPORTERA"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"DU HAR VALT ATT TA BORT ALLA AVMARKERADE POSTER, DETTA KOMMER TA BORT ALLA "
+"SPELFILER MED \"%s\" FILÄNDELSEN FRÅN \"%s\" SYSTEMKATALOGEN OCH SEDAN "
+"IMPORTERAS ALLA POSTER SOM DU VÄLJER PÅ NÄSTA SKÄRM\n"
+"ÄR DU SÄKER?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "GÖR DINA VAL"
+
+msgid "IMPORT"
+msgstr "IMPORTERA"
+
+msgid "import"
+msgstr "importera"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "IMPORTERADE %i POST"
+msgstr[1] "IMPORTERADE %i POSTER"
+
+msgid "SELECT ALL"
+msgstr "VÄLJ ALLA"
+
+msgid "select all"
+msgstr "välj alla"
+
+msgid "SELECT NONE"
+msgstr "VÄLJ INGA"
+
+msgid "select none"
+msgstr "välj inga"
+
 msgid "FILTER GAMELIST"
 msgstr "FILTRERA SPELLISTA"
 
@@ -697,11 +829,17 @@ msgstr "AVTRYCKARE"
 msgid "LEFT/RIGHT"
 msgstr "VÄNSTER/HÖGER"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "SPELLISTA VID UPPSTART"
+msgid "SYSTEM ON STARTUP"
+msgstr "SYSTEM VID UPPSTART"
 
-msgid "NONE"
-msgstr "INGEN"
+msgid "STARTUP VIEW"
+msgstr "VY VID UPPSTART"
+
+msgid "SYSTEM"
+msgstr "SYSTEM"
+
+msgid "GAMELIST"
+msgstr "SPELLISTA"
 
 msgid "SYSTEMS SORTING"
 msgstr "SORTERING AV SYSTEM"
@@ -745,6 +883,9 @@ msgstr "ÖPPNINGSANIMERING FÖR MENY"
 
 msgid "SCALE-UP"
 msgstr "UPPSKALNING"
+
+msgid "NONE"
+msgstr "INGEN"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "VARAKTIGHET FÖR STARTSKÄRM"
@@ -947,6 +1088,9 @@ msgstr "BYT PLATS PÅ A/B OCH X/Y-KNAPPARNA"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "IGNORERA TANGENTBORDSINMATNING"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "NOTIFIERINGAR FÖR INMATNINGSENHETER"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "KONFIGURERA TANGENTBORD OCH HANDKONTROLLER"
 
@@ -979,6 +1123,9 @@ msgstr "SPARA ÄNDRINGAR?"
 
 msgid "load default directory"
 msgstr "läs in standardkatalog"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr "MAX LOGGNING AV SPELTID"
 
 msgid "VRAM LIMIT"
 msgstr "VRAM-GRÄNS"
@@ -1098,6 +1245,9 @@ msgstr "AKTIVERA MENY I BARNLÄGE"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "VISA AVSLUTA-MENYN (OMSTART OCH STÄNG NER)"
 
+msgid "GAME IMPORTER"
+msgstr "SPELIMPORTERARE"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "UPPRENSNING AV AVSKUREN DATA"
 
@@ -1151,6 +1301,16 @@ msgstr "VERKLIGEN STÄNGA NER?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "STÄNG AV SYSTEMET"
+
+msgid "REALLY SUSPEND?"
+msgstr "VERKLIGEN VILA?"
+
+msgid "SUSPEND SYSTEM"
+msgstr "VILA SYSTEMET"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "INSTÄLLNINGAR SYSTEMSTATUS"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1269,9 +1429,6 @@ msgstr "Bearbetar:"
 
 msgid "Last error message:"
 msgstr "Senaste felmeddelandet:"
-
-msgid "START"
-msgstr "STARTA"
 
 msgid "start processing"
 msgstr "starta bearbetning"
@@ -1526,7 +1683,7 @@ msgid "BOX COVER IMAGES"
 msgstr "BILDER FÖR LÅDOMSLAG"
 
 msgid "BOX BACK COVER IMAGES"
-msgstr "OMSLAGSBILDER FÖR LÅDBAKSIDA"
+msgstr "BILDER FÖR LÅDBAKSIDA"
 
 msgid "MARQUEE (WHEEL) IMAGES"
 msgstr "MARQUEE-BILDER (HJUL)"
@@ -1545,6 +1702,9 @@ msgstr "SPELMANUALER"
 
 msgid "MIXIMAGE RESOLUTION"
 msgstr "UPPLÖSNING FÖR MIXBILD"
+
+msgid "MIXIMAGE FILE FORMAT"
+msgstr "FILFORMAT FÖR MIXBILDER"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1659,6 +1819,51 @@ msgstr "USA"
 msgid "WORLD"
 msgstr "VÄRLDEN"
 
+msgid "ASIA"
+msgstr "ASIEN"
+
+msgid "AUSTRALIA"
+msgstr "AUSTRALIEN"
+
+msgid "BRAZIL"
+msgstr "BRAZILIEN"
+
+msgid "CANADA"
+msgstr "KANADA"
+
+msgid "CHINA"
+msgstr "KINA"
+
+msgid "GERMANY"
+msgstr "TYSKLAND"
+
+msgid "FRANCE"
+msgstr "FRANKRIKE"
+
+msgid "ITALY"
+msgstr "ITALIEN"
+
+msgid "KOREA"
+msgstr "KOREA"
+
+msgid "NETHERLANDS"
+msgstr "NEDERLÄNDERNA"
+
+msgid "RUSSIA"
+msgstr "RYSSLAND"
+
+msgid "SWEDEN"
+msgstr "SVERIGE"
+
+msgid "SPAIN"
+msgstr "SPANIEN"
+
+msgid "TAIWAN"
+msgstr "TAIWAN"
+
+msgid "UNITED KINGDOM"
+msgstr "STORBRITANNIEN"
+
 msgid "PREFERRED LANGUAGE"
 msgstr "FÖREDRAGET SPRÅK"
 
@@ -1729,9 +1934,6 @@ msgstr "ALLA SPEL ÄR FILTRERADE, DET FINNS INGET ATT UTFÖRA"
 msgid "SCRAPING IN PROGRESS"
 msgstr "SCRAPING PÅGÅR"
 
-msgid "SYSTEM"
-msgstr "SYSTEM"
-
 msgid "REFINE SEARCH"
 msgstr "FÖRFINA SÖKNING"
 
@@ -1791,6 +1993,15 @@ msgstr "SPELARE:"
 
 msgid "NO GAMES FOUND"
 msgstr "INGA SPEL HITTADES"
+
+msgid "API CALLS:"
+msgstr "API-ANROP:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "%i ÅTERSTÅENDE"
+msgstr[1] "%i ÅTERSTÅENDE"
 
 msgid "RETRY"
 msgstr "FÖRSÖK IGEN"
@@ -1891,6 +2102,9 @@ msgstr "VISA BATTERIETS LADDNIVÅ I PROCENT"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "HÄMTAR NER TEMALISTAN 100%"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "ARKIVET AVVIKER FRÅN URSPRUNGSFJÄRR"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "TEMAT ÄR REDAN UPPDATERAT"
 
@@ -1964,6 +2178,18 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"DET VERKAR SOM ATT DETTA ÄR ETT AVVIKANDE ARKIV VILKET NORMALT SETT TYDER PÅ "
+"EN SAMMANSLAGNINGSKONFLIKT I UPPSTRÖMSARKIVET SOM MÅSTE ÅTGÄRDAS AV "
+"TEMAUTVECKLAREN. EN NY HÄMTNING KRÄVS OCH DEN GAMLA TEMAKATALOGEN KOMMER "
+"DÖPAS OM FRÅN \"%s\" TILL \"%s_DIVERGED_DISABLED\""
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -2005,6 +2231,9 @@ msgstr "MANUELL HÄMTNING"
 
 msgid "CORRUPT"
 msgstr "KORRUPT"
+
+msgid "DIVERGED"
+msgstr "AVVIKANDE"
 
 msgid "SHALLOW"
 msgstr "GRUND"
@@ -2109,13 +2338,10 @@ msgid "BOX COVER"
 msgstr "LÅDOMSLAG"
 
 msgid "BOX BACK COVER"
-msgstr "OMSLAG FÖR LÅDBAKSIDA"
+msgstr "LÅDBAKSIDA"
 
 msgid "TITLE SCREEN"
 msgstr "TITELSKÄRM"
-
-msgid "FAN ART"
-msgstr "FAN-SKAPAT"
 
 msgid "MIXIMAGE"
 msgstr "MIXBILD"
@@ -2240,6 +2466,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "SKRIV IN SPELTILLFÄLLEN"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr "SPELTID"
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr "SKRIV IN SPELTID"
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "HANDKONTROLL"
 
@@ -2310,6 +2544,9 @@ msgstr "spelmedia"
 
 msgid "zoom"
 msgstr "zooma"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Du har överskridit din dagliga scraping-kvot"
 
 msgid "Network error:"
 msgstr "Nätverksfel:"
@@ -2401,10 +2638,6 @@ msgid "jump to game"
 msgstr "hoppa till spel"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "okänd"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "ja"
 
@@ -2461,34 +2694,33 @@ msgstr ""
 "APPLIKATIONENS LOGGFIL es_log.txt FÖR MER INFORMATION"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"INGA SPELFILER HITTADES. PLACERA DINA SPEL I DEN KONFIGURERADE ROM-"
-"KATALOGEN. ALTERNATIVT SÅ KAN DU GENERERA KATALOGSTRUKTUREN VILKET SKAPAR EN "
-"TEXTFIL FÖR VARJE SYSTEM SOM INNEHÅLLER INFORMATION SÅSOM VILKA FILÄNDELSER "
-"SOM STÖDS.\n"
-"DET HÄR ÄR DEN KONFIGURERADE ROM-KATALOGEN:\n"
+"INGA SPELFILER HITTADES. IMPORTERA ANTINGEN ETT PAR SPEL ELLER PLACERA DEM "
+"MANUELLT I DEN KONFIGURERADE ROM-KATALOGEN. ALTERNATIVT SÅ KAN DU GENERERA "
+"KATALOGSTRUKTUREN VILKET SKAPAR EN TEXTFIL FÖR VARJE SYSTEM SOM INNEHÅLLER "
+"INFORMATION SÅSOM VILKA FILÄNDELSER SOM STÖDS. DET HÄR ÄR DEN KONFIGURERADE "
+"ROM-KATALOGEN:\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"INGA SPELFILER HITTADES. PLACERA ANTINGEN DINA SPEL I DEN KONFIGURERADE ROM-"
-"KATALOGEN ELLER ÄNDRA DESS SÖKVÄG MED KNAPPEN HÄR NEDANFÖR. ALTERNATIVT SÅ "
-"KAN DU GENERERA KATALOGSTRUKTUREN VILKET SKAPAR EN TEXTFIL FÖR VARJE SYSTEM "
-"SOM INNEHÅLLER INFORMATION SÅSOM VILKA FILÄNDELSER SOM STÖDS.\n"
-"DET HÄR ÄR DEN KONFIGURERADE ROM-KATALOGEN:\n"
+"INGA SPELFILER HITTADES. IMPORTERA ANTINGEN ETT PAR SPEL ELLER PLACERA DEM "
+"MANUELLT I DEN KONFIGURERADE ROM-KATALOGEN. DU KAN OCKSÅ ÄNDRA ROM-"
+"KATALOGENS SÖKVÄG OCH ALTERNATIVT SÅ KAN DU GENERERA KATALOGSTRUKTUREN "
+"VILKET SKAPAR EN TEXTFIL FÖR VARJE SYSTEM SOM INNEHÅLLER INFORMATION SÅSOM "
+"VILKA FILÄNDELSER SOM STÖDS. DET HÄR ÄR DEN KONFIGURERADE ROM-KATALOGEN:\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "ÄNDRA ROM-KATALOG"
+msgid "CHANGE"
+msgstr "BYT"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "ANGE ROM-KATALOGENS SÖKVÄG"
@@ -2508,12 +2740,9 @@ msgstr "LÄS IN KONFIGURERAD SÖKVÄG"
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "RENSA (LÄMNA TOMT FÖR STANDARDSÖKVÄG)"
 
-msgid "CREATE DIRECTORIES"
-msgstr "SKAPA KATALOGER"
-
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2557,14 +2786,14 @@ msgstr "UPPDATERA"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "APPLIKATIONSUPPDATERAREN KOMMER HÄMTA NER DEN SENASTE PORTABLA WINDOWS-"
-"VERSIONEN ÅT DIG, MEN DU MÅSTE MANUELLT GENOMFÖRA UPPGRADERINGEN. SE README."
-"TXT FILEN I DEN HÄMTADE ZIP-FILEN FÖR INSTRUKTIONER OM HUR DETTA GÅR "
+"VERSIONEN ÅT DIG, MEN DU MÅSTE MANUELLT GENOMFÖRA UPPGRADERINGEN. SE "
+"README.TXT FILEN I DEN HÄMTADE ZIP-FILEN FÖR INSTRUKTIONER OM HUR DETTA GÅR "
 "TILLVÄGA. SOM ÄVEN BESKRIVS I DETTA DOKUMENT SÅ SKA DU ALDRIG PACKA UPP DEN "
 "NYA UTGÅVAN OVANPÅ DEN GAMLA DÅ DETTA KAN FÖRSTÖRA APPLIKATIONEN."
 
@@ -2592,9 +2821,6 @@ msgstr "STARTAR SPELET '%s'"
 
 msgid "menu"
 msgstr "meny"
-
-msgid "WORKING..."
-msgstr "ARBETAR..."
 
 msgctxt "theme"
 msgid "never"
@@ -2655,18 +2881,6 @@ msgstr[1] "%i VALDA"
 
 msgid "change value"
 msgstr "ändra värde"
-
-msgid "SELECT ALL"
-msgstr "VÄLJ ALLA"
-
-msgid "select all"
-msgstr "välj alla"
-
-msgid "SELECT NONE"
-msgstr "VÄLJ INGA"
-
-msgid "select none"
-msgstr "välj inga"
 
 msgid "add half star"
 msgstr "lägg till halv stjärna"
@@ -2847,9 +3061,6 @@ msgstr "FÖRKASTA ÄNDRINGAR"
 msgid "discard changes"
 msgstr "förkasta ändringar"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "Du har överskridit din dagliga scraping-kvot"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Servern returnerade HTTP-felkoden %s"
@@ -2891,6 +3102,9 @@ msgstr "3:2 vertikal"
 
 msgid "4:3 vertical"
 msgstr "4:3 vertikal"
+
+msgid "5:3 vertical"
+msgstr "5:3 vertikal"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertikal"

@@ -47,8 +47,8 @@ namespace
         "DebugGrid",
         "DebugText",
         "DebugImage",
-        "LegacyAppDataDirectory",
         "ScraperFilter",
+        "GameLaunchTime",
         "TransitionsSystemToSystem",
         "TransitionsSystemToGamelist",
         "TransitionsGamelistToGamelist",
@@ -79,9 +79,6 @@ Settings::Settings()
 {
     mWasChanged = false;
     setDefaults();
-    if (Utils::FileSystem::getFileName(Utils::FileSystem::getAppDataDirectory()) ==
-        ".emulationstation")
-        mBoolMap["LegacyAppDataDirectory"] = std::make_pair(true, true);
     loadFile();
 }
 
@@ -127,6 +124,7 @@ void Settings::setDefaults()
     mBoolMap["ScrapeManuals"] = {true, true};
 
     mStringMap["MiximageResolution"] = {"1280x960", "1280x960"};
+    mStringMap["MiximageFileFormat"] = {"png", "png"};
     mStringMap["MiximageScreenshotHorizontalFit"] = {"crop", "crop"};
     mStringMap["MiximageScreenshotVerticalFit"] = {"contain", "contain"};
     mStringMap["MiximageScreenshotAspectThreshold"] = {"high", "high"};
@@ -167,12 +165,13 @@ void Settings::setDefaults()
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeColorScheme"] = {"", ""};
     mStringMap["ThemeFontSize"] = {"", ""};
-    mStringMap["ThemeAspectRatio"] = {"", ""};
+    mStringMap["ThemeAspectRatio"] = {"automatic", "automatic"};
     mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
     mStringMap["ThemeLanguage"] = {"automatic", "automatic"};
     mStringMap["ApplicationLanguage"] = {"automatic", "automatic"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
+    mStringMap["StartupView"] = {"system", "system"};
     mStringMap["SystemsSorting"] = {"default", "default"};
     mStringMap["DefaultSortOrder"] = {"name, ascending", "name, ascending"};
     mStringMap["MenuColorScheme"] = {"dark", "dark"};
@@ -262,6 +261,7 @@ void Settings::setDefaults()
     mBoolMap["InputOnlyFirstController"] = {false, false};
     mBoolMap["InputSwapButtons"] = {false, false};
     mBoolMap["InputIgnoreKeyboard"] = {false, false};
+    mBoolMap["InputDeviceNotifications"] = {true, true};
 
     // Game collection settings.
     mStringMap["CollectionSystemsAuto"] = {"", ""};
@@ -274,6 +274,7 @@ void Settings::setDefaults()
 #if !defined(__IOS__)
     mStringMap["MediaDirectory"] = {"", ""};
 #endif
+    mIntMap["MaxPlayTimeTracking"] = {8, 8};
 #if defined(STEAM_DECK) || defined(RETRODECK)
     mIntMap["MaxVRAM"] = {512, 512};
 #elif defined(RASPBERRY_PI)
@@ -337,6 +338,20 @@ void Settings::setDefaults()
     mBoolMap["ShowQuitMenu"] = {false, false};
 #endif
 
+    // Utilities -> Game Importer.
+    mStringMap["ImporterTargetSystem"] = {"", ""};
+    mStringMap["ImporterRemoveEntries"] = {"never", "never"};
+#if defined(__linux__) || defined(__FreeBSD__)
+    mBoolMap["ImporterStripSpecialChars"] = {false, false};
+#endif
+#if defined(__ANDROID__)
+    mStringMap["ImporterMediaTarget"] = {"screenshots", "screenshots"};
+    mBoolMap["ImporterImportMedia"] = {true, true};
+    mBoolMap["ImporterImportMediaAdditional"] = {true, true};
+    mBoolMap["ImporterImportMediaOverwrite"] = {false, false};
+    mBoolMap["ImporterGamesOnly"] = {false, false};
+#endif
+
     //
     // Settings configured via command-line arguments.
     //
@@ -391,8 +406,8 @@ void Settings::setDefaults()
     mBoolMap["DebugGrid"] = {false, false};
     mBoolMap["DebugText"] = {false, false};
     mBoolMap["DebugImage"] = {false, false};
-    mBoolMap["LegacyAppDataDirectory"] = {false, false};
     mIntMap["ScraperFilter"] = {0, 0};
+    mIntMap["GameLaunchTime"] = {0, 0};
     mIntMap["TransitionsSystemToSystem"] = {ViewTransitionAnimation::INSTANT,
                                             ViewTransitionAnimation::INSTANT};
     mIntMap["TransitionsSystemToGamelist"] = {ViewTransitionAnimation::INSTANT,
@@ -409,13 +424,7 @@ void Settings::setDefaults()
 
 void Settings::saveFile()
 {
-    std::string path;
-    if (mBoolMap["LegacyAppDataDirectory"].second == true) {
-        path = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
-    }
-    else {
-        path = Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
-    }
+    const std::string path {Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml"};
 
     pugi::xml_document doc;
 
@@ -445,11 +454,7 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    std::string path;
-    if (mBoolMap["LegacyAppDataDirectory"].second == true)
-        path = Utils::FileSystem::getAppDataDirectory() + "/es_settings.xml";
-    else
-        path = Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml";
+    const std::string path {Utils::FileSystem::getAppDataDirectory() + "/settings/es_settings.xml"};
 
     if (!Utils::FileSystem::exists(path))
         return;

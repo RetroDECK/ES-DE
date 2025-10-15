@@ -8,13 +8,13 @@ Table of contents:
 
 ES-DE is developed and compiled using GCC and Clang/LLVM on Unix/Linux, Clang/LLVM on macOS and MSVC on Windows.
 
-CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `jom` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during development.
+CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `jom` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE.
 
 For automatic code formatting [clang-format](https://clang.llvm.org/docs/ClangFormat.html) is used.
 
-Any code editor can be used of course, but [VSCode](https://code.visualstudio.com) is recommended.
+Any code editor can be used, but [VSCode](https://code.visualstudio.com) is recommended.
 
-## Building on Unix
+## Building on Linux and Unix
 
 There are some dependencies that need to be fulfilled in order to build ES-DE. These are detailed per operating system below.
 
@@ -38,10 +38,10 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 Then you can use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake gettext harfbuzz-devel libicu-devel libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel bluez-libs-devel mesa-libGL-devel poppler-cpp-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake gettext harfbuzz-devel libicu-devel libasan rpm-build SDL2-devel ffmpeg-devel libavcodec-devel libavfilter-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel bluez-libs-devel mesa-libGL-devel poppler-cpp-devel
 ```
 
-**Manjaro**
+**Arch/Manjaro**
 
 Use pacman to install all the required packages:
 
@@ -849,6 +849,7 @@ git remote add glm-external https://github.com/g-truc/glm.git
 git remote add lunasvg-external https://github.com/sammycage/lunasvg.git
 git remote add rapidjson-external https://github.com/Tencent/rapidjson.git
 git remote add rlottie-external https://github.com/Samsung/rlottie.git
+git remote add utfcpp-external https://github.com/nemtrif/utfcpp.git
 ```
 
 Following this, updates can be pulled like so (fetching up to the latest commit):
@@ -1115,6 +1116,27 @@ Or like this:
 export ESDE_APPDATA_DIR=~/.config/ES-DE
 ./ES-DE_x64.AppImage
 ```
+
+## Overriding resource files
+
+Although not normally needed, it's possible to override the bundled resource files on a per-file basis. To do so simply create the resource path inside the ES-DE application data directory and place a file there with the same name as the file you intend to override.
+
+Here's an example where the splash screen has been overridden with a custom image:
+
+```
+ES-DE/resources/graphics/splash.svg
+```
+
+And here's a custom MAME name translation file in use:
+```
+ES-DE/resources/MAME/mamenames.xml
+```
+Overriding resource files is supported on all operating systems including Android.
+
+Here's the bundled resources directory for reference: \
+https://gitlab.com/es-de/emulationstation-de/-/tree/master/resources?ref_type=heads
+
+Note that it's a bad idea to override the es_find_rules.xml, es_systems.xml and es_import_rules.xml files as for these there are better mechanisms available to customize the configuration. How that works is covered elsewhere in this document.
 
 ## Settings not configurable via the GUI
 
@@ -1935,6 +1957,148 @@ These files include all systems supported by ES-DE and provide the following sor
 
 You can apply any of these sorting files via the _Systems sorting_ option in the _Other settings_ menu. Note that in order to load a es_systems_sorting.xml file placed in the custom_systems directory you'll need to set this option to _Full names or custom_.
 
+## es_import_rules.xml
+
+The es_import_rules.xml file is used by the game importer that is accessible via the _Utilities_ menu and via a button in the "No ROMs" interface on application startup if there are no games present.
+
+The configuration file makes it possible to define which game systems should be added to the game importer and what rule types to use for each system. The es_import_rules.xml file is located in the resources directory, i.e. the same location as the es_systems.xml and es_find_rules.xml files, but a customized copy can be placed in ~/ES-DE/custom_systems, which will complement the bundled file.
+
+The structure of the file is similar to es_find_rules.xml with the configuration contained within a _ruleList_ tag pair. There is a _system_ tag pair that describes each system and the name attribute for this tag defines the actual game system to apply the configuration to.
+
+There are four import rules available, `androidpackage`, `file`, `desktopshortcut` and `macosbundle`.
+
+You can only define one rule per system, if you attempt to add more than one then the latest entry will simply overwrite any previous rules.
+
+All rule tags have two mandatory attributes, _name_ and _type_. The name attribute can be set to any value and is primarily intended for future use.
+
+`androidpackage` -  This rule which is only available on Android has a mandatory _extension_ tag which controls the file extension to use when importing the native apps and games. That is the only configuration necessary to apply this rule.
+
+Here's an example:
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE import rules configuration file for Android -->
+<ruleList>
+    <system name="androidapps">
+        <rule name="Android Package" type="androidpackage">
+            <extension>.app</extension>
+        </rule>
+    </system>
+    <system name="androidgames">
+        <rule name="Android Package" type="androidpackage">
+            <extension>.app</extension>
+        </rule>
+    </system>
+    <system name="emulators">
+        <rule name="Android Package" type="androidpackage">
+            <extension>.app</extension>
+        </rule>
+    </system>
+</ruleList>
+```
+
+`file` - This rule is available on Linux and Windows and has a mandatory _extension_ tag which controls the file extension to match when looking for files to import. This extension is case-sensitive in Linux and case-insensitive in Windows. There's also a _directory_ tag with a mandatory _recursive_ attribute. You can add multiple _directory_ tags to look for files at various locations. It's also possible to use the `%ESPATH%` variable for the directory tag to look for files relative to the ES-DE binary directory. The tilde symbol `~` is supported as well and will expand to the user home directory. Note that this will always expand to the operating system home directory, even if the --home command line option has been used, or if a portable.txt file is present.
+
+Here's an example:
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE import rules configuration file for Windows -->
+<ruleList>
+    <system name="desktop">
+        <rule name="Shortcut File" type="file">
+            <extension>.lnk</extension>
+            <directory recursive="true">C:\ProgramData\Microsoft\Windows\Start Menu\Programs</directory>
+            <directory recursive="true">~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</directory>
+        </rule>
+    </system>
+    <system name="emulators">
+        <rule name="Shortcut File" type="file">
+            <extension>.lnk</extension>
+            <directory recursive="true">C:\ProgramData\Microsoft\Windows\Start Menu\Programs</directory>
+            <directory recursive="true">~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</directory>
+            <directory recursive="true">%ESPATH%\Emulators</directory>
+            <directory recursive="true">%ESPATH%\..\Emulators</directory>
+        </rule>
+    </system>
+    <system name="steam">
+        <rule name="Steam URL File" type="file">
+            <extension>.url</extension>
+            <directory recursive="false">~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam</directory>
+        </rule>
+    </system>
+    <system name="windows">
+        <rule name="Shortcut File" type="file">
+            <extension>.lnk</extension>
+            <directory recursive="true">C:\ProgramData\Microsoft\Windows\Start Menu\Programs</directory>
+            <directory recursive="true">~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</directory>
+        </rule>
+    </system>
+</ruleList>
+```
+
+`desktopshortcut` - This rule is available on Linux and FreeBSD and only has a _directory_ tag with two optional attributes, _gamesOnly_ and _execFilter_. The way this rule works is that it searches for files with the .desktop extension in the defined directories and will then parse these files to retrieve the name of the game or application as well as the Exec key, the application category and whether the NoDisplay key has been set. The name parsing is important as these files can have cryptic names like _org.kde.gwenview.desktop_ and ES-DE will instead use the actual name defined inside the file. The _gamesOnly_ attribute controls whether to only include entries categorized as games. The _execFilter_ attribute can be used to match against the content of the _Exec_ key inside the shortcut file to only include files where there's a match. Note that this matching is case-insensitive. Finally the NoDisplay key is set for entries that should not be shown in the operating system menus, and ES-DE will as such skip these files during the import process. The tilde symbol `~` is supported as well for the directory tag, and will expand to the user home directory. Note that this will always expand to the operating system home directory, even if the --home command line option has been used, or if a portable.txt file is present.
+
+Here's an example:
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE import rules configuration file for Linux -->
+<ruleList>
+    <system name="desktop">
+        <rule name="Desktop Shortcut" type="desktopshortcut">
+            <directory>/usr/share/applications</directory>
+            <directory>/usr/local/share/applications</directory>
+            <directory>~/.local/share/applications</directory>
+            <directory>/var/lib/flatpak/exports/share/applications</directory>
+            <directory>/var/lib/snapd/desktop/applications</directory>
+        </rule>
+    </system>
+    <system name="emulators">
+        <rule name="Desktop Shortcut" type="desktopshortcut">
+            <directory>/usr/share/applications</directory>
+            <directory>/usr/local/share/applications</directory>
+            <directory>~/.local/share/applications</directory>
+            <directory>/var/lib/flatpak/exports/share/applications</directory>
+            <directory>/var/lib/snapd/desktop/applications</directory>
+        </rule>
+    </system>
+    <system name="lutris">
+        <rule name="Desktop Shortcut" type="desktopshortcut">
+            <directory execFilter="lutris:rungameid">~/.local/share/applications</directory>
+            <directory execFilter="lutris:rungameid">~/Desktop</directory>
+        </rule>
+    </system>
+    <system name="steam">
+        <rule name="Desktop Shortcut" type="desktopshortcut">
+            <directory execFilter="steam://rungameid">~/.local/share/applications</directory>
+            <directory execFilter="steam://rungameid">~/Desktop</directory>
+        </rule>
+    </system>
+</ruleList>
+```
+
+`macosbundle` - This rule is only available on macOS and works a bit different than the other rules. It has a _directory_ tag with a mandatory _recursive_ attribute which is used to define which directory to look for bundles in. As macOS bundles are entire directory structures containing the actual application files, ES-DE will make symlinks to these directories rather than copying them to the target system directory. The tilde symbol `~` is supported as well for the directory tag, and will expand to the user home directory. Note that this will always expand to the operating system home directory, even if the --home command line option has been used, or if a portable.txt file is present.
+
+Here's an example:
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE import rules configuration file for macOS -->
+<ruleList>
+    <system name="desktop">
+        <rule name="macOS Bundle" type="macosbundle">
+            <directory recursive="true">/Applications</directory>
+        </rule>
+    </system>
+    <system name="emulators">
+        <rule name="macOS Bundle" type="macosbundle">
+            <directory recursive="true">/Applications</directory>
+        </rule>
+    </system>
+</ruleList>
+```
+
 ## gamelist.xml
 
 The gamelist.xml file for a system defines the metadata for its entries, such as the game names, descriptions, release dates and ratings.
@@ -2169,9 +2333,11 @@ Just make sure to not place the portable installation on a network share that us
 
 There are numerous locations throughout ES-DE where custom scripts can be executed if the option to do so has been enabled in the settings. You'll find the option _Enable custom event scripts_ on the Main menu under _Other settings_. By default this setting is deactivated so make sure to enable it to use this feature.
 
-The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then attempt to execute all these files (regardless of their file extensions). If you want to have the scripts executed in a certain order you can name them accordingly as they will be sorted and executed in lexicographic order. The sorting is case-sensitive on Linux and Android and case-insensitive on macOS and Windows. ES-DE will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
+The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then attempt to execute all these files (regardless of their file extensions, except on Windows where only .bat files can be used). If you want to have the scripts executed in a certain order you can name them accordingly as they will be sorted and executed in lexicographic order. The sorting is case-sensitive on Linux and Android and case-insensitive on macOS and Windows. ES-DE will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
 
-On Windows it's also possible to place .lnk shortcut files in the event directories to have these executed in the same manner as a script. Note that while PowerShell scripts can't be executed directly they can be run via either a .lnk shortcut file or a .bat wrapper script where you explicitly call powershell.exe with the -command flag. Just be aware that by default the execution of PowerShell scripts is disabled on Windows. Further details about PowerShell is beyond the scope of this document.
+On Windows PowerShell scripts can't be executed directly but they can be run via .bat wrapper script where you explicitly call powershell.exe with the -command flag. Just be aware that by default the execution of PowerShell scripts is disabled on Windows. Further details about PowerShell is beyond the scope of this document.
+
+The working directory set when launching scripts differs between operating systems due to the way that the script execution works on different platforms, so it's best to not rely on this and instead set explicit paths in all your scripts. This way any child script executions or file output etc. will behave consistently.
 
 There are up to four parameters that will be passed to these scripts, as detailed below:
 

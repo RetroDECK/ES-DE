@@ -28,6 +28,8 @@ public:
               const std::function<void()>& func2 = nullptr,
               const std::string& name3 = "",
               const std::function<void()>& func3 = nullptr,
+              const std::string& name4 = "",
+              const std::function<void()>& func4 = nullptr,
               const std::function<void()>& backFunc = nullptr,
               const bool disableBackButton = false,
               const bool deleteOnButtonPress = true,

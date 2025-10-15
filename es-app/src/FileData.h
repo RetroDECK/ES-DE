@@ -52,6 +52,8 @@ public:
     const bool getCountAsGame();
     const std::pair<unsigned int, unsigned int>& getGameCount() const { return mGameCount; }
     const bool getExcludeFromScraper();
+    void setPlayMetadata(const bool writeMetadata);
+    const std::string getPlayTimeString(const std::string& playTimeSeconds);
     const std::vector<FileData*> getChildrenRecursive() const;
     FileType getType() const { return mType; }
     const std::string& getPath() const { return mPath; }
@@ -156,9 +158,9 @@ public:
     const std::string& getSortTypeString() const { return mSortTypeString; }
     const FileData::SortType& getSortTypeFromString(const std::string& desc) const;
 
-    static inline std::vector<std::string> sImageExtensions {".png", ".jpg"};
+    static inline std::vector<std::string> sImageExtensions {".png", ".jpg", ".webp"};
     static inline std::vector<std::string> sVideoExtensions {".mp4", ".mkv", ".avi",
-                                                             ".mp4", ".wmv", ".mov"};
+                                                             ".wmv", ".mov", ".webm"};
 
 protected:
     FileData* mSourceFileData;

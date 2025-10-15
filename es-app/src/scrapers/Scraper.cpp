@@ -5,7 +5,6 @@
 //
 //  Main scraper logic.
 //  Called from GuiScraperSearch.
-//  Calls either GamesDBJSONScraper or ScreenScraper.
 //
 
 #include "scrapers/Scraper.h"
@@ -89,15 +88,6 @@ std::unique_ptr<ScraperSearchHandle> startMediaURLsFetch(const std::string& game
     return handle;
 }
 
-std::vector<std::string> getScraperList()
-{
-    std::vector<std::string> list;
-    for (auto it = scraper_request_funcs.cbegin(); it != scraper_request_funcs.cend(); ++it)
-        list.push_back(it->first);
-
-    return list;
-}
-
 bool isValidConfiguredScraper()
 {
     const std::string& name {Settings::getInstance()->getString("Scraper")};
@@ -173,6 +163,12 @@ void ScraperHttpRequest::update()
         LOG(LogDebug) << "ScraperHttpRequest::update(): Server returned HTTP error code 404 "
                          "(resource not found)";
         setStatus(ASYNC_DONE);
+        return;
+    }
+    else if (status == HttpReq::REQ_QUOTA_REACHED) {
+        LOG(LogWarning) << "ScraperHttpRequest::update(): Server returned HTTP error code 429 "
+                           "(API quota reached)";
+        setError(_("You have exceeded your daily scrape quota"), true);
         return;
     }
 
@@ -334,6 +330,21 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
                 return;
             }
 
+            const std::string& content {mResult.thumbnailImageData};
+
+            if (Settings::getInstance()->getString("Scraper") == "screenscraper" &&
+                content.size() < 10) {
+                LOG(LogWarning) << "ScreenScraper: Image does not seem to be valid, not saving "
+                                   "it to disk: \""
+#if defined(_WIN64)
+                                << Utils::String::replace(filePath, "/", "\\") << "\"";
+#else
+                                << filePath << "\"";
+#endif
+                setStatus(ASYNC_DONE);
+                return;
+            }
+
 #if defined(_WIN64)
             std::ofstream stream(Utils::String::stringToWideString(filePath).c_str(),
                                  std::ios_base::out | std::ios_base::binary);
@@ -347,7 +358,6 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
                 return;
             }
 
-            const std::string& content {mResult.thumbnailImageData};
             stream.write(content.data(), content.length());
             stream.close();
             if (stream.bad()) {
@@ -432,6 +442,20 @@ void MediaDownloadHandle::update()
 {
     if (mReq->status() == HttpReq::REQ_IN_PROGRESS)
         return;
+
+    if (mReq->status() == HttpReq::REQ_RESOURCE_NOT_FOUND) {
+        if (mStatus == ASYNC_DONE)
+            return;
+        LOG(LogWarning) << "Scraper: Server returned HTTP error code 404 (resource not found), "
+                           "skipping \""
+#if defined(_WIN64)
+                        << Utils::String::replace(mSavePath, "/", "\\") << "\"";
+#else
+                        << mSavePath << "\"";
+#endif
+        setStatus(ASYNC_DONE);
+        return;
+    }
 
     if (mReq->status() != HttpReq::REQ_SUCCESS) {
         std::stringstream ss;
@@ -538,6 +562,20 @@ void MediaDownloadHandle::update()
         return;
     }
 
+    const std::string& content {mReq->getContent()};
+
+    if (Settings::getInstance()->getString("Scraper") == "screenscraper" && content.size() < 10) {
+        LOG(LogWarning) << "ScreenScraper: Image does not seem to be valid, not saving "
+                           "it to disk: \""
+#if defined(_WIN64)
+                        << Utils::String::replace(mSavePath, "/", "\\") << "\"";
+#else
+                        << mSavePath << "\"";
+#endif
+        setStatus(ASYNC_DONE);
+        return;
+    }
+
 #if defined(_WIN64)
     std::ofstream stream(Utils::String::stringToWideString(mSavePath).c_str(),
                          std::ios_base::out | std::ios_base::binary);
@@ -551,7 +589,6 @@ void MediaDownloadHandle::update()
         return;
     }
 
-    const std::string& content {mReq->getContent()};
     stream.write(content.data(), content.length());
     stream.close();
     if (stream.bad()) {

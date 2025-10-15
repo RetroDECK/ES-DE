@@ -373,7 +373,7 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
                     delete this;
                     return true;
                 },
-                "", nullptr, nullptr, true));
+                "", nullptr, "", nullptr, nullptr, true));
         }
         else {
             if (mText->isEditing())

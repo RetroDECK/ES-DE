@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-06 23:38+0800\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-06-25 04:03+0800\n"
 "Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
 "Language: ja_JP\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid "Network error (status:"
 msgstr "ネットワークエラー（ステータス："
@@ -128,6 +128,22 @@ msgstr "'%s' が絞り込まれ、可能なゲームが増えました"
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "コレクション '%s' を削除しました"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "未知"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i 分"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i 時間"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -301,6 +317,12 @@ msgstr "遊んだ回数、昇順"
 
 msgid "times played, descending"
 msgstr "遊んだ回数、降順"
+
+msgid "play time, ascending"
+msgstr "プレイ時間、昇順"
+
+msgid "play time, descending"
+msgstr "プレイ時間、降順"
 
 msgid "system, ascending"
 msgstr "システム、昇順"
@@ -528,6 +550,113 @@ msgstr "カスタムコレクションのお気に入りを上に"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "カスタムコレクションにスターマークを表示"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "システムにインポート"
+
+msgid "NO CONFIGURATION"
+msgstr "配置は見つかりませんでした"
+
+msgid "REMOVE ENTRIES"
+msgstr "項目を削除"
+
+msgid "ALL UNSELECTED"
+msgstr "すべての未選択項目"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr "特殊文字を削除"
+
+msgid "MEDIA TARGET TYPE"
+msgstr "メディア対象の種類"
+
+msgid "SCREENSHOTS"
+msgstr "スクリーンショット"
+
+msgid "TITLE SCREENS"
+msgstr "タイトルスクリーン"
+
+msgid "COVERS"
+msgstr "カバー"
+
+msgid "BACK COVERS"
+msgstr "バックカバー"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "マーキー（ホイール）"
+
+msgid "3D BOXES"
+msgstr "3Dボックス"
+
+msgid "PHYSICAL MEDIA"
+msgstr "物理メディア"
+
+msgid "FAN ART"
+msgstr "ファンアート"
+
+msgid "MIXIMAGES"
+msgstr "ミックス画像"
+
+msgid "IMPORT MEDIA"
+msgstr "メディアをインポート"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "可能であればバナーかロゴをインポート"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "メディアファイルを上書き"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "ゲームに分類されたアプリだけを含め"
+
+msgid "START"
+msgstr "開始"
+
+msgid "start importer"
+msgstr "インポーターを開始"
+
+msgid "WORKING..."
+msgstr "稼働中..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "インポートできる内容がありません"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"選択されていない項目をすべて削除すると選びましたが、これにより「%s」システム"
+"ディレクトリから「%s」拡張子のゲームファイルがすべて削除され、次の画面で選択"
+"した項目のみがインポートされます\n"
+"よろしいですか？"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "選んでください"
+
+msgid "IMPORT"
+msgstr "インポート"
+
+msgid "import"
+msgstr "インポート"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "%i個の項目がインポートされました"
+
+msgid "SELECT ALL"
+msgstr "全部選ぶ"
+
+msgid "select all"
+msgstr "全部選ぶ"
+
+msgid "SELECT NONE"
+msgstr "何も選ばない"
+
+msgid "select none"
+msgstr "何も選ばない"
+
 msgid "FILTER GAMELIST"
 msgstr "ゲームリストを絞り込む"
 
@@ -708,11 +837,17 @@ msgstr "トリガー"
 msgid "LEFT/RIGHT"
 msgstr "左/右"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "起動時にゲームリスト"
+msgid "SYSTEM ON STARTUP"
+msgstr "起動時のシステム"
 
-msgid "NONE"
-msgstr "無"
+msgid "STARTUP VIEW"
+msgstr "起動時の画面"
+
+msgid "SYSTEM"
+msgstr "システム"
+
+msgid "GAMELIST"
+msgstr "ゲームリスト"
 
 msgid "SYSTEMS SORTING"
 msgstr "システムのソート"
@@ -756,6 +891,9 @@ msgstr "メニューオープニングアニメーション"
 
 msgid "SCALE-UP"
 msgstr "拡大"
+
+msgid "NONE"
+msgstr "無"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "起動画面の継続時間"
@@ -955,6 +1093,9 @@ msgstr "A/B ボタンと X/Y ボタンを入れ替える"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "キーボードからの入力を無視"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "入力デバイスの通知"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "キーボードとコントローラーを設定"
 
@@ -987,6 +1128,9 @@ msgstr "セーブしますか？"
 
 msgid "load default directory"
 msgstr "デフォルトディレクトリをロードします"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr "最大プレイ時間トラッキング"
 
 msgid "VRAM LIMIT"
 msgstr "VRAM制限"
@@ -1106,6 +1250,9 @@ msgstr "キッズモードでメニューを有効"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "終了メニューを表示（再起動/電源オフ）"
 
+msgid "GAME IMPORTER"
+msgstr "ゲームインポーター"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "孤児データのクリーンアップ"
 
@@ -1160,6 +1307,16 @@ msgstr "本当に電源を切りますか？"
 
 msgid "POWER OFF SYSTEM"
 msgstr "電源を切る"
+
+msgid "REALLY SUSPEND?"
+msgstr "本当に一時停止しますか?"
+
+msgid "SUSPEND SYSTEM"
+msgstr "システムを一時停止"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "システム状態設定"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1278,9 +1435,6 @@ msgstr "処理中："
 
 msgid "Last error message:"
 msgstr "最後のエラー情報："
-
-msgid "START"
-msgstr "開始"
 
 msgid "start processing"
 msgstr "処理開始"
@@ -1573,6 +1727,9 @@ msgstr "ゲームマニュアル"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "複合画像の解像度"
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr "ミックス画像ファイル形式"
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "水平スクリーンショットの調整"
@@ -1686,6 +1843,51 @@ msgstr "アメリカ"
 msgid "WORLD"
 msgstr "世界"
 
+msgid "ASIA"
+msgstr "アジア"
+
+msgid "AUSTRALIA"
+msgstr "アウストリア"
+
+msgid "BRAZIL"
+msgstr "ブラジル"
+
+msgid "CANADA"
+msgstr "カナダ"
+
+msgid "CHINA"
+msgstr "中国"
+
+msgid "GERMANY"
+msgstr "ドイツ"
+
+msgid "FRANCE"
+msgstr "フランス"
+
+msgid "ITALY"
+msgstr "イタリア"
+
+msgid "KOREA"
+msgstr "韓国"
+
+msgid "NETHERLANDS"
+msgstr "オランダ"
+
+msgid "RUSSIA"
+msgstr "ロシア"
+
+msgid "SWEDEN"
+msgstr "スウェーデン"
+
+msgid "SPAIN"
+msgstr "スペイン"
+
+msgid "TAIWAN"
+msgstr "台湾"
+
+msgid "UNITED KINGDOM"
+msgstr "イギリス"
+
 msgid "PREFERRED LANGUAGE"
 msgstr "希望する言語"
 
@@ -1757,9 +1959,6 @@ msgstr ""
 msgid "SCRAPING IN PROGRESS"
 msgstr "スクレイプ中"
 
-msgid "SYSTEM"
-msgstr "システム"
-
 msgid "REFINE SEARCH"
 msgstr "絞り込み検索"
 
@@ -1816,6 +2015,14 @@ msgstr "プレイヤー："
 
 msgid "NO GAMES FOUND"
 msgstr "ゲームを発見できませんでした"
+
+msgid "API CALLS:"
+msgstr "APIコール："
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "あと%i個"
 
 msgid "RETRY"
 msgstr "再試行"
@@ -1916,6 +2123,9 @@ msgstr "バッテリーの残量パーセンテージを表示"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "テーマリストのダウンロードが100% 完了しました"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "ローカルリポジトリがORIGINから分岐しています"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "テーマはすでに最新の状態です"
 
@@ -1988,6 +2198,18 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"どうやらリポジトリが分岐しているようです。通常、これはテーマ開発者が解決すべ"
+"き上流マージ競合が存在することを意味します。新たにダウンロードする必要があり"
+"ます、古いテーマディレクトリ\"%s\"は「%s_DIVERGED_DISABLED」にリネームされま"
+"す。"
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -2028,6 +2250,9 @@ msgstr "手動ダウンロード"
 
 msgid "CORRUPT"
 msgstr "破損した"
+
+msgid "DIVERGED"
+msgstr "分岐しています"
 
 msgid "SHALLOW"
 msgstr "シャロー"
@@ -2136,9 +2361,6 @@ msgstr "ボックスバックカバー"
 
 msgid "TITLE SCREEN"
 msgstr "タイトルスクリーン"
-
-msgid "FAN ART"
-msgstr "ファンアート"
 
 msgid "MIXIMAGE"
 msgstr "複合画像"
@@ -2263,6 +2485,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "遊んだ回数を入力してください"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr "プレイ時間"
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr "プレイ時間を入力"
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "コントローラー"
 
@@ -2340,6 +2570,9 @@ msgstr "ゲームメディア"
 
 msgid "zoom"
 msgstr "拡大"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "一日のスクレイプ制限を超えました"
 
 msgid "Network error:"
 msgstr "ネットワークエラー："
@@ -2432,10 +2665,6 @@ msgid "jump to game"
 msgstr "ゲームに移動する"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "未知"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "はい"
 
@@ -2489,34 +2718,33 @@ msgstr ""
 "を参照してください"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"ゲームファイルが見つかりませんでした。設定されたROMディレクトリにゲームを配置"
-"してください。オプションとして、ROMディレクトリ構造を生成することもできます。"
-"これにより、各システム用のテキストファイルが作成され、サポートされているファ"
-"イル拡張子などの情報も提供されます。\n"
-"以下が現在設定されているROMディレクトリです：\n"
+"ゲームファイルが見つかりませんでした。ゲームをインポートするか、設定済みのROM"
+"ディレクトリに手動で配置してください。あるいはROMディレクトリ構造を生成するこ"
+"とも可能です。これにより、各システムごとにテキストファイルが作成され、対応"
+"ファイル拡張子などの情報も記載されます。設定されているROMディレクトリは以下の"
+"通りです：\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"ゲームファイルが見つかりませんでした。現在構成されているROMディレクトリにゲー"
-"ムを配置するか、以下のボタンを使用してパスを変更してください。オプションとし"
-"て、ROMディレクトリ構造が生成され、各システムのテキストファイルが作成されま"
-"す。サポートされているファイル拡張子などの情報も提供されます。\n"
-"以下が現在設定されているROMディレクトリです：\n"
+"ゲームファイルが見つかりませんでした。ゲームをインポートするか、現在設定され"
+"ているROMディレクトリに手動で配置してください。ROMのパスを変更することも可能"
+"です。あるいはROMディレクトリ構造を生成することも可能です。これにより、各シス"
+"テムごとにテキストファイルが作成され、対応ファイル拡張子などの情報も記載され"
+"ます。現在設定されているROMディレクトリ：\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "ROMディレクトリを変更する"
+msgid "CHANGE"
+msgstr "変更"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "ROMディレクトリパスを入力してください"
@@ -2535,9 +2763,6 @@ msgstr "現在設定されたパスをロード"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "クリア（何も入力せずにデフォルトパスにリセット）"
-
-msgid "CREATE DIRECTORIES"
-msgstr "ディレクトリを作成する"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2620,9 +2845,6 @@ msgstr "ゲーム '%s' を起動中"
 msgid "menu"
 msgstr "メニュー"
 
-msgid "WORKING..."
-msgstr "稼働中..."
-
 msgctxt "theme"
 msgid "never"
 msgstr "しない"
@@ -2676,18 +2898,6 @@ msgstr[0] "%i 種を選んだ"
 
 msgid "change value"
 msgstr "値を変更する"
-
-msgid "SELECT ALL"
-msgstr "すべてを選ぶ"
-
-msgid "select all"
-msgstr "すべてを選ぶ"
-
-msgid "SELECT NONE"
-msgstr "何も選ばない"
-
-msgid "select none"
-msgstr "何も選ばない"
 
 msgid "add half star"
 msgstr "ハーフスターを追加する"
@@ -2867,9 +3077,6 @@ msgstr "変更を無視"
 msgid "discard changes"
 msgstr "ESC キーを押してスキップ"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "一日のスクレイプ制限を超えました"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "サーバーがHTTPエラーコード %s を返しました"
@@ -2911,6 +3118,9 @@ msgstr "3:2 垂直"
 
 msgid "4:3 vertical"
 msgstr "4:3 垂直"
+
+msgid "5:3 vertical"
+msgstr "5:3 垂直"
 
 msgid "5:4 vertical"
 msgstr "5:4 垂直"

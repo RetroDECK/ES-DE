@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-03 20:53+0100\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-06-24 23:48+0200\n"
 "Last-Translator: Stefan <s.vandenbroekprive@gmail.com>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
 "Language: nl_NL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid "Network error (status:"
 msgstr "Netwerkfout (status:"
@@ -130,6 +130,24 @@ msgstr "'%s' is gefilterd, dus er kunnen meer spellen beschikbaar zijn"
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "VERWIJDERDE COLLECTIE '%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "onbekend"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -296,6 +314,12 @@ msgstr "keer gespeeld, oplopend"
 
 msgid "times played, descending"
 msgstr "keer gespeeld, aflopend"
+
+msgid "play time, ascending"
+msgstr ""
+
+msgid "play time, descending"
+msgstr ""
 
 msgid "system, ascending"
 msgstr "systeem, oplopend"
@@ -520,6 +544,115 @@ msgstr "SORTEER FAVORIETEN BOVEN VOOR AANGEPASTE COLLECTIES"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "WEERGAVE VAN STERRENMARKERINGEN VOOR AANGEPASTE COLLECTIES"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "IMPORTEER NAAR SYSTEEM"
+
+msgid "NO CONFIGURATION"
+msgstr "GEEN CONFIGURATIE"
+
+msgid "REMOVE ENTRIES"
+msgstr "VERWIJDER TOEVOEGINGEN"
+
+msgid "ALL UNSELECTED"
+msgstr "ALLE ONGESELECTEERDE"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr ""
+
+msgid "MEDIA TARGET TYPE"
+msgstr "MEDIA TARGET TYPE"
+
+msgid "SCREENSHOTS"
+msgstr "SCHERMAFBEELDINGEN"
+
+msgid "TITLE SCREENS"
+msgstr "TITEL SCHERMEN"
+
+msgid "COVERS"
+msgstr "COVERS"
+
+msgid "BACK COVERS"
+msgstr "ACHTERKANT COVERS"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "MARQUEES (WHEELS)"
+
+msgid "3D BOXES"
+msgstr "3D BOXES"
+
+msgid "PHYSICAL MEDIA"
+msgstr "FYSIEKE MEDIA"
+
+msgid "FAN ART"
+msgstr "FAN ART"
+
+msgid "MIXIMAGES"
+msgstr ""
+
+msgid "IMPORT MEDIA"
+msgstr "IMPORTEER MEDIA"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "BANNERS OF LOGO'S IMPORTEREN, INDIEN BESCHIKBAAR"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "MEDIABESTANDEN OVERSCHRIJVEN"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "ALLEEN APPS BEVATTEN DIE ZIJN GECATEGORISEERD ALS GAMES"
+
+msgid "START"
+msgstr "BEGIN"
+
+msgid "start importer"
+msgstr "start importeren"
+
+msgid "WORKING..."
+msgstr "BEZIG..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "KON NIETS VINDEN OM TE IMPORTEREN"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"U ERVOOR HEBT GEKOZEN OM ALLE NIET-GESELECTEERDE ITEMS TE VERWIJDEREN, "
+"WORDEN ALLE SPELBESTANDEN MET DE \"%s\" BESTANDSEXTENSIE UIT DE \"%s\" "
+"SYSTEEMDIRECTORY EN IMPORTEERT VERVOLGENS DE ITEMS DIE U SELECTEERT OP HET "
+"VOLGENDE SCHERM\n"
+"WEET U HET ZEKER?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "MAAK UW KEUZE"
+
+msgid "IMPORT"
+msgstr "IMPORTEREN"
+
+msgid "import"
+msgstr "Importeren"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "GESELECTEERDE %i ENTRIES"
+msgstr[1] "GESELECTEERDE %i ENTRIES"
+
+msgid "SELECT ALL"
+msgstr "ALLES"
+
+msgid "select all"
+msgstr "selecteer alles"
+
+msgid "SELECT NONE"
+msgstr "GEEN"
+
+msgid "select none"
+msgstr "selecteer geen"
+
 msgid "FILTER GAMELIST"
 msgstr "FILTER GAMELIJST"
 
@@ -700,11 +833,17 @@ msgstr "TRIGGERS"
 msgid "LEFT/RIGHT"
 msgstr "LINKS/RECHTS"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "GAMELIJST BIJ OPSTARTEN"
+msgid "SYSTEM ON STARTUP"
+msgstr "SYSTEEM BIJ OPSTARTEN"
 
-msgid "NONE"
-msgstr "GEEN"
+msgid "STARTUP VIEW"
+msgstr "OPSTARTSCHERM"
+
+msgid "SYSTEM"
+msgstr "SYSTEEM"
+
+msgid "GAMELIST"
+msgstr "GAMELIJST"
 
 msgid "SYSTEMS SORTING"
 msgstr "SYSTEEMSORTERING"
@@ -748,6 +887,9 @@ msgstr "MENU OPENING ANIMATIE"
 
 msgid "SCALE-UP"
 msgstr "OPSCHALING"
+
+msgid "NONE"
+msgstr "GEEN"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "DUUR VAN HET STARTSCHERM"
@@ -950,6 +1092,9 @@ msgstr "VERWISSEL DE A/B EN X/Y KNOPPEN"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "NEGEER TOETSENBORDINVOER"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "INVOERAPPARAAT NOTIFICATIES"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "TOETSENBORD EN CONTROLLERS CONFIGUREREN"
 
@@ -982,6 +1127,9 @@ msgstr "WIJZIGINGEN OPSLAAN?"
 
 msgid "load default directory"
 msgstr "laad standaardmap"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr ""
 
 msgid "VRAM LIMIT"
 msgstr "VRAM-LIMIET"
@@ -1101,6 +1249,9 @@ msgstr "MENU IN KINDMODUS INSCHAKELEN"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "MENU AFSLUITEN TONEN (HERSTARTEN EN UITSCHAKELEN)"
 
+msgid "GAME IMPORTER"
+msgstr "GAME IMPORTER"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "OPRUIMING VAN VERWEESDE DATA"
 
@@ -1154,6 +1305,16 @@ msgstr "ECHT UITSCHAKELEN?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "SCHAKEL SYSTEEM UIT"
+
+msgid "REALLY SUSPEND?"
+msgstr ""
+
+msgid "SUSPEND SYSTEM"
+msgstr ""
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "INSTELLINGEN SYSTEEMSTATUS"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1273,9 +1434,6 @@ msgstr "Verwerken:"
 
 msgid "Last error message:"
 msgstr "Laatste foutmelding:"
-
-msgid "START"
-msgstr "BEGIN"
 
 msgid "start processing"
 msgstr "begin met verwerken"
@@ -1560,6 +1718,9 @@ msgstr "SPELHANDLEIDING"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "MIXIMAGE-RESOLUTIE"
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr ""
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "HORIZONTALE SCREENSHOT FIT"
@@ -1673,6 +1834,51 @@ msgstr "VS"
 msgid "WORLD"
 msgstr "WERELD"
 
+msgid "ASIA"
+msgstr ""
+
+msgid "AUSTRALIA"
+msgstr ""
+
+msgid "BRAZIL"
+msgstr ""
+
+msgid "CANADA"
+msgstr ""
+
+msgid "CHINA"
+msgstr ""
+
+msgid "GERMANY"
+msgstr ""
+
+msgid "FRANCE"
+msgstr ""
+
+msgid "ITALY"
+msgstr ""
+
+msgid "KOREA"
+msgstr ""
+
+msgid "NETHERLANDS"
+msgstr ""
+
+msgid "RUSSIA"
+msgstr ""
+
+msgid "SWEDEN"
+msgstr ""
+
+msgid "SPAIN"
+msgstr ""
+
+msgid "TAIWAN"
+msgstr ""
+
+msgid "UNITED KINGDOM"
+msgstr ""
+
 msgid "PREFERRED LANGUAGE"
 msgstr "GEWENSTE TAAL"
 
@@ -1743,9 +1949,6 @@ msgstr "ALLE SPELLETJES ZIJN GEFILTERD, ER IS NIETS TE SCHRAPEN"
 msgid "SCRAPING IN PROGRESS"
 msgstr "SCRAPING IN UITVOERING"
 
-msgid "SYSTEM"
-msgstr "SYSTEEM"
-
 msgid "REFINE SEARCH"
 msgstr "VERFIJN ZOEKOPDRACHT"
 
@@ -1805,6 +2008,15 @@ msgstr "SPELERS:"
 
 msgid "NO GAMES FOUND"
 msgstr "GEEN SPELLETJES GEVONDEN"
+
+msgid "API CALLS:"
+msgstr "API CALLS:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "%i RESTEREND"
+msgstr[1] "%i RESTERENDE"
 
 msgid "RETRY"
 msgstr "OPNIEUW PROBEREN"
@@ -1905,6 +2117,9 @@ msgstr "PERCENTAGE BATTERIJLADING WEERGEVEN"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DOWNLOAD THEMA LIJST 100%"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "REPOSITORY IS AFWIJKEND VAN OORSPRONG"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "THEMA AL BIJGEWERKT"
 
@@ -1972,10 +2187,22 @@ msgid ""
 "DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
 "\"%s_DISABLED\""
 msgstr ""
-"HET LIJKT EROP DAT DIT EEN ONdiepe REPOSITORY IS, WAT BETEKENT DAT HET IS "
+"HET LIJKT EROP DAT DIT EEN ZWAKKE REPOSITORY IS, WAT BETEKENT DAT HET IS "
 "GEDOWNLOAD MET EEN ANDERE TOOL DAN DEZE THEMA DOWNLOADER. EEN NIEUWE "
 "DOWNLOAD IS VEREIST EN DE OUDE THEMA DIRECTORY \"%s\" WORDT HERNOEMD NAAR "
 "\"%s_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"HET LIJKT EROP DAT DIT EEN AFWIJKENDE REPOSITORY IS, WAT MEESTAL BETEKENT "
+"DAT ER EEN UPSTREAM MERGE CONFLICT MOET WORDEN OPGELOST DOOR DE MAKER VAN "
+"HET THEMA, EEN VERSE INSTALLATIE IS NODIG EN DE OUDE THEMA MAP “%s” ZAL "
+"HERNOEMD WORDEN NAAR ‘%s_AFWIJKEND_UITGESCHAKELD”"
 
 #, c-format
 msgid ""
@@ -2020,6 +2247,9 @@ msgstr "HANDLEIDING DOWNLOADEN"
 
 msgid "CORRUPT"
 msgstr "CORRUPT"
+
+msgid "DIVERGED"
+msgstr "AFWIJKEND"
 
 msgid "SHALLOW"
 msgstr "SHALLOW"
@@ -2129,9 +2359,6 @@ msgstr "DOOS ACHTERKANT"
 
 msgid "TITLE SCREEN"
 msgstr "TITELSCHERM"
-
-msgid "FAN ART"
-msgstr "FAN ART"
 
 msgid "MIXIMAGE"
 msgstr "MIXAFBEELDING"
@@ -2256,6 +2483,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "VOER HET AANTAL KEER IN DAT JE GESPEELD HEBT"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "CONTROLLER"
 
@@ -2327,6 +2562,9 @@ msgstr "spelmedia"
 
 msgid "zoom"
 msgstr "zoom"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "U hebt uw dagelijkse scrape-quotum overschreden"
 
 msgid "Network error:"
 msgstr "Netwerkfout:"
@@ -2422,16 +2660,12 @@ msgid "jump to game"
 msgstr "ga naar spel"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "onbekend"
-
-msgctxt "theme"
 msgid "yes"
-msgstr "Ja"
+msgstr "ja"
 
 msgctxt "theme"
 msgid "no"
-msgstr "Nee"
+msgstr "nee"
 
 msgid "screensaver"
 msgstr "schermbeveiliging"
@@ -2482,35 +2716,33 @@ msgstr ""
 "GEBROKEN. ZIE HET TOEPASSINGSLOGBESTAND es_log.txt VOOR EXTRA INFO"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"GEEN GAMEBESTANDEN GEVONDEN, PLAATS UW GAMES IN DE GECONFIGUREERDE ROM-"
-"DIRECTORY. Optioneel kan de ROM-DIRECTORY-STRUCTUUR WORDEN GEGENEREERD, WAT "
-"EEN TEKSTBESTAND VOOR ELK SYSTEEM CREËERT MET ENIGE INFORMATIE, ZOALS DE "
-"ONDERSTEUNDE BESTANDSEXTENSIES.\n"
-"DIT IS DE HUIDIG GECONFIGUREERDE ROM-DIRECTORY:\n"
+"ER ZIJN GEEN GAMEBESTANDEN GEVONDEN. IMPORTEER ENKELE GAMES OF PLAATS ZE "
+"HANDMATIG IN DE GECONFIGUREERDE ROM-MAP. Optioneel kunt u de structuur van "
+"de ROM-map genereren, waardoor er voor elk systeem een ​​tekstbestand wordt "
+"aangemaakt met informatie zoals de ondersteunde bestandsextensies. Dit is de "
+"GECONFIGUREERDE ROM-map:\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"GEEN GAMEBESTANDEN GEVONDEN. PLAATS UW GAMES IN DE HUIDIG GECONFIGUREERDE "
-"ROM-DIRECTORY OF WIJZIG HET PAD MET DE KNOP HIERONDER. Optioneel kan de ROM-"
-"DIRECTORYSTRUCTUUR WORDEN GEGENEREERD, WAARBIJ VOOR ELK SYSTEEM EEN "
-"TEKSTBESTAND WORDT GEMAAKT MET INFORMATIE ZOALS DE ONDERSTEUNDE "
-"BESTANDSEXTENSIES.\n"
-"DIT IS DE HUIDIG GECONFIGUREERDE ROM-DIRECTORY:\n"
+"ER ZIJN GEEN GAMEBESTANDEN GEVONDEN. IMPORTEER ENKELE SPELLEN OF PLAATS ZE "
+"HANDMATIG IN DE HUIDIG GECONFIGUREERDE ROM-MAP. U KUNT OOK HET ROM-PAD "
+"WIJZIGEN EN DESGEWENST DE ROM-MAPSTRUCTUUR GENEREREN, WAARDOOR VOOR ELK "
+"SYSTEEM EEN TEKSTBESTAND WORDT AANGEMAAKT MET INFORMATIE, ZOALS DE "
+"ONDERSTEUNDE BESTANDSEXTENSIES. DIT IS DE GECONFIGUREERDE ROM-MAP:\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "ROM-MAP WIJZIGEN"
+msgid "CHANGE"
+msgstr "VERANDER"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "VOER HET PAD VAN DE ROM-MAP IN"
@@ -2529,9 +2761,6 @@ msgstr "LAAD HET HUIDIG GECONFIGUREERDE PAD"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "WISSEN (LEEG LATEN OM STANDAARDPAD TE HERSTELLEN)"
-
-msgid "CREATE DIRECTORIES"
-msgstr "MAAK DIRECTORY'S"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2615,9 +2844,6 @@ msgstr "SPEL '%s' OPSTARTEN"
 msgid "menu"
 msgstr "menu"
 
-msgid "WORKING..."
-msgstr "BEZIG..."
-
 msgctxt "theme"
 msgid "never"
 msgstr "nooit"
@@ -2677,18 +2903,6 @@ msgstr[1] "%i GESELECTEERDE"
 
 msgid "change value"
 msgstr "waarde veranderen"
-
-msgid "SELECT ALL"
-msgstr "SELECTEER ALLES"
-
-msgid "select all"
-msgstr "selecteer alles"
-
-msgid "SELECT NONE"
-msgstr "SELECTEER GEEN"
-
-msgid "select none"
-msgstr "selecteer geen"
 
 msgid "add half star"
 msgstr "halve ster toevoegen"
@@ -2869,9 +3083,6 @@ msgstr "VERANDERINGEN VERWERPEN"
 msgid "discard changes"
 msgstr "wijzigingen negeren"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "U hebt uw dagelijkse scrape-quotum overschreden"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Server retourneerde HTTP-foutcode %s"
@@ -2913,6 +3124,9 @@ msgstr "3:2 verticaal"
 
 msgid "4:3 vertical"
 msgstr "4:3 verticaal"
+
+msgid "5:3 vertical"
+msgstr "5:3 verticaal"
 
 msgid "5:4 vertical"
 msgstr "5:4 verticaal"

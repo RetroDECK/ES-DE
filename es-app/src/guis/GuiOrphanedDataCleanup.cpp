@@ -1137,6 +1137,10 @@ void GuiOrphanedDataCleanup::onSizeChanged()
         descSizeY = 12.0f;
         col1Size = 0.36f;
     }
+    else if (mRenderer->getScreenAspectRatio() <= 1.15f) {
+        descSizeY = 9.4f;
+        col1Size = 0.31f;
+    }
     else if (mRenderer->getScreenAspectRatio() < 1.6f) {
         descSizeY = 9.2f;
         col1Size = 0.28f;

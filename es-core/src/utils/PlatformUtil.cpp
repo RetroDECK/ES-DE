@@ -41,14 +41,14 @@ namespace Utils
     {
         int runRebootCommand()
         {
-#if defined(__IOS__)
+#if defined(__APPLE__)
             return 0;
-#else
-#if defined(_WIN64)
+#elif defined(_WIN64)
             return system("shutdown -r -t 0");
-#elif defined(__APPLE__) || defined(__FreeBSD__)
-            // This will probably never be used on macOS as it requires root privileges to reboot.
+#elif defined(__FreeBSD__)
             return system("shutdown -r now");
+#elif defined(__HAIKU__)
+            return system("shutdown -r");
 #else
             return system("shutdown --reboot now");
 #endif
@@ -57,32 +57,48 @@ namespace Utils
 
         int runPoweroffCommand()
         {
-#if defined(__IOS__)
+#if defined(__APPLE__)
             return 0;
-#else
-#if defined(_WIN64)
+#elif defined(_WIN64)
             return system("shutdown -s -t 0");
-#elif defined(__APPLE__)
-            // This will probably never be used as macOS requires root privileges to power off.
-            return system("shutdown now");
 #elif defined(__FreeBSD__)
             return system("shutdown -p now");
+#elif defined(__HAIKU__)
+            return system("shutdown");
 #else
             return system("shutdown --poweroff now");
 #endif
 #endif
         }
 
+        int runSuspendCommand()
+        {
+#if defined(_APPLE__)
+            return 0;
+#elif defined(_WIN64)
+            return system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0");
+#elif defined(__FreeBSD__)
+            if (Utils::FileSystem::getPathToBinary("zzz") != "")
+                return system("zzz");
+
+            return -1;
+#else
+            // This should work on all Linux distributions that use systemd.
+            if (Utils::FileSystem::getPathToBinary("systemctl") != "")
+                return system("systemctl suspend");
+
+            // Fallback to the zzz command on some distributions.
+            if (Utils::FileSystem::getPathToBinary("zzz") != "")
+                return system("zzz");
+
+            return -1;
+#endif
+        }
+
         int runSystemCommand(const std::string& cmd_utf8)
         {
-#if defined(__IOS__)
+#if defined(_WIN64) || defined(__IOS__)
             return 0;
-#else
-#if defined(_WIN64)
-            // On Windows we use _wsystem to support non-ASCII paths
-            // which requires converting from UTF-8 to a wstring.
-            std::wstring wchar_str = Utils::String::stringToWideString(cmd_utf8);
-            return _wsystem(wchar_str.c_str());
 #else
             return system(cmd_utf8.c_str());
 #endif
@@ -92,7 +108,55 @@ namespace Utils
         int runSystemCommand(const std::wstring& cmd_utf16)
         {
 #if defined(_WIN64)
-            return _wsystem(cmd_utf16.c_str());
+            STARTUPINFOW si {};
+            PROCESS_INFORMATION pi;
+
+            si.cb = sizeof(si);
+
+            // Always hide the console window.
+            si.dwFlags = STARTF_USESHOWWINDOW;
+            si.wShowWindow = SW_HIDE;
+
+            bool processReturnValue {true};
+            DWORD errorCode {0};
+
+            std::wstring startDirectoryTemp {Utils::String::stringToWideString(
+                Utils::FileSystem::getAppDataDirectory() + "/scripts/")};
+            wchar_t* startDirectory {&startDirectoryTemp[0]};
+
+            // clang-format off
+            processReturnValue = CreateProcessW(
+                nullptr,                         // No application name (use command line).
+                const_cast<wchar_t*>(cmd_utf16.c_str()), // Command line.
+                nullptr,                         // Process attributes.
+                nullptr,                         // Thread attributes.
+                FALSE,                           // Handles inheritance.
+                0,                               // Creation flags.
+                nullptr,                         // Use parent's environment block.
+                startDirectory,                  // Starting directory.
+                &si,                             // Pointer to the STARTUPINFOW structure.
+                &pi);                            // Pointer to the PROCESS_INFORMATION structure.
+            // clang-format on
+
+            // We always wait forever for the script to finish its execution.
+            WaitForSingleObject(pi.hProcess, INFINITE);
+
+            // If the return value is false, then something failed.
+            if (!processReturnValue) {
+                LPWSTR pBuffer {nullptr};
+
+                FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER, nullptr,
+                               GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                               reinterpret_cast<LPWSTR>(&pBuffer), 0, nullptr);
+
+                errorCode = GetLastError();
+            }
+
+            // Close process and thread handles.
+            CloseHandle(pi.hProcess);
+            CloseHandle(pi.hThread);
+
+            return errorCode;
 #else
             return 0;
 #endif

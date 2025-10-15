@@ -1,0 +1,3182 @@
+# ES-DE Frontend translation strings.
+# Copyright (c) 2024-2025 Northwestern Software AB
+# This file is distributed under the same license as the ES-DE Frontend package.
+# Northwestern Software <info@es-de.org>, 2024-2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ES-DE Frontend\n"
+"Report-Msgid-Bugs-To: info@es-de.org\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-06-24 23:48+0200\n"
+"Last-Translator: SecularSteve <info@es-de.org>\n"
+"Language-Team: Croatian (Croatia) <info@es-de.org>\n"
+"Language: hr_HR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.6\n"
+
+msgid "Network error (status:"
+msgstr "Mrežna pogreška (status:"
+
+msgid "New prerelease available:"
+msgstr "Dostupno novo predizdanje:"
+
+msgid "New release available:"
+msgstr "Novo izdanje dostupno:"
+
+msgid "For more information visit"
+msgstr "Za više informacija posjetite"
+
+msgid "all games"
+msgstr "sve igre"
+
+msgid "last played"
+msgstr "zadnji put igrano"
+
+msgid "favorites"
+msgstr "omiljeni"
+
+msgid "collections"
+msgstr "kolekcije"
+
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "ONEMOGUĆENO '%s' U '%s'"
+
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "UREĐIVANJE KOLEKCIJE '%s', DODAVANJE/UKLANJANJE IGARA S %s"
+
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "ZAVRŠENO UREĐIVANJE KOLEKCIJE '%s'"
+
+msgid "Favorites"
+msgstr "Omiljeni"
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "DODANO '%s' U '%s'"
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "UKLONJENO '%s' IZ '%s'"
+
+msgid "This collection is empty"
+msgstr "Ova kolekcija je prazna"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "Ova kolekcija sadrži 1 igru: '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "Ova kolekcija sadrži 2 igre: '%s [%s]' i '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "Ova kolekcija sadrži 3 igre: '%s [%s]', '%s [%s]' i '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"Ova kolekcija sadrži %i igru: '%s [%s]', '%s [%s]' i '%s [%s]', između "
+"ostalih"
+msgstr[1] ""
+"Ova kolekcija sadrži %i igre: '%s [%s]', '%s [%s]' i '%s [%s]', između "
+"ostalih"
+msgstr[2] ""
+"Ova kolekcija sadrži %i igara: '%s [%s]', '%s [%s]' i '%s [%s]', između "
+"ostalih"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "Ova kolekcija sadrži 1 igru: '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "Ova kolekcija sadrži 2 igre: '%s' i '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "Ova kolekcija sadrži 3 igre: '%s', '%s' i '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] "Ova kolekcija sadrži %i igru: '%s', '%s' i '%s', između ostalih"
+msgstr[1] "Ova kolekcija sadrži %i igre: '%s', '%s' i '%s', između ostalih"
+msgstr[2] "Ova kolekcija sadrži %i igara: '%s', '%s' i '%s', između ostalih"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' je filtrirano pa bi moglo biti dostupno više igara"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "IZBRISANA KOLEKCIJA '%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "nepoznato"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr ""
+"POGREŠKA: NEDOSTAJE KONFIGURACIJA PRAVILA PRONALAŽENJA PRIJE NAREDBE ZA '%s'"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"POGREŠKA: NIJE MOGAO PRONAĆI PREDHODNU NAREDBU, JE LI ISPRAVNO INSTALIRANA?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"POGREŠKA: NIJE MOGUĆE PRONAĆI PREDHODNU NAREDBU '%s', JE LI ISPRAVNO "
+"INSTALIRANA?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr ""
+"POGREŠKA: NEDOSTAJE KONFIGURACIJA PRAVILA PRONALAŽENJA EMULATORA ZA '%s'"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "POGREŠKA: NIJE MOGUĆE PRONAĆI APLIKACIJU, JE LI ISPRAVNO INSTALIRANA?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"POGREŠKA: NIJE MOGUĆE PRONAĆI APLIKACIJU '%s', JE LI ISPRAVNO INSTALIRANA?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "POGREŠKA: NIJE MOGAO PRONAĆI EMULATOR, JE LI ISPRAVNO INSTALIRAN?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "POGREŠKA: NIJE MOGAO PRONAĆI EMULATOR '%s', JE LI ISPRAVNO INSTALIRAN?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "POGREŠKA: NIJE MOGUĆE PRONAĆI JEZGRENU DATOTEKU EMULATORA '%s'"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "POGREŠKA: NEVAŽEĆI UNOS U DATOTECI ZA KONFIGURACIJU SUSTAVA"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "POGREŠKA: NEDOSTAJE KONFIGURACIJA JEZGRE ZA '%s'"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "POGREŠKA: NEVAŽEĆI UNOS VARIJABLE %s"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr ""
+"POGREŠKA: IMENIK DEFINIRAN OD %s NIJE MOGAO BITI STVOREN, PROBLEMI S "
+"DOZVOLAMA?"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "POGREŠKA: APLIKACIJA ILI ALIAS DATOTEKA NE POSTOJI ILI JE NEČITLJIVA"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "POGREŠKA: DATOTEKA NA RADNOJ DATOTECI JE NEVAŽEĆA ILI NIJE ČITLJIVA"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "POGREŠKA: DATOTEKA NA RADNOJ DATOTECI NE POSTOJI ILI JE NIJE ČITLJIVA"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "POGREŠKA PRI POKRETANJU IGRE '%s' (KOD POGREŠKE %i)"
+
+msgid "RATING"
+msgstr "OCJENA"
+
+msgid "DEVELOPER"
+msgstr "RAZVOJNI PROGRAM"
+
+msgid "PUBLISHER"
+msgstr "IZDAVAČ"
+
+msgid "GENRE"
+msgstr "ŽANR"
+
+msgid "PLAYERS"
+msgstr "IGRAČI"
+
+msgid "FAVORITE"
+msgstr "FAVOURITE"
+
+msgid "COMPLETED"
+msgstr "ZAVRŠENO"
+
+msgid "KIDGAME"
+msgstr "DJEČJA IGRA"
+
+msgid "HIDDEN"
+msgstr "SKRIVEN"
+
+msgid "BROKEN"
+msgstr "SLOMLJEN"
+
+msgid "CONTROLLER"
+msgstr "KONTROLER"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "ALTERNATIVNI EMULATOR"
+
+msgid "FALSE"
+msgstr "NETOČNO"
+
+msgid "TRUE"
+msgstr "TOČNO"
+
+msgid "UNKNOWN"
+msgstr "NEPOZNATO"
+
+msgid "NONE SELECTED"
+msgstr "NIJE ODABRANO"
+
+msgid "name, ascending"
+msgstr "ime, uzlazno"
+
+msgid "name, descending"
+msgstr "ime, silazno"
+
+msgid "rating, ascending"
+msgstr "ocjena, uzlazno"
+
+msgid "rating, descending"
+msgstr "ocjena, silazno"
+
+msgid "release date, ascending"
+msgstr "datum izlaska, uzlazno"
+
+msgid "release date, descending"
+msgstr "datum izlaska, silazno"
+
+msgid "developer, ascending"
+msgstr "programer, uzlazno"
+
+msgid "developer, descending"
+msgstr "programer, silazno"
+
+msgid "publisher, ascending"
+msgstr "izdavač, uzlazno"
+
+msgid "publisher, descending"
+msgstr "izdavač, silazno"
+
+msgid "genre, ascending"
+msgstr "žanr, uzlazno"
+
+msgid "genre, descending"
+msgstr "žanr, silazno"
+
+msgid "players, ascending"
+msgstr "igrači, uzlazno"
+
+msgid "players, descending"
+msgstr "igrači, silazno"
+
+msgid "last played, ascending"
+msgstr "zadnje svirano, uzlazno"
+
+msgid "last played, descending"
+msgstr "zadnji put svirano, silazno"
+
+msgid "times played, ascending"
+msgstr "puta igranja, uzlazno"
+
+msgid "times played, descending"
+msgstr "puta igranja, silazno"
+
+msgid "play time, ascending"
+msgstr ""
+
+msgid "play time, descending"
+msgstr ""
+
+msgid "system, ascending"
+msgstr "sustav, uzlazni"
+
+msgid "system, descending"
+msgstr "sustav, silazni"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "ALTERNATIVNI EMULATORI"
+
+msgid "BACK"
+msgstr "NAZAD"
+
+msgid "back"
+msgstr "natrag"
+
+msgid "INVALID ENTRY"
+msgstr "NEVAŽEĆI UNOS"
+
+msgid "CLEARED ENTRY"
+msgstr "ODOBREN ULAZ"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "NISU DEFINIRANI ALTERNATIVNI EMULATORI"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "IZBRIŠI NEVAŽEĆI UNOS"
+
+msgid "DEFAULT"
+msgstr "ZADANO"
+
+msgid "select"
+msgstr "odaberi"
+
+msgid "APPLICATION UPDATER"
+msgstr "AŽURIRANJE APLIKACIJE"
+
+msgid "INSTALLATION STEPS:"
+msgstr "KORACI UGRADNJE:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "PREUZMITE NOVO IZDANJE"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "PREUZMITE NOVO IZDANJE U OVAJ DIREKTOR:"
+
+msgid "INSTALL PACKAGE"
+msgstr "INSTALACIJSKI PAKET"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "IZLAZ I RUČNO PONOVNO POKRENITE ES-DE"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "IZLAZ I RUČNO NADOGRADITE ES-DE"
+
+msgid "STATUS MESSAGE:"
+msgstr "PORUKA O STATUSU:"
+
+msgid "DOWNLOAD"
+msgstr "PREUZIMANJE"
+
+msgid "download new release"
+msgstr "preuzmite novo izdanje"
+
+msgid "Download directory does not exist"
+msgstr "Direktorij za preuzimanje ne postoji"
+
+msgid "CHANGE DIRECTORY"
+msgstr "PROMJENA IMENIKA"
+
+msgid "change download directory"
+msgstr "promjena direktorija za preuzimanje"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "UNOS DIREKTORA ZA PREUZIMANJE"
+
+msgid "CANCEL"
+msgstr "OTKAŽI"
+
+msgid "cancel"
+msgstr "otkaži"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "PREUZIMANJE PREKINUTO"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "NIJEDAN PAKET NIJE SPREMLJEN NA DISK"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "PAKET JE PREUZET I MOŽE SE RUČNO INSTALIRATI"
+
+msgid "DOWNLOADING 100%"
+msgstr "PREUZIMANJE 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "Preuzeta datoteka ne odgovara očekivanom MD5 kontrolnom zbroju"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr ""
+"Pogreška: Nije moguće izbrisati privremenu datoteku paketa, problemi s "
+"dozvolama?"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr "Pogreška: Nije moguće zapisati datoteku paketa, problemi s dozvolama?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "Pogreška: Nije moguće postaviti dozvole za datoteku AppImage"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "Preuzeto %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "Pogreška: Nije moguće otvoriti datoteku ažuriranja AppImage za čitanje"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr ""
+"Pogreška: Preuzeta datoteka ne odgovara očekivanom MD5 kontrolnom zbroju"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"Pogreška: Nije moguće preimenovati pokrenutu datoteku AppImage, problemi s "
+"dopuštenjima?"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"Pogreška: Nije moguće zamijeniti pokrenutu datoteku AppImage, problemi s "
+"dopuštenjima?"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "Uspješno instalirano kao %s"
+
+msgid "DOWNLOADING"
+msgstr "PREUZIMANJE"
+
+msgid "INSTALL"
+msgstr "INSTALIRATI"
+
+msgid "install package"
+msgstr "instalirati paket"
+
+msgid "Find the detailed changelog at"
+msgstr "Detaljan popis promjena pronađite na"
+
+msgid "QUIT"
+msgstr "PRESTATI"
+
+msgid "quit application"
+msgstr "zatvori aplikaciju"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "ZAVRŠI UREĐIVANJE KOLEKCIJE '%s'"
+
+msgid "SELECT COLLECTIONS"
+msgstr "ODABRANI KOLEKCIJE"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "AUTOMATSKE KOLEKCIJE IGARA"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "KOLEKCIJE IGARA PO NARUDŽBI"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "STVORI NOVU PRILAGOĐENU KOLEKCIJU IZ TEME"
+
+msgid "SELECT THEME FOLDER"
+msgstr "ODABERITE MAPU TEME"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "STVORI NOVU PRILAGOĐENU KOLEKCIJU"
+
+msgid "NEW COLLECTION NAME"
+msgstr "NAZIV NOVE KOLEKCIJE"
+
+msgid "CREATE"
+msgstr "STVORI"
+
+msgid "CREATE COLLECTION?"
+msgstr "KREIRATI KOLEKCIJU?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "IZBRIŠI PRILAGOĐENU KOLEKCIJU"
+
+msgid "COLLECTION TO DELETE"
+msgstr "ZBIRKA ZA BRISANJE"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"OVIM ĆE SE TRAJNO IZBRISATI KOLEKCIJA\n"
+"'%s'\n"
+"JESTE LI SIGURNI?"
+
+msgid "YES"
+msgstr "DA"
+
+msgid "NO"
+msgstr "NE"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "GRUPNE KOLEKCIJE PO NARUDŽBI"
+
+msgid "IF UNTHEMED"
+msgstr "AKO BEZ TEME"
+
+msgid "ALWAYS"
+msgstr "UVIJEK"
+
+msgid "NEVER"
+msgstr "NIKADA"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "SORTIRAJTE OMILJENE NA VRHU ZA PRILAGOĐENE KOLEKCIJE"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "PRIKAŽITE ZVJEZDNE OZNAKE ZA PRILAGOĐENE KOLEKCIJE"
+
+msgid "IMPORT TO SYSTEM"
+msgstr "UVEZI U SUSTAV"
+
+msgid "NO CONFIGURATION"
+msgstr "NEMA KONFIGURACIJE"
+
+msgid "REMOVE ENTRIES"
+msgstr "UKLONITE UNOS"
+
+msgid "ALL UNSELECTED"
+msgstr "SVE NEODABRANO"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr ""
+
+msgid "MEDIA TARGET TYPE"
+msgstr "VRSTA CILJNE MEDIJSKE GRUPE"
+
+msgid "SCREENSHOTS"
+msgstr "SNIMKE ZASLONA"
+
+msgid "TITLE SCREENS"
+msgstr "POČETNI ZASLONI"
+
+msgid "COVERS"
+msgstr "NASLOVNICE"
+
+msgid "BACK COVERS"
+msgstr "IZA-NASLOVNICE"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "ŠATORI (KOTAČI)"
+
+msgid "3D BOXES"
+msgstr "3D KUTIJE"
+
+msgid "PHYSICAL MEDIA"
+msgstr "FIZIČKI MEDIJ"
+
+msgid "FAN ART"
+msgstr "UMJETNOST OBOŽAVATELJA"
+
+msgid "MIXIMAGES"
+msgstr ""
+
+msgid "IMPORT MEDIA"
+msgstr "UVEZITE MEDIJ"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "UVEZITE BARJAK ILI LOGO AKO SU DOSTUPNI"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "PREPIŠITE MEDIJSKE DATOTEKE"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "UKLJUČITE SAMO APLIKACIJE KATEGORIZIRANE KAO IGRE"
+
+msgid "START"
+msgstr "START"
+
+msgid "start importer"
+msgstr "pokrenite uvoznik"
+
+msgid "WORKING..."
+msgstr "RADI..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "NIJE SE MOGLO PRONAĆI NIŠTA ZA UVOZ"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"ODABRALI STE UKLONJITI SVE NEODABRANE UNOSE. OVIM ĆE SE IZBRISATI SVE "
+"DATOTEKE IGRE S PRODUŽETKOM \"%s\" IZ SISTEMSKOG IMENIKA \"%s\", A ZATIM ĆE "
+"SE UVESTI UNOSI KOJE ODABERETE NA SLJEDEĆEM ZASLONU.\n"
+"JESTE LI SIGURNI?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "NAPRAVITE SVOJ ODABIR"
+
+msgid "IMPORT"
+msgstr "UVEZITE"
+
+msgid "import"
+msgstr "uvezite"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "UVEZEN %i UNOS"
+msgstr[1] "UVEZENA %i UNOSA"
+msgstr[2] "UVEZENO %i UNOSA"
+
+msgid "SELECT ALL"
+msgstr "ODABERI SVE"
+
+msgid "select all"
+msgstr "odaberi sve"
+
+msgid "SELECT NONE"
+msgstr "NE ODABERI NIŠTA"
+
+msgid "select none"
+msgstr "ne odaberi ništa"
+
+msgid "FILTER GAMELIST"
+msgstr "FILTRIRAJ POPIS IGRACA"
+
+msgid "RESET ALL FILTERS"
+msgstr "PONIŠTI SVE FILTRE"
+
+msgid "GAME NAME"
+msgstr "NAZIV IGRE"
+
+msgid "APPLY CHANGES?"
+msgstr "PRIMIJENITI PROMJENE?"
+
+msgid "NOTHING TO FILTER"
+msgstr "NEMA NIŠTA ZA FILTRIRANJE"
+
+msgid "GAMELIST OPTIONS"
+msgstr "OPCIJE POPISA IGRA"
+
+msgid "JUMP TO..."
+msgstr "SKOK NA..."
+
+msgid "SORT GAMES BY"
+msgstr "SORTIRAJ IGRE PO"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "OVAJ SUSTAV NEMA IGARA"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "DODAJ/UKLONI IGRE IZ OVE KOLEKCIJE"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "UREDI METAPODATKE OVE MAPE"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "UREDI METAPODATKE OVE IGRE"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "UNOS MAPE (NADIŠI POVEZNICU MAPE)"
+
+msgid "CLOSE"
+msgstr "ZATVORI"
+
+msgid "close"
+msgstr "zatvori"
+
+msgid "APPLY"
+msgstr "PRIJAVITE SE"
+
+msgid "apply"
+msgstr "primijeniti"
+
+msgid "close (apply)"
+msgstr "zatvori (primijeni)"
+
+msgid "close (cancel)"
+msgstr "zatvori (otkazati)"
+
+msgid "LAUNCHING GAME"
+msgstr "POKRETANJE IGRE"
+
+msgid "HELP PROMPTS"
+msgstr "UPUTE ZA POMOĆ"
+
+msgid "TOP"
+msgstr "VRH"
+
+msgid "BOTTOM"
+msgstr "DNO"
+
+msgid "DISABLED"
+msgstr "INVALIDITET"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "VRSTE MEDIJA ZA PRIKAZ"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "NEKA VIDEO ZAPISI TRAJU PRILIKOM PREGLEDA SLIKA"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "RASTEGNI VIDEO ZAPISE NA REZOLUCIJU EKRANA"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "RENDERIRAJ LINIJE SKENIRANJA ZA VIDEO ZAPISE"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "RENDERSKI ZAMUTLJIVANJE ZA VIDEO ZAPISE"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "PRIKAZ LINIJA SKENIRANJA ZA SNIMKE ZASLONOVA I NASLOVE"
+
+msgid "MAIN MENU"
+msgstr "GLAVNI IZBORNIK"
+
+msgid "SCRAPER"
+msgstr "STRUGAČ"
+
+msgid "UI SETTINGS"
+msgstr "POSTAVKE UI-ja"
+
+msgid "SOUND SETTINGS"
+msgstr "POSTAVKE ZVUKA"
+
+msgid "INPUT DEVICE SETTINGS"
+msgstr "POSTAVKE ULAZNOG UREĐAJA"
+
+msgid "GAME COLLECTION SETTINGS"
+msgstr "POSTAVKE ZBIRKE IGARA"
+
+msgid "OTHER SETTINGS"
+msgstr "OSTALE POSTAVKE"
+
+msgid "UTILITIES"
+msgstr "KOMUNALNE USLUGE"
+
+msgid "QUIT ES-DE"
+msgstr "IZLAZ IZ ES-DE"
+
+msgid "THEME"
+msgstr "TEMA"
+
+msgid "THEME DOWNLOADER"
+msgstr "PREUZIMANJE TEME"
+
+msgid "THEME VARIANT"
+msgstr "VARIJANTA TEME"
+
+msgid "NONE DEFINED"
+msgstr "NIJE DEFINIRANO"
+
+msgid "THEME COLOR SCHEME"
+msgstr "SHEMA BOJA TEME"
+
+msgid "THEME FONT SIZE"
+msgstr "VELIČINA FONTA TEME"
+
+msgid "THEME ASPECT RATIO"
+msgstr "OMJER STRANICA TEME"
+
+msgid "THEME TRANSITIONS"
+msgstr "PRIJELAZI IZMEĐU TEMA"
+
+msgid "AUTOMATIC"
+msgstr "AUTOMATSKI"
+
+msgid "THEME PROFILE"
+msgstr "PROFIL TEME"
+
+msgid "INSTANT (BUILT-IN)"
+msgstr "INSTANT (UGRAĐENO)"
+
+msgid "SLIDE (BUILT-IN)"
+msgstr "KLIZNI (UGRAĐENI)"
+
+msgid "FADE (BUILT-IN)"
+msgstr "BLIJEĐENJE (UGRAĐENO)"
+
+msgid "THEME LANGUAGE"
+msgstr "JEZIK TEME"
+
+msgid "APPLICATION LANGUAGE"
+msgstr "JEZIK APLIKACIJE"
+
+msgid "QUICK SYSTEM SELECT"
+msgstr "BRZI ODABIR SUSTAVA"
+
+msgid "LEFT/RIGHT OR SHOULDERS"
+msgstr "LIJEVO/DESNO ILI RAMENA"
+
+msgid "LEFT/RIGHT OR TRIGGERS"
+msgstr "LIJEVO/DESNO ILI OKIDAČI"
+
+msgid "SHOULDERS"
+msgstr "RAMENA"
+
+msgid "TRIGGERS"
+msgstr "OKIDAČI"
+
+msgid "LEFT/RIGHT"
+msgstr "LIJEVO/DESNO"
+
+msgid "SYSTEM ON STARTUP"
+msgstr "SUSTAV PRI POKRETANJU"
+
+msgid "STARTUP VIEW"
+msgstr "POČETNI PRIKAZ"
+
+msgid "SYSTEM"
+msgstr "SUSTAV"
+
+msgid "GAMELIST"
+msgstr "LISTA IGARA"
+
+msgid "SYSTEMS SORTING"
+msgstr "SORTIRANJE SUSTAVA"
+
+msgid "FULL NAMES OR CUSTOM"
+msgstr "PUNA IMENA ILI PRILAGOĐENA"
+
+msgid "RELEASE YEAR"
+msgstr "GODINA IZLASKA"
+
+msgid "MANUFACTURER, RELEASE YEAR"
+msgstr "PROIZVOĐAČ, GODINA IZLASKA"
+
+msgid "HW TYPE, RELEASE YEAR"
+msgstr "VRSTA UREĐAJA, GODINA IZLASKA"
+
+msgid "MANUFACTURER, HW TYPE, REL. YEAR"
+msgstr "PROIZVOĐAČ, VRS. OPREME, GOD. PROIZ"
+
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "ZADANI REDOSLIJED SORTIRANJA"
+
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "ZADANI REDOSLIJED SORTIRANJA IGARA"
+
+msgid "MENU COLOR SCHEME"
+msgstr "ŠEMA BOJA IZBORNIKA"
+
+msgid "DARK"
+msgstr "TAMNA"
+
+msgid "DARK AND RED"
+msgstr "TAMNA I CRVENA"
+
+msgid "LIGHT"
+msgstr "SVJETLA"
+
+msgid "MENU OPENING ANIMATION"
+msgstr "ANIMACIJA OTVARANJA IZBORNIKA"
+
+msgid "SCALE-UP"
+msgstr "PROŠIRENJE"
+
+msgid "NONE"
+msgstr "NIJEDAN"
+
+msgid "LAUNCH SCREEN DURATION"
+msgstr "TRAJANJE POKRETNOG ZASLONKA"
+
+msgid "NORMAL"
+msgstr "NORMALNO"
+
+msgid "BRIEF"
+msgstr "KRATKO"
+
+msgid "LONG"
+msgstr "DUGO"
+
+msgid "POPUP"
+msgstr "SKOČNI PROZOR"
+
+msgid "UI MODE"
+msgstr "NAČIN SUČELJSKOG RAČUNA"
+
+msgid "FULL"
+msgstr "PUNI"
+
+msgid "KIOSK"
+msgstr "KIOSK"
+
+msgid "KID"
+msgstr "DIJETE"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"OVIM SE SUČELJE MIJENJA U OGRANIČENI NAČIN RADA\n"
+"'KIOSK'\n"
+"OVIM SE SAKRIVA VEĆINA OPCIJA IZBORNIKA\n"
+"ZA OTKLJUČAVANJE I POVRATAK NA POTPUNO SUČELJE, UNESITE OVAJ KOD:\n"
+"%s\n"
+"\n"
+"ŽELITE LI NASTAVITI?"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"OVIM SE SUČELJE MIJENJA U OGRANIČENI NAČIN RADA\n"
+"'DIJETE'\n"
+"OVIM SE OMOGUĆAVAJU SAMO IGRE KOJE SU OZNAČENE\n"
+"KAO PRIMJERENE ZA DJECU\n"
+"ZA OTKLJUČAVANJE I POVRATAK NA POTPUNO SUČELJE, UNESITE OVAJ KOD:\n"
+"%s\n"
+"\n"
+"ŽELITE LI NASTAVITI?"
+
+msgid "RANDOM ENTRY BUTTON"
+msgstr "GUMB ZA NASUMIČNI UNOS"
+
+msgid "GAMES ONLY"
+msgstr "SAMO IGRE"
+
+msgid "GAMES AND SYSTEMS"
+msgstr "IGRE I SUSTAVI"
+
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "POSTAVKE STATUSA SUSTAVA"
+
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "POSTAVKE PREGLEDNIKA MEDIJA"
+
+msgid "SCREENSAVER SETTINGS"
+msgstr "POSTAVKE ČUVARA ZASLON"
+
+msgid "ENABLE THEME VARIANT TRIGGERS"
+msgstr "OMOGUĆI OTKAZAČE VARIJANTI TEME"
+
+msgid "DISPLAY CLOCK"
+msgstr "PRIKAZ SATA"
+
+msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
+msgstr "ZAMUTLJIVANJE POZADINE KADA JE IZBORNIK OTVOREN"
+
+msgid "SORT FOLDERS ON TOP OF GAMELISTS"
+msgstr "SORTIRAJ MAPE NA VRHU LISTA IGRA"
+
+msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+msgstr "SORTIRAJ OMILJENE IGRE IZNAD NEOMILJENIH"
+
+msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
+msgstr "ADD STAR MARKINGS TO FAVOURITE GAMES"
+
+msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+msgstr "OMOGUĆI BRZO POMICAJANJE PREKRIVAČA POPISA TEKSTA"
+
+msgid "ENABLE VIRTUAL KEYBOARD"
+msgstr "OMOGUĆI VIRTUALNU TIPKOVNICU"
+
+msgid "ENABLE TOGGLE FAVORITES BUTTON"
+msgstr "ENABLE TOGGLE FAVOURITES BUTTON"
+
+msgid "ENABLE GAMELIST FILTERS"
+msgstr "OMOGUĆI FILTRE POPISA IGRA"
+
+msgid "DISPLAY ON-SCREEN HELP"
+msgstr "PRIKAZ POMOĆI NA ZASLONU"
+
+msgid "AUDIO DRIVER"
+msgstr "AUDIO UPRAVLJAČ"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "AUDIO UPRAVLJAČKI PROGRAM (POTREBNO PONOVNO POKRETANJE)"
+
+msgid "SYSTEM VOLUME"
+msgstr "GLASNOĆA SUSTAVA"
+
+msgid "NAVIGATION SOUNDS VOLUME"
+msgstr "GLASNOĆA ZVUKOVA NAVIGACIJE"
+
+msgid "VIDEO PLAYER VOLUME"
+msgstr "GLASNOĆA VIDEO PLAYERA"
+
+msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+msgstr "REPRODUCIRAJ ZVUK ZA POPISE IGARA I VIDEO ZAPISE SUSTAVA"
+
+msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+msgstr "REPRODUCIRAJ ZVUK ZA SNIMKE GLAVLJENJA"
+
+msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+msgstr "REPRODUCIRAJ ZVUK ZA SNIMKE ČUVARA ZASLONA"
+
+msgid "ENABLE NAVIGATION SOUNDS"
+msgstr "OMOGUĆI ZVUKOVE NAVIGACIJE"
+
+msgid "CONTROLLER TYPE"
+msgstr "VRSTA KONTROLERA"
+
+msgid "TOUCH OVERLAY SIZE"
+msgstr "VELIČINA DODIRNOG PREKRIVAČA"
+
+msgid "MEDIUM"
+msgstr "SREDNJE"
+
+msgid "LARGE"
+msgstr "VELIKO"
+
+msgid "SMALL"
+msgstr "MALI"
+
+msgid "EXTRA SMALL"
+msgstr "IZUZETNO MALO"
+
+msgid "TOUCH OVERLAY OPACITY"
+msgstr "NEPROZIRNOST PREKRIVAČA PLOŠČA"
+
+msgid "LOW"
+msgstr "NISKA"
+
+msgid "VERY LOW"
+msgstr "VRLO NISKA"
+
+msgid "TOUCH OVERLAY FADE-OUT TIME"
+msgstr "VRIJEME ZATAMNJIVANJA DODIRNOG PREKRIVANJA"
+
+msgid "ENABLE TOUCH OVERLAY"
+msgstr "OMOGUĆI DODIRNI PREKRIVAČ"
+
+msgid ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+msgstr ""
+"NE ISKLJUČUJTE DODIRNI PREKRIVAČ OSIM AKO NE KORISTITE KONTROLER ILI ĆETE SE "
+"ZAKLJUČATI IZ APLIKACIJE. AKO SE TO DOGODI, MORAT ĆETE PRIVREMENO "
+"PRIKLJUČITI KONTROLER ILI TIPKOVNICU DA BISTE PONOVNO OMOGUĆILI OVU "
+"POSTAVKU, ILI MOŽETE IZBRIŠATI ES-DE MEMORIJU U POSTAVKAMA ANDROID "
+"APLIKACIJE KAKO BISTE PRISILILI KONFIGURATOR DA SE POKRENE PRI SLJEDEĆEM "
+"POKRETANJU"
+
+msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+msgstr "PRIHVATI SAMO UNOS OD PRVOG KONTROLERA"
+
+msgid "SWAP THE A/B AND X/Y BUTTONS"
+msgstr "ZAMIJENITE TIPKE A/B I X/Y"
+
+msgid "IGNORE KEYBOARD INPUT"
+msgstr "IGNORIRAJ UNOS S TIPKOVNICE"
+
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "OBAVIJESTI ULAZNIH UREĐAJA"
+
+msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
+msgstr "KONFIGURIRAJTE TIPKOVNICU I KONTROLERE"
+
+msgid ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
+"HELP PROMPTS)"
+msgstr ""
+"TIPKOVNICA I KONTROLERI SU AUTOMATSKI KONFIGURIRANI, ALI POMOĆU OVOG ALATA "
+"MOŽETE PONIŠTITI ZADANE MAPIRANJA TIPKI (TO NEĆE UTJECATI NA POMOĆNE UPUTE)"
+
+msgid "PROCEED"
+msgstr "NASTAVI"
+
+msgid "GAME MEDIA DIRECTORY"
+msgstr "IMENIK MEDIJA ZA IGRE"
+
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr "UNOS U IMENIK MEDIJA U IGRI"
+
+msgid "Default directory:"
+msgstr "Zadani direktorij:"
+
+msgid "SAVE"
+msgstr "SPREMI"
+
+msgid "SAVE CHANGES?"
+msgstr "SPREMI PROMJENE?"
+
+msgid "load default directory"
+msgstr "učitavanje zadanog direktorija"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr ""
+
+msgid "VRAM LIMIT"
+msgstr "OGRANIČENJA VRAM-a"
+
+msgid "ANTI-ALIASING (MSAA)"
+msgstr "ANTIALIASIRANJE (MSAA)"
+
+msgid "2X"
+msgstr "2 puta"
+
+msgid "4X"
+msgstr "4 puta"
+
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr "ANTIALIASIRANJE (MSAA) (POTREBNO PONOVNO POKRETANJE)"
+
+msgid "DISPLAY/MONITOR INDEX"
+msgstr "INDEKS ZASLON/MONITOR"
+
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr "INDEKS ZASLON/MONITOR (POTREBNO PONOVNO POKRETANJE)"
+
+msgid "ROTATE SCREEN"
+msgstr "ROTIRAJ ZASLON"
+
+msgid "90 DEGREES"
+msgstr "90 STUPNJA"
+
+msgid "180 DEGREES"
+msgstr "180 STUPNJA"
+
+msgid "270 DEGREES"
+msgstr "270 STUPNJA"
+
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr "ROTIRAJ ZASLON (POTREBNO PONOVNO POKRETANJE)"
+
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr "PREČAC ZA IZLAZ NA TIPKOVNICI"
+
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "WHEN TO SAVE METADATA"
+
+msgid "ON EXIT"
+msgstr "NA IZLAZU"
+
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "KADA SPREMITI METAPODATKE IGRE"
+
+msgid "APPLICATION UPDATES"
+msgstr "AŽURIRANJA APLIKACIJA"
+
+msgid "DAILY"
+msgstr "DNEVNO"
+
+msgid "WEEKLY"
+msgstr "TJEDNO"
+
+msgid "MONTHLY"
+msgstr "MJESEČNO"
+
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "PROVJERITE AŽURIRANJA APLIKACIJE"
+
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr "UKLJUČI PREDIZDANJA U PROVJERE AŽURIRANJA"
+
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr "SAKRIJ TRAKU ZADATAKA (POTREBNO PONOVNO POKRETANJE)"
+
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr "TRČANJE U POZADINI (DOK JE IGRA POKRENUTA)"
+
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr "DEKODIRANJE VIDEO HARDVERA (EKSPERIMENTALNO)"
+
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr "POVEĆANJE BRZINE SLIČNIH KADROVA VIDEA NA 60 FPS"
+
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr "OMOGUĆI ALTERNATIVNE EMULATORE PO IGRI"
+
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr "PRIKAŽI SKRIVENE DATOTEKE I MAPE"
+
+msgid "SHOW HIDDEN GAMES"
+msgstr "PRIKAŽI SKRIVENE IGRE"
+
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "OMOGUĆI PRILAGOĐENE SKRIPTE DOGAĐAJA"
+
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "PREGLEDAVANJE PRILAGOĐENIH DOGAĐAJA"
+
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr "PRIKAŽI SAMO IGRE IZ DATOTEKA GAMELIST.XML"
+
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr "UKLONI DODATNE INFORMACIJE O IMENU IMENA (POTREBNO PONOVNO POKRETANJE)"
+
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr "ONEMOGUĆI KOMPOZICIJU RADNE POVRŠINE (POTREBNO PONOVNO POKRETANJE)"
+
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr "GUMB ZA NATRAG/PRIVLAČENJEM PREMA NATRAG IZLAZ IZ APLIKACIJE"
+
+msgid "DEBUG MODE"
+msgstr "NAČIN OTKLANJANJA GREŠAKA"
+
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr "PRIKAZ STATISTIKE GPU-a"
+
+msgid "ENABLE MENU IN KID MODE"
+msgstr "OMOGUĆI IZBORNIK U DJEČJEM NAČINU"
+
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr "PRIKAŽI IZBORNIK ZA IZLAZ (UNOS ZA PONOVNO POKRETANJE I ISKLJUČIVANJE)"
+
+msgid "GAME IMPORTER"
+msgstr "UVOZNIK IGARA"
+
+msgid "ORPHANED DATA CLEANUP"
+msgstr "ČIŠĆENJE NASIROTIH PODATAKA"
+
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr "STVARANJE/AŽURIRANJE SISTEMSKIH IMENIKA"
+
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+"OVIM ĆE SE KREIRATI SVI DIREKTORIJI SUSTAVA IGRE UNUTAR VAŠE ROM MAPE I "
+"AŽURIRAT ĆE SE SVE DATOTEKE SYSTEMINFO.TXT. OVO JE SIGURNA OPERACIJA KOJA "
+"NEĆE IZBRISATI NITI IZMIJENITI DATOTEKE VAŠE IGRE. KAKO BISTE SKRATILI "
+"VRIJEME POKRETANJA APLIKACIJE, PREPORUČUJE SE DA IZBRISATE DIREKTORIJE "
+"SUSTAVA KOJI VAM NE TREBAJU NAKON POKRETANJA OVOG USLUŽNOG PROGRAMA"
+
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr "SISTEMSKE DIREKTORIJE USPJEŠNO SU KREIRANI"
+
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+"POGREŠKA PRI STVARANJU SISTEMSKIH DIREKTORA, PROBLEMI S DOZVOLAMA ILI JE "
+"DISK PUN? VIŠE INFORMACIJA POGLEDAJTE U DATOTECI ZAPISA"
+
+msgid "RESCAN ROM DIRECTORY"
+msgstr "PONOVNO SKENIRAJ ROM DIREKTORIJ"
+
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr ""
+"OVO ĆE PONOVNO SKENIRATI VAŠ ROM DIREKTOR ZA PROMJENE KAO ŠTO SU DODANI ILI "
+"UKLONJENI IGRE I SUSTAVI"
+
+msgid "REALLY QUIT?"
+msgstr "STVARNO ODUSTAJETE?"
+
+msgid "REALLY REBOOT?"
+msgstr "STVARNO PONOVNO POKREČETE?"
+
+msgid "REBOOT SYSTEM"
+msgstr "PONOVNO POKRETANJE SUSTAVA"
+
+msgid "REALLY POWER OFF?"
+msgstr "STVARNO ISKLJUČUJETE?"
+
+msgid "POWER OFF SYSTEM"
+msgstr "ISKLJUČIVANJE SUSTAVA"
+
+msgid "REALLY SUSPEND?"
+msgstr ""
+
+msgid "SUSPEND SYSTEM"
+msgstr ""
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "POSTAVKE STATUSA SUSTAVA"
+
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "POSTAVKE PREGLEDNIKA MEDIJA"
+
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
+msgstr "POSTAVKE ČUVARA ZASLON"
+
+msgid "choose"
+msgstr "odabrati"
+
+msgid "close menu"
+msgstr "zatvori izbornik"
+
+msgid "EDIT METADATA"
+msgstr "UREDI METAPODATKE"
+
+msgid "CLEAR ENTRY"
+msgstr "SLOBODAN UNOS"
+
+msgid "SELECT EMULATOR"
+msgstr "ODABERITE EMULATOR"
+
+msgid "SYSTEM-WIDE"
+msgstr "CIJELI SUSTAV"
+
+msgid "unknown"
+msgstr "nepoznato"
+
+msgid "SCRAPE"
+msgstr "STRUGNI"
+
+msgid "scrape"
+msgstr "strugnite"
+
+msgid "save metadata"
+msgstr "spremi metapodatke"
+
+msgid "cancel changes"
+msgstr "poništi promjene"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"OVIM ĆE SE IZBRISATI SVE MEDIJSKE DATOTEKE I UNOS GAMELIST.XML ZA OVU MAPU, "
+"ALI NI SAM DIREKTOR NITI SADRŽAJ UNUTAR NJEGA NEĆE BITI UKLONJENI.\n"
+"JESTE LI SIGURNI?"
+
+msgid "CLEAR"
+msgstr "JASAN"
+
+msgid "clear folder"
+msgstr "obriši mapu"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"OVIM ĆE SE IZBRISATI SVE MEDIJSKE DATOTEKE I UNOS GAMELIST.XML ZA OVU IGRU, "
+"ALI SAMA DATOTEKA IGRE NEĆE BITI UKLONJENA\n"
+"JESTE LI SIGURNI?"
+
+msgid "clear file"
+msgstr "obriši datoteku"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"OVIM ĆE SE IZBRISATI DATOTEKA IGRE, SVE MEDIJSKE DATOTEKE I UNOS GAMELIST."
+"XML\n"
+"JESTE LI SIGURNI?"
+
+msgid "DELETE"
+msgstr "OBRIŠI"
+
+msgid "delete game"
+msgstr "izbriši igru"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "GENERATOR MIXIMAGE OFFLINE"
+
+msgid "NOT STARTED"
+msgstr "NIJE POČELO"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "OBRAĐENO JE %i OD %i IGRE"
+msgstr[1] "OBRAĐENO JE %i OD %i IGRE"
+msgstr[2] "OBRAĐENO JE %i OD %i IGARA"
+
+msgid "Generated:"
+msgstr "Generirano:"
+
+msgid "Overwritten:"
+msgstr "Prepisano:"
+
+msgid "Skipped:"
+msgstr "Preskočeno:"
+
+msgid "Skipped (existing):"
+msgstr "Preskočeno (postojeće):"
+
+msgid "Failed:"
+msgstr "Nije uspjelo:"
+
+msgid "Processing:"
+msgstr "Obrada:"
+
+msgid "Last error message:"
+msgstr "Posljednja poruka o pogrešci:"
+
+msgid "start processing"
+msgstr "započnite obradu"
+
+msgid "PAUSE"
+msgstr "PAUZA"
+
+msgid "pause processing"
+msgstr "pauziraj obradu"
+
+msgid "close (abort processing)"
+msgstr "zatvori (prekini obradu)"
+
+msgid "RUNNING..."
+msgstr "TRČANJE..."
+
+msgid "PAUSED"
+msgstr "PAUZIRANO"
+
+msgid "RUNNING"
+msgstr "TRČANJE"
+
+msgid "DONE"
+msgstr "GOTOVO"
+
+msgid "done (close)"
+msgstr "gotovo (zatvori)"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"OVIM ĆE SE UKLONIT SVE MEDIJSKE DATOTEKE GDJE SE NE MOGU PRONAĆI "
+"ODGOVARAJUĆE DATOTEKE IGRE. OVE ĆE SE DATOTEKE PREMJESTITI U MAPU ZA "
+"ČIŠĆENJE UNUTAR VAŠEG MEDIJSKOG DIREKTORA IGRE. OVU MAPU MOŽETE RUČNO "
+"IZBRISATI KADA BUDETE SIGURNI DA VAM VIŠE NIJE POTREBNA."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"OVIM ĆE SE UKLONIT SVE UNOSITE IZ VAŠIH XML DATOTEKA S POPISU IGARA GDJE SE "
+"NE MOGU PRONAĆI ODGOVARAJUĆE DATOTEKE IGRE. SIGURNOSNE KOPIJE IZVORNIH "
+"DATOTEKA BIT ĆE SPREMLJENE U MAPU ZA ČIŠĆENJE UNUTAR VAŠEG DIREKTORA POPISA "
+"IGARA. OVU MAPU MOŽETE RUČNO IZBRISATI KADA BUDETE SIGURNI DA VIŠE NIJE "
+"POTREBNA."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"OVIM ĆE SE UKLONIT SVI UNOS IZ DATOTEKA ZA KONFIGURACIJU VAŠIH PRILAGOĐENIH "
+"ZBIRKI GDJE SE NE MOGU PRONAĆI ODGOVARAJUĆE DATOTEKE IGRE. SIGURNOSNE KOPIJE "
+"IZVORNIH DATOTEKA BIT ĆE SPREMLJENE U MAPU ZA ČIŠĆENJE UNUTAR VAŠEG "
+"DIREKTORIJA ZBIRKI. OBRAĐIVAT ĆE SE SAMO TRENUTNO OMOGUĆENE ZBIRKE."
+
+msgid "DESCRIPTION:"
+msgstr "OPIS:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "UKUPNO UKLONJENIH UNOSA:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "POSLJEDNJI OBRAĐENI SUSTAV:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "POSLJEDNJA PORUKA O POGREŠCI:"
+
+msgid "MEDIA"
+msgstr "MEDIJI"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "ČIŠĆENJE POKRETNIH MEDIJA"
+
+msgid "STOP"
+msgstr "STOP"
+
+msgid "stop processing"
+msgstr "zaustavi obradu"
+
+msgid "GAMELISTS"
+msgstr "POPISI IGARA"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "ČIŠĆENJE LISTA ZA IGRE"
+
+msgid "COLLECTIONS"
+msgstr "KOLEKCIJE"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "ČIŠĆENJE ZBIRKI NIJE USPJELO"
+
+msgid "There are no enabled custom collections"
+msgstr "Nema omogućenih prilagođenih kolekcija"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "ČIŠĆENJE ZBIRKI"
+
+msgid "PROCESSING"
+msgstr "OBRADA"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "Pronađena je datoteka flatten.txt koja preskače \"%s\""
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "Nije moguće stvoriti ciljni direktorij, problemi s dozvolama?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "Nije moguće premjestiti medijsku datoteku, problemi s dopuštenjima?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "Nije moguće analizirati datoteku gamelist.xml za \"%s\""
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "Nije pronađena oznaka popisa igara u datoteci za \"%s\""
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr ""
+"Nije moguće izbrisati privremenu datoteku popisa igara, problemi s "
+"dopuštenjima?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr ""
+"Nije moguće pisati u privremenu datoteku popisa igara, problemi s "
+"dopuštenjima?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr ""
+"Nije moguće stvoriti sigurnosnu kopiju direktorija, problemi s dozvolama?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr ""
+"Nije moguće premjestiti staru datoteku popisa igara, problemi s dozvolama?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr ""
+"Nije moguće premjestiti privremenu datoteku popisa igara, problemi s "
+"dozvolama?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "Nije pronađena datoteka za konfiguraciju prilagođene kolekcije"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "Nije moguće otvoriti datoteku konfiguracije prilagođene kolekcije"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr ""
+"Nije moguće izbrisati privremenu datoteku kolekcije, problemi s dozvolama?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "Nije moguće pisati u privremenu konfiguracijsku datoteku kolekcije"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr ""
+"Nije moguće premjestiti staru datoteku kolekcije, problemi s dozvolama?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr ""
+"Nije moguće premjestiti privremenu datoteku kolekcije, problemi s dozvolama?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "PREKINUTO ČIŠĆENJE MEDIJA"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "ZAVRŠENO ČIŠĆENJE MEDIJA"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "PREKINUTO ČIŠĆENJE POPISA ZA IGRAČE"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "ZAVRŠENO ČIŠĆENJE LISTE IGARA"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "ČIŠĆENJE PREKINUTIH ZBIRKI"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "ZAVRŠENO ČIŠĆENJE ZBIRKI"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "ČIŠĆENJE MEDIJA NIJE USPJELO"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "ČIŠĆENJE LISTA IGRACA NIJE USPJELO"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr ""
+"APLIKACIJA ĆE SE PONOVNO UČITATI PRI ZATVARANJU OVOG USLUŽNOG PROGRAMA."
+
+msgid "SCRAPE FROM"
+msgstr "STRUGATI OD"
+
+msgid "SCRAPE THESE GAMES"
+msgstr "STRUGAJTE OVE IGRE"
+
+msgid "ALL GAMES"
+msgstr "SVE IGRE"
+
+msgid "FAVORITE GAMES"
+msgstr "OMILJENE IGRE"
+
+msgid "NO METADATA"
+msgstr "NEMA METAPODATAKA"
+
+msgid "NO GAME IMAGE"
+msgstr "NEMA SLIKE IGRE"
+
+msgid "NO GAME VIDEO"
+msgstr "NEMA VIDEO ZAPISA IGRE"
+
+msgid "FOLDERS ONLY"
+msgstr "SAMO MAPE"
+
+msgid "SCRAPE THESE SYSTEMS"
+msgstr "STRUGAJTE OVE SUSTAVE"
+
+msgid "ACCOUNT SETTINGS"
+msgstr "POSTAVKE RAČUNA"
+
+msgid "CONTENT SETTINGS"
+msgstr "POSTAVKE SADRŽAJA"
+
+msgid "MIXIMAGE SETTINGS"
+msgstr "POSTAVKE MIXIMAGE"
+
+msgid "start scraper"
+msgstr "pokrenite strugač"
+
+msgid "SCREENSCRAPER USERNAME"
+msgstr "KORISNIČKO IME ZA STRUGAČA ZASLONOVA"
+
+msgid "SCREENSCRAPER PASSWORD"
+msgstr "LOZINKA ZA STRUGAČ ZASLONOVA"
+
+msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
+msgstr "KORISTITE OVAJ RAČUN ZA STRUGAČ ZASLONOVA"
+
+msgid "GAME NAMES"
+msgstr "NAZIV IGARA"
+
+msgid "RATINGS"
+msgstr "OCJENE"
+
+msgid "OTHER METADATA"
+msgstr "OSTALI METAPODACI"
+
+msgid "VIDEOS"
+msgstr "VIDEOZAPISI"
+
+msgid "SCREENSHOT IMAGES"
+msgstr "SNIMKE ZASLONA"
+
+msgid "TITLE SCREEN IMAGES"
+msgstr "SLIKE NASLOVNOG ZASLON"
+
+msgid "BOX COVER IMAGES"
+msgstr "SLIKE NASLOVNICE KUTIJE"
+
+msgid "BOX BACK COVER IMAGES"
+msgstr "SLIKE STRAŽNJE OMOTNICE KUTIJE"
+
+msgid "MARQUEE (WHEEL) IMAGES"
+msgstr "SLIKE KOTAČA (MARKUETY)"
+
+msgid "3D BOX IMAGES"
+msgstr "3D SLIKE KUTIJE"
+
+msgid "PHYSICAL MEDIA IMAGES"
+msgstr "SLIKE FIZIČKIH MEDIJA"
+
+msgid "FAN ART IMAGES"
+msgstr "SLIKE FAN ART-a"
+
+msgid "GAME MANUALS"
+msgstr "PRIRUČNICI ZA IGRE"
+
+msgid "MIXIMAGE RESOLUTION"
+msgstr "REZOLUCIJA MIX IMAGE"
+
+msgid "MIXIMAGE FILE FORMAT"
+msgstr ""
+
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "HORIZONTALNA SNIMKA ZASLONA PRILAGOĐENA"
+
+msgid "CONTAIN"
+msgstr "SADRŽI"
+
+msgid "CROP"
+msgstr "USJEV"
+
+msgid "STRETCH"
+msgstr "ISTEZANJE"
+
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "HORIZONTALNA SNIMKA ZASLONA PRILAGOĐENA"
+
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "VERTIKALNA SNIMKA ZASLONA PRILAGOĐENA"
+
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "VERTIKALNA SNIMKA ZASLONA PRILAGOĐENA"
+
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "PRAG OMJERA STRANICA ZASLONA"
+
+msgid "HIGH"
+msgstr "VISOK"
+
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "PRAG OMJERA STRANICA SNIMKE ZASLONA"
+
+msgid "BLANK AREAS FILL COLOR"
+msgstr "BOJA ISPUNJIVANJA PRAZNIH PODRUČJA"
+
+msgid "BLACK"
+msgstr "CRNA"
+
+msgid "FRAME"
+msgstr "OKVIR"
+
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "SCREENSHOT SCALING"
+
+msgid "SHARP"
+msgstr "OŠTAR"
+
+msgid "SMOOTH"
+msgstr "GLATKO"
+
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "METODA SKALOVANJA SNIMKE ZASLON"
+
+msgid "BOX SIZE"
+msgstr "VELIČINA KUTIJE"
+
+msgid "PHYSICAL MEDIA SIZE"
+msgstr "VELIČINA FIZIČKOG MEDIJA"
+
+msgid "GENERATE MIXIMAGES WHEN SCRAPING"
+msgstr "GENERIRAJ MIXIMAGES PRILIKOM STRUGANJA"
+
+msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
+msgstr "PREPIŠI MIXIMAGES (STRUGAČ/IZVAN LANE GENERATOR)"
+
+msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
+msgstr "UKLONITE POŠTANSKE SANDUČIĆE SA SNIMAKA ZASLONA"
+
+msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
+msgstr "UKLONITE KUTIJE ZA STUBOVE SA SNIMAKA ZASLONA"
+
+msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
+msgstr "ROTIRAJTE HORIZONTALNO ORIJENTIRANE KUTIJE"
+
+msgid "INCLUDE MARQUEE IMAGE"
+msgstr "UKLJUČI SLIKU MARQUEE-A"
+
+msgid "INCLUDE BOX IMAGE"
+msgstr "UKLJUČI SLIKU OKVIRA"
+
+msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
+msgstr "KORISTITE SLIKU NASLOVNICE AKO NEDOSTAJE 3D OKVIR"
+
+msgid "INCLUDE PHYSICAL MEDIA IMAGE"
+msgstr "UKLJUČI SLIKU FIZIČKOG MEDIJA"
+
+msgid "OFFLINE GENERATOR"
+msgstr "VANMREŽNI ISPUNJIVAČ"
+
+msgid ""
+"THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
+"PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
+msgstr ""
+"VANMREŽNI ISPUNJIVAČ KORISTI ISTE ODABIR SUSTAVA KAO I STRUGAČ, STOGA MOLIMO "
+"ODABERITE BAREM JEDAN SUSTAV ZA GENERIRANJE SLIKA"
+
+msgid "REGION"
+msgstr "REGIJA"
+
+msgid "EUROPE"
+msgstr "EUROPA"
+
+msgid "JAPAN"
+msgstr "JAPAN"
+
+msgid "USA"
+msgstr "SAD"
+
+msgid "WORLD"
+msgstr "SVIJET"
+
+msgid "ASIA"
+msgstr ""
+
+msgid "AUSTRALIA"
+msgstr ""
+
+msgid "BRAZIL"
+msgstr ""
+
+msgid "CANADA"
+msgstr ""
+
+msgid "CHINA"
+msgstr ""
+
+msgid "GERMANY"
+msgstr ""
+
+msgid "FRANCE"
+msgstr ""
+
+msgid "ITALY"
+msgstr ""
+
+msgid "KOREA"
+msgstr ""
+
+msgid "NETHERLANDS"
+msgstr ""
+
+msgid "RUSSIA"
+msgstr ""
+
+msgid "SWEDEN"
+msgstr ""
+
+msgid "SPAIN"
+msgstr ""
+
+msgid "TAIWAN"
+msgstr ""
+
+msgid "UNITED KINGDOM"
+msgstr ""
+
+msgid "PREFERRED LANGUAGE"
+msgstr "PREFERIRANI JEZIK"
+
+msgid "AUTOMATIC RETRIES ON ERROR"
+msgstr "AUTOMATSKI PONOVNI POKUŠAJI U SLUČAJU POGREŠKE"
+
+msgid "RETRY ATTEMPT TIMER"
+msgstr "VRIJEME PONOVNOG POKUŠAJA"
+
+msgid "HASH SEARCHES MAX FILE SIZE"
+msgstr "MAKSIMALNA VELIČINA DATOTEKE ZA HASH PRETRAŽIVANJE"
+
+msgid "OVERWRITE FILES AND DATA"
+msgstr "PREPIŠI DATOTEKE I PODATKE"
+
+msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
+msgstr "PRETRAŽIVANJE POMOĆU HASHOVA DATOTEKA (NEINTERAKTIVNI NAČIN)"
+
+msgid "SEARCH USING METADATA NAMES"
+msgstr "PRETRAŽIVANJE POMOĆU NAZIVOVA METAPODATAKA"
+
+msgid "SCRAPE ACTUAL FOLDERS"
+msgstr "STRUGAJ STVARNJE MAPE"
+
+msgid "INTERACTIVE MODE"
+msgstr "INTERAKTIVNI NAČIN RADA"
+
+msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
+msgstr "AUTOMATSKO PRIHVATAJ POJEDINAČNE UTAKMICE"
+
+msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
+msgstr "POŠTUJTE IZUZETKE STRUGAČA PO DATOTECI"
+
+msgid "EXCLUDE FOLDERS RECURSIVELY"
+msgstr "REKURZIVNO ISKLJUČI MAPE"
+
+msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
+msgstr "PRETVARANJE PODVLAKA U RAZMAKE PRI PRETRAŽIVANJU"
+
+msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
+msgstr "UKLONITE TOČKE IZ PRETRAŽIVANJA PRILIKOM AUTOMATSKOG STRUGANJA"
+
+msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
+msgstr "OMOGUĆI POVRATAK NA DODATNE REGIJE"
+
+msgid ""
+"THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
+msgstr ""
+"ODABRANI SUSTAV NEMA POSTAVLJENU PLATFORMU, REZULTATI MOGU BITI NETOČNI"
+
+msgid ""
+"AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
+"MAY BE INACCURATE"
+msgstr ""
+"BAREM JEDAN OD VAŠIH ODABRANIH SUSTAVA NEMA POSTAVLJENU PLATFORMU, REZULTATI "
+"MOGU BITI NETOČNI"
+
+msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
+msgstr "MOLIMO ODABERITE BAREM JEDAN SUSTAV ZA STRUGANJE"
+
+msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
+msgstr "MOLIMO ODABERITE BAREM JEDNU VRSTU SADRŽAJA ZA KOPIRANJE"
+
+msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
+msgstr "SVE IGRE SU BILE FILTRIRANE, NIŠTA ZA STRUGANJE"
+
+msgid "SCRAPING IN PROGRESS"
+msgstr "STRUGANJE U TIJEKU"
+
+msgid "REFINE SEARCH"
+msgstr "PRECIZIRAJ PRETRAŽIVANJE"
+
+msgid "refine search"
+msgstr "pročisti pretragu"
+
+msgid "SKIP"
+msgstr "PRESKOČITI"
+
+msgid "skip game"
+msgstr "preskoči igru"
+
+msgid "stop"
+msgstr "zaustavi"
+
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "IGRA"
+msgstr[1] "IGRE"
+msgstr[2] "IGARA"
+
+#, c-format
+msgid "GAME %i OF %i"
+msgstr "IGRA %i OD %i"
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr "NIJEDNA IGRA NIJE BILA OTKAZANA"
+
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i IGRA USPJEŠNO UKLANJENA"
+msgstr[1] "%i IGRE USPJEŠNO UKLANJENE"
+msgstr[2] "%i IGARA USPJEŠNO UKLANJENO"
+
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i IGRA PRESKOČENA"
+msgstr[1] "%i IGRE PRESKOČENO"
+msgstr[2] "%i IGARA PRESKOČENO"
+
+msgid "RATING:"
+msgstr "OCJENA:"
+
+msgid "RELEASED:"
+msgstr "OBJAVLJENO:"
+
+msgid "DEVELOPER:"
+msgstr "RAZVOJNI PROGRAM:"
+
+msgid "PUBLISHER:"
+msgstr "IZDAVAČ:"
+
+msgid "GENRE:"
+msgstr "ŽANR:"
+
+msgid "PLAYERS:"
+msgstr "IGRAČI:"
+
+msgid "NO GAMES FOUND"
+msgstr "NISU PRONAĐENE IGRE"
+
+msgid "API CALLS:"
+msgstr "API POZIVI:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "%i PREOSTALA"
+msgstr[1] "%i PREOSTALE"
+msgstr[2] "%i PREOSTALO"
+
+msgid "RETRY"
+msgstr "POKUŠAJ PONOVNO"
+
+msgid "Error downloading thumbnail:"
+msgstr "Greška pri preuzimanju minijature:"
+
+msgid "SEARCH"
+msgstr "TRAŽI"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "TRAŽI POMOĆU PRECIZIRANOG NAZIVA?"
+
+msgid "skip"
+msgstr "preskoči"
+
+msgid "accept result"
+msgstr "prihvati rezultat"
+
+msgid "back (cancel)"
+msgstr "natrag (otkaži)"
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr "POKRENI ČUVAR ZASLONA NAKON (MINUTA)"
+
+msgid "SCREENSAVER TYPE"
+msgstr "VRSTA ČUVARA ZASLONKA"
+
+msgid "DIM"
+msgstr "ZATAMLJEN"
+
+msgid "SLIDESHOW"
+msgstr "SLAJDOVI"
+
+msgid "VIDEO"
+msgstr "VIDEO"
+
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr "OMOGUĆI KONTROLE ČUVARA ZASLONA"
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr "POSTAVKE ČUVARA ZASLONA ZA SLIDESHOW"
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr "POSTAVKE ČUVARA ZASLONA ZA VIDEO"
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr "ČUVAR ZASLONKA SLIDŽ PROJEKCIJE"
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr "ZAMIJENI SLIKE NAKON (SEKUNDI)"
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr "UKLJUČI SAMO OMILJENE IGRE"
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr "RASTEGNITE SLIKE NA REZOLUCIJU ZASLONA"
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr "PRIKAZ PREKRIVANJA INFORMACIJA O IGRI"
+
+msgid "RENDER SCANLINES"
+msgstr "RENDER SKENIRANIH LINIJA"
+
+msgid "USE CUSTOM IMAGES"
+msgstr "KORISTITE PRILAGOĐENE SLIKE"
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr "REKURZIVNO PRETRAŽIVANJE PRILAGOĐENOG DIREKTORA SLIKA"
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr "PRILAGOĐENI IMENIK SLIKA"
+
+msgid "VIDEO SCREENSAVER"
+msgstr "ČUVAR ZASLONKA ZA VIDEO"
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr "ZAMIJENI VIDEOZAPISE NAKON (SEKUNDI)"
+
+msgid "RENDER BLUR"
+msgstr "RENDER ZAMUĆENJE"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "INDIKATOR STATUSA BLUETOOTH-A NA ZASLON"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "INDIKATOR STATUSA WI-FI-JA NA ZASLON"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "INDIKATOR STANJA MREŽE NA ZASLON"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "INDIKATOR STANJA BATERIJE NA ZASLON"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "PRIKAZ POSTOTAK NAPUNJENOSTI BATERIJE"
+
+msgid "DOWNLOADING THEMES LIST 100%"
+msgstr "PREUZIMANJE POPISA TEMA 100%"
+
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "SKLADIŠTE SE DIVERGIRALO OD POČETNOG KUĆIŠTA"
+
+msgid "THEME ALREADY UP TO DATE"
+msgstr "TEMA JE VEĆ AŽURIRANA"
+
+msgid "THEME HAS BEEN UPDATED"
+msgstr "TEMA JE AŽURIRANA"
+
+#, c-format
+msgid ""
+"COULDN'T RENAME DIRECTORY \"%s\"\n"
+"PERMISSION PROBLEMS?"
+msgstr ""
+"NIJE MOGAO PREIMENOVATI DIREKTORIJ \"%s\"\n"
+"PROBLEMI S DOZVOLAMA?"
+
+msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
+msgstr "NIJE MOGAO/LA PRONAĆI DATOTEKU ZA KONFIGURACIJU POPISA TEMA"
+
+msgid ""
+"COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
+"REPOSITORY IS CORRUPT?"
+msgstr ""
+"NIJE MOGAO/LA ANALIZIRATI DATOTEKU ZA KONFIGURACIJU POPISA TEMA, MOŽDA JE "
+"LOKALNI REPOZITORIJ OŠTEĆEN?"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+"BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
+msgstr ""
+"ČINI SE KAO DA NE KORISTITE NAJNOVIJE ES-DE IZDANJE, MOLIMO VAS DA "
+"NADOGRADITE PRIJE NASTAVKA JER OVE TEME MOŽDA NE BI KOMPATIBILNE S VAŠOM "
+"VERZIJOM"
+
+msgid "and"
+msgstr "i"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA THIS "
+"THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+"\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
+msgstr ""
+"ČINI SE KAO DA JE OVA TEMA RUČNO PREUZETA UMJESTO PREKO OVOG PROGRAMA ZA "
+"PREUZIMANJE TEMA. POTREBNO JE NOVO PREUZIMANJE I STARI DIREKTOR TEME \"%s\" "
+"ĆE BIT PREIMENOVAN U \"%s_DISABLED\""
+
+msgid "DOWNLOADING THEME"
+msgstr "PREUZIMANJE TEME"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
+"DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
+msgstr ""
+"ČINI SE KAO DA JE OVAJ REPOZITORIJ TEMA OŠTEĆEN, ŠTO JE MOGLO BITI "
+"UZROKOVANO PREKIDANOM PRETHODNOG PREUZIMANJA ILI AŽURIRANJA, NA PRIMJER AKO "
+"JE ES-DE PROCES ZAUSTAVLJEN. POTREBNO JE NOVO PREUZIMANJE I STARI DIREKTORIJ "
+"TEME \"%s\" BIT ĆE PREIMENOVAN U \"%s_CORRUPT_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
+"DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH "
+"DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
+"\"%s_DISABLED\""
+msgstr ""
+"ČINI SE KAO DA JE OVO PLITKO REPOZITORIJ ŠTO ZNAČI DA JE PREUZETO POMOĆU "
+"NEKOG DRUGOG ALATA, A NE OVOG PROGRAMA ZA PREUZIMANJE TEMA. POTREBNO JE "
+"SVJEŽE PREUZIMANJE, A STARI DIREKTORIJ TEME \"%s\" BIT ĆE PREIMENOVAN U "
+"\"%s_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"OVO IZGLEDA KAO DIVERGIRANI REPOZITORIJ ŠTO OBIČNO ZNAČI DA POSTOJI SUKOB "
+"PRI SPAJANJU UZVODNOG PROGRAMA KOJI RAZVOJ TEME TREBA RIJEŠITI. POTREBNO JE "
+"NOVO PREUZIMANJE, A STARI DIREKTORIJ TEME \"%s\" BIT ĆE PREIMENOVAN U "
+"\"%s_DIVERGED_DISABLED\""
+
+#, c-format
+msgid ""
+"THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
+"THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
+"THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
+msgstr ""
+"LOKALNO KLONIRANI REPOZITORIJ SADRŽI POGREŠAN URL ŠTO NORMALNO ZNAČI DA JE "
+"TEMA PREMJEŠTENA NA NOVU GIT STRANICU. POTREBNO JE SVJEŽE PREUZIMANJE I "
+"STARI DIREKTOR TEME \"%s\" BIT ĆE PREIMENOVAN U \"%s_WRONG_URL_DISABLED\""
+
+#, c-format
+msgid ""
+"THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
+"CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
+msgstr ""
+"REPOZITORIJ TEME \"%s\" SADRŽI LOKALNE PROMJENE. NASTAVITE S PREPISIVANJEM "
+"PROMJENA ILI OTKAŽITE KAKO BISTE PRESKOČILI SVA AŽURIRANJA ZA OVU TEMU"
+
+msgid "UPDATING THEME"
+msgstr "AŽURIRANJE TEME"
+
+msgid "VARIANTS:"
+msgstr "VARIJANTE:"
+
+msgid "COLOR SCHEMES:"
+msgstr "ŠEME BOJA:"
+
+msgid "ASPECT RATIOS:"
+msgstr "OMJER STRANICA:"
+
+msgid "FONT SIZES:"
+msgstr "VELIČINE FONTA:"
+
+msgid "INSTALLED"
+msgstr "INSTALIRAN"
+
+msgid "MANUAL DOWNLOAD"
+msgstr "RUČNO PREUZIMANJE"
+
+msgid "CORRUPT"
+msgstr "KORUPCIJA"
+
+msgid "DIVERGED"
+msgstr "DIVERGIRANO"
+
+msgid "SHALLOW"
+msgstr "PLITKO"
+
+msgid "NOT INSTALLED (NEW)"
+msgstr "NIJE INSTALIRANO (NOVO)"
+
+msgid "NOT INSTALLED"
+msgstr "NIJE INSTALIRANO"
+
+msgid "WRONG URL"
+msgstr "POGREŠAN URL"
+
+msgid "LOCAL CHANGES"
+msgstr "LOKALNE PROMJENE"
+
+msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
+msgstr "OVAJ TEMATSKI UNOS ĆE BITI UKLONJEN U SKOROJ BUDUĆNOSTI"
+
+msgid "CREATED BY"
+msgstr "IZRADIO/LA"
+
+msgid "ERROR:"
+msgstr "POGREŠKA:"
+
+msgid "COULDN'T DOWNLOAD THEMES LIST"
+msgstr "NIJE MOGAO PREUZIMATI POPIS TEMA"
+
+msgid "DOWNLOADING THEMES LIST"
+msgstr "PREUZIMANJE POPISA TEMA"
+
+msgid "THIS WILL COMPLETELY DELETE THE THEME"
+msgstr "OVIM ĆE SE TEMA POTPUNO IZBRISATI"
+
+msgid ""
+"THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
+msgstr "OVIM ĆE SE TEMA POTPUNO IZBRISATI, UKLJUČUJUĆI I LOKALNE PRILAGODE"
+
+msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
+msgstr "NISAM MOGAO IZBRISATI TEMU, PROBLEMI S DOZVOLAMA?"
+
+msgid "THEME WAS DELETED"
+msgstr "TEMA JE IZBRISANA"
+
+msgid "view screenshots"
+msgstr "pogledajte snimke zaslona"
+
+msgid "fetch updates"
+msgstr "dohvati ažuriranja"
+
+msgid "delete"
+msgstr "obriši"
+
+msgid "download"
+msgstr "preuzmi"
+
+msgid ""
+"IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
+"DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
+msgstr ""
+"ČINI SE KAO DA JE REPOZITORIJ POPISA TEMA OŠTEĆEN, ŠTO JE MOGLO BITI "
+"UZROKOVANO PREKIDANOM PRETHODNOG PREUZIMANJA ILI AŽURIRANJA, NA PRIMJER AKO "
+"JE ES-DE PROCES ZAUSTAVLJEN. POTREBNO JE NOVO PREUZIMANJE I STARI DIREKTOR "
+"\"themes-list\" ĆE BIT PREIMENOVAN U \"themes-list_CORRUPT_DISABLED\""
+
+msgid "UPDATING THEMES LIST"
+msgstr "AŽURIRANJE POPISA TEMA"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
+"THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+"WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED "
+"FILES WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE "
+"THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
+"CORRUPTION."
+msgstr ""
+"ČINI SE KAO DA PRVI PUT KORISTITE PROGRAM ZA PREUZIMANJE TEMA. STOGA ĆE SE "
+"PREUZETI REPOZITORIJ POPISA TEMA, ŠTO ĆE MALO TRAJATI. MEĐUTIM, KASNIJE ĆE "
+"TEME BITI MNOGO BRŽE JER ĆE SE DOHVATATI SAMO NOVE ILI IZMIJENJENE DATOTEKE. "
+"ISTO VRIJEDI I ZA BILO KOJE TEME KOJE PREUZMETE. NAPOMENA: NE MOŽETE "
+"PREKINUTTI PREUZIMANJE U TIJEKU JER BI TO MOGLO DOVESTI DO OŠTEĆENJA "
+"PODATAKA."
+
+msgid "browse"
+msgstr "pregledavati"
+
+msgid "pdf manual"
+msgstr "pdf priručnik"
+
+msgid "first"
+msgstr "prvi"
+
+msgid "last"
+msgstr "trajati"
+
+msgid "SCREENSHOT"
+msgstr "SNIMKA ZASLONA"
+
+msgid "BOX COVER"
+msgstr "POKLOPAC KUTIJE"
+
+msgid "BOX BACK COVER"
+msgstr "STRAŽNJA POKLOPNICA KUTIJE"
+
+msgid "TITLE SCREEN"
+msgstr "NASLOVNI ZASLON"
+
+msgid "MIXIMAGE"
+msgstr "MIXIMAGE"
+
+msgid "CUSTOM"
+msgstr "PRILAGOĐENO"
+
+msgctxt "metadata"
+msgid "NAME"
+msgstr "NAZIV"
+
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "UNESITE IME"
+
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "NAZIV SORTIRANJA"
+
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "UNESITE NAZIV SORTIRANJA"
+
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "PRILAGOĐENE KOLEKCIJE SORTNAME"
+
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "UNESITE NAZIV SORTIRANJA ZBIRKI"
+
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "OPIS"
+
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "UNESITE OPIS"
+
+msgctxt "metadata"
+msgid "RATING"
+msgstr "OCJENE"
+
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "DATUM IZLASKA"
+
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "RAZVOJNI PROGRAM"
+
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "UNESITE PROGRAMERA"
+
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "IZDAVAČ"
+
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "UNESITE IZDAVAČA"
+
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "ŽANR"
+
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "UNESITE ŽANR"
+
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "IGRAČI"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "UNESITE BROJ IGRAČA"
+
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "OMILJENO"
+
+msgctxt "metadata"
+msgid "COMPLETED"
+msgstr "ZAVRŠENO"
+
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "DJEČJA IGRA"
+
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "DJEČJA IGRA (UTJEČE SAMO NA ZNAČKE)"
+
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "SKRIVEN"
+
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "POKVARENO/NE RADI"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "ISKLJUČI IZ BROJAČA IGARA"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "ISKLJUČI IZ VIŠESTRUKOG STRUGAČA"
+
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "SAKRIJ POLJA METAPODATAKA"
+
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "BROJ IGRANIH VREMENA"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "UNESITE BROJ IGRANIH PUTA"
+
+msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "KONTROLER"
+
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "ODABERITE KONTROLER"
+
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "ALTERNATIVNI EMULATOR"
+
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "ODABERITE ALTERNATIVNI EMULATOR"
+
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "VEZA NA MAPU"
+
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "ODABERITE POVEZNICU MAPE"
+
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "ZADNJE IGRANO"
+
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "UNESITE DATUM ZADNJEG IGRANJA"
+
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "Nije pronađena snimka zaslona, nije moguće generirati miximage"
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr "Snimka zaslona u nepoznatom formatu, nije moguće generirati miximage"
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr "Snimka zaslona u nepodržanom formatu, nije moguće generirati miximage"
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "Pogreška u učitavanju snimke zaslona, nije moguće generirati miximage"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Pogreška u učitavanju slike s tekstom, oštećena datoteka?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Greška pri učitavanju 3D slike okvira, oštećena datoteka?"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "Greška pri učitavanju slike naslovnice kutije, oštećena datoteka?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "Pogreška pri učitavanju slike fizičkog medija, oštećena datoteka?"
+
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr "STRANICA %s OD %s"
+
+msgid "pan"
+msgstr "proširi"
+
+msgid "reset"
+msgstr "resetiraj"
+
+msgid "game media"
+msgstr "mediji igara"
+
+msgid "zoom"
+msgstr "približaj"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Premašili ste svoju dnevnu kvotu za skidanje podataka"
+
+msgid "Network error:"
+msgstr "Mrežna pogreška:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "Medijski direktorij ne postoji i ne može se stvoriti."
+
+msgid "Permission problems?"
+msgstr "Problemi s dozvolama?"
+
+msgid "Failed to open path for writing media file."
+msgstr "Nije uspjelo otvaranje putanje za pisanje medijske datoteke."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr ""
+"Nije moguće spremiti medijsku datoteku, problemi s dopuštenjima ili je disk "
+"pun?"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr ""
+"Nije moguće spremiti promijenjenu sliku, problemi s dopuštenjima ili je disk "
+"pun?"
+
+msgid "ScreenScraper error:"
+msgstr "Greška ScreenScrapera:"
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: Pogrešno korisničko ime ili lozinka"
+
+msgid "No Entries Found"
+msgstr "Nema pronađenih unosa"
+
+msgctxt "theme"
+msgid "all"
+msgstr "sve"
+
+msgctxt "theme"
+msgid "all games"
+msgstr "sve igre"
+
+msgctxt "theme"
+msgid "recent"
+msgstr "nedavno"
+
+msgctxt "theme"
+msgid "last played"
+msgstr "zadnji put igrano"
+
+msgctxt "theme"
+msgid "favorites"
+msgstr "favoriti"
+
+msgctxt "theme"
+msgid "collections"
+msgstr "kolekcije"
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr "NE MOGU SE DODATI PRILAGOĐENE KOLEKCIJE U PRILAGOĐENE KOLEKCIJE"
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr "NE MOGU SE DODATI REZERVIRANA MJESTA U PRILAGOĐENE ZBIRKE"
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr "NE MOGU SE DODATI MAPE U PRILAGOĐENE ZBIRKE"
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr "MARKED FOLDER '%s' AS FAVOURITE"
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr "REMOVED FAVOURITE MARKING FOR FOLDER '%s'"
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
+msgstr ""
+"NE MOGU SE DODATI UNOSI KOJI SE NE RAČUNAJU KAO IGRE U PRILAGOĐENE KOLEKCIJE"
+
+msgid "system"
+msgstr "sustav"
+
+msgid "view media"
+msgstr "prikaz medija"
+
+msgid "options"
+msgstr "opcije"
+
+msgid "random"
+msgstr "nasumičan"
+
+msgid "jump to game"
+msgstr "skok na igru"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "da"
+
+msgctxt "theme"
+msgid "no"
+msgstr "ne"
+
+msgid "screensaver"
+msgstr "čuvar zaslona"
+
+#, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "%i igra"
+msgstr[1] "%i igre"
+msgstr[2] "%i igara"
+
+#, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "(%i omiljena)"
+msgstr[1] "(%i omiljene)"
+msgstr[2] "(%i omiljenih)"
+
+#, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "%i omiljena"
+msgstr[1] "%i omiljene"
+msgstr[2] "%i omiljenih"
+
+msgid ""
+"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
+"NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE VARIOUS PROBLEMS, SOME OF "
+"WHICH MAY NOT BE APPARENT IMMEDIATELY. MAKE SURE TO ALWAYS FOLLOW THE "
+"UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
+"DIRECTORY."
+msgstr ""
+"ČINI SE KAO DA JE IZVRŠENA NESIGURNA NADOGRADNJA, MOGUĆE RASPAKIRANJEM NOVE "
+"VERZIJE PREKO STARE? TO MOŽE UZROKOVATI RAZNE PROBLEME, OD KOJIH NEKI MOŽDA "
+"NEĆE BITI ODMAH OČITI. OBAVEZNO UVIJEK SLIJEDITE UPUTE ZA NADOGRADNJU U "
+"DATOTECI README.TXT KOJA SE MOŽE NAĆI U ES-DE DIREKTORIJU."
+
+msgid ""
+"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
+"es_systems.xml FILE, THEN SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. IF "
+"YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
+"SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
+msgstr ""
+"NIJE MOGAO/LA ANALIZIRATI DATOTEKU ZA KONFIGURACIJU SUSTAVA. AKO IMATE "
+"PRILAGOĐENU DATOTEKU es_systems.xml, TADA VJEROJATNO NEŠTO NIJE U REDU S "
+"VAŠOM XML SINTAKSI. AKO NEMATE PRILAGOĐENU DATOTEKU SUSTAVA, TADA JE ES-DE "
+"INSTALACIJA OŠTEĆENA. ZA DODATNE INFORMACIJE POGLEDAJTE DATOTEKU ZAPISA "
+"APLIKACIJE es_log.txt"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
+msgstr ""
+"NISU PRONAĐENE DATOTEKE IGARA. UVEZITE NEKE IGRE ILI IH RUČNO STAVITE U "
+"KONFIGURIRANI ROM DIREKTOR. PO ŽELJI MOŽETE GENERIRATI STRUKTURU ROM "
+"DIREKTORIJA KOJA ĆE IZGRADITI TEKSTUALNU DATOTEKU ZA SVAKI SUSTAV KOJA ĆE "
+"PRUŽITI NEKE INFORMACIJE KAO ŠTO SU PODRŽANI PRODUŽECI DATOTEKA. OVO JE "
+"KONFIGURIRANI ROM DIREKTORIJ:\n"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"NISU PRONAĐENE DATOTEKE IGARA. UVEZITE NEKE IGRE ILI IH RUČNO POSTAVITE U "
+"SVOJ TRENUTNO KONFIGURIRANI ROM DIREKTORIJ. TAKOĐER MOŽETE PROMIJENITI PUT "
+"ROM-A I OPCIONALNO GENERIRATI STRUKTURU ROM DIREKTORIJA KOJA ĆE IZGRADITI "
+"TEKSTUALNU DATOTEKU ZA SVAKI SUSTAV KOJA ĆE PRUŽITI NEKE INFORMACIJE KAO ŠTO "
+"SU PODRŽANI PRODUŽECI DATOTEKA. OVO JE KONFIGURIRANI ROM DIREKTORIJ:\n"
+
+msgid "CHANGE"
+msgstr "PROMIJENI"
+
+msgid "ENTER ROM DIRECTORY PATH"
+msgstr "UNESITE PUT ROM DIREKTORA"
+
+msgid ""
+"ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
+msgstr ""
+"POSTAVKA ROM DIREKTORA SPREMLJENA, PONOVNO POKRENITE APLIKACIJU ZA PONOVNO "
+"SKENIRANJE SUSTAVA"
+
+msgid "Currently configured path:"
+msgstr "Trenutno konfigurirana putanja:"
+
+msgid "LOAD CURRENTLY CONFIGURED PATH"
+msgstr "UČITAJ TRENUTNO KONFIGURIRANU PUT"
+
+msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
+msgstr "IZBRIŠI (OSTAVI PRAZNO ZA POVRATAK NA ZADANU PUTANJU)"
+
+msgid ""
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
+"xml\n"
+"\n"
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"DON'T NEED"
+msgstr ""
+"OVO ĆE STVORITI DIREKTORIJE ZA SVE SUSTAVE IGARA DEFINIRANE U es_systems."
+"xml\n"
+"\n"
+"OVO MOŽE STVORITI PUNO MAPA, STOGA SE PREPORUČUJE DA UKLONITE ONE KOJE VAM "
+"NE TREBAJU"
+
+msgid ""
+"THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
+"PLACE YOUR GAMES IN THE NEW FOLDERS"
+msgstr ""
+"SISTEMSKE DIREKTORIJI SU USPJEŠNO GENERIRANI, IZLAZITE IZ APLIKACIJE I "
+"STAVITE SVOJE IGRE U NOVE MAPE"
+
+msgid ""
+"ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
+"\n"
+"SEE THE LOG FILE FOR MORE DETAILS"
+msgstr ""
+"POGREŠKA PRI STVARANJU SISTEMSKIH DIREKTORA, PROBLEMI S DOZVOLAMA ILI JE "
+"DISK PUN?\n"
+"\n"
+"VIŠE INFORMACIJA POGLEDAJTE U DATOTECI ZAPISA"
+
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+"NAJMANJE JEDAN OD VAŠIH SUSTAVA IMA KONFIGURIRAN NEVAŽEĆI ALTERNATIVNI "
+"EMULATOR BEZ ODGOVARAJUĆEG UNOSA U DATOTECI ZA KONFIGURACIJU SUSTAVA. MOLIMO "
+"VAS DA PREGLEDATE SVOJE POSTAVKE POMOĆU SUČELJA 'ALTERNATIVNI EMULATORI' U "
+"IZBORNIKU 'OSTALE POSTAVKE'"
+
+msgid "UPDATE"
+msgstr "AŽURIRAJ"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
+"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
+"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
+msgstr ""
+"AŽURIRANJE APLIKACIJE PREUZET ĆE ZA VAS NAJNOVIJE PRIJENOSNO IZDANJE SUSTAVA "
+"WINDOWS, ALI NADOGRADNJU ĆETE MORATI RUČNO. UPUTE O TOME POGLEDAJTE U "
+"DATOTECI README.TXT UNUTAR PREUZITE ZIP DATOTEKE. KAKO JE TAKOĐER OPISANO U "
+"TOM DOKUMENTU, NIKADA NE RASPAKIRAJTE NOVO IZDANJE PREKO STARE INSTALACIJE "
+"JER TO MOŽE OŠTETITI APLIKACIJU."
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM THE UPGRADE. WHEN "
+"DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
+"UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
+msgstr ""
+"AŽURIRANJE APLIKACIJE PREUZET ĆE NAJNOVIJE IZDANJE INSTALACIJE ZA WINDOWS, "
+"ALI MORAT ĆETE GA RUČNO POKRENUTI DA BI SE NADOGRADNJA IZVRŠILA. PRI TOMU, "
+"OBAVEZNO ODGOVORITE S DA NA PITANJE TREBATE LI DEINSTALIRATI STARU VERZIJU, "
+"ILI MOŽETE IMATI NEISPRAVNU INSTALACIJU."
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
+"WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
+msgstr ""
+"AŽURIRANJE APLIKACIJE PREUZET ĆE NAJNOVIJE IZDANJE ZA VAS, ALI MORAT ĆETE "
+"RUČNO INSTALIRATI DMG DATOTEKU ZA IZVRŠENJE NADOGRADNJE."
+
+#, c-format
+msgid "LAUNCHING GAME '%s'"
+msgstr "POKRETANJE IGRE '%s'"
+
+msgid "menu"
+msgstr "izbornik"
+
+msgctxt "theme"
+msgid "never"
+msgstr "nikada"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "prije %i dan"
+msgstr[1] "prije %i dana"
+msgstr[2] "prije %i dana"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "prije %i sat"
+msgstr[1] "prije %i sata"
+msgstr[2] "prije %i sati"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "prije %i minut"
+msgstr[1] "prije %i minute"
+msgstr[2] "prije %i minuta"
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "prije %i sekund"
+msgstr[1] "prije %i sekunde"
+msgstr[2] "prije %i sekundi"
+
+msgid "edit date"
+msgstr "uredi datum"
+
+msgid "Y-M-D"
+msgstr "G-M-D"
+
+msgid "modify"
+msgstr "modificirati"
+
+#, c-format
+msgid "%i (OF %i)"
+msgstr "%i (OD %i)"
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] "%s ODABRAN"
+msgstr[1] "%s ODABRANA"
+msgstr[2] "%s ODABRANO"
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] "%i ODABRAN"
+msgstr[1] "%i ODABRANA"
+msgstr[2] "%i ODABRANO"
+
+msgid "change value"
+msgstr "promijeniti vrijednost"
+
+msgid "add half star"
+msgstr "dodajte pola zvjezdice"
+
+msgid "toggle"
+msgstr "preklopnik"
+
+msgid "move cursor"
+msgstr "pomicanje kursora"
+
+msgid "edit"
+msgstr "uredi"
+
+msgid "WELCOME"
+msgstr "DOBRODOŠLI"
+
+msgid "CONFIGURE INPUT DEVICE"
+msgstr "KONFIGURIRAJ ULAZNI UREĐAJ"
+
+#, c-format
+msgid "%i GAMEPAD DETECTED"
+msgid_plural "%i GAMEPADS DETECTED"
+msgstr[0] "OTKRIVEN %i UPRAVLJAČ"
+msgstr[1] "OTKRIVENO %i UPRAVLJAČA"
+msgstr[2] "OTKRIVENO %i UPRAVLJAČA"
+
+msgid "NO GAMEPADS DETECTED"
+msgstr "NISU OTKRIVENE GAMEPADOVE"
+
+msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
+msgstr "(PRIHVAĆA SE SAMO UNOS OD PRVOG KONTROLERA)"
+
+msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
+msgstr "DRŽITE TIPKU NA UREĐAJU ZA KONFIGURACIJU"
+
+msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
+msgstr "DRŽITE PRITISNUT TIPKU NA TIPKOVNICI ZA KONFIGURACIJU"
+
+msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
+msgstr ""
+"PRITISNITE ESC ZA PRESKOČENJE (ILI PREČAC ZA IZLAZ ZA IZLAZ U BILO KOJE "
+"TRENUTKU)"
+
+msgid "PRESS ESC TO CANCEL"
+msgstr "PRITISNITE ESC ZA OTKAZIVANJE"
+
+msgid "CONFIGURING"
+msgstr "KONFIGURIRA SE"
+
+msgid "KEYBOARD"
+msgstr "TIPKOVNICA"
+
+msgid "GAMEPAD"
+msgstr "GAMEPAD"
+
+msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
+msgstr "DRŽITE BILO KOJU TIPKU 1 SEKUNDU ZA PRESKOČAVANJE"
+
+msgid "NOT DEFINED"
+msgstr "NIJE DEFINIRANO"
+
+msgid "ok"
+msgstr "ok"
+
+msgid "D-PAD UP"
+msgstr "D-PAD GORE"
+
+msgid "D-PAD DOWN"
+msgstr "D-PAD DOLJE"
+
+msgid "D-PAD LEFT"
+msgstr "D-PAD LIJEVO"
+
+msgid "D-PAD RIGHT"
+msgstr "D-PAD DESNO"
+
+msgid "MINUS"
+msgstr "MINUS"
+
+msgid "PLUS"
+msgstr "PLUS"
+
+msgid "CROSS"
+msgstr "KRIŽ"
+
+msgid "CIRCLE"
+msgstr "KRUG"
+
+msgid "SQUARE"
+msgstr "KVADRAT"
+
+msgid "TRIANGLE"
+msgstr "TROKUT"
+
+msgid "OPTIONS"
+msgstr "OPCIJE"
+
+msgid "VIEW"
+msgstr "POGLED"
+
+msgid "MENU"
+msgstr "IZBORNIK"
+
+msgid "LEFT SHOULDER"
+msgstr "LIJEVO RAME"
+
+msgid "RIGHT SHOULDER"
+msgstr "DESNO RAME"
+
+msgid "LEFT TRIGGER"
+msgstr "LIJEVI OKIDAČ"
+
+msgid "RIGHT TRIGGER"
+msgstr "DESNI OKIDAČ"
+
+msgid "LEFT THUMBSTICK UP"
+msgstr "LIJEVI PALAC GORE"
+
+msgid "LEFT THUMBSTICK DOWN"
+msgstr "LIJEVI PALAC DOLJE"
+
+msgid "LEFT THUMBSTICK LEFT"
+msgstr "LIJEVI PALČNI ŠTAPIĆ LIJEVO"
+
+msgid "LEFT THUMBSTICK RIGHT"
+msgstr "LIJEVI PALAC DESNI"
+
+msgid "LEFT THUMBSTICK CLICK"
+msgstr "KLIK LIJEVIM PALČNIM ŠTAPIĆEM"
+
+msgid "RIGHT THUMBSTICK UP"
+msgstr "DESNI PALAC GORE"
+
+msgid "RIGHT THUMBSTICK DOWN"
+msgstr "DESNI PALAC DOLJE"
+
+msgid "RIGHT THUMBSTICK LEFT"
+msgstr "DESNI PALČNI ŠTAPIĆ LIJEVI"
+
+msgid "RIGHT THUMBSTICK RIGHT"
+msgstr "DESNI PALČNI ŠTAPIĆ DESNO"
+
+msgid "RIGHT THUMBSTICK CLICK"
+msgstr "KLIK DESNIM PALČNIM ŠTAPIĆEM"
+
+msgid "ALREADY TAKEN"
+msgstr "VEĆ ZAUZETO"
+
+msgid "PRESS ANYTHING"
+msgstr "PRITISNITE BILO ŠTO"
+
+msgid "SPACE"
+msgstr "RAZMAK"
+
+msgid "LOAD"
+msgstr "OPTEREĆENJE"
+
+msgid "shift"
+msgstr "šift"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "novi redak"
+
+msgid "backspace"
+msgstr "brisanje"
+
+msgid "space"
+msgstr "prostor"
+
+msgid "LOAD DEFAULT"
+msgstr "UČITAJ ZADANO"
+
+msgid "DISCARD CHANGES"
+msgstr "ODBACI PROMJENE"
+
+msgid "discard changes"
+msgstr "odbaci promjene"
+
+#, c-format
+msgid "Server returned HTTP error code %s"
+msgstr "Poslužitelj je vratio HTTP kod pogreške %s"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "DODAN ULAZNI UREĐAJ '%s'"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "UKLONJEN ULAZNI UREĐAJ '%s'"
+
+msgid "medium"
+msgstr "srednje"
+
+msgid "large"
+msgstr "veliki"
+
+msgid "small"
+msgstr "mali"
+
+msgid "extra small"
+msgstr "ekstra mali"
+
+msgid "extra large"
+msgstr "ekstra veliki"
+
+msgid "automatic"
+msgstr "automatski"
+
+msgid "16:9 vertical"
+msgstr "16:9 okomito"
+
+msgid "16:10 vertical"
+msgstr "16:10 okomito"
+
+msgid "3:2 vertical"
+msgstr "3:2 okomito"
+
+msgid "4:3 vertical"
+msgstr "4:3 okomito"
+
+msgid "5:3 vertical"
+msgstr "5:3 okomito"
+
+msgid "5:4 vertical"
+msgstr "5:4 okomito"
+
+msgid "8:7 vertical"
+msgstr "8:7 okomito"
+
+msgid "19.5:9 vertical"
+msgstr "19,5:9 okomito"
+
+msgid "20:9 vertical"
+msgstr "20:9 okomito"
+
+msgid "21:9 vertical"
+msgstr "21:9 okomito"
+
+msgid "32:9 vertical"
+msgstr "32:9 okomito"
+
+msgid "Searching for games..."
+msgstr "Traženje igara..."
+
+msgid "Loading systems..."
+msgstr "Učitavanje sustava..."
+
+msgid "Reloading..."
+msgstr "Učitavanje..."
+
+msgid "Copying resources..."
+msgstr "Kopiranje resursa..."
+
+msgid "Creating system directories..."
+msgstr "Izrada sistemskih direktorija..."
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "POGREŠKA: NIJE MOGUĆE PRIKAZATI PDF DATOTEKU"

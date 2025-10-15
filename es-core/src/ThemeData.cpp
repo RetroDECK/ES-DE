@@ -73,6 +73,8 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRati
     {"3:2_vertical", "3:2 vertical"},
     {"4:3", "4:3"},
     {"4:3_vertical", "4:3 vertical"},
+    {"5:3", "5:3"},
+    {"5:3_vertical", "5:3 vertical"},
     {"5:4", "5:4"},
     {"5:4_vertical", "5:4 vertical"},
     {"8:7", "8:7"},
@@ -96,6 +98,8 @@ std::map<std::string, float> ThemeData::sAspectRatioMap {
     {"3:2_vertical", 0.6667f},
     {"4:3", 1.3333f},
     {"4:3_vertical", 0.75f},
+    {"5:3", 1.6667f},
+    {"5:3_vertical", 0.6f},
     {"5:4", 1.25f},
     {"5:4_vertical", 0.8f},
     {"8:7", 1.1429f},
@@ -114,17 +118,22 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedLanguages 
     {"automatic", "automatic"},
     {"en_US", "ENGLISH (UNITED STATES)"},
     {"en_GB", "ENGLISH (UNITED KINGDOM)"},
+    {"bs_BA", "BOSANSKI"},
     {"ca_ES", "CATALÀ"},
     {"de_DE", "DEUTSCH"},
     {"es_ES", "ESPAÑOL (ESPAÑA)"},
     {"fr_FR", "FRANÇAIS"},
+    {"hr_HR", "HRVATSKI"},
     {"it_IT", "ITALIANO"},
     {"nl_NL", "NEDERLANDS"},
     {"pl_PL", "POLSKI"},
     {"pt_BR", "PORTUGUÊS (BRASIL)"},
+    {"pt_PT", "PORTUGUÊS (PORTUGAL)"},
     {"ro_RO", "ROMÂNĂ"},
     {"ru_RU", "РУССКИЙ"},
+    {"sr_RS", "SRPSKI"},
     {"sv_SE", "SVENSKA"},
+    {"ar_SA", "العربية"},
     {"ja_JP", "日本語"},
     {"ko_KR", "한국어"},
     {"zh_CN", "简体中文"},
@@ -345,6 +354,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"tileHorizontalAlignment", STRING},
        {"tileVerticalAlignment", STRING},
        {"interpolation", STRING},
+       {"mipmap", BOOLEAN},
        {"cornerRadius", FLOAT},
        {"color", COLOR},
        {"colorEnd", COLOR},
@@ -2414,6 +2424,7 @@ void ThemeData::gettextMessageCatalogEntries()
     _("16:10 vertical");
     _("3:2 vertical");
     _("4:3 vertical");
+    _("5:3 vertical");
     _("5:4 vertical");
     _("8:7 vertical");
     _("19.5:9 vertical");

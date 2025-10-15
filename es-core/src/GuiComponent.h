@@ -277,6 +277,8 @@ public:
     virtual void setReflectionsFalloff(float falloff) {}
     virtual void setFlipX(bool flip) {}
     virtual void setFlipY(bool flip) {}
+    virtual void setInvertInMenus(bool state) {}
+    virtual const bool getInvertInMenus() const { return true; }
 
     virtual void setImage(const std::string& path, bool tile = false) {}
 

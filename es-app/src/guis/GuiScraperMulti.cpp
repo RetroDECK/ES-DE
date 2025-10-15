@@ -331,7 +331,7 @@ void GuiScraperMulti::finish()
             mIsProcessing = false;
             delete this;
         },
-        "", nullptr, "", nullptr,
+        "", nullptr, "", nullptr, "", nullptr,
         [&] {
             mIsProcessing = false;
             delete this;

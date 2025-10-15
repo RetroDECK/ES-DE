@@ -22,6 +22,8 @@ GuiMsgBox::GuiMsgBox(const std::string& text,
                      const std::function<void()>& func2,
                      const std::string& name3,
                      const std::function<void()>& func3,
+                     const std::string& name4,
+                     const std::function<void()>& func4,
                      const std::function<void()>& backFunc,
                      const bool disableBackButton,
                      const bool deleteOnButtonPress,
@@ -48,6 +50,9 @@ GuiMsgBox::GuiMsgBox(const std::string& text,
     if (!name3.empty())
         mButtons.push_back(std::make_shared<ButtonComponent>(
             name3, name3, std::bind(&GuiMsgBox::deleteMeAndCall, this, func3)));
+    if (!name4.empty())
+        mButtons.push_back(std::make_shared<ButtonComponent>(
+            name4, name4, std::bind(&GuiMsgBox::deleteMeAndCall, this, func4)));
 
     // Put the buttons into a ComponentGrid.
     mButtonGrid = MenuComponent::makeButtonGrid(mButtons);

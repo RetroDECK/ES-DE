@@ -46,6 +46,9 @@ namespace FileSorts
         FileData::SortType(&compareTimesPlayed, "times played, ascending"),
         FileData::SortType(&compareTimesPlayedDescending, "times played, descending"),
 
+        FileData::SortType(&comparePlayTime, "play time, ascending"),
+        FileData::SortType(&comparePlayTimeDescending, "play time, descending"),
+
         FileData::SortType(&compareSystem, "system, ascending"),
         FileData::SortType(&compareSystemDescending, "system, descending")};
 
@@ -261,6 +264,25 @@ namespace FileSorts
         return false;
     }
 
+    bool comparePlayTime(const FileData* file1, const FileData* file2)
+    {
+        // Only games have play time metadata.
+        if (file1->metadata.getType() == GAME_METADATA &&
+            file2->metadata.getType() == GAME_METADATA) {
+            return (file1)->metadata.getInt("playtime") < (file2)->metadata.getInt("playtime");
+        }
+        return false;
+    }
+
+    bool comparePlayTimeDescending(const FileData* file1, const FileData* file2)
+    {
+        if (file1->metadata.getType() == GAME_METADATA &&
+            file2->metadata.getType() == GAME_METADATA) {
+            return (file1)->metadata.getInt("playtime") > (file2)->metadata.getInt("playtime");
+        }
+        return false;
+    }
+
     bool compareSystem(const FileData* file1, const FileData* file2)
     {
         std::string system1 = Utils::String::toUpper(file1->getSystemName());
@@ -296,6 +318,8 @@ namespace FileSorts
         _("last played, descending");
         _("times played, ascending");
         _("times played, descending");
+        _("play time, ascending");
+        _("play time, descending");
         _("system, ascending");
         _("system, descending");
     }

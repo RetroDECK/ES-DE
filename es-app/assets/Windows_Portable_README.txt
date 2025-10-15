@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.2.0
+3.4.0-alpha
 
 The latest version can be downloaded from https://es-de.org
 
@@ -12,7 +12,7 @@ If upgrading from a previous release, then don't unpack this ZIP archive on top 
 
 New installation:
 1) The ROMs_ALL directory contains all the systems that ES-DE supports, but to decrease application startup time only copy the folders you need to the ROMs directory
-2) Place your games into their respective folders in the ROMs directory tree
+2) Place your games into their respective folders in the ROMs directory tree or optionally import some using the built-in game importer
 3) Place your emulators inside the Emulators directory
 4) Start ES-DE using ES-DE.exe and enjoy some retrogaming!
 
@@ -55,6 +55,7 @@ Emulators\azahar\azahar.exe
 Emulators\BasiliskII\BasiliskII.exe
 Emulators\BeebEm\BeebEm.exe
 Emulators\BigPEmu\BigPEmu.exe
+Emulators\blastem\blastem.exe
 Emulators\bsnes\bsnes.exe
 Emulators\cemu\Cemu.exe
 Emulators\Citra\canary-mingw\citra-qt.exe
@@ -80,9 +81,13 @@ Emulators\FS-UAE\Windows\x86-64\fs-uae.exe
 Emulators\FS-UAE-Launcher\Windows\x86-64\fs-uae-launcher.exe
 Emulators\Fuse\fuse.exe
 Emulators\Future Pinball\Future Pinball.exe
+Emulators\Future Pinball\BAM\FPLoader.exe
+Emulators\Future Pinball\BAM-OpenVR\FPLoader.exe
+Emulators\Future Pinball\BAM-OpenVR-OC\FPLoader.exe
 Emulators\gargoyle\gargoyle.exe
 Emulators\Gearboy\Gearboy.exe
 Emulators\gopher2600\gopher2600_windows_amd64.exe
+Emulators\gopher64\gopher64-windows-x86_64.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\izapple2\izapple2sdl_windows_amd64.exe
@@ -103,6 +108,7 @@ Emulators\noods\noods.exe
 Emulators\openMSX\openmsx.exe
 Emulators\Oricutron\oricutron.exe
 Emulators\Panda3DS\Alber.exe
+Emulators\parallel-launcher\parallel-launcher.exe
 Emulators\PCSX2\pcsx2.exe
 Emulators\PCSX2-Qt\pcsx2-qt.exe
 Emulators\PICO-8\pico8.exe
@@ -132,6 +138,7 @@ Emulators\solarus\solarus-run.exe
 Emulators\SSF\SSF.exe
 Emulators\Stella\64-bit\Stella.exe
 Emulators\Supermodel\Supermodel.exe
+Emulators\Supermodel-Dojo\supermodel.exe
 Emulators\tic80\tic80.exe
 Emulators\Triforce\DolphinWX.exe
 Emulators\tsugaru\Tsugaru_CUI.exe
@@ -143,6 +150,7 @@ Emulators\VICE\bin\xplus4.exe
 Emulators\VICE\xvic.exe
 Emulators\VICE\bin\xvic.exe
 Emulators\Vircon32\Emulator\Vircon32.exe
+Emulators\VPinballX\VPinballX_BGFX64.exe
 Emulators\VPinballX\VPinballX_GL64.exe
 Emulators\VPinballX\VPinballX64.exe
 Emulators\Vita3K\Vita3K.exe
@@ -154,4 +162,5 @@ Emulators\XM6 Pro-68k\XM6.exe
 Emulators\xm6_typeg\xm6g.exe
 Emulators\xroar\xroar.exe
 Emulators\yabasanshiro\yabasanshiro.exe
+Emulators\ymir\ymir-sdl3.exe
 Emulators\ZEsarUX\zesarux.exe

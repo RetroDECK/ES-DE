@@ -83,30 +83,34 @@ HttpReq::HttpReq(const std::string& url, bool scraperRequest)
         return;
     }
 
-    if (!mScraperRequest) {
-        // Set User-Agent.
-        std::string userAgent {"ES-DE Frontend/"};
-        userAgent.append(PROGRAM_VERSION_STRING).append(" (");
-#if defined(__ANDROID__)
-        userAgent.append("Android");
+    // Set User-Agent.
+    std::string userAgent {"ES-DE Frontend/"};
+    userAgent.append(PROGRAM_VERSION_STRING).append(" (");
+#if defined(__FreeBSD__)
+    userAgent.append("FreeBSD");
+#elif defined(__HAIKU__)
+    userAgent.append("Haiku");
+#elif defined(__ANDROID__)
+    userAgent.append("Android");
 #elif defined(_WIN64)
-        userAgent.append("Windows");
+    userAgent.append("Windows");
+#elif defined(__IOS__)
+    userAgent.append("iOS");
 #elif defined(__APPLE__)
-        userAgent.append("macOS");
+    userAgent.append("macOS");
 #elif defined(__linux__)
-        userAgent.append("Linux");
+    userAgent.append("Linux");
 #elif defined(__unix__)
-        userAgent.append("Unix");
+    userAgent.append("Unix");
 #else
-        userAgent.append("Unknown");
+    userAgent.append("Unknown");
 #endif
-        userAgent.append(")");
-        CURLcode err {curl_easy_setopt(mHandle, CURLOPT_USERAGENT, userAgent.c_str())};
-        if (err != CURLE_OK) {
-            mStatus = REQ_IO_ERROR;
-            onError(curl_easy_strerror(err));
-            return;
-        }
+    userAgent.append("; ").append(sPlatformIdentifier).append(")");
+    err = curl_easy_setopt(mHandle, CURLOPT_USERAGENT, userAgent.c_str());
+    if (err != CURLE_OK) {
+        mStatus = REQ_IO_ERROR;
+        onError(curl_easy_strerror(err));
+        return;
     }
 
     long connectionTimeout;
@@ -398,8 +402,13 @@ void HttpReq::pollCurl()
                         long responseCode;
                         curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &responseCode);
 
-                        if (responseCode == 430 &&
-                            Settings::getInstance()->getString("Scraper") == "screenscraper") {
+                        if (responseCode == 429 &&
+                            Settings::getInstance()->getString("Scraper") != "screenscraper") {
+                            req->mContent << _("You have exceeded your daily scrape quota");
+                            req->mStatus = REQ_QUOTA_REACHED;
+                        }
+                        else if (responseCode == 430 &&
+                                 Settings::getInstance()->getString("Scraper") == "screenscraper") {
                             req->mContent << _("You have exceeded your daily scrape quota");
                             req->mStatus = REQ_SUCCESS;
                         }

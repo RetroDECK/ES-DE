@@ -71,6 +71,7 @@ private:
         bool invalidRepository;
         bool shallowRepository;
         bool corruptRepository;
+        bool divergedRepository;
         bool wrongUrl;
         bool manuallyDownloaded;
         bool hasLocalChanges;
@@ -81,6 +82,7 @@ private:
             , invalidRepository {false}
             , shallowRepository {false}
             , corruptRepository {false}
+            , divergedRepository {false}
             , wrongUrl {false}
             , manuallyDownloaded {false}
             , hasLocalChanges {false}
@@ -96,6 +98,7 @@ private:
 
     bool checkLocalChanges(git_repository* repository);
     bool checkCorruptRepository(git_repository* repository);
+    bool checkDivergedRepository(git_repository* repository);
     void resetRepository(git_repository* repository);
     void makeInventory();
     bool renameDirectory(const std::string& path, const std::string& extension);

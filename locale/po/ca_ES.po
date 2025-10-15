@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-07 00:41+0100\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-09-01 19:55+0200\n"
 "Last-Translator: Josep M <johnnydement@duck.com>\n"
 "Language-Team: Català <info@es-de.org>\n"
 "Language: ca_ES\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
 msgid "Network error (status:"
 msgstr "Error de xarxa (estat:"
@@ -124,18 +124,36 @@ msgstr[1] "Aquesta col·lecció conté %i jocs: «%s», «%s» i «%s», entre d
 #, c-format
 msgctxt "theme"
 msgid "'%s' is filtered so there may be more games available"
-msgstr "«%s» té filtres, per tant, pot haver disponibles més jocs"
+msgstr "«%s» té filtres, per tant, potser hi ha més jocs disponibles"
 
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "COL·LECCIÓ «%s» ESBORRADA"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "desconegut"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
 msgstr "ERROR: FALTA LA CONFIGURACIÓ DE REGLES DE CERCA PRE-COMMAND PER «%s»"
 
 msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "ERROR: nO S'HA TROBAT PRE-COMMAND, ESTÀ INSTAL·LAT CORRECTAMENT?"
+msgstr "ERROR: NO S'HA TROBAT PRE-COMMAND, ESTÀ INSTAL·LAT CORRECTAMENT?"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
@@ -296,6 +314,12 @@ msgstr "partides, ascendent"
 msgid "times played, descending"
 msgstr "partides, descendent"
 
+msgid "play time, ascending"
+msgstr ""
+
+msgid "play time, descending"
+msgstr ""
+
 msgid "system, ascending"
 msgstr "sistema, ascendent"
 
@@ -393,7 +417,7 @@ msgid "DOWNLOADING 100%"
 msgstr "DESCARREGANT 100%"
 
 msgid "Downloaded file does not match expected MD5 checksum"
-msgstr "El checksum MD% de l'arxiu descarregat no coincideix amb l'esperat"
+msgstr "El checksum MD5 de l'arxiu descarregat no coincideix amb l'esperat"
 
 msgid "Error: Couldn't delete temporary package file, permission problems?"
 msgstr ""
@@ -518,6 +542,115 @@ msgstr "POSA ELS FAVORITS A L'INICI DE LES COL·LECCIONS A MIDA"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "MARCA AMB UNA ESTRELLA A LES COL·LECCIONS A MIDA"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "IMPORTA AL SISTEMA"
+
+msgid "NO CONFIGURATION"
+msgstr "SENSE CONFIGURACIÓ"
+
+msgid "REMOVE ENTRIES"
+msgstr "ELIMINA ENTRADES"
+
+msgid "ALL UNSELECTED"
+msgstr "ELS NO SELECCIONATS"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr ""
+
+msgid "MEDIA TARGET TYPE"
+msgstr "TIPUS DE MITJÀ OBJECTIU"
+
+msgid "SCREENSHOTS"
+msgstr "CAPTURES DE PANTALLA"
+
+msgid "TITLE SCREENS"
+msgstr "PANTALLES DE TÍTOL"
+
+msgid "COVERS"
+msgstr "PORTADES"
+
+msgid "BACK COVERS"
+msgstr "CONTRAPORTADES"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "MARQUESINES (RODES)"
+
+msgid "3D BOXES"
+msgstr "CAIXES 3D"
+
+msgid "PHYSICAL MEDIA"
+msgstr "MITJANS FÍSICS"
+
+msgid "FAN ART"
+msgstr "ART FAN"
+
+msgid "MIXIMAGES"
+msgstr ""
+
+msgid "IMPORT MEDIA"
+msgstr "IMPORTAR MULTIMÈDIA"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "IMPORTAR LES BANDEROLES O ELS LOGOS DISPONIBLES"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "SOBREESCRIURE ELS FITXERS MULTIMÈDIA"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "INCLOURE NOMÉS LES APPS CATEGORITZADES COM JOCS"
+
+msgid "START"
+msgstr "INICIAR"
+
+msgid "start importer"
+msgstr "iniciar l'importador"
+
+msgid "WORKING..."
+msgstr "TREBALLANT…"
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "NO S'HA TROBAT RES PER A IMPORTAR"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"HAS ESCOLLIT  ELIMINAR TOTES LES ENTRADES NO SELECCIONADES. AIXÒ ELIMINARÀ "
+"TOTS ELS FITXERS DE JOC AMB L'EXTENSIÓ \"%s\" DEL DIRECTORI DEL SISTEMA "
+"\"%s\" I DESPRÉS S'IMPORTARÀN LES ENTRADES QUE SELECCIONIS A LA PANTALLA "
+"SEGÜENT.\n"
+"ESTÀS SEGUR?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "ESCULL"
+
+msgid "IMPORT"
+msgstr "IMPORTA"
+
+msgid "import"
+msgstr "importa"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "S'HA IMPORTAT %i ENTRADA"
+msgstr[1] "S'HAN IMPORTAT %i ENTRADES"
+
+msgid "SELECT ALL"
+msgstr "TOT"
+
+msgid "select all"
+msgstr "seleccionar-ho tot"
+
+msgid "SELECT NONE"
+msgstr "NETEJAR"
+
+msgid "select none"
+msgstr "netejar selecció"
+
 msgid "FILTER GAMELIST"
 msgstr "FILTRAR LA LLISTA DE JOCS"
 
@@ -543,7 +676,7 @@ msgid "SORT GAMES BY"
 msgstr "ORDENAR JOCS SEGONS"
 
 msgid "THIS SYSTEM HAS NO GAMES"
-msgstr "AQUEST SISTEMA NO TÉ JOCS"
+msgstr "NO HI HA JOCS D'AQUEST SISTEMA"
 
 msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
 msgstr "AFEGIR/ELIMINAR JOCS D'AQUESTA COL·LECCIÓ"
@@ -552,7 +685,7 @@ msgid "EDIT THIS FOLDER'S METADATA"
 msgstr "EDITAR LES METADADES D'AQUESTA CARPETA"
 
 msgid "EDIT THIS GAME'S METADATA"
-msgstr "EDITAR LES METADADES D'AQUESt JOC"
+msgstr "EDITAR LES METADADES D'AQUEST JOC"
 
 msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
 msgstr "ESCRIU LA CARPETA (SOBREESCRIURE ENLLAÇ DE CARPETA)"
@@ -698,14 +831,20 @@ msgstr "GATELLS"
 msgid "LEFT/RIGHT"
 msgstr "ESQUERRA/DRETA"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "LLISTAT DE JOCS EN OBRIR"
+msgid "SYSTEM ON STARTUP"
+msgstr "SISTEMA A L'INICI"
 
-msgid "NONE"
-msgstr "CAP"
+msgid "STARTUP VIEW"
+msgstr "VISTA D'INICI"
+
+msgid "SYSTEM"
+msgstr "SISTEMA"
+
+msgid "GAMELIST"
+msgstr "LLISTAT DE JOCS"
 
 msgid "SYSTEMS SORTING"
-msgstr "ORDRE DELS SISTEMES"
+msgstr "ORDENAT DELS SISTEMES"
 
 msgid "FULL NAMES OR CUSTOM"
 msgstr "NOMS COMPLETS O A MIDA"
@@ -746,6 +885,9 @@ msgstr "ANIMACIÓ D'OBERTURA DE MENÚ"
 
 msgid "SCALE-UP"
 msgstr "ESCALAR"
+
+msgid "NONE"
+msgstr "CAP"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "DURACIÓ DE LA PANTALLA DE LLANÇAMENT"
@@ -943,6 +1085,9 @@ msgstr "INTERCANVIA EL BOTONS A/B I X/Y"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "IGNORA LES ENTRADES DEL TECLAT"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "NOTIFICACIONS DEL DISPOSITIU D'ENTRADA"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "CONFIGURA EL TECLAT I ELS COMANDAMENTS"
 
@@ -975,6 +1120,9 @@ msgstr "GUARDAR CANVIS?"
 
 msgid "load default directory"
 msgstr "guardar directori per defecte"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr ""
 
 msgid "VRAM LIMIT"
 msgstr "LÍMIT VRAM"
@@ -1094,6 +1242,9 @@ msgstr "HABILITAR EL MENÚ EN MODE INFANTIL"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "MOSTRAR MENÚ SORTIR (OPCIONS DE REINICI I APAGAR)"
 
+msgid "GAME IMPORTER"
+msgstr "IMPORTADOR DE JOCS"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "NETEJA DADES ORFES"
 
@@ -1147,6 +1298,16 @@ msgstr "APAGAR, SEGUR?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "APAGAR EL SISTEMA"
+
+msgid "REALLY SUSPEND?"
+msgstr ""
+
+msgid "SUSPEND SYSTEM"
+msgstr ""
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "OPCIONS D'ESTAT DE SISTEMA"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1266,9 +1427,6 @@ msgstr "Processant:"
 
 msgid "Last error message:"
 msgstr "Últim missatge d'error:"
-
-msgid "START"
-msgstr "INICIAR"
 
 msgid "start processing"
 msgstr "iniciar processat"
@@ -1551,6 +1709,9 @@ msgstr "MANUALS DE JOC"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "RESOLUCIÓ DE COMPOSICIÓ"
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr ""
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "AJUST HORITZONTAL DE CAPTURA"
@@ -1664,6 +1825,51 @@ msgstr "EEUU"
 msgid "WORLD"
 msgstr "MUNDIAL"
 
+msgid "ASIA"
+msgstr ""
+
+msgid "AUSTRALIA"
+msgstr ""
+
+msgid "BRAZIL"
+msgstr ""
+
+msgid "CANADA"
+msgstr ""
+
+msgid "CHINA"
+msgstr ""
+
+msgid "GERMANY"
+msgstr ""
+
+msgid "FRANCE"
+msgstr ""
+
+msgid "ITALY"
+msgstr ""
+
+msgid "KOREA"
+msgstr ""
+
+msgid "NETHERLANDS"
+msgstr ""
+
+msgid "RUSSIA"
+msgstr ""
+
+msgid "SWEDEN"
+msgstr ""
+
+msgid "SPAIN"
+msgstr ""
+
+msgid "TAIWAN"
+msgstr ""
+
+msgid "UNITED KINGDOM"
+msgstr ""
+
 msgid "PREFERRED LANGUAGE"
 msgstr "IDIOMA PREFERIT"
 
@@ -1734,9 +1940,6 @@ msgstr "S'HAN FILTRAT TOTS ELS JOCS, NO HI HA RES A GARBELLAR"
 msgid "SCRAPING IN PROGRESS"
 msgstr "GARBELLAT DE DADES EN CURS"
 
-msgid "SYSTEM"
-msgstr "SISTEMA"
-
 msgid "REFINE SEARCH"
 msgstr "REFINAR CERCA"
 
@@ -1796,6 +1999,15 @@ msgstr "JUGADORS:"
 
 msgid "NO GAMES FOUND"
 msgstr "NO S'HAN TROBAT JOCS"
+
+msgid "API CALLS:"
+msgstr "TRUCADES A L'API:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "QUEDA %i"
+msgstr[1] "QUEDEN %i"
 
 msgid "RETRY"
 msgstr "REINTENTAR"
@@ -1898,6 +2110,9 @@ msgstr "MOSTRA EL PERCENTATGE DE CÀRREGA DE LA BATERIA"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "DESCARREGANT EL LLISTAT DE TEMES 100%"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "EL REPOSITORI HA DIVERGIT DE L'ORIGEN"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "EL TEMA JA ESTÀ ACTUALITZAT"
 
@@ -1926,7 +2141,7 @@ msgid ""
 "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
 "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
 msgstr ""
-"SEMBLA QUE NO ESTÀS FENT SERVIR LA VERSIÓ MÉS RECENT D'ES-de, ACTUALITZA "
+"SEMBLA QUE NO ESTÀS FENT SERVIR LA VERSIÓ MÉS RECENT D'ES-DE, ACTUALITZA "
 "ABANS DE CONTINUAR, JA QUE ELS TEMES PODRIEN NO SER COMPATIBLES AMB LA TEVA "
 "VERSIÓ"
 
@@ -1971,6 +2186,18 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"SEMBLA QUE AQUEST ÉS UN REPOSITORI DIVERGENT, NORMALMENT AIXÒ VOL DIR QUE HI "
+"HA UN CONFLICTE DE SINCRONITZACIÓ(?) QUE HA DE RESOLDRE EL DESENVOLUPADOR "
+"DEL TEMA. CAL UNA NOVA DESCÀRREGA I ES REANOMENARÀ EL DIRECTORI ANTERIOR "
+"«%s» COM «%s_DIVERGED_DISABLED»"
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -2011,6 +2238,9 @@ msgstr "DESCÀRREGA MANUAL"
 
 msgid "CORRUPT"
 msgstr "CORRUPTE"
+
+msgid "DIVERGED"
+msgstr "DIVERGENT"
 
 msgid "SHALLOW"
 msgstr "INFORMAL"
@@ -2120,9 +2350,6 @@ msgstr "CONTRAPORTADA"
 
 msgid "TITLE SCREEN"
 msgstr "PANTALLA DE TÍTOL"
-
-msgid "FAN ART"
-msgstr "FAN ART"
 
 msgid "MIXIMAGE"
 msgstr "COMPOSICIÓ"
@@ -2247,6 +2474,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "ESCRIU EL NÚMERO DE VEGADES QUE S'HA JUGAT"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "COMANDAMENT"
 
@@ -2319,6 +2554,9 @@ msgstr "mitjans del joc"
 
 msgid "zoom"
 msgstr "zoom"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Has excedit la teva quota diaria de garbellat"
 
 msgid "Network error:"
 msgstr "Error de xarxa:"
@@ -2396,8 +2634,7 @@ msgstr "LA CARPETA «%s» JA NO ÉS FAVORITA"
 
 msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
 msgstr ""
-"NO ES PODEN AFEGIR ENTRADES QUE NO SIGUIN JOCS A LES COL·LECCIONS "
-"PERSONALITZADES"
+"A LES COL·LECCIONS PERSONALITZADES NOMES ES PODEN AFEGIR ENTRADES DE JOCS"
 
 msgid "system"
 msgstr "sistema"
@@ -2413,10 +2650,6 @@ msgstr "aleatori"
 
 msgid "jump to game"
 msgstr "saltar al joc"
-
-msgctxt "theme"
-msgid "unknown"
-msgstr "desconegut"
 
 msgctxt "theme"
 msgid "yes"
@@ -2457,9 +2690,9 @@ msgid ""
 "UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
 "DIRECTORY."
 msgstr ""
-"SEMBLA QUE S'HA PRODUÏT UNA ACTUALITZACIÓ INSEGURA, PROBABLEMENT "
-"DESENPAQUETANT UNA NOVA VERSIÓ SOBRE LA VELLA? AIXÒ POT PROVOCAR DIVERSOS "
-"PROBLEMES, QUE PODEN PASSAR DESAPARCEBUTS INICIALMENT. ASSEGURA¡T DE SEGUIR "
+"SEMBLA QUE S'HA PRODUÏT UNA ACTUALITZACIÓ INSEGURA, POT SER QUE S'HAGI "
+"DESEMPAQUETAT UNA NOVA VERSIÓ SOBRE LA VELLA? AIXÒ POT PROVOCAR DIVERSOS "
+"PROBLEMES, QUE INICIALMENT PASSARIEN DESAPERCEBUTS. ASSEGURAT DE SEGUIR "
 "SEMPRE LES INSTRUCCIONS D'ACTUALITZACIÓ A L'ARXIU README.TXT QUE POTS TROBAR "
 "AL DIRECTORI ES-DE."
 
@@ -2470,40 +2703,38 @@ msgid ""
 "SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
 msgstr ""
 "NO S'HA POGUT PROCESSAR L'ARXIU DE CONFIGURACIÓ DE SISTEMES. SI TENS UN "
-"ARXIU es_systems.xml PERSONALITZAT, LLAVORS SEGURAMENT HI HAGI ALGUN "
-"PROBLEMA AMB LA SINTAXI XML. EN CAS QUE NO EN TINGUIS, LA INSTAL·LACIÓ D'ES-"
-"DE ESTÀ TRENCADA. CONSULTA L'ARXIU DE REGISTRE es_log.txt PER MÉS INFORMACIÓ"
+"ARXIU es_systems.xml PERSONALITZAT, PROBABLEMENT HI HAGI ALGUN PROBLEMA AMB "
+"LA SINTAXI XML. SI NO ÉS EL CAS, LA INSTAL·LACIÓ D'ES-DE ESTÀ TRENCADA. "
+"CONSULTA L'ARXIU DE REGISTRE es_log.txt PER MÉS INFORMACIÓ"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"NO S'HAN TROBAR ARXIUS DE JOCS, COL·LOCA ELS TEUS JOCS A LA CARPETA DE ROMS "
-"CONFIGURADA. OPCIONALMENT, ES POT GENERAR L'ESTRUCTURA DE DIRECTORIS QUE "
-"CREARÀ UN ARXIU DE TEXT PER CADA SISTEMA DONANT MÉS INFORMACIÓ COM LES "
-"EXTENSIONS D'ARXIU SUPORTADES.\n"
-"AQUESTA ÉS LA CARPETA DE ROMS CONFIGURADA ACTUALMENT:\n"
+"NO S'HA TROBAT CAP FITXER DE JOC. IMPORTA ALGUNS JOCS O COL·LOCA'LS "
+"MANUALMENT AL DIRECTORI ROM CONFIGURAT. TAMBÉ TENS LA OPCIÓ DE GENERAR "
+"L'ESTRUCTURA DEL DIRECTORI ROMS. AIXÒ CREARÀ UN FITXER DE TEXT PER A CADA "
+"SISTEMA AMB INFORMACIÓ COM LES EXTENSIONS DE FITXER ADMESES. EL DIRECTORI  "
+"ROM CONFIGURAT ACTUALMENT ÉS:\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"NO S'HAN TROBAR ARXIUS DE JOCS, O BÉ COL·LOQUES ELS TEUS JOCS A LA CARPETA "
-"DE ROMS CONFIGURADA, O EN CANVIES LA RUTA PREMENT EL BOTÓ A CONTINUACIÓ. "
-"OPCIONALMENT, ES POT GENERAR L'ESTRUCTURA DE DIRECTORIS QUE CREARÀ UN ARXIU "
-"DE TEXT PER CADA SISTEMA DONANT MÉS INFORMACIÓ COM LES EXTENSIONS D'ARXIU "
-"SUPORTADES.\n"
-"AQUESTA ÉS LA CARPETA DE ROMS CONFIGURADA ACTUALMENT:\n"
+"NO S'HA TROBAT CAP FITXER DE JOC. IMPORTA ALGUNS JOCS O COL·LOCA'LS "
+"MANUALMENT AL DIRECTORI ROM CONFIGURAT. TAMBÉ POTS CANVIAR LA RUTA DE LA ROM "
+"I, OPCIONALMENT, GENERAR L'ESTRUCTURA DEL DIRECTORI ROM. AIXÒ CREARÀ UN "
+"FITXER DE TEXT PER A CADA SISTEMA AMB INFORMACIÓ COM LES EXTENSIONS DE "
+"FITXER ADMESES. EL DIRECTORI ROM CONFIGURAT ACTUALMENT ÉS:\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "CANVIAR CARPETA DE ROMS"
+msgid "CHANGE"
+msgstr "CANVIAR"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "ESCRIU LA RUTA A LA CARPETA DE ROMS"
@@ -2522,9 +2753,6 @@ msgstr "CARREGA LA RUTA CONFIGURADA ACTUALMENT"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "NETEJAR (DEIXA-HO EN BLANC PER REINICIAR A LA RUTA PER DEFECTE)"
-
-msgid "CREATE DIRECTORIES"
-msgstr "CREAR DIRECTORIS"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2606,9 +2834,6 @@ msgstr "INICIANT JOC «%s»"
 msgid "menu"
 msgstr "menu"
 
-msgid "WORKING..."
-msgstr "TREBALLANT…"
-
 msgctxt "theme"
 msgid "never"
 msgstr "mai"
@@ -2668,18 +2893,6 @@ msgstr[1] "%i SELECCIONATS"
 
 msgid "change value"
 msgstr "canviar valor"
-
-msgid "SELECT ALL"
-msgstr "SELECCIONAR-HO TOT"
-
-msgid "select all"
-msgstr "seleccionar-ho tot"
-
-msgid "SELECT NONE"
-msgstr "NETEJAR SELECCIÓ"
-
-msgid "select none"
-msgstr "netejar selecció"
 
 msgid "add half star"
 msgstr "afegir mitja estrella"
@@ -2860,9 +3073,6 @@ msgstr "DESCARTAR CANVIS"
 msgid "discard changes"
 msgstr "descartar canvis"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "Has excedit la teva quota diaria de garbellat"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "El servidor ha retornat el codi d'error HTTP %s"
@@ -2904,6 +3114,9 @@ msgstr "3:2 vertical"
 
 msgid "4:3 vertical"
 msgstr "4:3 vertical"
+
+msgid "5:3 vertical"
+msgstr "5:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"

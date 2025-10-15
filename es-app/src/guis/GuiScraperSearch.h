@@ -138,6 +138,7 @@ private:
     std::shared_ptr<ComponentList> mResultList;
 
     std::shared_ptr<ComponentGrid> mMD_Grid;
+    std::shared_ptr<TextComponent> mAPIStatistics;
     std::shared_ptr<RatingComponent> mMD_Rating;
     std::shared_ptr<DateTimeEditComponent> mMD_ReleaseDate;
     std::shared_ptr<TextComponent> mMD_Developer;

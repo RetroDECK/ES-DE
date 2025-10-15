@@ -1,3 +1,4 @@
 race:libpulsecommon
 race:radeonsi_dri
 race:libgallium
+race:libdrm_amdgpu

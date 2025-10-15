@@ -41,6 +41,7 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mRotateByTargetSize {false}
     , mLinearInterpolation {false}
     , mMipmapping {false}
+    , mInvertInMenus {true}
     , mTileHorizontalAlignment {ALIGN_LEFT}
     , mTileVerticalAlignment {ALIGN_BOTTOM}
     , mTopLeftCrop {0.0f, 0.0f}
@@ -596,6 +597,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << element.substr(6) << "\" defined as \"" << interpolation << "\"";
         }
     }
+
+    if (elem->has("mipmap"))
+        mMipmapping = elem->get<bool>("mipmap");
 
     if (elem->has("cornerRadius"))
         mCornerRadius =

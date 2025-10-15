@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-24 14:18+0100\n"
-"PO-Revision-Date: 2025-03-24 15:12+0200\n"
+"POT-Creation-Date: 2025-06-24 19:40+0200\n"
+"PO-Revision-Date: 2025-03-28 18:31+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Ελληνικά <info@es-de.org>\n"
 "Language: el_GR\n"
@@ -395,6 +395,7 @@ msgstr "ΕΓΚΑΤΑΣΤΑΣΗ 100%"
 
 msgid "Downloaded file does not match expected MD5 checksum"
 msgstr ""
+"Το αρχείο που λήφθηκε δεν ταιριάζει με το αναμενόμενο άθροισμα ελέγχου MD5"
 
 msgid "Error: Couldn't delete temporary package file, permission problems?"
 msgstr ""
@@ -519,6 +520,104 @@ msgstr "ΤΑΞΙΝΟΜΗΣΗ ΑΓΑΠΗΜΕΝΩΝ ΣΤΗΝ ΚΟΡΥΦΗ ΓΙΑ �
 
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr ""
+
+msgid "IMPORT TO SYSTEM"
+msgstr ""
+
+msgid "NO CONFIGURATION"
+msgstr ""
+
+msgid "REMOVE ENTRIES"
+msgstr ""
+
+msgid "ALL UNSELECTED"
+msgstr ""
+
+msgid "MEDIA TARGET TYPE"
+msgstr ""
+
+msgid "SCREENSHOTS"
+msgstr ""
+
+msgid "TITLE SCREENS"
+msgstr ""
+
+msgid "COVERS"
+msgstr ""
+
+msgid "BACK COVERS"
+msgstr ""
+
+msgid "MARQUEES (WHEELS)"
+msgstr ""
+
+msgid "3D BOXES"
+msgstr ""
+
+msgid "PHYSICAL MEDIA"
+msgstr ""
+
+msgid "FAN ART"
+msgstr "FAN ART"
+
+msgid "IMPORT MEDIA"
+msgstr ""
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr ""
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr ""
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr ""
+
+msgid "START"
+msgstr "ΕΝΑΡΞΗ"
+
+msgid "start importer"
+msgstr ""
+
+msgid "WORKING..."
+msgstr "ΔΟΥΛΕΥΕΙ..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr ""
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+
+msgid "MAKE YOUR SELECTION"
+msgstr ""
+
+msgid "IMPORT"
+msgstr ""
+
+msgid "import"
+msgstr ""
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "SELECT ALL"
+msgstr "ΕΠΙΛΟΓΗ ΟΛΩΝ"
+
+msgid "select all"
+msgstr "επιλογή όλων"
+
+msgid "SELECT NONE"
+msgstr "ΕΠΙΛΟΓΗ ΚΑΝΕΝΟΣ"
+
+msgid "select none"
+msgstr "επιλογή κανενός"
 
 msgid "FILTER GAMELIST"
 msgstr "ΦΙΛΤΡΟ ΣΤΗ ΛΙΣΤΑ ΠΑΙΧΝΙΔΙΩΝ"
@@ -703,11 +802,17 @@ msgstr "TRIGGERS"
 msgid "LEFT/RIGHT"
 msgstr "ΑΡΙΣΤΕΡΑ/ΔΕΞΙΑ"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "ΛΙΣΤΑ ΠΑΙΧΝΙΔΙΩΝ ΣΤΗΝ ΕΚΚΙΝΗΣΗ"
+msgid "SYSTEM ON STARTUP"
+msgstr ""
 
-msgid "NONE"
-msgstr "ΚΑΝΕΝΑ"
+msgid "STARTUP VIEW"
+msgstr ""
+
+msgid "SYSTEM"
+msgstr "ΣΥΣΤΗΜΑ"
+
+msgid "GAMELIST"
+msgstr ""
 
 msgid "SYSTEMS SORTING"
 msgstr ""
@@ -753,6 +858,9 @@ msgstr ""
 msgid "SCALE-UP"
 msgstr ""
 
+msgid "NONE"
+msgstr "ΚΑΝΕΝΑ"
+
 msgid "LAUNCH SCREEN DURATION"
 msgstr ""
 
@@ -766,7 +874,7 @@ msgid "LONG"
 msgstr "ΜΑΚΡΥ"
 
 msgid "POPUP"
-msgstr ""
+msgstr "POPUP"
 
 msgid "UI MODE"
 msgstr "ΛΕΙΤΟΥΡΓΙΑ UI"
@@ -934,6 +1042,9 @@ msgstr "ΑΛΛΑΓΗ ΤΩΝ ΚΟΥΜΠΙΩΝ  A/B ΜΕ ΤΑ X/Y"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "ΑΓΝΟΗΣΗ ΕΙΣΑΓΩΓΗ ΠΛΗΚΡΟΛΟΓΙΟΥ"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr ""
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr ""
 
@@ -1085,6 +1196,9 @@ msgstr "ΕΝΕΡΓΩΠΟΙΗΣΕ ΜΕΝΟΥ ΣΤΗ ΛΕΙΤΟΥΡΓΙΑ ΠΑΙΔ
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "ΕΜΦΑΝΙΣΗ ΜΕΝΟΥ ΕΞΟΔΟΥ (ΕΠΑΝΕΚΚΙΝΗΣΗ ΚΑΙ ΑΠΕΝΕΡΓΟΠΗΣΗ)"
+
+msgid "GAME IMPORTER"
+msgstr ""
 
 msgid "ORPHANED DATA CLEANUP"
 msgstr ""
@@ -1240,9 +1354,6 @@ msgstr "Επεξεργάζομαι:"
 
 msgid "Last error message:"
 msgstr "Τελευταίο μήνυμά σφάλματος:"
-
-msgid "START"
-msgstr "ΕΝΑΡΞΗ"
 
 msgid "start processing"
 msgstr "έναρξη επεξεργασίας"
@@ -1519,7 +1630,7 @@ msgid "CONTAIN"
 msgstr "ΠΕΡΙΕΧΕΙ"
 
 msgid "CROP"
-msgstr ""
+msgstr "ΠΕΡΙΚΟΠΗ"
 
 msgid "STRETCH"
 msgstr "ΤΕΝΤΩΜΑ"
@@ -1688,9 +1799,6 @@ msgstr "ΟΛΑ ΤΑ ΠΑΙΧΝΙΔΙΑ ΦΙΛΤΡΑΡΙΣΤΙΚΑΝ, ΤΙΠΟΤ�
 msgid "SCRAPING IN PROGRESS"
 msgstr "SCRAPING ΣΕ ΕΞΕΛΙΞΗ"
 
-msgid "SYSTEM"
-msgstr "ΣΥΣΤΗΜΑ"
-
 msgid "REFINE SEARCH"
 msgstr ""
 
@@ -1750,6 +1858,15 @@ msgstr "ΠΑΙΧΤΕΣ:"
 
 msgid "NO GAMES FOUND"
 msgstr "ΔΕΝ ΒΡΕΘΗΚΑΝ ΠΑΙΧΝΙΔΙΑ"
+
+msgid "API CALLS:"
+msgstr ""
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "RETRY"
 msgstr "ΕΠΑΝAΛΗΨΗ"
@@ -1830,9 +1947,27 @@ msgid "SWAP VIDEOS AFTER (SECONDS)"
 msgstr "ΕΝΑΛΛΑΓΗ ΒΙΝΤΕΟ ΜΕΤΑ (ΔΕΥΤΕΡΟΛΕΠΤΑ)"
 
 msgid "RENDER BLUR"
-msgstr ""
+msgstr "ΕΜΦΑΝΙΣΗ ΘΟΛΟΥΡΑΣ"
 
 msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr ""
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr ""
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr ""
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr ""
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr ""
+
+msgid "DOWNLOADING THEMES LIST 100%"
+msgstr "ΛΗΨΗ ΛΙΣΤΑΣ ΘΕΜΑΤΩΝ 100%"
+
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
 msgstr ""
 
 msgid "DISPLAY WI-FI STATUS INDICATOR"
@@ -1906,6 +2041,14 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -1939,6 +2082,9 @@ msgid "MANUAL DOWNLOAD"
 msgstr "ΧΕΙΡΟΚΙΝΗΤΗ ΛΗΨΗ"
 
 msgid "CORRUPT"
+msgstr ""
+
+msgid "DIVERGED"
 msgstr ""
 
 msgid "SHALLOW"
@@ -2047,9 +2193,6 @@ msgstr ""
 
 msgid "TITLE SCREEN"
 msgstr "ΟΘΟΝΗ ΤΙΤΛΟΥ"
-
-msgid "FAN ART"
-msgstr "FAN ART"
 
 msgid "MIXIMAGE"
 msgstr ""
@@ -2232,7 +2375,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Error loading physical media image, corrupt file?"
-msgstr "Προβλημα στη φόρτωση "
+msgstr "Σφάλμα στη φόρτωση της εικόνας μέσου, κατεστραμμένο αρχείο;"
 
 #, c-format
 msgid "PAGE %s OF %s"
@@ -2390,24 +2533,23 @@ msgid ""
 msgstr ""
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "ΑΛΛΑΓΗ ΦΑΚΕΛΟΥ ROM"
+msgid "CHANGE"
+msgstr ""
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "ΕΙΣΗΓΑΓΕ ΔΙΑΔΡΟΜΗ ΦΑΚΕΛΟΥ ROM"
@@ -2417,16 +2559,13 @@ msgid ""
 msgstr ""
 
 msgid "Currently configured path:"
-msgstr ""
+msgstr "Τρέχουσα διαμόρφωση διαδρομής:"
 
 msgid "LOAD CURRENTLY CONFIGURED PATH"
 msgstr ""
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr ""
-
-msgid "CREATE DIRECTORIES"
-msgstr "ΔΗΜΙΟΥΡΓΙΑ ΦΑΚΕΛΩΝ"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2483,9 +2622,6 @@ msgstr "ΕΚΚΙΝΗΣΗ ΠΑΙΧΝΙΔΙΟΥ '%s'"
 
 msgid "menu"
 msgstr "μενού"
-
-msgid "WORKING..."
-msgstr "ΔΟΥΛΕΥΕΙ..."
 
 msgctxt "theme"
 msgid "never"
@@ -2546,18 +2682,6 @@ msgstr[1] "%i ΕΠΙΛΕΓΜΕΝA"
 
 msgid "change value"
 msgstr "αλλαγη τιμης"
-
-msgid "SELECT ALL"
-msgstr "ΕΠΙΛΟΓΗ ΟΛΩΝ"
-
-msgid "select all"
-msgstr "επιλογή όλων"
-
-msgid "SELECT NONE"
-msgstr "ΕΠΙΛΟΓΗ ΚΑΝΕΝΟΣ"
-
-msgid "select none"
-msgstr "επιλογή κανενός"
 
 msgid "add half star"
 msgstr "προσθήκη μισού αστεριού"
@@ -2782,6 +2906,9 @@ msgstr "3:2 κάθετα"
 msgid "4:3 vertical"
 msgstr "4:3 κάθετα"
 
+msgid "5:3 vertical"
+msgstr "5:3 κάθετα"
+
 msgid "5:4 vertical"
 msgstr "5:4 κάθετα"
 
@@ -2810,7 +2937,7 @@ msgid "Reloading..."
 msgstr "Επαναφόρτοση..."
 
 msgid "Copying resources..."
-msgstr ""
+msgstr "Αντιγραφή πόρων..."
 
 msgid "Creating system directories..."
 msgstr ""

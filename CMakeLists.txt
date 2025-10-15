@@ -22,7 +22,7 @@ endif()
 project(es-de)
 
 # Application version, update this when making a new release.
-set(ES_VERSION 3.2.0)
+set(ES_VERSION 3.4.0-alpha)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
@@ -236,7 +236,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES Clang AND CMAKE_CXX_COMPILER_VERSION GREATER_EQ
 endif()
 
 if(ANDROID)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wno-unused-result")
     set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -llog")
 endif()
 
@@ -411,7 +411,7 @@ if(CMAKE_SYSTEM_NAME MATCHES Linux)
 endif()
 
 if(APPLE)
-    if(CMAKE_SYSTEM_PROCESSOR MATCHES arm)
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES arm AND NOT CMAKE_OSX_ARCHITECTURES MATCHES x86_64)
         add_compile_definitions(MACOS_APPLE_CPU)
     else()
         add_compile_definitions(MACOS_INTEL_CPU)
@@ -589,19 +589,19 @@ if(IOS)
 elseif(APPLE)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                          ${CURL_LIBRARIES}
-                         ${PROJECT_SOURCE_DIR}/libavcodec.60.dylib
-                         ${PROJECT_SOURCE_DIR}/libavfilter.9.dylib
-                         ${PROJECT_SOURCE_DIR}/libavformat.60.dylib
-                         ${PROJECT_SOURCE_DIR}/libavutil.58.dylib
-                         ${PROJECT_SOURCE_DIR}/libswresample.4.dylib
-                         ${PROJECT_SOURCE_DIR}/libswscale.7.dylib
+                         ${PROJECT_SOURCE_DIR}/libavcodec.61.dylib
+                         ${PROJECT_SOURCE_DIR}/libavfilter.10.dylib
+                         ${PROJECT_SOURCE_DIR}/libavformat.61.dylib
+                         ${PROJECT_SOURCE_DIR}/libavutil.59.dylib
+                         ${PROJECT_SOURCE_DIR}/libswresample.5.dylib
+                         ${PROJECT_SOURCE_DIR}/libswscale.8.dylib
                          ${PROJECT_SOURCE_DIR}/libfreeimage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
-                         ${PROJECT_SOURCE_DIR}/libgit2.1.7.dylib
+                         ${PROJECT_SOURCE_DIR}/libgit2.1.9.dylib
                          ${PROJECT_SOURCE_DIR}/libharfbuzz.dylib
-                         ${PROJECT_SOURCE_DIR}/libicudata.75.dylib
-                         ${PROJECT_SOURCE_DIR}/libicui18n.75.dylib
-                         ${PROJECT_SOURCE_DIR}/libicuuc.75.dylib
+                         ${PROJECT_SOURCE_DIR}/libicudata.77.dylib
+                         ${PROJECT_SOURCE_DIR}/libicui18n.77.dylib
+                         ${PROJECT_SOURCE_DIR}/libicuuc.77.dylib
                          ${PROJECT_SOURCE_DIR}/libintl.8.dylib
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.0.dylib)
@@ -677,10 +677,6 @@ elseif(EMSCRIPTEN)
                          ${PROJECT_SOURCE_DIR}/libopus.a
                          ${PROJECT_SOURCE_DIR}/libtheoradec.a
                          ${PROJECT_SOURCE_DIR}/libtheoraenc.a
-                         ${PROJECT_SOURCE_DIR}/libvorbis.a
-                         ${PROJECT_SOURCE_DIR}/libvorbisenc.a
-                         ${PROJECT_SOURCE_DIR}/libvorbisfile.a
-                         ${PROJECT_SOURCE_DIR}/libvpx.a
                          ${PROJECT_SOURCE_DIR}/libwavpack.a
                          ${PROJECT_SOURCE_DIR}/libz.a
                          # Other dependencies.

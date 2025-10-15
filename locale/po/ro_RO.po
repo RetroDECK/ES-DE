@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-05 00:20+0200\n"
+"POT-Creation-Date: 2025-10-13 21:59+0200\n"
+"PO-Revision-Date: 2025-10-12 21:31+0300\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
 "Language: ro_RO\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
 msgid "Network error (status:"
 msgstr "Eroare rețea (stare:"
@@ -136,6 +136,26 @@ msgstr "'%s' este filtrată, așadar pot fi mai multe jocuri disponibile"
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "S-A ȘTERS COLECȚIA „%s”"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "necunoscut"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i minut"
+msgstr[1] "%i minute"
+msgstr[2] "%i de minute"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i oră"
+msgstr[1] "%i ore"
+msgstr[2] "%i de ore"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -301,6 +321,12 @@ msgstr "nr. partide jucate, ascendent"
 
 msgid "times played, descending"
 msgstr "nr. partide jucate, descendent"
+
+msgid "play time, ascending"
+msgstr "timp jucat, ascendent"
+
+msgid "play time, descending"
+msgstr "timp jucat, descendent"
 
 msgid "system, ascending"
 msgstr "sistem, ascendent"
@@ -526,6 +552,115 @@ msgstr "AFIȘEAZĂ FAVORITELE LA ÎNCEPUT PENTRU COLECȚII"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "AFIȘEAZĂ O STEA PENTRU COLECȚIILE PERSONALIZATE"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "IMPORTĂ ÎN SISTEMUL"
+
+msgid "NO CONFIGURATION"
+msgstr "NICIO CONFIGURAȚIE"
+
+msgid "REMOVE ENTRIES"
+msgstr "ELIMINĂ INTRĂRILE"
+
+msgid "ALL UNSELECTED"
+msgstr "TOATE DESELECTATE"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr "ELIMINĂ CARACTERELE SPECIALE"
+
+msgid "MEDIA TARGET TYPE"
+msgstr "TIP MEDIA"
+
+msgid "SCREENSHOTS"
+msgstr "CAPTURI DE ECRAN"
+
+msgid "TITLE SCREENS"
+msgstr "ECRANE TITLU"
+
+msgid "COVERS"
+msgstr "COPERȚI"
+
+msgid "BACK COVERS"
+msgstr "SPATE COPERȚI"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "BANNERE"
+
+msgid "3D BOXES"
+msgstr "CUTII 3D"
+
+msgid "PHYSICAL MEDIA"
+msgstr "MEDIU FIZIC"
+
+msgid "FAN ART"
+msgstr "FAN ART"
+
+msgid "MIXIMAGES"
+msgstr "IMAGINI MIX"
+
+msgid "IMPORT MEDIA"
+msgstr "IMPORTĂ MEDIA"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "IMPORTĂ BANNERE SAU LOGOURI DACĂ EXISTĂ"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "SUPRASCRIE FIȘIERELE MEDIA"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "INCLUDE DOAR APLICAȚIILE CLASIFICATE CA JOCURI"
+
+msgid "START"
+msgstr "START"
+
+msgid "start importer"
+msgstr "începe importarea"
+
+msgid "WORKING..."
+msgstr "SE LUCREAZĂ..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "NU S-A PUTUT GĂSI NIMIC DE IMPORTAT"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"AI ALES SĂ ELIMINI TOATE INTRĂRILE DESELECTATE. ACEST LUCRU VA ȘTERGE TOATE "
+"FIȘIERELE JOCURILOR CU EXTENSIA \"%s\" DIN DOSARUL DE SISTEM \"%s\" ȘI APOI "
+"SĂ IMPORTE INTRĂRILE PE CARE LE VEI SELECTA PE ECRANUL URMĂTOR\n"
+"EȘTI SIGUR?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "SELECTEAZĂ"
+
+msgid "IMPORT"
+msgstr "IMPORTĂ"
+
+msgid "import"
+msgstr "importă"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "S-A IMPORTAT %i INTRARE"
+msgstr[1] "S-AU IMPORTAT %i INTRĂRI"
+msgstr[2] "S-AU IMPORTAT %i DE INTRĂRI"
+
+msgid "SELECT ALL"
+msgstr "SELECTEAZĂ TOT"
+
+msgid "select all"
+msgstr "selectează tot"
+
+msgid "SELECT NONE"
+msgstr "NU SELECTA NIMIC"
+
+msgid "select none"
+msgstr "nu selecta nimic"
+
 msgid "FILTER GAMELIST"
 msgstr "FILTREAZĂ LISTA DE JOCURI"
 
@@ -706,11 +841,17 @@ msgstr "TRĂGACE"
 msgid "LEFT/RIGHT"
 msgstr "STÂNGA/DREAPTA"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "LISTA DE JOCURI LA LANSARE"
+msgid "SYSTEM ON STARTUP"
+msgstr "SISTEM LA PORNIRE"
 
-msgid "NONE"
-msgstr "NICIUNA"
+msgid "STARTUP VIEW"
+msgstr "VIZUALIZARE PORNIRE"
+
+msgid "SYSTEM"
+msgstr "SISTEM"
+
+msgid "GAMELIST"
+msgstr "LISTA DE JOCURI"
 
 msgid "SYSTEMS SORTING"
 msgstr "SORTARE SISTEME"
@@ -754,6 +895,9 @@ msgstr "ANIMAȚIE DESCHIDERE MENIU"
 
 msgid "SCALE-UP"
 msgstr "MĂRIRE"
+
+msgid "NONE"
+msgstr "NICIUNA"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "DURATĂ ECRAN PORNIRE"
@@ -953,6 +1097,9 @@ msgstr "INTERSCHIMBĂ BUTOANELE A/B ȘI X/Y"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "IGNORĂ INTRAREA DE LA TASTATURĂ"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "NOTIFICĂRI DISPOZITIV DE INTRARE"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "CONFIGUREAZĂ TASTATURA ȘI CONTROLERELE"
 
@@ -985,6 +1132,9 @@ msgstr "SALVEZI MODIFICĂRILE?"
 
 msgid "load default directory"
 msgstr "încarcă dosarul implicit"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr "TIMPUL MAXIM DE URMĂRIT"
 
 msgid "VRAM LIMIT"
 msgstr "LIMITĂ VRAM"
@@ -1104,6 +1254,9 @@ msgstr "PERMITE MENIUL ÎN MODUL COPIL"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "AFIȘEAZĂ MENIU IEȘIRE (REPORNIRE ȘI ÎNCHIDERE)"
 
+msgid "GAME IMPORTER"
+msgstr "IMPORTATOR JOCURI"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "CURĂȚARE DATE INVALIDE"
 
@@ -1157,6 +1310,16 @@ msgstr "CHIAR ÎNCHIZI?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "ÎNCHIDE SISTEMUL"
+
+msgid "REALLY SUSPEND?"
+msgstr "CONFIRMI SUSPENDAREA?"
+
+msgid "SUSPEND SYSTEM"
+msgstr "SUSPENDĂ SISTEMUL"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "SETĂRI INDICATORI SISTEM"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1278,9 +1441,6 @@ msgstr "Se procesează:"
 
 msgid "Last error message:"
 msgstr "Ultimul mesaj de eroare:"
-
-msgid "START"
-msgstr "START"
 
 msgid "start processing"
 msgstr "începe procesarea"
@@ -1561,6 +1721,9 @@ msgstr "MANUALE JOC"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "REZOLUȚIE IMAGINE MIX"
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr "FORMAT FIȘIER IMAGINE MIX"
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "POTRIVIRE ORIZONTALĂ CAPTURĂ ECRAN"
@@ -1675,6 +1838,51 @@ msgstr "SUA"
 msgid "WORLD"
 msgstr "GLOBAL"
 
+msgid "ASIA"
+msgstr "ASIA"
+
+msgid "AUSTRALIA"
+msgstr "AUSTRALIA"
+
+msgid "BRAZIL"
+msgstr "BRAZILIA"
+
+msgid "CANADA"
+msgstr "CANADA"
+
+msgid "CHINA"
+msgstr "CHINA"
+
+msgid "GERMANY"
+msgstr "GERMANIA"
+
+msgid "FRANCE"
+msgstr "FRANȚA"
+
+msgid "ITALY"
+msgstr "ITALIA"
+
+msgid "KOREA"
+msgstr "COREEA"
+
+msgid "NETHERLANDS"
+msgstr "ȚĂRILE DE JOS"
+
+msgid "RUSSIA"
+msgstr "RUSIA"
+
+msgid "SWEDEN"
+msgstr "SUEDIA"
+
+msgid "SPAIN"
+msgstr "SPANIA"
+
+msgid "TAIWAN"
+msgstr "TAIWAN"
+
+msgid "UNITED KINGDOM"
+msgstr "REGATUL UNIT"
+
 msgid "PREFERRED LANGUAGE"
 msgstr "LIMBA PREFERATĂ"
 
@@ -1744,9 +1952,6 @@ msgstr "TOATE JOCURILE AU FOST FILTRATE. NIMIC DE PRELUAT"
 msgid "SCRAPING IN PROGRESS"
 msgstr "PRELUARE ÎN CURS"
 
-msgid "SYSTEM"
-msgstr "SISTEM"
-
 msgid "REFINE SEARCH"
 msgstr "RAFINEAZĂ CĂUTAREA"
 
@@ -1809,6 +2014,16 @@ msgstr "NR. JUCĂTORI:"
 
 msgid "NO GAMES FOUND"
 msgstr "NU S-AU GĂSIT JOCURI"
+
+msgid "API CALLS:"
+msgstr "APELURI API:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "%i RĂMAS"
+msgstr[1] "%i RĂMASE"
+msgstr[2] "%i RĂMASE"
 
 msgid "RETRY"
 msgstr "REÎNCEARCĂ"
@@ -1909,6 +2124,9 @@ msgstr "AFIȘEAZĂ PROCENT ÎNCĂRCARE BATERIE"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "SE DESCARCĂ LISTA DE TEME 100%"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "REPOSITORY-UL S-A ÎNDEPĂRTAT DE LA ORIGINE"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "TEMA ESTE DEJA LA ZI"
 
@@ -1983,6 +2201,18 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"SE PARE CĂ ACEST REPOSITORY S-A ÎNDEPĂRTAT DE ORIGINE, CEEA CE DE REGULĂ "
+"ÎNSEAMNĂ CĂ EXISTĂ UN CONFLICT CARE TREBUIE SĂ FIE REZOLVAT DE DEZVOLTATORUL "
+"TEMEI. O DESCĂRCARE PROASPĂTĂ ESTE NECESARĂ ȘI VECHIUL DOSAR AL TEMEI „%s” "
+"VA FI REDENUMIT ÎN „%s_DIVERGED_DISABLED”"
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -2024,6 +2254,9 @@ msgstr "DESCĂRCARE MANUALĂ"
 
 msgid "CORRUPT"
 msgstr "CORUPTĂ"
+
+msgid "DIVERGED"
+msgstr "ÎNDEPĂRTAT"
 
 msgid "SHALLOW"
 msgstr "SUPERFICIALĂ"
@@ -2132,9 +2365,6 @@ msgstr "COPERTĂ SPATE CUTIE"
 
 msgid "TITLE SCREEN"
 msgstr "ECRAN TITLU"
-
-msgid "FAN ART"
-msgstr "FAN ART"
 
 msgid "MIXIMAGE"
 msgstr "IMAGINE MIX"
@@ -2259,6 +2489,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "INTRODU NUMĂR DE PARTIDE"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr "TIMP JUCAT"
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr "INTRODU TIMP JUCAT"
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "CONTROLER"
 
@@ -2334,6 +2572,9 @@ msgstr "fișiere media joc"
 
 msgid "zoom"
 msgstr "mărește"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Ai depășit numărul zilnic maxim de informații preluate"
 
 msgid "Network error:"
 msgstr "Eroare rețea:"
@@ -2429,10 +2670,6 @@ msgid "jump to game"
 msgstr "sări la joc"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "necunoscut"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "da"
 
@@ -2492,35 +2729,34 @@ msgstr ""
 "STRICATĂ. VERIFICĂ FIȘIERUL JURNAL es_log.txt PENTRU DETALII ADIȚIONALE"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"NU S-AU GĂSIT FIȘIERE DE JOC. TE ROG PLASEAZĂ JOCURILE ÎN DOSARUL DE ROM-"
-"URI. OPȚIONAL, STRUCTURA DOSARELOR DE ROM-URI POATE FI GENERATĂ, CEEA CE VA "
-"CREEA UN FIȘIER TEXT PENTRU FIECARE SISTEM CONȚINÂND INFORMAȚII CU PRIVIRE "
-"LA EXTENSIILE SUPORTATE.\n"
-"ACESTA ESTE DOSARUL DE ROM-URI CONFIGURAT ÎN PREZENT:\n"
+"NU S-AU GĂSIT FIȘIERE DE JOCURI. FIE IMPORTĂ NIȘTE JOCURI, FIE PLASEAZĂ-LE "
+"MANUAL ÎN DOSARUL DE ROM-URI CONFIGURAT. OPȚIONAL POȚI ȘI GENERA STRUCTURA "
+"DE DOSARE DE ROM-URI CARE VA CREA ȘI UN FIȘIER TEXT PENTRU FIECARE SISTEM CU "
+"INFORMAȚII UTILE CUM AR FI EXTENSIILE DE FIȘIERE SUPORTATE. ACESTA ESTE "
+"DOSARUL DE ROM-URI CONFIGURAT:\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"NU S-AU GĂSIT FIȘIERE DE JOC. PLASEAZĂ JOCURILE ÎN DOSARUL DE ROM-URI "
-"CONFIGURAT SAU SCHIMBĂ CALEA CĂTRE ACESTA CU BUTONUL DE MAI JOS. OPȚIONAL, "
-"STRUCTURA DOSARELOR DE ROM-URI POATE FI GENERATĂ CEEA CE VA CREEA UN FIȘIER "
-"TEXT PENTRU FIECARE SISTEM CONȚINÂND INFORMAȚII CU PRIVIRE LA EXTENSIILE "
-"SUPORTATE.\n"
-"ACESTA ESTE DOSARUL DE ROM-URI CONFIGURAT ÎN PREZENT:\n"
+"NU S-AU GĂSIT FIȘIERE DE JOCURI. FIE IMPORTĂ NIȘTE JOCURI, FIE PLASEAZĂ-LE "
+"MANUAL ÎN DOSARUL DE ROM-URI CONFIGURAT. POȚI DE ASEMENEA SĂ SCHIMBI CALEA "
+"DOSARULUI DE ROM-URI ȘI OPȚIONAL POȚI GENERA ȘI STRUCTURA DE DOSARE DE ROM-"
+"URI CARE VA CREA ȘI UN FIȘIER TEXT PENTRU FIECARE SISTEM CU INFORMAȚII UTILE "
+"CUM AR FI EXTENSIILE DE FIȘIERE SUPORTATE. ACESTA ESTE DOSARUL DE ROM-URI "
+"CONFIGURAT:\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "SCHIMBĂ DOSARUL DE ROM-URI"
+msgid "CHANGE"
+msgstr "SCHIMBĂ"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "INTRODU LOCAȚIA DOSARULUI DE ROM-URI"
@@ -2539,9 +2775,6 @@ msgstr "ÎNCARCĂ CALEA CONFIGURATĂ ÎN PREZENT"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "CURĂȚĂ (LASĂ LIBER PENTRU A RESETA LA CALEA IMPLICITĂ)"
-
-msgid "CREATE DIRECTORIES"
-msgstr "CREEAZĂ DOSARE"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2627,9 +2860,6 @@ msgstr "SE LANSEAZĂ JOCUL „%s”"
 msgid "menu"
 msgstr "meniu"
 
-msgid "WORKING..."
-msgstr "SE LUCREAZĂ..."
-
 msgctxt "theme"
 msgid "never"
 msgstr "niciodată"
@@ -2695,18 +2925,6 @@ msgstr[2] "%i SELECTATE"
 
 msgid "change value"
 msgstr "schimbă valoarea"
-
-msgid "SELECT ALL"
-msgstr "SELECTEAZĂ TOT"
-
-msgid "select all"
-msgstr "selectează tot"
-
-msgid "SELECT NONE"
-msgstr "NU SELECTA NIMIC"
-
-msgid "select none"
-msgstr "nu selecta nimic"
 
 msgid "add half star"
 msgstr "adaugă jumătate de stea"
@@ -2888,9 +3106,6 @@ msgstr "ANULEAZĂ MODIFICĂRILE"
 msgid "discard changes"
 msgstr "anulează modificările"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "Ai depășit numărul zilnic maxim de informații preluate"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Serverul a returnat codul de eroare HTTP %s"
@@ -2932,6 +3147,9 @@ msgstr "3:2 vertical"
 
 msgid "4:3 vertical"
 msgstr "4:3 vertical"
+
+msgid "5:3 vertical"
+msgstr "5:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"

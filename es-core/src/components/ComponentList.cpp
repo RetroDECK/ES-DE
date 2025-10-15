@@ -307,6 +307,11 @@ void ComponentList::render(const glm::mat4& parentTrans)
                             it->component->setColorShift(origColor);
                     }
                 }
+                else if (!darkColorScheme && mFocused && i == static_cast<size_t>(mCursor) &&
+                         !it->component->getInvertInMenus()) {
+                    // Special case for light menus where we may not want to invert the image.
+                    drawAfterCursor.push_back(it->component.get());
+                }
                 else {
                     it->component->render(trans);
                 }

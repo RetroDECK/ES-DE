@@ -177,6 +177,9 @@ public:
     void setChangedTheme() { mChangedTheme = true; }
     bool getChangedTheme() { return mChangedTheme; }
 
+    void setGameLaunched(FileData* game) { mGameLaunched = game; }
+    FileData* getGameLaunched() { return mGameLaunched; }
+
     void passHelpComponents(std::vector<std::unique_ptr<HelpComponent>>* helpComponents)
     {
         mHelpComponents = helpComponents;
@@ -244,6 +247,7 @@ private:
     PDFViewer* mPDFViewer;
     GuiLaunchScreen* mLaunchScreen;
     GuiInfoPopup* mInfoPopup;
+    FileData* mGameLaunched;
 
     std::queue<std::pair<std::string, int>> mInfoPopupQueue;
     std::shared_ptr<TextureResource> mPostprocessedBackground;

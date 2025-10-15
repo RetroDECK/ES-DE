@@ -29,6 +29,7 @@
 #include "animations/LambdaAnimation.h"
 #include "animations/MoveCameraAnimation.h"
 #include "guis/GuiApplicationUpdater.h"
+#include "guis/GuiGameImporter.h"
 #include "guis/GuiMenu.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
@@ -182,29 +183,6 @@ void ViewController::setMenuColors()
     }
 }
 
-void ViewController::legacyAppDataDialog()
-{
-    const std::string upgradeMessage {
-        "AS OF ES-DE 3.0 THE APPLICATION DATA DIRECTORY HAS CHANGED FROM \".emulationstation\" "
-        "to \"ES-DE\"\nPLEASE RENAME YOUR CURRENT DATA DIRECTORY:\n" +
-#if defined(_WIN64)
-        Utils::String::replace(Utils::FileSystem::getAppDataDirectory(), "/", "\\") +
-        "\nTO THE FOLLOWING:\n" +
-        Utils::String::replace(
-            Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()), "/", "\\") +
-        "\\ES-DE"};
-#else
-        Utils::FileSystem::getAppDataDirectory() + "\nTO THE FOLLOWING:\n" +
-        Utils::FileSystem::getParent(Utils::FileSystem::getAppDataDirectory()) + "/ES-DE"};
-#endif
-
-    mWindow->pushGui(new GuiMsgBox(
-        upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr, true, true,
-        (mRenderer->getIsVerticalOrientation() ?
-             0.85f :
-             0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
-}
-
 void ViewController::migratedAppDataFilesDialog()
 {
     const std::string message {"SETTINGS HAVE BEEN MIGRATED FROM A LEGACY APPLICATION DATA "
@@ -218,7 +196,7 @@ void ViewController::migratedAppDataFilesDialog()
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-        "", nullptr, "", nullptr, nullptr, true, true,
+        "", nullptr, "", nullptr, "", nullptr, nullptr, true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.65f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -234,7 +212,8 @@ void ViewController::unsafeUpgradeDialog()
           "README.TXT FILE THAT CAN BE FOUND IN THE ES-DE DIRECTORY.")};
 
     mWindow->pushGui(new GuiMsgBox(
-        upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr, true, true,
+        upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, "", nullptr, nullptr,
+        true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -256,7 +235,7 @@ void ViewController::invalidSystemsFileDialog()
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-        "", nullptr, "", nullptr, nullptr, true, true,
+        "", nullptr, "", nullptr, "", nullptr, nullptr, true, true,
         (mRenderer->getIsVerticalOrientation() ?
              0.85f :
              0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -274,14 +253,21 @@ void ViewController::noGamesDialog()
                              "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
                              "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
                              "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n");
+#elif defined(__ANDROID__) || defined(__IOS__)
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR "
+                             "PLACE THEM MANUALLY IN THE CONFIGURED ROM DIRECTORY. "
+                             "OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY STRUCTURE "
+                             "WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING "
+                             "SOME INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. "
+                             "THIS IS THE CONFIGURED ROM DIRECTORY:\n");
 #else
-    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
-                             "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
-                             "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM "
-                             "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
-                             "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
-                             "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
-                             "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n");
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR "
+                             "PLACE THEM MANUALLY IN THE CURRENTLY CONFIGURED ROM "
+                             "DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+                             "OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE "
+                             "WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING "
+                             "SOME INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. "
+                             "THIS IS THE CONFIGURED ROM DIRECTORY:\n");
 #endif
 
 #if defined(_WIN64)
@@ -290,25 +276,24 @@ void ViewController::noGamesDialog()
     mRomDirectory = FileData::getROMDirectory();
 #endif
 
-#if defined(RETRODECK)
-    // Show a simple message with a "QUIT" option if RETRODECK is defined
-    mNoGamesMessageBox = new GuiMsgBox(
-        mNoGamesErrorMessage + mRomDirectory, 
-        _("QUIT"),
-        [] {
-            SDL_Event quit {};
-            quit.type = SDL_QUIT;
-            SDL_PushEvent(&quit);
-        }
-    );
-#else
+    auto gameImporterUpdateFunc = [&]() {
+        delete mNoGamesMessageBox;
+        ViewController::getInstance()->rescanROMDirectory();
+    };
 
 #if defined(__ANDROID__) || defined(__IOS__)
     mNoGamesMessageBox = new GuiMsgBox(
-        mNoGamesErrorMessage + mRomDirectory,
+        mNoGamesErrorMessage + mRomDirectory, _("IMPORT"),
+        [this, gameImporterUpdateFunc] {
+            mWindow->pushGui(new GuiGameImporter(_("GAME IMPORTER"), gameImporterUpdateFunc));
+        },
 #else
     mNoGamesMessageBox = new GuiMsgBox(
-        mNoGamesErrorMessage + mRomDirectory, _("CHANGE ROM DIRECTORY"),
+        mNoGamesErrorMessage + mRomDirectory, _("IMPORT"),
+        [this, gameImporterUpdateFunc] {
+            mWindow->pushGui(new GuiGameImporter(_("GAME IMPORTER"), gameImporterUpdateFunc));
+        },
+        _("CHANGE"),
         [this] {
             std::string currentROMDirectory;
 #if defined(_WIN64)
@@ -334,7 +319,8 @@ void ViewController::noGamesDialog()
                             mWindow->pushGui(new GuiMsgBox(
                                 _("ROM DIRECTORY SETTING SAVED, RESTART "
                                   "THE APPLICATION TO RESCAN THE SYSTEMS"),
-                                _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                                _("OK"), nullptr, "", nullptr, "", nullptr, "", nullptr, nullptr,
+                                true, true,
                                 (mRenderer->getIsVerticalOrientation() ?
                                      0.66f :
                                      0.42f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -361,7 +347,8 @@ void ViewController::noGamesDialog()
                         mWindow->pushGui(new GuiMsgBox(
                             _("ROM DIRECTORY SETTING SAVED, RESTART "
                               "THE APPLICATION TO RESCAN THE SYSTEMS"),
-                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            _("OK"), nullptr, "", nullptr, "", nullptr, "", nullptr, nullptr, true,
+                            true,
                             (mRenderer->getIsVerticalOrientation() ?
                                  0.66f :
                                  0.42f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -372,7 +359,7 @@ void ViewController::noGamesDialog()
             }
         },
 #endif // __ANDROID__
-        _("CREATE DIRECTORIES"),
+        _("CREATE"),
         [this] {
             mWindow->pushGui(new GuiMsgBox(
                 _("THIS WILL CREATE DIRECTORIES FOR ALL THE "
@@ -386,7 +373,8 @@ void ViewController::noGamesDialog()
                             _("THE SYSTEM DIRECTORIES WERE SUCCESSFULLY "
                               "GENERATED, EXIT THE APPLICATION AND PLACE "
                               "YOUR GAMES IN THE NEW FOLDERS"),
-                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            _("OK"), nullptr, "", nullptr, "", nullptr, "", nullptr, nullptr, true,
+                            true,
                             (mRenderer->getIsVerticalOrientation() ?
                                  0.74f :
                                  0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -396,13 +384,14 @@ void ViewController::noGamesDialog()
                             _("ERROR CREATING THE SYSTEM DIRECTORIES, "
                               "PERMISSION PROBLEMS OR DISK FULL?\n\n"
                               "SEE THE LOG FILE FOR MORE DETAILS"),
-                            _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                            _("OK"), nullptr, "", nullptr, "", nullptr, "", nullptr, nullptr, true,
+                            true,
                             (mRenderer->getIsVerticalOrientation() ?
                                  0.75f :
                                  0.47f * (1.778f / mRenderer->getScreenAspectRatio()))));
                     }
                 },
-                _("CANCEL"), nullptr, "", nullptr, nullptr, false, true,
+                _("CANCEL"), nullptr, "", nullptr, "", nullptr, nullptr, false, true,
                 (mRenderer->getIsVerticalOrientation() ?
                      0.78f :
                      0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -438,7 +427,8 @@ void ViewController::invalidAlternativeEmulatorDialog()
                                      "CONFIGURATION FILE, PLEASE REVIEW YOUR "
                                      "SETUP USING THE 'ALTERNATIVE EMULATORS' "
                                      "INTERFACE IN THE 'OTHER SETTINGS' MENU"),
-                                   _("OK"), nullptr, "", nullptr, "", nullptr, nullptr, true, true,
+                                   _("OK"), nullptr, "", nullptr, "", nullptr, "", nullptr, nullptr,
+                                   true, true,
                                    (mRenderer->getIsVerticalOrientation() ?
                                         0.70f :
                                         0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -490,8 +480,8 @@ void ViewController::updateAvailableDialog()
                               "THE UPGRADE.");
                     }
                     mWindow->pushGui(new GuiMsgBox(
-                        upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, nullptr,
-                        true, true,
+                        upgradeMessage.c_str(), _("OK"), [] {}, "", nullptr, "", nullptr, "",
+                        nullptr, nullptr, true, true,
                         (mRenderer->getIsVerticalOrientation() ?
                              0.85f :
                              0.535f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -502,14 +492,14 @@ void ViewController::updateAvailableDialog()
                 HttpReq::cleanupCurlMulti();
                 return;
             },
-            "", nullptr, nullptr, true, true,
+            "", nullptr, "", nullptr, nullptr, true, true,
             (mRenderer->getIsVerticalOrientation() ?
                  0.70f :
                  0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
     }
     else {
-        mWindow->pushGui(new GuiMsgBox(results, _("OK"), nullptr, "", nullptr, "", nullptr, nullptr,
-                                       true, true,
+        mWindow->pushGui(new GuiMsgBox(results, _("OK"), nullptr, "", nullptr, "", nullptr, "",
+                                       nullptr, nullptr, true, true,
                                        (mRenderer->getIsVerticalOrientation() ?
                                             0.70f :
                                             0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
@@ -523,28 +513,42 @@ void ViewController::goToStart(bool playTransition)
         return;
 
     // If the system view does not exist, then create it. We do this here as it would
-    // otherwise not be done if jumping directly into a specific game system on startup.
+    // otherwise not be done if jumping directly into a gamelist on startup.
     if (!mSystemListView)
         getSystemListView();
 
-    // If a specific system is requested, go directly to its game list.
-    auto requestedSystem = Settings::getInstance()->getString("StartupSystem");
-    if (requestedSystem != "") {
+    // If a specific system is requested then go directly to this system, which could be either
+    // the system view or the gamelist view.
+    std::string requestedSystem {Settings::getInstance()->getString("StartupSystem")};
+    SystemData* selectedSystem {nullptr};
+
+    if (requestedSystem == "") {
+        selectedSystem = SystemData::sSystemVector.front();
+    }
+    else {
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
              it != SystemData::sSystemVector.cend(); ++it) {
             if ((*it)->getName() == requestedSystem) {
-                goToGamelist(*it);
-                if (!playTransition)
-                    cancelViewTransitions();
-                return;
+                selectedSystem = *it;
+                break;
             }
         }
+    }
 
-        // Requested system doesn't exist.
+    // If the requested system doesn't exist.
+    if (selectedSystem == nullptr) {
+        selectedSystem = SystemData::sSystemVector.front();
         Settings::getInstance()->setString("StartupSystem", "");
     }
-    // Get the first system entry.
-    goToSystemView(getSystemListView()->getFirstSystem(), false);
+
+    if (Settings::getInstance()->getString("StartupView") == "gamelist") {
+        goToGamelist(selectedSystem);
+        if (!playTransition)
+            cancelViewTransitions();
+    }
+    else {
+        goToSystemView(selectedSystem, playTransition);
+    }
 }
 
 void ViewController::ReloadAndGoToStart()
@@ -1253,6 +1257,13 @@ bool ViewController::input(InputConfig* config, Input input)
         mWindow->setAllowFileAnimation(true);
         mWindow->setLaunchedGame(false);
         resetViewVideosTimer();
+
+        // This sets the lastplayed and playtime metadata values.
+        if (mWindow->getGameLaunched() != nullptr) {
+            mWindow->getGameLaunched()->setPlayMetadata(true);
+            mWindow->setGameLaunched(nullptr);
+        }
+
         // Filter out the "a" button so the game is not restarted if there was such a button press
         // queued when leaving the game.
         if (config->isMappedTo("a", input) && input.value != 0)
@@ -1326,6 +1337,7 @@ void ViewController::update(int deltaTime)
 
     if (mGameToLaunch) {
         launch(mGameToLaunch);
+        mWindow->setGameLaunched(mGameToLaunch);
         mGameToLaunch = nullptr;
     }
 }

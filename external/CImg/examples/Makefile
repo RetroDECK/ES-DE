@@ -195,12 +195,6 @@ X11_LIBS = $(shell pkg-config --libs x11 || echo -L/usr/X11R6/lib -lX11) -lpthre
 XSHM_CFLAGS = # -Dcimg_use_xshm $(shell pkg-config --cflags xcb-shm)
 XSHM_LIBS = # $(shell pkg-config --libs xcb-shm || echo -L$(USR)/X11R6/lib -lXext)
 
-# Flags to enable GDI32 display (Windows native).
-GDI32_DEFINE = -mwindows
-GDI32_INCDIR =
-GDI32_CFLAGS = $(GDI32_DEFINE) $(GDI32_INCDIR)
-GDI32_LIBS = -lgdi32
-
 # Flags to enable screen mode switching, using the XRandr library (when using X11).
 # ( http://www.x.org/wiki/Projects/XRandR )
 # !!! Not supported by the X11 server on MacOS, so do not use it on MacOS !!!
@@ -208,6 +202,18 @@ XRANDR_DEFINE = -Dcimg_use_xrandr
 XRANDR_INCDIR =
 XRANDR_CFLAGS = $(XRANDR_DEFINE) $(XRANDR_INCDIR)
 XRANDR_LIBS = -lXrandr
+
+# Flags to enable GDI32 display (Windows native).
+GDI32_DEFINE = -mwindows
+GDI32_INCDIR =
+GDI32_CFLAGS = $(GDI32_DEFINE) $(GDI32_INCDIR)
+GDI32_LIBS = -lgdi32
+
+# Flags to enable SDL3 display.
+SDL3_DEFINE = -Dcimg_display=3
+SDL3_INCDIR = $(shell pkg-config --cflags sdl3 || echo -I/usr/local/include)
+SDL3_CFLAGS = $(SDL3_DEFINE) $(SDL3_INCDIR)
+SDL3_LIBS = $(shell pkg-config --libs sdl3 || echo -L/usr/local/include -Wl,-rpath,/usr/local/lib)
 
 # Flags to enable native support for PNG image files, using the PNG library.
 # ( http://www.libpng.org/ )
@@ -222,6 +228,13 @@ JPEG_DEFINE = -Dcimg_use_jpeg
 JPEG_INCDIR =
 JPEG_CFLAGS = $(JPEG_DEFINE) $(JPEG_INCDIR)
 JPEG_LIBS = -ljpeg
+
+# Flags to enable native support for JPEG XL image files, using the JXL library.
+# ( http://www.ijg.org/ )
+JXL_DEFINE = -Dcimg_use_jxl
+JXL_INCDIR =
+JXL_CFLAGS = $(JXL_DEFINE) $(JXL_INCDIR)
+JXL_LIBS = -ljxl
 
 # Flags to enable native support for TIFF image files, using the TIFF library.
 # ( http://www.libtiff.org/ )
@@ -297,14 +310,14 @@ LAPACK_INCDIR =
 LAPACK_CFLAGS = $(LAPACK_DEFINE) $(LAPACK_INCDIR)
 LAPACK_LIBS = -lblas -llapack
 
-# Flags to enable the use of the Board library
-# ( https://github.com/c-koi/libboard )
-BOARD_DEFINE = -Dcimg_use_board
-BOARD_INCDIR = -I/usr/include/board
-BOARD_CFLAGS = $(BOARD_DEFINE) $(BOARD_INCDIR)
-BOARD_LIBS = -lboard
+# Enable native support of WebP image files, using the WebP library.
+# (https://chromium.googlesource.com/webm/libwebp/)
+WEBP_DEFINE = -Dcimg_use_webp
+WEBP_INCDIR = $(shell pkg-config --cflags libwebp)
+WEBP_CFLAGS = $(WEBP_DEFINE) $(WEBP_INCDIR)
+WEBP_LIBS = $(shell pkg-config --libs libwep || echo -lwebp)
 
-# Flags to compile GIMP plug-ins.
+# Flags to compile executable on Windows.
 ifeq ($(MSYSTEM),MINGW32)
 GIMP_CFLAGS = -mwindows
 endif
@@ -386,7 +399,6 @@ $(X11_CFLAGS) \
 $(FFTW3_CFLAGS) \
 $(PNG_CFLAGS) \
 $(JPEG_CFLAGS) \
-$(ZLIB_CFLAGS) \
 $(CURL_CFLAGS) \
 $(XSHM_CFLAGS)" \
 "CONF_LIBS = \
@@ -394,7 +406,6 @@ $(X11_LIBS) \
 $(FFTW3_LIBS) \
 $(PNG_LIBS) \
 $(JPEG_LIBS) \
-$(ZLIB_LIBS) \
 $(CURL_LIBS) \
 $(XSHM_LIBS)" \
 all

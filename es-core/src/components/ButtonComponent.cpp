@@ -158,6 +158,8 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
     }
 
     mButtonText->setColor(getCurTextColor());
+    if (mOpacity != 1.0f)
+        mButtonText->setOpacity(mOpacity);
     mButtonText->render(trans);
 }
 

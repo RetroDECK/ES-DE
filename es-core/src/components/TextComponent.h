@@ -55,7 +55,6 @@ public:
     void setHiddenText(const std::string& text) { mHiddenText = text; }
     void setAutoCalcExtent(glm::ivec2 extent) override { mAutoCalcExtent = extent; }
     const glm::ivec2 getAutoCalcExtent() { return mAutoCalcExtent; }
-    void setColor(unsigned int color) override;
     void setHorizontalAlignment(Alignment align);
     void setVerticalAlignment(Alignment align) { mVerticalAlignment = align; }
     void setLineSpacing(float spacing);
@@ -63,9 +62,10 @@ public:
     void setTextShaping(bool state) { mFont->setTextShaping(state); }
     void setNoTopMargin(bool margin);
     void setNeedGlyphsPos(bool state) { mNeedGlyphsPos = state; }
+    const glm::vec2 getGlyphPosition(int cursor);
     void setRemoveLineBreaks(bool state) override { mRemoveLineBreaks = state; }
     void setNoSizeUpdate(bool state) { mNoSizeUpdate = state; }
-    const glm::vec2 getGlyphPosition(int cursor);
+    void setColor(unsigned int color) override;
     void setBackgroundColor(unsigned int color) override;
     void setRenderBackground(bool render) { mRenderBackground = render; }
     void setBackgroundMargins(const glm::vec2 margins) { mBackgroundMargins = margins; }
@@ -161,6 +161,7 @@ private:
                                                                    "kidgame",
                                                                    "broken",
                                                                    "playcount",
+                                                                   "playtime",
                                                                    "controller",
                                                                    "altemulator",
                                                                    "emulator",

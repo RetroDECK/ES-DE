@@ -27,10 +27,10 @@ namespace Utils
 
         int runRebootCommand();
         int runPoweroffCommand();
+        int runSuspendCommand();
 
-        // Uses UTF-8 for Unix and does a UTF-16/wstring conversion for Windows.
+        // Uses UTF-8 for Unix and UTF-16 for Windows.
         int runSystemCommand(const std::string& cmd_utf8);
-        // Windows specific UTF-16/wstring function. (FOR FUTURE USE)
         int runSystemCommand(const std::wstring& cmd_utf16);
 
         int launchGameUnix(const std::string& cmd_utf8,

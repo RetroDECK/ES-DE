@@ -123,7 +123,7 @@ void FindRules::loadFindRules()
                 }
                 continue;
             }
-            for (pugi::xml_node rule = emulator.child("rule"); rule;
+            for (pugi::xml_node rule {emulator.child("rule")}; rule;
                  rule = rule.next_sibling("rule")) {
                 const std::string& ruleType {rule.attribute("type").as_string()};
                 if (ruleType.empty()) {
@@ -207,6 +207,317 @@ void FindRules::loadFindRules()
             }
             mCores[coreName] = coreRules;
             coreRules.corePaths.clear();
+        }
+    }
+}
+
+ImportRules::ImportRules()
+{
+    LOG(LogInfo) << "Loading system import rules...";
+    loadImportRules();
+}
+
+void ImportRules::loadImportRules()
+{
+    std::vector<std::string> paths;
+    std::string filePath {Utils::FileSystem::getAppDataDirectory() +
+                          "/custom_systems/es_import_rules.xml"};
+    if (Utils::FileSystem::exists(filePath)) {
+        paths.emplace_back(filePath);
+        LOG(LogInfo) << "Found custom import rules configuration file";
+    }
+
+#if defined(__ANDROID__)
+    filePath = ResourceManager::getInstance().getResourcePath(
+        ":/systems/android/es_import_rules.xml", false);
+#elif defined(__linux__)
+    filePath = ResourceManager::getInstance().getResourcePath(":/systems/linux/es_import_rules.xml",
+                                                              false);
+#elif defined(_WIN64)
+    filePath = ResourceManager::getInstance().getResourcePath(
+        ":/systems/windows/es_import_rules.xml", false);
+#elif defined(__APPLE__)
+    filePath = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_import_rules.xml",
+                                                              false);
+#elif defined(__HAIKU__)
+    filePath = ResourceManager::getInstance().getResourcePath(":/systems/haiku/es_import_rules.xml",
+                                                              false);
+#else
+    filePath =
+        ResourceManager::getInstance().getResourcePath(":/systems/unix/es_import_rules.xml", false);
+#endif
+
+    if (filePath.empty() && paths.empty()) {
+        LOG(LogInfo) << "No import rules configuration file found";
+        return;
+    }
+
+    if (!filePath.empty())
+        paths.emplace_back(filePath);
+
+    for (auto& path : paths) {
+#if defined(_WIN64)
+        LOG(LogInfo) << "Parsing import rules configuration file \""
+                     << Utils::String::replace(path, "/", "\\") << "\"...";
+#else
+        LOG(LogInfo) << "Parsing import rules configuration file \"" << path << "\"...";
+#endif
+
+        pugi::xml_document doc;
+#if defined(_WIN64)
+        const pugi::xml_parse_result& res {
+            doc.load_file(Utils::String::stringToWideString(path).c_str())};
+#else
+        const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
+#endif
+        if (!res) {
+            LOG(LogError) << "Couldn't parse es_import_rules.xml: " << res.description();
+            continue;
+        }
+
+        // Actually read the file.
+        const pugi::xml_node& ruleList {doc.child("ruleList")};
+
+        if (!ruleList) {
+            LOG(LogError) << "es_import_rules.xml is missing the <ruleList> tag";
+            continue;
+        }
+
+        for (pugi::xml_node system {ruleList.child("system")}; system;
+             system = system.next_sibling("system")) {
+            const std::string& systemName {system.attribute("name").as_string()};
+            if (systemName.empty()) {
+                LOG(LogWarning) << "Found system tag without name attribute, skipping entry";
+                continue;
+            }
+            if (mSystems.find(systemName) != mSystems.end()) {
+                if (paths.size() == 1) {
+                    LOG(LogWarning)
+                        << "Found repeating system tag \"" << systemName << "\", skipping entry";
+                }
+                continue;
+            }
+            for (pugi::xml_node rule {system.child("rule")}; rule;
+                 rule = rule.next_sibling("rule")) {
+                const std::string& ruleName {rule.attribute("name").as_string()};
+                if (ruleName.empty()) {
+                    LOG(LogWarning) << "Found rule tag without name attribute, skipping entry";
+                    continue;
+                }
+                const std::string& ruleType {rule.attribute("type").as_string()};
+                if (ruleType.empty()) {
+                    LOG(LogWarning) << "Found rule tag without type attribute for system \""
+                                    << systemName << "\", skipping entry";
+                    continue;
+                }
+#if defined(__ANDROID__)
+                if (ruleType != "androidpackage") {
+#elif defined(__APPLE__)
+                if (ruleType != "macosbundle") {
+#elif defined(__linux__) || defined(__FreeBSD__)
+                if (ruleType != "file" && ruleType != "desktopshortcut") {
+#else
+                if (ruleType != "file") {
+#endif
+                    LOG(LogWarning) << "Found invalid rule type \"" << ruleType
+                                    << "\" for system \"" << systemName << "\", skipping entry";
+                    continue;
+                }
+                if (ruleType == "androidpackage") {
+                    ImportRule importRule;
+                    importRule.ruleName = ruleName;
+                    importRule.ruleType = "androidpackage";
+
+                    bool hasExtension {false};
+
+                    const pugi::xml_node& extension {rule.child("extension")};
+                    if (extension) {
+                        const std::string extensionValue {extension.text().get()};
+                        if (extensionValue.size() > 0) {
+                            hasExtension = true;
+                            importRule.extension = extensionValue;
+                        }
+                        else {
+                            LOG(LogWarning) << "Property \"extension\" for system \"" << systemName
+                                            << "\" has no value defined";
+                        }
+                    }
+
+                    if (hasExtension) {
+                        mSystems[systemName] = importRule;
+                    }
+                    else {
+                        LOG(LogWarning) << "Missing mandatory property \"extension\" for system \""
+                                        << systemName << "\"";
+                    }
+                }
+#if defined(__APPLE__)
+                else if (ruleType == "macosbundle") {
+                    ImportRule importRule;
+                    importRule.ruleName = ruleName;
+                    importRule.ruleType = "macosbundle";
+                    importRule.extension = ".app";
+#else
+                else if (ruleType == "file") {
+                    ImportRule importRule;
+                    importRule.ruleName = ruleName;
+                    importRule.ruleType = "file";
+
+                    bool hasExtension {false};
+#endif
+                    bool hasDirectory {false};
+
+#if !defined(__APPLE__)
+                    const pugi::xml_node& extension {rule.child("extension")};
+                    if (extension) {
+                        const std::string extensionValue {extension.text().get()};
+                        if (extensionValue.size() > 0) {
+                            hasExtension = true;
+                            importRule.extension = extensionValue;
+                        }
+                        else {
+                            LOG(LogWarning) << "Property \"extension\" for system \"" << systemName
+                                            << "\" has no value defined";
+                        }
+                    }
+#endif
+                    for (pugi::xml_node directory {rule.child("directory")}; directory;
+                         directory = directory.next_sibling("directory")) {
+
+                        bool recursive {false};
+
+                        if (directory) {
+                            const std::string directoryValue {directory.text().get()};
+                            const std::string& directoryRecursive {
+                                directory.attribute("recursive").as_string()};
+                            if (directoryRecursive.empty()) {
+                                LOG(LogWarning)
+                                    << "Missing or blank mandatory recursive attribute for "
+                                       "directory tag for system \""
+                                    << systemName << "\", skipping entry ";
+                                continue;
+                            }
+                            else {
+                                if (directoryRecursive.size() > 0) {
+                                    if (directoryRecursive.front() == '1' ||
+                                        directoryRecursive.front() == 't' ||
+                                        directoryRecursive.front() == 'T' ||
+                                        directoryRecursive.front() == 'y' ||
+                                        directoryRecursive.front() == 'Y')
+                                        recursive = true;
+                                }
+                            }
+
+                            if (directoryValue.size() > 0) {
+                                bool duplicateEntry {false};
+                                for (auto& directoryEntry : importRule.directories) {
+                                    if (directoryEntry.path == directoryValue)
+                                        duplicateEntry = true;
+                                }
+                                if (duplicateEntry) {
+                                    LOG(LogWarning)
+                                        << "Property \"directory\" for system \"" << systemName
+                                        << "\" has duplicate path defined, skipping entry";
+                                    continue;
+                                }
+                                else {
+                                    hasDirectory = true;
+                                    ImportRuleDirectory directoryEntry;
+                                    directoryEntry.path = directoryValue;
+                                    directoryEntry.recursive = recursive;
+                                    importRule.directories.emplace_back(directoryEntry);
+                                }
+                            }
+                            else {
+                                LOG(LogWarning) << "Property \"directory\" for system \""
+                                                << systemName << "\" has no value defined";
+                            }
+                        }
+                    }
+
+                    bool addRule {true};
+#if !defined(__APPLE__)
+                    if (!hasExtension) {
+                        addRule = false;
+                        LOG(LogWarning) << "Missing mandatory property \"extension\" for system \""
+                                        << systemName << "\"";
+                    }
+#endif
+                    if (!hasDirectory) {
+                        addRule = false;
+                        LOG(LogWarning) << "Missing mandatory property \"directory\" for system \""
+                                        << systemName << "\"";
+                    }
+
+                    if (addRule)
+                        mSystems[systemName] = importRule;
+                }
+                else if (ruleType == "desktopshortcut") {
+                    ImportRule importRule;
+                    importRule.ruleName = ruleName;
+                    importRule.ruleType = "desktopshortcut";
+                    importRule.extension = ".desktop";
+
+                    bool hasDirectory {false};
+
+                    for (pugi::xml_node directory {rule.child("directory")}; directory;
+                         directory = directory.next_sibling("directory")) {
+
+                        bool isGamesOnly {false};
+                        std::string execFilter {directory.attribute("execFilter").as_string()};
+
+                        if (directory) {
+                            const std::string directoryValue {directory.text().get()};
+                            const std::string& gamesOnly {
+                                directory.attribute("gamesOnly").as_string()};
+
+                            if (!gamesOnly.empty()) {
+                                if (gamesOnly.front() == '1' || gamesOnly.front() == 't' ||
+                                    gamesOnly.front() == 'T' || gamesOnly.front() == 'y' ||
+                                    gamesOnly.front() == 'Y')
+                                    isGamesOnly = true;
+                            }
+
+                            if (directoryValue.size() > 0) {
+                                bool duplicateEntry {false};
+                                for (auto& directoryEntry : importRule.directories) {
+                                    if (directoryEntry.path == directoryValue)
+                                        duplicateEntry = true;
+                                }
+                                if (duplicateEntry) {
+                                    LOG(LogWarning)
+                                        << "Property \"directory\" for system \"" << systemName
+                                        << "\" has duplicate path defined, skipping entry";
+                                    continue;
+                                }
+                                else {
+                                    hasDirectory = true;
+                                    ImportRuleDirectory directoryEntry;
+                                    directoryEntry.path = directoryValue;
+                                    directoryEntry.filter = execFilter;
+                                    directoryEntry.gamesOnly = isGamesOnly;
+                                    importRule.directories.emplace_back(directoryEntry);
+                                }
+                            }
+                            else {
+                                LOG(LogWarning) << "Property \"directory\" for system \""
+                                                << systemName << "\" has no value defined";
+                            }
+                        }
+                    }
+
+                    bool addRule {true};
+
+                    if (!hasDirectory) {
+                        addRule = false;
+                        LOG(LogWarning) << "Missing mandatory property \"directory\" for system \""
+                                        << systemName << "\"";
+                    }
+
+                    if (addRule)
+                        mSystems[systemName] = importRule;
+                }
+            }
         }
     }
 }
@@ -498,6 +809,9 @@ bool SystemData::loadConfig()
     if (sFindRules.get() == nullptr)
         sFindRules = std::make_unique<FindRules>();
 
+    if (sImportRules.get() == nullptr)
+        sImportRules = std::make_unique<ImportRules>();
+
     LOG(LogInfo) << "Populating game systems...";
 
     if (Settings::getInstance()->getBool("ParseGamelistOnly")) {
@@ -615,6 +929,13 @@ bool SystemData::loadConfig()
             fullname = Utils::String::replace(system.child("fullname").text().get(), "\n", "");
             sortName = system.child("systemsortname").text().get();
             path = system.child("path").text().get();
+
+            for (auto& importRule : sImportRules->mSystems) {
+                if (importRule.first == name) {
+                    importRule.second.validSystem = true;
+                    importRule.second.fullName = fullname;
+                }
+            }
 
             if (splashScreen) {
                 const unsigned int curTime {SDL_GetTicks()};
@@ -856,6 +1177,13 @@ bool SystemData::loadConfig()
                  << " system" << (sSystemVector.size() == 1 ? "" : "s")
                  << " (collections not included)";
     LOG(LogInfo) << "Total game count: " << gameCount;
+
+    for (auto& importRule : sImportRules->mSystems) {
+        if (!importRule.second.validSystem) {
+            LOG(LogWarning) << "Import rule configuration contains invalid system \""
+                            << importRule.first << "\"";
+        }
+    }
 
     // Sort systems by sortName, and always perform secondary sorting by the full name.
     std::sort(std::begin(sSystemVector), std::end(sSystemVector), [](SystemData* a, SystemData* b) {

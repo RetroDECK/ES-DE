@@ -1,12 +1,215 @@
 # ES-DE Frontend - Changelog
 
+## Version 3.4.0 / 3.4.0-xx (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+* Added support for play time tracking
+* Added support for sorting the gamelist by play time
+* Changed the "last played" metadata value to always reset when returning from a game rather than when launching a game
+* Removed the "EmulationStation Desktop Edition" subtitle from the splash screen
+* Removed the logic to check for and handle the legacy application data directory ~/.emulationstation
+* Added Asia, Australia, Brazil, Canada, China, Germany, France, Italy and Korea as additional ScreenScraper regions
+* Added Netherlands, Russia, Sweden, Spain, Taiwan and United Kingdom as additional ScreenScraper regions
+* Changed the media and release date fallback order for the scraper to place Europe prior to Japan, so it matches the game name fallback order
+* (Android) Added an %EXTRAINTEGER_% launch command variable
+* (Android) Added two new %INTERNALDATA% and %EXTERNALDATA% variables to support launching RetroArch in multi-user setups
+* (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the Opera core for the 3do system and the PUAE 2021 core for the amiga system
+* (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the MAME 2003-Plus core for the arcade system and the Stella 2023 core for the atari2600 system
+* (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the DOSBox-Core core for the dos system and the Genesis Plus GX Wide core for the gamegear system
+* (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the SameBoy core for the gbc system and the blueMSX core for the msx2 system
+* (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the QuickNES core for the nes system and the Beetle PCE FAST core for the pcengine system
+* (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the bsnes core for the snes and snesna systems and the Vircon32 core for the vircon32 system
+* Added a "Suspend system" entry to the quit menu on Linux, FreeBSD and Windows (thanks Emma for the patch)
+* Added a suspend custom event
+* Added translations for Arabic (ar_SA)
+* Added .webp as a supported image file extension for scraped media
+* Added .webp as a supported file extension for the gameOverridePath property for the image element
+* Added a menu option for generating miximages in the PNG or WebP file format
+* Added support for the AV1 video codec on Android and macOS
+* (Android) Added miximages as a media target type for the game importer
+* (Linux) Added a "Strip special characters" setting to the game importer to enable imports to FAT-based filesystems
+* (Linux) Added desktopshortcut import rules for the ps3 system
+* (Linux) Added a ~/Desktop import rule entry for the desktop system
+* (macOS) Added a ~/Applications import rule entry for the steam system
+* (Windows) Added ~\Desktop import rule entries for the desktop, emulators and windows systems
+* (Android) Added support for the Valve Steam (steam) game system (using the GameNative client)
+* (Android) Added support for the Epic Games Store (epic) game system
+* (Android) Added Winlator Cmod standalone as the default emulator for the pcarcade, type-x and windows systems
+* (Android) Added Kenji-NX standalone as the default emulator for the switch system
+* (Android) Added Pizza Boy SC standalone as an alternative emulator for the megacd, megacdjp and segacd systems
+* (Android) Added Linkboy standalone as an alternative emulator for the gb, gba and gbc systems
+* (Android) Changed Pizza Boy GBA/A to use %ROMSAF% instead of %ROM% as the developer has changed the way games are launched from frontends
+* (Android) Changed Pizza Boy SC to use %ROMSAF% instead of %ROM% as the developer has changed the way games are launched from frontends
+* Added Parallel Launcher standalone as an alternative emulator for the n64 system on Linux, macOS and Windows
+* Added Gopher64 standalone as an alternative emulator for the n64 system on Linux and Windows
+* Added "Native port" as an alternative emulator for the n64 system (for running N64 recompilations)
+* Added "Shortcut or script" as an alternative emulator for the n64 system on Linux, macOS and Windows
+* Added import rules for the epic system
+* (Linux) Added find rule entries for the Ryubing Flatpak
+* (Android) Added an import rule for the n64 system
+* (Android) Added the .app file extension to the n64 system
+* (Linux) Added the .AppImage, .desktop and .sh file extensions to the n64 system
+* (macOS) Added the .app file extension to the n64 system
+* (Windows) Added the .exe and .LNK file extensions to the n64 system
+* Added ares [Mega LD] standalone (Pioneer LaserActive) as an alternative emulator for the daphne and laserdisc systems on Linux, macOS and Windows
+* Added the .mmi file extension to the daphne and laserdisc systems on Linux, macOS and Windows
+* Added the .png file extension to the tic80 system on Linux, macOS and Windows
+* Changed to Azahar standalone as the default emulator for the n3ds system
+* Added Azahar Shortcut standalone as an alternative emulator for the n3ds system on Linux and Windows
+* Added the .z3dsx, .zcci and .zcxi file extensions to the n3ds system
+* (Windows) Changed to the MAME - Current RetroArch core as the default emulator for the model2 system
+* (Windows) Added %STARTDIR%=%EMUDIR% for the shadPS4 Game Serial and shadPS4 eboot.bin emulator entries
+* Removed the .7z and .zip file extensions from the atarijaguarcd system on Linux and Windows
+* Added the .com file extension to the atari5200, atari800 and atarixe systems
+* Added the .lyx file extension to the atarilynx system
+* Added the .rom file extension to the atarixe system
+* Added the --fullscreen flag for Play! standalone on Linux, macOS and Windows
+* Added better support for handling invalid media files when scraping using ScreenScraper
+* Added better support for handling missing media files when scraping (HTTP 404 errors)
+* Added the User-Agent string when making scraper HTTP requests
+* (Android) Changed the target SDK version to 36 (Android 16)
+* (macOS) Made it possible to build using Xcode 26 / clang 17
+* (macOS) Added dav1d as a dependency
+* (macOS) Removed unnecessary dependencies on the Vorbis and Opus encoders
+* Updated SDL to 2.32.10 on Android, Windows, macOS and the Linux AppImage builds
+* Updated libgit2 to 1.9.1 on Android, macOS and Windows
+* Updated CImg to 3.6.1
+* Updated the MAME index files to include ROMs up to MAME version 0.281
+* Bundled the September 2025 release of the Mozilla TLS/SSL certificates
+* Translation updates for all languages
+
+### Bug fixes
+
+* (Android) Fixed a crash when scraping if the downloaded_media directory had been set to an invalid path
+* (macOS) On macOS 26 Tahoe the ES-DE application window was sometimes not focused on startup and the menu bar was sometimes visible
+* (macOS) The application updater for the x86 release downloaded the ARM package instead of the x86 package
+* Helpsystem icons could sometimes disappear temporarily after closing the media viewer
+* (Haiku) The reboot and power off entries in the quit menu didn't work as intended
+
+## Version 3.3.0-50 (Android intermediate)
+
+**Release date:** 2025-07-18
+
+### Release overview
+
+Android-specific hotfix release that fixes two issues with the game importer.
+
+### Bug fixes
+
+* (Android) Apps with invalid banner or logo images crashed the game importer if the "Import banners or logos if available" setting was enabled
+* (Android) Apps with any of the special characters :|"/\\?*<> in their names could not be imported by the game importer
+
+## Version 3.3.0 / 3.3.0-48
+
+**Release date:** 2025-07-15
+
+### Release overview
+
+This release introduces a cross-platform game importer tool that makes it possible to import games and apps into ES-DE. This is especially useful on Android where native apps and games can now be loaded into the androidapps, androidgames and emulators systems and launched from inside ES-DE. But the game importer is also available on Linux, macOS and Windows where it can import things like desktop applications, emulators and Steam games.
+
+Support for a number of new emulators has been added across all operating systems, and on Android the Sega Model 3 (model3) system has been enabled. Also on Android the MAME4droid 2024 emulator entries have been removed since the emulator has been renamed to MAME4droid Current by its developer. Replacement entries with the new name were added already in ES-DE 3.2.0-45.
+
+Translations to four new languages are also included, these being Bosnian, Croatian, Serbian and Portugues (Portugal).
+
+A change in behavior in this release is that the "Gamelist on startup" setting has been removed and replaced with the two new options "System on startup" and "Startup view". To retain the old functionality of going directly into the gamelist view, the "Startup view" setting has to be set to "Gamelist".
+
+Two minor additions is that API statistics is now displayed in the multi-scraper GUI and that device notifications can be disabled for plugging in and removing controllers.
+
+Apart from the above this release includes a large amount of internal changes as most dependencies (libraries) have been upgraded to newer versions. For Android there is also initial support for 16 KB page sizes which is a future requirement from Google.
+
+### Detailed list of changes
+
+* Added a fully configurable cross-platform game importer tool
+* Renamed the "Gamelist on startup" setting to "System on startup" and added a new "Startup view" option to control where to go on application startup
+* The scraper API call statistics is now shown in the interface when running the multi-scraper in automatic mode
+* Added a setting for whether to display notification popups when plugging in and removing input devices (like controllers and keyboards)
+* Added translations for Bosnian (bs_BA)
+* Added translations for Croatian (hr_HR)
+* Added translations for Serbian (sr_RS)
+* Added translations for Portuguese (Portugal) (pt_PT)
+* Added support for the Sega Model 3 (model3) game system on Android and macOS
+* Added the MAME - Current RetroArch core and MAME standalone as alternative emulators for the model3 system on Linux and Windows
+* Added the Geargrafx RetroArch core as an alternative emulator for the pcengine, supergrafx and tg16 systems
+* Added the .rom file extension to the pcengine, supergrafx and tg16 systems
+* Added the DICE RetroArch core as an alternative emulator for the arcade and mame systems
+* Added the drs (Cave Story) RetroArch core as an alternative emulator for the ports system
+* Added Ymir standalone as an alternative emulator for the saturn and saturnjp systems on Linux and Windows
+* Added Play! Arcade (Standalone) as an alternative emulator for the consolearcade system on Linux, macOS and Windows
+* Changed Play! (Standalone) to Play! Disc (Standalone) for the consolearcade system on Linux, macOS and Windows
+* Removed the .arcadedef file extension from the ps2 system on Linux, macOS and Windows
+* Changed the MAME "speech" parameter to "speechadapter" for the ti99 system due to changes introduced in MAME 0.276
+* Added MAME Legacy (Standalone) as an alternative emulator for the ti99 system on Linux, macOS and Windows
+* Added find rule entries for the bgfx release of Visual Pinball
+* (Android) Removed all MAME4droid 2024 emulator entries (replacement MAME4droid Current entries were added in ES-DE 3.2.0-45)
+* (Linux) Added the native xenia release as the default emulator for the xbox360 system
+* (Linux) Added Lindbergh Loader standalone as an alternative emulator for the arcade, mame and pcarcade systems
+* (Linux) Added a RetroArch core find rule entry for ~/.config/retroarch/libretro
+* (Linux) Added a RetroArch core find rule entry for ~/snap/retroarch/common/.config/retroarch/cores
+* (Linux) Added support for the Flatpak release of Azahar
+* (Linux) Added support for the AppImage release of PPSSPP
+* (Linux) Added support for the manually downloaded release of BlastEm
+* (Windows) Added BlastEm standalone as an alternative emulator for the genesis, megadrive and megadrivejp systems
+* (Windows) Added Supermodel Dojo standalone as an alternative emulator for the arcade, mame and model3 systems
+* (Windows) Added Future Pinball FPLoader standalone as an alternative emulator for the fpinball system
+* Added MAME - Current [Software list] and MAME [Software list] (Standalone) as alternative emulators for the apple2gs system on Linux, macOS and Windows
+* Added an %INJECT% variable for A7800 standalone for the atari7800 system on Linux and Windows
+* Added an %INJECT% variable for xenia standalone for the xbox360 system on Linux and Windows
+* Updated the logo and carousel icons for the Sega Mark III (mark3) system
+* Added support to the theme downloader for detecting and handling diverged repositories
+* Added a "mipmap" property to the image element to allow for higher quality texture scale-down
+* Changed the max value for the backgroundHorizontalPadding and backgroundVerticalPadding properties to 1 for the helpsystem, systemstatus and clock elements
+* Added support for scraping the Sega Pico (segapico) platform (not added as a new system so it will require custom system configuration to use)
+* Added support for the 5:3 display aspect ratio
+* Added .webm as a supported video file extension
+* Added support for a fourth button to GuiMsgBox
+* Removed the obsolete InputManager::doOnFinish() and InputManager::getTemporaryConfigPath() functions
+* (Android) Updated the build environment to the latest stable versions
+* (Android) Updated a number of Java and Kotlin dependencies to the latest stable versions
+* (Android) Prepared the application for 16 KB page sizes
+* (Windows) Worked around an OS glitch by changing PlatformUtil::runSystemCommand() to use CreateProcessW() instead of _wsystem()
+* (Windows) Converted to backslashes instead of forward slashes as directory separators for the screensaver-game-select, game-select and system-select events
+* (Android) Updated libiconv to 1.18, gettext/libintl to 0.24, ICU to 77.1, libpng to 1.6.47, LibTIFF to 4.7.0 and HarfBuzz to 11.0.1
+* (Android) Updated FreeType to 2.13.3, Poppler to 24.08.0, OpenSSL to 3.4.1, libgit2 to 1.9.0 and pugixml to 1.15
+* (macOS) Updated libiconv to 1.18, gettext/libintl to 0.24, ICU to 77.1, libpng to 1.6.47, HarfBuzz to 11.0.1 and FreeType to 2.13.3
+* (macOS) Updated fontconfig to 2.16.1, libjpeg-turbo to 3.1.0, LibTIFF to 4.7.0, OpenJPEG to 2.5.3 and Poppler to 25.04.0
+* (macOS) Updated libgit2 to 1.9.0, pugixml to 1.15, Opus to 1.5.2 and FFmpeg to 7.1
+* (macOS) Removed an unnecessary dependency on libvpx
+* (Windows) Updated gettext/linbintl to 0.23.1, ICU to 77.1, curl to 8.13.0, GLEW to 2.2.0, HarfBuzz to 11.0.1 and FreeType to 2.13.3
+* (Windows) Updated libgit2 to 1.9.0, Poppler to 24.08.0, pugixml to 1.15 and FFmpeg to 7.1
+* Updated SDL to 2.32.8 on Android, Windows, macOS and the Linux AppImage builds
+* Updated LunaSVG to 3.3.0
+* Updated CImg to 3.5.3
+* Updated GLM to 1.0.0
+* Updated UTF8-CPP to 4.0.6
+* Updated RapidJSON to commit 24b5e7a8b27f42fa16b96fc70aade9106cf7102f
+* Updated rlottie to commit e3026b1e1a516fff3c22d2b1b9f26ec864f89a82
+* Manually updated the rlottie CMake configuration to be able to build with CMake 4.0
+* Updated the MAME index files to include ROMs up to MAME version 0.277
+* Bundled the May 2025 release of the Mozilla TLS/SSL certificates
+* Translation updates for all languages
+
+### Bug fixes
+
+* (macOS) The application crashed when disconnecting a Bluetooth controller
+* (macOS) The PDF viewer created unnecessary Fontconfig cache files under some circumstances
+* Symlinks to directories could not be deleted from the metadata editor
+* Under some circumstances duplicate system-select events could be generated
+* Some orphaned data cleanup utility fields were not displayed correctly at some aspect ratios like 8:7
+* Sorting configuration was missing for the mark3 and vircon32 systems
+* (Windows) Custom event scripts would not work if the path to the ES-DE directory contained spaces
+
 ## Version 3.2.0 / 3.2.0-45
 
 **Release date:** 2025-04-04
 
 ### Release overview
 
-This release brings support for themeable system status indicators showing the Bluetooth, Wi-Fi, cellular and battery status for devices where such hardware is available. There is also a themeable clock added which can be enabled from the UI settings menu. For all platforms the game systems  Vircon32 Virtual Console (vircon32) and Sega Mark III (mark3) have been added, and for Linux, macOS and Windows support has also been added for the Sony PlayStation 4 (ps4) system using the shadPS4 emulator.
+This release brings support for themeable system status indicators showing the Bluetooth, Wi-Fi, cellular and battery status for devices where such hardware is available. There is also a themeable clock added which can be enabled from the UI settings menu. For all platforms the game systems Vircon32 Virtual Console (vircon32) and Sega Mark III (mark3) have been added, and for Linux, macOS and Windows, support has also been added for the Sony PlayStation 4 (ps4) system using the shadPS4 emulator.
 
 There is also support for a lot of new emulators, both standalone and RetroArch cores, and some find rules have been added or updated to enable additional package formats and binary names for some previously supported emulators.
 

@@ -261,6 +261,10 @@ System icon set by Zoidburg:
 
 https://github.com/Zoidburg13/ES-DE-System-Icon-Set
 
+Pixel system icon set by Rob Zombie:
+
+https://github.com/RobZombie9043/pixel-es-de/tree/main/_inc/systems/consoles
+
 Console/system logos by Dan Patrick (GitHub mirror, not officially maintained by Patrick):
 
 https://github.com/PRO100BYTE/console-logos
@@ -777,16 +781,20 @@ The following languages are supported:
 | :------------ | :----------------------- | :----------------------- |
 | en_US         | English (United States)  | English (United States)  |
 | en_GB         | English (United Kingdom) | English (United Kingdom) |
+| bs_BA         | Bosnian                  | Bosanski                 |
 | ca_ES         | Catalan                  | Català                   |
 | de_DE         | German                   | Deutsch                  |
 | es_ES         | Spanish (Spain)          | Español (España)         |
 | fr_FR         | French                   | Français                 |
+| hr_HR         | Croatian                 | Hrvatski                 |
 | it_IT         | Italian                  | Italiano                 |
 | nl_NL         | Dutch                    | Nederlands               |
 | pl_PL         | Polish                   | Polski                   |
 | pt_BR         | Portuguese (Brazil)      | Português (Brasil)       |
+| pt_PT         | Portuguese (Portugal)    | Português (Portugal)     |
 | ro_RO         | Romanian                 | Română                   |
 | ru_RU         | Russian                  | Русский                  |
+| sr_RS         | Serbian                  | Srpski                   |
 | sv_SE         | Swedish                  | Svenska                  |
 | ja_JP         | Japanese                 | 日本語                   |
 | ko_KR         | Korean                   | 한국어                   |
@@ -1208,6 +1216,7 @@ Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary
 | 16:10            | 16:10_vertical  | 1280x800, 1440x900, 1920x1200                  |
 | 3:2              | 3:2_vertical    | 2160x1440                                      |
 | 4:3              | 4:3_vertical    | 320x240, 640x480, 800x600, 1024x768, 1600x1200 |
+| 5:3              | 5:3_vertical    | 800x480, 1920x1152                             |
 | 5:4              | 5:4_vertical    | 1280x1024                                      |
 | 8:7              | 8:7_vertical    | 1240x1080                                      |
 | 19.5:9           | 19.5:9_vertical | 2340x1080, 2532x1170                           |
@@ -2462,9 +2471,9 @@ Properties:
     - Flips the image texture vertically.
     - Default is `false`
 * `path` - type: PATH
-    - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
+    - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, .webp and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
 * `gameOverridePath` - type: PATH
-    - Defines a directory where per-game overrides for the static image defined by the `path` property are kept. Supported file extensions are .jpg, .png, .gif (unanimated) and .svg and they are searched for in this precise order. How this works is that the basename of the game file will be used to check for an image file in the defined path in a very similar fashion as to how downloaded media is searched. For example if `gameOverridePath` has been set to `./imageOverrides` a match for the game file `~/ROMs/arcade/aburner.zip` would be `./imageOverrides/arcade/aburner.png` (or any of the other supported file extensions). In this case the image defined by the `path` property will be replaced for this specific game. Note that only static images can be overridden, not scraped media.
+    - Defines a directory where per-game overrides for the static image defined by the `path` property are kept. Supported file extensions are .jpg, .png, .webp, .gif (unanimated) and .svg and they are searched for in this precise order. How this works is that the basename of the game file will be used to check for an image file in the defined path in a very similar fashion as to how downloaded media is searched. For example if `gameOverridePath` has been set to `./imageOverrides` a match for the game file `~/ROMs/arcade/aburner.zip` would be `./imageOverrides/arcade/aburner.png` (or any of the other supported file extensions). In this case the image defined by the `path` property will be replaced for this specific game. Note that only static images can be overridden, not scraped media.
     - This property can only be used in the `gamelist` view and only if `imageType` is undefined.
 * `default` - type: PATH
     - Path to a default image file. This image will be displayed when the selected game does not have an image of the type(s) defined by `imageType` or if the static image defined by `path` is not found. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
@@ -2509,6 +2518,9 @@ Properties:
     - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
+* `mipmap` - type: BOOLEAN
+    - Normally the GPU will simply take any texture defined for the image element and scale it on the fly for each rendered frame. And it may optionally apply linear interpolation if that has been defined using the `interpolation` property. But this type of scaling offers limited quality under some circumstances like when massively scaling down some images. The `mipmap` property makes it possible to generate a mipmap of the image which means multiple pre-scaled versions will be available to the GPU which allows for much higher quality when scaling down images. Note that this comes with a substantial performance overhead and it will use a lot more VRAM as well. It also only has an effect when scaling down a texture and will be a complete waste for anything that is scaled up or displayed at its native resolution. Be very careful with using this property, as applying it to scraped media for instance will potentially cause a massive performance impact for the application and use a lot more VRAM. This property is also useless for scalable vector graphics (SVG) images.
+    - Default is `false`
 * `cornerRadius` - type: FLOAT
     - Setting this property higher than zero applies rounded corners to the image. The radius is a percentage of the screen width and not directly related to the image size. This makes it possible to apply identically sized corners regardless of image dimensions. Note that the maximum allowed value is quite arbitrary as the renderer will in practice limit the maximum roundness so it can never go beyond half the width or height. It means that setting this property sufficiently high will turn a perfectly square image into a perfectly round one.
     - Minimum value is `0` and maximum value is `0.5`
@@ -3044,6 +3056,7 @@ Properties:
     - `broken` - Whether the game is broken/not working. Will be printed as either `yes` or `no`
     - `manual` - Whether a PDF manual has been downloaded for the game. Will be printed as either `yes` or `no`
     - `playcount` - How many times the game has been played.
+    - `playtime` - How long the game has been played (tracked in seconds but presented in minutes or hours using the same logic as in Steam).
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
     - `emulator` - The emulator used to launch the game, could as such be a per-game alternative emulator entry, a system wide alternative emulator entry or the system's default emulator. This requires that the command tag in es_systems.xml has a label defined, otherwise this value will be blank. Folders will always have blank values as these can't be launched directly.
@@ -3542,12 +3555,12 @@ Properties:
     - Default is `horizontal`
 * `backgroundHorizontalPadding` - type: NORMALIZED_PAIR
     - This property makes it possible to apply a horizontal padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundHorizontalPadding` property value will not change the position of the overall element. The first value of the pair is the padding to the left of the element and the second value of the pair is the padding to the right of the element.
-    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used if `backgroundColor` has a value defined.
 * `backgroundVerticalPadding` - type: NORMALIZED_PAIR
     - This property makes it possible to apply a vertical padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundVerticalPadding` property value will not change the position of the overall element. The first value of the pair is the padding at the top of the element and the second value of the pair is the padding at the bottom of the element.
-    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used if `backgroundColor` has a value defined.
 * `backgroundCornerRadius` - type: FLOAT
@@ -3667,12 +3680,12 @@ Properties:
     - Default is `horizontal`
 * `backgroundHorizontalPadding` - type: NORMALIZED_PAIR
     - This property makes it possible to apply a horizontal padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundHorizontalPadding` property value will not change the position of the overall element. The first value of the pair is the padding to the left of the element and the second value of the pair is the padding to the right of the element.
-    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used if `backgroundColor` has a value defined.
 * `backgroundVerticalPadding` - type: NORMALIZED_PAIR
     - This property makes it possible to apply a vertical padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundVerticalPadding` property value will not change the position of the overall element. The first value of the pair is the padding at the top of the element and the second value of the pair is the padding at the bottom of the element.
-    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used if `backgroundColor` has a value defined.
 * `backgroundCornerRadius` - type: FLOAT
@@ -3773,12 +3786,12 @@ Properties:
     - Default is `horizontal`
 * `backgroundHorizontalPadding` - type: NORMALIZED_PAIR
     - This property makes it possible to apply a horizontal padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundHorizontalPadding` property value will not change the position of the overall element. The first value of the pair is the padding to the left of the element and the second value of the pair is the padding to the right of the element.
-    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used if `backgroundColor` has a value defined.
 * `backgroundVerticalPadding` - type: NORMALIZED_PAIR
     - This property makes it possible to apply a vertical padding around the element if `backgroundColor` has been defined. Note that this additional sizing will not have any effect on the `pos` and `origin` properties, these will remain constant. Or in other words, changing the `backgroundVerticalPadding` property value will not change the position of the overall element. The first value of the pair is the padding at the top of the element and the second value of the pair is the padding at the bottom of the element.
-    - Minimum value per axis is `0` and maximum value per axis is `0.2`
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
     - This property can only be used if `backgroundColor` has a value defined.
 * `backgroundCornerRadius` - type: FLOAT

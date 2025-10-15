@@ -77,6 +77,12 @@ public:
         mGrid.setCursorTo(mButtonGrid);
     }
 
+    void setButtonOpacity(unsigned int index, float opacity)
+    {
+        assert(index <= mButtonGrid->getChildCount() - 1);
+        mButtonGrid->getChild(index)->setOpacity(opacity);
+    }
+
     std::vector<HelpPrompt> getHelpPrompts() override { return mGrid.getHelpPrompts(); }
 
 private:

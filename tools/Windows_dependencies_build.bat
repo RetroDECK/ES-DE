@@ -45,9 +45,9 @@ if not exist %ICU_DATA_FILTER_FILE% (
 
 msbuild source\allinone\allinone.sln /p:Configuration=Release /p:Platform=x64 /p:SkipUWP=true
 
-copy /Y bin64\icudt75.dll ..\..\..\
-copy /Y bin64\icuin75.dll ..\..\..\
-copy /Y bin64\icuuc75.dll ..\..\..\
+copy /Y bin64\icudt77.dll ..\..\..\
+copy /Y bin64\icuin77.dll ..\..\..\
+copy /Y bin64\icuuc77.dll ..\..\..\
 copy /Y lib64\icudt.lib ..\..\..\
 copy /Y lib64\icuin.lib ..\..\..\
 copy /Y lib64\icuuc.lib ..\..\..\

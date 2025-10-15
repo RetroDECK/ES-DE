@@ -276,9 +276,6 @@ namespace Utils
 #endif
                     FileSystemVariables::sAppDataDirectory = getHomePath() + "/ES-DE";
                 }
-                else if (Utils::FileSystem::exists(getHomePath() + "/.emulationstation")) {
-                    FileSystemVariables::sAppDataDirectory = getHomePath() + "/.emulationstation";
-                }
                 else {
                     FileSystemVariables::sAppDataDirectory = getHomePath() + "/ES-DE";
                 }
@@ -349,7 +346,7 @@ namespace Utils
                 }
             }
 
-            if (exists(tempFile))
+            if (Utils::FileSystem::exists(tempFile))
                 removeFile(tempFile);
 
             return emulatorPath;
@@ -517,7 +514,8 @@ namespace Utils
             if ((path[0] == ':') && (path[1] == '/'))
                 return path;
 
-            std::string canonicalPath {exists(path) ? getAbsolutePath(path) : getGenericPath(path)};
+            std::string canonicalPath {Utils::FileSystem::exists(path) ? getAbsolutePath(path) :
+                                                                         getGenericPath(path)};
 
             // Cleanup path.
             bool scan {true};
@@ -662,10 +660,18 @@ namespace Utils
             }
         }
 
-        std::string expandHomePath(const std::string& path)
+        std::string expandHomePath(const std::string& path, const bool systemHome)
         {
             // Expand home path if ~ is used.
+#if defined(__ANDROID__)
             return Utils::String::replace(path, "~", Utils::FileSystem::getHomePath());
+#else
+            if (systemHome)
+                return Utils::String::replace(path, "~",
+                                              Utils::FileSystem::getSystemHomeDirectory());
+            else
+                return Utils::String::replace(path, "~", Utils::FileSystem::getHomePath());
+#endif
         }
 
         std::string resolveRelativePath(const std::string& path,
@@ -767,7 +773,7 @@ namespace Utils
                       const std::string& destinationPath,
                       bool overwrite)
         {
-            if (!exists(sourcePath)) {
+            if (!Utils::FileSystem::exists(sourcePath)) {
                 LOG(LogError) << "Can't copy file, source file does not exist:";
                 LOG(LogError) << sourcePath;
                 return true;
@@ -779,7 +785,7 @@ namespace Utils
                 return true;
             }
 
-            if (!overwrite && exists(destinationPath)) {
+            if (!overwrite && Utils::FileSystem::exists(destinationPath)) {
                 LOG(LogError) << "Destination file exists and the overwrite flag "
                                  "has not been set";
                 return true;
@@ -828,7 +834,7 @@ namespace Utils
             // Don't print any error message for a missing source file as Log will use this
             // function when initializing the logging. It would always generate an error in
             // case it's the first application start (as an old log file would then not exist).
-            if (!exists(sourcePath)) {
+            if (!Utils::FileSystem::exists(sourcePath)) {
                 return true;
             }
 
@@ -838,7 +844,7 @@ namespace Utils
                 return true;
             }
 
-            if (!overwrite && exists(destinationPath)) {
+            if (!overwrite && Utils::FileSystem::exists(destinationPath)) {
                 LOG(LogError) << "Destination file exists and the overwrite flag has not been set";
                 return true;
             }
@@ -854,7 +860,7 @@ namespace Utils
         bool createEmptyFile(const std::filesystem::path& path)
         {
             const std::filesystem::path cleanPath {path.lexically_normal().make_preferred()};
-            if (exists(path)) {
+            if (Utils::FileSystem::exists(path.string())) {
                 LOG(LogError) << "Couldn't create target file \"" << cleanPath.string()
                               << "\" as it already exists";
                 return false;
@@ -873,6 +879,21 @@ namespace Utils
             }
 
             targetFile.close();
+            return true;
+        }
+
+        bool createSymlink(const std::filesystem::path& source, const std::filesystem::path& target)
+        {
+            try {
+                if (std::filesystem::is_directory(source))
+                    std::filesystem::create_directory_symlink(source, target);
+                else
+                    std::filesystem::create_symlink(source, target);
+            }
+            catch (std::filesystem::filesystem_error& error) {
+                LOG(LogError) << "FileSystemUtil::createSymlink(): " << error.what();
+                return false;
+            }
             return true;
         }
 
@@ -919,7 +940,7 @@ namespace Utils
         {
             const std::string& genericPath {getGenericPath(path)};
 
-            if (exists(genericPath))
+            if (Utils::FileSystem::exists(genericPath))
                 return true;
 
 #if defined(_WIN64)
@@ -973,7 +994,7 @@ namespace Utils
             else if (genericPath.length() == 3 && genericPath.at(1) == ':')
                 genericPath += ".";
 
-            return exists(genericPath);
+            return Utils::FileSystem::exists(genericPath);
 #else
             return false;
 #endif

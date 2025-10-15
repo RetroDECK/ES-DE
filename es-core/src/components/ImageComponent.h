@@ -105,6 +105,9 @@ public:
     void setLinearInterpolation(bool state) { mLinearInterpolation = state; }
     // Whether to use mipmapping and trilinear filtering.
     void setMipmapping(bool state) { mMipmapping = state; }
+    // Whether to invert this image in menus when the row is selected (light color scheme only).
+    void setInvertInMenus(bool state) override { mInvertInMenus = state; }
+    const bool getInvertInMenus() const override { return mInvertInMenus; }
 
     // Returns the size of the current texture, or (0, 0) if none is loaded.
     // This may be different than the rendered size so use getSize() for that.
@@ -158,8 +161,8 @@ private:
     std::string mGameOverridePath;
     std::string mGameOverrideOriginalPath;
 
-    static inline std::vector<std::string> sSupportedOverrideExtensions {".jpg", ".png", ".gif",
-                                                                         ".svg"};
+    static inline std::vector<std::string> sSupportedOverrideExtensions {".jpg", ".png", ".webp",
+                                                                         ".gif", ".svg"};
     static inline std::vector<std::string> sSupportedImageTypes {
         "image", "miximage",  "marquee", "screenshot",    "titlescreen",
         "cover", "backcover", "3dbox",   "physicalmedia", "fanart"};
@@ -175,6 +178,7 @@ private:
     bool mRotateByTargetSize;
     bool mLinearInterpolation;
     bool mMipmapping;
+    bool mInvertInMenus;
 
     Alignment mTileHorizontalAlignment;
     Alignment mTileVerticalAlignment;

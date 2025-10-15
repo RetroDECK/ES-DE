@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-03-18 18:28+0100\n"
-"PO-Revision-Date: 2025-03-03 21:39+0100\n"
+"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"PO-Revision-Date: 2025-10-13 16:42+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Français <info@es-de.org>\n"
 "Language: fr_FR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid "Network error (status:"
 msgstr "Erreur réseau (état :"
@@ -129,6 +129,24 @@ msgstr "'%s' est filtré ainsi il peut y avoir plus de jeux dispo"
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "EFFACER COLLECTION '%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "inconnu"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i minute"
+msgstr[1] "%i minutes"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i heure"
+msgstr[1] "%i heures"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -308,6 +326,12 @@ msgstr "parties jouées, croissant"
 
 msgid "times played, descending"
 msgstr "parties jouées, décroissant"
+
+msgid "play time, ascending"
+msgstr "temps joué, croissant"
+
+msgid "play time, descending"
+msgstr "temps joué, décroissant"
 
 msgid "system, ascending"
 msgstr "système, croissant"
@@ -532,6 +556,115 @@ msgstr "AFFICHER LES FAVORIS EN PREMIER POUR LES COLLECTIONS PERSO"
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
 msgstr "AFFICHER UNE ÉTOILE POUR LES COLLECTIONS PERSO"
 
+msgid "IMPORT TO SYSTEM"
+msgstr "IMPORTATION DANS LE SYSTÈME"
+
+msgid "NO CONFIGURATION"
+msgstr "PAS DE CONFIGURATION"
+
+msgid "REMOVE ENTRIES"
+msgstr "ENLEVER LES ENTRÉES"
+
+msgid "ALL UNSELECTED"
+msgstr "TOUT DÉSÉLECTIONNER"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr "SUPPRIMER LES CARACTÈRES SPÉCIAUX"
+
+msgid "MEDIA TARGET TYPE"
+msgstr "TYPE DE MÉDIA CIBLE"
+
+msgid "SCREENSHOTS"
+msgstr "CAPTURES D'ÉCRANS"
+
+msgid "TITLE SCREENS"
+msgstr "ECRAN DE TITRE"
+
+msgid "COVERS"
+msgstr "AFFICHES"
+
+msgid "BACK COVERS"
+msgstr "AFFICHES ARRIÈRE"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "MARQUEES (WHEELS)"
+
+msgid "3D BOXES"
+msgstr "BOÎTES 3D"
+
+msgid "PHYSICAL MEDIA"
+msgstr "MÉDIA PHYSIQUE"
+
+msgid "FAN ART"
+msgstr "FANART"
+
+msgid "MIXIMAGES"
+msgstr "MIXIMAGES"
+
+msgid "IMPORT MEDIA"
+msgstr "IMPORTE MÉDIA"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "IMPORTE BANNIÈRES OU LOGO SI DISPO"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "ECRASER LES FICHIERS MÉDIA"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "INCLURE UNIQUEMENT LES APPS CLASSÉES COMME JEUX"
+
+msgid "START"
+msgstr "DÉMARRER"
+
+msgid "start importer"
+msgstr "demarrage de l'importation"
+
+msgid "WORKING..."
+msgstr "EN COURS..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "JE N'AI RIEN TROUVÉ À IMPORTER"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"VOUS AVEZ CHOISI DE SUPPRIMER TOUTES LES ENTRÉES NON SÉLECTIONNÉES. CELA "
+"SUPPRIMERA TOUS LES FICHIERS DE JEU AVEC L'EXTENSION « %s » DU RÉPERTOIRE "
+"SYSTÈME « %s ». LES ENTRÉES SÉLECTIONNÉES SERONT IMPORTÉES SUR L'ÉCRAN "
+"SUIVANT\n"
+"ÊTES-VOUS SÛR ?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "FAITES VOTRE SÉLECTION"
+
+msgid "IMPORT"
+msgstr "IMPORTER"
+
+msgid "import"
+msgstr "importer"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "ENTRÉE %i IMPORTÉ"
+msgstr[1] "ENTRÉES %i IMPORTÉS"
+
+msgid "SELECT ALL"
+msgstr "TOUT SÉLECTIONNER"
+
+msgid "select all"
+msgstr "tout sélectionné"
+
+msgid "SELECT NONE"
+msgstr "AUCUN"
+
+msgid "select none"
+msgstr "aucun"
+
 msgid "FILTER GAMELIST"
 msgstr "FILTRER LA LISTE DE JEUX"
 
@@ -712,11 +845,17 @@ msgstr "GÂCHETTES"
 msgid "LEFT/RIGHT"
 msgstr "GAUCHE/DROITE"
 
-msgid "GAMELIST ON STARTUP"
-msgstr "LISTE DE JEUX AU DÉMARRAGE"
+msgid "SYSTEM ON STARTUP"
+msgstr "SYSTÈME AU DÉMARRAGE"
 
-msgid "NONE"
-msgstr "AUCUN"
+msgid "STARTUP VIEW"
+msgstr "VUE AU DÉMARRAGE"
+
+msgid "SYSTEM"
+msgstr "SYSTÈME"
+
+msgid "GAMELIST"
+msgstr "LISTE DES JEUX"
 
 msgid "SYSTEMS SORTING"
 msgstr "TRI DES SYSTÈMES"
@@ -760,6 +899,9 @@ msgstr "ANIMATION DU MENU D'OUVERTURE"
 
 msgid "SCALE-UP"
 msgstr "METTRE À L'ÉCHELLE"
+
+msgid "NONE"
+msgstr "AUCUN"
 
 msgid "LAUNCH SCREEN DURATION"
 msgstr "DURÉE DE L'ÉCRAN DE LANCEMENT"
@@ -960,6 +1102,9 @@ msgstr "INTERVERTIR LES BOUTONS A/B ET X/Y"
 msgid "IGNORE KEYBOARD INPUT"
 msgstr "IGNORER LES ENTRÉES CLAVIER"
 
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "NOTIFICATIONS DU PÉRIPHÉRIQUE D'ENTRÉE"
+
 msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
 msgstr "CONFIGURER CLAVIER ET MANETTES"
 
@@ -992,6 +1137,9 @@ msgstr "SAUVEGARDER LES MODIFICATIONS?"
 
 msgid "load default directory"
 msgstr "charger le dossier par defaut"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr "DURÉE MAXI DU SUIVI DU TEMPS DE JEU"
 
 msgid "VRAM LIMIT"
 msgstr "LIMITE MÉMOIRE VIDÉO"
@@ -1113,6 +1261,9 @@ msgstr "ACTIVER LE MENU EN MODE ENFANT"
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "AFFICHER LE MENU QUITTER (AVEC LES OPTIONS REDÉMARRER ET ÉTEINDRE)"
 
+msgid "GAME IMPORTER"
+msgstr "IMPORTEUR DE JEUX"
+
 msgid "ORPHANED DATA CLEANUP"
 msgstr "NETTOYAGE DES DONNÉES ORPHELINES"
 
@@ -1167,6 +1318,16 @@ msgstr "VOULEZ-VOUS VRAIMENT ÉTEINDRE?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "ARRÊT DU SYSTÈME"
+
+msgid "REALLY SUSPEND?"
+msgstr "VOULEZ-VOUS VRAIMENT METTRE EN VEILLE PROLONGÉE LE SYSTÈME ?"
+
+msgid "SUSPEND SYSTEM"
+msgstr "MISE EN VEILLE PROLONGÉE DU SYSTÈME"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "CONFIGURATION BARRE D'ÉTAT"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1287,9 +1448,6 @@ msgstr "Traitement:"
 
 msgid "Last error message:"
 msgstr "Dernier message d'erreur:"
-
-msgid "START"
-msgstr "DÉMARRER"
 
 msgid "start processing"
 msgstr "début du traitement"
@@ -1585,6 +1743,9 @@ msgstr "MANUELS DU JEU"
 msgid "MIXIMAGE RESOLUTION"
 msgstr "RÉSOLUTION DU MIXIMAGE"
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr "FORMAT DE FICHIER"
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr "AJUSTEMENT DE CAPTURE D'ÉCRAN HORIZONTALE"
@@ -1699,6 +1860,51 @@ msgstr "USA"
 msgid "WORLD"
 msgstr "MONDE"
 
+msgid "ASIA"
+msgstr "ASIE"
+
+msgid "AUSTRALIA"
+msgstr "AUSTRALIE"
+
+msgid "BRAZIL"
+msgstr "BRÉSIL"
+
+msgid "CANADA"
+msgstr "CANADA"
+
+msgid "CHINA"
+msgstr "CHINE"
+
+msgid "GERMANY"
+msgstr "ALLEMAGNE"
+
+msgid "FRANCE"
+msgstr "FRANCE"
+
+msgid "ITALY"
+msgstr "ITALIE"
+
+msgid "KOREA"
+msgstr "CORÉE"
+
+msgid "NETHERLANDS"
+msgstr "PAYS-BAS"
+
+msgid "RUSSIA"
+msgstr "RUSSIE"
+
+msgid "SWEDEN"
+msgstr "SUÈDE"
+
+msgid "SPAIN"
+msgstr "ESPAGNE"
+
+msgid "TAIWAN"
+msgstr "TAIWAN"
+
+msgid "UNITED KINGDOM"
+msgstr "ROYAUME-UNI"
+
 msgid "PREFERRED LANGUAGE"
 msgstr "LANGUE PRÉFÉRÉE"
 
@@ -1769,9 +1975,6 @@ msgstr "TOUS LES JEUX ONT ÉTÉ FILTRÉS, RIEN A SCRAPER"
 msgid "SCRAPING IN PROGRESS"
 msgstr "SCRAPING EN COURS"
 
-msgid "SYSTEM"
-msgstr "SYSTÈME"
-
 msgid "REFINE SEARCH"
 msgstr "AFFINER LA RECHERCHE"
 
@@ -1831,6 +2034,15 @@ msgstr "JOUEURS:"
 
 msgid "NO GAMES FOUND"
 msgstr "AUCUN JEUX TROUVÉ"
+
+msgid "API CALLS:"
+msgstr "APPELS API:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "%i RESTANT"
+msgstr[1] "%i RESTANTS"
 
 msgid "RETRY"
 msgstr "RECOMMENCER"
@@ -1931,6 +2143,9 @@ msgstr "AFFICHER LE POURCENTAGE DE CHARGE DE LA BATTERIE"
 msgid "DOWNLOADING THEMES LIST 100%"
 msgstr "TÉLÉCHARGEMENT LISTE DES THÈMES 100%"
 
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "LE DÉPOT A DEVIÉ DE L'ORIGINAL"
+
 msgid "THEME ALREADY UP TO DATE"
 msgstr "THÈME DÉJÀ MIS À JOUR"
 
@@ -2007,6 +2222,19 @@ msgstr ""
 
 #, c-format
 msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"IL SEMBLE QU'IL S'AGIT D'UN RÉFÉRENTIEL DÉVERGENT, CE QUI SIGNIFIE "
+"GÉNÉRALEMENT QU'IL EXISTE UN CONFLIT DE FUSION EN AMONT QUI DOIT ÊTRE RÉSOLU "
+"PAR LE DÉVELOPPEUR DU THÈME . UN NOUVEAU TÉLÉCHARGEMENT EST REQUIS ET "
+"L'ANCIEN RÉPERTOIRE DE THÈMES \"%s\" SERA RENOMMÉ EN \"%s_ "
+"DIVERGED_DISABLED\""
+
+#, c-format
+msgid ""
 "THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
 "THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
 "THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
@@ -2047,6 +2275,9 @@ msgstr "TÉLÉCHARGEMENT MANUEL"
 
 msgid "CORRUPT"
 msgstr "CORROMPU"
+
+msgid "DIVERGED"
+msgstr "DÉVIÉ"
 
 msgid "SHALLOW"
 msgstr "SUPERFICIEL"
@@ -2152,16 +2383,13 @@ msgid "SCREENSHOT"
 msgstr "CAPTURE D'ÉCRAN"
 
 msgid "BOX COVER"
-msgstr "BOÎTE"
+msgstr "IMAGES DE LA BOITE (AVANT)"
 
 msgid "BOX BACK COVER"
-msgstr "DOS DE LA BOITE"
+msgstr "IMAGES DE LA BOITE (DOS)"
 
 msgid "TITLE SCREEN"
 msgstr "ÉCRAN TITRE"
-
-msgid "FAN ART"
-msgstr "FANART"
 
 msgid "MIXIMAGE"
 msgstr "MIXIMAGE"
@@ -2286,6 +2514,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr "ENTRER LE NOMBRE PARTIES JOUÉES"
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr "TEMPS JOUÉ"
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr "ENTREZ LE TEMPS JOUÉ"
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "MANETTE"
 
@@ -2361,6 +2597,9 @@ msgstr "médias du jeu"
 
 msgid "zoom"
 msgstr "zoom"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Vous avez dépassé votre quota de scrap quotidien"
 
 msgid "Network error:"
 msgstr "Erreur réseau:"
@@ -2455,10 +2694,6 @@ msgid "jump to game"
 msgstr "aller au jeu"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "inconnu"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "oui"
 
@@ -2516,34 +2751,34 @@ msgstr ""
 "D'APPLICATION es_log.txt POUR PLUS D'INFORMATIONS"
 
 msgid ""
-"NO GAME FILES WERE FOUND, PLEASE PLACE YOUR GAMES IN THE CONFIGURED ROM "
-"DIRECTORY. OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH "
-"WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS "
-"THE SUPPORTED FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
 msgstr ""
-"AUCUN FICHIER DE JEU N'A ÉTÉ TROUVÉ, VEUILLEZ PLACER VOS JEUX DANS LE "
-"DOSSIER ROM CONFIGURÉ. EN OPTION, LA STRUCTURE DU DOSSIER ROM PEUT ÊTRE "
-"GÉNÉRÉE, CE QUI CRÉERA UN FICHIER TEXTE POUR CHAQUE SYSTÈME FOURNISSANT "
-"CERTAINES INFORMATIONS TELLES QUE LES EXTENSIONS DE FICHIER PRISES EN "
-"CHARGE:\n"
+"AUCUN FICHIER DE JEU N'A ÉTÉ TROUVÉ. IMPORTEZ DES JEUX OU PLACEZ-LES "
+"MANUELLEMENT DANS LE RÉPERTOIRE ROM CONFIGURÉ. EN OPTION, VOUS POUVEZ "
+"GÉNÉRER LA STRUCTURE DU RÉPERTOIRE ROM, CE QUI CRÉERA UN FICHIER TEXTE POUR "
+"CHAQUE SYSTÈME FOURNISSANT DES INFORMATIONS TELLES QUE LES EXTENSIONS DE "
+"FICHIERS PRISES EN CHARGE. VOICI LE RÉPERTOIRE ROM CONFIGURÉ :\n"
 
 msgid ""
-"NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN THE CURRENTLY "
-"CONFIGURED ROM DIRECTORY OR CHANGE ITS PATH USING THE BUTTON BELOW. "
-"OPTIONALLY THE ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL CREATE A "
-"TEXT FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED "
-"FILE EXTENSIONS.\n"
-"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n"
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"AUCUN FICHIER DE JEU N'A ÉTÉ TROUVÉ. SOIT PLACER VOS JEUX DANS LE DOSSIER "
-"ROM ACTUELLEMENT CONFIGURÉ OU CHANGER SON CHEMIN À L'AIDE DU BOUTON CI-"
-"DESSOUS. EN OPTION, LA STRUCTURE DU DOSSIER ROM PEUT ÊTRE GÉNÉRÉE, CE QUI "
-"CRÉERA UN FICHIER TEXTE POUR CHAQUE SYSTÈME FOURNISSANT CERTAINES "
-"INFORMATIONS TELLES QUE LES EXTENSIONS DE FICHIER PRIS EN CHARGE.\n"
+"AUCUN FICHIER DE JEU N'A ÉTÉ TROUVÉ. IMPORTEZ DES JEUX OU PLACEZ-LES "
+"MANUELLEMENT DANS LE RÉPERTOIRE ROM ACTUELLEMENT CONFIGURÉ. VOUS POUVEZ "
+"ÉGALEMENT MODIFIER LE CHEMIN ROM ET ÉVENTUELLEMENT GÉNÉRER LA STRUCTURE DU "
+"RÉPERTOIRE ROM, CE QUI CRÉERA UN FICHIER TEXTE POUR CHAQUE SYSTÈME "
+"FOURNISSANT DES INFORMATIONS TELLES QUE LES EXTENSIONS DE FICHIERS PRISES EN "
+"CHARGE. IL S'AGIT DU RÉPERTOIRE ROM CONFIGURÉ :\n"
 
-msgid "CHANGE ROM DIRECTORY"
-msgstr "CHANGER LE DOSSIER ROM"
+msgid "CHANGE"
+msgstr "CHANGER"
 
 msgid "ENTER ROM DIRECTORY PATH"
 msgstr "ENTRER LE CHEMIN DU DOSSIER ROM"
@@ -2562,9 +2797,6 @@ msgstr "CHARGER LE CHEMIN ACTUELLEMENT CONFIGURÉ"
 
 msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "EFFACER (LAISSER VIDE POUR RÉINITIALISER LE CHEMIN PAR DÉFAUT)"
-
-msgid "CREATE DIRECTORIES"
-msgstr "CRÉER DOSSIERS"
 
 msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
@@ -2651,9 +2883,6 @@ msgstr "LANCEMENT DU JEU '%s'"
 msgid "menu"
 msgstr "menu"
 
-msgid "WORKING..."
-msgstr "EN COURS..."
-
 msgctxt "theme"
 msgid "never"
 msgstr "jamais"
@@ -2713,18 +2942,6 @@ msgstr[1] "%i SÉLECTIONNÉS"
 
 msgid "change value"
 msgstr "changer la valeur"
-
-msgid "SELECT ALL"
-msgstr "TOUT SÉLECTIONNER"
-
-msgid "select all"
-msgstr "tout sélectionné"
-
-msgid "SELECT NONE"
-msgstr "AUCUN"
-
-msgid "select none"
-msgstr "aucun"
 
 msgid "add half star"
 msgstr "ajouter une demi étoile"
@@ -2903,9 +3120,6 @@ msgstr "ANNULER LES MODIFICATIONS"
 msgid "discard changes"
 msgstr "annuler les modifications"
 
-msgid "You have exceeded your daily scrape quota"
-msgstr "Vous avez dépassé votre quota de scrap quotidien"
-
 #, c-format
 msgid "Server returned HTTP error code %s"
 msgstr "Le serveur a renvoyé le code d'erreur HTTP %s"
@@ -2947,6 +3161,9 @@ msgstr "3:2 vertical"
 
 msgid "4:3 vertical"
 msgstr "4:3 vertical"
+
+msgid "5:3 vertical"
+msgstr "5:3 vertical"
 
 msgid "5:4 vertical"
 msgstr "5:4 vertical"

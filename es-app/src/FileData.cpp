@@ -136,6 +136,118 @@ const bool FileData::getExcludeFromScraper()
         return false;
 }
 
+void FileData::setPlayMetadata(const bool writeMetadata)
+{
+    FileData* gameToUpdate {getSourceFileData()};
+    gameToUpdate->metadata.set("lastplayed", Utils::Time::DateTime(Utils::Time::now()));
+
+    // If the cursor is on a folder then a folder link must have been configured, so set the
+    // lastplayed timestamp for this folder to the same as the launched game.
+    FileData* cursor {
+        ViewController::getInstance()->getGamelistView(gameToUpdate->getSystem())->getCursor()};
+    if (cursor->getType() == FOLDER)
+        cursor->metadata.set("lastplayed", gameToUpdate->metadata.get("lastplayed"));
+
+    // If the parent is a folder and it's not the root of the system, then update its lastplayed
+    // timestamp to the same time as the game that was just launched.
+    if (gameToUpdate->getParent()->getType() == FOLDER &&
+        gameToUpdate->getParent()->getName() != gameToUpdate->getSystem()->getFullName()) {
+        gameToUpdate->getParent()->metadata.set("lastplayed",
+                                                gameToUpdate->metadata.get("lastplayed"));
+    }
+
+    const int startTime {Settings::getInstance()->getInt("GameLaunchTime")};
+
+    if (startTime != 0) {
+        Settings::getInstance()->setInt("GameLaunchTime", 0);
+        int prevPlayTime {gameToUpdate->metadata.getInt("playtime")};
+
+        if (prevPlayTime < 0)
+            prevPlayTime = 0;
+
+        const int endTime {static_cast<int>(Utils::Time::DateTime(Utils::Time::now()).getTime())};
+        int playTime {endTime - startTime};
+
+        if (playTime < 0)
+            playTime = 0;
+
+        const int maxPlayTimeTracking {
+            glm::clamp(Settings::getInstance()->getInt("MaxPlayTimeTracking"), 0, 24) * 3600};
+
+        if (maxPlayTimeTracking != 0 && playTime > maxPlayTimeTracking) {
+            LOG(LogDebug) << "FileData::setPlayMetadata(): Play time was " << playTime
+                          << " seconds which exceeds the MaxPlayTimeTracking value of "
+                          << maxPlayTimeTracking << ", not updating game metadata";
+        }
+        else {
+
+            LOG(LogDebug) << "FileData::setPlayMetadata(): Play time was " << playTime
+                          << " seconds";
+
+            gameToUpdate->metadata.set(
+                "playtime", std::to_string(static_cast<long long>(prevPlayTime + playTime)));
+        }
+    }
+
+    if (writeMetadata) {
+        CollectionSystemsManager::getInstance()->refreshCollectionSystems(gameToUpdate);
+        gameToUpdate->mSystem->onMetaDataSavePoint();
+    }
+}
+
+const std::string FileData::getPlayTimeString(const std::string& playTimeSeconds)
+{
+    int playTimeValue {0};
+
+    try {
+        playTimeValue = std::stoi(playTimeSeconds);
+
+        if (playTimeValue < 0)
+            playTimeValue = 0;
+    }
+    catch (...) {
+        playTimeValue = 0;
+    }
+
+    std::string timeString;
+    std::tm time {};
+
+    time.tm_hour = playTimeValue / 3600;
+    time.tm_min = (playTimeValue % 3600) / 60;
+    time.tm_sec = playTimeValue % 60;
+
+    // The logic is that anything from 1 to 119 seconds will be displayed as "1 minute" and
+    // everything from 2 to 119 minutes will be displayed as the number of minutes, such as
+    // "94 minutes". Everything from 120 minutes and upwards will be displayed as hours, with
+    // fractional values if applicable, such as "12.7 hours". The first six minutes of each
+    // hour will lead to the decimal being omitted, such as "79 hours". This way of presenting
+    // the play time is mimicking exactly how Steam does it.
+
+    if (time.tm_hour == 0 && time.tm_min == 0 && time.tm_sec == 0) {
+        timeString = _p("theme", "unknown");
+    }
+    else if (time.tm_hour == 0 && time.tm_min == 0 && time.tm_sec > 0) {
+        timeString = Utils::String::format(_np("theme", "%i minute", "%i minutes", 1), 1);
+    }
+    else if (time.tm_hour < 2) {
+        int minutes {(time.tm_hour * 60) + time.tm_min};
+        timeString =
+            Utils::String::format(_np("theme", "%i minute", "%i minutes", minutes), minutes);
+    }
+    else {
+        const std::string hours {std::to_string(time.tm_hour)};
+        timeString =
+            Utils::String::format(_np("theme", "%i hour", "%i hours", time.tm_hour), time.tm_hour);
+        if (time.tm_min >= 6) {
+            int fractional {time.tm_min / 6};
+            timeString =
+                Utils::String::replace(timeString, hours, hours + "." + std::to_string(fractional));
+        }
+    }
+
+    return timeString;
+}
+
 const std::vector<FileData*> FileData::getChildrenRecursive() const
 {
     std::vector<FileData*> childrenRecursive;
@@ -993,6 +1105,7 @@ void FileData::launchGame()
     std::string androidData;
     std::map<std::string, std::string> androidExtrasString;
     std::map<std::string, std::string> androidExtrasStringArray;
+    std::map<std::string, std::string> androidExtrasInteger;
     std::map<std::string, std::string> androidExtrasBool;
     std::vector<std::string> androidActivityFlags;
 #endif
@@ -1796,6 +1909,12 @@ void FileData::launchGame()
     // marks when parsing the Extras.
     command = Utils::String::replace(command, "\\\"", "%QUOTATION%");
 
+    // This is expanded to /data/user/<userid> and /storage/emulated/<userid> respectively.
+    command = Utils::String::replace(command, "%INTERNALDATA%",
+                                     Utils::Platform::Android::getInternalDirectory());
+    command = Utils::String::replace(command, "%EXTERNALDATA%",
+                                     Utils::Platform::Android::getExternalDirectory());
+
     const std::vector<std::string> androidVariabels {
         "%ACTION%=", "%CATEGORY%=", "%MIMETYPE%=", "%DATA%="};
 
@@ -1848,7 +1967,8 @@ void FileData::launchGame()
         }
     }
 
-    std::vector<std::string> extraVariabels {"%EXTRA_", "%EXTRAARRAY_", "%EXTRABOOL_"};
+    std::vector<std::string> extraVariabels {"%EXTRA_", "%EXTRAARRAY_", "%EXTRAINTEGER_",
+                                             "%EXTRABOOL_"};
 
     for (std::string variable : extraVariabels) {
         size_t extraPos {command.find(variable)};
@@ -1925,6 +2045,8 @@ void FileData::launchGame()
                             androidExtrasString[extraName] = extraValue;
                         else if (variable == "%EXTRAARRAY_")
                             androidExtrasStringArray[extraName] = extraValue;
+                        else if (variable == "%EXTRAINTEGER_")
+                            androidExtrasInteger[extraName] = extraValue;
                         else if (variable == "%EXTRABOOL_")
                             androidExtrasBool[extraName] = extraValue;
                     }
@@ -2020,6 +2142,10 @@ void FileData::launchGame()
         LOG(LogInfo) << "Extra array name: " << extra.first;
         LOG(LogInfo) << "Extra array value: " << extra.second;
     }
+    for (auto& extra : androidExtrasInteger) {
+        LOG(LogInfo) << "Extra integer name: " << extra.first;
+        LOG(LogInfo) << "Extra integer value: " << extra.second;
+    }
     for (auto& extra : androidExtrasBool) {
         LOG(LogInfo) << "Extra bool name: " << extra.first;
         LOG(LogInfo) << "Extra bool value: " << extra.second;
@@ -2042,6 +2168,9 @@ void FileData::launchGame()
 
     // Possibly keep ES-DE running in the background while the game is launched.
 
+    Settings::getInstance()->setInt(
+        "GameLaunchTime", static_cast<int>(Utils::Time::DateTime(Utils::Time::now()).getTime()));
+
 #if defined(_WIN64)
     returnValue = Utils::Platform::launchGameWindows(
         Utils::String::stringToWideString(command),
@@ -2050,7 +2179,7 @@ void FileData::launchGame()
     returnValue = Utils::Platform::Android::launchGame(
         androidPackage, androidActivity, androidAction, androidCategory, androidMimeType,
         androidData, mEnvData->mStartPath, romRaw, androidExtrasString, androidExtrasStringArray,
-        androidExtrasBool, androidActivityFlags);
+        androidExtrasInteger, androidExtrasBool, androidActivityFlags);
 #else
 
 #if defined(DEINIT_ON_LAUNCH)
@@ -2130,26 +2259,12 @@ returnValue = Utils::Platform::launchGameUnix(command, startDirectory, runInBack
     // Update number of times the game has been launched.
     FileData* gameToUpdate {getSourceFileData()};
 
-    int timesPlayed {gameToUpdate->metadata.getInt("playcount") + 1};
+    const int timesPlayed {gameToUpdate->metadata.getInt("playcount") + 1};
     gameToUpdate->metadata.set("playcount", std::to_string(static_cast<long long>(timesPlayed)));
 
-    // Update last played time.
-    gameToUpdate->metadata.set("lastplayed", Utils::Time::DateTime(Utils::Time::now()));
-
-    // If the cursor is on a folder then a folder link must have been configured, so set the
-    // lastplayed timestamp for this folder to the same as the launched game.
-    FileData* cursor {
-        ViewController::getInstance()->getGamelistView(gameToUpdate->getSystem())->getCursor()};
-    if (cursor->getType() == FOLDER)
-        cursor->metadata.set("lastplayed", gameToUpdate->metadata.get("lastplayed"));
-
-    // If the parent is a folder and it's not the root of the system, then update its lastplayed
-    // timestamp to the same time as the game that was just launched.
-    if (gameToUpdate->getParent()->getType() == FOLDER &&
-        gameToUpdate->getParent()->getName() != gameToUpdate->getSystem()->getFullName()) {
-        gameToUpdate->getParent()->metadata.set("lastplayed",
-                                                gameToUpdate->metadata.get("lastplayed"));
-    }
+    // This sets the lastplayed and playtime metadata values.
+    if (!runInBackground)
+        setPlayMetadata(false);
 
     // We make an explicit call to close the launch screen instead of waiting for
     // AnimationController to do it as that would be done too late. This is so because on

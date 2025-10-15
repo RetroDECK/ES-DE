@@ -24,6 +24,8 @@
 class FileData;
 class FileFilterIndex;
 class ThemeData;
+class GuiGameImporter;
+class SystemData;
 
 struct SystemEnvironmentData {
     std::string mStartPath;
@@ -59,6 +61,47 @@ private:
     std::map<std::string, struct CoreRules> mCores;
 
     friend FileData;
+};
+
+class ImportRules
+{
+public:
+    ImportRules();
+
+    void loadImportRules();
+
+private:
+    struct ImportRuleDirectory {
+        std::string path;
+        std::string filter;
+        bool recursive;
+        bool gamesOnly;
+
+        ImportRuleDirectory()
+            : recursive {false}
+            , gamesOnly {false}
+        {
+        }
+    };
+
+    struct ImportRule {
+        std::string ruleName;
+        std::string ruleType;
+        std::string fullName;
+        std::string extension;
+        std::vector<ImportRuleDirectory> directories;
+        bool validSystem;
+
+        ImportRule()
+            : validSystem {false}
+        {
+        }
+    };
+
+    std::map<std::string, struct ImportRule> mSystems;
+
+    friend GuiGameImporter;
+    friend SystemData;
 };
 
 class SystemData
@@ -120,6 +163,7 @@ public:
 
     static inline std::vector<SystemData*> sSystemVector;
     static inline std::unique_ptr<FindRules> sFindRules;
+    static inline std::unique_ptr<ImportRules> sImportRules;
     static inline bool sStartupExitSignal {false};
 
     const bool isCollection() const { return mIsCollectionSystem; }
