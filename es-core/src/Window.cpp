@@ -179,7 +179,11 @@ bool Window::init(bool resized)
     progressBarRect.barHeight -= borderThickness * 2.0f;
     progressBarRect.barPosX += borderThickness;
     progressBarRect.barPosY += borderThickness;
-    progressBarRect.color = 0x79010FFF;
+    #if defined(RETRODECK)
+        progressBarRect.color = 0xC858E6FF;
+    #else
+        progressBarRect.color = 0x79010FFF;
+    #endif
     mProgressBarRectangles.emplace_back(progressBarRect);
 
     mBackgroundOverlay->setResize(mRenderer->getScreenWidth(), mRenderer->getScreenHeight());
