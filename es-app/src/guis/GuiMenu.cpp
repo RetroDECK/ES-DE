@@ -63,6 +63,15 @@ GuiMenu::GuiMenu()
     if (isFullUI)
         addEntry(_("SCRAPER"), mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
+#if defined(RETRODECK)
+
+    if (isFullUI)
+        addEntry(_("RETRODECK CONFIGURATOR"), mMenuColorPrimary, false, [this] { openRetroDeckClassicConfigurator(); });
+
+    if (isFullUI)
+        addEntry(_("ES-DE CONFIGURATIONS"), mMenuColorPrimary, true, [this] { openESDEConfiguration(); });
+#else // not RetroDECK
+
     if (isFullUI)
         addEntry(_("UI SETTINGS"), mMenuColorPrimary, true, [this] { openUIOptions(); });
 
@@ -78,6 +87,8 @@ GuiMenu::GuiMenu()
 
     if (isFullUI)
         addEntry(_("OTHER SETTINGS"), mMenuColorPrimary, true, [this] { openOtherOptions(); });
+
+#endif // RetroDECK        
 
     if (isFullUI)
         addEntry(_("UTILITIES"), mMenuColorPrimary, true, [this] { openUtilities(); });
@@ -2484,6 +2495,22 @@ void GuiMenu::addVersionInfo()
 #endif
 #endif
 
+#if defined(RETRODECK)
+    LOG(LogInfo) << "Reading /app/retrodeck/version...";
+    std::ifstream versionFile("/app/retrodeck/version");
+    std::string retroDeckVersion;
+
+    // Attempt to open the version file and read a line into retroDeckVersion;
+    // also check that the line is not empty to ensure valid version information
+    if (versionFile && std::getline(versionFile, retroDeckVersion) && !retroDeckVersion.empty()) {
+        LOG(LogInfo) << "RetroDECK version read OK. Version: " + retroDeckVersion;
+    } else {
+        LOG(LogInfo) << "Error: Cannot read version from file or file is empty!";
+        retroDeckVersion = "UNKNOWN";
+    }
+    mVersion.setText("RetroDECK " + retroDeckVersion + " | ES-DE " + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+#endif
+
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
     addChild(&mVersion);
 }
@@ -2592,3 +2619,33 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
     prompts.push_back(HelpPrompt("start", _("close menu")));
     return prompts;
 }
+
+#if defined(RETRODECK)
+
+void GuiMenu::openRetroDeckClassicConfigurator()
+{
+    // Launch the configurator.sh script
+    std::string command;
+    std::string startDirectory;
+    bool runInBackground;
+    command = "bash /app/tools/configurator.sh";
+    startDirectory = "/app/tools";
+    runInBackground = false;
+    int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
+    // You can add any checks for the script's outcome here.
+}
+
+void GuiMenu::openRetroDeckGodotConfigurator()
+{
+    // Launch the configurator.sh script
+    std::string command;
+    std::string startDirectory;
+    bool runInBackground;
+    command = "bash godot-configurator.sh";
+    startDirectory = "/app";
+    runInBackground = false;
+    int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
+    // You can add any checks for the script's outcome here.
+}
+
+#endif

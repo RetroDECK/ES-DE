@@ -47,6 +47,12 @@ private:
     void openUtilities();
     void openQuitMenu();
 
+    #if defined(RETRODECK)
+        void openRetroDeckClassicConfigurator();
+        void openRetroDeckGodotConfigurator();
+        void openESDEConfiguration();
+    #endif
+
     Renderer* mRenderer;
     MenuComponent mMenu;
     TextComponent mVersion;
