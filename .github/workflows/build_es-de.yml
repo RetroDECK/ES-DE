@@ -45,7 +45,9 @@ jobs:
           fetch-depth: 1
 
       - name: Install dependencies
-        run: curl "https://raw.githubusercontent.com/RetroDECK/components-template/main/automation_tools/install_dependencies.sh" | bash
+        run: |
+          curl "https://raw.githubusercontent.com/RetroDECK/components-template/main/automation_tools/install_dependencies.sh" | bash
+          sudo apt-get install -y cmake libxext-dev
 
       - name: Pre-build automation
         run: "/bin/bash ${GITHUB_WORKSPACE}/automation_tools/pre_build_automation.sh"
