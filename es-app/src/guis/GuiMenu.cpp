@@ -1033,8 +1033,7 @@ void GuiMenu::openUIOptions()
         s->addSaveFunc([menuBlurBackground, s] {
             if (menuBlurBackground->getState() !=
                 Settings::getInstance()->getBool("MenuBlurBackground")) {
-                Settings::getInstance()->setBool("MenuBlurBackground",
-                                                 menuBlurBackground->getState());
+                Settings::getInstance()->setBool("MenuBlurBackground", menuBlurBackground->getState());
                 s->setNeedsSaving();
                 s->setInvalidateCachedBackground();
             }
@@ -2308,8 +2307,9 @@ void GuiMenu::openUtilities()
                             // Write any gamelist.xml changes before proceeding with the rescan.
                             if (Settings::getInstance()->getString("SaveGamelistsMode") ==
                                 "on exit") {
-                                for (auto system : SystemData::sSystemVector)
-                                    system->writeMetaData();
+                                for (auto it = SystemData::sSystemVector.cbegin();
+                                     it != SystemData::sSystemVector.cend(); ++it)
+                                    (*it)->writeMetaData();
                             }
                             ViewController::getInstance()->rescanROMDirectory();
                         },
@@ -2649,3 +2649,23 @@ void GuiMenu::openRetroDeckGodotConfigurator()
 }
 
 #endif
+
+void GuiMenu::openESDEConfiguration()
+{
+    auto s = new GuiSettings(_("ES-DE CONFIGURATIONS"));
+
+    // Logging level setting for RetroDECK
+    auto loggingLevel = std::make_shared<OptionListComponent<std::string>>();
+    loggingLevel->add(_("DEBUG"), "debug", Settings::getInstance()->getString("LoggingLevel") == "debug");
+    loggingLevel->add(_("INFO"), "info", Settings::getInstance()->getString("LoggingLevel") == "info");
+    loggingLevel->add(_("WARNING"), "warning", Settings::getInstance()->getString("LoggingLevel") == "warning");
+    loggingLevel->add(_("ERROR"), "error", Settings::getInstance()->getString("LoggingLevel") == "error");
+    s->addWithLabel(_("LOGGING LEVEL"), loggingLevel);
+    s->addSaveFunc([loggingLevel] {
+        Settings::getInstance()->setString("LoggingLevel", loggingLevel->getSelected());
+        Settings::getInstance()->saveFile();
+        Log::setReportingLevelFromEnv(); // Assuming this function exists to update logging level
+    });
+
+    mWindow->pushGui(s);
+}
