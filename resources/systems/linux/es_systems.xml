@@ -1086,10 +1086,10 @@
         <command label="SMS Plus GX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/smsplus_libretro.so %ROM%</command>
         <command label="Gearsystem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearsystem_libretro.so %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
-        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module sms %ROM%</command>
-        <command label="Mesen (Standalone)">%EMULATOR_MESEN% --fullscreen %ROM%</command>
-        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Master System" %ROM%</command>
-        <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% --file-path %ROM%</command>
+        <!-- <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module sms %ROM%</command> -->
+        <!-- <command label="Mesen (Standalone)">%EMULATOR_MESEN% &ndash;&ndash;fullscreen %ROM%</command> -->
+        <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Master System" %ROM%</command> -->
+        <!-- <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% &ndash;&ndash;file-path %ROM%</command> -->
         <platform>mastersystem</platform>
         <theme>mark3</theme>
     </system>
@@ -1203,19 +1203,17 @@
         <platform>arcade</platform>
         <theme>model2</theme>
     </system>
-<!--
     <system>
         <name>model3</name>
         <fullname>Sega Model 3</fullname>
         <path>%ROMPATH%/model3</path>
         <extension>.7z .7Z .zip .ZIP</extension>
-        <command label="Supermodel (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SUPERMODEL% -log-output=%GAMEDIR%/Config/Supermodel.log %INJECT%=%BASENAME%.commands %ROM%</command>
+        <!-- <command label="Supermodel (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SUPERMODEL% -log-output=%GAMEDIR%/Config/Supermodel.log %INJECT%=%BASENAME%.commands %ROM%</command> -->
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so %ROM%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/model3 %BASENAME%</command>
         <platform>arcade</platform>
         <theme>model3</theme>
     </system>
--->
     <system>
         <name>moto</name>
         <fullname>Thomson MO/TO Series</fullname>
@@ -1391,7 +1389,7 @@
         <extension>.app .APP .bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume_libretro.so %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.so %ROM%</command>
-        <command label="DeSmuME (Standalone)">%EMULATOR_DESMUME% %ROM%</command>
+        <!-- <command label="DeSmuME (Standalone)">%EMULATOR_DESMUME% %ROM%</command> -->
         <command label="NooDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/noods_libretro.so %ROM%</command>
         <!-- <command label="NooDS (Standalone)">%EMULATOR_NOODS% %ROM%</command> -->
         <!-- <command label="SkyEmu (Standalone)">%EMULATOR_SKYEMU% %ROM%</command> -->
@@ -1805,7 +1803,7 @@
         <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .m3u .M3U .mds .MDS .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_saturn_libretro.so %ROM%</command>
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/kronos_libretro.so %ROM%</command>
-        <command label="Kronos (Standalone)">%EMULATOR_KRONOS% %ROM%</command>
+        <!-- <command label="Kronos (Standalone)">%EMULATOR_KRONOS% %ROM%</command> -->
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabasanshiro_libretro.so %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabause_libretro.so %ROM%</command>
         <!-- <command label="Ymir (Standalone)">%STARTDIR%=~/.ymir %EMULATOR_YMIR% %ROM%</command> -->
@@ -1820,7 +1818,7 @@
         <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .m3u .M3U .mds .MDS .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Saturn">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_saturn_libretro.so %ROM%</command>
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/kronos_libretro.so %ROM%</command>
-        <command label="Kronos (Standalone)">%EMULATOR_KRONOS% %ROM%</command>
+        <!-- <command label="Kronos (Standalone)">%EMULATOR_KRONOS% %ROM%</command> -->
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabasanshiro_libretro.so %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabause_libretro.so %ROM%</command>
         <!-- <command label="Ymir (Standalone)">%STARTDIR%=~/.ymir %EMULATOR_YMIR% %ROM%</command> -->
@@ -2416,18 +2414,18 @@
         <theme>xbox</theme>
     </system>
 
-    <system>
+    <!-- <system>
         <name>xbox360</name>
         <fullname>Microsoft Xbox 360</fullname>
         <path>%ROMPATH%/xbox360</path>
         <extension>. .desktop .iso .ISO .sh .xex .XEX .zar .ZAR</extension>
         <command label="xenia (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% %INJECT%=%BASENAME%.commands %ROM%</command>
-        <!-- <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command> -->
-        <!-- <command label="xenia (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command> -->
-        <!-- <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
+        <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="xenia (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>xbox360</platform>
         <theme>xbox360</theme>
-    </system>
+    </system> -->
     <!--
     <system>
         <name>xboxone</name>
@@ -2439,7 +2437,7 @@
         <theme>xboxone</theme>
     </system>
   -->
-    <system>
+    <!-- <system>
         <name>xboxone</name>
         <fullname>Microsoft Xbox One</fullname>
         <path>%ROMPATH%/xboxone</path>
@@ -2447,7 +2445,7 @@
         <command>PLACEHOLDER %ROM%</command>
         <platform>xboxone</platform>
         <theme>xboxone</theme>
-    </system>
+    </system> -->
     <system>
         <name>zmachine</name>
         <fullname>Infocom Z-machine</fullname>
