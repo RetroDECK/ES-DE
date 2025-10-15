@@ -1970,21 +1970,6 @@ msgstr "ΛΗΨΗ ΛΙΣΤΑΣ ΘΕΜΑΤΩΝ 100%"
 msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
 msgstr ""
 
-msgid "DISPLAY WI-FI STATUS INDICATOR"
-msgstr ""
-
-msgid "DISPLAY CELLULAR STATUS INDICATOR"
-msgstr ""
-
-msgid "DISPLAY BATTERY STATUS INDICATOR"
-msgstr ""
-
-msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
-msgstr ""
-
-msgid "DOWNLOADING THEMES LIST 100%"
-msgstr "ΛΗΨΗ ΛΙΣΤΑΣ ΘΕΜΑΤΩΝ 100%"
-
 msgid "THEME ALREADY UP TO DATE"
 msgstr "ΘΕΜΑ ΣΤΗΝ ΝΕΟΤΕΡΗ ΕΚΔΟΣΗ"
 

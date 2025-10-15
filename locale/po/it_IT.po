@@ -1327,10 +1327,6 @@ msgid "SYSTEM STATUS SETTINGS"
 msgstr "IMPOSTAZIONI STATO SISTEMA"
 
 msgctxt "short"
-msgid "SYSTEM STATUS SETTINGS"
-msgstr "IMPOSTAZIONI STATO SISTEMA"
-
-msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "IMPOSTAZIONI VISUALIZZ. MEDIA"
 
@@ -3190,10 +3186,3 @@ msgstr "Creazione delle directory di sistema..."
 
 msgid "ERROR: COULDN'T RENDER PDF FILE"
 msgstr "ERRORE: IMPOSSIBILE RENDERIZZARE IL FILE PDF"
-
-# RetroDECK Specific
-msgid "QUIT RETRODECK"
-msgstr "ESCI DA RETRODECK"
-
-msgid "ES-DE CONFIGURATIONS"
-msgstr "IMPOSTAZIONI DI ES-DE"

@@ -1286,10 +1286,6 @@ msgid "SYSTEM STATUS SETTINGS"
 msgstr "系统状态设定"
 
 msgctxt "short"
-msgid "SYSTEM STATUS SETTINGS"
-msgstr "系统状态设定"
-
-msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "媒体播放器设置"
 

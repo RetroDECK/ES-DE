@@ -1313,10 +1313,6 @@ msgid "SYSTEM STATUS SETTINGS"
 msgstr "CONFIG. DOS EST. DO SISTEMA"
 
 msgctxt "short"
-msgid "SYSTEM STATUS SETTINGS"
-msgstr "CONFIG. DOS EST. DO SISTEMA"
-
-msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "CONFIG. DO VIS. DE MÍDIAS"
 

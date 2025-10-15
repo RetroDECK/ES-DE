@@ -1319,10 +1319,6 @@ msgid "SYSTEM STATUS SETTINGS"
 msgstr "システム状態設定"
 
 msgctxt "short"
-msgid "SYSTEM STATUS SETTINGS"
-msgstr "システム状態設定"
-
-msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "メディアビューアー設定"
 

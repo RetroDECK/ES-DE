@@ -1318,10 +1318,6 @@ msgid "SYSTEM STATUS SETTINGS"
 msgstr "НАСТРОЙКИ СТАТУСА СИСТЕМЫ"
 
 msgctxt "short"
-msgid "SYSTEM STATUS SETTINGS"
-msgstr "НАСТРОЙКИ СТАТУСА СИСТЕМЫ"
-
-msgctxt "short"
 msgid "MEDIA VIEWER SETTINGS"
 msgstr "НАСТРОЙКИ ПРОСМОТРЩИКА МЕДИА"
 
