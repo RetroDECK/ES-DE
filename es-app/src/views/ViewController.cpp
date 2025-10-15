@@ -271,7 +271,16 @@ void ViewController::noGamesDialog()
         ViewController::getInstance()->rescanROMDirectory();
     };
 
+// Show IMPORT button and, on regular desktop builds, also a CHANGE button to edit the ROM path.
+// For RETRODECK we keep the IMPORT (to allow the importer) but do not show CHANGE.
 #if defined(__ANDROID__) || defined(__IOS__)
+    mNoGamesMessageBox = new GuiMsgBox(
+        mNoGamesErrorMessage + mRomDirectory, _("IMPORT"),
+        [this, gameImporterUpdateFunc] {
+            mWindow->pushGui(new GuiGameImporter(_("GAME IMPORTER"), gameImporterUpdateFunc));
+        },
+#elif defined(RETRODECK)
+    // On RetroDECK we do not allow changing the ROM directory but we still provide the importer.
     mNoGamesMessageBox = new GuiMsgBox(
         mNoGamesErrorMessage + mRomDirectory, _("IMPORT"),
         [this, gameImporterUpdateFunc] {
@@ -348,7 +357,7 @@ void ViewController::noGamesDialog()
                     _("CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)")));
             }
         },
-#endif // __ANDROID__
+#endif // platform selection
         _("CREATE"),
         [this] {
             mWindow->pushGui(new GuiMsgBox(
