@@ -407,10 +407,10 @@ void ViewController::noGamesDialog()
              0.90f :
              0.58f * (1.778f / mRenderer->getScreenAspectRatio())));
 #else
-        nullptr, true, false,
-        (mRenderer->getIsVerticalOrientation() ?
-             0.90f :
-             0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
+    "", nullptr, nullptr, true, false,
+    (mRenderer->getIsVerticalOrientation() ?
+         0.90f :
+         0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
 #endif
 
     mWindow->pushGui(mNoGamesMessageBox);
