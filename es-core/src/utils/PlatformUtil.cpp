@@ -52,7 +52,6 @@ namespace Utils
 #else
             return system("shutdown --reboot now");
 #endif
-#endif
         }
 
         int runPoweroffCommand()
@@ -67,7 +66,6 @@ namespace Utils
             return system("shutdown");
 #else
             return system("shutdown --poweroff now");
-#endif
 #endif
         }
 
@@ -101,7 +99,6 @@ namespace Utils
             return 0;
 #else
             return system(cmd_utf8.c_str());
-#endif
 #endif
         }
 
