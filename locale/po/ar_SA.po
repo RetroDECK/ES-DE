@@ -780,8 +780,9 @@ msgstr "إعدادات أخرى"
 msgid "UTILITIES"
 msgstr "الفحص"
 
+# RetroDECK
 msgid "QUIT ES-DE"
-msgstr "إغلاق ES-DE"
+msgstr "إغلاق RETRODECK"
 
 msgid "THEME"
 msgstr "الثيمة"
@@ -2151,12 +2152,13 @@ msgid ""
 "REPOSITORY IS CORRUPT?"
 msgstr "تعذز تحليل ملف تكوين قائمة الثيمات، ربما يكون المستودع المحلي تالفًا؟"
 
+# RetroDECK
 msgid ""
 "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
 "BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
 msgstr ""
-"يبدو أنك لا تستخدم أحدث إصدار من ES-DE، يرجى الترقية قبل المتابعة لأن هذه "
-"الثيمات قد لا تكون متوافقة مع الإصدار الخاص بك"
+"ES-DE THEME ENGINE WAS UPDATED UPSTREAM. THESE THEMES MAY NOT BE COMPATIBLE WITH THE CURRENT RETRODECK VERSION. "
+"CHECK IF A NEW RETRODECK UPDATE IS AVAILABLE, ELSE PLEASE WAIT FOR IT OR PROCEED AT YOUR OWN RISK."
 
 msgid "and"
 msgstr "و"
@@ -2726,6 +2728,7 @@ msgstr ""
 "الروم المُهيأ يمكنك اختياريًا إنشاء بنية مجلد الروم لإنشاء ملف نصي لكل نظام "
 "يُوفر بعض معلومات مثل امتدادات الملفات المدعومة هذا هو مجلد الروم المُهيأ:\n"
 
+# RetroDECK
 msgid ""
 "NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
 "THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
@@ -2733,10 +2736,8 @@ msgid ""
 "FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
 "EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
 msgstr ""
-"لم يتم العثور على أي ملفات ألعاب استورد بعض الألعاب أو ضعها يدويًا في مجلد "
-"الروم المُهيأ حاليًا يمكنك أيضًا تغيير مسار الروم ويمكنك اختياريًا إنشاء بنية "
-"مجلد الروم والتي ستُنشئ ملفًا نصيًا لكل نظام يُوفر معلومات مثل امتدادات الملفات "
-"المدعومة هذا هو مجلد الروم المُهيأ:\n"
+"NO GAME WERE FOUND. PLEASE PLACE YOUR GAMES IN "
+"THE RETRODECK ROM DIRECTORY LOCATED IN:\n"
 
 msgid "CHANGE"
 msgstr "تغير"
