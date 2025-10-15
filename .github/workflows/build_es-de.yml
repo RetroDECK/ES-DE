@@ -39,10 +39,10 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: 'recursive'
-          token: ${{ steps.generate-rekku-token.outputs.token }}
-          fetch-depth: 1
+        # with:
+        #   submodules: 'recursive'
+        #   token: ${{ steps.generate-rekku-token.outputs.token }}
+        #   fetch-depth: 1
 
       - name: Install dependencies
         run: |
