@@ -60,9 +60,11 @@ void Log::open()
     sFile.open(Utils::String::stringToWideString(sLogPath).c_str());
 #else
 #if defined(RETRODECK)
-    mode |= std::ios::app; // Append to the log file if RetroDECK is defined
-#endif
+    // Append to the log file for RetroDECK builds
+    sFile.open(sLogPath.c_str(), std::ios::out | std::ios::app);
+#else
     sFile.open(sLogPath.c_str());
+#endif
 #endif
 }
 
