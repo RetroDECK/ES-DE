@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.4.0-alpha
+3.4.0
 
 The latest version can be downloaded from https://es-de.org
 
@@ -52,6 +52,7 @@ Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
 Emulators\ares\ares.exe
 Emulators\atari800\atari800.exe
 Emulators\azahar\azahar.exe
+Emulators\azaharplus\azaharplus.exe
 Emulators\BasiliskII\BasiliskII.exe
 Emulators\BeebEm\BeebEm.exe
 Emulators\BigPEmu\BigPEmu.exe
@@ -66,6 +67,7 @@ Emulators\CSpect\CSpect.exe
 Emulators\Cxbx-Reloaded\cxbx.exe
 Emulators\demul\demul.exe
 Emulators\Dolphin-x64\Dolphin.exe
+Emulators\DOSBoxPure\DOSBoxPure.exe
 Emulators\dosbox-staging\dosbox.exe
 Emulators\DOSBox-X\dosbox-x.exe
 Emulators\dreamm\dreamm.exe
@@ -129,6 +131,7 @@ Emulators\sameboy\sameboy.exe
 Emulators\scummvm\scummvm.exe
 Emulators\sdl2trs\sdl2trs64.exe
 Emulators\shadPS4\shadPS4.exe
+Emulators\shadPS4QtLauncher\shadPS4QtLauncher.exe
 Emulators\SheepShaver\SheepShaver.exe
 Emulators\SimCoupe\SimCoupe.exe
 Emulators\simple64\simple64-gui.exe
@@ -158,6 +161,8 @@ Emulators\WinArcadia\WinArcadia.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
 Emulators\xenia_canary\xenia_canary.exe
+Emulators\xenia_edge\xenia_edge.exe
+Emulators\XeniaManager\Emulators\Xenia Canary\xenia_canary.exe
 Emulators\XM6 Pro-68k\XM6.exe
 Emulators\xm6_typeg\xm6g.exe
 Emulators\xroar\xroar.exe

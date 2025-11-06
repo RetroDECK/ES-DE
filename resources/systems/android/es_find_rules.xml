@@ -22,10 +22,30 @@
             <entry>xyz.aethersx2.android/.EmulationActivity</entry>
         </rule>
     </emulator>
+    <emulator name="APS3E">
+        <!-- Sony PlayStation 3 emulator aPS3e -->
+        <rule type="androidpackage">
+            <entry>aenu.aps3e.premium/aenu.aps3e.EmulatorActivity</entry>
+            <entry>aenu.aps3e/aenu.aps3e.EmulatorActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="ARMSX2">
+        <!-- Sony PlayStation 2 emulator ARMSX2 -->
+        <rule type="androidpackage">
+            <entry>come.nanodata.armsx2/kr.co.iefriends.pcsx2.MainActivity</entry>
+            <entry>come.nanodata.armsx2.debug/kr.co.iefriends.pcsx2.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="AZAHAR">
         <!-- Nintendo 3DS emulator Azahar -->
         <rule type="androidpackage">
             <entry>io.github.lime3ds.android/org.citra.citra_emu.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="AZAHARPLUS">
+        <!-- Nintendo 3DS emulator AzaharPlus -->
+        <rule type="androidpackage">
+            <entry>io.github.azaharplus.android/org.citra.citra_emu.activities.EmulationActivity</entry>
         </rule>
     </emulator>
     <emulator name="C64-EMU">
@@ -140,6 +160,15 @@
         <!-- Sony PlayStation 1 emulator FPseNG -->
         <rule type="androidpackage">
             <entry>com.emulator.fpse64/.Main</entry>
+        </rule>
+    </emulator>
+    <emulator name="GAMEHUB-LITE">
+        <!-- Steam client GameHub Lite -->
+        <rule type="androidpackage">
+            <entry>gamehub.lite/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
+            <entry>com.antutu.ABenchMark/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
+            <entry>com.tencent.ig/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
+            <entry>com.ludashi.aibench/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
         </rule>
     </emulator>
     <emulator name="GAMENATIVE">
@@ -461,6 +490,7 @@
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="androidpackage">
+            <entry>org.vita3k.emulator.ikhoeyZX/org.vita3k.emulator.Emulator</entry>
             <entry>org.vita3k.emulator/.Emulator</entry>
         </rule>
     </emulator>

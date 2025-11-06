@@ -333,13 +333,13 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             const std::string& content {mResult.thumbnailImageData};
 
             if (Settings::getInstance()->getString("Scraper") == "screenscraper" &&
-                content.size() < 10) {
-                LOG(LogWarning) << "ScreenScraper: Image does not seem to be valid, not saving "
-                                   "it to disk: \""
+                content.size() < 80) {
+                LOG(LogWarning)
+                    << "ScreenScraper: Image seems to be invalid, not saving it to disk: \""
 #if defined(_WIN64)
-                                << Utils::String::replace(filePath, "/", "\\") << "\"";
+                    << Utils::String::replace(filePath, "/", "\\") << "\"";
 #else
-                                << filePath << "\"";
+                    << filePath << "\"";
 #endif
                 setStatus(ASYNC_DONE);
                 return;
@@ -564,9 +564,8 @@ void MediaDownloadHandle::update()
 
     const std::string& content {mReq->getContent()};
 
-    if (Settings::getInstance()->getString("Scraper") == "screenscraper" && content.size() < 10) {
-        LOG(LogWarning) << "ScreenScraper: Image does not seem to be valid, not saving "
-                           "it to disk: \""
+    if (Settings::getInstance()->getString("Scraper") == "screenscraper" && content.size() < 80) {
+        LOG(LogWarning) << "ScreenScraper: File seems to be invalid, not saving it to disk: \""
 #if defined(_WIN64)
                         << Utils::String::replace(mSavePath, "/", "\\") << "\"";
 #else

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-13 21:59+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
 "PO-Revision-Date: 2025-10-12 21:31+0300\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
@@ -1223,6 +1223,9 @@ msgstr "AFIȘEAZĂ FIȘIERELE ȘI DOSARELE ASCUNSE"
 
 msgid "SHOW HIDDEN GAMES"
 msgstr "AFIȘEAZĂ JOCURILE ASCUNSE"
+
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "LANSEAZĂ JOCURILE PE CELĂLALT ECRAN"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ACTIVEAZĂ SCRIPT EVENIMENTE PERSONALIZATE"

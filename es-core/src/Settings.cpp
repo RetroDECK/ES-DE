@@ -285,7 +285,7 @@ void Settings::setDefaults()
 #if !defined(USE_OPENGLES)
     mIntMap["AntiAliasing"] = {0, 0};
 #endif
-#if !defined(__IOS__)
+#if !defined(__ANDROID__) && !defined(__IOS__)
     mIntMap["DisplayIndex"] = {1, 1};
 #endif
     mIntMap["ScreenRotate"] = {0, 0};
@@ -317,6 +317,9 @@ void Settings::setDefaults()
     mBoolMap["AlternativeEmulatorPerGame"] = {true, true};
     mBoolMap["ShowHiddenFiles"] = {true, true};
     mBoolMap["ShowHiddenGames"] = {true, true};
+#if defined(__ANDROID__)
+    mBoolMap["LaunchOnOtherScreen"] = {false, false};
+#endif
 #if !defined(__IOS__)
     mBoolMap["CustomEventScripts"] = {false, false};
     mBoolMap["CustomEventScriptsBrowsing"] = {false, false};
@@ -341,7 +344,7 @@ void Settings::setDefaults()
     // Utilities -> Game Importer.
     mStringMap["ImporterTargetSystem"] = {"", ""};
     mStringMap["ImporterRemoveEntries"] = {"never", "never"};
-#if defined(__linux__) || defined(__FreeBSD__)
+#if (defined(__linux__) || defined(__FreeBSD__)) && !defined(__ANDROID__)
     mBoolMap["ImporterStripSpecialChars"] = {false, false};
 #endif
 #if defined(__ANDROID__)

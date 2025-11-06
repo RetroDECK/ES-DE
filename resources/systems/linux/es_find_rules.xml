@@ -50,6 +50,15 @@
             <entry>/usr/lib/libretro</entry>
         </rule>
     </core>
+    <emulator name="3DSEN">
+        <!-- Nintendo NES and Famicom emulator 3dSen -->
+        <rule type="staticpath">
+            <entry>~/Applications/3dSen/3dSen.exe</entry>
+            <entry>~/.local/share/applications/3dSen/3dSen.exe</entry>
+            <entry>~/.local/bin/3dSen/3dSen.exe</entry>
+            <entry>~/bin/3dSen/3dSen.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="3DSEN-WINDOWS">
         <!-- Nintendo NES and Famicom emulator 3dSen -->
         <rule type="staticpath">
@@ -117,6 +126,10 @@
             <entry>dev.ares.ares</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/ares*.AppImage</entry>
+            <entry>~/.local/share/applications/ares*.AppImage</entry>
+            <entry>~/.local/bin/ares*.AppImage</entry>
+            <entry>~/bin/ares*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/dev.ares.ares</entry>
             <entry>~/.local/share/flatpak/exports/bin/dev.ares.ares</entry>
             <!-- RetroDECK -->
@@ -137,6 +150,10 @@
             <entry>~/.local/share/applications/azahar*.AppImage</entry>
             <entry>~/.local/bin/azahar*.AppImage</entry>
             <entry>~/bin/azahar*.AppImage</entry>
+            <entry>~/Applications/Azahar-Enhanced*.AppImage</entry>
+            <entry>~/.local/share/applications/Azahar-Enhanced*.AppImage</entry>
+            <entry>~/.local/bin/Azahar-Enhanced*.AppImage</entry>
+            <entry>~/bin/Azahar-Enhanced*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.azahar_emu.Azahar</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.azahar_emu.Azahar</entry>
             <!-- RetroDECK -->
@@ -152,6 +169,15 @@
             <entry>~/bin/azahar*.AppImage</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/azaharplus/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="AZAHARPLUS">
+        <!-- Nintendo 3DS emulator AzaharPlus -->
+        <rule type="staticpath">
+            <entry>~/Applications/azaharplus*.AppImage</entry>
+            <entry>~/.local/share/applications/azaharplus*.AppImage</entry>
+            <entry>~/.local/bin/azaharplus*.AppImage</entry>
+            <entry>~/bin/azaharplus*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="BASILISKII">
@@ -319,6 +345,10 @@
             <entry>org.desmume.DeSmuME</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/desmume*.AppImage</entry>
+            <entry>~/.local/share/applications/desmume*.AppImage</entry>
+            <entry>~/.local/bin/desmume*.AppImage</entry>
+            <entry>~/bin/desmume*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.desmume.DeSmuME</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.desmume.DeSmuME</entry>
             <!-- RetroDECK -->
@@ -342,6 +372,18 @@
             <entry>~/.local/share/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/dolphin/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="DOSBOX-PURE-UNLEASHED">
+        <!-- DOS emulator DOSBox Pure Unleashed -->
+        <rule type="systempath">
+            <entry>DOSBoxPure</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/DOSBoxPure/DOSBoxPure</entry>
+            <entry>~/.local/share/applications/DOSBoxPure/DOSBoxPure</entry>
+            <entry>~/.local/bin/DOSBoxPure/DOSBoxPure</entry>
+            <entry>~/bin/DOSBoxPure/DOSBoxPure</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-STAGING">
@@ -741,6 +783,10 @@
             <entry>org.mamedev.MAME</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/MAME*.AppImage</entry>
+            <entry>~/.local/share/applications/MAME*.AppImage</entry>
+            <entry>~/.local/bin/MAME*.AppImage</entry>
+            <entry>~/bin/MAME*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.mamedev.MAME</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.mamedev.MAME</entry>
             <!-- RetroDECK -->
@@ -1279,6 +1325,15 @@
             <entry>/app/retrodeck/components/shadps4plus/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="SHADPS4-GUI">
+        <!-- Sony PlayStation 4 emulator shadPS4 (GUI) -->
+        <rule type="staticpath">
+            <entry>~/Applications/shadPS4QtLauncher*.AppImage</entry>
+            <entry>~/.local/share/applications/shadPS4QtLauncher*.AppImage</entry>
+            <entry>~/.local/bin/shadPS4QtLauncher*.AppImage</entry>
+            <entry>~/bin/shadPS4QtLauncher*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="SHEEPSHAVER">
         <!-- Apple Macintosh PowerPC emulator SheepShaver -->
         <rule type="systempath">
@@ -1569,6 +1624,22 @@
             <entry>~/bin/xenia/xenia_canary</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/xenia/component_launcher.sh</entry>
+            <entry>~/Applications/xenia-canary*.AppImage</entry>
+            <entry>~/.local/share/applications/xenia-canary*.AppImage</entry>
+            <entry>~/.local/bin/xenia-canary*.AppImage</entry>
+            <entry>~/bin/xenia-canary*.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="XENIA-EDGE">
+        <!-- Microsoft Xbox 360 emulator Xenia Edge -->
+        <rule type="systempath">
+            <entry>xenia_edge</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/xenia_edge*.AppImage</entry>
+            <entry>~/.local/share/applications/xenia_edge*.AppImage</entry>
+            <entry>~/.local/bin/xenia_edge*.AppImage</entry>
+            <entry>~/bin/xenia_edge*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="XENIA-WINDOWS">

@@ -21,7 +21,7 @@
             <langLabelDeveloper>Programer</langLabelDeveloper>
             <langLabelPublisher>Izdavač</langLabelPublisher>
             <langLabelLastPlayed>Posljednje igrano</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vrijeme Za Igranje</langLabelPlayTime>
             <langCustomCollections>Prilagođene kolekcije</langCustomCollections>
             <langYourCollections>Vaše kolekcije</langYourCollections>
         </variables>
@@ -35,7 +35,7 @@
             <langLabelDeveloper>Desenvolupador</langLabelDeveloper>
             <langLabelPublisher>Editor</langLabelPublisher>
             <langLabelLastPlayed>Última Partida</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Temps De Joc</langLabelPlayTime>
             <langCustomCollections>Col·leccions</langCustomCollections>
             <langYourCollections>Les teves Col·leccions</langYourCollections>
         </variables>
@@ -49,7 +49,7 @@
             <langLabelDeveloper>Entwickler</langLabelDeveloper>
             <langLabelPublisher>Herausgeber</langLabelPublisher>
             <langLabelLastPlayed>Zuletzt Gespielt</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Spielzeit</langLabelPlayTime>
             <langCustomCollections>Benutzerdefinierte Sammlungen</langCustomCollections>
             <langYourCollections>Deine Sammlungen</langYourCollections>
         </variables>
@@ -63,7 +63,7 @@
             <langLabelDeveloper>Desarrollador</langLabelDeveloper>
             <langLabelPublisher>Compañia</langLabelPublisher>
             <langLabelLastPlayed>Ultima Vez Jugado</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tiempo De Juego</langLabelPlayTime>
             <langCustomCollections>Colecciones</langCustomCollections>
             <langYourCollections>Tus Colecciones</langYourCollections>
         </variables>
@@ -77,7 +77,7 @@
             <langLabelDeveloper>Développeur</langLabelDeveloper>
             <langLabelPublisher>Editeur</langLabelPublisher>
             <langLabelLastPlayed>Dernier Joué</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Temps Joué</langLabelPlayTime>
             <langCustomCollections>Collections Perso</langCustomCollections>
             <langYourCollections>Vos Collections</langYourCollections>
         </variables>
@@ -91,7 +91,7 @@
             <langLabelDeveloper>Programer</langLabelDeveloper>
             <langLabelPublisher>Izdavač</langLabelPublisher>
             <langLabelLastPlayed>Zadnje igrano</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vrijeme Igranja</langLabelPlayTime>
             <langCustomCollections>Prilagođene kolekcije</langCustomCollections>
             <langYourCollections>Vaše kolekcije</langYourCollections>
         </variables>
@@ -105,7 +105,7 @@
             <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
             <langLabelPublisher>Casa Editrice</langLabelPublisher>
             <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo Di Gioco</langLabelPlayTime>
             <langCustomCollections>Collezioni Personalizzate</langCustomCollections>
             <langYourCollections>Le tue Collezioni</langYourCollections>
         </variables>
@@ -120,7 +120,7 @@
             <langLabelPublisher>Uitgever</langLabelPublisher>
             <langLabelPublisher>Uitgever</langLabelPublisher>
             <langLabelLastPlayed>Laatst Gespeeld</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Speltijd</langLabelPlayTime>
             <langCustomCollections>Custom Collecties</langCustomCollections>
             <langYourCollections>Jouw Collecties</langYourCollections>
         </variables>
@@ -134,7 +134,7 @@
             <langLabelDeveloper>Deweloper</langLabelDeveloper>
             <langLabelPublisher>Wydawca</langLabelPublisher>
             <langLabelLastPlayed>Ostatnio Grane</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Czas Rozgrywki</langLabelPlayTime>
             <langCustomCollections>Kolekcje Własne</langCustomCollections>
             <langYourCollections>Twoje Kolekcje</langYourCollections>
         </variables>
@@ -148,7 +148,7 @@
             <langLabelDeveloper>Desenvolvedor</langLabelDeveloper>
             <langLabelPublisher>Distribuidor</langLabelPublisher>
             <langLabelLastPlayed>Última Vez Que Jogou</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo De Jogo</langLabelPlayTime>
             <langCustomCollections>Coleções Adaptadas</langCustomCollections>
             <langYourCollections>Suas Coleções</langYourCollections>
         </variables>
@@ -162,7 +162,7 @@
             <langLabelDeveloper>Programador</langLabelDeveloper>
             <langLabelPublisher>Editora</langLabelPublisher>
             <langLabelLastPlayed>Última Jogada</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo De Jogo</langLabelPlayTime>
             <langCustomCollections>Coleções</langCustomCollections>
             <langYourCollections>As Tuas Coleções</langYourCollections>
         </variables>
@@ -176,7 +176,7 @@
             <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
             <langLabelPublisher>Editor</langLabelPublisher>
             <langLabelLastPlayed>Jucat Ultima Dată</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Timp Jucat</langLabelPlayTime>
             <langCustomCollections>Colecții Personalizate</langCustomCollections>
             <langYourCollections>Colecțiile Tale</langYourCollections>
         </variables>
@@ -184,15 +184,15 @@
     <language name="ru_RU">
         <variables>
             <langLabelRating>Рейтинг</langLabelRating>
-            <langLabelReleasedate>Дата Выхода</langLabelReleasedate>
+            <langLabelReleasedate>Дата выхода</langLabelReleasedate>
             <langLabelPlayers>Игроки</langLabelPlayers>
             <langLabelGenre>Жанр</langLabelGenre>
             <langLabelDeveloper>Разработчик</langLabelDeveloper>
             <langLabelPublisher>Издатель</langLabelPublisher>
-            <langLabelLastPlayed>Последняя Игра</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
-            <langCustomCollections>Польз. Коллекции</langCustomCollections>
-            <langYourCollections>Ваши Коллекции</langYourCollections>
+            <langLabelLastPlayed>Посл. запуск</langLabelLastPlayed>
+            <langLabelPlayTime>Время в игре</langLabelPlayTime>
+            <langCustomCollections>Польз. коллекции</langCustomCollections>
+            <langYourCollections>Ваши коллекции</langYourCollections>
         </variables>
     </language>
     <language name="sr_RS">
@@ -204,7 +204,7 @@
             <langLabelDeveloper>Programer</langLabelDeveloper>
             <langLabelPublisher>Izdavač</langLabelPublisher>
             <langLabelLastPlayed>Poslednje igrano</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vreme Igre</langLabelPlayTime>
             <langCustomCollections>Prilagođene kolekcije</langCustomCollections>
             <langYourCollections>Vaše kolekcije</langYourCollections>
         </variables>
@@ -232,7 +232,7 @@
             <langLabelDeveloper>المطور</langLabelDeveloper>
             <langLabelPublisher>الناشر</langLabelPublisher>
             <langLabelLastPlayed>لعب آخر مرة</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>وقت اللعب</langLabelPlayTime>
             <langCustomCollections>مجموعات مخصصة</langCustomCollections>
             <langYourCollections>مجموعاتك</langYourCollections>
         </variables>
@@ -246,7 +246,7 @@
             <langLabelDeveloper>開発者</langLabelDeveloper>
             <langLabelPublisher>発行者</langLabelPublisher>
             <langLabelLastPlayed>最後に遊んだ日</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>プレイ時間</langLabelPlayTime>
             <langCustomCollections>カスタムコレクション</langCustomCollections>
             <langYourCollections>あなたのコレクション</langYourCollections>
         </variables>
@@ -260,7 +260,7 @@
             <langLabelDeveloper>개발사</langLabelDeveloper>
             <langLabelPublisher>배급사</langLabelPublisher>
             <langLabelLastPlayed>최근 실행</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>놀이 시간</langLabelPlayTime>
             <langCustomCollections>커스텀 컬렉션</langCustomCollections>
             <langYourCollections>너의 컬렉션</langYourCollections>
         </variables>
@@ -274,7 +274,7 @@
             <langLabelDeveloper>开发者</langLabelDeveloper>
             <langLabelPublisher>发行商</langLabelPublisher>
             <langLabelLastPlayed>最后游玩</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>游玩时间</langLabelPlayTime>
             <langCustomCollections>自定义收藏</langCustomCollections>
             <langYourCollections>您的收藏</langYourCollections>
         </variables>
@@ -288,7 +288,7 @@
             <langLabelDeveloper>開發者</langLabelDeveloper>
             <langLabelPublisher>發行商</langLabelPublisher>
             <langLabelLastPlayed>最後遊玩</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>遊玩時間</langLabelPlayTime>
             <langCustomCollections>自定義收藏</langCustomCollections>
             <langYourCollections>您的收藏</langYourCollections>
         </variables>

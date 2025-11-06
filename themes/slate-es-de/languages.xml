@@ -17,7 +17,7 @@
             <langLabelGenre>Žanr</langLabelGenre>
             <langLabelPlayers>Igrači</langLabelPlayers>
             <langLabelLastPlayed>Posljednje igrano</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vrijeme Za Igranje</langLabelPlayTime>
         </variables>
     </language>
     <language name="ca_ES">
@@ -28,7 +28,7 @@
             <langLabelGenre>Gènere</langLabelGenre>
             <langLabelPlayers>Jugadors</langLabelPlayers>
             <langLabelLastPlayed>Última Partida</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Temps De Joc</langLabelPlayTime>
         </variables>
     </language>
     <language name="de_DE">
@@ -39,7 +39,7 @@
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelPlayers>Spieler</langLabelPlayers>
             <langLabelLastPlayed>Zuletzt Gespielt</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Spielzeit</langLabelPlayTime>
         </variables>
     </language>
     <language name="es_ES">
@@ -50,7 +50,7 @@
             <langLabelGenre>Genero</langLabelGenre>
             <langLabelPlayers>Jugadores</langLabelPlayers>
             <langLabelLastPlayed>Ultima Vez Jugado</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tiempo De Juego</langLabelPlayTime>
         </variables>
     </language>
     <language name="fr_FR">
@@ -61,7 +61,7 @@
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelPlayers>Joueurs</langLabelPlayers>
             <langLabelLastPlayed>Dernier Joué</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Temps Joué</langLabelPlayTime>
         </variables>
     </language>
     <language name="hr_HR">
@@ -72,7 +72,7 @@
             <langLabelGenre>Žanr</langLabelGenre>
             <langLabelPlayers>Igrači</langLabelPlayers>
             <langLabelLastPlayed>Zadnje igrano</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vrijeme Igranja</langLabelPlayTime>
         </variables>
     </language>
     <language name="it_IT">
@@ -83,7 +83,7 @@
             <langLabelGenre>Genere</langLabelGenre>
             <langLabelPlayers>Nr. Giocatori</langLabelPlayers>
             <langLabelLastPlayed>Ultima Partita</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo Di Gioco</langLabelPlayTime>
         </variables>
     </language>
     <language name="nl_NL">
@@ -94,7 +94,7 @@
             <langLabelGenre>Genre</langLabelGenre>
             <langLabelPlayers>Spelers</langLabelPlayers>
             <langLabelLastPlayed>Laatst Gespeeld</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Speltijd</langLabelPlayTime>
         </variables>
     </language>
     <language name="pl_PL">
@@ -105,7 +105,7 @@
             <langLabelGenre>Gatunek</langLabelGenre>
             <langLabelPlayers>Liczba Graczy</langLabelPlayers>
             <langLabelLastPlayed>Ostatnio Grane</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Czas Rozgrywki</langLabelPlayTime>
         </variables>
     </language>
     <language name="pt_BR">
@@ -116,7 +116,7 @@
             <langLabelGenre>Gênero</langLabelGenre>
             <langLabelPlayers>Jogadores</langLabelPlayers>
             <langLabelLastPlayed>Última Vez Que Jogou</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo De Jogo</langLabelPlayTime>
         </variables>
     </language>
     <language name="pt_PT">
@@ -127,7 +127,7 @@
             <langLabelGenre>Género</langLabelGenre>
             <langLabelPlayers>Jogadores</langLabelPlayers>
             <langLabelLastPlayed>Última Jogada</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo De Jogo</langLabelPlayTime>
         </variables>
     </language>
     <language name="ro_RO">
@@ -138,18 +138,18 @@
             <langLabelGenre>Gen</langLabelGenre>
             <langLabelPlayers>Număr de Jucători</langLabelPlayers>
             <langLabelLastPlayed>Jucat Ultima Dată</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Timp Jucat</langLabelPlayTime>
         </variables>
     </language>
     <language name="ru_RU">
         <variables>
-            <langLabelReleasedate>Дата Выхода</langLabelReleasedate>
+            <langLabelReleasedate>Дата выхода</langLabelReleasedate>
             <langLabelDeveloper>Разработчик</langLabelDeveloper>
             <langLabelPublisher>Издатель</langLabelPublisher>
             <langLabelGenre>Жанр</langLabelGenre>
             <langLabelPlayers>Игроки</langLabelPlayers>
-            <langLabelLastPlayed>Последняя Игра</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelLastPlayed>Посл. запуск</langLabelLastPlayed>
+            <langLabelPlayTime>Время в игре</langLabelPlayTime>
         </variables>
     </language>
     <language name="sr_RS">
@@ -160,7 +160,7 @@
             <langLabelGenre>Žanr</langLabelGenre>
             <langLabelPlayers>Igrači</langLabelPlayers>
             <langLabelLastPlayed>Poslednje igrano</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vreme Igre</langLabelPlayTime>
         </variables>
     </language>
     <language name="sv_SE">
@@ -182,7 +182,7 @@
             <langLabelGenre>النوع</langLabelGenre>
             <langLabelPlayers>اللاعبون</langLabelPlayers>
             <langLabelLastPlayed>لعب آخر مرة</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>وقت اللعب</langLabelPlayTime>
         </variables>
     </language>
     <language name="ja_JP">
@@ -193,7 +193,7 @@
             <langLabelGenre>ジャンル</langLabelGenre>
             <langLabelPlayers>プレイヤー</langLabelPlayers>
             <langLabelLastPlayed>最後に遊んだ日</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>プレイ時間</langLabelPlayTime>
         </variables>
     </language>
     <language name="ko_KR">
@@ -204,7 +204,7 @@
             <langLabelGenre>장르</langLabelGenre>
             <langLabelPlayers>플레이어</langLabelPlayers>
             <langLabelLastPlayed>최근 실행</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>놀이 시간</langLabelPlayTime>
         </variables>
     </language>
     <language name="zh_CN">
@@ -215,7 +215,7 @@
             <langLabelGenre>类别</langLabelGenre>
             <langLabelPlayers>玩家</langLabelPlayers>
             <langLabelLastPlayed>最后游玩</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>游玩时间</langLabelPlayTime>
         </variables>
     </language>
     <language name="zh_TW">
@@ -226,7 +226,7 @@
             <langLabelGenre>類別</langLabelGenre>
             <langLabelPlayers>玩家</langLabelPlayers>
             <langLabelLastPlayed>最後遊玩</langLabelLastPlayed>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>遊玩時間</langLabelPlayTime>
         </variables>
     </language>
 </theme>

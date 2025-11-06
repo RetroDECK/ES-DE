@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
 "PO-Revision-Date: 2025-06-25 04:03+0800\n"
 "Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
@@ -1219,6 +1219,9 @@ msgstr "隠しファイルとフォルダを表示"
 
 msgid "SHOW HIDDEN GAMES"
 msgstr "非表示中のゲームを表示"
+
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "別のスクリーンでゲームを起動"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "カスタムイベントスクリプトを有効に"

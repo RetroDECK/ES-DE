@@ -1,15 +1,25 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.4.0 / 3.4.0-xx (in development)
+## Version 3.4.0 / 3.4.0-56 (in development)
 
 **Release date:** TBD
 
 ### Release overview
 
+This release introduces play time tracking to show for how long games have been played, using an identical logic to how it works in Steam. This does however require that themes get updated to support this feature. It's now also possible to sort gamelists by play time. A cosmetic change in this release is that the "EmulationStation Desktop Edition" subtitle has been removed from the splash screen, and ES-DE will no longer search for an .emulationstation directory on startup when running on desktop operating systems.
+
+On Android the Sony PlayStation 3 (ps3), Valve Steam (steam) and Epic Games Store (epic) systems have been enabled and there is improved support for running on dual-screen devices. For instance there is a new "Launch games on the other screen" option in the Other settings menu to control on which screen to run games and emulators.
+
+Also on Android there is experimental support for running RetroArch in multi-user setups. This has currently been enabled for a handful of emulator entries to make sure we capture potential firmware bugs and similar that may prevent this from working. If it turns out to be stable across a wide range of hardware then this will be rolled out to all emulator entries in the future. Another nice feature is that Samsung DeX is now supported by ES-DE, but this is actually due to a policy change by Samsung and not due to any changes inside ES-DE. Still this release contains some bug fixes that should make the DeX experience better. Just be aware that you need to use One UI 8.0 or later for this to work as Samsung has not enabled this on earlier OS releases.
+
+Translations to Arabic (ar_SA) have also been added in this release, as well as support for many additional regions when scraping using ScreenScraper. There is now also support for the WebP image format and the AV1 video codec for scraped media (these are however not currently supported by ScreenScraper or TheGamesDB so this can be considered more of a future-proofing feature). You can now also select whether to generate miximages in PNG or WebP format, with the latter leading to reduced disk usage but slightly slower scraping.
+
+In addition to the above there is support for a lot of new emulators, import rules and file extensions, and there are numerous minor improvements, as well as some bug fixes. See below for all details.
+
 ### Detailed list of changes
 
 * Added support for play time tracking
-* Added support for sorting the gamelist by play time
+* Added support for sorting gamelists by play time
 * Added play time tracking to the Linear, Modern and Slate themes
 * Changed the "last played" metadata value to always reset when returning from a game rather than when launching a game
 * Removed the "EmulationStation Desktop Edition" subtitle from the splash screen
@@ -18,6 +28,8 @@
 * Added Netherlands, Russia, Sweden, Spain, Taiwan and United Kingdom as additional ScreenScraper regions
 * Changed the media and release date fallback order for the scraper to place Europe prior to Japan, so it matches the game name fallback order
 * Added translations for Arabic (ar_SA)
+* (Android) Improved support for Samsung DeX (this requires One UI 8.0 or higher)
+* (Android) Added an experimental "Launch games on the other screen" setting for use on dual-screen devices
 * (Android) Added an %EXTRAINTEGER_% launch command variable
 * (Android) Added two new %INTERNALDATA% and %EXTERNALDATA% variables to support launching of RetroArch in multi-user setups
 * (Android) Added %INTERNALDATA% and %EXTERNALDATA% to the Opera core for the 3do system and the PUAE 2021 core for the amiga system
@@ -33,13 +45,17 @@
 * Added a menu option for generating miximages in the PNG or WebP file format
 * Added support for the AV1 video codec on Android and macOS
 * (Android) Added miximages as a media target type for the game importer
+* (Android) Removed the "Display/monitor index" setting as it does nothing on this operating system
 * (Linux) Added a "Strip special characters" setting to the game importer to enable imports to FAT-based filesystems
 * Added import rules for the epic system
 * (Linux) Added desktopshortcut import rules for the ps3 system
 * (Linux) Added a ~/Desktop import rule entry for the desktop system
 * (macOS) Added a ~/Applications import rule entry for the steam system
 * (Windows) Added ~\Desktop import rule entries for the desktop, emulators and windows systems
-* (Android) Added support for the Valve Steam (steam) game system (using the GameNative client)
+* (Android) Added support for the Sony PlayStation 3 (ps3) game system (using aPS3e)
+* (Android) Added support for the Valve Steam (steam) game system (using GameNative and GameHub Lite)
+* (Android) Added GameNative and GameHub Lite standalone as alternative emulators for the windows system
+* (Android) Added ARMSX2 standalone as an alternative emulator for the ps2 system
 * (Android) Added support for the Epic Games Store (epic) game system
 * (Android) Added Winlator Cmod standalone as the default emulator for the pcarcade, type-x and windows systems
 * (Android) Added Kenji-NX standalone as the default emulator for the switch system
@@ -47,16 +63,37 @@
 * (Android) Added Linkboy standalone as an alternative emulator for the gb, gba and gbc systems
 * (Android) Changed Pizza Boy GBA/A to use %ROMSAF% instead of %ROM% as the developer has changed the way games are launched from frontends
 * (Android) Changed Pizza Boy SC to use %ROMSAF% instead of %ROM% as the developer has changed the way games are launched from frontends
+* (Android) Added a find rule entry for the Vita3K ZX fork
+* Added DOSBox Pure Unleashed standalone as an alternative emulator for the dos, pc, windows3x and windows9x systems on Linux, macOS and Windows
 * Added Parallel Launcher standalone as an alternative emulator for the n64 system on Linux, macOS and Windows
 * Added Gopher64 standalone as an alternative emulator for the n64 system on Linux and Windows
 * Added "Native port" as an alternative emulator for the n64 system (for running N64 recompilations)
 * Added "Shortcut or script" as an alternative emulator for the n64 system on Linux, macOS and Windows
+* Added "Shortcut or script" as an alternative emulator for the ps2 system on Linux and Windows
+* Added AzaharPlus as an alternative emulator for the n3ds system on Android, Linux and Windows
+* Added Xenia Edge as an alternative emulator for the xbox360 system on Linux and Windows
+* Added 3dSen standalone as an alternative emulator for the famicom and nes systems on Linux and macOS
+* Added shadPS4 [GUI] Game Serial standalone as an alternative emulator for the ps4 system on Linux, macOS and Windows
+* Added shadPS4 [GUI] eboot.bin standalone as an alternative emulator for the ps4 system on Linux, macOS and Windows
 * (Android) Added an import rule for the n64 system
 * (Android) Added the .app file extension to the n64 system
+* (Android) Added the .steam file extension to the windows system
+* (Linux) Added support for the pkgforge-dev AppImage release of ares
+* (Linux) Added support for the pkgforge-dev AppImage release of Azahar (Azahar-Enhanced)
+* (Linux) Added support for the pkgforge-dev AppImage release of DeSmuME
+* (Linux) Added support for the pkgforge-dev AppImage release of MAME
+* (Linux) Added support for the pkgforge-dev AppImage release of xenia (xenia-canary)
 * (Linux) Added the .AppImage, .desktop and .sh file extensions to the n64 system
+* (Linux) Added the .desktop file extension to the ps2 system
 * (Linux) Added find rule entries for the Ryubing Flatpak
+* (macOS) Added Ymir standalone as an alternative emulator for the saturn and saturnjp systems
+* (macOS) Added the .3dsen file extension to the famicom and nes systems
 * (macOS) Added the .app file extension to the n64 system
-* (Windows) Added the .exe and .LNK file extensions to the n64 system
+* (Windows) Added find rule entries for xenia canary installed via Xenia Manager
+* (Windows) Added "Shortcut or script" as an alternative emulator for the xbox360 system
+* (Windows) Added the .lnk file extension to the ps2 and xbox360 systems
+* (Windows) Added the .exe and .lnk file extensions to the n64 system
+* Added ares standalone as an alternative emulator for the psx system on Linux, macOS and Windows
 * Added ares [Mega LD] standalone (Pioneer LaserActive) as an alternative emulator for the daphne and laserdisc systems on Linux, macOS and Windows
 * Added the .mmi file extension to the daphne and laserdisc systems on Linux, macOS and Windows
 * Added the .png file extension to the tic80 system on Linux, macOS and Windows
@@ -87,8 +124,11 @@
 ### Bug fixes
 
 * (Android) Fixed a crash when scraping if the downloaded_media directory had been set to an invalid path
+* (Android) The splash screen progress bar sometimes didn't render correctly when running in multi-window mode or after switching screens
+* (Android) The Android soft keyboard was always enabled after resizing the ES-DE window when running in multi-window mode
 * (macOS) On macOS 26 Tahoe the ES-DE application window was sometimes not focused on startup and the menu bar was sometimes visible
 * (macOS) The application updater for the x86 release downloaded the ARM package instead of the x86 package
+* Invalid media files could get saved to disk when reaching the daily ScreenScraper quota
 * Helpsystem icons could sometimes disappear temporarily after closing the media viewer
 * (Haiku) The reboot and power off entries in the quit menu didn't work as intended
 

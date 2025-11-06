@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
-"PO-Revision-Date: 2025-06-24 23:48+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"PO-Revision-Date: 2025-10-15 09:29+0200\n"
 "Last-Translator: SecularSteve <info@es-de.org>\n"
 "Language-Team: Bosnian (Bosnia & Herzegovina) <info@es-de.org>\n"
 "Language: bs_BA\n"
@@ -143,17 +143,17 @@ msgstr "nepoznato"
 msgctxt "theme"
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i minut"
+msgstr[1] "%i minute"
+msgstr[2] "%i minuta"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i sat"
+msgstr[1] "%i sata"
+msgstr[2] "%i sati"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -328,10 +328,10 @@ msgid "times played, descending"
 msgstr "vremena igranja, opadajuće"
 
 msgid "play time, ascending"
-msgstr ""
+msgstr "vrijeme igranja, rastuće"
 
 msgid "play time, descending"
-msgstr ""
+msgstr "vrijeme igranja, silazno"
 
 msgid "system, ascending"
 msgstr "sistem, uzlazni"
@@ -569,7 +569,7 @@ msgid "ALL UNSELECTED"
 msgstr "SVE NEODABRANO"
 
 msgid "STRIP SPECIAL CHARACTERS"
-msgstr ""
+msgstr "SKIDANJE SPECIJALNIH LIKOVA"
 
 msgid "MEDIA TARGET TYPE"
 msgstr "VRSTA CILJNE MEDIJSKE GRUPE"
@@ -599,7 +599,7 @@ msgid "FAN ART"
 msgstr "UMJETNOST FANOVA"
 
 msgid "MIXIMAGES"
-msgstr ""
+msgstr "MIXIMAGES"
 
 msgid "IMPORT MEDIA"
 msgstr "UVEZITE MEDIJ"
@@ -1139,7 +1139,7 @@ msgid "load default directory"
 msgstr "učitavanje zadanog direktorija"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr ""
+msgstr "PRAĆENJE MAKSIMALNOG VREMENA REPRODUKCIJE"
 
 msgid "VRAM LIMIT"
 msgstr "OGRANIČENJA VRAM-a"
@@ -1229,6 +1229,9 @@ msgstr "PRIKAŽI SKRIVENE DATOTEKE I MAPE"
 msgid "SHOW HIDDEN GAMES"
 msgstr "PRIKAŽI SKRIVENE IGRE"
 
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "POKRENITE IGRE NA DRUGOM EKRANU"
+
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "OMOGUĆI PRILAGOĐENI SKRIPTU ZA DOGAĐAJ"
 
@@ -1317,10 +1320,10 @@ msgid "POWER OFF SYSTEM"
 msgstr "ISKLJUČI SISTEM"
 
 msgid "REALLY SUSPEND?"
-msgstr ""
+msgstr "ZAISTA SUSPENDIRATI?"
 
 msgid "SUSPEND SYSTEM"
-msgstr ""
+msgstr "SISTEM OVJEŠENJA"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1727,7 +1730,7 @@ msgid "MIXIMAGE RESOLUTION"
 msgstr "MIJEŠANA REZOLUCIJA SLIKE"
 
 msgid "MIXIMAGE FILE FORMAT"
-msgstr ""
+msgstr "FORMAT DATOTEKE MIXIMAGE"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1843,49 +1846,49 @@ msgid "WORLD"
 msgstr "SVIJET"
 
 msgid "ASIA"
-msgstr ""
+msgstr "AZIJA"
 
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "AUSTRALIJA"
 
 msgid "BRAZIL"
-msgstr ""
+msgstr "BRAZIL"
 
 msgid "CANADA"
-msgstr ""
+msgstr "KANADA"
 
 msgid "CHINA"
-msgstr ""
+msgstr "KINA"
 
 msgid "GERMANY"
-msgstr ""
+msgstr "NJEMAČKA"
 
 msgid "FRANCE"
-msgstr ""
+msgstr "FRANCUSKA"
 
 msgid "ITALY"
-msgstr ""
+msgstr "ITALIJA"
 
 msgid "KOREA"
-msgstr ""
+msgstr "KOREJA"
 
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "HOLANDIJA"
 
 msgid "RUSSIA"
-msgstr ""
+msgstr "RUSIJA"
 
 msgid "SWEDEN"
-msgstr ""
+msgstr "ŠVEDSKA"
 
 msgid "SPAIN"
-msgstr ""
+msgstr "ŠPANIJA"
 
 msgid "TAIWAN"
-msgstr ""
+msgstr "TAJVAN"
 
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "UJEDINJENO KRALJEVSTVO"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "PREFERIRANI JEZIK"
@@ -2492,11 +2495,11 @@ msgstr "UNESITE BROJ IGRANIH PUTA"
 
 msgctxt "metadata"
 msgid "PLAY TIME"
-msgstr ""
+msgstr "VRIJEME ZA IGRANJE"
 
 msgctxt "metadata"
 msgid "ENTER PLAY TIME"
-msgstr ""
+msgstr "UNESITE VRIJEME IGRANJA"
 
 msgctxt "metadata"
 msgid "CONTROLLER"

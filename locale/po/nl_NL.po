@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
-"PO-Revision-Date: 2025-06-24 23:48+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"PO-Revision-Date: 2025-10-15 09:33+0200\n"
 "Last-Translator: Stefan <s.vandenbroekprive@gmail.com>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
 "Language: nl_NL\n"
@@ -139,15 +139,15 @@ msgstr "onbekend"
 msgctxt "theme"
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i minuut"
+msgstr[1] "%i minuten"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i uur"
+msgstr[1] "%i uren"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -316,10 +316,10 @@ msgid "times played, descending"
 msgstr "keer gespeeld, aflopend"
 
 msgid "play time, ascending"
-msgstr ""
+msgstr "speeltijd, oplopend"
 
 msgid "play time, descending"
-msgstr ""
+msgstr "speeltijd, aflopend"
 
 msgid "system, ascending"
 msgstr "systeem, oplopend"
@@ -557,7 +557,7 @@ msgid "ALL UNSELECTED"
 msgstr "ALLE ONGESELECTEERDE"
 
 msgid "STRIP SPECIAL CHARACTERS"
-msgstr ""
+msgstr "SPECIALE TEKENS STRIPPEN"
 
 msgid "MEDIA TARGET TYPE"
 msgstr "MEDIA TARGET TYPE"
@@ -587,7 +587,7 @@ msgid "FAN ART"
 msgstr "FAN ART"
 
 msgid "MIXIMAGES"
-msgstr ""
+msgstr "MIXIMAGES"
 
 msgid "IMPORT MEDIA"
 msgstr "IMPORTEER MEDIA"
@@ -633,7 +633,7 @@ msgid "IMPORT"
 msgstr "IMPORTEREN"
 
 msgid "import"
-msgstr "Importeren"
+msgstr "importeren"
 
 #, c-format
 msgid "IMPORTED %i ENTRY"
@@ -1129,7 +1129,7 @@ msgid "load default directory"
 msgstr "laad standaardmap"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr ""
+msgstr "MAXIMALE SPEELTIJD BIJHOUDEN"
 
 msgid "VRAM LIMIT"
 msgstr "VRAM-LIMIET"
@@ -1219,6 +1219,9 @@ msgstr "VERBORGEN BESTANDEN EN MAPPEN WEERGEVEN"
 msgid "SHOW HIDDEN GAMES"
 msgstr "VERBORGEN SPELLETJES TONEN"
 
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "SPELLEN OP HET ANDERE SCHERM STARTEN"
+
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "AANGEPASTE EVENEMENTEN-SCRIPTS INSCHAKELEN"
 
@@ -1307,10 +1310,10 @@ msgid "POWER OFF SYSTEM"
 msgstr "SCHAKEL SYSTEEM UIT"
 
 msgid "REALLY SUSPEND?"
-msgstr ""
+msgstr "ECHT OPSCHORTEN?"
 
 msgid "SUSPEND SYSTEM"
-msgstr ""
+msgstr "SUSPEND SYSTEEM"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1715,7 +1718,7 @@ msgid "MIXIMAGE RESOLUTION"
 msgstr "MIXIMAGE-RESOLUTIE"
 
 msgid "MIXIMAGE FILE FORMAT"
-msgstr ""
+msgstr "BESTANDSINDELING MIXIMAGE"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1831,49 +1834,49 @@ msgid "WORLD"
 msgstr "WERELD"
 
 msgid "ASIA"
-msgstr ""
+msgstr "AZIË"
 
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "OOSTENRIJK"
 
 msgid "BRAZIL"
-msgstr ""
+msgstr "BRAZIL"
 
 msgid "CANADA"
-msgstr ""
+msgstr "CANADA"
 
 msgid "CHINA"
-msgstr ""
+msgstr "CHINA"
 
 msgid "GERMANY"
-msgstr ""
+msgstr "DUITSLAND"
 
 msgid "FRANCE"
-msgstr ""
+msgstr "FRANKRIJK"
 
 msgid "ITALY"
-msgstr ""
+msgstr "ITALIË"
 
 msgid "KOREA"
-msgstr ""
+msgstr "KOREA"
 
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "NEDERLAND"
 
 msgid "RUSSIA"
-msgstr ""
+msgstr "RUSLAND"
 
 msgid "SWEDEN"
-msgstr ""
+msgstr "ZWEDEN"
 
 msgid "SPAIN"
-msgstr ""
+msgstr "SPANJE"
 
 msgid "TAIWAN"
-msgstr ""
+msgstr "TAIWAN"
 
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "VERENIGD KONINKRIJK"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "GEWENSTE TAAL"
@@ -2480,11 +2483,11 @@ msgstr "VOER HET AANTAL KEER IN DAT JE GESPEELD HEBT"
 
 msgctxt "metadata"
 msgid "PLAY TIME"
-msgstr ""
+msgstr "SPELTIJD"
 
 msgctxt "metadata"
 msgid "ENTER PLAY TIME"
-msgstr ""
+msgstr "SPEELTIJD INVOEREN"
 
 msgctxt "metadata"
 msgid "CONTROLLER"

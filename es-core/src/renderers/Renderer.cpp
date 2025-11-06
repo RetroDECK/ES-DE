@@ -69,7 +69,7 @@ bool Renderer::createWindow()
 
     mInitialCursorState = (SDL_ShowCursor(0) != 0);
 
-#if defined(__IOS__)
+#if defined(__ANDROID__) || defined(__IOS__)
     int displayIndex {0};
 #else
     int displayIndex {Settings::getInstance()->getInt("DisplayIndex")};

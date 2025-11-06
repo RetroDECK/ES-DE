@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -1170,6 +1170,9 @@ msgid "SHOW HIDDEN FILES AND FOLDERS"
 msgstr ""
 
 msgid "SHOW HIDDEN GAMES"
+msgstr ""
+
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
 msgstr ""
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"

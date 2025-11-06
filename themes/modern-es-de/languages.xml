@@ -16,7 +16,7 @@
             <langLabelReleasedate>Objavljeno</langLabelReleasedate>
             <langLabelPlayers>Igrači</langLabelPlayers>
             <langLabelGenre>Žanr</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vrijeme Za Igranje</langLabelPlayTime>
             <langLabelDeveloper>Programer</langLabelDeveloper>
             <langLabelPublisher>Izdavač</langLabelPublisher>
             <langUnknown>Nepoznato</langUnknown>
@@ -28,7 +28,7 @@
             <langLabelReleasedate>Llançament</langLabelReleasedate>
             <langLabelPlayers>Jugadors</langLabelPlayers>
             <langLabelGenre>Gènere</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Temps De Joc</langLabelPlayTime>
             <langLabelDeveloper>Desenvolupador</langLabelDeveloper>
             <langLabelPublisher>Editor</langLabelPublisher>
             <langUnknown>Desconegut</langUnknown>
@@ -40,7 +40,7 @@
             <langLabelReleasedate>Veröffentlicht</langLabelReleasedate>
             <langLabelPlayers>Spieler</langLabelPlayers>
             <langLabelGenre>Genre</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Spielzeit</langLabelPlayTime>
             <langLabelDeveloper>Entwickler</langLabelDeveloper>
             <langLabelPublisher>Herausgeber</langLabelPublisher>
             <langUnknown>Unbekannt</langUnknown>
@@ -52,7 +52,7 @@
             <langLabelReleasedate>Lanzamiento</langLabelReleasedate>
             <langLabelPlayers>Jugadores</langLabelPlayers>
             <langLabelGenre>Genero</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tiempo De Juego</langLabelPlayTime>
             <langLabelDeveloper>Desarrollador</langLabelDeveloper>
             <langLabelPublisher>Compañia</langLabelPublisher>
             <langUnknown>Desconocido</langUnknown>
@@ -64,7 +64,7 @@
             <langLabelReleasedate>Date de Sortie</langLabelReleasedate>
             <langLabelPlayers>Joueurs</langLabelPlayers>
             <langLabelGenre>Genre</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Temps Joué</langLabelPlayTime>
             <langLabelDeveloper>Développeur</langLabelDeveloper>
             <langLabelPublisher>Editeur</langLabelPublisher>
             <langUnknown>Inconnu</langUnknown>
@@ -76,7 +76,7 @@
             <langLabelReleasedate>Objavljeno</langLabelReleasedate>
             <langLabelPlayers>Igrači</langLabelPlayers>
             <langLabelGenre>Žanr</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vrijeme Igranja</langLabelPlayTime>
             <langLabelDeveloper>Programer</langLabelDeveloper>
             <langLabelPublisher>Izdavač</langLabelPublisher>
             <langUnknown>Nepoznato</langUnknown>
@@ -88,7 +88,7 @@
             <langLabelReleasedate>Data Uscita</langLabelReleasedate>
             <langLabelPlayers>Nr. Giocatori</langLabelPlayers>
             <langLabelGenre>Genere</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo Di Gioco</langLabelPlayTime>
             <langLabelDeveloper>Sviluppatore</langLabelDeveloper>
             <langLabelPublisher>Casa Editrice</langLabelPublisher>
             <langUnknown>Sconosciuto</langUnknown>
@@ -100,7 +100,7 @@
             <langLabelReleasedate>Datum van Uitgave</langLabelReleasedate>
             <langLabelPlayers>Spelers</langLabelPlayers>
             <langLabelGenre>Genre</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Speltijd</langLabelPlayTime>
             <langLabelDeveloper>Ontwikkelaar</langLabelDeveloper>
             <langLabelPublisher>Uitgever</langLabelPublisher>
             <langUnknown>Onbekend</langUnknown>
@@ -112,7 +112,7 @@
             <langLabelReleasedate>Wydano</langLabelReleasedate>
             <langLabelPlayers>Liczba Graczy</langLabelPlayers>
             <langLabelGenre>Gatunek</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Czas Rozgrywki</langLabelPlayTime>
             <langLabelDeveloper>Deweloper</langLabelDeveloper>
             <langLabelPublisher>Wydawca</langLabelPublisher>
             <langUnknown>Nieznane</langUnknown>
@@ -124,7 +124,7 @@
             <langLabelReleasedate>Lançamento</langLabelReleasedate>
             <langLabelPlayers>Jogadores</langLabelPlayers>
             <langLabelGenre>Gênero</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo De Jogo</langLabelPlayTime>
             <langLabelDeveloper>Desenvolvedor</langLabelDeveloper>
             <langLabelPublisher>Distribuidor</langLabelPublisher>
             <langUnknown>Desconhecido</langUnknown>
@@ -136,7 +136,7 @@
             <langLabelReleasedate>Lançamento</langLabelReleasedate>
             <langLabelPlayers>Jogadores</langLabelPlayers>
             <langLabelGenre>Género</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Tempo De Jogo</langLabelPlayTime>
             <langLabelDeveloper>Programador</langLabelDeveloper>
             <langLabelPublisher>Editora</langLabelPublisher>
             <langUnknown>Desconhecido</langUnknown>
@@ -148,7 +148,7 @@
             <langLabelReleasedate>Lansat</langLabelReleasedate>
             <langLabelPlayers>Număr de Jucători</langLabelPlayers>
             <langLabelGenre>Gen</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Timp Jucat</langLabelPlayTime>
             <langLabelDeveloper>Dezvoltator</langLabelDeveloper>
             <langLabelPublisher>Editor</langLabelPublisher>
             <langUnknown>Necunoscut</langUnknown>
@@ -157,10 +157,10 @@
     <language name="ru_RU">
         <variables>
             <langLabelRating>Рейтинг</langLabelRating>
-            <langLabelReleasedate>Дата Выхода</langLabelReleasedate>
+            <langLabelReleasedate>Дата выхода</langLabelReleasedate>
             <langLabelPlayers>Игроки</langLabelPlayers>
             <langLabelGenre>Жанр</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Время в игре</langLabelPlayTime>
             <langLabelDeveloper>Разработчик</langLabelDeveloper>
             <langLabelPublisher>Издатель</langLabelPublisher>
             <langUnknown>Неизвестно</langUnknown>
@@ -172,7 +172,7 @@
             <langLabelReleasedate>Objavljeno</langLabelReleasedate>
             <langLabelPlayers>Igrači</langLabelPlayers>
             <langLabelGenre>Žanr</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>Vreme Igre</langLabelPlayTime>
             <langLabelDeveloper>Programer</langLabelDeveloper>
             <langLabelPublisher>Izdavač</langLabelPublisher>
             <langUnknown>Nepoznato</langUnknown>
@@ -196,7 +196,7 @@
             <langLabelReleasedate>تاريخ الإصدار</langLabelReleasedate>
             <langLabelPlayers>اللاعبون</langLabelPlayers>
             <langLabelGenre>النوع</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>وقت اللعب</langLabelPlayTime>
             <langLabelDeveloper>المطور</langLabelDeveloper>
             <langLabelPublisher>الناشر</langLabelPublisher>
             <langUnknown>غير معروف</langUnknown>
@@ -208,7 +208,7 @@
             <langLabelReleasedate>発行日</langLabelReleasedate>
             <langLabelPlayers>プレイヤー</langLabelPlayers>
             <langLabelGenre>ジャンル</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>プレイ時間</langLabelPlayTime>
             <langLabelDeveloper>開発者</langLabelDeveloper>
             <langLabelPublisher>発行者</langLabelPublisher>
             <langUnknown>未知</langUnknown>
@@ -220,7 +220,7 @@
             <langLabelReleasedate>발매일</langLabelReleasedate>
             <langLabelPlayers>플레이어</langLabelPlayers>
             <langLabelGenre>장르</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>놀이 시간</langLabelPlayTime>
             <langLabelDeveloper>개발사</langLabelDeveloper>
             <langLabelPublisher>배급사</langLabelPublisher>
             <langUnknown>알수없음</langUnknown>
@@ -232,7 +232,7 @@
             <langLabelReleasedate>发行日</langLabelReleasedate>
             <langLabelPlayers>玩家</langLabelPlayers>
             <langLabelGenre>分类</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>游玩时间</langLabelPlayTime>
             <langLabelDeveloper>开发者</langLabelDeveloper>
             <langLabelPublisher>发行商</langLabelPublisher>
             <langUnknown>未知</langUnknown>
@@ -244,7 +244,7 @@
             <langLabelReleasedate>發行日</langLabelReleasedate>
             <langLabelPlayers>玩家</langLabelPlayers>
             <langLabelGenre>分類</langLabelGenre>
-            <langLabelPlayTime>Play Time</langLabelPlayTime>
+            <langLabelPlayTime>遊玩時間</langLabelPlayTime>
             <langLabelDeveloper>開發者</langLabelDeveloper>
             <langLabelPublisher>發行商</langLabelPublisher>
             <langUnknown>未知</langUnknown>

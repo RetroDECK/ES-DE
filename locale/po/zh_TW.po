@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-13 22:03+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
 "PO-Revision-Date: 2025-10-13 22:04+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 繁體中文 <info@es-de.org>\n"
@@ -1191,6 +1191,9 @@ msgstr "顯示隱藏檔案和資料夾"
 
 msgid "SHOW HIDDEN GAMES"
 msgstr "顯示隱藏的遊戲"
+
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "在另一個螢幕上啟動遊戲"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "啟用自定義事件指令碼"

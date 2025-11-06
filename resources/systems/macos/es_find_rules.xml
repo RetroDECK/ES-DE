@@ -21,6 +21,12 @@
             <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
         </rule>
     </core>
+    <emulator name="3DSEN">
+        <!-- Nintendo NES and Famicom emulator 3dSen -->
+        <rule type="staticpath">
+            <entry>/Applications/3dSen.app/Contents/MacOS/3dSen</entry>
+        </rule>
+    </emulator>
     <emulator name="ACE-DL">
         <!-- Amstrad CPC emulator ACE-DL -->
         <rule type="staticpath">
@@ -88,6 +94,12 @@
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="staticpath">
             <entry>/Applications/Dolphin.app/Contents/MacOS/Dolphin</entry>
+        </rule>
+    </emulator>
+    <emulator name="DOSBOX-PURE-UNLEASHED">
+        <!-- DOS emulator DOSBox Pure Unleashed -->
+        <rule type="staticpath">
+            <entry>/Applications/DOSBoxPure.app/Contents/MacOS/DOSBoxPure</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-STAGING">
@@ -342,6 +354,12 @@
             <entry>/Applications/shadps4.app/Contents/MacOS/shadps4</entry>
         </rule>
     </emulator>
+    <emulator name="SHADPS4-GUI">
+        <!-- Sony PlayStation 4 emulator shadPS4 (GUI) -->
+        <rule type="staticpath">
+            <entry>/Applications/shadPS4QtLauncher.app/Contents/MacOS/shadPS4QtLauncher</entry>
+        </rule>
+    </emulator>
     <emulator name="SHEEPSHAVER">
         <!-- Apple Macintosh PowerPC emulator SheepShaver -->
         <rule type="staticpath">
@@ -443,6 +461,12 @@
         <!-- Dragon and Tandy 8-bit computer emulator XRoar -->
         <rule type="staticpath">
             <entry>/Applications/XRoar.app/Contents/MacOS/xroar</entry>
+        </rule>
+    </emulator>
+    <emulator name="YMIR">
+        <!-- Sega Saturn emulator Ymir -->
+        <rule type="staticpath">
+            <entry>/Applications/ymir-sdl3.app/Contents/MacOS/ymir-sdl3</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">

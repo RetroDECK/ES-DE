@@ -1763,7 +1763,7 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-#if !defined(__IOS__)
+#if !defined(__ANDROID__) && !defined(__IOS__)
     // Display/monitor.
     auto displayIndex =
         std::make_shared<OptionListComponent<std::string>>(_("DISPLAY/MONITOR INDEX"), false);
@@ -2019,6 +2019,21 @@ void GuiMenu::openOtherOptions()
             s->setNeedsRescanROMDirectory();
         }
     });
+
+#if defined(__ANDROID__)
+    // Launch games on the other screen.
+    auto launchOnOtherScreen = std::make_shared<SwitchComponent>();
+    launchOnOtherScreen->setState(Settings::getInstance()->getBool("LaunchOnOtherScreen"));
+    s->addWithLabel(_("LAUNCH GAMES ON THE OTHER SCREEN"), launchOnOtherScreen);
+    s->addSaveFunc([launchOnOtherScreen, s] {
+        if (launchOnOtherScreen->getState() !=
+            Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+            Settings::getInstance()->setBool("LaunchOnOtherScreen",
+                                             launchOnOtherScreen->getState());
+            s->setNeedsSaving();
+        }
+    });
+#endif
 
 #if !defined(__IOS__)
     // Custom event scripts, fired using Scripting::fireEvent().

@@ -128,6 +128,7 @@ bool Window::init(bool resized)
 
     mBackgroundOverlay = std::make_unique<ImageComponent>(false, false);
     mBackgroundOverlayOpacity = 0.0f;
+    mProgressBarRectangles.clear();
 
     // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
     if (mDefaultFonts.empty()) {

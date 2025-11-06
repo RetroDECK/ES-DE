@@ -572,6 +572,7 @@
         <path>%ROMPATH%/dos</path>
         <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
+        <command label="DOSBox Pure Unleashed (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-PURE-UNLEASHED% %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
@@ -656,6 +657,7 @@
         <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Famicom" %ROM%</command> -->
         <!-- <command label="ares FDS (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Famicom Disk System" %ROM%</command> -->
         <!-- <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% &ndash;&ndash;file-path %ROM%</command> -->
+        <!-- <command label="3dSen (Standalone)">%EMULATOR_3DSEN% -id=%INJECT%=%BASENAME%.3dsen</command> -->
         <!-- <command label="3dSen (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_3DSEN-WINDOWS% -id=%INJECT%=%BASENAME%.3dsen</command> -->
         <!-- <command label="3dSen (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_3DSEN-WINDOWS% -id=%INJECT%=%BASENAME%.3dsen</command> -->
         <platform>famicom</platform>
@@ -1281,6 +1283,8 @@
         <path>%ROMPATH%/n3ds</path>
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
         <command label="Azahar (Standalone)">%EMULATOR_AZAHAR% %ROM%</command>
+        <command label="Azahar Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <!-- <command label="AzaharPlus (Standalone)">%EMULATOR_AZAHARPLUS% %ROM%</command> -->
         <command label="Citra">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra_libretro.so %ROM%</command>
         <command label="Citra 2018">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra2018_libretro.so %ROM%</command>
         <command label="Panda3DS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/panda3ds_libretro.so %ROM%</command>
@@ -1420,6 +1424,7 @@
         <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Famicom" %ROM%</command> -->
         <!-- <command label="ares FDS (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "Famicom Disk System" %ROM%</command> -->
         <!-- <command label="jgenesis (Standalone)">%EMULATOR_JGENESIS% &ndash;&ndash;file-path %ROM%</command> -->
+        <!-- <command label="3dSen (Standalone)">%EMULATOR_3DSEN% -id=%INJECT%=%BASENAME%.3dsen</command> -->
         <!-- <command label="3dSen (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_3DSEN-WINDOWS% -id=%INJECT%=%BASENAME%.3dsen</command> -->
         <!-- <command label="3dSen (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_3DSEN-WINDOWS% -id=%INJECT%=%BASENAME%.3dsen</command> -->
         <platform>nes</platform>
@@ -1509,6 +1514,7 @@
         <path>%ROMPATH%/pc</path>
         <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
+        <command label="DOSBox Pure Unleashed (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-PURE-UNLEASHED% %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
@@ -1645,12 +1651,13 @@
         <name>ps2</name>
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%/ps2</path>
-        <extension>.arcadedef .bin .BIN .chd .CHD .ciso .CISO .cso .CSO .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG .zso .ZSO</extension>
-	    <command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% -batch %ROM%</command>
+        <extension>.bin .BIN .chd .CHD .ciso .CISO .cso .CSO .desktop .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG .zso .ZSO</extension>
+        <command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% -batch %ROM%</command>
         <command label="LRPS2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx2_libretro.so %ROM%</command>
         <command label="PCSX2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx2_libretro.so %ROM%</command>
-        <!-- <command label="PCSX2 Legacy (Standalone)">%EMULATOR_PCSX2-LEGACY% &ndash;&ndash;nogui %ROM%</command>-->
-        <!-- <command label="Play! (Standalone)">%EMULATOR_PLAY!% &ndash;&ndash;disc %ROM%</command>-->
+        <!-- <command label="PCSX2 Legacy (Standalone)">%EMULATOR_PCSX2-LEGACY% &ndash;&ndash;nogui %ROM%</command> -->
+        <!-- <command label="Play! (Standalone)">%EMULATOR_PLAY!% &ndash;&ndash;fullscreen &ndash;&ndash;disc %ROM%</command> -->
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>ps2</platform>
         <theme>ps2</theme>
     </system>
@@ -1666,7 +1673,7 @@
         <theme>ps3</theme>
     </system>
 
-    <system>
+    <!-- <system>
         <name>ps4</name>
         <fullname>Sony PlayStation 4</fullname>
         <path>%ROMPATH%/ps4</path>
@@ -1674,12 +1681,11 @@
         <command label="shadPS4 Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="shadPS4 Game Serial (Standalone)">%EMULATOR_SHADPS4% -g %INJECT%=%BASENAME%.ps4</command>
         <command label="shadPS4 eboot.bin (Standalone)">%EMULATOR_SHADPS4% %ROM%</command>
-    <!-- <command label="shadPS4 Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <command label="shadPS4 Plus Game Serial (Standalone)">%EMULATOR_SHADPS4PLUS% -g %INJECT%=%BASENAME%.ps4</command>
-        <command label="shadPS4 Plus eboot.bin (Standalone)">%EMULATOR_SHADPS4PLUS% %ROM%</command>  -->
+        <command label="shadPS4 [GUI] Game Serial (Standalone)">%EMULATOR_SHADPS4-GUI% -d -g %INJECT%=%BASENAME%.ps4</command>
+        <command label="shadPS4 [GUI] eboot.bin (Standalone)">%EMULATOR_SHADPS4-GUI% -d -g %ROM%</command>
         <platform>ps4</platform>
         <theme>ps4</theme>
-    </system>
+    </system> -->
 
     <system>
         <name>psp</name>
@@ -1710,7 +1716,8 @@
         <command label="Beetle PSX HW">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_psx_hw_libretro.so %ROM%</command>
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx_rearmed_libretro.so %ROM%</command>
         <command label="DuckStation (Legacy) (Standalone)">%EMULATOR_DUCKSTATION% -batch %ROM%</command>
-        <!-- <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module psx %ROM%</command>-->
+        <!-- <command label="ares (Standalone)">%EMULATOR_ARES% &ndash;&ndash;fullscreen &ndash;&ndash;system "PlayStation" %ROM%</command> -->
+        <!-- <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module psx %ROM%</command> -->
         <platform>psx</platform>
         <theme>psx</theme>
     </system>
@@ -2297,12 +2304,13 @@
         <fullname>Microsoft Windows 3.x</fullname>
         <path>%ROMPATH%/windows3x</path>
         <extension>.AppImage .bat .BAT .desktop .dosz .DOSZ .sh .7z .7Z .zip .ZIP</extension>
-        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
+        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command> -->
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
-      <!--     <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
-      <!--     <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
-      <!--     <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
-        <!--   <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
+        <!-- <command label="DOSBox Pure Unleashed (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-PURE-UNLEASHED% %ROM%</command> -->
+        <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
+        <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <platform>windows3x</platform>
         <theme>windows3x</theme>
     </system>
@@ -2311,12 +2319,13 @@
         <fullname>Microsoft Windows 9x</fullname>
         <path>%ROMPATH%/windows9x</path>
         <extension>.AppImage .bat .BAT .desktop .dosz .DOSZ .sh .7z .7Z .zip .ZIP</extension>
-        <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
+        <!-- <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command> -->
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
-      <!--   <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
-        <!--   <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
-        <!--   <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
-        <!--   <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command> -->
+        <!-- <command label="DOSBox Pure Unleashed (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-PURE-UNLEASHED% %ROM%</command> -->
+        <command label="Shortcut or script (Suspend ES-DE)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Shortcut or script (Keep ES-DE running)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
+        <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <platform>pcwindows</platform>
         <theme>windows9x</theme>
     </system>
@@ -2385,10 +2394,11 @@
         <fullname>Microsoft Xbox 360</fullname>
         <path>%ROMPATH%/xbox360</path>
         <extension>. .desktop .iso .ISO .sh .xex .XEX .zar .ZAR</extension>
-      <command label="xenia (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% %INJECT%=%BASENAME%.commands %ROM%</command>
-      <!--    <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %ROM%</command>  -->
-    <!--      <command label="xenia (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_XENIA-WINDOWS% %ROM%</command> -->
-      <!--    <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
+        <command label="xenia (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% %INJECT%=%BASENAME%.commands %ROM%</command>
+        <!-- <command label="Xenia Edge (Standalone)">%EMULATOR_XENIA-EDGE% %INJECT%=%BASENAME%.commands %ROM%</command> -->
+        <!-- <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command> -->
+        <!-- <command label="xenia (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command> -->
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>xbox360</platform>
         <theme>xbox360</theme>
     </system>

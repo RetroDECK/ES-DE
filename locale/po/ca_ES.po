@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
-"PO-Revision-Date: 2025-09-01 19:55+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"PO-Revision-Date: 2025-10-20 17:04+0200\n"
 "Last-Translator: Josep M <johnnydement@duck.com>\n"
 "Language-Team: Català <info@es-de.org>\n"
 "Language: ca_ES\n"
@@ -138,15 +138,15 @@ msgstr "desconegut"
 msgctxt "theme"
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i minut"
+msgstr[1] "%i minuts"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i hora"
+msgstr[1] "%i hores"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -315,10 +315,10 @@ msgid "times played, descending"
 msgstr "partides, descendent"
 
 msgid "play time, ascending"
-msgstr ""
+msgstr "temps de joc, ascendent"
 
 msgid "play time, descending"
-msgstr ""
+msgstr "temps de joc, descendent"
 
 msgid "system, ascending"
 msgstr "sistema, ascendent"
@@ -555,7 +555,7 @@ msgid "ALL UNSELECTED"
 msgstr "ELS NO SELECCIONATS"
 
 msgid "STRIP SPECIAL CHARACTERS"
-msgstr ""
+msgstr "ELIMINAR CARÀCTERS ESPECIALS"
 
 msgid "MEDIA TARGET TYPE"
 msgstr "TIPUS DE MITJÀ OBJECTIU"
@@ -585,7 +585,7 @@ msgid "FAN ART"
 msgstr "ART FAN"
 
 msgid "MIXIMAGES"
-msgstr ""
+msgstr "COMPOSICIÓ"
 
 msgid "IMPORT MEDIA"
 msgstr "IMPORTAR MULTIMÈDIA"
@@ -1123,7 +1123,7 @@ msgid "load default directory"
 msgstr "guardar directori per defecte"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr ""
+msgstr "SEGUIMENT DEL TEMPS DE JOC MÀXIM"
 
 msgid "VRAM LIMIT"
 msgstr "LÍMIT VRAM"
@@ -1213,6 +1213,9 @@ msgstr "MOSTRAR ARXIUS I CARPETES OCULTES"
 msgid "SHOW HIDDEN GAMES"
 msgstr "MOSTRAR JOCS OCULTS"
 
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "LLANÇA JOCS A L'ALTRA PANTALLA"
+
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "HABILITAR SCRIPTS PERSONALITZATS D'ESDEVENIMENT"
 
@@ -1301,10 +1304,10 @@ msgid "POWER OFF SYSTEM"
 msgstr "APAGAR EL SISTEMA"
 
 msgid "REALLY SUSPEND?"
-msgstr ""
+msgstr "SUSPENDRE, SEGUR?"
 
 msgid "SUSPEND SYSTEM"
-msgstr ""
+msgstr "SUSPENDRE EL SISTEMA"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1707,7 +1710,7 @@ msgid "MIXIMAGE RESOLUTION"
 msgstr "RESOLUCIÓ DE COMPOSICIÓ"
 
 msgid "MIXIMAGE FILE FORMAT"
-msgstr ""
+msgstr "FORMAT DE FITXER DE COMPOSICIÓ"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1823,49 +1826,49 @@ msgid "WORLD"
 msgstr "MUNDIAL"
 
 msgid "ASIA"
-msgstr ""
+msgstr "ÀSIA"
 
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "AUSTRÀLIA"
 
 msgid "BRAZIL"
-msgstr ""
+msgstr "BRASIL"
 
 msgid "CANADA"
-msgstr ""
+msgstr "CANADÀ"
 
 msgid "CHINA"
-msgstr ""
+msgstr "XINA"
 
 msgid "GERMANY"
-msgstr ""
+msgstr "ALEMANYA"
 
 msgid "FRANCE"
-msgstr ""
+msgstr "FRANÇA"
 
 msgid "ITALY"
-msgstr ""
+msgstr "ITÀLIA"
 
 msgid "KOREA"
-msgstr ""
+msgstr "COREA"
 
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "PAÏSOS BAIXOS"
 
 msgid "RUSSIA"
-msgstr ""
+msgstr "RÚSSIA"
 
 msgid "SWEDEN"
-msgstr ""
+msgstr "SUÈCIA"
 
 msgid "SPAIN"
-msgstr ""
+msgstr "ESPANYA"
 
 msgid "TAIWAN"
-msgstr ""
+msgstr "TAIWAN"
 
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "REGNE UNIT"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "IDIOMA PREFERIT"
@@ -2472,11 +2475,11 @@ msgstr "ESCRIU EL NÚMERO DE VEGADES QUE S'HA JUGAT"
 
 msgctxt "metadata"
 msgid "PLAY TIME"
-msgstr ""
+msgstr "TEMPS DE JOC"
 
 msgctxt "metadata"
 msgid "ENTER PLAY TIME"
-msgstr ""
+msgstr "ESCRIU EL TEMPS DE JOC"
 
 msgctxt "metadata"
 msgid "CONTROLLER"

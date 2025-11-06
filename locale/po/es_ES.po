@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
 "PO-Revision-Date: 2025-10-14 19:26+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Español (España) <info@es-de.org>\n"
@@ -1228,6 +1228,9 @@ msgstr "MOSTRAR FICHEROS OCULTOS Y CARPETAS"
 
 msgid "SHOW HIDDEN GAMES"
 msgstr "MOSTRAR JUEGOS OCULTOS"
+
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "LANZA JUEGOS EN LA OTRA PANTALLA"
 
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ACTIVAR SCRIPTS DE EVENTO PERSONALIZADOS"

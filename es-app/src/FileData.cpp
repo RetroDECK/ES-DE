@@ -158,7 +158,7 @@ void FileData::setPlayMetadata(const bool writeMetadata)
 
     const int startTime {Settings::getInstance()->getInt("GameLaunchTime")};
 
-    if (startTime != 0) {
+    if (startTime != 0 && Settings::getInstance()->getInt("MaxPlayTimeTracking") != 0) {
         Settings::getInstance()->setInt("GameLaunchTime", 0);
         int prevPlayTime {gameToUpdate->metadata.getInt("playtime")};
 
@@ -174,19 +174,22 @@ void FileData::setPlayMetadata(const bool writeMetadata)
         const int maxPlayTimeTracking {
             glm::clamp(Settings::getInstance()->getInt("MaxPlayTimeTracking"), 0, 24) * 3600};
 
-        if (maxPlayTimeTracking != 0 && playTime > maxPlayTimeTracking) {
+        if (maxPlayTimeTracking != 24 * 3600 && playTime > maxPlayTimeTracking) {
             LOG(LogDebug) << "FileData::setPlayMetadata(): Play time was " << playTime
                           << " seconds which exceeds the MaxPlayTimeTracking value of "
                           << maxPlayTimeTracking << ", not updating game metadata";
         }
         else {
-
             LOG(LogDebug) << "FileData::setPlayMetadata(): Play time was " << playTime
                           << " seconds";
 
             gameToUpdate->metadata.set(
                 "playtime", std::to_string(static_cast<long long>(prevPlayTime + playTime)));
         }
+    }
+    else {
+        LOG(LogDebug) << "FileData::setPlayMetadata(): Play time tracking disabled, not updating "
+                         "game metadata";
     }
 
     if (writeMetadata) {
@@ -2179,7 +2182,8 @@ void FileData::launchGame()
     returnValue = Utils::Platform::Android::launchGame(
         androidPackage, androidActivity, androidAction, androidCategory, androidMimeType,
         androidData, mEnvData->mStartPath, romRaw, androidExtrasString, androidExtrasStringArray,
-        androidExtrasInteger, androidExtrasBool, androidActivityFlags);
+        androidExtrasInteger, androidExtrasBool, androidActivityFlags,
+        Settings::getInstance()->getBool("LaunchOnOtherScreen"));
 #else
 
 #if defined(DEINIT_ON_LAUNCH)

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
-"PO-Revision-Date: 2025-06-29 00:11+0300\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"PO-Revision-Date: 2025-10-18 14:03+0300\n"
 "Last-Translator: Lorenzo Castelletta <lorenzo.castelletta@gmail.com>\n"
 "Language-Team: Italiano <info@es-de.org>\n"
 "Language: it_IT\n"
@@ -48,23 +48,22 @@ msgstr "DISABILITATI '%s' SU '%s'"
 
 #, c-format
 msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
-msgstr ""
-"MODIFICA DELLA COLLEZIONE '%s' IN CORSO, AGGIUNGI/RIMUOVI GIOCHI CON %s"
+msgstr "MODIFICA COLLEZIONE '%s' IN CORSO, AGGIUNGI/RIMUOVI GIOCHI CON %s"
 
 #, c-format
 msgid "FINISHED EDITING '%s' COLLECTION"
-msgstr "MODIFICA DELLA COLLEZIONE '%s' TERMINATA"
+msgstr "MODIFICA COLLEZIONE '%s' TERMINATA"
 
 msgid "Favorites"
 msgstr "Preferiti"
 
 #, c-format
 msgid "ADDED '%s' TO '%s'"
-msgstr "AGGIUNTO '%s' A '%s'"
+msgstr "AGGIUNTA DI '%s' A '%s'"
 
 #, c-format
 msgid "REMOVED '%s' FROM '%s'"
-msgstr "RIMOSSO '%s' DA '%s'"
+msgstr "RIMOZIONE DI '%s' DA '%s'"
 
 msgid "This collection is empty"
 msgstr "Questa collezione è vuota"
@@ -137,15 +136,15 @@ msgstr "sconosciuto"
 msgctxt "theme"
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i minuto"
+msgstr[1] "%i minuti"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i ora"
+msgstr[1] "%i ore"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -158,7 +157,7 @@ msgstr ""
 #, c-format
 msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
 msgstr ""
-"ERRORE: IMPOSSIBLE TROVARE IL PRE-COMANDO '%s'. È STATO INSTALLATO "
+"ERRORE: IMPOSSIBILE TROVARE IL PRE-COMANDO '%s'. È STATO INSTALLATO "
 "CORRETTAMENTE?"
 
 #, c-format
@@ -190,11 +189,11 @@ msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
 msgstr "ERRORE: IMPOSSIBILE TROVARE IL FILE CORE '%s' DELL'EMULATORE"
 
 msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr "ERRORE: INSERIMENTO NON VALIDO NEL FILE DI CONFIGURAZIONE DEI SISTEMI"
+msgstr "ERRORE: PARAMETRO NON VALIDO NEL FILE DI CONFIGURAZIONE DEI SISTEMI"
 
 #, c-format
 msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr "ERRORE: MANCA LA CONFIGURAZIONE DEL CORE DI '%s'"
+msgstr "ERRORE: MANCA LA CONFIGURAZIONE DEL CORE PER '%s'"
 
 #, c-format
 msgid "ERROR: INVALID %s VARIABLE ENTRY"
@@ -287,16 +286,16 @@ msgid "release date, descending"
 msgstr "data uscita, discendente"
 
 msgid "developer, ascending"
-msgstr "sviluppatore, asc."
+msgstr "sviluppatore, ascendente"
 
 msgid "developer, descending"
-msgstr "sviluppatore, disc."
+msgstr "sviluppatore, discendente"
 
 msgid "publisher, ascending"
-msgstr "publisher, asc."
+msgstr "publisher, ascendente"
 
 msgid "publisher, descending"
-msgstr "publisher, disc."
+msgstr "publisher, discendente"
 
 msgid "genre, ascending"
 msgstr "genere, ascendente"
@@ -311,10 +310,10 @@ msgid "players, descending"
 msgstr "giocatori, discendente"
 
 msgid "last played, ascending"
-msgstr "ultima partita, asc."
+msgstr "ultima partita, ascendente"
 
 msgid "last played, descending"
-msgstr "ultima partita, disc."
+msgstr "ultima partita, discendente"
 
 msgid "times played, ascending"
 msgstr "nr. partite, ascendente"
@@ -323,10 +322,10 @@ msgid "times played, descending"
 msgstr "nr. partite, discendente"
 
 msgid "play time, ascending"
-msgstr ""
+msgstr "tempo di gioco, ascendente"
 
 msgid "play time, descending"
-msgstr ""
+msgstr "tempo di gioco, discendente"
 
 msgid "system, ascending"
 msgstr "sistema, ascendente"
@@ -347,13 +346,13 @@ msgid "INVALID ENTRY"
 msgstr "INSERIMENTO NON VALIDO"
 
 msgid "CLEARED ENTRY"
-msgstr "INSERIMENTO PULITO"
+msgstr "INSERIMENTO RIMOSSO"
 
 msgid "NO ALTERNATIVE EMULATORS DEFINED"
 msgstr "EMULATORI ALTERNATIVI NON DEFINITI"
 
 msgid "CLEAR INVALID ENTRY"
-msgstr "PULISCI INSERIMENTO NON VALIDO"
+msgstr "RIMUOVI INSERIMENTO NON VALIDO"
 
 msgid "DEFAULT"
 msgstr "PREDEFINITO"
@@ -365,7 +364,7 @@ msgid "APPLICATION UPDATER"
 msgstr "AGGIORNAMENTO APPLICAZIONE"
 
 msgid "INSTALLATION STEPS:"
-msgstr "PASSI DELL'INSTALLAZIONE:"
+msgstr "PROCEDURA DI INSTALLAZIONE:"
 
 msgid "DOWNLOAD NEW RELEASE"
 msgstr "SCARICA NUOVA VERSIONE"
@@ -377,7 +376,7 @@ msgid "INSTALL PACKAGE"
 msgstr "INSTALLA IL PACCHETTO"
 
 msgid "QUIT AND MANUALLY RESTART ES-DE"
-msgstr "ESCI E RIAVVIA MANUALMENTE ES-DE"
+msgstr "ESCI E RIAVVIA ES-DE MANUALMENTE"
 
 msgid "QUIT AND MANUALLY UPGRADE ES-DE"
 msgstr "ESCI E AGGIORNA ES-DE MANUALMENTE"
@@ -401,7 +400,7 @@ msgid "change download directory"
 msgstr "cambia directory di download"
 
 msgid "ENTER DOWNLOAD DIRECTORY"
-msgstr "INSERISCI LA DIRECTORY DI DOWNLOAD"
+msgstr "INSERISCI LA DIRECTORY DEI DOWNLOAD"
 
 msgid "CANCEL"
 msgstr "ANNULLA"
@@ -419,7 +418,7 @@ msgid "OK"
 msgstr "OK"
 
 msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
-msgstr "IL PACCHETTO È STATO SCARICATO E PUÒ ESSERE INSTALLATO MANUALMENTE"
+msgstr "PACCHETTO SCARICATO. ORA PUÒ ESSERE INSTALLATO MANUALMENTE"
 
 msgid "DOWNLOADING 100%"
 msgstr "STO SCARICANDO 100%"
@@ -488,7 +487,7 @@ msgid "FINISH EDITING '%s' COLLECTION"
 msgstr "TERMINA MODIFICHE DELLA COLLEZIONE '%s'"
 
 msgid "SELECT COLLECTIONS"
-msgstr "SELEZIONA LE COLLEZIONI"
+msgstr "SCEGLI LE COLLEZIONI"
 
 msgid "AUTOMATIC GAME COLLECTIONS"
 msgstr "COLLEZIONI DEI GIOCHI AUTOMATICHE"
@@ -549,10 +548,10 @@ msgid "NEVER"
 msgstr "MAI"
 
 msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
-msgstr "ORDINA PREFERITI IN CIMA, NELLE COLLEZIONI PERS."
+msgstr "METTI PREFERITI IN CIMA, IN COLLEZIONI PERS."
 
 msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
-msgstr "MOSTRA STELLE DI VALUTAZIONE, NELLE COLLEZIONI PERS."
+msgstr "MOSTRA STELLE DI VALUTAZIONE, IN COLLEZIONI PERS."
 
 msgid "IMPORT TO SYSTEM"
 msgstr "IMPORTA SUL SISTEMA"
@@ -567,7 +566,7 @@ msgid "ALL UNSELECTED"
 msgstr "TUTTI I NON SELEZIONATI"
 
 msgid "STRIP SPECIAL CHARACTERS"
-msgstr ""
+msgstr "RIMUOVI CARATTERI SPECIALI"
 
 msgid "MEDIA TARGET TYPE"
 msgstr "TIPO MEDIA"
@@ -597,7 +596,7 @@ msgid "FAN ART"
 msgstr "FAN-ART"
 
 msgid "MIXIMAGES"
-msgstr ""
+msgstr "MIXIMAGE"
 
 msgid "IMPORT MEDIA"
 msgstr "IMPORTA MEDIA"
@@ -1138,7 +1137,7 @@ msgid "load default directory"
 msgstr "carica la directory di default"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr ""
+msgstr "TRACCIAMENTO TEMPO DI GIOCO MASSIMO"
 
 msgid "VRAM LIMIT"
 msgstr "LIMITE DELLA V-RAM"
@@ -1228,6 +1227,9 @@ msgstr "MOSTRA FILE E CARTELLE NASCOSTI"
 msgid "SHOW HIDDEN GAMES"
 msgstr "MOSTRA GIOCHI NASCOSTI"
 
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "AVVIA I GIOCHI SULL'ALTRO SCHERMO"
+
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ABILITA GLI SCRIPT DEGLI EVENTI PERSONALIZZATI"
 
@@ -1277,9 +1279,9 @@ msgstr ""
 "QUESTO GENERERÀ TUTTE LE DIRECTORY DEI SISTEMI ALL'INTERNO DELLA TUA "
 "CARTELLA DELLE ROM E AGGIORNERÀ ANCHE TUTTI I FILE SYSTEMINFO.TXT. QUESTA È "
 "UN'OPERAZIONE SICURA CHE NON ELMINIERÀ O MODIFICHERÀ I TUOI FILE DEI GIOCHI. "
-"PER DIMINUIRE I TEMPI DI CARICAMENTO DELL'APPLICAZIONE. DOPO AVER ESEGUITO "
-"QUESTA OPERAZIONE È CONSIGLIATO DI ELIMINARE LE DIRECTORY DEI SISTEMI DI CUI "
-"NON SI HA BISOGNO."
+"PER DIMINUIRE I TEMPI DI CARICAMENTO DELL'APPLICAZIONE È SI CONSIGLIA DI "
+"ELIMINARE LE DIRECTORY DEI SISTEMI DI CUI NON SI HA BISOGNO, DOPO AVER "
+"ESEGUITO QUESTA OPERAZIONE"
 
 msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
 msgstr "LE DIRECTORY DEI SISTEMI SONO STATE CREATE CON SUCCESSO"
@@ -1299,28 +1301,28 @@ msgid ""
 "GAMES AND SYSTEMS"
 msgstr ""
 "QUESTO EFFETTUERÀ UN RESCAN DELLA TUA DIRECTORY DELLE ROM, RILEVANDO "
-"CAMBIAMENTI COME L'AGGIUNTA O LA RIMOZIONE DI GIOCHI E SISTEMI."
+"CAMBIAMENTI, COME L'AGGIUNTA O LA RIMOZIONE DI GIOCHI E SISTEMI."
 
 msgid "REALLY QUIT?"
-msgstr "VUOI DAVVERO USCIRE?"
+msgstr "CONFERMARE USCITA"
 
 msgid "REALLY REBOOT?"
-msgstr "VUOI DAVVERO RIAVVIARE?"
+msgstr "CONFERMARE RIAVVIO"
 
 msgid "REBOOT SYSTEM"
 msgstr "RIAVVIA IL SISTEMA"
 
 msgid "REALLY POWER OFF?"
-msgstr "VUOI DAVVERO SPEGNERE?"
+msgstr "CONFERMARE SPEGNIMENTO"
 
 msgid "POWER OFF SYSTEM"
 msgstr "SPEGNI IL SISTEMA"
 
 msgid "REALLY SUSPEND?"
-msgstr ""
+msgstr "CONFERMARE SOSPENSIONE"
 
 msgid "SUSPEND SYSTEM"
-msgstr ""
+msgstr "SOSPENDI SISTEMA"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1727,10 +1729,10 @@ msgid "GAME MANUALS"
 msgstr "MANUALI DEI GIOCHI"
 
 msgid "MIXIMAGE RESOLUTION"
-msgstr "RISOLUZIONE DELLE MIXIMAGE"
+msgstr "RISOLUZIONE MIXIMAGE"
 
 msgid "MIXIMAGE FILE FORMAT"
-msgstr ""
+msgstr "FORMATO FILE MIXIMAGE"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1847,49 +1849,49 @@ msgid "WORLD"
 msgstr "MONDO"
 
 msgid "ASIA"
-msgstr ""
+msgstr "ASIA"
 
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "AUSTRALIA"
 
 msgid "BRAZIL"
-msgstr ""
+msgstr "BRASILE"
 
 msgid "CANADA"
-msgstr ""
+msgstr "CANADA"
 
 msgid "CHINA"
-msgstr ""
+msgstr "CINA"
 
 msgid "GERMANY"
-msgstr ""
+msgstr "GERMANIA"
 
 msgid "FRANCE"
-msgstr ""
+msgstr "FRANCIA"
 
 msgid "ITALY"
-msgstr ""
+msgstr "ITALIA"
 
 msgid "KOREA"
-msgstr ""
+msgstr "COREA"
 
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "PAESI BASSI"
 
 msgid "RUSSIA"
-msgstr ""
+msgstr "RUSSIA"
 
 msgid "SWEDEN"
-msgstr ""
+msgstr "SVEZIA"
 
 msgid "SPAIN"
-msgstr ""
+msgstr "SPAGNA"
 
 msgid "TAIWAN"
-msgstr ""
+msgstr "TAIWAN"
 
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "REGNO UNITO"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "LINGUA PREFERITA"
@@ -2500,11 +2502,11 @@ msgstr "INSERISCI IL NUMERO DI PARTITE EFFETTUATE"
 
 msgctxt "metadata"
 msgid "PLAY TIME"
-msgstr ""
+msgstr "TEMPO DI GIOCO"
 
 msgctxt "metadata"
 msgid "ENTER PLAY TIME"
-msgstr ""
+msgstr "INSERISCI TEMPO DI GIOCO"
 
 msgctxt "metadata"
 msgid "CONTROLLER"
@@ -2539,18 +2541,16 @@ msgid "ENTER LAST PLAYED DATE"
 msgstr "INSERISCI LA DATA DELL'ULTIMA PARTITA EFFETTUATA"
 
 msgid "No screenshot found, couldn't generate miximage"
-msgstr "Nessuno screenshot trovato. Impossibile generare la miximage"
+msgstr "Nessuno screenshot trovato. Impossibile generare miximage"
 
 msgid "Screenshot in unknown format, couldn't generate miximage"
-msgstr "Screenshot di un formato sconosciuto. Impossibile generare la miximage"
+msgstr "Screenshot di un formato sconosciuto. Impossibile generare miximage"
 
 msgid "Screenshot in unsupported format, couldn't generate miximage"
-msgstr ""
-"Screenshot di un formato non supportato. Impossibile generare la miximage"
+msgstr "Screenshot di un formato non supportato. Impossibile generare miximage"
 
 msgid "Error loading screenshot, couldn't generate miximage"
-msgstr ""
-"Errore nel caricamento dello screenshot. Impossibile generare la miximage"
+msgstr "Errore nel caricamento dello screenshot. Impossibile generare miximage"
 
 msgid "Error loading marquee image, corrupt file?"
 msgstr "Erorre nel caricamento dell'imagine marquee. File corrotto?"
@@ -2715,8 +2715,8 @@ msgid ""
 "UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
 "DIRECTORY."
 msgstr ""
-"SEMBRA CHE UN AGGIORNAMENTO NON SICURO SIA STATO EFFETTUATO. POSSIBILMENTE "
-"TRAMITE LO SPACCHETTAMENTO DI UNA NUOVA VERSIONE SOPRA A QUELLA VECCHIA? "
+"SEMBRA CHE UN AGGIORNAMENTO NON SICURO SIA STATO EFFETTUATO, POSSIBILMENTE "
+"TRAMITE LO SCOMPATTAMENTO DI UNA NUOVA VERSIONE SOPRA A QUELLA VECCHIA. "
 "QUESTO POTREBBE CAUSARE SVARIATI PROBLEMI, ALCUNI DEI QUALI POTREBBERO "
 "APPARENTEMENTE NON VERIFICARSI SUBITO. ASSICURATI DI SEGUIRE SEMPRE LE "
 "ISTRUZIONI SU COME EFFETTUARE GLI AGGIORNAMENTI, CONTENUTE NEL FILE README."

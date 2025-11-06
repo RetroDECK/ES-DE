@@ -54,6 +54,7 @@ Daniel Nylander \
 **Arabic** \
 fotonom243 \
 **Vietnamese** \
+Trần Tâm \
 dungtrinh25 \
 **Japanese** \
 冰棍 \

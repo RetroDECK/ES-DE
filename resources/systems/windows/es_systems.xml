@@ -570,6 +570,7 @@
         <path>%ROMPATH%\dos</path>
         <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
+        <command label="DOSBox Pure Unleashed (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-PURE-UNLEASHED% %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_core_libretro.dll %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_svn_libretro.dll %ROM%</command>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
@@ -1272,6 +1273,7 @@
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .lnk .LNK .z3dsx .Z3DSX .zcci .ZCCI .zcxi .ZCXI .7z .7Z .zip .ZIP</extension>
         <command label="Azahar (Standalone)">%EMULATOR_AZAHAR% %ROM%</command>
         <command label="Azahar Shortcut (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="AzaharPlus (Standalone)">%EMULATOR_AZAHARPLUS% %ROM%</command>
         <command label="Citra">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\citra_libretro.dll %ROM%</command>
         <command label="Citra 2018">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\citra2018_libretro.dll %ROM%</command>
         <command label="Citra (Standalone)">%EMULATOR_CITRA% %ROM%</command>
@@ -1497,6 +1499,7 @@
         <path>%ROMPATH%\pc</path>
         <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .img .IMG .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
+        <command label="DOSBox Pure Unleashed (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-PURE-UNLEASHED% %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_core_libretro.dll %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_svn_libretro.dll %ROM%</command>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%</command>
@@ -1624,12 +1627,13 @@
         <name>ps2</name>
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%\ps2</path>
-        <extension>.bin .BIN .chd .CHD .ciso .CISO .cso .CSO .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG .zso .ZSO</extension>
+        <extension>.bin .BIN .chd .CHD .ciso .CISO .cso .CSO .dump .DUMP .elf .ELF .gz .GZ .lnk .LNK .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG .zso .ZSO</extension>
         <command label="LRPS2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\pcsx2_libretro.dll %ROM%</command>
         <command label="PCSX2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\pcsx2_libretro.dll %ROM%</command>
         <command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% -batch %ROM%</command>
         <command label="PCSX2 Legacy (Standalone)">%EMULATOR_PCSX2-LEGACY% --nogui %ROM%</command>
         <command label="Play! (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_PLAY!% --fullscreen --disc %ROM%</command>
+        <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>ps2</platform>
         <theme>ps2</theme>
     </system>
@@ -1652,6 +1656,8 @@
         <command label="shadPS4 Shortcut (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <command label="shadPS4 Game Serial (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SHADPS4% -g %INJECT%=%BASENAME%.ps4</command>
         <command label="shadPS4 eboot.bin (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SHADPS4% %ROM%</command>
+        <command label="shadPS4 [GUI] Game Serial (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SHADPS4-GUI% -d -g %INJECT%=%BASENAME%.ps4</command>
+        <command label="shadPS4 [GUI] eboot.bin (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SHADPS4-GUI% -d -g %ROM%</command>
         <platform>ps4</platform>
         <theme>ps4</theme>
     </system>
@@ -1684,6 +1690,7 @@
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\pcsx_rearmed_libretro.dll %ROM%</command>
         <command label="SwanStation">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\swanstation_libretro.dll %ROM%</command>
         <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% -batch %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "PlayStation" %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module psx %ROM%</command>
         <platform>psx</platform>
         <theme>psx</theme>
@@ -2274,6 +2281,7 @@
         <extension>.bat .BAT .dosz .DOSZ .lnk .LNK .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
+        <command label="DOSBox Pure Unleashed (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-PURE-UNLEASHED% %ROM%</command>
         <command label="Shortcut or script (Suspend ES-DE)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <command label="Shortcut or script (Keep ES-DE running)">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>windows3x</platform>
@@ -2286,6 +2294,7 @@
         <extension>.bat .BAT .dosz .DOSZ .lnk .LNK .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-X (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
+        <command label="DOSBox Pure Unleashed (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-PURE-UNLEASHED% %ROM%</command>
         <command label="Shortcut or script (Suspend ES-DE)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <command label="Shortcut or script (Keep ES-DE running)">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>pcwindows</platform>
@@ -2353,8 +2362,10 @@
         <name>xbox360</name>
         <fullname>Microsoft Xbox 360</fullname>
         <path>%ROMPATH%\xbox360</path>
-        <extension>. .iso .ISO .xex .XEX .zar .ZAR</extension>
+        <extension>. .iso .ISO .lnk .LNK .xex .XEX .zar .ZAR</extension>
         <command label="xenia (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="Xenia Edge (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA-EDGE% %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>xbox360</platform>
         <theme>xbox360</theme>
     </system>

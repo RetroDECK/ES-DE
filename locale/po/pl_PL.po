@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
-"PO-Revision-Date: 2025-07-08 21:28+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"PO-Revision-Date: 2025-10-19 19:49+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Polski <info@es-de.org>\n"
 "Language: pl_PL\n"
@@ -140,17 +140,17 @@ msgstr "nieznane"
 msgctxt "theme"
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i minuta"
+msgstr[1] "%i minuty"
+msgstr[2] "%i minut"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i godzina"
+msgstr[1] "%i godziny"
+msgstr[2] "%i godzin"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -329,10 +329,10 @@ msgid "times played, descending"
 msgstr "liczba rozgrywek, malejąco"
 
 msgid "play time, ascending"
-msgstr ""
+msgstr "czas rozgrywki, rosnąco"
 
 msgid "play time, descending"
-msgstr ""
+msgstr "czas rozgrywki, malejąco"
 
 msgid "system, ascending"
 msgstr "system, rosnąco"
@@ -569,7 +569,7 @@ msgid "ALL UNSELECTED"
 msgstr "WSZYSTKIE NIEWYBRANE"
 
 msgid "STRIP SPECIAL CHARACTERS"
-msgstr ""
+msgstr "USUŃ ZNAKI SPECJALNE"
 
 msgid "MEDIA TARGET TYPE"
 msgstr "DOCELOWY TYP MEDIÓW"
@@ -599,7 +599,7 @@ msgid "FAN ART"
 msgstr "FAN ART"
 
 msgid "MIXIMAGES"
-msgstr ""
+msgstr "OBRAZY MIXIMAGE"
 
 msgid "IMPORT MEDIA"
 msgstr "IMPORTUJ MEDIA"
@@ -1138,7 +1138,7 @@ msgid "load default directory"
 msgstr "załaduj katalog domyślny"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr ""
+msgstr "ŚLEDZENIE MAKS. CZASU ROZGRYWKI"
 
 msgid "VRAM LIMIT"
 msgstr "LIMIT VRAM"
@@ -1228,6 +1228,9 @@ msgstr "POKAŻ UKRYTE PLIKI I FOLDERY"
 msgid "SHOW HIDDEN GAMES"
 msgstr "POKAŻ UKRYTE GRY"
 
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "URUCHOM GRY NA DRUGIM EKRANIE"
+
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "WŁĄCZ SKRYPTY ZDARZEŃ"
 
@@ -1316,10 +1319,10 @@ msgid "POWER OFF SYSTEM"
 msgstr "WYŁĄCZ SYSTEM"
 
 msgid "REALLY SUSPEND?"
-msgstr ""
+msgstr "WSTRZYMAĆ?"
 
 msgid "SUSPEND SYSTEM"
-msgstr ""
+msgstr "WSTRZYMAJ SYSTEM"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1722,7 +1725,7 @@ msgid "MIXIMAGE RESOLUTION"
 msgstr "ROZDZIELCZOŚĆ MIXIMAGE"
 
 msgid "MIXIMAGE FILE FORMAT"
-msgstr ""
+msgstr "FORMAT PLIKU MIXIMAGE"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1838,49 +1841,49 @@ msgid "WORLD"
 msgstr "ŚWIAT"
 
 msgid "ASIA"
-msgstr ""
+msgstr "AZJA"
 
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "AUSTRALIA"
 
 msgid "BRAZIL"
-msgstr ""
+msgstr "BRAZYLIA"
 
 msgid "CANADA"
-msgstr ""
+msgstr "KANADA"
 
 msgid "CHINA"
-msgstr ""
+msgstr "CHINY"
 
 msgid "GERMANY"
-msgstr ""
+msgstr "NIEMCY"
 
 msgid "FRANCE"
-msgstr ""
+msgstr "FRANCJA"
 
 msgid "ITALY"
-msgstr ""
+msgstr "WŁOCHY"
 
 msgid "KOREA"
-msgstr ""
+msgstr "KOREA"
 
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "HOLANDIA"
 
 msgid "RUSSIA"
-msgstr ""
+msgstr "ROSJA"
 
 msgid "SWEDEN"
-msgstr ""
+msgstr "SZWECJA"
 
 msgid "SPAIN"
-msgstr ""
+msgstr "HISZPANIA"
 
 msgid "TAIWAN"
-msgstr ""
+msgstr "TAJWAN"
 
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "WIELKA BRYTANIA"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "JĘZYK PREFEROWANY"
@@ -2492,11 +2495,11 @@ msgstr "WPISZ LICZBĘ ROZEGRAŃ"
 
 msgctxt "metadata"
 msgid "PLAY TIME"
-msgstr ""
+msgstr "CZAS ROZGRYWKI"
 
 msgctxt "metadata"
 msgid "ENTER PLAY TIME"
-msgstr ""
+msgstr "WPROWADŹ CZAS ROZGRYWKI"
 
 msgctxt "metadata"
 msgid "CONTROLLER"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
-"PO-Revision-Date: 2025-07-08 20:26+0200\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"PO-Revision-Date: 2025-10-22 10:14+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Deutsch <info@es-de.org>\n"
 "Language: de_DE\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 msgid "Network error (status:"
 msgstr "Netzwerkfehler (Status:"
@@ -138,15 +138,15 @@ msgstr "unbekannt"
 msgctxt "theme"
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i Minute"
+msgstr[1] "%i Minuten"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i Stunde"
+msgstr[1] "%i Stunden"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -321,10 +321,10 @@ msgid "times played, descending"
 msgstr "Wie oft gespielt, absteigend"
 
 msgid "play time, ascending"
-msgstr ""
+msgstr "Spielzeit, aufsteigend"
 
 msgid "play time, descending"
-msgstr ""
+msgstr "Spielzeit, absteigend"
 
 msgid "system, ascending"
 msgstr "System, aufsteigend"
@@ -567,7 +567,7 @@ msgid "ALL UNSELECTED"
 msgstr "ALLE UNAUSGEWÄHLTEN"
 
 msgid "STRIP SPECIAL CHARACTERS"
-msgstr ""
+msgstr "SONDERZEICHEN ENTFERNEN"
 
 msgid "MEDIA TARGET TYPE"
 msgstr "MEDIEN-ZIELTYP"
@@ -597,7 +597,7 @@ msgid "FAN ART"
 msgstr "FAN KUNST"
 
 msgid "MIXIMAGES"
-msgstr ""
+msgstr "MIXIMAGES"
 
 msgid "IMPORT MEDIA"
 msgstr "MEDIEN IMPORTIEREN"
@@ -803,7 +803,7 @@ msgid "THEME ASPECT RATIO"
 msgstr "THEME BILDFORMAT"
 
 msgid "THEME TRANSITIONS"
-msgstr "THEMENÜBERGÄNGE"
+msgstr "THEME ÜBERGÄNGE"
 
 msgid "AUTOMATIC"
 msgstr "AUTOMATISCH"
@@ -821,7 +821,7 @@ msgid "FADE (BUILT-IN)"
 msgstr "VERBLASSEN (INTEGRIERT)"
 
 msgid "THEME LANGUAGE"
-msgstr "THEMESPRACHE"
+msgstr "THEME SPRACHE"
 
 msgid "APPLICATION LANGUAGE"
 msgstr "ANWENDUNGSSPRACHE"
@@ -1137,7 +1137,7 @@ msgid "load default directory"
 msgstr "Standardverzeichnis öffnen"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr ""
+msgstr "VERFOLGUNG DER MAXIMALEN SPIELZEIT"
 
 msgid "VRAM LIMIT"
 msgstr "VRAM LIMIT"
@@ -1227,6 +1227,9 @@ msgstr "VERSTECKE DATEIEN UND ORDNER ZEIGEN"
 msgid "SHOW HIDDEN GAMES"
 msgstr "VERSTECKTE SPIELE ZEIGEN"
 
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "STARTEN SIE SPIELE AUF DEM ANDEREN BILDSCHIRM"
+
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "BENUTZERDEFINIERTE EREIGNIS-SKRIPTE AKTIVIEREN"
 
@@ -1315,10 +1318,10 @@ msgid "POWER OFF SYSTEM"
 msgstr "SYSTEM HERUNTERFAHREN"
 
 msgid "REALLY SUSPEND?"
-msgstr ""
+msgstr "WIRKLICH AUSSETZEN?"
 
 msgid "SUSPEND SYSTEM"
-msgstr ""
+msgstr "SUSPEND SYSTEM"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1732,7 +1735,7 @@ msgid "MIXIMAGE RESOLUTION"
 msgstr "MIXIMAGE AUFLÖSUNG"
 
 msgid "MIXIMAGE FILE FORMAT"
-msgstr ""
+msgstr "MIXIMAGE-DATEIFORMAT"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1849,49 +1852,49 @@ msgid "WORLD"
 msgstr "WELT"
 
 msgid "ASIA"
-msgstr ""
+msgstr "ASIEN"
 
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "AUSTRALIEN"
 
 msgid "BRAZIL"
-msgstr ""
+msgstr "BRASILIEN"
 
 msgid "CANADA"
-msgstr ""
+msgstr "KANADA"
 
 msgid "CHINA"
-msgstr ""
+msgstr "CHINA"
 
 msgid "GERMANY"
-msgstr ""
+msgstr "DEUTSCHLAND"
 
 msgid "FRANCE"
-msgstr ""
+msgstr "FRANKREICH"
 
 msgid "ITALY"
-msgstr ""
+msgstr "ITALIEN"
 
 msgid "KOREA"
-msgstr ""
+msgstr "KOREA"
 
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "NIEDERLANDE"
 
 msgid "RUSSIA"
-msgstr ""
+msgstr "RUßLAND"
 
 msgid "SWEDEN"
-msgstr ""
+msgstr "SCHWEDEN"
 
 msgid "SPAIN"
-msgstr ""
+msgstr "SPANIEN"
 
 msgid "TAIWAN"
-msgstr ""
+msgstr "TAIWAN"
 
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "VEREINIGTES KÖNIGREICH"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "BEVORZUGTE SPRACHE"
@@ -2500,11 +2503,11 @@ msgstr "ANZAHL DER SPIELE EINGEBEN"
 
 msgctxt "metadata"
 msgid "PLAY TIME"
-msgstr ""
+msgstr "SPIELZEIT"
 
 msgctxt "metadata"
 msgid "ENTER PLAY TIME"
-msgstr ""
+msgstr "SPIELZEIT EINGEBEN"
 
 msgctxt "metadata"
 msgid "CONTROLLER"

@@ -1246,10 +1246,12 @@ bool ViewController::input(InputConfig* config, Input input)
     // If we're in this state and then register some input, it means that the user is back in ES-DE.
     // Therefore unset the game launch flag and update all the GUI components. This will re-enable
     // the video player and scrolling of game names and game descriptions as well as letting the
-    // screensaver start on schedule. On Android the onResume() method will call the native onResume
-    // function which will perform the same steps as shown below (on Android we always keep running
-    // when launching games).
-#if !defined(__ANDROID__)
+    // screensaver start on schedule. On Android the onResume() method will normally call the native
+    // onResume function which will perform the same steps as shown below (on Android we always keep
+    // running when launching games). But there is a special case when using Samsung DeX or when
+    // launching apps to another screen on multi-screen devices, in this case there will be no
+    // onResume() call as ES-DE was technically still running in the foreground, so we need to
+    // handle the launch state here in a similar manner as on desktop operating systems.
     if (mWindow->getGameLaunchedState()) {
         mWindow->setAllowTextScrolling(true);
         mWindow->setAllowFileAnimation(true);
@@ -1261,11 +1263,12 @@ bool ViewController::input(InputConfig* config, Input input)
             mWindow->getGameLaunched()->setPlayMetadata(true);
             mWindow->setGameLaunched(nullptr);
         }
-
+#if !defined(__ANDROID__)
         // Filter out the "a" button so the game is not restarted if there was such a button press
         // queued when leaving the game.
         if (config->isMappedTo("a", input) && input.value != 0)
             return true;
+#endif
         // Trigger the game-end event.
         auto& eventParams = mWindow->getGameEndEventParams();
         if (eventParams.size() == 5) {
@@ -1274,7 +1277,6 @@ bool ViewController::input(InputConfig* config, Input input)
             eventParams.clear();
         }
     }
-#endif
 
     // Open the main menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&

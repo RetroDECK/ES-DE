@@ -89,7 +89,7 @@ GuiGameImporter::GuiGameImporter(std::string title, std::function<void()> update
 
     mMenu.addWithLabel(_("REMOVE ENTRIES"), mRemoveEntries);
 
-#if defined(__linux__) || defined(__FreeBSD__)
+#if (defined(__linux__) || defined(__FreeBSD__)) && !defined(__ANDROID__)
     mStripSpecialChars = std::make_shared<SwitchComponent>();
     mStripSpecialChars->setState(Settings::getInstance()->getBool("ImporterStripSpecialChars"));
     mMenu.addWithLabel(_("STRIP SPECIAL CHARACTERS"), mStripSpecialChars);

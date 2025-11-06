@@ -516,6 +516,11 @@ void applicationLoop()
                     ViewController::getInstance()->setWindowSizeChanged(
                         static_cast<int>(event.window.data1), static_cast<int>(event.window.data2));
                     ViewController::getInstance()->checkWindowSizeChanged();
+                    // Workaround for what seems to be a bug in the SDL library.
+                    if (Settings::getInstance()->getBool("VirtualKeyboard"))
+                        SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "0");
+                    else
+                        SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "1");
                 }
                 // Prevent that button presses get registered immediately when entering the
                 // foreground (which most commonly mean we're returning from a game).

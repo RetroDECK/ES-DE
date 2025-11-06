@@ -93,6 +93,13 @@
             <entry>%ESPATH%\..\Emulators\azahar\azahar.exe</entry>
         </rule>
     </emulator>
+    <emulator name="AZAHARPLUS">
+        <!-- Nintendo 3DS emulator AzaharPlus -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\azaharplus\azaharplus.exe</entry>
+            <entry>%ESPATH%\..\Emulators\azaharplus\azaharplus.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="BASILISKII">
         <!-- Macintosh 68k emulator Basilisk II -->
         <rule type="staticpath">
@@ -184,6 +191,13 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\Dolphin-x64\Dolphin.exe</entry>
             <entry>%ESPATH%\..\Emulators\Dolphin-x64\Dolphin.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="DOSBOX-PURE-UNLEASHED">
+        <!-- DOS emulator DOSBox Pure Unleashed -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\DOSBoxPure\DOSBoxPure.exe</entry>
+            <entry>%ESPATH%\..\Emulators\DOSBoxPure\DOSBoxPure.exe</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-STAGING">
@@ -601,6 +615,13 @@
             <entry>%ESPATH%\..\Emulators\shadPS4\shadPS4.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SHADPS4-GUI">
+        <!-- Sony PlayStation 4 emulator shadPS4 (GUI) -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\shadPS4QtLauncher\shadPS4QtLauncher.exe</entry>
+            <entry>%ESPATH%\..\Emulators\shadPS4QtLauncher\shadPS4QtLauncher.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SHEEPSHAVER">
         <!-- Apple Macintosh PowerPC emulator SheepShaver -->
         <rule type="staticpath">
@@ -787,6 +808,15 @@
             <entry>%ESPATH%\..\Emulators\xenia\xenia.exe</entry>
             <entry>%ESPATH%\Emulators\xenia_canary\xenia_canary.exe</entry>
             <entry>%ESPATH%\..\Emulators\xenia_canary\xenia_canary.exe</entry>
+            <entry>%ESPATH%\Emulators\XeniaManager\Emulators\Xenia Canary\xenia_canary.exe</entry>
+            <entry>%ESPATH%\..\Emulators\XeniaManager\Emulators\Xenia Canary\xenia_canary.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="XENIA-EDGE">
+        <!-- Microsoft Xbox 360 emulator Xenia Edge -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\xenia_edge\xenia_edge.exe</entry>
+            <entry>%ESPATH%\..\Emulators\xenia_edge\xenia_edge.exe</entry>
         </rule>
     </emulator>
     <emulator name="XM6PRO68K">

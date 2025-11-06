@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-09 22:35+0200\n"
-"PO-Revision-Date: 2025-07-02 16:34+0400\n"
+"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"PO-Revision-Date: 2025-10-19 17:38+0400\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
 "Language: ru_RU\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 msgid "Network error (status:"
 msgstr "Ошибка сети (статус:"
@@ -56,7 +56,7 @@ msgid "FINISHED EDITING '%s' COLLECTION"
 msgstr "ЗАВЕРШЕНО РЕДАКТИРОВАНИЕ КОЛЛЕКЦИИ '%s'"
 
 msgid "Favorites"
-msgstr "Избранное"
+msgstr "Избр"
 
 #, c-format
 msgid "ADDED '%s' TO '%s'"
@@ -142,17 +142,17 @@ msgstr "неизвестно"
 msgctxt "theme"
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i минута"
+msgstr[1] "%i минуты"
+msgstr[2] "%i минут"
 
 #, c-format
 msgctxt "theme"
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%i час"
+msgstr[1] "%i часа"
+msgstr[2] "%i часов"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -309,10 +309,10 @@ msgid "players, descending"
 msgstr "игроки, по убыванию"
 
 msgid "last played, ascending"
-msgstr "последняя игра, по возрастанию"
+msgstr "посл. запуск, по возрастанию"
 
 msgid "last played, descending"
-msgstr "последняя игра, по убыванию"
+msgstr "посл. запуск, по убыванию"
 
 msgid "times played, ascending"
 msgstr "сыграно раз, по возрастанию"
@@ -321,10 +321,10 @@ msgid "times played, descending"
 msgstr "сыграно раз, по убыванию"
 
 msgid "play time, ascending"
-msgstr ""
+msgstr "время в игре, по возрастанию"
 
 msgid "play time, descending"
-msgstr ""
+msgstr "время в игре, по убыванию"
 
 msgid "system, ascending"
 msgstr "система, по возрастанию"
@@ -357,7 +357,7 @@ msgid "DEFAULT"
 msgstr "ПО УМОЛЧАНИЮ"
 
 msgid "select"
-msgstr "выбрать"
+msgstr "выбр"
 
 msgid "APPLICATION UPDATER"
 msgstr "АПДЕЙТЕР ПРИЛОЖЕНИЯ"
@@ -405,7 +405,7 @@ msgid "CANCEL"
 msgstr "ОТМЕНА"
 
 msgid "cancel"
-msgstr "отмена"
+msgstr "отм"
 
 msgid "DOWNLOAD ABORTED"
 msgstr "ЗАГРУЗКА ПРЕРВАНА"
@@ -557,10 +557,10 @@ msgid "REMOVE ENTRIES"
 msgstr "УДАЛИТЬ ЗАПИСИ"
 
 msgid "ALL UNSELECTED"
-msgstr "ВСЕ НЕ ВЫБРАННЫЕ"
+msgstr "ВСЕ НЕВЫБРАННЫЕ"
 
 msgid "STRIP SPECIAL CHARACTERS"
-msgstr ""
+msgstr "РАЗДЕЛЯТЬ СПЕЦ. СИМВОЛЫ"
 
 msgid "MEDIA TARGET TYPE"
 msgstr "ТИП МЕДИА"
@@ -569,13 +569,13 @@ msgid "SCREENSHOTS"
 msgstr "СКРИНШОТЫ"
 
 msgid "TITLE SCREENS"
-msgstr "СКРИНШОТЫ ГЛАВНОГО МЕНЮ"
+msgstr "ГЛАВНОЕ МЕНЮ"
 
 msgid "COVERS"
-msgstr "ПЕРЕДНИЕ ОБЛОЖКИ"
+msgstr "ОБЛОЖКИ"
 
 msgid "BACK COVERS"
-msgstr "ЗАДНИЕ ОБЛОЖКИ"
+msgstr "ОБЛОЖКИ СЗАДИ"
 
 msgid "MARQUEES (WHEELS)"
 msgstr "ЛОГО (БАННЕРЫ)"
@@ -590,7 +590,7 @@ msgid "FAN ART"
 msgstr "ФАН-АРТ"
 
 msgid "MIXIMAGES"
-msgstr ""
+msgstr "МИКС-ИЗОБРАЖЕНИЯ"
 
 msgid "IMPORT MEDIA"
 msgstr "ИМПОРТИРОВАТЬ МЕДИА"
@@ -651,7 +651,7 @@ msgid "select all"
 msgstr "выбрать всё"
 
 msgid "SELECT NONE"
-msgstr "НЕ ВЫБИРАТЬ НИЧЕГО"
+msgstr "СНЯТЬ ВЫБОР"
 
 msgid "select none"
 msgstr "не выбирать"
@@ -687,10 +687,10 @@ msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
 msgstr "ДОБАВИТЬ/УДАЛИТЬ ИГРЫ В ЭТУ КОЛЛЕКЦИЮ"
 
 msgid "EDIT THIS FOLDER'S METADATA"
-msgstr "РЕДАКТИРОВАТЬ МЕТАДАННЫЕ ЭТОЙ ПАПКИ"
+msgstr "РЕД. МЕТАДАННЫЕ ЭТОЙ ПАПКИ"
 
 msgid "EDIT THIS GAME'S METADATA"
-msgstr "РЕДАКТИРОВАТЬ МЕТАДАННЫЕ ЭТОЙ ИГРЫ"
+msgstr "РЕД. МЕТАДАННЫЕ ЭТОЙ ИГРЫ"
 
 msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
 msgstr "ВВЕДИТЕ ПАПКУ (ПЕРЕЗАПИСАТЬ ССЫЛКУ НА ПАПКУ)"
@@ -699,19 +699,19 @@ msgid "CLOSE"
 msgstr "ЗАКРЫТЬ"
 
 msgid "close"
-msgstr "закрыть"
+msgstr "закр"
 
 msgid "APPLY"
 msgstr "ПРИМЕНИТЬ"
 
 msgid "apply"
-msgstr "применить"
+msgstr "прим"
 
 msgid "close (apply)"
-msgstr "закрыть (применить)"
+msgstr "закр (прим.)"
 
 msgid "close (cancel)"
-msgstr "закрыть (отмена)"
+msgstr "закр (отм.)"
 
 msgid "LAUNCHING GAME"
 msgstr "ЗАПУСК ИГРЫ"
@@ -880,7 +880,7 @@ msgid "DARK"
 msgstr "ТЁМНАЯ"
 
 msgid "DARK AND RED"
-msgstr "ТЁМНЫЙ И КРАСНЫЙ"
+msgstr "ТЁМНАЯ И КРАСНАЯ"
 
 msgid "LIGHT"
 msgstr "СВЕТЛАЯ"
@@ -987,22 +987,22 @@ msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
 msgstr "РАЗМЫТИЕ ФОНА ПРИ ОТКРЫТИИ МЕНЮ"
 
 msgid "SORT FOLDERS ON TOP OF GAMELISTS"
-msgstr "СОРТИРОВАТЬ ПАПКИ ПОВЕРХ ГЕЙМЛИСТЫ"
+msgstr "СОРТ. ПАПКИ ПОВЕРХ ГЕЙМЛИСТЫ"
 
 msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
-msgstr "СОРТИРОВАТЬ ИЗБРАННЫЕ ИГРЫ НАД НЕИЗБРАННЫМИ"
+msgstr "СОРТ. ИЗБРАННЫЕ ИГРЫ НАД НЕИЗБРАННЫМИ"
 
 msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
 msgstr "МАРКИРОВКА ЗВЁЗДАМИ ДЛЯ ИЗБРАННОГО"
 
 msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
-msgstr "ВКЛЮЧИТЬ ОВЕРЛЕЙ ПРОКРУТКИ ТЕКСТОВОГО СПИСКА"
+msgstr "ВКЛ. ОВЕРЛЕЙ ПРОКРУТКИ ТЕКСТОВОГО СПИСКА"
 
 msgid "ENABLE VIRTUAL KEYBOARD"
-msgstr "ВКЛЮЧИТЬ ВИРТУАЛЬНУЮ КЛАВИАТУРУ"
+msgstr "ВКЛ. ВИРТУАЛЬНУЮ КЛАВИАТУРУ"
 
 msgid "ENABLE TOGGLE FAVORITES BUTTON"
-msgstr "ВКЛЮЧИТЬ КНОПКУ ПЕРЕКЛЮЧЕНИЯ ИЗБРАННОГО"
+msgstr "ВКЛ. КНОПКУ ПЕРЕКЛЮЧЕНИЯ ИЗБРАННОГО"
 
 msgid "ENABLE GAMELIST FILTERS"
 msgstr "РАЗРЕШИТЬ ФИЛЬТРЫ ГЕЙМЛИСТА"
@@ -1026,16 +1026,16 @@ msgid "VIDEO PLAYER VOLUME"
 msgstr "ГРОМКОСТЬ ВИДЕОПЛЕЕРА"
 
 msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
-msgstr "ВКЛЮЧИТЬ ЗВУК ВИДЕО ГЕЙМЛИСТОВ И СИСТЕМ"
+msgstr "ВКЛ. ЗВУК ВИДЕО ГЕЙМЛИСТОВ И СИСТЕМ"
 
 msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
-msgstr "ВКЛЮЧИТЬ ЗВУК ПРОСМОТРЩИКА ВИДЕО"
+msgstr "ВКЛ. ЗВУК ПРОСМОТРЩИКА ВИДЕО"
 
 msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
-msgstr "ВКЛЮЧИТЬ ЗВУК ЗАСТАВОЧНЫХ ВИДЕО"
+msgstr "ВКЛ. ЗВУК ЗАСТАВОЧНЫХ ВИДЕО"
 
 msgid "ENABLE NAVIGATION SOUNDS"
-msgstr "ВКЛЮЧИТЬ ЗВУКИ НАВИГАЦИИ"
+msgstr "ВКЛ. ЗВУКИ НАВИГАЦИИ"
 
 msgid "CONTROLLER TYPE"
 msgstr "ТИП КОНТРОЛЛЕРА"
@@ -1127,10 +1127,10 @@ msgid "SAVE CHANGES?"
 msgstr "СОХРАНИТЬ ИЗМЕНЕНИЯ?"
 
 msgid "load default directory"
-msgstr "загрузить каталог по умолчанию"
+msgstr "каталог по умолчанию"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr ""
+msgstr "ТРЕКИНГ ВРЕМЕНИ В ИГРЕ"
 
 msgid "VRAM LIMIT"
 msgstr "ЛИМИТ VRAM"
@@ -1220,6 +1220,9 @@ msgstr "ПОКАЗЫВАТЬ СКРЫТЫЕ ФАЙЛЫ И ПАПКИ"
 msgid "SHOW HIDDEN GAMES"
 msgstr "ПОКАЗЫВАТЬ СКРЫТЫЕ ИГРЫ"
 
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "ЗАПУСКАТЬ ИГРЫ НА ДРУГОМ ЭКРАНЕ"
+
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "РАЗРЕШИТЬ ПОЛЬЗ. СЦЕНАРИИ СОБЫТИЙ"
 
@@ -1227,10 +1230,10 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "ПОЛЬЗ. СОБЫТИЯ ПРИ НАВИГАЦИИ"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
-msgstr "ПОКАЗЫВАТЬ  ИГРЫ ТОЛЬКО ИЗ GAMELIST.XML"
+msgstr "ПОКАЗЫВАТЬ ИГРЫ ТОЛЬКО ИЗ GAMELIST.XML"
 
 msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
-msgstr "УДАЛЯТЬ ЛИШНЕЕ У ИМЕНИ MAME (НУЖЕН ПЕРЕЗАПУСК)"
+msgstr "УДАЛЯТЬ ЛИШНЕЕ В ИМЕНИ MAME (НУЖЕН ПЕРЕЗАПУСК)"
 
 msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
 msgstr "ОТКЛ. КОМПОЗИЦИЮ РАБ. СТОЛА (НУЖЕН ПЕРЕЗАПУСК)"
@@ -1308,10 +1311,10 @@ msgid "POWER OFF SYSTEM"
 msgstr "ВЫКЛЮЧИТЬ ПИТАНИЕ СИСТЕМЫ"
 
 msgid "REALLY SUSPEND?"
-msgstr ""
+msgstr "ПЕРЕВЕСТИ В СПЯЩИЙ РЕЖИМ?"
 
 msgid "SUSPEND SYSTEM"
-msgstr ""
+msgstr "СПЯЩИЙ РЕЖИМ"
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1329,7 +1332,7 @@ msgid "choose"
 msgstr "выбор"
 
 msgid "close menu"
-msgstr "закрыть меню"
+msgstr "закр. меню"
 
 msgid "EDIT METADATA"
 msgstr "ИЗМЕНИТЬ МЕТАДАННЫЕ"
@@ -1353,10 +1356,10 @@ msgid "scrape"
 msgstr "скрейпить"
 
 msgid "save metadata"
-msgstr "сохранить метаданные"
+msgstr "сохр. данные"
 
 msgid "cancel changes"
-msgstr "отменить изменения"
+msgstr "отм. изменения"
 
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
@@ -1371,7 +1374,7 @@ msgid "CLEAR"
 msgstr "ОЧИСТИТЬ"
 
 msgid "clear folder"
-msgstr "очистить папку"
+msgstr "очис. папку"
 
 msgid ""
 "THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
@@ -1383,7 +1386,7 @@ msgstr ""
 "ВЫ УВЕРЕНЫ?"
 
 msgid "clear file"
-msgstr "очистить файл"
+msgstr "очис. файл"
 
 msgid ""
 "THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
@@ -1397,7 +1400,7 @@ msgid "DELETE"
 msgstr "УДАЛИТЬ"
 
 msgid "delete game"
-msgstr "удалить игру"
+msgstr "удал. игру"
 
 msgid "MIXIMAGE OFFLINE GENERATOR"
 msgstr "ОФФЛАЙН-ГЕНЕРАТОР МИКС-ИЗОБРАЖЕНИЙ"
@@ -1443,7 +1446,7 @@ msgid "pause processing"
 msgstr "пауза обработки"
 
 msgid "close (abort processing)"
-msgstr "закрыть (отменить обработку)"
+msgstr "закрыть (отм. обработку)"
 
 msgid "RUNNING..."
 msgstr "ВЫПОЛНЕНИЕ..."
@@ -1515,7 +1518,7 @@ msgid "STOP"
 msgstr "СТОП"
 
 msgid "stop processing"
-msgstr "остановить выполнение"
+msgstr "остан. выполнение"
 
 msgid "GAMELISTS"
 msgstr "ГЕЙМЛИСТЫ"
@@ -1657,7 +1660,7 @@ msgid "MIXIMAGE SETTINGS"
 msgstr "НАСТРОЙКИ МИКС-ИЗОБРАЖЕНИЙ"
 
 msgid "start scraper"
-msgstr "запуск скрейпера"
+msgstr "запуск"
 
 msgid "SCREENSCRAPER USERNAME"
 msgstr "ЛОГИН SCREENSCRAPER"
@@ -1666,7 +1669,7 @@ msgid "SCREENSCRAPER PASSWORD"
 msgstr "ПАРОЛЬ SCREENSCRAPER"
 
 msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
-msgstr "ИСПОЛЬЗОВАТЬ ЭТОТ АККАУНТ ДЛЯ SCREENSCRAPER"
+msgstr "ИСП. ЭТОТ АККАУНТ ДЛЯ SCREENSCRAPER"
 
 msgid "GAME NAMES"
 msgstr "НАЗВАНИЯ ИГР"
@@ -1681,16 +1684,16 @@ msgid "VIDEOS"
 msgstr "ВИДЕО"
 
 msgid "SCREENSHOT IMAGES"
-msgstr "СКРИНШОТЫ"
+msgstr "СКРИНШОТ"
 
 msgid "TITLE SCREEN IMAGES"
-msgstr "СКРИНШОТЫ ГЛАВНОГО МЕНЮ"
+msgstr "ГЛАВНОЕ МЕНЮ"
 
 msgid "BOX COVER IMAGES"
-msgstr "ПЕРЕДНИЕ ОБЛОЖКИ"
+msgstr "ОБЛОЖКА"
 
 msgid "BOX BACK COVER IMAGES"
-msgstr "ЗАДНИЕ ОБЛОЖКИ"
+msgstr "ОБЛОЖКА СЗАДИ"
 
 msgid "MARQUEE (WHEEL) IMAGES"
 msgstr "ЛОГО (БАННЕРЫ)"
@@ -1711,7 +1714,7 @@ msgid "MIXIMAGE RESOLUTION"
 msgstr "РАЗРЕШЕНИЕ МИКС-ИЗОБРАЖЕНИЯ"
 
 msgid "MIXIMAGE FILE FORMAT"
-msgstr ""
+msgstr "ФОРМАТ МИКС-ИЗОБРАЖЕНИЙ"
 
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
@@ -1827,49 +1830,49 @@ msgid "WORLD"
 msgstr "МИР"
 
 msgid "ASIA"
-msgstr ""
+msgstr "АЗИЯ"
 
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "АВСТРАЛИЯ"
 
 msgid "BRAZIL"
-msgstr ""
+msgstr "БРАЗИЛИЯ"
 
 msgid "CANADA"
-msgstr ""
+msgstr "КАНАДА"
 
 msgid "CHINA"
-msgstr ""
+msgstr "КИТАЙ"
 
 msgid "GERMANY"
-msgstr ""
+msgstr "ГЕРМАНИЯ"
 
 msgid "FRANCE"
-msgstr ""
+msgstr "ФРАНЦИЯ"
 
 msgid "ITALY"
-msgstr ""
+msgstr "ИТАЛИЯ"
 
 msgid "KOREA"
-msgstr ""
+msgstr "КОРЕЯ"
 
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "НЕДЕРЛАНДЫ"
 
 msgid "RUSSIA"
-msgstr ""
+msgstr "РОССИЯ"
 
 msgid "SWEDEN"
-msgstr ""
+msgstr "ШВЕЦИЯ"
 
 msgid "SPAIN"
-msgstr ""
+msgstr "ИСПАНИЯ"
 
 msgid "TAIWAN"
-msgstr ""
+msgstr "ТАЙВАНЬ"
 
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "ВЕЛИКОБРИТАНИЯ"
 
 msgid "PREFERRED LANGUAGE"
 msgstr "ПРЕДПОЧИТАЕМЫЙ ЯЗЫК"
@@ -2292,10 +2295,10 @@ msgid "THEME WAS DELETED"
 msgstr "ТЕМА БЫЛА УДАЛЕНА"
 
 msgid "view screenshots"
-msgstr "просмотреть скриншоты"
+msgstr "смотреть"
 
 msgid "fetch updates"
-msgstr "получить обновления"
+msgstr "обновить"
 
 msgid "delete"
 msgstr "удалить"
@@ -2348,10 +2351,10 @@ msgid "SCREENSHOT"
 msgstr "СКРИНШОТ"
 
 msgid "BOX COVER"
-msgstr "ПЕРЕДНЯЯ ОБЛОЖКА"
+msgstr "ОБЛОЖКА"
 
 msgid "BOX BACK COVER"
-msgstr "ЗАДНЯЯ ОБЛОЖКА"
+msgstr "ОБЛОЖКА СЗАДИ"
 
 msgid "TITLE SCREEN"
 msgstr "ГЛАВНОЕ МЕНЮ"
@@ -2380,11 +2383,11 @@ msgstr "ВВЕДИТЕ СОРТИРОВОЧНОЕ ИМЯ"
 
 msgctxt "metadata"
 msgid "CUSTOM COLLECTIONS SORTNAME"
-msgstr "СОРТИРОВОЧНОЕ ИМЯ ДЛЯ ПОЛЬЗОВАТЕЛЬСКИХ КОЛЛЕКЦИЙ"
+msgstr "СОРТ. ИМЯ ДЛЯ ПОЛЬЗ. КОЛЛЕКЦИЙ"
 
 msgctxt "metadata"
 msgid "ENTER COLLECTIONS SORTNAME"
-msgstr "ВВЕДИТЕ СОРТИРОВОЧНОЕ ИМЯ ДЛЯ КОЛЛЕКЦИЙ"
+msgstr "ВВЕДИТЕ СОРТ. ИМЯ ДЛЯ КОЛЛЕКЦИЙ"
 
 msgctxt "metadata"
 msgid "DESCRIPTION"
@@ -2480,11 +2483,11 @@ msgstr "ВВЕДИТЕ ЧИСЛО СЫГРАННЫХ РАЗ"
 
 msgctxt "metadata"
 msgid "PLAY TIME"
-msgstr ""
+msgstr "ВРЕМЯ В ИГРЕ"
 
 msgctxt "metadata"
 msgid "ENTER PLAY TIME"
-msgstr ""
+msgstr "ВВЕДИТЕ ВРЕМЯ В ИГРЕ"
 
 msgctxt "metadata"
 msgid "CONTROLLER"
@@ -2512,7 +2515,7 @@ msgstr "ВЫБЕРИТЕ ССЫЛКУ НА ПАПКУ"
 
 msgctxt "metadata"
 msgid "LAST PLAYED"
-msgstr "ПОСЛЕДНЯЯ ИГРА"
+msgstr "ПОСЛЕДНИЙ ЗАПУСК"
 
 msgctxt "metadata"
 msgid "ENTER LAST PLAYED DATE"
@@ -2653,7 +2656,7 @@ msgid "options"
 msgstr "опции"
 
 msgid "random"
-msgstr "случайно"
+msgstr "случ"
 
 msgid "jump to game"
 msgstr "к игре"
@@ -2882,13 +2885,13 @@ msgstr[1] "%i секунды назад"
 msgstr[2] "%i секунд назад"
 
 msgid "edit date"
-msgstr "изменить дату"
+msgstr "изм. дату"
 
 msgid "Y-M-D"
 msgstr "Г-М-Д"
 
 msgid "modify"
-msgstr "изменить"
+msgstr "изм"
 
 #, c-format
 msgid "%i (OF %i)"
@@ -2909,19 +2912,19 @@ msgstr[1] "%i ВЫБРАНО"
 msgstr[2] "%i ВЫБРАНО"
 
 msgid "change value"
-msgstr "изменить значение"
+msgstr "изм"
 
 msgid "add half star"
-msgstr "добавить ползвезды"
+msgstr "ползвезды"
 
 msgid "toggle"
-msgstr "переключить"
+msgstr "изм"
 
 msgid "move cursor"
-msgstr "переместить курсор"
+msgstr "перем. курсор"
 
 msgid "edit"
-msgstr "редактировать"
+msgstr "ред"
 
 msgid "WELCOME"
 msgstr "ДОБРО ПОЖАЛОВАТЬ"
@@ -3064,7 +3067,7 @@ msgid "SPACE"
 msgstr "ПРОБЕЛ"
 
 msgid "LOAD"
-msgstr "ЗАГРУЗКА"
+msgstr "СБРОС"
 
 msgid "shift"
 msgstr "shift"
@@ -3073,7 +3076,7 @@ msgid "alt"
 msgstr "alt"
 
 msgid "newline"
-msgstr "перенос строки"
+msgstr "перенос"
 
 msgid "backspace"
 msgstr "backspace"
@@ -3082,13 +3085,13 @@ msgid "space"
 msgstr "пробел"
 
 msgid "LOAD DEFAULT"
-msgstr "ЗАГРУЗИТЬ ЗНАЧЕНИЯ ПО УМОЛЧАНИЮ"
+msgstr "СБРОС"
 
 msgid "DISCARD CHANGES"
-msgstr "ОТМЕНИТЬ ИЗМЕНЕНИЯ"
+msgstr "ОТМ. ИЗМЕНЕНИЯ"
 
 msgid "discard changes"
-msgstr "отменить изменения"
+msgstr "отм. изменения"
 
 #, c-format
 msgid "Server returned HTTP error code %s"
