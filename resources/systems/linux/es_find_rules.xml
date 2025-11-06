@@ -1622,12 +1622,12 @@
             <entry>~/.local/share/applications/xenia/xenia_canary</entry>
             <entry>~/.local/bin/xenia/xenia_canary</entry>
             <entry>~/bin/xenia/xenia_canary</entry>
-            <!-- RetroDECK -->
-            <entry>/app/retrodeck/components/xenia/component_launcher.sh</entry>
             <entry>~/Applications/xenia-canary*.AppImage</entry>
             <entry>~/.local/share/applications/xenia-canary*.AppImage</entry>
             <entry>~/.local/bin/xenia-canary*.AppImage</entry>
             <entry>~/bin/xenia-canary*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/xenia/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="XENIA-EDGE">
@@ -1640,6 +1640,8 @@
             <entry>~/.local/share/applications/xenia_edge*.AppImage</entry>
             <entry>~/.local/bin/xenia_edge*.AppImage</entry>
             <entry>~/bin/xenia_edge*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/xenia-edge/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="XENIA-WINDOWS">
