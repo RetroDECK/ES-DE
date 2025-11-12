@@ -715,6 +715,12 @@ int main(int argc, char* argv[])
     // Start the logger.
     Log::init();
     Log::open();
+
+#if defined(RETRODECK)
+    // Set logging level from RetroDECK configuration file.
+    Log::setReportingLevelFromRetroDeckConfig();
+#endif
+
     {
         const std::string applicationName {"ES-DE"};
 #if defined(__ANDROID__)

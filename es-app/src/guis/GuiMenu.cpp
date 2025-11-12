@@ -2663,25 +2663,64 @@ void GuiMenu::openRetroDeckGodotConfigurator()
     // You can add any checks for the script's outcome here.
 }
 
-#endif
-
-#if defined(RETRODECK)
 void GuiMenu::openESDEConfiguration()
 {
     auto s = new GuiSettings(_("ES-DE CONFIGURATIONS"));
 
-    // Logging level setting for RetroDECK
-    auto loggingLevel = std::make_shared<OptionListComponent<std::string>>(_("LOGGING LEVEL"), false);
-    loggingLevel->add(_("DEBUG"), "debug", Settings::getInstance()->getString("LoggingLevel") == "debug");
-    loggingLevel->add(_("INFO"), "info", Settings::getInstance()->getString("LoggingLevel") == "info");
-    loggingLevel->add(_("WARNING"), "warning", Settings::getInstance()->getString("LoggingLevel") == "warning");
-    loggingLevel->add(_("ERROR"), "error", Settings::getInstance()->getString("LoggingLevel") == "error");
-    s->addWithLabel(_("LOGGING LEVEL"), loggingLevel);
-    s->addSaveFunc([loggingLevel] {
-        Settings::getInstance()->setString("LoggingLevel", loggingLevel->getSelected());
-        Settings::getInstance()->saveFile();
-        Log::setReportingLevelFromEnv(); // Assuming this function exists to update logging level
-    });
+    // UI Settings submenu
+    ComponentListRow uiSettingsRow;
+    uiSettingsRow.elements.clear();
+    uiSettingsRow.addElement(std::make_shared<TextComponent>(_("UI SETTINGS"),
+                                                             Font::get(FONT_SIZE_MEDIUM),
+                                                             mMenuColorPrimary),
+                             true);
+    uiSettingsRow.addElement(mMenu.makeArrow(), false);
+    uiSettingsRow.makeAcceptInputHandler(std::bind(&GuiMenu::openUIOptions, this));
+    s->addRow(uiSettingsRow);
+
+    // Sound Settings submenu
+    ComponentListRow soundSettingsRow;
+    soundSettingsRow.elements.clear();
+    soundSettingsRow.addElement(std::make_shared<TextComponent>(_("SOUND SETTINGS"),
+                                                                Font::get(FONT_SIZE_MEDIUM),
+                                                                mMenuColorPrimary),
+                                true);
+    soundSettingsRow.addElement(mMenu.makeArrow(), false);
+    soundSettingsRow.makeAcceptInputHandler(std::bind(&GuiMenu::openSoundOptions, this));
+    s->addRow(soundSettingsRow);
+
+    // Input Device Settings submenu
+    ComponentListRow inputDeviceSettingsRow;
+    inputDeviceSettingsRow.elements.clear();
+    inputDeviceSettingsRow.addElement(std::make_shared<TextComponent>(_("INPUT DEVICE SETTINGS"),
+                                                                       Font::get(FONT_SIZE_MEDIUM),
+                                                                       mMenuColorPrimary),
+                                      true);
+    inputDeviceSettingsRow.addElement(mMenu.makeArrow(), false);
+    inputDeviceSettingsRow.makeAcceptInputHandler(std::bind(&GuiMenu::openInputDeviceOptions, this));
+    s->addRow(inputDeviceSettingsRow);
+
+    // Game Collection Settings submenu
+    ComponentListRow collectionSettingsRow;
+    collectionSettingsRow.elements.clear();
+    collectionSettingsRow.addElement(std::make_shared<TextComponent>(_("GAME COLLECTION SETTINGS"),
+                                                                      Font::get(FONT_SIZE_MEDIUM),
+                                                                      mMenuColorPrimary),
+                                     true);
+    collectionSettingsRow.addElement(mMenu.makeArrow(), false);
+    collectionSettingsRow.makeAcceptInputHandler(std::bind(&GuiMenu::openCollectionSystemOptions, this));
+    s->addRow(collectionSettingsRow);
+
+    // Other Settings submenu
+    ComponentListRow otherSettingsRow;
+    otherSettingsRow.elements.clear();
+    otherSettingsRow.addElement(std::make_shared<TextComponent>(_("OTHER SETTINGS"),
+                                                                Font::get(FONT_SIZE_MEDIUM),
+                                                                mMenuColorPrimary),
+                                true);
+    otherSettingsRow.addElement(mMenu.makeArrow(), false);
+    otherSettingsRow.makeAcceptInputHandler(std::bind(&GuiMenu::openOtherOptions, this));
+    s->addRow(otherSettingsRow);
 
     mWindow->pushGui(s);
 }

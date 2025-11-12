@@ -54,6 +54,7 @@ public:
     static void close();
 
     #if defined(RETRODECK)
+    static void setReportingLevelFromRetroDeckConfig();
     static void setReportingLevelFromEnv();
     #endif
 

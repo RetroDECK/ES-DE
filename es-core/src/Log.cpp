@@ -13,6 +13,7 @@
 
 #if defined(RETRODECK)
 #include <algorithm>
+#include <fstream>
 #endif
 
 LogLevel Log::getReportingLevel()
@@ -183,6 +184,74 @@ Log::~Log()
 
 // RetroDECK specific function
 #if defined(RETRODECK)
+void Log::setReportingLevelFromRetroDeckConfig()
+{
+    // Try to read the logging level from RetroDECK config file
+    const char* rdHomePath = std::getenv("RETRODECK_CONFIG_HOME");
+    if (!rdHomePath) {
+        LOG(LogError) << "setReportingLevelFromRetroDeckConfig: Failed to read rd_logging_level "
+                      << "- RETRODECK_CONFIG_HOME environment variable not set. Falling back to DEBUG.";
+        sReportingLevel = LogDebug;
+        return;
+    }
+
+    std::string configPath = std::string(rdHomePath) + "/retrodeck.cfg";
+    std::ifstream configFile(configPath);
+    if (!configFile.is_open()) {
+        LOG(LogError) << "setReportingLevelFromRetroDeckConfig: Failed to read rd_logging_level "
+                      << "from '" << configPath << "' - File not found. Falling back to DEBUG.";
+        sReportingLevel = LogDebug;
+        return;
+    }
+
+    // Parse the JSON file looking for rd_logging_level
+    std::string line;
+    std::string logLevel = "debug"; // Default fallback
+    bool found = false;
+
+    while (std::getline(configFile, line)) {
+        // Simple pattern matching for "rd_logging_level": "value"
+        size_t pos = line.find("\"rd_logging_level\"");
+        if (pos != std::string::npos) {
+            // Find the value between quotes after the colon
+            size_t colonPos = line.find(':', pos);
+            if (colonPos != std::string::npos) {
+                size_t firstQuote = line.find('"', colonPos);
+                size_t secondQuote = line.find('"', firstQuote + 1);
+                if (firstQuote != std::string::npos && secondQuote != std::string::npos) {
+                    logLevel = line.substr(firstQuote + 1, secondQuote - firstQuote - 1);
+                    found = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    configFile.close();
+
+    if (!found) {
+        LOG(LogError) << "setReportingLevelFromRetroDeckConfig: Failed to read rd_logging_level "
+                      << "from '" << configPath << "' - Setting not found. Falling back to DEBUG.";
+        sReportingLevel = LogDebug;
+        return;
+    }
+
+    // Map string to LogLevel
+    if (logLevel == "debug")
+        sReportingLevel = LogDebug;
+    else if (logLevel == "warning")
+        sReportingLevel = LogWarning;
+    else if (logLevel == "error")
+        sReportingLevel = LogError;
+    else if (logLevel == "info")
+        sReportingLevel = LogInfo;
+    else {
+        LOG(LogError) << "setReportingLevelFromRetroDeckConfig: Invalid rd_logging_level value '"
+                      << logLevel << "'. Falling back to DEBUG.";
+        sReportingLevel = LogDebug;
+    }
+}
+
 void Log::setReportingLevelFromEnv()
 {
     // Check for the logging_level environment variable
