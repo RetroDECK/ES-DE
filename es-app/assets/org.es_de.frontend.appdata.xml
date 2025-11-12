@@ -5,7 +5,7 @@
     <summary>Gaming frontend</summary>
     <description>
         <p>ES-DE is a frontend for browsing and launching games from your
-           multi-platform collection.</p>
+            multi-platform collection.</p>
     </description>
     <launchable type="desktop-id">org.es_de.frontend.desktop</launchable>
     <categories>
@@ -41,6 +41,9 @@
         </screenshot>
     </screenshots>
     <releases>
+        <release version="3.4.0" date="2025-11-07">
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
+        </release>
         <release version="3.3.0" date="2025-07-15">
             <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>

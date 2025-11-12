@@ -1,8 +1,8 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.4.0 / 3.4.0-56 (in development)
+## Version 3.4.0 / 3.4.0-56
 
-**Release date:** TBD
+**Release date:** 2025-11-07
 
 ### Release overview
 
@@ -14,7 +14,7 @@ Also on Android there is experimental support for running RetroArch in multi-use
 
 Translations to Arabic (ar_SA) have also been added in this release, as well as support for many additional regions when scraping using ScreenScraper. There is now also support for the WebP image format and the AV1 video codec for scraped media (these are however not currently supported by ScreenScraper or TheGamesDB so this can be considered more of a future-proofing feature). You can now also select whether to generate miximages in PNG or WebP format, with the latter leading to reduced disk usage but slightly slower scraping.
 
-In addition to the above there is support for a lot of new emulators, import rules and file extensions, and there are numerous minor improvements, as well as some bug fixes. See below for all details.
+In addition to the above there is support for a lot of new emulators, import rules and file extensions, and there are numerous minor improvements as well as some bug fixes. See below for all details.
 
 ### Detailed list of changes
 
@@ -42,7 +42,7 @@ In addition to the above there is support for a lot of new emulators, import rul
 * Added a suspend custom event
 * Added .webp as a supported image file extension for scraped media
 * Added .webp as a supported file extension for the gameOverridePath property for the image element
-* Added a menu option for generating miximages in the PNG or WebP file format
+* Added a menu option for generating miximages in the PNG or WebP file formats
 * Added support for the AV1 video codec on Android and macOS
 * (Android) Added miximages as a media target type for the game importer
 * (Android) Removed the "Display/monitor index" setting as it does nothing on this operating system

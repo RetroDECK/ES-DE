@@ -1,8 +1,10 @@
 # ES-DE Frontend - Frequently Asked Questions
 
-## What's the correct name for the application? ES-DE, EmulationStation etc?
+## What's the correct and official name for the project and application?
 
-The official name for the project and application is ES-DE Frontend or simply ES-DE. This originally stood for EmulationStation Desktop Edition as the project originated from the RetroPie fork of EmulationStation in 2020, and was originally intended for desktop computers. However the application has now changed so much that it would just cause confusion to keep the EmulationStation name. During a transition period EmulationStation Desktop Edition will be included as a subtitle on the splash screen and mentioned in some documentation entries, but long term this will be dropped entirely. The red version of the EmulationStation logo will however remain as it's part of the application legacy. There's also an interesting diagram available at https://gist.github.com/anthonycaccese/53d72260f5e3c2c72defd77fe216bd1b which provides a visual overview of the EmulationStation history and where ES-DE fits into this.
+The official name is ES-DE Frontend or simply ES-DE. This originally stood for EmulationStation Desktop Edition as the project originated from the RetroPie fork of EmulationStation back in 2020, and was initially intended for desktop computers. However the application has now changed so much that it would just cause confusion to keep the EmulationStation name. The old name is simply displayed on the https://es-de.org website and on Patreon to make it easy to find the project as some people still search for ES-DE using the EmulationStation name.
+
+The red version of the EmulationStation logo will however remain as it's part of the application legacy. There's also an interesting diagram available at https://gist.github.com/anthonycaccese/53d72260f5e3c2c72defd77fe216bd1b which provides a visual overview of the EmulationStation history and where ES-DE fits into this.
 
 ## Is this software available for free, and is it open source?
 

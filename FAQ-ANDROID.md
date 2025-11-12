@@ -8,7 +8,9 @@ Yes it's the exact same application, with only some minor differences. This mean
 
 ## Why is it named ES-DE as in "Desktop Edition" if this is a release for a mobile operating system?
 
-First it's branding, it would be very confusing to have different names for the same application when it's available cross-platform. Second, the _Desktop Edition_ part is now basically legacy. Actually the entire _EmulationStation Desktop Edition_ subtitle used on the splash screen is only temporary during a transition period and it will be removed at some point. The official name of the project is already ES-DE Frontend or ES-DE for short. There's also an interesting diagram available at https://gist.github.com/anthonycaccese/53d72260f5e3c2c72defd77fe216bd1b which provides a visual overview of the EmulationStation history and where ES-DE fits into this.
+The "EmulationStation Desktop Edition" name is obsolete, it's no longer used anywhere inside the ES-DE app or in the documentation, or in the support channels etc. It's simply displayed on the https://es-de.org website and on Patreon to make it easy to find the project as some people still search for ES-DE using the EmulationStation name.
+
+As a side note there is an interesting diagram available at https://gist.github.com/anthonycaccese/53d72260f5e3c2c72defd77fe216bd1b which provides a visual overview of the EmulationStation history and where ES-DE fits into this.
 
 ## Is it available for free, and is it open source?
 
@@ -79,9 +81,9 @@ Yes but this is not recommended. It's tedious to setup and not how ES-DE is inte
 
 ## When I launch a game using RetroArch I just see a black screen, what is wrong?
 
-RetroArch on Android is very unforgiving, if you haven't installed the necessary core or BIOS files it's a high chance that you just see a black screen and it will hang there, possibly until you kill it. And due to the security model in Android it's not possible for ES-DE to check if a core is actually installed prior to attempting to launch RetroArch (on Linux, macOS and Windows a popup is shown if the core file is missing and the game is never actually launched in this case). Also make sure that the core you have installed in RetroArch is the one you actually use in ES-DE. You can select between different cores and emulators for most systems using the _Alternative emulators_ interface in the _Other settings_ menu.
+RetroArch on Android is very unforgiving, if you haven't installed the necessary core or BIOS files it's a high chance that you just see a black screen and it will hang there, possibly until you kill it. And due to the security model in Android it's not possible for ES-DE to check if a core is actually installed prior to attempting to launch RetroArch (on Linux, macOS and Windows a popup is shown if the core file is missing and the game is never actually launched in this case). Also make sure that the core you have installed in RetroArch is the one you actually use in ES-DE. You can select between different cores and emulators for most systems using the _Alternative emulators_ interface in the _Other settings_ menu, or per game via the metadata editor.
 
-Another reason for the black screen is if you have multiple users configured on your device and attempt to run RetroArch from a non-primary user while having your ROMs on internal storage. At the time of writing RetroArch does not support external game launching for any other user than the primary user as it can't parse paths such as /storage/emulated/10/.
+Another reason for the black screen is if you have multiple users configured on your device and attempt to run RetroArch from a non-primary user while having your ROMs on internal storage. In ES-DE 3.4.0 there is experimental multi-user support for RetroArch for a limited number of emulator entries, and the plan is to roll this out for all entries in the future, which should fully resolve this issue.
 
 As a side note, the RetroArch release on the Google Play store has not been updated in a very long time, so it's instead strongly recommended to download a current release from the [RetroArch](https://retroarch.com) website.
 

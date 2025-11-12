@@ -2469,9 +2469,9 @@ Properties:
     - Flips the image texture vertically.
     - Default is `false`
 * `path` - type: PATH
-    - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
+    - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, .webp and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
 * `gameOverridePath` - type: PATH
-    - Defines a directory where per-game overrides for the static image defined by the `path` property are kept. Supported file extensions are .jpg, .png, .gif (unanimated) and .svg and they are searched for in this precise order. How this works is that the basename of the game file will be used to check for an image file in the defined path in a very similar fashion as to how downloaded media is searched. For example if `gameOverridePath` has been set to `./imageOverrides` a match for the game file `~/ROMs/arcade/aburner.zip` would be `./imageOverrides/arcade/aburner.png` (or any of the other supported file extensions). In this case the image defined by the `path` property will be replaced for this specific game. Note that only static images can be overridden, not scraped media.
+    - Defines a directory where per-game overrides for the static image defined by the `path` property are kept. Supported file extensions are .jpg, .png, .webp, .gif (unanimated) and .svg and they are searched for in this precise order. How this works is that the basename of the game file will be used to check for an image file in the defined path in a very similar fashion as to how downloaded media is searched. For example if `gameOverridePath` has been set to `./imageOverrides` a match for the game file `~/ROMs/arcade/aburner.zip` would be `./imageOverrides/arcade/aburner.png` (or any of the other supported file extensions). In this case the image defined by the `path` property will be replaced for this specific game. Note that only static images can be overridden, not scraped media.
     - This property can only be used in the `gamelist` view and only if `imageType` is undefined.
 * `default` - type: PATH
     - Path to a default image file. This image will be displayed when the selected game does not have an image of the type(s) defined by `imageType` or if the static image defined by `path` is not found. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
@@ -3054,6 +3054,7 @@ Properties:
     - `broken` - Whether the game is broken/not working. Will be printed as either `yes` or `no`
     - `manual` - Whether a PDF manual has been downloaded for the game. Will be printed as either `yes` or `no`
     - `playcount` - How many times the game has been played.
+    - `playtime` - How long the game has been played (tracked in seconds but presented in minutes or hours using the same logic as in Steam).
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
     - `emulator` - The emulator used to launch the game, could as such be a per-game alternative emulator entry, a system wide alternative emulator entry or the system's default emulator. This requires that the command tag in es_systems.xml has a label defined, otherwise this value will be blank. Folders will always have blank values as these can't be launched directly.

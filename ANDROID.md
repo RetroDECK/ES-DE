@@ -223,12 +223,32 @@ If you prefer to apply the NetherSX2 patch yourself (i.e. build the APK) then yo
 
 https://github.com/Trixarian/NetherSX2-patch
 
+### aPS3e
+
+This emulator can be installed from the Play store or downloaded from their GitHub site. There's both a Premium (paid) version and a free version available on the Play store.
+
+https://play.google.com/store/apps/details?id=aenu.aps3e \
+https://play.google.com/store/apps/details?id=aenu.aps3e.premium \
+https://github.com/aenu1/aps3e/releases
+
+### ARMSX2
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/ARMSX2/ARMSX2/releases
+
 ### Azahar
 
-This emulator can be installed from the Play store or from their GitHub site.
+This emulator can be installed from the Play store or downloaded from their GitHub site.
 
 https://play.google.com/store/apps/details?id=io.github.lime3ds.android \
 https://github.com/azahar-emu/azahar/releases
+
+### AzaharPlus
+
+This emulator can be downloaded from their GitHub site. Make sure to get the APK with _coexists_with_azahar_ in the filename.
+
+https://github.com/AzaharPlus/AzaharPlus/releases
 
 ### Cemu
 
@@ -339,6 +359,18 @@ These emulators can be installed from the Play store as a paid apps. FPseNG is t
 https://play.google.com/store/apps/details?id=com.emulator.fpse64 \
 https://play.google.com/store/apps/details?id=com.emulator.fpse
 
+### GameHub Lite
+
+This Steam client can be downloaded from their GitHub site.
+
+https://github.com/gamehublite/gamehub-oss/releases
+
+### GameNative
+
+This Steam client can be downloaded from their GitHub site.
+
+https://github.com/utkarshdalal/GameNative/releases
+
 ### iNES
 
 This emulator can be installed from the Play store.
@@ -375,13 +407,25 @@ This emulator can be downloaded from their GitHub site.
 
 https://github.com/woesss/JL-Mod/releases
 
+### Kenji-NX
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/Kenji-NX/Android-Releases/releases
+
 ### Lime3DS
 
 This emulator which is forked from Citra is no longer developed as it's been carried over into the Azahar emulator.
 
+### Linkboy
+
+This emulator can be installed from the Play store.
+
+https://play.google.com/store/apps/details?id=com.pixelrespawn.linkboy
+
 ### MAME4droid Current and MAME4droid
 
-These emulators can be installed from the Play store or from their GitHub sites. It's strongly recommended to go for the _MAME4droid Current_ version (previously named _MAME4droid 2024_) as this is updated with a recent MAME release while the older _MAME4droid_ is using an ancient MAME release.
+These emulators can be installed from the Play store or downloaded from their GitHub sites. It's strongly recommended to go for the _MAME4droid Current_ version (previously named _MAME4droid 2024_) as this is updated with a recent MAME release while the older _MAME4droid_ is using an ancient MAME release.
 
 Note that for MAME4droid Current there's an exception when it comes to setting up the ROM path. Instead of selecting each separate system directory (as is done on most other standalone emulators) you must select the root of the ROMs directory tree. To change the ROM path open _Settings_ in MAME4droid Current, then select _General_ and then _Change ROMs path_. After restarting the emulator choose _External storage_ and then the ROMs directory which contains all your ES-DE system directories. If you instead choose a specific system directory like ROMs/arcade or ROMs/neogeo then only that specific system will work when launching games from ES-DE.
 
@@ -465,7 +509,6 @@ https://github.com/wheremyfoodat/Panda3DS/releases
 ### Pizza Boy emulators
 
 The Pizza Boy GBA/A, Pizza Boy GBC/C and Pizza Boy SC emulators can be installed from the Play store. There are Basic (free) versions and Pro (paid) versions available.
-At the time of writing the Basic version of the GBA/A emulator does not seem to be able to launch zipped games, but both the Basic and Pro versions of the GBC/C and SC emulators are working correctly.
 
 https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygba \
 https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygbapro \
@@ -476,7 +519,7 @@ https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboyscpro
 
 ### Play!
 
-This emulator can be installed from the Play store or from their website.
+This emulator can be installed from the Play store or downloaded from their website.
 
 https://play.google.com/store/apps/details?id=com.virtualapplications.play \
 https://www.purei.org/downloads.php
@@ -551,7 +594,7 @@ https://play.google.com/store/apps/details?id=com.issess.flashplayerpro
 
 ### Virtual Virtual Boy
 
-This emulator can be installed from the Play store or from their GitHub site.
+This emulator can be installed from the Play store or downloaded from their GitHub site.
 
 https://play.google.com/store/apps/details?id=com.simongellis.vvb \
 https://github.com/SupernaviX/vvb/releases
@@ -566,8 +609,9 @@ https://github.com/vpinball/vpinball/actions
 
 ### Vita3K
 
-This PlayStation Vita emulator can be downloaded from their GitHub site. Refer to the User guide for detailed game setup instructions.
+Two separate Vita3K forks are supported by ES-DE and they share the same emulator entry. The primary find rule is for Vita3K ZX, and the secondary find rule is for the original Vita3K release, which at the time of writing does not appear to be maintained any longer. Both emulators can be downloaded from their GitHub sites. Refer to the User guide for detailed game setup instructions.
 
+https://github.com/ikhoeyZX/Vita3K-Android/releases \
 https://github.com/Vita3K/Vita3K-Android/releases
 
 ### Winlator
@@ -575,7 +619,7 @@ https://github.com/Vita3K/Vita3K-Android/releases
 In order to use Winlator to run Windows games you need to use a specific fork named _Winlator Cmod_ as mainline [Winlator](https://winlator.com/) does not offer frontend support. The Cmod fork can be downloaded from their GitHub page:\
 https://github.com/coffincolors/winlator
 
-There are two variants of the fork, Glibc and PRoot, both of which come with some pros and cons with regards to compatibility and performance. The Glibc variant is the default emulator in ES-DE, so to use PRoot instead you'll need to select its alternative emulator entry.
+There are three variants of the fork, the main one (aka Bionic) as well as the Glibc and PRoot builds. The main variant is the default emulator in ES-DE, so to use Glibc or PRoot instead you'll need to select either of these alternative emulator entries.
 
 In addition to the official repository there are multiple Winlator builds floating around the Internet, but these have not been extensively tested with ES-DE.
 
@@ -744,8 +788,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga and CDTV_ section in the user guide |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS,<br>MAME4droid Current **(Standalone)** | Yes for MAME4droid Current | Single archive or disk file          |
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
-| androidapps           | Android Apps                                   | _Native apps_                     |                                   | No           |                                      |
-| androidgames          | Android Games                                  | _Native apps_                     |                                   | No           |                                      |
+| androidapps           | Android Apps                                   | _Native apps_                     |                                   | No           | Use the built-in game importer       |
+| androidgames          | Android Games                                  | _Native apps_                     |                                   | No           | Use the built-in game importer       |
 | apple2                | Apple II                                       | MAME4droid Current **(Standalone)**  |                                   | Yes          | See the specific _Apple II_ section in the user guide |
 | apple2gs              | Apple IIGS                                     | MAME4droid Current **(Standalone)**  |                                   | Yes          | See the specific _Apple IIGS_ section in the user guide |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>DICE | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
@@ -785,8 +829,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)**,<br>Redream **(Standalone)** | No           | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           |                                   | No           |                                      |
 | electron              | Acorn Electron                                 | MAME4droid Current [Tape] **(Standalone)** | MAME4droid Current [Diskette DFS] **(Standalone)**,<br>MAME4droid Current [Diskette ADFS] **(Standalone)** | Yes          | Single archive, or single tape or diskette image file |
-| emulators             | Emulators                                      | _Native apps_                     |                                   | No           |                                      |
-| epic                  | Epic Games Store                               | _Placeholder_                     |                                   |              |                                      |
+| emulators             | Emulators                                      | _Native apps_                     |                                   | No           | Use the built-in game importer       |
+| epic                  | Epic Games Store                               | _Native apps_                     |                                   | No           | Use the built-in game importer       |
 | famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          |                                |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          |                                      |
@@ -799,9 +843,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gameandwatch          | Nintendo Game and Watch                        | Multi (MESS)                      | MAME4droid Current Local Artwork **(Standalone)**,<br>MAME4droid Current **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section in the user guide |
 | gamecom               | Tiger Electronics Game.com                     | MAME4droid Current **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>Pizza Boy SC **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
-| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>SkyEmu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
-| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP,<br>NooDS,<br>NooDS **(Standalone)**,<br>GBA.emu **(Standalone)**,<br>SkyEmu **(Standalone)**,<br>My Boy! **(Standalone)**,<br>Pizza Boy GBA **(Standalone)** | No          | Single archive or ROM file |
-| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>SkyEmu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
+| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>SkyEmu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Linkboy **(Standalone)**,<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
+| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP,<br>NooDS,<br>NooDS **(Standalone)**,<br>GBA.emu **(Standalone)**,<br>SkyEmu **(Standalone)**,<br>My Boy! **(Standalone)**,<br>Linkboy **(Standalone)**,<br>Pizza Boy GBA **(Standalone)** | No          | Single archive or ROM file |
+| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>GBC.emu **(Standalone)**,<br>SkyEmu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Linkboy **(Standalone)**,<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           | Disc image file for single-disc games, .m3u playlist for multi-disc games |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)** | No           | Single archive or ROM file |
 | gmaster               | Hartung Game Master                            | MAME4droid Current **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
@@ -819,8 +863,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   |              |                                      |
 | mark3                 | Sega Mark III                                  | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
-| megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | Yes          |                                      |
-| megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | Yes          |                                      |
+| megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)** | Yes          |                                      |
+| megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)** | Yes          |                                      |
 | megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)** | No           | Single archive or ROM file           |
 | megadrivejp           | Sega Mega Drive [Japan]                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)** | No           | Single archive or ROM file           |
 | megaduck              | Creatronic Mega Duck                           | SameDuck                          | MAME4droid Current **(Standalone)**  | No           | Single archive or ROM file           |
@@ -837,8 +881,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomi2                | Sega NAOMI 2                                   | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
-| n3ds                  | Nintendo 3DS                                   | Citra                             | Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Azahar **(Standalone)**,<br>Mandarine **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | No           | Single archive or ROM file |
+| n3ds                  | Nintendo 3DS                                   | Azahar **(Standalone)**           | AzaharPlus **(Standalone)**,<br>Citra,<br>Citra **(Standalone)**,<br>Citra Canary **(Standalone)**,<br>Citra MMJ **(Standalone)**,<br>Mandarine **(Standalone)**,<br>Lime3DS **(Standalone)**,<br>Panda3DS **(Standalone)**  | No           | Single ROM file       |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64,<br> _Native port_ | No           | Single archive or ROM file, for recompilations see the specific _Nintendo 64 Recompilations_ section in the user guide |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>NooDS,<br>NooDS **(Standalone)**,<br>DraStic **(Standalone)**,<br>SkyEmu **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
@@ -855,7 +899,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>VirtualXT | No           | See the specific _DOS / PC_ section in the user guide |
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   | Yes          |                                      |
 | pc98                  | NEC PC-9800 Series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
-| pcarcade              | PC Arcade Systems                              | Winlator Cmod Glibc **(Standalone)** | Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
+| pcarcade              | PC Arcade Systems                              | Winlator Cmod **(Standalone)**    | Winlator Cmod Glibc **(Standalone)**,<br>Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Geargrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>PCE.emu **(Standalone)** | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   | Yes          |                                      |
@@ -863,8 +907,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | CannonBall (OutRun),<br>Mr.Boom (Bomberman),<br>NXEngine (Cave Story),<br>drs (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War | Yes for ECWolf |                                      |
-| ps2                   | Sony PlayStation 2                             | AetherSX2 **(Standalone)**        | Play! **(Standalone)**            | Yes for AetherSX2 |                                      |
-| ps3                   | Sony PlayStation 3                             | _Placeholder_                     |                                   |              |                                      |
+| ps2                   | Sony PlayStation 2                             | AetherSX2 **(Standalone)**        | ARMSX2 **(Standalone)**,<br>Play! **(Standalone)**            | Yes for AetherSX2 and ARMSX2 |                                      |
+| ps3                   | Sony PlayStation 3                             | aPS3e Game Serial **(Standalone)** | aPS3e Directory **(Standalone)**,<br>aPS3e ISO **(Standalone)** | Yes          | See the specific _Sony PlayStation 3_ section in the user guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file               |
 | psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           |                                   | Yes          | See the specific _Sony PlayStation Vita_ section in the User guide |
@@ -880,7 +924,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file           |
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file           |
 | sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         |                                   | No           | Single archive or ROM file           |
-| segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)** | Yes          |                                      |
+| segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)** | Yes          |                                      |
 | sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-jg,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust,<br>Mesen-S | No           | Single archive or ROM file |
 | sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>blueMSX,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file           |
 | sgb                   | Nintendo Super Game Boy                        | Mesen-S                           | SameBoy,<br>mGBA                  |              |  Single archive or ROM file |
@@ -888,13 +932,13 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-jg,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust,<br>Mesen-S | No           | Single archive or ROM file |
 | solarus               | Solarus Game Engine                            | _Placeholder_                     |                                   |              |                                      |
 | spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
-| steam                 | Valve Steam                                    | _Placeholder_                     |                                   |              |                                      |
+| steam                 | Valve Steam                                    | GameNative **(Standalone)**       | GameHub Lite **(Standalone)**,<br>GameHub Lite Local **(Standalone)** | No           | See the specific _Steam_ section in the user guide |
 | stv                   | Sega Titan Video Game System                   | MAME - Current                    | MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | Single archive file                  |
 | sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x 2005 Plus,<br>Snes9x EX+ **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-jg,<br>bsnes-mercury Accuracy |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>Geargrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
 | supervision           | Watara Supervision                             | Potator                           | MAME4droid Current **(Standalone)**  | No           | Single archive or ROM file           |
 | supracan              | Funtech Super A'Can                            | MAME4droid Current **(Standalone)**  |                                   | Yes          | Single archive or ROM file. You need a supracan.zip archive that contains a valid internal_68k.bin file and an empty file named umc6650.bin |
-| switch                | Nintendo Switch                                | Skyline **(Standalone)**          |                                   | Yes          |                                      |
+| switch                | Nintendo Switch                                | Kenji-NX **(Standalone)**         | Skyline **(Standalone)**          | Yes          |                                      |
 | symbian               | Symbian                                        | EKA2L1 **(Standalone)**           |                                   | Yes          | See the specific _Symbian and Nokia N-Gage_ section in the User guide |
 | tanodragon            | Tano Dragon                                    | MAME4droid Current [Tape] **(Standalone)** | MAME4droid Current [Cartridge] **(Standalone)** | Yes          | See the specific _Dragon 32 and Tano Dragon_ section in the user guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Beetle SuperGrafx,<br>Geargrafx,<br>PCE.emu **(Standalone)** | No           | Single archive or ROM file           |
@@ -904,7 +948,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | to8                   | Thomson TO8                                    | Theodore                          |                                   |              |                                      |
 | triforce              | Namco-Sega-Nintendo Triforce                   | _Placeholder_                     |                                   |              |                                      |
 | trs-80                | Tandy TRS-80                                   | _Placeholder_                     |                                   |              |                                      |
-| type-x                | Taito Type X                                   | Winlator Cmod Glibc **(Standalone)** | Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
+| type-x                | Taito Type X                                   | Winlator Cmod **(Standalone)**    | Winlator Cmod Glibc **(Standalone)**,<br>Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
 | uzebox                | Uzebox Open Source Console                     | Uzem                              |                                   |              |                                      |
 | vectrex               | GCE Vectrex                                    | vecx                              | MAME4droid Current **(Standalone)**  | Yes for MAME4droid Current | Single archive or ROM file           |
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   | No           | Single archive or tape, cartridge or diskette image file |
@@ -916,7 +960,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section in the user guide |
-| windows               | Microsoft Windows                              | Winlator Cmod Glibc **(Standalone)** | Winlator Cmod PRoot **(Standalone)** | No           | See the _Winlator_ section elsewhere in this document |
+| windows               | Microsoft Windows                              | Winlator Cmod **(Standalone)**    | Winlator Cmod Glibc **(Standalone)**,<br>Winlator Cmod PRoot **(Standalone)**,<br>GameNative **(Standalone)**,<br>GameHub Lite **(Standalone)**,<br>GameHub Lite Local **(Standalone)** | No           | For general Windows games see the _Winlator_ section elsewhere in this document and for Steam games see the specific _Steam_ section in the user guide |
 | windows3x             | Microsoft Windows 3.x                          | DOSBox-Pure                       |                                   | No           |                                      |
 | windows9x             | Microsoft Windows 9x                           | DOSBox-Pure                       |                                   | No           |                                      |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Swan.emu **(Standalone)**         | No           | Single archive or ROM file           |

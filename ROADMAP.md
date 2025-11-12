@@ -9,7 +9,6 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * RetroAchievements.org integration
 * Bulk metadata editor
 * Background music
-* Controller button mappings from inside ES-DE (similar to pad2key in Batocera)
 
 **User interface**
 

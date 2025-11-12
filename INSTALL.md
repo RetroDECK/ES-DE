@@ -1814,12 +1814,18 @@ The es_systems.xml file on Android utilizes variables heavily to implement the _
 
 `%MIMETYPE%` - Sets an explicit MIME type, which you need to assign using an equal sign such as %MIMETYPE%=text/plain. You will rarely, if ever, need to set an explicit MIME type so this variable is of limited use. By default Android will set the MIME type to application/octet-stream which is normally what you want.
 
+`%INTERNALDATA%` - Expands to _/data/user/\<userid\>_ - for example _/data/user/0_ or _/data/user/11_. This is for instance necessary for launching RetroArch in multi-user setups.
+
+`%EXTERNALDATA%` - Expands to _/storage/emulated/\<userid\>_ - for example _/storage/emulated/0_ or _/storage/emulated/11_. This is for instance necessary for launching RetroArch in multi-user setups.
+
 There are two main ways to pass options to emulators, using _extras_ or using the _data_ URI. There can only be a single data URI but there can be an arbitrary amount of extras. To understand more about the way this works, you can read about the _putExtra()_ and and _setData()_ functions here:\
 https://developer.android.com/reference/android/content/Intent
 
 `%EXTRA_` - This passes an _extra_ which contains any additional information that the emulator may support. This is provided as a key/value pair where you define the key name following the literal %EXTRA_ string and terminate it with a % sign and then assign the value using an equal sign. For example %EXTRA_LIBRETRO%=puae_libretro_android.so will pass the extra named _LIBRETRO_ with its value set to _puae_libretro_android.so_. You can pass an unlimited number of extras and you can also use various ROM variables in combination with this as described below. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%`, `%ROMRAW%` and `%ROMRAWWIN%` variables inside an `%EXTRA_` variable definition. This will expand to the basename of the game file, the directory of the game file, the ROM directory, the path to the game file with standard forward slashes as directory separators, and the path to the game file with Windows backslashes as directory separators, respectively.
 
 `%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings and special variables are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%`, `%ROMRAW%` and `%ROMRAWWIN%` variables inside an `%EXTRAARRAY_` variable definition. This will expand to the basename of the game file, the directory of the game file, the ROM directory, the path to the game file with standard forward slashes as directory separators, and the path to the game file with Windows backslashes as directory separators, respectively.
+
+`%EXTRAINTEGER_` - Sets an extra with an integer value.
 
 `%EXTRABOOL_` - Sets an extra with a boolean value, i.e. true/1 or false/0.
 
@@ -1844,6 +1850,7 @@ Here are some examples to clarify how this works:
 %DATA%=%ROMPROVIDER%
 %EXTRA_ROM%=%ROM%
 %EXTRA_bootPath%=%ROMSAF%
+%EXTRAINTEGER_app_id%=%INJECT%=%ROM%
 %EXTRABOOL_resumeState%=false
 ```
 
@@ -1910,6 +1917,17 @@ Here's an example es_systems.xml file for Android:
         <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRABOOL_resumeState%=false %EXTRA_bootPath%=%ROMSAF%</command>
         <platform>psx</platform>
         <theme>psx</theme>
+    </system>
+    <system>
+        <name>steam</name>
+        <fullname>Valve Steam</fullname>
+        <path>%ROMPATH%/steam</path>
+        <extension>.steam</extension>
+        <command label="GameNative (Standalone)">%EMULATOR_GAMENATIVE% %ACTION%=app.gamenative.LAUNCH_GAME %EXTRAINTEGER_app_id%=%INJECT%=%ROM%</command>
+        <command label="GameHub Lite (Standalone)">%EMULATOR_GAMEHUB-LITE% %ACTION%=gamehub.lite.LAUNCH_GAME %EXTRABOOL_autoStartGame%=true %EXTRA_steamAppId%=%INJECT%=%ROM%</command>
+        <command label="GameHub Lite Local (Standalone)">%EMULATOR_GAMEHUB-LITE% %ACTION%=gamehub.lite.LAUNCH_GAME %EXTRABOOL_autoStartGame%=true %EXTRA_localGameId%=%INJECT%=%ROM%</command>
+        <platform>steam</platform>
+        <theme>steam</theme>
     </system>
 </systemList>
 ```
@@ -2187,6 +2205,7 @@ There are two basic categories of metadata, `game` and `folders` and the metdata
 * `nomultiscrape` - bool, indicates whether the game should be excluded from the multi-scraper
 * `hidemetadata` - bool, indicates whether to hide most of the metadata fields when displaying the game in the gamelist view
 * `playcount` - integer, the number of times this game has been played
+* `playtime` - integer, the number of seconds that the game has been played
 * `controller` - string, used to display controller badges
 * `altemulator` - string, overrides the emulator/launch command on a per game basis
 * `lastplayed` - statistic, datetime, the last date and time this game was played
@@ -2347,6 +2366,7 @@ There are up to four parameters that will be passed to these scripts, as detaile
 | quit                     |                                                    | Application quit/shutdown                                                                         |
 | reboot                   |                                                    | System reboot (quit event triggered as well)                                                      |
 | poweroff                 |                                                    | System power off (quit event triggered as well)                                                   |
+| suspend                  |                                                    | System suspend (on platforms that support suspending)                                             |
 | config-changed           |                                                    | On saving application settings or controller configuration                                        |
 | settings-changed         |                                                    | On saving application settings (config-changed event triggered as well)                           |
 | controls-changed         |                                                    | On saving controller configuration (config-changed event triggered as well)                       |
