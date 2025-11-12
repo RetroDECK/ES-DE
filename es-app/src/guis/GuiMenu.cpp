@@ -2643,8 +2643,8 @@ void GuiMenu::openRetroDeckClassicConfigurator()
     std::string command;
     std::string startDirectory;
     bool runInBackground;
-    command = "bash /app/tools/configurator.sh";
-    startDirectory = "/app/tools";
+    command = "bash /app/bin/configurator";
+    startDirectory = "/app/bin";
     runInBackground = false;
     int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
     // You can add any checks for the script's outcome here.
