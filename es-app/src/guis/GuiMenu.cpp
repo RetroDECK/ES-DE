@@ -2665,6 +2665,7 @@ void GuiMenu::openRetroDeckGodotConfigurator()
 
 #endif
 
+#if defined(RETRODECK)
 void GuiMenu::openESDEConfiguration()
 {
     auto s = new GuiSettings(_("ES-DE CONFIGURATIONS"));
@@ -2684,3 +2685,4 @@ void GuiMenu::openESDEConfiguration()
 
     mWindow->pushGui(s);
 }
+#endif

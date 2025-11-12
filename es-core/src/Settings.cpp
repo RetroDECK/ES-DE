@@ -179,6 +179,9 @@ void Settings::setDefaults()
     mStringMap["LaunchScreenDuration"] = {"normal", "normal"};
     mStringMap["UIMode"] = {"full", "full"};
     mStringMap["RandomEntryButton"] = {"games", "games"};
+    #if defined(RETRODECK)
+    mStringMap["LoggingLevel"] = {"info", "info"};
+    #endif
 
     // UI settings -> system status settings.
     mBoolMap["SystemStatusBluetooth"] = {true, true};
