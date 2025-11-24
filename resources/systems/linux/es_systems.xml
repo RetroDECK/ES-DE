@@ -441,7 +441,7 @@
         <!-- <command label="Play! Arcade (Standalone)">%EMULATOR_PLAY!% &ndash;&ndash;fullscreen &ndash;&ndash;arcade %GAMEDIR%/%BASENAME%</command> -->
         <!-- <command label="Play! Disc (Standalone)">%EMULATOR_PLAY!% &ndash;&ndash;fullscreen &ndash;&ndash;disc %ROM%</command> -->
         <command label="RPCS3 Shortcut (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <!-- <command label="RPCS3 Game Serial (Standalone)">%EMULATOR_RPCS3% &ndash;&ndash;di-gui %RPCS3_GAMEID%:%INJECT%=%BASENAME%.ps3</command> -->
+        <command label="RPCS3 Game Serial (Standalone)">%EMULATOR_RPCS3% &ndash;&ndash;di-gui %RPCS3_GAMEID%:%INJECT%=%BASENAME%.ps3</command>
         <!-- <command label="Triforce (Standalone)">%INJECT%=%BASENAME%.esprefix %EMULATOR_TRIFORCE% -b -e %ROM%</command> -->
         <command label="xemu (Standalone)">%INJECT%=%BASENAME%.esprefix %EMULATOR_XEMU% -dvd_path %ROM%</command>
         <!-- <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
