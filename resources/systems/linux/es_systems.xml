@@ -546,6 +546,7 @@
         <platform>daphne, arcade</platform>
         <theme>daphne</theme>
     </system>
+<!--
     <system>
         <name>desktop</name>
         <fullname>Desktop Applications</fullname>
@@ -558,6 +559,7 @@
         <platform>pcwindows</platform>
         <theme>desktop</theme>
     </system>
+-->
     <system>
         <name>doom</name>
         <fullname>Doom</fullname>
@@ -637,6 +639,7 @@
         <platform>electron</platform>
         <theme>electron</theme>
     </system>
+<!--
     <system>
         <name>emulators</name>
         <fullname>Emulators</fullname>
@@ -649,7 +652,7 @@
         <platform>pcwindows</platform>
         <theme>emulators</theme>
     </system>
-<!--
+
     <system>
         <name>epic</name>
         <fullname>Epic Games Store</fullname>
