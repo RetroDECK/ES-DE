@@ -2275,6 +2275,7 @@ void GuiMenu::openUtilities()
     };
 
     ComponentListRow row;
+#if !defined(RETRODECK)
     row.addElement(std::make_shared<TextComponent>(_("GAME IMPORTER"), Font::get(FONT_SIZE_MEDIUM),
                                                    mMenuColorPrimary),
                    true);
@@ -2283,6 +2284,7 @@ void GuiMenu::openUtilities()
         mWindow->pushGui(new GuiGameImporter(_("GAME IMPORTER"), gameImporterUpdateFunc));
     }));
     s->addRow(row);
+#endif
 
     row.elements.clear();
     row.addElement(std::make_shared<TextComponent>(_("ORPHANED DATA CLEANUP"),
