@@ -172,12 +172,17 @@ Log::~Log()
                                 mOutStringStream.str().c_str());
     }
 #else
-    // If it's an error or the --debug flag has been set, then print to the console as well.
+    // For regular builds (non-RetroDECK) print to stderr when it's an error
+    // or the reporting level is Debug. On RetroDECK we always write logs to
+    // the terminal via stdout instead, to avoid duplicate messages (stderr+stdout).
+#if !defined(RETRODECK)
     if (mMessageLevel == LogError || sReportingLevel >= LogDebug)
         std::cerr << mOutStringStream.str();
 #endif
+#endif
 #if defined(RETRODECK)
-    // Always write logs to the terminal as well when RetroDECK is defined
+    // Write logs to the terminal (stdout) for RetroDECK builds. Avoid using
+    // stderr here to prevent duplicate logging when reporting level is Debug.
     std::cout << mOutStringStream.str();
 #endif
 }
