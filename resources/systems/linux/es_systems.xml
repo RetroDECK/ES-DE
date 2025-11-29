@@ -564,6 +564,7 @@
         <path>%ROMPATH%/doom</path>
         <extension>.doom .DOOM .desktop .ipk3 .IPK3 .iwad .IWAD .pk3 .PK3 .pk4 .PK4 .pwad .PWAD .sh .wad .WAD</extension>
         <command label="GZDoom (Standalone)">/app/retrodeck/components/gzdoom/component_launcher.sh %ROM%</command>
+        <!-- <command label="UZDoom (Standalone)">/app/retrodeck/components/uzdoom/component_launcher.sh %ROM%</command> -->
         <command label="PrBoom">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/prboom_libretro.so %ROM%</command>
         <!-- <command label="PrBoom+ (Standalone)">%EMULATOR_PRBOOM-PLUS% -iwad %ROM%</command> -->
         <command label="Boom 3">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/boom3_libretro.so %ROM%</command>
