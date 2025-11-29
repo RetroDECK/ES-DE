@@ -57,6 +57,8 @@
             <entry>~/.local/share/applications/3dSen/3dSen.exe</entry>
             <entry>~/.local/bin/3dSen/3dSen.exe</entry>
             <entry>~/bin/3dSen/3dSen.exe</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/3dsen/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="3DSEN-WINDOWS">
@@ -103,6 +105,8 @@
             <entry>~/.local/share/applications/advancemame/advmame</entry>
             <entry>~/.local/bin/advancemame/advmame</entry>
             <entry>~/bin/advancemame/advmame</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/advmame/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="AMIBERRY">
@@ -171,15 +175,6 @@
             <entry>/app/retrodeck/components/azaharplus/component_launcher.sh</entry>
         </rule>
     </emulator>
-    <emulator name="AZAHARPLUS">
-        <!-- Nintendo 3DS emulator AzaharPlus -->
-        <rule type="staticpath">
-            <entry>~/Applications/azaharplus*.AppImage</entry>
-            <entry>~/.local/share/applications/azaharplus*.AppImage</entry>
-            <entry>~/.local/bin/azaharplus*.AppImage</entry>
-            <entry>~/bin/azaharplus*.AppImage</entry>
-        </rule>
-    </emulator>
     <emulator name="BASILISKII">
         <!-- Macintosh 68k emulator Basilisk II -->
         <rule type="systempath">
@@ -233,6 +228,8 @@
             <entry>~/bin/blastem/blastem</entry>
             <entry>/var/lib/flatpak/exports/bin/com.retrodev.blastem</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.retrodev.blastem</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/blastem/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="BSNES">
@@ -244,6 +241,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/dev.bsnes.bsnes</entry>
             <entry>~/.local/share/flatpak/exports/bin/dev.bsnes.bsnes</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/bnes/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="CEMU">
@@ -384,6 +383,8 @@
             <entry>~/.local/share/applications/DOSBoxPure/DOSBoxPure</entry>
             <entry>~/.local/bin/DOSBoxPure/DOSBoxPure</entry>
             <entry>~/bin/DOSBoxPure/DOSBoxPure</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/dosbox-pure/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-STAGING">
@@ -984,6 +985,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/ca.parallel_launcher.ParallelLauncher</entry>
             <entry>~/.local/share/flatpak/exports/bin/ca.parallel_launcher.ParallelLauncher</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/parallel-launcher/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2">
@@ -1014,6 +1017,8 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/pcsx2-legacy/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PICO-8">
@@ -1042,6 +1047,8 @@
             <entry>~/bin/Play!*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.purei.Play</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.purei.Play</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/play!/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="PPSSPP">
@@ -1332,6 +1339,8 @@
             <entry>~/.local/share/applications/shadPS4QtLauncher*.AppImage</entry>
             <entry>~/.local/bin/shadPS4QtLauncher*.AppImage</entry>
             <entry>~/bin/shadPS4QtLauncher*.AppImage</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/shadps4-gui/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="SHEEPSHAVER">
@@ -1699,6 +1708,8 @@
             <entry>~/.local/share/applications/ymir/ymir-sdl3</entry>
             <entry>~/.local/bin/ymir/ymir-sdl3</entry>
             <entry>~/bin/ymir/ymir-sdl3</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/ymir/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">
@@ -1717,6 +1728,7 @@
     </emulator>
     <emulator name="FLATPAKSPAWN">
         <rule type="systempath">
+            <!-- RetroDECK -->
             <entry>flatpak-spawn</entry>
         </rule>
     </emulator>
