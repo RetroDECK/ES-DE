@@ -109,6 +109,16 @@
             <entry>/app/retrodeck/components/advmame/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="AGS">
+        <!-- Adventure Game Studio Game Engine -->
+        <rule type="systempath">
+            <entry>ags</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/ags/component_launcher.sh</entry>
+        </rule>
+    </emulator>
     <emulator name="AMIBERRY">
         <!-- Commodore Amiga emulator Amiberry -->
         <rule type="systempath">
@@ -935,16 +945,6 @@
             <entry>noods</entry>
         </rule>
     </emulator>
-    <emulator name="OPENBOR">
-        <!-- OpenBOR Game Engine -->
-        <rule type="systempath">
-            <entry>openbor</entry>
-        </rule>
-        <rule type="staticpath">
-            <!-- RetroDECK -->
-            <entry>/app/retrodeck/components/openbor/component_launcher.sh</entry>
-        </rule>
-    </emulator>
     <emulator name="OPENMSX">
         <!-- MSX home computer emulator openMSX -->
         <rule type="systempath">
@@ -1751,10 +1751,81 @@
             <entry>/app/retrodeck/components/zesarux/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <!-- RetroDECK Specific Components-->
     <emulator name="FLATPAKSPAWN">
         <rule type="systempath">
             <!-- RetroDECK -->
             <entry>flatpak-spawn</entry>
+        </rule>
+    </emulator>
+    <emulator name="GZDOOM">
+        <!-- GZDoom Game Engine -->
+        <rule type="systempath">
+            <entry>gzdoom</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/gzdoom/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="UZDOOM">
+        <!-- UZDoom Game Engine -->
+        <rule type="systempath">
+            <entry>uzdoom</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/uzdoom/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="RAZE">
+        <!-- RAZE Game Engine -->
+        <rule type="systempath">
+            <entry>raze</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/raze/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="KEGS">
+        <!-- KEGS Apple IIgs emulator -->
+        <rule type="systempath">
+            <entry>kegs</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/kegs/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="OPENBOR">
+        <!-- OpenBOR Game Engine -->
+        <rule type="systempath">
+            <entry>openbor</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/openbor/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="GAMETANK">
+        <!-- GameTank Emulator -->
+        <rule type="systempath">
+            <entry>gametank</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/gametank/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="COMMANDERX16">
+        <!-- Commander X16 Emulator -->
+        <rule type="systempath">
+            <entry>commanderx16</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/commanderx16/component_launcher.sh</entry>
         </rule>
     </emulator>
 </ruleList>
