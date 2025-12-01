@@ -149,6 +149,9 @@
     </emulator>
     <emulator name="AZAHAR">
         <!-- Nintendo 3DS emulator Azahar -->
+        <rule type="systempath">
+            <entry>azahar</entry>
+        </rule>
         <rule type="staticpath">
             <entry>~/Applications/azahar*.AppImage</entry>
             <entry>~/.local/share/applications/azahar*.AppImage</entry>
@@ -165,12 +168,12 @@
         </rule>
     </emulator>
     <emulator name="AZAHARPLUS">
-        <!-- Nintendo 3DS emulator Azahar Plus-->
+        <!-- Nintendo 3DS emulator AzaharPlus -->
         <rule type="staticpath">
-            <entry>~/Applications/azahar*.AppImage</entry>
-            <entry>~/.local/share/applications/azahar*.AppImage</entry>
-            <entry>~/.local/bin/azahar*.AppImage</entry>
-            <entry>~/bin/azahar*.AppImage</entry>
+            <entry>~/Applications/azaharplus*.AppImage</entry>
+            <entry>~/.local/share/applications/azaharplus*.AppImage</entry>
+            <entry>~/.local/bin/azaharplus*.AppImage</entry>
+            <entry>~/bin/azaharplus*.AppImage</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/azaharplus/component_launcher.sh</entry>
         </rule>
@@ -458,12 +461,15 @@
         <!-- EasyRPG game engine -->
         <rule type="systempath">
             <entry>easyrpg-player</entry>
+            <entry>org.easyrpg.player</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/easyrpg/easyrpg-player</entry>
             <entry>~/.local/share/applications/easyrpg/easyrpg-player</entry>
             <entry>~/.local/bin/easyrpg/easyrpg-player</entry>
             <entry>~/bin/easyrpg/easyrpg-player</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.easyrpg.player</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.easyrpg.player</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/easyrpg/component_launcher.sh</entry>
         </rule>
@@ -543,6 +549,10 @@
             <entry>fsuae.launcher</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
+            <entry>~/.local/share/applications/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
+            <entry>~/.local/bin/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
+            <entry>~/bin/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
             <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
             <!-- RetroDECK -->
@@ -1035,6 +1045,12 @@
             <entry>/app/retrodeck/components/pico8/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="PLASTIC">
+        <!-- Nintendo NES and Famicom emulator Plastic -->
+        <rule type="systempath">
+            <entry>plastic</entry>
+        </rule>
+    </emulator>
     <emulator name="PLAY!">
         <!-- Sony PlayStation 2 emulator Play! -->
         <rule type="systempath">
@@ -1506,6 +1522,13 @@
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="systempath">
             <entry>visualboyadvance-m</entry>
+            <entry>com.vba_m.visualboyadvance-m</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.vba_m.visualboyadvance-m</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.vba_m.visualboyadvance-m</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/vba-m/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="VICE-X64SC">
@@ -1708,6 +1731,8 @@
             <entry>~/.local/share/applications/ymir/ymir-sdl3</entry>
             <entry>~/.local/bin/ymir/ymir-sdl3</entry>
             <entry>~/bin/ymir/ymir-sdl3</entry>
+            <entry>/var/lib/flatpak/exports/bin/io.github.strikerx3.ymir</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.strikerx3.ymir</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/ymir/component_launcher.sh</entry>
         </rule>
