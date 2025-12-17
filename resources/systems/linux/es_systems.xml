@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+f<?xml version="1.0"?>
 <!-- This is the ES-DE Frontend game systems configuration file for Linux -->
 <systemList>
     <system>
@@ -1672,7 +1672,7 @@
         <path>%ROMPATH%/portmaster</path>
         <extension>.sh</extension>
         <command label="PortMaster">%ENABLESHORTCUTS% %EMULATOR_PORTMASTER% %ROM%</command>
-        <platform>portmaster, pc, pcwindows</platform>
+        <platform>portmaster</platform>
         <theme>portmaster</theme>
     </system>
     <system>
