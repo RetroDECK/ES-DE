@@ -1671,7 +1671,7 @@
         <fullname>PortMaster</fullname>
         <path>%ROMPATH%/portmaster</path>
         <extension>.sh</extension>
-        <command label="PortMaster">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="PortMaster">%ENABLESHORTCUTS% %EMULATOR_PORTMASTER% %ROM%</command>
         <platform>portmaster, pc, pcwindows</platform>
         <theme>portmaster</theme>
     </system>

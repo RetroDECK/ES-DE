@@ -34,7 +34,8 @@
             <entry>~/.config/retroarch/libretro</entry>
             <!-- Portable AppImage -->
             <entry>~/Applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
-            <entry>~/.local/share/applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
+            <entry>
+                ~/.local/share/applications/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
             <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
             <entry>~/bin/RetroArch-Linux-x86_64.AppImage.home/.config/retroarch/cores</entry>
             <!-- Flatpak package -->
@@ -263,7 +264,7 @@
         <rule type="systempath">
             <entry>cemu</entry>
             <entry>Cemu</entry>
-             <!-- RetroDECK -->
+            <!-- RetroDECK -->
             <entry>Cemu-wrapper</entry>
         </rule>
         <rule type="staticpath">
@@ -563,8 +564,10 @@
             <entry>~/.local/share/applications/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
             <entry>~/.local/bin/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
             <entry>~/bin/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
-            <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
+            <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run
+                --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run
+                --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/fsuae/component_launcher.sh</entry>
         </rule>
@@ -834,8 +837,10 @@
             <entry>mednafen</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+            <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run
+                --command=mednafen com.github.AmatCoder.mednaffe</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run
+                --command=mednafen com.github.AmatCoder.mednaffe</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/mednafen/component_launcher.sh</entry>
         </rule>
@@ -1233,7 +1238,7 @@
         </rule>
     </emulator>
     <emulator name="RYUBING">
-            <!-- Nintendo Switch emulator Ryubing -->
+        <!-- Nintendo Switch emulator Ryubing -->
         <rule type="systempath">
             <entry>Ryujinx.sh</entry>
             <entry>ryubing</entry>
@@ -1429,8 +1434,10 @@
             <entry>solarus.run</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run
+                --command=solarus-run org.solarus_games.solarus.Launcher</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run
+                --command=solarus-run org.solarus_games.solarus.Launcher</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/solarus/component_launcher.sh</entry>
         </rule>
@@ -1543,7 +1550,8 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4 net.sf.VICE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4 net.sf.VICE</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xplus4
+                net.sf.VICE</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/vice-xplus4/component_launcher.sh</entry>
         </rule>
@@ -1556,7 +1564,8 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic
+                net.sf.VICE</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/vice-xvic/component_launcher.sh</entry>
         </rule>
@@ -1826,6 +1835,13 @@
         <rule type="staticpath">
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/mudlet/component_launcher.sh</entry>
+        </rule>
+    </emulator>
+    <emulator name="PORTMASTER">
+        <!-- PORTMASTER -->
+        <rule type="systempath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/portmaster/component_launcher.sh</entry>
         </rule>
     </emulator>
 </ruleList>
