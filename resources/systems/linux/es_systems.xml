@@ -2273,6 +2273,7 @@ f<?xml version="1.0"?>
         <platform>virtualboy</platform>
         <theme>virtualboy</theme>
     </system>
+<!--
     <system>
         <name>vpinball</name>
         <fullname>Visual Pinball</fullname>
@@ -2282,6 +2283,7 @@ f<?xml version="1.0"?>
         <platform>vpinball</platform>
         <theme>vpinball</theme>
     </system>
+-->
     <system>
         <name>vsmile</name>
         <fullname>VTech V.Smile</fullname>
