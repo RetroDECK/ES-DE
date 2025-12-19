@@ -1,4 +1,4 @@
-f<?xml version="1.0"?>
+<?xml version="1.0"?>
 <!-- This is the ES-DE Frontend game systems configuration file for Linux -->
 <systemList>
     <system>
@@ -537,7 +537,7 @@ f<?xml version="1.0"?>
         <fullname>Daphne Arcade LaserDisc Emulator</fullname>
         <path>%ROMPATH%/daphne</path>
         <extension>.daphne .dirksimple .mmi .MMI .ogv .OGV .singe .7z .7Z .zip .ZIP</extension>
-        <!--  <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%/%BASENAME%.txt %INJECT%=%BASENAME%.commands</command> --> 
+        <!--  <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%/%BASENAME%.txt %INJECT%=%BASENAME%.commands</command> -->
         <!-- <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%/%BASENAME%.txt -script %GAMEDIR%/%BASENAME%.singe %INJECT%=%BASENAME%.commands</command> -->
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so %ROM%</command>
         <command label="MAME (Standalone)">%EMULATOR_MAME% -inipath /var/config/mame/ini -rompath %GAMEDIR%\;%ROMPATH%/daphne %BASENAME%</command>
@@ -596,10 +596,10 @@ f<?xml version="1.0"?>
         <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="XRoar Dragon 32 (Standalone)">%EMULATOR_XROAR% -fs -default-machine dragon32 %ROM%</command>
         <command label="XRoar Dragon 64 (Standalone)">%EMULATOR_XROAR% -fs -default-machine dragon64 %ROM%</command>
-        <command label="MAME Dragon 32 [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon32 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%</command> 
-        <command label="MAME Dragon 32 [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon32 -cart %ROM%</command> 
-        <command label="MAME Dragon 64 [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon64 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%</command> 
-        <command label="MAME Dragon 64 [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon64 -cart %ROM%</command> 
+        <command label="MAME Dragon 32 [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon32 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%</command>
+        <command label="MAME Dragon 32 [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon32 -cart %ROM%</command>
+        <command label="MAME Dragon 64 [Tape] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon64 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%</command>
+        <command label="MAME Dragon 64 [Cartridge] (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/dragon32 dragon64 -cart %ROM%</command>
         <platform>dragon32</platform>
         <theme>dragon32</theme>
     </system>
@@ -1278,7 +1278,7 @@ f<?xml version="1.0"?>
         <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% --steammode --profile="%BASENAME%"</command>
         <platform>muds</platform>
         <theme>muds</theme>
-    </system> 
+    </system>
 -->
     <system>
         <name>mugen</name>
@@ -1455,7 +1455,7 @@ f<?xml version="1.0"?>
         <platform>nes</platform>
         <theme>nes</theme>
     </system>
-<!--    
+<!--
      <system>
         <name>ngage</name>
         <fullname>Nokia N-Gage</fullname>
@@ -1700,7 +1700,7 @@ f<?xml version="1.0"?>
         <platform>ps3</platform>
         <theme>ps3</theme>
     </system>
-<!-- 
+<!--
     <system>
         <name>ps4</name>
         <fullname>Sony PlayStation 4</fullname>
@@ -1713,7 +1713,7 @@ f<?xml version="1.0"?>
         <command label="shadPS4 [GUI] eboot.bin (Standalone)">%EMULATOR_SHADPS4-GUI% -d -g %ROM%</command>
         <platform>ps4</platform>
         <theme>ps4</theme>
-    </system> 
+    </system>
 -->
     <system>
         <name>psp</name>
@@ -2097,7 +2097,7 @@ f<?xml version="1.0"?>
         <platform>switch</platform>
         <theme>switch</theme>
     </system>
-<!-- 
+<!--
     <system>
         <name>symbian</name>
         <fullname>Symbian</fullname>
@@ -2434,7 +2434,7 @@ f<?xml version="1.0"?>
         <extension>. .desktop .iso .ISO .sh .xex .XEX .zar .ZAR</extension>
         <command label="xenia (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="Xenia Edge (Standalone)">%EMULATOR_XENIA-EDGE% %INJECT%=%BASENAME%.commands %ROM%</command>
-        <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command> 
+        <command label="xenia (Wine)">%STARTDIR%=%EMUDIR% %PRECOMMAND_WINE% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="xenia (Proton)">%STARTDIR%=%EMUDIR% %PRECOMMAND_PROTON% %EMULATOR_XENIA-WINDOWS% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>xbox360</platform>
@@ -2469,7 +2469,7 @@ f<?xml version="1.0"?>
         <platform>zx81</platform>
         <theme>zx81</theme>
     </system>
-<!-- 
+<!--
     <system>
         <name>zxnext</name>
         <fullname>Sinclair ZX Spectrum Next</fullname>
