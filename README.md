@@ -15,6 +15,8 @@ The **RetroDECK Light Fork** builds upon the upstream ES‑DE codebase, adapting
 | **Feature Set** | Disabled features that conflict with Flatpak restrictions or that are not available in RetroDECK. |
 | **Upstream Integration** | All new features and bug fixes originate from the upstream ES‑DE project; the fork merges these changes regularly. |
 
+All the changes are done under `#if defined(RETRODECK)` definition in the C++ files, so compiling the application without that flag makes the build identical to the original, with the exception of course of `es_systems.xml` and `es_find_rules.xml` that are hardly customized for RetroDECK only.
+
 ## Resources
 
 - **Official ES‑DE Website:** <https://es-de.org>
