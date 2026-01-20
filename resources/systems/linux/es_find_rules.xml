@@ -1039,7 +1039,7 @@
       <entry>~/.local/bin/pico-8/pico8</entry>
       <entry>~/bin/pico-8/pico8</entry>
       <!-- RetroDECK -->
-      <entry>/app/retrodeck/components/pico8/component_launcher.sh</entry>
+      <entry>/app/retrodeck/components/pico-8/component_launcher.sh</entry>
     </rule>
   </emulator>
   <emulator name="PLASTIC">
