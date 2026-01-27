@@ -571,7 +571,7 @@
       <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run
                 --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
       <!-- RetroDECK -->
-      <entry>/app/retrodeck/components/fsuae/component_launcher.sh</entry>
+      <entry>/app/retrodeck/components/fs-uae/component_launcher.sh</entry>
     </rule>
   </emulator>
   <emulator name="FUSE">
