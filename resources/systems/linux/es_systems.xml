@@ -42,6 +42,7 @@
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <!-- <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command> -->
+        <!-- <command label="FS-UAE (Standalone) AmigaVision">%EMULATOR_FS-UAE% /var/config/FS-UAE/AmigaVision.fs-uae</command> -->
         <!-- <command label="Amiberry (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_AMIBERRY% &dash;&dash;autoload %ROM%</command> -->
         <platform>amiga</platform>
         <theme>amiga</theme>
