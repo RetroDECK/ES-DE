@@ -43,6 +43,7 @@
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <!-- <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command> -->
         <!-- <command label="FS-UAE (Standalone) AmigaVision">%EMULATOR_FS-UAE% /var/config/FS-UAE/AmigaVision.fs-uae</command> -->
+        <!-- <command label="FS-UAE (Standalone) Custom">%EMULATOR_FS-UAE% /var/config/FS-UAE/custom.fs-uae %ROM%</command> -->
         <!-- <command label="Amiberry (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_AMIBERRY% &dash;&dash;autoload %ROM%</command> -->
         <platform>amiga</platform>
         <theme>amiga</theme>
@@ -55,6 +56,7 @@
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <!-- <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command> -->
+        <!-- <command label="FS-UAE (Standalone) Custom">%EMULATOR_FS-UAE% /var/config/FS-UAE/custom.fs-uae %ROM%</command> -->
         <!-- <command label="Amiberry (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_AMIBERRY% &dash;&dash;autoload %ROM%</command> -->
         <platform>amiga</platform>
         <theme>amiga1200</theme>
@@ -67,6 +69,7 @@
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <!-- <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command> -->
+        <!-- <command label="FS-UAE (Standalone) Custom">%EMULATOR_FS-UAE% /var/config/FS-UAE/custom.fs-uae %ROM%</command> -->
         <!-- <command label="Amiberry (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_AMIBERRY% &dash;&dash;autoload %ROM%</command> -->
         <platform>amiga</platform>
         <theme>amiga600</theme>
@@ -79,6 +82,7 @@
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <!-- <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% &dash;&dash;config:amiga-model=CD32 %ROM%</command> -->
+        <!-- <command label="FS-UAE (Standalone) Custom">%EMULATOR_FS-UAE% /var/config/FS-UAE/custom.fs-uae %ROM%</command> -->
         <!-- <command label="Amiberry (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_AMIBERRY% &dash;&dash;model CD32 &dash;&dash;autoload %ROM%</command> -->
         <platform>amigacd32</platform>
         <theme>amigacd32</theme>
@@ -377,6 +381,7 @@
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <!-- <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% &dash;&dash;config:amiga-model=CDTV %ROM%</command> -->
+        <!-- <command label="FS-UAE (Standalone) Custom">%EMULATOR_FS-UAE% /var/config/FS-UAE/custom.fs-uae %ROM%</command> -->
         <!-- <command label="Amiberry (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_AMIBERRY% &dash;&dash;model CDTV &dash;&dash;autoload %ROM%</command> -->
         <platform>cdtv</platform>
         <theme>cdtv</theme>
