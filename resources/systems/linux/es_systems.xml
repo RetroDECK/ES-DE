@@ -1274,17 +1274,6 @@
         <platform>msxturbor</platform>
         <theme>msxturbor</theme>
     </system>
-<!--
-  <system>
-        <name>muds</name>
-        <fullname>Multi-User Dungeons</fullname>
-        <path>%ROMPATH%/muds</path>
-        <extension>.mud .MUD</extension>
-        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% &dash;&dash;steammode &dash;&dash;profile="%BASENAME%"</command>
-        <platform>muds</platform>
-        <theme>muds</theme>
-    </system>
--->
     <system>
         <name>mugen</name>
         <fullname>M.U.G.E.N Game Engine</fullname>
@@ -2505,4 +2494,21 @@
         <platform>zxspectrum</platform>
         <theme>zxspectrum</theme>
     </system>
+  <!-- ============================================================= -->
+  <!--                         RetroDECK                             -->
+  <!-- ============================================================= -->
+<!--
+     <system>
+        <name>muds</name>
+        <fullname>Multi-User Dungeons</fullname>
+        <path>%ROMPATH%/muds</path>
+        <extension>.mud .MUD</extension>
+        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% &dash;&dash;steammode &dash;&dash;profile="%BASENAME%"</command>
+        <platform>muds</platform>
+        <theme>muds</theme>
+    </system>
+-->
+  <!-- ============================================================= -->
+  <!--                       RetroDECK End                           -->
+  <!-- ============================================================= -->
 </systemList>
