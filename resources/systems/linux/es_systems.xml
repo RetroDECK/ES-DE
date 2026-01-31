@@ -2495,7 +2495,7 @@
         <fullname>Commander X16</fullname>
         <path>%ROMPATH%/commander-x16</path>
         <extension>.prg .PRG</extension>
-        <command label="Commander X16 (Standalone)">%EMULATOR_COMMANDERX16%"</command>
+        <command label="Commander X16 (Standalone)">%EMULATOR_COMMANDER-X16%" %ROM%</command>
         <platform>commander-x16</platform>
         <theme>commander-x16</theme>
     </system>

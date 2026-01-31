@@ -1756,14 +1756,14 @@
     <!-- ============================================================= -->
     <!--                         RetroDECK                             -->
     <!-- ============================================================= -->
-    <emulator name="COMMANDERX16">
+    <emulator name="COMMANDER-X16">
         <!-- Commander X16 Emulator -->
         <rule type="systempath">
             <entry>commanderx16</entry>
         </rule>
         <rule type="staticpath">
             <!-- RetroDECK -->
-            <entry>/app/retrodeck/components/commanderx16/component_launcher.sh</entry>
+            <entry>/app/retrodeck/components/commander-x16/component_launcher.sh</entry>
         </rule>
     </emulator>
     <emulator name="ECWOLF">
