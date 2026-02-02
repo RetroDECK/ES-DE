@@ -2519,7 +2519,7 @@
     </system>
     <system>
         <name>microvision</name>
-        <fullname>MB Microvision</fullname>
+        <fullname>Milton-Bradley Microvision</fullname>
         <path>%ROMPATH%/microvision</path>
         <extension>.bin .BIN</extension>
         <command label="MVEM (Standalone)">%EMULATOR_MVEM% %ROM%</command>
