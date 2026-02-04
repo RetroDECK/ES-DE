@@ -566,10 +566,8 @@
             <entry>~/.local/share/applications/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
             <entry>~/.local/bin/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
             <entry>~/bin/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
-            <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run
-                --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run
-                --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
+            <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/fs-uae/component_launcher.sh</entry>
         </rule>
@@ -839,10 +837,8 @@
             <entry>mednafen</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run
-                --command=mednafen com.github.AmatCoder.mednaffe</entry>
-            <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run
-                --command=mednafen com.github.AmatCoder.mednaffe</entry>
+            <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/mednafen/component_launcher.sh</entry>
         </rule>
@@ -1437,10 +1433,8 @@
             <entry>solarus.run</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run
-                --command=solarus-run org.solarus_games.solarus.Launcher</entry>
-            <entry>~/.local/share/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run
-                --command=solarus-run org.solarus_games.solarus.Launcher</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
             <!-- RetroDECK -->
             <entry>/app/retrodeck/components/solarus/component_launcher.sh</entry>
         </rule>
@@ -1855,54 +1849,54 @@
         <emulator name="OPENSURGE">
             <!-- Open Surge Game Engine -->
             <rule type="systempath">
-                <entry>surge</entry>
+                <entry>opensurge</entry>
             </rule>
             <rule type="staticpath">
                 <!-- RetroDECK -->
-                <entry>/app/retrodeck/components/surge/component_launcher.sh</entry>
+                <entry>/app/retrodeck/components/opensurge/component_launcher.sh</entry>
             </rule>
-    </emulator>
-    <emulator name="PORTMASTER">
-        <!-- PORTMASTER -->
-        <rule type="staticpath">
-            <!-- RetroDECK -->
-            <entry>/app/retrodeck/components/portmaster/component_launcher.sh</entry>
-        </rule>
-    </emulator>
-    <emulator name="PRISM-LAUNCHER">
-        <!-- Prism Launcher Minecraft -->
-        <rule type="systempath">
-            <entry>prism-launcher</entry>
-        </rule>
-        <rule type="staticpath">
-            <!-- RetroDECK -->
-            <entry>/app/retrodeck/components/prism-launcher/component_launcher.sh</entry>
-        </rule>
-    </emulator>
-    <emulator name="RAZE">
-        <!-- RAZE Game Engine -->
-        <rule type="systempath">
-            <entry>raze</entry>
-        </rule>
-        <rule type="staticpath">
-            <!-- RetroDECK -->
-            <entry>/app/retrodeck/components/raze/component_launcher.sh</entry>
-        </rule>
-    </emulator>
-    <emulator name="UZDOOM">
-        <!-- UZDoom Game Engine -->
-        <rule type="systempath">
-            <entry>uzdoom</entry>
-        </rule>
-        <rule type="staticpath">
-            <!-- RetroDECK -->
-            <entry>/app/retrodeck/components/uzdoom/component_launcher.sh</entry>
-        </rule>
-    </emulator>
-    <!-- ============================================================= -->
-    <!--                       RetroDECK: Ports                        -->
-    <!-- ============================================================= -->
-    <!-- ============================================================= -->
-    <!--                       RetroDECK End                           -->
-    <!-- ============================================================= -->
-</ruleList>
+        </emulator>
+        <emulator name="PORTMASTER">
+            <!-- PORTMASTER -->
+            <rule type="staticpath">
+                <!-- RetroDECK -->
+                <entry>/app/retrodeck/components/portmaster/component_launcher.sh</entry>
+            </rule>
+        </emulator>
+        <emulator name="PRISM-LAUNCHER">
+            <!-- Prism Launcher Minecraft -->
+            <rule type="systempath">
+                <entry>prism-launcher</entry>
+            </rule>
+            <rule type="staticpath">
+                <!-- RetroDECK -->
+                <entry>/app/retrodeck/components/prism-launcher/component_launcher.sh</entry>
+            </rule>
+        </emulator>
+        <emulator name="RAZE">
+            <!-- RAZE Game Engine -->
+            <rule type="systempath">
+                <entry>raze</entry>
+            </rule>
+            <rule type="staticpath">
+                <!-- RetroDECK -->
+                <entry>/app/retrodeck/components/raze/component_launcher.sh</entry>
+            </rule>
+        </emulator>
+        <emulator name="UZDOOM">
+            <!-- UZDoom Game Engine -->
+            <rule type="systempath">
+                <entry>uzdoom</entry>
+            </rule>
+            <rule type="staticpath">
+                <!-- RetroDECK -->
+                <entry>/app/retrodeck/components/uzdoom/component_launcher.sh</entry>
+            </rule>
+        </emulator>
+        <!-- ============================================================= -->
+        <!--                       RetroDECK: Ports                        -->
+        <!-- ============================================================= -->
+        <!-- ============================================================= -->
+        <!--                       RetroDECK End                           -->
+        <!-- ============================================================= -->
+    </ruleList>
