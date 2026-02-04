@@ -2527,6 +2527,17 @@
         <theme>microvision</theme>
     </system>
     <system>
+        <name>surge</name>
+        <fullname>Open Surge Engine</fullname>
+        <path>%ROMPATH%/surge</path>
+        <extension>.surge .SURGE .lev .LEV .qst .QST</extension>
+        <command label="Open Surge Engine (Game) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game %ROM%</command>
+        <command label="Open Surge Engine (Quest) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;quest %ROM%</command>
+        <command label="Open Surge Engine (Level) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;level %ROM%</command>
+        <platform>surge</platform>
+        <theme>surge</theme>
+    </system>
+    <system>
         <name>muds</name>
         <fullname>Multi-User Dungeons</fullname>
         <path>%ROMPATH%/muds</path>
