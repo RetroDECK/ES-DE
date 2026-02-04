@@ -1853,7 +1853,7 @@
             <entry>/app/retrodeck/components/openbor/component_launcher.sh</entry>
         </rule>
         <emulator name="OPENSURGE">
-            <!-- OpenBOR Game Engine -->
+            <!-- Open Surge Game Engine -->
             <rule type="systempath">
                 <entry>surge</entry>
             </rule>
