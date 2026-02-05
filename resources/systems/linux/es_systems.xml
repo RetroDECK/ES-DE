@@ -2543,7 +2543,7 @@
         <fullname>Multi-User Dungeons</fullname>
         <path>%ROMPATH%/muds</path>
         <extension>.mud .MUD</extension>
-        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% &dash;&dash;steammode &dash;&dash;profile="%BASENAME%"</command>
+        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% &dash;&dash;fullscreen &dash;&dash;steammode &dash;&dash;profile="%BASENAME%"</command>
         <platform>muds</platform>
         <theme>muds</theme>
     </system>
