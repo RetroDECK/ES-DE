@@ -212,7 +212,7 @@ void CommandServer::handleClient(int clientSocket)
                 event.user.data1 = commandStr;
                 event.user.data2 = nullptr;
                 
-                if (SDL_PushEvent(&event) == 0) {
+                if (SDL_PushEvent(&event) == 1) {
                     response["status"] = "success";
                     response["message"] = "Rescan command queued";
                     LOG(LogInfo) << "CommandServer: Rescan command queued";
