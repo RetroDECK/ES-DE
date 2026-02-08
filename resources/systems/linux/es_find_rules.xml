@@ -1804,7 +1804,7 @@
         </rule>
     </emulator>
     <emulator name="IRONWAIL">
-        <!-- GZDoom Game Engine -->
+        <!-- Quake Game Engine -->
         <rule type="systempath">
             <entry>ironwail</entry>
         </rule>
