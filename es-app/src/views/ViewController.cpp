@@ -1672,6 +1672,29 @@ void ViewController::checkWindowSizeChanged()
 #endif
 }
 
+#if defined(RETRODECK)
+ViewController::RescanResult ViewController::performRescan()
+{
+    RescanResult result;
+    result.success = false;
+    result.systemsFound = 0;
+
+    CollectionSystemsManager::getInstance()->deinit(false);
+    SystemData::loadConfig();
+
+    if (SystemData::sStartupExitSignal) {
+        result.message = "Startup exit signal received";
+        return result;
+    }
+
+    result.systemsFound = static_cast<int>(SystemData::sSystemVector.size());
+    result.success = result.systemsFound > 0;
+    result.message = result.success ? "Scan completed" : "No systems found";
+
+    return result;
+}
+#endif
+
 void ViewController::rescanROMDirectory()
 {
     mWindow->setBlockInput(true);
@@ -1685,8 +1708,12 @@ void ViewController::rescanROMDirectory()
     mSkipView.reset();
 
     mWindow->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
+#if defined(RETRODECK)
+    RescanResult result = performRescan();
+#else
     CollectionSystemsManager::getInstance()->deinit(false);
     SystemData::loadConfig();
+#endif
 
     if (SystemData::sStartupExitSignal) {
         SDL_Event quit {};

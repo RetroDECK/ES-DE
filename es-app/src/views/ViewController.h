@@ -62,6 +62,16 @@ public:
     // Rescan the ROM directory for any changes to games and systems.
     void rescanROMDirectory();
 
+#if defined(RETRODECK)
+    // Core rescan logic that can be called from external commands
+    struct RescanResult {
+        bool success;
+        std::string message;
+        int systemsFound;
+    };
+    RescanResult performRescan();
+#endif
+
     // Navigation.
     void goToNextGamelist();
     void goToPrevGamelist();
