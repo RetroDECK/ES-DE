@@ -1803,6 +1803,16 @@
             <entry>/app/retrodeck/components/gzdoom/component_launcher.sh</entry>
         </rule>
     </emulator>
+    <emulator name="IRONWAIL">
+        <!-- GZDoom Game Engine -->
+        <rule type="systempath">
+            <entry>ironwail</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/ironwail/component_launcher.sh</entry>
+        </rule>
+    </emulator>
     <emulator name="KEGS">
         <!-- KEGS Apple IIgs emulator -->
         <rule type="systempath">
