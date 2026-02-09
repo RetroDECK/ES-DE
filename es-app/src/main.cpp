@@ -543,6 +543,15 @@ void applicationLoop()
 #endif
                 InputManager::getInstance().parseEvent(event);
 
+                if (event.type == SDL_WINDOWEVENT &&
+                    event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
+#if defined(RETRODECK)
+                    // Execute any pending commands from CommandServer that were queued
+                    // while ES-DE was in the background.
+                    CommandServer::getInstance()->executePendingCommands();
+#endif
+                }
+
                 if (event.type == SDL_QUIT)
 #if !defined(__EMSCRIPTEN__)
                     return;
@@ -551,17 +560,12 @@ void applicationLoop()
 #endif
 
 #if defined(RETRODECK)
-                // Handle external command events
-                if (event.type == SDL_USEREVENT) {
-                    if (event.user.code == 100 && event.user.data1) {
-                        // Rescan command from external socket
-                        std::string* command = static_cast<std::string*>(event.user.data1);
-                        if (*command == "rescan_rom_directory") {
-                            LOG(LogInfo) << "Main loop: Processing external rescan command";
-                            ViewController::getInstance()->rescanROMDirectory();
-                        }
-                        delete command;
-                    }
+                // Handle external command events from CommandServer FIFO.
+                // The SDL event just notifies us - the command is stored in CommandServer's queue.
+                if (event.type == SDL_USEREVENT &&
+                    event.type == CommandServer::getSDLUserEventType()) {
+                    LOG(LogInfo) << "Main loop: Processing commands from CommandServer";
+                    CommandServer::getInstance()->executePendingCommands();
                 }
 #endif
             } while (SDL_PollEvent(&event));
@@ -1248,9 +1252,7 @@ int main(int argc, char* argv[])
 
 #if defined(RETRODECK)
         // Start the external command server for IPC.
-#if !defined(_WIN64) && !defined(__ANDROID__) && !defined(__IOS__)
         CommandServer::getInstance()->start();
-#endif
 #endif
 
         lastTime = SDL_GetTicks();
@@ -1332,9 +1334,7 @@ int main(int argc, char* argv[])
 
 #if defined(RETRODECK)
     // Stop the external command server.
-#if !defined(_WIN64) && !defined(__ANDROID__) && !defined(__IOS__)
     CommandServer::getInstance()->stop();
-#endif
 #endif
 
     CollectionSystemsManager::getInstance()->deinit(true);

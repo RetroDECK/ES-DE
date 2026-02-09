@@ -16,6 +16,9 @@
 
 #include "ApplicationVersion.h"
 #include "CollectionSystemsManager.h"
+#if defined(RETRODECK)
+#include "CommandServer.h"
+#endif
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "Scripting.h"
@@ -2650,6 +2653,11 @@ void GuiMenu::openRetroDeckClassicConfigurator()
     runInBackground = false;
     int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
     // You can add any checks for the script's outcome here.
+    // Safety check: execute any commands that were queued while configurator was open.
+    // The SDL_USEREVENT may have been discarded by launchGameUnix's event loop.
+#if defined(RETRODECK)
+    CommandServer::getInstance()->executePendingCommands();
+#endif
 }
 
 void GuiMenu::openRetroDeckGodotConfigurator()
@@ -2663,6 +2671,11 @@ void GuiMenu::openRetroDeckGodotConfigurator()
     runInBackground = false;
     int result = Utils::Platform::launchGameUnix(command, startDirectory, runInBackground);
     // You can add any checks for the script's outcome here.
+    // Safety check: execute any commands that were queued while configurator was open.
+    // The SDL_USEREVENT may have been discarded by launchGameUnix's event loop.
+#if defined(RETRODECK)
+    CommandServer::getInstance()->executePendingCommands();
+#endif
 }
 
 void GuiMenu::openESDEConfiguration()
