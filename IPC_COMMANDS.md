@@ -4,68 +4,53 @@ This document describes the external command interface (IPC) that allows externa
 
 ## Overview
 
-ES-DE exposes a Unix domain socket that accepts JSON-formatted commands. This allows external tools like RetroDECK to trigger actions such as rescanning the ROM directory.
+ES-DE exposes a named pipe (FIFO) that accepts plain text commands. This allows external tools like RetroDECK to trigger actions such as rescanning the ROM directory.
 
 ## Usage
 
-### Using socat (recommanded / netcat should work the same)
-
 ```bash
-printf '{"command":"rescan_rom_directory"}\n' | socat - UNIX-CONNECT:~/.var/app/net.retrodeck.retrodeck/config/ES-DE/es-de-command.sock
+echo "RESCAN" > ~/.var/app/net.retrodeck.retrodeck/config/ES-DE/es-de-command.fifo
 ```
 
-### Using Python (works everywhere)
-
-```python
-import socket
-import json
-
-sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-sock.connect('/home/user/.var/app/net.retrodeck.retrodeck/config/ES-DE/es-de-command.sock')
-sock.send(b'{"command":"rescan_rom_directory"}')
-print(sock.recv(1024).decode())
-sock.close()
-```
 
 ## Available Commands
 
-| Command | Description | Response |
-|---------|-------------|----------|
-| `rescan_rom_directory` | Triggers a complete rescan of the ROM directory | `{"status":"success","message":"Rescan command queued"}` |
+| Command | Description | Coalescing |
+|---------|-------------|------------|
+| `RESCAN` | Triggers a complete rescan of the ROM directory | Yes - duplicate commands are merged |
+| `rescan_rom_directory` | Alias for RESCAN | Yes |
 
 ## Technical Details
 
-### Socket Location
+### FIFO Location
 
-The socket is created at:
-- **RetroDECK Flatpak**: `$HOME/.var/app/net.retrodeck.retrodeck/config/ES-DE/es-de-command.sock`
-- Falls back to `$HOME/.emulationstation/ES-DE/es-de-command.sock` if config directory not set
+The FIFO is created at:
+- **RetroDECK Flatpak**: `$HOME/.var/app/net.retrodeck.retrodeck/config/ES-DE/es-de-command.fifo`
+- Falls back to `/tmp/ES-DE/es-de-command.fifo` if config directory not set
 
 ### Protocol
 
-- **Transport**: Unix domain socket (stream)
-- **Message format**: JSON (raw, not HTTP)
-- **Request format**: `{"command":"<command_name>"}`
-- **Response format**: `{"status":"<success|error>","message":"<description>"}`
+- **Transport**: Named pipe (FIFO)
+- **Message format**: Plain text, newline-terminated
+- **Command format**: `<COMMAND>\n`
+- **Response**: None (fire-and-forget)
 
 ## Implementation Details
 
 ### Files Added/Modified
 
 1. **es-app/src/CommandServer.h** - Header for the command server (RETRODECK-only)
-2. **es-app/src/CommandServer.cpp** - Implementation of the Unix socket server (RETRODECK-only)
-3. **es-app/src/views/ViewController.h** - Added `RescanResult` struct and `performRescan()` method (RETRODECK-only)
-4. **es-app/src/views/ViewController.cpp** - Refactored rescan logic into `performRescan()` (RETRODECK-only)
-5. **es-app/src/main.cpp** - Integrated CommandServer startup/shutdown and event handling (RETRODECK-only)
-6. **es-app/CMakeLists.txt** - Added new source files to build
-
+2. **es-app/src/CommandServer.cpp** - Implementation of the FIFO-based command server (RETRODECK-only)
+3. **es-app/src/main.cpp** - Integrated CommandServer event handling (RETRODECK-only)
+4. **es-app/src/guis/GuiMenu.cpp** - Safety checks after external process execution (RETRODECK-only)
 
 ### Server Implementation Details
 
-- **Connection handling**: Uses `select()` with 200ms timeout for efficient polling
-- **CPU usage**: Should be Zero when idle, immediate response when connection arrives
-- **Event code**: Uses SDL_USEREVENT code 100 (reserved for external commands)
-- **Memory safety**: Proper cleanup on event queue failure
+- **Threading**: Dedicated server thread reads from FIFO, main thread executes commands
+- **Synchronization**: Thread-safe command queue with mutex protection
+- **Event handling**: SDL_USEREVENT notifies main thread of pending commands
+- **Coalescing**: Duplicate RESCAN commands are automatically merged
+- **Error handling**: Robust handling of FIFO reopening, EINTR, and EOF conditions
 
 ## Platform Support
 
@@ -89,31 +74,21 @@ make -j$(nproc)
 
 ## Security Considerations
 
-- The socket is created in the user's configuration directory
-- The socket is removed when ES-DE exits normally
+- The FIFO is created in the user's configuration directory
+- The FIFO is removed when ES-DE exits normally
 - No authentication is currently implemented (relies on filesystem permissions)
-- Socket permissions are inherited from the parent directory (typically 0755)
 
 ## Troubleshooting
-
-### "Invalid JSON" error with curl
-
-Curl sends HTTP headers which the server doesn't understand. Use `nc` or `socat` instead:
-
-```bash
-# Wrong - sends HTTP headers
-curl --unix-socket ...
-
-# Correct - sends raw JSON
-printf '{"command":"rescan_rom_directory"}\n' | nc -U ...
-```
 
 ### Command not executing
 
 - Verify ES-DE was compiled with `-DRETRODECK=ON`
-- Check that the socket path matches between client and server
-- Ensure ES-DE has finished loading (socket is created after startup completes)
+- Check that the FIFO path matches between client and server
+- Ensure ES-DE has finished loading (FIFO is created after startup completes)
+- Check ES-DE logs for "CommandServer" messages
 
-### Rescan doesn't start
+### Rescan doesn't start immediately
+
 - ES-DE may be in a state where it can't perform a rescan (e.g., during another operation)
 - The command is queued and will execute when ES-DE is ready
+- If ES-DE was in the background, the command executes when it regains focus
