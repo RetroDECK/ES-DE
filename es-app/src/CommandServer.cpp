@@ -16,6 +16,8 @@
 #include "Settings.h"
 #include "Window.h"
 
+#include <filesystem>
+
 #include <SDL_events.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -29,6 +31,7 @@
 static constexpr size_t BUFFER_SIZE = 256;
 static constexpr int SELECT_TIMEOUT_MS = 200;
 static constexpr mode_t FIFO_PERMISSIONS = 0644;
+static constexpr size_t MAX_COMMAND_BUFFER_SIZE = 4096; // Prevent unbounded growth
 
 // Static member definition
 std::once_flag CommandServer::s_sdlInitFlag;
@@ -51,6 +54,34 @@ CommandServer::~CommandServer()
 {
     stop();
 }
+
+// ============================================================================
+// COMMAND REGISTRY
+// ============================================================================
+// Add new commands here. Each command maps to a handler function.
+// Set coalesce=true to prevent duplicate commands from queueing.
+
+void CommandServer::initializeCommandRegistry()
+{
+    // Register RESCAN command (coalesces duplicates)
+    registerCommand("RESCAN", [this]() {
+        ViewController::getInstance()->rescanROMDirectory();
+    }, true);
+
+    // Alias for rescan_rom_directory
+    registerCommand("rescan_rom_directory", [this]() {
+        ViewController::getInstance()->rescanROMDirectory();
+    }, true);
+}
+
+void CommandServer::registerCommand(const std::string& name,
+                                      CommandHandler handler,
+                                      bool coalesce)
+{
+    m_commandRegistry[name] = {handler, coalesce};
+}
+
+// ============================================================================
 
 bool CommandServer::start()
 {
@@ -129,7 +160,7 @@ std::string CommandServer::getFifoPath() const
 {
     // Try to get config directory from Settings
     std::string configDir = Settings::getInstance()->getString("ConfigDirectory");
-    
+
     // If not set, construct the RetroDECK flatpak path
     if (configDir.empty()) {
         const char* home = getenv("HOME");
@@ -139,29 +170,20 @@ std::string CommandServer::getFifoPath() const
             configDir = "/tmp";
         }
     }
-    
+
     // Append ES-DE subdirectory
-    std::string esdeDir = configDir + "/ES-DE";
-    
+    std::filesystem::path esdeDir = std::filesystem::path(configDir) / "ES-DE";
+
     // Create the ES-DE subdirectory if it doesn't exist
-    struct stat st;
-    if (stat(esdeDir.c_str(), &st) != 0) {
-        // Try to create the directory recursively
-        size_t pos = 0;
-        while ((pos = esdeDir.find('/', pos + 1)) != std::string::npos) {
-            std::string subdir = esdeDir.substr(0, pos);
-            if (mkdir(subdir.c_str(), 0755) < 0 && errno != EEXIST) {
-                LOG(LogWarning) << "CommandServer: Failed to create directory " << subdir
-                                << " (errno: " << errno << ")";
-            }
-        }
-        if (mkdir(esdeDir.c_str(), 0755) < 0 && errno != EEXIST) {
-            LOG(LogError) << "CommandServer: Failed to create ES-DE directory " << esdeDir
-                          << " (errno: " << errno << ")";
+    if (!std::filesystem::exists(esdeDir)) {
+        std::error_code ec;
+        if (!std::filesystem::create_directories(esdeDir, ec)) {
+            LOG(LogError) << "CommandServer: Failed to create ES-DE directory "
+                          << esdeDir.string() << " (" << ec.message() << ")";
         }
     }
-    
-    return esdeDir + "/" + FIFO_NAME;
+
+    return (esdeDir / FIFO_NAME).string();
 }
 
 void CommandServer::serverThreadFunc()
@@ -220,6 +242,13 @@ void CommandServer::serverThreadFunc()
             if (bytesRead > 0) {
                 buffer[bytesRead] = '\0';
                 commandBuffer.append(buffer);
+
+                // Prevent unbounded buffer growth (e.g., from data without newlines)
+                if (commandBuffer.size() > MAX_COMMAND_BUFFER_SIZE) {
+                    LOG(LogWarning) << "CommandServer: Command buffer overflow, clearing "
+                                    << commandBuffer.size() << " bytes";
+                    commandBuffer.clear();
+                }
 
                 // Process complete lines from the buffer
                 size_t pos;
@@ -304,27 +333,6 @@ void CommandServer::executeCommand(const std::string& command)
     } else {
         LOG(LogWarning) << "CommandServer: Unknown command during execution: " << command;
     }
-}
-
-// Command registry for extensibility
-void CommandServer::initializeCommandRegistry()
-{
-    // Register RESCAN command (coalesces duplicates)
-    registerCommand("RESCAN", [this]() {
-        ViewController::getInstance()->rescanROMDirectory();
-    }, true);
-    
-    // Alias for rescan_rom_directory
-    registerCommand("rescan_rom_directory", [this]() {
-        ViewController::getInstance()->rescanROMDirectory();
-    }, true);
-}
-
-void CommandServer::registerCommand(const std::string& name, 
-                                      CommandHandler handler, 
-                                      bool coalesce)
-{
-    m_commandRegistry[name] = {handler, coalesce};
 }
 
 std::string CommandServer::trimWhitespace(const std::string& str) const

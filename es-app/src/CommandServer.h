@@ -19,7 +19,6 @@
 #include <unordered_map>
 #include <functional>
 #include <SDL_stdinc.h>
-#include <mutex>
 
 class CommandServer {
 public:
