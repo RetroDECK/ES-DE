@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <cerrno>
 #include <chrono>
+#include <cstring>
 #include <thread>
 
 // Constants
@@ -32,6 +33,7 @@ static constexpr size_t BUFFER_SIZE = 256;
 static constexpr int SELECT_TIMEOUT_MS = 200;
 static constexpr mode_t FIFO_PERMISSIONS = 0644;
 static constexpr size_t MAX_COMMAND_BUFFER_SIZE = 4096; // Prevent unbounded growth
+static constexpr const char* COMMAND_PREFIX = "ESDE:";
 
 // Static member definition
 std::once_flag CommandServer::s_sdlInitFlag;
@@ -64,13 +66,19 @@ CommandServer::~CommandServer()
 void CommandServer::initializeCommandRegistry()
 {
     // Register RESCAN command (coalesces duplicates)
-    registerCommand("RESCAN", [this]() {
+    registerCommand(std::string(COMMAND_PREFIX) + "RESCAN", [this](const std::string& payload) {
+        (void)payload; // No payload expected for rescan
         ViewController::getInstance()->rescanROMDirectory();
     }, true);
 
-    // Alias for rescan_rom_directory
-    registerCommand("rescan_rom_directory", [this]() {
-        ViewController::getInstance()->rescanROMDirectory();
+    // Register MODIFYROMPATH command (coalesces duplicates)
+    registerCommand(std::string(COMMAND_PREFIX) + "MODIFYROMPATH", [this](const std::string& payload) {
+        if (payload.empty()) {
+            LOG(LogWarning) << "CommandServer: MODIFYROMPATH received without payload";
+            return;
+        }
+        setPathOverride(payload);
+        LOG(LogInfo) << "CommandServer: MODIFYROMPATH set override to: " << payload;
     }, true);
 }
 
@@ -79,6 +87,28 @@ void CommandServer::registerCommand(const std::string& name,
                                       bool coalesce)
 {
     m_commandRegistry[name] = {handler, coalesce};
+}
+
+std::pair<std::string, std::string> CommandServer::parseCommandWithPayload(
+    const std::string& rawCommand) const
+{
+    // Look for the payload separator " ::"
+    size_t sepPos = rawCommand.find(PAYLOAD_SEPARATOR);
+    
+    if (sepPos == std::string::npos) {
+        // No payload - return command as-is with empty payload
+        return {rawCommand, ""};
+    }
+    
+    // Extract command (before separator) and payload (after separator)
+    std::string command = rawCommand.substr(0, sepPos);
+    std::string payload = rawCommand.substr(sepPos + strlen(PAYLOAD_SEPARATOR));
+    
+    // Trim whitespace from both
+    command = trimWhitespace(command);
+    payload = trimWhitespace(payload);
+    
+    return {command, payload};
 }
 
 // ============================================================================
@@ -154,6 +184,20 @@ void CommandServer::stop()
     unlink(fifoPath.c_str());
     
     LOG(LogInfo) << "CommandServer: Stopped";
+}
+
+void CommandServer::setPathOverride(const std::string& path)
+{
+    std::lock_guard<std::mutex> lock(m_pathOverrideMutex);
+    m_pendingPathOverride = path;
+}
+
+std::optional<std::string> CommandServer::consumePathOverride()
+{
+    std::lock_guard<std::mutex> lock(m_pathOverrideMutex);
+    std::optional<std::string> result = std::move(m_pendingPathOverride);
+    m_pendingPathOverride = std::nullopt;  // Clear the override
+    return result;
 }
 
 std::string CommandServer::getFifoPath() const
@@ -268,9 +312,22 @@ void CommandServer::serverThreadFunc()
     }
 }
 
-void CommandServer::processCommand(const std::string& command)
+void CommandServer::processCommand(const std::string& rawCommand)
 {
-    LOG(LogDebug) << "CommandServer: Received command: " << command;
+    LOG(LogDebug) << "CommandServer: Received raw input: " << rawCommand;
+
+    // Parse command and payload (if present)
+    auto [command, payload] = parseCommandWithPayload(rawCommand);
+    
+    // Validate command prefix
+    if (command.rfind(COMMAND_PREFIX, 0) != 0) {
+        LOG(LogWarning) << "CommandServer: Command must start with " << COMMAND_PREFIX 
+                        << ", got: " << command;
+        return;
+    }
+
+    LOG(LogDebug) << "CommandServer: Parsed command: " << command 
+                  << ", payload: " << (payload.empty() ? "(none)" : payload);
 
     // Check if command is registered
     auto it = m_commandRegistry.find(command);
@@ -283,17 +340,19 @@ void CommandServer::processCommand(const std::string& command)
 
     std::lock_guard<std::mutex> lock(m_queueMutex);
     
-    // Coalesce if configured
+    // Use full rawCommand for coalescing check (including payload)
     if (shouldCoalesce) {
-        auto dupIt = std::find(m_commandQueue.begin(), m_commandQueue.end(), command);
+        auto dupIt = std::find(m_commandQueue.begin(), m_commandQueue.end(), rawCommand);
         if (dupIt != m_commandQueue.end()) {
-            LOG(LogDebug) << "CommandServer: " << command << " already pending, skipping duplicate";
+            LOG(LogDebug) << "CommandServer: " << rawCommand << " already pending, skipping duplicate";
             return;
         }
     }
 
-    m_commandQueue.push_back(command);
-    LOG(LogInfo) << "CommandServer: Command queued: " << command;
+    // Store the full command string for later execution
+    m_commandQueue.push_back(rawCommand);
+    LOG(LogInfo) << "CommandServer: Command queued: " << command 
+                 << (payload.empty() ? "" : " (with payload)");
 
     // Notify main thread via SDL event
     SDL_Event event;
@@ -325,11 +384,14 @@ void CommandServer::executePendingCommands()
     }
 }
 
-void CommandServer::executeCommand(const std::string& command)
+void CommandServer::executeCommand(const std::string& rawCommand)
 {
+    // Parse command and payload again for execution
+    auto [command, payload] = parseCommandWithPayload(rawCommand);
+    
     auto it = m_commandRegistry.find(command);
     if (it != m_commandRegistry.end()) {
-        it->second.handler();
+        it->second.handler(payload);
     } else {
         LOG(LogWarning) << "CommandServer: Unknown command during execution: " << command;
     }

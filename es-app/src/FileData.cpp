@@ -27,6 +27,10 @@
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
 
+#if defined(RETRODECK)
+#include "CommandServer.h"
+#endif
+
 #if defined(__ANDROID__)
 #include "utils/PlatformUtilAndroid.h"
 #endif
@@ -2115,6 +2119,22 @@ void FileData::launchGame()
     Scripting::fireEvent("game-start", romPath, getSourceFileData()->metadata.get("name"),
                          getSourceFileData()->getSystem()->getName(),
                          getSourceFileData()->getSystem()->getFullName());
+
+#if defined(RETRODECK)
+    // Process any pending commands from CommandServer (e.g., MODIFYROMPATH).
+    // This allows external scripts to dynamically modify the ROM path before launch.
+    CommandServer::getInstance()->executePendingCommands();
+
+    // Check for path override and apply it if set.
+    if (auto overridePath = CommandServer::getInstance()->consumePathOverride()) {
+        LOG(LogInfo) << "FileData::launchGame(): Overriding ROM path from " << romPath << " to "
+                     << *overridePath;
+        romPath = Utils::FileSystem::getEscapedPath(*overridePath);
+        romRaw = Utils::FileSystem::getPreferredPath(*overridePath);
+        baseName = Utils::FileSystem::getStem(*overridePath);
+    }
+#endif
+
     int returnValue {0};
 
     LOG(LogDebug) << "Raw emulator launch command:";
