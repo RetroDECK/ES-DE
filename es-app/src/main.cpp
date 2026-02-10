@@ -562,8 +562,7 @@ void applicationLoop()
 #if defined(RETRODECK)
                 // Handle external command events from CommandServer FIFO.
                 // The SDL event just notifies us - the command is stored in CommandServer's queue.
-                if (event.type == SDL_USEREVENT &&
-                    event.type == CommandServer::getSDLUserEventType()) {
+                if (event.type == CommandServer::getSDLUserEventType()) {
                     LOG(LogInfo) << "Main loop: Processing commands from CommandServer";
                     CommandServer::getInstance()->executePendingCommands();
                 }
