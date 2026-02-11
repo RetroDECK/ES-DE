@@ -12,7 +12,6 @@ project(es-de)
 set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationUpdater.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/CommandServer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.h
@@ -65,7 +64,6 @@ set(ES_HEADERS
 set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationUpdater.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/CommandServer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.cpp
@@ -118,6 +116,11 @@ set(ES_SOURCES
 
 if(WIN32)
     list(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/assets/ES-DE.rc)
+endif()
+
+if(RETRODECK)
+    list(APPEND ES_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/CommandServer.h)
+    list(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/CommandServer.cpp)
 endif()
 
 #---------------------------------------------------------------------------------------------------
