@@ -41,9 +41,8 @@
         <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
-        <!-- <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% %ROM%</command> -->
+        <!-- <command label="FS-UAE (Standalone)">%EMULATOR_FS-UAE% /var/config/FS-UAE/RetroDECK.fs-uae %ROM%</command> -->
         <!-- <command label="FS-UAE (Standalone) AmigaVision">%EMULATOR_FS-UAE% /var/config/FS-UAE/AmigaVision.fs-uae</command> -->
-        <!-- <command label="FS-UAE (Standalone) Custom">%EMULATOR_FS-UAE% /var/config/FS-UAE/custom.fs-uae %ROM%</command> -->
         <!-- <command label="Amiberry (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_AMIBERRY% &dash;&dash;autoload %ROM%</command> -->
         <platform>amiga</platform>
         <theme>amiga</theme>
@@ -1773,6 +1772,7 @@
         <command label="vitaQuake 2 [Xatrix]">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vitaquake2-xatrix_libretro.so %ROM%</command>
         <command label="vitaQuake 2 [Zaero]">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vitaquake2-zaero_libretro.so %ROM%</command>
         <command label="vitaQuake 3">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vitaquake3_libretro.so %ROM%</command>
+        <command label="Ironwail (Standalone)">%EMULATOR_IRONWAIL% </command>
         <!-- <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command> -->
         <platform>pc, pcwindows</platform>
         <theme>quake</theme>
@@ -2522,7 +2522,7 @@
         <fullname>Milton-Bradley Microvision</fullname>
         <path>%ROMPATH%/microvision</path>
         <extension>.bin .BIN</extension>
-        <command label="MVEM (Standalone)">%EMULATOR_MVEM% %ROM%</command>
+        <command label="MVEM (Standalone)">%EMULATOR_MVEM% %ROM% 640x480</command>
         <platform>microvision</platform>
         <theme>microvision</theme>
     </system>
@@ -2531,10 +2531,10 @@
         <fullname>Open Surge Engine</fullname>
         <path>%ROMPATH%/opensurge</path>
         <extension>.surge .SURGE .lev .LEV .qst .QST</extension>
-        <command label="Open Surge Engine (Game) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game %ROM%</command>
-        <command label="Open Surge Engine (Quest) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;quest %ROM%</command>
-        <command label="Open Surge Engine (Level) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;level %ROM%</command>
-        <command label="Open Surge Engine (Surge the Rabbit) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high</command>
+        <command label="Open Surge Engine (Game) (Standalone)">%EMULATOR_OPENSURGE% --fullscreen --quality high --game %ROM%</command>
+        <command label="Open Surge Engine (Quest) (Standalone)">%EMULATOR_OPENSURGE% --fullscreen --quality high --game-folder /app/retrodeck/components/opensurge/opensurge --quest %ROM%</command>
+        <command label="Open Surge Engine (Level) (Standalone)">%EMULATOR_OPENSURGE% --fullscreen --quality high --game-folder /app/retrodeck/components/opensurge/opensurge --level %ROM%</command>
+        <command label="Open Surge Engine (Surge the Rabbit) (Standalone)">%EMULATOR_OPENSURGE% --fullscreen --quality high --game-folder /app/retrodeck/components/opensurge/opensurge</command>
         <platform>opensurge</platform>
         <theme>opensurge</theme>
     </system>
@@ -2543,7 +2543,7 @@
         <fullname>Multi-User Dungeons</fullname>
         <path>%ROMPATH%/muds</path>
         <extension>.mud .MUD</extension>
-        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% &dash;&dash;steammode &dash;&dash;profile="%BASENAME%"</command>
+        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% &dash;&dash;fullscreen &dash;&dash;steammode &dash;&dash;profile="%BASENAME%"</command>
         <platform>muds</platform>
         <theme>muds</theme>
     </system>
