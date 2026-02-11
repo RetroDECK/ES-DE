@@ -37,7 +37,6 @@
 
 #include <assert.h>
 #include <regex>
-#include <thread>
 
 FileData::FileData(FileType type,
                    const std::string& path,
