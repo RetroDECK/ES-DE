@@ -2522,7 +2522,7 @@
         <fullname>Milton-Bradley Microvision</fullname>
         <path>%ROMPATH%/microvision</path>
         <extension>.bin .BIN</extension>
-        <command label="MVEM (Standalone)">%EMULATOR_MVEM% %ROM% 640x480</command>
+        <command label="MVEM (Standalone)">%EMULATOR_MVEM% %ROM% -f</command>
         <platform>microvision</platform>
         <theme>microvision</theme>
     </system>
