@@ -2552,13 +2552,14 @@
         <fullname>Wolfenstein 3D</fullname>
         <path>%ROMPATH%/wolf</path>
         <extension>.wolf .WOLF</extension>
-        <command label="ECWolf (Standalone) Wolfenstein 3D - Full">%EMULATOR_ECWOLF% %ROM%</command>
-        <command label="ECWolf (Standalone) Wolfenstein 3D - Shareware">%EMULATOR_ECWOLF% %ROM%</command>
-        <command label="ECWolf (Standalone) Spear of Destiny">%EMULATOR_ECWOLF% %ROM%</command>
-        <command label="ECWolf (Standalone) Spear of Destiny - MP1">%EMULATOR_ECWOLF% %ROM%</command>
-        <command label="ECWolf (Standalone) Spear of Destiny - MP2">%EMULATOR_ECWOLF% %ROM%</command>
-        <command label="ECWolf (Standalone) Spear of Destiny - MP3">%EMULATOR_ECWOLF% %ROM%</command>
-        <command label="ECWolf (Standalone) Super 3D Noah’s Ark">%EMULATOR_ECWOLF% %ROM%</command>
+        <command label="ECWolf (Standalone) Wolfenstein 3D - Full">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_wolf_full_wl6.cfg</command>
+        <command label="ECWolf (Standalone) Wolfenstein 3D - Shareware">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_wolf_share_wl1.cfg</command>
+        <command label="ECWolf (Standalone) Spear of Destiny - Full">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_full_sod.cfg</command>
+        <command label="ECWolf (Standalone) Spear of Destiny - Demo">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_demo_sdm.cfg</command>
+        <command label="ECWolf (Standalone) Spear of Destiny - MP1">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_sd1.cfg</command>
+        <command label="ECWolf (Standalone) Spear of Destiny - MP2">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_sd2.cfg</command>
+        <command label="ECWolf (Standalone) Spear of Destiny - MP3">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_sd3.cfg</command>
+        <command label="ECWolf (Standalone) Super 3D Noah's Ark">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_noah_full_n3d.cfg</command>
         <platform>wolf</platform>
         <theme>wolf</theme>
     </system>
