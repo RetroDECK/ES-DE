@@ -173,6 +173,9 @@ jobs:
     needs: [configure, build]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
@@ -223,6 +226,9 @@ jobs:
     needs: [configure, create-release]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Prune old releases
         run: |
           BRANCH="${{ needs.configure.outputs.branch }}"
