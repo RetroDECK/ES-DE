@@ -26,7 +26,7 @@ This flag is has been built-in by upstream in ES-DE over many years and allows R
 | **Menu Structure** | Reorganized menu entries to expose RetroDECK-specific tools such as the *RetroDECK Configurator*. |
 | **Feature Set** | Disabled features that conflict with Flatpak restrictions or are not applicable within RetroDECK. |
 | **Upstream Integration** | All new features and bug fixes originate from upstream ES-DE. The fork regularly merges upstream changes to remain aligned. |
-| **`es_systems.xml` / `es_find_rules.xml` ** | These configuration files contain RetroDECK-specific additions and omissions. |
+| **es_systems.xml** / **es_find_rules.xml** | These configuration files contain RetroDECK-specific additions and omissions. |
 
 ---
 
