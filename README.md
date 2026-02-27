@@ -20,12 +20,13 @@ All minor source code modifications are conditionally compiled using the `RETROD
 
 This flag is has been built-in by upstream in ES-DE over many years and allows RetroDECK-specific adjustments to be included only when building the RetroDECK Light Fork.
 
+All new features and bug fixes originate from upstream ES-DE not from RetroDECK. The fork regularly merges upstream changes to remain aligned. 
+
 | Aspect | RetroDECK Light Fork Modification |
 |--------|------------------------------------|
 | **Flatpak Compatibility** | Adjusted filesystem paths, permissions, and runtime dependencies to comply with Flatpak sandbox constraints. |
 | **Menu Structure** | Reorganized menu entries to expose RetroDECK-specific tools such as the *RetroDECK Configurator*. |
 | **Feature Set** | Disabled features that conflict with Flatpak restrictions or are not applicable within RetroDECK. |
-| **Upstream Integration** | All new features and bug fixes originate from upstream ES-DE. The fork regularly merges upstream changes to remain aligned. |
 | **es_systems.xml** / **es_find_rules.xml** | These configuration files contain RetroDECK-specific additions and omissions. |
 
 ---
