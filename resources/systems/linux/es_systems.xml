@@ -2552,14 +2552,7 @@
         <fullname>Wolfenstein 3D</fullname>
         <path>%ROMPATH%/wolf</path>
         <extension>.wolf .WOLF</extension>
-        <command label="ECWolf (Standalone) Wolfenstein 3D - Full">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_wolf_full_wl6.cfg --savedir /var/data/ecwolf/saves/wl6</command>
-        <command label="ECWolf (Standalone) Wolfenstein 3D - Shareware">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_wolf_share_wl1.cfg --savedir /var/data/ecwolf/saves/wl1</command>
-        <command label="ECWolf (Standalone) Spear of Destiny - Full">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_full_sod.cfg --savedir /var/data/ecwolf/saves/sod</command>
-        <command label="ECWolf (Standalone) Spear of Destiny - Demo">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_demo_sdm.cfg --savedir /var/data/ecwolf/saves/sdm</command>
-        <command label="ECWolf (Standalone) Spear of Destiny - MP1">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_sd1.cfg --savedir /var/data/ecwolf/saves/sd1</command>
-        <command label="ECWolf (Standalone) Spear of Destiny - MP2">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_sd2.cfg --savedir /var/data/ecwolf/saves/sd2</command>
-        <command label="ECWolf (Standalone) Spear of Destiny - MP3">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_sod_sd3.cfg --savedir /var/data/ecwolf/saves/sd3</command>
-        <command label="ECWolf (Standalone) Super 3D Noah's Ark">%EMULATOR_ECWOLF% --config /var/config/ecwolf/ecwolf_noah_full_n3d.cfg --savedir /var/data/ecwolf/saves/n3d</command>
+        <command label="ECWolf (Standalone)">%EMULATOR_ECWOLF% %ROM%</command>
         <platform>wolf</platform>
         <theme>wolf</theme>
     </system>
