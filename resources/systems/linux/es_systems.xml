@@ -2529,8 +2529,8 @@
         <path>%ROMPATH%/opensurge</path>
         <extension>.surge .SURGE .lev .LEV .qst .QST</extension>
             <command label="Open Surge Engine (Game) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game %ROM%</command>
-            <command label="Open Surge Engine (Quest) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game-folder /app/retrodeck/components/opensurge/opensurge --quest %ROM%</command>
-            <command label="Open Surge Engine (Level) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game-folder /app/retrodeck/components/opensurge/opensurge --level %ROM%</command>
+            <command label="Open Surge Engine (Quest) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game-folder /app/retrodeck/components/opensurge/opensurge &dash;&dashquest %ROM%</command>
+            <command label="Open Surge Engine (Level) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game-folder /app/retrodeck/components/opensurge/opensurge &dash;&dashlevel %ROM%</command>
             <command label="Open Surge Engine (Surge the Rabbit) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game-folder /app/retrodeck/components/opensurge/opensurge</command>
         <platform>opensurge</platform>
         <theme>opensurge</theme>
