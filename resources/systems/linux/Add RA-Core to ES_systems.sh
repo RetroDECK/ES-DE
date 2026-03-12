@@ -1,1 +1,0 @@
-perl -0777 -pi -e 's{(<command\s+label=")([^"]*)(?<! \(RA-Core\))(">\s*%EMULATOR_RETROARCH%)}{$1$2 (RA-Core)$3}g' es_systems.xml
