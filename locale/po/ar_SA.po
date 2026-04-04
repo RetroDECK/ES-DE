@@ -1,13 +1,13 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024-2025 Northwestern Software AB
+# Copyright (c) 2024-2026 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024-2025.
+# Northwestern Software <info@es-de.org>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"POT-Creation-Date: 2026-03-22 21:12+0100\n"
 "PO-Revision-Date: 2025-09-17 14:34+0300\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Arabic (Classical Arabic) <info@es-de.org>\n"
@@ -985,7 +985,7 @@ msgid "MEDIA VIEWER SETTINGS"
 msgstr "إعدادات عارض الوسائط"
 
 msgid "SCREENSAVER SETTINGS"
-msgstr "إعدادات شاشة توقف"
+msgstr "إعدادات شاشة التوقف"
 
 msgid "ENABLE THEME VARIANT TRIGGERS"
 msgstr "تمكين مشغلات متغيرات الثيمة"
@@ -1042,7 +1042,7 @@ msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
 msgstr "تشغيل الصوت لمقاطع فيديو عارض الوسائط"
 
 msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
-msgstr "تشغيل الصوت فيديو شاشة توقف"
+msgstr "تشغيل صوت فيديوهات شاشة التوقف"
 
 msgid "ENABLE NAVIGATION SOUNDS"
 msgstr "تمكين أصوات الملاحة"
@@ -1051,7 +1051,7 @@ msgid "CONTROLLER TYPE"
 msgstr "نوع وحدة التحكم"
 
 msgid "TOUCH OVERLAY SIZE"
-msgstr "لمس حجم التراكب"
+msgstr "حجم طبقة اللمس"
 
 msgid "MEDIUM"
 msgstr "وسط"
@@ -1066,7 +1066,7 @@ msgid "EXTRA SMALL"
 msgstr "صغير جدًا"
 
 msgid "TOUCH OVERLAY OPACITY"
-msgstr "المس تراكب العتامة"
+msgstr "شفافية طبقة اللمس"
 
 msgid "LOW"
 msgstr "منخفض"
@@ -1075,7 +1075,7 @@ msgid "VERY LOW"
 msgstr "منخفض جدا"
 
 msgid "TOUCH OVERLAY FADE-OUT TIME"
-msgstr "لمس التراكب الوقت في وقت التلاشي"
+msgstr "وقت تلاشي طبقة اللمس"
 
 msgid "ENABLE TOUCH OVERLAY"
 msgstr "تمكين لمسة تراكب"
@@ -1137,7 +1137,7 @@ msgid "load default directory"
 msgstr "تحميل المسار الافتراضي"
 
 msgid "MAX PLAY TIME TRACKING"
-msgstr "تتبع أقصى وقت للعب"
+msgstr "أقصى وقت لمتتابع وقت اللعب"
 
 msgid "VRAM LIMIT"
 msgstr "VRAM حد"
@@ -1332,7 +1332,7 @@ msgstr "إعدادات عارض الوسائط"
 
 msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
-msgstr "إعدادات شاشة توقف"
+msgstr "إعدادات شاشة التوقف"
 
 msgid "choose"
 msgstr "اختيار"
@@ -1784,7 +1784,7 @@ msgid "GENERATE MIXIMAGES WHEN SCRAPING"
 msgstr "توليد الصور المخطلطة عند الكشط"
 
 msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
-msgstr "(مكشطة/مولد غير متصل) استبدال الصور المخطلطة"
+msgstr "(مولد غير متصل) استبدال الصور المخطلطة"
 
 msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
 msgstr "إزالة صناديق الخطاب من لقطات الشاشة"
@@ -1829,11 +1829,14 @@ msgstr "اليابان"
 msgid "USA"
 msgstr "الولايات المتحدة الأمريكية"
 
-msgid "WORLD"
-msgstr "العالم"
+msgid "NORTH AMERICA"
+msgstr "أمريكا الشمالية"
 
 msgid "ASIA"
 msgstr "آسيا"
+
+msgid "WORLD"
+msgstr "العالم"
 
 msgid "AUSTRALIA"
 msgstr "أستراليا"
@@ -2052,10 +2055,10 @@ msgid "back (cancel)"
 msgstr "(إلغاء) العودة"
 
 msgid "START SCREENSAVER AFTER (MINUTES)"
-msgstr "(دقائق) ابدأ شاشة توقف بعد"
+msgstr "(دقائق) ابدأ شاشة التوقف بعد"
 
 msgid "SCREENSAVER TYPE"
-msgstr "نوع شاشة توقف"
+msgstr "نوع شاشة التوقف"
 
 msgid "DIM"
 msgstr "خافت"
@@ -2067,16 +2070,16 @@ msgid "VIDEO"
 msgstr "فيديو"
 
 msgid "ENABLE SCREENSAVER CONTROLS"
-msgstr "تمكين عناصر التحكم في شاشة توقف"
+msgstr "تمكين عناصر التحكم في شاشة التوقف"
 
 msgid "SLIDESHOW SCREENSAVER SETTINGS"
-msgstr "إعدادات عرض الشرائح في شاشة توقف"
+msgstr "إعدادات عرض الشرائح في شاشة التوقف"
 
 msgid "VIDEO SCREENSAVER SETTINGS"
-msgstr "إعدادات فيديو شاشة توقف"
+msgstr "إعدادات فيديو شاشة التوقف"
 
 msgid "SLIDESHOW SCREENSAVER"
-msgstr "عرض الشرائح شاشة توقف"
+msgstr "عرض الشرائح شاشة التوقف"
 
 msgid "SWAP IMAGES AFTER (SECONDS)"
 msgstr "(ثواني) تبديل الصور بعد"
@@ -2103,7 +2106,7 @@ msgid "CUSTOM IMAGE DIRECTORY"
 msgstr "مسار الصور المخصصة"
 
 msgid "VIDEO SCREENSAVER"
-msgstr "الفيديو شاشة توقف"
+msgstr "فيديو شاشة التوقف"
 
 msgid "SWAP VIDEOS AFTER (SECONDS)"
 msgstr "(ثواني) تبادل الفيديو بعد"
@@ -2662,7 +2665,7 @@ msgid "no"
 msgstr "لا"
 
 msgid "screensaver"
-msgstr "شاشة توقف"
+msgstr "شاشة التوقف"
 
 #, c-format
 msgctxt "theme"
@@ -2764,7 +2767,7 @@ msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
 "xml\n"
 "\n"
-"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
 msgstr ""
 "سيؤدي هذا إلى إنشاء مسارات لجميع أنظمة es_systems.xml الألعاب المحددة في\n"

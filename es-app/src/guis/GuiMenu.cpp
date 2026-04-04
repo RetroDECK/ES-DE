@@ -592,6 +592,7 @@ void GuiMenu::openUIOptions()
     applicationLanguage->add("РУССКИЙ", "ru_RU", selectedApplicationLanguage == "ru_RU");
     applicationLanguage->add("SRPSKI", "sr_RS", selectedApplicationLanguage == "sr_RS");
     applicationLanguage->add("SVENSKA", "sv_SE", selectedApplicationLanguage == "sv_SE");
+    applicationLanguage->add("TIẾNG VIỆT", "vi_VN", selectedApplicationLanguage == "vi_VN");
     applicationLanguage->add("العربية", "ar_SA", selectedApplicationLanguage == "ar_SA");
     applicationLanguage->add("日本語", "ja_JP", selectedApplicationLanguage == "ja_JP");
     applicationLanguage->add("한국어", "ko_KR", selectedApplicationLanguage == "ko_KR");

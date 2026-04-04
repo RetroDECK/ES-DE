@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>December 10, 1993</systemReleaseDateFormated>
         <systemHardwareType>Engine</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>A11321</systemColor>
         <systemColorPalette1>33709F</systemColorPalette1>
         <systemColorPalette2>DFDED1</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>A63417</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>Doom هي لعبة تصويب من منظور الشخص الأول (FPS) من إنتاج شركة id Software لنظام MS-DOS عام 1993. يتقمص اللاعبون دور جندي بحرية فضائي، معروف باسم Doomguy، يقاتل في طريقه عبر جحافل من الشياطين الغازية من الجحيم. بدأت شركة Id بتطوير Doom بعد إصدار لعبة التصويب من منظور الشخص الأول السابقة Wolfenstein 3D (1992).</systemDescription>
+            <systemHardwareType>المحرك</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Doom je igara za prvu osobu iz 1993. godine razvijena od strane ID softvera za MS-DOS. Igrači preuzimaju ulogu svemirskog morskog morskog, popularno poznatog kao Doomguy, boreći se svojim putem kroz horde kroz invaziju demona iz pakla. Počeo sam razvijati propast nakon izlaska njihovih prethodnih FPS-a, Wolfenstein 3D (1992).</systemDescription>
+            <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>DOOM és un joc de tirador en primera persona (FPS) de 1993 desenvolupat per programari ID per a MS-DOS. Els jugadors assumeixen el paper d’un espacial marí, conegut popularment com a Doomguy, lluitant pel seu camí a través de les hordes de dimonis invasors des de l’infern. La ID va començar a desenvolupar Doom després del llançament del seu FPS anterior, Wolfenstein 3D (1992).</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Moteur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Doom je igra prve osobe iz prve osobe (FPS) iz 1993. godine koju je razvio ID softver za MS-DOS. Igrači preuzimaju ulogu svemirskog marinaca, popularno poznatog kao Doomguy, boreći se kroz horde invazivnih demona iz pakla. ID je počeo razvijati Doom nakon objavljivanja njihovog prethodnog FPS -a, Wolfenstein 3D (1992).</systemDescription>
+            <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Doom è un gioco sparatutto in prima persona (FPS) del 1993 sviluppato da id Software per MS-DOS. I giocatori assumono il ruolo di un marine spaziale, noto come Doomguy, che combatte contro orde di demoni infernali. Id ha iniziato a sviluppare Doom dopo l'uscita del suo precedente FPS, Wolfenstein 3D (1992).</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>Doomは1993年にid SoftwareによってMS-DOS向けに開発された一人称視点のシューティングゲーム（FPS）である。プレイヤーはドゥームガイとして知られる宇宙海兵隊員となり、地獄から侵略してきた悪魔の大群と戦う。Id社は前作『ウルフェンシュタイン3D』（1992年）のリリース後に『Doom』の開発を開始した。</systemDescription>
+            <systemHardwareType>エンジン</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>둠은 1993년 id Software에서 MS-DOS용으로 개발한 1인칭 슈팅(FPS) 게임입니다. 플레이어는 둠가이라는 별명을 가진 우주 해병의 역할을 맡아 지옥에서 침입한 악마 무리를 물리쳐야 합니다. Id는 이전 FPS인 Wolfenstein 3D(1992년)를 출시한 후 둠 개발을 시작했습니다.</systemDescription>
+            <systemHardwareType>엔진</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Motor</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>Doom é um jogo de tiro em primeira pessoa em 1993 (FPS) desenvolvido pelo Software ID para MS-DOS. Os jogadores assumem o papel de um fuzileiro naval espacial, popularmente conhecido como Doomguy, lutando por hordas de invasores de demônios do inferno. O ID começou a desenvolver a Doom após o lançamento de seus FPs anteriores, Wolfenstein 3D (1992).</systemDescription>
+            <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Doom este un joc 1993 first-person shooter (FPS) dezvoltat de id Software pentru MS-DOS. Jucătorii își asumă rolul unui marinar spațial, cunoscut popular sub numele de Doomguy, luptându-și drumul prin hoardele de demoni invadatori din iad. Id a început să dezvolte Doom după lansarea FPS-ului lor anterior, Wolfenstein 3D (1992).</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Двигатель</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Доом је 1993. године Схоотер (ФПС) утакмица (ФПС) који је развио ИД софтвера за МС-ДОС.Играчи претпостављају улогу свемирског марине, популарно познате као Доомгуи, борба против хорда кроз нападање демона из пакла.ИД је започео развијање пропасти након објављивања свог претходног фпс, Волфенстеин 3Д (1992).</systemDescription>
+            <systemHardwareType>Мотор</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Doom är ett förstapersonsskjutspel (FPS) från 1993 som utvecklades av id Software för MS-DOS. Spelare antar rollen som en rymdmarinsoldat, populärt känd som Doomguy, som kämpar sig igenom horder av invaderande demoner från helvetet. Id började utveckla Doom efter lanseringen av deras tidigare FPS, Wolfenstein 3D (1992).</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>Doomは1993年にid SoftwareによってMS-DOS向けに開発された一人称視点のシューティングゲーム（FPS）である。プレイヤーはドゥームガイとして知られる宇宙海兵隊員となり、地獄から侵略してきた悪魔の大群と戦う。Id社は前作『ウルフェンシュタイン3D』（1992年）のリリース後に『Doom』の開発を開始した。</systemDescription>
-            <systemHardwareType>エンジン</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>둠은 1993년 id Software에서 MS-DOS용으로 개발한 1인칭 슈팅(FPS) 게임입니다. 플레이어는 둠가이라는 별명을 가진 우주 해병의 역할을 맡아 지옥에서 침입한 악마 무리를 물리쳐야 합니다. Id는 이전 FPS인 Wolfenstein 3D(1992년)를 출시한 후 둠 개발을 시작했습니다.</systemDescription>
-            <systemHardwareType>엔진</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

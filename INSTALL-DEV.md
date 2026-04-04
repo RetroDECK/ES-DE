@@ -22,10 +22,10 @@ There are some dependencies that need to be fulfilled in order to build ES-DE. T
 
 **Debian/Ubuntu**
 
-All of the required packages can be installed with apt-get:
+All of the required packages can be installed with apt:
 
 ```
-sudo apt-get install build-essential clang-format git cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libbluetooth-dev libgl1-mesa-dev libpoppler-cpp-dev
+sudo apt install build-essential clang-format git cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libbluetooth-dev libgl1-mesa-dev libpoppler-cpp-dev
 ```
 
 **Fedora**
@@ -53,23 +53,30 @@ sudo pacman -S gcc clang make cmake gettext harfbuzz icu pkgconf sdl2 ffmpeg fre
 
 **Raspberry Pi OS**
 
-All of the required packages can be installed with apt-get:
+All of the required packages can be installed with apt:
 ```
-sudo apt-get install clang-format cmake gettext libharfbuzz-dev libicu-dev libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libbluetooth-dev libpoppler-cpp-dev
+sudo apt install clang-format cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libbluetooth-dev libpoppler-cpp-dev
 ```
-
-For a 64-bit build it's very important that you include libraspberrypi-dev because if this package is not installed then the file /usr/include/bcm_host.h is not present on the filesystem. This leads to CMake not detecting that it's indeed a Raspberry Pi and it will attempt to make a regular Linux build instead.
-
-To build with CEC support you also need to install these packages:
-```
-sudo apt-get install libcec-dev libp8-platform-dev
-```
-
-The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible.
 
 Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required. By default a display server (Xorg or Wayland) is also required but by using the DEINIT_ON_LAUNCH build option as explained later in this document KMS/direct framebuffer access can be used.
 
-Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by default.
+If you want to use the default OpenGL ES 3.0 driver then you need to build with the GLES option:
+```
+cmake -DGLES=on .
+make -j8
+```
+
+Alternatively you can skip this and run ES-DE by explicitly telling the driver to use regular desktop OpenGL 3.3:
+```
+MESA_GL_VERSION_OVERRIDE=3.3 ./es-de
+```
+
+Yet another alternative would be to use the Zink driver on top of Vulkan, although that could lead to slightly worse performance:
+```
+MESA_GL_VERSION_OVERRIDE=3.3 MESA_LOADER_DRIVER_OVERRIDE=zink ./es-de
+```
+
+Note that you'll probably need a 64-bit operating system to build and run ES-DE as there has been no testing done on 32-bit operating systems.
 
 **FreeBSD**
 
@@ -227,14 +234,6 @@ To build ES-DE with experimental FFmpeg video hardware decoding support, enable 
 cmake -DVIDEO_HW_DECODING=on .
 make -j8
 ```
-
-To build ES-DE with CEC support, enable the corresponding option, for example:
-
-```
-cmake -DCEC=on .
-make -j8
-```
-You will most likely need to install additional packages to get this to build. On Debian-based systems these are _libcec-dev_ and _libp8-platform-dev_. Note that the CEC support is currently untested.
 
 To build with the GLES 3.0 renderer, run the following:
 ```
@@ -399,16 +398,17 @@ tools/create_AppImage.sh
 
 This script has only been tested on Ubuntu 20.04 LTS and 22.04 LTS. It's generally recommended to go for an older operating system when building the AppImage to achieve compatibility with a larger number of distributions. To build it you need the PipeWire development package installed. The name differs between releases, but for 22.04 LTS it's named _libpipewire-0.3-dev_.
 
-The script will delete CMakeCache.txt and run cmake with the BUNDLED_CERTS option, as otherwise scraping wouldn't work on some distributions.
+To build an AppImage for the ARM64/AArch64 architecture, run the following:
+```
+tools/create_AppImage_AArch64.sh
+```
 
-After creating the AppImage it's recommended to delete CMakeCache.txt manually so the BUNDLED_CERTS option is not accidentally enabled when building the other packages.
-
-To build the Steam Deck-specific AppImage, run the following:
+And to build the Steam Deck-specific AppImage, run the following:
 ```
 tools/create_AppImage_SteamDeck.sh
 ```
 
-This is similar to the regular AppImage but does not build with the BUNDLED_CERTS option and changes some settings like the VRAM limit.
+This is similar to the regular x86 and aarch64 AppImages but changes some settings like the VRAM limit.
 
 Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running the build script.
 
@@ -687,17 +687,20 @@ Only the Microsoft Visual C++ (MSVC) compiler is supported on Windows. Although 
 Install Git for Windows: \
 https://gitforwindows.org
 
+You also need 7-Zip installed and the 7z.exe binary location added to your Path environment variable: \
+https://www.7-zip.org
+
 Download the Visual Studio Build Tools (choose Visual Studio Community edition): \
 https://visualstudio.microsoft.com/downloads
 
 During installation, choose the Desktop development with C++ workload with the following options:
 
 ```
-MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+MSVC Build Tools for x64/x86 (Latest)
 Just-In-Time debugger
 C++ CMake tools for Windows
 C++ AddressSanitizer
-Windows 10 SDK (10.0.20348.0)
+Windows 11 SDK (10.0.26100)
 ```
 
 The Windows SDK version is important, it has to be this precise version or some dependencies may not build correctly.
@@ -1827,6 +1830,8 @@ https://developer.android.com/reference/android/content/Intent
 
 `%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings and special variables are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%`, `%ROMRAW%` and `%ROMRAWWIN%` variables inside an `%EXTRAARRAY_` variable definition. This will expand to the basename of the game file, the directory of the game file, the ROM directory, the path to the game file with standard forward slashes as directory separators, and the path to the game file with Windows backslashes as directory separators, respectively.
 
+_Note that multiple forward slashes are automatically replaced with single forward slashes for the %EXTRA% and %EXTRARRAY% values, if you want to pass multiple forward slashes you will need to escape them such as_ `\/\/`
+
 `%EXTRAINTEGER_` - Sets an extra with an integer value.
 
 `%EXTRABOOL_` - Sets an extra with a boolean value, i.e. true/1 or false/0.
@@ -2362,24 +2367,26 @@ The working directory set when launching scripts differs between operating syste
 
 There are up to four parameters that will be passed to these scripts, as detailed below:
 
-| Event                    | Parameters*                                        | Description                                                                                       |
-| :----------------------- | :------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| startup                  |                                                    | Application startup                                                                               |
-| quit                     |                                                    | Application quit/shutdown                                                                         |
-| reboot                   |                                                    | System reboot (quit event triggered as well)                                                      |
-| poweroff                 |                                                    | System power off (quit event triggered as well)                                                   |
-| suspend                  |                                                    | System suspend (on platforms that support suspending)                                             |
-| config-changed           |                                                    | On saving application settings or controller configuration                                        |
-| settings-changed         |                                                    | On saving application settings (config-changed event triggered as well)                           |
-| controls-changed         |                                                    | On saving controller configuration (config-changed event triggered as well)                       |
-| theme-changed            | New theme name, old theme name                     | When manually changing themes in the UI Settings menu                                             |
-| game-start               | ROM path, game name, system name, system full name | On game launch                                                                                    |
-| game-end                 | ROM path, game name, system name, system full name | On game end (or on application wakeup if running in the background)                               |
-| screensaver-start        | _timer_ or _manual_                                | Screensaver started via timer or manually                                                         |
-| screensaver-end          | _cancel_ or _game-jump_ or _game-start_            | Screensaver ended via cancellation, jump to game or start/launch of game                          |
-| screensaver-game-select  | ROM path, game name, system name, system full name | Screensaver selected a new random game                                                            |
-| game-select              | ROM path, game name, system name, system full name | On browsing games in the gamelist view, requires enabling of the _Browsing custom events_ setting |
-| system-select            | System name, system full name, system     ROM path | On browsing systems in the system view, requires enabling of the _Browsing custom events_ setting |
+| Event                    | Parameters*                                                                             | Description                                                                                       |
+| :----------------------- | :-------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| startup                  |                                                                                         | Application startup                                                                               |
+| quit                     |                                                                                         | Application quit/shutdown                                                                         |
+| reboot                   |                                                                                         | System reboot (quit event triggered as well)                                                      |
+| poweroff                 |                                                                                         | System power off (quit event triggered as well)                                                   |
+| suspend                  |                                                                                         | System suspend (on platforms that support suspending)                                             |
+| config-changed           |                                                                                         | On saving application settings or controller configuration                                        |
+| settings-changed         |                                                                                         | On saving application settings (config-changed event triggered as well)                           |
+| controls-changed         |                                                                                         | On saving controller configuration (config-changed event triggered as well)                       |
+| theme-changed            | New theme name, old theme name                                                          | When manually changing themes in the UI Settings menu                                             |
+| game-start               | ROM path, game name, system name, system full name                                      | On game launch                                                                                    |
+| game-end                 | ROM path, game name, system name, system full name                                      | On game end (or on application wakeup if running in the background)                               |
+| screensaver-start        | _timer_ or _manual_                                                                     | Screensaver started via timer or manually                                                         |
+| screensaver-end          | _cancel_ or _game-jump_ or _game-start_                                                 | Screensaver ended via cancellation, jump to game or start/launch of game                          |
+| screensaver-game-select  | ROM path, game name, system name, system full name                                      | Screensaver selected a new random game                                                            |
+| scraper-start            | Scraper service, _automatic_ or _interactive_, number of systems, total number of games | On starting the multi-scraper in automatic or interactive mode                                    |
+| scraper-end              | Number of scraped games, number of skipped games, _finished_ or _stopped_               | On ending the multi-scraper (scraping finished or manually stopped by the user)                   |
+| game-select              | ROM path, game name, system name, system full name                                      | On browsing games in the gamelist view, requires enabling of the _Browsing custom events_ setting |
+| system-select            | System name, system full name, system     ROM path                                      | On browsing systems in the system view, requires enabling of the _Browsing custom events_ setting |
 
 ***)** Parameters in _italics_ are literal strings.
 

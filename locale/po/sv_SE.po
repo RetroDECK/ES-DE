@@ -1,13 +1,13 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024-2025 Northwestern Software AB
+# Copyright (c) 2024-2026 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024-2025.
+# Northwestern Software <info@es-de.org>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"POT-Creation-Date: 2026-03-22 21:12+0100\n"
 "PO-Revision-Date: 2025-10-09 22:50+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Svenska <info@es-de.org>\n"
@@ -1815,11 +1815,14 @@ msgstr "JAPAN"
 msgid "USA"
 msgstr "USA"
 
-msgid "WORLD"
-msgstr "VÄRLDEN"
+msgid "NORTH AMERICA"
+msgstr "NORDAMERIKA"
 
 msgid "ASIA"
 msgstr "ASIEN"
+
+msgid "WORLD"
+msgstr "VÄRLDEN"
 
 msgid "AUSTRALIA"
 msgstr "AUSTRALIEN"
@@ -2743,7 +2746,7 @@ msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
 "xml\n"
 "\n"
-"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
 msgstr ""
 "DET HÄR SKAPAR KATALOGER FÖR ALLA SPELSYSTEM SOM FINNS DEFINIERADE I "

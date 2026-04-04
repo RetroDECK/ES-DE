@@ -1,13 +1,13 @@
 # ES-DE Frontend translation strings.
-# Copyright (c) 2024-2025 Northwestern Software AB
+# Copyright (c) 2024-2026 Northwestern Software AB
 # This file is distributed under the same license as the ES-DE Frontend package.
-# Northwestern Software <info@es-de.org>, 2024-2025.
+# Northwestern Software <info@es-de.org>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-10-25 17:48+0200\n"
+"POT-Creation-Date: 2026-03-22 21:12+0100\n"
 "PO-Revision-Date: 2025-10-22 16:15-0300\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Português (Brasil) <info@es-de.org>\n"
@@ -1829,11 +1829,14 @@ msgstr "JAPÃO"
 msgid "USA"
 msgstr "EUA"
 
-msgid "WORLD"
-msgstr "MUNDIAL"
+msgid "NORTH AMERICA"
+msgstr "AMÉRICA DO NORTE"
 
 msgid "ASIA"
 msgstr "ÁSIA"
+
+msgid "WORLD"
+msgstr "MUNDIAL"
 
 msgid "AUSTRALIA"
 msgstr "AUSTRÁLIA"
@@ -2766,7 +2769,7 @@ msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
 "xml\n"
 "\n"
-"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
 msgstr ""
 "ISSO VAI CRIAR AS PASTAS PARA TODOS OS SISTEMAS DE JOGO DEFINIDOS EM "

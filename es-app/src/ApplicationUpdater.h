@@ -62,6 +62,7 @@ private:
         MACOS_APPLE,
         MACOS_INTEL,
         LINUX_APPIMAGE,
+        LINUX_AARCH64_APPIMAGE,
         LINUX_STEAM_DECK_APPIMAGE,
         UNKNOWN
     };

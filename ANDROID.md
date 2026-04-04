@@ -201,6 +201,34 @@ Finally, multi-window mode doesn't work when ES-DE has been set as the home app 
 * The Android soft keyboard causes rendering issues when navigating using a controller or physical keyboard, as such the ES-DE built-in keyboard is enabled by default for the time being. For testing purposes the Android soft keyboard can be enabled via the _Enable virtual keyboard_ option in the _UI settings_ menu. If only using touch input the issue is not present. This problem is believed to be caused by a bug in the SDL library so it probably needs to be resolved there.
 * Using a mounted USB storage device for the ES-DE and/or ROMs directories will lead to the configurator exiting after finishing the setup instead of launching ES-DE. Restarting ES-DE manually will lead to a successful startup. If the option to create the system directories was selected in the configurator then this will have to be executed again from inside ES-DE. Note that using a mounted USB storage device leads to a very crippled setup anyway, as for example RetroArch can't read any games from such devices (i.e. from the /mnt/media_rw/ directory tree). Only emulators supporting scoped storage will be usable in such a setup.
 
+## Known problems on specific devices
+
+There are some devices which have specific quirks and issues which may cause problems when running ES-DE. Here are some things to consider and work around.
+
+### AYANEO Pocket DS
+
+The option "Launch games on the other screen" doesn't work on this device as it has the same display name defined for both screens. The next ES-DE release will contain a workaround for this issue, but ideally it should be resolved by AYANEO via a firmware update.
+
+### AYN Odin 3
+
+With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Handheld Settings->Advanced->Is it force start selinux_.
+
+### AYN Thor
+
+The Android task switcher can't be used when setting ES-DE (or other frontends) as the home app.
+
+### Logitech G Cloud
+
+This device will by default kill any process that is not currently focused, so if starting a game the OS will kill ES-DE so that it has to start up every time you return from a game. To fix this disable _Settings->Labs->Process protection_.
+
+### Retroid Pocket G2
+
+With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Handheld Settings->Advanced->Is it force start selinux_.
+
+### Samsung devices
+
+There seems to be a firmware bug on at least some Samsung devices that may make ES-DE not find RetroArch when attempting to launch a game. This happens very rarely and is seemingly triggered after doing an OS update, or possibly after upgrading RetroArch itself, or due to a combination of the two. It's been observed on the S23 and S25 models. Just starting RetroArch once outside of ES-DE permanently fixes the problem. It's unclear whether this can happen for standalone emulators as well, but this has so far not been observed or reported.
+
 ## Emulator installation and setup
 
 Below are specific instructions and considerations for all supported emulators.
@@ -363,7 +391,7 @@ https://play.google.com/store/apps/details?id=com.emulator.fpse
 
 This Steam client can be downloaded from their GitHub site.
 
-https://github.com/gamehublite/gamehub-oss/releases
+https://github.com/Producdevity/gamehub-lite/releases
 
 ### GameNative
 
@@ -564,11 +592,9 @@ https://buildbot.scummvm.org/#/dailybuilds
 
 ### SkyEmu
 
-Note that frontend support was added to SkyEmu in version 4 so you need that to be able to use it with ES-DE.
+This emulator can be downloaded from their GitHub site.
 
-At the time of writing this version can only be downloaded from their GitHub automatic build system.
-
-https://github.com/skylersaleh/SkyEmu/actions
+https://github.com/skylersaleh/SkyEmu/releases
 
 ### Skyline
 
@@ -658,11 +684,13 @@ This is clearly not a complete list of Android devices, but rather those we know
 | AYANEO       | Pocket Micro            | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket S                | 13              | Yes       | None                |                            |
 | AYANEO       | Pocket S2               | 14              | Yes       | None                |                            |
-| Ayn          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
-| Ayn          | Odin Lite               | 11              | Yes       | None                |                            |
-| Ayn          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Minor audio issues  |                            |
-| Ayn          | Odin 2 Mini             | 13              | Yes       | None                |                            |
-| Ayn          | Odin 2 Portal           | 13              | Yes       | None                |                            |
+| AYN          | Odin (Base/Pro)         | 10              | Yes       | None                |                            |
+| AYN          | Odin Lite               | 11              | Yes       | None                |                            |
+| AYN          | Odin 2 (Base/Pro/Max)   | 13              | Yes       | Minor audio issues  |                            |
+| AYN          | Odin 2 Mini             | 13              | Yes       | None                |                            |
+| AYN          | Odin 2 Portal           | 13              | Yes       | None                |                            |
+| AYN          | Odin 3                  | 15              | Yes       | Theme downloader broken with default settings | See _Known problems on specific devices_ for a workaround |
+| AYN          | Thor                    | 13              | Yes       | None                |                            |
 | GKD          | Bubble                  | GammaOS 13 TV   | Yes       | None                | Limited RAM capacity for this device makes it unsuitable for demanding themes and large game collections |
 | Google       | Pixel 2 XL              | 11              | Yes       | None                |                            |
 | Google       | Pixel 3 XL              | 12              | Yes       | None                |                            |
@@ -727,6 +755,7 @@ This is clearly not a complete list of Android devices, but rather those we know
 | Retroid      | Pocket Classic          | 14              | Yes       | None                |                            |
 | Retroid      | Pocket Flip             | 11              | Yes       | None                |                            |
 | Retroid      | Pocket Flip 2           | 13              | Yes       | None                |                            |
+| Retroid      | Pocket G2               | 15              | Yes       | Theme downloader broken with default settings | See _Known problems on specific devices_ for a workaround |
 | Retroid      | Pocket Mini             | 10              | Yes       | None                |                            |
 | Retroid      | Pocket Mini V2          | 13              | Yes       | None                |                            |
 | Samsung      | Galaxy A17              | 11              | Yes       | None                |                            |

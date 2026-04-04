@@ -11,6 +11,7 @@ It was the first video game console to include a touchscreen and the first handh
         <systemReleaseDateFormated>August 1997</systemReleaseDateFormated>
         <systemHardwareType>Portable</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>54a4b6</systemColor>
         <systemColorPalette1>71829A</systemColorPalette1>
         <systemColorPalette2>293039</systemColorPalette2>
@@ -18,6 +19,24 @@ It was the first video game console to include a touchscreen and the first handh
         <systemColorPalette4>186DA4</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز Game.com هو جهاز ألعاب محمول باليد من الجيل الخامس أصدرته شركة Tiger Electronics في أغسطس 1997. وصدرت نسخة أصغر، Game.com Pocket Pro، في منتصف عام 1999.
+يمكن توصيل الإصدار الأول من Game.com بمودم 14.4 كيلوبايت/ثانية للاتصال بالإنترنت، ومن هنا جاء اسمه الذي يشير إلى نطاق المستوى الأعلى .com.
+
+وكان أول جهاز ألعاب فيديو يتضمن شاشة تعمل باللمس وأول جهاز محمول باليد يتضمن اتصالاً بالإنترنت.</systemDescription>
+            <systemHardwareType>محمول</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Game.com je peta generacija ručna igra koja je puštena od tigra elektronike koja je puštena u kolovozu 1997. manja verzija, Igrac.c.chove Pro, puštena je sredinom 1999. godine.
+Prva verzija igre.com može se povezati sa modemom od 14,4 kbit / s za internetsku povezanost, otuda i njegovo ime referenciranje gornjeg domena .com .com.
+
+Bila je to prva konzola za video igru koja je uključila dodirnu ekranu i prvu ručnu konzolu za uključivanje internetske povezanosti.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El Game.com és una consola de joc de cinquena generació de mà publicada per Tiger Electronics l’agost de 1997. Una versió més petita, el Game.com Pocket Pro, es va publicar a mitjan 1999.
@@ -54,6 +73,15 @@ C'est la première console de jeux vidéo à inclure un écran tactile et la pre
             <systemHardwareType>Portable</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Game.com je ručna konzola za igru pete generacije koju je Tiger Electronics objavila u kolovozu 1997. godine. Manja verzija, Game.com Pocket Pro, objavljena je sredinom 1999.
+Prva verzija Game.com može se povezati s modemom od 14,4 kbit/s za internetsku povezanost, pa otuda i njegovo ime upućivanje na domenu najviše razine .com.
+
+Bila je to prva konzola za video igre koja je uključivala zaslon osjetljiv na dodir i prvu ručnu konzolu koja uključuje internetsku povezanost.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Game.com è una console portatile di quinta generazione rilasciata da Tiger Electronics nell'agosto 1997. Una versione più piccola, il Game.com Pocket Pro, è stata rilasciata a metà del 1999.
@@ -61,6 +89,24 @@ La prima versione del Game.com può essere collegata a un modem a 14,4 kbit/s pe
 
 È stata la prima console per videogiochi a includere un touchscreen e la prima console portatile a includere la connettività Internet.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ゲームコムは、1997年8月にタイガー魔法瓶から発売された第5世代の携帯ゲーム機。1999年半ばには、より小型の「ゲーム・コム・ポケット・プロ」が発売された。
+ゲーム・ドット・コムの最初のバージョンは、インターネット接続用に14.4kビット/秒のモデムに接続することができ、これがトップ・レベル・ドメイン.comにちなんだ名前の由来となっている。
+
+タッチスクリーンを搭載した初のゲーム機であり、インターネット接続機能を搭載した初の携帯ゲーム機でもある。</systemDescription>
+            <systemHardwareType>ポータブル</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>Game.com은 1997년 8월에 타이거 일렉트로닉스에서 출시한 5세대 휴대용 게임 콘솔입니다. 더 작은 버전인 Game.com 포켓 프로는 1999년 중반에 출시되었습니다.
+Game.com의 첫 번째 버전은 인터넷 연결을 위해 14.4kbit/s 모뎀에 연결할 수 있었기 때문에 최상위 도메인 .com을 참조하여 이름이 붙여졌습니다.
+
+이 제품은 터치스크린이 포함된 최초의 비디오 게임 콘솔이자 인터넷 연결 기능이 포함된 최초의 휴대용 콘솔이었습니다.</systemDescription>
+            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -90,6 +136,15 @@ Foi o primeiro console de videogame a incluir uma tela sensível ao toque e o pr
             <systemHardwareType>Portátil</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Game.com é um console de jogo portátil de quinta geração lançado pela Tiger Electronics em agosto de 1997. Uma versão menor, o Game.com Pocket Pro, foi lançada em meados de 1999.
+A primeira versão do Game.com pode ser conectada a um modem de 14,4 kbit/s para conectividade à Internet, portanto, seu nome referenciando o domínio de nível superior .com.
+
+Foi o primeiro console de videogame a incluir uma tela sensível ao toque e o primeiro console portátil a incluir conectividade à Internet.</systemDescription>
+            <systemHardwareType>Portátil</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Game.com este o consolă de jocuri portabilă de generația a cincea lansată de Tiger Electronics în august 1997. O versiune mai mică, Game.com Pocket Pro, a fost lansată la mijlocul anului 1999.
@@ -108,6 +163,15 @@ A fost prima consolă de jocuri video care a inclus un ecran tactil și prima co
             <systemHardwareType>Портативный</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Гаме.цом је ручна игара пете генерације коју је у августу 1997. године објавила мања верзија, мања верзија, утакмицу ИГРЕ.ЦОМ Поцкет Про, слобода је пуштена средином 1999. године.
+Прва верзија игре.цом може се повезати на 14,4 кбит / с модем за интернетску повезаност, отуда и назив референцирајући домен највишег нивоа .цом.
+
+Била је то прва видео игарска конзола која укључује екран осетљив на додир и прву ручну конзолу која укључује интернетску повезаност.</systemDescription>
+            <systemHardwareType>Преносив</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Game.com är en femte generationens handhållen spelkonsol som lanserades av Tiger Electronics i augusti 1997. En mindre version, Game.com Pocket Pro, släpptes i mitten av 1999.
@@ -115,24 +179,6 @@ Den första versionen av Game.com kan anslutas till ett 14,4 kbit/s modem för I
 
 Det var den första videospelskonsolen med pekskärm och den första handhållna konsolen med Internetanslutning.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ゲームコムは、1997年8月にタイガー魔法瓶から発売された第5世代の携帯ゲーム機。1999年半ばには、より小型の「ゲーム・コム・ポケット・プロ」が発売された。
-ゲーム・ドット・コムの最初のバージョンは、インターネット接続用に14.4kビット/秒のモデムに接続することができ、これがトップ・レベル・ドメイン.comにちなんだ名前の由来となっている。
-
-タッチスクリーンを搭載した初のゲーム機であり、インターネット接続機能を搭載した初の携帯ゲーム機でもある。</systemDescription>
-            <systemHardwareType>ポータブル</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>Game.com은 1997년 8월에 타이거 일렉트로닉스에서 출시한 5세대 휴대용 게임 콘솔입니다. 더 작은 버전인 Game.com 포켓 프로는 1999년 중반에 출시되었습니다.
-Game.com의 첫 번째 버전은 인터넷 연결을 위해 14.4kbit/s 모뎀에 연결할 수 있었기 때문에 최상위 도메인 .com을 참조하여 이름이 붙여졌습니다.
-
-이 제품은 터치스크린이 포함된 최초의 비디오 게임 콘솔이자 인터넷 연결 기능이 포함된 최초의 휴대용 콘솔이었습니다.</systemDescription>
-            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

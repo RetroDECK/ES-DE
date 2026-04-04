@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>August 14, 1989</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>243-340</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>B52D2E</systemColor>
         <systemColorPalette1>D2D2D2</systemColorPalette1>
         <systemColorPalette2>488277</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>811B15</systemColorPalette4>
         <systemCartSize>112-67</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز سيجا جينيسيس، المعروف باسم ميجا درايف في معظم المناطق خارج أمريكا الشمالية، هو جهاز ألعاب فيديو منزلي 16 بت تم تطويره وبيعه من قبل شركة سيجا إنتربرايزس المحدودة. كان جينيسيس هو وحدة التحكم الثالثة من سيجا وخليفة النظام الرئيسي. أصدرت Sega وحدة التحكم لأول مرة باسم Mega Drive في اليابان في عام 1988، ثم أطلقتها لأول مرة في أمريكا الشمالية تحت اسم Genesis في عام 1989. وفي عام 1990، تم توزيع وحدة التحكم باسم Mega Drive من قبل شركة Virgin Mastertronic في أوروبا، وشركة Ozisoft في أستراليا، وشركة Tec Toy في البرازيل. وفي كوريا الجنوبية، تم توزيع الأنظمة من قبل شركة Samsung وعُرفت باسم Super Gam*Boy، ولاحقًا باسم Super Aladdin Boy. المعالج الدقيق الرئيسي في Genesis هو وحدة المعالجة المركزية Motorola 68000 ذات 16/32 بت من موتورولا 68000 بسرعة 7.6 ميجاهرتز. تشتمل وحدة التحكم أيضاً على معالج فرعي Zilog Z80، والذي كان يستخدم بشكل أساسي للتحكم في أجهزة الصوت ويوفر أيضاً توافقاً مع النظام الرئيسي.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Sega Genesis, poznata kao Mega Pogon u većini regiona izvan Sjeverne Amerike, nalazi se 16-bitna konzola za video igre za video igre koja je razvila i prodala Sega Enterprises, doo je bila treća konzola Sega i nasljednik master sustava. Sega je u Japanu prvi put objavila kao Mega Pogon u Japanu 1988. godine, a slijedi se Sjeverni američki debi 1989. godine, 1990. godine konzola je distribuirana kao MEGA vožnja Virgin Mastertronic u Europi, a TEC igračka u Brazilu. U Južnoj Koreji su sustavi distribuirali Samsung i bili su poznati kao Super Gam * Boy, a kasnije i super Aladdin dječak. Glavni mikroprocesor geneze je 16/32-bitni Motorola 68000 CPU sa 4,6 MHz. Konzola uključuje i pod-procesor Zilog Z80, koji se uglavnom koristio za kontrolu zvučnog hardvera i pruža i unazad kompatibilnost sa master sistemom.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El Sega Genesis, conegut com el Mega Drive a la majoria de regions de fora d’Amèrica del Nord, és una consola de videojocs a casa de 16 bits que va ser desenvolupada i venuda per Sega Enterprises, Ltd. El Genesis va ser la tercera consola de Sega i el successor del sistema mestre. Sega va llançar per primera vegada la consola com a Mega Drive al Japó el 1988, seguida d'un debut nord -americà sota el Genesis Moniker el 1989. El 1990, la consola es va distribuir com a Mega Drive per Virgin Mastertronic a Europa, per Ozisoft a Australàsia ide Tec Toy al Brasil. A Corea del Sud, els sistemes van ser distribuïts per Samsung i eren coneguts com el Super Gam*Boy, i més tard el Super Aladdin Boy. El microprocessador principal del Gènesi és una CPU de 16/32 bits de 68000 CPU amb 7,6 MHz. La consola també inclou un subprocessador Zilog Z80, que es va utilitzar principalment per controlar el maquinari de so i també proporciona una compatibilitat enrere amb el sistema mestre.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>SEGA Genesis, poznata kao Mega Drive u većini regija izvan Sjeverne Amerike, 16-bitna je kućna konzola za video igre koju je razvio i prodao Sega Enterprises, Ltd. Genesis je bila treća konzola Sege i nasljednik glavnog sustava. Sega je prvi put objavila konzolu kao Mega Drive u Japanu 1988. godine, nakon čega je uslijedio sjevernoamerički debi pod glavom Genesis 1989. godine. 1990. konzola je distribuirana kao Mega Drive by Virgin Mastertronic u Europi, Ozisoft u Australalasiji, a TEC igračka u Brazilu. U Južnoj Koreji sustave je distribuirao Samsung i bili su poznati kao Boy Super Gam*, a kasnije i Super Aladdin Boy. Glavni mikroprocesor Geneze je 16/32-bitni Motorola 68000 CPU-a na 7,6 MHz. Konzola također uključuje Zilog Z80 podprocesora, koji se uglavnom koristio za kontrolu zvučnog hardvera i također pruža kompatibilnost s glavnim sustavom.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Sega Genesis, noto come Mega Drive nella maggior parte delle regioni al di fuori del Nord America, è una console per videogiochi domestica a 16 bit sviluppata e venduta dalla Sega Enterprises, Ltd. Il Genesis è stata la terza console di Sega e il successore del Master System. La console è stata distribuita per la prima volta come Mega Drive in Giappone nel 1988, seguita da un debutto in Nord America con il nome Genesis nel 1989. Nel 1990, la console fu distribuita come Mega Drive da Virgin Mastertronic in Europa, da Ozisoft in Australasia e da Tec Toy in Brasile. In Corea del Sud, i sistemi furono distribuiti da Samsung e furono conosciuti come Super Gam*Boy e successivamente Super Aladdin Boy. Il microprocessore principale del Genesis è una CPU Motorola 68000 a 16/32 bit con clock a 7,6 MHz. La console include anche un sottoprocessore Zilog Z80, utilizzato principalmente per controllare l'hardware audio e per garantire la retrocompatibilità con il Master System.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>セガ・ジェネシス（北米以外のほとんどの地域ではメガドライブとして知られている）は、セガ・エンタープライゼス社が開発・販売した16ビットの家庭用ゲーム機である。ジェネシスはセガにとって3番目のゲーム機であり、マスターシステムの後継機である。1988年に日本でメガドライブとして発売され、1989年に北米でジェネシスとして発売された。1990年、ヨーロッパではヴァージン・マスタートロニック社、オーストラレーシアではオジソフト社、ブラジルではテック・トイ社からメガドライブとして発売された。韓国ではサムスンからスーパーガムボーイ、後にスーパーアラジンボーイとして販売された。ジェネシスのメイン・マイクロプロセッサは、7.6MHzの16/32ビット・モトローラ68000 CPUである。このゲーム機にはZilog Z80サブプロセッサーも搭載されており、主にサウンドハードウェアの制御に使用され、マスターシステムとの後方互換性も提供した。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>북미 외 대부분의 지역에서 메가 드라이브라고 알려진 세가 제네시스는 세가 엔터프라이즈에서 개발 및 판매한 16비트 가정용 비디오 게임 콘솔입니다. 제네시스는 세가의 세 번째 콘솔이자 마스터 시스템의 후속작입니다. 세가는 1988년 일본에서 메가 드라이브라는 이름으로 콘솔을 처음 출시한 후 1989년 제네시스라는 이름으로 북미에 데뷔했습니다. 1990년에는 유럽에서는 버진 마스터트로닉, 오스트랄라시아에서는 오지소프트, 브라질에서는 테크 토이가 메가 드라이브라는 이름으로 콘솔을 유통했습니다. 한국에서는 삼성에서 이 시스템을 배포하여 슈퍼 감*보이, 이후에는 슈퍼 알라딘 보이로 알려졌습니다. 제네시스의 메인 마이크로프로세서는 7.6MHz로 클럭된 16/32비트 모토로라 68000 CPU입니다. 콘솔에는 주로 사운드 하드웨어를 제어하는 데 사용되며 마스터 시스템과의 하위 호환성을 제공하는 Zilog Z80 서브 프로세서도 포함되어 있습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Sega Genesis, conhecido como Mega Drive na maioria das regiões fora da América do Norte, é um console de videogame em casa de 16 bits que foi desenvolvido e vendido pela Sega Enterprises, Ltd. O Genesis foi o terceiro console da Sega e o sucessor do sistema mestre. Sega first released the console as the Mega Drive in Japan in 1988, followed by a North American debut under the Genesis moniker in 1989. In 1990, the console was distributed as the Mega Drive by Virgin Mastertronic in Europe, by Ozisoft in Australasia, and by Tec Toy in Brazil. Na Coréia do Sul, os sistemas foram distribuídos pela Samsung e eram conhecidos como The Super Gam*Boy, e mais tarde o Super Aladdin Boy. O microprocessador principal do Gênesis é uma CPU de Motorola 68000 de 16/32 bits, com um tempo de 7,6 MHz. O console também inclui um subprocessador Zilog Z80, que foi usado principalmente para controlar o hardware do som e também fornece compatibilidade com versões anteriores com o sistema mestre.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Sega Genesis, cunoscută sub numele de Mega Drive în majoritatea regiunilor din afara Americii de Nord, este o consolă de jocuri video pe 16 biți care a fost dezvoltată și vândută de Sega Enterprises, Ltd. Genesis a fost a treia consolă Sega și succesoarea Master System. Sega a lansat prima dată consola ca Mega Drive în Japonia în 1988, urmată de un debut în America de Nord sub denumirea Genesis în 1989. În 1990, consola a fost distribuită ca Mega Drive de Virgin Mastertronic în Europa, de Ozisoft în Australasia și de Tec Toy în Brazilia. În Coreea de Sud, sistemele au fost distribuite de Samsung și erau cunoscute sub numele de Super Gam*Boy, iar mai târziu Super Aladdin Boy. Microprocesorul principal al Genesis este un CPU Motorola 68000 pe 16/32 de biți tactat la 7,6 MHz. Consola include, de asemenea, un subprocesor Zilog Z80, care a fost folosit în principal pentru a controla hardware-ul de sunet și oferă, de asemenea, compatibilitate retroactivă cu Master System.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Постанак СЕГА, познат као МЕГА Дриве у већини региона изван Северне Америке, је 16-битни хоме видео игру коју је развио и продао Сега Ентерприсес, Лтд. Генеза је била трећа конзола Сеги-а и наследник главног система.Сега је 1988. године први пут објавио конзолу у Јапану, а слиједило је северноамерички деби у Генесис Моникеру 1989. године. 1990. године конзола је дистрибуирана као Мега Дривинг ДИОУРТИОНС у Европи Озисофт у Аустралији и ТЕЦ играчка у Бразилу.У Јужној Кореји, Системи су дистрибуирали Самсунг и били су познати и као Супер Гам * Бои, а касније је Супер Аладдин дечко.Главни микропроцесор Генесиса је 16/32-битни моторола 68000 ЦПУ Цлоцтед на 7,6 МХз.Конзола такође укључује ЗИЛОГ З80 подпроцесор, који се углавном користио за контролу звучног хардвера и такође омогућава уназад компатибилност са главним системом.</systemDescription>
+            <systemHardwareType>Конзола</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Sega Genesis, känd som Mega Drive i de flesta regioner utanför Nordamerika, är en 16-bitars hemkonsol för videospel som utvecklades och såldes av Sega Enterprises, Ltd. Genesis var Segas tredje konsol och efterföljaren till Master System. Sega släppte konsolen först som Mega Drive i Japan 1988, följt av en nordamerikansk debut under namnet Genesis 1989. Under 1990 distribuerades konsolen som Mega Drive av Virgin Mastertronic i Europa, av Ozisoft i Australasien och av Tec Toy i Brasilien. I Sydkorea distribuerades systemen av Samsung och var kända som Super Gam*Boy, och senare Super Aladdin Boy. Huvudmikroprocessorn i Genesis är en 16/32-bitars Motorola 68000 CPU med en klockfrekvens på 7,6 MHz. Konsolen innehåller också en Zilog Z80-subprocessor, som främst användes för att styra ljudhårdvaran och som också ger bakåtkompatibilitet med Master System.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>セガ・ジェネシス（北米以外のほとんどの地域ではメガドライブとして知られている）は、セガ・エンタープライゼス社が開発・販売した16ビットの家庭用ゲーム機である。ジェネシスはセガにとって3番目のゲーム機であり、マスターシステムの後継機である。1988年に日本でメガドライブとして発売され、1989年に北米でジェネシスとして発売された。1990年、ヨーロッパではヴァージン・マスタートロニック社、オーストラレーシアではオジソフト社、ブラジルではテック・トイ社からメガドライブとして発売された。韓国ではサムスンからスーパーガムボーイ、後にスーパーアラジンボーイとして販売された。ジェネシスのメイン・マイクロプロセッサは、7.6MHzの16/32ビット・モトローラ68000 CPUである。このゲーム機にはZilog Z80サブプロセッサーも搭載されており、主にサウンドハードウェアの制御に使用され、マスターシステムとの後方互換性も提供した。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>북미 외 대부분의 지역에서 메가 드라이브라고 알려진 세가 제네시스는 세가 엔터프라이즈에서 개발 및 판매한 16비트 가정용 비디오 게임 콘솔입니다. 제네시스는 세가의 세 번째 콘솔이자 마스터 시스템의 후속작입니다. 세가는 1988년 일본에서 메가 드라이브라는 이름으로 콘솔을 처음 출시한 후 1989년 제네시스라는 이름으로 북미에 데뷔했습니다. 1990년에는 유럽에서는 버진 마스터트로닉, 오스트랄라시아에서는 오지소프트, 브라질에서는 테크 토이가 메가 드라이브라는 이름으로 콘솔을 유통했습니다. 한국에서는 삼성에서 이 시스템을 배포하여 슈퍼 감*보이, 이후에는 슈퍼 알라딘 보이로 알려졌습니다. 제네시스의 메인 마이크로프로세서는 7.6MHz로 클럭된 16/32비트 모토로라 68000 CPU입니다. 콘솔에는 주로 사운드 하드웨어를 제어하는 데 사용되며 마스터 시스템과의 하위 호환성을 제공하는 Zilog Z80 서브 프로세서도 포함되어 있습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

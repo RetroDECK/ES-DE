@@ -397,16 +397,12 @@ tools/create_AppImage.sh
 
 This script has only been tested on Ubuntu 20.04 LTS and 22.04 LTS. It's generally recommended to go for an older operating system when building the AppImage to achieve compatibility with a larger number of distributions. To build it you need the PipeWire development package installed. The name differs between releases, but for 22.04 LTS it's named _libpipewire-0.3-dev_.
 
-The script will delete CMakeCache.txt and run cmake with the BUNDLED_CERTS option, as otherwise scraping wouldn't work on some distributions.
-
-After creating the AppImage it's recommended to delete CMakeCache.txt manually so the BUNDLED_CERTS option is not accidentally enabled when building the other packages.
-
 To build the Steam Deck-specific AppImage, run the following:
 ```
 tools/create_AppImage_SteamDeck.sh
 ```
 
-This is similar to the regular AppImage but does not build with the BUNDLED_CERTS option and changes some settings like the VRAM limit.
+This is similar to the regular AppImage but changes some settings like the VRAM limit.
 
 Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running the build script.
 

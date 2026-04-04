@@ -44,6 +44,9 @@
             <entry>/usr/lib64/libretro</entry>
             <!-- Manjaro repository -->
             <entry>/usr/lib/libretro</entry>
+            <!-- NixOS and Nixpkgs repository -->
+            <entry>/run/current-system/sw/lib/retroarch/cores</entry>
+            <entry>~/.nix-profile/lib/retroarch/cores</entry>
         </rule>
     </core>
     <emulator name="3DSEN">
@@ -133,6 +136,9 @@
     </emulator>
     <emulator name="AZAHAR">
         <!-- Nintendo 3DS emulator Azahar -->
+        <rule type="systempath">
+            <entry>azahar</entry>
+        </rule>
         <rule type="staticpath">
             <entry>~/Applications/azahar*.AppImage</entry>
             <entry>~/.local/share/applications/azahar*.AppImage</entry>
@@ -402,12 +408,27 @@
         <!-- EasyRPG game engine -->
         <rule type="systempath">
             <entry>easyrpg-player</entry>
+            <entry>org.easyrpg.player</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/easyrpg/easyrpg-player</entry>
             <entry>~/.local/share/applications/easyrpg/easyrpg-player</entry>
             <entry>~/.local/bin/easyrpg/easyrpg-player</entry>
             <entry>~/bin/easyrpg/easyrpg-player</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.easyrpg.player</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.easyrpg.player</entry>
+        </rule>
+    </emulator>
+    <emulator name="EDEN">
+        <!-- Nintendo Switch emulator Eden -->
+        <rule type="systempath">
+            <entry>eden</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Eden*.AppImage</entry>
+            <entry>~/.local/share/applications/Eden*.AppImage</entry>
+            <entry>~/.local/bin/Eden*.AppImage</entry>
+            <entry>~/bin/Eden*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="EKA2L1">
@@ -429,6 +450,19 @@
             <entry>~/.local/share/applications/EKA2L1/eka2l1_qt.exe</entry>
             <entry>~/.local/bin/EKA2L1/eka2l1_qt.exe</entry>
             <entry>~/bin/EKA2L1/eka2l1_qt.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="UMU">
+        <!-- Microsoft Windows compatibility layer UMU -->
+        <rule type="systempath">
+            <entry>umu-run</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/umu/umu-run</entry>
+            <entry>~/.local/share/applications/umu/umu-run</entry>
+            <entry>~/.local/bin/umu/umu-run</entry>
+            <entry>~/bin/umu/umu-run</entry>
+            <entry>~/.var/app/io.github.Faugus.faugus-launcher/data/faugus-launcher/umu-run</entry>
         </rule>
     </emulator>
     <emulator name="FINALBURN-NEO">
@@ -477,6 +511,10 @@
             <entry>fsuae.launcher</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
+            <entry>~/.local/share/applications/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
+            <entry>~/.local/bin/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
+            <entry>~/bin/FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher</entry>
             <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE|flatpak run --command=fs-uae-launcher net.fsuae.FS-UAE</entry>
         </rule>
@@ -519,6 +557,18 @@
             <entry>~/bin/gearboy/gearboy</entry>
         </rule>
     </emulator>
+    <emulator name="GEARGRAFX">
+        <!--  NEC PC Engine/TurboGrafx-16 and SuperGrafx emulator Geargrafx -->
+        <rule type="systempath">
+            <entry>geargrafx</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/geargrafx/geargrafx</entry>
+            <entry>~/.local/share/applications/geargrafx/geargrafx</entry>
+            <entry>~/.local/bin/geargrafx/geargrafx</entry>
+            <entry>~/bin/geargrafx/geargrafx</entry>
+        </rule>
+    </emulator>
     <emulator name="GOPHER2600">
         <!-- Atari 2600 emulator Gopher2600 -->
         <rule type="staticpath">
@@ -532,7 +582,6 @@
         <!-- Nintendo 64 emulator Gopher64 -->
         <rule type="systempath">
             <entry>gopher64-linux-x86_64</entry>
-            <entry>gopher64-linux-aarch64</entry>
             <entry>io.github.gopher64.gopher64</entry>
         </rule>
         <rule type="staticpath">
@@ -540,10 +589,6 @@
             <entry>~/.local/share/applications/gopher64/gopher64-linux-x86_64</entry>
             <entry>~/.local/bin/gopher64/gopher64-linux-x86_64</entry>
             <entry>~/bin/gopher64/gopher64-linux-x86_64</entry>
-            <entry>~/Applications/gopher64/gopher64-linux-aarch64</entry>
-            <entry>~/.local/share/applications/gopher64/gopher64-linux-aarch64</entry>
-            <entry>~/.local/bin/gopher64/gopher64-linux-aarch64</entry>
-            <entry>~/bin/gopher64/gopher64-linux-aarch64</entry>
             <entry>/var/lib/flatpak/exports/bin/io.github.gopher64.gopher64</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.gopher64.gopher64</entry>
         </rule>
@@ -587,6 +632,18 @@
             <entry>~/.local/share/applications/jgenesis-cli*.AppImage</entry>
             <entry>~/.local/bin/jgenesis-cli*.AppImage</entry>
             <entry>~/bin/jgenesis-cli*.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="KEGS">
+        <!-- Apple IIGS emulator KEGS -->
+        <rule type="systempath">
+            <entry>xkegs</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/kegs/xkegs</entry>
+            <entry>~/.local/share/applications/kegs/xkegs</entry>
+            <entry>~/.local/bin/kegs/xkegs</entry>
+            <entry>~/bin/kegs/xkegs</entry>
         </rule>
     </emulator>
     <emulator name="KRONOS">
@@ -887,6 +944,12 @@
             <entry>~/.local/share/applications/pico-8/pico8</entry>
             <entry>~/.local/bin/pico-8/pico8</entry>
             <entry>~/bin/pico-8/pico8</entry>
+        </rule>
+    </emulator>
+    <emulator name="PLASTIC">
+        <!-- Nintendo NES and Famicom emulator Plastic -->
+        <rule type="systempath">
+            <entry>plastic</entry>
         </rule>
     </emulator>
     <emulator name="PLAY!">
@@ -1262,6 +1325,11 @@
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="systempath">
             <entry>visualboyadvance-m</entry>
+            <entry>com.vba_m.visualboyadvance-m</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.vba_m.visualboyadvance-m</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.vba_m.visualboyadvance-m</entry>
         </rule>
     </emulator>
     <emulator name="VICE-X64SC">
@@ -1364,6 +1432,10 @@
     </emulator>
     <emulator name="XENIA">
         <!-- Microsoft Xbox 360 emulator xenia -->
+        <rule type="systempath">
+            <entry>xenia</entry>
+            <entry>xenia_canary</entry>
+        </rule>
         <rule type="staticpath">
             <entry>~/Applications/xenia/xenia</entry>
             <entry>~/.local/share/applications/xenia/xenia</entry>
@@ -1373,6 +1445,14 @@
             <entry>~/.local/share/applications/xenia/xenia_canary</entry>
             <entry>~/.local/bin/xenia/xenia_canary</entry>
             <entry>~/bin/xenia/xenia_canary</entry>
+            <entry>~/Applications/xenia_canary*.AppImage</entry>
+            <entry>~/.local/share/applications/xenia_canary*.AppImage</entry>
+            <entry>~/.local/bin/xenia_canary*.AppImage</entry>
+            <entry>~/bin/xenia_canary*.AppImage</entry>
+            <entry>~/Applications/Xenia_Canary*.AppImage</entry>
+            <entry>~/.local/share/applications/Xenia_Canary*.AppImage</entry>
+            <entry>~/.local/bin/Xenia_Canary*.AppImage</entry>
+            <entry>~/bin/Xenia_Canary*.AppImage</entry>
             <entry>~/Applications/xenia-canary*.AppImage</entry>
             <entry>~/.local/share/applications/xenia-canary*.AppImage</entry>
             <entry>~/.local/bin/xenia-canary*.AppImage</entry>
@@ -1438,12 +1518,15 @@
         <!-- Sega Saturn emulator Ymir -->
         <rule type="systempath">
             <entry>ymir-sdl3</entry>
+            <entry>io.github.strikerx3.ymir</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/ymir/ymir-sdl3</entry>
             <entry>~/.local/share/applications/ymir/ymir-sdl3</entry>
             <entry>~/.local/bin/ymir/ymir-sdl3</entry>
             <entry>~/bin/ymir/ymir-sdl3</entry>
+            <entry>/var/lib/flatpak/exports/bin/io.github.strikerx3.ymir</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.strikerx3.ymir</entry>
         </rule>
     </emulator>
     <emulator name="ZESARUX">

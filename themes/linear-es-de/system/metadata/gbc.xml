@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>October 21, 1998</systemReleaseDateFormated>
         <systemHardwareType>Portable</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>fbb625</systemColor>
         <systemColorPalette1>F63B77</systemColorPalette1>
         <systemColorPalette2>2D308E</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>7642B6</systemColorPalette4>
         <systemCartSize>373-436</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز Game Boy Color (اختصاراً GBC) هو جهاز ألعاب محمول باليد من إنتاج شركة Nintendo، تم إصداره في 21 أكتوبر 1998 في اليابان وتم طرحه في نوفمبر من نفس العام في الأسواق العالمية. وهو خليفة Game Boy. يتميز Game Boy Color، كما يوحي الاسم، بشاشة ملونة، ولكن بدون إضاءة خلفية. وهو أكثر سمكاً وأطول قليلاً من Game Boy Pocket، وهو جهاز Game Boy معاد تصميمه والذي تم إصداره في عام 1996. وكما هو الحال مع Game Boy الأصلي، فهو يحتوي على معالج 8 بت مخصص مرتبط إلى حد ما بوحدة المعالجة المركزية Zilog Z80 (CPU). ظل الاسم الأصلي - مع تهجئة كلمة "color" بالإنجليزية الأمريكية - دون تغيير حتى في الأسواق التي كانت فيها كلمة "color" هي التهجئة الإنجليزية المقبولة. كان المنافسون الأساسيون لجهاز Game Boy Color هم Neo Geo Pocket الأكثر تقدمًا من SNK وWonderSwan من Bandai (كلاهما صدر في اليابان فقط)، على الرغم من أن Game Boy Color تفوق على هذه الأجهزة بهامش كبير. باعت Game Boy و Game Boy Color مجتمعين 118.69 مليون وحدة حول العالم. تم إيقافها في عام 2003، بعد فترة وجيزة من إصدار Game Boy Advance SP.</systemDescription>
+            <systemHardwareType>محمول</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Boja igara, (skraćeno kao GBC) je ručna igra koja proizvodi Nintendo, koja je objavljena 21. oktobra 1998. u Japanu i puštena je u novembru iste godine na međunarodnim tržištima. To je naslednik dečaka igre. Boja dječaka igre, kako je predložio ime, sadrži ekran u boji, ali bez pozadinskog osvjetljenja. Malo je deblji i viši od džepa za igru, koji je redizajniran dječak za igru objavljen 1996. godine. Kao i kod originalnog dječaka za igru, ima prilagođeni 8-bitni procesor koji se pomalo povezuje na centralnu prerađivačku jedinicu za obradu zilog Z80 (CPU). Originalno ime - sa svojim američkim engleskim pravopisom "Boja" - ostao je nepromijenjen čak i na tržištima gdje je "boja" bio prihvaćen engleski pravopis. Igrački natjecatelji Boja Boja bili su mnogo napredniji Neo Geo džep od SNK-a i Wonderswan by Bandai (samo su pušteni u Japanu), iako ih igra dječak izvadi na raspolaganju na široku maržu. Boy i igra u boji u kombinaciji u boji prodali su 118,69 miliona jedinica širom svijeta. Ustalo je u 2003. godini, ubrzo nakon puštanja igara Boy Advance Sp.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El Game Boy Color (abreujat com a GBC) és una consola de joc de mà fabricada per Nintendo, que es va publicar el 21 d'octubre de 1998 al Japó i que es va publicar el novembre del mateix any als mercats internacionals.És el successor del Game Boy. El color Game Boy, tal com suggereix el nom, presenta una pantalla de colors, però no té llum.És lleugerament més gruixut i alt que el Game Boy Pocket, que és un Game Boy redissenyat llançat el 1996. Igual que amb el Game Boy original, té un processador personalitzat de 8 bits una mica relacionat amb una unitat de processament central de Zilog Z80 (CPU). El nom original, amb la seva ortografia anglesa nord -americana de "Color", es va mantenir sense canvis fins i tot en mercats on "Color" era l'ortografia anglesa acceptada. Els principals competidors de Game Boy Color van ser els molt més avançats Neo Geo Pocket de SNK i The Wonderswan de Bandai (tots dos llançats al Japó), tot i que el Game Boy Color els va subministrar per un ampli marge. El Game Boy i Game Boy Color combinats han venut 118,69 milions d’unitats a tot el món. Es va suspendre el 2003, poc després del llançament del Game Boy Advance SP.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Portable</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Game Boy Color (skraćena kao GBC) je ručna konzola za igru koju je proizveo Nintendo, koja je objavljena 21. listopada 1998. u Japanu, a objavljena je u studenom iste godine na međunarodnim tržištima. To je nasljednik igrača. Boja Game Boy, kako je predložilo ime, sadrži zaslon u boji, ali bez pozadinskog osvjetljenja. Nešto je gušći i viši od džepa Game Boy, koji je redizajnirani igrač koji je objavljen 1996. godine. Kao i kod originalnog igrača, on ima prilagođeni 8-bitni procesor donekle povezan s Zilog Z80 Central Feldover jedinicom (CPU). Izvorno ime - svojim američkim engleskim pravopisom "Color" - ostalo je nepromijenjeno čak i na tržištima na kojima je "boja" bio prihvaćeni engleski pravopis. Primarni natjecatelji Game Boy Color bili su mnogo napredniji Neo Geo Pocket by SNK i The Wonderswan Bandai (oba objavljena samo u Japanu), premda ih igra Game Boy nadmašuje širokom maržom. Game Boy i Game Boy Color u boji prodali su 118,69 milijuna jedinica širom svijeta. Ukinuta je 2003. godine, ubrzo nakon objavljivanja Game Boy Advance Sp.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Game Boy Color (abbreviato in GBC) è una console portatile prodotta da Nintendo, uscita il 21 ottobre 1998 in Giappone e nel novembre dello stesso anno nei mercati internazionali. È il successore del Game Boy. Il Game Boy Color, come suggerisce il nome, è dotato di uno schermo a colori, ma senza retroilluminazione. È leggermente più spesso e più alto del Game Boy Pocket, che è un Game Boy ridisegnato uscito nel 1996. Come il Game Boy originale, è dotato di un processore a 8 bit personalizzato, in qualche modo simile a un'unità di elaborazione centrale (CPU) Zilog Z80. Il nome originale, con l'ortografia inglese americana di "color", è rimasto invariato anche nei mercati in cui "colour" era l'ortografia inglese accettata. I principali concorrenti del Game Boy Color erano il Neo Geo Pocket di SNK, molto più avanzato, e il WonderSwan di Bandai (entrambi usciti solo in Giappone), anche se il Game Boy Color li superò con un ampio margine di vendite. Il Game Boy e il Game Boy Color insieme hanno venduto 118,69 milioni di unità in tutto il mondo. È stato dismesso nel 2003, poco dopo l'uscita del Game Boy Advance SP.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ゲームボーイカラー（略称GBC）は、任天堂製の携帯型ゲーム機で、日本では1998年10月21日に発売され、海外では同年11月に発売された。ゲームボーイの後継機である。ゲームボーイカラーという名前から想像できるように、カラー画面を搭載しているが、バックライトはない。1996年に発売されたゲームボーイのデザインを一新したゲームボーイ・ポケットよりも若干厚く、背も高い。初代ゲームボーイと同様、Zilog Z80中央演算処理装置（CPU）にやや関連したカスタム8ビットプロセッサを搭載している。オリジナルの名称は、アメリカ英語の綴りである "color "で、"color "が英語の綴りとして受け入れられている市場でも変更されなかった。ゲームボーイカラーの主な競合機種は、SNKのネオジオポケットとバンダイのワンダースワン（いずれも日本限定発売）だったが、ゲームボーイカラーはこれらを大差で上回った。ゲームボーイとゲームボーイカラーを合わせた世界累計販売台数は1億1869万台。ゲームボーイアドバンスSP発売直後の2003年に生産終了。</systemDescription>
+            <systemHardwareType>ポータブル</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>게임보이 컬러(약칭 GBC)는 닌텐도에서 제조한 휴대용 게임 콘솔로, 1998년 10월 21일 일본에서 출시되어 같은 해 11월에 해외 시장에 출시되었습니다. 게임 보이의 후속작입니다. 게임보이 컬러는 이름에서 알 수 있듯이 컬러 화면이 특징이지만 백라이트는 없습니다. 1996년에 출시된 게임 보이 포켓보다 약간 더 두껍고 키가 큽니다. 오리지널 Game Boy와 마찬가지로 Zilog Z80 중앙 처리 장치(CPU)와 다소 유사한 맞춤형 8비트 프로세서가 탑재되어 있습니다. '컬러'라는 미국식 영어 철자를 사용한 원래 이름은 '컬러'가 일반적인 영어 철자인 시장에서도 변경되지 않았습니다. 게임보이 컬러의 주요 경쟁 제품은 훨씬 더 진보한 SNK의 네오 지오 포켓과 반다이의 원더스완(둘 다 일본에서만 출시)이었지만, 게임보이 컬러가 큰 차이로 판매량을 앞섰습니다. 게임 보이와 게임 보이 컬러는 전 세계적으로 1억 1,869만 대가 판매되었습니다. 게임보이 어드밴스 SP가 출시된 직후인 2003년에 단종되었습니다.</systemDescription>
+            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Portátil</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Game Boy Color, (abreviado como GBC) é um console de jogos portátil fabricado pela Nintendo, lançado em 21 de outubro de 1998 no Japão e foi lançado em novembro do mesmo ano em mercados internacionais.É o sucessor do Game Boy. A cor do Game Boy, como sugerido pelo nome, apresenta uma tela colorida, mas sem luz de fundo.É um pouco mais espesso e mais alto que o Game Boy Pocket, que é um Game Boy redesenhado lançado em 1996. Como no Game Boy original, possui um processador personalizado de 8 bits um pouco relacionado a uma unidade de processamento central do Zilog Z80 (CPU). O nome original - com sua ortografia inglesa americana de "cor" - permaneceu inalterada, mesmo em mercados onde "cor" era a ortografia inglesa aceita. Os principais concorrentes do Game Boy Color foram o NEO Geo Pocket muito mais avançado da SNK e The Wonderswan por Bandai (ambos lançados apenas no Japão), embora o Game Boy Color tenha vendido isso por uma ampla margem. O Game Boy e Game Boy Color Combined venderam 118,69 milhões de unidades em todo o mundo. Foi descontinuado em 2003, logo após o lançamento do Game Boy Advance SP.</systemDescription>
+            <systemHardwareType>Portátil</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Game Boy Color, (abreviat ca GBC) este o consolă portabilă de jocuri fabricată de Nintendo, care a fost lansată pe 21 octombrie 1998 în Japonia și a fost lansată în luna noiembrie a aceluiași an pe piețele internaționale. Este succesorul lui Game Boy. Game Boy Color, așa cum sugerează și numele, are un ecran color, dar fără lumină de fundal. Este puțin mai gros și mai înalt decât Game Boy Pocket, care este un Game Boy reproiectat lansat în 1996. Ca și Game Boy-ul original, acesta are un procesor personalizat pe 8 biți, oarecum înrudit cu unitatea centrală de procesare (CPU) Zilog Z80. Numele original - cu ortografia sa în engleză americană "color" - a rămas neschimbat chiar și pe piețele unde "color" era ortografia engleză acceptată. Principalii concurenți ai Game Boy Color au fost mult mai avansatul Neo Geo Pocket de la SNK și WonderSwan de la Bandai (ambele lansate doar în Japonia), deși Game Boy Color a depășit cu mult vânzările acestora. Game Boy și Game Boy Color împreună au vândut 118,69 milioane de unități în întreaga lume. A fost abandonat în 2003, la scurt timp după lansarea Game Boy Advance SP.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Портативный</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Боја у игри, (скраћено као ГБЦ) је ручна игарска конзола коју је произвео Нинтендо, који је објављен 21. октобра 1998. године у Јапану и објављен је у новембру исте године на међународним тржиштима.То је наследник дечака игара.Боја дечака у игри, како је предложио име, садржи екран у боји, али без позадинског осветљења.То је нешто дебљи и виши од џепа дечака у игри, који је редизајнирани дечак у игри који је објављен 1996. године. Као и код оригиналног дечака за игру, има прилагођени 8-битни процесор нешто повезан са цилог З80 централне прерађивачке јединице З80 (ЦПУ).Оригинално име - са америчким енглеским правописом "боје" - остало је непромењено чак и на тржиштима где је "боја" била прихваћена правопис енглеског језика.Примарни такмичари у боји Бои БОЈ-а били су много напреднији џеп Нео ГЕО-а СНК-ом и Вондерсаном од стране Бандаи-а (како су само пуштени само у Јапану), иако је Боја утакмице у игри оутсолд-у од стране широке марже.ГЕТ БОИ и ГЕТ БОИ БОЈА КОЈЕ СПОТЉЕНО су продали 118,69 милиона јединица широм света.Прекинута је 2003. године, убрзо након издавања игара БОИ БЕИН ПРЕУПЦИЈА СП.</systemDescription>
+            <systemHardwareType>Преносив</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Game Boy Color, (förkortat GBC) är en handhållen spelkonsol tillverkad av Nintendo, som släpptes den 21 oktober 1998 i Japan och släpptes i november samma år på internationella marknader. Det är efterföljaren till Game Boy. Game Boy Color har, som namnet antyder, en färgskärm men ingen bakgrundsbelysning. Den är något tjockare och högre än Game Boy Pocket, som är en omdesignad Game Boy som släpptes 1996. Liksom den ursprungliga Game Boy har den en egenutvecklad 8-bitars processor som är besläktad med en Zilog Z80 central processing unit (CPU). Det ursprungliga namnet - med den amerikansk-engelska stavningen "color" - förblev oförändrat även på marknader där "colour" var den vedertagna engelska stavningen. Game Boy Colors främsta konkurrenter var den mycket mer avancerade Neo Geo Pocket från SNK och WonderSwan från Bandai (båda släpptes endast i Japan), men Game Boy Color sålde mycket bättre än dessa. Game Boy och Game Boy Color har tillsammans sålts i 118,69 miljoner exemplar världen över. Den lades ned 2003, strax efter lanseringen av Game Boy Advance SP.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ゲームボーイカラー（略称GBC）は、任天堂製の携帯型ゲーム機で、日本では1998年10月21日に発売され、海外では同年11月に発売された。ゲームボーイの後継機である。ゲームボーイカラーという名前から想像できるように、カラー画面を搭載しているが、バックライトはない。1996年に発売されたゲームボーイのデザインを一新したゲームボーイ・ポケットよりも若干厚く、背も高い。初代ゲームボーイと同様、Zilog Z80中央演算処理装置（CPU）にやや関連したカスタム8ビットプロセッサを搭載している。オリジナルの名称は、アメリカ英語の綴りである "color "で、"color "が英語の綴りとして受け入れられている市場でも変更されなかった。ゲームボーイカラーの主な競合機種は、SNKのネオジオポケットとバンダイのワンダースワン（いずれも日本限定発売）だったが、ゲームボーイカラーはこれらを大差で上回った。ゲームボーイとゲームボーイカラーを合わせた世界累計販売台数は1億1869万台。ゲームボーイアドバンスSP発売直後の2003年に生産終了。</systemDescription>
-            <systemHardwareType>ポータブル</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>게임보이 컬러(약칭 GBC)는 닌텐도에서 제조한 휴대용 게임 콘솔로, 1998년 10월 21일 일본에서 출시되어 같은 해 11월에 해외 시장에 출시되었습니다. 게임 보이의 후속작입니다. 게임보이 컬러는 이름에서 알 수 있듯이 컬러 화면이 특징이지만 백라이트는 없습니다. 1996년에 출시된 게임 보이 포켓보다 약간 더 두껍고 키가 큽니다. 오리지널 Game Boy와 마찬가지로 Zilog Z80 중앙 처리 장치(CPU)와 다소 유사한 맞춤형 8비트 프로세서가 탑재되어 있습니다. '컬러'라는 미국식 영어 철자를 사용한 원래 이름은 '컬러'가 일반적인 영어 철자인 시장에서도 변경되지 않았습니다. 게임보이 컬러의 주요 경쟁 제품은 훨씬 더 진보한 SNK의 네오 지오 포켓과 반다이의 원더스완(둘 다 일본에서만 출시)이었지만, 게임보이 컬러가 큰 차이로 판매량을 앞섰습니다. 게임 보이와 게임 보이 컬러는 전 세계적으로 1억 1,869만 대가 판매되었습니다. 게임보이 어드밴스 SP가 출시된 직후인 2003년에 단종되었습니다.</systemDescription>
-            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

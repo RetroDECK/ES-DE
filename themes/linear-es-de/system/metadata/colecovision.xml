@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>August 1, 1982</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>e9663e</systemColor>
         <systemColorPalette1>EF8185</systemColorPalette1>
         <systemColorPalette2>F3994B</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>A4DDF0</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>ColecoVision هو جهاز ألعاب فيديو منزلي من الجيل الثاني (1976-1992) تم تطويره وتوزيعه من قبل شركة Coleco Industries. تم إصداره في أغسطس 1982 في أمريكا الشمالية بسعر 175 دولار أمريكي. تم إصدار وحدة التحكم لاحقًا في أوروبا (1983). قدمت ColecoVision تجربة أقرب إلى ألعاب الأركيد من منافسيها في ذلك الوقت. تم إيقاف وحدة التحكم في منتصف عام 1985.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Colecovision je druga generacija (1976-1992) kućna igra video igre razvijena i distribuirana od strane Coleco Industries. Pušteno je u avgustu 1982. u Severnoj Americi u maloprodajnoj ceni od 175 dolara. Konzola je kasnije objavljena u Evropi (1983). Kolekovizija je ponudila bliže iskustvo za arkadne igre nego svoje takmičare u to vrijeme. Konzola je prekinuta sredinom 1985. godine.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>La Colecovisió és una consola de videojocs a casa de segona generació (1976–1992) desenvolupada i distribuïda per Coleco Industries. Va ser llançat a l'agost de 1982 a Amèrica del Nord a un preu al detall de 175 dòlars. La consola es va publicar més tard a Europa (1983). La Colecovisió va oferir una experiència més estreta als jocs d'arcades que els seus competidors en aquell moment. La consola es va suspendre a mitjan 1985.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>ColecoVision je druga generacija (1976–1992) Konzola za kućne video igre koju je razvila i distribuirala Coleco Industries. Objavljen je u kolovozu 1982. u Sjevernoj Americi po maloprodajnoj cijeni od 175 dolara. Konzola je kasnije objavljena u Europi (1983). Colecovision je ponudio bliže iskustvo arkadnim igrama od svojih konkurenata u to vrijeme. Konzola je prekinuta sredinom 1985. godine.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il ColecoVision è una console per videogiochi domestici di seconda generazione (1976-1992) sviluppata e distribuita da Coleco Industries. È stata rilasciata nell'agosto 1982 in Nord America a un prezzo al dettaglio di 175 dollari. La console è stata successivamente rilasciata in Europa (1983). Il ColecoVision offriva un'esperienza più vicina ai giochi arcade rispetto ai suoi concorrenti dell'epoca. La console fu dismessa a metà del 1985.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ColecoVisionは、Coleco Industriesが開発・販売した第2世代（1976年〜1992年）の家庭用ビデオゲーム機である。1982年8月に北米で発売され、小売価格は175ドルであった。後にヨーロッパでも発売された（1983年）。ColecoVisionは、当時の競合他社よりもアーケードゲームに近い体験を提供した。このゲーム機は1985年半ばに製造中止となった。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>콜코비전은 콜코 산업에서 개발 및 유통한 2세대(1976~1992년) 가정용 비디오 게임 콘솔입니다. 1982년 8월 북미에서 175달러의 소매가로 출시되었습니다. 이 콘솔은 나중에 유럽(1983년)에서 출시되었습니다. 콜코비전은 당시 경쟁사보다 아케이드 게임에 더 가까운 경험을 제공했습니다. 이 콘솔은 1985년 중반에 단종되었습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O ColecoVision é um console de videogame caseiro de segunda geração (1976-1992) desenvolvido e distribuído pela Coleco Industries. Foi lançado em agosto de 1982 na América do Norte a um preço de varejo de US $ 175. O console foi lançado posteriormente na Europa (1983). O ColecoVision ofereceu uma experiência mais próxima dos jogos de arcade do que seus concorrentes na época. O console foi descontinuado em meados de 1985.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>ColecoVision este o a doua generație (1976-1992) de console de jocuri video dezvoltate și distribuite de Coleco Industries. A fost lansată în august 1982 în America de Nord la un preț de vânzare cu amănuntul de 175 $. Consola a fost lansată ulterior în Europa (1983). ColecoVision a oferit o experiență mai apropiată de jocurile arcade decât concurenții săi de la acea vreme. Consola a fost abandonată la mijlocul anului 1985.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Колековизија је друга генерација (1976-1992) Хоме Видео игарска конзола коју је развио и дистрибуирао ЦОЛЕЦО ИНДУСТРИЕС.Објављен је у августу 1982. године у Северној Америци на малопродајној цени од 175 долара.Конзола је касније објављена у Европи (1983).Колековизија је понудила ближе искуство аркадних игара од њених конкурената у то време.Конзола је прекинута средином 1985. године.</systemDescription>
+            <systemHardwareType>Конзола</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>ColecoVision är en andra generationens (1976-1992) hemkonsol för videospel som utvecklades och distribuerades av Coleco Industries. Den släpptes i augusti 1982 i Nordamerika till ett detaljhandelspris av 175 dollar. Konsolen släpptes senare i Europa (1983). ColecoVision erbjöd en närmare upplevelse av arkadspel än sina konkurrenter vid den tiden. Konsolen slutade tillverkas i mitten av 1985.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ColecoVisionは、Coleco Industriesが開発・販売した第2世代（1976年〜1992年）の家庭用ビデオゲーム機である。1982年8月に北米で発売され、小売価格は175ドルであった。後にヨーロッパでも発売された（1983年）。ColecoVisionは、当時の競合他社よりもアーケードゲームに近い体験を提供した。このゲーム機は1985年半ばに製造中止となった。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>콜코비전은 콜코 산업에서 개발 및 유통한 2세대(1976~1992년) 가정용 비디오 게임 콘솔입니다. 1982년 8월 북미에서 175달러의 소매가로 출시되었습니다. 이 콘솔은 나중에 유럽(1983년)에서 출시되었습니다. 콜코비전은 당시 경쟁사보다 아케이드 게임에 더 가까운 경험을 제공했습니다. 이 콘솔은 1985년 중반에 단종되었습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

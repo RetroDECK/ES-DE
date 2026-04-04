@@ -826,8 +826,9 @@ void GuiScraperMenu::openOtherOptions()
     scraperRegion->add(_("EUROPE"),         "eu",  selectedScraperRegion == "eu");
     scraperRegion->add(_("JAPAN"),          "jp",  selectedScraperRegion == "jp");
     scraperRegion->add(_("USA"),            "us",  selectedScraperRegion == "us");
-    scraperRegion->add(_("WORLD"),          "wor", selectedScraperRegion == "wor");
+    scraperRegion->add(_("NORTH AMERICA"),  "ame", selectedScraperRegion == "ame");
     scraperRegion->add(_("ASIA"),           "asi", selectedScraperRegion == "asi");
+    scraperRegion->add(_("WORLD"),          "wor", selectedScraperRegion == "wor");
     scraperRegion->add(_("AUSTRALIA"),      "au",  selectedScraperRegion == "au");
     scraperRegion->add(_("BRAZIL"),         "br",  selectedScraperRegion == "br");
     scraperRegion->add(_("CANADA"),         "ca",  selectedScraperRegion == "ca");

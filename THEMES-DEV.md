@@ -1,6 +1,6 @@
 # ES-DE Frontend (development version) - Themes
 
-**Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
+This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
 If creating themes for ES-DE, please add `-es-de` to the repository/directory name to clearly indicate that it's a theme for this frontend. Two examples would be `linear-es-de` and `modern-es-de`. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting themes from the _UI Settings_ menu. For example linear-es-de will be listed simply as _Linear_ in this menu.
 
@@ -2730,7 +2730,7 @@ Properties:
 
 #### animation
 
-GIF and Lottie (vector graphics) animations. The animation type is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of these to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or of high resolution.
+GIF and Lottie (vector graphics) animations. The animation type is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's advised to not add too many of these to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or of high resolution.
 
 Also be aware that the [rlottie](https://github.com/Samsung/rlottie) library used by ES-DE is not compatible with all Lottie animations out there so you may need to convert them to a format that rlottie can read, or use some other animations altogether.
 

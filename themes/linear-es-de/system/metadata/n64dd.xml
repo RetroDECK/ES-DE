@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>December 1, 1999</systemReleaseDateFormated>
         <systemHardwareType>Peripheral</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>0da25e</systemColor>
         <systemColorPalette1>DCAF36</systemColorPalette1>
         <systemColorPalette2>268340</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>B73E3A</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>إن 64DDD، الذي يُشار إليه بالعامية باسم Nintendo 64DD، هو محرك أقراص مغناطيسية طرفية لوحدة تحكم ألعاب Nintendo 64 التي طورتها Nintendo. وقد تم الإعلان عنه في الأصل في عام 1995، قبل إطلاق نينتندو 64 في عام 1996، وبعد العديد من التأخيرات تم إصداره أخيراً في اليابان فقط في 1 ديسمبر 1999. تم إصدار عشرة عناوين برمجيات فقط حتى تم إيقاف الوحدة في فبراير 2001. وقد كان فشلاً تجارياً، حيث تم بيع ما لا يقل عن 15000 وحدة على الأقل ولم يتم بيع 85000 وحدة أخرى.</systemDescription>
+            <systemHardwareType>محيطي</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>64DD, kolokvijalno naziva NINTENDO 64DD, je magnetski disk pogon periferni za Nintendo 64 Game Console koju je razvio Nintendo. Prvobitno je objavljeno 1995. godine, prije početka Nintendo 64 iz 1996. godine, a nakon brojnih kašnjenja konačno je puštena samo u Japanu 1999. godine. Samo deset softverskih naslova bilo je u februaru 2001. godine. Sa najmanje 15.000 ukupnih jedinica prodanih i još 85.000 jedinica neprodanih.</systemDescription>
+            <systemHardwareType>Periferni</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El 64DD, anomenat col·loquialment com a Nintendo 64DD, és un perifèric de disc magnètic per a la consola de jocs Nintendo 64 desenvolupada per Nintendo. Es va anunciar originalment el 1995, abans del llançament de 1996 de Nintendo 64, i després de nombrosos retards només es van publicar només al Japó l'1 de desembre de 1999. Només es van publicar deu títols de programari fins que la unitat es va suspendre el febrer del 2001. Va ser comercialFalla, amb almenys 15.000 unitats venudes i altres 85.000 unitats no venudes.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Périphérique</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>64DD, kolokvijalno nazvan Nintendo 64DD, periferni je magnetski diskovni pogon za igru Nintendo 64 koju je razvio Nintendo. Prvobitno je najavljeno 1995. godine, prije lansiranja Nintendo 64 1996., a nakon što je 1. prosinca 1999. godine konačno objavljeno tek u Japanu. Samo je deset softverskih naslova objavljeno sve dok jedinica nije ukinuta u veljači 2001. godine. To je bio komercijalni neuspjeh, s najmanje 15.000 ukupnih jedinica koje su rasplamsale i još 85 000 jedinica.</systemDescription>
+            <systemHardwareType>Periferni</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il 64DD, colloquialmente chiamato Nintendo 64DD, è una periferica a disco magnetico per la console Nintendo 64 sviluppata da Nintendo. Fu annunciato originariamente nel 1995, prima del lancio del Nintendo 64 nel 1996, e dopo numerosi ritardi fu finalmente rilasciato solo in Giappone il 1° dicembre 1999. Vennero rilasciati solo dieci titoli software fino a quando l'unità venne dismessa nel febbraio 2001. Fu un fallimento commerciale, con almeno 15.000 unità totali vendute e altre 85.000 invendute.</systemDescription>
             <systemHardwareType>Periferica</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>64DD、俗称ニンテンドー64DDは、任天堂が開発したNINTENDO64ゲーム機用の磁気ディスクドライブ周辺機器である。当初はNINTENDO64の1996年の発売前の1995年に発表され、何度も延期された後、1999年12月1日にようやく日本でのみ発売された。2001年2月に販売終了となるまで、発売されたソフトはわずか10タイトル。商業的には失敗作で、総販売台数は少なくとも15,000台、さらに85,000台が売れ残った。</systemDescription>
+            <systemHardwareType>ペリフェラル</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>구어체로 닌텐도 64DD라고 불리는 64DD는 닌텐도에서 개발한 닌텐도 64 게임 콘솔용 마그네틱 디스크 드라이브 주변기기입니다. 닌텐도 64의 1996년 출시에 앞서 1995년에 처음 발표되었으며, 여러 차례의 연기 끝에 1999년 12월 1일에야 일본에서만 출시되었습니다. 2001년 2월 단종될 때까지 단 10개의 소프트웨어 타이틀만 출시되었습니다. 총 판매량은 최소 15,000대, 나머지 85,000대는 미판매되는 등 상업적으로 실패했습니다.</systemDescription>
+            <systemHardwareType>주변기기</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Periférico</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O 64DD, referido coloquialmente como o Nintendo 64DD, é um periférico de unidade de disco magnético para o console de jogos Nintendo 64 desenvolvido pela Nintendo. Foi anunciado originalmente em 1995, antes do lançamento do Nintendo 64 em 1996, e após vários atrasos foi finalmente lançado apenas no Japão em 1º de dezembro de 1999. Apenas dez títulos de software foram lançados até que a unidade fosse descontinuada em fevereiro de 2001. Foi uma falha comercial, com pelo menos 15.000 unidades no total e outras 85.000 unidades.</systemDescription>
+            <systemHardwareType>Peripheral</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>64DD, denumit în mod colocvial Nintendo 64DD, este o unitate de disc magnetic periferică pentru consola de jocuri Nintendo 64 dezvoltată de Nintendo. Acesta a fost anunțat inițial în 1995, înainte de lansarea Nintendo 64 în 1996 și, după numeroase amânări, a fost lansat în cele din urmă numai în Japonia la 1 decembrie 1999. Doar zece titluri software au fost lansate până când unitatea a fost întreruptă în februarie 2001. A fost un eșec comercial, cu cel puțin 15.000 de unități vândute în total și alte 85.000 de unități nevândute.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Периферийное устройство</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>64ДД, колоквијално се називао Нинтендо 64ДД, је магнетни диск погон периферна за Нинтендо 64 игру коју је развио Нинтендо.Првобитно је најављено 1995. године, пре лансирања Нинтендо 64, а након бројних кашњења, 1. децембра 1999. године, само у Јапану је пуштено само у Јапану. Само је десет називих софтвера у фебруару 2001. године прекинуто, са комерцијалним неуспехом, а још 15.000 укупних јединица је непросветљење, а још 15.000 укупно продатих укупних јединица и још 15.000 јединица непродате.</systemDescription>
+            <systemHardwareType>Периферни</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>64DD, i dagligt tal kallad Nintendo 64DD, är en magnetisk hårddisk för spelkonsolen Nintendo 64 som utvecklats av Nintendo. Den presenterades ursprungligen 1995, före Nintendo 64:s lansering 1996, och efter många förseningar släpptes den slutligen endast i Japan den 1 december 1999. Endast tio mjukvarutitlar släpptes fram till dess att enheten avvecklades i februari 2001. Den var ett kommersiellt misslyckande, med minst 15.000 sålda enheter och ytterligare 85.000 osålda enheter.</systemDescription>
             <systemHardwareType>Tillbehör</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>64DD、俗称ニンテンドー64DDは、任天堂が開発したNINTENDO64ゲーム機用の磁気ディスクドライブ周辺機器である。当初はNINTENDO64の1996年の発売前の1995年に発表され、何度も延期された後、1999年12月1日にようやく日本でのみ発売された。2001年2月に販売終了となるまで、発売されたソフトはわずか10タイトル。商業的には失敗作で、総販売台数は少なくとも15,000台、さらに85,000台が売れ残った。</systemDescription>
-            <systemHardwareType>ペリフェラル</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>구어체로 닌텐도 64DD라고 불리는 64DD는 닌텐도에서 개발한 닌텐도 64 게임 콘솔용 마그네틱 디스크 드라이브 주변기기입니다. 닌텐도 64의 1996년 출시에 앞서 1995년에 처음 발표되었으며, 여러 차례의 연기 끝에 1999년 12월 1일에야 일본에서만 출시되었습니다. 2001년 2월 단종될 때까지 단 10개의 소프트웨어 타이틀만 출시되었습니다. 총 판매량은 최소 15,000대, 나머지 85,000대는 미판매되는 등 상업적으로 실패했습니다.</systemDescription>
-            <systemHardwareType>주변기기</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

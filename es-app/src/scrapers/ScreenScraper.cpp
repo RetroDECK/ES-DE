@@ -76,6 +76,7 @@ namespace
         {HARTUNG_GAME_MASTER, 103},
         {APPLE_MACINTOSH, 146},
         {GOOGLE_ANDROID, 63},
+        {J2ME, 63},
         {LCD_GAMES, 75},
         {MICROSOFT_XBOX, 32},
         {MICROSOFT_XBOX_360, 33},

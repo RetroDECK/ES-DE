@@ -25,7 +25,7 @@ fi
 
 if [ ! -f appimagetool-x86_64.AppImage ]; then
   echo -e "Can't find appimagetool-x86_64.AppImage, downloading the latest version...\n"
-  wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
+  wget "https://github.com/pkgforge-dev/appimagetool-uruntime/releases/download/continuous/appimagetool-x86_64.AppImage"
 fi
 
 chmod a+x appimagetool-x86_64.AppImage
@@ -67,7 +67,7 @@ rm -rf ./AppDir
 mkdir AppDir
 
 rm -f CMakeCache.txt
-cmake -DAPPIMAGE_BUILD=on .
+cmake -DAPPIMAGE_BUILD=on -DBUNDLED_CERTS=on .
 make clean
 make -j${JOBS}
 make install DESTDIR=AppDir

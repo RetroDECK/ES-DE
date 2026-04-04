@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>January 1, 1984</systemReleaseDateFormated>
         <systemHardwareType>Computer</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>517d9f</systemColor>
         <systemColorPalette1>E91C23</systemColorPalette1>
         <systemColorPalette2>00A651</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>3E3E3E</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>كمبيوتر أمستراد الملون الشخصي، المعروف باسم أمستراد CPC، هو سلسلة من أجهزة الكمبيوتر المنزلية ذات 8 بت من تصميم أمستراد. تم إصدار الطرازات الأولى في أبريل 1984 في أوروبا بسعر تجزئة يتراوح بين 199 جنيهًا إسترلينيًا و299 جنيهًا إسترلينيًا، حسب الحزمة التي تم شراؤها. لم يتم إصدار أجهزة الكمبيوتر خارج أوروبا. كان لسلسلة CPC خمسة نماذج متميزة: CPC464 و CPC664 و CPC6128 و CPC6128 و 464 بلس و 6128 بلس. تم تصنيع أجهزة الكمبيوتر حتى وقت غير محدد في عام 1990.</systemDescription>
+            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>AMSTRAD Color Lični računar, poznatiji kao ASTSTRAD CPC, je niz 8-bitnih kućnih računala koje je dizajnirao Amstrad. Prvi modeli su pušteni u aprilu 1984. godine u Europi u maloprodajnoj cijeni u rasponu od 199 do 299 do 299, ovisno o kupljenoj paketu. Računari nisu pušteni izvan Evrope. Serija CPC-a imala je pet različitih modela: CPC464, CPC664, CPC6128, 464Plus i 6128plus. Računari su proizvedeni do neodređenog vremena 1990. godine.</systemDescription>
+            <systemHardwareType>Računar</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>L’ordinador personal d’Amstrad Color, més conegut com a Amstrad CPC, és una sèrie d’ordinadors domèstics de 8 bits dissenyats per Amstrad. Els primers models es van publicar a l'abril de 1984 a Europa a un preu al detall que oscil·la entre 199 i 299 £, segons el paquet comprat. Els ordinadors no es van alliberar fora d'Europa. La sèrie CPC tenia cinc models diferents: els CPC464, CPC664, CPC6128, 464Plus i 6128Plus. Els ordinadors es van fabricar fins a un temps no especificat el 1990.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Ordinateur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Osobno računalo Amstrad Color, poznatije kao Amstrad CPC, serija je 8-bitnih kućnih računala koje je dizajnirao Amstrad. Prvi modeli objavljeni su u travnju 1984. u Europi po maloprodajnoj cijeni u rasponu od 199 do 299 funti, ovisno o kupljenom paketu. Računala nisu puštena izvan Europe. CPC serija imala je pet različitih modela: CPC464, CPC664, CPC6128, 464Plus i 6128Plus. Računala su proizvedena do neodređenog vremena 1990. godine.</systemDescription>
+            <systemHardwareType>Računalo</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>L'Amstrad Colour Personal Computer, meglio noto come Amstrad CPC, è una serie di home computer a 8 bit progettati da Amstrad. I primi modelli furono commercializzati in Europa nell'aprile del 1984 a un prezzo al dettaglio che variava da 199 a 299 sterline, a seconda della confezione acquistata. I computer non sono stati commercializzati al di fuori dell'Europa. La serie CPC comprendeva cinque modelli distinti: CPC464, CPC664, CPC6128, 464plus e 6128plus. I computer sono stati prodotti fino a un momento imprecisato del 1990.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>アムストラッドCPCとして知られるアムストラッド・カラー・パーソナル・コンピュータは、アムストラッドが設計した8ビット家庭用コンピュータのシリーズである。最初のモデルは1984年4月にヨーロッパで発売され、小売価格はパッケージによって199ポンドから299ポンドであった。ヨーロッパ以外では発売されなかった。CPCシリーズには5つのモデルがあった：CPC464、CPC664、CPC6128、464plus、6128plusである。コンピュータは1990年の特定できない時期まで製造された。</systemDescription>
+            <systemHardwareType>コンピューター</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>암스트래드 CPC로 더 잘 알려진 암스트래드 컬러 개인용 컴퓨터는 암스트래드에서 설계한 8비트 가정용 컴퓨터 시리즈입니다. 첫 번째 모델은 1984년 4월 유럽에서 구입한 패키지에 따라 199파운드에서 299파운드 사이의 소매가로 출시되었습니다. 이 컴퓨터는 유럽 이외 지역에는 출시되지 않았습니다. CPC 시리즈에는 다섯 가지 모델이 있었습니다: CPC464, CPC664, CPC6128, 464플러스, 6128플러스. 이 컴퓨터는 1990년 지정되지 않은 시기까지 제조되었습니다.</systemDescription>
+            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Computador</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O computador pessoal da Amstrad Color, mais conhecido como CPC Amstrad, é uma série de computadores domésticos de 8 bits projetados pela Amstrad. Os primeiros modelos foram lançados em abril de 1984 na Europa a um preço de varejo que varia de £ 199 a £ 299, dependendo do pacote comprado. Os computadores não foram lançados fora da Europa. A série CPC tinha cinco modelos distintos: o CPC464, CPC664, CPC6128, 464PLUS e 6128PLUS. Os computadores foram fabricados até um tempo não especificado em 1990.</systemDescription>
+            <systemHardwareType>Computador</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Amstrad Colour Personal Computer, mai bine cunoscut sub numele de Amstrad CPC, este o serie de computere de acasă pe 8 biți concepute de Amstrad. Primele modele au fost lansate în aprilie 1984 în Europa la un preț de vânzare cu amănuntul variind între £199 și £299, în funcție de pachetul cumpărat. Calculatoarele nu au fost lansate în afara Europei. Seria CPC a avut cinci modele distincte: CPC464, CPC664, CPC6128, 464plus și 6128plus. Calculatoarele au fost fabricate până la o dată nespecificată în 1990.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Компьютер</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Лични рачунар Амстрад Боја, познатији као АмСТРАД ЦПЦ, је серија 8-битних кућних рачунара које је дизајнирао Амстрад.Први модели су објављени у априлу 1984. године у Европи на малопродајној цени у распону од 199 £ на 299 фунти, у зависности од купљеног пакета.Рачунари нису пуштени ван Европе.Серија ЦПЦ-а имала је пет различитих модела: ЦПЦ464, ЦПЦ664, ЦПЦ6128, 464Плус и 6128Плус.Рачунари су произведени до неодређеног времена 1990. године.</systemDescription>
+            <systemHardwareType>Рачунар</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Amstrad Colour Personal Computer, mer känd som Amstrad CPC, är en serie 8-bitars hemdatorer som designats av Amstrad. De första modellerna släpptes i april 1984 i Europa till ett detaljhandelspris på mellan £199 och £299, beroende på vilket paket som köptes. Datorerna släpptes inte utanför Europa. CPC-serien bestod av fem olika modeller: CPC464, CPC664, CPC6128, 464plus och 6128plus. Datorerna tillverkades fram till en ospecificerad tidpunkt under 1990.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>アムストラッドCPCとして知られるアムストラッド・カラー・パーソナル・コンピュータは、アムストラッドが設計した8ビット家庭用コンピュータのシリーズである。最初のモデルは1984年4月にヨーロッパで発売され、小売価格はパッケージによって199ポンドから299ポンドであった。ヨーロッパ以外では発売されなかった。CPCシリーズには5つのモデルがあった：CPC464、CPC664、CPC6128、464plus、6128plusである。コンピュータは1990年の特定できない時期まで製造された。</systemDescription>
-            <systemHardwareType>コンピューター</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>암스트래드 CPC로 더 잘 알려진 암스트래드 컬러 개인용 컴퓨터는 암스트래드에서 설계한 8비트 가정용 컴퓨터 시리즈입니다. 첫 번째 모델은 1984년 4월 유럽에서 구입한 패키지에 따라 199파운드에서 299파운드 사이의 소매가로 출시되었습니다. 이 컴퓨터는 유럽 이외 지역에는 출시되지 않았습니다. CPC 시리즈에는 다섯 가지 모델이 있었습니다: CPC464, CPC664, CPC6128, 464플러스, 6128플러스. 이 컴퓨터는 1990년 지정되지 않은 시기까지 제조되었습니다.</systemDescription>
-            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

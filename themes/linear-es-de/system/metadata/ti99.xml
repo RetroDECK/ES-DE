@@ -10,6 +10,7 @@ It includes a simplified internal design, a full-travel keyboard, improved graph
         <systemReleaseDateFormated>June 1981</systemReleaseDateFormated>
         <systemHardwareType>Computer</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>5F6165</systemColor>
         <systemColorPalette1>AAA6A7</systemColorPalette1>
         <systemColorPalette2>C7C2BE</systemColorPalette2>
@@ -17,6 +18,22 @@ It includes a simplified internal design, a full-travel keyboard, improved graph
         <systemColorPalette4>FD7F34</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>إن TI-99/4 هو كمبيوتر منزلي تم إصداره في أواخر عام 1979 من قبل شركة تكساس إنسترومنتس. واستناداً إلى المعالج الدقيق TMS9900 من تكساس إنسترومنتس TMS9900 المستخدم أصلاً في الحواسيب الصغيرة، كان أول حاسوب منزلي 16 بت. توفر وحدة التحكم في عرض الفيديو المرتبطة به رسومات ملونة ومن بين أفضل دعم للعفاريت في عصره.
+
+وهو يتضمن تصميم داخلي مبسط ولوحة مفاتيح كاملة الحركة ورسومات محسّنة ونظام توسعة فريد من نوعه. وبنصف سعر الطراز الأصلي، ارتفعت المبيعات بشكل كبير. دعمت TI الطراز 4A بالأجهزة الطرفية، بما في ذلك مُركِّب الكلام وصندوق "نظام التوسعة الطرفية" لاحتواء الأجهزة الإضافية. وأصدرت TI معلومات وأدوات المطورين، ولكن الإصرار على البقاء ناشرًا وحيدًا استمر في تجويع المنصة من البرامج.</systemDescription>
+            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>The TI-99/4 is a home computer released in late 1979 by Texas Instruments. Based on the Texas Instruments TMS9900 microprocessor originally used in minicomputers, it was the first 16-bit home computer. The associated video display controller provides color graphics and among the best sprite support of its era.
+
+It includes a simplified internal design, a full-travel keyboard, improved graphics, and a unique expansion system. At half the price of the original model, sales picked up significantly. TI supported the 4A with peripherals, including a speech synthesizer and a "Peripheral Expansion System" box to contain hardware add-ons. TI released developer information and tools, but the insistence on remaining sole publisher continued to starve the platform of software.</systemDescription>
+            <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El TI-99/4 és un ordinador domèstic publicat a finals de 1979 per Texas Instruments. Basat en el microprocessador TMS9900 de Texas Instruments utilitzat originalment en minicomputadors, va ser el primer ordinador domèstic de 16 bits. El controlador de pantalla de vídeo associat proporciona gràfics en color i entre el millor suport Sprite de la seva època.
@@ -49,12 +66,36 @@ Il comprend une conception interne simplifiée, un clavier à course complète, 
             <systemHardwareType>Ordinateur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>The TI-99/4 is a home computer released in late 1979 by Texas Instruments. Based on the Texas Instruments TMS9900 microprocessor originally used in minicomputers, it was the first 16-bit home computer. The associated video display controller provides color graphics and among the best sprite support of its era.
+
+It includes a simplified internal design, a full-travel keyboard, improved graphics, and a unique expansion system. At half the price of the original model, sales picked up significantly. TI supported the 4A with peripherals, including a speech synthesizer and a "Peripheral Expansion System" box to contain hardware add-ons. TI released developer information and tools, but the insistence on remaining sole publisher continued to starve the platform of software.</systemDescription>
+            <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il TI-99/4 è un home computer rilasciato alla fine del 1979 da Texas Instruments. Basato sul microprocessore Texas Instruments TMS9900, originariamente utilizzato nei minicomputer, è stato il primo home computer a 16 bit. Il controller video associato fornisce grafica a colori e uno dei migliori supporti per gli sprite dell'epoca.
 
 Include un design interno semplificato, una tastiera a corsa completa, una grafica migliorata e un sistema di espansione unico. Con un prezzo dimezzato rispetto al modello originale, le vendite aumentarono notevolmente. TI supportò il 4A con periferiche, tra cui un sintetizzatore vocale e un box "Peripheral Expansion System" per contenere componenti hardware aggiuntivi. TI rilasciò informazioni e strumenti per gli sviluppatori, ma l'insistenza nel voler rimanere l'unico editore continuò a privare la piattaforma di software.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>TI-99/4は、テキサス・インスツルメンツ社が1979年末に発売した家庭用コンピュータである。元々ミニコンピュータに使われていたテキサス・インスツルメンツのTMS9900マイクロプロセッサをベースにした、最初の16ビット家庭用コンピュータである。関連するビデオ・ディスプレイ・コントローラはカラー・グラフィックスを提供し、当時最高のスプライトをサポートした。
+
+簡素化された内部設計、フルトラベル・キーボード、改良されたグラフィック、ユニークな拡張システムなどを備えている。価格はオリジナルモデルの半額で、売れ行きは大幅に回復した。TIは、音声合成器やハードウェアのアドオンを入れる「周辺機器拡張システム」ボックスなどの周辺機器で4Aをサポートした。TIは開発者向けの情報やツールを公開したが、唯一のパブリッシャーであり続けることに固執したため、このプラットフォームはソフトウェアに飢え続けた。</systemDescription>
+            <systemHardwareType>コンピューター</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>TI-99/4는 텍사스 인스트루먼트에서 1979년 말에 출시한 가정용 컴퓨터입니다. 원래 미니컴퓨터에 사용되던 텍사스 인스트루먼트 TMS9900 마이크로프로세서를 기반으로 한 이 제품은 최초의 16비트 가정용 컴퓨터였습니다. 관련 비디오 디스플레이 컨트롤러는 컬러 그래픽과 당대 최고의 스프라이트 지원을 제공합니다.
+
+간소화된 내부 디자인, 풀 트래블 키보드, 향상된 그래픽, 독특한 확장 시스템 등이 특징입니다. 기존 모델의 절반 가격으로 판매량이 크게 증가했습니다. TI는 음성 합성기와 하드웨어 추가 기능을 포함하는 "주변기기 확장 시스템" 박스를 포함한 주변기기를 4A에 지원했습니다. TI는 개발자 정보와 도구를 공개했지만, 유일한 퍼블리셔로 남겠다는 고집으로 인해 플랫폼의 소프트웨어가 계속 부족해졌습니다.</systemDescription>
+            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -81,6 +122,14 @@ Ele inclui um design interno simplificado, um teclado de deslocamento total, gr�
             <systemHardwareType>Computador</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>The TI-99/4 is a home computer released in late 1979 by Texas Instruments. Based on the Texas Instruments TMS9900 microprocessor originally used in minicomputers, it was the first 16-bit home computer. The associated video display controller provides color graphics and among the best sprite support of its era.
+
+It includes a simplified internal design, a full-travel keyboard, improved graphics, and a unique expansion system. At half the price of the original model, sales picked up significantly. TI supported the 4A with peripherals, including a speech synthesizer and a "Peripheral Expansion System" box to contain hardware add-ons. TI released developer information and tools, but the insistence on remaining sole publisher continued to starve the platform of software.</systemDescription>
+            <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>TI-99/4 este un computer de casă lansat la sfârșitul anului 1979 de Texas Instruments. Bazat pe microprocesorul Texas Instruments TMS9900 utilizat inițial în minicalculatoare, acesta a fost primul computer de acasă pe 16 biți. Controlerul de afișare video asociat oferă grafică color și unul dintre cele mai bune suporturi pentru sprite ale epocii sale.
@@ -97,28 +146,20 @@ Acesta include un design intern simplificat, o tastatură cu cursă completă, g
             <systemHardwareType>Компьютер</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>The TI-99/4 is a home computer released in late 1979 by Texas Instruments. Based on the Texas Instruments TMS9900 microprocessor originally used in minicomputers, it was the first 16-bit home computer. The associated video display controller provides color graphics and among the best sprite support of its era.
+
+It includes a simplified internal design, a full-travel keyboard, improved graphics, and a unique expansion system. At half the price of the original model, sales picked up significantly. TI supported the 4A with peripherals, including a speech synthesizer and a "Peripheral Expansion System" box to contain hardware add-ons. TI released developer information and tools, but the insistence on remaining sole publisher continued to starve the platform of software.</systemDescription>
+            <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>TI-99/4 är en hemdator som lanserades i slutet av 1979 av Texas Instruments. Baserad på Texas Instruments TMS9900-mikroprocessor, som ursprungligen användes i minidatorer, var det den första 16-bitars hemdatorn. Den tillhörande video display controllern ger färggrafik och bland det bästa sprite-stödet för sin tid.
 
 Den har en förenklad intern design, ett tangentbord med full rörelsefrihet, förbättrad grafik och ett unikt expansionssystem. Till halva priset jämfört med originalmodellen ökade försäljningen markant. TI kompletterade 4A med kringutrustning, bl.a. en talsyntes och en låda med "Peripheral Expansion System" för hårdvarutillägg. TI släppte information och verktyg för utvecklare, men kravet på att vara ensam utgivare gjorde att plattformen fortsatte att sakna programvara.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>TI-99/4は、テキサス・インスツルメンツ社が1979年末に発売した家庭用コンピュータである。元々ミニコンピュータに使われていたテキサス・インスツルメンツのTMS9900マイクロプロセッサをベースにした、最初の16ビット家庭用コンピュータである。関連するビデオ・ディスプレイ・コントローラはカラー・グラフィックスを提供し、当時最高のスプライトをサポートした。
-
-簡素化された内部設計、フルトラベル・キーボード、改良されたグラフィック、ユニークな拡張システムなどを備えている。価格はオリジナルモデルの半額で、売れ行きは大幅に回復した。TIは、音声合成器やハードウェアのアドオンを入れる「周辺機器拡張システム」ボックスなどの周辺機器で4Aをサポートした。TIは開発者向けの情報やツールを公開したが、唯一のパブリッシャーであり続けることに固執したため、このプラットフォームはソフトウェアに飢え続けた。</systemDescription>
-            <systemHardwareType>コンピューター</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>TI-99/4는 텍사스 인스트루먼트에서 1979년 말에 출시한 가정용 컴퓨터입니다. 원래 미니컴퓨터에 사용되던 텍사스 인스트루먼트 TMS9900 마이크로프로세서를 기반으로 한 이 제품은 최초의 16비트 가정용 컴퓨터였습니다. 관련 비디오 디스플레이 컨트롤러는 컬러 그래픽과 당대 최고의 스프라이트 지원을 제공합니다.
-
-간소화된 내부 디자인, 풀 트래블 키보드, 향상된 그래픽, 독특한 확장 시스템 등이 특징입니다. 기존 모델의 절반 가격으로 판매량이 크게 증가했습니다. TI는 음성 합성기와 하드웨어 추가 기능을 포함하는 "주변기기 확장 시스템" 박스를 포함한 주변기기를 4A에 지원했습니다. TI는 개발자 정보와 도구를 공개했지만, 유일한 퍼블리셔로 남겠다는 고집으로 인해 플랫폼의 소프트웨어가 계속 부족해졌습니다.</systemDescription>
-            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

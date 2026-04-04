@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>April 18, 2022</systemReleaseDateFormated>
         <systemHardwareType>Portable</systemHardwareType>
         <systemCoverSize>4-3</systemCoverSize>
+        <systemCoverSizeType>landscape</systemCoverSizeType>
         <systemColor>6c00ff</systemColor>
         <systemColorPalette1>6c00ff</systemColorPalette1>
         <systemColorPalette2>ffc833</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemCartSize>1-1</systemCartSize>
         <systemColorPalette4>ffc833</systemColorPalette4>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>Playdate هو جهاز ألعاب فيديو محمول باليد طورته شركة بانيك. بالإضافة إلى الأزرار ولوحة الاتجاه، يحتوي الجهاز على ذراع ميكانيكي على جانبه. تم الإعلان عن وحدة التحكم لأول مرة في 22 مايو 2019 على غلاف مجلة Edge، وتم إصدارها في 18 أبريل 2022. يشير الاسم إلى جدول الإصدار الأسبوعي للألعاب.</systemDescription>
+            <systemHardwareType>محمول</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>PlayDate je ručna konzola za video igre razvijena od strane panike. Kao i dugmad i usmjereni jastučić, uređaj ima mehaničku ručicu na njegovoj strani. Konzola je prvi put najavljena 22. maja 2019. na naslovnici časopisa Edge, a pušten je 18. aprila 2022. godine. Ime reference u svom tjednom rasporedu igara.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Playdate és una consola de videojocs de mà desenvolupada per Panic. A més dels botons i un coixinet direccional, el dispositiu té una manivela mecànica al seu costat. La consola es va anunciar per primera vegada el 22 de maig de 2019 a la portada de la revista Edge i es va publicar el 18 d'abril de 2022. El nom fa referència a la seva programació setmanal de llançament de jocs.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Portable</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Playdate je ručna konzola za video igre koju je razvila Panic. Osim gumba i jastučića za usmjeravanje, uređaj ima mehaničku ručicu sa svoje strane. Konzola je prvi put najavljena 22. svibnja 2019. na naslovnici časopisa Edge, a objavljena je 18. travnja 2022. godine. Ime se odnosi na svoj tjedni raspored izdanja igara.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Playdate è una console portatile per videogiochi sviluppata da Panic. Oltre ai pulsanti e al pad direzionale, il dispositivo è dotato di una manovella meccanica sul lato. La console è stata annunciata per la prima volta il 22 maggio 2019 sulla copertina della rivista Edge ed è stata rilasciata il 18 aprile 2022. Il nome fa riferimento alla programmazione settimanale dei giochi.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>プレイデートはパニック社が開発した携帯ゲーム機。ボタンや方向パッドのほか、側面に機械式クランクを備えている。このゲーム機は2019年5月22日に雑誌『Edge』の表紙で初めて発表され、2022年4月18日に発売された。この名前は、毎週発売されるゲームのスケジュールを表している。</systemDescription>
+            <systemHardwareType>ポータブル</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>플레이데이트는 패닉에서 개발한 휴대용 비디오 게임 콘솔입니다. 버튼과 방향 패드뿐만 아니라 측면에 기계식 크랭크가 있습니다. 이 콘솔은 2019년 5월 22일 Edge 매거진 표지를 통해 처음 발표되었으며, 2022년 4월 18일에 출시되었습니다. 이 이름은 매주 출시되는 게임 일정을 나타냅니다.</systemDescription>
+            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Portátil</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O PlayDate é um console de videogame portátil desenvolvido pelo Panic. Além de botões e uma almofada direcional, o dispositivo tem uma manivela mecânica ao seu lado. O console foi anunciado pela primeira vez em 22 de maio de 2019 na capa da revista Edge e foi lançado em 18 de abril de 2022. O nome faz referência ao seu cronograma de lançamento semanal de jogos.</systemDescription>
+            <systemHardwareType>Portátil</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Playdate este o consolă de jocuri video portabilă dezvoltată de Panic. Pe lângă butoane și un pad direcțional, dispozitivul are o manivelă mecanică pe partea sa. Consola a fost anunțată pentru prima dată pe 22 mai 2019, pe coperta revistei Edge, și a fost lansată pe 18 aprilie 2022. Numele face referire la programul său săptămânal de lansare a jocurilor.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Портативный</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>ПлаиДате је ручна конзола за видео игру коју је развио Панић.Као и дугмади и усмерени јастучић, уређај има механичку рупу на њеној страни.Конзола је први пут објављена 22. маја 2019. на поклопцу ЕДГЕ магазина и објављена је 18. априла 2022. године. Име референцује свој недељни распоред ослобађања игара.</systemDescription>
+            <systemHardwareType>Преносив</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Playdate är en handhållen videospelskonsol som utvecklats av Panic. Förutom knappar och en styrplatta har enheten en mekanisk vev på sidan. Konsolen presenterades för första gången den 22 maj 2019 på omslaget till tidningen Edge och släpptes den 18 april 2022. Namnet refererar till dess veckovisa utgivningsschema för spel.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>プレイデートはパニック社が開発した携帯ゲーム機。ボタンや方向パッドのほか、側面に機械式クランクを備えている。このゲーム機は2019年5月22日に雑誌『Edge』の表紙で初めて発表され、2022年4月18日に発売された。この名前は、毎週発売されるゲームのスケジュールを表している。</systemDescription>
-            <systemHardwareType>ポータブル</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>플레이데이트는 패닉에서 개발한 휴대용 비디오 게임 콘솔입니다. 버튼과 방향 패드뿐만 아니라 측면에 기계식 크랭크가 있습니다. 이 콘솔은 2019년 5월 22일 Edge 매거진 표지를 통해 처음 발표되었으며, 2022년 4월 18일에 출시되었습니다. 이 이름은 매주 출시되는 게임 일정을 나타냅니다.</systemDescription>
-            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

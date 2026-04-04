@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>September 12, 2003</systemReleaseDateFormated>
         <systemHardwareType>Folder</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>8a52cb</systemColor>
         <systemColorPalette1>2F3B50</systemColorPalette1>
         <systemColorPalette2>0A7CAF</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>2A2E33</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>Steam هي خدمة توزيع ألعاب الفيديو الرقمية وواجهة متجر لألعاب الفيديو من Valve. تم إطلاقها كعميل برمجيات في سبتمبر 2003 كوسيلة ل Valve لتوفير تحديثات تلقائية لألعابهم، وتوسعت لتوزيع وتقديم عناوين ناشري ألعاب الطرف الثالث في أواخر عام 2005.</systemDescription>
+            <systemHardwareType>المجلد</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Steam is a video game digital distribution service and storefront by Valve. It was launched as a software client in September 2003 as a way for Valve to provide automatic updates for their games, and expanded to distributing and offering third-party game publishers' titles in late 2005.</systemDescription>
+            <systemHardwareType>Folder</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Steam és un servei de distribució digital de videojocs i aparador de Valve. Va ser llançat com a client de programari el setembre del 2003 com a forma de Valve per proporcionar actualitzacions automàtiques per als seus jocs i es va ampliar a distribuir i oferir títols de tercers editors de jocs a finals del 2005.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Dossier</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Steam is a video game digital distribution service and storefront by Valve. It was launched as a software client in September 2003 as a way for Valve to provide automatic updates for their games, and expanded to distributing and offering third-party game publishers' titles in late 2005.</systemDescription>
+            <systemHardwareType>Folder</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Steam è un servizio di distribuzione digitale di videogiochi e un negozio di Valve. È stato lanciato come client software nel settembre 2003, come modo per Valve di fornire aggiornamenti automatici per i propri giochi, e si è esteso alla distribuzione e all'offerta di titoli di editori di giochi terzi alla fine del 2005.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>Steamは、Valveによるビデオゲームのデジタル配信サービスおよびストアフロントである。2003年9月、Valveが自社ゲームの自動アップデートを提供するためのソフトウェアクライアントとして開始され、2005年後半にはサードパーティゲームパブリッシャーのタイトルを配信・提供するまでに拡大した。</systemDescription>
+            <systemHardwareType>フォルダ</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>Steam은 Valve의 비디오 게임 디지털 배포 서비스이자 스토어입니다. 2003년 9월에 Valve가 게임에 자동 업데이트를 제공하기 위해 소프트웨어 클라이언트로 출시되었으며, 2005년 말에는 타사 게임 퍼블리셔의 타이틀을 배포하고 제공하는 것으로 확장되었습니다.</systemDescription>
+            <systemHardwareType>폴더</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Pasta</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>Steam is a video game digital distribution service and storefront by Valve. It was launched as a software client in September 2003 as a way for Valve to provide automatic updates for their games, and expanded to distributing and offering third-party game publishers' titles in late 2005.</systemDescription>
+            <systemHardwareType>Folder</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Steam este un serviciu de distribuție digitală de jocuri video și o vitrină de magazin de la Valve. Acesta a fost lansat ca un client software în septembrie 2003, ca o modalitate prin care Valve să furnizeze actualizări automate pentru jocurile sale, și s-a extins la distribuirea și oferirea titlurilor editorilor de jocuri terțe la sfârșitul anului 2005.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Папка</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Steam is a video game digital distribution service and storefront by Valve. It was launched as a software client in September 2003 as a way for Valve to provide automatic updates for their games, and expanded to distributing and offering third-party game publishers' titles in late 2005.</systemDescription>
+            <systemHardwareType>Folder</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Steam är en digital distributionstjänst för videospel och ett skyltfönster från Valve. Den lanserades som en mjukvaruklient i september 2003 som ett sätt för Valve att tillhandahålla automatiska uppdateringar för sina spel, och utökades till att distribuera och erbjuda titlar från tredjepartsspelutgivare i slutet av 2005.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>Steamは、Valveによるビデオゲームのデジタル配信サービスおよびストアフロントである。2003年9月、Valveが自社ゲームの自動アップデートを提供するためのソフトウェアクライアントとして開始され、2005年後半にはサードパーティゲームパブリッシャーのタイトルを配信・提供するまでに拡大した。</systemDescription>
-            <systemHardwareType>フォルダ</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>Steam은 Valve의 비디오 게임 디지털 배포 서비스이자 스토어입니다. 2003년 9월에 Valve가 게임에 자동 업데이트를 제공하기 위해 소프트웨어 클라이언트로 출시되었으며, 2005년 말에는 타사 게임 퍼블리셔의 타이틀을 배포하고 제공하는 것으로 확장되었습니다.</systemDescription>
-            <systemHardwareType>폴더</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

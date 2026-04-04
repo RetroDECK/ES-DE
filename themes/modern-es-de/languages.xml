@@ -190,6 +190,18 @@
             <langUnknown>Okänd</langUnknown>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <langLabelRating>Đánh giá</langLabelRating>
+            <langLabelReleasedate>Ngày phát hành</langLabelReleasedate>
+            <langLabelPlayers>Người chơi</langLabelPlayers>
+            <langLabelGenre>Thể loại</langLabelGenre>
+            <langLabelPlayTime>Thời gian chơi</langLabelPlayTime>
+            <langLabelDeveloper>Nhà phát triển</langLabelDeveloper>
+            <langLabelPublisher>Nhà xuất bản</langLabelPublisher>
+            <langUnknown>Không xác định</langUnknown>
+        </variables>
+    </language>
     <language name="ar_SA">
         <variables>
             <langLabelRating>التقيم</langLabelRating>

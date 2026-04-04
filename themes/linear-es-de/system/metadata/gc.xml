@@ -10,6 +10,7 @@ The GameCube is the first Nintendo console to use optical discs as its primary s
         <systemReleaseDateFormated>November 18, 2001</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>243-340</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>958bf4</systemColor>
         <systemColorPalette1>7B79AA</systemColorPalette1>
         <systemColorPalette2>524C82</systemColorPalette2>
@@ -17,6 +18,22 @@ The GameCube is the first Nintendo console to use optical discs as its primary s
         <systemColorPalette4>1E1C11</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز نينتندو جيم كيوب هو جهاز ألعاب فيديو منزلي أصدرته شركة نينتندو في اليابان وأمريكا الشمالية في عام 2001 وفي مناطق PAL في عام 2002. GameCube هو جهاز نينتندو في الجيل السادس من أجهزة ألعاب الفيديو، وهو خليفة لوحدة التحكم السابقة Nintendo 64. تنافس GameCube مع PlayStation 2 من سوني وXbox من مايكروسوفت.
+
+GameCube هو أول وحدة تحكم من نينتندو تستخدم الأقراص الضوئية كوسيط تخزين أساسي. الأقراص بتنسيق يعتمد على أقراص ميني دي في دي، لكن النظام لم يصمم لتشغيل أقراص دي في دي كاملة الحجم أو أقراص صوتية مدمجة على عكس منافسيه، وركز بشكل أساسي على الألعاب بدلاً من ذلك. وتدعم وحدة التحكم الألعاب المحدودة عبر الإنترنت لعدد قليل من الألعاب عبر محول النطاق العريض أو المودم GameCube ويمكنها الاتصال بجهاز Game Boy Advance باستخدام كابل رابط، مما يسمح للاعبين بالوصول إلى ميزات حصرية داخل اللعبة باستخدام الجهاز المحمول كشاشة ثانية ووحدة تحكم مثل Wii U.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Nintendo Gamecube je konzola za video igre koja je u Japanu i u Sjevernoj Americi 2001. godine objavila u Japanu i na PAL teritorijama 2002. godine. Gamecube je ulazak Nintendoa u šestoj generaciji video igara, a nintendo 64. Gamecube se natjecala sa Sonyjevim igralištem 2 i Microsoftovom Xboxom.
+
+Gamecube je prva Nintendona konzola za korištenje optičkih diskova kao svog primarnog skladišta. Diskovi su u miniDVD-temeljenom formatu, ali sustav nije dizajniran za reprodukciju DVD-a ili audio CD-a za razliku od svojih konkurenata, a uglavnom se fokusira na igranje. Konzola podržava mrežno igranje za mali broj igara putem Gamecube širokopojasne ili modemske adapterom i može se povezati s avansom za igru pomoću kabla za povezivanje, što omogućava igračima da pristupe ekskluzivnim funkcijama u igri koristeći kao drugi ekran i kontroler poput wii u.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>La Nintendo Gamecube és una consola de videojocs a casa llançada per Nintendo a Japó i Amèrica del Nord el 2001 i als territoris PAL el 2002. El Gamecube és l’entrada de Nintendo a la sisena generació de consoles de videojocs i és el successor de la seva consola anterior, la Nintendo, la Nintendo64. El GameCube va competir amb PlayStation 2 de Sony i Microsoft's Xbox.
@@ -49,12 +66,36 @@ La GameCube est la première console Nintendo à utiliser des disques optiques c
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Nintendo Gamecube je konzola za kućne video igre koju je Nintendo objavio u Japanu i Sjevernoj Americi 2001. godine, a na teritorijama PAL -a 2002. godine. Gamecube je Nintendov unos u šestoj generaciji konzola za video igre i nasljednik njihove prethodne konzole, Nintendo 64.
+
+GameCube je prva Nintendo konzola koja je koristila optičke diskove kao svoj primarni medij za pohranu. Diskovi su u formatu utemeljenom na miniDVD-u, ali sustav nije osmišljen za reprodukciju DVD-a ili audio CD-a u punoj veličini, za razliku od konkurenta, a umjesto toga uglavnom usredotočeni na igranje. Konzola podržava ograničeno internetsko igranje za mali broj igara putem širokopojasnog ili modemskog adaptera GameCube i može se povezati s igračem Advance s kablom s vezama, koji omogućuje igračima pristup ekskluzivnim značajkama u igri pomoću ručnog zaslona i kontrolera poput Wii U.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Nintendo GameCube è una console per videogiochi domestica pubblicata da Nintendo in Giappone e Nord America nel 2001 e nei territori PAL nel 2002. Il GameCube rappresenta l'ingresso di Nintendo nella sesta generazione di console per videogiochi ed è il successore della console precedente, il Nintendo 64. Il GameCube ha fatto concorrenza alla PlayStation 2 di Sony e alla Xbox di Microsoft.
 
 Il GameCube è la prima console Nintendo a utilizzare dischi ottici come supporto di memorizzazione principale. I dischi sono in formato miniDVD, ma la console non è stata progettata per riprodurre DVD o CD audio a grandezza naturale, a differenza dei suoi concorrenti, e si è concentrata principalmente sul gioco. La console supporta un numero limitato di giochi online tramite un adattatore GameCube a banda larga o modem e può essere collegata a un Game Boy Advance con un cavo di collegamento, che consente ai giocatori di accedere a funzioni esclusive del gioco utilizzando il palmare come secondo schermo e controller come una Wii U.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ニンテンドーゲームキューブは、任天堂が2001年に日本と北米で、2002年にPAL地域で発売した家庭用ゲーム機である。ゲームキューブは任天堂の第6世代ビデオゲーム機への参入であり、以前のゲーム機であるNINTENDO64の後継機である。ゲームキューブはソニーのプレイステーション2とマイクロソフトのXboxと競合した。
+
+ゲームキューブは、主記憶媒体として光ディスクを採用した任天堂初のゲーム機である。ディスクはminiDVDベースのフォーマットだが、競合他社とは異なり、フルサイズのDVDやオーディオCDを再生するようには設計されておらず、代わりにゲームに主眼を置いていた。また、ゲームボーイアドバンスとリンクケーブルで接続することができ、ゲームボーイアドバンスをWii Uのようなセカンドスクリーンやコントローラーとして使用することで、専用のゲーム内機能にアクセスすることができる。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>닌텐도 게임큐브는 닌텐도가 2001년 일본과 북미에서, 2002년 PAL 지역에서 출시한 가정용 비디오 게임 콘솔입니다. 게임큐브는 닌텐도의 6세대 비디오 게임 콘솔로, 이전 콘솔인 닌텐도 64의 후속작입니다. 게임큐브는 소니의 플레이스테이션 2와 마이크로소프트의 엑스박스와 경쟁했습니다.
+
+게임큐브는 광 디스크를 기본 저장 매체로 사용한 최초의 닌텐도 콘솔입니다. 디스크는 미니DVD 기반 형식이지만 경쟁사와 달리 풀 사이즈 DVD나 오디오 CD를 재생하도록 설계되지 않았고, 대신 주로 게임에 중점을 두었습니다. 이 콘솔은 GameCube 광대역 또는 모뎀 어댑터를 통해 소수의 게임에 대한 제한된 온라인 게임을 지원하며, 링크 케이블로 Game Boy Advance에 연결하면 플레이어가 핸드헬드를 Wii U처럼 세컨드 스크린 및 컨트롤러로 사용하여 게임 내 독점 기능에 액세스할 수 있습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -81,6 +122,14 @@ O GameCube é o primeiro console da Nintendo a usar discos ópticos como seu pri
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Nintendo Gamecube é um console de videogame caseiro lançado pela Nintendo no Japão e na América do Norte em 2001 e nos territórios da PAL em 2002. O Gamecube é a entrada da Nintendo na sexta geração de consoles de videogame e é o sucessor de Sony 2 e o Nintendo 64.
+
+O GameCube é o primeiro console da Nintendo a usar discos ópticos como seu principal meio de armazenamento. Os discos estão em um formato baseado em MinIDVD, mas o sistema não foi projetado para jogar DVDs de tamanho normal ou CDs de áudio, ao contrário de seus concorrentes, e focados principalmente nos jogos. O console suporta jogos on-line limitados para um pequeno número de jogos por meio de um adaptador de banda larga ou modem da GameCube e pode se conectar a um Game Boy Advance com um cabo de link, que permite que os jogadores acessem recursos exclusivos no jogo usando o computador de mão como uma segunda tela e controlador como um Wii U.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Nintendo GameCube este o consolă de jocuri video pentru acasă lansată de Nintendo în Japonia și America de Nord în 2001 și în teritoriile PAL în 2002. GameCube este intrarea Nintendo în a șasea generație de console de jocuri video și este succesorul consolei lor anterioare, Nintendo 64. GameCube a concurat cu PlayStation 2 de la Sony și Xbox de la Microsoft.
@@ -97,28 +146,20 @@ GameCube - первая консоль Nintendo, в которой в качес
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Нинтендо Гамецубе је хоме видео игарска конзола коју је Нинтендо у Јапанској и северној Америци у 2002. години и у Пал Територији у 2002. години. Гамецубе је Нинтендо улазак у шесту генерацију видео игара у шестој генерацији њихове претходне конзоле, Нинтендо 64. ГамеЦубе је такмичио се са Сони-овом ПлаиСтатион 2 и Мицрософтовом Ксбок-ом и Мицрософтовом Ксбок-ом и Мицрософтовом Ксбок-ом и Мицрософтовим Ксбок-ом и Мицрософтовим Ксбок-ом и Мицрософтовим Ксбок-ом и Мицрософтовим Ксбок-ом и Мицрософтовом Ксбок и Мицрософтовом Ксбок и Мицрософтовом Ксбоку и Мицрософтовом Ксбоку и Мицрософтовом Ксбоку.
+
+Гамецубе је прва Нинтендо конзола за коришћење оптичких дискова као њен примарни медијум за складиштење.Дискови су у формату у МиниДВД-у, али систем није дизајниран за репродукцију ДВД-а или аудио ЦД-ова за разлику од својих такмичара, а углавном се фокусира на играње.Конзола подржава ограничено играње на мрежи за мали број игара путем ГАМЕЦУБЕ широкопојасне или модемског адаптера и може да се повеже са игараним каблом, који омогућава играчима да приступе ексклузивним функцијама у игри у игри и контролору као и други екран и контролер.</systemDescription>
+            <systemHardwareType>Конзола</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Nintendo GameCube är en hemkonsol för videospel som släpptes av Nintendo i Japan och Nordamerika 2001 och i PAL-områden 2002. GameCube är Nintendos inträde i den sjätte generationen av videospelskonsoler och är efterföljaren till deras tidigare konsol, Nintendo 64. GameCube konkurrerade med Sonys PlayStation 2 och Microsofts Xbox.
 
 GameCube är den första Nintendo-konsolen som använder optiska skivor som sitt primära lagringsmedium. Skivorna är i ett miniDVD-baserat format men systemet var inte utformat för att spela fullstora DVD-skivor eller ljud-CD-skivor till skillnad från sina konkurrenter, utan fokuserade främst på spel istället. Konsolen stöder begränsat onlinespelande för ett litet antal spel via en GameCube bredbands- eller modemadapter och kan anslutas till en Game Boy Advance med en länkkabel, vilket gör att spelarna kan få tillgång till exklusiva funktioner i spelet genom att använda handenheten som en andra skärm och handkontroll som en Wii U.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ニンテンドーゲームキューブは、任天堂が2001年に日本と北米で、2002年にPAL地域で発売した家庭用ゲーム機である。ゲームキューブは任天堂の第6世代ビデオゲーム機への参入であり、以前のゲーム機であるNINTENDO64の後継機である。ゲームキューブはソニーのプレイステーション2とマイクロソフトのXboxと競合した。
-
-ゲームキューブは、主記憶媒体として光ディスクを採用した任天堂初のゲーム機である。ディスクはminiDVDベースのフォーマットだが、競合他社とは異なり、フルサイズのDVDやオーディオCDを再生するようには設計されておらず、代わりにゲームに主眼を置いていた。また、ゲームボーイアドバンスとリンクケーブルで接続することができ、ゲームボーイアドバンスをWii Uのようなセカンドスクリーンやコントローラーとして使用することで、専用のゲーム内機能にアクセスすることができる。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>닌텐도 게임큐브는 닌텐도가 2001년 일본과 북미에서, 2002년 PAL 지역에서 출시한 가정용 비디오 게임 콘솔입니다. 게임큐브는 닌텐도의 6세대 비디오 게임 콘솔로, 이전 콘솔인 닌텐도 64의 후속작입니다. 게임큐브는 소니의 플레이스테이션 2와 마이크로소프트의 엑스박스와 경쟁했습니다.
-
-게임큐브는 광 디스크를 기본 저장 매체로 사용한 최초의 닌텐도 콘솔입니다. 디스크는 미니DVD 기반 형식이지만 경쟁사와 달리 풀 사이즈 DVD나 오디오 CD를 재생하도록 설계되지 않았고, 대신 주로 게임에 중점을 두었습니다. 이 콘솔은 GameCube 광대역 또는 모뎀 어댑터를 통해 소수의 게임에 대한 제한된 온라인 게임을 지원하며, 링크 케이블로 Game Boy Advance에 연결하면 플레이어가 핸드헬드를 Wii U처럼 세컨드 스크린 및 컨트롤러로 사용하여 게임 내 독점 기능에 액세스할 수 있습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

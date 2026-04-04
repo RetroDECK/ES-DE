@@ -22,6 +22,7 @@
     <language>ru_RU</language>
     <language>sr_RS</language>
     <language>sv_SE</language>
+    <language>vi_VN</language>
     <language>ar_SA</language>
     <language>ja_JP</language>
     <language>ko_KR</language>
@@ -54,6 +55,7 @@
         <label language="ru_RU">Тёмная</label>
         <label language="sr_RS">Tamna</label>
         <label language="sv_SE">Mörkt</label>
+        <label language="vi_VN">Tối</label>
         <label language="ar_SA">داكن</label>
         <label language="ja_JP">ダーク</label>
         <label language="ko_KR">다크</label>
@@ -79,6 +81,7 @@
         <label language="ru_RU">Светлая</label>
         <label language="sr_RS">Svetla</label>
         <label language="sv_SE">Ljust</label>
+        <label language="vi_VN">Sáng</label>
         <label language="ar_SA">فاتح</label>
         <label language="ja_JP">ライト</label>
         <label language="ko_KR">라이트</label>
@@ -104,6 +107,7 @@
         <label language="ru_RU">Скольжение</label>
         <label language="sr_RS">Klizivo</label>
         <label language="sv_SE">Glidande</label>
+        <label language="vi_VN">Trượt</label>
         <label language="ar_SA">انزلاق</label>
         <label language="ja_JP">スライド</label>
         <label language="ko_KR">슬라이드</label>
@@ -134,6 +138,7 @@
         <label language="ru_RU">Мгновенно</label>
         <label language="sr_RS">Instantno</label>
         <label language="sv_SE">Direkt</label>
+        <label language="vi_VN">Ngay lập tức</label>
         <label language="ar_SA">فوري</label>
         <label language="ja_JP">インスタント</label>
         <label language="ko_KR">즉시</label>
@@ -166,6 +171,7 @@
         <label language="ru_RU">Затухание</label>
         <label language="sr_RS">Bled</label>
         <label language="sv_SE">Uttoning</label>
+        <label language="vi_VN">Mờ dần</label>
         <label language="ar_SA">تلاشى</label>
         <label language="ja_JP">フェイド</label>
         <label language="ko_KR">페이드</label>
@@ -204,6 +210,7 @@
         <label language="ru_RU">Текст с видео</label>
         <label language="sr_RS">Tekstlista s videima</label>
         <label language="sv_SE">Textlista med video</label>
+        <label language="vi_VN">Văn bản có video</label>
         <label language="ar_SA">قائمة نصية مع فيديو</label>
         <label language="ja_JP">ビデオが含まるテキストリスト</label>
         <label language="ko_KR">텍스트리스트 비디오 포함</label>
@@ -235,6 +242,7 @@
         <label language="ru_RU">Текст без видео</label>
         <label language="sr_RS">Tekstlista bez videa</label>
         <label language="sv_SE">Textlista utan video</label>
+        <label language="vi_VN">Văn bản không có video</label>
         <label language="ar_SA">قائمة نصية بدون فيديو</label>
         <label language="ja_JP">ビデオが含まないテキストリスト</label>
         <label language="ko_KR">텍스트리스트 비디오 없음</label>

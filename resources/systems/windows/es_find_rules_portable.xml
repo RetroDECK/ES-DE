@@ -239,6 +239,13 @@
             <entry>%ESPATH%\..\Emulators\EasyRPG\Player.exe</entry>
         </rule>
     </emulator>
+    <emulator name="EDEN">
+        <!-- Nintendo Switch emulator Eden -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\eden\eden.exe</entry>
+            <entry>%ESPATH%\..\Emulators\eden\eden.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="EKA2L1">
         <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
         <rule type="staticpath">
@@ -315,6 +322,13 @@
             <entry>%ESPATH%\..\Emulators\Gearboy\Gearboy.exe</entry>
         </rule>
     </emulator>
+    <emulator name="GEARGRAFX">
+        <!--  NEC PC Engine/TurboGrafx-16 and SuperGrafx emulator Geargrafx -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Geargrafx\Geargrafx.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Geargrafx\Geargrafx.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="GOPHER2600">
         <!-- Atari 2600 emulator Gopher2600 -->
         <rule type="staticpath">
@@ -355,6 +369,13 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\jgenesis\jgenesis-cli.exe</entry>
             <entry>%ESPATH%\..\Emulators\jgenesis\jgenesis-cli.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="KEGS">
+        <!-- Apple IIGS emulator KEGS -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\kegs\kegswin.exe</entry>
+            <entry>%ESPATH%\..\Emulators\kegs\kegswin.exe</entry>
         </rule>
     </emulator>
     <emulator name="KEMULATOR">

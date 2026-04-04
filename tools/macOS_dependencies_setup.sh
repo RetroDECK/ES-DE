@@ -358,7 +358,7 @@ if [ ! -d ogg ]; then
 fi
 
 cd ogg
-git checkout v1.3.5
+git checkout v1.3.6
 cd ..
 
 echo

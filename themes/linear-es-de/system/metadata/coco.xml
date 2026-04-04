@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>September 1980</systemReleaseDateFormated>
         <systemHardwareType>Computer</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>D1AA41</systemColor>
         <systemColorPalette1>498CC1</systemColorPalette1>
         <systemColorPalette2>197123</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>AE1F19</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>راديو شاك TRS-80 الملون للكمبيوتر الملون، الذي تم تسويقه لاحقاً باسم كمبيوتر تاندي الملون والذي أطلق عليه أحياناً اسم CoCo، هو خط من أجهزة الكمبيوتر المنزلية التي طورتها شركة تاندي وباعتها. وعلى الرغم من اشتراكه في الاسم مع TRS-80 السابق، إلا أن الحاسوب الملون هو نظام مختلف تماماً وغير متوافق، وهو نظام مختلف تماماً ومغاير تماماً في التصميم والتوافق مع معالج موتورولا 6809E بدلاً من معالج Zilog Z80 الذي تم بناء النماذج السابقة حوله.</systemDescription>
+            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>RadioShack TRS-80 boja računar, kasnije se plasira kao tandy u boji i ponekad nadimak Coco, linija je kućnih računara razvijenih i prodaje Tandy Corporation. Unatoč dijeljenju imena sa ranijom TRS-80, računar u boji je potpuno drugačiji, nekompatibilan sistem i radikalni odlazak u dizajn i kompatibilnost sa svojim Motorola 6809E procesorom, a ne na zigu Z80 ranije.</systemDescription>
+            <systemHardwareType>Računar</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>L’ordinador de color Radioshack TRS-80, que es va comercialitzar més tard com a ordinador de color tandy i, de vegades, sobrenomenat COCO, és una línia d’ordinadors domèstics desenvolupats i venuts per Tandy Corporation. Tot i compartir un nom amb l’anterior TRS-80, l’ordinador en color és un sistema completament diferent, incompatible i una sortida radical en disseny i compatibilitat amb el seu processador Motorola 6809E en lloc dels models anteriors Zilog Z80.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Ordinateur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Računalo u boji Radioshack TRS-80, kasnije, na tržištu Tandy Color Computer, a ponekad i nadimak Coco, linija je kućnih računala koja je razvila i prodavala Tandy Corporation. Unatoč dijeljenju imena s ranijim TRS-80, računalo u boji potpuno je drugačiji, nespojivi sustav i radikalni odlazak u dizajnu i kompatibilnosti s njegovim procesorom Motorola 6809E, a ne ranijim modelima Zilog Z80.</systemDescription>
+            <systemHardwareType>Računalo</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il RadioShack TRS-80 Color Computer, successivamente commercializzato come Tandy Color Computer e talvolta soprannominato CoCo, è una linea di home computer sviluppata e venduta da Tandy Corporation. Nonostante il nome in comune con il precedente TRS-80, il Color Computer è un sistema completamente diverso e incompatibile, che si discosta radicalmente dal design e dalla compatibilità grazie al processore Motorola 6809E piuttosto che allo Zilog Z80 su cui erano costruiti i modelli precedenti.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ラジオシャックTRS-80カラーコンピュータ（後にタンディカラーコンピュータとして販売され、CoCoの愛称で呼ばれることもある）は、タンディ社が開発・販売した家庭用コンピュータのラインである。以前のTRS-80と名前を共有しているにもかかわらず、カラーコンピュータは全く異なる互換性のないシステムであり、以前のモデルが搭載していたZilog Z80ではなく、Motorola 6809Eプロセッサを搭載しているため、設計と互換性において根本的に異なっている。</systemDescription>
+            <systemHardwareType>コンピューター</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>나중에 탠디 컬러 컴퓨터로 판매되고 CoCo라는 별명으로도 불리는 라디오쉑 TRS-80 컬러 컴퓨터는 탠디 코퍼레이션에서 개발 및 판매한 가정용 컴퓨터 제품군입니다. 컬러 컴퓨터는 이전 TRS-80과 이름을 공유하지만 완전히 다른 호환되지 않는 시스템으로, 이전 모델의 기반이 되었던 Zilog Z80이 아닌 모토로라 6809E 프로세서를 기반으로 디자인 및 호환성 면에서 급진적으로 출발했습니다.</systemDescription>
+            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Computador</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O computador de cores RadioShack TRS-80, mais tarde comercializado como o computador de cores tândi e, às vezes, apelidado de Coco, é uma linha de computadores domésticos desenvolvidos e vendidos pela Tandy Corporation. Apesar de compartilhar um nome com o TRS-80 anterior, o computador colorido é um sistema incompatível completamente diferente e uma partida radical em design e compatibilidade com seu processador Motorola 6809E, em vez dos modelos anteriores do Zilog Z80.</systemDescription>
+            <systemHardwareType>Computador</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>RadioShack TRS-80 Color Computer, comercializat ulterior ca Tandy Color Computer și uneori poreclit CoCo, este o linie de computere de acasă dezvoltate și vândute de Tandy Corporation. În ciuda împărțirii numelui cu modelul anterior TRS-80, Color Computer este un sistem complet diferit, incompatibil și o abatere radicală în ceea ce privește designul și compatibilitatea cu procesorul său Motorola 6809E, mai degrabă decât Zilog Z80 în jurul căruia au fost construite modelele anterioare.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Компьютер</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>РадиоСхацк ТРС-80 рачунар у боји, касније маркетиран као рачунар у боји Танди, а понекад је надимак надимак ЦОЦО, је линија кућних рачунара развијених и продати корпорација Танди.Упркос дељењу имена са ранијим ТРС-80, рачунар је потпуно другачији, неспојив систем и радикални одлазак у дизајн и компатибилност са својом Моторола 6809Е процесором, а не на располагању ранији модели З80.</systemDescription>
+            <systemHardwareType>Рачунар</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>RadioShack TRS-80 Color Computer, senare marknadsförd som Tandy Color Computer och ibland med smeknamnet CoCo, är en serie hemdatorer som utvecklats och sålts av Tandy Corporation. Trots att Color Computer delar namn med den tidigare TRS-80 är den ett helt annat, inkompatibelt system och en radikal avvikelse i design och kompatibilitet med sin Motorola 6809E-processor i stället för Zilog Z80 som tidigare modeller var uppbyggda kring.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ラジオシャックTRS-80カラーコンピュータ（後にタンディカラーコンピュータとして販売され、CoCoの愛称で呼ばれることもある）は、タンディ社が開発・販売した家庭用コンピュータのラインである。以前のTRS-80と名前を共有しているにもかかわらず、カラーコンピュータは全く異なる互換性のないシステムであり、以前のモデルが搭載していたZilog Z80ではなく、Motorola 6809Eプロセッサを搭載しているため、設計と互換性において根本的に異なっている。</systemDescription>
-            <systemHardwareType>コンピューター</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>나중에 탠디 컬러 컴퓨터로 판매되고 CoCo라는 별명으로도 불리는 라디오쉑 TRS-80 컬러 컴퓨터는 탠디 코퍼레이션에서 개발 및 판매한 가정용 컴퓨터 제품군입니다. 컬러 컴퓨터는 이전 TRS-80과 이름을 공유하지만 완전히 다른 호환되지 않는 시스템으로, 이전 모델의 기반이 되었던 Zilog Z80이 아닌 모토로라 6809E 프로세서를 기반으로 디자인 및 호환성 면에서 급진적으로 출발했습니다.</systemDescription>
-            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

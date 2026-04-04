@@ -108,7 +108,7 @@ enum class ElementID : uint8_t {
     Use
 };
 
-ElementID elementid(const std::string_view& name);
+ElementID elementid(std::string_view name);
 
 using SVGNodeList = std::list<std::unique_ptr<SVGNode>>;
 using SVGPropertyList = std::forward_list<SVGProperty*>;
@@ -120,6 +120,8 @@ class SVGPaintElement;
 class SVGLayoutState;
 class SVGRenderState;
 
+extern const std::string emptyString;
+
 class SVGElement : public SVGNode {
 public:
     static std::unique_ptr<SVGElement> create(Document* document, ElementID id);
@@ -127,9 +129,9 @@ public:
     SVGElement(Document* document, ElementID id);
     virtual ~SVGElement() = default;
 
-    bool hasAttribute(const std::string_view& name) const;
-    const std::string& getAttribute(const std::string_view& name) const;
-    bool setAttribute(const std::string_view& name, const std::string& value);
+    bool hasAttribute(std::string_view name) const;
+    const std::string& getAttribute(std::string_view name) const;
+    bool setAttribute(std::string_view name, const std::string& value);
 
     const Attribute* findAttribute(PropertyID id) const;
     bool hasAttribute(PropertyID id) const;
@@ -157,10 +159,12 @@ public:
     virtual Rect strokeBoundingBox() const;
     virtual Rect paintBoundingBox() const;
 
-    SVGMarkerElement* getMarker(const std::string_view& id) const;
-    SVGClipPathElement* getClipper(const std::string_view& id) const;
-    SVGMaskElement* getMasker(const std::string_view& id) const;
-    SVGPaintElement* getPainter(const std::string_view& id) const;
+    SVGMarkerElement* getMarker(std::string_view id) const;
+    SVGClipPathElement* getClipper(std::string_view id) const;
+    SVGMaskElement* getMasker(std::string_view id) const;
+    SVGPaintElement* getPainter(std::string_view id) const;
+
+    SVGElement* elementFromPoint(float x, float y);
 
     template<typename T>
     void transverse(T callback);
@@ -187,6 +191,7 @@ public:
     bool isVisibilityHidden() const { return m_visibility != Visibility::Visible; }
 
     bool isHiddenElement() const;
+    bool isPointableElement() const;
 
     const SVGClipPathElement* clipper() const { return m_clipper; }
     const SVGMaskElement* masker() const { return m_masker; }
@@ -204,6 +209,7 @@ private:
     Display m_display = Display::Inline;
     Overflow m_overflow = Overflow::Visible;
     Visibility m_visibility = Visibility::Visible;
+    PointerEvents m_pointer_events = PointerEvents::Auto;
 
     ElementID m_id;
     AttributeList m_attributes;
@@ -338,9 +344,9 @@ public:
     void setNeedsLayout() { m_intrinsicWidth = -1.f; }
     bool needsLayout() const { return m_intrinsicWidth == -1.f; }
 
-    SVGRootElement* updateLayout();
+    SVGRootElement* layoutIfNeeded();
 
-    SVGElement* getElementById(const std::string_view& id) const;
+    SVGElement* getElementById(std::string_view id) const;
     void addElementById(const std::string& id, SVGElement* element);
     void layout(SVGLayoutState& state) final;
 

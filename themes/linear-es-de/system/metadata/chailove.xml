@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>November 30, 2017</systemReleaseDateFormated>
         <systemHardwareType>Engine</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>26AAE0</systemColor>
         <systemColorPalette1>0080E8</systemColorPalette1>
         <systemColorPalette2>AEE7FF</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>25AAE1</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>ChaiLove هو إطار عمل رائع يمكنك استخدامه لصنع ألعاب ثنائية الأبعاد في ChaiScript. إنه مجاني ومفتوح المصدر، ويعمل على أنظمة ويندوز وماك أو إس إكس ولينكس وأندرويد و ARM من خلال libretro/RetroArch.</systemDescription>
+            <systemHardwareType>المحرك</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>ChaiLove je fenomenalni okvir koji možete koristiti za izradu 2D igre u Chaistictu. Besplatno je, otvoreno i radovi na Windows-u, Mac OS X, Linux, Android i ARM kroz Libretro / Retroarch.</systemDescription>
+            <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Chailove és un marc impressionant que podeu utilitzar per fer jocs en 2D a Chaiscript.És gratuït, de codi obert i funciona a Windows, Mac OS X, Linux, Android i Arm a través de Libretro/Retroarch.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Moteur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Chailove je sjajan okvir koji možete koristiti za izradu 2D igara u Chaiscript. Besplatan je, otvoreni kosi i radi na Windows, Mac OS X, Linux, Android i ARM putem Libretro/Retroarch.</systemDescription>
+            <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>ChaiLove è un framework fantastico che si può usare per creare giochi 2D in ChaiScript. È gratuito, open-source e funziona su Windows, Mac OS X, Linux, Android e ARM tramite libretro/RetroArch.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ChaiLoveはChaiScriptで2Dゲームを作るための素晴らしいフレームワークです。フリー、オープンソースで、libretro/RetroArchを通じてWindows、Mac OS X、Linux、Android、ARMで動作します。</systemDescription>
+            <systemHardwareType>エンジン</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>ChaiLove는 ChaiScript로 2D 게임을 만드는 데 사용할 수 있는 멋진 프레임워크입니다. 무료 오픈 소스이며 libretro/RetroArch를 통해 Windows, Mac OS X, Linux, Android 및 ARM에서 작동합니다.</systemDescription>
+            <systemHardwareType>엔진</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Motor</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>Chailove é uma estrutura incrível que você pode usar para criar jogos 2D no Chaisercript.É gratuito, de código aberto e trabalha no Windows, Mac OS X, Linux, Android e Arm através da Libretro/Retroarch.</systemDescription>
+            <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>ChaiLove este un cadru minunat pe care îl puteți utiliza pentru a crea jocuri 2D în ChaiScript. Este gratuit, open-source și funcționează pe Windows, Mac OS X, Linux, Android și ARM prin libretro/RetroArch.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Двигатель</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Цхалове је сјајан оквир који можете користити за прављење 2Д утакмица у Цхиисцрипт-у.БЕСПЛАТНО је отворен и ради на Виндовс-у, Мац ОС Кс, Линуку, Андроид и АРМ-у кроз ЛибреТРО / Ретроарцх.</systemDescription>
+            <systemHardwareType>Мотор</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>ChaiLove är ett fantastiskt ramverk som du kan använda för att skapa 2D-spel i ChaiScript. Det är gratis, har öppen källkod och fungerar på Windows, Mac OS X, Linux, Android och ARM via libretro/RetroArch.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ChaiLoveはChaiScriptで2Dゲームを作るための素晴らしいフレームワークです。フリー、オープンソースで、libretro/RetroArchを通じてWindows、Mac OS X、Linux、Android、ARMで動作します。</systemDescription>
-            <systemHardwareType>エンジン</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>ChaiLove는 ChaiScript로 2D 게임을 만드는 데 사용할 수 있는 멋진 프레임워크입니다. 무료 오픈 소스이며 libretro/RetroArch를 통해 Windows, Mac OS X, Linux, Android 및 ARM에서 작동합니다.</systemDescription>
-            <systemHardwareType>엔진</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

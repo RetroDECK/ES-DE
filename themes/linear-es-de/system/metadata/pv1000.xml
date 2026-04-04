@@ -12,6 +12,7 @@ The PV-1000 is powered by a Zilog Z80 CPU, with 2 KB RAM, with 1 KB allocated as
         <systemReleaseDateFormated>October 1, 1983</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>9e3830</systemColor>
         <systemColorPalette1>2A4E78</systemColorPalette1>
         <systemColorPalette2>4FBBB2</systemColorPalette2>
@@ -19,6 +20,26 @@ The PV-1000 is powered by a Zilog Z80 CPU, with 2 KB RAM, with 1 KB allocated as
         <systemColorPalette4>D13931</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز كاسيو PV-1000 (ぴーぶいせん, Pi Bui-Sen) هو جهاز ألعاب فيديو منزلي من الجيل الثالث من صنع شركة كاسيو وتم إصداره في اليابان في عام 1983. تم إيقافه بعد أقل من عام من إصداره.
+
+تم إصدار PV-1000 في أكتوبر 1983. وتم إصدارها في اليابان فقط حيث بيعت بسعر 14,800 ين. فشلت كاسيو في تحقيق حصة سوقية كبيرة. وفقًا لموقع retrogames.co.uk تم سحب وحدة التحكم بعد عدة أسابيع؛ بسبب انخفاض المبيعات.
+
+يتم تشغيل PV-1000 بواسطة وحدة المعالجة المركزية Zilog Z80، مع 2 كيلوبايت من ذاكرة الوصول العشوائي، مع تخصيص 1 كيلوبايت كذاكرة وصول عشوائي VRAM. كما أنها تحتوي على 1 كيلوبايت إضافية مخصصة لمولد الأحرف. تم توفير الرسومات من قبل Texas Instruments TMS9918، حيث تولد دقة 256 × 192 بكسل مع 8 ألوان. تحتوي وحدة التحكم على رقاقة NEC D65010G031 تستخدم لإخراج الفيديو والصوت. كانت تحتوي على ثلاثة أصوات موجات مربعة مع 6 بت للتحكم في الفترة.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Casio PV-1000 (ぴーぶいせん, pi Bui-Sen) je konzola za video igre treće generacije koju je CASIO proizveo i pušten u Japan 1983. godine. Prekinuo je manje od godinu dana nakon puštanja na slobodu.
+
+PV-1000 je pušten u oktobru 1983. godine. Pušten je samo u Japanu, gdje je prodao 14.800 jena. Casio nije uspjela postići značajan tržišni udio. Prema retrogames.co.uk konzola je povučena nakon nekoliko tjedana;Zbog niske prodaje.
+
+PV-1000 pokreće Zilog Z80 CPU, sa 2 KB RAM-a, s 1 KB dodijeljenim kao Vram. Takođe ima dodatnih 1 KB posvećenog generatoru znakova. Grafika je osigurao Texas Instruments TMS9918, generirajući rezoluciju 256x192 piksela sa 8 boja. Konzola sadrži DEN D65010G031 čip koji se koristi za izlaz video i zvuk. Imao je tri kvadratna talasa sa 6 bita za kontrolu perioda.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El Casio PV-1000 (ぴーぶいせん, Pi Bui-Sen) és una consola de videojocs de tercera generació fabricada per Casio i llançada al Japó el 1983. Es va suspendre menys d’un any després del llançament.
@@ -59,6 +80,16 @@ Le PV-1000 est équipé d'un processeur Zilog Z80, d'une mémoire vive de 2 Ko, 
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Casio PV-1000 (ぴーぶいせん, PI Bui-sen) je konzola za kućne video igre treće generacije koju je proizvela Casio i objavljena u Japanu 1983. godine. Ukinuta je manje od godinu dana nakon puštanja.
+
+PV-1000 objavljen je u listopadu 1983. godine. Objavljen je samo u Japanu gdje je prodao za 14.800 jena. Casio nije uspio postići značajan tržišni udio. Prema retrogames.co.uk konzola je povučena nakon nekoliko tjedana;Zbog niske prodaje.
+
+PV-1000 pokreće Zilog Z80 CPU, s 2 kb RAM-a, s 1 kb dodijeljenim kao VRAM. Također ima dodatnih 1 kB posvećenog generatoru znakova. Grafiku je pružio Texas Instruments TMS9918, generirajući rezoluciju 256x192 piksela s 8 boja. Konzola sadrži NEC D65010G031 čip koji se koristi za izlaz video i zvuka. Imao je tri glasa kvadratnog vala sa 6 bita za kontrolu razdoblja.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Casio PV-1000 (ぴーぶいせん, Pi Bui-Sen) è una console per videogiochi di terza generazione prodotta da Casio e rilasciata in Giappone nel 1983. È stata dismessa meno di un anno dopo l'uscita.
@@ -67,6 +98,26 @@ Il PV-1000 è stato rilasciato nell'ottobre 1983. Venne commercializzata solo in
 
 Il PV-1000 è alimentato da una CPU Zilog Z80, con 2 KB di RAM, di cui 1 KB allocato come VRAM. Dispone inoltre di un ulteriore 1 KB dedicato a un generatore di caratteri. La grafica è stata fornita da un Texas Instruments TMS9918, che genera una risoluzione di 256x192 pixel a 8 colori. La console contiene un chip NEC D65010G031 utilizzato per l'uscita video e audio. Disponeva di tre voci a onda quadra con 6 bit per il controllo del periodo.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>カシオPV-1000（ぴーぶいせん、ぴーぶいせん）は、1983年に日本で発売されたカシオ製の第3世代家庭用ゲーム機。発売から1年足らずで生産終了となった。
+
+PV-1000は1983年10月に発売された。日本でのみ発売され、14,800円で販売された。カシオは大きなシェアを獲得できなかった。retrogames.co.ukによると、販売台数が少なかったため、このゲーム機は数週間後に撤去された。
+
+PV-1000はZilog Z80CPUを搭載し、2KBのRAMと1KBのVRAMを備えている。さらに1KBがキャラクタジェネレータに割り当てられている。グラフィックはテキサス・インスツルメンツのTMS9998で、256×192ピクセル、8色の解像度を持つ。コンソールには、ビデオとサウンドを出力するためのNEC D65010G031チップが搭載されている。6ビットで周期を制御する3つの矩形波ボイスを備えていた。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>카시오 PV-1000(ぴーぶいせん, 파이 부이 센)은 카시오에서 제조한 3세대 가정용 비디오 게임 콘솔로 1983년 일본에서 출시되었습니다. 출시 후 1년도 채 되지 않아 단종되었습니다.
+
+PV-1000은 1983년 10월에 출시되었습니다. 일본에서만 출시되어 14,800엔에 판매되었습니다. 카시오는 큰 시장 점유율을 달성하지 못했습니다. retrogames.co.uk에 따르면 이 콘솔은 판매량 저조로 인해 몇 주 만에 단종되었습니다.
+
+PV-1000은 2KB RAM과 1KB가 VRAM으로 할당된 Zilog Z80 CPU로 구동됩니다. 또한 캐릭터 생성기에 1KB가 추가로 할당되어 있습니다. 그래픽은 텍사스 인스트루먼트 TMS9918로 256x192픽셀 해상도와 8가지 색상을 생성합니다. 콘솔에는 비디오 및 사운드 출력에 사용되는 NEC D65010G031 칩이 포함되어 있습니다. 이 칩은 6비트의 구형파 음성 세 개를 사용하여 주기를 제어했습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -99,6 +150,16 @@ O PV-1000 é alimentado por uma CPU Zilog Z80, com 2 KB de RAM, sendo 1 KB aloca
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Casio PV-1000 (ぴーぶいせん, Pi Bui-sen) é um console de videogame caseiro de terceira geração fabricado por Casio e lançado no Japão em 1983. Foi interrompido menos de um ano após o lançamento.
+
+O PV-1000 foi lançado em outubro de 1983. Foi lançado apenas no Japão, onde foi vendido por 14.800 ienes. Casio não conseguiu alcançar uma participação de mercado significativa. De acordo com retrogames.co.uk, o console foi puxado após várias semanas;devido a baixas vendas.
+
+O PV-1000 é alimentado por uma CPU Zilog Z80, com 2 kb de RAM, com 1 kb alocado como VRAM. Ele também possui 1 KB adicional dedicado a um gerador de caracteres. Os gráficos foram fornecidos por um Texas Instruments TMS9918, gerando uma resolução de 256x192 pixels com 8 cores. O console contém um chip NEC D65010G031 usado para produzir vídeo e som. Tinha três vozes de onda quadrada com 6 bits para controlar o período.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Casio PV-1000 (ぴーぶいせん, Pi Bui-Sen) este o consolă de jocuri video de a treia generație fabricată de Casio și lansată în Japonia în 1983. A fost discontinuată la mai puțin de un an de la lansare.
@@ -119,6 +180,16 @@ PV-1000 работает на процессоре Zilog Z80, имеет 2 КБ 
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Цасио ПВ-1000 (ひーふいせん, ПИ Буи-Сен) је кућна видео игара треће генерације коју је ЦАСИО произвео у Јапану и објављен је у Јапану 1983. године. Прекинута је мање од годину дана након пуштања.
+
+ПВ-1000 је објављен у октобру 1983. Пуштен је само у Јапану где је продато за 14.800 јена.ЦАСИО није успео да постигне значајан тржишни удео.Према Ретрогамес.цо.ук Конзола је повучена након неколико недеља;због ниске продаје.
+
+ПВ-1000 покреће З80 ЦПУ, са 2 КБ РАМ-ом, са 1 КБ додељеним као ВРАМ.Такође има додатних 1 кб посвећених генератору знака.Графика је обезбедила Текас Инструментс ТМС9918, генерисање резолуције на 256к192 пиксела са 8 боја.Конзола садржи НЕЦ Д65010Г031 ЦХИП који се користи за излазни видео и звук.Имала је три квадратна таласна гласова са 6 бита за контролу периода.</systemDescription>
+            <systemHardwareType>Конзола</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Casio PV-1000 (ぴーぶいせん, Pi Bui-Sen) är en tredje generationens hemkonsol för videospel som tillverkades av Casio och släpptes i Japan 1983. Den slutade säljas mindre än ett år efter lanseringen.
@@ -127,26 +198,6 @@ PV-1000 släpptes i oktober 1983. Den släpptes endast i Japan där den såldes 
 
 PV-1000 drivs av en Zilog Z80 CPU, med 2 KB RAM, varav 1 KB är allokerat som VRAM. Den har också ytterligare 1 KB som ägnas åt en teckengenerator. Grafiken levererades av en Texas Instruments TMS9918, som genererade en upplösning på 256x192 pixlar med 8 färger. Konsolen innehåller ett NEC D65010G031-chip som används för att mata ut video och ljud. Den hade tre fyrkantsvågröster med 6 bitar för att kontrollera perioden.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>カシオPV-1000（ぴーぶいせん、ぴーぶいせん）は、1983年に日本で発売されたカシオ製の第3世代家庭用ゲーム機。発売から1年足らずで生産終了となった。
-
-PV-1000は1983年10月に発売された。日本でのみ発売され、14,800円で販売された。カシオは大きなシェアを獲得できなかった。retrogames.co.ukによると、販売台数が少なかったため、このゲーム機は数週間後に撤去された。
-
-PV-1000はZilog Z80CPUを搭載し、2KBのRAMと1KBのVRAMを備えている。さらに1KBがキャラクタジェネレータに割り当てられている。グラフィックはテキサス・インスツルメンツのTMS9998で、256×192ピクセル、8色の解像度を持つ。コンソールには、ビデオとサウンドを出力するためのNEC D65010G031チップが搭載されている。6ビットで周期を制御する3つの矩形波ボイスを備えていた。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>카시오 PV-1000(ぴーぶいせん, 파이 부이 센)은 카시오에서 제조한 3세대 가정용 비디오 게임 콘솔로 1983년 일본에서 출시되었습니다. 출시 후 1년도 채 되지 않아 단종되었습니다.
-
-PV-1000은 1983년 10월에 출시되었습니다. 일본에서만 출시되어 14,800엔에 판매되었습니다. 카시오는 큰 시장 점유율을 달성하지 못했습니다. retrogames.co.uk에 따르면 이 콘솔은 판매량 저조로 인해 몇 주 만에 단종되었습니다.
-
-PV-1000은 2KB RAM과 1KB가 VRAM으로 할당된 Zilog Z80 CPU로 구동됩니다. 또한 캐릭터 생성기에 1KB가 추가로 할당되어 있습니다. 그래픽은 텍사스 인스트루먼트 TMS9918로 256x192픽셀 해상도와 8가지 색상을 생성합니다. 콘솔에는 비디오 및 사운드 출력에 사용되는 NEC D65010G031 칩이 포함되어 있습니다. 이 칩은 6비트의 구형파 음성 세 개를 사용하여 주기를 제어했습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

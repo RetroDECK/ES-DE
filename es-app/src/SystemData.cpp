@@ -53,6 +53,9 @@ void FindRules::loadFindRules()
 #if defined(__ANDROID__)
     filePath = ResourceManager::getInstance().getResourcePath(":/systems/android/es_find_rules.xml",
                                                               false);
+#elif defined(LINUX_AARCH64)
+    filePath = ResourceManager::getInstance().getResourcePath(
+        ":/systems/linuxarm/es_find_rules.xml", false);
 #elif defined(__linux__)
     filePath =
         ResourceManager::getInstance().getResourcePath(":/systems/linux/es_find_rules.xml", false);
@@ -230,6 +233,9 @@ void ImportRules::loadImportRules()
 #if defined(__ANDROID__)
     filePath = ResourceManager::getInstance().getResourcePath(
         ":/systems/android/es_import_rules.xml", false);
+#elif defined(LINUX_AARCH64)
+    filePath = ResourceManager::getInstance().getResourcePath(
+        ":/systems/linuxarm/es_import_rules.xml", false);
 #elif defined(__linux__)
     filePath = ResourceManager::getInstance().getResourcePath(":/systems/linux/es_import_rules.xml",
                                                               false);
@@ -1338,6 +1344,9 @@ std::vector<std::string> SystemData::getConfigPath()
 
 #if defined(__ANDROID__)
     path = ResourceManager::getInstance().getResourcePath(":/systems/android/es_systems.xml", true);
+#elif defined(LINUX_AARCH64)
+    path =
+        ResourceManager::getInstance().getResourcePath(":/systems/linuxarm/es_systems.xml", true);
 #elif defined(__linux__)
     path = ResourceManager::getInstance().getResourcePath(":/systems/linux/es_systems.xml", true);
 #elif defined(_WIN64)

@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>October 4, 1993</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>752-1440</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>d4a53a</systemColor>
         <systemColorPalette1>FF0000</systemColorPalette1>
         <systemColorPalette2>0000A0</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>23B14D</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز 3DO التفاعلي متعدد اللاعبين (غالباً ما يُطلق عليه ببساطة 3DO) هو جهاز ألعاب فيديو أنتجته باناسونيك في الأصل عام 1993. وتم إصدار إصدارات أخرى من الجهاز في عام 1994 من قبل Sanyo وGoldstar. تم تصنيع وحدات التحكم وفقًا للمواصفات التي أنشأتها شركة 3DO، وتم تصميمها في الأصل من قبل ديف نيدل وRJ Mical من مجموعة التكنولوجيا الجديدة. تم تصميم النظام من قبل رجل الأعمال ومؤسس شركة Electronic Arts تريب هوكينز.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>3DO interaktivni multiplayer (često se naziva jednostavno 3DO) je konzola za video igre koju je izvorno proizvela Panasonic 1993. godine. Daljnje preispitivanje hardvera objavljene su 1994. godine Sanyo i Goldstar. Konzole su proizvedene u skladu sa specifikacijama koje je stvorila 3DO kompanija, a izvorno su dizajnirala Dave igla i RJ MICAL iz nove tehnološke grupe. Sistem je zamišljen po osnivaču za osnivač preduzetnika i elektroničkog umetnosti.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El multijugador 3DO Interactive (sovint anomenat Simply 3DO) és una consola de videojocs produïda originalment per Panasonic el 1993. Les rendicions del maquinari es van publicar el 1994 per Sanyo i Goldstar. Les consoles es van fabricar segons les especificacions creades per la Companyia 3DO i van ser dissenyades originalment per Dave Needle i RJ mical de New Technology Group. El sistema va ser concebut per l'emprenedor i el fundador d'Electronic Arts, Trip Hawkins.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>3DO interaktivni multiplayer (koji se često naziva jednostavno 3DO) je konzola za video igre koju je Panasonic izvorno producirao 1993. godine. Daljnje predstave hardvera objavili su 1994. godine Sanyo i Goldstar. Konzole su proizvedene prema specifikacijama koje je stvorila tvrtka 3DO, a izvorno su ih dizajnirali Dave Igle i RJ Mical iz New Technology Group. Sustav je zamislio poduzetnik i osnivač elektroničkih umjetnosti Trip Hawkins.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il 3DO Interactive Multiplayer (spesso chiamato semplicemente 3DO) è una console per videogiochi prodotta originariamente da Panasonic nel 1993. Ulteriori versioni dell'hardware sono state rilasciate nel 1994 da Sanyo e Goldstar. Le console sono state prodotte secondo le specifiche create da The 3DO Company e sono state originariamente progettate da Dave Needle e RJ Mical di New Technology Group. Il sistema è stato concepito dall'imprenditore e fondatore di Electronic Arts Trip Hawkins.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>3DO Interactive Multiplayer（単に3DOと呼ばれることが多い）は、1993年にパナソニックが製造したビデオゲーム機である。1994年には三洋電機とゴールドスターからも発売された。コンソールは3DOカンパニーが作成した仕様に従って製造され、当初はニューテクノロジー・グループのデイブ・ニードルとRJ・ミカルが設計した。このシステムは、起業家でエレクトロニック・アーツ創業者のトリップ・ホーキンスによって考案された。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>3DO 인터랙티브 멀티플레이어(간단히 3DO라고도 함)는 1993년 파나소닉에서 처음 생산한 비디오 게임 콘솔입니다. 하드웨어의 추가 버전은 1994년 산요와 골드스타에 의해 출시되었습니다. 이 콘솔은 3DO Company에서 만든 사양에 따라 제조되었으며, 원래는 New Technology Group의 Dave Needle과 RJ Mical이 설계했습니다. 이 시스템은 기업가이자 일렉트로닉 아츠의 창립자인 트립 호킨스가 고안했습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O 3DO Interactive Multiplayer (geralmente chamado de simplesmente 3DO) é um console de videogame originalmente produzido pela Panasonic em 1993. Outras interpretações do hardware foram lançadas em 1994 por Sanyo e Goldstar. Os consoles foram fabricados de acordo com as especificações criadas pela 3DO Company e foram originalmente projetadas por Dave Needle e RJ Mical of New Technology Group. O sistema foi concebido pelo empresário e fundador de artes eletrônicas Trip Hawkins.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>3DO Interactive Multiplayer (adesea numită simplu 3DO) este o consolă de jocuri video produsă inițial de Panasonic în 1993. Alte versiuni ale hardware-ului au fost lansate în 1994 de Sanyo și Goldstar. Consolele au fost fabricate în conformitate cu specificațiile create de The 3DO Company și au fost proiectate inițial de Dave Needle și RJ Mical de la New Technology Group. Sistemul a fost conceput de antreprenorul și fondatorul Electronic Arts Trip Hawkins.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>3До интерактивни мултиплаиер (често се назива једноставно 3ДО) је видео игарска конзола првобитно коју је ПАНАСОНИЦ извео 1993. године. Даљње преузимања хардвера објављена су 1994. године Санио и Голдстар.Конзоле су произведене у складу са спецификацијама које је креирао компанија 3ДО, а првобитно је дизајнирао Даве игла и РЈ Милка нове технолошке групе.Систем је замислио прелазне и електронске уметничке претресечке траке.</systemDescription>
+            <systemHardwareType>Конзола</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>3DO Interactive Multiplayer (ofta bara kallad 3DO) är en videospelskonsol som ursprungligen tillverkades av Panasonic 1993. Ytterligare versioner av hårdvaran släpptes 1994 av Sanyo och Goldstar. Konsolerna tillverkades enligt specifikationer skapade av The 3DO Company och designades ursprungligen av Dave Needle och RJ Mical från New Technology Group. Systemet utformades av entreprenören och Electronic Arts-grundaren Trip Hawkins.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>3DO Interactive Multiplayer（単に3DOと呼ばれることが多い）は、1993年にパナソニックが製造したビデオゲーム機である。1994年には三洋電機とゴールドスターからも発売された。コンソールは3DOカンパニーが作成した仕様に従って製造され、当初はニューテクノロジー・グループのデイブ・ニードルとRJ・ミカルが設計した。このシステムは、起業家でエレクトロニック・アーツ創業者のトリップ・ホーキンスによって考案された。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>3DO 인터랙티브 멀티플레이어(간단히 3DO라고도 함)는 1993년 파나소닉에서 처음 생산한 비디오 게임 콘솔입니다. 하드웨어의 추가 버전은 1994년 산요와 골드스타에 의해 출시되었습니다. 이 콘솔은 3DO Company에서 만든 사양에 따라 제조되었으며, 원래는 New Technology Group의 Dave Needle과 RJ Mical이 설계했습니다. 이 시스템은 기업가이자 일렉트로닉 아츠의 창립자인 트립 호킨스가 고안했습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

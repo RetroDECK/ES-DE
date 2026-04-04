@@ -10,6 +10,7 @@ The console was rushed to market, released several months before its initial rel
         <systemReleaseDateFormated>December 8, 1989</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>61b1df</systemColor>
         <systemColorPalette1>B2B2B2</systemColorPalette1>
         <systemColorPalette2>0091AD</systemColorPalette2>
@@ -17,6 +18,22 @@ The console was rushed to market, released several months before its initial rel
         <systemColorPalette4>D9D9D9</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>محرك الكمبيوتر الشخصي SuperGrafx (PC Engine SuperGrafx (PCエン エジン スー スー パー グ ー グ ラ フ ィ ッ ク ス)، والمعروف أيضًا باسم SuperGrafx، هو جهاز ألعاب فيديو منزلي من الجيل الرابع تم تصنيعه من قبل شركة NEC للإلكترونيات المنزلية وتم إصداره في اليابان وفرنسا في عام 1989. وهو النظام الذي خلف محرك الكمبيوتر الشخصي الذي تم إصداره قبل ذلك بعامين. كان يُعرف في الأصل باسم PC Engine 2 أثناء مراحل الإنتاج، وكان يُزعم أنه وحدة تحكم منزلية منزلية حقيقية ذات 16 بت، ويتميز برسومات وقدرات صوتية محسنة عن سابقه.
+
+تم تسريع طرح وحدة التحكم في السوق، وتم إصدارها قبل عدة أشهر من تاريخ إصدارها الأولي في عام 1990، ولم يكن لديها سوى تحديثات متواضعة على الأجهزة. مع إصدار ست ألعاب تجزئة فقط استفادت من تحديثات أجهزة وحدة التحكم، كانت لعبة SuperGrafx فاشلة تجارياً، حيث بيع منها 75,000 وحدة فقط في كلا المنطقتين. ولم تُنقل أي من التحديثات التي طرأت على أجهزتها إلى وحدات تحكم NEC اللاحقة، مثل TurboDuo.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>The PC Engine SuperGrafx (PCエンジンスーパーグラフィックス, Pī Shī Enjin SūpāGurafikkusu), also known as simply the SuperGrafx, is a fourth-generation home video game console manufactured by NEC Home Electronics and released in Japan and France in 1989. It is the successor system to the PC Engine, released two years prior. Originally known as the PC Engine 2 during production stages, it was purported as a true 16-bit home console, featuring improved graphics and audio capabilities over its predecessor.
+
+The console was rushed to market, released several months before its initial release date of 1990, only having modest updates to the hardware. With only six retail games released that took advantage of the console's hardware updates, the SuperGrafx was a commercial failure, selling only 75,000 units total in both regions. None of the hardware advancements it possessed were carried over to NEC's later consoles, such as the TurboDuo.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El motor PC Supergrafx (PC エンジンスーパーグラフィックス, Pī Shī Enjin Sūpāgurifikkusu), també conegut com simplement el Supergrafx, és una consola de videojocs de quarta generació fabricada per NEC Home Electronics i llançada al Japó i França el 1989. És elSistema successor del motor de PC, publicat dos anys abans. Originalment conegut com el PC Engine 2 durant les etapes de producció, es pretenia com una autèntica consola domèstica de 16 bits, amb capacitats gràfiques i àudio millorats sobre el seu predecessor.
@@ -49,12 +66,36 @@ La console a été commercialisée à la hâte, plusieurs mois avant sa date de 
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>The PC Engine SuperGrafx (PCエンジンスーパーグラフィックス, Pī Shī Enjin SūpāGurafikkusu), also known as simply the SuperGrafx, is a fourth-generation home video game console manufactured by NEC Home Electronics and released in Japan and France in 1989. It is the successor system to the PC Engine, released two years prior. Originally known as the PC Engine 2 during production stages, it was purported as a true 16-bit home console, featuring improved graphics and audio capabilities over its predecessor.
+
+The console was rushed to market, released several months before its initial release date of 1990, only having modest updates to the hardware. With only six retail games released that took advantage of the console's hardware updates, the SuperGrafx was a commercial failure, selling only 75,000 units total in both regions. None of the hardware advancements it possessed were carried over to NEC's later consoles, such as the TurboDuo.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il PC Engine SuperGrafx (PCエンジンスーパーグラフィックス, Pī Shī Enjin SūpāGurafikkusu), noto anche come semplicemente SuperGrafx, è una console per videogiochi domestici di quarta generazione prodotta da NEC Home Electronics e rilasciata in Giappone e Francia nel 1989. È il successore del PC Engine, uscito due anni prima. Conosciuto originariamente come PC Engine 2 durante le fasi di produzione, è stato presentato come una vera console domestica a 16 bit, con capacità grafiche e audio migliorate rispetto al suo predecessore.
 
 La console è stata immessa sul mercato in fretta e furia, rilasciata diversi mesi prima della data di uscita iniziale del 1990, con solo modesti aggiornamenti all'hardware. Con solo sei giochi distribuiti al dettaglio che sfruttavano gli aggiornamenti hardware della console, il SuperGrafx fu un fallimento commerciale, vendendo solo 75.000 unità in totale in entrambe le regioni. Nessuno dei progressi hardware di cui disponeva fu trasferito alle console successive di NEC, come il TurboDuo.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>PCエンジンスーパーグラフィックス（PCエンジンスーパーグラフィックス、Pī Shī Enjin SūpāGurafikkusu）は、NECホームエレクトロニクス製の第4世代家庭用ゲーム機で、1989年に日本とフランスで発売された。その2年前に発売されたPCエンジンの後継機である。当初はPCエンジン2として製造され、16ビットの家庭用ゲーム機として開発された。
+
+このゲーム機は発売を急がされ、当初の発売予定日であった1990年より数ヶ月早く発売され、ハードウェアにはささやかなアップデートが施されただけであった。このゲーム機のハードウェアのアップデートを利用した小売向けゲームはわずか6本しか発売されず、SuperGrafxは商業的に失敗し、両地域で合計75,000台しか売れなかった。このゲーム機が持っていたハードウェアの進歩は、TurboDuoのようなNECの後のゲーム機に引き継がれることはなかった。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>간단히 슈퍼그래픽스라고도 알려진 PC 엔진 슈퍼그래픽스(PCエンジンスーパーグラフィックス, 피시 엔진 스우파구라피쿠스)는 1989년 일본과 프랑스에서 출시된 NEC 홈 일렉트로닉스에서 제조한 4세대 가정용 비디오 게임 콘솔입니다. 2년 전에 출시된 PC 엔진의 후속 시스템입니다. 제작 단계에서는 PC 엔진 2로 알려졌지만, 전작보다 향상된 그래픽과 오디오 기능을 갖춘 진정한 16비트 가정용 콘솔이라는 평가를 받았습니다.
+
+이 콘솔은 서둘러 시장에 출시되어 1990년 출시일보다 몇 달 전에 출시되었고, 하드웨어 업데이트도 소폭만 이루어졌습니다. 콘솔의 하드웨어 업데이트를 활용한 리테일 게임은 단 6종에 불과했고, 슈퍼그래프엑스는 두 지역에서 총 75,000대밖에 판매되지 않아 상업적으로 실패했습니다. 슈퍼그래프엑스가 가지고 있던 하드웨어의 발전은 터보듀오와 같은 NEC의 후속 콘솔에 이어지지 않았습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -81,6 +122,14 @@ O console foi lançado às pressas no mercado, vários meses antes da data de la
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>The PC Engine SuperGrafx (PCエンジンスーパーグラフィックス, Pī Shī Enjin SūpāGurafikkusu), also known as simply the SuperGrafx, is a fourth-generation home video game console manufactured by NEC Home Electronics and released in Japan and France in 1989. It is the successor system to the PC Engine, released two years prior. Originally known as the PC Engine 2 during production stages, it was purported as a true 16-bit home console, featuring improved graphics and audio capabilities over its predecessor.
+
+The console was rushed to market, released several months before its initial release date of 1990, only having modest updates to the hardware. With only six retail games released that took advantage of the console's hardware updates, the SuperGrafx was a commercial failure, selling only 75,000 units total in both regions. None of the hardware advancements it possessed were carried over to NEC's later consoles, such as the TurboDuo.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>PC Engine SuperGrafx (PCエンジンスーパーグラフィックス, Pī Shī Enjin SūpāGurafikkusu), cunoscut și ca pur și simplu SuperGrafx, este o consolă de jocuri video de a patra generație fabricată de NEC Home Electronics și lansată în Japonia și Franța în 1989. Este sistemul succesor al PC Engine, lansat cu doi ani înainte. Cunoscut inițial ca PC Engine 2 în timpul etapelor de producție, a fost prezentat ca o adevărată consolă de acasă pe 16 biți, oferind capacități grafice și audio îmbunătățite față de predecesorul său.
@@ -97,28 +146,20 @@ Consola a fost lansată pe piață în grabă, cu câteva luni înainte de data 
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>The PC Engine SuperGrafx (PCエンジンスーパーグラフィックス, Pī Shī Enjin SūpāGurafikkusu), also known as simply the SuperGrafx, is a fourth-generation home video game console manufactured by NEC Home Electronics and released in Japan and France in 1989. It is the successor system to the PC Engine, released two years prior. Originally known as the PC Engine 2 during production stages, it was purported as a true 16-bit home console, featuring improved graphics and audio capabilities over its predecessor.
+
+The console was rushed to market, released several months before its initial release date of 1990, only having modest updates to the hardware. With only six retail games released that took advantage of the console's hardware updates, the SuperGrafx was a commercial failure, selling only 75,000 units total in both regions. None of the hardware advancements it possessed were carried over to NEC's later consoles, such as the TurboDuo.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>PC Engine SuperGrafx (PCエンジンスーパーグラフィックス, Pī Shī Enjin SūpāGurafikkusu), även känd som SuperGrafx, är en fjärde generationens hemkonsol för videospel som tillverkas av NEC Home Electronics och släpptes i Japan och Frankrike 1989. Det är efterföljaren till PC Engine, som släpptes två år tidigare. Under produktionsstadierna var den ursprungligen känd som PC Engine 2 och presenterades som en äkta 16-bitars hemkonsol med förbättrad grafik och ljud jämfört med sin föregångare.
 
 Konsolen kom ut på marknaden i all hast, flera månader före det ursprungliga lanseringsdatumet 1990, och hade endast blygsamma uppdateringar av hårdvaran. Med endast sex spel som utnyttjade konsolens hårdvaruuppdateringar blev SuperGrafx ett kommersiellt misslyckande och sålde endast 75.000 enheter totalt i båda regionerna. Inga av de hårdvaruförbättringar som konsolen hade fördes över till NEC:s senare konsoler, som TurboDuo.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>PCエンジンスーパーグラフィックス（PCエンジンスーパーグラフィックス、Pī Shī Enjin SūpāGurafikkusu）は、NECホームエレクトロニクス製の第4世代家庭用ゲーム機で、1989年に日本とフランスで発売された。その2年前に発売されたPCエンジンの後継機である。当初はPCエンジン2として製造され、16ビットの家庭用ゲーム機として開発された。
-
-このゲーム機は発売を急がされ、当初の発売予定日であった1990年より数ヶ月早く発売され、ハードウェアにはささやかなアップデートが施されただけであった。このゲーム機のハードウェアのアップデートを利用した小売向けゲームはわずか6本しか発売されず、SuperGrafxは商業的に失敗し、両地域で合計75,000台しか売れなかった。このゲーム機が持っていたハードウェアの進歩は、TurboDuoのようなNECの後のゲーム機に引き継がれることはなかった。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>간단히 슈퍼그래픽스라고도 알려진 PC 엔진 슈퍼그래픽스(PCエンジンスーパーグラフィックス, 피시 엔진 스우파구라피쿠스)는 1989년 일본과 프랑스에서 출시된 NEC 홈 일렉트로닉스에서 제조한 4세대 가정용 비디오 게임 콘솔입니다. 2년 전에 출시된 PC 엔진의 후속 시스템입니다. 제작 단계에서는 PC 엔진 2로 알려졌지만, 전작보다 향상된 그래픽과 오디오 기능을 갖춘 진정한 16비트 가정용 콘솔이라는 평가를 받았습니다.
-
-이 콘솔은 서둘러 시장에 출시되어 1990년 출시일보다 몇 달 전에 출시되었고, 하드웨어 업데이트도 소폭만 이루어졌습니다. 콘솔의 하드웨어 업데이트를 활용한 리테일 게임은 단 6종에 불과했고, 슈퍼그래프엑스는 두 지역에서 총 75,000대밖에 판매되지 않아 상업적으로 실패했습니다. 슈퍼그래프엑스가 가지고 있던 하드웨어의 발전은 터보듀오와 같은 NEC의 후속 콘솔에 이어지지 않았습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

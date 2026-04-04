@@ -102,17 +102,17 @@ inline bool operator<(const RuleData& a, const RuleData& b) { return a.isLessTha
 
 using RuleDataList = std::vector<RuleData>;
 
-constexpr bool equals(const std::string_view& value, const std::string_view& subvalue)
+constexpr bool equals(std::string_view value, std::string_view subvalue)
 {
     return value.compare(subvalue) == 0;
 }
 
-constexpr bool contains(const std::string_view& value, const std::string_view& subvalue)
+constexpr bool contains(std::string_view value, std::string_view subvalue)
 {
     return value.find(subvalue) != std::string_view::npos;
 }
 
-constexpr bool includes(const std::string_view& value, const std::string_view& subvalue)
+constexpr bool includes(std::string_view value, std::string_view subvalue)
 {
     if(subvalue.empty() || subvalue.length() > value.length())
         return false;
@@ -130,21 +130,21 @@ constexpr bool includes(const std::string_view& value, const std::string_view& s
     return false;
 }
 
-constexpr bool startswith(const std::string_view& value, const std::string_view& subvalue)
+constexpr bool startswith(std::string_view value, std::string_view subvalue)
 {
     if(subvalue.empty() || subvalue.length() > value.length())
         return false;
     return subvalue == value.substr(0, subvalue.size());
 }
 
-constexpr bool endswith(const std::string_view& value, const std::string_view& subvalue)
+constexpr bool endswith(std::string_view value, std::string_view subvalue)
 {
     if(subvalue.empty() || subvalue.length() > value.length())
         return false;
     return subvalue == value.substr(value.size() - subvalue.size(), subvalue.size());
 }
 
-constexpr bool dashequals(const std::string_view& value, const std::string_view& subvalue)
+constexpr bool dashequals(std::string_view value, std::string_view subvalue)
 {
     if(startswith(value, subvalue))
         return (value.length() == subvalue.length() || value.at(subvalue.length()) == '-');
@@ -214,7 +214,7 @@ static bool matchPseudoClassSelector(const PseudoClassSelector& selector, const 
         while(sibling) {
             if(sibling->id() == element->id())
                 return false;
-            sibling = element->previousElement();
+            sibling = sibling->previousElement();
         }
 
         return true;
@@ -225,7 +225,7 @@ static bool matchPseudoClassSelector(const PseudoClassSelector& selector, const 
         while(sibling) {
             if(sibling->id() == element->id())
                 return false;
-            sibling = element->nextElement();
+            sibling = sibling->nextElement();
         }
 
         return true;
@@ -571,6 +571,9 @@ static RuleDataList parseStyleSheet(std::string_view input)
                 for(const auto& attributeSelector : simpleSelector.attributeSelectors) {
                     specificity += (attributeSelector.id == PropertyID::Id) ? 0x10000 : 0x100;
                 }
+                for(const auto& pseudoClassSelector : simpleSelector.pseudoClassSelectors) {
+                    specificity += 0x100;
+                }
             }
 
             rules.emplace_back(selector, rule.declarations, specificity, rules.size());
@@ -714,7 +717,7 @@ bool Document::parse(const char* data, size_t length)
     std::string styleSheet;
     SVGElement* currentElement = nullptr;
     int ignoring = 0;
-    auto handleText = [&](const std::string_view& text, bool in_cdata) {
+    auto handleText = [&](std::string_view text, bool in_cdata) {
         if(text.empty() || currentElement == nullptr || ignoring > 0)
             return;
         if(currentElement->id() != ElementID::Text && currentElement->id() != ElementID::Tspan && currentElement->id() != ElementID::Style) {
@@ -738,6 +741,17 @@ bool Document::parse(const char* data, size_t length)
     };
 
     std::string_view input(data, length);
+    if(length >= 3) {
+        auto buffer = (const uint8_t*)(data);
+
+        const auto c1 = buffer[0];
+        const auto c2 = buffer[1];
+        const auto c3 = buffer[2];
+        if(c1 == 0xEF && c2 == 0xBB && c3 == 0xBF) {
+            input.remove_prefix(3);
+        }
+    }
+
     while(!input.empty()) {
         if(currentElement) {
             auto text = input.substr(0, input.find('<'));

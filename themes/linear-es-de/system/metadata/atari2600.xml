@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>September 11, 1977</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>c53a34</systemColor>
         <systemColorPalette1>6D391F</systemColorPalette1>
         <systemColorPalette2>D4282D</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>222222</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>نظام كمبيوتر الفيديو أتاري (VCS)، والذي سمي فيما بعد أتاري 2600، هو الجيل الثاني (1976-1992) من أجهزة ألعاب الفيديو المنزلية التي طورتها ووزعتها شركة أتاري. وقد تم إصداره في 11 سبتمبر 1977 في أمريكا الشمالية بسعر تجزئة 199 دولارًا أمريكيًا. تم إصدار وحدة التحكم لاحقًا في أوروبا (1978) واليابان (1983 - باسم أتاري 2800). شاع أتاري 2600 استخدام الأجهزة القائمة على المعالجات الدقيقة والألعاب الموجودة على خراطيش ROM. تم إيقاف وحدة التحكم في 1 يناير 1992.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Atari Video Computer System (VCS), kasnije je imenovao Atari 2600, a druga generacija (1976-1992) Console za video igre razvijena i distribuira Atari, Inc. Objavljen je 11. septembra 1977. u Severnoj Americi u maloprodajnoj ceni od 19977. godine. Konzola je kasnije objavljena u Evropi (1978) i Japanu (1983. - kao Atari 2800). Atari 2600 popularizirao je upotrebu hardvera i igara na bazi mikroprocesora sadržanih na rom patronama. Konzola je prekinuta 1. januara 1992. godine.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El sistema informàtic de vídeo Atari (VCS), més tard anomenat Atari 2600, és una consola de videojocs de segona generació (1976–1992) desenvolupada i distribuïda per Atari, Inc. Va ser llançada l’11 de setembre de 1977 a Amèrica del Nord en un comerç al detall en un comerç al detall en un comerç al detall en un comerç al detall en un comerç. Preu de 199 dòlars. La consola es va publicar més tard a Europa (1978) i Japó (1983 - com a Atari 2800). L’Atari 2600 va popularitzar l’ús de maquinari i jocs basats en microprocessadors continguts en cartutxos de ROM. La consola es va suspendre l'1 de gener de 1992.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Atari Video Computer System (VCS), kasnije nazvan Atari 2600, druga je generacija (1976–1992) Konzola za kućne video igre koju je razvio i distribuirao Atari, Inc. Objavljen je 11. rujna 1977. u Sjevernoj Americi po maloprodajnoj cijeni od 199 dolara. Konzola je kasnije objavljena u Europi (1978) i Japanu (1983. - kao Atari 2800). Atari 2600 popularizirao je uporabu hardvera i igara sa sjedištem u mikroprocesoru na ROM patronima. Konzola je prekinuta 1. siječnja 1992.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>L'Atari Video Computer System (VCS), successivamente denominato Atari 2600, è una console per videogiochi domestica di seconda generazione (1976-1992) sviluppata e distribuita da Atari, Inc. È stata rilasciata l'11 settembre 1977 in Nord America a un prezzo al dettaglio di 199 dollari. La console è stata successivamente distribuita in Europa (1978) e in Giappone (1983 - come Atari 2800). L'Atari 2600 ha reso popolare l'uso di hardware basato su microprocessore e giochi contenuti in cartucce ROM. La console è stata dismessa il 1° gennaio 1992.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>アタリ・ビデオ・コンピュータ・システム（VCS）は、後にアタリ2600と名付けられ、アタリ社が開発・販売した第2世代（1976年～1992年）の家庭用ビデオゲーム機である。北米では1977年9月11日に199ドルの小売価格で発売された。後にヨーロッパ（1978年）と日本（1983年 - アタリ2800として）でも発売された。アタリ2600は、マイクロプロセッサベースのハードウェアとROMカートリッジに収録されたゲームの使用を普及させた。このゲーム機は1992年1月1日に販売終了となった。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>아타리 비디오 컴퓨터 시스템(VCS)은 나중에 아타리 2600으로 명명된 2세대(1976-1992) 가정용 비디오 게임 콘솔로, 아타리에서 개발 및 배포했습니다. 1977년 9월 11일 북미에서 199달러의 소매가로 출시되었습니다. 이 콘솔은 이후 유럽(1978년)과 일본(1983년 - 아타리 2800)에서도 출시되었습니다. Atari 2600은 마이크로프로세서 기반 하드웨어와 ROM 카트리지에 포함된 게임의 사용을 대중화했습니다. 이 콘솔은 1992년 1월 1일에 단종되었습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Atari Video Computer System (VCS), mais tarde chamado Atari 2600, é um console de videogame caseiro de segunda geração (1976-1992) desenvolvido e distribuído pela Atari, Inc. foi lançado em 11 de setembro de 1977 na América do Norte a um preço de varejo de US $ 199. O console foi divulgado posteriormente na Europa (1978) e no Japão (1983 - como o Atari 2800). O Atari 2600 popularizou o uso de hardware e jogos baseados em microprocessadores contidos nos cartuchos da ROM. O console foi descontinuado em 1º de janeiro de 1992.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Atari Video Computer System (VCS), numit ulterior Atari 2600, este o a doua generație (1976-1992) de console de jocuri video pentru acasă dezvoltate și distribuite de Atari, Inc. A fost lansată pe 11 septembrie 1977 în America de Nord la un preț de vânzare cu amănuntul de 199 $. Consola a fost lansată ulterior în Europa (1978) și Japonia (1983 - ca Atari 2800). Atari 2600 a popularizat utilizarea hardware-ului bazat pe microprocesor și a jocurilor conținute pe cartușe ROM. Consola a fost abandonată la 1 ianuarie 1992.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Атари Видео Цомпутер Систем (ВЦС), касније је назвао Атари 2600, је друга генерација (1976-1992) Почетна видео игру коју је развио и дистрибуирао Атари, Инц. Објављен је 11. септембра 1977. у Северној Америци у малопродајној цени 199 долара.Конзола је касније објављена у Европи (1978) и Јапана (1983 - као Атари 2800).Атари 2600 популаризовао је употребу хардвера и игара на бази микропроцесора на РОМ-у.Конзола је прекинута 1. јануара 1992. године.</systemDescription>
+            <systemHardwareType>Конзола</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Atari Video Computer System (VCS), senare kallad Atari 2600, är en andra generationens (1976-1992) videospelskonsol för hemmabruk som utvecklades och distribuerades av Atari, Inc. Den släpptes den 11 september 1977 i Nordamerika till ett detaljhandelspris av 199 dollar. Konsolen släpptes senare i Europa (1978) och Japan (1983 - som Atari 2800). Atari 2600 populariserade användningen av mikroprocessorbaserad hårdvara och spel på ROM-kassetter. Konsolen slutade säljas den 1 januari 1992.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>アタリ・ビデオ・コンピュータ・システム（VCS）は、後にアタリ2600と名付けられ、アタリ社が開発・販売した第2世代（1976年～1992年）の家庭用ビデオゲーム機である。北米では1977年9月11日に199ドルの小売価格で発売された。後にヨーロッパ（1978年）と日本（1983年 - アタリ2800として）でも発売された。アタリ2600は、マイクロプロセッサベースのハードウェアとROMカートリッジに収録されたゲームの使用を普及させた。このゲーム機は1992年1月1日に販売終了となった。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>아타리 비디오 컴퓨터 시스템(VCS)은 나중에 아타리 2600으로 명명된 2세대(1976-1992) 가정용 비디오 게임 콘솔로, 아타리에서 개발 및 배포했습니다. 1977년 9월 11일 북미에서 199달러의 소매가로 출시되었습니다. 이 콘솔은 이후 유럽(1978년)과 일본(1983년 - 아타리 2800)에서도 출시되었습니다. Atari 2600은 마이크로프로세서 기반 하드웨어와 ROM 카트리지에 포함된 게임의 사용을 대중화했습니다. 이 콘솔은 1992년 1월 1일에 단종되었습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

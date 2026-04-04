@@ -3,53 +3,60 @@
     "website": "https://es-de.org/",
     "repository": "https://gitlab.com/es-de/",
     "stable": {
-        "version": "3.3.0",
-        "release": "49",
-        "date": "2025-07-15",
-        "androidVersionName": "3.3.0-50",
-        "androidVersionCode": "50",
-        "androidDate": "2025-07-18",
+        "version": "3.4.0",
+        "release": "50",
+        "date": "2025-11-07",
+        "androidVersionName": "3.4.0-56",
+        "androidVersionCode": "56",
+        "androidDate": "2025-11-07",
         "packages": [
             {
                 "name": "WindowsPortable",
-                "filename": "ES-DE_3.3.0-x64_Portable.zip",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/210673039/download",
-                "md5": "9548bf3053cc42ca1152360e512cc516",
+                "filename": "ES-DE_3.4.0-x64_Portable.zip",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/243196975/download",
+                "md5": "cd57bacfb62accbb10107d971dc8af57",
                 "message": ""
             },
             {
                 "name": "WindowsInstaller",
-                "filename": "ES-DE_3.3.0-x64.exe",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/210672910/download",
-                "md5": "876e9f9e8a243ae67760181517722cb3",
+                "filename": "ES-DE_3.4.0-x64.exe",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/243196961/download",
+                "md5": "d71143ae768db963be90fba973f3e812",
                 "message": ""
             },
             {
                 "name": "macOSApple",
-                "filename": "ES-DE_3.3.0-arm64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/210210122/download",
-                "md5": "aad2f9f862e9525ec3f264a7833e7ae4",
+                "filename": "ES-DE_3.4.0-arm64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/243196872/download",
+                "md5": "cb3aa237d63a8fd963a60680d24c4f01",
                 "message": ""
             },
             {
                 "name": "macOSIntel",
-                "filename": "ES-DE_3.3.0-x64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/212641229/download",
-                "md5": "9aa9f7813a19b4bdc0aabd221a41054f",
+                "filename": "ES-DE_3.4.0-x64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/243196947/download",
+                "md5": "4a2ca7ca5b4e6dcf92e1c5db0242629e",
                 "message": ""
             },
             {
                 "name": "LinuxAppImage",
                 "filename": "ES-DE_x64.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/210210324/download",
-                "md5": "8af76376d416dcd30a0cc42e57f0f33d",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/246875981/download",
+                "md5": "5a5820c0fd53d5a7aa3ac25352c28e67",
+                "message": ""
+            },
+            {
+                "name": "LinuxAArch64AppImage",
+                "filename": "ES-DE_aarch64.AppImage",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/287278640/download",
+                "md5": "9cac0fb0987ae4c8b52742e58618bd7a",
                 "message": ""
             },
             {
                 "name": "LinuxSteamDeckAppImage",
                 "filename": "ES-DE_x64_SteamDeck.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/210210368/download",
-                "md5": "baba5ae1b1cc5d9dab51621471396d85",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/246876039/download",
+                "md5": "940992cdb4d799bc207ea1aba537fb5d",
                 "message": ""
             }
         ]
@@ -90,6 +97,13 @@
             },
             {
                 "name": "LinuxAppImage",
+                "filename": "",
+                "url": "",
+                "md5": "",
+                "message": ""
+            },
+            {
+                "name": "LinuxAArch64AppImage",
                 "filename": "",
                 "url": "",
                 "md5": "",

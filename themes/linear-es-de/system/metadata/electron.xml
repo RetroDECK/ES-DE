@@ -7,6 +7,8 @@
         <systemReleaseDate>1983-10-25</systemReleaseDate>
         <systemReleaseDateFormated>August 25, 1983</systemReleaseDateFormated>
         <systemHardwareType>Computer</systemHardwareType>
+        <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>3F9B5B</systemColor>
         <systemColorPalette1>999999</systemColorPalette1>
         <systemColorPalette2>777777</systemColorPalette2>
@@ -14,6 +16,18 @@
         <systemColorPalette4>333333</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>كان Acorn Electron (الملقب بـ Elk داخل Acorn وما بعدها) بديلاً أقل تكلفة لحاسوب BBC Micro التعليمي/المنزلي، الذي طورته شركة Acorn Computers Ltd، لتوفير العديد من ميزات ذلك الجهاز الأغلى ثمناً بسعر أكثر تنافسية مع سعر ZX Spectrum. وكان يحتوي على 32 كيلو بايت من ذاكرة الوصول العشوائي (RAM)، وتضمنت ذاكرة القراءة فقط (ROM) الخاصة به BBC BASIC II مع نظام التشغيل. وأُعلن عنه في عام 1982 لإصدار محتمل في نفس العام، وتم طرحه في نهاية المطاف في 25 أغسطس 1983 بسعر 199 جنيهاً استرلينياً</systemDescription>
+            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Acorn Electron (nadimak Elk unutar žira) bio je nižina alternativa BBC Micro Educational / Početna računala, također razvio Acorn Computers Ltd, kako bi pružio mnoge karakteristike tog skupljeg stroja po cijeni konkurentnije s tim na konkurentnu cijenu. Imao je 32 kilobajta RAM-a, a njegov ROM je uključio BBC Basic II zajedno sa operativnim sistemom. Najavljeno 1982. godine za moguće puštanje iste godine, na kraju je predstavljen 25. avgusta 1983. po cijeni od 1998 godine</systemDescription>
+            <systemHardwareType>Računar</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>L’electró Acorn (sobrenomenat The Elk Inside Acorn and Beyond) va ser una alternativa de baix cost a l’ordinador Micro Educational/Home de la BBC, també desenvolupat per Acorn Computers Ltd, per proporcionar moltes de les característiques d’aquesta màquina més cara a un preu més competitiuamb el de l’espectre ZX. Tenia 32 quilobytes de memòria RAM, i la seva ROM incloïa la BBC Basic II juntament amb el sistema operatiu. Anunciat el 1982 per a un possible llançament el mateix any, es va introduir el 25 d'agost de 1983 amb un preu de 199 £</systemDescription>
@@ -38,10 +52,28 @@
             <systemHardwareType>Ordinateur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Elektron Acorn (nadimak je loš unutar Acorn-a i šire) bio je niža troškova alternativa BBC mikro obrazovnom/kućnom računalu, koje je također razvio Acorn Computers Ltd, kako bi osigurao mnoge značajke tog skupljeg stroja po cijeni konkurentnijim onom ZX spektra. Imao je 32 kilobajta RAM -a, a njegov ROM uključivao je BBC Basic II zajedno s operativnim sustavom. Najavljeno 1982. godine za moguće izdanje iste godine, na kraju je uveden 25. kolovoza 1983. godine po cijeni od 199 funti</systemDescription>
+            <systemHardwareType>Računalo</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>L'Acorn Electron (soprannominato Elk all'interno di Acorn e non solo) era un'alternativa a basso costo al computer educativo/casa BBC Micro, anch'esso sviluppato da Acorn Computers Ltd, per fornire molte delle caratteristiche di quella macchina più costosa a un prezzo più competitivo con quello dello ZX Spectrum. Aveva 32 kilobyte di RAM e la sua ROM comprendeva il BBC BASIC II e il sistema operativo. Annunciato nel 1982 per un possibile rilascio nello stesso anno, fu infine presentato il 25 agosto 1983 al prezzo di 199 sterline.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>エイコーン・エレクトロン（エイコーン社内およびそれ以外での愛称はエルク）は、同じくエイコーン・コンピュータ社によって開発された教育用/家庭用コンピュータBBC Microに代わる廉価版で、より高価なBBC Microの機能の多くを、ZX Spectrumに匹敵する価格で提供した。32キロバイトのRAMを搭載し、ROMにはオペレーティング・システムとともにBBC BASIC IIが含まれていた。1982年に発表され、同年発売される可能性があったが、最終的に1983年8月25日に199ポンドで発売された。</systemDescription>
+            <systemHardwareType>コンピューター</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>도토리 일렉트론(도토리 안팎에서는 엘크라는 별명을 가졌습니다)은 BBC 마이크로 교육용/가정용 컴퓨터의 저가형 대안으로, Acorn Computers Ltd에서 개발하여 더 비싼 컴퓨터의 많은 기능을 ZX 스펙트럼보다 경쟁력 있는 가격으로 제공했습니다. 이 컴퓨터는 32킬로바이트의 RAM을 가지고 있었고, 운영 체제와 함께 BBC BASIC II가 ROM에 포함되어 있었습니다. 1982년에 발표되어 같은 해에 출시될 수 있었던 이 제품은 결국 1983년 8월 25일 199파운드의 가격으로 출시되었습니다.</systemDescription>
+            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -62,6 +94,12 @@
             <systemHardwareType>Computador</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O elétron de bolota (apelidado de alces dentro da bolota e além) era uma alternativa de menor custo ao computador educacional/doméstico da BBC, também desenvolvido pela Acorn Computers Ltd, para fornecer muitos dos recursos dessa máquina mais cara a um preço mais competitivo com o do espectro ZX. Tinha 32 kilobytes de RAM, e sua ROM incluiu a BBC Basic II juntamente com o sistema operacional. Anunciado em 1982 para um possível lançamento no mesmo ano, acabou sendo introduzido em 25 de agosto de 1983, ao preço de £ 199</systemDescription>
+            <systemHardwareType>Computador</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Acorn Electron (poreclit Elk inside Acorn and beyond) a fost o alternativă mai ieftină la computerul educațional/casnic BBC Micro, dezvoltat tot de Acorn Computers Ltd, pentru a oferi multe dintre caracteristicile acelui computer mai scump la un preț mai competitiv cu cel al ZX Spectrum. Avea 32 de kilobyți de memorie RAM, iar ROM-ul său includea BBC BASIC II împreună cu sistemul de operare. Anunțat în 1982 pentru o posibilă lansare în același an, acesta a fost în cele din urmă introdus pe 25 august 1983 la prețul de £199</systemDescription>
@@ -74,22 +112,16 @@
             <systemHardwareType>Компьютер</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>АЦРОН ЕЛЕКТРОН (надимак је Елк Инсиде Ацорн и Беионд) био је ниже цене алтернатива ББЦ микро образовном / кућном рачунару, које је такође развио АЦОРН Цомпутерс ЛТД, како би се омогућило многе карактеристике то скупље машине по цени конкурентније од стране ЗКС спектра.Имало је 32 килобајта РАМ-а, а њен РОМ је обухватио ББЦ Басиц ИИ заједно са оперативним системом.Најављено 1982. године за могуће издање исте године, на крају је уведен 25. августа 1983. године по £ 199</systemDescription>
+            <systemHardwareType>Рачунар</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Acorn Electron (med smeknamnet Elk inside Acorn and beyond) var ett billigare alternativ till BBC Micro, även den utvecklad av Acorn Computers Ltd, för att erbjuda många av funktionerna i den dyrare datorn till ett pris som var mer konkurrenskraftigt än för ZX Spectrum. Den hade 32 kilobyte RAM-minne och dess ROM innehöll BBC BASIC II tillsammans med operativsystemet. Den annonserades 1982 för en möjlig lansering samma år, men introducerades slutligen den 25 augusti 1983 till ett pris av £199</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>エイコーン・エレクトロン（エイコーン社内およびそれ以外での愛称はエルク）は、同じくエイコーン・コンピュータ社によって開発された教育用/家庭用コンピュータBBC Microに代わる廉価版で、より高価なBBC Microの機能の多くを、ZX Spectrumに匹敵する価格で提供した。32キロバイトのRAMを搭載し、ROMにはオペレーティング・システムとともにBBC BASIC IIが含まれていた。1982年に発表され、同年発売される可能性があったが、最終的に1983年8月25日に199ポンドで発売された。</systemDescription>
-            <systemHardwareType>コンピューター</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>도토리 일렉트론(도토리 안팎에서는 엘크라는 별명을 가졌습니다)은 BBC 마이크로 교육용/가정용 컴퓨터의 저가형 대안으로, Acorn Computers Ltd에서 개발하여 더 비싼 컴퓨터의 많은 기능을 ZX 스펙트럼보다 경쟁력 있는 가격으로 제공했습니다. 이 컴퓨터는 32킬로바이트의 RAM을 가지고 있었고, 운영 체제와 함께 BBC BASIC II가 ROM에 포함되어 있었습니다. 1982년에 발표되어 같은 해에 출시될 수 있었던 이 제품은 결국 1983년 8월 25일 199파운드의 가격으로 출시되었습니다.</systemDescription>
-            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

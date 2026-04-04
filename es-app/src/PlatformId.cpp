@@ -72,6 +72,7 @@ namespace PlatformIds
         "gmaster",              // Hartung Game Master
         "gx4000",               // Amstrad GX4000
         "intellivision",        // Mattel Electronics Intellivision
+        "j2me",                 // Java 2 Micro Edition
         "lcdgames",             // LCD Handheld Games
         "love",                 // ChaiLove Game Engine
         "lowresnx",             // LowRes NX Fantasy Console

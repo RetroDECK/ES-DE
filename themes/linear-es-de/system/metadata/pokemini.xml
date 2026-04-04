@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>November 16, 2001</systemReleaseDateFormated>
         <systemHardwareType>Portable</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>415289</systemColor>
         <systemColorPalette1>FCE200</systemColorPalette1>
         <systemColorPalette2>004F8A</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>8C8C8C</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>بوكيمون ميني هو جهاز ألعاب محمول باليد صممته وصنعته شركة نينتندو ويتمحور حول امتياز بوكيمون الإعلامي. إنه أصغر نظام ألعاب مزود بخراطيش قابلة للتبديل أنتجته شركة نينتندو على الإطلاق، حيث يزن أقل بقليل من أوقية ونصف الأوقية (70 جرام). تم إصداره لأول مرة في أمريكا الشمالية في 16 نوفمبر 2001، ثم في اليابان في 14 ديسمبر 2001، وفي أوروبا في 15 مارس 2002. تم إصدار الأنظمة بثلاثة ألوان: ووبير الأزرق، شيكوريتا الأخضر، وسموشوم البنفسجي. تتضمن ميزات بوكيمون ميني بوكيمون ساعة داخلية في الوقت الحقيقي، ومنفذ أشعة تحت الحمراء يستخدم لتسهيل اللعب متعدد اللاعبين، ومفتاح قصب لاكتشاف الاهتزازات، ومحرك يستخدم لتنفيذ ردود الفعل بالقوة. تتميز قناة لعبة GameCube Pokémon Channel بنسخ تجريبية قابلة للتشغيل من العديد من ألعاب بوكيمون المصغرة عبر محاكاة وحدة التحكم. كما تتضمن اللعبة لعبة Snorlax's Lunch Time، وهي لعبة حصرية لقناة بوكيمون. تم إصدار بعض الألعاب في اليابان فقط، مثل لعبة Togepi's Adventure.</systemDescription>
+            <systemHardwareType>محمول</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Pokémon Mini je ručna igra za igru koja je dizajnirala i proizvela Nintendo i tematski oko pokémon Media franšize. To je najmanji sistem igre s izmjenjivim kertridžima koji je ikada proizveo Nintendo, težine ispod dvije i pol unci (70 grama). Prvo je pušten u Severnoj Americi 16. novembra 2001., a zatim u Japanu, 14. decembra 2001., a u Evropi 15. marta 2002. godine. Sistemi su pušteni u tri boje: Wooper Plava, Chikorita Green i Smoochum Ljubičasta. Značajke Pokémon Mini uključuju unutrašnji sat u stvarnom vremenu, infracrveni port koji se koristi za olakšavanje multiplayer igranja, trske prekidač za otkrivanje tresenja i motora koji se koriste za implementaciju povratnih informacija o silu. Igra Gamecube Pokémon Channel sadrži demo verzije za reprodukciju nekoliko pokemona mini igara putem emulacije konzole. Također je uključen u igru je Snorlaxov ručak, ekskluzivni kanal Pokémon. Neke su igre puštene samo u Japanu, kao što su Togepijeva avantura.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El Pokémon Mini és una consola de jocs de mà dissenyada i fabricada per Nintendo i temàtica al voltant de la franquícia Pokémon Media.És el sistema de jocs més petit amb cartutxos intercanviables mai produïts per Nintendo, que pesen poc menys de dues unces i mitja (70 grams). Va ser llançat per primera vegada a Amèrica del Nord el 16 de novembre de 2001, després al Japó el 14 de desembre de 2001 i a Europa el 15 de març de 2002. Els sistemes es van publicar en tres colors: Wooper Blue, Chikorita Green i Smoochum Purple. Les característiques del Pokémon Mini inclouen un rellotge en temps real intern, un port infraroig utilitzat per facilitar els jocs multijugador, un interruptor de canya per detectar batuts i un motor utilitzat per implementar la retroalimentació de la força. El GameCube Game Pokémon Channel compta amb versions de demostració jugables de diversos jocs de Pokémon Mini mitjançant l'emulació de la consola. També s’inclou al joc l’hora de dinar de Snorlax, un canal de Pokémon exclusiu. Alguns jocs només es van publicar al Japó, com ara l'aventura de Togepi.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Portable</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Pokémon Mini je ručna konzola za igru koju je dizajnirao i proizveo Nintendo, a tematizirao se oko franšize Pokémon Media. To je najmanji sustav igara s izmjenjivim patronima koje je Nintendo ikad proizveo, težine nešto manje od dvije i pol unce (70 grama). Prvo je objavljen u Sjevernoj Americi 16. studenog 2001., zatim u Japanu 14. prosinca 2001., a u Europi 15. ožujka 2002. Sustavi su objavljeni u tri boje: Wooper Blue, Chikorita Green i Smoochum Purple. Značajke Pokémon Mini uključuju interni sat u stvarnom vremenu, infracrveni priključak koji se koristi za olakšavanje igranja za više igrača, trska za otkrivanje shakea i motor koji se koristi za implementaciju povratnih informacija sile. GameCube Game Pokémon Channel sadrži igrane demo verzije nekoliko Pokémon mini igara putem emulacije konzole. U igru je također uključen Snorlaxovo vrijeme ručka, ekskluzivan Pokémon kanal. Neke su igre objavljene samo u Japanu, poput Togepijeve avanture.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Pokémon Mini è una console portatile progettata e prodotta da Nintendo e incentrata sul franchise mediatico dei Pokémon. È la più piccola console di gioco con cartucce intercambiabili mai prodotta da Nintendo, con un peso di poco inferiore alle due once e mezzo (70 grammi). È stata rilasciata per la prima volta in Nord America il 16 novembre 2001, poi in Giappone il 14 dicembre 2001 e in Europa il 15 marzo 2002. I sistemi sono stati distribuiti in tre colori: Blu Wooper, Verde Chikorita e Viola Smoochum. Le caratteristiche del Pokémon mini includono un orologio interno in tempo reale, una porta a infrarossi utilizzata per facilitare il gioco multigiocatore, un interruttore reed per rilevare gli scuotimenti e un motore utilizzato per implementare il force feedback. Il gioco per GameCube Pokémon Channel contiene versioni demo giocabili di diversi giochi Pokémon mini tramite emulazione della console. Il gioco include anche Snorlax's Lunch Time, un'esclusiva di Pokémon Channel. Alcuni giochi sono stati rilasciati solo in Giappone, come Togepi's Adventure.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ポケモンミニは、任天堂が企画・製造した、ポケモンをテーマにした携帯ゲーム機である。任天堂が製造した交換可能なカートリッジ付きのゲームシステムの中で最も小さく、重さは2.5オンス（70グラム）弱である。北米では2001年11月16日に、日本では2001年12月14日に、ヨーロッパでは2002年3月15日に発売された。カラーは3色：ウーパー・ブルー、チコリータ・グリーン、スモウ・パープルの3色である。ポケモンminiの特徴は、内蔵リアルタイムクロック、マルチプレイヤーゲームを容易にするために使用される赤外線ポート、揺れを検出するためのリードスイッチ、フォースフィードバックを実装するために使用されるモーターなどである。ゲームキューブのゲーム「ポケモンチャンネル」では、ゲーム機のエミュレーションによって、いくつかのポケモンminiのゲームの体験版がプレイできる。また、ポケモンチャンネル限定の「スノーラックスのランチタイム」も収録されている。トゲピーの冒険」など、日本でのみ発売されたゲームもある。</systemDescription>
+            <systemHardwareType>ポータブル</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>포켓몬 미니는 닌텐도에서 설계 및 제조한 포켓몬스터 미디어 프랜차이즈를 테마로 한 휴대용 게임 콘솔입니다. 2.5온스(70그램) 미만의 무게로, 닌텐도에서 생산한 카트리지 교환식 게임기 중 가장 작은 게임 시스템입니다. 2001년 11월 16일 북미에서 처음 출시되었고, 2001년 12월 14일 일본, 2002년 3월 15일 유럽에서 출시되었습니다. 시스템은 세 가지 색상으로 출시되었습니다: 우퍼블루, 치코리타그린, 스무첨퍼플. 포켓몬 미니의 특징으로는 내부 실시간 시계, 멀티플레이어 게임을 용이하게 하는 적외선 포트, 흔들림을 감지하는 리드 스위치, 포스 피드백을 구현하는 데 사용되는 모터 등이 있습니다. GameCube 게임 포켓몬 채널에서는 콘솔 에뮬레이션을 통해 여러 포켓몬 미니 게임의 데모 버전을 플레이할 수 있습니다. 이 게임에는 포켓몬 채널 독점 게임인 스노락스의 런치타임도 포함되어 있습니다. 토게피의 모험과 같은 일부 게임은 일본에서만 출시되었습니다.</systemDescription>
+            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Portátil</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Pokémon Mini é um console de jogos portátil que foi projetado e fabricado pela Nintendo e temático em torno da franquia Pokémon Media.É o menor sistema de jogos com cartuchos intercambiáveis já produzidos pela Nintendo, pesando pouco menos de duas onças e meia (70 gramas). Foi lançado pela primeira vez na América do Norte em 16 de novembro de 2001, depois no Japão em 14 de dezembro de 2001 e na Europa em 15 de março de 2002. Os sistemas foram lançados em três cores: Wooper Blue, Chikorita Green e Smoochum Purple. Os recursos do Pokémon Mini incluem um relógio interno em tempo real, uma porta infravermelha usada para facilitar os jogos multiplayer, um interruptor de palheta para detectar shakes e um motor usado para implementar feedback de força. O GameCube Game Pokémon Channel apresenta versões de demonstração jogável de vários mini -jogos do Pokémon via emulação de console. Também está incluído no jogo a hora do almoço do Snorlax, um exclusivo do Pokémon Channel. Alguns jogos foram lançados apenas no Japão, como a aventura de Torgepi.</systemDescription>
+            <systemHardwareType>Portátil</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Pokémon Mini este o consolă de jocuri portabilă proiectată și fabricată de Nintendo și având ca temă franciza media Pokémon. Este cea mai mică consolă de jocuri cu cartușe interschimbabile produsă vreodată de Nintendo, cântărind puțin sub două uncii și jumătate (70 de grame). A fost lansat pentru prima dată în America de Nord pe 16 noiembrie 2001, apoi în Japonia pe 14 decembrie 2001 și în Europa pe 15 martie 2002. Sistemele au fost lansate în trei culori: Wooper Blue, Chikorita Green, și Smoochum Purple. Caracteristicile Pokémon mini includ un ceas intern în timp real, un port cu infraroșu utilizat pentru a facilita jocurile multiplayer, un comutator reed pentru detectarea tremurăturilor și un motor utilizat pentru a implementa feedback-ul forței. Jocul Pokémon Channel pentru GameCube conține versiuni demo jucabile ale mai multor jocuri Pokémon mini prin emulare de consolă. De asemenea, în joc este inclus Snorlax's Lunch Time, o exclusivitate Pokémon Channel. Unele jocuri au fost lansate numai în Japonia, cum ar fi Togepi's Adventure.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Портативный</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Покемон Мини је ручна игарска конзола коју је Дизајнирао и произвео Нинтендо и теме око Покемонове медијске франшизе.То је најмањи систем игре са заменљивим кертриџама које је икада произвео Нинтендо, тежине само под две и по унце (70 грама).Прво је објављен у Северној Америци 16. новембра 2001. године, а затим у Јапану 14. децембра 2001. године, а у Европи 15. марта 2002. године. Системи су објављени у три боје: Воопер Блуе, Цхикорита Греен и Смооцхум Пурпле.Карактеристике Покемона МИНИ укључују интерни сат у реалном времену, инфрацрвени прикључак који се користи за олакшавање мултиплаиер игара, преклопник Реед-а за откривање тресе и мотор који се користи за спровођење повратних информација силе.Гамецубе игра Покемон канал садржи демо верзије неколико полуморијских игара на емулацији Покемона.Такође је укључено у игру је Снорлакно време за ручак, ексклузивни канал Покемон.Неке игре су пуштене само у Јапану, као што је авантура у Тогепију.</systemDescription>
+            <systemHardwareType>Преносив</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Pokémon Mini är en handhållen spelkonsol som designades och tillverkades av Nintendo och vars tema är Pokémon-mediefranchisen. Det är det minsta spelsystemet med utbytbara kassetter som någonsin producerats av Nintendo, med en vikt på knappt 70 gram (2,5 ounces). Det släpptes först i Nordamerika den 16 november 2001, sedan i Japan den 14 december 2001 och i Europa den 15 mars 2002. Systemen släpptes i tre färger: Wooper Blue, Chikorita Green och Smoochum Purple. Pokémon mini har bland annat en intern realtidsklocka, en infraröd port som används för att underlätta multiplayer-spel, en reed-omkopplare för att känna av skakningar och en motor som används för att implementera force feedback. GameCube-spelet Pokémon Channel innehåller spelbara demoversioner av flera Pokémon minispel via konsolemulering. I spelet ingår också Snorlax's Lunch Time, ett exklusivt spel för Pokémon Channel. Vissa spel släpptes bara i Japan, till exempel Togepi's Adventure.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ポケモンミニは、任天堂が企画・製造した、ポケモンをテーマにした携帯ゲーム機である。任天堂が製造した交換可能なカートリッジ付きのゲームシステムの中で最も小さく、重さは2.5オンス（70グラム）弱である。北米では2001年11月16日に、日本では2001年12月14日に、ヨーロッパでは2002年3月15日に発売された。カラーは3色：ウーパー・ブルー、チコリータ・グリーン、スモウ・パープルの3色である。ポケモンminiの特徴は、内蔵リアルタイムクロック、マルチプレイヤーゲームを容易にするために使用される赤外線ポート、揺れを検出するためのリードスイッチ、フォースフィードバックを実装するために使用されるモーターなどである。ゲームキューブのゲーム「ポケモンチャンネル」では、ゲーム機のエミュレーションによって、いくつかのポケモンminiのゲームの体験版がプレイできる。また、ポケモンチャンネル限定の「スノーラックスのランチタイム」も収録されている。トゲピーの冒険」など、日本でのみ発売されたゲームもある。</systemDescription>
-            <systemHardwareType>ポータブル</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>포켓몬 미니는 닌텐도에서 설계 및 제조한 포켓몬스터 미디어 프랜차이즈를 테마로 한 휴대용 게임 콘솔입니다. 2.5온스(70그램) 미만의 무게로, 닌텐도에서 생산한 카트리지 교환식 게임기 중 가장 작은 게임 시스템입니다. 2001년 11월 16일 북미에서 처음 출시되었고, 2001년 12월 14일 일본, 2002년 3월 15일 유럽에서 출시되었습니다. 시스템은 세 가지 색상으로 출시되었습니다: 우퍼블루, 치코리타그린, 스무첨퍼플. 포켓몬 미니의 특징으로는 내부 실시간 시계, 멀티플레이어 게임을 용이하게 하는 적외선 포트, 흔들림을 감지하는 리드 스위치, 포스 피드백을 구현하는 데 사용되는 모터 등이 있습니다. GameCube 게임 포켓몬 채널에서는 콘솔 에뮬레이션을 통해 여러 포켓몬 미니 게임의 데모 버전을 플레이할 수 있습니다. 이 게임에는 포켓몬 채널 독점 게임인 스노락스의 런치타임도 포함되어 있습니다. 토게피의 모험과 같은 일부 게임은 일본에서만 출시되었습니다.</systemDescription>
-            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

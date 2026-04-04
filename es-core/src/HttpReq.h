@@ -73,8 +73,6 @@ public:
     const static inline std::string sPlatformIdentifier {"G"};
 #elif defined(APPIMAGE_BUILD)
     const static inline std::string sPlatformIdentifier {"A"};
-#elif defined(__linux__) && defined(RASPBERRY_PI)
-    const static inline std::string sPlatformIdentifier {"P"};
 #elif defined(__linux__)
     const static inline std::string sPlatformIdentifier {"L"};
 #elif defined(__IOS__)

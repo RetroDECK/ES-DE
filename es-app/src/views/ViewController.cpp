@@ -355,7 +355,7 @@ void ViewController::noGamesDialog()
                 _("THIS WILL CREATE DIRECTORIES FOR ALL THE "
                   "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
                   "THIS MAY CREATE A LOT OF FOLDERS SO IT'S "
-                  "ADVICED TO REMOVE THE ONES YOU DON'T NEED"),
+                  "ADVISED TO REMOVE THE ONES YOU DON'T NEED"),
                 _("PROCEED"),
                 [this] {
                     if (!SystemData::createSystemDirectories()) {

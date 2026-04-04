@@ -61,8 +61,6 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
     std::stringstream ss;
     if (target->getDeviceId() == DEVICE_KEYBOARD)
         ss << _("KEYBOARD");
-    else if (target->getDeviceId() == DEVICE_CEC)
-        ss << "CEC";
     else
         ss << _("GAMEPAD") << " " << (target->getDeviceId() + 1) << " (" << target->getDeviceName()
            << ")";

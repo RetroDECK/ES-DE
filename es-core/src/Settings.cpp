@@ -192,11 +192,7 @@ void Settings::setDefaults()
     mBoolMap["MediaViewerShowTypes"] = {false, false};
     mBoolMap["MediaViewerKeepVideoRunning"] = {true, true};
     mBoolMap["MediaViewerStretchVideos"] = {false, false};
-#if defined(RASPBERRY_PI)
-    mBoolMap["MediaViewerVideoScanlines"] = {false, false};
-#else
     mBoolMap["MediaViewerVideoScanlines"] = {true, true};
-#endif
     mBoolMap["MediaViewerVideoBlur"] = {false, false};
     mBoolMap["MediaViewerScreenshotScanlines"] = {true, true};
 
@@ -220,11 +216,7 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverVideoOnlyFavorites"] = {false, false};
     mBoolMap["ScreensaverStretchVideos"] = {false, false};
     mBoolMap["ScreensaverVideoGameInfo"] = {true, true};
-#if defined(RASPBERRY_PI)
-    mBoolMap["ScreensaverVideoScanlines"] = {false, false};
-#else
     mBoolMap["ScreensaverVideoScanlines"] = {true, true};
-#endif
     mBoolMap["ScreensaverVideoBlur"] = {false, false};
 
     mBoolMap["ThemeVariantTriggers"] = {true, true};
@@ -275,13 +267,7 @@ void Settings::setDefaults()
     mStringMap["MediaDirectory"] = {"", ""};
 #endif
     mIntMap["MaxPlayTimeTracking"] = {8, 8};
-#if defined(STEAM_DECK) || defined(RETRODECK)
     mIntMap["MaxVRAM"] = {512, 512};
-#elif defined(RASPBERRY_PI)
-    mIntMap["MaxVRAM"] = {192, 192};
-#else
-    mIntMap["MaxVRAM"] = {512, 512};
-#endif
 #if !defined(USE_OPENGLES)
     mIntMap["AntiAliasing"] = {0, 0};
 #endif

@@ -2043,6 +2043,8 @@ void FileData::launchGame()
                             Utils::String::replace(extraValue, "%ROMRAWWIN%", romRawWindows);
                         extraValue = Utils::String::replace(extraValue, "%BASENAME%", baseName);
                         extraValue = Utils::String::replace(extraValue, "//", "/");
+                        // This is mostly intended for escaping double forward slashes as \/\/.
+                        extraValue = Utils::String::replace(extraValue, "\\/", "/");
 
                         if (variable == "%EXTRA_")
                             androidExtrasString[extraName] = extraValue;

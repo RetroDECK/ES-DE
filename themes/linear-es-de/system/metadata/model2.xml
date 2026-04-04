@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>January 1, 1993</systemReleaseDateFormated>
         <systemHardwareType>Arcade</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>3b96ef</systemColor>
         <systemColorPalette1>034693</systemColorPalette1>
         <systemColorPalette2>F7ED18</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>199A40</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>لوحة نظام Sega Model 2 هي لوحة نظام أركيد ظهرت لأول مرة من قبل Sega في عام 1993 كخلف للوحة Sega Model 1. وهي امتداد لأجهزة الموديل 1، وأبرزها تقديم مفهوم المضلعات ذات الخرائط المبنية على النسيج، مما يسمح برسومات ثلاثية الأبعاد أكثر واقعية (بالنسبة لوقتها). كانت لوحة الطراز 2 علامة فارقة مهمة في صناعة الأركيد، وساعدت في إطلاق العديد من ألعاب الأركيد الرئيسية في التسعينيات، بما في ذلك Daytona USA و Virtua Cop و Sega Rally Championship و Dead or Alive و Virtua Striker و Cyber Troopers Virtual-On و The House of the Dead. تم تصميم الطراز 2 بمساعدة من شركة GE Aerospace (التي استحوذت عليها شركة Martin Marietta في عام 1993، وهي الآن جزء من شركة Lockheed Martin)، التي صممت تقنية رسم خرائط النسيج التي يتضمنها الطراز 2. قاد عملية تطوير الموديل 2 مصمم الألعاب الشهير يو سوزوكي. وظهرت لوحة الموديل 2 لأول مرة مع لعبة Daytona USA، وهي لعبة تم الانتهاء منها وحصلت على حقوق الطبع والنشر وظهرت لأول مرة في معرض JAMMA للألعاب في عام 1993. كانت هناك أربعة إصدارات من النظام: الطراز 2 الأصلي والطراز 2A-CRX والطراز 2B-CRX والطراز 2C-CRX. استخدم الموديل 2 والموديل 2A-CRX معالج DSP مخصص مع كود داخلي للمُعدِّل الهندسي بينما استخدم الموديلان 2B-CRX و2C-CRX معالج DSP موثق جيدًا وتم تحميل كود المُعدِّل الهندسي عند بدء التشغيل إلى DSP.</systemDescription>
+            <systemHardwareType>أركيد</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Sega Model 2 je arkadna matična ploča koju je iz 1993. godine izvorno debitovao Sega 1993. kao nasljednik ploče Sega Model 1. To je proširenje hardvera modela 1, što najiskozbivo najvažnije uvodi koncept poligona preslikanih tekstura, koji omogućava realniju 3D grafiku (za svoje vrijeme). Odbor modela 2 bio je važan prekretnica za arkadnu industriju, a pomogao je u pokretanju nekoliko ključnih arcadnih franšiza 90-ih, uključujući Daytona SAD, Virtua COP, Sega Rally Championship, mrtvi ili živ, virtuari, virtual-on i kuću mrtvih. Model 2 je bio dizajniran uz pomoć GE Aerospacea (stekao Martin Marietta 1993. godine, sada dio Lockheed Martina), koji je dizajnirao tehnologiju za mapiranje teksture ugrađenu od strane modela 2. Razvoj modela 2 je vodio poznati dizajner za glavu Yu Suzuki. Model 2 Arcade Board debitovao je zajedno sa Daytonom SAD-om, a debitoran je u ekipu Jamma na Arkadenoj emisiji 1993. godine. Tu su četiri verzije sistema: Originalni model 2A-CRX, model 2B-CRX i model 2C-CRX varijante. Model 2 i 2A-CRX koristili su prilagođeni DSP s internim kodom za geometrizer, dok su 2b-CRX i 2C-CRX koristili dobro dokumentene DSP-ove i učitavali kôd geometrije pri pokretanju na DSP.</systemDescription>
+            <systemHardwareType>Arkada</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El SEGA Model 2 és una junta de sistemes d'arcades debutat originalment per SEGA el 1993 com a successor de la junta SEGA Model 1.És una extensió del maquinari Model 1, que introdueix sobretot el concepte de polígons basats en textures, que permeten gràfics 3D més realistes (per al seu temps). El Model 2 Board va ser una fita important per a la indústria de les arcades i va ajudar a llançar diverses franquícies d'arcades clau dels anys 90, incloses Daytona USA, Virtua Cop, Campionat de Rally Sega, Dead Or Alive, Virtua Striker, Cibers Topers Virtual-on i la casa i la casadels morts. El Model 2 va ser dissenyat amb l'ajuda de Ge Aerospace (adquirit per Martin Marietta el 1993, que ara forma part de Lockheed Martin), que va dissenyar la tecnologia de mapatge de textures incorporada pel model 2. El desenvolupament del model 2 va ser dirigit pel famós dissenyador de jocs Yu Suzuki. El Model 2 Arcade Board va debutar juntament amb Daytona USA, un joc que es va acabar, es va acabar amb copyright i va debutar al Jamma Arcade Show el 1993. Hi ha quatre versions del sistema: el Model 2 original i el Model 2A-CRX, Model 2B-CRX-CRXi variants del model 2C-CRX. El model 2 i 2A-CRX van utilitzar un DSP personalitzat amb codi intern per al geometritzador, mentre que 2B-CRX i 2C-CRX utilitzaven DSPs ben documentats i van penjar el codi de geometritzador en startup al DSP.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Arcade</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>SEGA Model 2 je odbor arkadnog sustava koji je SEGA izvorno debitirala 1993. godine kao nasljednik ploče SEGA Model 1. To je produžetak hardvera Model 1, ponajviše uvodeći koncept poligona s teksturom, omogućavajući realnije 3D grafiku (za njegovo vrijeme). Odbor Model 2 bio je važna prekretnica za arkadnu industriju, a pomogla je pokrenuti nekoliko ključnih arkadnih franšiza 90-ih, uključujući Daytona USA, policajac Virtua, prvenstvo u SEGA Rally, mrtva ili živa, virtua, virtualni Cyber Troopers virtualno i kuću mrtvih. Model 2 je izrađen uz pomoć GE Aerospacea (kupio ga je Martin Marietta 1993. godine, koji je sada dio Lockheed Martin), koji je dizajnirao tehnologiju mapiranja teksture koju je ugradio model 2. Razvoj modela 2 vodio je poznati dizajner igara Yu Suzuki. Arcade Board Model 2 debitirao je zajedno s Daytonom USA, igrom koja je završena, zaštićena autorskim pravima i debitirala na sajmu Jamma Arcade 1993. godine. Postoje četiri verzije sustava: Originalni model 2 i model 2A-CRX, Model 2B-CRX i Model 2C-CRX varijante. Model 2 i 2A-CRX koristio je prilagođeni DSP s unutarnjim kodom za Geometrizer, dok je 2B-CRX i 2C-CRX koristili dobro dokumentirane DSP-ove i prenijeli kôd Geometrizer pri pokretanju u DSP.</systemDescription>
+            <systemHardwareType>Arkada</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Sega Model 2 è una scheda di sistema arcade originariamente presentata da Sega nel 1993 come successore della scheda Sega Model 1. Si tratta di un'estensione dell'hardware del Model 1, che introduce in particolare il concetto di poligoni mappati con texture, consentendo una grafica 3D più realistica (per l'epoca). La scheda Model 2 è stata un'importante pietra miliare per l'industria arcade e ha contribuito al lancio di diversi franchise arcade chiave degli anni '90, tra cui Daytona USA, Virtua Cop, Sega Rally Championship, Dead or Alive, Virtua Striker, Cyber Troopers Virtual-On e The House of the Dead. Il Model 2 è stato progettato con l'aiuto di GE Aerospace (acquisita da Martin Marietta nel 1993, ora parte di Lockheed Martin), che ha ideato la tecnologia di texture-mapping incorporata nel Model 2. Lo sviluppo del Model 2 è stato guidato dal famoso game designer Yu Suzuki. La scheda arcade del Model 2 debuttò insieme a Daytona USA, un gioco finito, protetto da copyright e presentato alla fiera arcade JAMMA nel 1993. Esistono quattro versioni del sistema: il Model 2 originale e le varianti Model 2A-CRX, Model 2B-CRX e Model 2C-CRX. Il Modello 2 e il Modello 2A-CRX utilizzavano un DSP personalizzato con codice interno per il geometrizzatore, mentre il Modello 2B-CRX e il Modello 2C-CRX utilizzavano DSP ben documentati e caricavano il codice del geometrizzatore all'avvio del DSP.</systemDescription>
             <systemHardwareType>Arcade</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>セガ・モデル2は、セガ・モデル1の後継機として1993年にセガからデビューしたアーケードシステム基板である。1型のハードウェアを拡張したもので、特にテクスチャマップポリゴンの概念を導入し、（当時としては）よりリアルな3Dグラフィックを可能にした。Model 2基板はアーケード業界にとって重要なマイルストーンであり、Daytona USA、Virtua Cop、Sega Rally Championship、Dead or Alive、Virtua Striker、Cyber Troopers Virtual-On、The House of the Deadなど、90年代の主要なアーケードフランチャイズの立ち上げに貢献した。Model 2は、GEエアロスペース（1993年にマーティン・マリエッタが買収、現在はロッキード・マーティンの傘下）の協力を得て設計され、Model 2で採用されたテクスチャマッピング技術を設計した。モデル2の開発は、有名なゲームデザイナーの鈴木裕氏が主導した。モデル2のアーケードボードは、1993年のJAMMAアーケードショーで完成し、版権を取得し、デビューしたゲーム「デイトナUSA」とともにデビューした。初代2型と2A-CRX型、2B-CRX型、2C-CRX型の4種類があった。モデル2と2A-CRXはジオメトライザー用の内部コードを持つカスタムDSPを使用し、2B-CRXと2C-CRXはよく文書化されたDSPを使用し、起動時にジオメトライザーのコードをDSPにアップロードした。</systemDescription>
+            <systemHardwareType>アーケード</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>세가 모델 2는 1993년 세가에서 세가 모델 1 보드의 후속작으로 처음 선보인 아케이드 시스템 보드입니다. 모델 1 하드웨어의 확장판으로, 특히 텍스처 매핑 폴리곤 개념을 도입하여 당시로서는 더욱 사실적인 3D 그래픽을 구현할 수 있었습니다. 모델 2 보드는 아케이드 업계에 중요한 이정표가 되었으며, 90년대의 주요 아케이드 프랜차이즈인 데이토나 USA, 버추어 캅, 세가 랠리 챔피언십, 데드 오어 얼라이브, 버추어 스트라이커, 사이버 트루퍼스 가상 온, 더 하우스 오브 더 데드 등 여러 게임을 출시하는 데 기여했습니다. 모델 2에 적용된 텍스처 매핑 기술을 설계한 GE Aerospace(1993년 마틴 마리에타에 인수되어 현재 록히드 마틴의 일부가 됨)의 도움을 받아 모델 2를 설계했습니다. 모델 2의 개발은 유명한 게임 디자이너 스즈키 유가 주도했습니다. Model 2 아케이드 보드는 1993년 JAMMA 아케이드 쇼에서 완성되어 저작권을 획득하고 데뷔한 게임인 Daytona USA와 함께 데뷔했습니다. 이 시스템에는 오리지널 모델 2와 모델 2A-CRX, 모델 2B-CRX, 모델 2C-CRX 변형 등 네 가지 버전이 있습니다. 모델 2와 2A-CRX는 지오메트리저용 내부 코드가 포함된 맞춤형 DSP를 사용했고, 2B-CRX와 2C-CRX는 잘 문서화된 DSP를 사용했으며 시작 시 지오메트리저 코드를 DSP에 업로드했습니다.</systemDescription>
+            <systemHardwareType>아케이드</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Fliperama</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Sega Model 2 é uma placa do sistema de arcade originalmente estreou pela SEGA em 1993 como sucessor da placa Modelo 1 da SEGA.É uma extensão do hardware do Modelo 1, apresentando principalmente o conceito de polígonos mapeados de textura, permitindo gráficos 3D mais realistas (para o seu tempo). O Conselho do Modelo 2 era um marco importante para a indústria de arcade e ajudou a lançar várias franquias importantes dos anos 90, incluindo Daytona USA, Virtua Cop, Sega Rally Championship, Dead ou Alive, Virtua Striker, Cyber Troopers Virtual-on e The House of the Dead. O Modelo 2 foi projetado com a ajuda da GE Aerospace (adquirida por Martin Marietta em 1993, agora parte de Lockheed Martin), que projetou a tecnologia de mapeamento de textura incorporada pelo Modelo 2. O desenvolvimento do Modelo 2 foi liderado pelo famoso designer de jogos Yu Suzuki. O Modelo 2 Arcade Board estreou junto com Daytona USA, um jogo que foi concluído, protegido por direitos autorais e estreou no Jamma Arcade Show em 1993. Existem quatro versões do sistema: as variantes Modelo 2 e Modelo 2A-CRX, Modelo 2B-CRX e Modelo 2C-CRX. O Modelo 2 e 2A-CRX usaram um DSP personalizado com código interno para o geometriz, enquanto o 2B-CRX e 2C-CRX usou DSPs bem documentados e enviou o código do geometriz na inicialização do DSP.</systemDescription>
+            <systemHardwareType>Arcade</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Sega Model 2 este o placă de sistem arcade debutat inițial de Sega în 1993 ca succesor al plăcii Sega Model 1. Este o extensie a hardware-ului Model 1, cel mai notabil introducând conceptul de poligoane cu textură, permițând o grafică 3D mai realistă (pentru vremea sa). Placa Model 2 a fost o piatră de hotar importantă pentru industria de arcade și a contribuit la lansarea mai multor francize arcade cheie ale anilor '90, inclusiv Daytona USA, Virtua Cop, Sega Rally Championship, Dead or Alive, Virtua Striker, Cyber Troopers Virtual-On și The House of the Dead. Modelul 2 a fost proiectat cu ajutorul GE Aerospace (achiziționat de Martin Marietta în 1993, în prezent parte a Lockheed Martin), care a proiectat tehnologia de mapare a texturilor încorporată de Modelul 2. Dezvoltarea Modelului 2 a fost condusă de celebrul designer de jocuri Yu Suzuki. Placa arcade Model 2 a debutat împreună cu Daytona USA, un joc care a fost finalizat, protejat prin drepturi de autor și a debutat la expoziția arcade JAMMA din 1993. Au existat patru versiuni ale sistemului: Modelul 2 original și variantele Model 2A-CRX, Model 2B-CRX și Model 2C-CRX. Modelul 2 și 2A-CRX foloseau un DSP personalizat cu cod intern pentru geometrizer, în timp ce 2B-CRX și 2C-CRX foloseau DSP-uri bine documentate și încărcau codul geometrizerului la pornire în DSP.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Аркада</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Сега Модел 2 је одбор за аркадну системску матичну плочу, првобитно дебитовао Сега 1993. године као наследник одбора Сега Модел 1.То је проширење хардвера модела 1, што најпознатије представља концепт полигона који пресликани текстуре, омогућавајући реалистичнију 3Д графику (за своје време).Модел 2 одбор био је важан прекретница за аркадну индустрију и помогла је да покрене неколико кључних аркадских франшиза од 90-их, укључујући Даитона УСА, Виртуа ЦОП, Сега Ралли Цхампионсхип, мртву или живу нападачу Виртуа, Виртуа нападача, виртуари виртуари виртуални и кућу мртвих.Модел 2 је инседиран уз помоћ ГЕ Аероспаце-а (стекао Мартин Мариетта 1993. године, сада је део Лоцкхеед Мартин), који је дизајнирао технологију мапирања текстуре уграђеног моделом 2. Развој 2. Дизајн 2. Дизајнер 2.Модел 2 Аркадна плоча је дебитовала заједно са Даитона УСА, игром која је била завршена, заштићена ауторским правима и дебитовао на Јамма Арцаде Схов 1993. Постоје четири верзије система: оригинал 2 и модел 2А-ЦРКС, модел 2Б-ЦРКС и модел 2Ц-ЦРКС варијанте 2Ц-ЦРКС.Модел 2 и 2А-ЦРКС користио је прилагођени ДСП са унутрашњим кодом за геометризер док је 2Б-ЦРКС и 2Ц-ЦРКС користио добро документоване ДСПС и пренесен је код геометризатора при покретању у ДСП.</systemDescription>
+            <systemHardwareType>Аркада</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Sega Model 2 är ett arkadsystemkort som ursprungligen lanserades av Sega 1993 som en efterföljare till Sega Model 1-kortet. Det är en förlängning av Model 1-hårdvaran och introducerade framför allt konceptet med texturmappade polygoner, vilket möjliggjorde mer realistisk 3D-grafik (för sin tid). Model 2-kortet var en viktig milstolpe för arkadindustrin och hjälpte till att lansera flera viktiga arkadserier på 90-talet, bland annat Daytona USA, Virtua Cop, Sega Rally Championship, Dead or Alive, Virtua Striker, Cyber Troopers Virtual-On och The House of the Dead. Model 2 konstruerades med hjälp av GE Aerospace (som 1993 förvärvades av Martin Marietta, numera en del av Lockheed Martin), som utformade den texturmappningsteknik som Model 2 bygger på. Utvecklingen av Model 2 leddes av den berömde speldesignern Yu Suzuki. Model 2 arkadkort debuterade tillsammans med Daytona USA, ett spel som var färdigt, upphovsrättsskyddat och debuterade på arkadmässan JAMMA 1993. Det fanns fyra versioner av systemet: den ursprungliga Model 2 och varianterna Model 2A-CRX, Model 2B-CRX och Model 2C-CRX. Model 2 och 2A-CRX använde en egen DSP med intern kod för geometrizer medan 2B-CRX och 2C-CRX använde väldokumenterade DSP:er och laddade upp geometrizerkoden vid start till DSP:en.</systemDescription>
             <systemHardwareType>Arkad</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>セガ・モデル2は、セガ・モデル1の後継機として1993年にセガからデビューしたアーケードシステム基板である。1型のハードウェアを拡張したもので、特にテクスチャマップポリゴンの概念を導入し、（当時としては）よりリアルな3Dグラフィックを可能にした。Model 2基板はアーケード業界にとって重要なマイルストーンであり、Daytona USA、Virtua Cop、Sega Rally Championship、Dead or Alive、Virtua Striker、Cyber Troopers Virtual-On、The House of the Deadなど、90年代の主要なアーケードフランチャイズの立ち上げに貢献した。Model 2は、GEエアロスペース（1993年にマーティン・マリエッタが買収、現在はロッキード・マーティンの傘下）の協力を得て設計され、Model 2で採用されたテクスチャマッピング技術を設計した。モデル2の開発は、有名なゲームデザイナーの鈴木裕氏が主導した。モデル2のアーケードボードは、1993年のJAMMAアーケードショーで完成し、版権を取得し、デビューしたゲーム「デイトナUSA」とともにデビューした。初代2型と2A-CRX型、2B-CRX型、2C-CRX型の4種類があった。モデル2と2A-CRXはジオメトライザー用の内部コードを持つカスタムDSPを使用し、2B-CRXと2C-CRXはよく文書化されたDSPを使用し、起動時にジオメトライザーのコードをDSPにアップロードした。</systemDescription>
-            <systemHardwareType>アーケード</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>세가 모델 2는 1993년 세가에서 세가 모델 1 보드의 후속작으로 처음 선보인 아케이드 시스템 보드입니다. 모델 1 하드웨어의 확장판으로, 특히 텍스처 매핑 폴리곤 개념을 도입하여 당시로서는 더욱 사실적인 3D 그래픽을 구현할 수 있었습니다. 모델 2 보드는 아케이드 업계에 중요한 이정표가 되었으며, 90년대의 주요 아케이드 프랜차이즈인 데이토나 USA, 버추어 캅, 세가 랠리 챔피언십, 데드 오어 얼라이브, 버추어 스트라이커, 사이버 트루퍼스 가상 온, 더 하우스 오브 더 데드 등 여러 게임을 출시하는 데 기여했습니다. 모델 2에 적용된 텍스처 매핑 기술을 설계한 GE Aerospace(1993년 마틴 마리에타에 인수되어 현재 록히드 마틴의 일부가 됨)의 도움을 받아 모델 2를 설계했습니다. 모델 2의 개발은 유명한 게임 디자이너 스즈키 유가 주도했습니다. Model 2 아케이드 보드는 1993년 JAMMA 아케이드 쇼에서 완성되어 저작권을 획득하고 데뷔한 게임인 Daytona USA와 함께 데뷔했습니다. 이 시스템에는 오리지널 모델 2와 모델 2A-CRX, 모델 2B-CRX, 모델 2C-CRX 변형 등 네 가지 버전이 있습니다. 모델 2와 2A-CRX는 지오메트리저용 내부 코드가 포함된 맞춤형 DSP를 사용했고, 2B-CRX와 2C-CRX는 잘 문서화된 DSP를 사용했으며 시작 시 지오메트리저 코드를 DSP에 업로드했습니다.</systemDescription>
-            <systemHardwareType>아케이드</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

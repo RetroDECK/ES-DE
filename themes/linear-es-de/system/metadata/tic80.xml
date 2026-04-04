@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>2017</systemReleaseDateFormated>
         <systemHardwareType>Engine</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>140C1C</systemColor>
         <systemColorPalette1>4E76B4</systemColorPalette1>
         <systemColorPalette2>C5494A</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>65A33D</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>TIC-80 عبارة عن كمبيوتر خيالي مجاني ومفتوح المصدر لصنع الألعاب الصغيرة وتشغيلها ومشاركتها. هناك أدوات مدمجة للتطوير: التعليمات البرمجية والعفاريت والخرائط ومحررات الصوت وسطر الأوامر، وهو ما يكفي لإنشاء لعبة ريترو صغيرة. عند الخروج ستحصل على ملف خرطوشة، يمكن تخزينه وتشغيله على الموقع الإلكتروني. أيضًا، يمكن تعبئة اللعبة في مشغل يعمل على جميع المنصات الشائعة وتوزيعها كما يحلو لك. لصنع لعبة على الطراز القديم، تتم عملية الإنشاء بأكملها في ظل بعض القيود التقنية: عرض 240 × 136 بكسل، ولوحة ألوان 16، وعفاريت ملونة 256 8 × 8، وصوت 4 قنوات وغيرها.</systemDescription>
+            <systemHardwareType>المحرك</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>TIC-80 is a free and open source fantasy computer for making, playing and sharing tiny games. There are built-in tools for development: code, sprites, maps, sound editors and the command line, which is enough to create a mini retro game. At the exit you will get a cartridge file, which can be stored and played on the website. Also, the game can be packed into a player that works on all popular platforms and distribute as you wish. To make a retro styled game the whole process of creation takes place under some technical limitations: 240x136 pixels display, 16 color palette, 256 8x8 color sprites, 4 channel sound and etc.</systemDescription>
+            <systemHardwareType>Engine</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>TIC-80 és un ordinador de fantasia gratuït i de codi obert per fer, jugar i compartir jocs minúsculs. Hi ha eines integrades per al desenvolupament: codi, sprites, mapes, editors de so i la línia d’ordres, que és suficient per crear un mini joc retro. A la sortida obtindreu un fitxer de cartutx, que es pot emmagatzemar i reproduir al lloc web. A més, el joc es pot empaquetar en un jugador que funciona a totes les plataformes populars i distribuir -la com vulgueu. Per fer un joc d’estil retro, tot el procés de creació té lloc sota algunes limitacions tècniques: 240x136 píxels Pantalla, 16 paleta de colors, 256 8x8 Sprites de color, so de 4 canals i etc.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Moteur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>TIC-80 is a free and open source fantasy computer for making, playing and sharing tiny games. There are built-in tools for development: code, sprites, maps, sound editors and the command line, which is enough to create a mini retro game. At the exit you will get a cartridge file, which can be stored and played on the website. Also, the game can be packed into a player that works on all popular platforms and distribute as you wish. To make a retro styled game the whole process of creation takes place under some technical limitations: 240x136 pixels display, 16 color palette, 256 8x8 color sprites, 4 channel sound and etc.</systemDescription>
+            <systemHardwareType>Engine</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>TIC-80 è un computer fantasy gratuito e open source per creare, giocare e condividere piccoli giochi. Ci sono strumenti integrati per lo sviluppo: codice, sprite, mappe, editor di suoni e linea di comando, sufficienti per creare un mini gioco retrò. All'uscita si otterrà un file di cartuccia, che potrà essere memorizzato e giocato sul sito web. Inoltre, il gioco può essere inserito in un lettore che funziona su tutte le piattaforme più diffuse e distribuito a piacimento. Per realizzare un gioco in stile retrò, l'intero processo di creazione si svolge con alcune limitazioni tecniche: Display da 240x136 pixel, tavolozza di 16 colori, 256 sprite da 8x8 colori, suono a 4 canali e così via.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>TIC-80は、小さなゲームを作り、遊び、共有するためのフリーでオープンソースのファンタジーコンピュータです。コード、スプライト、マップ、サウンドエディター、コマンドラインなど、開発のためのツールが組み込まれており、ミニ・レトロゲームを作るのに十分です。終了時にはカートリッジファイルが作成され、ウェブサイトに保存してプレイすることができます。また、ゲームはすべての一般的なプラットフォームで動作するプレイヤーにパックすることができ、あなたが望むように配布することができます。レトロスタイルのゲームを作るために、作成のすべてのプロセスは、いくつかの技術的な制限の下で行われます：240x136ピクセルのディスプレイ、16色パレット、8x8色のスプライト256個、4チャンネルのサウンドなど。</systemDescription>
+            <systemHardwareType>エンジン</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>TIC-80은 작은 게임을 만들고, 플레이하고, 공유할 수 있는 무료 오픈 소스 판타지 컴퓨터입니다. 코드, 스프라이트, 지도, 사운드 편집기, 명령줄 등 개발을 위한 도구가 내장되어 있어 미니 레트로 게임을 만들기에 충분합니다. 종료 시 웹사이트에 저장하고 플레이할 수 있는 카트리지 파일을 받게 됩니다. 또한 모든 인기 플랫폼에서 작동하는 플레이어에 게임을 담아 원하는 대로 배포할 수 있습니다. 레트로 스타일의 게임을 만들기 위해 전체 제작 과정은 몇 가지 기술적 제한이 있습니다: 240x136 픽셀 디스플레이, 16 컬러 팔레트, 256 8x8 컬러 스프라이트, 4채널 사운드 등입니다.</systemDescription>
+            <systemHardwareType>엔진</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Motor</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>TIC-80 is a free and open source fantasy computer for making, playing and sharing tiny games. There are built-in tools for development: code, sprites, maps, sound editors and the command line, which is enough to create a mini retro game. At the exit you will get a cartridge file, which can be stored and played on the website. Also, the game can be packed into a player that works on all popular platforms and distribute as you wish. To make a retro styled game the whole process of creation takes place under some technical limitations: 240x136 pixels display, 16 color palette, 256 8x8 color sprites, 4 channel sound and etc.</systemDescription>
+            <systemHardwareType>Engine</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>TIC-80 este un computer fantezie gratuit și cu sursă deschisă pentru crearea, redarea și partajarea jocurilor mici. Există instrumente încorporate pentru dezvoltare: cod, sprite, hărți, editoare de sunet și linie de comandă, ceea ce este suficient pentru a crea un mini-joc retro. La ieșire veți obține un fișier cartuș, care poate fi stocat și jucat pe site. De asemenea, jocul poate fi împachetat într-un player care funcționează pe toate platformele populare și poate fi distribuit după cum doriți. Pentru a face un joc în stil retro, întregul proces de creare are loc sub anumite limitări tehnice: ecran de 240x136 pixeli, paletă de 16 culori, 256 de sprite de 8x8 culori, sunet cu 4 canale etc.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Двигатель</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>TIC-80 is a free and open source fantasy computer for making, playing and sharing tiny games. There are built-in tools for development: code, sprites, maps, sound editors and the command line, which is enough to create a mini retro game. At the exit you will get a cartridge file, which can be stored and played on the website. Also, the game can be packed into a player that works on all popular platforms and distribute as you wish. To make a retro styled game the whole process of creation takes place under some technical limitations: 240x136 pixels display, 16 color palette, 256 8x8 color sprites, 4 channel sound and etc.</systemDescription>
+            <systemHardwareType>Engine</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>TIC-80 är en fantasidator med fri och öppen källkod för att skapa, spela och dela små spel. Det finns inbyggda verktyg för utveckling: kod, sprites, kartor, ljudredigerare och kommandoraden, vilket är tillräckligt för att skapa ett miniretrospel. Vid utgången får du en cartridge-fil, som kan lagras och spelas på webbplatsen. Spelet kan också packas in i en spelare som fungerar på alla populära plattformar och distribueras som du vill. För att skapa ett spel i retrostil sker hela skapandeprocessen under vissa tekniska begränsningar: 240x136 pixlars skärm, 16 färgpalett, 256 8x8 färgsprites, 4-kanals ljud och så vidare.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>TIC-80は、小さなゲームを作り、遊び、共有するためのフリーでオープンソースのファンタジーコンピュータです。コード、スプライト、マップ、サウンドエディター、コマンドラインなど、開発のためのツールが組み込まれており、ミニ・レトロゲームを作るのに十分です。終了時にはカートリッジファイルが作成され、ウェブサイトに保存してプレイすることができます。また、ゲームはすべての一般的なプラットフォームで動作するプレイヤーにパックすることができ、あなたが望むように配布することができます。レトロスタイルのゲームを作るために、作成のすべてのプロセスは、いくつかの技術的な制限の下で行われます：240x136ピクセルのディスプレイ、16色パレット、8x8色のスプライト256個、4チャンネルのサウンドなど。</systemDescription>
-            <systemHardwareType>エンジン</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>TIC-80은 작은 게임을 만들고, 플레이하고, 공유할 수 있는 무료 오픈 소스 판타지 컴퓨터입니다. 코드, 스프라이트, 지도, 사운드 편집기, 명령줄 등 개발을 위한 도구가 내장되어 있어 미니 레트로 게임을 만들기에 충분합니다. 종료 시 웹사이트에 저장하고 플레이할 수 있는 카트리지 파일을 받게 됩니다. 또한 모든 인기 플랫폼에서 작동하는 플레이어에 게임을 담아 원하는 대로 배포할 수 있습니다. 레트로 스타일의 게임을 만들기 위해 전체 제작 과정은 몇 가지 기술적 제한이 있습니다: 240x136 픽셀 디스플레이, 16 컬러 팔레트, 256 8x8 컬러 스프라이트, 4채널 사운드 등입니다.</systemDescription>
-            <systemHardwareType>엔진</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

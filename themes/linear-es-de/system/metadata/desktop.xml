@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>Various</systemReleaseDateFormated>
         <systemHardwareType>Folder</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>39B1DE</systemColor>
         <systemColorPalette1>5475B7</systemColorPalette1>
         <systemColorPalette2>503E7A</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>5C5599</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>عرض اختصارات سطح المكتب وتشغيلها</systemDescription>
+            <systemHardwareType>المجلد</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Pogledajte i pokrenite svoje prečice radne površine</systemDescription>
+            <systemHardwareType>Mapa</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Veure i executar les dreceres d'escriptori</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Dossier</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Pogledajte i pokrenite prečace na radnoj površini</systemDescription>
+            <systemHardwareType>Mapa</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Visualizzare ed eseguire i collegamenti al desktop</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>デスクトップショートカットの表示と実行</systemDescription>
+            <systemHardwareType>フォルダ</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>데스크톱 바로 가기 보기 및 실행</systemDescription>
+            <systemHardwareType>폴더</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Pasta</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>Veja e execute seus atalhos de mesa</systemDescription>
+            <systemHardwareType>Pasta</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Vizualizați și rulați comenzile rapide de pe desktop</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Папка</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Погледајте и покрените пречице за радну површину</systemDescription>
+            <systemHardwareType>Мапа</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Visa och kör dina genvägar på skrivbordet</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>デスクトップショートカットの表示と実行</systemDescription>
-            <systemHardwareType>フォルダ</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>데스크톱 바로 가기 보기 및 실행</systemDescription>
-            <systemHardwareType>폴더</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

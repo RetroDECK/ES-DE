@@ -223,6 +223,20 @@
             <langYourCollections>Dina Samlingar</langYourCollections>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <langLabelRating>Đánh giá</langLabelRating>
+            <langLabelReleasedate>Ngày phát hành</langLabelReleasedate>
+            <langLabelPlayers>Người chơi</langLabelPlayers>
+            <langLabelGenre>Thể loại</langLabelGenre>
+            <langLabelDeveloper>Nhà phát triển</langLabelDeveloper>
+            <langLabelPublisher>Nhà xuất bản</langLabelPublisher>
+            <langLabelLastPlayed>Lần chơi cuối</langLabelLastPlayed>
+            <langLabelPlayTime>Thời gian chơi</langLabelPlayTime>
+            <langCustomCollections>Bộ sưu tập tùy chỉnh</langCustomCollections>
+            <langYourCollections>Bộ sưu tập của bạn</langYourCollections>
+        </variables>
+    </language>
     <language name="ar_SA">
         <variables>
             <langLabelRating>التقيم</langLabelRating>

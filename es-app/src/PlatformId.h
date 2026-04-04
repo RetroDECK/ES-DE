@@ -71,6 +71,7 @@ namespace PlatformIds
         HARTUNG_GAME_MASTER,
         AMSTRAD_GX4000,
         INTELLIVISION,
+        J2ME,
         LCD_GAMES,
         GAMEENGINE_LOVE,
         GAMEENGINE_LOWRES_NX,

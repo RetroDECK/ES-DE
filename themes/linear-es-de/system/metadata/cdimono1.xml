@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>December 3, 1991</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>c47ca6</systemColor>
         <systemColorPalette1>000000</systemColorPalette1>
         <systemColorPalette2>E70000</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>0B5ED8</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز CD-i (القرص المضغوط التفاعلي) من فيليبس هو مشغل أقراص مضغوطة تفاعلي متعدد الوسائط تم تطويره وتسويقه من قبل شركة رويال فيليبس للإلكترونيات (Royal Philips Electronics N.V.) وقد تم إنشاء هذه الفئة من الأجهزة لتوفير وظائف أكثر من مشغل الأقراص المضغوطة الصوتية أو وحدة التحكم في الألعاب، ولكن بسعر أقل من سعر الكمبيوتر الشخصي المزود بمحرك أقراص مضغوطة في ذلك الوقت. ويرجع التوفير في التكلفة إلى عدم وجود محرك أقراص صلبة ومحرك أقراص مرنة ولوحة مفاتيح وفأرة وشاشة (تم استخدام تلفاز قياسي) وبرامج نظام تشغيل أقل. وبالإضافة إلى الألعاب، تم إنتاج عناوين مرجعية تعليمية ومتعددة الوسائط، مثل الموسوعات التفاعلية والجولات في المتاحف وما إلى ذلك قبل انتشار الوصول العام إلى الإنترنت. وكان من بين المنافسين جهاز Tandy VIS و Commodore CDTV. وقد ثبت أن تنسيق CD-i، الذي كان يُنظر إليه كوحدة تحكم في الألعاب، كان فاشلاً تجارياً. فقد خسرت الشركة ما يقرب من مليار دولار على المشروع بأكمله. وتسبب فشل CD-i في ترك فيليبس لصناعة ألعاب الفيديو بعد توقفها. يعد CD-i أيضًا من أوائل وحدات التحكم التي طبقت ميزات الإنترنت، بما في ذلك الاشتراكات وتصفح الويب والتنزيل والبريد الإلكتروني واللعب عبر الإنترنت. وقد تم تسهيل ذلك من خلال استخدام مودم إضافي للأجهزة أصدرته Philips في عام 1996.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Philips CD-I (kompaktni disk interaktivni) je interaktivni multimedijalni CD player razvijen i marketirao Royal Philips Electronics N. V. Ova kategorija uređaja stvorena je za pružanje više funkcionalnosti od audio CD uređaja ili na nižoj cijeni od ličnog računala s CD-ROM uređajem u to vrijeme. Ušteda troškova nastala je zbog nedostatka tvrdog diska, diskete, tipkovnice, miša, monitora (korištena standardna televizija) i manje softvera operativnog sistema. Pored igara, proizvedene su edukativne i multimedijske referentne naslove, poput interaktivnih enciklopedija, muzejskih tura itd. Prije javnog interneta bio je rasprostranjen. Natjecatelji su uključivali Tandy Vis i Commodore CDTV. Gledano kao igračka konzola, CD-I format se pokazao kao komercijalni kvar. Kompanija je na cijelom projektu izgubila gotovo milijardu dolara. Neuspjeh CD-a - izazvao sam Philips da napuste industriju video igara nakon što je prekinuta. CD-I je takođe jedna od najranijih konzola za implementaciju internetskih značajki, uključujući pretplate, web pretraživanje, preuzimanje, e-poštu i online reprodukciju. To je olakšalo korištenje dodatnog hardverskog modema koji je Philips objavio 1996. godine.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El Philips CD-I (Compact Disc Interactive) és un reproductor de CD multimèdia interactiu desenvolupat i comercialitzat per Royal Philips Electronics N. V. Aquesta categoria de dispositiu va ser creada per proporcionar més funcionalitat que un reproductor de CD o consola de jocs d'àudioordinador personal amb unitat de CD-ROM en aquell moment. L’estalvi de costos es va deure a la manca d’un disc dur, disquet, teclat, ratolí, monitor (es va utilitzar un televisor estàndard) i menys programari del sistema operatiu. A més dels jocs, es van produir títols de referència educatius i multimèdia, com enciclopèdies interactives, visites museístiques, etc. abans que l’accés públic a Internet fos generalitzat. Entre els competidors es van incloure el CDTV de Tandy Vis i Commodore. Vist com una consola de jocs, el format CD-I va resultar ser un fracàs comercial. La companyia va perdre prop de mil milions de dòlars en tot el projecte. El fracàs del CD-I va fer que Philips abandonés la indústria dels videojocs un cop es va suspendre. El CD-I també és una de les primeres consoles per implementar funcions a Internet, incloses subscripcions, navegació web, descàrrega, correu electrònic i joc en línia. Això es va facilitar per l’ús d’un mòdem de maquinari addicional que Philips va publicar el 1996.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Philips CD-I (Compact Disc Interactive) interaktivni je multimedijski CD player koji je razvio i plasirao na tržište Royal Philips Electronics N. V. Ova je kategorija uređaja stvorena kako bi osigurala više funkcionalnosti od audio CD playera ili konzole za igru, ali po nižoj cijeni od osobnog računala s CD-ROM pogonom u to vrijeme. Ušteda troškova nastala je zbog nedostatka tvrdog diska, diskete, tipkovnice, miša, monitora (korištena je standardna televizija) i manje softvera operativnog sustava. Pored igara, izrađeni su edukativni i multimedijski referentni naslovi, poput interaktivnih enciklopedija, turneja muzeja itd. Prije nego što je javni pristup internetu bio široko rasprostranjen. Natjecatelji su uključivali Tandy Vis i Commodore CDTV. Gledano kao igračka konzola, CD-I format pokazao se kao komercijalni neuspjeh. Tvrtka je izgubila gotovo milijardu dolara na cijelom projektu. Neuspjeh CD-I uzrokovao je Philips da napusti industriju videoigara nakon što je ukinut. CD-I je također jedna od najranijih konzola za implementaciju internetskih značajki, uključujući pretplate, pregledavanje web mjesta, preuzimanje, e-poštu i internetsku igru. To je olakšano korištenjem dodatnog hardverskog modema koji je Philips objavio 1996. godine.</systemDescription>
+            <systemHardwareType>Konzola</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Philips CD-i (Compact Disc Interactive) è un lettore CD multimediale interattivo sviluppato e commercializzato da Royal Philips Electronics N.V. Questa categoria di dispositivi è stata creata per fornire più funzionalità di un lettore CD audio o di una console per videogiochi, ma a un prezzo inferiore rispetto a quello di un personal computer con unità CD-ROM dell'epoca. La riduzione dei costi era dovuta all'assenza di disco rigido, unità floppy, tastiera, mouse, monitor (si utilizzava un televisore standard) e una minore quantità di software del sistema operativo. Oltre ai giochi, furono prodotti titoli di riferimento educativi e multimediali, come enciclopedie interattive, visite ai musei, ecc. prima che l'accesso pubblico a Internet fosse diffuso. Tra i concorrenti vi erano il Tandy VIS e il Commodore CDTV. Considerato come una console per videogiochi, il formato CD-i si rivelò un fallimento commerciale. L'azienda perse quasi un miliardo di dollari per l'intero progetto. L'insuccesso del CD-i portò Philips ad abbandonare il settore dei videogiochi dopo la sua dismissione. Il CD-i è anche una delle prime console a implementare le funzionalità di Internet, tra cui abbonamenti, navigazione sul Web, download, e-mail e gioco online. Ciò è stato facilitato dall'uso di un modem hardware aggiuntivo che Philips ha rilasciato nel 1996.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>Philips CD-i（Compact Disc Interactive）は、Royal Philips Electronics N.V.が開発・販売したインタラクティブ・マルチメディアCDプレーヤーである。このカテゴリの機器は、オーディオCDプレーヤーやゲーム機よりも高機能でありながら、当時のCD-ROMドライブ付きパソコンよりも低価格を実現するために作られた。ハードドライブ、フロッピードライブ、キーボード、マウス、モニター（標準的なテレビが使われた）がなく、オペレーティングシステムソフトウェアも少なかったため、コスト削減ができた。ゲームだけでなく、インタラクティブな百科事典や博物館ツアーなど、教育的でマルチメディアなレファレンス・タイトルも、一般のインターネット・アクセスが普及する前に制作された。競合機種としては、タンディVISやコモドールCDTVがあった。ゲーム機として見られたCD-iフォーマットは、商業的には失敗に終わった。同社はプロジェクト全体で10億ドル近い損失を出した。CD-iの失敗により、フィリップスは製造中止後、ビデオゲーム業界から撤退した。CD-iはまた、定額制、ウェブブラウジング、ダウンロード、電子メール、オンラインプレイなどのインターネット機能を実装した初期のゲーム機のひとつでもある。これは、フィリップスが1996年に発売した追加ハードウェアモデムの使用によって実現した。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>필립스 CD-i(컴팩트 디스크 인터랙티브)는 로열 필립스 일렉트로닉스에서 개발 및 판매한 대화형 멀티미디어 CD 플레이어로, 오디오 CD 플레이어나 게임 콘솔보다 더 많은 기능을 제공하면서도 당시 CD-ROM 드라이브가 장착된 개인용 컴퓨터보다 저렴한 가격으로 제작되었습니다. 하드 드라이브, 플로피 드라이브, 키보드, 마우스, 모니터(표준 텔레비전이 사용됨)가 없고 운영 체제 소프트웨어가 적었기 때문에 비용을 절감할 수 있었습니다. 공용 인터넷이 보급되기 전에는 게임 외에도 대화형 백과사전, 박물관 투어 등 교육용 및 멀티미디어 참고용 타이틀이 제작되었습니다. 경쟁 제품으로는 탠디 VIS와 코모도어 CDTV가 있었습니다. 게임 콘솔로 여겨졌던 CD-i 포맷은 상업적으로 실패로 돌아갔습니다. 회사는 전체 프로젝트에서 10억 달러에 가까운 손실을 입었습니다. CD-i의 실패로 인해 필립스는 단종 후 비디오 게임 산업에서 철수했습니다. CD-i는 구독, 웹 브라우징, 다운로드, 이메일, 온라인 플레이 등 인터넷 기능을 가장 먼저 구현한 콘솔 중 하나이기도 합니다. 이는 필립스가 1996년에 출시한 추가 하드웨어 모뎀을 사용함으로써 가능했습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Philips CD-I (Compact Disc Interactive) é um CD player interativo multimídia desenvolvido e comercializado pela Royal Philips Electronics N. V. Esta categoria de dispositivo foi criada para fornecer mais funcionalidade do que um CD player ou console de jogo, mas a um preço mais baixo do que um computador pessoal com unidade de CD-ROM na época. A economia de custos foi devida à falta de disco rígido, disquete, teclado, mouse, monitor (uma televisão padrão foi usada) e menos software de sistema operacional. Além dos jogos, foram produzidos títulos de referência educacional e multimídia, como enciclopédias interativas, passeios de museus etc. antes que o acesso público à Internet fosse generalizado. Os concorrentes incluíram o Tandy Vis e o Commodore CDTV. Visto como um console de jogo, o formato CD-I provou ser um fracasso comercial. A empresa perdeu quase um bilhão de dólares em todo o projeto. O fracasso do CD-I fez com que a Philips deixasse a indústria de videogames depois que ela foi interrompida. O CD-I também é um dos primeiros consoles para implementar recursos da Internet, incluindo assinaturas, navegação na Web, download, e-mail e reprodução on-line. Isso foi facilitado pelo uso de um modem de hardware adicional lançado em 1996.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Philips CD-i (Compact Disc Interactive) este un CD player multimedia interactiv dezvoltat și comercializat de Royal Philips Electronics N.V. Această categorie de dispozitive a fost creată pentru a oferi mai multe funcționalități decât un CD player audio sau o consolă de jocuri, dar la un preț mai mic decât un computer personal cu unitate CD-ROM la acea vreme. Reducerea costurilor se datora lipsei unui hard disk, a unei unități de dischetă, a unei tastaturi, a unui mouse, a unui monitor (se folosea un televizor standard) și a mai puțin software pentru sistemul de operare. În plus față de jocuri, au fost produse titluri de referință educaționale și multimedia, cum ar fi enciclopedii interactive, tururi ale muzeelor etc. înainte ca accesul public la internet să fie larg răspândit. Printre concurenți se numărau Tandy VIS și Commodore CDTV. Văzut ca o consolă de jocuri, formatul CD-i s-a dovedit a fi un eșec comercial. Compania a pierdut aproape un miliard de dolari pe întregul proiect. Eșecul CD-i a determinat Philips să părăsească industria jocurilor video după ce a fost abandonat. CD-i este, de asemenea, una dintre primele console care a implementat funcții de internet, inclusiv abonamente, navigare pe internet, descărcare, e-mail și jocuri online. Acest lucru a fost facilitat de utilizarea unui modem hardware suplimentar pe care Philips l-a lansat în 1996.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>ПХИЛИПС ЦД-И (компактни дисков интерактиван) је интерактивни мултимедијални ЦД плејер који је развио и продао Роиал Пхилипс Елецтроницс Н.В. Ова категорија уређаја је створена да пружи више функционалности него аудио ЦД плејер или у нижој цени од личног рачунара у то време.Уштеда трошкова била је последица недостатка тврдог диска, дискете, тастатуре, миша, монитора (коришћена је стандардна телевизија) и мање софтвера за оперативни систем.Поред игара, произведени су образовни и мултимедијални референтни наслови, као што су интерактивне енциклопедије, музејске туре итд. Пре јавног приступа Интернету је распрострањен.Такмичари су укључивали Танди Вис и Цоммодоре ЦДТВ.Гледано као конзола игара, формат ЦД-ја показао се комерцијалним неуспехом.Компанија је изгубила скоро милијарду долара на целом пројекту.Неуспјех ЦД-ја сам изазвао Пхилипс да напусте индустрију видео игара након што је прекинута.ЦД-И је такође један од најранијих конзола за примену Интернет функција, укључујући претплате, веб прегледање, преузимање, е-пошту и интернетску игру.То је олакшано употребом додатног хардверског модема који је Пхилипс објавио 1996. године.</systemDescription>
+            <systemHardwareType>Конзола</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Philips CD-i (Compact Disc Interactive) är en interaktiv multimedia-CD-spelare som utvecklats och marknadsförs av Royal Philips Electronics N.V. Denna typ av enhet skapades för att erbjuda fler funktioner än en ljud-CD-spelare eller spelkonsol, men till ett lägre pris än en persondator med CD-ROM-enhet på den tiden. Kostnadsbesparingarna berodde på avsaknaden av hårddisk, diskettenhet, tangentbord, mus, bildskärm (en vanlig TV användes) och mindre programvara för operativsystemet. Förutom spel producerades även utbildnings- och multimediareferenser, t.ex. interaktiva uppslagsverk, museiturer m.m. innan Internet var allmänt tillgängligt för allmänheten. Konkurrenter var bland annat Tandy VIS och Commodore CDTV. CD-iformatet, som sågs som en spelkonsol, visade sig vara ett kommersiellt misslyckande. Företaget förlorade nästan en miljard dollar på hela projektet. Misslyckandet med CD-i ledde till att Philips lämnade videospelbranschen efter att den tagits ur drift. CD-i är också en av de första konsolerna med internetfunktioner, inklusive prenumerationer, webbsurfning, nedladdning, e-post och onlinespel. Detta underlättades genom att använda ett extra hårdvarumodem som Philips släppte 1996.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>Philips CD-i（Compact Disc Interactive）は、Royal Philips Electronics N.V.が開発・販売したインタラクティブ・マルチメディアCDプレーヤーである。このカテゴリの機器は、オーディオCDプレーヤーやゲーム機よりも高機能でありながら、当時のCD-ROMドライブ付きパソコンよりも低価格を実現するために作られた。ハードドライブ、フロッピードライブ、キーボード、マウス、モニター（標準的なテレビが使われた）がなく、オペレーティングシステムソフトウェアも少なかったため、コスト削減ができた。ゲームだけでなく、インタラクティブな百科事典や博物館ツアーなど、教育的でマルチメディアなレファレンス・タイトルも、一般のインターネット・アクセスが普及する前に制作された。競合機種としては、タンディVISやコモドールCDTVがあった。ゲーム機として見られたCD-iフォーマットは、商業的には失敗に終わった。同社はプロジェクト全体で10億ドル近い損失を出した。CD-iの失敗により、フィリップスは製造中止後、ビデオゲーム業界から撤退した。CD-iはまた、定額制、ウェブブラウジング、ダウンロード、電子メール、オンラインプレイなどのインターネット機能を実装した初期のゲーム機のひとつでもある。これは、フィリップスが1996年に発売した追加ハードウェアモデムの使用によって実現した。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>필립스 CD-i(컴팩트 디스크 인터랙티브)는 로열 필립스 일렉트로닉스에서 개발 및 판매한 대화형 멀티미디어 CD 플레이어로, 오디오 CD 플레이어나 게임 콘솔보다 더 많은 기능을 제공하면서도 당시 CD-ROM 드라이브가 장착된 개인용 컴퓨터보다 저렴한 가격으로 제작되었습니다. 하드 드라이브, 플로피 드라이브, 키보드, 마우스, 모니터(표준 텔레비전이 사용됨)가 없고 운영 체제 소프트웨어가 적었기 때문에 비용을 절감할 수 있었습니다. 공용 인터넷이 보급되기 전에는 게임 외에도 대화형 백과사전, 박물관 투어 등 교육용 및 멀티미디어 참고용 타이틀이 제작되었습니다. 경쟁 제품으로는 탠디 VIS와 코모도어 CDTV가 있었습니다. 게임 콘솔로 여겨졌던 CD-i 포맷은 상업적으로 실패로 돌아갔습니다. 회사는 전체 프로젝트에서 10억 달러에 가까운 손실을 입었습니다. CD-i의 실패로 인해 필립스는 단종 후 비디오 게임 산업에서 철수했습니다. CD-i는 구독, 웹 브라우징, 다운로드, 이메일, 온라인 플레이 등 인터넷 기능을 가장 먼저 구현한 콘솔 중 하나이기도 합니다. 이는 필립스가 1996년에 출시한 추가 하드웨어 모뎀을 사용함으로써 가능했습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">
