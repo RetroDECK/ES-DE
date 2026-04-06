@@ -16,6 +16,7 @@ Sharp continues to sell desktop PC/TV combos in Japan through its Internet Aquos
         <systemReleaseDateFormated>1982</systemReleaseDateFormated>
         <systemHardwareType>Computer</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>c2433a</systemColor>
         <systemColorPalette1>752421</systemColorPalette1>
         <systemColorPalette2>4A90CB</systemColorPalette2>
@@ -23,6 +24,34 @@ Sharp continues to sell desktop PC/TV combos in Japan through its Internet Aquos
         <systemColorPalette4>28333D</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز X1 (エッ ク ス ワン, Ekkusuwan)، الذي يُطلق عليه أحيانًا Sharp X1، هو سلسلة من أجهزة الكمبيوتر المنزلية التي أصدرتها شركة Sharp من عام 1982 إلى عام 1988. وكانت تعتمد على وحدة المعالجة المركزية Z80.
+
+على الرغم من أن قسم الكمبيوتر في شركة Sharp كان قد أصدر سلسلة MZ، إلا أن قسم التلفزيون أصدر فجأة سلسلة كمبيوترات جديدة أطلق عليها X1. في الوقت الذي تم فيه إصدار X1 الأصلي، كانت جميع أجهزة الكمبيوتر المنزلية الأخرى تحتوي بشكل عام على لغة BASIC في ذاكرة القراءة فقط. إلا أن X1 لم يكن لدى X1 ذاكرة ROM للغة BASIC، وكان عليه تحميل مترجم لغة BASIC من شريط كاسيت. ولكن على الجانب الإيجابي، كان هذا المفهوم يعني أن مساحة ذاكرة الوصول العشوائي (RAM) الخالية كانت متاحة بأكبر قدر ممكن عند عدم استخدام لغة BASIC. وقد نُسخت هذه السياسة في الأصل من سلسلة Sharp MZ، وكانت تسمى الحواسيب النظيفة في اليابان. كما كان شكل خزانة X1 أكثر أناقة من غيرها في ذلك الوقت، وكان يمكن اختيار مجموعة من ألوان الخزانة (بما في ذلك اللون الأحمر).
+
+كانت شاشة العرض RGB الخاصة بجهاز X1 مزودة بموالف تلفزيون، ويمكن تركيب شاشة كمبيوتر على التلفزيون. كان يمكن التحكم في جميع وظائف التلفزيون من برنامج كمبيوتر. كان خط الأحرف قابلاً للبرمجة بالكامل (المعروف أيضًا باسم PCG) مع ألوان 4 بت، وتم استخدامه بفعالية في العديد من الألعاب. تم تعيين ذاكرة VRAM بأكملها على منطقة الإدخال/الإخراج، لذا كان يتم التحكم بها دون تبديل البنك. نظرًا لأن X1 كان يحتوي على هذه الميزات، فقد كان قويًا جدًا لبرامج الألعاب.
+
+بينما كان X1 يكافح من أجل البيع، كان جهاز PC8801 (من NEC) يحظى بشعبية كبيرة في السوق اليابانية. في عام 1984، أصدرت Sharp سلسلة X1 توربو X1 برسومات عالية الدقة (640 × 400، بينما كان X1 يحتوي على 640 × 200). كان بها العديد من التحسينات، لكن سرعة الساعة كانت لا تزال 4 ميجاهرتز فقط. في عام 1986، أصدرت Sharp سلسلة X1 توربو Z سلسلة X1 مع شاشة RGB تناظرية ملونة 4096. وأخيرًا تم إصدار توأم X1، الذي كان يحتوي على محرك كمبيوتر في الخزانة، كآخر جهاز من سلسلة X1 في عام 1987. ثم خلفت هذه السلسلة سلسلة X68000 سلسلة X68000.
+
+تواصل Sharp بيع أجهزة الكمبيوتر المكتبي/التلفزيون المكتبي في اليابان من خلال خط الإنترنت Aquos، حيث يتوفر نظام ألوان أحمر على غرار X1.</systemDescription>
+            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>The X1 (エックスワン, Ekkusuwan), sometimes called the Sharp X1, is a series of home computers released by Sharp Corporation from 1982 to 1988. It was based on a Z80 CPU.
+
+Despite the fact that the Computer Division of Sharp Corporation had released the MZ series, suddenly the Television Division released a new computer series called the X1. At the time the original X1 was released, all other home computers generally had a BASIC language in ROM. However the X1 did not have a BASIC ROM, and it had to load the Hu-BASIC interpreter from a cassette tape. On the plus side however, this concept meant that a free RAM area was available that was as big as possible when not using BASIC. This policy was originally copied from the Sharp MZ series, and they were called clean computers in Japan. The cabinet shape of X1 was also much more stylish than others at that time and a range of cabinet colors (including Red) was selectable.
+
+The RGB display monitor for the X1 had a television tuner, and a computer screen could be super-imposed on TV. All the TV functions could be controlled from a computer program. The character font was completely programmable (A.K.A. PCG) with 4bit color, and was effectively used in many games. The entirety of the VRAM memory was mapped on to the I/O area, so it was controlled without bank switching. Since X1 had these features, it was very powerful for game software.
+
+While X1 was struggling to sell, the PC8801 (from NEC) was quickly becoming popular in the Japanese market. In 1984, Sharp released the X1 turbo series with high resolution graphics (640x400, while X1 had 640x200). It had many improvements, but the clock speed was still only 4 MHz. In 1986, Sharp released the X1 turbo Z series with a 4096 color analog RGB monitor. An X1 twin, which had a PC-Engine in the cabinet, was finally released as the last machine of the X1 series in 1987. Then this series was succeeded by the X68000 series.
+
+Sharp continues to sell desktop PC/TV combos in Japan through its Internet Aquos line, where an X1-style red color scheme is available.</systemDescription>
+            <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>La X1 (エックスワン, Ekkusuwan), de vegades anomenada Sharp X1, és una sèrie d’ordinadors domèstics publicats per Sharp Corporation de 1982 a 1988. Es va basar en una CPU Z80.
@@ -79,6 +108,20 @@ Sharp continue de vendre des combinés PC/TV de bureau au Japon par l'intermédi
             <systemHardwareType>Ordinateur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>The X1 (エックスワン, Ekkusuwan), sometimes called the Sharp X1, is a series of home computers released by Sharp Corporation from 1982 to 1988. It was based on a Z80 CPU.
+
+Despite the fact that the Computer Division of Sharp Corporation had released the MZ series, suddenly the Television Division released a new computer series called the X1. At the time the original X1 was released, all other home computers generally had a BASIC language in ROM. However the X1 did not have a BASIC ROM, and it had to load the Hu-BASIC interpreter from a cassette tape. On the plus side however, this concept meant that a free RAM area was available that was as big as possible when not using BASIC. This policy was originally copied from the Sharp MZ series, and they were called clean computers in Japan. The cabinet shape of X1 was also much more stylish than others at that time and a range of cabinet colors (including Red) was selectable.
+
+The RGB display monitor for the X1 had a television tuner, and a computer screen could be super-imposed on TV. All the TV functions could be controlled from a computer program. The character font was completely programmable (A.K.A. PCG) with 4bit color, and was effectively used in many games. The entirety of the VRAM memory was mapped on to the I/O area, so it was controlled without bank switching. Since X1 had these features, it was very powerful for game software.
+
+While X1 was struggling to sell, the PC8801 (from NEC) was quickly becoming popular in the Japanese market. In 1984, Sharp released the X1 turbo series with high resolution graphics (640x400, while X1 had 640x200). It had many improvements, but the clock speed was still only 4 MHz. In 1986, Sharp released the X1 turbo Z series with a 4096 color analog RGB monitor. An X1 twin, which had a PC-Engine in the cabinet, was finally released as the last machine of the X1 series in 1987. Then this series was succeeded by the X68000 series.
+
+Sharp continues to sell desktop PC/TV combos in Japan through its Internet Aquos line, where an X1-style red color scheme is available.</systemDescription>
+            <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>L'X1 (エックスワン, Ekkusuwan), talvolta chiamato Sharp X1, è una serie di home computer rilasciati da Sharp Corporation dal 1982 al 1988. Era basato su una CPU Z80.
@@ -91,6 +134,34 @@ Mentre l'X1 faticava a vendere, il PC8801 (di NEC) stava rapidamente diventando 
 
 Sharp continua a vendere PC/TV combinati in Giappone attraverso la linea Internet Aquos, dove è disponibile una combinazione di colori rossi in stile X1.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>X1（エックスワン、えくすわん）は、シャープX1と呼ばれることもある、シャープ株式会社が1982年から1988年にかけて発売した家庭用コンピュータのシリーズである。Z80 CPUをベースにしている。
+
+シャープのコンピュータ事業部はMZシリーズを発売していたにもかかわらず、突然テレビ事業部からX1という新しいコンピュータシリーズが発売された。初代X1が発売された当時、他の家庭用パソコンは一般的にROMにBASIC言語が入っていた。しかし、X1にはBASICのROMがなく、Hu-BASICインタプリタをカセットテープから読み込まなければならなかった。しかし、このコンセプトは、BASICを使用しないときに、可能な限り大きな空きRAM領域を確保できることを意味した。この方針は、もともとシャープのMZシリーズを真似たもので、日本ではクリーンコンピュータと呼ばれていた。また、X1の筐体形状は当時としてはかなりスタイリッシュなもので、筐体色（赤を含む）も選択可能であった。
+
+X1のRGBディスプレイ・モニターにはテレビ・チューナーが搭載され、テレビにパソコンの画面を重ねることができた。すべてのテレビ機能はコンピューター・プログラムから制御できた。文字フォントは4ビットカラーで完全にプログラマブル（A.K.A. PCG）であり、多くのゲームで有効に使用された。VRAMメモリはI/Oエリアにすべてマッピングされていたため、バンク切り替えなしで制御できた。このような特徴を持つX1は、ゲームソフトとして非常に強力だった。
+
+X1が苦戦していた頃、日本市場ではPC8801（NEC製）が急速に普及していた。1984年、シャープは高解像度のグラフィック（X1が640x200だったのに対し、X1は640x400）を搭載したX1ターボシリーズを発売した。多くの改良が加えられたが、クロックスピードはまだ4MHzだった。1986年、シャープは4096色のアナログRGBモニターを搭載したX1ターボZシリーズを発売した。1987年、X1シリーズ最後の機種として、キャビネットにPC-Engineを搭載したX1ツインが発売された。その後、このシリーズはX68000シリーズに引き継がれた。
+
+シャープは、インターネット・アクオス・ラインを通じて、デスクトップPCとテレビのコンボ機を日本で販売し続けており、X1スタイルの赤のカラーリングが用意されている。</systemDescription>
+            <systemHardwareType>コンピューター</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>샤프 X1(エックスワン, 에쿠스완)은 1982년부터 1988년까지 샤프에서 출시한 가정용 컴퓨터 시리즈로, 샤프 X1이라고도 불립니다. Z80 CPU를 기반으로 했습니다.
+
+샤프 코퍼레이션의 컴퓨터 사업부에서 MZ 시리즈를 출시했음에도 불구하고 갑자기 텔레비전 사업부에서 X1이라는 새로운 컴퓨터 시리즈를 출시했습니다. 오리지널 X1이 출시될 당시 다른 모든 가정용 컴퓨터에는 일반적으로 ROM에 BASIC 언어가 탑재되어 있었습니다. 하지만 X1에는 BASIC ROM이 없었기 때문에 카세트 테이프에서 Hu-BASIC 인터프리터를 불러와야 했습니다. 그러나 이 개념의 장점은 BASIC을 사용하지 않을 때 가능한 한 큰 RAM 영역을 사용할 수 있다는 것을 의미했습니다. 이 정책은 원래 샤프 MZ 시리즈에서 복사한 것으로, 일본에서는 클린 컴퓨터라고 불렸습니다. X1의 캐비닛 모양도 당시 다른 제품보다 훨씬 세련되었으며 다양한 캐비닛 색상(레드 포함)을 선택할 수 있었습니다.
+
+X1의 RGB 디스플레이 모니터에는 텔레비전 튜너가 장착되어 있어 컴퓨터 화면을 TV에 겹쳐서 볼 수 있었습니다. 모든 TV 기능은 컴퓨터 프로그램에서 제어할 수 있었습니다. 문자 글꼴은 4비트 컬러로 완전히 프로그래밍할 수 있었고(일명 PCG), 많은 게임에서 효과적으로 사용되었습니다. VRAM 메모리 전체가 I/O 영역에 매핑되어 있어 뱅크 전환 없이 제어할 수 있었습니다. X1은 이러한 기능을 갖추고 있었기 때문에 게임 소프트웨어에 매우 강력했습니다.
+
+X1이 판매에 어려움을 겪고 있는 동안 일본 시장에서는 PC8801(NEC)이 빠르게 인기를 얻고 있었습니다. 1984년, 샤프는 고해상도 그래픽(640x400, X1은 640x200)을 갖춘 X1 터보 시리즈를 출시했습니다. 많은 개선이 이루어졌지만 클럭 속도는 여전히 4MHz에 불과했습니다. 1986년 샤프는 4096 컬러 아날로그 RGB 모니터를 장착한 X1 터보 Z 시리즈를 출시했습니다. 1987년에는 캐비닛에 PC 엔진이 탑재된 X1 트윈이 마침내 X1 시리즈의 마지막 제품으로 출시되었습니다. 그 후 이 시리즈는 X68000 시리즈로 이어졌습니다.
+
+샤프는 X1 스타일의 레드 색상을 제공하는 인터넷 아쿠오스 라인을 통해 일본에서 데스크톱 PC/TV 콤보를 계속 판매하고 있습니다.</systemDescription>
+            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -135,6 +206,20 @@ A Sharp continua a vender combinações de PC/TV de mesa no Japão por meio de s
             <systemHardwareType>Computador</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>The X1 (エックスワン, Ekkusuwan), sometimes called the Sharp X1, is a series of home computers released by Sharp Corporation from 1982 to 1988. It was based on a Z80 CPU.
+
+Despite the fact that the Computer Division of Sharp Corporation had released the MZ series, suddenly the Television Division released a new computer series called the X1. At the time the original X1 was released, all other home computers generally had a BASIC language in ROM. However the X1 did not have a BASIC ROM, and it had to load the Hu-BASIC interpreter from a cassette tape. On the plus side however, this concept meant that a free RAM area was available that was as big as possible when not using BASIC. This policy was originally copied from the Sharp MZ series, and they were called clean computers in Japan. The cabinet shape of X1 was also much more stylish than others at that time and a range of cabinet colors (including Red) was selectable.
+
+The RGB display monitor for the X1 had a television tuner, and a computer screen could be super-imposed on TV. All the TV functions could be controlled from a computer program. The character font was completely programmable (A.K.A. PCG) with 4bit color, and was effectively used in many games. The entirety of the VRAM memory was mapped on to the I/O area, so it was controlled without bank switching. Since X1 had these features, it was very powerful for game software.
+
+While X1 was struggling to sell, the PC8801 (from NEC) was quickly becoming popular in the Japanese market. In 1984, Sharp released the X1 turbo series with high resolution graphics (640x400, while X1 had 640x200). It had many improvements, but the clock speed was still only 4 MHz. In 1986, Sharp released the X1 turbo Z series with a 4096 color analog RGB monitor. An X1 twin, which had a PC-Engine in the cabinet, was finally released as the last machine of the X1 series in 1987. Then this series was succeeded by the X68000 series.
+
+Sharp continues to sell desktop PC/TV combos in Japan through its Internet Aquos line, where an X1-style red color scheme is available.</systemDescription>
+            <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>X1 (エックスワン, Ekkusuwan), uneori numit Sharp X1, este o serie de computere de acasă lansate de Sharp Corporation din 1982 până în 1988. Acesta a fost bazat pe un CPU Z80.
@@ -163,6 +248,20 @@ Sharp продолжает продавать настольные ПК/теле
             <systemHardwareType>Компьютер</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>The X1 (エックスワン, Ekkusuwan), sometimes called the Sharp X1, is a series of home computers released by Sharp Corporation from 1982 to 1988. It was based on a Z80 CPU.
+
+Despite the fact that the Computer Division of Sharp Corporation had released the MZ series, suddenly the Television Division released a new computer series called the X1. At the time the original X1 was released, all other home computers generally had a BASIC language in ROM. However the X1 did not have a BASIC ROM, and it had to load the Hu-BASIC interpreter from a cassette tape. On the plus side however, this concept meant that a free RAM area was available that was as big as possible when not using BASIC. This policy was originally copied from the Sharp MZ series, and they were called clean computers in Japan. The cabinet shape of X1 was also much more stylish than others at that time and a range of cabinet colors (including Red) was selectable.
+
+The RGB display monitor for the X1 had a television tuner, and a computer screen could be super-imposed on TV. All the TV functions could be controlled from a computer program. The character font was completely programmable (A.K.A. PCG) with 4bit color, and was effectively used in many games. The entirety of the VRAM memory was mapped on to the I/O area, so it was controlled without bank switching. Since X1 had these features, it was very powerful for game software.
+
+While X1 was struggling to sell, the PC8801 (from NEC) was quickly becoming popular in the Japanese market. In 1984, Sharp released the X1 turbo series with high resolution graphics (640x400, while X1 had 640x200). It had many improvements, but the clock speed was still only 4 MHz. In 1986, Sharp released the X1 turbo Z series with a 4096 color analog RGB monitor. An X1 twin, which had a PC-Engine in the cabinet, was finally released as the last machine of the X1 series in 1987. Then this series was succeeded by the X68000 series.
+
+Sharp continues to sell desktop PC/TV combos in Japan through its Internet Aquos line, where an X1-style red color scheme is available.</systemDescription>
+            <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>X1 (エックスワン, Ekkusuwan), ibland kallad Sharp X1, är en serie hemdatorer som släpptes av Sharp Corporation mellan 1982 och 1988. Den var baserad på en Z80-processor.
@@ -175,34 +274,6 @@ Medan X1 hade svårt att sälja blev PC8801 (från NEC) snabbt populär på den 
 
 Sharp fortsätter att sälja stationära PC/TV-kombinationer i Japan genom sin Internet Aquos-linje, där en röd färgskala i X1-stil finns tillgänglig.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>X1（エックスワン、えくすわん）は、シャープX1と呼ばれることもある、シャープ株式会社が1982年から1988年にかけて発売した家庭用コンピュータのシリーズである。Z80 CPUをベースにしている。
-
-シャープのコンピュータ事業部はMZシリーズを発売していたにもかかわらず、突然テレビ事業部からX1という新しいコンピュータシリーズが発売された。初代X1が発売された当時、他の家庭用パソコンは一般的にROMにBASIC言語が入っていた。しかし、X1にはBASICのROMがなく、Hu-BASICインタプリタをカセットテープから読み込まなければならなかった。しかし、このコンセプトは、BASICを使用しないときに、可能な限り大きな空きRAM領域を確保できることを意味した。この方針は、もともとシャープのMZシリーズを真似たもので、日本ではクリーンコンピュータと呼ばれていた。また、X1の筐体形状は当時としてはかなりスタイリッシュなもので、筐体色（赤を含む）も選択可能であった。
-
-X1のRGBディスプレイ・モニターにはテレビ・チューナーが搭載され、テレビにパソコンの画面を重ねることができた。すべてのテレビ機能はコンピューター・プログラムから制御できた。文字フォントは4ビットカラーで完全にプログラマブル（A.K.A. PCG）であり、多くのゲームで有効に使用された。VRAMメモリはI/Oエリアにすべてマッピングされていたため、バンク切り替えなしで制御できた。このような特徴を持つX1は、ゲームソフトとして非常に強力だった。
-
-X1が苦戦していた頃、日本市場ではPC8801（NEC製）が急速に普及していた。1984年、シャープは高解像度のグラフィック（X1が640x200だったのに対し、X1は640x400）を搭載したX1ターボシリーズを発売した。多くの改良が加えられたが、クロックスピードはまだ4MHzだった。1986年、シャープは4096色のアナログRGBモニターを搭載したX1ターボZシリーズを発売した。1987年、X1シリーズ最後の機種として、キャビネットにPC-Engineを搭載したX1ツインが発売された。その後、このシリーズはX68000シリーズに引き継がれた。
-
-シャープは、インターネット・アクオス・ラインを通じて、デスクトップPCとテレビのコンボ機を日本で販売し続けており、X1スタイルの赤のカラーリングが用意されている。</systemDescription>
-            <systemHardwareType>コンピューター</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>샤프 X1(エックスワン, 에쿠스완)은 1982년부터 1988년까지 샤프에서 출시한 가정용 컴퓨터 시리즈로, 샤프 X1이라고도 불립니다. Z80 CPU를 기반으로 했습니다.
-
-샤프 코퍼레이션의 컴퓨터 사업부에서 MZ 시리즈를 출시했음에도 불구하고 갑자기 텔레비전 사업부에서 X1이라는 새로운 컴퓨터 시리즈를 출시했습니다. 오리지널 X1이 출시될 당시 다른 모든 가정용 컴퓨터에는 일반적으로 ROM에 BASIC 언어가 탑재되어 있었습니다. 하지만 X1에는 BASIC ROM이 없었기 때문에 카세트 테이프에서 Hu-BASIC 인터프리터를 불러와야 했습니다. 그러나 이 개념의 장점은 BASIC을 사용하지 않을 때 가능한 한 큰 RAM 영역을 사용할 수 있다는 것을 의미했습니다. 이 정책은 원래 샤프 MZ 시리즈에서 복사한 것으로, 일본에서는 클린 컴퓨터라고 불렸습니다. X1의 캐비닛 모양도 당시 다른 제품보다 훨씬 세련되었으며 다양한 캐비닛 색상(레드 포함)을 선택할 수 있었습니다.
-
-X1의 RGB 디스플레이 모니터에는 텔레비전 튜너가 장착되어 있어 컴퓨터 화면을 TV에 겹쳐서 볼 수 있었습니다. 모든 TV 기능은 컴퓨터 프로그램에서 제어할 수 있었습니다. 문자 글꼴은 4비트 컬러로 완전히 프로그래밍할 수 있었고(일명 PCG), 많은 게임에서 효과적으로 사용되었습니다. VRAM 메모리 전체가 I/O 영역에 매핑되어 있어 뱅크 전환 없이 제어할 수 있었습니다. X1은 이러한 기능을 갖추고 있었기 때문에 게임 소프트웨어에 매우 강력했습니다.
-
-X1이 판매에 어려움을 겪고 있는 동안 일본 시장에서는 PC8801(NEC)이 빠르게 인기를 얻고 있었습니다. 1984년, 샤프는 고해상도 그래픽(640x400, X1은 640x200)을 갖춘 X1 터보 시리즈를 출시했습니다. 많은 개선이 이루어졌지만 클럭 속도는 여전히 4MHz에 불과했습니다. 1986년 샤프는 4096 컬러 아날로그 RGB 모니터를 장착한 X1 터보 Z 시리즈를 출시했습니다. 1987년에는 캐비닛에 PC 엔진이 탑재된 X1 트윈이 마침내 X1 시리즈의 마지막 제품으로 출시되었습니다. 그 후 이 시리즈는 X68000 시리즈로 이어졌습니다.
-
-샤프는 X1 스타일의 레드 색상을 제공하는 인터넷 아쿠오스 라인을 통해 일본에서 데스크톱 PC/TV 콤보를 계속 판매하고 있습니다.</systemDescription>
-            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

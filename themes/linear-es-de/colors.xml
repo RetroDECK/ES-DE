@@ -35,6 +35,24 @@
             <gamelistWatermarkLogoColor>707070</gamelistWatermarkLogoColor>
         </variables>
     </colorScheme>
+    <colorScheme name="oled">
+        <variables>
+            <!-- Both system and gamelist views -->
+            <helpsystemPanelColor>000000</helpsystemPanelColor>
+            <backgroundColor>000000</backgroundColor>
+            <primaryColor>FAFAFA</primaryColor>
+            <secondaryColor>C2C2C2</secondaryColor>
+            <tertiaryColor>C2C2C2</tertiaryColor>
+
+            <!-- Gamelist view -->
+            <gamelistTextlistSelectorColor>FFFFFF</gamelistTextlistSelectorColor>
+            <gamelistTextlistPrimaryColor>777777</gamelistTextlistPrimaryColor>
+            <gamelistTextlistSecondaryColor>BBBBBB</gamelistTextlistSecondaryColor>
+            <gamelistMetadataPanelColor>000000</gamelistMetadataPanelColor>
+            <gamelistMetadataLabelColor>ABABAB</gamelistMetadataLabelColor>
+            <gamelistWatermarkLogoColor>545454</gamelistWatermarkLogoColor>
+        </variables>
+    </colorScheme>
     <colorScheme name="nso">
         <variables>
             <!-- Both system and gamelist views -->

@@ -10,6 +10,7 @@ The original Macintosh is the first successful mass-market all-in-one desktop pe
         <systemReleaseDateFormated>January 1984</systemReleaseDateFormated>
         <systemHardwareType>Computer</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>12a3df</systemColor>
         <systemColorPalette1>76B845</systemColorPalette1>
         <systemColorPalette2>E19433</systemColorPalette2>
@@ -17,6 +18,22 @@ The original Macintosh is the first successful mass-market all-in-one desktop pe
         <systemColorPalette4>C45152</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز ماكنتوش (Macintosh (Mac بشكل أساسي منذ عام 1998) هو عائلة من أجهزة الكمبيوتر الشخصية التي تم تصميمها وتصنيعها وبيعها من قبل شركة Apple Inc. (في الأصل باسم Apple Computer, Inc.) منذ يناير 1984.
+
+يعد جهاز ماكنتوش الأصلي أول كمبيوتر شخصي مكتبي متعدد الإمكانات ناجح في السوق الشامل يتميز بواجهة مستخدم رسومية وشاشة مدمجة وماوس. باعت Apple جهاز ماكنتوش إلى جانب عائلاتها الشهيرة Apple II وApple IIGS وApple III وApple Lisa حتى توقفت الطرازات الأخرى في التسعينيات.</systemDescription>
+            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Macintosh (uglavnom Mac od 1998.) je porodica ličnih računara dizajnirana, proizvedena i prodana od strane Apple Inc. (izvorno kao Apple Computer, Inc.) od januara 1984. godine.
+
+Originalni Macintosh je prvi uspješan lični računar na tržištu masovnog tržišta koji je bio predstavio grafičko korisničko sučelje, ugrađeni ekran i miš. Apple je prodao Macintosh zajedno sa svojim popularnim Apple II, Apple Iig, Apple III i Apple Lisa porodice računara dok se drugi modeli nisu obustavili u devedesetih godina.</systemDescription>
+            <systemHardwareType>Računar</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>El Macintosh (principalment Mac des de 1998) és una família d’ordinadors personals dissenyats, fabricats i venuts per Apple Inc. (originalment com Apple Computer, Inc.) des de gener de 1984.
@@ -49,12 +66,36 @@ Le Macintosh original est le premier ordinateur de bureau de masse tout-en-un à
             <systemHardwareType>Ordinateur</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Macintosh (uglavnom Mac od 1998.) obitelj je osobnih računala koju je dizajnirao, proizveo i prodavao Apple Inc. (izvorno kao Apple Computer, Inc.) od siječnja 1984. godine.
+
+Originalni Macintosh prvo je uspješno masovno tržište osobno računalo na jednom na jednom, koje je imalo grafičko korisničko sučelje, ugrađeni zaslon i miša. Apple je prodao Macintosh zajedno s popularnim Apple II, Apple IIGS -om, Apple III i Apple Lisa obitelji računala sve dok ostali modeli nisu ukinuti 1990 -ih.</systemDescription>
+            <systemHardwareType>Računalo</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Macintosh (principalmente Mac dal 1998) è una famiglia di personal computer progettati, prodotti e venduti da Apple Inc. (originariamente come Apple Computer, Inc.) dal gennaio 1984.
 
 Il Macintosh originale è il primo personal computer desktop all-in-one di successo sul mercato di massa a disporre di un'interfaccia utente grafica, di uno schermo integrato e di un mouse. Apple ha venduto il Macintosh insieme alle sue popolari famiglie di computer Apple II, Apple IIGS, Apple III e Apple Lisa fino a quando gli altri modelli sono stati dismessi negli anni '90.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>マッキントッシュ（1998年以降は主にMac）は、アップル社（当初はアップルコンピュータ社）が1984年1月から設計・製造・販売しているパーソナルコンピュータのファミリー。
+
+初代マッキントッシュは、グラフィカル・ユーザー・インターフェース、内蔵スクリーン、マウスを搭載した、初めて成功した大衆向けオールインワン・デスクトップ・パーソナル・コンピュータである。アップル社は、1990年代に他のモデルが製造中止となるまで、人気の高いApple II、Apple IIGS、Apple III、Apple LisaシリーズのコンピュータとともにMacintoshを販売していた。</systemDescription>
+            <systemHardwareType>コンピューター</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>매킨토시(1998년 이후 주로 Mac)는 1984년 1월부터 Apple Inc.(원래는 Apple Computer, Inc.)에서 설계, 제조 및 판매한 개인용 컴퓨터 제품군입니다.
+
+최초의 매킨토시는 그래픽 사용자 인터페이스, 내장 화면, 마우스를 갖춘 최초의 성공적인 대중 시장용 올인원 데스크톱 개인용 컴퓨터입니다. Apple은 1990년대에 다른 모델들이 단종될 때까지 매킨토시를 인기 있는 Apple II, Apple IIGS, Apple III, Apple Lisa 컴퓨터 제품군과 함께 판매했습니다.</systemDescription>
+            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -81,6 +122,14 @@ O Macintosh original é o primeiro computador pessoal de mesa tudo-em-um bem-suc
             <systemHardwareType>Computador</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Macintosh (principalmente Mac desde 1998) é uma família de computadores pessoais projetados, fabricados e vendidos pela Apple Inc. (originalmente como Apple Computer, Inc.) desde janeiro de 1984.
+
+O Macintosh original é o primeiro computador pessoal de comprimidos de mesa de mercado de massa de massa a apresentar uma interface gráfica do usuário, tela embutida e mouse. A Apple vendeu o Macintosh ao lado de suas famílias de computadores Apple II, Apple IIGS, Apple III e Apple Lisa até que os outros modelos fossem descontinuados nos anos 90.</systemDescription>
+            <systemHardwareType>Computador</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Macintosh (în principal Mac din 1998) este o familie de computere personale proiectate, fabricate și vândute de Apple Inc. (inițial Apple Computer, Inc.) din ianuarie 1984.
@@ -97,28 +146,20 @@ Originalul Macintosh este primul computer personal desktop all-in-one de succes 
             <systemHardwareType>Компьютер</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Мацинтосх (углавном Мац од 1998. године) је породица личних рачунара дизајнирана, произведена и продала од стране Аппле Инц. (Првобитно као Аппле Цомпутер, Инц.) Од јануара 1984. године.
+
+Оригинални Мацинтосх је први успешан масовни тржишни лични рачунар на радној површини, који је имао графички кориснички интерфејс, уграђени екран и миш.Аппле је Мацинтосх продао поред своје популарне Аппле ИИ, Аппле Иигс, Аппле ИИИ и породице рачунара Аппле Лисе, све док други модели нису прекинули 1990-их.</systemDescription>
+            <systemHardwareType>Рачунар</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Macintosh (huvudsakligen Mac sedan 1998) är en familj av persondatorer som designats, tillverkats och sålts av Apple Inc (ursprungligen Apple Computer, Inc) sedan januari 1984.
 
 Den ursprungliga Macintosh är den första framgångsrika massmarknaden allt-i-ett stationär persondator som har haft ett grafiskt användargränssnitt, inbyggd skärm och mus. Apple sålde Macintosh tillsammans med sina populära datorfamiljer Apple II, Apple IIGS, Apple III och Apple Lisa tills de andra modellerna slutade tillverkas på 1990-talet.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>マッキントッシュ（1998年以降は主にMac）は、アップル社（当初はアップルコンピュータ社）が1984年1月から設計・製造・販売しているパーソナルコンピュータのファミリー。
-
-初代マッキントッシュは、グラフィカル・ユーザー・インターフェース、内蔵スクリーン、マウスを搭載した、初めて成功した大衆向けオールインワン・デスクトップ・パーソナル・コンピュータである。アップル社は、1990年代に他のモデルが製造中止となるまで、人気の高いApple II、Apple IIGS、Apple III、Apple LisaシリーズのコンピュータとともにMacintoshを販売していた。</systemDescription>
-            <systemHardwareType>コンピューター</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>매킨토시(1998년 이후 주로 Mac)는 1984년 1월부터 Apple Inc.(원래는 Apple Computer, Inc.)에서 설계, 제조 및 판매한 개인용 컴퓨터 제품군입니다.
-
-최초의 매킨토시는 그래픽 사용자 인터페이스, 내장 화면, 마우스를 갖춘 최초의 성공적인 대중 시장용 올인원 데스크톱 개인용 컴퓨터입니다. Apple은 1990년대에 다른 모델들이 단종될 때까지 매킨토시를 인기 있는 Apple II, Apple IIGS, Apple III, Apple Lisa 컴퓨터 제품군과 함께 판매했습니다.</systemDescription>
-            <systemHardwareType>컴퓨터</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

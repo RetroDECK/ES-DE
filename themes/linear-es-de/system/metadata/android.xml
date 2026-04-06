@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>September 23, 2008</systemReleaseDateFormated>
         <systemHardwareType>OS</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>2ec681</systemColor>
         <systemColorPalette1>4086F4</systemColorPalette1>
         <systemColorPalette2>EB4132</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>31AA52</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>أندرويد هو نظام تشغيل للهواتف المحمولة يعتمد على نسخة معدلة من نواة لينكس وغيرها من البرمجيات مفتوحة المصدر، وهو مصمم بشكل أساسي للأجهزة المحمولة التي تعمل باللمس مثل الهواتف الذكية والأجهزة اللوحية. تم تطوير أندرويد من قبل اتحاد المطورين المعروف باسم تحالف الأجهزة المحمولة المفتوحة، على الرغم من أن الإصدار الأكثر استخدامًا تم تطويره بشكل أساسي من قبل جوجل. تم الكشف عنه في نوفمبر 2007، وتم إطلاق أول جهاز أندرويد تجاري وهو HTC Dream في سبتمبر 2008.</systemDescription>
+            <systemHardwareType>نظام التشغيل</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Android je mobilni operativni sistem zasnovan na modificiranoj verziji Linux kernela i drugog softvera otvorenog koda, dizajniran prvenstveno za mobilne uređaje osjetljivih na dodir kao što su pametni telefoni i tableti. Android razvija konzorcijum programera poznatih kao savez otvorenih slušalica, iako je Google razvijen njegova najčešće korištena verzija. Otkriven je u novembru 2007. godine, sa prvim komercijalnim Android uređajem, HTC san, pokrenut je u septembru 2008. godine.</systemDescription>
+            <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Android és un sistema operatiu mòbil basat en una versió modificada del nucli Linux i un altre programari de codi obert, dissenyat principalment per a dispositius mòbils de pantalla tàctil com telèfons intel·ligents i tauletes. Android està desenvolupat per un consorci de desenvolupadors conegut com The Open Helpach Alliance, tot i que la seva versió més utilitzada és desenvolupada principalment per Google. Es va donar a conèixer el novembre de 2007, amb el primer dispositiu Android comercial, el HTC Dream, llançat el setembre del 2008.</systemDescription>
@@ -39,9 +52,27 @@
             <systemHardwareType>OS</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Android je mobilni operativni sustav zasnovan na modificiranoj verziji Linux kernela i drugog softvera s otvorenim kodom, dizajniran prvenstveno za mobilne uređaje za zaslon osjetljivih na dodir, poput pametnih telefona i tableta. Android je razvio konzorcij programera poznatog kao Savez Open Handset, iako je njegovu najčešće korištenu verziju prvenstveno razvio Google. Otkriven je u studenom 2007. godine, a prvi komercijalni Android uređaj, HTC Dream, lansiran je u rujnu 2008. godine.</systemDescription>
+            <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Android è un sistema operativo mobile basato su una versione modificata del kernel Linux e su altri software open-source, progettato principalmente per dispositivi mobili touchscreen come smartphone e tablet. Android è sviluppato da un consorzio di sviluppatori noto come Open Handset Alliance, anche se la sua versione più diffusa è sviluppata principalmente da Google. È stato presentato nel novembre 2007 e il primo dispositivo Android commerciale, l'HTC Dream, è stato lanciato nel settembre 2008.</systemDescription>
+            <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>Androidは、Linuxカーネルの改良版とその他のオープンソースソフトウェアをベースにしたモバイルオペレーティングシステムで、主にスマートフォンやタブレットなどのタッチスクリーンモバイルデバイス向けに設計されている。アンドロイドは、オープンハンドセットアライアンスとして知られる開発者のコンソーシアムによって開発されているが、最も広く使われているバージョンは主にグーグルによって開発されている。アンドロイドは2007年11月に発表され、最初の商用アンドロイド端末であるHTCドリームは2008年9月に発売された。</systemDescription>
+            <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>Android는 주로 스마트폰 및 태블릿과 같은 터치스크린 모바일 디바이스용으로 설계된 Linux 커널 및 기타 오픈 소스 소프트웨어의 수정 버전을 기반으로 하는 모바일 운영 체제입니다. Android는 오픈 핸드셋 연합으로 알려진 개발자 컨소시엄에서 개발했지만, 가장 널리 사용되는 버전은 주로 Google에서 개발했습니다. 2007년 11월에 공개되었으며, 2008년 9월에 최초의 상용 안드로이드 디바이스인 HTC 드림이 출시되었습니다.</systemDescription>
             <systemHardwareType>OS</systemHardwareType>
         </variables>
     </language>
@@ -63,6 +94,12 @@
             <systemHardwareType>SO</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Android é um sistema operacional móvel com base em uma versão modificada do kernel Linux e de outro software de código aberto, projetado principalmente para dispositivos móveis com tela sensível ao toque, como smartphones e tablets. O Android é desenvolvido por um consórcio de desenvolvedores conhecidos como Apen Handet Alliance, embora sua versão mais usada seja desenvolvida principalmente pelo Google. Foi apresentado em novembro de 2007, com o primeiro dispositivo Android comercial, o HTC Dream, sendo lançado em setembro de 2008.</systemDescription>
+            <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Android este un sistem de operare mobil bazat pe o versiune modificată a nucleului Linux și pe alte programe open-source, conceput în principal pentru dispozitive mobile cu ecran tactil, cum ar fi smartphone-urile și tabletele. Android este dezvoltat de un consorțiu de dezvoltatori cunoscut sub numele de Open Handset Alliance, deși versiunea sa cea mai răspândită este dezvoltată în principal de Google. Acesta a fost prezentat în noiembrie 2007, iar primul dispozitiv comercial Android, HTC Dream, a fost lansat în septembrie 2008.</systemDescription>
@@ -75,21 +112,15 @@
             <systemHardwareType>OS</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Андроид је мобилни оперативни систем заснован на модификованој верзији Линук кернела и другог софтвера отвореног кода, дизајниран пре свега за мобилне уређаје са додирним екраном као што су паметне телефоне и таблете.Андроид је развио конзорцијум програмера познатих као алијанса отворене слушалице, мада је његова најчешће коришћена верзија коју је Гоогле превладавао.Био је представљен у новембру 2007. године, са првим комерцијалним андроид уређајем, ХТЦ сан, покренут је у септембру 2008. године.</systemDescription>
+            <systemHardwareType>Ос</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Android är ett mobilt operativsystem baserat på en modifierad version av Linux-kärnan och annan programvara med öppen källkod, främst avsett för mobila enheter med pekskärm, t.ex. smartphones och surfplattor. Android utvecklas av ett konsortium av utvecklare som kallas Open Handset Alliance, även om den mest använda versionen främst utvecklas av Google. Android presenterades i november 2007 och den första kommersiella Android-enheten, HTC Dream, lanserades i september 2008.</systemDescription>
-            <systemHardwareType>OS</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>Androidは、Linuxカーネルの改良版とその他のオープンソースソフトウェアをベースにしたモバイルオペレーティングシステムで、主にスマートフォンやタブレットなどのタッチスクリーンモバイルデバイス向けに設計されている。アンドロイドは、オープンハンドセットアライアンスとして知られる開発者のコンソーシアムによって開発されているが、最も広く使われているバージョンは主にグーグルによって開発されている。アンドロイドは2007年11月に発表され、最初の商用アンドロイド端末であるHTCドリームは2008年9月に発売された。</systemDescription>
-            <systemHardwareType>OS</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>Android는 주로 스마트폰 및 태블릿과 같은 터치스크린 모바일 디바이스용으로 설계된 Linux 커널 및 기타 오픈 소스 소프트웨어의 수정 버전을 기반으로 하는 모바일 운영 체제입니다. Android는 오픈 핸드셋 연합으로 알려진 개발자 컨소시엄에서 개발했지만, 가장 널리 사용되는 버전은 주로 Google에서 개발했습니다. 2007년 11월에 공개되었으며, 2008년 9월에 최초의 상용 안드로이드 디바이스인 HTC 드림이 출시되었습니다.</systemDescription>
             <systemHardwareType>OS</systemHardwareType>
         </variables>
     </language>

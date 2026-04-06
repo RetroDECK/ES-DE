@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>Various</systemReleaseDateFormated>
         <systemHardwareType>Folder</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>3161BC</systemColor>
         <systemColorPalette1>4F5054</systemColorPalette1>
         <systemColorPalette2>737375</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>E45B12</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>عرض جميع منافذ الألعاب المفضلة لديك وتشغيلها.</systemDescription>
+            <systemHardwareType>المجلد</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Pogledajte i igrajte sve svoje omiljene portove igre.</systemDescription>
+            <systemHardwareType>Mapa</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Veure i jugar a tots els ports de joc preferits.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Dossier</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Pogledajte i igrajte sve svoje omiljene luke za igre.</systemDescription>
+            <systemHardwareType>Mapa</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Visualizzate e giocate a tutte le vostre porte di gioco preferite.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>お気に入りのゲームポートをすべて表示してプレイできます。</systemDescription>
+            <systemHardwareType>フォルダ</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>좋아하는 게임 포트를 모두 보고 플레이하세요.</systemDescription>
+            <systemHardwareType>폴더</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Pasta</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>Veja e jogue todas as suas portas de jogo favoritas.</systemDescription>
+            <systemHardwareType>Pasta</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Vizualizați și jucați toate porturile jocurilor dvs. preferate.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Папка</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Погледајте и репродукујте све своје омиљене портове за игре.</systemDescription>
+            <systemHardwareType>Мапа</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Visa och spela alla dina favoritspelportar.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>お気に入りのゲームポートをすべて表示してプレイできます。</systemDescription>
-            <systemHardwareType>フォルダ</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>좋아하는 게임 포트를 모두 보고 플레이하세요.</systemDescription>
-            <systemHardwareType>폴더</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

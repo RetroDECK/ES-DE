@@ -36,9 +36,17 @@
             <entry>come.nanodata.armsx2.debug/kr.co.iefriends.pcsx2.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="AX360E">
+        <!-- Microsoft Xbox 360 emulator aX360e -->
+        <rule type="androidpackage">
+            <entry>aenu.ax360e/aenu.ax360e.EmulatorActivity</entry>
+            <entry>aenu.ax360e.free/aenu.ax360e.EmulatorActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="AZAHAR">
         <!-- Nintendo 3DS emulator Azahar -->
         <rule type="androidpackage">
+            <entry>org.azahar_emu.azahar/org.citra.citra_emu.activities.EmulationActivity</entry>
             <entry>io.github.lime3ds.android/org.citra.citra_emu.activities.EmulationActivity</entry>
         </rule>
     </emulator>
@@ -124,6 +132,22 @@
             <entry>com.github.stenzek.duckstation/.EmulationActivity</entry>
         </rule>
     </emulator>
+    <emulator name="EDEN">
+        <!-- Nintendo Switch emulator Eden -->
+        <rule type="androidpackage">
+            <entry>dev.eden.eden_emulator/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+            <entry>dev.legacy.eden_emulator/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+            <entry>com.miHoYo.Yuanshen/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="EDEN-NIGHTLY">
+        <!-- Nintendo Switch emulator Eden -->
+        <rule type="androidpackage">
+            <entry>dev.eden.eden_emulator.nightly/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+            <entry>dev.legacy.eden_emulator.nightly/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+            <entry>com.miHoYo.Yuanshen.nightly/org.yuzu.yuzu_emu.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="EKA2L1">
         <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
         <rule type="androidpackage">
@@ -165,6 +189,7 @@
     <emulator name="GAMEHUB-LITE">
         <!-- Steam client GameHub Lite -->
         <rule type="androidpackage">
+            <entry>emuready.gamehub.lite/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
             <entry>gamehub.lite/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
             <entry>com.antutu.ABenchMark/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
             <entry>com.tencent.ig/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
@@ -187,6 +212,18 @@
         <!-- Nintendo Game Boy and Game Boy Color emulator GBC.emu -->
         <rule type="androidpackage">
             <entry>com.explusalpha.GbcEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="HAKUX">
+        <!-- Microsoft Xbox emulator hakuX -->
+        <rule type="androidpackage">
+            <entry>com.rfandango.haku_x/.LauncherActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="IDTECH4A++">
+        <!-- idTech game engine collection idTech4A++ -->
+        <rule type="androidpackage">
+            <entry>com.karin.idTech4Amm/com.n0n3m4.q3e.Q3EMain</entry>
         </rule>
     </emulator>
     <emulator name="INES">
@@ -291,6 +328,7 @@
         <!-- Nintendo DS and DSi emulator melonDS -->
         <rule type="androidpackage">
             <entry>me.magnum.melonds/.ui.emulator.EmulatorActivity</entry>
+            <entry>me.magnum.melondualds/me.magnum.melonds.ui.emulator.EmulatorActivity</entry>
         </rule>
     </emulator>
     <emulator name="MELONDS-NIGHTLY">
@@ -369,6 +407,12 @@
         <!-- NEC PC Engine/TurboGrafx-16 emulator PCE.emu -->
         <rule type="androidpackage">
             <entry>com.PceEmu/com.imagine.BaseActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="PICO-8">
+        <!-- PICO-8 Fantasy Console (game engine) -->
+        <rule type="androidpackage">
+            <entry>io.wip.pico8/com.godot.game.GodotAppLauncher</entry>
         </rule>
     </emulator>
     <emulator name="PIZZA-BOY-GBA">
@@ -461,6 +505,12 @@
             <entry>com.fms.speccy/com.fms.emulib.TVActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SUPER3">
+        <!-- Sega Model 3 emulator SUPER3 -->
+        <rule type="androidpackage">
+            <entry>com.izzy2lost.super3/com.izzy2lost.super3.MainActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SWAN-EMU">
         <!-- Bandai WonderSwan emulator Swan.emu -->
         <rule type="androidpackage">
@@ -485,13 +535,14 @@
         <rule type="androidpackage">
             <entry>org.vpinball.vpinball_bgfx/org.vpinball.app.VPinballActivity</entry>
             <entry>org.vpinball.app/.VpxLauncherActivity</entry>
+            <entry>org.vpinball.app.gl/org.vpinball.app.VPinballActivity</entry>
         </rule>
     </emulator>
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="androidpackage">
-            <entry>org.vita3k.emulator.ikhoeyZX/org.vita3k.emulator.Emulator</entry>
             <entry>org.vita3k.emulator/.Emulator</entry>
+            <entry>org.vita3k.emulator.ikhoeyZX/org.vita3k.emulator.Emulator</entry>
         </rule>
     </emulator>
     <emulator name="WINLATOR-CMOD">
@@ -510,6 +561,12 @@
         <!-- Microsoft Windows emulator Winlator Cmod PRoot -->
         <rule type="androidpackage">
             <entry>com.cmodded.winlator/com.winlator.XServerDisplayActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="X1-BOX">
+        <!-- Microsoft Xbox emulator X1 BOX -->
+        <rule type="androidpackage">
+            <entry>com.izzy2lost.x1box/.LauncherActivity</entry>
         </rule>
     </emulator>
     <emulator name="YABASANSHIRO-2">

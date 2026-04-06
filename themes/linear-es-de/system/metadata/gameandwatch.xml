@@ -12,6 +12,7 @@ The series sold a combined of 43.4 million units worldwide.</systemDescription>
         <systemReleaseDateFormated>April 28, 1980</systemReleaseDateFormated>
         <systemHardwareType>Portable</systemHardwareType>
         <systemCoverSize>112-67</systemCoverSize>
+        <systemCoverSizeType>landscape</systemCoverSizeType>
         <systemColor>8ca3ae</systemColor>
         <systemColorPalette1>C4353D</systemColorPalette1>
         <systemColorPalette2>C2904A</systemColorPalette2>
@@ -19,6 +20,26 @@ The series sold a combined of 43.4 million units worldwide.</systemDescription>
         <systemColorPalette4>4C301C</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>العلامة التجارية Game &amp; Watch عبارة عن سلسلة من الألعاب الإلكترونية المحمولة باليد تم تطويرها وتصنيعها وإصدارها وتسويقها من قبل شركة نينتندو من 1980 إلى 1991. ابتكرها مصمم الألعاب "جونبي يوكوي"، وقد استمد المنتج اسمه من احتوائه على لعبة واحدة بالإضافة إلى ساعة على شاشة LCD. تضمنت الموديلات من عام 1981 فصاعدًا منبهًا بالإضافة إلى ذلك. وكان أول منتج ألعاب فيديو من نينتندو يحقق نجاحًا كبيرًا.
+
+تعتمد الوحدات على وحدة معالجة مركزية رباعية البت من عائلة Sharp SM5xx، والتي تتضمن ذاكرة ROM وذاكرة وصول عشوائي صغيرة ودائرة تشغيل شاشة LCD، على الرغم من أنه قبل محاكاتها في MAME، كان هناك اعتقاد خاطئ بأن كل وحدة تستخدم وحدة ASIC مخصصة بدلاً من متحكم دقيق مناسب.
+
+باعت السلسلة ما مجموعه 43.4 مليون وحدة في جميع أنحاء العالم.</systemDescription>
+            <systemHardwareType>محمول</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Marka igre i satovi je niz ručnih elektroničkih igara razvijenih, proizvedenih, objavljenih i marketiranih od strane Nintendoa od 1980. do 1991. godine. Kreiran od strane Dizajnerske igre Gunpei Yokoi, koji je izveden iz svoje igre, kao i sat na LCD ekranu. Modeli iz 1981. godine nadaljeni su alarm pored toga. Bio je to najraniji proizvod Nintendo video igre kako bi se dobio veliki uspjeh.
+
+Jedinice se temelje na 4-bitnom CPU-u, u obliku SM5XX porodice, koji uključuju mali ROM i RAM-ov krug vozača zaslona, iako je prije njegove simulacije u Mame došlo do zablude u tome što je svaka jedinica koristila prilagođenu asiću umjesto odgovarajućeg mikrokontrolera.
+
+Serija se prodala kombinovana od 43,4 miliona jedinica širom svijeta.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>The Game &amp; Watch Brand és una sèrie de jocs electrònics de mà desenvolupats, fabricats, publicats i comercialitzats per Nintendo de 1980 a 1991. Creat pel dissenyador de jocs Gunpei Yokoi, el producte va derivar el seu nom de la seva presentació d’un sol joc i també d’un rellotge auna pantalla LCD. Els models del 1981 van presentar una alarma a més. Va ser el primer producte de videojocs de Nintendo per obtenir un gran èxit.
@@ -59,6 +80,16 @@ La série s'est vendue à 43,4 millions d'exemplaires dans le monde.</systemDesc
             <systemHardwareType>Portable</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Marka Game &amp; Watch niz je ručnih elektroničkih igara koje je razvio, proizveo, objavio i prodao Nintendo od 1980. do 1991. godine. Stvorio dizajner igara Gunpei Yokoi, proizvod je dobio ime po jednoj igri, kao i sat na LCD ekranu. Modeli od 1981. nadalje su bili alarm. Bio je to najraniji proizvod Nintendo videoigara koji je postigao veliki uspjeh.
+
+Jedinice se temelje na 4-bitnom CPU-u, iz oštre obitelji SM5XX, koji uključuju mali ROM i RAM-područje i krug vozača zaslona LCD zaslona, iako je, prije njegove simulacije u MAME, postojala zabluda u tome što je svaka jedinica koristila prilagođeni ASIC umjesto odgovarajućeg mikrokontrollera.
+
+Serija je prodala kombinirano od 43,4 milijuna jedinica širom svijeta.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il marchio Game &amp; Watch è una serie di giochi elettronici portatili sviluppati, prodotti, distribuiti e commercializzati da Nintendo dal 1980 al 1991. Creato dal designer di giochi Gunpei Yokoi, il prodotto deve il suo nome alla presenza di un singolo gioco e di un orologio su uno schermo LCD. I modelli dal 1981 in poi erano dotati anche di una sveglia. È stato il primo prodotto videoludico Nintendo a riscuotere un grande successo.
@@ -67,6 +98,26 @@ Le unità sono basate su una CPU a 4 bit, della famiglia Sharp SM5xx, che includ
 
 La serie ha venduto complessivamente 43,4 milioni di unità in tutto il mondo.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ゲーム＆ウォッチブランドは、1980年から1991年まで任天堂が開発、製造、発売、販売した携帯型電子ゲームのシリーズである。ゲームデザイナーの横井軍平によって開発され、1つのゲームに加え、液晶画面に時計が表示されることからその名がついた。1981年以降のモデルにはアラームも搭載された。任天堂のゲーム機の中で最も早く大成功を収めた製品である。
+
+シャープのSM5xxファミリーの4ビットCPUをベースにしており、小さなROMとRAMエリア、液晶画面ドライバ回路を含んでいる。しかし、MAMEでシミュレーションされる以前は、すべてのユニットが適切なマイクロコントローラの代わりにカスタムASICを使用しているという誤解があった。
+
+シリーズ合計で全世界に4,340万台を販売した。</systemDescription>
+            <systemHardwareType>ポータブル</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>게임 &amp; 워치 브랜드는 1980년부터 1991년까지 닌텐도에서 개발, 제조, 출시 및 판매한 휴대용 전자 게임기 시리즈입니다. 게임 디자이너 요코이 군페이가 만든 이 제품은 LCD 화면에 하나의 게임과 시계가 탑재되어 있다는 점에서 그 이름이 유래되었습니다. 1981년 이후 모델에는 알람 기능이 추가되었습니다. 이 제품은 닌텐도 비디오 게임 제품 중 가장 먼저 큰 성공을 거둔 제품입니다.
+
+이 장치는 작은 ROM 및 RAM 영역과 LCD 화면 드라이버 회로를 포함하는 Sharp SM5xx 제품군의 4비트 CPU를 기반으로 하지만, MAME에서 시뮬레이션하기 전에는 모든 장치가 적절한 마이크로 컨트롤러 대신 맞춤형 ASIC을 사용한다는 오해가 있었습니다.
+
+이 시리즈는 전 세계적으로 총 4,340만 대가 판매되었습니다.</systemDescription>
+            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -99,6 +150,16 @@ A série vendeu um total de 43,4 milhões de unidades em todo o mundo.</systemDe
             <systemHardwareType>Portátil</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>A Brand Game &amp; Watch é uma série de jogos eletrônicos de mão desenvolvidos, fabricados, lançados e comercializados pela Nintendo de 1980 a 1991. Criado pelo designer de jogos Gunpei Yokoi, o produto derivou seu nome a partir de seu único jogo e um relógio em uma tela LCD. Os modelos a partir de 1981 contiveram um alarme. Foi o primeiro produto de videogame da Nintendo para obter grande sucesso.
+
+As unidades são baseadas em uma CPU de 4 bits, da família SM5XX SM5XX, que inclui uma pequena área de ROM e RAM e um circuito de driver de tela LCD, embora, antes de sua simulação em MAME, houve um equívoco em que todas as unidades usavam um ASIC personalizado em vez de um microcontrolador adequado.
+
+A série vendeu um combinado de 43,4 milhões de unidades em todo o mundo.</systemDescription>
+            <systemHardwareType>Portátil</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Marca Game &amp; Watch este o serie de jocuri electronice portabile dezvoltate, fabricate, lansate și comercializate de Nintendo din 1980 până în 1991. Creat de designerul de jocuri Gunpei Yokoi, produsul și-a derivat numele din faptul că prezenta un singur joc, precum și un ceas pe un ecran LCD. Modelele începând cu 1981 aveau în plus o alarmă. Acesta a fost cel mai timpuriu produs de jocuri video Nintendo care a obținut un succes major.
@@ -119,6 +180,16 @@ Seria a vândut un combinat de 43,4 milioane de unități în întreaga lume.</s
             <systemHardwareType>Портативный</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Бренд игре и гледање је низ ручних електронских игара развијених, произведених, објављених, а назививши Нинтендо од 1980. до 1991. године. Направљен дизајнер игре Гунпеи Иокои, производ је добио своје име из своје јединствене игре и сат на једној игри.Модели из 1981. надаље су били аларм.То је био најранији Нинтендо Видео игарска производ за добијање великог успеха.
+
+Јединице се заснивају на 4-битном ЦПУ-у, са оштрог СМ5КСКС породице, која укључује мали РОМ и РАМ круг и управљачки програм за ЛЦД екран, мада пре своје симулације у мами дошло је до заблуде у томе да је свака јединица користила прилагођену АСИЦ уместо одговарајућег микроконтролера.
+
+Серија је продала комбиновану од 43,4 милиона јединица широм света.</systemDescription>
+            <systemHardwareType>Преносив</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Varumärket Game &amp; Watch är en serie handhållna elektroniska spel som utvecklades, tillverkades, släpptes och marknadsfördes av Nintendo mellan 1980 och 1991. Produkten skapades av speldesignern Gunpei Yokoi och fick sitt namn av att den innehöll ett enda spel samt en klocka på en LCD-skärm. Modellerna från 1981 och framåt hade dessutom ett alarm. Det var den av Nintendos videospelprodukter som tidigast nådde stora framgångar.
@@ -127,26 +198,6 @@ Enheterna är baserade på en 4-bitars CPU, från Sharp SM5xx-familjen, som inkl
 
 Serien såldes i sammanlagt 43,4 miljoner exemplar över hela världen.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ゲーム＆ウォッチブランドは、1980年から1991年まで任天堂が開発、製造、発売、販売した携帯型電子ゲームのシリーズである。ゲームデザイナーの横井軍平によって開発され、1つのゲームに加え、液晶画面に時計が表示されることからその名がついた。1981年以降のモデルにはアラームも搭載された。任天堂のゲーム機の中で最も早く大成功を収めた製品である。
-
-シャープのSM5xxファミリーの4ビットCPUをベースにしており、小さなROMとRAMエリア、液晶画面ドライバ回路を含んでいる。しかし、MAMEでシミュレーションされる以前は、すべてのユニットが適切なマイクロコントローラの代わりにカスタムASICを使用しているという誤解があった。
-
-シリーズ合計で全世界に4,340万台を販売した。</systemDescription>
-            <systemHardwareType>ポータブル</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>게임 &amp; 워치 브랜드는 1980년부터 1991년까지 닌텐도에서 개발, 제조, 출시 및 판매한 휴대용 전자 게임기 시리즈입니다. 게임 디자이너 요코이 군페이가 만든 이 제품은 LCD 화면에 하나의 게임과 시계가 탑재되어 있다는 점에서 그 이름이 유래되었습니다. 1981년 이후 모델에는 알람 기능이 추가되었습니다. 이 제품은 닌텐도 비디오 게임 제품 중 가장 먼저 큰 성공을 거둔 제품입니다.
-
-이 장치는 작은 ROM 및 RAM 영역과 LCD 화면 드라이버 회로를 포함하는 Sharp SM5xx 제품군의 4비트 CPU를 기반으로 하지만, MAME에서 시뮬레이션하기 전에는 모든 장치가 적절한 마이크로 컨트롤러 대신 맞춤형 ASIC을 사용한다는 오해가 있었습니다.
-
-이 시리즈는 전 세계적으로 총 4,340만 대가 판매되었습니다.</systemDescription>
-            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

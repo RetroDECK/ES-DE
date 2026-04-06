@@ -73,8 +73,9 @@ namespace Scripting
                     arg3Quotation = "\"";
                 if (!arg4.empty() && arg4.front() != '\"')
                     arg4Quotation = "\"";
-                std::string script;
+                std::string script {"\""};
                 script.append(*it)
+                    .append("\"")
                     .append(" ")
                     .append(arg1Quotation)
                     .append(arg1)

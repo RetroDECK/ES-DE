@@ -10,6 +10,7 @@ The games use a parallax effect to create the illusion of depth. Sales failed to
         <systemReleaseDateFormated>July 21, 1995</systemReleaseDateFormated>
         <systemHardwareType>Portable</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>f05148</systemColor>
         <systemColorPalette1>363636</systemColorPalette1>
         <systemColorPalette2>FE0016</systemColorPalette2>
@@ -17,6 +18,22 @@ The games use a parallax effect to create the illusion of depth. Sales failed to
         <systemColorPalette4>232323</systemColorPalette4>
         <systemCartSize>257-229</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>فيرتشوال بوي هو جهاز ألعاب فيديو محمول 32 بت تم تطويره وتصنيعه من قبل شركة نينتندو. صدر في عام 1995، وتم تسويقه كأول وحدة تحكم قادرة على عرض رسومات مجسمة "ثلاثية الأبعاد". ويستخدم اللاعب وحدة التحكم مثل شاشة العرض المثبتة على الرأس، ويضع رأسه على العدسة ليرى شاشة عرض أحادية اللون حمراء.
+
+تستخدم الألعاب تأثير المنظر لخلق وهم العمق. فشلت المبيعات في تحقيق الأهداف، وتوقفت نينتندو عن التوزيع وتطوير الألعاب في عام 1996، بعد أن أصدرت 22 لعبة فقط للنظام.</systemDescription>
+            <systemHardwareType>محمول</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>The Virtual Boy is a 32-bit tabletop portable video game console developed and manufactured by Nintendo. Released in 1995, it was marketed as the first console capable of displaying stereoscopic "3D" graphics. The player uses the console like a head-mounted display, placing the head against the eyepiece to see a red monochrome display.
+
+The games use a parallax effect to create the illusion of depth. Sales failed to meet targets, and Nintendo ceased distribution and game development in 1996, having released only 22 games for the system.</systemDescription>
+            <systemHardwareType>Portable</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>The Virtual Boy és una consola de videojocs portàtils de 32 bits desenvolupada i fabricada per Nintendo. Estrenada el 1995, es va comercialitzar com la primera consola capaç de mostrar gràfics "3D" estereoscòpics. El jugador utilitza la consola com una pantalla muntada al cap, col·locant el cap contra l’ocular per veure una pantalla monocroma vermella.
@@ -49,12 +66,36 @@ Les jeux utilisent un effet de parallaxe pour créer l'illusion de profondeur. L
             <systemHardwareType>Portable</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>The Virtual Boy is a 32-bit tabletop portable video game console developed and manufactured by Nintendo. Released in 1995, it was marketed as the first console capable of displaying stereoscopic "3D" graphics. The player uses the console like a head-mounted display, placing the head against the eyepiece to see a red monochrome display.
+
+The games use a parallax effect to create the illusion of depth. Sales failed to meet targets, and Nintendo ceased distribution and game development in 1996, having released only 22 games for the system.</systemDescription>
+            <systemHardwareType>Portable</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Virtual Boy è una console portatile per videogiochi da tavolo a 32 bit sviluppata e prodotta da Nintendo. Rilasciata nel 1995, è stata commercializzata come la prima console in grado di visualizzare grafica stereoscopica "3D". Il giocatore utilizza la console come un display montato sulla testa, posizionando la testa contro l'oculare per vedere un display monocromatico rosso.
 
 I giochi utilizzano un effetto di parallasse per creare l'illusione della profondità. Le vendite non raggiunsero gli obiettivi prefissati e Nintendo cessò la distribuzione e lo sviluppo di giochi nel 1996, dopo aver pubblicato solo 22 giochi per la console.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>バーチャルボーイは、任天堂が開発・製造した32ビットの卓上型携帯ゲーム機である。1995年に発売され、立体的な「3D」グラフィックを表示できる最初のゲーム機として売り出された。プレイヤーはこのゲーム機をヘッドマウントディスプレイのように使い、接眼レンズに頭を当てて赤いモノクロディスプレイを見る。
+
+ゲームは視差効果を利用して奥行きの錯覚を作り出す。売上は目標に届かず、任天堂は1996年に販売とゲーム開発を中止した。</systemDescription>
+            <systemHardwareType>ポータブル</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>버추얼 보이는 닌텐도에서 개발 및 제조한 32비트 테이블탑 휴대용 비디오 게임 콘솔입니다. 1995년에 출시된 이 콘솔은 입체적인 "3D" 그래픽을 표시할 수 있는 최초의 콘솔로 판매되었습니다. 플레이어는 콘솔을 헤드 마운트 디스플레이처럼 사용하여 아이피스에 머리를 대고 빨간색 단색 디스플레이를 볼 수 있습니다.
+
+이 게임은 시차 효과를 사용하여 깊이감이 느껴지는 착각을 불러일으킵니다. 판매량이 목표를 달성하지 못하자 닌텐도는 1996년 이 시스템용 게임 22개만 출시하고 유통 및 게임 개발을 중단했습니다.</systemDescription>
+            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -81,6 +122,14 @@ Os jogos usam um efeito de paralaxe para criar a ilusão de profundidade. As ven
             <systemHardwareType>Portátil</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>The Virtual Boy is a 32-bit tabletop portable video game console developed and manufactured by Nintendo. Released in 1995, it was marketed as the first console capable of displaying stereoscopic "3D" graphics. The player uses the console like a head-mounted display, placing the head against the eyepiece to see a red monochrome display.
+
+The games use a parallax effect to create the illusion of depth. Sales failed to meet targets, and Nintendo ceased distribution and game development in 1996, having released only 22 games for the system.</systemDescription>
+            <systemHardwareType>Portable</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Virtual Boy este o consolă de jocuri video portabilă de 32 de biți, dezvoltată și fabricată de Nintendo. Lansată în 1995, a fost comercializată ca prima consolă capabilă să afișeze grafică stereoscopică "3D". Jucătorul utilizează consola ca pe un afișaj montat pe cap, punând capul pe ocular pentru a vedea un afișaj monocrom roșu.
@@ -97,28 +146,20 @@ Jocurile folosesc un efect de paralaxă pentru a crea iluzia de adâncime. Vânz
             <systemHardwareType>Портативный</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>The Virtual Boy is a 32-bit tabletop portable video game console developed and manufactured by Nintendo. Released in 1995, it was marketed as the first console capable of displaying stereoscopic "3D" graphics. The player uses the console like a head-mounted display, placing the head against the eyepiece to see a red monochrome display.
+
+The games use a parallax effect to create the illusion of depth. Sales failed to meet targets, and Nintendo ceased distribution and game development in 1996, having released only 22 games for the system.</systemDescription>
+            <systemHardwareType>Portable</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Virtual Boy är en 32-bitars bärbar konsol för videospel som utvecklats och tillverkats av Nintendo. Den släpptes 1995 och marknadsfördes som den första konsolen som kunde visa stereoskopisk "3D"-grafik. Spelaren använder konsolen som en huvudmonterad bildskärm och placerar huvudet mot okularet för att se en röd monokrom bildskärm.
 
 Spelen använder en parallaxeffekt för att skapa en illusion av djup. Försäljningen nådde inte upp till målen och Nintendo upphörde med distribution och spelutveckling 1996, efter att endast ha släppt 22 spel till systemet.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>バーチャルボーイは、任天堂が開発・製造した32ビットの卓上型携帯ゲーム機である。1995年に発売され、立体的な「3D」グラフィックを表示できる最初のゲーム機として売り出された。プレイヤーはこのゲーム機をヘッドマウントディスプレイのように使い、接眼レンズに頭を当てて赤いモノクロディスプレイを見る。
-
-ゲームは視差効果を利用して奥行きの錯覚を作り出す。売上は目標に届かず、任天堂は1996年に販売とゲーム開発を中止した。</systemDescription>
-            <systemHardwareType>ポータブル</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>버추얼 보이는 닌텐도에서 개발 및 제조한 32비트 테이블탑 휴대용 비디오 게임 콘솔입니다. 1995년에 출시된 이 콘솔은 입체적인 "3D" 그래픽을 표시할 수 있는 최초의 콘솔로 판매되었습니다. 플레이어는 콘솔을 헤드 마운트 디스플레이처럼 사용하여 아이피스에 머리를 대고 빨간색 단색 디스플레이를 볼 수 있습니다.
-
-이 게임은 시차 효과를 사용하여 깊이감이 느껴지는 착각을 불러일으킵니다. 판매량이 목표를 달성하지 못하자 닌텐도는 1996년 이 시스템용 게임 22개만 출시하고 유통 및 게임 개발을 중단했습니다.</systemDescription>
-            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

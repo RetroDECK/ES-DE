@@ -8,8 +8,21 @@
         <systemReleaseDateFormated>Various</systemReleaseDateFormated>
         <systemHardwareType>Collection</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>عرض ألعابك المفضلة وتشغيلها عبر المكتبة بأكملها.</systemDescription>
+            <systemHardwareType>المجموعة</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Pogledajte i igrajte svoje omiljene igre u cijeloj biblioteci.</systemDescription>
+            <systemHardwareType>Zbirka</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Veure i jugar els teus jocs preferits a tota la biblioteca.</systemDescription>
@@ -34,10 +47,28 @@
             <systemHardwareType>Collection</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Pogledajte i igrajte svoje omiljene igre u cijeloj knjižnici.</systemDescription>
+            <systemHardwareType>Kolekcija</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Visualizzate e giocate ai vostri giochi preferiti nell'intera libreria.</systemDescription>
             <systemHardwareType>Collezione</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ライブラリ全体でお気に入りのゲームを表示、プレイできます。</systemDescription>
+            <systemHardwareType>コレクション</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>전체 라이브러리에서 좋아하는 게임을 보고 플레이하세요.</systemDescription>
+            <systemHardwareType>컬렉션</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -58,6 +89,12 @@
             <systemHardwareType>Coleção</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>Veja e jogue seus jogos favoritos em toda a biblioteca.</systemDescription>
+            <systemHardwareType>Coleção</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Vizualizați și jucați jocurile dvs. preferate în întreaga bibliotecă.</systemDescription>
@@ -70,22 +107,16 @@
             <systemHardwareType>Коллекция</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Погледајте и репродукујте своје омиљене игре у целој библиотеци.</systemDescription>
+            <systemHardwareType>Збирка</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Visa och spela dina favoritspel i hela biblioteket.</systemDescription>
             <systemHardwareType>Samling</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ライブラリ全体でお気に入りのゲームを表示、プレイできます。</systemDescription>
-            <systemHardwareType>コレクション</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>전체 라이브러리에서 좋아하는 게임을 보고 플레이하세요.</systemDescription>
-            <systemHardwareType>컬렉션</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

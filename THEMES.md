@@ -2728,7 +2728,7 @@ Properties:
 
 #### animation
 
-GIF and Lottie (vector graphics) animations. The animation type is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of these to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or of high resolution.
+GIF and Lottie (vector graphics) animations. The animation type is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's advised to not add too many of these to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or of high resolution.
 
 Also be aware that the [rlottie](https://github.com/Samsung/rlottie) library used by ES-DE is not compatible with all Lottie animations out there so you may need to convert them to a format that rlottie can read, or use some other animations altogether.
 

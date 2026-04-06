@@ -15,6 +15,7 @@
 #include "FileFilterIndex.h"
 #include "GamelistFileParser.h"
 #include "MameNames.h"
+#include "Scripting.h"
 #include "SystemData.h"
 #include "Window.h"
 #include "components/ButtonComponent.h"
@@ -46,6 +47,21 @@ GuiScraperMulti::GuiScraperMulti(
 
     for (auto it = searches.second.begin(); it != searches.second.end(); ++it)
         mQueueCountPerSystem[(*it).first] = std::make_pair(0, (*it).second);
+
+    {
+        std::string scraperService;
+        if (Settings::getInstance()->getString("Scraper") == "thegamesdb")
+            scraperService = "thegamesdb";
+        else
+            scraperService = "screenscraper";
+
+        const std::string scraperMode {
+            Settings::getInstance()->getBool("ScraperInteractive") ? "interactive" : "automatic"};
+
+        Scripting::fireEvent("scraper-start", scraperService, scraperMode,
+                             std::to_string(mQueueCountPerSystem.size()),
+                             std::to_string(mTotalGames));
+    }
 
     // Set up grid.
     mTitle = std::make_shared<TextComponent>(
@@ -309,6 +325,10 @@ void GuiScraperMulti::skip()
 
 void GuiScraperMulti::finish()
 {
+    Scripting::fireEvent("scraper-end", std::to_string(mTotalSuccessful),
+                         std::to_string(mTotalSkipped),
+                         (mSearchQueue.empty() ? "finished" : "stopped"), "");
+
     std::stringstream ss;
     if (mTotalSuccessful == 0) {
         ss << _("NO GAMES WERE SCRAPED");

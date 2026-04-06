@@ -128,8 +128,7 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
         return true;
     }
 
-    if (input.type == TYPE_BUTTON || input.type == TYPE_AXIS || input.type == TYPE_KEY ||
-        input.type == TYPE_CEC_BUTTON) {
+    if (input.type == TYPE_BUTTON || input.type == TYPE_AXIS || input.type == TYPE_KEY) {
         if (input.value && mHoldingConfig == nullptr) {
             // Started holding.
             mHoldingConfig = config;

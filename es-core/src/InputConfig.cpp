@@ -31,8 +31,6 @@ std::string InputConfig::inputTypeToString(InputType type)
             return "key";
         case TYPE_TOUCH:
             return "touch-button";
-        case TYPE_CEC_BUTTON:
-            return "cec-button";
         default:
             return "error";
     }
@@ -48,8 +46,6 @@ InputType InputConfig::stringToInputType(const std::string& type)
         return TYPE_KEY;
     if (type == "touch-button")
         return TYPE_TOUCH;
-    if (type == "cec-button")
-        return TYPE_CEC_BUTTON;
     return TYPE_COUNT;
 }
 
@@ -209,10 +205,6 @@ void InputConfig::writeToXML(pugi::xml_node& parent)
     if (mDeviceId == DEVICE_KEYBOARD) {
         cfg.append_attribute("type") = "keyboard";
         cfg.append_attribute("deviceName") = "Keyboard";
-    }
-    else if (mDeviceId == DEVICE_CEC) {
-        cfg.append_attribute("type") = "cec";
-        cfg.append_attribute("deviceName") = "CEC";
     }
     else {
         cfg.append_attribute("type") = "controller";

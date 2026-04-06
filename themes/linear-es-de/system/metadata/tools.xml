@@ -8,8 +8,21 @@
         <systemReleaseDateFormated>Various</systemReleaseDateFormated>
         <systemHardwareType>Folder</systemHardwareType>
         <systemCoverSize>1-1</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>برامج ونصوص برمجية وأدوات مساعدة لإدارة إعداداتك.</systemDescription>
+            <systemHardwareType>المجلد</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Programs, scripts and utilities to manage your set up.</systemDescription>
+            <systemHardwareType>Folder</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Programes, scripts i serveis per gestionar la vostra configuració.</systemDescription>
@@ -34,10 +47,28 @@
             <systemHardwareType>Dossier</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Programs, scripts and utilities to manage your set up.</systemDescription>
+            <systemHardwareType>Folder</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Programmi, script e utility per gestire la vostra configurazione.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>セットアップを管理するためのプログラム、スクリプト、ユーティリティ。</systemDescription>
+            <systemHardwareType>フォルダ</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>설정을 관리하기 위한 프로그램, 스크립트 및 유틸리티.</systemDescription>
+            <systemHardwareType>폴더</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -58,6 +89,12 @@
             <systemHardwareType>Pasta</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>Programs, scripts and utilities to manage your set up.</systemDescription>
+            <systemHardwareType>Folder</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Programe, scripturi și utilitare pentru a vă gestiona configurația.</systemDescription>
@@ -70,22 +107,16 @@
             <systemHardwareType>Папка</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Programs, scripts and utilities to manage your set up.</systemDescription>
+            <systemHardwareType>Folder</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Program, skript och verktyg för att hantera din installation.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>セットアップを管理するためのプログラム、スクリプト、ユーティリティ。</systemDescription>
-            <systemHardwareType>フォルダ</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>설정을 관리하기 위한 프로그램, 스크립트 및 유틸리티.</systemDescription>
-            <systemHardwareType>폴더</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

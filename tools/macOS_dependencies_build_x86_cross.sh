@@ -331,40 +331,6 @@ make install
 cd ..
 
 echo
-echo "Building Vorbis"
-
-if [ ! -d vorbis ]; then
-  echo "Vorbis directory is missing, aborting."
-  exit
-fi
-
-cd vorbis
-rm -f CMakeCache.txt
-cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
-make clean
-make -j${JOBS}
-make install
-cp lib/libvorbisenc.2.0.12.dylib ../..
-cp lib/libvorbis.0.4.9.dylib ../..
-cd ..
-
-echo
-echo "Building Opus"
-
-if [ ! -d opus ]; then
-  echo "Opus directory is missing, aborting."
-  exit
-fi
-
-cd opus
-rm -f CMakeCache.txt
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
-make clean
-make -j${JOBS}
-make install
-cd ..
-
-echo
 echo "Building dav1d"
 
 if [ ! -d dav1d ]; then

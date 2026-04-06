@@ -10,6 +10,7 @@ The NAOMI was succeeded by the Sega Hikaru and Sega NAOMI 2 boards, though havin
         <systemReleaseDateFormated>January 1, 1998</systemReleaseDateFormated>
         <systemHardwareType>Arcade</systemHardwareType>
         <systemCoverSize>3-4</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>fa860a</systemColor>
         <systemColorPalette1>E4E7D7</systemColorPalette1>
         <systemColorPalette2>A39B7C</systemColorPalette2>
@@ -17,6 +18,22 @@ The NAOMI was succeeded by the Sega Hikaru and Sega NAOMI 2 boards, though havin
         <systemColorPalette4>243551</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>إن NAOMI (فكرة آلة تشغيل الأركيد الجديدة) هو نظام أركيد أصدرته شركة Sega في عام 1998. وقد تم تصميمه كخلف لأجهزة Sega Model 3، باستخدام بنية مشابهة لـ Sega Dreamcast.
+
+وقد خلفت جهاز NAOMI لوحتي Sega Hikaru وSega NAOMI 2، على الرغم من أنها تفوقت على NAOMI 2 وHikaru وSega Aurora. يمكن أيضًا اعتبار Sega Chihiro، أو ربما حتى Sega Lindbergh، كخليفتين.</systemDescription>
+            <systemHardwareType>أركيد</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Naomi (nova arkadna ideja operacije) je arkadni sistem koji se objavljuje iz Sega 1998. godine. Dizajniran je kao nasljednik Hardware Sega Model 3, koristeći sličnu arhitekturu sa sega dreamcast.
+
+Naomi je naslijedio Sega Hikaru i Sega Naomi 2 ploče, iako su izdržali naimi naimi 2, Hikaru i Sega Auroru. Sega Chihiro ili eventualno čak i Sega Lindbergh, mogla bi se vidjeti i kao nasljednici.</systemDescription>
+            <systemHardwareType>Arkada</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>Naomi (New Arcade Operation Machine Idea) és un sistema d’arcades publicat per Sega el 1998. Va ser dissenyat com a successor del maquinari Sega Model 3, utilitzant una arquitectura similar a la Sega Dreamcast.
@@ -49,12 +66,36 @@ La NAOMI a été remplacée par les cartes Sega Hikaru et Sega NAOMI 2, qui ont 
             <systemHardwareType>Arcade</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Naomi (New Arcade Operac Machine Idea) je arkadni sustav koji je Sega objavila 1998. godine. Zamišljen je kao nasljednik hardvera SEGA Model 3, koristeći sličnu arhitekturu kao Sega Dreamcast.
+
+Naomi su naslijedile ploče Sega Hikaru i Sega Naomi 2, iako su nadmašili Naomi 2, Hikaru i Sega Aurora. Sega Chihiro, ili možda čak i Sega Lindbergh, također se mogao smatrati nasljednicima.</systemDescription>
+            <systemHardwareType>Arkada</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il NAOMI (New Arcade Operation Machine Idea) è un sistema arcade rilasciato da Sega nel 1998. È stato progettato come successore dell'hardware del Sega Model 3, utilizzando un'architettura simile a quella del Sega Dreamcast.
 
 Il NAOMI è stato succeduto dalle schede Sega Hikaru e Sega NAOMI 2, pur avendo superato il NAOMI 2, la Hikaru e il Sega Aurora. Anche la Sega Chihiro, o forse anche la Sega Lindbergh, potrebbero essere considerate dei successori.</systemDescription>
             <systemHardwareType>Arcade</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>NAOMI（New Arcade Operation Machine Idea）は、1998年にセガから発売されたアーケードシステム。セガ3号機の後継機として設計され、セガ・ドリームキャストと同様のアーキテクチャを採用している。
+
+NAOMIはセガ光、セガNAOMI 2基板に引き継がれたが、NAOMI 2、光、セガオーロラを凌駕した。セガちひろ、あるいはセガ・リンドバーグも後継機と言えるかもしれない。</systemDescription>
+            <systemHardwareType>アーケード</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>NAOMI(새로운 아케이드 오퍼레이션 머신 아이디어)는 1998년 Sega에서 출시한 아케이드 시스템입니다. 세가 모델 3 하드웨어의 후속작으로 설계되었으며, 세가 드림캐스트와 유사한 아키텍처를 사용했습니다.
+
+나오미는 세가 히카루와 세가 나오미 2 보드에 의해 계승되었지만 나오미 2, 히카루, 세가 오로라보다 오래 지속되었습니다. 세가 치히로 또는 세가 린드버그도 후속 기종으로 볼 수 있습니다.</systemDescription>
+            <systemHardwareType>아케이드</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -81,6 +122,14 @@ O NAOMI foi sucedido pelas placas Sega Hikaru e Sega NAOMI 2, embora tenha durad
             <systemHardwareType>Fliperama</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Naomi (New Arcade Operation Machine Idea) é um sistema de arcade lançado pela SEGA em 1998. Foi projetado como sucessor do Hardware da SEGA Modelo 3, usando uma arquitetura semelhante ao Sega Dreamcast.
+
+O Naomi foi sucedido pelas placas Sega Hikaru e Sega Naomi 2, apesar de ter superado os Naomi 2, Hikaru e Sega Aurora. O Sega Chihiro, ou possivelmente até o Sega Lindbergh, também poderia ser visto como sucessores.</systemDescription>
+            <systemHardwareType>Arcade</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>NAOMI (New Arcade Operation Machine Idea) este un sistem arcade lansat de Sega în 1998. A fost proiectat ca un succesor al hardware-ului Sega Model 3, folosind o arhitectură similară cu cea a Sega Dreamcast.
@@ -97,28 +146,20 @@ NAOMI a fost succedat de plăcile Sega Hikaru și Sega NAOMI 2, deși a depăși
             <systemHardwareType>Аркада</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Наоми (нова идеја за аркадну операцију) је аркадни систем који је избао Сега 1998. године. Дизајниран је као наследник АГА модел 3 хардвера, користећи сличну архитектуру у Сега Дреамцаст.
+
+Наоми је наследио Сега Хикару и Сега Наоми 2 плоче, иако је избацио наоми 2, Хикару и Сега Аурора.Сега Цхихиро, или евентуално чак и Сега Линдбергх, такође би се могла видети и као наследници.</systemDescription>
+            <systemHardwareType>Аркада</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>NAOMI (New Arcade Operation Machine Idea) är ett arkadsystem som lanserades av Sega 1998. Det var utformat som en efterföljare till Sega Model 3-hårdvaran och hade en liknande arkitektur som Sega Dreamcast.
 
 NAOMI efterträddes av Sega Hikaru och Sega NAOMI 2, som dock hade överlevt NAOMI 2, Hikaru och Sega Aurora. Sega Chihiro, eller möjligen till och med Sega Lindbergh, kan också ses som efterföljare.</systemDescription>
             <systemHardwareType>Arkad</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>NAOMI（New Arcade Operation Machine Idea）は、1998年にセガから発売されたアーケードシステム。セガ3号機の後継機として設計され、セガ・ドリームキャストと同様のアーキテクチャを採用している。
-
-NAOMIはセガ光、セガNAOMI 2基板に引き継がれたが、NAOMI 2、光、セガオーロラを凌駕した。セガちひろ、あるいはセガ・リンドバーグも後継機と言えるかもしれない。</systemDescription>
-            <systemHardwareType>アーケード</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>NAOMI(새로운 아케이드 오퍼레이션 머신 아이디어)는 1998년 Sega에서 출시한 아케이드 시스템입니다. 세가 모델 3 하드웨어의 후속작으로 설계되었으며, 세가 드림캐스트와 유사한 아키텍처를 사용했습니다.
-
-나오미는 세가 히카루와 세가 나오미 2 보드에 의해 계승되었지만 나오미 2, 히카루, 세가 오로라보다 오래 지속되었습니다. 세가 치히로 또는 세가 린드버그도 후속 기종으로 볼 수 있습니다.</systemDescription>
-            <systemHardwareType>아케이드</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

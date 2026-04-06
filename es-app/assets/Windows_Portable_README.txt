@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.4.0
+3.4.1
 
 The latest version can be downloaded from https://es-de.org
 
@@ -74,6 +74,7 @@ Emulators\dreamm\dreamm.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe
 Emulators\EasyRPG\Player.exe
+Emulators\eden\eden.exe
 Emulators\EKA2L1\eka2l1_qt.exe
 Emulators\fbneo\fbneo64.exe
 Emulators\fbneo\fbneo.exe
@@ -88,12 +89,14 @@ Emulators\Future Pinball\BAM-OpenVR\FPLoader.exe
 Emulators\Future Pinball\BAM-OpenVR-OC\FPLoader.exe
 Emulators\gargoyle\gargoyle.exe
 Emulators\Gearboy\Gearboy.exe
+Emulators\Geargrafx\Geargrafx.exe
 Emulators\gopher2600\gopher2600_windows_amd64.exe
 Emulators\gopher64\gopher64-windows-x86_64.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\izapple2\izapple2sdl_windows_amd64.exe
 Emulators\jgenesis\jgenesis-cli.exe
+Emulators\kegs\kegswin.exe
 Emulators\KEmulator\KEmulator.exe
 Emulators\kronos\kronos.exe
 Emulators\lime3ds\lime3ds.exe

@@ -220,6 +220,18 @@
             <entry>~/bin/gearboy/gearboy</entry>
         </rule>
     </emulator>
+    <emulator name="GEARGRAFX">
+        <!--  NEC PC Engine/TurboGrafx-16 and SuperGrafx emulator Geargrafx -->
+        <rule type="systempath">
+            <entry>geargrafx</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/geargrafx/geargrafx</entry>
+            <entry>~/.local/share/applications/geargrafx/geargrafx</entry>
+            <entry>~/.local/bin/geargrafx/geargrafx</entry>
+            <entry>~/bin/geargrafx/geargrafx</entry>
+        </rule>
+    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="systempath">
@@ -245,6 +257,12 @@
             <entry>~/.local/share/applications/izapple2/izapple2sdl_linux_amd64</entry>
             <entry>~/.local/bin/izapple2/izapple2sdl_linux_amd64</entry>
             <entry>~/bin/izapple2/izapple2sdl_linux_amd64</entry>
+        </rule>
+    </emulator>
+    <emulator name="KEGS">
+        <!-- Apple IIGS emulator KEGS -->
+        <rule type="systempath">
+            <entry>xkegs</entry>
         </rule>
     </emulator>
     <emulator name="LIGHTSPARK">

@@ -27,8 +27,8 @@ find ../es-app/src/ ../es-core/src -name '*.cpp' -o -name '*.h' | sort -f -d | x
 --no-location --copyright-holder="Northwestern Software AB" --package-name="ES-DE Frontend" --msgid-bugs-address "info@es-de.org"
 
 sed -i "1s/.*/# ES-DE Frontend translation strings./" ../locale/es-de.pot
-sed -i "2s/.*/# Copyright (c) 2024-2025 Northwestern Software AB/" ../locale/es-de.pot
-sed -i "4s/.*/# Northwestern Software <info@es-de.org>, 2024-2025./" ../locale/es-de.pot
+sed -i "2s/.*/# Copyright (c) 2024-2026 Northwestern Software AB/" ../locale/es-de.pot
+sed -i "4s/.*/# Northwestern Software <info@es-de.org>, 2024-2026./" ../locale/es-de.pot
 sed -i "s/Language-Team: LANGUAGE <LL@li.org>/Language-Team: LANGUAGE <info@es-de.org>/" ../locale/es-de.pot
 
 for language in $(cat ../locale/languages); do

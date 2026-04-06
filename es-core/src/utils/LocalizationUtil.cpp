@@ -46,6 +46,7 @@ namespace Utils
                                                                                   {{"ru"}, {"RU"}},
                                                                                   {{"sr"}, {"RS"}},
                                                                                   {{"sv"}, {"SE"}},
+                                                                                  {{"vi"}, {"VN"}},
                                                                                   {{"ar"}, {"SA"}},
                                                                                   {{"ja"}, {"JP"}},
                                                                                   {{"ko"}, {"KR"}},
@@ -225,6 +226,8 @@ namespace Utils
                 sMenuTitleScaleFactor = 0.92f;
             else if (localePair.first == "sv")
                 sMenuTitleScaleFactor = 0.87f;
+            else if (localePair.first == "vi")
+                sMenuTitleScaleFactor = 0.92f;
             else if (localePair.first == "ar")
                 sMenuTitleScaleFactor = 0.94f;
             else if (localePair.first == "ja")

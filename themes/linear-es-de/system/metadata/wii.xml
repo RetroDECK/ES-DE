@@ -10,6 +10,7 @@ As of the first quarter of 2016, the Wii led its generation over the PlayStation
         <systemReleaseDateFormated>December 2, 2006</systemReleaseDateFormated>
         <systemHardwareType>Console</systemHardwareType>
         <systemCoverSize>243-340</systemCoverSize>
+        <systemCoverSizeType>portrait</systemCoverSizeType>
         <systemColor>78c6eb</systemColor>
         <systemColorPalette1>24A9E2</systemColorPalette1>
         <systemColorPalette2>D1D1D1</systemColorPalette2>
@@ -17,6 +18,22 @@ As of the first quarter of 2016, the Wii led its generation over the PlayStation
         <systemColorPalette4>1E1C1A</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز Wii (المعروف بشكل غير رسمي باسم Nintendo Wii) هو جهاز ألعاب فيديو منزلي أصدرته شركة نينتندو في 19 نوفمبر 2006. وباعتبارها وحدة تحكم من الجيل السابع، تنافس جهاز Wii مع جهاز Xbox 360 من مايكروسوفت وبلاي ستيشن 3 من سوني. صرحت نينتندو أن وحدة التحكم الخاصة بها تستهدف فئة سكانية أوسع من تلك التي تستهدفها الاثنتان الأخريان.
+
+واعتبارًا من الربع الأول من عام 2016، تصدرت Wii جيلها على PlayStation 3 وXbox 360 في المبيعات العالمية، حيث بيعت أكثر من 101 مليون وحدة؛ وفي ديسمبر 2009، حطمت وحدة التحكم الرقم القياسي للمبيعات لشهر واحد في الولايات المتحدة.</systemDescription>
+            <systemHardwareType>وحدة التحكم</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>The Wii (known unofficially as the Nintendo Wii) is a home video game console released by Nintendo on November 19, 2006. As a seventh generation console, the Wii competed with Microsoft's Xbox 360 and Sony's PlayStation 3. Nintendo stated that its console targets a broader demographic than that of the two others.
+
+As of the first quarter of 2016, the Wii led its generation over the PlayStation 3 and Xbox 360 in worldwide sales, with more than 101 million units sold; in December 2009, the console broke the sales record for a single month in the United States.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>La Wii (coneguda no oficialment com la Nintendo Wii) és una consola de videojocs a casa publicada per Nintendo el 19 de novembre de 2006. Com a consola de setena generació, la Wii va competir amb la Xbox 360 de Microsoft i la PlayStation 3 de Sony.més ampli demogràfic que la dels altres.
@@ -49,12 +66,36 @@ Au premier trimestre 2016, la Wii était en tête des ventes mondiales de sa gé
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>The Wii (known unofficially as the Nintendo Wii) is a home video game console released by Nintendo on November 19, 2006. As a seventh generation console, the Wii competed with Microsoft's Xbox 360 and Sony's PlayStation 3. Nintendo stated that its console targets a broader demographic than that of the two others.
+
+As of the first quarter of 2016, the Wii led its generation over the PlayStation 3 and Xbox 360 in worldwide sales, with more than 101 million units sold; in December 2009, the console broke the sales record for a single month in the United States.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>La Wii (conosciuta non ufficialmente come Nintendo Wii) è una console per videogiochi domestica rilasciata da Nintendo il 19 novembre 2006. Come console di settima generazione, la Wii compete con la Xbox 360 di Microsoft e la PlayStation 3 di Sony. Nintendo ha dichiarato che la sua console si rivolge a un pubblico più ampio di quello delle altre due.
 
 Nel primo trimestre del 2016, la console Wii ha superato la PlayStation 3 e la Xbox 360 nelle vendite mondiali, con oltre 101 milioni di unità vendute; nel dicembre 2009, la console ha battuto il record di vendite per un singolo mese negli Stati Uniti.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>Wiiは、2006年11月19日に任天堂から発売された家庭用ゲーム機である。第7世代ゲーム機として、WiiはマイクロソフトのXbox 360とソニーのプレイステーション3と競合した。任天堂は、このゲーム機は他の2つのゲーム機よりも幅広い層をターゲットにしていると述べている。
+
+2016年第1四半期の時点で、Wiiは全世界での販売台数が1億100万台を超え、プレイステーション3とXbox 360を抑えて同世代機のトップに立っている。</systemDescription>
+            <systemHardwareType>コンソール</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>Wii(비공식적으로 닌텐도 Wii로 알려짐)는 2006년 11월 19일에 닌텐도에서 출시한 가정용 비디오 게임 콘솔입니다. 7세대 콘솔인 Wii는 마이크로소프트의 Xbox 360 및 소니의 플레이스테이션 3와 경쟁했습니다. 닌텐도는 자사의 콘솔이 다른 두 제품보다 더 폭넓은 연령층을 타겟으로 한다고 밝혔습니다.
+
+2016년 1분기 기준 Wii는 전 세계 판매량에서 1억 1,100만 대 이상이 판매되어 PlayStation 3와 Xbox 360을 제치고 1위를 차지했으며, 2009년 12월에는 미국에서 한 달 동안 판매량 기록을 경신했습니다.</systemDescription>
+            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -81,6 +122,14 @@ No primeiro trimestre de 2016, o Wii liderava sua geração em relação ao Play
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>The Wii (known unofficially as the Nintendo Wii) is a home video game console released by Nintendo on November 19, 2006. As a seventh generation console, the Wii competed with Microsoft's Xbox 360 and Sony's PlayStation 3. Nintendo stated that its console targets a broader demographic than that of the two others.
+
+As of the first quarter of 2016, the Wii led its generation over the PlayStation 3 and Xbox 360 in worldwide sales, with more than 101 million units sold; in December 2009, the console broke the sales record for a single month in the United States.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Wii (cunoscută neoficial ca Nintendo Wii) este o consolă de jocuri video pentru acasă lansată de Nintendo pe 19 noiembrie 2006. Fiind a șaptea generație de console, Wii a concurat cu Xbox 360 de la Microsoft și PlayStation 3 de la Sony. Nintendo a declarat că consola sa se adresează unui segment demografic mai larg decât cel al celorlalte două.
@@ -97,28 +146,20 @@ No primeiro trimestre de 2016, o Wii liderava sua geração em relação ao Play
             <systemHardwareType>Консоль</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>The Wii (known unofficially as the Nintendo Wii) is a home video game console released by Nintendo on November 19, 2006. As a seventh generation console, the Wii competed with Microsoft's Xbox 360 and Sony's PlayStation 3. Nintendo stated that its console targets a broader demographic than that of the two others.
+
+As of the first quarter of 2016, the Wii led its generation over the PlayStation 3 and Xbox 360 in worldwide sales, with more than 101 million units sold; in December 2009, the console broke the sales record for a single month in the United States.</systemDescription>
+            <systemHardwareType>Console</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Wii (inofficiellt känt som Nintendo Wii) är en hemkonsol för videospel som släpptes av Nintendo den 19 november 2006. Som en sjunde generationens konsol konkurrerade Wii med Microsofts Xbox 360 och Sonys PlayStation 3. Nintendo uppgav att dess konsol riktar sig till en bredare demografisk målgrupp än de två andra.
 
 Från och med första kvartalet 2016 ledde Wii sin generation över PlayStation 3 och Xbox 360 i världsomspännande försäljning, med mer än 101 miljoner sålda enheter; i december 2009 slog konsolen försäljningsrekordet för en enda månad i USA.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>Wiiは、2006年11月19日に任天堂から発売された家庭用ゲーム機である。第7世代ゲーム機として、WiiはマイクロソフトのXbox 360とソニーのプレイステーション3と競合した。任天堂は、このゲーム機は他の2つのゲーム機よりも幅広い層をターゲットにしていると述べている。
-
-2016年第1四半期の時点で、Wiiは全世界での販売台数が1億100万台を超え、プレイステーション3とXbox 360を抑えて同世代機のトップに立っている。</systemDescription>
-            <systemHardwareType>コンソール</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>Wii(비공식적으로 닌텐도 Wii로 알려짐)는 2006년 11월 19일에 닌텐도에서 출시한 가정용 비디오 게임 콘솔입니다. 7세대 콘솔인 Wii는 마이크로소프트의 Xbox 360 및 소니의 플레이스테이션 3와 경쟁했습니다. 닌텐도는 자사의 콘솔이 다른 두 제품보다 더 폭넓은 연령층을 타겟으로 한다고 밝혔습니다.
-
-2016년 1분기 기준 Wii는 전 세계 판매량에서 1억 1,100만 대 이상이 판매되어 PlayStation 3와 Xbox 360을 제치고 1위를 차지했으며, 2009년 12월에는 미국에서 한 달 동안 판매량 기록을 경신했습니다.</systemDescription>
-            <systemHardwareType>콘솔</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

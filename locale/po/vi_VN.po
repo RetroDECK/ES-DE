@@ -1,0 +1,3123 @@
+# ES-DE Frontend translation strings.
+# Copyright (c) 2024-2026 Northwestern Software AB
+# This file is distributed under the same license as the ES-DE Frontend package.
+# Northwestern Software <info@es-de.org>, 2024-2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ES-DE Frontend\n"
+"Report-Msgid-Bugs-To: info@es-de.org\n"
+"POT-Creation-Date: 2026-03-22 21:12+0100\n"
+"PO-Revision-Date: 2025-11-19 15:51+0700\n"
+"Last-Translator: Northwestern Software <info@es-de.org>\n"
+"Language-Team: Tiếng Việt <info@es-de.org>\n"
+"Language: vi_VN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.2\n"
+
+msgid "Network error (status:"
+msgstr "Lỗi mạng (trạng thái:"
+
+msgid "New prerelease available:"
+msgstr "Có phiên bản thử nghiệm mới:"
+
+msgid "New release available:"
+msgstr "Có phiên bản mới:"
+
+msgid "For more information visit"
+msgstr "Để biết thêm thông tin, hãy truy cập"
+
+msgid "all games"
+msgstr "tất cả trò chơi"
+
+msgid "last played"
+msgstr "chơi lần cuối"
+
+msgid "favorites"
+msgstr "yêu thích"
+
+msgid "collections"
+msgstr "bộ sưu tập"
+
+#, c-format
+msgid "DISABLED '%s' IN '%s'"
+msgstr "TẮT '%s' TRONG '%s'"
+
+#, c-format
+msgid "EDITING '%s' COLLECTION, ADD/REMOVE GAMES WITH %s"
+msgstr "ĐANG CHỈNH SỬA BỘ SƯU TẬP '%s', THÊM/XÓA TRÒ CHƠI BẰNG %s"
+
+#, c-format
+msgid "FINISHED EDITING '%s' COLLECTION"
+msgstr "ĐÃ HOÀN TẤT CHỈNH SỬA BỘ SƯU TẬP '%s'"
+
+msgid "Favorites"
+msgstr "Yêu thích"
+
+#, c-format
+msgid "ADDED '%s' TO '%s'"
+msgstr "ĐÃ THÊM '%s' VÀO '%s'"
+
+#, c-format
+msgid "REMOVED '%s' FROM '%s'"
+msgstr "ĐÃ XÓA '%s' KHỎI '%s'"
+
+msgid "This collection is empty"
+msgstr "Bộ sưu tập này trống"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s [%s]'"
+msgstr "Bộ sưu tập này chứa 1 trò chơi: '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s [%s]' and '%s [%s]'"
+msgstr "Bộ sưu tập này chứa 2 trò chơi: '%s [%s]' và '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s [%s]', '%s [%s]' and '%s [%s]'"
+msgstr "Bộ sưu tập này chứa 3 trò chơi: '%s [%s]', '%s [%s]' và '%s [%s]'"
+
+#, c-format
+msgctxt "theme"
+msgid ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgid_plural ""
+"This collection contains %i games: '%s [%s]', '%s [%s]' and '%s [%s]', among "
+"others"
+msgstr[0] ""
+"Bộ sưu tập này chứa %i trò chơi: '%s [%s]', '%s [%s]' và '%s [%s]', cùng các "
+"trò khác"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 1 game: '%s'"
+msgstr "Bộ sưu tập này chứa 1 trò chơi: '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 2 games: '%s' and '%s'"
+msgstr "Bộ sưu tập này chứa 2 trò chơi: '%s' và '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains 3 games: '%s', '%s' and '%s'"
+msgstr "Bộ sưu tập này chứa 3 trò chơi: '%s', '%s' và '%s'"
+
+#, c-format
+msgctxt "theme"
+msgid "This collection contains %i games: '%s', '%s' and '%s', among others"
+msgid_plural ""
+"This collection contains %i games: '%s', '%s' and '%s', among others"
+msgstr[0] ""
+"Bộ sưu tập này chứa %i trò chơi: '%s', '%s' và '%s', cùng các trò khác"
+
+#, c-format
+msgctxt "theme"
+msgid "'%s' is filtered so there may be more games available"
+msgstr "'%s' Đã được lọc, có thể còn nhiều trò chơi khác"
+
+#, c-format
+msgid "DELETED COLLECTION '%s'"
+msgstr "ĐÃ XÓA BỘ SƯU TẬP '%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "không rõ"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i phút"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i giờ"
+
+#, c-format
+msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
+msgstr "LỖI: THIẾU CẤU HÌNH QUY TẮC TÌM LỆNH TIỀN XỬ LÝ CHO '%s'"
+
+msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "LỖI: KHÔNG TÌM THẤY LỆNH TIỀN XỬ LÝ, CÓ THỂ NÓ CHƯA ĐƯỢC CÀI ĐẶT ĐÚNG?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"LỖI: KHÔNG TÌM THẤY LỆNH TIỀN XỬ LÝ '%s', CÓ THỂ NÓ CHƯA ĐƯỢC CÀI ĐẶT ĐÚNG?"
+
+#, c-format
+msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
+msgstr "LỖI: THIẾU CẤU HÌNH QUY TẮC TÌM GIẢ LẬP CHO '%s'"
+
+msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"LỖI: KHÔNG TÌM THẤY ỨNG DỤNG, CÓ PHẢI NÓ ĐÃ ĐƯỢC CÀI ĐẶT ĐÚNG CÁCH KHÔNG?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"LỖI: KHÔNG TÌM THẤY ỨNG DỤNG '%s', CÓ PHẢI NÓ ĐÃ ĐƯỢC CÀI ĐẶT ĐÚNG CÁCH?"
+
+msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
+msgstr "LỖI: KHÔNG TÌM THẤY GIẢ LẬP, CÓ THỂ NÓ CHƯA ĐƯỢC CÀI ĐẶT ĐÚNG?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
+msgstr ""
+"LỖI: KHÔNG TÌM THẤY ỨNG DỤNG '%s', CÓ PHẢI NÓ ĐÃ ĐƯỢC CÀI ĐẶT ĐÚNG CÁCH?"
+
+#, c-format
+msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
+msgstr "LỖI: KHÔNG TÌM THẤY TỆP LÕI GIẢ LẬP '%s'"
+
+msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
+msgstr "LỖI: MỤC NHẬP KHÔNG HỢP LỆ TRONG TỆP CẤU HÌNH HỆ THỐNG"
+
+#, c-format
+msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
+msgstr "LỖI: THIẾU CẤU HÌNH LÕI CHO '%s'"
+
+#, c-format
+msgid "ERROR: INVALID %s VARIABLE ENTRY"
+msgstr "LỖI: MỤC BIẾN %s KHÔNG HỢP LỆ"
+
+#, c-format
+msgid ""
+"ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
+msgstr ""
+"LỖI: KHÔNG THỂ TẠO THƯ MỤC ĐƯỢC XÁC ĐỊNH BỞI %s, CÓ THỂ LỖI QUYỀN TRUY CẬP?"
+
+msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "LỖI: TỆP ỨNG DỤNG HOẶC BIỆT DANH KHÔNG TỒN TẠI HOẶC KHÔNG ĐỌC ĐƯỢC"
+
+msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
+msgstr "LỖI: TỆP MÀN HÌNH NỀN KHÔNG HỢP LỆ HOẶC KHÔNG ĐỌC ĐƯỢC"
+
+msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
+msgstr "LỖI: TỆP MÀN HÌNH NỀN KHÔNG TỒN TẠI HOẶC KHÔNG ĐỌC ĐƯỢC"
+
+#, c-format
+msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
+msgstr "LỖI KHỞI CHẠY TRÒ CHƠI '%s' (MÃ LỖI %i)"
+
+msgid "RATING"
+msgstr "ĐÁNH GIÁ"
+
+msgid "DEVELOPER"
+msgstr "NHÀ PHÁT TRIỂN"
+
+msgid "PUBLISHER"
+msgstr "NHÀ PHÁT HÀNH"
+
+msgid "GENRE"
+msgstr "THỂ LOẠI"
+
+msgid "PLAYERS"
+msgstr "NGƯỜI CHƠI"
+
+msgid "FAVORITE"
+msgstr "YÊU THÍCH"
+
+msgid "COMPLETED"
+msgstr "HOÀN TẤT"
+
+msgid "KIDGAME"
+msgstr "TRÒ CHƠI TRẺ EM"
+
+msgid "HIDDEN"
+msgstr "ẨN"
+
+msgid "BROKEN"
+msgstr "HỎNG"
+
+msgid "CONTROLLER"
+msgstr "TAY CẦM"
+
+msgid "ALTERNATIVE EMULATOR"
+msgstr "TRÌNH GIẢ LẬP KHÁC"
+
+msgid "FALSE"
+msgstr "SAI"
+
+msgid "TRUE"
+msgstr "ĐÚNG"
+
+msgid "UNKNOWN"
+msgstr "KHÔNG RÕ"
+
+msgid "NONE SELECTED"
+msgstr "CHƯA CHỌN GÌ"
+
+msgid "name, ascending"
+msgstr "tên, tăng dần"
+
+msgid "name, descending"
+msgstr "tên, giảm dần"
+
+msgid "rating, ascending"
+msgstr "xếp hạng, tăng dần"
+
+msgid "rating, descending"
+msgstr "xếp hạng, giảm dần"
+
+msgid "release date, ascending"
+msgstr "ngày phát hành, tăng dần"
+
+msgid "release date, descending"
+msgstr "ngày phát hành, giảm dần"
+
+msgid "developer, ascending"
+msgstr "nhà phát triển, tăng dần"
+
+msgid "developer, descending"
+msgstr "nhà phát triển, giảm dần"
+
+msgid "publisher, ascending"
+msgstr "nhà phát hành, tăng dần"
+
+msgid "publisher, descending"
+msgstr "nhà phát hành, giảm dần"
+
+msgid "genre, ascending"
+msgstr "thể loại, tăng dần"
+
+msgid "genre, descending"
+msgstr "thể loại, giảm dần"
+
+msgid "players, ascending"
+msgstr "người chơi, tăng dần"
+
+msgid "players, descending"
+msgstr "người chơi, giảm dần"
+
+msgid "last played, ascending"
+msgstr "chơi lần cuối, tăng dần"
+
+msgid "last played, descending"
+msgstr "chơi lần cuối, giảm dần"
+
+msgid "times played, ascending"
+msgstr "số lần chơi, tăng dần"
+
+msgid "times played, descending"
+msgstr "số lần chơi, giảm dần"
+
+msgid "play time, ascending"
+msgstr "thời gian chơi, tăng dần"
+
+msgid "play time, descending"
+msgstr "thời gian chơi, giảm dần"
+
+msgid "system, ascending"
+msgstr "hệ thống, tăng dần"
+
+msgid "system, descending"
+msgstr "hệ thống, giảm dần"
+
+msgid "ALTERNATIVE EMULATORS"
+msgstr "TRÌNH GIẢ LẬP KHÁC"
+
+msgid "BACK"
+msgstr "QUAY LẠI"
+
+msgid "back"
+msgstr "quay lại"
+
+msgid "INVALID ENTRY"
+msgstr "MỤC KHÔNG HỢP LỆ"
+
+msgid "CLEARED ENTRY"
+msgstr "ĐÃ XÓA MỤC"
+
+msgid "NO ALTERNATIVE EMULATORS DEFINED"
+msgstr "KHÔNG CÓ TRÌNH GIẢ LẬP THAY THẾ"
+
+msgid "CLEAR INVALID ENTRY"
+msgstr "XÓA MỤC KHÔNG HỢP LỆ"
+
+msgid "DEFAULT"
+msgstr "MẶC ĐỊNH"
+
+msgid "select"
+msgstr "chọn"
+
+msgid "APPLICATION UPDATER"
+msgstr "TRÌNH CẬP NHẬT ỨNG DỤNG"
+
+msgid "INSTALLATION STEPS:"
+msgstr "CÁC BƯỚC CÀI ĐẶT:"
+
+msgid "DOWNLOAD NEW RELEASE"
+msgstr "TẢI PHIÊN BẢN MỚI"
+
+msgid "DOWNLOAD NEW RELEASE TO THIS DIRECTORY:"
+msgstr "TẢI PHIÊN BẢN MỚI VÀO THƯ MỤC NÀY:"
+
+msgid "INSTALL PACKAGE"
+msgstr "CÀI ĐẶT GÓI"
+
+msgid "QUIT AND MANUALLY RESTART ES-DE"
+msgstr "THOÁT VÀ KHỞI ĐỘNG LẠI ES-DE THỦ CÔNG"
+
+msgid "QUIT AND MANUALLY UPGRADE ES-DE"
+msgstr "THOÁT VÀ CẬP NHẬT ES-DE THỦ CÔNG"
+
+msgid "STATUS MESSAGE:"
+msgstr "THÔNG BÁO TRẠNG THÁI:"
+
+msgid "DOWNLOAD"
+msgstr "TẢI XUỐNG"
+
+msgid "download new release"
+msgstr "tải phiên bản mới"
+
+msgid "Download directory does not exist"
+msgstr "Thư mục tải xuống không tồn tại"
+
+msgid "CHANGE DIRECTORY"
+msgstr "THAY ĐỔI THƯ MỤC"
+
+msgid "change download directory"
+msgstr "thay đổi thư mục tải xuống"
+
+msgid "ENTER DOWNLOAD DIRECTORY"
+msgstr "NHẬP THƯ MỤC TẢI XUỐNG"
+
+msgid "CANCEL"
+msgstr "HỦY"
+
+msgid "cancel"
+msgstr "hủy"
+
+msgid "DOWNLOAD ABORTED"
+msgstr "TẢI XUỐNG ĐÃ BỊ HỦY"
+
+msgid "NO PACKAGE SAVED TO DISK"
+msgstr "KHÔNG GÓI NÀO ĐƯỢC LƯU VÀO Ổ ĐĨA"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "PACKAGE WAS DOWNLOADED AND CAN BE MANUALLY INSTALLED"
+msgstr "GÓI ĐÃ TẢI XUỐNG VÀ CÓ THỂ CÀI ĐẶT THỦ CÔNG"
+
+msgid "DOWNLOADING 100%"
+msgstr "ĐÃ TẢI 100%"
+
+msgid "Downloaded file does not match expected MD5 checksum"
+msgstr "Tệp đã tải không khớp với mã kiểm tra MD5 dự kiến"
+
+msgid "Error: Couldn't delete temporary package file, permission problems?"
+msgstr "Lỗi: Không thể xóa tệp gói tạm, có thể lỗi quyền truy cập?"
+
+msgid "Error: Couldn't write package file, permission problems?"
+msgstr "Lỗi: Không thể ghi tệp gói, có thể lỗi quyền truy cập?"
+
+msgid "Error: Couldn't set permissions on AppImage file"
+msgstr "Lỗi: Không thể đặt quyền truy cập cho tệp AppImage"
+
+#, c-format
+msgid "Downloaded %s"
+msgstr "Đã tải %s"
+
+msgid "Error: Couldn't open AppImage update file for reading"
+msgstr "Lỗi: Không thể mở tệp cập nhật AppImage để đọc"
+
+msgid "Error: Downloaded file does not match expected MD5 checksum"
+msgstr "Lỗi: Tệp đã tải không khớp với giá trị kiểm tra MD5 dự kiến"
+
+msgid "Error: Couldn't rename running AppImage file, permission problems?"
+msgstr ""
+"Lỗi: Không thể đổi tên tệp AppImage đang chạy, có thể lỗi quyền truy cập?"
+
+msgid "Error: Couldn't replace running AppImage file, permission problems?"
+msgstr ""
+"Lỗi: Không thể thay thế tệp AppImage đang chạy, có thể lỗi quyền truy cập?"
+
+#, c-format
+msgid "Successfully installed as %s"
+msgstr "Cài đặt thành công dưới tên %s"
+
+msgid "DOWNLOADING"
+msgstr "ĐANG TẢI XUỐNG"
+
+msgid "INSTALL"
+msgstr "CÀI ĐẶT"
+
+msgid "install package"
+msgstr "cài đặt gói"
+
+msgid "Find the detailed changelog at"
+msgstr "Xem nhật ký thay đổi chi tiết tại"
+
+msgid "QUIT"
+msgstr "THOÁT"
+
+msgid "quit application"
+msgstr "thoát ứng dụng"
+
+#, c-format
+msgid "FINISH EDITING '%s' COLLECTION"
+msgstr "HOÀN TẤT CHỈNH SỬA BỘ SƯU TẬP '%s'"
+
+msgid "SELECT COLLECTIONS"
+msgstr "CHỌN BỘ SƯU TẬP"
+
+msgid "AUTOMATIC GAME COLLECTIONS"
+msgstr "BỘ SƯU TẬP TỰ ĐỘNG"
+
+msgid "CUSTOM GAME COLLECTIONS"
+msgstr "BỘ SƯU TẬP TRÒ CHƠI TÙY CHỈNH"
+
+msgid "CREATE NEW CUSTOM COLLECTION FROM THEME"
+msgstr "TẠO BỘ SƯU TẬP TÙY CHỈNH MỚI TỪ GIAO DIỆN"
+
+msgid "SELECT THEME FOLDER"
+msgstr "CHỌN THƯ MỤC GIAO DIỆN"
+
+msgid "CREATE NEW CUSTOM COLLECTION"
+msgstr "TẠO BỘ SƯU TẬP TÙY CHỈNH MỚI"
+
+msgid "NEW COLLECTION NAME"
+msgstr "TÊN BỘ SƯU TẬP MỚI"
+
+msgid "CREATE"
+msgstr "TẠO"
+
+msgid "CREATE COLLECTION?"
+msgstr "TẠO BỘ SƯU TẬP?"
+
+msgid "DELETE CUSTOM COLLECTION"
+msgstr "XÓA BỘ SƯU TẬP TÙY CHỈNH"
+
+msgid "COLLECTION TO DELETE"
+msgstr "BỘ SƯU TẬP CẦN XÓA"
+
+#, c-format
+msgid ""
+"THIS WILL PERMANENTLY DELETE THE COLLECTION\n"
+"'%s'\n"
+"ARE YOU SURE?"
+msgstr ""
+"ĐIỀU NÀY SẼ XÓA VĨNH VIỄN BỘ SƯU TẬP\n"
+"'%s'\n"
+"BẠN CÓ CHẮC KHÔNG?"
+
+msgid "YES"
+msgstr "CÓ"
+
+msgid "NO"
+msgstr "KHÔNG"
+
+msgid "GROUP CUSTOM COLLECTIONS"
+msgstr "NHÓM BỘ SƯU TẬP"
+
+msgid "IF UNTHEMED"
+msgstr "KHÔNG CÓ GIAO DIỆN"
+
+msgid "ALWAYS"
+msgstr "LUÔN LUÔN"
+
+msgid "NEVER"
+msgstr "KHÔNG BAO GIỜ"
+
+msgid "SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS"
+msgstr "ƯU TIÊN YÊU THÍCH TRONG BỘ SƯU TẬP"
+
+msgid "DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS"
+msgstr "HIỂN THỊ DẤU SAO CHO BỘ SƯU TẬP"
+
+msgid "IMPORT TO SYSTEM"
+msgstr "NHẬP VÀO HỆ THỐNG"
+
+msgid "NO CONFIGURATION"
+msgstr "KHÔNG CẤU HÌNH"
+
+msgid "REMOVE ENTRIES"
+msgstr "XÓA MỤC"
+
+msgid "ALL UNSELECTED"
+msgstr "BỎ CHỌN TẤT CẢ"
+
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr "LOẠI BỎ KÝ TỰ ĐẶC BIỆT"
+
+msgid "MEDIA TARGET TYPE"
+msgstr "KIỂU PHƯƠNG TIỆN"
+
+msgid "SCREENSHOTS"
+msgstr "ẢNH CHỤP MÀN HÌNH"
+
+msgid "TITLE SCREENS"
+msgstr "MÀN HÌNH TIÊU ĐỀ"
+
+msgid "COVERS"
+msgstr "BÌA TRƯỚC"
+
+msgid "BACK COVERS"
+msgstr "BÌA SAU"
+
+msgid "MARQUEES (WHEELS)"
+msgstr "BIỂU NGỮ (XOAY VÒNG)"
+
+msgid "3D BOXES"
+msgstr "HỘP 3D"
+
+msgid "PHYSICAL MEDIA"
+msgstr "PHƯƠNG TIỆN VẬT LÝ"
+
+msgid "FAN ART"
+msgstr "HÌNH NGƯỜI HÂM MỘ"
+
+msgid "MIXIMAGES"
+msgstr "ẢNH TỔNG HỢP"
+
+msgid "IMPORT MEDIA"
+msgstr "NHẬP PHƯƠNG TIỆN"
+
+msgid "IMPORT BANNERS OR LOGOS IF AVAILABLE"
+msgstr "NHẬP BIỂU NGỮ HOẶC LOGO NẾU CÓ"
+
+msgid "OVERWRITE MEDIA FILES"
+msgstr "GHI ĐÈ TỆP PHƯƠNG TIỆN"
+
+msgid "ONLY INCLUDE APPS CATEGORIZED AS GAMES"
+msgstr "CHỈ BAO GỒM ỨNG DỤNG ĐƯỢC PHÂN LOẠI LÀ TRÒ CHƠI"
+
+msgid "START"
+msgstr "BẮT ĐẦU"
+
+msgid "start importer"
+msgstr "bắt đầu nhập dữ liệu"
+
+msgid "WORKING..."
+msgstr "ĐANG XỬ LÝ..."
+
+msgid "COULDN'T FIND ANYTHING TO IMPORT"
+msgstr "KHÔNG TÌM THẤY GÌ ĐỂ NHẬP VÀO"
+
+#, c-format
+msgid ""
+"YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
+"FILES WITH THE \"%s\" FILE EXTENSION FROM THE \"%s\" SYSTEM DIRECTORY AND "
+"THEN IMPORT THE ENTRIES YOU SELECT ON THE NEXT SCREEN\n"
+"ARE YOU SURE?"
+msgstr ""
+"BẠN ĐÃ CHỌN XÓA TẤT CẢ CÁC MỤC KHÔNG ĐƯỢC CHỌN, HÀNH ĐỘNG NÀY SẼ XÓA TẤT CẢ "
+"CÁC TỆP TRÒ CHƠI CÓ PHẦN MỞ RỘNG \"%s\" TRONG THƯ MỤC HỆ THỐNG \"%s\" VÀ SAU "
+"ĐÓ SẼ NHẬP CÁC MỤC BẠN CHỌN Ở MÀN HÌNH TIẾP THEO\n"
+" BẠN CÓ CHẮC KHÔNG?"
+
+msgid "MAKE YOUR SELECTION"
+msgstr "HÃY CHỌN"
+
+msgid "IMPORT"
+msgstr "NHẬP"
+
+msgid "import"
+msgstr "nhập"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "ĐÃ NHẬP %i MỤC"
+
+msgid "SELECT ALL"
+msgstr "CHỌN TẤT CẢ"
+
+msgid "select all"
+msgstr "chọn tất cả"
+
+msgid "SELECT NONE"
+msgstr "BỎ CHỌN TẤT CẢ"
+
+msgid "select none"
+msgstr "bỏ chọn"
+
+msgid "FILTER GAMELIST"
+msgstr "LỌC DANH SÁCH TRÒ CHƠI"
+
+msgid "RESET ALL FILTERS"
+msgstr "ĐẶT LẠI TẤT CẢ BỘ LỌC"
+
+msgid "GAME NAME"
+msgstr "TÊN TRÒ CHƠI"
+
+msgid "APPLY CHANGES?"
+msgstr "ÁP DỤNG THAY ĐỔI?"
+
+msgid "NOTHING TO FILTER"
+msgstr "KHÔNG CÓ GÌ ĐỂ LỌC"
+
+msgid "GAMELIST OPTIONS"
+msgstr "TÙY CHỌN DANH SÁCH TRÒ CHƠI"
+
+msgid "JUMP TO..."
+msgstr "CHUYỂN ĐẾN..."
+
+msgid "SORT GAMES BY"
+msgstr "SẮP XẾP TRÒ CHƠI THEO"
+
+msgid "THIS SYSTEM HAS NO GAMES"
+msgstr "HỆ THỐNG NÀY KHÔNG CÓ TRÒ CHƠI NÀO"
+
+msgid "ADD/REMOVE GAMES TO THIS COLLECTION"
+msgstr "THÊM/XÓA TRÒ CHƠI KHỎI BỘ SƯU TẬP NÀY"
+
+msgid "EDIT THIS FOLDER'S METADATA"
+msgstr "SỬA DỮ LIỆU CỦA THƯ MỤC NÀY"
+
+msgid "EDIT THIS GAME'S METADATA"
+msgstr "SỬA DỮ LIỆU CỦA TRÒ CHƠI NÀY"
+
+msgid "ENTER FOLDER (OVERRIDE FOLDER LINK)"
+msgstr "NHẬP THƯ MỤC (GHI ĐÈ LIÊN KẾT THƯ MỤC)"
+
+msgid "CLOSE"
+msgstr "ĐÓNG"
+
+msgid "close"
+msgstr "đóng"
+
+msgid "APPLY"
+msgstr "ÁP DỤNG"
+
+msgid "apply"
+msgstr "áp dụng"
+
+msgid "close (apply)"
+msgstr "đóng (áp dụng)"
+
+msgid "close (cancel)"
+msgstr "đóng (hủy)"
+
+msgid "LAUNCHING GAME"
+msgstr "ĐANG KHỞI CHẠY TRÒ CHƠI"
+
+msgid "HELP PROMPTS"
+msgstr "GỢI Ý TRỢ GIÚP"
+
+msgid "TOP"
+msgstr "TRÊN CÙNG"
+
+msgid "BOTTOM"
+msgstr "DƯỚI"
+
+msgid "DISABLED"
+msgstr "TẮT"
+
+msgid "DISPLAY MEDIA TYPES"
+msgstr "HIỂN THỊ LOẠI PHƯƠNG TIỆN"
+
+msgid "KEEP VIDEOS RUNNING WHEN VIEWING IMAGES"
+msgstr "GIỮ VIDEO CHẠY KHI XEM HÌNH ẢNH"
+
+msgid "STRETCH VIDEOS TO SCREEN RESOLUTION"
+msgstr "KÉO DÃN VIDEO THEO MÀN HÌNH"
+
+msgid "RENDER SCANLINES FOR VIDEOS"
+msgstr "HIỆU ỨNG DÒNG QUÉT CHO VIDEO (CRT)"
+
+msgid "RENDER BLUR FOR VIDEOS"
+msgstr "HIỆU ỨNG MỜ CHO VIDEO"
+
+msgid "RENDER SCANLINES FOR SCREENSHOTS AND TITLES"
+msgstr "HIỆU ỨNG DÒNG QUÉT CHO ẢNH VÀ TIÊU ĐỀ"
+
+msgid "MAIN MENU"
+msgstr "MENU CHÍNH"
+
+msgid "SCRAPER"
+msgstr "THU THẬP DỮ LIỆU"
+
+msgid "UI SETTINGS"
+msgstr "CÀI ĐẶT GIAO DIỆN"
+
+msgid "SOUND SETTINGS"
+msgstr "CÀI ĐẶT ÂM THANH"
+
+msgid "INPUT DEVICE SETTINGS"
+msgstr "CÀI ĐẶT THIẾT BỊ NHẬP"
+
+msgid "GAME COLLECTION SETTINGS"
+msgstr "CÀI ĐẶT BỘ SƯU TẬP TRÒ CHƠI"
+
+msgid "OTHER SETTINGS"
+msgstr "CÀI ĐẶT KHÁC"
+
+msgid "UTILITIES"
+msgstr "TIỆN ÍCH"
+
+msgid "QUIT ES-DE"
+msgstr "THOÁT"
+
+msgid "THEME"
+msgstr "GIAO DIỆN"
+
+msgid "THEME DOWNLOADER"
+msgstr "TRÌNH TẢI GIAO DIỆN"
+
+msgid "THEME VARIANT"
+msgstr "BIẾN THỂ GIAO DIỆN"
+
+msgid "NONE DEFINED"
+msgstr "CHƯA ĐƯỢC XÁC ĐỊNH"
+
+msgid "THEME COLOR SCHEME"
+msgstr "BẢNG MÀU GIAO DIỆN"
+
+msgid "THEME FONT SIZE"
+msgstr "CỠ CHỮ GIAO DIỆN"
+
+msgid "THEME ASPECT RATIO"
+msgstr "TỶ LỆ KHUNG HÌNH GIAO DIỆN"
+
+msgid "THEME TRANSITIONS"
+msgstr "HIỆU ỨNG CHUYỂN GIAO DIỆN"
+
+msgid "AUTOMATIC"
+msgstr "TỰ ĐỘNG"
+
+msgid "THEME PROFILE"
+msgstr "HỒ SƠ GIAO DIỆN"
+
+msgid "INSTANT (BUILT-IN)"
+msgstr "NHANH (TÍCH HỢP SẴN)"
+
+msgid "SLIDE (BUILT-IN)"
+msgstr "DẠNG TRƯỢT (TÍCH HỢP SẴN)"
+
+msgid "FADE (BUILT-IN)"
+msgstr "LÀM MỜ (TÍCH HỢP SẴN)"
+
+msgid "THEME LANGUAGE"
+msgstr "NGÔN NGỮ GIAO DIỆN"
+
+msgid "APPLICATION LANGUAGE"
+msgstr "NGÔN NGỮ ỨNG DỤNG"
+
+msgid "QUICK SYSTEM SELECT"
+msgstr "CHỌN HỆ THỐNG NHANH"
+
+msgid "LEFT/RIGHT OR SHOULDERS"
+msgstr "TRÁI/PHẢI HOẶC NÚT TRÊN"
+
+msgid "LEFT/RIGHT OR TRIGGERS"
+msgstr "TRÁI/PHẢI HOẶC CÒ"
+
+msgid "SHOULDERS"
+msgstr "NÚT TRÊN"
+
+msgid "TRIGGERS"
+msgstr "CÒ"
+
+msgid "LEFT/RIGHT"
+msgstr "TRÁI/PHẢI"
+
+msgid "SYSTEM ON STARTUP"
+msgstr "HỆ THỐNG KHI KHỞI ĐỘNG"
+
+msgid "STARTUP VIEW"
+msgstr "GIAO DIỆN KHỞI ĐỘNG"
+
+msgid "SYSTEM"
+msgstr "HỆ THỐNG"
+
+msgid "GAMELIST"
+msgstr "DANH SÁCH TRÒ CHƠI"
+
+msgid "SYSTEMS SORTING"
+msgstr "SẮP XẾP HỆ THỐNG"
+
+msgid "FULL NAMES OR CUSTOM"
+msgstr "TÊN ĐẦY ĐỦ HOẶC TÙY CHỈNH"
+
+msgid "RELEASE YEAR"
+msgstr "NĂM PHÁT HÀNH"
+
+msgid "MANUFACTURER, RELEASE YEAR"
+msgstr "NHÀ SẢN XUẤT, NĂM PHÁT HÀNH"
+
+msgid "HW TYPE, RELEASE YEAR"
+msgstr "LOẠI PHẦN CỨNG, NĂM PHÁT HÀNH"
+
+msgid "MANUFACTURER, HW TYPE, REL. YEAR"
+msgstr "NHÀ SẢN XUẤT, LOẠI PHẦN CỨNG, NĂM PHÁT HÀNH"
+
+msgctxt "short"
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "THỨ TỰ SẮP XẾP"
+
+msgid "GAMES DEFAULT SORT ORDER"
+msgstr "THỨ TỰ SẮP XẾP"
+
+msgid "MENU COLOR SCHEME"
+msgstr "BẢNG MÀU MENU"
+
+msgid "DARK"
+msgstr "TỐI"
+
+msgid "DARK AND RED"
+msgstr "TỐI VÀ ĐỎ"
+
+msgid "LIGHT"
+msgstr "NHẸ"
+
+msgid "MENU OPENING ANIMATION"
+msgstr "HIỆU ỨNG MỞ MENU"
+
+msgid "SCALE-UP"
+msgstr "PHÓNG TO"
+
+msgid "NONE"
+msgstr "KHÔNG"
+
+msgid "LAUNCH SCREEN DURATION"
+msgstr "THỜI GIAN KHỞI ĐỘNG"
+
+msgid "NORMAL"
+msgstr "BÌNH THƯỜNG"
+
+msgid "BRIEF"
+msgstr "NGẮN"
+
+msgid "LONG"
+msgstr "DÀI"
+
+msgid "POPUP"
+msgstr "THÔNG BÁO BẬT LÊN"
+
+msgid "UI MODE"
+msgstr "CHẾ ĐỘ GIAO DIỆN"
+
+msgid "FULL"
+msgstr "ĐẦY ĐỦ"
+
+msgid "KIOSK"
+msgstr "CHẾ ĐỘ KIOSK"
+
+msgid "KID"
+msgstr "TRẺ EM"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KIOSK'\n"
+"THIS WILL HIDE MOST MENU OPTIONS\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"ĐIỀU NÀY SẼ CHUYỂN GIAO DIỆN SANG CHẾ ĐỘ HẠN CHẾ\n"
+"'KIOSK'\n"
+"ĐIỀU NÀY SẼ ẨN PHẦN LỚN CÁC TÙY CHỌN TRONG MENU\n"
+"ĐỂ MỞ KHÓA VÀ QUAY LẠI GIAO DIỆN ĐẦY ĐỦ, HÃY NHẬP MÃ NÀY:\n"
+"%s\n"
+"\n"
+" BẠN CÓ MUỐN TIẾP TỤC KHÔNG?"
+
+#, c-format
+msgid ""
+"THIS CHANGES THE UI TO THE RESTRICTED MODE\n"
+"'KID'\n"
+"THIS ONLY ENABLES GAMES THAT HAVE BEEN FLAGGED\n"
+"AS SUITABLE FOR CHILDREN\n"
+"TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE:\n"
+"%s\n"
+"\n"
+"DO YOU WANT TO PROCEED?"
+msgstr ""
+"ĐIỀU NÀY SẼ CHUYỂN GIAO DIỆN SANG CHẾ ĐỘ HẠN CHẾ\n"
+"'TRẺ EM'\n"
+"CHỈ CHO PHÉP CÁC TRÒ CHƠI ĐƯỢC ĐÁNH DẤU LÀ\n"
+"PHÙ HỢP VỚI TRẺ EM\n"
+"ĐỂ MỞ KHÓA VÀ QUAY LẠI GIAO DIỆN ĐẦY ĐỦ, HÃY NHẬP MÃ NÀY:\n"
+"%s\n"
+"\n"
+"BẠN CÓ MUỐN TIẾP TỤC KHÔNG?"
+
+msgid "RANDOM ENTRY BUTTON"
+msgstr "NÚT CHỌN NGẪU NHIÊN"
+
+msgid "GAMES ONLY"
+msgstr "CHỈ TRÒ CHƠI"
+
+msgid "GAMES AND SYSTEMS"
+msgstr "TRÒ CHƠI VÀ HỆ THỐNG"
+
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "CÀI ĐẶT TRẠNG THÁI HỆ THỐNG"
+
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "CÀI ĐẶT TRÌNH XEM PHƯƠNG TIỆN"
+
+msgid "SCREENSAVER SETTINGS"
+msgstr "CÀI ĐẶT MÀN HÌNH CHỜ"
+
+msgid "ENABLE THEME VARIANT TRIGGERS"
+msgstr "BẬT BIẾN THỂ GIAO DIỆN"
+
+msgid "DISPLAY CLOCK"
+msgstr "HIỂN THỊ ĐỒNG HỒ"
+
+msgid "BLUR BACKGROUND WHEN MENU IS OPEN"
+msgstr "LÀM MỜ NỀN KHI MỞ MENU"
+
+msgid "SORT FOLDERS ON TOP OF GAMELISTS"
+msgstr "HIỆN THƯ MỤC TRÊN ĐẦU TRÒ CHƠI"
+
+msgid "SORT FAVORITE GAMES ABOVE NON-FAVORITES"
+msgstr "SẮP XẾP TRÒ CHƠI YÊU THÍCH LÊN TRÊN"
+
+msgid "ADD STAR MARKINGS TO FAVORITE GAMES"
+msgstr "THÊM DẤU SAO CHO TRÒ CHƠI YÊU THÍCH"
+
+msgid "ENABLE TEXTLIST QUICK SCROLLING OVERLAY"
+msgstr "BẬT CUỘN NHANH DANH SÁCH CHỮ"
+
+msgid "ENABLE VIRTUAL KEYBOARD"
+msgstr "BẬT BÀN PHÍM ẢO"
+
+msgid "ENABLE TOGGLE FAVORITES BUTTON"
+msgstr "BẬT NÚT CHUYỂN ĐỔI YÊU THÍCH"
+
+msgid "ENABLE GAMELIST FILTERS"
+msgstr "BẬT BỘ LỌC DANH SÁCH TRÒ CHƠI"
+
+msgid "DISPLAY ON-SCREEN HELP"
+msgstr "HIỂN THỊ TRỢ GIÚP TRÊN MÀN HÌNH"
+
+msgid "AUDIO DRIVER"
+msgstr "TRÌNH ÂM THANH"
+
+msgid "AUDIO DRIVER (REQUIRES RESTART)"
+msgstr "TRÌNH ÂM THANH"
+
+msgid "SYSTEM VOLUME"
+msgstr "ÂM LƯỢNG HỆ THỐNG"
+
+msgid "NAVIGATION SOUNDS VOLUME"
+msgstr "ÂM LƯỢNG ÂM THANH ĐIỀU HƯỚNG"
+
+msgid "VIDEO PLAYER VOLUME"
+msgstr "ÂM LƯỢNG TRÌNH PHÁT VIDEO"
+
+msgid "PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS"
+msgstr "PHÁT ÂM THANH VIDEO VÀ HỆ THỐNG"
+
+msgid "PLAY AUDIO FOR MEDIA VIEWER VIDEOS"
+msgstr "PHÁT ÂM THANH PHƯƠNG TIỆN VIDEO"
+
+msgid "PLAY AUDIO FOR SCREENSAVER VIDEOS"
+msgstr "PHÁT ÂM THANH VIDEO MÀN HÌNH CHỜ"
+
+msgid "ENABLE NAVIGATION SOUNDS"
+msgstr "BẬT ÂM THANH ĐIỀU HƯỚNG"
+
+msgid "CONTROLLER TYPE"
+msgstr "LOẠI TAY CẦM"
+
+msgid "TOUCH OVERLAY SIZE"
+msgstr "KÍCH THƯỚC LỚP CẢM ỨNG"
+
+msgid "MEDIUM"
+msgstr "TRUNG BÌNH"
+
+msgid "LARGE"
+msgstr "LỚN"
+
+msgid "SMALL"
+msgstr "NHỎ"
+
+msgid "EXTRA SMALL"
+msgstr "RẤT NHỎ"
+
+msgid "TOUCH OVERLAY OPACITY"
+msgstr "ĐỘ MỜ CỦA LỚP CẢM ỨNG"
+
+msgid "LOW"
+msgstr "THẤP"
+
+msgid "VERY LOW"
+msgstr "RẤT THẤP"
+
+msgid "TOUCH OVERLAY FADE-OUT TIME"
+msgstr "THỜI GIAN MỜ DẦN LỚP CẢM ỨNG"
+
+msgid "ENABLE TOUCH OVERLAY"
+msgstr "BẬT LỚP CẢM ỨNG"
+
+msgid ""
+"DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
+"WILL LOCK YOURSELF OUT OF THE APP. IF THIS HAPPENS YOU WILL NEED TO "
+"TEMPORARILY PLUG IN A CONTROLLER OR A KEYBOARD TO ENABLE THIS SETTING AGAIN, "
+"OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
+"THE CONFIGURATOR TO RUN ON NEXT STARTUP"
+msgstr ""
+"ĐỪNG TẮT LỚP CẢM ỨNG NẾU BẠN KHÔNG DÙNG TAY CẦM, NẾU KHÔNG BẠN SẼ KHÔNG THỂ "
+"ĐIỀU KHIỂN ỨNG DỤNG. NẾU VIỆC NÀY XẢY RA, BẠN CẦN TẠM THỜI KẾT NỐI TAY CẦM "
+"HOẶC BÀN PHÍM ĐỂ BẬT LẠI CÀI ĐẶT NÀY, HOẶC XÓA DỮ LIỆU LƯU TRỮ CỦA ES-DE "
+"TRONG CÀI ĐẶT ỨNG DỤNG ANDROID ĐỂ BẮT BUỘC TRÌNH CẤU HÌNH KHỞI ĐỘNG LẠI LẦN "
+"SAU"
+
+msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
+msgstr "CHỈ NHẬN TÍN HIỆU TỪ TAY CẦM THỨ NHẤT"
+
+msgid "SWAP THE A/B AND X/Y BUTTONS"
+msgstr "ĐỔI VỊ TRÍ NÚT A/B VÀ X/Y"
+
+msgid "IGNORE KEYBOARD INPUT"
+msgstr "BỎ QUA NHẬP TỪ BÀN PHÍM"
+
+msgid "INPUT DEVICE NOTIFICATIONS"
+msgstr "THÔNG BÁO THIẾT BỊ NHẬP"
+
+msgid "CONFIGURE KEYBOARD AND CONTROLLERS"
+msgstr "CẤU HÌNH BÀN PHÍM VÀ TAY CẦM"
+
+msgid ""
+"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY CONFIGURED, BUT USING THIS "
+"TOOL YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS (THIS WILL NOT AFFECT THE "
+"HELP PROMPTS)"
+msgstr ""
+"BÀN PHÍM VÀ TAY CẦM ĐƯỢC CẤU HÌNH TỰ ĐỘNG, NHƯNG BẰNG CÔNG CỤ NÀY BẠN CÓ THỂ "
+"GHI ĐÈ CÁC THIẾT LẬP NÚT MẶC ĐỊNH (ĐIỀU NÀY KHÔNG ẢNH HƯỞNG ĐẾN CÁC GỢI Ý "
+"TRỢ GIÚP)"
+
+msgid "PROCEED"
+msgstr "TIẾP TỤC"
+
+msgid "GAME MEDIA DIRECTORY"
+msgstr "THƯ MỤC PHƯƠNG TIỆN TRÒ CHƠI"
+
+msgid "ENTER GAME MEDIA DIRECTORY"
+msgstr "NHẬP THƯ MỤC PHƯƠNG TIỆN TRÒ CHƠI"
+
+msgid "Default directory:"
+msgstr "Thư mục mặc định:"
+
+msgid "SAVE"
+msgstr "LƯU"
+
+msgid "SAVE CHANGES?"
+msgstr "LƯU THAY ĐỔI?"
+
+msgid "load default directory"
+msgstr "tải thư mục mặc định"
+
+msgid "MAX PLAY TIME TRACKING"
+msgstr "THEO DÕI THỜI GIAN CHƠI TỐI ĐA"
+
+msgid "VRAM LIMIT"
+msgstr "GIỚI HẠN VRAM"
+
+msgid "ANTI-ALIASING (MSAA)"
+msgstr "KHỬ RĂNG CƯA (MSAA)"
+
+msgid "2X"
+msgstr "2X"
+
+msgid "4X"
+msgstr "4X"
+
+msgid "ANTI-ALIASING (MSAA) (REQUIRES RESTART)"
+msgstr "KHỬ RĂNG CƯA (CẦN KHỞI ĐỘNG LẠI)"
+
+msgid "DISPLAY/MONITOR INDEX"
+msgstr "CHỈ MỤC MÀN HÌNH/HIỂN THỊ"
+
+msgid "DISPLAY/MONITOR INDEX (REQUIRES RESTART)"
+msgstr "CHỈ MỤC MÀN HÌNH(CẦN KHỞI ĐỘNG LẠI)"
+
+msgid "ROTATE SCREEN"
+msgstr "XOAY MÀN HÌNH"
+
+msgid "90 DEGREES"
+msgstr "90 ĐỘ"
+
+msgid "180 DEGREES"
+msgstr "180 ĐỘ"
+
+msgid "270 DEGREES"
+msgstr "270 ĐỘ"
+
+msgid "ROTATE SCREEN (REQUIRES RESTART)"
+msgstr "XOAY MÀN HÌNH (CẦN KHỞI ĐỘNG LẠI)"
+
+msgid "KEYBOARD QUIT SHORTCUT"
+msgstr "PHÍM TẮT THOÁT CHƯƠNG TRÌNH"
+
+msgctxt "short"
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "KHI NÀO LƯU SIÊU DỮ LIỆU TRÒ CHƠI"
+
+msgid "ON EXIT"
+msgstr "KHI THOÁT"
+
+msgid "WHEN TO SAVE GAME METADATA"
+msgstr "KHI NÀO LƯU SIÊU DỮ LIỆU TRÒ CHƠI"
+
+msgid "APPLICATION UPDATES"
+msgstr "CẬP NHẬT ỨNG DỤNG"
+
+msgid "DAILY"
+msgstr "HÀNG NGÀY"
+
+msgid "WEEKLY"
+msgstr "HÀNG TUẦN"
+
+msgid "MONTHLY"
+msgstr "HÀNG THÁNG"
+
+msgid "CHECK FOR APPLICATION UPDATES"
+msgstr "KIỂM TRA CẬP NHẬT ỨNG DỤNG"
+
+msgid "INCLUDE PRERELEASES IN UPDATE CHECKS"
+msgstr "BAO GỒM CẢ CÁC BẢN PHÁT HÀNH THỬ KHI KIỂM TRA CẬP NHẬT"
+
+msgid "HIDE TASKBAR (REQUIRES RESTART)"
+msgstr "ẨN THANH TÁC VỤ (CẦN KHỞI ĐỘNG LẠI)"
+
+msgid "RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)"
+msgstr "CHẠY NỀN (KHI TRÒ CHƠI ĐANG KHỞI CHẠY)"
+
+msgid "VIDEO HARDWARE DECODING (EXPERIMENTAL)"
+msgstr "GIẢI MÃ VIDEO BẰNG PHẦN CỨNG (THỬ NGHIỆM)"
+
+msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
+msgstr "NÂNG TẦN SỐ KHUNG HÌNH VIDEO LÊN 60 FPS"
+
+msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
+msgstr "CHỌN GIẢ LẬP CHO TỪNG TRÒ CHƠI"
+
+msgid "SHOW HIDDEN FILES AND FOLDERS"
+msgstr "HIỂN THỊ TỆP VÀ THƯ MỤC ẨN"
+
+msgid "SHOW HIDDEN GAMES"
+msgstr "HIỂN THỊ TRÒ CHƠI ẨN"
+
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr "BẮT ĐẦU TRÒ CHƠI TRÊN MÀN HÌNH KHÁC"
+
+msgid "ENABLE CUSTOM EVENT SCRIPTS"
+msgstr "BẬT TẬP LỆNH SỰ KIỆN"
+
+msgid "BROWSING CUSTOM EVENTS"
+msgstr "TÙY CHỈNH KHI DUYỆT"
+
+msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
+msgstr "CHỈ HIỂN THỊ TRÒ CHƠI TỪ TỆP GAMELIST.XML"
+
+msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
+msgstr "XÓA TÊN MAME THỪA (CẦN KHỞI ĐỘNG LẠI)"
+
+msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
+msgstr "TẮT HIỆU ỨNG GIAO DIỆN MÀN HÌNH NỀN (CẦN KHỞI ĐỘNG LẠI)"
+
+msgid "BACK BUTTON/BACK SWIPE EXITS APP"
+msgstr "NHẤN HOẶC VUỐT QUAY LẠI ĐỂ THOÁT"
+
+msgid "DEBUG MODE"
+msgstr "CHẾ ĐỘ GỠ LỖI"
+
+msgid "DISPLAY GPU STATISTICS OVERLAY"
+msgstr "HIỂN THỊ THỐNG KÊ GPU"
+
+msgid "ENABLE MENU IN KID MODE"
+msgstr "BẬT MENU TRONG CHẾ ĐỘ TRẺ EM"
+
+msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
+msgstr "HIỂN THỊ MENU THOÁT (KHỞI ĐỘNG LẠI VÀ TẮT MÁY)"
+
+msgid "GAME IMPORTER"
+msgstr "TRÌNH NHẬP TRÒ CHƠI"
+
+msgid "ORPHANED DATA CLEANUP"
+msgstr "DỌN DẸP DỮ LIỆU ĐƠN LẺ"
+
+msgid "CREATE/UPDATE SYSTEM DIRECTORIES"
+msgstr "TẠO/CẬP NHẬT THƯ MỤC HỆ THỐNG"
+
+msgid ""
+"THIS WILL CREATE ALL GAME SYSTEM DIRECTORIES INSIDE YOUR ROM FOLDER AND IT "
+"WILL ALSO UPDATE ALL SYSTEMINFO.TXT FILES. THIS IS A SAFE OPERATION THAT "
+"WILL NOT DELETE OR MODIFY YOUR GAME FILES. TO DECREASE APPLICATION STARTUP "
+"TIMES IT'S RECOMMENDED TO DELETE THE SYSTEM DIRECTORIES YOU DON'T NEED AFTER "
+"RUNNING THIS UTILITY"
+msgstr ""
+"ĐIỀU NÀY SẼ TẠO TẤT CẢ CÁC THƯ MỤC HỆ THỐNG TRÒ CHƠI TRONG THƯ MỤC ROM CỦA "
+"BẠN VÀ CẬP NHẬT TẤT CẢ CÁC TỆP SYSTEMINFO.TXT. ĐÂY LÀ MỘT THAO TÁC AN TOÀN, "
+"KHÔNG XÓA HOẶC THAY ĐỔI CÁC TỆP TRÒ CHƠI CỦA BẠN. ĐỂ GIẢM THỜI GIAN KHỞI "
+"ĐỘNG ỨNG DỤNG, KHUYẾN NGHỊ XÓA CÁC THƯ MỤC HỆ THỐNG KHÔNG CẦN THIẾT SAU KHI "
+"CHẠY TIỆN ÍCH NÀY"
+
+msgid "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED"
+msgstr "CÁC THƯ MỤC HỆ THỐNG ĐÃ ĐƯỢC TẠO THÀNH CÔNG"
+
+msgid ""
+"ERROR CREATING SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL? SEE THE "
+"LOG FILE FOR MORE DETAILS"
+msgstr ""
+"LỖI KHI TẠO THƯ MỤC HỆ THỐNG, CÓ THỂ LỖI QUYỀN TRUY CẬP HOẶC Ổ ĐĨA ĐÃ ĐẦY? "
+"KIỂM TRA TỆP NHẬT KÝ ĐỂ BIẾT THÊM CHI TIẾT"
+
+msgid "RESCAN ROM DIRECTORY"
+msgstr "QUÉT LẠI THƯ MỤC ROM"
+
+msgid ""
+"THIS WILL RESCAN YOUR ROM DIRECTORY FOR CHANGES SUCH AS ADDED OR REMOVED "
+"GAMES AND SYSTEMS"
+msgstr ""
+"HỆ THỐNG SẼ QUÉT LẠI THƯ MỤC ROM CỦA BẠN ĐỂ KIỂM TRA CÁC THAY ĐỔI NHƯ THÊM "
+"HOẶC XÓA TRÒ CHƠI VÀ HỆ THỐNG"
+
+msgid "REALLY QUIT?"
+msgstr "BẠN CÓ CHẮC MUỐN THOÁT KHÔNG?"
+
+msgid "REALLY REBOOT?"
+msgstr "BẠN CÓ CHẮC MUỐN KHỞI ĐỘNG LẠI KHÔNG?"
+
+msgid "REBOOT SYSTEM"
+msgstr "KHỞI ĐỘNG LẠI HỆ THỐNG"
+
+msgid "REALLY POWER OFF?"
+msgstr "BẠN CÓ CHẮC MUỐN TẮT NGUỒN KHÔNG?"
+
+msgid "POWER OFF SYSTEM"
+msgstr "TẮT NGUỒN HỆ THỐNG"
+
+msgid "REALLY SUSPEND?"
+msgstr "THỰC SỰ TẠM DỪNG?"
+
+msgid "SUSPEND SYSTEM"
+msgstr "TẠM DỪNG HỆ THỐNG"
+
+msgctxt "short"
+msgid "SYSTEM STATUS SETTINGS"
+msgstr "CÀI ĐẶT TRẠNG THÁI HỆ THỐNG"
+
+msgctxt "short"
+msgid "MEDIA VIEWER SETTINGS"
+msgstr "CÀI ĐẶT TRÌNH XEM PHƯƠNG TIỆN"
+
+msgctxt "short"
+msgid "SCREENSAVER SETTINGS"
+msgstr "CÀI ĐẶT MÀN HÌNH CHỜ"
+
+msgid "choose"
+msgstr "lựa chọn"
+
+msgid "close menu"
+msgstr "đóng menu"
+
+msgid "EDIT METADATA"
+msgstr "CHỈNH SỬA DỮ LIỆU"
+
+msgid "CLEAR ENTRY"
+msgstr "XÓA MỤC"
+
+msgid "SELECT EMULATOR"
+msgstr "CHỌN TRÌNH GIẢ LẬP"
+
+msgid "SYSTEM-WIDE"
+msgstr "TOÀN HỆ THỐNG"
+
+msgid "unknown"
+msgstr "không rõ"
+
+msgid "SCRAPE"
+msgstr "THU THẬP DỮ LIỆU"
+
+msgid "scrape"
+msgstr "quét dữ liệu"
+
+msgid "save metadata"
+msgstr "lưu siêu dữ liệu"
+
+msgid "cancel changes"
+msgstr "hủy thay đổi"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS FOLDER, "
+"BUT NEITHER THE DIRECTORY ITSELF OR ANY CONTENT INSIDE IT WILL BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"ĐIỀU NÀY SẼ XÓA TẤT CẢ CÁC TỆP PHƯƠNG TIỆN VÀ MỤC TRONG GAMELIST.XML CHO THƯ "
+"MỤC NÀY, NHƯNG KHÔNG XÓA THƯ MỤC HOẶC NỘI DUNG BÊN TRONG NÓ\n"
+"BẠN CÓ CHẮC KHÔNG?"
+
+msgid "CLEAR"
+msgstr "XÓA"
+
+msgid "clear folder"
+msgstr "xóa thư mục"
+
+msgid ""
+"THIS WILL DELETE ANY MEDIA FILES AND THE GAMELIST.XML ENTRY FOR THIS GAME, "
+"BUT THE GAME FILE ITSELF WILL NOT BE REMOVED\n"
+"ARE YOU SURE?"
+msgstr ""
+"ĐIỀU NÀY SẼ XÓA TẤT CẢ CÁC TỆP PHƯƠNG TIỆN VÀ MỤC TRONG GAMELIST.XML CHO TRÒ "
+"CHƠI NÀY, NHƯNG KHÔNG XÓA TỆP TRÒ CHƠI CHÍNH\n"
+"BẠN CÓ CHẮC KHÔNG?"
+
+msgid "clear file"
+msgstr "xóa tệp"
+
+msgid ""
+"THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
+"ARE YOU SURE?"
+msgstr ""
+"ĐIỀU NÀY SẼ XÓA TỆP TRÒ CHƠI, MỌI TỆP PHƯƠNG TIỆN VÀ MỤC TRONG GAMELIST.XML\n"
+"BẠN CÓ CHẮC KHÔNG?"
+
+msgid "DELETE"
+msgstr "XÓA"
+
+msgid "delete game"
+msgstr "xóa trò chơi"
+
+msgid "MIXIMAGE OFFLINE GENERATOR"
+msgstr "TRÌNH TẠO HÌNH ẢNH TỔNG HỢP NGOẠI TUYẾN"
+
+msgid "NOT STARTED"
+msgstr "CHƯA BẮT ĐẦU"
+
+#, c-format
+msgid "%i OF %i GAME PROCESSED"
+msgid_plural "%i OF %i GAMES PROCESSED"
+msgstr[0] "%i TRONG %i TRÒ CHƠI ĐÃ XỬ LÝ"
+
+msgid "Generated:"
+msgstr "Đã tạo:"
+
+msgid "Overwritten:"
+msgstr "Đã ghi đè:"
+
+msgid "Skipped:"
+msgstr "Bỏ qua:"
+
+msgid "Skipped (existing):"
+msgstr "Bỏ qua (đã tồn tại):"
+
+msgid "Failed:"
+msgstr "Thất bại:"
+
+msgid "Processing:"
+msgstr "Đang xử lý:"
+
+msgid "Last error message:"
+msgstr "Thông báo lỗi gần nhất:"
+
+msgid "start processing"
+msgstr "bắt đầu xử lý"
+
+msgid "PAUSE"
+msgstr "TẠM DỪNG"
+
+msgid "pause processing"
+msgstr "tạm dừng xử lý"
+
+msgid "close (abort processing)"
+msgstr "đóng (hủy xử lý)"
+
+msgid "RUNNING..."
+msgstr "ĐANG CHẠY..."
+
+msgid "PAUSED"
+msgstr "ĐANG TẠM DỪNG"
+
+msgid "RUNNING"
+msgstr "ĐANG CHẠY"
+
+msgid "DONE"
+msgstr "HOÀN TẤT"
+
+msgid "done (close)"
+msgstr "xong (đóng)"
+
+msgid ""
+"THIS WILL REMOVE ALL MEDIA FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. "
+"THESE FILES WILL BE MOVED TO A CLEANUP FOLDER INSIDE YOUR GAME MEDIA "
+"DIRECTORY. YOU CAN MANUALLY DELETE THIS FOLDER WHEN YOU ARE SURE IT'S NO "
+"LONGER NEEDED."
+msgstr ""
+"TẤT CẢ CÁC TỆP PHƯƠNG TIỆN KHÔNG CÓ TỆP TRÒ CHƠI TƯƠNG ỨNG SẼ BỊ XÓA. NHỮNG "
+"TỆP NÀY SẼ ĐƯỢC CHUYỂN VÀO THƯ MỤC 'CLEANUP' BÊN TRONG THƯ MỤC PHƯƠNG TIỆN "
+"TRÒ CHƠI CỦA BẠN. BẠN CÓ THỂ XÓA THƯ MỤC NÀY THỦ CÔNG KHI CHẮC CHẮN RẰNG NÓ "
+"KHÔNG CÒN CẦN THIẾT."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR GAMELIST XML FILES WHERE NO MATCHING "
+"GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL FILES WILL BE SAVED TO A "
+"CLEANUP FOLDER INSIDE YOUR GAMELISTS DIRECTORY. YOU CAN MANUALLY DELETE THIS "
+"FOLDER WHEN YOU ARE SURE IT'S NO LONGER NEEDED."
+msgstr ""
+"ĐIỀU NÀY SẼ XÓA TẤT CẢ CÁC MỤC KHÔNG CÓ TỆP TRÒ CHƠI TƯƠNG ỨNG KHỎI CÁC TỆP "
+"GAMELIST.XML. CÁC BẢN SAO LƯU CỦA TỆP GỐC SẼ ĐƯỢC LƯU VÀO THƯ MỤC 'CLEANUP' "
+"BÊN TRONG THƯ MỤC 'GAMELISTS'. BẠN CÓ THỂ XÓA THƯ MỤC NÀY THỦ CÔNG KHI CHẮC "
+"CHẮN RẰNG NÓ KHÔNG CÒN CẦN THIẾT NỮA."
+
+msgid ""
+"THIS WILL REMOVE ALL ENTRIES FROM YOUR CUSTOM COLLECTIONS CONFIGURATION "
+"FILES WHERE NO MATCHING GAME FILES CAN BE FOUND. BACKUPS OF THE ORIGINAL "
+"FILES WILL BE SAVED TO A CLEANUP FOLDER INSIDE YOUR COLLECTIONS DIRECTORY. "
+"ONLY CURRENTLY ENABLED COLLECTIONS WILL BE PROCESSED."
+msgstr ""
+"ĐIỀU NÀY SẼ XÓA TẤT CẢ CÁC MỤC KHÔNG CÓ TỆP TRÒ CHƠI TƯƠNG ỨNG KHỎI TỆP CẤU "
+"HÌNH BỘ SƯU TẬP TÙY CHỈNH CỦA BẠN. CÁC BẢN SAO LƯU CỦA TỆP GỐC SẼ ĐƯỢC LƯU "
+"VÀO THƯ MỤC 'CLEANUP' BÊN TRONG THƯ MỤC BỘ SƯU TẬP. CHỈ CÁC BỘ SƯU TẬP ĐANG "
+"BẬT MỚI ĐƯỢC XỬ LÝ."
+
+msgid "DESCRIPTION:"
+msgstr "MÔ TẢ:"
+
+msgid "TOTAL ENTRIES REMOVED:"
+msgstr "TỔNG SỐ MỤC ĐÃ XÓA:"
+
+msgid "LAST PROCESSED SYSTEM:"
+msgstr "HỆ THỐNG ĐƯỢC XỬ LÝ GẦN NHẤT:"
+
+msgid "LAST ERROR MESSAGE:"
+msgstr "THÔNG BÁO LỖI GẦN NHẤT:"
+
+msgid "MEDIA"
+msgstr "PHƯƠNG TIỆN"
+
+msgid "RUNNING MEDIA CLEANUP"
+msgstr "ĐANG DỌN DẸP PHƯƠNG TIỆN"
+
+msgid "STOP"
+msgstr "DỪNG"
+
+msgid "stop processing"
+msgstr "dừng xử lý"
+
+msgid "GAMELISTS"
+msgstr "DANH SÁCH TRÒ CHƠI"
+
+msgid "RUNNING GAMELISTS CLEANUP"
+msgstr "ĐANG DỌN DẸP DANH SÁCH TRÒ CHƠI"
+
+msgid "COLLECTIONS"
+msgstr "BỘ SƯU TẬP"
+
+msgid "COLLECTIONS CLEANUP FAILED"
+msgstr "DỌN DẸP BỘ SƯU TẬP THẤT BẠI"
+
+msgid "There are no enabled custom collections"
+msgstr "Không có bộ sưu tập tùy chỉnh nào được bật"
+
+msgid "RUNNING COLLECTIONS CLEANUP"
+msgstr "ĐANG DỌN DẸP BỘ SƯU TẬP"
+
+msgid "PROCESSING"
+msgstr "ĐANG XỬ LÝ"
+
+#, c-format
+msgid "A flatten.txt file was found, skipping \"%s\""
+msgstr "Phát hiện file flatten.txt, bỏ qua \"%s\""
+
+msgid "Couldn't create target directory, permission problems?"
+msgstr "Không thể tạo thư mục đích, có thể lỗi quyền truy cập?"
+
+msgid "Couldn't move media file, permission problems?"
+msgstr "Không thể di chuyển tệp phương tiện, có thể lỗi quyền truy cập?"
+
+#, c-format
+msgid "Couldn't parse gamelist.xml file for \"%s\""
+msgstr "Không thể phân tích tệp gamelist.xml cho \"%s\""
+
+#, c-format
+msgid "Couldn't find a gamelist tag in file for \"%s\""
+msgstr "Không tìm thấy thẻ danh sách trò chơi trong tệp cho \"%s\""
+
+msgid "Couldn't delete temporary gamelist file, permission problems?"
+msgstr "Không thể xóa tệp tạm danh sách trò chơi, có thể lỗi quyền truy cập?"
+
+msgid "Couldn't write to temporary gamelist file, permission problems?"
+msgstr ""
+"Không thể ghi vào tệp tạm thời của danh sách trò chơi, có thể lỗi quyền truy "
+"cập?"
+
+msgid "Couldn't create backup directory, permission problems?"
+msgstr "Không thể tạo thư mục sao lưu, có thể lỗi quyền truy cập?"
+
+msgid "Couldn't move old gamelist file, permission problems?"
+msgstr ""
+"Không thể di chuyển tệp danh sách trò chơi cũ, có thể lỗi quyền truy cập?"
+
+msgid "Couldn't move temporary gamelist file, permission problems?"
+msgstr ""
+"Không thể di chuyển tệp tạm thời của danh sách trò chơi, có thể lỗi quyền "
+"truy cập?"
+
+msgid "Couldn't find custom collection configuration file"
+msgstr "Không tìm thấy tệp cấu hình bộ sưu tập tùy chỉnh"
+
+msgid "Couldn't open custom collection configuration file"
+msgstr "Không thể mở tệp cấu hình bộ sưu tập tùy chỉnh"
+
+msgid "Couldn't delete temporary collection file, permission problems?"
+msgstr "Không thể xóa tệp tạm thời của bộ sưu tập, có thể lỗi quyền truy cập?"
+
+msgid "Couldn't write to temporary collection configuration file"
+msgstr "Không thể ghi vào tệp cấu hình bộ sưu tập tạm thời"
+
+msgid "Couldn't move old collection file, permission problems?"
+msgstr "Không thể di chuyển tệp bộ sưu tập cũ, có thể lỗi quyền truy cập?"
+
+msgid "Couldn't move temporary collection file, permission problems?"
+msgstr ""
+"Không thể di chuyển tệp tạm thời của bộ sưu tập, có thể lỗi quyền truy cập?"
+
+msgid "ABORTED MEDIA CLEANUP"
+msgstr "ĐÃ HỦY DỌN DẸP MEDIA"
+
+msgid "COMPLETED MEDIA CLEANUP"
+msgstr "ĐÃ HOÀN TẤT DỌN DẸP PHƯƠNG TIỆN"
+
+msgid "ABORTED GAMELIST CLEANUP"
+msgstr "ĐÃ HỦY DỌN DẸP DANH SÁCH TRÒ CHƠI"
+
+msgid "COMPLETED GAMELIST CLEANUP"
+msgstr "ĐÃ HOÀN TẤT DỌN DẸP DANH SÁCH TRÒ CHƠI"
+
+msgid "ABORTED COLLECTIONS CLEANUP"
+msgstr "ĐÃ HỦY DỌN DẸP BỘ SƯU TẬP"
+
+msgid "COMPLETED COLLECTIONS CLEANUP"
+msgstr "ĐÃ HOÀN TẤT DỌN DẸP BỘ SƯU TẬP"
+
+msgid "MEDIA CLEANUP FAILED"
+msgstr "DỌN DẸP PHƯƠNG TIỆN THẤT BẠI"
+
+msgid "GAMELISTS CLEANUP FAILED"
+msgstr "DỌN DẸP DANH SÁCH TRÒ CHƠI THẤT BẠI"
+
+msgid "THE APPLICATION WILL RELOAD WHEN CLOSING THIS UTILITY."
+msgstr "ỨNG DỤNG SẼ TẢI LẠI KHI ĐÓNG TIỆN ÍCH NÀY."
+
+msgid "SCRAPE FROM"
+msgstr "THU THẬP TỪ"
+
+msgid "SCRAPE THESE GAMES"
+msgstr "QUÉT CÁC TRÒ CHƠI NÀY"
+
+msgid "ALL GAMES"
+msgstr "TẤT CẢ TRÒ CHƠI"
+
+msgid "FAVORITE GAMES"
+msgstr "TRÒ CHƠI YÊU THÍCH"
+
+msgid "NO METADATA"
+msgstr "KHÔNG CÓ SIÊU DỮ LIỆU"
+
+msgid "NO GAME IMAGE"
+msgstr "KHÔNG CÓ ẢNH TRÒ CHƠI"
+
+msgid "NO GAME VIDEO"
+msgstr "KHÔNG CÓ VIDEO TRÒ CHƠI"
+
+msgid "FOLDERS ONLY"
+msgstr "CHỈ THƯ MỤC"
+
+msgid "SCRAPE THESE SYSTEMS"
+msgstr "QUÉT CÁC HỆ THỐNG NÀY"
+
+msgid "ACCOUNT SETTINGS"
+msgstr "CÀI ĐẶT TÀI KHOẢN"
+
+msgid "CONTENT SETTINGS"
+msgstr "CÀI ĐẶT NỘI DUNG"
+
+msgid "MIXIMAGE SETTINGS"
+msgstr "CÀI ĐẶT TỔNG HỢP"
+
+msgid "start scraper"
+msgstr "bắt đầu tìm dữ liệu"
+
+msgid "SCREENSCRAPER USERNAME"
+msgstr "TÊN ĐĂNG NHẬP SCREENSCRAPER"
+
+msgid "SCREENSCRAPER PASSWORD"
+msgstr "MẬT KHẨU SCREENSCRAPER"
+
+msgid "USE THIS ACCOUNT FOR SCREENSCRAPER"
+msgstr "DÙNG TÀI KHOẢN NÀY CHO SCREENSCRAPER"
+
+msgid "GAME NAMES"
+msgstr "TÊN TRÒ CHƠI"
+
+msgid "RATINGS"
+msgstr "CÁC ĐÁNH GIÁ"
+
+msgid "OTHER METADATA"
+msgstr "SIÊU DỮ LIỆU KHÁC"
+
+msgid "VIDEOS"
+msgstr "VIDEO"
+
+msgid "SCREENSHOT IMAGES"
+msgstr "HÌNH ẢNH ẢNH CHỤP MÀN HÌNH"
+
+msgid "TITLE SCREEN IMAGES"
+msgstr "HÌNH ẢNH MÀN HÌNH TIÊU ĐỀ"
+
+msgid "BOX COVER IMAGES"
+msgstr "HÌNH ẢNH BÌA HỘP"
+
+msgid "BOX BACK COVER IMAGES"
+msgstr "HÌNH BÌA SAU HỘP"
+
+msgid "MARQUEE (WHEEL) IMAGES"
+msgstr "ẢNH TIÊU ĐỀ (XOAY VÒNG)"
+
+msgid "3D BOX IMAGES"
+msgstr "HÌNH HỘP 3D"
+
+msgid "PHYSICAL MEDIA IMAGES"
+msgstr "HÌNH ẢNH PHƯƠNG TIỆN VẬT LÝ"
+
+msgid "FAN ART IMAGES"
+msgstr "HÌNH NGƯỜI HÂM MỘ"
+
+msgid "GAME MANUALS"
+msgstr "SÁCH HƯỚNG DẪN TRÒ CHƠI"
+
+msgid "MIXIMAGE RESOLUTION"
+msgstr "ĐỘ PHÂN GIẢI HÌNH ẢNH TỔNG HỢP"
+
+msgid "MIXIMAGE FILE FORMAT"
+msgstr "ĐỊNH DẠNG TỆP ẢNH TỔNG HỢP"
+
+msgctxt "short"
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "CĂN CHỈNH NGANG ẢNH CHỤP MÀN HÌNH"
+
+msgid "CONTAIN"
+msgstr "CHỨA"
+
+msgid "CROP"
+msgstr "CẮT"
+
+msgid "STRETCH"
+msgstr "KÉO DÃN"
+
+msgid "HORIZONTAL SCREENSHOT FIT"
+msgstr "CĂN CHỈNH ẢNH CHỤP NGANG"
+
+msgctxt "short"
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "CĂN CHỈNH DỌC ẢNH CHỤP MÀN HÌNH"
+
+msgid "VERTICAL SCREENSHOT FIT"
+msgstr "KHỚP ẢNH CHỤP DỌC"
+
+msgctxt "short"
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "GIỚI HẠN TỶ LỆ ẢNH CHỤP MÀN HÌNH"
+
+msgid "HIGH"
+msgstr "CAO"
+
+msgid "SCREENSHOT ASPECT RATIO THRESHOLD"
+msgstr "GIỚI HẠN TỶ LỆ ẢNH CHỤP MÀN HÌNH"
+
+msgid "BLANK AREAS FILL COLOR"
+msgstr "MÀU LẤP PHẦN TRỐNG"
+
+msgid "BLACK"
+msgstr "ĐEN"
+
+msgid "FRAME"
+msgstr "KHUNG"
+
+msgctxt "short"
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "PHƯƠNG PHÁP THU PHÓNG ẢNH CHỤP MÀN HÌNH"
+
+msgid "SHARP"
+msgstr "SẮC NÉT"
+
+msgid "SMOOTH"
+msgstr "MƯỢT"
+
+msgid "SCREENSHOT SCALING METHOD"
+msgstr "THU PHÓNG ẢNH CHỤP MÀN HÌNH"
+
+msgid "BOX SIZE"
+msgstr "KÍCH THƯỚC HỘP"
+
+msgid "PHYSICAL MEDIA SIZE"
+msgstr "KÍCH THƯỚC PHƯƠNG TIỆN VẬT LÝ"
+
+msgid "GENERATE MIXIMAGES WHEN SCRAPING"
+msgstr "TẠO ẢNH PHỐI HỢP KHI QUÉT DỮ LIỆU"
+
+msgid "OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)"
+msgstr "GHI ĐÈ ẢNH (QUÉT/NGOẠI TUYẾN)"
+
+msgid "REMOVE LETTERBOXES FROM SCREENSHOTS"
+msgstr "XÓA VIỀN TRÊN DƯỚI ẢNH CHỤP MÀN HÌNH"
+
+msgid "REMOVE PILLARBOXES FROM SCREENSHOTS"
+msgstr "XÓA VIỀN TRÁI PHẢI ẢNH CHỤP MÀN HÌNH"
+
+msgid "ROTATE HORIZONTALLY ORIENTED BOXES"
+msgstr "XOAY CÁC HỘP CÓ HƯỚNG NGANG"
+
+msgid "INCLUDE MARQUEE IMAGE"
+msgstr "BAO GỒM HÌNH LOGO (BIỂU NGỮ)"
+
+msgid "INCLUDE BOX IMAGE"
+msgstr "BAO GỒM HÌNH BÌA HỘP"
+
+msgid "USE COVER IMAGE IF 3D BOX IS MISSING"
+msgstr "DÙNG ẢNH BÌA NẾU KHÔNG CÓ HỘP 3D"
+
+msgid "INCLUDE PHYSICAL MEDIA IMAGE"
+msgstr "BAO GỒM HÌNH ẢNH ĐĨA VẬT LÝ"
+
+msgid "OFFLINE GENERATOR"
+msgstr "TRÌNH TẠO NGOẠI TUYẾN"
+
+msgid ""
+"THE OFFLINE GENERATOR USES THE SAME SYSTEM SELECTIONS AS THE SCRAPER, SO "
+"PLEASE SELECT AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"
+msgstr ""
+"BỘ TẠO NGOẠI TUYẾN SỬ DỤNG CÙNG CÁC HỆ THỐNG ĐÃ CHỌN NHƯ TRÌNH TÌM DỮ LIỆU, "
+"VÌ VẬY HÃY CHỌN ÍT NHẤT MỘT HỆ THỐNG ĐỂ TẠO HÌNH ẢNH"
+
+msgid "REGION"
+msgstr "KHU VỰC"
+
+msgid "EUROPE"
+msgstr "CHÂU ÂU"
+
+msgid "JAPAN"
+msgstr "NHẬT BẢN"
+
+msgid "USA"
+msgstr "MỸ"
+
+msgid "NORTH AMERICA"
+msgstr "BẮC MỸ"
+
+msgid "ASIA"
+msgstr "CHÂU Á"
+
+msgid "WORLD"
+msgstr "THẾ GIỚI"
+
+msgid "AUSTRALIA"
+msgstr "ÚC"
+
+msgid "BRAZIL"
+msgstr "BRAZIL"
+
+msgid "CANADA"
+msgstr "CANADA"
+
+msgid "CHINA"
+msgstr "TRUNG QUỐC"
+
+msgid "GERMANY"
+msgstr "ĐỨC"
+
+msgid "FRANCE"
+msgstr "PHÁP"
+
+msgid "ITALY"
+msgstr "Ý"
+
+msgid "KOREA"
+msgstr "HÀN QUỐC"
+
+msgid "NETHERLANDS"
+msgstr "HÀ LAN"
+
+msgid "RUSSIA"
+msgstr "NGA"
+
+msgid "SWEDEN"
+msgstr "THỤY ĐIỂN"
+
+msgid "SPAIN"
+msgstr "TÂY BAN NHA"
+
+msgid "TAIWAN"
+msgstr "ĐÀI LOAN"
+
+msgid "UNITED KINGDOM"
+msgstr "ANH"
+
+msgid "PREFERRED LANGUAGE"
+msgstr "NGÔN NGỮ ƯA THÍCH"
+
+msgid "AUTOMATIC RETRIES ON ERROR"
+msgstr "TỰ ĐỘNG THỬ LẠI KHI LỖI"
+
+msgid "RETRY ATTEMPT TIMER"
+msgstr "HẸN GIỜ THỬ LẠI"
+
+msgid "HASH SEARCHES MAX FILE SIZE"
+msgstr "CỠ TỆP TỐI ĐA CHO TÌM KIẾM HASH"
+
+msgid "OVERWRITE FILES AND DATA"
+msgstr "GHI ĐÈ TỆP VÀ DỮ LIỆU"
+
+msgid "SEARCH USING FILE HASHES (NON-INTERACTIVE MODE)"
+msgstr "TÌM KIẾM BẰNG MÃ BĂM TỆP (CHẾ ĐỘ KHÔNG TƯƠNG TÁC)"
+
+msgid "SEARCH USING METADATA NAMES"
+msgstr "TÌM KIẾM THEO TÊN TRONG SIÊU DỮ LIỆU"
+
+msgid "SCRAPE ACTUAL FOLDERS"
+msgstr "QUÉT THƯ MỤC THẬT"
+
+msgid "INTERACTIVE MODE"
+msgstr "CHẾ ĐỘ TƯƠNG TÁC"
+
+msgid "AUTO-ACCEPT SINGLE GAME MATCHES"
+msgstr "TỰ CHẤP NHẬN KHI CHỈ CÓ MỘT KẾT QUẢ"
+
+msgid "RESPECT PER-FILE SCRAPER EXCLUSIONS"
+msgstr "LOẠI TRỪ ẢNH TRÊN TỪNG TỆP"
+
+msgid "EXCLUDE FOLDERS RECURSIVELY"
+msgstr "LOẠI TRỪ THƯ MỤC ĐỆ QUY"
+
+msgid "CONVERT UNDERSCORES TO SPACES WHEN SEARCHING"
+msgstr "CHUYỂN DẤU GẠCH DƯỚI THÀNH KHOẢNG TRẮNG KHI TÌM KIẾM"
+
+msgid "REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING"
+msgstr "XÓA DẤU CHẤM KHỎI KẾT QUẢ KHI TỰ ĐỘNG QUÉT DỮ LIỆU"
+
+msgid "ENABLE FALLBACK TO ADDITIONAL REGIONS"
+msgstr "CHO PHÉP MỞ RỘNG KHU VỰC DỰ PHÒNG"
+
+msgid ""
+"THE SELECTED SYSTEM DOES NOT HAVE A PLATFORM SET, RESULTS MAY BE INACCURATE"
+msgstr ""
+"HỆ THỐNG ĐƯỢC CHỌN KHÔNG CÓ NỀN TẢNG ĐƯỢC THIẾT LẬP, KẾT QUẢ CÓ THỂ KHÔNG "
+"CHÍNH XÁC"
+
+msgid ""
+"AT LEAST ONE OF YOUR SELECTED SYSTEMS DOES NOT HAVE A PLATFORM SET, RESULTS "
+"MAY BE INACCURATE"
+msgstr ""
+"CÓ ÍT NHẤT MỘT HỆ THỐNG BẠN CHỌN CHƯA ĐƯỢC GÁN NỀN TẢNG, KẾT QUẢ CÓ THỂ "
+"KHÔNG CHÍNH XÁCCÓ THỂ KHÔNG CHÍNH XÁC"
+
+msgid "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"
+msgstr "VUI LÒNG CHỌN ÍT NHẤT MỘT HỆ THỐNG ĐỂ QUÉT DỮ LIỆU"
+
+msgid "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"
+msgstr "VUI LÒNG CHỌN ÍT NHẤT MỘT LOẠI NỘI DUNG ĐỂ QUÉT DỮ LIỆU"
+
+msgid "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"
+msgstr "TẤT CẢ TRÒ CHƠI ĐÃ BỊ LỌC, KHÔNG CÓ GÌ ĐỂ QUÉT"
+
+msgid "SCRAPING IN PROGRESS"
+msgstr "ĐANG THU THẬP DỮ LIỆU"
+
+msgid "REFINE SEARCH"
+msgstr "LỌC KẾT QUẢ TÌM KIẾM"
+
+msgid "refine search"
+msgstr "lọc tìm kiếm"
+
+msgid "SKIP"
+msgstr "BỎ QUA"
+
+msgid "skip game"
+msgstr "bỏ qua trò chơi"
+
+msgid "stop"
+msgstr "dừng"
+
+msgid "GAME"
+msgid_plural "GAMES"
+msgstr[0] "TRÒ CHƠI"
+
+#, c-format
+msgid "GAME %i OF %i"
+msgstr "TRÒ CHƠI %i TRÊN %i"
+
+msgid "NO GAMES WERE SCRAPED"
+msgstr "KHÔNG TRÒ CHƠI NÀO ĐƯỢC QUÉT DỮ LIỆU"
+
+#, c-format
+msgid "%i GAME SUCCESSFULLY SCRAPED"
+msgid_plural "%i GAMES SUCCESSFULLY SCRAPED"
+msgstr[0] "%i TRÒ CHƠI ĐÃ QUÉT THÀNH CÔNG"
+
+#, c-format
+msgid "%i GAME SKIPPED"
+msgid_plural "%i GAMES SKIPPED"
+msgstr[0] "%i TRÒ CHƠI BỊ BỎ QUA"
+
+msgid "RATING:"
+msgstr "ĐÁNH GIÁ:"
+
+msgid "RELEASED:"
+msgstr "PHÁT HÀNH:"
+
+msgid "DEVELOPER:"
+msgstr "NHÀ PHÁT TRIỂN:"
+
+msgid "PUBLISHER:"
+msgstr "NHÀ PHÁT HÀNH:"
+
+msgid "GENRE:"
+msgstr "THỂ LOẠI:"
+
+msgid "PLAYERS:"
+msgstr "NGƯỜI CHƠI:"
+
+msgid "NO GAMES FOUND"
+msgstr "KHÔNG TÌM THẤY TRÒ CHƠI NÀO"
+
+msgid "API CALLS:"
+msgstr "LỆNH API:"
+
+#, c-format
+msgid "%i REMAINING"
+msgid_plural "%i REMAINING"
+msgstr[0] "CÒN %i"
+
+msgid "RETRY"
+msgstr "THỬ LẠI"
+
+msgid "Error downloading thumbnail:"
+msgstr "Lỗi khi tải hình thu nhỏ:"
+
+msgid "SEARCH"
+msgstr "TÌM KIẾM"
+
+msgid "SEARCH USING REFINED NAME?"
+msgstr "TÌM KIẾM THEO TÊN ĐÃ CHỈNH SỬA?"
+
+msgid "skip"
+msgstr "bỏ qua"
+
+msgid "accept result"
+msgstr "chấp nhận kết quả"
+
+msgid "back (cancel)"
+msgstr "quay lại (hủy)"
+
+msgid "START SCREENSAVER AFTER (MINUTES)"
+msgstr "BẮT ĐẦU MÀN HÌNH CHỜ SAU (PHÚT)"
+
+msgid "SCREENSAVER TYPE"
+msgstr "KIỂU MÀN HÌNH CHỜ"
+
+msgid "DIM"
+msgstr "MỜ"
+
+msgid "SLIDESHOW"
+msgstr "TRÌNH CHIẾU"
+
+msgid "VIDEO"
+msgstr "VIDEO"
+
+msgid "ENABLE SCREENSAVER CONTROLS"
+msgstr "BẬT ĐIỀU KHIỂN MÀN HÌNH CHỜ"
+
+msgid "SLIDESHOW SCREENSAVER SETTINGS"
+msgstr "CÀI ĐẶT TRÌNH CHIẾU MÀN HÌNH CHỜ"
+
+msgid "VIDEO SCREENSAVER SETTINGS"
+msgstr "CÀI ĐẶT MÀN HÌNH CHỜ VIDEO"
+
+msgid "SLIDESHOW SCREENSAVER"
+msgstr "TRÌNH CHIẾU MÀN HÌNH CHỜ"
+
+msgid "SWAP IMAGES AFTER (SECONDS)"
+msgstr "ĐỔI HÌNH ẢNH SAU (GIÂY)"
+
+msgid "ONLY INCLUDE FAVORITE GAMES"
+msgstr "CHỈ BAO GỒM TRÒ CHƠI YÊU THÍCH"
+
+msgid "STRETCH IMAGES TO SCREEN RESOLUTION"
+msgstr "KÉO DÃN HÌNH ẢNH THEO MÀN HÌNH"
+
+msgid "DISPLAY GAME INFO OVERLAY"
+msgstr "HIỂN THỊ THÔNG TIN TRÒ CHƠI"
+
+msgid "RENDER SCANLINES"
+msgstr "HIỆU ỨNG DÒNG QUÉT (CRT)"
+
+msgid "USE CUSTOM IMAGES"
+msgstr "SỬ DỤNG HÌNH ẢNH TÙY CHỈNH"
+
+msgid "CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH"
+msgstr "TÌM TẤT CẢ THƯ MỤC BÊN TRONG"
+
+msgid "CUSTOM IMAGE DIRECTORY"
+msgstr "THƯ MỤC HÌNH ẢNH TÙY CHỈNH"
+
+msgid "VIDEO SCREENSAVER"
+msgstr "MÀN HÌNH CHỜ VIDEO"
+
+msgid "SWAP VIDEOS AFTER (SECONDS)"
+msgstr "ĐỔI VIDEO SAU (GIÂY)"
+
+msgid "RENDER BLUR"
+msgstr "HIỆU ỨNG MỜ"
+
+msgid "DISPLAY BLUETOOTH STATUS INDICATOR"
+msgstr "HIỂN THỊ TRẠNG THÁI BLUETOOTH"
+
+msgid "DISPLAY WI-FI STATUS INDICATOR"
+msgstr "HIỂN THỊ TRẠNG THÁI WI-FI"
+
+msgid "DISPLAY CELLULAR STATUS INDICATOR"
+msgstr "HIỂN THỊ TRẠNG THÁI DI ĐỘNG"
+
+msgid "DISPLAY BATTERY STATUS INDICATOR"
+msgstr "HIỂN THỊ TRẠNG THÁI PIN"
+
+msgid "DISPLAY BATTERY CHARGE PERCENTAGE"
+msgstr "HIỂN THỊ PHẦN TRĂM PIN"
+
+msgid "DOWNLOADING THEMES LIST 100%"
+msgstr "ĐÃ TẢI DANH SÁCH GIAO DIỆN 100%"
+
+msgid "REPOSITORY HAS DIVERGED FROM ORIGIN"
+msgstr "KHO MÃ NGUỒN ĐÃ KHÁC VỚI BẢN GỐC"
+
+msgid "THEME ALREADY UP TO DATE"
+msgstr "GIAO DIỆN ĐÃ Ở PHIÊN BẢN MỚI NHẤT"
+
+msgid "THEME HAS BEEN UPDATED"
+msgstr "GIAO DIỆN ĐÃ ĐƯỢC CẬP NHẬT"
+
+#, c-format
+msgid ""
+"COULDN'T RENAME DIRECTORY \"%s\"\n"
+"PERMISSION PROBLEMS?"
+msgstr ""
+"KHÔNG THỂ ĐỔI TÊN THƯ MỤC \"%s\"\n"
+"CÓ THỂ LỖI QUYỀN TRUY CẬP?"
+
+msgid "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE"
+msgstr "KHÔNG TÌM THẤY TỆP CẤU HÌNH DANH SÁCH GIAO DIỆN"
+
+msgid ""
+"COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL "
+"REPOSITORY IS CORRUPT?"
+msgstr ""
+"KHÔNG THỂ PHÂN TÍCH TỆP CẤU HÌNH DANH SÁCH GIAO DIỆN, CÓ THỂ KHO LƯU TRỮ CỤC "
+"BỘ ĐÃ BỊ HỎNG?"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE "
+"BEFORE PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION"
+msgstr ""
+"CÓ VẺ BẠN KHÔNG CHẠY BẢN PHÁT HÀNH ES-DE MỚI NHẤT, VUI LÒNG NÂNG CẤP TRƯỚC "
+"KHI TIẾP TỤC VÌ CÁC GIAO DIỆN NÀY CÓ THỂ KHÔNG TƯƠNG THÍCH VỚI PHIÊN BẢN CỦA "
+"BẠN"
+
+msgid "and"
+msgstr "và"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA THIS "
+"THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+"\"%s\" WILL BE RENAMED TO \"%s_DISABLED\""
+msgstr ""
+"CÓ VẺ GIAO DIỆN NÀY ĐÃ ĐƯỢC TẢI THỦ CÔNG THAY VÌ THÔNG QUA BỘ TẢI GIAO DIỆN. "
+"CẦN TẢI LẠI GIAO DIỆN, VÀ THƯ MỤC GIAO DIỆN CŨ \"%s\" SẼ ĐƯỢC ĐỔI TÊN THÀNH "
+"\"%s_DISABLED\""
+
+msgid "DOWNLOADING THEME"
+msgstr "ĐANG TẢI GIAO DIỆN"
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
+"DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_CORRUPT_DISABLED\""
+msgstr ""
+"CÓ VẺ KHO LƯU GIAO DIỆN NÀY ĐÃ BỊ HỎNG, CÓ THỂ DO GIÁN ĐOẠN TRONG LẦN TẢI "
+"HOẶC CẬP NHẬT TRƯỚC, VÍ DỤ NẾU TIẾN TRÌNH ES-DE BỊ DỪNG. CẦN TẢI LẠI GIAO "
+"DIỆN, VÀ THƯ MỤC GIAO DIỆN CŨ \"%s\" SẼ ĐƯỢC ĐỔI TÊN THÀNH "
+"\"%s_CORRUPT_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
+"DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH "
+"DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO "
+"\"%s_DISABLED\""
+msgstr ""
+"CÓ VẺ KHO LƯU NÀY LÀ DẠNG NÔNG, NGHĨA LÀ NÓ ĐÃ ĐƯỢC TẢI BẰNG MỘT CÔNG CỤ "
+"KHÁC CHỨ KHÔNG PHẢI BỘ TẢI GIAO DIỆN NÀY. CẦN TẢI LẠI GIAO DIỆN, VÀ THƯ MỤC "
+"GIAO DIỆN CŨ \"%s\" SẼ ĐƯỢC ĐỔI TÊN THÀNH \"%s_DISABLED\""
+
+#, c-format
+msgid ""
+"IT SEEMS AS IF THIS IS A DIVERGED REPOSITORY WHICH USUALLY MEANS THERE IS AN "
+"UPSTREAM MERGE CONFLICT THAT NEEDS TO BE RESOLVED BY THE THEME DEVELOPER. A "
+"FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY \"%s\" WILL BE "
+"RENAMED TO \"%s_DIVERGED_DISABLED\""
+msgstr ""
+"CÓ VẺ KHO LƯU NÀY ĐÃ BỊ LỆCH HƯỚNG, THƯỜNG CÓ NGHĨA LÀ CÓ XUNG ĐỘT HỢP NHẤT "
+"CẦN ĐƯỢC NHÀ PHÁT TRIỂN GIAO DIỆN GIẢI QUYẾT. CẦN TẢI LẠI GIAO DIỆN, VÀ THƯ "
+"MỤC GIAO DIỆN CŨ \"%s\" SẼ ĐƯỢC ĐỔI TÊN THÀNH \"%s_DIVERGED_DISABLED\""
+
+#, c-format
+msgid ""
+"THE LOCALLY CLONED REPOSITORY CONTAINS THE WRONG URL WHICH NORMALLY MEANS "
+"THE THEME HAS BEEN MOVED TO A NEW GIT SITE. A FRESH DOWNLOAD IS REQUIRED AND "
+"THE OLD THEME DIRECTORY \"%s\" WILL BE RENAMED TO \"%s_WRONG_URL_DISABLED\""
+msgstr ""
+"KHO LƯU TRỮ SAO CHÉP CỤC BỘ CHỨA URL KHÔNG ĐÚNG, ĐIỀU NÀY THƯỜNG CÓ NGHĨA LÀ "
+"GIAO DIỆN ĐÃ ĐƯỢC CHUYỂN SANG MỘT TRANG GIT MỚI. CẦN TẢI LẠI PHIÊN BẢN MỚI, "
+"VÀ THƯ MỤC GIAO DIỆN CŨ \"%s\" SẼ ĐƯỢC ĐỔI TÊN THÀNH "
+"\"%s_WRONG_URL_DISABLED\""
+
+#, c-format
+msgid ""
+"THEME REPOSITORY \"%s\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR "
+"CHANGES OR CANCEL TO SKIP ALL UPDATES FOR THIS THEME"
+msgstr ""
+"KHO GIAO DIỆN \"%s\" CÓ CHỨA CÁC THAY ĐỔI CỤC BỘ. CHỌN GHI ĐÈ ĐỂ LƯU LẠI "
+"HOẶC HỦY ĐỂ BỎ QUA TOÀN BỘ CẬP NHẬT CHO GIAO DIỆN NÀY"
+
+msgid "UPDATING THEME"
+msgstr "ĐANG CẬP NHẬT GIAO DIỆN"
+
+msgid "VARIANTS:"
+msgstr "BIẾN THỂ:"
+
+msgid "COLOR SCHEMES:"
+msgstr "BẢNG MÀU:"
+
+msgid "ASPECT RATIOS:"
+msgstr "TỶ LỆ MÀN HÌNH:"
+
+msgid "FONT SIZES:"
+msgstr "CỠ CHỮ:"
+
+msgid "INSTALLED"
+msgstr "ĐÃ CÀI ĐẶT"
+
+msgid "MANUAL DOWNLOAD"
+msgstr "TẢI THỦ CÔNG"
+
+msgid "CORRUPT"
+msgstr "HỎNG"
+
+msgid "DIVERGED"
+msgstr "KHÁC BIỆT"
+
+msgid "SHALLOW"
+msgstr "NÔNG"
+
+msgid "NOT INSTALLED (NEW)"
+msgstr "CHƯA CÀI ĐẶT (MỚI)"
+
+msgid "NOT INSTALLED"
+msgstr "CHƯA CÀI ĐẶT"
+
+msgid "WRONG URL"
+msgstr "ĐỊA CHỈ URL KHÔNG HỢP LỆ"
+
+msgid "LOCAL CHANGES"
+msgstr "THAY ĐỔI CỤC BỘ"
+
+msgid "THIS THEME ENTRY WILL BE REMOVED IN THE NEAR FUTURE"
+msgstr "MỤC GIAO DIỆN NÀY SẼ BỊ XÓA TRONG THỜI GIAN TỚI"
+
+msgid "CREATED BY"
+msgstr "TẠO BỞI"
+
+msgid "ERROR:"
+msgstr "LỖI:"
+
+msgid "COULDN'T DOWNLOAD THEMES LIST"
+msgstr "KHÔNG TẢI ĐƯỢC DANH SÁCH GIAO DIỆN"
+
+msgid "DOWNLOADING THEMES LIST"
+msgstr "ĐANG TẢI DANH SÁCH GIAO DIỆN"
+
+msgid "THIS WILL COMPLETELY DELETE THE THEME"
+msgstr "ĐIỀU NÀY SẼ XÓA HOÀN TOÀN GIAO DIỆN"
+
+msgid ""
+"THIS WILL COMPLETELY DELETE THE THEME INCLUDING ANY LOCAL CUSTOMIZATIONS"
+msgstr "ĐIỀU NÀY SẼ XÓA HOÀN TOÀN GIAO DIỆN, BAO GỒM MỌI TÙY CHỈNH CỤC BỘ"
+
+msgid "COULDN'T DELETE THEME, PERMISSION PROBLEMS?"
+msgstr "KHÔNG THỂ XÓA GIAO DIỆN, CÓ THỂ LỖI QUYỀN TRUY CẬP?"
+
+msgid "THEME WAS DELETED"
+msgstr "GIAO DIỆN ĐÃ BỊ XÓA"
+
+msgid "view screenshots"
+msgstr "xem ảnh chụp màn hình"
+
+msgid "fetch updates"
+msgstr "lấy cập nhật"
+
+msgid "delete"
+msgstr "xóa"
+
+msgid "download"
+msgstr "tải xuống"
+
+msgid ""
+"IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+"CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF "
+"THE ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD "
+"DIRECTORY \"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\""
+msgstr ""
+"CÓ VẺ KHO LƯU DANH SÁCH GIAO DIỆN ĐÃ BỊ HỎNG, CÓ THỂ DO BỊ GIÁN ĐOẠN KHI TẢI "
+"HOẶC CẬP NHẬT TRƯỚC ĐÓ, VÍ DỤ NẾU TIẾN TRÌNH ES-DE BỊ DỪNG. CẦN TẢI LẠI MỚI, "
+"VÀ THƯ MỤC CŨ \"themes-list\" SẼ ĐƯỢC ĐỔI TÊN THÀNH \"themes-"
+"list_CORRUPT_DISABLED\""
+
+msgid "UPDATING THEMES LIST"
+msgstr "ĐANG CẬP NHẬT DANH SÁCH GIAO DIỆN"
+
+msgid ""
+"IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. AS SUCH "
+"THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+"WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED "
+"FILES WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE "
+"THAT YOU CAN'T ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA "
+"CORRUPTION."
+msgstr ""
+"CÓ VẺ BẠN ĐANG SỬ DỤNG BỘ TẢI GIAO DIỆN LẦN ĐẦU TIÊN. TRONG TRƯỜNG HỢP NÀY, "
+"KHO DANH SÁCH GIAO DIỆN SẼ ĐƯỢC TẢI XUỐNG, QUÁ TRÌNH NÀY CÓ THỂ MẤT MỘT CHÚT "
+"THỜI GIAN. TỪ NHỮNG LẦN SAU, TỐC ĐỘ SẼ NHANH HƠN NHIỀU VÌ CHỈ TẢI NHỮNG TỆP "
+"MỚI HOẶC ĐÃ THAY ĐỔI. ĐIỀU NÀY CŨNG ÁP DỤNG CHO MỌI GIAO DIỆN BẠN TẢI. LƯU Ý "
+"BẠN KHÔNG THỂ DỪNG QUÁ TRÌNH TẢI ĐANG DIỄN RA VÌ ĐIỀU ĐÓ CÓ THỂ GÂY LỖI DỮ "
+"LIỆU."
+
+msgid "browse"
+msgstr "duyệt"
+
+msgid "pdf manual"
+msgstr "hướng dẫn pdf"
+
+msgid "first"
+msgstr "đầu tiên"
+
+msgid "last"
+msgstr "cuối cùng"
+
+msgid "SCREENSHOT"
+msgstr "CHỤP ẢNH MÀN HÌNH"
+
+msgid "BOX COVER"
+msgstr "BÌA HỘP"
+
+msgid "BOX BACK COVER"
+msgstr "BÌA SAU HỘP"
+
+msgid "TITLE SCREEN"
+msgstr "MÀN HÌNH TIÊU ĐỀ"
+
+msgid "MIXIMAGE"
+msgstr "HÌNH ẢNH TỔNG HỢP"
+
+msgid "CUSTOM"
+msgstr "TÙY CHỈNH"
+
+msgctxt "metadata"
+msgid "NAME"
+msgstr "TÊN"
+
+msgctxt "metadata"
+msgid "ENTER NAME"
+msgstr "NHẬP TÊN"
+
+msgctxt "metadata"
+msgid "SORTNAME"
+msgstr "TÊN SẮP XẾP"
+
+msgctxt "metadata"
+msgid "ENTER SORTNAME"
+msgstr "NHẬP TÊN SẮP XẾP"
+
+msgctxt "metadata"
+msgid "CUSTOM COLLECTIONS SORTNAME"
+msgstr "TÊN SẮP XẾP CHO BỘ SƯU TẬP TÙY CHỈNH"
+
+msgctxt "metadata"
+msgid "ENTER COLLECTIONS SORTNAME"
+msgstr "NHẬP TÊN SẮP XẾP CHO BỘ SƯU TẬP"
+
+msgctxt "metadata"
+msgid "DESCRIPTION"
+msgstr "MÔ TẢ"
+
+msgctxt "metadata"
+msgid "ENTER DESCRIPTION"
+msgstr "NHẬP MÔ TẢ"
+
+msgctxt "metadata"
+msgid "RATING"
+msgstr "XẾP HẠNG"
+
+msgctxt "metadata"
+msgid "RELEASE DATE"
+msgstr "NGÀY PHÁT HÀNH"
+
+msgctxt "metadata"
+msgid "DEVELOPER"
+msgstr "NHÀ PHÁT TRIỂN"
+
+msgctxt "metadata"
+msgid "ENTER DEVELOPER"
+msgstr "NHẬP NHÀ PHÁT TRIỂN"
+
+msgctxt "metadata"
+msgid "PUBLISHER"
+msgstr "NHÀ PHÁT HÀNH"
+
+msgctxt "metadata"
+msgid "ENTER PUBLISHER"
+msgstr "NHẬP NHÀ PHÁT HÀNH"
+
+msgctxt "metadata"
+msgid "GENRE"
+msgstr "THỂ LOẠI"
+
+msgctxt "metadata"
+msgid "ENTER GENRE"
+msgstr "NHẬP THỂ LOẠI"
+
+msgctxt "metadata"
+msgid "PLAYERS"
+msgstr "NGƯỜI CHƠI"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF PLAYERS"
+msgstr "NHẬP SỐ NGƯỜI CHƠI"
+
+msgctxt "metadata"
+msgid "FAVORITE"
+msgstr "YÊU THÍCH"
+
+msgctxt "metadata"
+msgid "COMPLETED"
+msgstr "ĐÃ HOÀN THÀNH"
+
+msgctxt "metadata"
+msgid "KIDGAME"
+msgstr "TRÒ CHƠI TRẺ EM"
+
+msgctxt "metadata"
+msgid "KIDGAME (ONLY AFFECTS BADGES)"
+msgstr "TRÒ CHƠI TRẺ EM (CHỈ ẢNH HƯỞNG ĐẾN HUY HIỆU)"
+
+msgctxt "metadata"
+msgid "HIDDEN"
+msgstr "ẨN"
+
+msgctxt "metadata"
+msgid "BROKEN/NOT WORKING"
+msgstr "BỊ HỎNG/KHÔNG HOẠT ĐỘNG"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM GAME COUNTER"
+msgstr "LOẠI TRỪ KHỎI BỘ ĐẾM TRÒ CHƠI"
+
+msgctxt "metadata"
+msgid "EXCLUDE FROM MULTI-SCRAPER"
+msgstr "LOẠI TRỪ KHỎI TRÌNH QUÉT NHIỀU NGUỒN"
+
+msgctxt "metadata"
+msgid "HIDE METADATA FIELDS"
+msgstr "ẨN CÁC TRƯỜNG SIÊU DỮ LIỆU"
+
+msgctxt "metadata"
+msgid "TIMES PLAYED"
+msgstr "SỐ LẦN ĐÃ CHƠI"
+
+msgctxt "metadata"
+msgid "ENTER NUMBER OF TIMES PLAYED"
+msgstr "NHẬP SỐ LẦN ĐÃ CHƠI"
+
+msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr "THỜI GIAN CHƠI"
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr "NHẬP THỜI GIAN CHƠI"
+
+msgctxt "metadata"
+msgid "CONTROLLER"
+msgstr "TAY CẦM"
+
+msgctxt "metadata"
+msgid "SELECT CONTROLLER"
+msgstr "CHỌN TAY CẦM"
+
+msgctxt "metadata"
+msgid "ALTERNATIVE EMULATOR"
+msgstr "TRÌNH GIẢ LẬP THAY THẾ"
+
+msgctxt "metadata"
+msgid "SELECT ALTERNATIVE EMULATOR"
+msgstr "CHỌN TRÌNH GIẢ LẬP THAY THẾ"
+
+msgctxt "metadata"
+msgid "FOLDER LINK"
+msgstr "LIÊN KẾT THƯ MỤC"
+
+msgctxt "metadata"
+msgid "SELECT FOLDER LINK"
+msgstr "CHỌN LIÊN KẾT THƯ MỤC"
+
+msgctxt "metadata"
+msgid "LAST PLAYED"
+msgstr "LẦN CHƠI CUỐI"
+
+msgctxt "metadata"
+msgid "ENTER LAST PLAYED DATE"
+msgstr "NHẬP NGÀY CHƠI GẦN NHẤT"
+
+msgid "No screenshot found, couldn't generate miximage"
+msgstr "Không tìm thấy ảnh chụp màn hình, không thể tạo ảnh tổng hợp"
+
+msgid "Screenshot in unknown format, couldn't generate miximage"
+msgstr ""
+"Ảnh chụp màn hình ở định dạng không xác định, không thể tạo ảnh tổng hợp"
+
+msgid "Screenshot in unsupported format, couldn't generate miximage"
+msgstr ""
+"Ảnh chụp màn hình ở định dạng không được hỗ trợ, không thể tạo ảnh tổng hợp"
+
+msgid "Error loading screenshot, couldn't generate miximage"
+msgstr "Lỗi khi tải ảnh chụp màn hình, không thể tạo ảnh tổ hợp"
+
+msgid "Error loading marquee image, corrupt file?"
+msgstr "Lỗi khi tải hình biểu ngữ, tệp bị hỏng?"
+
+msgid "Error loading 3d box image, corrupt file?"
+msgstr "Lỗi khi tải hình hộp 3d, tệp bị hỏng?"
+
+msgid "Error loading box cover image, corrupt file?"
+msgstr "Lỗi khi tải hình bìa hộp, tệp bị hỏng?"
+
+msgid "Error loading physical media image, corrupt file?"
+msgstr "Lỗi khi tải hình ảnh phương tiện vật lý, có thể tệp bị hỏng?"
+
+#, c-format
+msgid "PAGE %s OF %s"
+msgstr "TRANG %s TRÊN %s"
+
+msgid "pan"
+msgstr "di chuyển khung"
+
+msgid "reset"
+msgstr "đặt lại"
+
+msgid "game media"
+msgstr "phương tiện trò chơi"
+
+msgid "zoom"
+msgstr "phóng to/nhỏ"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Bạn đã vượt quá hạn mức quét dữ liệu hàng ngày"
+
+msgid "Network error:"
+msgstr "Lỗi mạng:"
+
+msgid "Media directory does not exist and can't be created."
+msgstr "Thư mục phương tiện không tồn tại và không thể tạo được."
+
+msgid "Permission problems?"
+msgstr "Lỗi quyền truy cập?"
+
+msgid "Failed to open path for writing media file."
+msgstr "Không thể mở đường dẫn để ghi tệp phương tiện."
+
+msgid "Couldn't save media file, permission problems or is the disk full?"
+msgstr ""
+"Không thể lưu tệp phương tiện, có thể lỗi quyền truy cập hoặc ổ đĩa đã đầy?"
+
+msgid "Couldn't save resized image, permission problems or is the disk full?"
+msgstr ""
+"Không thể lưu ảnh đã thay đổi kích thước - có thể lỗi quyền truy cập hoặc ổ "
+"đĩa đã đầy?"
+
+msgid "ScreenScraper error:"
+msgstr "Lỗi ScreenScraper:"
+
+msgid "ScreenScraper: Wrong username or password"
+msgstr "ScreenScraper: Sai tên người dùng hoặc mật khẩu"
+
+msgid "No Entries Found"
+msgstr "Không tìm thấy mục nào"
+
+msgctxt "theme"
+msgid "all"
+msgstr "tất cả"
+
+msgctxt "theme"
+msgid "all games"
+msgstr "tất cả trò chơi"
+
+msgctxt "theme"
+msgid "recent"
+msgstr "gần đây"
+
+msgctxt "theme"
+msgid "last played"
+msgstr "chơi lần cuối"
+
+msgctxt "theme"
+msgid "favorites"
+msgstr "yêu thích"
+
+msgctxt "theme"
+msgid "collections"
+msgstr "bộ sưu tập"
+
+msgid "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS"
+msgstr "KHÔNG THỂ THÊM BỘ SƯU TẬP TÙY CHỈNH VÀO BỘ SƯU TẬP TÙY CHỈNH"
+
+msgid "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS"
+msgstr "KHÔNG THỂ THÊM TRÌNH GIỮ CHỖ VÀO BỘ SƯU TẬP TÙY CHỈNH"
+
+msgid "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS"
+msgstr "KHÔNG THỂ THÊM THƯ MỤC VÀO BỘ SƯU TẬP TÙY CHỈNH"
+
+#, c-format
+msgid "MARKED FOLDER '%s' AS FAVORITE"
+msgstr "ĐÃ ĐÁNH DẤU THƯ MỤC '%s' LÀ MỤC YÊU THÍCH"
+
+#, c-format
+msgid "REMOVED FAVORITE MARKING FOR FOLDER '%s'"
+msgstr "ĐÃ XÓA ĐÁNH DẤU YÊU THÍCH CHO THƯ MỤC '%s'"
+
+msgid "CAN'T ADD ENTRIES THAT ARE NOT COUNTED AS GAMES TO CUSTOM COLLECTIONS"
+msgstr ""
+"KHÔNG THỂ THÊM MỤC KHÔNG PHẢI TRÒ CHƠI VÀO BỘ SƯU TẬP TÙY CHỈNHBỘ SƯU TẬP"
+
+msgid "system"
+msgstr "hệ thống"
+
+msgid "view media"
+msgstr "xem phương tiện"
+
+msgid "options"
+msgstr "tùy chọn"
+
+msgid "random"
+msgstr "ngẫu nhiên"
+
+msgid "jump to game"
+msgstr "nhảy đến trò chơi"
+
+msgctxt "theme"
+msgid "yes"
+msgstr "có"
+
+msgctxt "theme"
+msgid "no"
+msgstr "không"
+
+msgid "screensaver"
+msgstr "màn hình chờ"
+
+#, c-format
+msgctxt "theme"
+msgid "%i game"
+msgid_plural "%i games"
+msgstr[0] "%i trò chơi"
+
+#, c-format
+msgctxt "theme"
+msgid "(%i favorite)"
+msgid_plural "(%i favorites)"
+msgstr[0] "(%i yêu thích)"
+
+#, c-format
+msgctxt "theme"
+msgid "%i favorite"
+msgid_plural "%i favorites"
+msgstr[0] "%i mục yêu thích"
+
+msgid ""
+"IT SEEMS AS IF AN UNSAFE UPGRADE HAS BEEN MADE, POSSIBLY BY UNPACKING THE "
+"NEW RELEASE ON TOP OF THE OLD ONE? THIS MAY CAUSE VARIOUS PROBLEMS, SOME OF "
+"WHICH MAY NOT BE APPARENT IMMEDIATELY. MAKE SURE TO ALWAYS FOLLOW THE "
+"UPGRADE INSTRUCTIONS IN THE README.TXT FILE THAT CAN BE FOUND IN THE ES-DE "
+"DIRECTORY."
+msgstr ""
+"CÓ VẺ NHƯ MỘT BẢN NÂNG CẤP KHÔNG AN TOÀN ĐÃ ĐƯỢC THỰC HIỆN, CÓ THỂ BẰNG CÁCH "
+"GIẢI NÉN PHIÊN BẢN MỚI CHÈN LÊN PHIÊN BẢN CŨ? ĐIỀU NÀY CÓ THỂ GÂY RA NHIỀU "
+"VẤN ĐỀ, MỘT SỐ TRONG ĐÓ CÓ THỂ KHÔNG XUẤT HIỆN NGAY LẬP TỨC. HÃY LUÔN TUÂN "
+"THEO HƯỚNG DẪN NÂNG CẤP TRONG TỆP README.TXT CÓ TRONG THƯ MỤC ES-DE."
+
+msgid ""
+"COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. IF YOU HAVE A CUSTOMIZED "
+"es_systems.xml FILE, THEN SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. IF "
+"YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
+"SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
+msgstr ""
+"KHÔNG THỂ PHÂN TÍCH TỆP CẤU HÌNH HỆ THỐNG. NẾU BẠN CÓ TỆP NGƯỜI DÙNG "
+"es_systems.xml, CÓ THỂ CÚ PHÁP XML ĐANG GẶP LỖI. NẾU BẠN KHÔNG CÓ TỆP HỆ "
+"THỐNG TÙY CHỈNH, CÓ NGHĨA LÀ CÀI ĐẶT ES-DE ĐÃ BỊ LỖI. HÃY XEM TỆP NHẬT KÝ "
+"CỦA ỨNG DỤNG es_log.txt ĐỂ BIẾT THÊM THÔNG TIN"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CONFIGURED ROM DIRECTORY. OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY "
+"STRUCTURE WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
+"INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. THIS IS THE CONFIGURED "
+"ROM DIRECTORY:\n"
+msgstr ""
+"KHÔNG TÌM THẤY TỆP TRÒ CHƠI NÀO. HÃY NHẬP VÀO MỘT SỐ TRÒ CHƠI HOẶC ĐẶT CHÚNG "
+"THỦ CÔNG VÀO THƯ MỤC ROM ĐÃ ĐƯỢC CẤU HÌNH. BẠN CŨNG CÓ THỂ TÙY CHỌN TẠO CẤU "
+"TRÚC THƯ MỤC ROM, HÀNH ĐỘNG NÀY SẼ TẠO RA MỘT TỆP VĂN BẢN CHO MỖI HỆ THỐNG "
+"CHỨA THÔNG TIN NHƯ CÁC PHẦN MỞ RỘNG TỆP ĐƯỢC HỖ TRỢ. ĐÂY LÀ THƯ MỤC ROM ĐÃ "
+"CẤU HÌNH:\n"
+
+msgid ""
+"NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
+"THE CURRENTLY CONFIGURED ROM DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+"OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE WHICH WILL CREATE A TEXT "
+"FILE FOR EACH SYSTEM PROVIDING SOME INFORMATION SUCH AS THE SUPPORTED FILE "
+"EXTENSIONS. THIS IS THE CONFIGURED ROM DIRECTORY:\n"
+msgstr ""
+"KHÔNG TÌM THẤY TỆP TRÒ CHƠI NÀO. HÃY NHẬP VÀO MỘT SỐ TRÒ CHƠI HOẶC ĐẶT CHÚNG "
+"THỦ CÔNG VÀO THƯ MỤC ROM ĐANG ĐƯỢC CẤU HÌNH. BẠN CŨNG CÓ THỂ THAY ĐỔI ĐƯỜNG "
+"DẪN ROM VÀ TÙY CHỌN TẠO CẤU TRÚC THƯ MỤC ROM, HÀNH ĐỘNG NÀY SẼ TẠO RA MỘT "
+"TỆP VĂN BẢN CHO MỖI HỆ THỐNG CHỨA THÔNG TIN NHƯ CÁC PHẦN MỞ RỘNG TỆP ĐƯỢC HỖ "
+"TRỢ. ĐÂY LÀ THƯ MỤC ROM ĐÃ CẤU HÌNH:\n"
+
+msgid "CHANGE"
+msgstr "THAY ĐỔI"
+
+msgid "ENTER ROM DIRECTORY PATH"
+msgstr "NHẬP ĐƯỜNG DẪN ĐẾN THƯ MỤC ROM"
+
+msgid ""
+"ROM DIRECTORY SETTING SAVED, RESTART THE APPLICATION TO RESCAN THE SYSTEMS"
+msgstr ""
+"CÀI ĐẶT THƯ MỤC ROM ĐÃ ĐƯỢC LƯU, KHỞI ĐỘNG LẠI ỨNG DỤNG ĐỂ QUÉT LẠI HỆ THỐNG"
+
+msgid "Currently configured path:"
+msgstr "ĐƯỜNG DẪN ĐANG ĐƯỢC CẤU HÌNH:"
+
+msgid "LOAD CURRENTLY CONFIGURED PATH"
+msgstr "TẢI ĐƯỜNG DẪN ĐANG CẤU HÌNH"
+
+msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
+msgstr "XÓA (ĐỂ TRỐNG ĐỂ ĐẶT LẠI ĐƯỜNG DẪN MẶC ĐỊNH)"
+
+msgid ""
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
+"xml\n"
+"\n"
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
+"DON'T NEED"
+msgstr ""
+"ĐIỀU NÀY SẼ TẠO CÁC THƯ MỤC CHO TẤT CẢ HỆ THỐNG TRÒ CHƠI ĐƯỢC ĐỊNH NGHĨA "
+"TRONG es_systems.xml\n"
+"\n"
+"ĐIỀU NÀY CÓ THỂ TẠO RẤT NHIỀU THƯ MỤC, VÌ VẬY HÃY XÓA NHỮNG CÁI KHÔNG CẦN"
+
+msgid ""
+"THE SYSTEM DIRECTORIES WERE SUCCESSFULLY GENERATED, EXIT THE APPLICATION AND "
+"PLACE YOUR GAMES IN THE NEW FOLDERS"
+msgstr ""
+"CÁC THƯ MỤC HỆ THỐNG ĐÃ ĐƯỢC TẠO THÀNH CÔNG, HÃY THOÁT ỨNG DỤNG VÀ ĐẶT CÁC "
+"TRÒ CHƠI CỦA BẠN VÀO CÁC THƯ MỤC MỚI"
+
+msgid ""
+"ERROR CREATING THE SYSTEM DIRECTORIES, PERMISSION PROBLEMS OR DISK FULL?\n"
+"\n"
+"SEE THE LOG FILE FOR MORE DETAILS"
+msgstr ""
+"LỖI KHI TẠO CÁC THƯ MỤC HỆ THỐNG, CÓ THỂ LỖI QUYỀN TRUY CẬP HOẶC Ổ ĐĨA ĐÃ "
+"ĐẦY?\n"
+"\n"
+"XEM TỆP NHẬT KÝ ĐỂ BIẾT THÊM CHI TIẾT"
+
+msgid ""
+"AT LEAST ONE OF YOUR SYSTEMS HAS AN INVALID ALTERNATIVE EMULATOR CONFIGURED "
+"WITH NO MATCHING ENTRY IN THE SYSTEMS CONFIGURATION FILE, PLEASE REVIEW YOUR "
+"SETUP USING THE 'ALTERNATIVE EMULATORS' INTERFACE IN THE 'OTHER SETTINGS' "
+"MENU"
+msgstr ""
+"ÍT NHẤT MỘT HỆ THỐNG BẠN CHỌN CHƯA CÓ NỀN TẢNG TRÌNH GIẢ LẬP THAY THẾ KHÔNG "
+"CÓ MỤC TƯƠNG ỨNG TRONG TỆP CẤU HÌNH HỆ THỐNG. VUI LÒNG KIỂM TRA CÀI ĐẶT TRÊN "
+"GIAO DIỆN \"TRÌNH GIẢ LẬP THAY THẾ\" TRONG MENU \"CÀI ĐẶT KHÁC\""
+
+msgid "UPDATE"
+msgstr "CẬP NHẬT"
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
+"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
+"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
+msgstr ""
+"TRÌNH CẬP NHẬT ỨNG DỤNG SẼ TẢI PHIÊN BẢN DI ĐỘNG MỚI NHẤT CHO WINDOWS, NHƯNG "
+"BẠN SẼ PHẢI TỰ THỰC HIỆN VIỆC NÂNG CẤP. XEM TỆP README.TXT TRONG TỆP ZIP ĐÃ "
+"TẢI VỀ ĐỂ BIẾT HƯỚNG DẪN CÁCH THỰC HIỆN. NHƯ CŨNG ĐƯỢC MÔ TẢ TRONG TÀI LIỆU "
+"ĐÓ, KHÔNG BAO GIỜ GIẢI NÉN PHIÊN BẢN MỚI CHÈN LÊN PHIÊN BẢN CŨ, VÌ VIỆC NÀY "
+"CÓ THỂ LÀM HỎNG ỨNG DỤNG."
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST WINDOWS INSTALLER RELEASE "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY RUN IT TO PERFORM THE UPGRADE. WHEN "
+"DOING THIS, MAKE SURE THAT YOU ANSWER YES TO THE QUESTION OF WHETHER TO "
+"UNINSTALL THE OLD VERSION, OR YOU MAY END UP WITH A BROKEN SETUP."
+msgstr ""
+"TRÌNH CẬP NHẬT ỨNG DỤNG SẼ TẢI PHIÊN BẢN CÀI ĐẶT MỚI NHẤT CHO WINDOWS, NHƯNG "
+"BẠN SẼ PHẢI TỰ CHẠY NÓ ĐỂ THỰC HIỆN VIỆC NÂNG CẤP. KHI LÀM VIỆC NÀY, HÃY ĐẢM "
+"BẢO RẰNG BẠN CHỌN \"CÓ\" KHI ĐƯỢC HỎI CÓ GỠ PHIÊN BẢN CŨ KHÔNG, NẾU KHÔNG "
+"CÀI ĐẶT CÓ THỂ BỊ LỖI."
+
+msgid ""
+"THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST RELEASE FOR YOU, BUT YOU "
+"WILL NEED TO MANUALLY INSTALL THE DMG FILE TO PERFORM THE UPGRADE."
+msgstr ""
+"TRÌNH CẬP NHẬT ỨNG DỤNG SẼ TẢI PHIÊN BẢN MỚI NHẤT CHO BẠN, NHƯNG ĐỂ NÂNG "
+"CẤP, BẠN CẦN TỰ CÀI ĐẶT TỆP DMG."
+
+#, c-format
+msgid "LAUNCHING GAME '%s'"
+msgstr "ĐANG KHỞI CHẠY TRÒ CHƠI '%s'"
+
+msgid "menu"
+msgstr "menu"
+
+msgctxt "theme"
+msgid "never"
+msgstr "không bao giờ"
+
+#, c-format
+msgctxt "theme"
+msgid "%i day ago"
+msgid_plural "%i days ago"
+msgstr[0] "cách đây %i ngày"
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour ago"
+msgid_plural "%i hours ago"
+msgstr[0] "cách đây %i giờ"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute ago"
+msgid_plural "%i minutes ago"
+msgstr[0] "cách đây %i phút"
+
+#, c-format
+msgctxt "theme"
+msgid "%i second ago"
+msgid_plural "%i seconds ago"
+msgstr[0] "cách đây %i giây"
+
+msgid "edit date"
+msgstr "chỉnh ngày"
+
+msgid "Y-M-D"
+msgstr "NĂM-THÁNG-NGÀY"
+
+msgid "modify"
+msgstr "chỉnh sửa"
+
+#, c-format
+msgid "%i (OF %i)"
+msgstr "%i (TRONG %i)"
+
+#, c-format
+msgid "%s SELECTED"
+msgid_plural "%s SELECTED"
+msgstr[0] "ĐÃ CHỌN %s"
+
+#, c-format
+msgid "%i SELECTED"
+msgid_plural "%i SELECTED"
+msgstr[0] "ĐÃ CHỌN %i"
+
+msgid "change value"
+msgstr "thay đổi giá trị"
+
+msgid "add half star"
+msgstr "thêm nửa ngôi sao"
+
+msgid "toggle"
+msgstr "chuyển đổi"
+
+msgid "move cursor"
+msgstr "di chuyển con trỏ"
+
+msgid "edit"
+msgstr "chỉnh sửa"
+
+msgid "WELCOME"
+msgstr "CHÀO MỪNG"
+
+msgid "CONFIGURE INPUT DEVICE"
+msgstr "CẤU HÌNH THIẾT BỊ ĐIỀU KHIỂN"
+
+#, c-format
+msgid "%i GAMEPAD DETECTED"
+msgid_plural "%i GAMEPADS DETECTED"
+msgstr[0] "ĐÃ PHÁT HIỆN %i TAY CẦM"
+
+msgid "NO GAMEPADS DETECTED"
+msgstr "KHÔNG PHÁT HIỆN TAY CẦM NÀO"
+
+msgid "(ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)"
+msgstr "(CHỈ NHẬN TÍN HIỆU TỪ TAY CẦM THỨ NHẤT)"
+
+msgid "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT"
+msgstr "GIỮ NÚT \"A\" TRÊN THIẾT BỊ CỦA BẠN ĐỂ CẤU HÌNH"
+
+msgid "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT"
+msgstr "GIỮ PHÍM \"A\" TRÊN BÀN PHÍM ĐỂ CẤU HÌNH"
+
+msgid "PRESS ESC TO SKIP (OR THE QUIT SHORTCUT TO QUIT AT ANY TIME)"
+msgstr "NHẤN ESC ĐỂ BỎ QUA (HOẶC PHÍM TẮT THOÁT ĐỂ THOÁT BẤT KỲ LÚC NÀO)"
+
+msgid "PRESS ESC TO CANCEL"
+msgstr "NHẤN ESC ĐỂ HỦY"
+
+msgid "CONFIGURING"
+msgstr "ĐANG CẤU HÌNH"
+
+msgid "KEYBOARD"
+msgstr "BÀN PHÍM"
+
+msgid "GAMEPAD"
+msgstr "TAY CẦM"
+
+msgid "HOLD ANY BUTTON 1 SECOND TO SKIP"
+msgstr "GIỮ BẤT KỲ NÚT NÀO 1 GIÂY ĐỂ BỎ QUA"
+
+msgid "NOT DEFINED"
+msgstr "CHƯA XÁC ĐỊNH"
+
+msgid "ok"
+msgstr "ok"
+
+msgid "D-PAD UP"
+msgstr "D-PAD LÊN"
+
+msgid "D-PAD DOWN"
+msgstr "D-PAD XUỐNG"
+
+msgid "D-PAD LEFT"
+msgstr "D-PAD TRÁI"
+
+msgid "D-PAD RIGHT"
+msgstr "D-PAD PHẢI"
+
+msgid "MINUS"
+msgstr "TRỪ"
+
+msgid "PLUS"
+msgstr "CỘNG"
+
+msgid "CROSS"
+msgstr "NÚT X"
+
+msgid "CIRCLE"
+msgstr "NÚT TRÒN"
+
+msgid "SQUARE"
+msgstr "VUÔNG"
+
+msgid "TRIANGLE"
+msgstr "TAM GIÁC"
+
+msgid "OPTIONS"
+msgstr "TÙY CHỌN"
+
+msgid "VIEW"
+msgstr "XEM"
+
+msgid "MENU"
+msgstr "MENU"
+
+msgid "LEFT SHOULDER"
+msgstr "NÚT TRÊN TRÁI"
+
+msgid "RIGHT SHOULDER"
+msgstr "NÚT VAI PHẢI"
+
+msgid "LEFT TRIGGER"
+msgstr "CÒ TRÁI"
+
+msgid "RIGHT TRIGGER"
+msgstr "CÒ PHẢI"
+
+msgid "LEFT THUMBSTICK UP"
+msgstr "GẠT TRÁI LÊN"
+
+msgid "LEFT THUMBSTICK DOWN"
+msgstr "GẠT TRÁI XUỐNG"
+
+msgid "LEFT THUMBSTICK LEFT"
+msgstr "GẠT TRÁI SANG TRÁI"
+
+msgid "LEFT THUMBSTICK RIGHT"
+msgstr "GẠT TRÁI SANG PHẢI"
+
+msgid "LEFT THUMBSTICK CLICK"
+msgstr "NHẤN GẠT TRÁI"
+
+msgid "RIGHT THUMBSTICK UP"
+msgstr "GẠT PHẢI LÊN TRÊN"
+
+msgid "RIGHT THUMBSTICK DOWN"
+msgstr "NÚT GẠT PHẢI XUỐNG"
+
+msgid "RIGHT THUMBSTICK LEFT"
+msgstr "NÚT GẠT PHẢI SANG TRÁI"
+
+msgid "RIGHT THUMBSTICK RIGHT"
+msgstr "GẠT PHẢI SANG PHẢI"
+
+msgid "RIGHT THUMBSTICK CLICK"
+msgstr "NHẤN NÚT GẠT PHẢI"
+
+msgid "ALREADY TAKEN"
+msgstr "ĐÃ ĐƯỢC SỬ DỤNG"
+
+msgid "PRESS ANYTHING"
+msgstr "NHẤN BẤT KỲ PHÍM NÀO"
+
+msgid "SPACE"
+msgstr "PHÍM CÁCH"
+
+msgid "LOAD"
+msgstr "TẢI"
+
+msgid "shift"
+msgstr "shift"
+
+msgid "alt"
+msgstr "alt"
+
+msgid "newline"
+msgstr "dòng mới"
+
+msgid "backspace"
+msgstr "backspace"
+
+msgid "space"
+msgstr "khoảng trắng"
+
+msgid "LOAD DEFAULT"
+msgstr "TẢI MẶC ĐỊNH"
+
+msgid "DISCARD CHANGES"
+msgstr "HỦY THAY ĐỔI"
+
+msgid "discard changes"
+msgstr "hủy thay đổi"
+
+#, c-format
+msgid "Server returned HTTP error code %s"
+msgstr "Máy chủ trả về mã lỗi HTTP %s"
+
+#, c-format
+msgid "ADDED INPUT DEVICE '%s'"
+msgstr "ĐÃ THÊM THIẾT BỊ NHẬP '%s'"
+
+#, c-format
+msgid "REMOVED INPUT DEVICE '%s'"
+msgstr "ĐÃ XÓA THIẾT BỊ NHẬP '%s'"
+
+msgid "medium"
+msgstr "bình thường"
+
+msgid "large"
+msgstr "lớn"
+
+msgid "small"
+msgstr "nhỏ"
+
+msgid "extra small"
+msgstr "rất nhỏ"
+
+msgid "extra large"
+msgstr "rất lớn"
+
+msgid "automatic"
+msgstr "tự động"
+
+msgid "16:9 vertical"
+msgstr "16:9 dọc"
+
+msgid "16:10 vertical"
+msgstr "16:10 dọc"
+
+msgid "3:2 vertical"
+msgstr "3:2 dọc"
+
+msgid "4:3 vertical"
+msgstr "4:3 dọc"
+
+msgid "5:3 vertical"
+msgstr "5:3 dọc"
+
+msgid "5:4 vertical"
+msgstr "5:4 dọc"
+
+msgid "8:7 vertical"
+msgstr "8:7 dọc"
+
+msgid "19.5:9 vertical"
+msgstr "19.5:9 dọc"
+
+msgid "20:9 vertical"
+msgstr "20:9 dọc"
+
+msgid "21:9 vertical"
+msgstr "21:9 dọc"
+
+msgid "32:9 vertical"
+msgstr "32:9 dọc"
+
+msgid "Searching for games..."
+msgstr "Đang tìm trò chơi..."
+
+msgid "Loading systems..."
+msgstr "Đang tải hệ thống..."
+
+msgid "Reloading..."
+msgstr "Đang tải lại..."
+
+msgid "Copying resources..."
+msgstr "Đang sao chép tài nguyên..."
+
+msgid "Creating system directories..."
+msgstr "Đang tạo thư mục hệ thống..."
+
+msgid "ERROR: COULDN'T RENDER PDF FILE"
+msgstr "LỖI: KHÔNG THỂ HIỂN THỊ TỆP PDF"

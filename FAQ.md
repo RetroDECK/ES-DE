@@ -12,7 +12,7 @@ ES-DE is available for free on Windows, macOS and Linux and it's released under 
 
 ## Which operating systems are supported?
 
-ES-DE is officially supported on Android, Windows, macOS and multiple Linux distributions including Ubuntu, Fedora, Arch, Manjaro, SteamOS etc. It's also semiofficially supported on some secondary platforms like FreeBSD, the Raspberry Pi and Haiku although these ports may not always be up to date and you may have to build ES-DE yourself.
+ES-DE is officially supported on Android, Windows, macOS and multiple Linux distributions including Ubuntu, Fedora, Arch, Manjaro, SteamOS etc. It's also semiofficially supported on some secondary platforms like FreeBSD and Haiku although these ports may not always be up to date.
 
 ## What is the relationship between ES-DE and RetroDECK?
 

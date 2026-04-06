@@ -11,8 +11,6 @@
 #ifndef ES_CORE_INPUT_MANAGER_H
 #define ES_CORE_INPUT_MANAGER_H
 
-#include "CECInput.h"
-
 #if defined(__ANDROID__) || defined(__IOS__)
 #include "InputOverlay.h"
 #endif
@@ -64,7 +62,6 @@ private:
     void removeControllerByJoystickID(Window* window, SDL_JoystickID joyID);
 
     Window* mWindow;
-    CECInput mCECInput;
 #if defined(__ANDROID__) || defined(__IOS__)
     InputOverlay& mInputOverlay;
 #endif
@@ -79,7 +76,6 @@ private:
 
     std::unique_ptr<InputConfig> mKeyboardInputConfig;
     std::unique_ptr<InputConfig> mTouchInputConfig;
-    std::unique_ptr<InputConfig> mCECInputConfig;
 
     std::map<std::pair<SDL_JoystickID, int>, int> mPrevAxisValues;
     std::map<std::pair<SDL_JoystickID, int>, int> mPrevButtonValues;

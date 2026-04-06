@@ -73,6 +73,7 @@ namespace
         {INTELLIVISION, "32"},
         {APPLE_MACINTOSH, "37"},
         {GOOGLE_ANDROID, "4916"},
+        {J2ME, "5018"},
         {LCD_GAMES, "4951"},
         {MICROSOFT_XBOX, "14"},
         {MICROSOFT_XBOX_360, "15"},

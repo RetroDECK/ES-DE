@@ -71,7 +71,7 @@ namespace Utils
 
         int runSuspendCommand()
         {
-#if defined(_APPLE__)
+#if defined(__APPLE__)
             return 0;
 #elif defined(_WIN64)
             return system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0");
@@ -230,13 +230,6 @@ namespace Utils
             }
 
             returnValue = pclose(commandPipe);
-
-#if defined(RASPBERRY_PI)
-            // Hack to avoid that the application window occasionally loses focus when returning
-            // from a game, which only seems to happen on Raspberry Pi OS 10.
-            SDL_Delay(50);
-            SDL_SetWindowInputFocus(Renderer::getInstance()->getSDLWindow());
-#endif
 
             // We need to shift the return value as it contains some flags (which we don't need).
             returnValue >>= 8;

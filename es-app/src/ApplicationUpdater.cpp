@@ -51,6 +51,8 @@ ApplicationUpdater::ApplicationUpdater()
     mPackageType = PackageType::MACOS_INTEL;
 #elif defined(STEAM_DECK)
     mPackageType = PackageType::LINUX_STEAM_DECK_APPIMAGE;
+#elif defined(APPIMAGE_BUILD) && defined(LINUX_AARCH64)
+    mPackageType = PackageType::LINUX_AARCH64_APPIMAGE;
 #elif defined(APPIMAGE_BUILD)
     mPackageType = PackageType::LINUX_APPIMAGE;
 #endif
@@ -419,6 +421,9 @@ void ApplicationUpdater::compareVersions()
                     mPackage = package;
                 else if (mPackageType == PackageType::LINUX_APPIMAGE &&
                          package.name == "LinuxAppImage")
+                    mPackage = package;
+                else if (mPackageType == PackageType::LINUX_AARCH64_APPIMAGE &&
+                         package.name == "LinuxAArch64AppImage")
                     mPackage = package;
                 else if (mPackageType == PackageType::LINUX_STEAM_DECK_APPIMAGE &&
                          package.name == "LinuxSteamDeckAppImage")

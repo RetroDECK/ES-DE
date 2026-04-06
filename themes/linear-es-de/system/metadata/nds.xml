@@ -8,6 +8,7 @@
         <systemReleaseDateFormated>November 21, 2004</systemReleaseDateFormated>
         <systemHardwareType>Portable</systemHardwareType>
         <systemCoverSize>257-229</systemCoverSize>
+        <systemCoverSizeType>square</systemCoverSizeType>
         <systemColor>b3c8d5</systemColor>
         <systemColorPalette1>5C67A9</systemColorPalette1>
         <systemColorPalette2>280FBE</systemColorPalette2>
@@ -15,6 +16,18 @@
         <systemColorPalette4>212121</systemColorPalette4>
         <systemCartSize>1-1</systemCartSize>
     </variables>
+    <language name="ar_SA">
+        <variables>
+            <systemDescription>جهاز نينتندو DS أو ببساطة DS، هو جهاز ألعاب محمول باليد بشاشة مزدوجة 32 بت تم تطويره وإصداره من قبل شركة نينتندو. تم طرح الجهاز للبيع في أمريكا الشمالية في 21 نوفمبر 2004. قدم DS، وهو اختصار لـ "نظام المطورين" أو "الشاشة المزدوجة"، ميزات جديدة مميزة للألعاب المحمولة باليد: شاشتا LCD تعملان جنباً إلى جنب (الشاشة السفلية تحتوي على شاشة تعمل باللمس)، وميكروفون مدمج، ودعم للاتصال اللاسلكي. كلتا الشاشتين مدمجتان في تصميم صدفي مشابه لجهاز Game Boy Advance SP. كما يتميز جهاز Nintendo DS أيضاً بقدرة وحدات تحكم DS المتعددة على التفاعل مباشرة مع بعضها البعض عبر شبكة Wi-Fi ضمن نطاق قصير دون الحاجة إلى الاتصال بشبكة لاسلكية موجودة. وبدلاً من ذلك، يمكنهم التفاعل عبر الإنترنت باستخدام خدمة Nintendo Wi-Fi Connection التي تم إغلاقها الآن.</systemDescription>
+            <systemHardwareType>محمول</systemHardwareType>
+        </variables>
+    </language>
+    <language name="bs_BA">
+        <variables>
+            <systemDescription>Nintendo DS ili Jednostavno, DS, je 32-bitna dvostruka ekrana Handheld Game Console razvijena i pušta Nintendo. Uređaj je u Severnoj Americi 19. novembra 2004. godine, kratak za "sistem programera" ili "Dual ekran" uveo prepoznatljive nove funkcije: dva LCD ekrana koji rade u tandemu (donji mikrofon), ugrađeni mikrofon i podrška za bežičnu vezu. Oba ekrana su obuhvaćena u dizajnu školjke slične igri dječaka Avand Sp. Nintendo DS također sadrži sposobnost za višestruki DS konzola za izravno međusobno komuniciranje preko Wi-Fi-ja u kratkom rasponu bez potrebe za povezivanjem na postojeću bežičnu mrežu. Alternativno, mogli bi komunicirati putem interneta koristeći sada zatvoreni NINTENDO Wi-Fi servis veze.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="ca_ES">
         <variables>
             <systemDescription>La Nintendo DS o simplement, DS, és una consola de joc de mà de doble pantalla de 32 bits desenvolupada i llançada per Nintendo. El dispositiu va sortir a la venda a Amèrica del Nord el 21 de novembre de 2004. El DS, curt per a "Sistema de desenvolupadors" o "Pantalla Dual", va introduir noves funcions per a jocs de mà: dues pantalles LCD que funcionen en conjunt (la part inferior amb unTouchscreen), un micròfon integrat i suport per a la connectivitat sense fils. Les dues pantalles s’inclouen dins d’un disseny de clamshell similar al Game Boy Advance SP. La Nintendo DS també ofereix la capacitat de diverses consoles DS per interactuar directament entre elles sobre Wi-Fi dins d’un curt abast sense necessitat de connectar-se a una xarxa sense fils existent. Alternativament, podrien interactuar en línia mitjançant el servei de connexió Wi-Fi de Nintendo ara tancat.</systemDescription>
@@ -39,10 +52,28 @@
             <systemHardwareType>Portable</systemHardwareType>
         </variables>
     </language>
+    <language name="hr_HR">
+        <variables>
+            <systemDescription>Nintendo DS ili jednostavno, DS, 32-bitna je dvostruka zaslonska konzola za igru koju je razvio i objavio Nintendo. Uređaj je u Sjevernoj Americi bio u prodaji 21. studenog 2004. godine, DS, skraćeno za "Sustav programera" ili "Dvostruki zaslon", uveo je prepoznatljive nove značajke za ručno igranje: dva LCD ekrana koji rade u tandemu (donji zaslon s dodirnim zaslonom), ugrađeni mikrofon i podršku za bežičnu povezanost. Oba su ekrana obuhvaćena u dizajnu školjki sličan Game Boy Advance Sp. Nintendo DS također ima mogućnost da se više DS konzola izravno međusobno komuniciraju preko Wi-Fi-ja u kratkom rasponu bez potrebe za povezivanjem na postojeću bežičnu mrežu. Alternativno, mogli bi komunicirati putem interneta pomoću sada zatvorene usluge Nintendo Wi-Fi Connection.</systemDescription>
+            <systemHardwareType>Prenosiv</systemHardwareType>
+        </variables>
+    </language>
     <language name="it_IT">
         <variables>
             <systemDescription>Il Nintendo DS, o semplicemente DS, è una console portatile a doppio schermo a 32 bit sviluppata e pubblicata da Nintendo. Il dispositivo è stato messo in vendita in Nord America il 21 novembre 2004. Il DS, abbreviazione di "Developers' System" o "Dual Screen", ha introdotto nuove caratteristiche distintive nei giochi portatili: due schermi LCD che lavorano in tandem (quello inferiore è dotato di touchscreen), un microfono integrato e il supporto per la connettività wireless. Entrambi gli schermi sono racchiusi in un design a conchiglia simile a quello del Game Boy Advance SP. Il Nintendo DS offre inoltre la possibilità a più console DS di interagire direttamente tra loro tramite Wi-Fi a breve distanza, senza la necessità di collegarsi a una rete wireless esistente. In alternativa, possono interagire online utilizzando il servizio Nintendo Wi-Fi Connection, ora chiuso.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ja_JP">
+        <variables>
+            <systemDescription>ニンテンドーDS（Nintendo DS）は、任天堂が開発・発売した32ビット2画面携帯ゲーム機である。2004年11月21日に北米で発売された。DSは "Developers' System "または "Dual Screen "の略で、携帯ゲーム機に特徴的な新機能を導入した。2つのLCDスクリーンが同時に動作し（下側のスクリーンはタッチスクリーンを搭載）、内蔵マイクを搭載し、ワイヤレス接続に対応した。両画面はゲームボーイアドバンスSPに似たクラムシェルデザインに収められている。また、ニンテンドーDSは、既存のワイヤレスネットワークに接続しなくても、近距離であればWi-Fi経由で複数のDSコンソールが相互に直接通信できる機能を備えている。あるいは、現在は終了しているニンテンドーWi-Fiコネクションサービスを利用して、オンラインでやりとりすることもできる。</systemDescription>
+            <systemHardwareType>ポータブル</systemHardwareType>
+        </variables>
+    </language>
+    <language name="ko_KR">
+        <variables>
+            <systemDescription>닌텐도 DS 또는 간단히 DS는 닌텐도에서 개발 및 출시한 32비트 듀얼 스크린 휴대용 게임 콘솔입니다. 이 장치는 2004년 11월 21일 북미에서 판매되기 시작했습니다. "개발자 시스템" 또는 "듀얼 스크린"의 줄임말인 DS는 두 개의 LCD 화면(하단에는 터치스크린이 있음), 내장 마이크, 무선 연결 지원 등 핸드헬드 게임에 독특한 새로운 기능을 도입했습니다. 두 화면 모두 Game Boy Advance SP와 유사한 클램셸 디자인에 포함되어 있습니다. 또한 Nintendo DS는 기존 무선 네트워크에 연결할 필요 없이 근거리에서 여러 대의 DS 콘솔이 Wi-Fi를 통해 직접 상호 작용할 수 있는 기능을 갖추고 있습니다. 또는 지금은 종료된 Nintendo Wi-Fi 연결 서비스를 사용하여 온라인으로 상호 작용할 수도 있습니다.</systemDescription>
+            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="nl_NL">
@@ -63,6 +94,12 @@
             <systemHardwareType>Portátil</systemHardwareType>
         </variables>
     </language>
+    <language name="pt_PT">
+        <variables>
+            <systemDescription>O Nintendo DS ou simplesmente, o DS, é um console de jogo portátil de tela dupla de 32 bits desenvolvida e lançada pela Nintendo. O dispositivo foi colocado à venda na América do Norte em 21 de novembro de 2004. O DS, abreviado para o "sistema de desenvolvedores" ou "tela dupla", introduziu novos recursos distintos em jogos portáteis: duas telas LCD trabalhando em tandem (a parte inferior com uma tela sensível ao toque), um microfone embutido e suporte para conectividade sem fio. Ambas as telas são abrangidas em um design de concha semelhante ao Game Boy Advance SP. O Nintendo DS também apresenta a capacidade de vários consoles DS interagirem diretamente entre si sobre o Wi-Fi em um curto alcance, sem a necessidade de se conectar a uma rede sem fio existente. Como alternativa, eles poderiam interagir on-line usando o agora fechado Serviço de Conexão Wi-Fi da Nintendo.</systemDescription>
+            <systemHardwareType>Portátil</systemHardwareType>
+        </variables>
+    </language>
     <language name="ro_RO">
         <variables>
             <systemDescription>Nintendo DS sau pur și simplu, DS, este o consolă portabilă de jocuri cu ecran dublu pe 32 de biți dezvoltată și lansată de Nintendo. Dispozitivul a fost pus în vânzare în America de Nord pe 21 noiembrie 2004. DS, prescurtarea de la "Developers' System" sau "Dual Screen", a introdus noi caracteristici distinctive pentru jocurile portabile: două ecrane LCD care funcționează în tandem (cel de jos având un ecran tactil), un microfon încorporat și suport pentru conectivitate fără fir. Ambele ecrane sunt înglobate într-un design cu clapetă similar cu Game Boy Advance SP. Nintendo DS oferă, de asemenea, posibilitatea ca mai multe console DS să interacționeze direct între ele prin Wi-Fi pe o rază scurtă, fără a fi nevoie să se conecteze la o rețea wireless existentă. Alternativ, acestea ar putea interacționa online utilizând serviciul Nintendo Wi-Fi Connection, acum închis.</systemDescription>
@@ -75,22 +112,16 @@
             <systemHardwareType>Портативный</systemHardwareType>
         </variables>
     </language>
+    <language name="sr_RS">
+        <variables>
+            <systemDescription>Нинтендо ДС или једноставно, ДС, је 32-битна ручна конзола са двоструким екраном који је Нинтендо развио и издао Нинтендо.Уређај је у продаји у Северној Америци 21. новембра 2004. године. ДС, кратак за "систем програмера" или "двоструки екран", увео је карактеристичне нове функције за ручно снимање: Два ЛЦД екрана која раде у Тандему (доњи микрофон који садржи екран на додир), уграђени микрофон за додир.Оба екрана су обухваћена у дизајну шкољки сличан игри Дечак унапред Сп.Нинтендо ДС такође има могућност да више ДС конзола директно комуницира једни са другима преко Ви-Фи-а у оквиру кратког опсега без потребе за повезивањем на постојећу бежичну мрежу.Алтернативно, могли би да комуницирају путем интернета користећи сада затворени Нинтендо Ви-Фи услуге повезивања.</systemDescription>
+            <systemHardwareType>Преносив</systemHardwareType>
+        </variables>
+    </language>
     <language name="sv_SE">
         <variables>
             <systemDescription>Nintendo DS, eller helt enkelt DS, är en 32-bitars handhållen spelkonsol med dubbla skärmar som utvecklats och släppts av Nintendo. Enheten började säljas i Nordamerika den 21 november 2004. DS, en förkortning för "Developers' System" eller "Dual Screen", introducerade nya funktioner för handhållna spel: två LCD-skärmar som arbetar tillsammans (den nedre har en pekskärm), en inbyggd mikrofon och stöd för trådlös anslutning. Båda skärmarna är inrymda i en clamshell-design som liknar Game Boy Advance SP. Nintendo DS har också möjlighet för flera DS-konsoler att direkt interagera med varandra via Wi-Fi inom en kort räckvidd utan att behöva ansluta till ett befintligt trådlöst nätverk. Alternativt kunde de interagera online med hjälp av den numera nedlagda tjänsten Nintendo Wi-Fi Connection.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ja_JP">
-        <variables>
-            <systemDescription>ニンテンドーDS（Nintendo DS）は、任天堂が開発・発売した32ビット2画面携帯ゲーム機である。2004年11月21日に北米で発売された。DSは "Developers' System "または "Dual Screen "の略で、携帯ゲーム機に特徴的な新機能を導入した。2つのLCDスクリーンが同時に動作し（下側のスクリーンはタッチスクリーンを搭載）、内蔵マイクを搭載し、ワイヤレス接続に対応した。両画面はゲームボーイアドバンスSPに似たクラムシェルデザインに収められている。また、ニンテンドーDSは、既存のワイヤレスネットワークに接続しなくても、近距離であればWi-Fi経由で複数のDSコンソールが相互に直接通信できる機能を備えている。あるいは、現在は終了しているニンテンドーWi-Fiコネクションサービスを利用して、オンラインでやりとりすることもできる。</systemDescription>
-            <systemHardwareType>ポータブル</systemHardwareType>
-        </variables>
-    </language>
-    <language name="ko_KR">
-        <variables>
-            <systemDescription>닌텐도 DS 또는 간단히 DS는 닌텐도에서 개발 및 출시한 32비트 듀얼 스크린 휴대용 게임 콘솔입니다. 이 장치는 2004년 11월 21일 북미에서 판매되기 시작했습니다. "개발자 시스템" 또는 "듀얼 스크린"의 줄임말인 DS는 두 개의 LCD 화면(하단에는 터치스크린이 있음), 내장 마이크, 무선 연결 지원 등 핸드헬드 게임에 독특한 새로운 기능을 도입했습니다. 두 화면 모두 Game Boy Advance SP와 유사한 클램셸 디자인에 포함되어 있습니다. 또한 Nintendo DS는 기존 무선 네트워크에 연결할 필요 없이 근거리에서 여러 대의 DS 콘솔이 Wi-Fi를 통해 직접 상호 작용할 수 있는 기능을 갖추고 있습니다. 또는 지금은 종료된 Nintendo Wi-Fi 연결 서비스를 사용하여 온라인으로 상호 작용할 수도 있습니다.</systemDescription>
-            <systemHardwareType>휴대성</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

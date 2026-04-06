@@ -112,7 +112,7 @@
         <name>apple2</name>
         <fullname>Apple II</fullname>
         <path>%ROMPATH%/apple2</path>
-        <extension>.do .DO .dsk .DSK .nib .NIB .po .PO</extension>
+        <extension>.do .DO .dsk .DSK .nib .NIB .po .PO .7z .7Z .zip .ZIP</extension>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module apple2 %ROM%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/apple2 apple2e -gameio joy -flop1 %ROM%</command>
         <platform>apple2</platform>
@@ -122,7 +122,7 @@
         <name>apple2gs</name>
         <fullname>Apple IIGS</fullname>
         <path>%ROMPATH%/apple2gs</path>
-        <extension>.2mg .2MG .7z .7z .zip .ZIP</extension>
+        <extension>.2mg .2MG .7z .7Z .zip .ZIP</extension>
         <command label="MAME (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/apple2gs apple2gs -gameio joy -flop3 %ROM%</command>
         <command label="MAME [Software list] (Standalone)">%STARTDIR%=~/config/settings/mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/apple2gs apple2gs -gameio joy %BASENAME%</command>
         <platform>apple2gs</platform>
@@ -746,7 +746,7 @@
         <path>%ROMPATH%/j2me</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
-        <platform>android</platform>
+        <platform>j2me</platform>
         <theme>j2me</theme>
     </system>
     <system>

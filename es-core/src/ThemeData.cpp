@@ -133,6 +133,7 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedLanguages 
     {"ru_RU", "РУССКИЙ"},
     {"sr_RS", "SRPSKI"},
     {"sv_SE", "SVENSKA"},
+    {"vi_VN", "TIẾNG VIỆT"},
     {"ar_SA", "العربية"},
     {"ja_JP", "日本語"},
     {"ko_KR", "한국어"},

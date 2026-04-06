@@ -23,7 +23,6 @@
 #include <pugixml.hpp>
 
 #define KEYBOARD_GUID_STRING "-1"
-#define CEC_GUID_STRING "-2"
 
 #if defined(__ANDROID__)
 #define TOUCH_GUID_STRING "-3"
@@ -34,12 +33,6 @@
 #define TOUCH_GUID_STRING "-3"
 #endif
 
-namespace
-{
-    int SDL_USER_CECBUTTONDOWN {-1};
-    int SDL_USER_CECBUTTONUP {-1};
-} // namespace
-
 InputManager::InputManager() noexcept
     : mWindow {Window::getInstance()}
 #if defined(__ANDROID__) || defined(__IOS__)
@@ -47,7 +40,6 @@ InputManager::InputManager() noexcept
 #endif
     , mKeyboardInputConfig {nullptr}
     , mTouchInputConfig {nullptr}
-    , mCECInputConfig {nullptr}
 {
 }
 
@@ -127,11 +119,6 @@ void InputManager::init()
         if (SDL_IsGameController(i))
             addControllerByDeviceIndex(nullptr, i);
     }
-
-    SDL_USER_CECBUTTONDOWN = SDL_RegisterEvents(2);
-    SDL_USER_CECBUTTONUP = SDL_USER_CECBUTTONDOWN + 1;
-    mCECInputConfig = std::make_unique<InputConfig>(DEVICE_CEC, "CEC", CEC_GUID_STRING);
-    loadInputConfig(mCECInputConfig.get());
 }
 
 void InputManager::deinit()
@@ -150,7 +137,6 @@ void InputManager::deinit()
 
     mKeyboardInputConfig.reset();
     mTouchInputConfig.reset();
-    mCECInputConfig.reset();
 
     SDL_GameControllerEventState(SDL_DISABLE);
     SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
@@ -234,9 +220,6 @@ int InputManager::getNumConfiguredDevices()
         ++num;
 #endif
 
-    if (mCECInputConfig->isConfigured())
-        ++num;
-
     return num;
 }
 
@@ -249,12 +232,6 @@ int InputManager::getButtonCountByDevice(SDL_JoystickID id)
 {
     if (id == DEVICE_KEYBOARD)
         return -1;
-    else if (id == DEVICE_CEC)
-#if defined(HAVE_CECLIB)
-        return CEC::CEC_USER_CONTROL_CODE_MAX;
-#else
-        return 0;
-#endif
     else
         return SDL_JoystickNumButtons(mJoysticks[id]);
 }
@@ -267,8 +244,6 @@ std::string InputManager::getDeviceGUIDString(int deviceId)
     else if (deviceId == DEVICE_TOUCH)
         return TOUCH_GUID_STRING;
 #endif
-    else if (deviceId == DEVICE_CEC)
-        return CEC_GUID_STRING;
 
     auto it = mJoysticks.find(deviceId);
     if (it == mJoysticks.cend()) {
@@ -290,8 +265,6 @@ InputConfig* InputManager::getInputConfigByDevice(int device)
     else if (device == DEVICE_TOUCH)
         return mTouchInputConfig.get();
 #endif
-    else if (device == DEVICE_CEC)
-        return mCECInputConfig.get();
     else
         return mInputConfigs[device].get();
 }
@@ -538,15 +511,6 @@ bool InputManager::parseEvent(const SDL_Event& event)
             removeControllerByJoystickID(mWindow, event.cdevice.which);
             return false;
         }
-    }
-
-    if ((event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN)) ||
-        (event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONUP))) {
-        mWindow->input(getInputConfigByDevice(DEVICE_CEC),
-                       Input(DEVICE_CEC, TYPE_CEC_BUTTON, event.user.code,
-                             event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN),
-                             false));
-        return true;
     }
 
     return false;

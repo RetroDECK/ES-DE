@@ -237,7 +237,7 @@ GuiGameImporter::GuiGameImporter(std::string title, std::function<void()> update
         mRemoveEntries->getParent()
             ->getChild(mRemoveEntries->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
-#if defined(__linux__) || defined(__FreeBSD__)
+#if (defined(__linux__) || defined(__FreeBSD__)) && !defined(__ANDROID__)
         mStripSpecialChars->setEnabled(false);
         mStripSpecialChars->setOpacity(DISABLED_OPACITY);
         mStripSpecialChars->getParent()
@@ -806,7 +806,7 @@ void GuiGameImporter::fileRule(std::pair<const std::string, ImportRules::ImportR
 #if defined(_WIN64)
                 if (Utils::FileSystem::getFileName(file) == "ES-DE.lnk")
                     continue;
-#elif defined(__linux__) || defined(__FreeBSD__)
+#elif (defined(__linux__) || defined(__FreeBSD__)) && !defined(__ANDROID__)
                 if (Utils::FileSystem::getFileName(file) == "org.es_de.frontend.desktop")
                     continue;
 #endif
@@ -960,7 +960,6 @@ void GuiGameImporter::desktopshortcutRule(
                 std::string targetFile;
                 bool usedNameEntry {false};
 
-#if defined(__linux__) || defined(__FreeBSD__)
                 if (nameEntry != "") {
                     if (mStripSpecialChars->getState()) {
                         // Remove characters that are not allowed in filenames on FAT-based
@@ -981,7 +980,6 @@ void GuiGameImporter::desktopshortcutRule(
                         nameEntry = Utils::String::replace(nameEntry, "\\", "");
                     }
                 }
-#endif
 
                 if (validFile && nameEntry.length() > 5) {
                     targetFile = nameEntry.substr(5, nameEntry.length()) + ".desktop";

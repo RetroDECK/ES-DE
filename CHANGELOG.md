@@ -1,5 +1,118 @@
 # ES-DE Frontend - Changelog
 
+## Version 3.4.1 / 3.4.1-xx (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+* (Linux) Added initial support for the ARM64/AArch64 architecture (including its own set of find rules, import rules and system configuration)
+* (Android) Changed all RetroArch emulator entries to use %INTERNALDATA% and %EXTERNALDATA% to support multi-user setups
+* (Android) Added support for using the "Launch games on the other screen" option on devices where both screens have the same display name
+* Added translations for Vietnamese (vi_VN)
+* Added North America as an additional ScreenScraper region
+* Added scraper-start and scraper-end custom events for the multi-scraper
+* (Android) Added support for the Namco-Sega-Nintendo Triforce (triforce) system using the Dolphin RetroArch core
+* (Android) Added support for the Microsoft Xbox (xbox) system using the X1 BOX emulator
+* (Android) Added hakuX standalone as an alternative emulator for the xbox system
+* (Android) Added support for the Microsoft Xbox 360 (xbox360) system using the aX360e emulator
+* (Android) Added SUPER3 standalone as the default emulator for the model3 system
+* (Android) Added PICO-8 standalone as the default emulator for the pico8 system
+* (Android) Added aPS3e Game Serial, aPS3e Directory and aPS3e ISO standalone as alternative emulators for the consolearcade system
+* (Android) Added GameNative standalone as an alternative emulator for the epic system
+* (Android) Added idTech4A++ standalone as an alternative emulator for the doom, ports and quake systems
+* (Android) Added the Boom 3 RetroArch core as an alternative emulator for the doom system
+* (Android) Changed the launch command for GameNative for the steam system to make launching work with their new behavior
+* (Android) Added GameNative emulator entries for Steam, Epic, GOG and Custom games for the windows system
+* (Android) Removed the generic GameNative emulator entry from the windows system
+* (Android) Made it possible to run both Steam games and locally installed games using the GameHub Lite emulator entry
+* (Android) Added a find rule entry for the new package name for Azahar
+* (Android) Added a find rule entry for the new package name for future GameHub Lite releases
+* (Android) Added a find rule entry for the MelonDualDS fork of melonDS
+* (Android) Added a find rule entry for the GL build of Visual Pinball
+* (Android) Set the official Vita3K release as the primary find rule entry instead of the Vita3K ZX fork
+* (Android) Changed Pizza Boy GBC/C to use %ROMSAF% instead of %ROM% as the developer has changed the way games are launched from frontends
+* (Android) Added the .idtech file extension to the doom, ports and quake systems
+* (Android) Added the .ps3 file extension to the consolearcade system
+* (Android) Added the .pk4 file extension to the doom system
+* (Android) Added the .epic and .pcgame file extensions to the epic system
+* (Android) Added the .pcgame file extension to the steam system
+* (Android) Added the .epic, .gog and .pcgame file extensions to the windows system
+* (Android) Added support for escaping forward slashes in %EXTRA% and %EXTRAARRAY% variable definitions
+* (Linux) Added UMU standalone as an alternative emulator for the pcarcade and type-x systems
+* (Linux) Added Plastic standalone as an alternative emulator for the famicom and nes systems
+* (Linux) Added support for the manually downloaded release of FS-UAE Launcher
+* (Linux) Added support for the Flatpak release of EasyRPG Player
+* (Linux) Added support for the Flatpak release of VBA-M
+* (Linux) Added support for the Flatpak release of Ymir
+* (Linux) Added support for the repository/AUR release of azahar
+* (Linux) Added systempath find rules for xenia and xenia_canary
+* (Linux) Added staticpath find rules for the new pkgforge-dev AppImage filename for xenia canary
+* (Linux) Added staticpath find rules for the new official xenia canary AppImage
+* Added the ClownMDEmu RetroArch core as an alternative emulator for the genesis, megacd, megacdjp, megadrive, megadrivejp and segacd systems
+* Added the SkyEmu RetroArch core as an alternative emulator for the gb, gba, gbc and nds systems
+* Added the AmiArcadia RetroArch core as the default emulator for the arcadia system
+* Added the JollyCV RetroArch core as an alternative emulator for the colecovision system
+* Added the Dolphin RetroArch core as an alternative emulator for the consolearcade system
+* Added the JollyCV RetroArch core as the default emulator for the crvision system
+* Added the Dolphin RetroArch core as the default emulator for the triforce system on Linux and Windows
+* Added Dolphin standalone as an alternative emulator for the triforce system
+* Added the Mini vMac RetroArch core as an alternative emulator for the macintosh system
+* Added the Azahar RetroArch core as the default emulator for the n3ds system
+* Added the Craft (Minecraft) RetroArch core as an alternative emulator for the ports system
+* Added a popular standalone emulator as the default emulator for the switch system
+* Added Geargrafx standalone as an alternative emulator for the pcengine, pcenginecd, supergrafx, tg16 and tg-cd systems on Linux, macOS and Windows
+* Added the Geargrafx RetroArch core as an alternative emulator for the pcenginecd and tg-cd systems
+* Added the Gearlynx RetroArch core as an alternative emulator for the atarilynx system
+* Added RPCS3 ISO standalone as an alternative emulator for the consolearcade and ps3 systems on Linux, macOS and Windows
+* Added Dolphin standalone as an alternative emulator for the consolearcade system
+* Added Mesen standalone as an alternative emulator for the gba system on Linux and Windows
+* Added a j2me platform to the j2me system so that these games can be scraped using TheGamesDB
+* Added KEGS standalone as an alternative emulator for the apple2gs system on Linux, macOS and Windows
+* Changed the launch parameter for EasyRPG Player standalone on Linux, macOS and Windows to support zipped games
+* Added the .bigpimg file extension to the atarijaguar and atarijaguarcd systems on Linux and Windows
+* Added the .gbx file extension to the gb, gba and gbc systems
+* Added the .7z and .zip file extensions to the apple2 and wasm systems
+* Added the .tvc file extension to the arcadia system
+* Added the .iso file extension to the ps3 system
+* Added the .myv file extension to the colecovision system
+* Added the .img file extension to the macintosh system
+* Added the .xiso file extension to the xbox system
+* (macOS) Added support for the OpenBOR Game Engine (openbor) system
+* (macOS) Added support for the Namco-Sega-Nintendo Triforce (triforce) system using the Dolphin RetroArch core
+* (macOS) Added support for the Microsoft Xbox 360 (xbox360) system using the XeniOS emulator
+* (macOS) Added the YabaSanshiro RetroArch core as an alternative emulator for the saturn and saturnjp systems
+* (macOS) Added the vitaQuake 3 RetroArch core as an alternative emulator for the quake system
+* (macOS) Added Mariani standalone as the default emulator for the apple2 system
+* (macOS) Added Supermodel standalone as the default emulator for the model3 system
+* (macOS) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
+* (Linux) Changed to building the AppImages using appimagetool-uruntime provided by the PkgForge project
+* (Linux) Changed the AppImage build scripts to use the bundled TLS/SSL certificates
+* (Linux) Added an AppImage build script for the AArch64 architecture
+* (Linux) Added RetroArch core find rule entries for NixOS and Nixpkgs
+* (linear-es-de) Updated the system metadata from the upstream system-metadata repository
+* (linear-es-de) Added an OLED color scheme (thanks c-fan for the patch)
+* The theme downloader will now use the bundled certificates on all platforms if built with the BUNDLED_CERTS option
+* Removed the obsolete and unsupported CEC functionality
+* Removed all specific configuration and code for the Raspberry Pi
+* Updated LunaSVG to commit b350c01cb09b48f1e894463dcb54d1b46d407162
+* (macOS) Updated Ogg to 1.3.6
+* (macOS) Removed obsolete entries for the Vorbis and Opus encoders from the build scripts
+* Updated the MAME index files to include ROMs up to MAME version 0.286
+* Bundled the February 2026 release of the Mozilla TLS/SSL certificates
+* (Windows) Updated OpenSSL to 3.6.1
+* Translation updates for all languages
+
+### Bug fixes
+
+* (Android) The game importer would crash if attempting to open it without any import rules defined
+* Custom event scripts would not run if the path to the application data directory contained spaces
+* Some SVG files would not render if they contained Windows-style line breaks
+* The apple2gs system had two lowercase .7z extensions instead of one in lowercase and one in uppercase
+* The logo for the Sinclair ZX Spectrum Next (zxnext) system was missing for the Linear and Slate themes
+
 ## Version 3.4.0 / 3.4.0-56
 
 **Release date:** 2025-11-07

@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0281.xml -->
+<!-- Last updated with information from MAME driver file mame0286.xml -->
 <bios>3dobios</bios>
 <bios>airlbios</bios>
 <bios>aleck64</bios>
@@ -78,11 +78,13 @@
 <bios>sfcbox</bios>
 <bios>shtzone</bios>
 <bios>skns</bios>
+<bios>slvrball</bios>
 <bios>stvbios</bios>
 <bios>su2000</bios>
 <bios>sys246</bios>
 <bios>sys256</bios>
 <bios>sys573</bios>
+<bios>systemy2</bios>
 <bios>taitofx1</bios>
 <bios>taitogn</bios>
 <bios>taitotz</bios>
