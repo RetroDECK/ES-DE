@@ -966,6 +966,7 @@ The following manually downloaded emulators are supported when using the bundled
 | nes/famicon                                   | 3dSen                 | 3dSen/3dSen.exe                              |
 | oric                                          | Oricutron             | oricutron/Oricutron                          |
 | pc88                                          | QUASI88               | quasi88/quasi88                              |
+| pcarcade/type-x                               | UMU                   | umu/umu-run                                  |
 | pcengine/pcenginecd/supergrafx/tg16/tg-cd     | Geargrafx             | geargrafx/geargrafx                          |
 | pico8                                         | PICO-8                | pico-8/pico8                                 |
 | ps4                                           | shadPS4               | shadps4/shadps4                              |

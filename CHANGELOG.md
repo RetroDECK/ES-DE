@@ -1,10 +1,20 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.4.1 / 3.4.1-xx (in development)
+## Version 3.4.1 / 3.4.1-58 (in development)
 
 **Release date:** TBD
 
 ### Release overview
+
+This release adds official (although experimental) support for Linux on AArch64, which is aiming for operating systems such as the upcoming SteamOS release for ARM. It also adds support for a lot of new emulators across all the main supported operating systems.
+
+For Android specifically there are multiple new systems enabled, those being Namco-Sega-Nintendo Triforce (triforce), Microsoft Xbox (xbox) and Microsoft Xbox 360 (xbox360). And although the Sega Model 3 (model3) system was technically supported in the previous release, it wasn't really very usable in practice due to only MAME being available for these games, but now this system is also fully usable due to the new SUPER3 emulator. Support for multi-user setups has also been fully rolled out for all RetroArch cores as of this release, meaning ES-DE should now work correctly in Android multi-user environments.
+
+On macOS three new systems have been enabled as well, those being OpenBOR Game Engine (openbor), Namco-Sega-Nintendo Triforce (triforce) and Microsoft Xbox 360 (xbox360).
+
+As for general cross-platform topics, a new language has been added, which is Vietnamese. There are also a couple of general bug fixes and translation updates as well as some dependency library updates. There are also quite a number of new RetroArch cores supported for many systems, see below for all details.
+
+Under the hood the remaining ancient Raspberry Pi specific code and configuration has now been fully removed, meaning there is no longer any device-specific code or configuration whatsoever in ES-DE and everything is instead completely generalized.
 
 ### Detailed list of changes
 
