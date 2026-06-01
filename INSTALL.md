@@ -43,8 +43,8 @@ sudo dnf install gcc-c++ clang-tools-extra cmake gettext harfbuzz-devel libicu-d
 
 Sometimes FFmpeg refuses to install, and in this case you may need to run the following as well:
 ```
-dnf remove ffmpeg-free
-dnf install --allowerasing ffmpeg-devel
+sudo dnf remove ffmpeg-free
+sudo dnf install --allowerasing ffmpeg-devel
 ```
 
 ### Arch/Manjaro

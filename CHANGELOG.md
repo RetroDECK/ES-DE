@@ -9,6 +9,7 @@
 ### Detailed list of changes
 
 * Added translations for Czech (cs_CZ)
+* Added a "Y" button shortcut to the game importer selection screen
 * Added a SplashScreenProgressBarColor option that can be manually set in es_settings.xml to customize the splash screen progress bar color
 * Changed the ScreenScraper platform ID for the j2me system to scrape J2ME instead of Android
 * Added "itemLinearScale" and "itemLinearSpacing" properties to the carousel element
@@ -22,6 +23,7 @@
 * (Linux) Added support for parsing the Path key in .desktop shortcut files
 * (Linux) Added ~/AppImages/ as an additional search path for all AppImages
 * Added the .a0, .b0 and .rom file extensions to the vic20 system
+* Added the .dsi and .ids file extensions to the nds system
 * (Windows) Updated OpenSSL to 4.0.0 and curl to 8.19.0
 
 ### Bug fixes
