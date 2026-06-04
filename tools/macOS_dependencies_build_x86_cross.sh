@@ -91,15 +91,15 @@ ICU_DATA_FILTER_FILE=icu_filters.json CXXFLAGS="-arch x86_64 -DUCONFIG_NO_COLLAT
 make clean
 make -j${JOBS}
 cd lib
-install_name_tool -id "@rpath/libicudata.77.dylib" libicudata.77.1.dylib
-install_name_tool -id "@rpath/libicui18n.77.dylib" libicui18n.77.1.dylib
-install_name_tool -change $(otool -L libicui18n.77.1.dylib | grep libicuuc | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicuuc.77.dylib libicui18n.77.1.dylib
-install_name_tool -change $(otool -L libicui18n.77.1.dylib | grep libicudata | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicudata.77.dylib libicui18n.77.1.dylib
-install_name_tool -id "@rpath/libicuuc.77.dylib" libicuuc.77.1.dylib
-install_name_tool -change $(otool -L libicuuc.77.1.dylib | grep libicudata | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicudata.77.dylib libicuuc.77.1.dylib
-cp libicudata.77.1.dylib ../../../../../libicudata.77.dylib
-cp libicui18n.77.1.dylib ../../../../../libicui18n.77.dylib
-cp libicuuc.77.1.dylib ../../../../../libicuuc.77.dylib
+install_name_tool -id "@rpath/libicudata.78.dylib" libicudata.78.3.dylib
+install_name_tool -id "@rpath/libicui18n.78.dylib" libicui18n.78.3.dylib
+install_name_tool -change $(otool -L libicui18n.78.3.dylib | grep libicuuc | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicuuc.78.dylib libicui18n.78.3.dylib
+install_name_tool -change $(otool -L libicui18n.78.3.dylib | grep libicudata | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicudata.78.dylib libicui18n.78.3.dylib
+install_name_tool -id "@rpath/libicuuc.78.dylib" libicuuc.78.3.dylib
+install_name_tool -change $(otool -L libicuuc.78.3.dylib | grep libicudata | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libicudata.78.dylib libicuuc.78.3.dylib
+cp libicudata.78.3.dylib ../../../../../libicudata.78.dylib
+cp libicui18n.78.3.dylib ../../../../../libicui18n.78.dylib
+cp libicuuc.78.3.dylib ../../../../../libicuuc.78.dylib
 cd ../../../../
 
 echo
@@ -144,10 +144,10 @@ fi
 
 cd freetype/build
 rm -f CMakeCache.txt
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=on -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_PREFIX_PATH=$(pwd)/../../local_install -DCMAKE_INSTALL_PREFIX=$(pwd)/../../local_install -S .. -B .
+cmake -DCMAKE_BUILD_TYPE=Release -DFT_REQUIRE_HARFBUZZ=off -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_PREFIX_PATH=$(pwd)/../../local_install -DCMAKE_INSTALL_PREFIX=$(pwd)/../../local_install -S .. -B .
 make clean
 make -j${JOBS}
-cp libfreetype.6.20.2.dylib ../../../libfreetype.6.dylib
+cp libfreetype.6.20.6.dylib ../../../libfreetype.6.dylib
 cd ../..
 
 echo
@@ -221,7 +221,7 @@ cmake -DCMAKE_BUILD_TYPE=Release -Dtiff-tools=off -Dtiff-tests=off -Dtiff-contri
 make clean
 make -j${JOBS}
 make install
-cp libtiff/libtiff.6.1.0.dylib ../../../libtiff.6.dylib
+cp libtiff/libtiff.6.2.0.dylib ../../../libtiff.6.dylib
 cd ../..
 
 echo
@@ -258,11 +258,11 @@ make clean
 make -j${JOBS}
 
 # This will fail if there are spaces in the build path.
-install_name_tool -change $(otool -L libpoppler.148.dylib | grep libfreetype | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libfreetype.6.dylib libpoppler.148.dylib
-install_name_tool -change $(otool -L libpoppler.148.dylib | grep libfontconfig | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libfontconfig.1.dylib libpoppler.148.dylib
+install_name_tool -change $(otool -L libpoppler.161.dylib | grep libfreetype | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libfreetype.6.dylib libpoppler.161.dylib
+install_name_tool -change $(otool -L libpoppler.161.dylib | grep libfontconfig | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libfontconfig.1.dylib libpoppler.161.dylib
 
-cp libpoppler.148.0.0.dylib ../../../libpoppler.148.dylib
-cp cpp/libpoppler-cpp.2.1.0.dylib ../../../libpoppler-cpp.2.dylib
+cp libpoppler.161.0.0.dylib ../../../libpoppler.161.dylib
+cp cpp/libpoppler-cpp.3.0.0.dylib ../../../libpoppler-cpp.3.dylib
 cd ../..
 
 echo
@@ -296,7 +296,7 @@ rm -f CMakeCache.txt
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF ..
 make clean
 make -j${JOBS}
-cp libgit2.1.9.1.dylib ../../../libgit2.1.9.dylib
+cp libgit2.1.9.4.dylib ../../../libgit2.1.9.dylib
 cd ../..
 
 echo
@@ -395,27 +395,26 @@ if [ ! -d FFmpeg ]; then
 fi
 
 cd FFmpeg
-PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig ./configure --arch=x86_64-apple-darwin --cpu=x86_64 --prefix=/usr/local --enable-rpath --install-name-dir=@rpath --disable-doc --disable-lzma --enable-gpl --enable-shared --enable-libdav1d --enable-postproc
+PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig ./configure --arch=x86_64-apple-darwin --cpu=x86_64 --prefix=/usr/local --enable-rpath --install-name-dir=@rpath --disable-doc --disable-lzma --enable-gpl --enable-shared --enable-libdav1d
 
 make clean
 make -j${JOBS}
-install_name_tool -rpath /usr/local/lib @executable_path libavcodec/libavcodec.61.dylib
-install_name_tool -change $(otool -L libavcodec/libavcodec.61.dylib | grep libdav1d | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libdav1d.7.dylib libavcodec/libavcodec.61.dylib
-cp libavcodec/libavcodec.61.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libavfilter/libavfilter.10.dylib
-install_name_tool -change $(otool -L libavfilter/libavfilter.10.dylib | grep libdav1d | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libdav1d.7.dylib libavfilter/libavfilter.10.dylib
-cp libavfilter/libavfilter.10.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libavformat/libavformat.61.dylib
-install_name_tool -change $(otool -L libavformat/libavformat.61.dylib | grep libdav1d | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libdav1d.7.dylib libavformat/libavformat.61.dylib
-cp libavformat/libavformat.61.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libavutil/libavutil.59.dylib
-cp libavutil/libavutil.59.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libpostproc/libpostproc.58.dylib
-cp libpostproc/libpostproc.58.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libswresample/libswresample.5.dylib
-cp libswresample/libswresample.5.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libswscale/libswscale.8.dylib
-cp libswscale/libswscale.8.dylib ../..
+
+install_name_tool -rpath /usr/local/lib @executable_path libavcodec/libavcodec.62.dylib
+install_name_tool -change $(otool -L libavcodec/libavcodec.62.dylib | grep libdav1d | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libdav1d.7.dylib libavcodec/libavcodec.62.dylib
+cp libavcodec/libavcodec.62.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libavfilter/libavfilter.11.dylib
+install_name_tool -change $(otool -L libavfilter/libavfilter.11.dylib | grep libdav1d | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libdav1d.7.dylib libavfilter/libavfilter.11.dylib
+cp libavfilter/libavfilter.11.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libavformat/libavformat.62.dylib
+install_name_tool -change $(otool -L libavformat/libavformat.62.dylib | grep libdav1d | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libdav1d.7.dylib libavformat/libavformat.62.dylib
+cp libavformat/libavformat.62.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libavutil/libavutil.60.dylib
+cp libavutil/libavutil.60.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libswresample/libswresample.6.dylib
+cp libswresample/libswresample.6.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libswscale/libswscale.9.dylib
+cp libswscale/libswscale.9.dylib ../..
 
 unset PKG_CONFIG_PATH
 
