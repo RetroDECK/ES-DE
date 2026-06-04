@@ -239,7 +239,7 @@ PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig cmake -DCMAKE_BUILD_TYPE=R
 make clean
 make -j${JOBS}
 make install
-cp bin/libopenjp2.2.5.3.dylib ../../../libopenjp2.7.dylib
+cp bin/libopenjp2.2.5.4.dylib ../../../libopenjp2.7.dylib
 cd ../..
 
 echo
