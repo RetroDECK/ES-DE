@@ -42,8 +42,8 @@ if exist gettext\ (
 mkdir gettext
 cd gettext
 
-curl -LO https://github.com/vslavik/gettext-tools-windows/releases/download/v0.23.1/gettext-tools-windows-0.23.1.zip
-7z x gettext-tools-windows-0.23.1.zip
+curl -LO https://github.com/vslavik/gettext-tools-windows/releases/download/v0.26/gettext-tools-windows-0.26.zip
+7z x gettext-tools-windows-0.26.zip
 
 if not exist bin\msgfmt.exe (
   echo msgfmt.exe is missing, aborting.
@@ -85,35 +85,36 @@ if not exist icu\ (
 
 cd icu
 git sparse-checkout set --no-cone icu4c
-git checkout release-77-1
+git checkout release-78.3
 copy /Y ..\..\es-app\assets\icu_filters.json icu4c\source\
 cd ..
 
 echo:
 echo Setting up curl
 
-if exist curl-8.19.0_7-win64-mingw\ (
-  rmdir /S /Q curl-8.19.0_7-win64-mingw
+if exist curl-8.20.0_5-win64-mingw\ (
+  rmdir /S /Q curl-8.20.0_5-win64-mingw
 )
 
 if exist curl\ (
   rmdir /S /Q curl
 )
 
-if exist curl-8.19.0_7-win64-mingw.zip (
-  del curl-8.19.0_7-win64-mingw.zip
+if exist curl-8.20.0_5-win64-mingw.zip (
+  del curl-8.20.0_5-win64-mingw.zip
 )
 
-curl -O https://curl.se/windows/dl-8.19.0_7/curl-8.19.0_7-win64-mingw.zip
-7z x curl-8.19.0_7-win64-mingw.zip
+curl -O https://curl.se/windows/dl-8.20.0_5/curl-8.20.0_5-win64-mingw.zip
 
-if not exist curl-8.19.0_7-win64-mingw\bin\ (
+7z x curl-8.20.0_5-win64-mingw.zip
+
+if not exist curl-8.20.0_5-win64-mingw\bin\ (
   echo curl directory is missing, aborting.
   cd ..
   goto end
 )
 
-rename curl-8.19.0_7-win64-mingw curl
+rename curl-8.20.0_5-win64-mingw curl
 
 cd curl\bin
 
@@ -130,28 +131,28 @@ cd ..\..
 echo:
 echo Setting up GLEW
 
-if exist glew-2.2.0\ (
-  rmdir /S /Q glew-2.2.0
+if exist glew-2.3.1\ (
+  rmdir /S /Q glew-2.3.1
 )
 
 if exist glew\ (
   rmdir /S /Q glew
 )
 
-if exist glew-2.2.0-win32.zip (
-  del glew-2.2.0-win32.zip
+if exist glew-2.3.1-win32.zip (
+  del glew-2.3.1-win32.zip
 )
 
-curl -LO https://downloads.sourceforge.net/project/glew/glew/2.2.0/glew-2.2.0-win32.zip
-7z x glew-2.2.0-win32.zip
+curl -LO https://downloads.sourceforge.net/project/glew/glew/2.3.1/glew-2.3.1-win32.zip
+7z x glew-2.3.1-win32.zip
 
-if not exist glew-2.2.0\ (
+if not exist glew-2.3.1\ (
   echo GLEW directory is missing, aborting.
   cd ..
   goto end
 )
 
-rename glew-2.2.0 glew
+rename glew-2.3.1 glew
 
 copy /Y glew\bin\Release\x64\glew32.dll ..
 copy /Y glew\lib\Release\x64\glew32.lib ..
@@ -172,7 +173,7 @@ if not exist harfbuzz\ (
 )
 
 cd harfbuzz
-git checkout 11.0.1
+git checkout 14.2.1
 mkdir build
 cd ..
 
@@ -192,7 +193,7 @@ if not exist freetype\ (
 )
 
 cd freetype
-git checkout VER-2-13-3
+git checkout VER-2-14-3
 mkdir build
 cd ..
 
@@ -235,7 +236,7 @@ if not exist libgit2\ (
 )
 
 cd libgit2
-git checkout v1.9.1
+git checkout v1.9.4
 mkdir build
 cd ..
 
@@ -250,20 +251,20 @@ if exist poppler\ (
   rmdir /S /Q poppler
 )
 
-if exist Release-24.08.0-0.zip (
-  del Release-24.08.0-0.zip
+if exist Release-26.02.0-0.zip (
+  del Release-26.02.0-0.zip
 )
 
-curl -LO https://github.com/oschwartz10612/poppler-windows/releases/download/v24.08.0-0/Release-24.08.0-0.zip
-7z x Release-24.08.0-0.zip
+curl -LO https://github.com/oschwartz10612/poppler-windows/releases/download/v26.02.0-0/Release-26.02.0-0.zip
+7z x Release-26.02.0-0.zip
 
-if not exist poppler-24.08.0\Library\ (
+if not exist poppler-26.02.0\Library\ (
   echo Poppler directory is missing, aborting.
   cd ..
   goto end
 )
 
-rename poppler-24.08.0 poppler
+rename poppler-26.02.0 poppler
 
 copy /Y poppler\Library\lib\poppler-cpp.lib ..\es-pdf-converter
 copy /Y poppler\Library\bin\charset.dll ..\es-pdf-converter
@@ -341,38 +342,34 @@ copy /Y SDL2\lib\x64\SDL2main.lib ..
 echo:
 echo Setting up FFmpeg
 
-if exist ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0\ (
-  rmdir /S /Q ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0
-)
-
 if exist ffmpeg\ (
   rmdir /S /Q ffmpeg
 )
 
-if exist ffmpeg-n7.1-214-g71889a8437-win64-gpl-shared-7.1.zip (
-  del ffmpeg-n7.1-214-g71889a8437-win64-gpl-shared-7.1.zip
+if exist ffmpeg-n8.1.1-9-g58d4114d36-win64-gpl-shared-8.1.zip (
+  del ffmpeg-n8.1.1-9-g58d4114d36-win64-gpl-shared-8.1.zip
 )
 
 :: This package should be available for download for two years.
-curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2025-02-28-13-02/ffmpeg-n7.1-214-g71889a8437-win64-gpl-shared-7.1.zip
+curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-05-31-13-22/ffmpeg-n8.1.1-9-g58d4114d36-win64-gpl-shared-8.1.zip
 
-7z x ffmpeg-n7.1-214-g71889a8437-win64-gpl-shared-7.1.zip
+7z x ffmpeg-n8.1.1-9-g58d4114d36-win64-gpl-shared-8.1.zip
 
-if not exist ffmpeg-n7.1-214-g71889a8437-win64-gpl-shared-7.1\ (
+if not exist ffmpeg-n8.1.1-9-g58d4114d36-win64-gpl-shared-8.1\ (
   echo FFmpeg directory is missing, aborting.
   cd ..
   goto end
 )
 
-rename ffmpeg-n7.1-214-g71889a8437-win64-gpl-shared-7.1 ffmpeg
+rename ffmpeg-n8.1.1-9-g58d4114d36-win64-gpl-shared-8.1 ffmpeg
 
-copy /Y ffmpeg\bin\avcodec-61.dll ..
-copy /Y ffmpeg\bin\avfilter-10.dll ..
-copy /Y ffmpeg\bin\avformat-61.dll ..
-copy /Y ffmpeg\bin\avutil-59.dll ..
-copy /Y ffmpeg\bin\postproc-58.dll ..
-copy /Y ffmpeg\bin\swresample-5.dll ..
-copy /Y ffmpeg\bin\swscale-8.dll ..
+copy /Y ffmpeg\bin\avcodec-62.dll ..
+copy /Y ffmpeg\bin\avfilter-11.dll ..
+copy /Y ffmpeg\bin\avformat-62.dll ..
+copy /Y ffmpeg\bin\avutil-60.dll ..
+copy /Y ffmpeg\bin\postproc-59.dll ..
+copy /Y ffmpeg\bin\swresample-6.dll ..
+copy /Y ffmpeg\bin\swscale-9.dll ..
 copy /Y ffmpeg\lib\avcodec.lib ..
 copy /Y ffmpeg\lib\avfilter.lib ..
 copy /Y ffmpeg\lib\avformat.lib ..
