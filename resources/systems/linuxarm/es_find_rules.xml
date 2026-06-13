@@ -157,6 +157,11 @@
             <entry>org.DolphinEmu.dolphin-emu</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/AppImages/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/.local/share/applications/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/.local/bin/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/bin/Dolphin_Emulator*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
         </rule>
