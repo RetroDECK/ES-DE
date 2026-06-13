@@ -849,7 +849,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | xbox360              | xenia               | Xenia_Canary*.AppImage         | pkgforge-dev         |
 | xbox360              | xenia               | xenia-canary*.AppImage         | pkgforge-dev         |
 | xbox360              | Xenia Edge          | xenia_edge*.AppImage           | Official             |
-| wii                  | Dolphin             | Dolphin_Emulator*.AppImage     | Official             |
+| wii                  | Dolphin             | Dolphin_Emulator*.AppImage     | pkgforge-dev         |
 | wiiu                 | Cemu                | Cemu*.AppImage                 | Official             |
 | zmachine             | Gargoyle            | Gargoyle*.AppImage             | Official             |
 

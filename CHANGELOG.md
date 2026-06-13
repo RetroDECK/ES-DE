@@ -20,6 +20,7 @@
 * (Android) Added EmuCoreX standalone as an alternative emulator for the ps2 system
 * (Android) Added EmuCoreV standalone as an alternative emulator for the psvita system
 * (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
+* (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin
 * (Linux) Added support for parsing the Path key in .desktop shortcut files
 * (Linux) Added ~/AppImages/ as an additional search path for all AppImages
 * Added the .a0, .b0 and .rom file extensions to the vic20 system

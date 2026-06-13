@@ -848,13 +848,13 @@ The following emulators are supported in AppImage format when using the bundled 
 | snes                 | Snes9x              | Snes9x*.AppImage               | Official             |
 | switch               | Eden                | Eden*.AppImage                 | Official             |
 | switch               | Ryujinx             | \*yujinx\*.AppImage            | Community            |
+| wii                  | Dolphin             | Dolphin_Emulator*.AppImage     | pkgforge-dev         |
+| wiiu                 | Cemu                | Cemu*.AppImage                 | Official             |
 | xbox                 | xemu                | xemu*.AppImage                 | Official             |
 | xbox360              | xenia               | xenia_canary*.AppImage         | Official             |
 | xbox360              | xenia               | Xenia_Canary*.AppImage         | pkgforge-dev         |
 | xbox360              | xenia               | xenia-canary*.AppImage         | pkgforge-dev         |
 | xbox360              | Xenia Edge          | xenia_edge*.AppImage           | Official             |
-| wii                  | Dolphin             | Dolphin_Emulator*.AppImage     | Official             |
-| wiiu                 | Cemu                | Cemu*.AppImage                 | Official             |
 | zmachine             | Gargoyle            | Gargoyle*.AppImage             | Official             |
 
 The following emulators are supported in AppImage format when using the bundled configuration on **aarch64**:
@@ -864,6 +864,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | _Multiple_           | ares                | ares*.AppImage                 | pkgforge-dev         |
 | _Multiple_           | MAME                | MAME*.AppImage                 | pkgforge-dev         |
 | gba                  | mGBA                | mGBA*.AppImage                 | Official             |
+| gc                   | Dolphin             | Dolphin_Emulator*.AppImage     | pkgforge-dev         |
 | model3               | Supermodel          | Supermodel*.AppImage           | pkgforge-dev         |
 | n3ds                 | Azahar              | Azahar-Enhanced*.AppImage      | pkgforge-dev         |
 | nds                  | DeSmuME             | desmume*.AppImage              | pkgforge-dev         |
@@ -872,6 +873,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | psp                  | PPSSPP              | PPSSPP*.AppImage               | Official             |
 | psx                  | DuckStation         | DuckStation*.AppImage          | Official             |
 | switch               | Eden                | Eden*.AppImage                 | Official             |
+| wii                  | Dolphin             | Dolphin_Emulator*.AppImage     | pkgforge-dev         |
 | xbox                 | xemu                | xemu*.AppImage                 | Official             |
 
 Most AppImages are distributed directly by the official projects, but there's also a good selection of AppImages available at https://github.com/pkgforge-dev which includes some emulators that don't ship AppImages themselves.
