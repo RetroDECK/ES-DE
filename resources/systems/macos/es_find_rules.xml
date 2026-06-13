@@ -51,6 +51,12 @@
             <entry>/Applications/ares.app/Contents/MacOS/ares</entry>
         </rule>
     </emulator>
+    <emulator name="ARMSX2">
+        <!-- Sony PlayStation 2 emulator ARMSX2 -->
+        <rule type="staticpath">
+            <entry>/Applications/ARMSX2.app/Contents/MacOS/ARMSX2</entry>
+        </rule>
+    </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="staticpath">
