@@ -506,6 +506,7 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
             <entry>%ESPATH%\..\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
+            <entry>%ESPATH%\Emulators\PCSX2\pcsx2-qt*.exe</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2-LEGACY">

@@ -116,6 +116,7 @@ Emulators\Panda3DS\Alber.exe
 Emulators\parallel-launcher\parallel-launcher.exe
 Emulators\PCSX2\pcsx2.exe
 Emulators\PCSX2-Qt\pcsx2-qt.exe
+Emulators\PCSX2\pcsx2-qt*.exe
 Emulators\PICO-8\pico8.exe
 Emulators\Play\Play.exe
 Emulators\PPSSPP\PPSSPPWindows64.exe
