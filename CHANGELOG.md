@@ -16,15 +16,20 @@
 * Added a "scaleFactor" property to the image element to allow for lower-resolution SVG rasterization
 * Added a "scaleFactor" property to the animation element to allow for lower-resolution Lottie animation rasterization
 * Added the IroGB RetroArch core as an alternative emulator for the gb and gbc systems
+* Added the MAME - Current RetroArch core as an alternative emulator for the neogeo system
 * Added SUPER ZSNES standalone as an alternative emulator for the sfc, snes and snesna systems on Linux, macOS and Windows
+* (Android) Added a find rule entry for the new package name for ARMSX2 Refresh
 * (Android) Added EmuCoreX standalone as an alternative emulator for the ps2 system
 * (Android) Added EmuCoreV standalone as an alternative emulator for the psvita system
 * (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
 * (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin
 * (Linux) Added support for parsing the Path key in .desktop shortcut files
 * (Linux) Added ~/AppImages/ as an additional search path for all AppImages
+* (macOS) Added ARMSX2 standalone as an alternative emulator for the ps2 system
+* (Windows) Added an additional find rule entry for PCSX2
 * Added the .a0, .b0 and .rom file extensions to the vic20 system
 * Added the .dsi and .ids file extensions to the nds system
+* The UTF8-CPP dependency is now only built on Android
 * (Android) Updated the build environment
 * (Android) Updated a number of Java and Kotlin dependencies
 * (Android) Updated libiconv to 1.19, gettext/libintl to 1.0, ICU to 78.3, libpng to 1.6.58 and libjpeg-turbo to 3.1.4.1

@@ -844,13 +844,13 @@ The following emulators are supported in AppImage format when using the bundled 
 | snes                 | Snes9x              | Snes9x*.AppImage               | Official             |
 | switch               | Eden                | Eden*.AppImage                 | Official             |
 | switch               | Ryujinx             | \*yujinx\*.AppImage            | Community            |
+| wii                  | Dolphin             | Dolphin_Emulator*.AppImage     | pkgforge-dev         |
+| wiiu                 | Cemu                | Cemu*.AppImage                 | Official             |
 | xbox                 | xemu                | xemu*.AppImage                 | Official             |
 | xbox360              | xenia               | xenia_canary*.AppImage         | Official             |
 | xbox360              | xenia               | Xenia_Canary*.AppImage         | pkgforge-dev         |
 | xbox360              | xenia               | xenia-canary*.AppImage         | pkgforge-dev         |
 | xbox360              | Xenia Edge          | xenia_edge*.AppImage           | Official             |
-| wii                  | Dolphin             | Dolphin_Emulator*.AppImage     | pkgforge-dev         |
-| wiiu                 | Cemu                | Cemu*.AppImage                 | Official             |
 | zmachine             | Gargoyle            | Gargoyle*.AppImage             | Official             |
 
 The following emulators are supported in AppImage format when using the bundled configuration on **aarch64**:

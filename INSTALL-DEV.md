@@ -2522,19 +2522,17 @@ First create the game start script, let's name it `set_resolution_1080p.sh` with
 
 ```
 #!/bin/sh
-xrandr -s 1920x1080
+kscreen-doctor output.HDMI-A-1.mode.1920x1080@60
 ```
 
 Then create the end script, which we'll name `set_resolution_4K.sh`:
 
 ```
 #!/bin/sh
-xrandr -s 3840x2160
-sleep 0.3
-xdotool search --class es-de windowactivate
+kscreen-doctor output.HDMI-A-1.mode.3840x2160@60
 ```
 
-The last two lines are optional, they're used to set the focus back to ES-DE in case you're running attention-seeking applications such as Kodi which may steal focus after resolution changes. You may need to adjust the sleep time to get this to work reliably though, as the timing may differ between different computers and graphics drivers.
+This is just an example and you will likely need to change the device name from HDMI-A-1 and perhaps also the refresh rate, depending on your setup.
 
 After creating the two scripts, you should have something like this on the filesystem:
 
