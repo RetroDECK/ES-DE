@@ -32,6 +32,7 @@
     <emulator name="ARMSX2">
         <!-- Sony PlayStation 2 emulator ARMSX2 -->
         <rule type="androidpackage">
+            <entry>com.armsx2/.MainActivity</entry>
             <entry>come.nanodata.armsx2/kr.co.iefriends.pcsx2.MainActivity</entry>
             <entry>come.nanodata.armsx2.debug/kr.co.iefriends.pcsx2.MainActivity</entry>
         </rule>
