@@ -307,6 +307,12 @@
             <entry>/Applications/PCSX2.app/Contents/MacOS/PCSX2</entry>
         </rule>
     </emulator>
+    <emulator name="PCSX2X6">
+        <!-- Namco System 246 and 256 emulator PCSX2x6 -->
+        <rule type="staticpath">
+            <entry>/Applications/PCSX2x6.app/Contents/MacOS/PCSX2</entry>
+        </rule>
+    </emulator>
     <emulator name="PICO-8">
         <!-- PICO-8 Fantasy Console (game engine) -->
         <rule type="staticpath">
