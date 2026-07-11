@@ -367,7 +367,6 @@ copy /Y ffmpeg\bin\avcodec-62.dll ..
 copy /Y ffmpeg\bin\avfilter-11.dll ..
 copy /Y ffmpeg\bin\avformat-62.dll ..
 copy /Y ffmpeg\bin\avutil-60.dll ..
-copy /Y ffmpeg\bin\postproc-59.dll ..
 copy /Y ffmpeg\bin\swresample-6.dll ..
 copy /Y ffmpeg\bin\swscale-9.dll ..
 copy /Y ffmpeg\lib\avcodec.lib ..
@@ -385,9 +384,9 @@ if exist Win64OpenSSL_Light-4_0_0.exe (
 )
 
 if not exist "C:\Program Files\OpenSSL-Win64\libcrypto-4-x64.dll" (
-  curl -O https://slproweb.com/download/Win64OpenSSL_Light-4_0_0.exe
+  curl -O https://slproweb.com/download/Win64OpenSSL_Light-4_0_1.exe
   :: Run the installer.
-  .\Win64OpenSSL_Light-4_0_0.exe
+  .\Win64OpenSSL_Light-4_0_1.exe
 )
 
 :: Return to the root of the repository.
