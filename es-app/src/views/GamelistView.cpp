@@ -317,7 +317,9 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mContainerTextComponents.back()->applyTheme(
                         theme, "gamelist", element.first,
                         ALL ^ POSITION ^ ORIGIN ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION);
-                    if (mContainerTextComponents.back()->getThemeMetadata() != "")
+                    if (mContainerTextComponents.back()->getThemeMetadata() != "" &&
+                        mContainerTextComponents.back()->getThemeMetadata() !=
+                            "customCollectionNameGames")
                         mContainerComponents.back()->setScrollHide(true);
                     else if (mContainerTextComponents.back()->getMetadataElement())
                         mContainerComponents.back()->setScrollHide(true);
@@ -727,8 +729,12 @@ void GamelistView::updateView(const CursorState& state)
         for (auto& rating : mRatingComponents)
             rating->setVisible(false);
         for (auto& cText : mContainerTextComponents) {
-            if (cText->getThemeMetadata() != "description" || cText->getMetadataElement())
+            if ((cText->getThemeMetadata() != "description" &&
+                 cText->getThemeMetadata() != "customCollectionNameGrouped" &&
+                 cText->getThemeMetadata() != "customCollectionNameGames") ||
+                cText->getMetadataElement()) {
                 cText->setVisible(false);
+            }
         }
     }
     else {
