@@ -958,7 +958,7 @@ namespace Utils
             if (parent != genericPath)
                 createDirectory(parent);
 
-                // Try to create directory again now that the parent should exist.
+            // Try to create directory again now that the parent should exist.
 
 #if defined(_WIN64)
             return (_wmkdir(Utils::String::stringToWideString(genericPath).c_str()) == 0);
