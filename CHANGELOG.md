@@ -15,6 +15,7 @@
 * Added "itemLinearScale" and "itemLinearSpacing" properties to the carousel element
 * Added a "scaleFactor" property to the image element to allow for lower-resolution SVG rasterization
 * Added a "scaleFactor" property to the animation element to allow for lower-resolution Lottie animation rasterization
+* Added support for "customCollectionNameGrouped" and "customCollectionNameGames" values to the text element metadata property
 * Added the IroGB RetroArch core as an alternative emulator for the gb and gbc systems
 * Added the MAME - Current RetroArch core as an alternative emulator for the neogeo system
 * Added SUPER ZSNES standalone as an alternative emulator for the sfc, snes and snesna systems on Linux, macOS and Windows
