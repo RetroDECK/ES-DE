@@ -201,6 +201,7 @@
         <command label="Stella">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/stella_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Stella 2014">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/stella2014_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Stella 2023">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/stella2023_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Tia">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/tia_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="2600.emu (Standalone)">%EMULATOR_2600-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>atari2600</platform>
         <theme>atari2600</theme>
