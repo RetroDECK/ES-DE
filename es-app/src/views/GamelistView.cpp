@@ -330,7 +330,8 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     const std::string& metadata {mTextComponents.back()->getThemeMetadata()};
                     if (metadata != "" && metadata != "systemName" &&
                         metadata != "systemFullname" && metadata != "sourceSystemName" &&
-                        metadata != "sourceSystemFullname")
+                        metadata != "sourceSystemFullname" &&
+                        metadata != "customCollectionNameGames")
                         mTextComponents.back()->setScrollHide(true);
                     else if (mTextComponents.back()->getMetadataElement())
                         mTextComponents.back()->setScrollHide(true);
@@ -698,7 +699,9 @@ void GamelistView::updateView(const CursorState& state)
                 (text->getThemeMetadata() != "" && text->getThemeMetadata() != "systemName" &&
                  text->getThemeMetadata() != "systemFullname" &&
                  text->getThemeMetadata() != "sourceSystemName" &&
-                 text->getThemeMetadata() != "sourceSystemFullname"))
+                 text->getThemeMetadata() != "sourceSystemFullname" &&
+                 text->getThemeMetadata() != "customCollectionNameGrouped" &&
+                 text->getThemeMetadata() != "customCollectionNameGames"))
                 text->setVisible(false);
         }
         for (auto& date : mDateTimeComponents)
@@ -1062,6 +1065,28 @@ void GamelistView::updateView(const CursorState& state)
                 return file->getSourceFileData()->getSystem()->getName();
             else if (metadata == "sourceSystemFullname")
                 return file->getSourceFileData()->getSystem()->getFullName();
+            else if (!file->getSystem()->isGroupedCustomCollection() &&
+                     metadata == "customCollectionNameGrouped")
+                return "";
+            else if (!file->getSystem()->isCustomCollection() &&
+                     metadata == "customCollectionNameGames")
+                return "";
+            else if (file->getSystem()->isGroupedCustomCollection() &&
+                     metadata == "customCollectionNameGrouped" &&
+                     file->getPath() != file->getSystem()->getName())
+                return "";
+            else if (file->getSystem()->isCustomCollection() &&
+                     metadata == "customCollectionNameGames" &&
+                     file->getPath() == file->getSystem()->getName())
+                return "";
+            else if (file->getSystem()->isGroupedCustomCollection() &&
+                     metadata == "customCollectionNameGrouped" &&
+                     file->getPath() == file->getSystem()->getName())
+                return file->getSystem()->getFullName();
+            else if (file->getSystem()->isCustomCollection() &&
+                     metadata == "customCollectionNameGames" &&
+                     file->getPath() != file->getSystem()->getName())
+                return file->getSystem()->getFullName();
             else
                 return metadata;
         };
