@@ -17,6 +17,7 @@
 * Added a "scaleFactor" property to the animation element to allow for lower-resolution Lottie animation rasterization
 * Added support for "customCollectionNameGrouped" and "customCollectionNameGames" values to the text element metadata property
 * Added the IroGB RetroArch core as an alternative emulator for the gb and gbc systems
+* Added the Tia RetroArch core as an alternative emulator for the atari2600 system
 * Added the MAME - Current RetroArch core as an alternative emulator for the neogeo system
 * Added SUPER ZSNES standalone as an alternative emulator for the sfc, snes and snesna systems on Linux, macOS and Windows
 * Added PCSX2x6 standalone as an alternative emulator for the arcade, consolearcade and mame systems on Linux, macOS and Windows
@@ -40,11 +41,11 @@
 * (Android) Updated a number of Java and Kotlin dependencies
 * (Android) Updated libiconv to 1.19, gettext/libintl to 1.0, ICU to 78.3, libpng to 1.6.58 and libjpeg-turbo to 3.1.4.1
 * (Android) Updated LibTIFF to 4.7.1, OpenJPEG to 2.5.4, HarfBuzz to 14.2.1, FreeType to 2.14.3 and Poppler to 26.06.0
-* (Android) Updated OpenSSL to 4.0.0, curl to 8.20.0 and libgit2 to 1.9.4
+* (Android) Updated OpenSSL to 4.0.1, curl to 8.20.0 and libgit2 to 1.9.4
 * (macOS) Updated libiconv to 1.19, gettext/libintl to 1.0, ICU to 78.3, libpng to 1.6.58 and libjpeg-turbo to 3.1.4.1
 * (macOS) Updated LibTIFF to 4.7.1, OpenJPEG to 2.5.4, HarfBuzz to 14.2.1, FreeType to 2.14.3 and Poppler to 26.06.0
 * (macOS) Updated libgit2 to 1.9.4, dav1d to 1.5.3 and FFmpeg to 8.1.1
-* (Windows) Updated gettext/libintl to 0.26, ICU to 78.3, OpenSSL to 4.0.0, curl to 8.20.0 and GLEW to 2.3.1
+* (Windows) Updated gettext/libintl to 0.26, ICU to 78.3, OpenSSL to 4.0.1, curl to 8.20.0 and GLEW to 2.3.1
 * (Windows) Updated HarfBuzz to 14.2.1, FreeType to 2.14.3, libgit2 to 1.9.4, Poppler to 26.02.0 and FFmpeg to 8.1.1
 
 ### Bug fixes
