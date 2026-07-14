@@ -100,6 +100,7 @@ Emulators\kegs\kegswin.exe
 Emulators\KEmulator\KEmulator.exe
 Emulators\kronos\kronos.exe
 Emulators\lime3ds\lime3ds.exe
+Emulators\linuxloader\linuxloader.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
 Emulators\mandarine\mandarine-qt.exe

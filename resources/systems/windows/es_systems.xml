@@ -146,7 +146,7 @@
         <name>arcade</name>
         <fullname>Arcade</fullname>
         <path>%ROMPATH%\arcade</path>
-        <extension>.acgame .arcadedef .bat .BAT .cmd .CMD .gam .GAM .lnk .LNK .neo .NEO .7z .7Z .zip .ZIP</extension>
+        <extension>.acgame .arcadedef .bat .BAT .cmd .CMD .gam .GAM .lindbergh .lnk .LNK .neo .NEO .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
@@ -166,6 +166,7 @@
         <command label="Model 2 Emulator [Suspend ES-DE] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%</command>
         <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="Supermodel Dojo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL-DOJO% %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="Linux Loader (Standalone)">%STARTDIR%=%GAMEENTRYDIR% %EMULATOR_LINUX-LOADER% %INJECT%=%BASENAME%\%BASENAME%.commands</command>
         <command label="PCSX2x6 (Standalone)">%EMULATOR_PCSX2X6% -batch %ROM%</command>
         <command label="Play! Arcade (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_PLAY!% --fullscreen --arcade %GAMEDIR%\%BASENAME%</command>
         <command label="MFME (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_MFME% %ROM%</command>
@@ -1038,7 +1039,7 @@
         <name>mame</name>
         <fullname>Multiple Arcade Machine Emulator</fullname>
         <path>%ROMPATH%\mame</path>
-        <extension>.acgame .arcadedef .bat .BAT .cmd .CMD .gam .GAM .lnk .LNK .neo .NEO .7z .7Z .zip .ZIP</extension>
+        <extension>.acgame .arcadedef .bat .BAT .cmd .CMD .gam .GAM .lindbergh .lnk .LNK .neo .NEO .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
@@ -1058,6 +1059,7 @@
         <command label="Model 2 Emulator [Suspend ES-DE] (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%</command>
         <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="Supermodel Dojo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL-DOJO% %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="Linux Loader (Standalone)">%STARTDIR%=%GAMEENTRYDIR% %EMULATOR_LINUX-LOADER% %INJECT%=%BASENAME%\%BASENAME%.commands</command>
         <command label="PCSX2x6 (Standalone)">%EMULATOR_PCSX2X6% -batch %ROM%</command>
         <command label="Play! Arcade (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_PLAY!% --fullscreen --arcade %GAMEDIR%\%BASENAME%</command>
         <command label="MFME (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_MFME% %ROM%</command>
@@ -1562,8 +1564,9 @@
         <name>pcarcade</name>
         <fullname>PC Arcade Systems</fullname>
         <path>%ROMPATH%\pcarcade</path>
-        <extension>.bat .BAT .lnk .LNK</extension>
+        <extension>.bat .BAT .lindbergh .lnk .LNK</extension>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="Linux Loader (Standalone)">%STARTDIR%=%GAMEENTRYDIR% %EMULATOR_LINUX-LOADER% %INJECT%=%BASENAME%\%BASENAME%.commands</command>
         <platform>arcade</platform>
         <theme>pcarcade</theme>
     </system>

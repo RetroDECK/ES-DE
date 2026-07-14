@@ -753,6 +753,23 @@
             <entry>~/.local/share/flatpak/exports/bin/com.github.lindberghloader</entry>
         </rule>
     </emulator>
+    <emulator name="LINUX-LOADER">
+        <!-- Sega Lindbergh emulator Linux Loader -->
+        <rule type="systempath">
+            <entry>linuxloader</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/linuxloader*.AppImage</entry>
+            <entry>~/AppImages/linuxloader*.AppImage</entry>
+            <entry>~/.local/share/applications/linuxloader*.AppImage</entry>
+            <entry>~/.local/bin/linuxloader*.AppImage</entry>
+            <entry>~/bin/linuxloader*.AppImage</entry>
+            <entry>~/Applications/linuxloader/linuxloader</entry>
+            <entry>~/.local/share/applications/linuxloader/linuxloader</entry>
+            <entry>~/.local/bin/linuxloader/linuxloader</entry>
+            <entry>~/bin/linuxloader/linuxloader</entry>
+        </rule>
+    </emulator>
     <emulator name="M2EMULATOR-WINDOWS">
         <!-- Sega Model 2 Emulator -->
         <rule type="staticpath">
