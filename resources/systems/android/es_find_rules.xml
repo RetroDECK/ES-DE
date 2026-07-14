@@ -207,6 +207,7 @@
             <entry>com.antutu.ABenchMark/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
             <entry>com.tencent.ig/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
             <entry>com.ludashi.aibench/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
+            <entry>com.antutu.benchmark.full/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
         </rule>
     </emulator>
     <emulator name="GAMENATIVE">
