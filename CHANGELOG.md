@@ -19,6 +19,7 @@
 * Added the IroGB RetroArch core as an alternative emulator for the gb and gbc systems
 * Added the Tia RetroArch core as an alternative emulator for the atari2600 system
 * Added the MAME - Current RetroArch core as an alternative emulator for the neogeo system
+* Added the HBMAME RetroArch core as an alternative emulator for the arcade and mame systems
 * Added SUPER ZSNES standalone as an alternative emulator for the sfc, snes and snesna systems on Linux, macOS and Windows
 * Added PCSX2x6 standalone as an alternative emulator for the arcade, consolearcade and mame systems on Linux, macOS and Windows
 * Added Linux Loader standalone as an alternative emulator for the arcade, mame and pcarcade systems on Linux and Windows
