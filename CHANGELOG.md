@@ -21,10 +21,13 @@
 * Added the MAME - Current RetroArch core as an alternative emulator for the neogeo system
 * Added SUPER ZSNES standalone as an alternative emulator for the sfc, snes and snesna systems on Linux, macOS and Windows
 * Added PCSX2x6 standalone as an alternative emulator for the arcade, consolearcade and mame systems on Linux, macOS and Windows
+* Added Linux Loader standalone as an alternative emulator for the arcade, mame and pcarcade systems on Linux and Windows
 * Added Play! Arcade standalone as an alternative emulator for the arcade and mame systems on Linux, macOS and Windows
+* Added BlastEm standalone as an alternative emulator for the sega32x, sega32xjp and sega32xna systems on Linux and Windows
 * (Android) Added a find rule entry for the new package name for ARMSX2 Refresh
 * (Android) Added EmuCoreX standalone as an alternative emulator for the ps2 system
 * (Android) Added EmuCoreV standalone as an alternative emulator for the psvita system
+* (Android) Added a find rule entry for yet another package name for GameHub Lite
 * (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
 * (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin
 * (Linux) Added support for parsing the Path key in .desktop shortcut files
@@ -32,6 +35,7 @@
 * (Linux) Changed the AppImage find rule entries for PCSX2 to avoid collisions with PCSX2x6
 * (macOS) Added ARMSX2 standalone as an alternative emulator for the ps2 system
 * (Windows) Added an additional find rule entry for PCSX2
+* (Windows) Added the .lindbergh file extension to the arcade, mame and pcarcade systems
 * Added the .acgame file extension to the consolearcade system on Linux, macOS and Windows
 * Added the .acgame and .arcadedef file extensions to the arcade and mame systems on Linux, macOS and Windows
 * Added the .a0, .b0 and .rom file extensions to the vic20 system
