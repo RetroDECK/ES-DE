@@ -52,6 +52,8 @@ set(ES_HEADERS
 
     # RomM
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMApiClient.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMCache.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLibrarySync.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMPlatformMapping.h
 
     # Scrapers
@@ -112,6 +114,8 @@ set(ES_SOURCES
 
     # RomM
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMApiClient.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMCache.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLibrarySync.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMPlatformMapping.cpp
 
     # Scrapers

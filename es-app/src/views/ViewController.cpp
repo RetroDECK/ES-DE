@@ -18,6 +18,8 @@
 #include "FileFilterIndex.h"
 #include "InputManager.h"
 #include "Log.h"
+#include "RomM/RomMLibrarySync.h"
+#include "RomM/RomMPlatformMapping.h"
 #include "Scripting.h"
 #include "Settings.h"
 #include "Sound.h"
@@ -1340,6 +1342,35 @@ bool ViewController::input(InputConfig* config, Input input)
     return false;
 }
 
+void ViewController::startRomMBackgroundSync()
+{
+    // Guards against this being called more than once (it currently isn't, but stay safe).
+    if (mRomMBackgroundSync != nullptr) {
+        return;
+    }
+    if (!Settings::getInstance()->getBool("RomMEnableIntegration")) {
+        return;
+    }
+    if (!Settings::getInstance()->getBool("RomMSyncOnStartup")) {
+        return;
+    }
+
+    bool anySyncEnabled {false};
+    for (const auto& mapping : RomMPlatformMapping::getInstance().getAllMappings()) {
+        if (mapping.syncEnabled) {
+            anySyncEnabled = true;
+            break;
+        }
+    }
+    if (!anySyncEnabled) {
+        return;
+    }
+
+    LOG(LogInfo) << "Starting background RomM library sync";
+    mRomMBackgroundSync = std::make_unique<RomMLibrarySync>();
+    mRomMBackgroundSync->start();
+}
+
 void ViewController::update(int deltaTime)
 {
     if (mWindow->getChangedTheme())
@@ -1350,6 +1381,16 @@ void ViewController::update(int deltaTime)
 
     updateSelf(deltaTime);
 
+    // Silent by design - unlike the manual GuiRomMSync dialog, failures are only logged, and
+    // there's no busy animation or completion message box.
+    if (mRomMBackgroundSync != nullptr && mRomMBackgroundSync->isDone()) {
+        mRomMBackgroundSync->applyResults();
+        LOG(LogInfo) << "RomM background sync complete: " << mRomMBackgroundSync->getAddedCount()
+                     << " game(s) added, " << mRomMBackgroundSync->getRemovedCount()
+                     << " game(s) removed";
+        mRomMBackgroundSync.reset();
+    }
+
     if (mGameToLaunch) {
         if (mGameToLaunch->metadata.get("rommremote") == "true") {
             FileData* remoteGame {mGameToLaunch};
@@ -1358,15 +1399,14 @@ void ViewController::update(int deltaTime)
             // confirm dialog below can actually receive input.
             mWindow->setBlockInput(false);
 
-            const int64_t sizeBytes {
-                atoll(remoteGame->metadata.get("rommsize").c_str())};
-            const std::string message {Utils::String::format(
-                _("THIS GAME IS NOT INSTALLED\nDOWNLOAD FROM ROMM NOW? (%s)"),
-                formatByteSize(sizeBytes).c_str())};
+            const int64_t sizeBytes {atoll(remoteGame->metadata.get("rommsize").c_str())};
+            const std::string message {
+                Utils::String::format(_("THIS GAME IS NOT INSTALLED\nDOWNLOAD FROM ROMM NOW? (%s)"),
+                                      formatByteSize(sizeBytes).c_str())};
             mWindow->pushGui(new GuiMsgBox(
                 message, _("YES"),
-                [this, remoteGame] { mWindow->pushGui(new GuiRomMDownload(remoteGame)); },
-                _("NO"), nullptr));
+                [this, remoteGame] { mWindow->pushGui(new GuiRomMDownload(remoteGame)); }, _("NO"),
+                nullptr));
         }
         else {
             launch(mGameToLaunch);

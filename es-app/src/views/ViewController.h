@@ -19,9 +19,11 @@
 #include "renderers/Renderer.h"
 #include "utils/StringUtil.h"
 
+#include <memory>
 #include <vector>
 
 class GamelistView;
+class RomMLibrarySync;
 class SystemData;
 class SystemView;
 
@@ -61,6 +63,16 @@ public:
 
     // Rescan the ROM directory for any changes to games and systems.
     void rescanROMDirectory();
+
+    // Kicks off a silent, non-blocking RomM library sync in the background (used on startup).
+    // No-op if RomM integration or the startup-sync setting is disabled, or if no system is
+    // opted into sync.
+    void startRomMBackgroundSync();
+    // Whether the background sync is currently in progress, so the manual "FORCE FULL RESYNC"
+    // menu action can avoid starting a second sync that would race it over RomMCache (see
+    // RomMCache's class comment). The manual sync itself isn't tracked here - its own dialog
+    // (GuiRomMSync) blocks all input while running, so it can't be re-triggered concurrently.
+    bool isRomMSyncing() const { return mRomMBackgroundSync != nullptr; }
 
     // Navigation.
     void goToNextGamelist();
@@ -197,6 +209,8 @@ private:
 
     FileData* mGameToLaunch;
     State mState;
+
+    std::unique_ptr<RomMLibrarySync> mRomMBackgroundSync;
 
     glm::mat4 mCamera;
     bool mSystemViewTransition;

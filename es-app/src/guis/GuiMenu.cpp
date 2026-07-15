@@ -134,9 +134,22 @@ void GuiMenu::openRomMOptions()
 {
     auto s = new GuiSettings(_("ROMM INTEGRATION"));
 
+    // Whether the RomM integration is enabled.
+    auto rommEnableIntegration = std::make_shared<SwitchComponent>();
+    rommEnableIntegration->setState(Settings::getInstance()->getBool("RomMEnableIntegration"));
+    s->addWithLabel(_("ENABLE ROMM INTEGRATION"), rommEnableIntegration);
+    s->addSaveFunc([rommEnableIntegration, s] {
+        if (rommEnableIntegration->getState() !=
+            Settings::getInstance()->getBool("RomMEnableIntegration")) {
+            Settings::getInstance()->setBool("RomMEnableIntegration",
+                                             rommEnableIntegration->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // RomM server URL.
     auto rommServerURL = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
-                                                          mMenuColorPrimary, ALIGN_RIGHT);
+                                                         mMenuColorPrimary, ALIGN_RIGHT);
     s->addEditableTextComponent(_("SERVER URL"), rommServerURL,
                                 Settings::getInstance()->getString("RomMServerURL"));
     rommServerURL->setSize(0.0f, rommServerURL->getFont()->getHeight());
@@ -151,7 +164,7 @@ void GuiMenu::openRomMOptions()
     // a future version may replace this with a QR code/pairing-code flow that obtains the
     // token automatically via RomM's device-auth endpoints.
     auto rommToken = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
-                                                      mMenuColorPrimary, ALIGN_RIGHT);
+                                                     mMenuColorPrimary, ALIGN_RIGHT);
     std::string tokenMasked;
     if (Settings::getInstance()->getString("RomMToken") != "") {
         tokenMasked = "********";
@@ -166,27 +179,14 @@ void GuiMenu::openRomMOptions()
         }
     });
 
-    // Whether the RomM integration is enabled.
-    auto rommEnableIntegration = std::make_shared<SwitchComponent>();
-    rommEnableIntegration->setState(Settings::getInstance()->getBool("RomMEnableIntegration"));
-    s->addWithLabel(_("ENABLE ROMM INTEGRATION"), rommEnableIntegration);
-    s->addSaveFunc([rommEnableIntegration, s] {
-        if (rommEnableIntegration->getState() !=
-            Settings::getInstance()->getBool("RomMEnableIntegration")) {
-            Settings::getInstance()->setBool("RomMEnableIntegration",
-                                             rommEnableIntegration->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     // Test connection using whatever has currently been entered in the fields above, whether
     // saved yet or not. This runs synchronously on the UI thread, which is an accepted
     // simplification for this manual, infrequently-used action (bounded by the connection
     // timeout, worst case a few seconds on an unreachable server).
     ComponentListRow testConnectionRow;
     testConnectionRow.addElement(std::make_shared<TextComponent>(_("TEST CONNECTION"),
-                                                                  Font::get(FONT_SIZE_MEDIUM),
-                                                                  mMenuColorPrimary),
+                                                                 Font::get(FONT_SIZE_MEDIUM),
+                                                                 mMenuColorPrimary),
                                  true);
     testConnectionRow.makeAcceptInputHandler([this, rommServerURL, rommToken] {
         RomMApiClient client {rommServerURL->getValue(), rommToken->getHiddenValue()};
@@ -194,26 +194,16 @@ void GuiMenu::openRomMOptions()
             mWindow->pushGui(new GuiMsgBox(_("SUCCESSFULLY CONNECTED TO THE ROMM SERVER")));
         }
         else {
-            mWindow->pushGui(new GuiMsgBox(
-                Utils::String::format(_("COULDN'T CONNECT TO THE ROMM SERVER:\n%s"),
-                                      client.lastError().c_str())));
+            mWindow->pushGui(new GuiMsgBox(Utils::String::format(
+                _("COULDN'T CONNECT TO THE ROMM SERVER:\n%s"), client.lastError().c_str())));
         }
     });
     s->addRow(testConnectionRow);
 
-    // Refresh the RomM library now.
-    ComponentListRow refreshRow;
-    refreshRow.addElement(std::make_shared<TextComponent>(_("REFRESH ROMM LIBRARY NOW"),
-                                                           Font::get(FONT_SIZE_MEDIUM),
-                                                           mMenuColorPrimary),
-                          true);
-    refreshRow.makeAcceptInputHandler([this] { mWindow->pushGui(new GuiRomMSync()); });
-    s->addRow(refreshRow);
-
     // Sync.
     ComponentListRow syncRow;
-    syncRow.addElement(std::make_shared<TextComponent>(_("SYNC"), Font::get(FONT_SIZE_MEDIUM),
-                                                        mMenuColorPrimary),
+    syncRow.addElement(std::make_shared<TextComponent>(
+                           _("SYNC SETTINGS"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                        true);
     syncRow.addElement(mMenu.makeArrow(), false);
     syncRow.makeAcceptInputHandler(std::bind(&GuiMenu::openRomMSyncOptions, this));
@@ -227,16 +217,46 @@ void GuiMenu::openRomMSyncOptions()
     // A small submenu rather than putting "PLATFORM SYNC" directly under the top-level RomM
     // screen, so a future custom-collection sync feature has a natural home here later without
     // touching the top-level menu again.
-    auto s = new GuiSettings(_("SYNC"));
+    auto s = new GuiSettings(_("SYNC SETTINGS"));
 
     ComponentListRow platformSyncRow;
     platformSyncRow.addElement(std::make_shared<TextComponent>(_("PLATFORM SYNC"),
-                                                                Font::get(FONT_SIZE_MEDIUM),
-                                                                mMenuColorPrimary),
+                                                               Font::get(FONT_SIZE_MEDIUM),
+                                                               mMenuColorPrimary),
                                true);
     platformSyncRow.addElement(mMenu.makeArrow(), false);
     platformSyncRow.makeAcceptInputHandler(std::bind(&GuiMenu::openRomMPlatformSync, this));
     s->addRow(platformSyncRow);
+
+    // Whether to silently sync the RomM library in the background on startup.
+    auto rommSyncOnStartup = std::make_shared<SwitchComponent>();
+    rommSyncOnStartup->setState(Settings::getInstance()->getBool("RomMSyncOnStartup"));
+    s->addWithLabel(_("SYNC ON STARTUP"), rommSyncOnStartup);
+    s->addSaveFunc([rommSyncOnStartup, s] {
+        if (rommSyncOnStartup->getState() !=
+            Settings::getInstance()->getBool("RomMSyncOnStartup")) {
+            Settings::getInstance()->setBool("RomMSyncOnStartup", rommSyncOnStartup->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Force a full RomM resync now. The regular (fast, cache-based) sync already runs
+    // automatically in the background, but it can only ever add/update roms - it has no way to
+    // detect one that's been deleted from RomM. This is therefore the only way a removed game
+    // stops showing up locally as available to download, in addition to being a way to force a
+    // complete rebuild if the local cache is ever suspected to have drifted.
+    ComponentListRow fullResyncRow;
+    fullResyncRow.addElement(std::make_shared<TextComponent>(_("FORCE FULL RESYNC"),
+                                                             Font::get(FONT_SIZE_MEDIUM),
+                                                             mMenuColorPrimary),
+                             true);
+    fullResyncRow.makeAcceptInputHandler([this] {
+        if (ViewController::getInstance()->isRomMSyncing())
+            mWindow->pushGui(new GuiMsgBox(_("A ROMM SYNC IS ALREADY IN PROGRESS")));
+        else
+            mWindow->pushGui(new GuiRomMSync(true));
+    });
+    s->addRow(fullResyncRow);
 
     mWindow->pushGui(s);
 }
@@ -285,7 +305,7 @@ void GuiMenu::openRomMPlatformSync()
             if (!matchedIsActive) {
                 for (const auto& tmpl : SystemData::sInactiveSystemTemplates) {
                     for (const std::string& token :
-                        Utils::String::delimitedStringToVector(tmpl.platform, ",")) {
+                         Utils::String::delimitedStringToVector(tmpl.platform, ",")) {
                         if (RomMApiClient::platformNameMatches(Utils::String::trim(token),
                                                                platform.slug, platform.fsSlug)) {
                             matchedSystemName = tmpl.name;

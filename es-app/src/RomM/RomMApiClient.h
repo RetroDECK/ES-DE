@@ -16,6 +16,7 @@
 #define ES_APP_ROMM_ROMM_API_CLIENT_H
 
 #include <cstdint>
+#include <ctime>
 #include <string>
 #include <vector>
 
@@ -69,6 +70,12 @@ public:
         // are actually downloaded instead (one file at a time, no zip involved).
         bool hasMultipleFiles {false};
         std::vector<RomFile> files;
+        // Unix timestamp (seconds since epoch, UTC) parsed from RomM's "updated_at", or 0 if
+        // unset/unparsed. Diagnostic only - NOT used as the incremental sync cursor (see
+        // RomMLibrarySync, which uses the wall-clock fetch-start time instead, to avoid a race
+        // where a rom updated mid-fetch would otherwise be permanently skipped by a future
+        // updated_after filter).
+        int64_t updatedAt {0};
     };
 
     RomMApiClient(const std::string& serverURL, const std::string& token);
@@ -82,10 +89,13 @@ public:
     // lastError() on failure.
     std::vector<Platform> fetchPlatforms();
 
-    // Pages through and returns every rom belonging to the given RomM platform id. Returns
-    // an empty vector and sets lastError() on failure (an empty vector is also returned, with
-    // no error, if the platform genuinely has no roms).
-    std::vector<Rom> fetchRoms(int platformId);
+    // Pages through and returns every rom belonging to the given RomM platform id. If
+    // updatedAfterUtc is non-empty (see formatTimestampUtc()), restricts the result to roms
+    // whose updated_at is after that timestamp instead of the platform's full list - pass ""
+    // for the original full-fetch behavior. Returns an empty vector and sets lastError() on
+    // failure (an empty vector is also returned, with no error, if the platform/delta
+    // genuinely has no roms).
+    std::vector<Rom> fetchRoms(int platformId, const std::string& updatedAfterUtc = "");
 
     // Looks up a single rom by MD5 hash. Returns true and populates outRom on a match, false
     // otherwise (not found or a request error - check lastError() to disambiguate).
@@ -118,6 +128,12 @@ public:
     static bool platformNameMatches(const std::string& esdePlatformName,
                                     const std::string& rommSlug,
                                     const std::string& rommFsSlug);
+
+    // Formats a UTC time_t as "YYYY-MM-DDTHH:MM:SSZ", the format RomM's updated_after query
+    // parameter accepts (empirically verified against a live RomM instance). Public and
+    // static so callers (e.g. RomMLibrarySync/RomMCache) can format a persisted sync cursor
+    // without duplicating the gmtime_r/gmtime_s platform split.
+    static std::string formatTimestampUtc(time_t time);
 
 private:
     std::string buildUrl(const std::string& path) const;

@@ -167,6 +167,9 @@ void Settings::setDefaults()
     // and pasting it in here. A future version may add a QR code/device pairing flow (RomM's
     // /api/auth/device/* endpoints) that fetches this automatically via status polling.
     mStringMap["RomMToken"] = {"", ""};
+    // Whether to silently sync the RomM library in the background on startup, so opted-in
+    // systems are populated with remote entries without a manual "REFRESH ROMM LIBRARY NOW".
+    mBoolMap["RomMSyncOnStartup"] = {true, true};
 
     // UI settings.
     mStringMap["Theme"] = {"linear-es-de", "linear-es-de"};

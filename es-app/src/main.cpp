@@ -1208,6 +1208,10 @@ int main(int argc, char* argv[])
             }
         }
 
+        // Kick off a silent, non-blocking RomM library sync so any system that's opted into
+        // sync gets its remote game list populated without requiring a manual menu action.
+        ViewController::getInstance()->startRomMBackgroundSync();
+
 #if defined(__ANDROID__)
         if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
             LOG(LogInfo) << "Creating \"no media\" file \""
@@ -1227,7 +1231,10 @@ int main(int argc, char* argv[])
 #if defined(APPLICATION_UPDATER)
         if (ApplicationUpdater::getInstance().getResults())
             ViewController::getInstance()->updateAvailableDialog();
-        else
+        else if (!ViewController::getInstance()->isRomMSyncing())
+            // Tearing down the shared curl multi-handle here would otherwise race with the
+            // RomM background sync thread's in-flight HTTP requests, silently orphaning
+            // whichever request happens to be active at that moment until its own timeout.
             HttpReq::cleanupCurlMulti();
 #endif
 

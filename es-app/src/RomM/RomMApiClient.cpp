@@ -14,6 +14,7 @@
 #include "rapidjson/error/en.h"
 
 #include <chrono>
+#include <cstdio>
 #include <thread>
 
 using namespace rapidjson;
@@ -142,6 +143,29 @@ std::vector<RomMApiClient::Platform> RomMApiClient::fetchPlatforms()
 
 namespace
 {
+    // Parses the fixed "YYYY-MM-DDTHH:MM:SS" prefix of an ISO-8601 timestamp as returned by
+    // RomM's "updated_at"/"created_at" fields (e.g. "2026-07-10T22:03:33.794021+00:00", always
+    // UTC on a live instance) into Unix seconds. Ignores any fractional-seconds/offset suffix -
+    // this field is diagnostic-only (see Rom::updatedAt), never correctness-sensitive. Returns
+    // 0 on any parse failure.
+    int64_t parseIso8601ToUnixSeconds(const std::string& value)
+    {
+        tm parsedTime {};
+        if (sscanf(value.c_str(), "%d-%d-%dT%d:%d:%d", &parsedTime.tm_year, &parsedTime.tm_mon,
+                   &parsedTime.tm_mday, &parsedTime.tm_hour, &parsedTime.tm_min,
+                   &parsedTime.tm_sec) != 6)
+            return 0;
+
+        parsedTime.tm_year -= 1900;
+        parsedTime.tm_mon -= 1;
+
+#if defined(_WIN64)
+        return static_cast<int64_t>(_mkgmtime(&parsedTime));
+#else
+        return static_cast<int64_t>(timegm(&parsedTime));
+#endif
+    }
+
     RomMApiClient::Rom parseRom(const rapidjson::Value& entry)
     {
         RomMApiClient::Rom rom;
@@ -193,6 +217,8 @@ namespace
                 rom.files.emplace_back(file);
             }
         }
+        if (entry.HasMember("updated_at") && entry["updated_at"].IsString())
+            rom.updatedAt = parseIso8601ToUnixSeconds(entry["updated_at"].GetString());
 
         if (entry.HasMember("metadatum") && entry["metadatum"].IsObject()) {
             const auto& metadatum = entry["metadatum"];
@@ -224,7 +250,8 @@ namespace
     }
 } // namespace
 
-std::vector<RomMApiClient::Rom> RomMApiClient::fetchRoms(int platformId)
+std::vector<RomMApiClient::Rom> RomMApiClient::fetchRoms(int platformId,
+                                                         const std::string& updatedAfterUtc)
 {
     std::vector<Rom> roms;
 
@@ -238,9 +265,12 @@ std::vector<RomMApiClient::Rom> RomMApiClient::fetchRoms(int platformId)
     int total {0};
 
     do {
-        const std::string url {buildUrl("/api/roms?platform_ids=" + std::to_string(platformId) +
-                                        "&limit=" + std::to_string(pageSize) +
-                                        "&offset=" + std::to_string(offset))};
+        std::string url {buildUrl("/api/roms?platform_ids=" + std::to_string(platformId) +
+                                  "&limit=" + std::to_string(pageSize) +
+                                  "&offset=" + std::to_string(offset))};
+        if (!updatedAfterUtc.empty())
+            url += "&updated_after=" + HttpReq::urlEncode(updatedAfterUtc);
+
         HttpReq req {url, false, "", "", "", mToken};
         if (!waitForRequest(req))
             return roms;
@@ -330,6 +360,19 @@ std::string RomMApiClient::getFileDownloadUrl(int fileId, const std::string& fil
 {
     return buildUrl("/api/roms/" + std::to_string(fileId) + "/files/content/" +
                     HttpReq::urlEncode(fileName));
+}
+
+std::string RomMApiClient::formatTimestampUtc(time_t time)
+{
+    tm utcTime {};
+#if defined(_WIN64)
+    gmtime_s(&utcTime, &time);
+#else
+    gmtime_r(&time, &utcTime);
+#endif
+    char buffer[32];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", &utcTime);
+    return std::string {buffer};
 }
 
 bool RomMApiClient::platformNameMatches(const std::string& esdePlatformName,
