@@ -10,6 +10,7 @@
 #define ES_APP_GUIS_GUI_ROMM_DOWNLOAD_H
 
 #include "GuiComponent.h"
+#include "RomM/RomMApiClient.h"
 #include "components/BusyComponent.h"
 
 #include <atomic>
@@ -40,16 +41,28 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    // Runs on the background thread: performs the streaming download and polls its progress.
-    // No FileData/ViewController access.
+    // Runs on the background thread: fetches the rom's current detail by id (rather than
+    // trusting anything cached from an earlier sync) to decide whether it's multi-disc, then
+    // dispatches to one of the two methods below.
     void downloadInBackground();
+    // Single-file rom: one HttpReq straight to mTmpPath, as a plain file.
+    void downloadSingleFileInBackground();
+    // Multi-disc rom: mTmpPath is created as a directory, each disc/part file downloaded into it
+    // individually via RomM's per-file endpoint (its rom-level endpoint bundles these as a zip,
+    // which ES-DE has no way to unpack). Uses RomM's own .m3u among the files if present,
+    // otherwise synthesizes one - either way it's saved named exactly like the wrapper
+    // directory, since that's what FileData::launchGame() looks for (see
+    // SystemData::populateFolder() for the ES-DE convention this reuses).
+    void downloadMultiDiscInBackground(const RomMApiClient::Rom& rom);
     // Runs on the main thread once downloadInBackground() has completed: renames the
-    // downloaded file into place and updates the FileData, or cleans up on failure/cancel.
+    // downloaded file/directory into place and updates the FileData, or cleans up on
+    // failure/cancel.
     void finishOnMainThread();
 
     Renderer* mRenderer;
     BusyComponent mBusyAnim;
     FileData* mGame;
+    bool mMultiDisc;
     std::string mTmpPath;
     std::unique_ptr<std::thread> mDownloadThread;
     std::atomic<bool> mDownloading;

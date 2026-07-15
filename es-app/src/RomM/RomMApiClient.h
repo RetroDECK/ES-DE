@@ -32,6 +32,17 @@ public:
         int romCount {0};
     };
 
+    // One disc/part of a multi-file rom (RomM's RomFileSchema). "id" here identifies the file
+    // itself, not the rom - required by getFileDownloadUrl() below.
+    struct RomFile {
+        int id {0};
+        std::string fileName;
+        int64_t sizeBytes {0};
+        // Nullable in RomM's API (game/dlc/manual/patch/update/mod/demo/translation/prototype/
+        // cheat/soundtrack/screenshot) - empty string if unset.
+        std::string category;
+    };
+
     struct Rom {
         int id {0};
         std::string name;
@@ -53,6 +64,11 @@ public:
         std::string revision;
         std::vector<std::string> regions;
         std::vector<std::string> languages;
+        // True for roms spanning multiple discs/parts. RomM's own content endpoint bundles
+        // these as a zip, which ES-DE never unpacks - see getFileDownloadUrl() for how these
+        // are actually downloaded instead (one file at a time, no zip involved).
+        bool hasMultipleFiles {false};
+        std::vector<RomFile> files;
     };
 
     RomMApiClient(const std::string& serverURL, const std::string& token);
@@ -75,11 +91,21 @@ public:
     // otherwise (not found or a request error - check lastError() to disambiguate).
     bool fetchRomByHash(const std::string& md5Hash, Rom& outRom);
 
+    // Fetches the full, current detail for a single rom by its RomM id (e.g. the "rommid"
+    // metadata already stashed on a synced FileData). Used at download time to get an
+    // up-to-date has_multiple_files/files list rather than trusting anything cached from an
+    // earlier sync. Returns true and populates outRom on success, false otherwise.
+    bool fetchRomById(int romId, Rom& outRom);
+
     // Builds the URL for downloading a rom's file content. Unlike the fetch*() methods above,
     // this doesn't perform a network call itself - the caller is expected to stream the
     // download via its own HttpReq (see GuiRomMDownload), since that needs to run on a
     // dedicated background thread with live progress tracking.
     std::string getDownloadUrl(int romId, const std::string& fsName) const;
+
+    // Builds the URL for downloading a single disc/part of a multi-file rom (Rom::files[i]).
+    // Unlike getDownloadUrl(), fileId identifies the individual file record, not the rom itself.
+    std::string getFileDownloadUrl(int fileId, const std::string& fileName) const;
 
     const std::string& lastError() const { return mLastError; }
 

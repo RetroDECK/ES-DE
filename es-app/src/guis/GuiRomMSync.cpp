@@ -226,8 +226,21 @@ void GuiRomMSync::applyResults()
             // downloaded (GuiRomMDownload just saves to the synthetic FileData's own path), so
             // it needs to be filesystem-safe and keep the original extension.
             const std::string& displayName {displayNames.at(rom.id)};
-            const std::string localFileName {sanitizeForFileName(displayName) +
-                                             Utils::FileSystem::getExtension(rom.fsName)};
+            // RomM's list endpoint only reliably reports has_multiple_files, not the files
+            // array itself (only hydrated on the single-rom detail endpoint GuiRomMDownload
+            // re-fetches from at download time), so detection here relies on the flag alone.
+            const bool isMultiDisc {rom.hasMultipleFiles};
+            // Represented as a directory named "<title>.m3u" - ES-DE's existing convention for
+            // multi-disc games (SystemData::populateFolder()): a directory whose name matches a
+            // configured extension is treated as a single GAME entry, and
+            // FileData::launchGame() looks inside it for a file with that exact name (the
+            // downloaded disc files plus a synthesized .m3u playlist).
+            std::string extension {isMultiDisc ? ".m3u" :
+                                                 Utils::FileSystem::getExtension(rom.fsName)};
+            // getExtension() returns "." for "no extension" - never emit a bare trailing dot.
+            if (extension == ".")
+                extension = ".m3u";
+            const std::string localFileName {sanitizeForFileName(displayName) + extension};
             const std::string desiredPath {system->getStartPath() + "/" + localFileName};
 
             auto it {byRommId.find(rom.id)};

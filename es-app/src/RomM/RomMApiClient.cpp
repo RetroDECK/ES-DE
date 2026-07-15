@@ -174,6 +174,25 @@ namespace
                     rom.languages.emplace_back(language.GetString());
             }
         }
+        if (entry.HasMember("has_multiple_files") && entry["has_multiple_files"].IsBool())
+            rom.hasMultipleFiles = entry["has_multiple_files"].GetBool();
+        if (entry.HasMember("files") && entry["files"].IsArray()) {
+            for (const auto& fileEntry : entry["files"].GetArray()) {
+                if (!fileEntry.IsObject())
+                    continue;
+                RomMApiClient::RomFile file;
+                if (fileEntry.HasMember("id") && fileEntry["id"].IsInt())
+                    file.id = fileEntry["id"].GetInt();
+                if (fileEntry.HasMember("file_name") && fileEntry["file_name"].IsString())
+                    file.fileName = fileEntry["file_name"].GetString();
+                if (fileEntry.HasMember("file_size_bytes") &&
+                    fileEntry["file_size_bytes"].IsInt64())
+                    file.sizeBytes = fileEntry["file_size_bytes"].GetInt64();
+                if (fileEntry.HasMember("category") && fileEntry["category"].IsString())
+                    file.category = fileEntry["category"].GetString();
+                rom.files.emplace_back(file);
+            }
+        }
 
         if (entry.HasMember("metadatum") && entry["metadatum"].IsObject()) {
             const auto& metadatum = entry["metadatum"];
@@ -276,10 +295,41 @@ bool RomMApiClient::fetchRomByHash(const std::string& md5Hash, Rom& outRom)
     return true;
 }
 
+bool RomMApiClient::fetchRomById(int romId, Rom& outRom)
+{
+    if (mServerURL.empty()) {
+        mLastError = "No RomM server URL configured";
+        return false;
+    }
+
+    const std::string url {buildUrl("/api/roms/" + std::to_string(romId))};
+    HttpReq req {url, false, "", "", "", mToken};
+    if (!waitForRequest(req))
+        return false;
+
+    Document doc;
+    doc.Parse(req.getContent().c_str());
+    if (doc.HasParseError() || !doc.IsObject()) {
+        mLastError = "Unexpected RomM rom response format";
+        return false;
+    }
+    if (!doc.HasMember("id") || !doc["id"].IsInt())
+        return false;
+
+    outRom = parseRom(doc);
+    return true;
+}
+
 std::string RomMApiClient::getDownloadUrl(int romId, const std::string& fsName) const
 {
     return buildUrl("/api/roms/" + std::to_string(romId) + "/content/" +
                     HttpReq::urlEncode(fsName));
+}
+
+std::string RomMApiClient::getFileDownloadUrl(int fileId, const std::string& fileName) const
+{
+    return buildUrl("/api/roms/" + std::to_string(fileId) + "/files/content/" +
+                    HttpReq::urlEncode(fileName));
 }
 
 bool RomMApiClient::platformNameMatches(const std::string& esdePlatformName,
