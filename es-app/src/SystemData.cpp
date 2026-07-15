@@ -17,6 +17,7 @@
 #include "GamelistFileParser.h"
 #include "InputManager.h"
 #include "Log.h"
+#include "RomM/RomMPlatformMapping.h"
 #include "Settings.h"
 #include "ThemeData.h"
 #include "UIModeController.h"
@@ -812,6 +813,7 @@ std::vector<std::string> readList(const std::string& str, const std::string& del
 bool SystemData::loadConfig()
 {
     deleteSystems();
+    sInactiveSystemTemplates.clear();
 
     if (sFindRules.get() == nullptr)
         sFindRules = std::make_unique<FindRules>();
@@ -988,37 +990,6 @@ bool SystemData::loadConfig()
             // In case ~ is used, expand it to the home directory path.
             path = Utils::FileSystem::expandHomePath(path);
 
-            // Check that the ROM directory for the system is valid or otherwise abort the
-            // processing.
-            if (!Utils::FileSystem::exists(path)) {
-                LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
-#if defined(_WIN64)
-                              << "\" as the defined ROM directory \""
-                              << Utils::String::replace(path, "/", "\\")
-#else
-                              << "\" as the defined ROM directory \"" << path
-#endif
-                              << "\" does not exist";
-                continue;
-            }
-            if (!Utils::FileSystem::isDirectory(path)) {
-                LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
-                              << "\" as the defined ROM directory \"" << path
-                              << "\" is not actually a directory";
-                continue;
-            }
-            if (Utils::FileSystem::isSymlink(path)) {
-                // Make sure that the symlink is not pointing to somewhere higher in the hierarchy
-                // as that would lead to an infite loop, meaning the application would never start.
-                const std::string& resolvedRompath {Utils::FileSystem::getCanonicalPath(rompath)};
-                if (resolvedRompath.find(Utils::FileSystem::getCanonicalPath(path)) == 0) {
-                    LOG(LogWarning)
-                        << "Skipping system \"" << name << "\" as the defined ROM directory \""
-                        << path << "\" is an infinitely recursive symlink";
-                    continue;
-                }
-            }
-
             // Convert extensions list from a string into a vector of strings.
             std::vector<std::string> extensions {readList(system.child("extension").text().get())};
 
@@ -1122,6 +1093,53 @@ bool SystemData::loadConfig()
             if (sortName == "")
                 sortName = fullname;
 
+            // Used to decide whether a system that ends up with no local ROM directory/files
+            // is worth offering for activation from the RomM platform sync screen - a system
+            // with no real emulator command configured isn't meaningfully "activatable" (this
+            // mirrors the same exclusion applied in createSystemDirectories()).
+            const bool isPlaceholder {
+                commands.size() == 1 &&
+                Utils::String::toLower(commands.front().first).find("placeholder") !=
+                    std::string::npos};
+
+            // Check that the ROM directory for the system is valid or otherwise abort the
+            // processing.
+            if (!Utils::FileSystem::exists(path)) {
+                LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+#if defined(_WIN64)
+                              << "\" as the defined ROM directory \""
+                              << Utils::String::replace(path, "/", "\\")
+#else
+                              << "\" as the defined ROM directory \"" << path
+#endif
+                              << "\" does not exist";
+
+                // Record this as a bundled-but-currently-inactive system (see
+                // RomMPlatformMapping / GuiRomMSync).
+                if (!isPlaceholder) {
+                    sInactiveSystemTemplates.push_back(
+                        {name, fullname, path, platformList});
+                }
+                continue;
+            }
+            if (!Utils::FileSystem::isDirectory(path)) {
+                LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+                              << "\" as the defined ROM directory \"" << path
+                              << "\" is not actually a directory";
+                continue;
+            }
+            if (Utils::FileSystem::isSymlink(path)) {
+                // Make sure that the symlink is not pointing to somewhere higher in the hierarchy
+                // as that would lead to an infite loop, meaning the application would never start.
+                const std::string& resolvedRompath {Utils::FileSystem::getCanonicalPath(rompath)};
+                if (resolvedRompath.find(Utils::FileSystem::getCanonicalPath(path)) == 0) {
+                    LOG(LogWarning)
+                        << "Skipping system \"" << name << "\" as the defined ROM directory \""
+                        << path << "\" is an infinitely recursive symlink";
+                    continue;
+                }
+            }
+
             // Convert path to generic directory seperators.
             path = Utils::FileSystem::getGenericPath(path);
 
@@ -1158,9 +1176,28 @@ bool SystemData::loadConfig()
                 }
             }
 
-            if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
+            // A system whose RomM platform sync is enabled may have an existing-but-still-empty
+            // ROM directory right after activation - the sync itself (which runs immediately
+            // after this rescan) is what populates it with remote entries, so it must not be
+            // discarded here just because it has no local files yet.
+            const RomMSystemMapping* rommMapping {
+                RomMPlatformMapping::getInstance().getMapping(name)};
+            const bool keepEmptyForRomMSync {rommMapping != nullptr && rommMapping->syncEnabled};
+
+            if ((newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) &&
+                !keepEmptyForRomMSync) {
                 LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
                               << "\" as no files matched any of the defined file extensions";
+
+                // This is by far the most common way a real-world "unused bundled system" is
+                // encountered: ES-DE's directory-creation feature (or a user's own setup)
+                // pre-creates the ROM directory for every bundled system, so most inactive
+                // systems reach here with an existing-but-empty directory rather than hitting
+                // the "directory doesn't exist" branch above.
+                if (!isPlaceholder) {
+                    sInactiveSystemTemplates.push_back(
+                        {name, fullname, path, platformList});
+                }
                 delete newSys;
             }
             else {

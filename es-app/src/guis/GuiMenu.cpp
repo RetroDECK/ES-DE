@@ -36,6 +36,7 @@
 #include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOrphanedDataCleanup.h"
+#include "guis/GuiRomMSync.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
 #include "guis/GuiSystemStatusOptions.h"
@@ -199,6 +200,15 @@ void GuiMenu::openRomMOptions()
         }
     });
     s->addRow(testConnectionRow);
+
+    // Refresh the RomM library now.
+    ComponentListRow refreshRow;
+    refreshRow.addElement(std::make_shared<TextComponent>(_("REFRESH ROMM LIBRARY NOW"),
+                                                           Font::get(FONT_SIZE_MEDIUM),
+                                                           mMenuColorPrimary),
+                          true);
+    refreshRow.makeAcceptInputHandler([this] { mWindow->pushGui(new GuiRomMSync()); });
+    s->addRow(refreshRow);
 
     // Sync.
     ComponentListRow syncRow;
