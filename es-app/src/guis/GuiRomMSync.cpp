@@ -19,7 +19,83 @@
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
 
+#include <cstdlib>
+#include <unordered_map>
 #include <unordered_set>
+
+namespace
+{
+    // Filesystem-illegal characters across the platforms ES-DE supports (Windows is the most
+    // restrictive of them), replaced with underscores so RomM's freeform game titles are always
+    // safe to use verbatim as local file names.
+    std::string sanitizeForFileName(const std::string& input)
+    {
+        static const std::string illegal {"\\/:*?\"<>|"};
+        std::string result;
+        result.reserve(input.size());
+        for (char c : input)
+            result += (illegal.find(c) != std::string::npos) ? '_' : c;
+        result = Utils::String::trim(result);
+        // Trailing dots/spaces are also illegal in a Windows file name.
+        while (!result.empty() && (result.back() == '.' || result.back() == ' '))
+            result.pop_back();
+        return result;
+    }
+
+    // Builds a region/revision/language tag from RomM's own parsed rom metadata (never guessed
+    // from the filename), e.g. "(USA) (Rev 1)". Returns an empty string if none of these fields
+    // are populated for this rom.
+    std::string buildVariantTag(const RomMApiClient::Rom& rom)
+    {
+        std::string tag;
+        if (!rom.regions.empty()) {
+            std::string joined;
+            for (const auto& region : rom.regions)
+                joined += (joined.empty() ? "" : ", ") + region;
+            tag += "(" + joined + ")";
+        }
+        if (!rom.revision.empty())
+            tag += (tag.empty() ? "" : " ") + std::string("(Rev ") + rom.revision + ")";
+        if (!rom.languages.empty()) {
+            std::string joined;
+            for (const auto& language : rom.languages)
+                joined += (joined.empty() ? "" : ",") + language;
+            tag += (tag.empty() ? "" : " ") + std::string("(") + joined + ")";
+        }
+        return tag;
+    }
+
+    // Roms sharing the same title within a single sync batch would otherwise show up as
+    // identically-named gamelist entries and collide once downloaded to the same directory. For
+    // any such collision, appends a tag built from RomM's own region/revision/language metadata;
+    // if that's empty for a colliding rom, falls back to a running counter so the name is still
+    // guaranteed unique.
+    std::unordered_map<int, std::string>
+    buildDisplayNames(const std::vector<RomMApiClient::Rom>& roms)
+    {
+        std::unordered_map<std::string, int> nameCounts;
+        for (const auto& rom : roms)
+            ++nameCounts[Utils::String::toLower(rom.name)];
+
+        std::unordered_map<int, std::string> displayNames;
+        std::unordered_map<std::string, int> disambiguatorSeen;
+        for (const auto& rom : roms) {
+            if (nameCounts[Utils::String::toLower(rom.name)] <= 1) {
+                displayNames[rom.id] = rom.name;
+                continue;
+            }
+            const std::string tag {buildVariantTag(rom)};
+            std::string candidate {tag.empty() ? rom.name : rom.name + " " + tag};
+            const std::string candidateKey {Utils::String::toLower(candidate)};
+            int& seen {disambiguatorSeen[candidateKey]};
+            if (seen > 0)
+                candidate += " (" + std::to_string(seen + 1) + ")";
+            ++seen;
+            displayNames[rom.id] = candidate;
+        }
+        return displayNames;
+    }
+} // namespace
 
 GuiRomMSync::GuiRomMSync()
     : mRenderer {Renderer::getInstance()}
@@ -124,40 +200,68 @@ void GuiRomMSync::applyResults()
         FileData* rootFolder {system->getRootFolder()};
         FileFilterIndex* fileIndex {system->getIndex()};
 
-        std::unordered_set<std::string> seenFileNames;
+        const std::unordered_map<int, std::string> displayNames {buildDisplayNames(result.roms)};
+
+        // Index already-known RomM entries (remote or downloaded) by RomM rom id rather than by
+        // file name - the local file name a still-remote entry uses can change between syncs as
+        // the batch's title collisions change (a newly-added sibling rom can introduce a
+        // collision that wasn't there before), so an id-based lookup is the only one that stays
+        // correct regardless.
+        std::unordered_map<int, FileData*> byRommId;
+        for (FileData* file : rootFolder->getFilesRecursive(GAME)) {
+            const std::string& rommId {file->metadata.get("rommid")};
+            if (!rommId.empty())
+                byRommId[atoi(rommId.c_str())] = file;
+        }
+
+        std::unordered_set<int> seenRomIds;
         bool addedAny {false};
 
         for (const auto& rom : result.roms) {
             if (rom.fsName.empty())
                 continue;
-            seenFileNames.insert(rom.fsName);
+            seenRomIds.insert(rom.id);
 
-            const std::unordered_map<std::string, FileData*>& children {
-                rootFolder->getChildrenByFilename()};
-            auto it {children.find(rom.fsName)};
-            if (it != children.cend()) {
+            // The name shown in the list is also the name the file will be saved under once
+            // downloaded (GuiRomMDownload just saves to the synthetic FileData's own path), so
+            // it needs to be filesystem-safe and keep the original extension.
+            const std::string& displayName {displayNames.at(rom.id)};
+            const std::string localFileName {sanitizeForFileName(displayName) +
+                                             Utils::FileSystem::getExtension(rom.fsName)};
+            const std::string desiredPath {system->getStartPath() + "/" + localFileName};
+
+            auto it {byRommId.find(rom.id)};
+            if (it != byRommId.cend()) {
                 FileData* existing {it->second};
-                if (existing->metadata.get("rommremote") == "true") {
-                    // Refresh metadata for an already-synthesized remote entry.
-                    existing->metadata.set("name", rom.name);
+                if (existing->metadata.get("rommremote") != "true") {
+                    // Already downloaded - leave the real local file untouched.
+                    continue;
+                }
+                if (existing->getPath() == desiredPath) {
+                    // Still remote and already at the right synthetic path - just refresh.
+                    existing->metadata.set("name", displayName);
                     if (!rom.summary.empty())
                         existing->metadata.set("desc", rom.summary);
-                    existing->metadata.set("rommid", std::to_string(rom.id));
+                    existing->metadata.set("rommsize", std::to_string(rom.fsSizeBytes));
+                    continue;
                 }
-                // If it's a real local file already, leave it untouched.
-                continue;
+                // The computed name changed since the last sync (e.g. a newly-added sibling rom
+                // introduced a title collision) - a FileData's path can't be mutated in place,
+                // so drop the stale synthetic entry and recreate it below with the new path.
+                ViewController::getInstance()->getGamelistView(system)->remove(existing, false);
             }
 
-            // New remote-only entry. The synthetic path is exactly where the file will land
-            // once downloaded, so no other code needs to change once that happens.
-            const std::string syntheticPath {system->getStartPath() + "/" + rom.fsName};
+            // New (or renamed) remote-only entry. The synthetic path is exactly where the file
+            // will land once downloaded, using the same name the user sees in the list - so no
+            // other code needs to change once that happens.
             FileData* newGame {
-                new FileData(GAME, syntheticPath, system->getSystemEnvData(), system)};
-            newGame->metadata.set("name", rom.name);
+                new FileData(GAME, desiredPath, system->getSystemEnvData(), system)};
+            newGame->metadata.set("name", displayName);
             if (!rom.summary.empty())
                 newGame->metadata.set("desc", rom.summary);
             newGame->metadata.set("rommremote", "true");
             newGame->metadata.set("rommid", std::to_string(rom.id));
+            newGame->metadata.set("rommsize", std::to_string(rom.fsSizeBytes));
             rootFolder->addChild(newGame);
             fileIndex->addToIndex(newGame);
             addedAny = true;
@@ -168,8 +272,7 @@ void GuiRomMSync::applyResults()
         std::vector<FileData*> toRemove;
         for (FileData* file : rootFolder->getFilesRecursive(GAME)) {
             if (file->metadata.get("rommremote") == "true" &&
-                seenFileNames.find(Utils::FileSystem::getFileName(file->getPath())) ==
-                    seenFileNames.cend())
+                seenRomIds.find(atoi(file->metadata.get("rommid").c_str())) == seenRomIds.cend())
                 toRemove.push_back(file);
         }
         for (FileData* file : toRemove) {

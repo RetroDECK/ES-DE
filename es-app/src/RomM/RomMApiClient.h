@@ -47,6 +47,12 @@ public:
         float averageRating {0.0f};
         // Free-form string, e.g. "1-4" - not a pure integer in RomM's API.
         std::string playerCount;
+        // RomM's own parsed identification of the rom file's variant, e.g. "1" for a rom named
+        // "Some Game (USA) (Rev 1).sfc" - used to tell apart roms that otherwise share the same
+        // "name" (different regional/revision releases of one game).
+        std::string revision;
+        std::vector<std::string> regions;
+        std::vector<std::string> languages;
     };
 
     RomMApiClient(const std::string& serverURL, const std::string& token);
@@ -68,6 +74,12 @@ public:
     // Looks up a single rom by MD5 hash. Returns true and populates outRom on a match, false
     // otherwise (not found or a request error - check lastError() to disambiguate).
     bool fetchRomByHash(const std::string& md5Hash, Rom& outRom);
+
+    // Builds the URL for downloading a rom's file content. Unlike the fetch*() methods above,
+    // this doesn't perform a network call itself - the caller is expected to stream the
+    // download via its own HttpReq (see GuiRomMDownload), since that needs to run on a
+    // dedicated background thread with live progress tracking.
+    std::string getDownloadUrl(int romId, const std::string& fsName) const;
 
     const std::string& lastError() const { return mLastError; }
 

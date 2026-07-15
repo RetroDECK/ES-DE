@@ -158,6 +158,22 @@ namespace
             rom.fsSizeBytes = entry["fs_size_bytes"].GetInt64();
         if (entry.HasMember("url_cover") && entry["url_cover"].IsString())
             rom.urlCover = entry["url_cover"].GetString();
+        // revision/regions/languages are top-level fields on RomM's rom schema (not nested
+        // under metadatum) - RomM parses them out of the filename itself server-side.
+        if (entry.HasMember("revision") && entry["revision"].IsString())
+            rom.revision = entry["revision"].GetString();
+        if (entry.HasMember("regions") && entry["regions"].IsArray()) {
+            for (const auto& region : entry["regions"].GetArray()) {
+                if (region.IsString())
+                    rom.regions.emplace_back(region.GetString());
+            }
+        }
+        if (entry.HasMember("languages") && entry["languages"].IsArray()) {
+            for (const auto& language : entry["languages"].GetArray()) {
+                if (language.IsString())
+                    rom.languages.emplace_back(language.GetString());
+            }
+        }
 
         if (entry.HasMember("metadatum") && entry["metadatum"].IsObject()) {
             const auto& metadatum = entry["metadatum"];
@@ -258,6 +274,12 @@ bool RomMApiClient::fetchRomByHash(const std::string& md5Hash, Rom& outRom)
 
     outRom = parseRom(doc);
     return true;
+}
+
+std::string RomMApiClient::getDownloadUrl(int romId, const std::string& fsName) const
+{
+    return buildUrl("/api/roms/" + std::to_string(romId) + "/content/" +
+                    HttpReq::urlEncode(fsName));
 }
 
 bool RomMApiClient::platformNameMatches(const std::string& esdePlatformName,

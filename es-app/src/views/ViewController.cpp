@@ -31,15 +31,39 @@
 #include "guis/GuiApplicationUpdater.h"
 #include "guis/GuiGameImporter.h"
 #include "guis/GuiMenu.h"
+#include "guis/GuiMsgBox.h"
+#include "guis/GuiRomMDownload.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/LocalizationUtil.h"
+#include "utils/StringUtil.h"
 #include "views/GamelistView.h"
 #include "views/SystemView.h"
 
 #if defined(__ANDROID__)
 #include "utils/PlatformUtilAndroid.h"
 #endif
+
+#include <cstdlib>
+
+namespace
+{
+    std::string formatByteSize(int64_t bytes)
+    {
+        constexpr double KiB {1024.0};
+        constexpr double MiB {KiB * 1024.0};
+        constexpr double GiB {MiB * 1024.0};
+
+        char buffer[32];
+        if (bytes >= static_cast<int64_t>(GiB))
+            snprintf(buffer, sizeof(buffer), "%.1f GiB", bytes / GiB);
+        else if (bytes >= static_cast<int64_t>(MiB))
+            snprintf(buffer, sizeof(buffer), "%.1f MiB", bytes / MiB);
+        else
+            snprintf(buffer, sizeof(buffer), "%.1f KiB", bytes / KiB);
+        return std::string {buffer};
+    }
+} // namespace
 
 ViewController::ViewController() noexcept
     : mRenderer {Renderer::getInstance()}
@@ -1327,9 +1351,28 @@ void ViewController::update(int deltaTime)
     updateSelf(deltaTime);
 
     if (mGameToLaunch) {
-        launch(mGameToLaunch);
-        mWindow->setGameLaunched(mGameToLaunch);
-        mGameToLaunch = nullptr;
+        if (mGameToLaunch->metadata.get("rommremote") == "true") {
+            FileData* remoteGame {mGameToLaunch};
+            mGameToLaunch = nullptr;
+            // triggerGameLaunch() already called setBlockInput(true) - undo that so the
+            // confirm dialog below can actually receive input.
+            mWindow->setBlockInput(false);
+
+            const int64_t sizeBytes {
+                atoll(remoteGame->metadata.get("rommsize").c_str())};
+            const std::string message {Utils::String::format(
+                _("THIS GAME IS NOT INSTALLED\nDOWNLOAD FROM ROMM NOW? (%s)"),
+                formatByteSize(sizeBytes).c_str())};
+            mWindow->pushGui(new GuiMsgBox(
+                message, _("YES"),
+                [this, remoteGame] { mWindow->pushGui(new GuiRomMDownload(remoteGame)); },
+                _("NO"), nullptr));
+        }
+        else {
+            launch(mGameToLaunch);
+            mWindow->setGameLaunched(mGameToLaunch);
+            mGameToLaunch = nullptr;
+        }
     }
 }
 

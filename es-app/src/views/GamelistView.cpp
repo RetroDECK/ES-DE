@@ -585,11 +585,16 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
             prompts.push_back(HelpPrompt("left/right", _("system")));
     }
 
+    FileData* cursor {getCursor()};
+    const bool cursorIsRemote {cursor != nullptr && cursor->getType() == GAME &&
+                               cursor->metadata.get("rommremote") == "true"};
+    const std::string selectPromptText {cursorIsRemote ? _("download") : _("select")};
+
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::ViewMode::GAMELIST)
-        prompts.push_back(HelpPrompt("a", _("select")));
+        prompts.push_back(HelpPrompt("a", selectPromptText));
     else
-        prompts.push_back(HelpPrompt("a", _("select")));
+        prompts.push_back(HelpPrompt("a", selectPromptText));
 
     prompts.push_back(HelpPrompt("b", _("back")));
     prompts.push_back(HelpPrompt("x", _("view media")));
@@ -666,8 +671,13 @@ void GamelistView::updateView(const CursorState& state)
     if (!loadedTexture)
         onDemandTextureLoad();
 
-    if (state == CursorState::CURSOR_STOPPED)
+    if (state == CursorState::CURSOR_STOPPED) {
         mLastUpdated = file;
+        // The "select"/"download" help prompt depends on the selected entry's "rommremote"
+        // flag, so it needs refreshing whenever the cursor settles on a different entry -
+        // updateHelpPrompts() is otherwise only triggered when a GUI is pushed/popped.
+        updateHelpPrompts();
+    }
 
     bool hideMetaDataFields {false};
 
