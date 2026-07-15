@@ -160,6 +160,14 @@ void Settings::setDefaults()
     mBoolMap["ScraperAutomaticRemoveDots"] = {true, true};
     mBoolMap["ScraperRegionFallback"] = {true, true};
 
+    // RomM integration.
+    mBoolMap["RomMEnableIntegration"] = {false, false};
+    mStringMap["RomMServerURL"] = {"", ""};
+    // A RomM API bearer token, currently obtained by generating a token on the RomM server
+    // and pasting it in here. A future version may add a QR code/device pairing flow (RomM's
+    // /api/auth/device/* endpoints) that fetches this automatically via status polling.
+    mStringMap["RomMToken"] = {"", ""};
+
     // UI settings.
     mStringMap["Theme"] = {"linear-es-de", "linear-es-de"};
     mStringMap["ThemeVariant"] = {"", ""};

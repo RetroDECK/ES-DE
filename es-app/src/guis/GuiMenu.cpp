@@ -19,6 +19,7 @@
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "GamelistFileParser.h"
+#include "RomM/RomMApiClient.h"
 #include "Scripting.h"
 #include "SystemData.h"
 #include "UIModeController.h"
@@ -63,6 +64,9 @@ GuiMenu::GuiMenu()
 
     if (isFullUI)
         addEntry(_("SCRAPER"), mMenuColorPrimary, true, [this] { openScraperOptions(); });
+
+    if (isFullUI)
+        addEntry(_("ROMM INTEGRATION"), mMenuColorPrimary, true, [this] { openRomMOptions(); });
 
     if (isFullUI)
         addEntry(_("UI SETTINGS"), mMenuColorPrimary, true, [this] { openUIOptions(); });
@@ -121,6 +125,80 @@ void GuiMenu::openScraperOptions()
 {
     // Open the scraper menu.
     mWindow->pushGui(new GuiScraperMenu(_("SCRAPER")));
+}
+
+void GuiMenu::openRomMOptions()
+{
+    auto s = new GuiSettings(_("ROMM INTEGRATION"));
+
+    // RomM server URL.
+    auto rommServerURL = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
+                                                          mMenuColorPrimary, ALIGN_RIGHT);
+    s->addEditableTextComponent(_("SERVER URL"), rommServerURL,
+                                Settings::getInstance()->getString("RomMServerURL"));
+    rommServerURL->setSize(0.0f, rommServerURL->getFont()->getHeight());
+    s->addSaveFunc([rommServerURL, s] {
+        if (rommServerURL->getValue() != Settings::getInstance()->getString("RomMServerURL")) {
+            Settings::getInstance()->setString("RomMServerURL", rommServerURL->getValue());
+            s->setNeedsSaving();
+        }
+    });
+
+    // RomM API token. Currently generated manually on the RomM server and pasted in here;
+    // a future version may replace this with a QR code/pairing-code flow that obtains the
+    // token automatically via RomM's device-auth endpoints.
+    auto rommToken = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
+                                                      mMenuColorPrimary, ALIGN_RIGHT);
+    std::string tokenMasked;
+    if (Settings::getInstance()->getString("RomMToken") != "") {
+        tokenMasked = "********";
+        rommToken->setHiddenValue(Settings::getInstance()->getString("RomMToken"));
+    }
+    s->addEditableTextComponent(_("API TOKEN"), rommToken, tokenMasked, "", true);
+    rommToken->setSize(0.0f, rommToken->getFont()->getHeight());
+    s->addSaveFunc([rommToken, s] {
+        if (rommToken->getHiddenValue() != Settings::getInstance()->getString("RomMToken")) {
+            Settings::getInstance()->setString("RomMToken", rommToken->getHiddenValue());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether the RomM integration is enabled.
+    auto rommEnableIntegration = std::make_shared<SwitchComponent>();
+    rommEnableIntegration->setState(Settings::getInstance()->getBool("RomMEnableIntegration"));
+    s->addWithLabel(_("ENABLE ROMM INTEGRATION"), rommEnableIntegration);
+    s->addSaveFunc([rommEnableIntegration, s] {
+        if (rommEnableIntegration->getState() !=
+            Settings::getInstance()->getBool("RomMEnableIntegration")) {
+            Settings::getInstance()->setBool("RomMEnableIntegration",
+                                             rommEnableIntegration->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Test connection using whatever has currently been entered in the fields above, whether
+    // saved yet or not. This runs synchronously on the UI thread, which is an accepted
+    // simplification for this manual, infrequently-used action (bounded by the connection
+    // timeout, worst case a few seconds on an unreachable server).
+    ComponentListRow testConnectionRow;
+    testConnectionRow.addElement(std::make_shared<TextComponent>(_("TEST CONNECTION"),
+                                                                  Font::get(FONT_SIZE_MEDIUM),
+                                                                  mMenuColorPrimary),
+                                 true);
+    testConnectionRow.makeAcceptInputHandler([this, rommServerURL, rommToken] {
+        RomMApiClient client {rommServerURL->getValue(), rommToken->getHiddenValue()};
+        if (client.testConnection()) {
+            mWindow->pushGui(new GuiMsgBox(_("SUCCESSFULLY CONNECTED TO THE ROMM SERVER")));
+        }
+        else {
+            mWindow->pushGui(new GuiMsgBox(
+                Utils::String::format(_("COULDN'T CONNECT TO THE ROMM SERVER:\n%s"),
+                                      client.lastError().c_str())));
+        }
+    });
+    s->addRow(testConnectionRow);
+
+    mWindow->pushGui(s);
 }
 
 void GuiMenu::openUIOptions()

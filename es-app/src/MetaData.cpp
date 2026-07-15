@@ -45,7 +45,10 @@ namespace
     {"controller",         MD_CONTROLLER,       "",                false,     "CONTROLLER",                  "SELECT CONTROLLER",                true},
     {"altemulator",        MD_ALT_EMULATOR,     "",                false,     "ALTERNATIVE EMULATOR",        "SELECT ALTERNATIVE EMULATOR",      false},
     {"screen",             MD_SCREEN,           "",                false,     "LAUNCH ON SCREEN",            "LAUNCH ON WHICH SCREEN",           false},
-    {"lastplayed",         MD_TIME,             "0",               true,      "LAST PLAYED",                 "ENTER LAST PLAYED DATE",           false}
+    {"lastplayed",         MD_TIME,             "0",               true,      "LAST PLAYED",                 "ENTER LAST PLAYED DATE",           false},
+    // Internal bookkeeping for the RomM integration, not intended for manual editing.
+    {"rommremote",         MD_BOOL,             "false",           true,      "ROMM REMOTE",                 "ENTER ROMM REMOTE OFF/ON",         false},
+    {"rommid",             MD_STRING,           "",                true,      "ROMM ID",                     "ENTER ROMM ID",                    false}
     };
 
     MetaDataDecl folderDecls[] {

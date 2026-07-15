@@ -48,6 +48,10 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSystemStatusOptions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiThemeDownloader.h
 
+    # RomM
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMApiClient.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMPlatformMapping.h
+
     # Scrapers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraperResources.h
@@ -100,6 +104,10 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSystemStatusOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiThemeDownloader.cpp
+
+    # RomM
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMApiClient.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMPlatformMapping.cpp
 
     # Scrapers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.cpp

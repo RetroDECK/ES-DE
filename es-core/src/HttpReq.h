@@ -13,6 +13,7 @@
 #include <curl/curl.h>
 
 #include <atomic>
+#include <fstream>
 #include <map>
 #include <mutex>
 #include <queue>
@@ -22,7 +23,17 @@
 class HttpReq
 {
 public:
-    HttpReq(const std::string& url, bool scraperRequest);
+    // If username is non-empty, the request authenticates using HTTP Basic Auth.
+    // If bearerToken is non-empty, the request authenticates using an "Authorization: Bearer"
+    // header instead (username/password are ignored in that case).
+    // If downloadFilePath is non-empty, the response body is streamed directly to that file
+    // instead of being buffered in memory, which is required for large downloads.
+    HttpReq(const std::string& url,
+            bool scraperRequest,
+            const std::string& username = "",
+            const std::string& password = "",
+            const std::string& downloadFilePath = "",
+            const std::string& bearerToken = "");
     ~HttpReq();
 
     enum Status {
@@ -42,9 +53,14 @@ public:
     Status status() { return mStatus; }
 
     std::string getErrorMsg() { return mErrorMsg; }
+    // Returns the full response body. Not valid if the request was constructed with a
+    // downloadFilePath, as the content was streamed to disk instead of being buffered.
     std::string getContent() const;
     long getTotalBytes() { return mTotalBytes; }
     long getDownloadedBytes() { return mDownloadedBytes; }
+    // The HTTP response status code, e.g. 200 or 401. Only meaningful once the request has
+    // left the REQ_IN_PROGRESS state.
+    long getHttpStatusCode() { return mHttpStatusCode; }
 
     static std::string urlEncode(const std::string& s);
 
@@ -109,10 +125,14 @@ private:
     static inline std::mutex sRequestMutex;
 
     std::stringstream mContent;
+    std::ofstream mOutputFile;
+    bool mStreamToFile;
+    struct curl_slist* mHeaderList;
     std::string mErrorMsg;
     static inline std::atomic<bool> sStopPoll = false;
     std::atomic<long> mTotalBytes;
     std::atomic<long> mDownloadedBytes;
+    std::atomic<long> mHttpStatusCode;
     bool mScraperRequest;
 };
 

@@ -40,13 +40,31 @@ std::string HttpReq::urlEncode(const std::string& s)
     return escaped;
 }
 
-HttpReq::HttpReq(const std::string& url, bool scraperRequest)
+HttpReq::HttpReq(const std::string& url,
+                 bool scraperRequest,
+                 const std::string& username,
+                 const std::string& password,
+                 const std::string& downloadFilePath,
+                 const std::string& bearerToken)
     : mStatus {REQ_IN_PROGRESS}
     , mHandle {nullptr}
+    , mStreamToFile {false}
+    , mHeaderList {nullptr}
     , mTotalBytes {0}
     , mDownloadedBytes {0}
+    , mHttpStatusCode {0}
     , mScraperRequest {scraperRequest}
 {
+    if (!downloadFilePath.empty()) {
+        Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(downloadFilePath));
+        mOutputFile.open(downloadFilePath, std::ios::binary | std::ios::trunc);
+        if (!mOutputFile.is_open()) {
+            mStatus = REQ_IO_ERROR;
+            onError("Couldn't open file \"" + downloadFilePath + "\" for writing");
+            return;
+        }
+        mStreamToFile = true;
+    }
     // The multi-handle is cleaned up via an explicit call to cleanupCurlMulti() from any object
     // that uses HttpReq. For example from GuiScraperSearch after scraping has been completed.
     if (!sMultiHandle)
@@ -81,6 +99,32 @@ HttpReq::HttpReq(const std::string& url, bool scraperRequest)
         mStatus = REQ_IO_ERROR;
         onError(curl_easy_strerror(err));
         return;
+    }
+
+    // Set HTTP Basic Auth credentials, e.g. for the RomM integration.
+    if (!username.empty()) {
+        err = curl_easy_setopt(mHandle, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        if (err == CURLE_OK)
+            err = curl_easy_setopt(mHandle, CURLOPT_USERNAME, username.c_str());
+        if (err == CURLE_OK)
+            err = curl_easy_setopt(mHandle, CURLOPT_PASSWORD, password.c_str());
+        if (err != CURLE_OK) {
+            mStatus = REQ_IO_ERROR;
+            onError(curl_easy_strerror(err));
+            return;
+        }
+    }
+
+    // Set a bearer token via the Authorization header, e.g. for the RomM integration.
+    if (!bearerToken.empty()) {
+        const std::string headerValue {"Authorization: Bearer " + bearerToken};
+        mHeaderList = curl_slist_append(mHeaderList, headerValue.c_str());
+        err = curl_easy_setopt(mHandle, CURLOPT_HTTPHEADER, mHeaderList);
+        if (err != CURLE_OK) {
+            mStatus = REQ_IO_ERROR;
+            onError(curl_easy_strerror(err));
+            return;
+        }
     }
 
     // Set User-Agent.
@@ -252,6 +296,9 @@ HttpReq::HttpReq(const std::string& url, bool scraperRequest)
 
 HttpReq::~HttpReq()
 {
+    if (mHeaderList)
+        curl_slist_free_all(mHeaderList);
+
     if (mHandle) {
         std::unique_lock<std::mutex> requestLock {sRequestMutex};
         sRequests.erase(mHandle);
@@ -312,16 +359,27 @@ size_t HttpReq::writeContent(void* buff, size_t size, size_t nmemb, void* req_pt
         }) != sRequests.cend())
         validEntry = true;
 
+    size_t bytesWritten {nmemb};
+
     if (validEntry) {
         // size = size of an element, nmemb = number of elements.
-        std::stringstream& ss {static_cast<HttpReq*>(req_ptr)->mContent};
-        ss.write(static_cast<char*>(buff), size * nmemb);
+        HttpReq* req {static_cast<HttpReq*>(req_ptr)};
+        if (req->mStreamToFile) {
+            req->mOutputFile.write(static_cast<char*>(buff), size * nmemb);
+            // Returning a value different from size * nmemb signals an error to curl and
+            // aborts the transfer, e.g. if the disk is full.
+            if (req->mOutputFile.fail())
+                bytesWritten = 0;
+        }
+        else {
+            req->mContent.write(static_cast<char*>(buff), size * nmemb);
+        }
     }
 
     requestLock.unlock();
 
     // Return value is number of elements successfully read.
-    return nmemb;
+    return bytesWritten;
 }
 
 void HttpReq::pollCurl()
@@ -391,6 +449,10 @@ void HttpReq::pollCurl()
                         continue;
                     }
 
+                    long responseCode {0};
+                    curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &responseCode);
+                    req->mHttpStatusCode = responseCode;
+
                     if (msg->data.result == CURLE_OK) {
                         req->mStatus = REQ_SUCCESS;
                     }
@@ -399,9 +461,6 @@ void HttpReq::pollCurl()
                         req->onError(curl_easy_strerror(msg->data.result));
                     }
                     else if (msg->data.result == CURLE_HTTP_RETURNED_ERROR) {
-                        long responseCode;
-                        curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &responseCode);
-
                         if (responseCode == 429 &&
                             Settings::getInstance()->getString("Scraper") != "screenscraper") {
                             req->mContent << _("You have exceeded your daily scrape quota");

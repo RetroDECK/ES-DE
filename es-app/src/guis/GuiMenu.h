@@ -34,6 +34,7 @@ private:
     void addVersionInfo();
 
     void openScraperOptions();
+    void openRomMOptions();
     void openUIOptions();
     void openThemeDownloader(GuiSettings* settings);
     void openSystemStatusOptions();
