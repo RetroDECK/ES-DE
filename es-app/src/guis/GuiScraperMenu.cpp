@@ -1397,7 +1397,8 @@ std::pair<std::queue<ScraperSearchParams>, std::map<SystemData*, int>> GuiScrape
         std::vector<FileData*> games {(*sys)->getRootFolder()->getScrapeFilesRecursive(
             Settings::getInstance()->getBool("ScraperIncludeFolders"),
             Settings::getInstance()->getBool("ScraperExcludeRecursively"),
-            Settings::getInstance()->getBool("ScraperRespectExclusions"))};
+            Settings::getInstance()->getBool("ScraperRespectExclusions"),
+            Settings::getInstance()->getBool("RomMScrapeDownloadedOnly"))};
 
         for (auto game = games.cbegin(); game != games.cend(); ++game) {
             if (selector((*sys), (*game))) {

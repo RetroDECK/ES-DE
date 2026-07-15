@@ -536,17 +536,22 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
 
 std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
                                                          bool excludeRecursively,
-                                                         bool respectExclusions) const
+                                                         bool respectExclusions,
+                                                         bool excludeRomMRemote) const
 {
     std::vector<FileData*> out;
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
+        // Not-yet-downloaded RomM placeholder, skip it regardless of type when requested.
+        const bool isRomMRemote {excludeRomMRemote &&
+                                 (*it)->metadata.get("rommremote") == "true"};
+
         if (includeFolders && (*it)->getType() == FOLDER) {
-            if (!(respectExclusions && (*it)->getExcludeFromScraper()))
+            if (!(respectExclusions && (*it)->getExcludeFromScraper()) && !isRomMRemote)
                 out.emplace_back(*it);
         }
         else if ((*it)->getType() == GAME) {
-            if (!(respectExclusions && (*it)->getExcludeFromScraper()))
+            if (!(respectExclusions && (*it)->getExcludeFromScraper()) && !isRomMRemote)
                 out.emplace_back(*it);
         }
 
@@ -557,7 +562,7 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
 
         if ((*it)->getChildren().size() > 0) {
             std::vector<FileData*> subChildren {(*it)->getScrapeFilesRecursive(
-                includeFolders, excludeRecursively, respectExclusions)};
+                includeFolders, excludeRecursively, respectExclusions, excludeRomMRemote)};
             out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
         }
     }

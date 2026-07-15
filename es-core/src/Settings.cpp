@@ -170,6 +170,10 @@ void Settings::setDefaults()
     // Whether to silently sync the RomM library in the background on startup, so opted-in
     // systems are populated with remote entries without a manual "REFRESH ROMM LIBRARY NOW".
     mBoolMap["RomMSyncOnStartup"] = {true, true};
+    // Whether the multi-scraper should skip RomM entries that haven't been downloaded yet
+    // (rommremote == "true"), rather than scraping/searching for placeholder games the user
+    // may never actually download.
+    mBoolMap["RomMScrapeDownloadedOnly"] = {true, true};
 
     // UI settings.
     mStringMap["Theme"] = {"linear-es-de", "linear-es-de"};

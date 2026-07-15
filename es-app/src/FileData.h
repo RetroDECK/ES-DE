@@ -110,7 +110,8 @@ public:
                                              bool countAllGames = true) const;
     std::vector<FileData*> getScrapeFilesRecursive(bool includeFolders,
                                                    bool excludeRecursively,
-                                                   bool respectExclusions) const;
+                                                   bool respectExclusions,
+                                                   bool excludeRomMRemote) const;
 
     void addChild(FileData* file);
     void removeChild(FileData* file);

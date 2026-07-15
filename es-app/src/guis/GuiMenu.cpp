@@ -147,6 +147,20 @@ void GuiMenu::openRomMOptions()
         }
     });
 
+    // Whether the multi-scraper should skip not-yet-downloaded RomM entries.
+    auto rommScrapeDownloadedOnly = std::make_shared<SwitchComponent>();
+    rommScrapeDownloadedOnly->setState(
+        Settings::getInstance()->getBool("RomMScrapeDownloadedOnly"));
+    s->addWithLabel(_("ONLY SCRAPE DOWNLOADED GAMES"), rommScrapeDownloadedOnly);
+    s->addSaveFunc([rommScrapeDownloadedOnly, s] {
+        if (rommScrapeDownloadedOnly->getState() !=
+            Settings::getInstance()->getBool("RomMScrapeDownloadedOnly")) {
+            Settings::getInstance()->setBool("RomMScrapeDownloadedOnly",
+                                             rommScrapeDownloadedOnly->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // RomM server URL.
     auto rommServerURL = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
                                                          mMenuColorPrimary, ALIGN_RIGHT);
