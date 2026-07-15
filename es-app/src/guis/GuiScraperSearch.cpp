@@ -377,7 +377,11 @@ void GuiScraperSearch::search(ScraperSearchParams& params)
 
     mMD5Hash = "";
     params.md5Hash = "";
-    if (!Utils::FileSystem::isDirectory(params.game->getPath()) && mSearchType != MANUAL_MODE)
+    // A RomM remote entry (metadata "rommremote" == "true") has no real file on disk yet, so
+    // there's nothing to hash or size - skip straight to name-based matching for those instead
+    // of logging a spurious filesystem error for every such game.
+    if (!Utils::FileSystem::isDirectory(params.game->getPath()) && mSearchType != MANUAL_MODE &&
+        Utils::FileSystem::exists(params.game->getPath()))
         params.fileSize = Utils::FileSystem::getFileSize(params.game->getPath());
 
     // Only use MD5 file hash searching when in automatic mode.

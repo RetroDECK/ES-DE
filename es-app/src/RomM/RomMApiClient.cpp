@@ -161,10 +161,11 @@ namespace
 
         if (entry.HasMember("metadatum") && entry["metadatum"].IsObject()) {
             const auto& metadatum = entry["metadatum"];
-            // first_release_date is a Unix timestamp (seconds since epoch), not a string.
+            // first_release_date is a Unix timestamp in milliseconds since epoch, not a string -
+            // normalized to seconds here to match Rom::firstReleaseDate's documented meaning.
             if (metadatum.HasMember("first_release_date") &&
                 metadatum["first_release_date"].IsInt64())
-                rom.firstReleaseDate = metadatum["first_release_date"].GetInt64();
+                rom.firstReleaseDate = metadatum["first_release_date"].GetInt64() / 1000;
             if (metadatum.HasMember("average_rating") && metadatum["average_rating"].IsNumber())
                 rom.averageRating = metadatum["average_rating"].GetFloat();
             if (metadatum.HasMember("genres") && metadatum["genres"].IsArray()) {

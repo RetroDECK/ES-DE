@@ -41,7 +41,8 @@ public:
         std::string urlCover;
         std::vector<std::string> genres;
         std::vector<std::string> companies;
-        // Unix timestamp (seconds since epoch), or 0 if unset.
+        // Unix timestamp (seconds since epoch), or 0 if unset. RomM's API itself reports this
+        // in milliseconds - already divided down to seconds by the time it lands here.
         int64_t firstReleaseDate {0};
         float averageRating {0.0f};
         // Free-form string, e.g. "1-4" - not a pure integer in RomM's API.
