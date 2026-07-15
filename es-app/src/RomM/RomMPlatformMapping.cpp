@@ -30,6 +30,8 @@ RomMPlatformMapping::RomMPlatformMapping() { loadFile(); }
 
 const RomMSystemMapping* RomMPlatformMapping::getMapping(const std::string& systemName) const
 {
+    if (systemName.empty())
+        return nullptr;
     for (const auto& mapping : mMappings) {
         if (mapping.systemName == systemName)
             return &mapping;
@@ -37,10 +39,35 @@ const RomMSystemMapping* RomMPlatformMapping::getMapping(const std::string& syst
     return nullptr;
 }
 
+const RomMSystemMapping* RomMPlatformMapping::findByPlatformId(int rommPlatformId) const
+{
+    if (rommPlatformId < 0)
+        return nullptr;
+    for (const auto& mapping : mMappings) {
+        if (mapping.rommPlatformId == rommPlatformId)
+            return &mapping;
+    }
+    return nullptr;
+}
+
 void RomMPlatformMapping::setMapping(const RomMSystemMapping& mapping)
 {
+    if (mapping.rommPlatformId < 0)
+        return;
+
+    // Enforce a one-to-one relationship between RomM platforms and ES-DE systems: clear any
+    // other platform mapping that currently claims the same system name.
+    if (!mapping.systemName.empty()) {
+        for (auto& existing : mMappings) {
+            if (existing.rommPlatformId != mapping.rommPlatformId &&
+                existing.systemName == mapping.systemName) {
+                existing.systemName.clear();
+            }
+        }
+    }
+
     for (auto& existing : mMappings) {
-        if (existing.systemName == mapping.systemName) {
+        if (existing.rommPlatformId == mapping.rommPlatformId) {
             existing = mapping;
             saveFile();
             return;
@@ -48,6 +75,18 @@ void RomMPlatformMapping::setMapping(const RomMSystemMapping& mapping)
     }
     mMappings.emplace_back(mapping);
     saveFile();
+}
+
+void RomMPlatformMapping::setSystemNameForPlatform(int rommPlatformId,
+                                                   const std::string& systemName)
+{
+    for (auto& existing : mMappings) {
+        if (existing.rommPlatformId == rommPlatformId) {
+            existing.systemName = systemName;
+            saveFile();
+            return;
+        }
+    }
 }
 
 void RomMPlatformMapping::loadFile()
@@ -69,12 +108,14 @@ void RomMPlatformMapping::loadFile()
         return;
     }
 
-    for (pugi::xml_node node {doc.child("system")}; node; node = node.next_sibling("system")) {
+    for (pugi::xml_node node {doc.child("platform")}; node; node = node.next_sibling("platform")) {
         RomMSystemMapping mapping;
-        mapping.systemName = node.attribute("name").as_string();
-        mapping.syncEnabled = node.attribute("syncEnabled").as_bool();
         mapping.rommPlatformId = node.attribute("rommPlatformId").as_int(-1);
-        if (!mapping.systemName.empty())
+        mapping.platformSlug = node.attribute("platformSlug").as_string();
+        mapping.platformFsSlug = node.attribute("platformFsSlug").as_string();
+        mapping.systemName = node.attribute("systemName").as_string();
+        mapping.syncEnabled = node.attribute("syncEnabled").as_bool();
+        if (mapping.rommPlatformId >= 0)
             mMappings.emplace_back(mapping);
     }
 }
@@ -85,10 +126,12 @@ void RomMPlatformMapping::saveFile()
 
     pugi::xml_document doc;
     for (const auto& mapping : mMappings) {
-        pugi::xml_node node {doc.append_child("system")};
-        node.append_attribute("name").set_value(mapping.systemName.c_str());
-        node.append_attribute("syncEnabled").set_value(mapping.syncEnabled);
+        pugi::xml_node node {doc.append_child("platform")};
         node.append_attribute("rommPlatformId").set_value(mapping.rommPlatformId);
+        node.append_attribute("platformSlug").set_value(mapping.platformSlug.c_str());
+        node.append_attribute("platformFsSlug").set_value(mapping.platformFsSlug.c_str());
+        node.append_attribute("systemName").set_value(mapping.systemName.c_str());
+        node.append_attribute("syncEnabled").set_value(mapping.syncEnabled);
     }
 
 #if defined(_WIN64)

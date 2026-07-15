@@ -168,6 +168,19 @@ public:
     static inline std::unique_ptr<ImportRules> sImportRules;
     static inline bool sStartupExitSignal {false};
 
+    // A bundled es_systems.xml entry whose ROM directory doesn't exist yet, so it was never
+    // turned into a live SystemData. Lets a RomM platform with no local system yet still be
+    // offered for activation (see RomMPlatformMapping / GuiRomMSync::activatePendingSystems()).
+    // Populated by loadConfig() - see SystemData.cpp (Phase 4, next commit).
+    struct InactiveSystemTemplate {
+        std::string name;
+        std::string fullName;
+        std::string path;
+        // Raw, lowercased, comma-separated <platform> tag value.
+        std::string platform;
+    };
+    static inline std::vector<InactiveSystemTemplate> sInactiveSystemTemplates;
+
     const bool isCollection() const { return mIsCollectionSystem; }
     const bool isCustomCollection() const { return mIsCustomCollectionSystem; }
     const bool isGroupedCustomCollection() const { return mIsGroupedCustomCollectionSystem; }

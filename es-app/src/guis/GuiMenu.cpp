@@ -19,7 +19,9 @@
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "GamelistFileParser.h"
+#include "Log.h"
 #include "RomM/RomMApiClient.h"
+#include "RomM/RomMPlatformMapping.h"
 #include "Scripting.h"
 #include "SystemData.h"
 #include "UIModeController.h"
@@ -197,6 +199,115 @@ void GuiMenu::openRomMOptions()
         }
     });
     s->addRow(testConnectionRow);
+
+    // Sync.
+    ComponentListRow syncRow;
+    syncRow.addElement(std::make_shared<TextComponent>(_("SYNC"), Font::get(FONT_SIZE_MEDIUM),
+                                                        mMenuColorPrimary),
+                       true);
+    syncRow.addElement(mMenu.makeArrow(), false);
+    syncRow.makeAcceptInputHandler(std::bind(&GuiMenu::openRomMSyncOptions, this));
+    s->addRow(syncRow);
+
+    mWindow->pushGui(s);
+}
+
+void GuiMenu::openRomMSyncOptions()
+{
+    // A small submenu rather than putting "PLATFORM SYNC" directly under the top-level RomM
+    // screen, so a future custom-collection sync feature has a natural home here later without
+    // touching the top-level menu again.
+    auto s = new GuiSettings(_("SYNC"));
+
+    ComponentListRow platformSyncRow;
+    platformSyncRow.addElement(std::make_shared<TextComponent>(_("PLATFORM SYNC"),
+                                                                Font::get(FONT_SIZE_MEDIUM),
+                                                                mMenuColorPrimary),
+                               true);
+    platformSyncRow.addElement(mMenu.makeArrow(), false);
+    platformSyncRow.makeAcceptInputHandler(std::bind(&GuiMenu::openRomMPlatformSync, this));
+    s->addRow(platformSyncRow);
+
+    mWindow->pushGui(s);
+}
+
+void GuiMenu::openRomMPlatformSync()
+{
+    auto s = new GuiSettings(_("PLATFORM SYNC"));
+
+    // Fetch the RomM platform list, showing every platform the server has - not just the
+    // ones that happen to already have a matching ES-DE system - so the user can see and
+    // toggle sync for RomM's full catalog, not a subset filtered by local configuration. Each
+    // row commits immediately on toggle; there's no separate save/confirm step.
+    RomMApiClient client {Settings::getInstance()->getString("RomMServerURL"),
+                          Settings::getInstance()->getString("RomMToken")};
+    auto platforms = client.fetchPlatforms();
+
+    for (const auto& platform : platforms) {
+        const RomMSystemMapping* existingMapping {
+            RomMPlatformMapping::getInstance().findByPlatformId(platform.id)};
+
+        // Resolve which local system this platform corresponds to, if any: an already-assigned
+        // mapping takes priority, otherwise auto-match against active systems first, then
+        // against bundled-but-inactive system templates (collections are never offered, as
+        // they aren't backed by a real ROM directory and don't map to a single RomM platform).
+        std::string matchedSystemName;
+        bool matchedIsActive {false};
+        if (existingMapping != nullptr && !existingMapping->systemName.empty()) {
+            matchedSystemName = existingMapping->systemName;
+            matchedIsActive = true;
+        }
+        else {
+            for (auto system : SystemData::sSystemVector) {
+                if (system->hasPlatformId(PlatformIds::PLATFORM_IGNORE) || system->isCollection())
+                    continue;
+                for (const auto& platformId : system->getPlatformIds()) {
+                    if (RomMApiClient::platformNameMatches(PlatformIds::getPlatformName(platformId),
+                                                           platform.slug, platform.fsSlug)) {
+                        matchedSystemName = system->getName();
+                        matchedIsActive = true;
+                        break;
+                    }
+                }
+                if (matchedIsActive)
+                    break;
+            }
+            if (!matchedIsActive) {
+                for (const auto& tmpl : SystemData::sInactiveSystemTemplates) {
+                    for (const std::string& token :
+                        Utils::String::delimitedStringToVector(tmpl.platform, ",")) {
+                        if (RomMApiClient::platformNameMatches(Utils::String::trim(token),
+                                                               platform.slug, platform.fsSlug)) {
+                            matchedSystemName = tmpl.name;
+                            break;
+                        }
+                    }
+                    if (!matchedSystemName.empty())
+                        break;
+                }
+            }
+        }
+
+        const std::string label {Utils::String::toUpper(platform.name)};
+
+        auto syncToggle = std::make_shared<SwitchComponent>();
+        syncToggle->setState(existingMapping != nullptr && existingMapping->syncEnabled);
+
+        // Manual override of a wrong auto-match is out of scope for this screen - toggling on
+        // always binds to whatever was resolved above (or leaves systemName empty pending
+        // activation, see GuiRomMSync::activatePendingSystems()).
+        syncToggle->setCallback([platform, matchedSystemName, matchedIsActive, syncToggle] {
+            RomMSystemMapping mapping;
+            mapping.rommPlatformId = platform.id;
+            mapping.platformSlug = platform.slug;
+            mapping.platformFsSlug = platform.fsSlug;
+            mapping.systemName = matchedIsActive ? matchedSystemName : "";
+            mapping.syncEnabled = syncToggle->getState();
+            RomMPlatformMapping::getInstance().setMapping(mapping);
+        });
+
+        s->addWithLabel(label, syncToggle);
+    }
 
     mWindow->pushGui(s);
 }
