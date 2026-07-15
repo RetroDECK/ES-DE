@@ -503,6 +503,13 @@ namespace GamelistFileParser
                 if (!(*fit)->metadata.wasChanged() && !(*fit)->getDeletionFlag())
                     continue;
 
+                // RomM entries not yet downloaded are rebuilt fresh from the server on every
+                // sync, so they must never be persisted to gamelist.xml with a <path> that
+                // doesn't exist on disk. Once downloaded, "rommremote" is cleared and the
+                // entry is written normally on the next pass.
+                if ((*fit)->metadata.get("rommremote") == "true")
+                    continue;
+
                 // Check if the file already exists in the XML file.
                 // If it does, remove the entry before adding it back.
                 for (pugi::xml_node fileNode {root.child(tag.c_str())}; fileNode;

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Placeholder badge icon for RomM remote (not yet downloaded) games. -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   width="80"
+   height="92"
+   version="1.1"
+   viewBox="0 0 21.166666 24.341666"
+   id="svg_badge_romm">
+  <rect
+     style="fill:#000000;fill-opacity:1;stroke:none"
+     width="21.166666"
+     height="24.341666"
+     x="0"
+     y="0" />
+  <rect
+     style="fill:#e6e6e6;fill-opacity:1"
+     height="17.205626"
+     width="17.540144"
+     y="5.3001146"
+     x="1.8323106" />
+  <path
+     style="fill:#4a90d9;fill-opacity:1;stroke:#282828;stroke-width:0.22;stroke-linejoin:round;stroke-miterlimit:4"
+     d="M 9.6,7 H 11.76 V 14 H 13.86 L 10.68,19 7.5,14 H 9.6 Z" />
+  <rect
+     style="fill:#4a90d9;fill-opacity:1;stroke:#282828;stroke-width:0.22"
+     x="6"
+     y="20.2"
+     width="9.36"
+     height="1.6"
+     rx="0.3" />
+</svg>
