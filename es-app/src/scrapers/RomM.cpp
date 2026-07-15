@@ -28,6 +28,7 @@
 
 #include <cmath>
 #include <iomanip>
+#include <unordered_set>
 
 using namespace rapidjson;
 
@@ -42,7 +43,9 @@ namespace
         return baseURL;
     }
 
-    void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
+    void processGame(const Value& game,
+                     const std::string& baseURL,
+                     std::vector<ScraperSearchResult>& results)
     {
         if (!game.HasMember("id") || !game["id"].IsInt() || !game.HasMember("name") ||
             !game["name"].IsString())
@@ -55,9 +58,52 @@ namespace
         if (game.HasMember("summary") && game["summary"].IsString())
             result.mdl.set("desc", game["summary"].GetString());
 
-        if (game.HasMember("url_cover") && game["url_cover"].IsString()) {
-            result.coverUrl = game["url_cover"].GetString();
-            result.coverFormat = Utils::FileSystem::getExtension(result.coverUrl);
+        // Prefer the cover hosted by RomM itself over "url_cover", which links directly to the
+        // upstream provider using RomM's own credentials and gets rejected for direct client
+        // requests. Both fields are "" rather than absent when there's no cover, hence the
+        // length check.
+        const char* coverPathField {nullptr};
+        if (game.HasMember("path_cover_large") && game["path_cover_large"].IsString() &&
+            game["path_cover_large"].GetStringLength() > 0)
+            coverPathField = "path_cover_large";
+        else if (game.HasMember("path_cover_small") && game["path_cover_small"].IsString() &&
+                game["path_cover_small"].GetStringLength() > 0)
+            coverPathField = "path_cover_small";
+
+        if (coverPathField != nullptr) {
+            std::string coverPath {game[coverPathField].GetString()};
+            // The cache-busting "?ts=..." query RomM appends contains a raw, unencoded space.
+            coverPath = Utils::String::replace(coverPath, " ", "%20");
+            result.coverUrl = baseURL + coverPath;
+
+            const size_t queryPos {coverPath.find_first_of("?#")};
+            result.coverFormat = Utils::String::toLower(
+                Utils::FileSystem::getExtension(coverPath.substr(0, queryPos)));
+        }
+        else if (game.HasMember("url_cover") && game["url_cover"].IsString() &&
+                game["url_cover"].GetStringLength() > 0) {
+            // Fallback for when RomM has no cached cover. The upstream URL's real image format
+            // is only conveyed via a query parameter, so its path often ends in just the
+            // provider's API script name (e.g. ".php") - only trust a plausible image
+            // extension, otherwise skip the download rather than save the error response.
+            std::string coverPath {game["url_cover"].GetString()};
+            const size_t queryPos {coverPath.find_first_of("?#")};
+            if (queryPos != std::string::npos)
+                coverPath.resize(queryPos);
+
+            static const std::unordered_set<std::string> validImageExtensions {
+                ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"};
+
+            std::string detectedFormat {
+                Utils::String::toLower(Utils::FileSystem::getExtension(coverPath))};
+            if (validImageExtensions.find(detectedFormat) != validImageExtensions.cend()) {
+                result.coverUrl = game["url_cover"].GetString();
+                result.coverFormat = detectedFormat;
+            }
+            else {
+                LOG(LogDebug) << "RomM scraper: Ignoring non-image url_cover fallback for \""
+                             << game["name"].GetString() << "\": " << game["url_cover"].GetString();
+            }
         }
 
         if (game.HasMember("metadatum") && game["metadatum"].IsObject()) {
@@ -244,9 +290,11 @@ void RomMRequest::process(const std::unique_ptr<HttpReq>& req,
         return;
     }
 
+    const std::string baseURL {getBaseURL()};
+
     // The by-hash endpoint returns a single rom object directly.
     if (doc.HasMember("id")) {
-        processGame(doc, results);
+        processGame(doc, baseURL, results);
         return;
     }
 
@@ -254,7 +302,7 @@ void RomMRequest::process(const std::unique_ptr<HttpReq>& req,
     if (doc.HasMember("items") && doc["items"].IsArray()) {
         const Value& items {doc["items"]};
         for (SizeType i {0}; i < items.Size() && i < MAX_SCRAPER_RESULTS; ++i)
-            processGame(items[i], results);
+            processGame(items[i], baseURL, results);
         if (results.empty()) {
             LOG(LogDebug) << "RomMRequest::process(): No games found";
         }
