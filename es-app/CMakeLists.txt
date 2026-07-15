@@ -55,6 +55,7 @@ set(ES_HEADERS
     # Scrapers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraperResources.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/RomM.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/Scraper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/ScreenScraper.h
 
@@ -112,6 +113,7 @@ set(ES_SOURCES
     # Scrapers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraperResources.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/RomM.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/Scraper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/ScreenScraper.cpp
 
