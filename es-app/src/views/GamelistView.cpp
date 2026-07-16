@@ -965,6 +965,10 @@ void GamelistView::updateView(const CursorState& state)
                     if (file->getManualPath() != "")
                         badgeSlots.emplace_back(badgeInfo);
                 }
+                else if (badge == "romm") {
+                    if (file->metadata.get("rommid") != "")
+                        badgeSlots.emplace_back(badgeInfo);
+                }
                 else {
                     if (file->metadata.get(badge) == "true")
                         badgeSlots.emplace_back(badgeInfo);

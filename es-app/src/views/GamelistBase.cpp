@@ -944,6 +944,13 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                     }
                 }
 
+                if (indicators != "none" && (*it)->getType() == GAME && (*it)->getRomMRemote()) {
+                    if (indicators == "ascii")
+                        name = "@ " + name;
+                    else
+                        name = ViewController::DOWNLOAD_CHAR + "  " + name;
+                }
+
                 if (letterCase == LetterCase::UPPERCASE)
                     name = Utils::String::toUpper(name);
                 else if (letterCase == LetterCase::LOWERCASE)

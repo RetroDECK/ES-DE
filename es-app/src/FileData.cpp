@@ -120,6 +120,14 @@ const bool FileData::getHidden()
         return false;
 }
 
+const bool FileData::getRomMRemote()
+{
+    if (metadata.get("rommremote") == "true")
+        return true;
+    else
+        return false;
+}
+
 const bool FileData::getCountAsGame()
 {
     if (metadata.get("nogamecount") == "true")
@@ -543,8 +551,7 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
         // Not-yet-downloaded RomM placeholder, skip it regardless of type when requested.
-        const bool isRomMRemote {excludeRomMRemote &&
-                                 (*it)->metadata.get("rommremote") == "true"};
+        const bool isRomMRemote {excludeRomMRemote && (*it)->metadata.get("rommremote") == "true"};
 
         if (includeFolders && (*it)->getType() == FOLDER) {
             if (!(respectExclusions && (*it)->getExcludeFromScraper()) && !isRomMRemote)

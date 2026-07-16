@@ -161,6 +161,7 @@ public:
     static inline const std::string CONTROLLER_CHAR {Utils::String::wideStringToString(L"\uf11b")};
     static inline const std::string CROSSEDCIRCLE_CHAR {
         Utils::String::wideStringToString(L"\uf05e")};
+    static inline const std::string DOWNLOAD_CHAR {Utils::String::wideStringToString(L"\uf0ed")};
     static inline const std::string EXCLAMATION_CHAR {Utils::String::wideStringToString(L"\uf06a")};
     static inline const std::string FAVORITE_CHAR {Utils::String::wideStringToString(L"\uf005")};
     static inline const std::string FILTER_CHAR {Utils::String::wideStringToString(L"\uf0b0")};
@@ -175,6 +176,7 @@ public:
     static inline const std::string BRANCH_CHAR {"\uf18c"};
     static inline const std::string CONTROLLER_CHAR {"\uf11b"};
     static inline const std::string CROSSEDCIRCLE_CHAR {"\uf05e"};
+    static inline const std::string DOWNLOAD_CHAR {"\uf0ed"};
     static inline const std::string EXCLAMATION_CHAR {"\uf06a"};
     static inline const std::string FAVORITE_CHAR {"\uf005"};
     static inline const std::string FILTER_CHAR {"\uf0b0"};
