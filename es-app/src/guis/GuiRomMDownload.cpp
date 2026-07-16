@@ -295,6 +295,7 @@ void GuiRomMDownload::finishOnMainThread()
     // Clears the badge on the next onFileChanged() and lets GamelistFileParser's write-side
     // guard stop excluding this entry, so it gets persisted to gamelist.xml normally.
     mGame->metadata.set("rommremote", "false");
+    mGame->getSystem()->onMetaDataSavePoint();
     ViewController::getInstance()->onFileChanged(mGame, true);
 
     // Per design: no auto-launch, a second explicit select/launch is required.

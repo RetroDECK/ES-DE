@@ -352,6 +352,22 @@ void RomMLibrarySync::applyResults()
             // New (or renamed) remote-only entry. The synthetic path is exactly where the file
             // will land once downloaded, using the same name the user sees in the list - so no
             // other code needs to change once that happens.
+            //
+            // A rom the user already owns as a plain local file (not tracked via rommid, so
+            // byRommId above missed it) would collide here on filename - mChildrenByFilename is
+            // keyed by FileData::getKey(), just the filename for plain FileData (see FileData.h).
+            // Skip rather than risk mislinking by name alone - addChild() below would otherwise
+            // silently no-op on the collision and leak the newly constructed object.
+            const std::string desiredFileName {Utils::FileSystem::getFileName(desiredPath)};
+            const auto& childrenByFilename = rootFolder->getChildrenByFilename();
+            if (childrenByFilename.find(desiredFileName) != childrenByFilename.cend()) {
+                LOG(LogWarning) << "RomM sync: Skipping rom \"" << displayName
+                                << "\" for system \"" << system->getName()
+                                << "\" as the filename \"" << desiredFileName
+                                << "\" is already in use";
+                continue;
+            }
+
             FileData* newGame {new FileData(GAME, desiredPath, system->getSystemEnvData(), system)};
             newGame->metadata.set("name", displayName);
             if (!rom.summary.empty())
