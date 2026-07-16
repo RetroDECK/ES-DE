@@ -804,7 +804,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         }
     }
     else {
-        if (mClearGameFunc) {
+        if (mClearGameFunc && Utils::FileSystem::exists(scraperParams.game->getPath())) {
             auto clearSelf = [&] {
                 mClearGameFunc();
                 delete this;
@@ -827,22 +827,32 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
         // For the special case where a directory has a supported file extension and is therefore
         // interpreted as a file, don't add the delete button. If it's however a symlink then add
-        // the delete button as we should be able to remove such files.
+        // the delete button as we should be able to remove such files. Also allow it for a
+        // RomM-tracked directory, since ES-DE downloaded it and controls its contents.
+        const bool isRomMGame {scraperParams.game->metadata.get("rommid") != ""};
 #if defined(__ANDROID__)
-        if (mDeleteGameFunc && !Utils::FileSystem::isDirectory(scraperParams.game->getPath())) {
+        if (mDeleteGameFunc && Utils::FileSystem::exists(scraperParams.game->getPath()) &&
+            (isRomMGame || !Utils::FileSystem::isDirectory(scraperParams.game->getPath()))) {
 #else
-        if (mDeleteGameFunc && (Utils::FileSystem::isSymlink(scraperParams.game->getPath()) ||
-                                !Utils::FileSystem::isDirectory(scraperParams.game->getPath()))) {
+        if (mDeleteGameFunc && Utils::FileSystem::exists(scraperParams.game->getPath()) &&
+            (isRomMGame || Utils::FileSystem::isSymlink(scraperParams.game->getPath()) ||
+             !Utils::FileSystem::isDirectory(scraperParams.game->getPath()))) {
 #endif
             auto deleteFilesAndSelf = [&] {
                 mDeleteGameFunc();
                 delete this;
             };
-            auto deleteGameBtnFunc = [this, deleteFilesAndSelf] {
+            auto deleteGameBtnFunc = [this, deleteFilesAndSelf, isRomMGame] {
+                // A RomM game isn't fully removed - only its file and media go away - so the
+                // generic wording below would be misleading here.
                 mWindow->pushGui(
-                    new GuiMsgBox(_("THIS WILL DELETE THE GAME "
-                                    "FILE, ANY MEDIA FILES AND "
-                                    "THE GAMELIST.XML ENTRY\nARE YOU SURE?"),
+                    new GuiMsgBox(isRomMGame ? _("THIS WILL DELETE THE DOWNLOADED "
+                                                 "GAME FILE AND ANY MEDIA FILES, BUT "
+                                                 "THE GAME WILL REMAIN IN YOUR LIST "
+                                                 "AS NOT DOWNLOADED\nARE YOU SURE?") :
+                                               _("THIS WILL DELETE THE GAME "
+                                                 "FILE, ANY MEDIA FILES AND "
+                                                 "THE GAMELIST.XML ENTRY\nARE YOU SURE?"),
                                   _("YES"), deleteFilesAndSelf, _("NO"), nullptr, "", nullptr, "",
                                   nullptr, nullptr, false, true,
                                   (mRenderer->getIsVerticalOrientation() ?

@@ -414,7 +414,39 @@ void GuiGamelistOptions::openMetaDataEd()
     std::function<void()> clearGameBtnFunc;
     std::function<void()> deleteGameBtnFunc;
 
-    clearGameBtnFunc = [this, file] {
+    // For a RomM-tracked game, keep the name and RomM's own bookkeeping fields untouched -
+    // resetting those would rename the entry away from what the server calls it and sever
+    // its RomM link, breaking future syncs.
+    auto resetMetadataFunc = [file] {
+        const std::vector<MetaDataDecl>& mdd {file->metadata.getMDD()};
+        const bool isRomMGame {file->metadata.get("rommid") != ""};
+        for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
+            if (isRomMGame) {
+                if (it->key == "name" || it->key == "rommid" || it->key == "rommremote" ||
+                    it->key == "rommsize")
+                    continue;
+            }
+            if (it->key == "name") {
+                if (file->isArcadeGame()) {
+                    // If it's a MAME or Neo Geo game, expand the game name accordingly.
+                    file->metadata.set(it->key,
+                                       MameNames::getInstance().getCleanName(file->getCleanName()));
+                }
+                else {
+                    file->metadata.set(it->key, file->getDisplayName());
+                }
+                continue;
+            }
+            file->metadata.set(it->key, it->defaultValue);
+        }
+
+        // For the special case where a directory has a supported file extension and is
+        // therefore interpreted as a file, don't include the extension in the metadata name.
+        if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath()))
+            file->metadata.set("name", Utils::FileSystem::getStem(file->metadata.get("name")));
+    };
+
+    clearGameBtnFunc = [this, file, resetMetadataFunc] {
 #if defined(_WIN64)
         if (file->getType() == FOLDER) {
             LOG(LogInfo) << "Deleting media files and gamelist.xml entry for the folder \""
@@ -445,27 +477,7 @@ void GuiGamelistOptions::openMetaDataEd()
         }
         ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
 
-        // Manually reset all the metadata values, set the name to the actual file/folder name.
-        const std::vector<MetaDataDecl>& mdd {file->metadata.getMDD()};
-        for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
-            if (it->key == "name") {
-                if (file->isArcadeGame()) {
-                    // If it's a MAME or Neo Geo game, expand the game name accordingly.
-                    file->metadata.set(it->key,
-                                       MameNames::getInstance().getCleanName(file->getCleanName()));
-                }
-                else {
-                    file->metadata.set(it->key, file->getDisplayName());
-                }
-                continue;
-            }
-            file->metadata.set(it->key, it->defaultValue);
-        }
-
-        // For the special case where a directory has a supported file extension and is therefore
-        // interpreted as a file, don't include the extension in the metadata name.
-        if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath()))
-            file->metadata.set("name", Utils::FileSystem::getStem(file->metadata.get("name")));
+        resetMetadataFunc();
 
         // Update all collections where the game is present.
         if (file->getType() == GAME)
@@ -486,7 +498,40 @@ void GuiGamelistOptions::openMetaDataEd()
         file->setDeletionFlag(false);
     };
 
-    deleteGameBtnFunc = [this, file] {
+    deleteGameBtnFunc = [this, file, resetMetadataFunc] {
+        if (file->metadata.get("rommid") != "") {
+#if defined(_WIN64)
+            LOG(LogInfo) << "Deleting downloaded RomM game file \""
+                         << Utils::String::replace(file->getFullPath(), "/", "\\")
+#else
+            LOG(LogInfo) << "Deleting downloaded RomM game file \"" << file->getFullPath()
+#endif
+                         << "\" and all its media files, reverting the entry to not downloaded";
+            ViewController::getInstance()
+                ->getGamelistView(file->getSystem())
+                .get()
+                ->removeMedia(file);
+
+            // Multi-disc RomM downloads are ".m3u" wrapper directories, not plain files.
+            if (Utils::FileSystem::isDirectory(file->getPath()))
+                Utils::FileSystem::removeDirectory(file->getPath(), true);
+            else
+                Utils::FileSystem::removeFile(file->getPath());
+
+            resetMetadataFunc();
+
+            file->setDeletionFlag(true);
+            file->getSystem()->writeMetaData();
+            file->setDeletionFlag(false);
+
+            file->metadata.set("rommremote", "true");
+            file->getSystem()->onMetaDataSavePoint();
+
+            mWindow->invalidateCachedBackground();
+            ViewController::getInstance()->onFileChanged(file, true);
+            return;
+        }
+
 #if defined(_WIN64)
         LOG(LogInfo) << "Deleting game file \""
                      << Utils::String::replace(file->getFullPath(), "/", "\\")
