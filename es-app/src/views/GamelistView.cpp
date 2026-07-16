@@ -585,7 +585,7 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
             prompts.push_back(HelpPrompt("left/right", _("system")));
     }
 
-    FileData* cursor {getCursor()};
+    FileData* cursor {mPrimary->size() > 0 ? getCursor() : nullptr};
     const bool cursorIsRemote {cursor != nullptr && cursor->getType() == GAME &&
                                cursor->metadata.get("rommremote") == "true"};
     const std::string selectPromptText {cursorIsRemote ? _("download") : _("select")};
