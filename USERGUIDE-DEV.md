@@ -1426,13 +1426,15 @@ Not all systems are as simple to setup as what was described in the previous sec
 
 ### Apple II
 
-On Android only MAME4droid Current is supported for the apple2 system. Make sure you've read the _MAME4droid Current and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-current-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+On all supported platforms (except Haiku) the AppleWin RetroArch core is the default emulator for the apple2 system.
 
-On Linux the default emulator for the apple2 system is [LinApple](http://linapple.sourceforge.net), on macOS it's [Mariani](https://sh95014.github.io/AppleWin) (which is based on AppleWin) and on Windows it's [AppleWin](https://github.com/AppleWin/AppleWin). Additionally the alternative emulators [Mednafen](https://mednafen.github.io) and [MAME](https://www.mamedev.org) standalone are supported.
+Additionally on Android, MAME4droid Current is supported. Make sure you've read the _MAME4droid Current and MAME4droid_ section of the [Android documentation](ANDROID-DEV.md#mame4droid-current-and-mame4droid) and that your ROM directory is configured correctly inside the emulator.
+
+On desktop operating systems there are multiple additional supported emulators such as [LinApple](http://linapple.sourceforge.net) on Linux, [Mariani](https://sh95014.github.io/AppleWin) (which is based on AppleWin) on macOS and [AppleWin](https://github.com/AppleWin/AppleWin) on Windows. [Mednafen](https://mednafen.github.io) and [MAME](https://www.mamedev.org) standalone are also supported.
 
 Depending on which Linux operating system you're using, LinApple may not be readily available and you may have to build it from source code or obtain a binary from somewhere on the Internet. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details on where it needs to be installed. If you're using an OS with access to the AUR, such as Arch or Manjaro, then LinApple is available there. Note that you need to use the _linapple-git_ package as the regular _linapple_ package does not work correctly.
 
-Once the LinApple or AppleWin emulator is installed no additional configuration is required, just drop your games into the ~/ROMs/apple2 folder and launch them from inside ES-DE.
+The setup is simple, just drop your games into the ~/ROMs/apple2 folder and launch them from inside ES-DE.
 
 If using Mednafen you need to place some Apple II ROM files in the emulator firmware directory, refer to the Mednafen documentation for details about this.
 
@@ -4918,7 +4920,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file                 |
 | androidapps           | Android Apps                                   | _Placeholder_                     |                                   |              |                                      |
 | androidgames          | Android Games                                  | _Placeholder_                     |                                   |              |                                      |
-| apple2                | Apple II                                       | LinApple **(Standalone)** [L],<br>Mariani **(Standalone)** [M],<br>AppleWin **(Standalone)** [W] | Mednafen **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)**,<br>izapple2 **(Standalone)** [LW] | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
+| apple2                | Apple II                                       | AppleWin                          | LinApple **(Standalone)** [L],<br>Mariani **(Standalone)** [M],<br>AppleWin **(Standalone)** [W],<br>Mednafen **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)**,<br>izapple2 **(Standalone)** [LW] | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME - Current                    | MAME - Current [Software list],<br>MAME **(Standalone)**,<br>MAME [Software list] **(Standalone)**,<br>KEGS **(Standalone)** | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>HBMAME,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [LW],<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Kronos [LW],<br>DICE,<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)**,<br>Supermodel Dojo **(Standalone)** [W],<br>Lindbergh Loader **(Standalone)** [L],<br>Linux Loader **(Standalone)** [LW],<br>PCSX2x6 **(Standalone)**,<br>Play! Arcade **(Standalone)**,<br>MFME **(Standalone)** [LW],<br> _Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | arcadia               | Emerson Arcadia 2001                           | AmiArcadia                        | MAME - Current,<br>MAME **(Standalone)**,<br>WinArcadia **(Standalone)** [W] | No           | Single archive or ROM file           |

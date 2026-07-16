@@ -16,6 +16,7 @@
 * Added a "scaleFactor" property to the image element to allow for lower-resolution SVG rasterization
 * Added a "scaleFactor" property to the animation element to allow for lower-resolution Lottie animation rasterization
 * Added support for "customCollectionNameGrouped" and "customCollectionNameGames" values to the text element metadata property
+* Added the AppleWin RetroArch core as the default emulator for the apple2 system
 * Added the IroGB RetroArch core as an alternative emulator for the gb and gbc systems
 * Added the Tia RetroArch core as an alternative emulator for the atari2600 system
 * Added the MAME - Current RetroArch core as an alternative emulator for the neogeo system
