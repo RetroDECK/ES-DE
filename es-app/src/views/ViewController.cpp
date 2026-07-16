@@ -1571,13 +1571,19 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
             system->getIndex()->setKidModeFilters();
             std::shared_ptr<GamelistView> newView {getGamelistView(system)};
 
+            // This needs to happen before setCursor() below, as that call can synchronously
+            // trigger a help prompt refresh (via the cursor-changed callback), which reads
+            // mCurrentView. Leaving mCurrentView unset until after setCursor() meant that
+            // refresh would run with mCurrentView still null (or pointing at the old, just
+            // destroyed view), so the help system's component registration was never updated
+            // to reference the new view - leaving it pointing at freed memory.
+            if (isCurrent)
+                mCurrentView = newView;
+
             // Make sure we don't attempt to set the cursor to a nonexistent entry.
             auto children = system->getRootFolder()->getChildrenRecursive();
             if (std::find(children.cbegin(), children.cend(), cursor) != children.cend())
                 newView->setCursor(cursor);
-
-            if (isCurrent)
-                mCurrentView = newView;
 
             newView->populateCursorHistory(cursorHistoryTemp);
             // This is required to get the game count updated if the favorite metadata value has
