@@ -16,12 +16,6 @@
             <entry>com.explusalpha.A2600Emu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
-    <emulator name="AETHERSX2">
-        <!-- Sony PlayStation 2 emulator AetherSX2 -->
-        <rule type="androidpackage">
-            <entry>xyz.aethersx2.android/.EmulationActivity</entry>
-        </rule>
-    </emulator>
     <emulator name="APS3E">
         <!-- Sony PlayStation 3 emulator aPS3e -->
         <rule type="androidpackage">
@@ -391,6 +385,24 @@
         <!-- Nintendo NES and Famicom emulator Nesoid -->
         <rule type="androidpackage">
             <entry>com.androidemu.nes/.EmulatorActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="NETHERSX2">
+        <!-- Sony PlayStation 2 emulator NetherSX2 (AetherSX2) -->
+        <rule type="androidpackage">
+            <entry>xyz.aethersx2.android/.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="NETHERSX2-TURNIP">
+        <!-- Sony PlayStation 2 emulator NetherSX2-Turnip -->
+        <rule type="androidpackage">
+            <entry>xyz.aethersx2.tturnip/xyz.aethersx2.android.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="NETHERSX2-TURNIP-CLASSIC">
+        <!-- Sony PlayStation 2 emulator NetherSX2-Turnip Classic -->
+        <rule type="androidpackage">
+            <entry>xyz.aethersx2.cturnip/xyz.aethersx2.android.EmulationActivity</entry>
         </rule>
     </emulator>
     <emulator name="NGP-EMU">
