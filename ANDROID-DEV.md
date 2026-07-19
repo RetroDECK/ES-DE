@@ -243,14 +243,6 @@ https://f-droid.org/en/packages/com.retroarch
 
 Be aware that you need to manually install every core you want to use from inside the RetroArch user interface, and you also need to install all necessary BIOS files. The Android release of RetroArch is pretty unforgiving and will usually just present a black screen on game launch if the core file or the BIOS file is missing, and it will hang there until Android realizes the app is not responding and displays a popup where you can choose to kill the process.
 
-### AetherSX2 / NetherSX2
-
-Although the emulator entry is named AetherSX2 the recommended release of this emulator is actually the NetherSX2 patched version as the AetherSX2 release on the Google Play store doesn't work correctly and probably can't be used with ES-DE at all. You'll need to search for this APK online, the filename you'll want is `15210-v1.5-4248-noads.apk`
-
-If you prefer to apply the NetherSX2 patch yourself (i.e. build the APK) then you can find all relevant information here:
-
-https://github.com/Trixarian/NetherSX2-patch
-
 ### aPS3e
 
 This emulator can be installed from the Play store or downloaded from their GitHub site. There's both a Premium (paid) version and a free version available on the Play store.
@@ -558,6 +550,16 @@ https://play.google.com/store/apps/details?id=com.fastemulator.gbc
 This emulator can be downloaded from their GitHub site.
 
 https://github.com/proninyaroslav/nesoid/releases
+
+### NetherSX2 (AetherSX2)
+
+Although this emulator is named NetherSX2 it's actually a patched version of AetherSX2 (which hasn't been updated in years and which probably can't be used with ES-DE at all). You'll need to search for the APK online, the filename you want is `15210-v1.5-4248-noads.apk`
+
+If you prefer to apply the NetherSX2 patch yourself (i.e. to build the APK) then you can find all relevant information here:
+
+https://github.com/Trixarian/NetherSX2-patch
+
+There is also support in ES-DE for the Turnip and Turnip Classic builds of NetherSX2.
 
 ### NooDS
 
@@ -1006,7 +1008,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | CannonBall (OutRun),<br>Craft (Minecraft),<br>Mr.Boom (Bomberman),<br>NXEngine (Cave Story),<br>drs (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War,,<br>idTech4A++ **(Standalone)** | Yes for ECWolf |                                      |
-| ps2                   | Sony PlayStation 2                             | AetherSX2 **(Standalone)**        | ARMSX2 **(Standalone)**,<br>EmuCoreX **(Standalone)**,<br>Play! **(Standalone)**            | Yes except for Play! |                                      |
+| ps2                   | Sony PlayStation 2                             | NetherSX2 **(Standalone)**        | NetherSX2-Turnip **(Standalone)**,<br>NetherSX2-Turnip Classic **(Standalone)**,<br>AetherSX2 **(Standalone)**,<br>ARMSX2 **(Standalone)**,<br>EmuCoreX **(Standalone)**,<br>Play! **(Standalone)**            | Yes except for Play! |                                      |
 | ps3                   | Sony PlayStation 3                             | aPS3e Game Serial **(Standalone)** | aPS3e Directory **(Standalone)**,<br>aPS3e ISO **(Standalone)** | Yes          | See the specific _Sony PlayStation 3_ section in the user guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file               |
