@@ -29,7 +29,8 @@ namespace
     // entry's media gets cached under the extension-stripped name while still remote (path
     // doesn't exist yet) but looked up under the extension-included name once downloaded (path
     // is now a real directory). Migrate anything caught by that flip, or it disappears.
-    void migrateMultiDiscMedia(const std::string& oldName, const std::string& newName,
+    void migrateMultiDiscMedia(const std::string& oldName,
+                               const std::string& newName,
                                const std::string& systemName)
     {
         const std::string mediaRoot {FileData::getMediaDirectory() + systemName};
@@ -37,8 +38,7 @@ namespace
             return;
 
         for (const std::string& path : Utils::FileSystem::getDirContent(mediaRoot, true)) {
-            if (Utils::FileSystem::isDirectory(path) ||
-                Utils::FileSystem::getStem(path) != oldName)
+            if (Utils::FileSystem::isDirectory(path) || Utils::FileSystem::getStem(path) != oldName)
                 continue;
             const std::string newPath {Utils::FileSystem::getParent(path) + "/" + newName +
                                        Utils::FileSystem::getExtension(path)};
@@ -134,8 +134,8 @@ void GuiRomMDownload::downloadSingleFileInBackground()
                 mErrorMessage = _("NETWORK ERROR, COULD NOT REACH THE ROMM SERVER");
             }
             else {
-                mErrorMessage = Utils::String::format(
-                    _("DOWNLOAD FAILED: %s"), request.getErrorMsg().c_str());
+                mErrorMessage =
+                    Utils::String::format(_("DOWNLOAD FAILED: %s"), request.getErrorMsg().c_str());
             }
             LOG(LogWarning) << "RomM download: Failed to download \"" << mGame->getFileName()
                             << "\": " << request.getErrorMsg();
@@ -207,12 +207,12 @@ void GuiRomMDownload::downloadMultiDiscInBackground(const RomMApiClient::Rom& ro
                     mErrorMessage = _("AUTHENTICATION FAILED, CHECK THE ROMM CREDENTIALS");
                 }
                 else if (status == HttpReq::REQ_IO_ERROR ||
-                        status == HttpReq::REQ_UNDEFINED_ERROR) {
+                         status == HttpReq::REQ_UNDEFINED_ERROR) {
                     mErrorMessage = _("NETWORK ERROR, COULD NOT REACH THE ROMM SERVER");
                 }
                 else {
-                    mErrorMessage = Utils::String::format(
-                        _("DOWNLOAD FAILED: %s"), request.getErrorMsg().c_str());
+                    mErrorMessage = Utils::String::format(_("DOWNLOAD FAILED: %s"),
+                                                          request.getErrorMsg().c_str());
                 }
                 LOG(LogWarning) << "RomM download: Failed to download \"" << file.fileName
                                 << "\": " << request.getErrorMsg();
@@ -221,8 +221,8 @@ void GuiRomMDownload::downloadMultiDiscInBackground(const RomMApiClient::Rom& ro
             else {
                 const long downloaded {request.getDownloadedBytes()};
                 if (totalBytes > 0) {
-                    mPercentage = static_cast<int>(
-                        ((completedBytes + downloaded) * 100) / totalBytes);
+                    mPercentage =
+                        static_cast<int>(((completedBytes + downloaded) * 100) / totalBytes);
                 }
             }
         }
@@ -231,8 +231,7 @@ void GuiRomMDownload::downloadMultiDiscInBackground(const RomMApiClient::Rom& ro
             return;
 
         completedBytes += file.sizeBytes;
-        if (!isM3u &&
-            file.category != "manual" && file.category != "soundtrack" &&
+        if (!isM3u && file.category != "manual" && file.category != "soundtrack" &&
             file.category != "screenshot")
             discFileNames.emplace_back(file.fileName);
     }
@@ -279,9 +278,8 @@ void GuiRomMDownload::finishOnMainThread()
         LOG(LogError) << "RomM download: Downloaded \"" << mTmpPath
                       << "\" but couldn't rename it to \"" << mGame->getPath() << "\"";
         removeTmpPath();
-        mWindow->pushGui(
-            new GuiMsgBox(_("DOWNLOAD SUCCEEDED BUT THE FILE COULDN'T BE SAVED, CHECK "
-                            "PERMISSIONS ON THE ROM DIRECTORY")));
+        mWindow->pushGui(new GuiMsgBox(_("DOWNLOAD SUCCEEDED BUT THE FILE COULDN'T BE SAVED, CHECK "
+                                         "PERMISSIONS ON THE ROM DIRECTORY")));
         return;
     }
 
@@ -299,9 +297,8 @@ void GuiRomMDownload::finishOnMainThread()
     ViewController::getInstance()->onFileChanged(mGame, true);
 
     // Per design: no auto-launch, a second explicit select/launch is required.
-    mWindow->pushGui(new GuiMsgBox(
-        Utils::String::format(_("%s HAS BEEN DOWNLOADED"),
-                              Utils::String::toUpper(mGame->metadata.get("name")).c_str())));
+    mWindow->pushGui(new GuiMsgBox(Utils::String::format(
+        _("%s HAS BEEN DOWNLOADED"), Utils::String::toUpper(mGame->metadata.get("name")).c_str())));
 }
 
 void GuiRomMDownload::update(int deltaTime)

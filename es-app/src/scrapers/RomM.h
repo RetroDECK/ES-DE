@@ -20,15 +20,15 @@ class RomMRequest : public ScraperHttpRequest
 {
 public:
     RomMRequest(std::vector<ScraperSearchResult>& resultsWrite,
-               const std::string& url,
-               const std::string& bearerToken)
+                const std::string& url,
+                const std::string& bearerToken)
         : ScraperHttpRequest(resultsWrite, url, bearerToken)
     {
     }
 
 protected:
     void process(const std::unique_ptr<HttpReq>& req,
-                std::vector<ScraperSearchResult>& results) override;
+                 std::vector<ScraperSearchResult>& results) override;
 };
 
 #endif // ES_APP_SCRAPERS_ROMM_H

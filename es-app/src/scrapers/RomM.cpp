@@ -67,7 +67,7 @@ namespace
             game["path_cover_large"].GetStringLength() > 0)
             coverPathField = "path_cover_large";
         else if (game.HasMember("path_cover_small") && game["path_cover_small"].IsString() &&
-                game["path_cover_small"].GetStringLength() > 0)
+                 game["path_cover_small"].GetStringLength() > 0)
             coverPathField = "path_cover_small";
 
         if (coverPathField != nullptr) {
@@ -81,7 +81,7 @@ namespace
                 Utils::FileSystem::getExtension(coverPath.substr(0, queryPos)));
         }
         else if (game.HasMember("url_cover") && game["url_cover"].IsString() &&
-                game["url_cover"].GetStringLength() > 0) {
+                 game["url_cover"].GetStringLength() > 0) {
             // Fallback for when RomM has no cached cover. The upstream URL's real image format
             // is only conveyed via a query parameter, so its path often ends in just the
             // provider's API script name (e.g. ".php") - only trust a plausible image
@@ -102,7 +102,8 @@ namespace
             }
             else {
                 LOG(LogDebug) << "RomM scraper: Ignoring non-image url_cover fallback for \""
-                             << game["name"].GetString() << "\": " << game["url_cover"].GetString();
+                              << game["name"].GetString()
+                              << "\": " << game["url_cover"].GetString();
             }
         }
 
@@ -134,18 +135,17 @@ namespace
                 // log the raw value so a genuine parsing/unit bug can be told apart from bad
                 // upstream data.
                 if (year < 1950 || year > currentYear + 2) {
-                    LOG(LogWarning)
-                        << "RomM scraper: Ignoring implausible release date for \""
-                        << game["name"].GetString() << "\" (raw timestamp " << rawTimestampMs
-                        << " ms -> year " << year << ")";
+                    LOG(LogWarning) << "RomM scraper: Ignoring implausible release date for \""
+                                    << game["name"].GetString() << "\" (raw timestamp "
+                                    << rawTimestampMs << " ms -> year " << year << ")";
                 }
                 else {
                     // Formatted directly to MD_DATE's raw storage format, see the
                     // "releasedate" default value ("19700101T000000") in MetaData.cpp.
                     std::stringstream dateStream;
                     dateStream << std::setfill('0') << std::setw(4) << year << std::setw(2)
-                              << (utcTime.tm_mon + 1) << std::setw(2) << utcTime.tm_mday
-                              << "T000000";
+                               << (utcTime.tm_mon + 1) << std::setw(2) << utcTime.tm_mday
+                               << "T000000";
                     result.mdl.set("releasedate", dateStream.str());
                 }
             }
@@ -225,8 +225,7 @@ void romm_generate_scraper_requests(const ScraperSearchParams& params,
         Settings::getInstance()->getBool("ScraperSearchFileHash")) {
         const std::string path {baseURL +
                                 "/api/roms/by-hash?md5_hash=" + HttpReq::urlEncode(params.md5Hash)};
-        requests.push(
-            std::unique_ptr<ScraperRequest>(new RomMRequest(results, path, token)));
+        requests.push(std::unique_ptr<ScraperRequest>(new RomMRequest(results, path, token)));
         return;
     }
 
@@ -265,8 +264,7 @@ void romm_generate_scraper_requests(const ScraperSearchParams& params,
                         << params.system->getName() << "\", search will be inaccurate";
     }
 
-    requests.push(
-        std::unique_ptr<ScraperRequest>(new RomMRequest(results, path, token)));
+    requests.push(std::unique_ptr<ScraperRequest>(new RomMRequest(results, path, token)));
 }
 
 void RomMRequest::process(const std::unique_ptr<HttpReq>& req,

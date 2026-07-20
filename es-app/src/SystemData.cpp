@@ -1117,8 +1117,7 @@ bool SystemData::loadConfig()
                 // Record this as a bundled-but-currently-inactive system (see
                 // RomMPlatformMapping / GuiRomMSync).
                 if (!isPlaceholder) {
-                    sInactiveSystemTemplates.push_back(
-                        {name, fullname, path, platformList});
+                    sInactiveSystemTemplates.push_back({name, fullname, path, platformList});
                 }
                 continue;
             }
@@ -1195,8 +1194,7 @@ bool SystemData::loadConfig()
                 // systems reach here with an existing-but-empty directory rather than hitting
                 // the "directory doesn't exist" branch above.
                 if (!isPlaceholder) {
-                    sInactiveSystemTemplates.push_back(
-                        {name, fullname, path, platformList});
+                    sInactiveSystemTemplates.push_back({name, fullname, path, platformList});
                 }
                 delete newSys;
             }

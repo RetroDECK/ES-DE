@@ -361,9 +361,8 @@ void RomMLibrarySync::applyResults()
             const std::string desiredFileName {Utils::FileSystem::getFileName(desiredPath)};
             const auto& childrenByFilename = rootFolder->getChildrenByFilename();
             if (childrenByFilename.find(desiredFileName) != childrenByFilename.cend()) {
-                LOG(LogWarning) << "RomM sync: Skipping rom \"" << displayName
-                                << "\" for system \"" << system->getName()
-                                << "\" as the filename \"" << desiredFileName
+                LOG(LogWarning) << "RomM sync: Skipping rom \"" << displayName << "\" for system \""
+                                << system->getName() << "\" as the filename \"" << desiredFileName
                                 << "\" is already in use";
                 continue;
             }
