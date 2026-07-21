@@ -776,6 +776,13 @@
             <entry>%ESPATH%\..\Emulators\VBA-M\visualboyadvance-m.exe</entry>
         </rule>
     </emulator>
+    <emulator name="VEESEM">
+        <!-- VTech V.Smile emulator veesem -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\veesem\veesem.exe</entry>
+            <entry>%ESPATH%\..\Emulators\veesem\veesem.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VICE-X64SC">
         <!-- Commodore 8-bit computer emulator VICE (x64sc accurate) -->
         <rule type="staticpath">

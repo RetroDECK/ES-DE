@@ -154,6 +154,7 @@ Emulators\tic80\tic80.exe
 Emulators\Triforce\DolphinWX.exe
 Emulators\tsugaru\Tsugaru_CUI.exe
 Emulators\VBA-M\visualboyadvance-m.exe
+Emulators\veesem\veesem.exe
 Emulators\VICE\x64sc.exe
 Emulators\VICE\bin\x64sc.exe
 Emulators\VICE\xplus4.exe

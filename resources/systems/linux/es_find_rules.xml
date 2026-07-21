@@ -1418,6 +1418,20 @@
             <entry>~/.local/share/flatpak/exports/bin/com.vba_m.visualboyadvance-m</entry>
         </rule>
     </emulator>
+    <emulator name="VEESEM">
+        <!-- VTech V.Smile emulator veesem -->
+        <rule type="systempath">
+            <entry>veesem</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/veesem/veesem</entry>
+            <entry>~/.local/share/applications/veesem/veesem</entry>
+            <entry>~/.local/bin/veesem/veesem</entry>
+            <entry>~/bin/veesem/veesem</entry>
+            <entry>/var/lib/flatpak/exports/bin/com.github.sp1187.veesem</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.github.sp1187.veesem</entry>
+        </rule>
+    </emulator>
     <emulator name="VICE-X64SC">
         <!-- Commodore 8-bit computer emulator VICE (x64sc accurate) -->
         <rule type="systempath">
