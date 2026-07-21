@@ -9,6 +9,8 @@
 #include "HttpReq.h"
 #include "Log.h"
 #include "RomM/RomMUtils.h"
+#include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
@@ -16,6 +18,7 @@
 #include <chrono>
 #include <cstdio>
 #include <thread>
+#include <unordered_set>
 
 using namespace rapidjson;
 
@@ -144,6 +147,10 @@ namespace
             rom.fsSizeBytes = entry["fs_size_bytes"].GetInt64();
         if (entry.HasMember("url_cover") && entry["url_cover"].IsString())
             rom.urlCover = entry["url_cover"].GetString();
+        if (entry.HasMember("path_cover_large") && entry["path_cover_large"].IsString())
+            rom.pathCoverLarge = entry["path_cover_large"].GetString();
+        if (entry.HasMember("path_cover_small") && entry["path_cover_small"].IsString())
+            rom.pathCoverSmall = entry["path_cover_small"].GetString();
         // revision/regions/languages are top-level fields on RomM's rom schema (not nested
         // under metadatum) - RomM parses them out of the filename itself server-side.
         if (entry.HasMember("revision") && entry["revision"].IsString())
@@ -321,4 +328,58 @@ std::string RomMApiClient::getFileDownloadUrl(int fileId, const std::string& fil
 {
     return buildUrl("/api/roms/" + std::to_string(fileId) + "/files/content/" +
                     HttpReq::urlEncode(fileName));
+}
+
+namespace
+{
+    // Used by resolveCoverUrl(): treats path as a server-relative path (RomM's own re-hosted
+    // asset), prefixing serverURL and fixing up the cache-busting query's raw unencoded space,
+    // exactly as scrapers/RomM.cpp's processGame() already does inline for
+    // path_cover_large/path_cover_small.
+    std::string resolveServerRelativePath(const std::string& serverURL,
+                                          const std::string& path,
+                                          std::string& outFormat)
+    {
+        std::string fixedPath {Utils::String::replace(path, " ", "%20")};
+        const size_t queryPos {fixedPath.find_first_of("?#")};
+        outFormat =
+            Utils::String::toLower(Utils::FileSystem::getExtension(fixedPath.substr(0, queryPos)));
+        return serverURL + fixedPath;
+    }
+
+    // Used by resolveCoverUrl(): the upstream-hosted fallback URL is only trusted when its path
+    // (ignoring any query string) ends in a plausible image extension - RomM/IGDB URLs otherwise
+    // often end in just the provider's API script name (e.g. ".php"), with the real format only
+    // conveyed via a query parameter.
+    std::string resolveUpstreamUrl(const std::string& url, std::string& outFormat)
+    {
+        std::string path {url};
+        const size_t queryPos {path.find_first_of("?#")};
+        if (queryPos != std::string::npos)
+            path.resize(queryPos);
+
+        static const std::unordered_set<std::string> validImageExtensions {
+            ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"};
+
+        const std::string detectedFormat {
+            Utils::String::toLower(Utils::FileSystem::getExtension(path))};
+        if (validImageExtensions.find(detectedFormat) == validImageExtensions.cend())
+            return "";
+
+        outFormat = detectedFormat;
+        return url;
+    }
+} // namespace
+
+std::string RomMApiClient::resolveCoverUrl(const std::string& serverURL,
+                                           const Rom& rom,
+                                           std::string& outFormat)
+{
+    if (!rom.pathCoverLarge.empty())
+        return resolveServerRelativePath(serverURL, rom.pathCoverLarge, outFormat);
+    if (!rom.pathCoverSmall.empty())
+        return resolveServerRelativePath(serverURL, rom.pathCoverSmall, outFormat);
+    if (!rom.urlCover.empty())
+        return resolveUpstreamUrl(rom.urlCover, outFormat);
+    return "";
 }

@@ -11,6 +11,7 @@
 #include "Log.h"
 #include "RomM/RomMCache.h"
 #include "RomM/RomMLocalFavorites.h"
+#include "RomM/RomMRemoteMediaLoader.h"
 #include "RomM/RomMUtils.h"
 #include "Settings.h"
 #include "SystemData.h"
@@ -97,6 +98,16 @@ namespace
         return displayNames;
     }
 
+    // Resolves and records rom's cover source URL with RomMRemoteMediaLoader, so the gamelist
+    // view can lazily fetch the actual image bytes once the user browses to this rom - see
+    // RomMRemoteMediaLoader.h. No network I/O happens here; the URL is derived purely from
+    // fields already present in rom (parsed at sync time by RomMApiClient::parseRom()).
+    void registerRemoteMedia(const RomMApiClient::Rom& rom, const std::string& serverURL)
+    {
+        std::string coverFormat;
+        const std::string coverUrl {RomMApiClient::resolveCoverUrl(serverURL, rom, coverFormat)};
+        RomMRemoteMediaLoader::getInstance().setCoverSource(rom.id, coverUrl, coverFormat);
+    }
 } // namespace
 
 RomMLibrarySync::RomMLibrarySync(bool forceFullResync)
@@ -331,6 +342,15 @@ void RomMLibrarySync::fetchInBackground()
 
 void RomMLibrarySync::applyResults()
 {
+    // Used below to resolve each rom's cover source URL for RomMRemoteMediaLoader - read fresh
+    // here (main thread) rather than threading it through from fetchInBackground(), since it's
+    // a plain settings read with no threading concerns of its own. Trailing slash stripped to
+    // match RomMApiClient's own normalization, since resolveCoverUrl() just concatenates this
+    // directly with a leading-slash path.
+    std::string serverURL {Settings::getInstance()->getString("RomMServerURL")};
+    while (!serverURL.empty() && serverURL.back() == '/')
+        serverURL.pop_back();
+
     for (auto& result : mResults) {
         SystemData* system {result.system};
         FileData* rootFolder {system->getRootFolder()};
@@ -394,6 +414,7 @@ void RomMLibrarySync::applyResults()
                     if (!rom.summary.empty())
                         existing->metadata.set("desc", rom.summary);
                     RomMUtils::applyRomMData(existing, rom);
+                    registerRemoteMedia(rom, serverURL);
                     continue;
                 }
                 // The computed name changed since the last sync (e.g. a newly-added sibling rom
@@ -431,6 +452,7 @@ void RomMLibrarySync::applyResults()
             if (!carriedOverLastPlayed.empty())
                 newGame->metadata.set("lastplayed", carriedOverLastPlayed);
             RomMUtils::applyRomMData(newGame, rom);
+            registerRemoteMedia(rom, serverURL);
             rootFolder->addChild(newGame);
             fileIndex->addToIndex(newGame);
             addedAny = true;
@@ -452,6 +474,7 @@ void RomMLibrarySync::applyResults()
             // Gone from RomM entirely - drop any lingering local-only favorite intent for it too.
             RomMLocalFavorites::getInstance().setFavorite(
                 atoi(file->metadata.get("rommid").c_str()), false);
+            RomMRemoteMediaLoader::getInstance().forget(atoi(file->metadata.get("rommid").c_str()));
             ViewController::getInstance()->getGamelistView(system)->remove(file, false);
         }
 

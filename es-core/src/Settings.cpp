@@ -178,6 +178,10 @@ void Settings::setDefaults()
     // Whether to sort downloaded games above not-yet-downloaded (remote) RomM entries,
     // independently of the FavoritesFirst setting.
     mBoolMap["RomMDownloadedFirst"] = {true, true};
+    // Whether to lazily fetch and display a not-yet-downloaded RomM entry's cover while
+    // browsing the gamelist (RomMRemoteMediaLoader), independent of RomM integration as a
+    // whole - lets a user on a slow/metered connection opt out of this extra network traffic.
+    mBoolMap["RomMShowRemoteMedia"] = {true, true};
 
     // UI settings.
     mStringMap["Theme"] = {"linear-es-de", "linear-es-de"};

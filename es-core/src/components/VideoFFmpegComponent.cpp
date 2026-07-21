@@ -194,7 +194,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
     if (!mVisible || mOpacity == 0.0f || mThemeOpacity == 0.0f)
         return;
 
-    if (!mHasVideo && mStaticImagePath == "")
+    if (!mHasVideo && mStaticImagePath == "" && !mStaticImageFromMemory)
         return;
 
     if (mIterationCount != 0 && mPlayCount == mIterationCount) {

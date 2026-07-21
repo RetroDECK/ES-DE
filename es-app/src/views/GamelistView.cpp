@@ -9,11 +9,14 @@
 #include "views/GamelistView.h"
 
 #include "CollectionSystemsManager.h"
+#include "RomM/RomMRemoteMediaLoader.h"
 #include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "UIModeController.h"
 #include "animations/LambdaAnimation.h"
 #include "utils/LocalizationUtil.h"
+
+#include <cstdlib>
 
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 325
@@ -449,6 +452,18 @@ void GamelistView::update(int deltaTime)
             anim->advanceAnimation(0, deltaTime);
     }
 
+    // Poll any in-flight RomM cover fetch. If the entry we're currently waiting on just
+    // finished (successfully or not), re-run updateView() so the newly-arrived image (or the
+    // default image, on failure) gets displayed without requiring the user to move the cursor
+    // again.
+    RomMRemoteMediaLoader::getInstance().update();
+    if (mPendingRomMMediaId != -1 &&
+        RomMRemoteMediaLoader::getInstance().getCoverState(mPendingRomMMediaId) !=
+            RomMRemoteMediaLoader::State::IN_PROGRESS) {
+        mPendingRomMMediaId = -1;
+        updateView(CursorState::CURSOR_STOPPED, true);
+    }
+
     if (mTriggerEvent) {
         mTriggerEvent = false;
         FileData* file {mPrimary->size() > 0 ? mPrimary->getSelected() : nullptr};
@@ -637,7 +652,7 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
     return prompts;
 }
 
-void GamelistView::updateView(const CursorState& state)
+void GamelistView::updateView(const CursorState& state, bool forceRefresh)
 {
     bool loadedTexture {false};
     mTriggerEvent = false;
@@ -652,8 +667,10 @@ void GamelistView::updateView(const CursorState& state)
                         nullptr};
 
     // If the game data has already been rendered to the view, then skip it this time.
-    // This also happens when fast-scrolling.
-    if (file == mLastUpdated) {
+    // This also happens when fast-scrolling. A pending RomM cover fetch that resolves after the
+    // cursor has already stopped bypasses this via forceRefresh, so the newly-arrived image can
+    // be displayed without duplicating any population logic below.
+    if (file == mLastUpdated && !forceRefresh) {
         if (!mTriggeredEventFastScroll && state == CursorState::CURSOR_SCROLLING &&
             Settings::getInstance()->getBool("CustomEventScripts") &&
             Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
@@ -841,6 +858,20 @@ void GamelistView::updateView(const CursorState& state)
             }
         }
         else {
+            // Kick off (or check on) a lazy cover fetch for a not-yet-downloaded RomM entry
+            // before populating images below, so setGameImage() can immediately use any bytes
+            // that already finished fetching on a previous visit to this entry. update()
+            // re-triggers this same updateView() call (via forceRefresh) once a pending fetch
+            // resolves, so the newly-arrived image gets displayed without the user having to
+            // move the cursor again.
+            mPendingRomMMediaId = -1;
+            if (file->getRomMRemote() && Settings::getInstance()->getBool("RomMShowRemoteMedia")) {
+                const int rommId {atoi(file->metadata.get("rommid").c_str())};
+                if (RomMRemoteMediaLoader::getInstance().requestCover(rommId) ==
+                    RomMRemoteMediaLoader::State::IN_PROGRESS)
+                    mPendingRomMMediaId = rommId;
+            }
+
             for (auto& image : mImageComponents)
                 setGameImage(file, image.get());
 
@@ -1269,9 +1300,24 @@ void GamelistView::updateView(const CursorState& state)
 
 void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
 {
+    const bool isRomMRemote {file->getRomMRemote()};
+    const int rommId {isRomMRemote ? atoi(file->metadata.get("rommid").c_str()) : -1};
+    auto& mediaLoader = RomMRemoteMediaLoader::getInstance();
+    // Tries the in-memory bytes fetched for a not-yet-downloaded RomM entry before falling
+    // through to the normal on-disk path lookup (which would otherwise just find nothing).
+    // Returns true if bytes were applied, meaning the caller should stop and not touch `path`.
+    auto tryRemoteMedia = [&](const std::string* bytes) {
+        if (!isRomMRemote || !bytes)
+            return false;
+        comp->setImage(bytes->data(), bytes->size());
+        return true;
+    };
+
     std::string path;
     for (auto& imageType : comp->getThemeImageTypes()) {
         if (imageType == "image") {
+            if (tryRemoteMedia(mediaLoader.getCoverBytes(rommId)))
+                return;
             path = file->getImagePath();
             if (path != "") {
                 comp->setImage(path);
@@ -1307,6 +1353,8 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
             }
         }
         else if (imageType == "cover") {
+            if (tryRemoteMedia(mediaLoader.getCoverBytes(rommId)))
+                return;
             path = file->getCoverPath();
             if (path != "") {
                 comp->setImage(path);

@@ -34,17 +34,29 @@
 class RomMCache
 {
 public:
-    // Deliberately excludes urlCover/files/updatedAt, which RomM's sync/revert paths never read.
-    // Everything else is kept: a still-remote FileData is rebuilt from scratch every app run, and
-    // an incremental sync only re-fetches changed roms, so an unchanged (or reverted-to-remote)
-    // rom is reconstructed via toApiRom() from exactly what's cached here - without these fields
-    // it would regress to blank/default values instead of keeping what RomM last reported.
+    // The fields RomMLibrarySync::applyResults() actually reads (directly, or via
+    // RomMUtils::formatReleaseDate()/formatCommunityRating() or
+    // RomMApiClient::resolveCoverUrl()) - still deliberately excludes files/updatedAt: files is
+    // only ever refreshed from the single-rom detail endpoint at download time (see
+    // GuiRomMDownload), and updatedAt is diagnostic-only.
+    // Every field here must round-trip through fromApiRom()/toApiRom(), since an incremental
+    // (non-full-resync) sync reconstructs any rom NOT included in that run's delta fetch purely
+    // from this cache - a field left out here silently reverts to its default for every
+    // unchanged rom on every sync after the first.
     struct CachedRom {
         int id {0};
         std::string name;
         std::string summary;
         std::string fsName;
         int64_t fsSizeBytes {0};
+        std::string urlCover;
+        std::string pathCoverLarge;
+        std::string pathCoverSmall;
+        std::vector<std::string> genres;
+        std::vector<std::string> companies;
+        int64_t firstReleaseDate {0};
+        float averageRating {0.0f};
+        std::string playerCount;
         std::string revision;
         std::vector<std::string> regions;
         std::vector<std::string> languages;
@@ -53,11 +65,6 @@ public:
         bool userHidden {false};
         int userRating {0};
         std::string userStatus;
-        std::vector<std::string> genres;
-        std::vector<std::string> companies;
-        int64_t firstReleaseDate {0};
-        float averageRating {0.0f};
-        std::string playerCount;
     };
 
     static RomMCache& getInstance();

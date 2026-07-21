@@ -42,6 +42,9 @@ public:
     void setStaticVideo() { setVideo(mConfig.staticVideoPath); }
     // Loads a static image that is displayed if the video cannot be played.
     void setImage(const std::string& path, bool tile = false) override;
+    // Same as setImage(path) but loads the static image directly from an in-memory buffer
+    // (e.g. bytes fetched over the network) instead of a file on disk.
+    void setImage(const char* data, size_t length, bool tile = false) override;
     // Same as setImage() but does not set the default image if the path argument is empty.
     void setImageNoDefault(const std::string& path);
     // Sets whether we're in media viewer mode.
@@ -133,6 +136,7 @@ protected:
     glm::vec2 mPillarboxThreshold;
     std::shared_ptr<TextureResource> mTexture;
     std::string mStaticImagePath;
+    bool mStaticImageFromMemory {false};
     std::string mDefaultImagePath;
 
     static inline std::vector<std::string> sSupportedImageTypes {

@@ -99,6 +99,14 @@ RomMCache::CachedRom RomMCache::fromApiRom(const RomMApiClient::Rom& rom)
     cached.summary = rom.summary;
     cached.fsName = rom.fsName;
     cached.fsSizeBytes = rom.fsSizeBytes;
+    cached.urlCover = rom.urlCover;
+    cached.pathCoverLarge = rom.pathCoverLarge;
+    cached.pathCoverSmall = rom.pathCoverSmall;
+    cached.genres = rom.genres;
+    cached.companies = rom.companies;
+    cached.firstReleaseDate = rom.firstReleaseDate;
+    cached.averageRating = rom.averageRating;
+    cached.playerCount = rom.playerCount;
     cached.revision = rom.revision;
     cached.regions = rom.regions;
     cached.languages = rom.languages;
@@ -107,11 +115,6 @@ RomMCache::CachedRom RomMCache::fromApiRom(const RomMApiClient::Rom& rom)
     cached.userHidden = rom.userHidden;
     cached.userRating = rom.userRating;
     cached.userStatus = rom.userStatus;
-    cached.genres = rom.genres;
-    cached.companies = rom.companies;
-    cached.firstReleaseDate = rom.firstReleaseDate;
-    cached.averageRating = rom.averageRating;
-    cached.playerCount = rom.playerCount;
     return cached;
 }
 
@@ -123,6 +126,14 @@ RomMApiClient::Rom RomMCache::toApiRom(const CachedRom& cached)
     rom.summary = cached.summary;
     rom.fsName = cached.fsName;
     rom.fsSizeBytes = cached.fsSizeBytes;
+    rom.urlCover = cached.urlCover;
+    rom.pathCoverLarge = cached.pathCoverLarge;
+    rom.pathCoverSmall = cached.pathCoverSmall;
+    rom.genres = cached.genres;
+    rom.companies = cached.companies;
+    rom.firstReleaseDate = cached.firstReleaseDate;
+    rom.averageRating = cached.averageRating;
+    rom.playerCount = cached.playerCount;
     rom.revision = cached.revision;
     rom.regions = cached.regions;
     rom.languages = cached.languages;
@@ -131,13 +142,7 @@ RomMApiClient::Rom RomMCache::toApiRom(const CachedRom& cached)
     rom.userHidden = cached.userHidden;
     rom.userRating = cached.userRating;
     rom.userStatus = cached.userStatus;
-    rom.genres = cached.genres;
-    rom.companies = cached.companies;
-    rom.firstReleaseDate = cached.firstReleaseDate;
-    rom.averageRating = cached.averageRating;
-    rom.playerCount = cached.playerCount;
-    // urlCover/files/updatedAt stay at their defaults - applyResults()/buildDisplayNames()
-    // never read them.
+    // files/updatedAt stay at their defaults - see the CachedRom comment in RomMCache.h.
     return rom;
 }
 
@@ -181,6 +186,14 @@ void RomMCache::loadFile()
             rom.summary = romNode.attribute("summary").as_string();
             rom.fsName = romNode.attribute("fsName").as_string();
             rom.fsSizeBytes = romNode.attribute("fsSizeBytes").as_llong();
+            rom.urlCover = romNode.attribute("urlCover").as_string();
+            rom.pathCoverLarge = romNode.attribute("pathCoverLarge").as_string();
+            rom.pathCoverSmall = romNode.attribute("pathCoverSmall").as_string();
+            rom.genres = splitComma(romNode.attribute("genres").as_string());
+            rom.companies = splitComma(romNode.attribute("companies").as_string());
+            rom.firstReleaseDate = romNode.attribute("firstReleaseDate").as_llong();
+            rom.averageRating = romNode.attribute("averageRating").as_float();
+            rom.playerCount = romNode.attribute("playerCount").as_string();
             rom.revision = romNode.attribute("revision").as_string();
             rom.regions = splitComma(romNode.attribute("regions").as_string());
             rom.languages = splitComma(romNode.attribute("languages").as_string());
@@ -189,11 +202,6 @@ void RomMCache::loadFile()
             rom.userHidden = romNode.attribute("userHidden").as_bool();
             rom.userRating = romNode.attribute("userRating").as_int();
             rom.userStatus = romNode.attribute("userStatus").as_string();
-            rom.genres = splitComma(romNode.attribute("genres").as_string());
-            rom.companies = splitComma(romNode.attribute("companies").as_string());
-            rom.firstReleaseDate = romNode.attribute("firstReleaseDate").as_llong();
-            rom.averageRating = romNode.attribute("averageRating").as_float();
-            rom.playerCount = romNode.attribute("playerCount").as_string();
             entry.roms.emplace_back(std::move(rom));
         }
 
@@ -218,6 +226,15 @@ void RomMCache::flush()
             romNode.append_attribute("fsName").set_value(rom.fsName.c_str());
             romNode.append_attribute("fsSizeBytes")
                 .set_value(static_cast<long long>(rom.fsSizeBytes));
+            romNode.append_attribute("urlCover").set_value(rom.urlCover.c_str());
+            romNode.append_attribute("pathCoverLarge").set_value(rom.pathCoverLarge.c_str());
+            romNode.append_attribute("pathCoverSmall").set_value(rom.pathCoverSmall.c_str());
+            romNode.append_attribute("genres").set_value(joinComma(rom.genres).c_str());
+            romNode.append_attribute("companies").set_value(joinComma(rom.companies).c_str());
+            romNode.append_attribute("firstReleaseDate")
+                .set_value(static_cast<long long>(rom.firstReleaseDate));
+            romNode.append_attribute("averageRating").set_value(rom.averageRating);
+            romNode.append_attribute("playerCount").set_value(rom.playerCount.c_str());
             romNode.append_attribute("revision").set_value(rom.revision.c_str());
             romNode.append_attribute("regions").set_value(joinComma(rom.regions).c_str());
             romNode.append_attribute("languages").set_value(joinComma(rom.languages).c_str());
@@ -226,12 +243,6 @@ void RomMCache::flush()
             romNode.append_attribute("userHidden").set_value(rom.userHidden);
             romNode.append_attribute("userRating").set_value(rom.userRating);
             romNode.append_attribute("userStatus").set_value(rom.userStatus.c_str());
-            romNode.append_attribute("genres").set_value(joinComma(rom.genres).c_str());
-            romNode.append_attribute("companies").set_value(joinComma(rom.companies).c_str());
-            romNode.append_attribute("firstReleaseDate")
-                .set_value(static_cast<long long>(rom.firstReleaseDate));
-            romNode.append_attribute("averageRating").set_value(rom.averageRating);
-            romNode.append_attribute("playerCount").set_value(rom.playerCount.c_str());
         }
     }
 

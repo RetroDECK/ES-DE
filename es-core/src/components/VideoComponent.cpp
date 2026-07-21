@@ -99,6 +99,8 @@ bool VideoComponent::setVideo(std::string path)
 
 void VideoComponent::setImage(const std::string& path, bool tile)
 {
+    mStaticImageFromMemory = false;
+
     std::string imagePath {path};
 
     if (imagePath == "")
@@ -110,6 +112,13 @@ void VideoComponent::setImage(const std::string& path, bool tile)
 
     mStaticImage.setImage(imagePath, tile);
     mStaticImagePath = imagePath;
+}
+
+void VideoComponent::setImage(const char* data, size_t length, bool tile)
+{
+    mStaticImage.setImage(data, length, tile);
+    mStaticImagePath.clear();
+    mStaticImageFromMemory = true;
 }
 
 void VideoComponent::setImageNoDefault(const std::string& path)
@@ -482,7 +491,8 @@ void VideoComponent::update(int deltaTime)
     if (mWindow->getGameLaunchedState())
         return;
 
-    if (!mIsPlaying && (mConfig.startDelay == 0 || (mStaticImagePath == "" && !mImageTypeNone))) {
+    if (!mIsPlaying && (mConfig.startDelay == 0 ||
+                        (mStaticImagePath == "" && !mStaticImageFromMemory && !mImageTypeNone))) {
         startVideoStream();
     }
     else if (mStartTime == 0 || SDL_GetTicks() > mStartTime) {
@@ -520,7 +530,13 @@ void VideoComponent::startVideoPlayer()
     if (mIsPlaying)
         stopVideoPlayer();
 
-    if (mConfig.showStaticImageDelay && mConfig.startDelay != 0 && mStaticImagePath != "") {
+    if (mConfig.showStaticImageDelay && mConfig.startDelay != 0 && mStaticImageFromMemory) {
+        // The static image was loaded directly from bytes already in mStaticImage - there's no
+        // path to reload from, and calling the path-based setImage() here would try (and fail)
+        // to load mStaticImagePath ("") as a file, discarding the already-loaded texture.
+        mStartTime = SDL_GetTicks() + mConfig.startDelay;
+    }
+    else if (mConfig.showStaticImageDelay && mConfig.startDelay != 0 && mStaticImagePath != "") {
         mStartTime = SDL_GetTicks() + mConfig.startDelay;
         setImage(mStaticImagePath);
     }
@@ -536,7 +552,7 @@ void VideoComponent::renderStaticImage(const glm::mat4& parentTrans, bool forceR
     if (mHasVideo && (!forceRender && (!mConfig.showStaticImageDelay || mConfig.startDelay == 0)))
         return;
 
-    if (mStaticImagePath != "") {
+    if (mStaticImagePath != "" || mStaticImageFromMemory) {
         mStaticImage.setOpacity(mOpacity * mThemeOpacity);
         mStaticImage.setSaturation(mSaturation * mThemeSaturation);
         if (mBrightness != 0.0f)

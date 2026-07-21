@@ -11,9 +11,11 @@
 #include "Log.h"
 #include "RomM/RomMApiClient.h"
 #include "RomM/RomMLocalFavorites.h"
+#include "RomM/RomMRemoteMediaLoader.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "guis/GuiMsgBox.h"
+#include "scrapers/Scraper.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/LocalizationUtil.h"
 #include "utils/StringUtil.h"
@@ -48,6 +50,43 @@ namespace
                 LOG(LogWarning) << "RomM download: Failed to migrate media file \"" << path
                                 << "\" to \"" << newPath << "\"";
             }
+        }
+    }
+
+    // Writes bytes lazily fetched by RomMRemoteMediaLoader (while the game was still remote) to
+    // its normal scraped-media location, using the same getSaveAsPath() helper the scraper
+    // itself saves media through - so a game downloaded after being previewed keeps its cover
+    // with no separate scrape needed. No resizing is applied, unlike the scraper's own save
+    // path, to keep this a small addition rather than duplicating that logic.
+    void saveMediaBytes(FileData* game,
+                        const std::string& subdirectory,
+                        const std::string& extension,
+                        const std::string& bytes)
+    {
+        if (extension.empty() || extension == ".")
+            return;
+
+        ScraperSearchParams params;
+        params.system = game->getSystem();
+        params.game = game;
+        const std::string savePath {getSaveAsPath(params, subdirectory, extension)};
+
+#if defined(_WIN64)
+        std::ofstream stream(Utils::String::stringToWideString(savePath).c_str(),
+                             std::ios_base::out | std::ios_base::binary);
+#else
+        std::ofstream stream(savePath, std::ios_base::out | std::ios_base::binary);
+#endif
+        if (!stream || stream.bad()) {
+            LOG(LogWarning) << "RomM download: Couldn't open \"" << savePath
+                            << "\" for writing lazily-fetched media";
+            return;
+        }
+        stream.write(bytes.data(), static_cast<std::streamsize>(bytes.length()));
+        stream.close();
+        if (stream.bad()) {
+            LOG(LogWarning) << "RomM download: Failed writing lazily-fetched media to \""
+                            << savePath << "\"";
         }
     }
 } // namespace
@@ -299,6 +338,21 @@ void GuiRomMDownload::finishOnMainThread()
     // Clears the badge on the next onFileChanged() and lets GamelistFileParser's write-side
     // guard stop excluding this entry, so it gets persisted to gamelist.xml normally.
     mGame->metadata.set("rommremote", "false");
+
+    // If the user previewed this entry while it was still remote, RomMRemoteMediaLoader may
+    // already have its cover bytes cached in memory - save them to the normal scraped-media
+    // location now rather than losing them, so the game doesn't end up with no art until a
+    // manual scrape. onMetaDataSavePoint() below then persists genre/rating/etc., already
+    // sitting in metadata since sync (see RomMLibrarySync's applyRomMGameData()), for free at
+    // the same time.
+    const int rommId {atoi(mGame->metadata.get("rommid").c_str())};
+    auto& mediaLoader = RomMRemoteMediaLoader::getInstance();
+    if (mGame->getCoverPath().empty()) {
+        if (const std::string* bytes {mediaLoader.getCoverBytes(rommId)})
+            saveMediaBytes(mGame, "covers", mediaLoader.getCoverFormat(rommId), *bytes);
+    }
+    mediaLoader.forget(rommId);
+
     mGame->getSystem()->onMetaDataSavePoint();
 
     // The game just left the "not yet downloaded" bucket, so its position among its siblings

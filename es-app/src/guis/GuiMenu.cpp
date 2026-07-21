@@ -172,6 +172,19 @@ void GuiMenu::openRomMOptions()
         }
     });
 
+    // Whether to lazily show a not-yet-downloaded RomM entry's cover while browsing.
+    auto rommShowRemoteMedia = std::make_shared<SwitchComponent>();
+    rommShowRemoteMedia->setState(Settings::getInstance()->getBool("RomMShowRemoteMedia"));
+    s->addWithLabel(_("SHOW IMAGES WHILE BROWSING"), rommShowRemoteMedia);
+    s->addSaveFunc([rommShowRemoteMedia, s] {
+        if (rommShowRemoteMedia->getState() !=
+            Settings::getInstance()->getBool("RomMShowRemoteMedia")) {
+            Settings::getInstance()->setBool("RomMShowRemoteMedia",
+                                             rommShowRemoteMedia->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Sync.
     ComponentListRow syncRow;
     syncRow.addElement(std::make_shared<TextComponent>(

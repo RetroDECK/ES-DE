@@ -26,7 +26,7 @@ public:
     // as tiling, creates vertices accordingly).
     void setImage(const std::string& path, bool tile = false) override;
     // Loads an image from memory.
-    void setImage(const char* data, size_t length, bool tile = false);
+    void setImage(const char* data, size_t length, bool tile = false) override;
     // Use an already existing texture.
     void setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture = true);
     // Loads a texture using raw image pixel data.

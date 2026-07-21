@@ -49,6 +49,11 @@ public:
         std::string fsName;
         int64_t fsSizeBytes {0};
         std::string urlCover;
+        // RomM's own re-hosted cover, relative to the server root - preferred over urlCover
+        // (see resolveCoverUrl()), which links directly to the upstream provider and gets
+        // rejected for direct client requests.
+        std::string pathCoverLarge;
+        std::string pathCoverSmall;
         std::vector<std::string> genres;
         std::vector<std::string> companies;
         // Unix timestamp (seconds since epoch), or 0 if unset. RomM's API itself reports this
@@ -90,13 +95,13 @@ public:
     std::vector<Platform> fetchPlatforms();
 
     // Pages through and returns every rom belonging to the given RomM platform id. If
-    // updatedAfterUtc is non-empty (see RomMUtils::formatTimestampUtc()), restricts the
-    // result to roms whose updated_at is after that timestamp instead of the platform's full
-    // list - pass "" for the original full-fetch behavior. Returns an empty vector and sets
-    // lastError() on failure (an empty vector is also returned, with no error, if the
-    // platform/delta genuinely has no roms). If set, onRomsFetched(1, total) is called once
-    // per rom parsed - total is scoped to this exact query, so an incremental fetch's total
-    // is just what changed, not the platform's full library.
+    // updatedAfterUtc is non-empty (see RomMUtils::formatTimestampUtc()), restricts the result
+    // to roms whose updated_at is after that timestamp instead of the platform's full list -
+    // pass "" for the original full-fetch behavior. Returns an empty vector and sets lastError() on
+    // failure (an empty vector is also returned, with no error, if the platform/delta
+    // genuinely has no roms). If set, onRomsFetched(1, total) is called once per rom parsed -
+    // total is scoped to this exact query, so an incremental fetch's total is just what changed,
+    // not the platform's full library.
     std::vector<Rom> fetchRoms(int platformId,
                                const std::string& updatedAfterUtc = "",
                                const std::function<void(int, int)>& onRomsFetched = nullptr);
@@ -118,6 +123,16 @@ public:
     std::string getFileDownloadUrl(int fileId, const std::string& fileName) const;
 
     const std::string& lastError() const { return mLastError; }
+
+    // Resolves the best available cover URL for a rom, preferring RomM's own re-hosted
+    // path_cover_large/path_cover_small (prefixed with serverURL, with the cache-busting
+    // query's raw space encoded) over the upstream url_cover, which is only trusted when its
+    // path ends in a plausible image extension. Returns "" (and leaves outFormat untouched) if
+    // no usable cover is available. Mirrors the equivalent inline logic in
+    // scrapers/RomM.cpp's processGame().
+    static std::string resolveCoverUrl(const std::string& serverURL,
+                                       const Rom& rom,
+                                       std::string& outFormat);
 
 private:
     std::string buildUrl(const std::string& path) const;
