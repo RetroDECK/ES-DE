@@ -121,6 +121,12 @@
             <entry>com.dsemu.drastic/.DraSticActivity</entry>
         </rule>
     </emulator>
+    <emulator name="DSMILE">
+        <!-- VTech V.Smile emulator D.Smile -->
+        <rule type="androidpackage">
+            <entry>com.dsmile.emulator/.ui.EmuActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="androidpackage">

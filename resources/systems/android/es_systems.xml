@@ -2057,6 +2057,7 @@
         <path>%ROMPATH%/vsmile</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME4droid Current (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/vsmile' -cart '%ROMRAW%'" %DATA%=vsmile</command>
+        <command label="D.Smile (Standalone)">%EMULATOR_DSMILE% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>vsmile</platform>
         <theme>vsmile</theme>
     </system>
