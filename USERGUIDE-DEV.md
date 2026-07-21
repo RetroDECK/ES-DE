@@ -998,6 +998,7 @@ The following manually downloaded emulators are supported when using the bundled
 | trs-80                                        | sdl2trs               | sdl2trs/sdl2trs                              |
 | vpinball                                      | Visual Pinball X      | VPinballX/VPinballX_BGFX                     |
 | vpinball                                      | Visual Pinball X      | VPinballX/VPinballX_GL                       |
+| vsmile                                        | veesem                | veesem/veesem                                |
 | wiiu                                          | Cemu                  | Cemu/Cemu                                    |
 | xbox360                                       | xenia                 | xenia/xenia                                  |
 | xbox360                                       | xenia                 | xenia/xenia_canary                           |
@@ -5086,7 +5087,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vircon32              | Vircon32 Virtual Console                       | Vircon32                          | Vircon32 **(Standalone)** [LW]    | No           | Single archive or ROM file           |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           | Single archive or ROM file           |
 | vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | See the specific _Visual Pinball_ section elsewhere in this guide |
-| vsmile                | VTech V.Smile                                  | MAME - Current                    | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
+| vsmile                | VTech V.Smile                                  | MAME - Current                    | MAME **(Standalone)**,<br>veesem **(Standalone)** [LW] | Yes          | Single archive or ROM file           |
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [LW] | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |

@@ -26,11 +26,14 @@
 * Added Linux Loader standalone as an alternative emulator for the arcade, mame and pcarcade systems on Linux and Windows
 * Added Play! Arcade standalone as an alternative emulator for the arcade and mame systems on Linux, macOS and Windows
 * Added BlastEm standalone as an alternative emulator for the sega32x, sega32xjp and sega32xna systems on Linux and Windows
+* Added veesem standalone as an alternative emulator for the vsmile system on Linux and Windows
 * (Android) Added NetherSX2 standalone as the default emulator for the ps2 system
 * (Android) Added NetherSX2-Turnip and NetherSX2-Turnip Classic standalone as alternative emulators for the ps2 system
 * (Android) Added a find rule entry for the new package name for ARMSX2 Refresh
+* (Android) Added MAME4droid Current [Software list] standalone as an alternative emulator for the apple2gs system
 * (Android) Added EmuCoreX standalone as an alternative emulator for the ps2 system
 * (Android) Added EmuCoreV standalone as an alternative emulator for the psvita system
+* (Android) Added D.Smile standalone as an alternative emulator for the vsmile system
 * (Android) Added a find rule entry for yet another package name for GameHub Lite
 * (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
 * (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin

@@ -233,6 +233,9 @@ There seems to be a firmware bug on at least some Samsung devices that may make 
 
 Below are specific instructions and considerations for all supported emulators.
 
+As an alternative to manually downloading and installing emulators it's recommended to use Obtanium, which simplifies the process. You can find it here: \
+https://github.com/ImranR98/Obtainium
+
 ### RetroArch
 
 The RetroArch release from the Google Play store is problematic. It does not contain all emulator cores and a number of people have reported issues launching games from ES-DE (apparently it doesn't work at all on some devices). For these reasons it's strongly recommended to use the 64-bit release from the RetroArch website instead, or to install it from the Samsung Galaxy Store or the F-Droid store.
@@ -892,7 +895,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | androidapps           | Android Apps                                   | _Native apps_                     |                                   | No           | Use the built-in game importer       |
 | androidgames          | Android Games                                  | _Native apps_                     |                                   | No           | Use the built-in game importer       |
 | apple2                | Apple II                                       | AppleWin                          | MAME4droid Current **(Standalone)** | Yes for MAME4droid | See the specific _Apple II_ section in the user guide |
-| apple2gs              | Apple IIGS                                     | MAME4droid Current **(Standalone)**  |                                   | Yes          | See the specific _Apple IIGS_ section in the user guide |
+| apple2gs              | Apple IIGS                                     | MAME4droid Current **(Standalone)**  | MAME4droid Current [Software list] **(Standalone)** | Yes          | See the specific _Apple IIGS_ section in the user guide |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>HBMAME,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>DICE | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
 | arcadia               | Emerson Arcadia 2001                           | AmiArcadia                        | DroidArcadia **(Standalone**),<br>MAME4droid Current **(Standalone)**  | No           | Single archive or ROM file           |
 | archimedes            | Acorn Archimedes                               | MAME4droid Current [Model A440/1] **(Standalone)** | MAME4droid Current [Model A3000] **(Standalone)**,<br>MAME4droid Current [Model A310] **(Standalone)**,<br>MAME4droid Current [Model A540] **(Standalone)** | Yes          |                                      |
@@ -1057,7 +1060,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vircon32              | Vircon32 Virtual Console                       | Vircon32                          |                                   | No           | Single archive or ROM file           |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Virtual Virtual Boy **(Standalone)** | No           | Single archive or ROM file           |
 | vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | See the specific _Visual Pinball_ section in the user guide |
-| vsmile                | VTech V.Smile                                  | MAME4droid Current **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
+| vsmile                | VTech V.Smile                                  | MAME4droid Current **(Standalone)** | D.Smile **(Standalone)**          | Yes for MAME4droid Current | Single archive or ROM file
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section in the user guide |

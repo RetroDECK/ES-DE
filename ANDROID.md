@@ -233,6 +233,9 @@ There seems to be a firmware bug on at least some Samsung devices that may make 
 
 Below are specific instructions and considerations for all supported emulators.
 
+As an alternative to manually downloading and installing emulators it's recommended to use Obtanium, which simplifies the process. You can find it here: \
+https://github.com/ImranR98/Obtainium
+
 ### RetroArch
 
 The RetroArch release from the Google Play store is problematic. It does not contain all emulator cores and a number of people have reported issues launching games from ES-DE (apparently it doesn't work at all on some devices). For these reasons it's strongly recommended to use the 64-bit release from the RetroArch website instead, or to install it from the Samsung Galaxy Store or the F-Droid store.
