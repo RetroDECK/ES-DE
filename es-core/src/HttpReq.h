@@ -23,17 +23,20 @@
 class HttpReq
 {
 public:
-    // If username is non-empty, the request authenticates using HTTP Basic Auth.
     // If bearerToken is non-empty, the request authenticates using an "Authorization: Bearer"
-    // header instead (username/password are ignored in that case).
+    // header.
     // If downloadFilePath is non-empty, the response body is streamed directly to that file
     // instead of being buffered in memory, which is required for large downloads.
+    // If postJsonBody is non-empty, the request is a POST with that body (otherwise GET).
+    // If failOnHttpError is false, CURLOPT_FAILONERROR is left unset so the response body is
+    // still delivered on an HTTP >= 400 status (status() reports REQ_SUCCESS regardless;
+    // getHttpStatusCode() must be checked instead).
     HttpReq(const std::string& url,
             bool scraperRequest,
-            const std::string& username = "",
-            const std::string& password = "",
             const std::string& downloadFilePath = "",
-            const std::string& bearerToken = "");
+            const std::string& bearerToken = "",
+            const std::string& postJsonBody = "",
+            bool failOnHttpError = true);
     ~HttpReq();
 
     enum Status {
@@ -53,8 +56,8 @@ public:
     Status status() { return mStatus; }
 
     std::string getErrorMsg() { return mErrorMsg; }
-    // Returns the full response body. Not valid if the request was constructed with a
-    // downloadFilePath, as the content was streamed to disk instead of being buffered.
+    // Returns the full response body. Not valid if constructed with a downloadFilePath. Valid
+    // for REQ_SUCCESS and REQ_BAD_STATUS_CODE (the latter can still carry a useful body).
     std::string getContent() const;
     long getTotalBytes() { return mTotalBytes; }
     long getDownloadedBytes() { return mDownloadedBytes; }

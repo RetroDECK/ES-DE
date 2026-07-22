@@ -17,6 +17,7 @@
 #include "GamelistFileParser.h"
 #include "InputManager.h"
 #include "Log.h"
+#include "RomM/RomMApiClient.h"
 #include "RomM/RomMPlatformMapping.h"
 #include "Settings.h"
 #include "ThemeData.h"
@@ -1178,10 +1179,12 @@ bool SystemData::loadConfig()
             // A system whose RomM platform sync is enabled may have an existing-but-still-empty
             // ROM directory right after activation - the sync itself (which runs immediately
             // after this rescan) is what populates it with remote entries, so it must not be
-            // discarded here just because it has no local files yet.
+            // discarded here just because it has no local files yet. Also requires a currently
+            // valid login, since the mapping alone persists across logout/re-login.
             const RomMSystemMapping* rommMapping {
                 RomMPlatformMapping::getInstance().getMapping(name)};
-            const bool keepEmptyForRomMSync {rommMapping != nullptr && rommMapping->syncEnabled};
+            const bool keepEmptyForRomMSync {rommMapping != nullptr && rommMapping->syncEnabled &&
+                                             RomMApiClient::isLoggedIn()};
 
             if ((newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) &&
                 !keepEmptyForRomMSync) {

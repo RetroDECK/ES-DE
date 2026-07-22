@@ -42,10 +42,10 @@ std::string HttpReq::urlEncode(const std::string& s)
 
 HttpReq::HttpReq(const std::string& url,
                  bool scraperRequest,
-                 const std::string& username,
-                 const std::string& password,
                  const std::string& downloadFilePath,
-                 const std::string& bearerToken)
+                 const std::string& bearerToken,
+                 const std::string& postJsonBody,
+                 bool failOnHttpError)
     : mStatus {REQ_IN_PROGRESS}
     , mHandle {nullptr}
     , mStreamToFile {false}
@@ -101,13 +101,11 @@ HttpReq::HttpReq(const std::string& url,
         return;
     }
 
-    // Set HTTP Basic Auth credentials, e.g. for the RomM integration.
-    if (!username.empty()) {
-        err = curl_easy_setopt(mHandle, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        if (err == CURLE_OK)
-            err = curl_easy_setopt(mHandle, CURLOPT_USERNAME, username.c_str());
-        if (err == CURLE_OK)
-            err = curl_easy_setopt(mHandle, CURLOPT_PASSWORD, password.c_str());
+    // Set a bearer token via the Authorization header, e.g. for the RomM integration.
+    if (!bearerToken.empty()) {
+        const std::string headerValue {"Authorization: Bearer " + bearerToken};
+        mHeaderList = curl_slist_append(mHeaderList, headerValue.c_str());
+        err = curl_easy_setopt(mHandle, CURLOPT_HTTPHEADER, mHeaderList);
         if (err != CURLE_OK) {
             mStatus = REQ_IO_ERROR;
             onError(curl_easy_strerror(err));
@@ -115,11 +113,15 @@ HttpReq::HttpReq(const std::string& url,
         }
     }
 
-    // Set a bearer token via the Authorization header, e.g. for the RomM integration.
-    if (!bearerToken.empty()) {
-        const std::string headerValue {"Authorization: Bearer " + bearerToken};
-        mHeaderList = curl_slist_append(mHeaderList, headerValue.c_str());
+    // CURLOPT_COPYPOSTFIELDS (not CURLOPT_POSTFIELDS) since postJsonBody won't outlive this call.
+    if (!postJsonBody.empty()) {
+        mHeaderList = curl_slist_append(mHeaderList, "Content-Type: application/json");
         err = curl_easy_setopt(mHandle, CURLOPT_HTTPHEADER, mHeaderList);
+        if (err == CURLE_OK)
+            err = curl_easy_setopt(mHandle, CURLOPT_POSTFIELDSIZE,
+                                   static_cast<long>(postJsonBody.size()));
+        if (err == CURLE_OK)
+            err = curl_easy_setopt(mHandle, CURLOPT_COPYPOSTFIELDS, postJsonBody.c_str());
         if (err != CURLE_OK) {
             mStatus = REQ_IO_ERROR;
             onError(curl_easy_strerror(err));
@@ -274,12 +276,14 @@ HttpReq::HttpReq(const std::string& url,
         }
     }
 
-    // Fail on HTTP status codes >= 400.
-    err = curl_easy_setopt(mHandle, CURLOPT_FAILONERROR, 1L);
-    if (err != CURLE_OK) {
-        mStatus = REQ_IO_ERROR;
-        onError(curl_easy_strerror(err));
-        return;
+    if (failOnHttpError) {
+        // Fail on HTTP status codes >= 400.
+        err = curl_easy_setopt(mHandle, CURLOPT_FAILONERROR, 1L);
+        if (err != CURLE_OK) {
+            mStatus = REQ_IO_ERROR;
+            onError(curl_easy_strerror(err));
+            return;
+        }
     }
 
     // Add the handle to the multi. This is done in pollCurl(), running in a separate thread.
@@ -314,7 +318,7 @@ HttpReq::~HttpReq()
 
 std::string HttpReq::getContent() const
 {
-    assert(mStatus == REQ_SUCCESS);
+    assert(mStatus == REQ_SUCCESS || mStatus == REQ_BAD_STATUS_CODE);
     return mContent.str();
 }
 
@@ -461,7 +465,7 @@ void HttpReq::pollCurl()
                         req->onError(curl_easy_strerror(msg->data.result));
                     }
                     else if (msg->data.result == CURLE_HTTP_RETURNED_ERROR) {
-                        if (responseCode == 429 &&
+                        if (responseCode == 429 && req->mScraperRequest &&
                             Settings::getInstance()->getString("Scraper") != "screenscraper") {
                             req->mContent << _("You have exceeded your daily scrape quota");
                             req->mStatus = REQ_QUOTA_REACHED;

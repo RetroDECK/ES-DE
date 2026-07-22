@@ -145,7 +145,7 @@ ScraperHttpRequest::ScraperHttpRequest(std::vector<ScraperSearchResult>& results
     : ScraperRequest(resultsWrite)
 {
     setStatus(ASYNC_IN_PROGRESS);
-    mReq = std::unique_ptr<HttpReq>(new HttpReq(url, true, "", "", "", bearerToken));
+    mReq = std::unique_ptr<HttpReq>(new HttpReq(url, true, "", bearerToken));
 }
 
 void ScraperHttpRequest::update()

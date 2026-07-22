@@ -40,6 +40,7 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOrphanedDataCleanup.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMDownload.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMPairing.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMSync.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.h
@@ -53,6 +54,7 @@ set(ES_HEADERS
     # RomM
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMApiClient.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMCache.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthFlow.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLibrarySync.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMPlatformMapping.h
 
@@ -102,6 +104,7 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOrphanedDataCleanup.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMDownload.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMPairing.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMSync.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.cpp
@@ -115,6 +118,7 @@ set(ES_SOURCES
     # RomM
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMApiClient.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMCache.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthFlow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLibrarySync.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMPlatformMapping.cpp
 

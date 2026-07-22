@@ -431,6 +431,7 @@ set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/glm
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/lunasvg/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/external/qrcodegen
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rlottie/inc
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
@@ -573,6 +574,7 @@ elseif(WIN32)
                             ${PROJECT_SOURCE_DIR}/freetype.lib
                             ${PROJECT_SOURCE_DIR}/lunasvg.lib
                             ${PROJECT_SOURCE_DIR}/pugixml.lib
+                            ${PROJECT_SOURCE_DIR}/qrcodegen.lib
                             ${PROJECT_SOURCE_DIR}/rlottie.lib
                             ${PROJECT_SOURCE_DIR}/SDL2main.lib
                             ${PROJECT_SOURCE_DIR}/SDL2.lib
@@ -652,16 +654,20 @@ else()
 endif()
 
 if(NOT WIN32)
-    # SVG rendering library LunaSVG and Lottie animation library rlottie.
+    # SVG rendering library LunaSVG, Lottie animation library rlottie and QR code generator
+    # library qrcodegen.
     if(ANDROID)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/liblunasvg.a)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/librlottie.a)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/libqrcodegen.a)
     elseif(IOS)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/liblunasvg.a)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/librlottie.a)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/libqrcodegen.a)
     else()
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/liblunasvg.a)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/librlottie.a)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/libqrcodegen.a)
     endif()
 endif()
 
@@ -714,6 +720,7 @@ if(COMPILE_LOCALIZATIONS)
 endif()
 
 add_dependencies(es-core rlottie)
+add_dependencies(es-core qrcodegen)
 
 # Set lottie2gif to not be built.
 set_target_properties(lottie2gif PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)

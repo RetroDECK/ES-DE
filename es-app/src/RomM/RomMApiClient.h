@@ -78,6 +78,59 @@ public:
         int64_t updatedAt {0};
     };
 
+    static const std::vector<std::string>& deviceAuthScopes();
+
+    // DeviceAuthInitResponse.
+    struct DeviceAuthInit {
+        std::string deviceCode;
+        std::string userCode;
+        // Relative - join with the resolved server origin for a displayable/QR-able URL.
+        std::string verificationPath;
+        std::string verificationPathComplete;
+        int expiresIn {0};
+        int interval {0};
+    };
+
+    // DeviceAuthTokenResponse.
+    struct DeviceAuthToken {
+        std::string accessToken;
+        std::string deviceId;
+        std::vector<std::string> scopes;
+        std::string expiresAt; // empty if the token never expires
+    };
+
+    // Mirrors the "detail" values RomM's backend returns while polling /api/auth/device/token.
+    enum class TokenPollResult {
+        Pending,
+        SlowDown,
+        Denied,
+        Expired,
+        Success,
+        Error
+    };
+
+    // Unauthenticated helpers for the device-pairing flow, used before any token exists.
+
+    static bool checkHeartbeat(const std::string& serverURL);
+
+    // Tries https:// then http:// if rawInput has no scheme. Returns true and sets
+    // outResolvedUrl on success.
+    static bool resolveServerUrl(const std::string& rawInput, std::string& outResolvedUrl);
+
+    // serverURL must already be resolved. Returns true and populates outInit on success (201).
+    static bool initDeviceAuth(const std::string& serverURL,
+                               const std::string& clientDeviceIdentifier,
+                               const std::string& deviceName,
+                               DeviceAuthInit& outInit,
+                               std::string& outError);
+
+    // A single poll attempt - caller owns the sleep/retry loop. Pending/SlowDown mean keep
+    // polling; Denied/Expired/Error are terminal.
+    static TokenPollResult pollDeviceAuthToken(const std::string& serverURL,
+                                               const std::string& deviceCode,
+                                               DeviceAuthToken& outToken,
+                                               std::string& outError);
+
     RomMApiClient(const std::string& serverURL, const std::string& token);
 
     // Performs a lightweight request (fetching the platform list) purely to validate that
@@ -134,6 +187,11 @@ public:
     // static so callers (e.g. RomMLibrarySync/RomMCache) can format a persisted sync cursor
     // without duplicating the gmtime_r/gmtime_s platform split.
     static std::string formatTimestampUtc(time_t time);
+
+    // Non-empty RomMToken with an unexpired (or absent) RomMTokenExpiresAt. Local check only.
+    static bool isLoggedIn();
+
+    static std::string joinUrl(const std::string& serverURL, const std::string& path);
 
 private:
     std::string buildUrl(const std::string& path) const;

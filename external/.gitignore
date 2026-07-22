@@ -13,6 +13,11 @@ lunasvg/*.vcxproj.filters
 lunasvg/Makefile
 lunasvg/lunasvg.sln
 lunasvg/lunasvg.pc
+!qrcodegen
+!qrcodegen/*
+qrcodegen/CMakeFiles
+qrcodegen/cmake_install.cmake
+qrcodegen/Makefile
 !rapidjson
 !rapidjson/*
 !rlottie

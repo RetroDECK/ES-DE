@@ -37,6 +37,7 @@ private:
 
     void openScraperOptions();
     void openRomMOptions();
+    void openRomMLoginOptions();
     void openRomMSyncOptions();
     void openRomMPlatformSync();
     void openUIOptions();

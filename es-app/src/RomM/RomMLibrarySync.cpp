@@ -401,3 +401,29 @@ void RomMLibrarySync::applyResults()
         }
     }
 }
+
+void RomMLibrarySync::removeAllRemoteEntries()
+{
+    for (auto system : SystemData::sSystemVector) {
+        // Collections don't own FileData of their own - they reference the owning system's
+        // entries, which are handled when this loop reaches that system.
+        if (system->isCollection())
+            continue;
+
+        FileData* rootFolder {system->getRootFolder()};
+        std::vector<FileData*> toRemove;
+        for (FileData* file : rootFolder->getFilesRecursive(GAME)) {
+            if (file->metadata.get("rommremote") == "true")
+                toRemove.push_back(file);
+        }
+        if (toRemove.empty())
+            continue;
+
+        for (FileData* file : toRemove)
+            ViewController::getInstance()->getGamelistView(system)->remove(file, false);
+
+        rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
+                         Settings::getInstance()->getBool("FavoritesFirst"));
+        ViewController::getInstance()->onFileChanged(rootFolder, true);
+    }
+}

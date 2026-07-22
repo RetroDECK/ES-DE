@@ -18,6 +18,7 @@
 #include "FileFilterIndex.h"
 #include "InputManager.h"
 #include "Log.h"
+#include "RomM/RomMApiClient.h"
 #include "RomM/RomMLibrarySync.h"
 #include "RomM/RomMPlatformMapping.h"
 #include "Scripting.h"
@@ -1348,7 +1349,7 @@ void ViewController::startRomMBackgroundSync()
     if (mRomMBackgroundSync != nullptr) {
         return;
     }
-    if (!Settings::getInstance()->getBool("RomMEnableIntegration")) {
+    if (!RomMApiClient::isLoggedIn()) {
         return;
     }
     if (!Settings::getInstance()->getBool("RomMSyncOnStartup")) {
@@ -1371,6 +1372,25 @@ void ViewController::startRomMBackgroundSync()
     mRomMBackgroundSync->start();
 }
 
+bool ViewController::isRomMSyncing()
+{
+    finalizeRomMBackgroundSyncIfDone();
+    return mRomMBackgroundSync != nullptr;
+}
+
+void ViewController::finalizeRomMBackgroundSyncIfDone()
+{
+    // Silent by design - unlike the manual GuiRomMSync dialog, failures are only logged, and
+    // there's no busy animation or completion message box.
+    if (mRomMBackgroundSync != nullptr && mRomMBackgroundSync->isDone()) {
+        mRomMBackgroundSync->applyResults();
+        LOG(LogInfo) << "RomM background sync complete: " << mRomMBackgroundSync->getAddedCount()
+                     << " game(s) added, " << mRomMBackgroundSync->getRemovedCount()
+                     << " game(s) removed";
+        mRomMBackgroundSync.reset();
+    }
+}
+
 void ViewController::update(int deltaTime)
 {
     if (mWindow->getChangedTheme())
@@ -1381,15 +1401,7 @@ void ViewController::update(int deltaTime)
 
     updateSelf(deltaTime);
 
-    // Silent by design - unlike the manual GuiRomMSync dialog, failures are only logged, and
-    // there's no busy animation or completion message box.
-    if (mRomMBackgroundSync != nullptr && mRomMBackgroundSync->isDone()) {
-        mRomMBackgroundSync->applyResults();
-        LOG(LogInfo) << "RomM background sync complete: " << mRomMBackgroundSync->getAddedCount()
-                     << " game(s) added, " << mRomMBackgroundSync->getRemovedCount()
-                     << " game(s) removed";
-        mRomMBackgroundSync.reset();
-    }
+    finalizeRomMBackgroundSyncIfDone();
 
     if (mGameToLaunch) {
         if (mGameToLaunch->metadata.get("rommremote") == "true") {

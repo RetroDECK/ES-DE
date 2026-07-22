@@ -63,6 +63,10 @@ public:
     int getAddedCount() const { return mSystemsAdded; }
     int getRemovedCount() const { return mSystemsRemoved; }
 
+    // Removes every synthetic "rommremote" placeholder FileData across all systems (used on
+    // logout). Runs synchronously on the main thread.
+    static void removeAllRemoteEntries();
+
 private:
     struct SystemSyncResult {
         SystemData* system;

@@ -161,12 +161,13 @@ void Settings::setDefaults()
     mBoolMap["ScraperRegionFallback"] = {true, true};
 
     // RomM integration.
-    mBoolMap["RomMEnableIntegration"] = {false, false};
     mStringMap["RomMServerURL"] = {"", ""};
-    // A RomM API bearer token, currently obtained by generating a token on the RomM server
-    // and pasting it in here. A future version may add a QR code/device pairing flow (RomM's
-    // /api/auth/device/* endpoints) that fetches this automatically via status polling.
+    // A RomM API bearer token, obtained via the device-pairing flow (GuiRomMPairing).
     mStringMap["RomMToken"] = {"", ""};
+    // ISO-8601 timestamp for when RomMToken expires, or empty if it doesn't.
+    mStringMap["RomMTokenExpiresAt"] = {"", ""};
+    // Random per-install identifier sent as the pairing flow's client_device_identifier.
+    mStringMap["RomMDeviceIdentifier"] = {"", ""};
     // Whether to silently sync the RomM library in the background on startup, so opted-in
     // systems are populated with remote entries without a manual "REFRESH ROMM LIBRARY NOW".
     mBoolMap["RomMSyncOnStartup"] = {true, true};

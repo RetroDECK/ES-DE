@@ -94,6 +94,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/LocalizationUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtil.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/QrCodeUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.h
 )
@@ -170,6 +171,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/LocalizationUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtil.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/QrCodeUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.cpp
 )

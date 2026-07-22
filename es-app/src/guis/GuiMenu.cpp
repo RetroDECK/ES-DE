@@ -21,6 +21,8 @@
 #include "GamelistFileParser.h"
 #include "Log.h"
 #include "RomM/RomMApiClient.h"
+#include "RomM/RomMCache.h"
+#include "RomM/RomMLibrarySync.h"
 #include "RomM/RomMPlatformMapping.h"
 #include "Scripting.h"
 #include "SystemData.h"
@@ -36,6 +38,7 @@
 #include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOrphanedDataCleanup.h"
+#include "guis/GuiRomMPairing.h"
 #include "guis/GuiRomMSync.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
@@ -134,18 +137,13 @@ void GuiMenu::openRomMOptions()
 {
     auto s = new GuiSettings(_("ROMM INTEGRATION"));
 
-    // Whether the RomM integration is enabled.
-    auto rommEnableIntegration = std::make_shared<SwitchComponent>();
-    rommEnableIntegration->setState(Settings::getInstance()->getBool("RomMEnableIntegration"));
-    s->addWithLabel(_("ENABLE ROMM INTEGRATION"), rommEnableIntegration);
-    s->addSaveFunc([rommEnableIntegration, s] {
-        if (rommEnableIntegration->getState() !=
-            Settings::getInstance()->getBool("RomMEnableIntegration")) {
-            Settings::getInstance()->setBool("RomMEnableIntegration",
-                                             rommEnableIntegration->getState());
-            s->setNeedsSaving();
-        }
-    });
+    ComponentListRow loginRow;
+    loginRow.addElement(std::make_shared<TextComponent>(
+                            _("LOGIN SETTINGS"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                        true);
+    loginRow.addElement(mMenu.makeArrow(), false);
+    loginRow.makeAcceptInputHandler([this] { openRomMLoginOptions(); });
+    s->addRow(loginRow);
 
     // Whether the multi-scraper should skip not-yet-downloaded RomM entries.
     auto rommScrapeDownloadedOnly = std::make_shared<SwitchComponent>();
@@ -161,59 +159,6 @@ void GuiMenu::openRomMOptions()
         }
     });
 
-    // RomM server URL.
-    auto rommServerURL = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
-                                                         mMenuColorPrimary, ALIGN_RIGHT);
-    s->addEditableTextComponent(_("SERVER URL"), rommServerURL,
-                                Settings::getInstance()->getString("RomMServerURL"));
-    rommServerURL->setSize(0.0f, rommServerURL->getFont()->getHeight());
-    s->addSaveFunc([rommServerURL, s] {
-        if (rommServerURL->getValue() != Settings::getInstance()->getString("RomMServerURL")) {
-            Settings::getInstance()->setString("RomMServerURL", rommServerURL->getValue());
-            s->setNeedsSaving();
-        }
-    });
-
-    // RomM API token. Currently generated manually on the RomM server and pasted in here;
-    // a future version may replace this with a QR code/pairing-code flow that obtains the
-    // token automatically via RomM's device-auth endpoints.
-    auto rommToken = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
-                                                     mMenuColorPrimary, ALIGN_RIGHT);
-    std::string tokenMasked;
-    if (Settings::getInstance()->getString("RomMToken") != "") {
-        tokenMasked = "********";
-        rommToken->setHiddenValue(Settings::getInstance()->getString("RomMToken"));
-    }
-    s->addEditableTextComponent(_("API TOKEN"), rommToken, tokenMasked, "", true);
-    rommToken->setSize(0.0f, rommToken->getFont()->getHeight());
-    s->addSaveFunc([rommToken, s] {
-        if (rommToken->getHiddenValue() != Settings::getInstance()->getString("RomMToken")) {
-            Settings::getInstance()->setString("RomMToken", rommToken->getHiddenValue());
-            s->setNeedsSaving();
-        }
-    });
-
-    // Test connection using whatever has currently been entered in the fields above, whether
-    // saved yet or not. This runs synchronously on the UI thread, which is an accepted
-    // simplification for this manual, infrequently-used action (bounded by the connection
-    // timeout, worst case a few seconds on an unreachable server).
-    ComponentListRow testConnectionRow;
-    testConnectionRow.addElement(std::make_shared<TextComponent>(_("TEST CONNECTION"),
-                                                                 Font::get(FONT_SIZE_MEDIUM),
-                                                                 mMenuColorPrimary),
-                                 true);
-    testConnectionRow.makeAcceptInputHandler([this, rommServerURL, rommToken] {
-        RomMApiClient client {rommServerURL->getValue(), rommToken->getHiddenValue()};
-        if (client.testConnection()) {
-            mWindow->pushGui(new GuiMsgBox(_("SUCCESSFULLY CONNECTED TO THE ROMM SERVER")));
-        }
-        else {
-            mWindow->pushGui(new GuiMsgBox(Utils::String::format(
-                _("COULDN'T CONNECT TO THE ROMM SERVER:\n%s"), client.lastError().c_str())));
-        }
-    });
-    s->addRow(testConnectionRow);
-
     // Sync.
     ComponentListRow syncRow;
     syncRow.addElement(std::make_shared<TextComponent>(
@@ -226,12 +171,98 @@ void GuiMenu::openRomMOptions()
     mWindow->pushGui(s);
 }
 
+void GuiMenu::openRomMLoginOptions()
+{
+    auto s = new GuiSettings(_("LOGIN"));
+
+    const bool isLoggedIn {RomMApiClient::isLoggedIn()};
+
+    // Fixed while logged in - changing it out from under an active pairing would leave
+    // RomMToken silently associated with the wrong server.
+    std::shared_ptr<TextComponent> rommServerURL;
+    if (isLoggedIn) {
+        auto serverURLDisplay = std::make_shared<TextComponent>(
+            Settings::getInstance()->getString("RomMServerURL"), Font::get(FONT_SIZE_MEDIUM),
+            mMenuColorPrimary, ALIGN_RIGHT);
+        s->addWithLabel(_("SERVER URL"), serverURLDisplay);
+    }
+    else {
+        rommServerURL = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
+                                                        mMenuColorPrimary, ALIGN_RIGHT);
+        s->addEditableTextComponent(_("SERVER URL"), rommServerURL,
+                                    Settings::getInstance()->getString("RomMServerURL"));
+        rommServerURL->setSize(0.0f, rommServerURL->getFont()->getHeight());
+        s->addSaveFunc([rommServerURL, s] {
+            if (rommServerURL->getValue() != Settings::getInstance()->getString("RomMServerURL")) {
+                Settings::getInstance()->setString("RomMServerURL", rommServerURL->getValue());
+                s->setNeedsSaving();
+            }
+        });
+    }
+
+    if (isLoggedIn) {
+        ComponentListRow logoutRow;
+        logoutRow.addElement(std::make_shared<TextComponent>(
+                                 _("LOG OUT"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                             true);
+        logoutRow.makeAcceptInputHandler([this, s] {
+            // Avoid racing a sync currently writing to the FileData tree.
+            if (ViewController::getInstance()->isRomMSyncing()) {
+                mWindow->pushGui(new GuiMsgBox(_("A ROMM SYNC IS ALREADY IN PROGRESS")));
+                return;
+            }
+            Settings::getInstance()->setString("RomMToken", "");
+            Settings::getInstance()->setString("RomMTokenExpiresAt", "");
+            Settings::getInstance()->saveFile();
+            RomMLibrarySync::removeAllRemoteEntries();
+            RomMCache::getInstance().clearAll();
+            RomMCache::getInstance().flush();
+            mWindow->pushGui(
+                new GuiMsgBox(_("LOGGED OUT\nPLEASE RESTART ES-DE FOR THE CHANGES TO TAKE EFFECT"),
+                              _("OK"), [this, s] {
+                                  delete s;
+                                  openRomMLoginOptions();
+                              }));
+        });
+        s->addRow(logoutRow);
+    }
+    else {
+        ComponentListRow pairRow;
+        pairRow.addElement(std::make_shared<TextComponent>(_("PAIR WITH SERVER"),
+                                                           Font::get(FONT_SIZE_MEDIUM),
+                                                           mMenuColorPrimary),
+                           true);
+        pairRow.makeAcceptInputHandler([this, rommServerURL, s] {
+            auto onPaired = [this, rommServerURL, s](const std::string& resolvedUrl) {
+                rommServerURL->setValue(resolvedUrl);
+                delete s;
+                openRomMLoginOptions();
+            };
+            mWindow->pushGui(new GuiRomMPairing(rommServerURL->getValue(), onPaired));
+        });
+        s->addRow(pairRow);
+    }
+
+    mWindow->pushGui(s);
+}
+
 void GuiMenu::openRomMSyncOptions()
 {
     // A small submenu rather than putting "PLATFORM SYNC" directly under the top-level RomM
     // screen, so a future custom-collection sync feature has a natural home here later without
     // touching the top-level menu again.
     auto s = new GuiSettings(_("SYNC SETTINGS"));
+
+    if (!RomMApiClient::isLoggedIn()) {
+        ComponentListRow messageRow;
+        messageRow.addElement(std::make_shared<TextComponent>(
+                                  _("YOU NEED TO LOG IN TO ACCESS THESE SETTINGS"),
+                                  Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_CENTER),
+                              false);
+        s->addRow(messageRow);
+        mWindow->pushGui(s);
+        return;
+    }
 
     ComponentListRow platformSyncRow;
     platformSyncRow.addElement(std::make_shared<TextComponent>(_("PLATFORM SYNC"),
@@ -340,13 +371,17 @@ void GuiMenu::openRomMPlatformSync()
         // Manual override of a wrong auto-match is out of scope for this screen - toggling on
         // always binds to whatever was resolved above (or leaves systemName empty pending
         // activation, see GuiRomMSync::activatePendingSystems()).
-        syncToggle->setCallback([platform, matchedSystemName, matchedIsActive, syncToggle] {
+        //
+        // Raw pointer, not shared_ptr: capturing syncToggle by value would store a shared_ptr
+        // to this component inside its own mCallback member - a reference cycle that leaks it.
+        SwitchComponent* syncTogglePtr {syncToggle.get()};
+        syncToggle->setCallback([platform, matchedSystemName, matchedIsActive, syncTogglePtr] {
             RomMSystemMapping mapping;
             mapping.rommPlatformId = platform.id;
             mapping.platformSlug = platform.slug;
             mapping.platformFsSlug = platform.fsSlug;
             mapping.systemName = matchedIsActive ? matchedSystemName : "";
-            mapping.syncEnabled = syncToggle->getState();
+            mapping.syncEnabled = syncTogglePtr->getState();
             RomMPlatformMapping::getInstance().setMapping(mapping);
         });
 

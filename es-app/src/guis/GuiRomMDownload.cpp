@@ -116,7 +116,7 @@ void GuiRomMDownload::downloadSingleFileInBackground()
     const std::string url {
         client.getDownloadUrl(atoi(mGame->metadata.get("rommid").c_str()), mGame->getFileName())};
 
-    HttpReq request {url, false, "", "", mTmpPath, token};
+    HttpReq request {url, false, mTmpPath, token};
 
     while (!mAbort) {
         SDL_Delay(16);
@@ -192,7 +192,7 @@ void GuiRomMDownload::downloadMultiDiscInBackground(const RomMApiClient::Rom& ro
         const bool isM3u {&file == rommM3u};
         const std::string destPath {mTmpPath + "/" + (isM3u ? wrapperName : file.fileName)};
         const std::string url {client.getFileDownloadUrl(file.id, file.fileName)};
-        HttpReq request {url, false, "", "", destPath, token};
+        HttpReq request {url, false, destPath, token};
 
         bool fileDone {false};
         while (!mAbort && !fileDone) {

@@ -72,7 +72,11 @@ public:
     // menu action can avoid starting a second sync that would race it over RomMCache (see
     // RomMCache's class comment). The manual sync itself isn't tracked here - its own dialog
     // (GuiRomMSync) blocks all input while running, so it can't be re-triggered concurrently.
-    bool isRomMSyncing() const { return mRomMBackgroundSync != nullptr; }
+    //
+    // Not const: also finalizes a just-completed sync if update() hasn't noticed it yet, since
+    // update() only runs on this object while it's the topmost GUI stack entry - a menu sitting
+    // on top of it would otherwise see a stale "still syncing" answer indefinitely.
+    bool isRomMSyncing();
 
     // Navigation.
     void goToNextGamelist();
@@ -213,6 +217,7 @@ private:
     State mState;
 
     std::unique_ptr<RomMLibrarySync> mRomMBackgroundSync;
+    void finalizeRomMBackgroundSyncIfDone(); // shared by isRomMSyncing() and update()
 
     glm::mat4 mCamera;
     bool mSystemViewTransition;

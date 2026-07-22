@@ -35,6 +35,13 @@ else()
     set(BUILD_SHARED_LIBS OFF)
 endif()
 
+add_subdirectory(qrcodegen EXCLUDE_FROM_ALL)
+
+if(ANDROID)
+    set_target_properties(qrcodegen PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                          ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
+endif()
+
 add_subdirectory(lunasvg EXCLUDE_FROM_ALL)
 
 # Disable LunaSVG DLL interface warnings and narrowing conversion warnings.
