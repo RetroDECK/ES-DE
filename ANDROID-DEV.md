@@ -328,6 +328,12 @@ This emulator can be downloaded directly from their website.
 
 http://amigan.1emu.net/releases
 
+### D.Smile
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/derik-dot-digital/D.Smile
+
 ### DuckStation
 
 The Play store version of this emulator is getting frequent updates and is therefore recommended.

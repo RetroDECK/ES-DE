@@ -23,6 +23,7 @@
 * Added the HBMAME RetroArch core as an alternative emulator for the arcade and mame systems
 * Added SUPER ZSNES standalone as an alternative emulator for the sfc, snes and snesna systems on Linux, macOS and Windows
 * Added PCSX2x6 standalone as an alternative emulator for the arcade, consolearcade and mame systems on Linux, macOS and Windows
+* Added Hypseus [Singe ZLUA] standalone as an alternative emulator for the daphne and laserdisc systems on Linux, macOS and Windows
 * Added Linux Loader standalone as an alternative emulator for the arcade, mame and pcarcade systems on Linux and Windows
 * Added Play! Arcade standalone as an alternative emulator for the arcade and mame systems on Linux, macOS and Windows
 * Added BlastEm standalone as an alternative emulator for the sega32x, sega32xjp and sega32xna systems on Linux and Windows
@@ -62,6 +63,8 @@
 ### Bug fixes
 
 * Some specific theme configuration for the system status indicators could lead to a crash on battery charge status changes
+* (Android) The MAME4droid Current [Diskette] and MAME4droid Current [Software list] emulator entries for the adam system didn't work correctly
+* (Android) The MAME4droid Current [FM-7 Software list] and MAME4droid Current [FM77AV Software list] emulator entries for the fm7 system didn't work correctly
 * (macOS) The Stella 2023 RetroArch core could not be used as the es_systems.xml entry was invalid
 
 ## Version 3.4.1 / 3.4.1-58
