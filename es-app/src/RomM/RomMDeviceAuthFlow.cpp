@@ -7,7 +7,8 @@
 #include "RomM/RomMDeviceAuthFlow.h"
 
 #include "Log.h"
-#include "RomM/RomMApiClient.h"
+#include "RomM/RomMDeviceAuthClient.h"
+#include "RomM/RomMUtils.h"
 #include "Settings.h"
 
 #include <chrono>
@@ -75,7 +76,7 @@ void RomMDeviceAuthFlow::run()
     LOG(LogInfo) << "RomM Device Pairing: Starting pairing server";
 
     std::string resolvedServerUrl;
-    if (!RomMApiClient::resolveServerUrl(mServerUrl, resolvedServerUrl)) {
+    if (!RomMUtils::resolveServerUrl(mServerUrl, resolvedServerUrl)) {
         mLastError = "Couldn't reach the RomM server - check the server address";
         LOG(LogWarning) << "RomM Device Pairing: " << mLastError;
         mState = State::Error;
@@ -83,11 +84,11 @@ void RomMDeviceAuthFlow::run()
     }
     mServerUrl = resolvedServerUrl;
 
-    RomMApiClient::DeviceAuthInit init;
+    RomMDeviceAuthClient authClient {mServerUrl};
+    RomMDeviceAuthClient::DeviceAuthInit init;
     std::string error;
 
-    if (!RomMApiClient::initDeviceAuth(mServerUrl, getOrCreateDeviceIdentifier(), "ES-DE", init,
-                                       error)) {
+    if (!authClient.initDeviceAuth(getOrCreateDeviceIdentifier(), "ES-DE", init, error)) {
         mLastError = error;
         LOG(LogWarning) << "RomM Device Pairing: Init failed for server \"" << mServerUrl
                         << "\": " << mLastError;
@@ -95,7 +96,7 @@ void RomMDeviceAuthFlow::run()
         return;
     }
 
-    mVerificationUrl = RomMApiClient::joinUrl(mServerUrl, init.verificationPathComplete);
+    mVerificationUrl = RomMUtils::joinUrl(mServerUrl, init.verificationPathComplete);
     mUserCode = init.userCode;
     mState = State::AwaitingApproval;
 
@@ -126,12 +127,12 @@ void RomMDeviceAuthFlow::run()
             return;
         }
 
-        RomMApiClient::DeviceAuthToken token;
-        const RomMApiClient::TokenPollResult result {
-            RomMApiClient::pollDeviceAuthToken(mServerUrl, init.deviceCode, token, error)};
+        RomMDeviceAuthClient::DeviceAuthToken token;
+        const RomMDeviceAuthClient::TokenPollResult result {
+            authClient.pollDeviceAuthToken(init.deviceCode, token, error)};
 
         switch (result) {
-            case RomMApiClient::TokenPollResult::Success:
+            case RomMDeviceAuthClient::TokenPollResult::Success:
                 mAccessToken = token.accessToken;
                 mExpiresAt = token.expiresAt;
                 mState = State::Success;
@@ -140,24 +141,24 @@ void RomMDeviceAuthFlow::run()
                              << (mExpiresAt.empty() ? ", no expiry" : ", expires_at=" + mExpiresAt)
                              << ")";
                 return;
-            case RomMApiClient::TokenPollResult::Denied:
+            case RomMDeviceAuthClient::TokenPollResult::Denied:
                 LOG(LogInfo) << "RomM Device Pairing: Denied by the user on the server";
                 mState = State::Denied;
                 return;
-            case RomMApiClient::TokenPollResult::Expired:
+            case RomMDeviceAuthClient::TokenPollResult::Expired:
                 LOG(LogInfo) << "RomM Device Pairing: Server reported the pairing code as "
                                 "expired";
                 mState = State::Expired;
                 return;
-            case RomMApiClient::TokenPollResult::SlowDown:
+            case RomMDeviceAuthClient::TokenPollResult::SlowDown:
                 intervalSeconds += 5;
                 LOG(LogDebug) << "RomM Device Pairing: Server asked to slow down polling, "
                                  "interval now "
                               << intervalSeconds << "s";
                 break;
-            case RomMApiClient::TokenPollResult::Pending:
+            case RomMDeviceAuthClient::TokenPollResult::Pending:
                 break;
-            case RomMApiClient::TokenPollResult::Error:
+            case RomMDeviceAuthClient::TokenPollResult::Error:
                 mLastError = error;
                 LOG(LogWarning) << "RomM Device Pairing: Poll failed: " << mLastError;
                 mState = State::Error;

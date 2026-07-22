@@ -17,8 +17,8 @@
 #include "GamelistFileParser.h"
 #include "InputManager.h"
 #include "Log.h"
-#include "RomM/RomMApiClient.h"
 #include "RomM/RomMPlatformMapping.h"
+#include "RomM/RomMUtils.h"
 #include "Settings.h"
 #include "ThemeData.h"
 #include "UIModeController.h"
@@ -1184,7 +1184,7 @@ bool SystemData::loadConfig()
             const RomMSystemMapping* rommMapping {
                 RomMPlatformMapping::getInstance().getMapping(name)};
             const bool keepEmptyForRomMSync {rommMapping != nullptr && rommMapping->syncEnabled &&
-                                             RomMApiClient::isLoggedIn()};
+                                             RomMUtils::isLoggedIn()};
 
             if ((newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) &&
                 !keepEmptyForRomMSync) {

@@ -24,6 +24,7 @@
 #include "RomM/RomMCache.h"
 #include "RomM/RomMLibrarySync.h"
 #include "RomM/RomMPlatformMapping.h"
+#include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "SystemData.h"
 #include "UIModeController.h"
@@ -175,7 +176,7 @@ void GuiMenu::openRomMLoginOptions()
 {
     auto s = new GuiSettings(_("LOGIN"));
 
-    const bool isLoggedIn {RomMApiClient::isLoggedIn()};
+    const bool isLoggedIn {RomMUtils::isLoggedIn()};
 
     // Fixed while logged in - changing it out from under an active pairing would leave
     // RomMToken silently associated with the wrong server.
@@ -253,7 +254,7 @@ void GuiMenu::openRomMSyncOptions()
     // touching the top-level menu again.
     auto s = new GuiSettings(_("SYNC SETTINGS"));
 
-    if (!RomMApiClient::isLoggedIn()) {
+    if (!RomMUtils::isLoggedIn()) {
         ComponentListRow messageRow;
         messageRow.addElement(std::make_shared<TextComponent>(
                                   _("YOU NEED TO LOG IN TO ACCESS THESE SETTINGS"),

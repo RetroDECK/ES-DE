@@ -18,9 +18,9 @@
 #include "FileFilterIndex.h"
 #include "InputManager.h"
 #include "Log.h"
-#include "RomM/RomMApiClient.h"
 #include "RomM/RomMLibrarySync.h"
 #include "RomM/RomMPlatformMapping.h"
+#include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "Settings.h"
 #include "Sound.h"
@@ -1349,7 +1349,7 @@ void ViewController::startRomMBackgroundSync()
     if (mRomMBackgroundSync != nullptr) {
         return;
     }
-    if (!RomMApiClient::isLoggedIn()) {
+    if (!RomMUtils::isLoggedIn()) {
         return;
     }
     if (!Settings::getInstance()->getBool("RomMSyncOnStartup")) {
