@@ -789,6 +789,8 @@ void Window::updateSplashScreenText()
         _("Copying resources..."), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     mSplashTextDirCreation = std::make_unique<TextComponent>(
         _("Creating system directories..."), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mSplashTextSyncing = std::make_unique<TextComponent>(_("Syncing RomM library..."),
+                                                         Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     mSplashTextPositions.x =
         (mRenderer->getScreenWidth() - mSplashTextScanning->getSize().x) / 2.0f;
@@ -840,6 +842,9 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
     else if (state == SplashScreenState::DIR_CREATION) {
         textPosX = (mRenderer->getScreenWidth() - mSplashTextDirCreation->getSize().x) / 2.0f;
     }
+    else if (state == SplashScreenState::SYNCING) {
+        textPosX = (mRenderer->getScreenWidth() - mSplashTextSyncing->getSize().x) / 2.0f;
+    }
 
     trans = glm::translate(trans, glm::round(glm::vec3 {textPosX, textPosY, 0.0f}));
 
@@ -853,6 +858,8 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
         mSplashTextResourceCopy->render(trans);
     else if (state == SplashScreenState::DIR_CREATION)
         mSplashTextDirCreation->render(trans);
+    else if (state == SplashScreenState::SYNCING)
+        mSplashTextSyncing->render(trans);
 
     mRenderer->swapBuffers();
 }

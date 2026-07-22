@@ -41,7 +41,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOrphanedDataCleanup.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMDownload.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMPairing.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMSync.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.h
@@ -107,7 +106,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOrphanedDataCleanup.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMDownload.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMPairing.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMSync.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.cpp

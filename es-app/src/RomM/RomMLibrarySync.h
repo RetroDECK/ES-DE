@@ -4,8 +4,9 @@
 //  RomMLibrarySync.h
 //
 //  Synchronizes ES-DE's gamelists with a RomM server. This is the reusable sync engine shared
-//  by the manual "FORCE FULL RESYNC" dialog (GuiRomMSync) and the silent background sync
-//  triggered automatically on startup (ViewController).
+//  by the splash-screen-driven syncs (ViewController::runRomMSyncWithSplashScreen(), used for
+//  both the post-pairing sync and the manual "FORCE FULL RESYNC" action) and the silent
+//  background sync triggered automatically on startup (ViewController::startRomMBackgroundSync()).
 //
 
 #ifndef ES_APP_ROMM_ROMM_LIBRARY_SYNC_H
@@ -63,6 +64,11 @@ public:
     int getAddedCount() const { return mSystemsAdded; }
     int getRemovedCount() const { return mSystemsRemoved; }
 
+    // Safe to poll from the main thread while the background thread runs. 0 until start() has
+    // resolved the list of systems to sync.
+    int getTotalSystems() const { return mTotalSystems; }
+    int getCompletedSystems() const { return mCompletedSystems; }
+
     // Removes every synthetic "rommremote" placeholder FileData across all systems (used on
     // logout). Runs synchronously on the main thread.
     static void removeAllRemoteEntries();
@@ -83,6 +89,8 @@ private:
     int mSystemsAdded;
     int mSystemsRemoved;
     bool mForceFullResync;
+    std::atomic<int> mTotalSystems;
+    std::atomic<int> mCompletedSystems;
 };
 
 #endif // ES_APP_ROMM_ROMM_LIBRARY_SYNC_H

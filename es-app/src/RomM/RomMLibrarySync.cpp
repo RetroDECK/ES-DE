@@ -102,6 +102,8 @@ RomMLibrarySync::RomMLibrarySync(bool forceFullResync)
     , mSystemsAdded {0}
     , mSystemsRemoved {0}
     , mForceFullResync {forceFullResync}
+    , mTotalSystems {0}
+    , mCompletedSystems {0}
 {
 }
 
@@ -161,18 +163,73 @@ void RomMLibrarySync::activatePendingSystems()
         ViewController::getInstance()->rescanROMDirectory();
 }
 
+namespace
+{
+    // Resolved sequentially before any worker thread is spawned, so the RomMPlatformMapping/
+    // RomMCache reads below need no synchronization.
+    struct SyncTask {
+        SystemData* system;
+        int platformId;
+        std::string storedCursor;
+        std::vector<RomMCache::CachedRom> previousRoms;
+        std::vector<RomMCache::CachedRom> mergeBaseRoms;
+    };
+
+    struct TaskResult {
+        SystemData* system {nullptr};
+        int platformId {-1};
+        std::vector<RomMApiClient::Rom> finalRoms;
+        std::vector<RomMCache::CachedRom> newCachedRoms;
+        std::string cursorToStore;
+        int addedCount {0};
+        int removedCount {0};
+    };
+
+    // Bounded so as not to open more simultaneous connections than a modest, self-hosted RomM
+    // server can comfortably handle (HttpReq requests all share one curl multi-handle, so several
+    // in flight at once is otherwise free - see HttpReq::pollCurl()).
+    constexpr size_t kMaxConcurrentPlatformFetches {4};
+} // namespace
+
 void RomMLibrarySync::fetchInBackground()
 {
     const std::string serverURL {Settings::getInstance()->getString("RomMServerURL")};
     const std::string token {Settings::getInstance()->getString("RomMToken")};
 
+    std::vector<SyncTask> tasks;
     for (auto system : SystemData::sSystemVector) {
         const RomMSystemMapping* mapping {
             RomMPlatformMapping::getInstance().getMapping(system->getName())};
         if (mapping == nullptr || !mapping->syncEnabled || mapping->rommPlatformId < 0)
             continue;
 
-        const int platformId {mapping->rommPlatformId};
+        SyncTask task;
+        task.system = system;
+        task.platformId = mapping->rommPlatformId;
+        // The actual last-known cache, regardless of forceFullResync - used below both as the
+        // failure-fallback (so a failed forced resync can't wipe a platform's remote list) and
+        // to compute genuinely-new/genuinely-removed counts against the server's real state,
+        // rather than against the in-memory FileData tree (which is always empty at this point
+        // in every run, forced or not, since remote entries are never persisted - diffing
+        // against that would misreport every rom as "added" on every single sync).
+        task.previousRoms = RomMCache::getInstance().getRoms(task.platformId);
+        task.storedCursor =
+            mForceFullResync ? std::string() : RomMCache::getInstance().getCursor(task.platformId);
+        // What to merge a successful fetch against - empty for a forced full resync, so stale
+        // entries not present in the fresh authoritative fetch are naturally dropped.
+        task.mergeBaseRoms =
+            mForceFullResync ? std::vector<RomMCache::CachedRom>() : task.previousRoms;
+        tasks.emplace_back(std::move(task));
+    }
+
+    mTotalSystems = static_cast<int>(tasks.size());
+
+    std::vector<TaskResult> taskResults(tasks.size());
+
+    // Worker thread: network I/O and Rom-vector bookkeeping only, no RomMCache/FileData access.
+    auto fetchOne = [&serverURL, &token](const SyncTask& task, TaskResult& result) {
+        result.system = task.system;
+        result.platformId = task.platformId;
 
         // Captured before fetchRoms() (which may page across multiple requests) begins, and
         // used as the NEXT sync's updated_after cursor rather than the max updated_at seen in
@@ -180,49 +237,32 @@ void RomMLibrarySync::fetchInBackground()
         // instead of being permanently skipped.
         const std::string newCursor {RomMApiClient::formatTimestampUtc(Utils::Time::now())};
 
-        // The actual last-known cache, regardless of forceFullResync - used below both as the
-        // failure-fallback (so a failed forced resync can't wipe a platform's remote list) and
-        // to compute genuinely-new/genuinely-removed counts against the server's real state,
-        // rather than against the in-memory FileData tree (which is always empty at this point
-        // in every run, forced or not, since remote entries are never persisted - diffing
-        // against that would misreport every rom as "added" on every single sync).
-        const std::vector<RomMCache::CachedRom> previousRoms {
-            RomMCache::getInstance().getRoms(platformId)};
-
-        const std::string storedCursor {
-            mForceFullResync ? std::string() : RomMCache::getInstance().getCursor(platformId)};
-        // What to merge a successful fetch against - empty for a forced full resync, so stale
-        // entries not present in the fresh authoritative fetch are naturally dropped.
-        const std::vector<RomMCache::CachedRom> mergeBaseRoms {
-            mForceFullResync ? std::vector<RomMCache::CachedRom>() : previousRoms};
-
         RomMApiClient client {serverURL, token};
-        std::vector<RomMApiClient::Rom> fetched {client.fetchRoms(platformId, storedCursor)};
+        std::vector<RomMApiClient::Rom> fetched {
+            client.fetchRoms(task.platformId, task.storedCursor)};
         const bool fetchFailed {fetched.empty() && !client.lastError().empty()};
 
-        std::vector<RomMApiClient::Rom> finalRoms;
-        std::vector<RomMCache::CachedRom> newCachedRoms;
-        std::string cursorToStore {storedCursor};
+        result.cursorToStore = task.storedCursor;
 
         if (fetchFailed) {
-            if (previousRoms.empty()) {
+            if (task.previousRoms.empty()) {
                 // No prior cache at all (first-ever sync for this platform, forced or not) and
                 // it failed outright - nothing to fall back to, matches the pre-caching
                 // behavior (empty result).
                 LOG(LogWarning) << "RomM sync: Initial full fetch failed for system \""
-                                << system->getName() << "\": " << client.lastError();
+                                << task.system->getName() << "\": " << client.lastError();
             }
             else {
                 // A delta (or forced full-resync) fetch failed but a prior cache exists -
                 // reuse it as-is rather than telling applyResults() every previously known
                 // remote rom just vanished from the server. The cursor is NOT advanced, so
                 // nothing is silently skipped by a future updated_after filter.
-                LOG(LogWarning) << "RomM sync: Fetch failed for system \"" << system->getName()
-                                << "\", reusing cached rom list (" << previousRoms.size()
+                LOG(LogWarning) << "RomM sync: Fetch failed for system \"" << task.system->getName()
+                                << "\", reusing cached rom list (" << task.previousRoms.size()
                                 << " roms) as-is: " << client.lastError();
-                for (const auto& cachedRom : previousRoms)
-                    finalRoms.push_back(RomMCache::toApiRom(cachedRom));
-                newCachedRoms = previousRoms;
+                for (const auto& cachedRom : task.previousRoms)
+                    result.finalRoms.push_back(RomMCache::toApiRom(cachedRom));
+                result.newCachedRoms = task.previousRoms;
             }
         }
         else {
@@ -235,42 +275,59 @@ void RomMLibrarySync::fetchInBackground()
             // "fetched", the server's authoritative current list, which is what actually
             // reconciles deletions.
             std::unordered_map<int, RomMApiClient::Rom> merged;
-            for (const auto& cachedRom : mergeBaseRoms)
+            for (const auto& cachedRom : task.mergeBaseRoms)
                 merged[cachedRom.id] = RomMCache::toApiRom(cachedRom);
             for (auto& rom : fetched)
                 merged[rom.id] = rom;
 
             for (auto& [romId, rom] : merged)
-                finalRoms.push_back(std::move(rom));
-            for (const auto& rom : finalRoms)
-                newCachedRoms.push_back(RomMCache::fromApiRom(rom));
-            cursorToStore = newCursor; // This fetch fully succeeded - safe to advance.
+                result.finalRoms.push_back(std::move(rom));
+            for (const auto& rom : result.finalRoms)
+                result.newCachedRoms.push_back(RomMCache::fromApiRom(rom));
+            result.cursorToStore = newCursor; // This fetch fully succeeded - safe to advance.
         }
 
         // Genuinely-new/genuinely-removed counts, against the real previous cache rather than
         // the (always momentarily empty) in-memory FileData tree - see the comment on
-        // previousRoms above.
+        // task.previousRoms above.
         std::unordered_set<int> previousIds;
-        for (const auto& rom : previousRoms)
+        for (const auto& rom : task.previousRoms)
             previousIds.insert(rom.id);
         std::unordered_set<int> finalIds;
-        for (const auto& rom : finalRoms)
+        for (const auto& rom : result.finalRoms)
             finalIds.insert(rom.id);
         for (int romId : finalIds) {
             if (previousIds.find(romId) == previousIds.cend())
-                ++mSystemsAdded;
+                ++result.addedCount;
         }
         for (int romId : previousIds) {
             if (finalIds.find(romId) == finalIds.cend())
-                ++mSystemsRemoved;
+                ++result.removedCount;
         }
+    };
 
-        RomMCache::getInstance().setPlatform(platformId, cursorToStore, newCachedRoms);
+    for (size_t batchStart {0}; batchStart < tasks.size();
+         batchStart += kMaxConcurrentPlatformFetches) {
+        const size_t batchEnd {std::min(tasks.size(), batchStart + kMaxConcurrentPlatformFetches)};
+        std::vector<std::thread> workers;
+        for (size_t i {batchStart}; i < batchEnd; ++i)
+            workers.emplace_back(fetchOne, std::cref(tasks[i]), std::ref(taskResults[i]));
+        for (auto& worker : workers)
+            worker.join();
+        mCompletedSystems = static_cast<int>(batchEnd);
+    }
 
-        SystemSyncResult result;
-        result.system = system;
-        result.roms = std::move(finalRoms);
-        mResults.emplace_back(std::move(result));
+    // Every worker has joined, so touching RomMCache (not thread-safe) here is safe.
+    for (auto& result : taskResults) {
+        RomMCache::getInstance().setPlatform(result.platformId, result.cursorToStore,
+                                             result.newCachedRoms);
+        mSystemsAdded += result.addedCount;
+        mSystemsRemoved += result.removedCount;
+
+        SystemSyncResult syncResult;
+        syncResult.system = result.system;
+        syncResult.roms = std::move(result.finalRoms);
+        mResults.emplace_back(std::move(syncResult));
     }
 
     RomMCache::getInstance().flush();

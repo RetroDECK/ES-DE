@@ -88,7 +88,7 @@ void GuiRomMDownload::downloadInBackground()
 
     // Always re-fetch the rom's current detail rather than trusting anything cached from an
     // earlier sync - has_multiple_files/files could have changed on the server since, and this
-    // is the only place that needs them (GuiRomMSync only ever needed has_multiple_files
+    // is the only place that needs them (RomMLibrarySync only ever needed has_multiple_files
     // transiently, to pick the synthetic entry's extension).
     RomMApiClient client {serverURL, token};
     RomMApiClient::Rom rom;
@@ -341,7 +341,7 @@ bool GuiRomMDownload::input(InputConfig* config, Input input)
             _("CANCEL THE DOWNLOAD?"), _("YES"), [this] { mAbort = true; }, _("NO"), nullptr));
     }
 
-    // Block all other input while downloading, matching GuiRomMSync's behavior for its own
+    // Block all other input while downloading, matching GuiGameImporter's behavior for its own
     // background-thread-driven step.
     return true;
 }

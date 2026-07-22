@@ -21,9 +21,10 @@
 #include <vector>
 
 // Not thread-safe by design: exactly one RomMLibrarySync background thread ever exists at a
-// time (the startup background sync and the manual "FORCE FULL RESYNC" dialog can't overlap -
-// see ViewController::isRomMSyncing() and GuiRomMSync::input()), and it's the only caller of
-// this class, so no locking is needed. Must never be touched from the main/render thread.
+// time (the startup background sync and the manual "FORCE FULL RESYNC" action, run via
+// ViewController::runRomMSyncWithSplashScreen(), can't overlap - see
+// ViewController::isRomMSyncing()), and it's the only caller of this class, so no locking is
+// needed. Must never be touched from the main/render thread.
 class RomMCache
 {
 public:

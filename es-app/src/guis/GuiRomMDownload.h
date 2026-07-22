@@ -21,8 +21,8 @@ class FileData;
 
 // Streams a RomM library entry's file content to disk (via HttpReq's downloadFilePath
 // support), replacing the placeholder "rommremote" FileData with a real one once the file
-// lands at its final path. Modeled on GuiRomMSync's background-thread + BusyComponent pattern,
-// plus a live download percentage and a B-button cancel (matching
+// lands at its final path. Modeled on RomMLibrarySync's background-thread + BusyComponent
+// pattern, plus a live download percentage and a B-button cancel (matching
 // GuiApplicationUpdater::downloadPackage()'s cancel behavior).
 //
 // Network I/O (including the streaming file write, which HttpReq itself performs) runs on a

@@ -170,7 +170,7 @@ public:
 
     // A bundled es_systems.xml entry whose ROM directory doesn't exist yet, so it was never
     // turned into a live SystemData. Lets a RomM platform with no local system yet still be
-    // offered for activation (see RomMPlatformMapping / GuiRomMSync::activatePendingSystems()).
+    // offered for activation (see RomMPlatformMapping / RomMLibrarySync::activatePendingSystems()).
     struct InactiveSystemTemplate {
         std::string name;
         std::string fullName;

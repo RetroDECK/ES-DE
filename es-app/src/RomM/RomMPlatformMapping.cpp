@@ -89,6 +89,12 @@ void RomMPlatformMapping::setSystemNameForPlatform(int rommPlatformId,
     }
 }
 
+void RomMPlatformMapping::clearAll()
+{
+    mMappings.clear();
+    saveFile();
+}
+
 void RomMPlatformMapping::loadFile()
 {
     mMappings.clear();

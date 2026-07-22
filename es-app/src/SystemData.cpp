@@ -1116,7 +1116,7 @@ bool SystemData::loadConfig()
                               << "\" does not exist";
 
                 // Record this as a bundled-but-currently-inactive system (see
-                // RomMPlatformMapping / GuiRomMSync).
+                // RomMPlatformMapping / RomMLibrarySync).
                 if (!isPlaceholder) {
                     sInactiveSystemTemplates.push_back({name, fullname, path, platformList});
                 }

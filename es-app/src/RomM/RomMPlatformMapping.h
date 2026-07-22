@@ -6,7 +6,7 @@
 //  Persists, per RomM platform, whether library sync is enabled and which ES-DE system it's
 //  mapped to. Keyed by RomM platform id rather than by ES-DE system name so that a platform
 //  can be marked "sync enabled" before any local system exists for it yet - systemName stays
-//  empty until GuiRomMSync::activatePendingSystems() creates the ROM directory and fills it
+//  empty until RomMLibrarySync::activatePendingSystems() creates the ROM directory and fills it
 //  in. This is a list of tuples rather than a scalar value, so it's kept in its own small XML
 //  file (romm_mapping.xml, alongside es_settings.xml) instead of being shoehorned into the
 //  flat key/value Settings class.
@@ -55,6 +55,11 @@ public:
     const RomMSystemMapping* findByPlatformId(int rommPlatformId) const;
 
     const std::vector<RomMSystemMapping>& getAllMappings() const { return mMappings; }
+
+    // Clears every persisted platform mapping and persists immediately (used on logout, so a
+    // subsequent login/pairing - possibly to a different server - starts from a clean slate
+    // instead of resuming whichever platforms were previously mapped/enabled for sync).
+    void clearAll();
 
 private:
     RomMPlatformMapping();

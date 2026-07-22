@@ -4,8 +4,8 @@
 //  GuiRomMPairing.h
 //
 //  Modal dialog for the RomM device-pairing ("PAIR WITH SERVER") menu action. Drives a
-//  RomMDeviceAuthFlow on a background thread. Modeled on GuiRomMSync/GuiRomMDownload's
-//  background-thread + BusyComponent pattern.
+//  RomMDeviceAuthFlow on a background thread. Modeled on GuiRomMDownload's background-thread +
+//  BusyComponent pattern.
 //
 
 #ifndef ES_APP_GUIS_GUI_ROMM_PAIRING_H

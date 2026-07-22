@@ -69,14 +69,20 @@ public:
     // opted into sync.
     void startRomMBackgroundSync();
     // Whether the background sync is currently in progress, so the manual "FORCE FULL RESYNC"
-    // menu action can avoid starting a second sync that would race it over RomMCache (see
-    // RomMCache's class comment). The manual sync itself isn't tracked here - its own dialog
-    // (GuiRomMSync) blocks all input while running, so it can't be re-triggered concurrently.
+    // menu action and the post-pairing sync can avoid starting a second sync that would race it
+    // over RomMCache (see RomMCache's class comment). runRomMSyncWithSplashScreen() isn't
+    // tracked here - it blocks all input while running (see its own comment), so it can't be
+    // re-triggered concurrently.
     //
     // Not const: also finalizes a just-completed sync if update() hasn't noticed it yet, since
     // update() only runs on this object while it's the topmost GUI stack entry - a menu sitting
     // on top of it would otherwise see a stale "still syncing" answer indefinitely.
     bool isRomMSyncing();
+
+    // Runs a RomM library sync synchronously with Window::SplashScreenState::SYNCING, blocking
+    // input for the duration; results are logged rather than shown in a message box.
+    // forceFullResync is forwarded to RomMLibrarySync - see its constructor for details.
+    void runRomMSyncWithSplashScreen(bool forceFullResync = false);
 
     // Navigation.
     void goToNextGamelist();

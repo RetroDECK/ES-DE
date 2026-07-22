@@ -1380,8 +1380,8 @@ bool ViewController::isRomMSyncing()
 
 void ViewController::finalizeRomMBackgroundSyncIfDone()
 {
-    // Silent by design - unlike the manual GuiRomMSync dialog, failures are only logged, and
-    // there's no busy animation or completion message box.
+    // Silent by design - unlike runRomMSyncWithSplashScreen(), failures are only logged, and
+    // there's no splash screen or busy animation.
     if (mRomMBackgroundSync != nullptr && mRomMBackgroundSync->isDone()) {
         mRomMBackgroundSync->applyResults();
         LOG(LogInfo) << "RomM background sync complete: " << mRomMBackgroundSync->getAddedCount()
@@ -1389,6 +1389,39 @@ void ViewController::finalizeRomMBackgroundSyncIfDone()
                      << " game(s) removed";
         mRomMBackgroundSync.reset();
     }
+}
+
+void ViewController::runRomMSyncWithSplashScreen(bool forceFullResync)
+{
+    mWindow->setBlockInput(true);
+
+    RomMLibrarySync sync {forceFullResync};
+    sync.start();
+
+    SDL_Event event {};
+    while (!sync.isDone()) {
+        // Matches preload()'s convention: keeps the OS from flagging the app as hung, and lets
+        // SDL_QUIT still get through.
+        while (SDL_PollEvent(&event)) {
+            InputManager::getInstance().parseEvent(event);
+            if (event.type == SDL_QUIT) {
+                SDL_PushEvent(&event);
+                mWindow->setBlockInput(false);
+                return;
+            }
+        }
+        const int totalSystems {sync.getTotalSystems()};
+        const float progress {totalSystems > 0 ?
+                                  static_cast<float>(sync.getCompletedSystems()) / totalSystems :
+                                  0.0f};
+        mWindow->renderSplashScreen(Window::SplashScreenState::SYNCING, progress);
+        SDL_Delay(10);
+    }
+
+    sync.applyResults();
+    LOG(LogInfo) << "RomM sync complete: " << sync.getAddedCount() << " game(s) added, "
+                 << sync.getRemovedCount() << " game(s) removed";
+    mWindow->setBlockInput(false);
 }
 
 void ViewController::update(int deltaTime)

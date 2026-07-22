@@ -112,7 +112,8 @@ public:
         POPULATING,
         RELOADING,
         RESOURCE_COPY,
-        DIR_CREATION
+        DIR_CREATION,
+        SYNCING
     };
 
     void updateSplashScreenText();
@@ -233,6 +234,7 @@ private:
     std::unique_ptr<TextComponent> mSplashTextReloading;
     std::unique_ptr<TextComponent> mSplashTextResourceCopy;
     std::unique_ptr<TextComponent> mSplashTextDirCreation;
+    std::unique_ptr<TextComponent> mSplashTextSyncing;
 
     glm::vec4 mSplashTextPositions;
     std::vector<ProgressBarRectangle> mProgressBarRectangles;

@@ -40,7 +40,6 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOrphanedDataCleanup.h"
 #include "guis/GuiRomMPairing.h"
-#include "guis/GuiRomMSync.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
 #include "guis/GuiSystemStatusOptions.h"
@@ -206,7 +205,7 @@ void GuiMenu::openRomMLoginOptions()
         logoutRow.addElement(std::make_shared<TextComponent>(
                                  _("LOG OUT"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                              true);
-        logoutRow.makeAcceptInputHandler([this, s] {
+        logoutRow.makeAcceptInputHandler([this] {
             // Avoid racing a sync currently writing to the FileData tree.
             if (ViewController::getInstance()->isRomMSyncing()) {
                 mWindow->pushGui(new GuiMsgBox(_("A ROMM SYNC IS ALREADY IN PROGRESS")));
@@ -218,12 +217,11 @@ void GuiMenu::openRomMLoginOptions()
             RomMLibrarySync::removeAllRemoteEntries();
             RomMCache::getInstance().clearAll();
             RomMCache::getInstance().flush();
-            mWindow->pushGui(
-                new GuiMsgBox(_("LOGGED OUT\nPLEASE RESTART ES-DE FOR THE CHANGES TO TAKE EFFECT"),
-                              _("OK"), [this, s] {
-                                  delete s;
-                                  openRomMLoginOptions();
-                              }));
+            RomMPlatformMapping::getInstance().clearAll();
+            // Must close before rescanning - rescanROMDirectory() may push its own GUI (e.g.
+            // noGamesDialog()), which closing afterward would immediately tear down again.
+            GuiMenu::close(true);
+            ViewController::getInstance()->rescanROMDirectory();
         });
         s->addRow(logoutRow);
     }
@@ -233,11 +231,14 @@ void GuiMenu::openRomMLoginOptions()
                                                            Font::get(FONT_SIZE_MEDIUM),
                                                            mMenuColorPrimary),
                            true);
-        pairRow.makeAcceptInputHandler([this, rommServerURL, s] {
-            auto onPaired = [this, rommServerURL, s](const std::string& resolvedUrl) {
+        pairRow.makeAcceptInputHandler([this, rommServerURL] {
+            auto onPaired = [this, rommServerURL](const std::string& resolvedUrl) {
                 rommServerURL->setValue(resolvedUrl);
-                delete s;
-                openRomMLoginOptions();
+                // close(true) deletes this GuiMenu - don't touch `this`/mWindow after it.
+                GuiMenu::close(true);
+                ViewController::getInstance()->rescanROMDirectory();
+                if (!ViewController::getInstance()->isRomMSyncing())
+                    ViewController::getInstance()->runRomMSyncWithSplashScreen();
             };
             mWindow->pushGui(new GuiRomMPairing(rommServerURL->getValue(), onPaired));
         });
@@ -300,7 +301,7 @@ void GuiMenu::openRomMSyncOptions()
         if (ViewController::getInstance()->isRomMSyncing())
             mWindow->pushGui(new GuiMsgBox(_("A ROMM SYNC IS ALREADY IN PROGRESS")));
         else
-            mWindow->pushGui(new GuiRomMSync(true));
+            ViewController::getInstance()->runRomMSyncWithSplashScreen(true);
     });
     s->addRow(fullResyncRow);
 
@@ -371,7 +372,7 @@ void GuiMenu::openRomMPlatformSync()
 
         // Manual override of a wrong auto-match is out of scope for this screen - toggling on
         // always binds to whatever was resolved above (or leaves systemName empty pending
-        // activation, see GuiRomMSync::activatePendingSystems()).
+        // activation, see RomMLibrarySync::activatePendingSystems()).
         //
         // Raw pointer, not shared_ptr: capturing syncToggle by value would store a shared_ptr
         // to this component inside its own mCallback member - a reference cycle that leaks it.
