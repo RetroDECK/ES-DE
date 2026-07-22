@@ -23,7 +23,6 @@
 #include <vector>
 
 class GamelistView;
-class RomMLibrarySync;
 class SystemData;
 class SystemView;
 
@@ -64,25 +63,12 @@ public:
     // Rescan the ROM directory for any changes to games and systems.
     void rescanROMDirectory();
 
-    // Kicks off a silent, non-blocking RomM library sync in the background (used on startup).
-    // No-op if RomM integration or the startup-sync setting is disabled, or if no system is
-    // opted into sync.
-    void startRomMBackgroundSync();
-    // Whether the background sync is currently in progress, so the manual "FORCE FULL RESYNC"
-    // menu action and the post-pairing sync can avoid starting a second sync that would race it
-    // over RomMCache (see RomMCache's class comment). runRomMSyncWithSplashScreen() isn't
-    // tracked here - it blocks all input while running (see its own comment), so it can't be
-    // re-triggered concurrently.
-    //
-    // Not const: also finalizes a just-completed sync if update() hasn't noticed it yet, since
-    // update() only runs on this object while it's the topmost GUI stack entry - a menu sitting
-    // on top of it would otherwise see a stale "still syncing" answer indefinitely.
-    bool isRomMSyncing();
-
     // Runs a RomM library sync synchronously with Window::SplashScreenState::SYNCING, blocking
     // input for the duration; results are logged rather than shown in a message box.
     // forceFullResync is forwarded to RomMLibrarySync - see its constructor for details.
-    void runRomMSyncWithSplashScreen(bool forceFullResync = false);
+    // rescanFirst can be false to skip the redundant rescanROMDirectory() call right after
+    // startup's own initial system load.
+    void runRomMSyncWithSplashScreen(bool forceFullResync = false, bool rescanFirst = true);
 
     // Navigation.
     void goToNextGamelist();
@@ -221,9 +207,6 @@ private:
 
     FileData* mGameToLaunch;
     State mState;
-
-    std::unique_ptr<RomMLibrarySync> mRomMBackgroundSync;
-    void finalizeRomMBackgroundSyncIfDone(); // shared by isRomMSyncing() and update()
 
     glm::mat4 mCamera;
     bool mSystemViewTransition;

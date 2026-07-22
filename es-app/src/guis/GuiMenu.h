@@ -39,7 +39,6 @@ private:
     void openRomMOptions();
     void openRomMLoginOptions();
     void openRomMSyncOptions();
-    void openRomMPlatformSync();
     void openUIOptions();
     void openThemeDownloader(GuiSettings* settings);
     void openSystemStatusOptions();

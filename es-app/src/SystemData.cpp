@@ -17,7 +17,7 @@
 #include "GamelistFileParser.h"
 #include "InputManager.h"
 #include "Log.h"
-#include "RomM/RomMPlatformMapping.h"
+#include "RomM/RomMApiClient.h"
 #include "RomM/RomMUtils.h"
 #include "Settings.h"
 #include "ThemeData.h"
@@ -35,6 +35,7 @@
 #include <fstream>
 #include <pugixml.hpp>
 #include <random>
+#include <unordered_set>
 
 FindRules::FindRules()
 {
@@ -859,6 +860,25 @@ bool SystemData::loadConfig()
             break;
     }
 
+    // Fetched once per loadConfig() call rather than per system - decides below which inactive
+    // systems auto-activate and which empty ones stay visible as RomM-driven.
+    std::vector<RomMApiClient::Platform> rommPlatforms;
+    if (RomMUtils::isLoggedIn()) {
+        RomMApiClient client {Settings::getInstance()->getString("RomMServerURL"),
+                              Settings::getInstance()->getString("RomMToken")};
+        rommPlatforms = client.fetchPlatforms();
+        if (rommPlatforms.empty() && !client.lastError().empty()) {
+            LOG(LogWarning) << "SystemData::loadConfig(): Failed to fetch RomM platforms: "
+                            << client.lastError();
+        }
+    }
+
+    // Enforces a one-to-one match: multiple bundled systems can alias to the same RomM platform
+    // (e.g. both "genesis" and "megadrive" match RomM's single "genesis-slash-megadrive"), and
+    // without this, each would independently claim it, doubling both the reported rom count and
+    // the actual synced content across two systems. First system encountered in file order wins.
+    std::unordered_set<int> claimedRomMPlatformIds;
+
     for (auto& configPath : configPaths) {
         // If the loadExclusive tag is present in the custom es_systems.xml file, then skip
         // processing of the bundled configuration file.
@@ -1074,6 +1094,23 @@ bool SystemData::loadConfig()
                     platformIds.emplace_back(platformId);
             }
 
+            bool matchesRomMPlatform {false};
+            for (const auto& platform : rommPlatforms) {
+                if (claimedRomMPlatformIds.find(platform.id) != claimedRomMPlatformIds.cend())
+                    continue;
+                for (const std::string& token :
+                     Utils::String::delimitedStringToVector(platformList, ",")) {
+                    if (RomMApiClient::platformNameMatches(Utils::String::trim(token),
+                                                           platform.slug, platform.fsSlug)) {
+                        matchesRomMPlatform = true;
+                        claimedRomMPlatformIds.insert(platform.id);
+                        break;
+                    }
+                }
+                if (matchesRomMPlatform)
+                    break;
+            }
+
             // Theme folder.
             themeFolder = system.child("theme").text().as_string(name.c_str());
 
@@ -1094,10 +1131,8 @@ bool SystemData::loadConfig()
             if (sortName == "")
                 sortName = fullname;
 
-            // Used to decide whether a system that ends up with no local ROM directory/files
-            // is worth offering for activation from the RomM platform sync screen - a system
-            // with no real emulator command configured isn't meaningfully "activatable" (this
-            // mirrors the same exclusion applied in createSystemDirectories()).
+            // A system with no real emulator command configured isn't meaningfully "activatable"
+            // (this mirrors the same exclusion applied in createSystemDirectories()).
             const bool isPlaceholder {
                 commands.size() == 1 &&
                 Utils::String::toLower(commands.front().first).find("placeholder") !=
@@ -1106,21 +1141,26 @@ bool SystemData::loadConfig()
             // Check that the ROM directory for the system is valid or otherwise abort the
             // processing.
             if (!Utils::FileSystem::exists(path)) {
-                LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
-#if defined(_WIN64)
-                              << "\" as the defined ROM directory \""
-                              << Utils::String::replace(path, "/", "\\")
-#else
-                              << "\" as the defined ROM directory \"" << path
-#endif
-                              << "\" does not exist";
-
-                // Record this as a bundled-but-currently-inactive system (see
-                // RomMPlatformMapping / RomMLibrarySync).
-                if (!isPlaceholder) {
-                    sInactiveSystemTemplates.push_back({name, fullname, path, platformList});
+                if (matchesRomMPlatform && Utils::FileSystem::createDirectory(path)) {
+                    LOG(LogInfo) << "SystemData::loadConfig(): Activating system \"" << name
+                                 << "\" for RomM sync, created ROM directory \"" << path << "\"";
                 }
-                continue;
+                else {
+                    LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+#if defined(_WIN64)
+                                  << "\" as the defined ROM directory \""
+                                  << Utils::String::replace(path, "/", "\\")
+#else
+                                  << "\" as the defined ROM directory \"" << path
+#endif
+                                  << "\" does not exist";
+
+                    // Record this as a bundled-but-currently-inactive system.
+                    if (!isPlaceholder) {
+                        sInactiveSystemTemplates.push_back({name, fullname, path, platformList});
+                    }
+                    continue;
+                }
             }
             if (!Utils::FileSystem::isDirectory(path)) {
                 LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
@@ -1176,18 +1216,11 @@ bool SystemData::loadConfig()
                 }
             }
 
-            // A system whose RomM platform sync is enabled may have an existing-but-still-empty
-            // ROM directory right after activation - the sync itself (which runs immediately
-            // after this rescan) is what populates it with remote entries, so it must not be
-            // discarded here just because it has no local files yet. Also requires a currently
-            // valid login, since the mapping alone persists across logout/re-login.
-            const RomMSystemMapping* rommMapping {
-                RomMPlatformMapping::getInstance().getMapping(name)};
-            const bool keepEmptyForRomMSync {rommMapping != nullptr && rommMapping->syncEnabled &&
-                                             RomMUtils::isLoggedIn()};
-
+            // A RomM-matched system may have an existing-but-still-empty ROM directory (nothing
+            // downloaded yet, or just activated above) - the sync that follows this rescan is
+            // what populates it, so it must not be discarded here just because it's empty.
             if ((newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) &&
-                !keepEmptyForRomMSync) {
+                !matchesRomMPlatform) {
                 LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
                               << "\" as no files matched any of the defined file extensions";
 

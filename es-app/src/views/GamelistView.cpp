@@ -9,6 +9,7 @@
 #include "views/GamelistView.h"
 
 #include "CollectionSystemsManager.h"
+#include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "UIModeController.h"
 #include "animations/LambdaAnimation.h"
@@ -966,7 +967,7 @@ void GamelistView::updateView(const CursorState& state)
                         badgeSlots.emplace_back(badgeInfo);
                 }
                 else if (badge == "romm") {
-                    if (file->metadata.get("rommid") != "")
+                    if (file->metadata.get("rommid") != "" && RomMUtils::isLoggedIn())
                         badgeSlots.emplace_back(badgeInfo);
                 }
                 else {

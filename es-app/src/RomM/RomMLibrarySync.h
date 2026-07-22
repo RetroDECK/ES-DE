@@ -3,10 +3,9 @@
 //  ES-DE Frontend
 //  RomMLibrarySync.h
 //
-//  Synchronizes ES-DE's gamelists with a RomM server. This is the reusable sync engine shared
-//  by the splash-screen-driven syncs (ViewController::runRomMSyncWithSplashScreen(), used for
-//  both the post-pairing sync and the manual "FORCE FULL RESYNC" action) and the silent
-//  background sync triggered automatically on startup (ViewController::startRomMBackgroundSync()).
+//  Synchronizes ES-DE's gamelists with a RomM server. Driven by
+//  ViewController::runRomMSyncWithSplashScreen(), used at startup, right after pairing, and by
+//  the manual "FORCE FULL RESYNC" menu action.
 //
 
 #ifndef ES_APP_ROMM_ROMM_LIBRARY_SYNC_H
@@ -21,15 +20,15 @@
 
 class SystemData;
 
-// For each system opted into RomM sync (see RomMPlatformMapping), lists the roms present on
-// the server and adds/updates/removes synthetic FileData entries (flagged "rommremote") for
-// games not yet present locally. A local cache (RomMCache) of the rom fields this class needs
-// lets normal syncs fetch only what's changed since last time (RomMApiClient::fetchRoms's
-// updated_after parameter) instead of every rom's full payload - but that incremental path can
-// only ever add/update, never detect a rom removed from RomM (a cheap, delta-only fetch has no
-// way to know something's now missing). Removals are only reconciled by a forced full resync
-// (see forceFullResync below), which re-fetches each platform's complete list with an empty
-// cache to merge against, so anything no longer returned is naturally dropped.
+// For each active system matching a platform on the logged-in RomM server, lists the roms
+// present on the server and adds/updates/removes synthetic FileData entries (flagged
+// "rommremote") for games not yet present locally. A local cache (RomMCache) of the rom fields
+// this class needs lets normal syncs fetch only what's changed since last time
+// (RomMApiClient::fetchRoms's updated_after parameter) instead of every rom's full payload - but
+// that incremental path can only ever add/update, never detect a rom removed from RomM (a cheap,
+// delta-only fetch has no way to know something's now missing). Removals are only reconciled by a
+// forced full resync (see forceFullResync below), which re-fetches each platform's complete list
+// with an empty cache to merge against, so anything no longer returned is naturally dropped.
 //
 // Network I/O runs on a background thread; the resulting FileData tree mutations are applied
 // on the main thread via applyResults(), since SystemData/FileData/ViewController are not safe
@@ -39,7 +38,7 @@ class SystemData;
 class RomMLibrarySync
 {
 public:
-    // forceFullResync: when true, ignores any cached rom list/cursor for every opted-in
+    // forceFullResync: when true, ignores any cached rom list/cursor for every matched
     // platform this run (treated the same as that platform never having been synced before)
     // and, once a platform's fetch succeeds, wholesale-replaces its cache entry with the fresh
     // result - the "FULL ROMM RESYNC" menu action's escape hatch, and the only way a rom
@@ -49,10 +48,8 @@ public:
     explicit RomMLibrarySync(bool forceFullResync = false);
     ~RomMLibrarySync();
 
-    // Runs synchronously on the main thread: for any RomM platform the user has enabled sync
-    // for but which has no local ES-DE system yet, creates its ROM directory and rescans, so
-    // the fetch below picks it up in the same continuous sync run - no restart, no separate
-    // activation step. Then spawns the background fetch thread.
+    // Spawns the background fetch thread. Activating newly-matched systems is handled by
+    // SystemData::loadConfig() itself, already run by the time any caller constructs this class.
     void start();
 
     bool isDone() const { return mDoneSyncing; }
@@ -64,14 +61,11 @@ public:
     int getAddedCount() const { return mSystemsAdded; }
     int getRemovedCount() const { return mSystemsRemoved; }
 
-    // Safe to poll from the main thread while the background thread runs. 0 until start() has
-    // resolved the list of systems to sync.
-    int getTotalSystems() const { return mTotalSystems; }
-    int getCompletedSystems() const { return mCompletedSystems; }
-
-    // Removes every synthetic "rommremote" placeholder FileData across all systems (used on
-    // logout). Runs synchronously on the main thread.
-    static void removeAllRemoteEntries();
+    // Whichever platform's fetch most recently reported progress. Safe to poll from the main
+    // thread while the background thread runs.
+    SystemData* getCurrentSystem() const { return mCurrentSystem; }
+    int getCurrentSystemProcessed() const { return mCurrentSystemProcessed; }
+    int getCurrentSystemTotal() const { return mCurrentSystemTotal; }
 
 private:
     struct SystemSyncResult {
@@ -79,7 +73,6 @@ private:
         std::vector<RomMApiClient::Rom> roms;
     };
 
-    void activatePendingSystems();
     // Runs on the background thread: only network I/O, no FileData/ViewController access.
     void fetchInBackground();
 
@@ -89,8 +82,9 @@ private:
     int mSystemsAdded;
     int mSystemsRemoved;
     bool mForceFullResync;
-    std::atomic<int> mTotalSystems;
-    std::atomic<int> mCompletedSystems;
+    std::atomic<SystemData*> mCurrentSystem;
+    std::atomic<int> mCurrentSystemProcessed;
+    std::atomic<int> mCurrentSystemTotal;
 };
 
 #endif // ES_APP_ROMM_ROMM_LIBRARY_SYNC_H

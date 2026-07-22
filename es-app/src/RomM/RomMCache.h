@@ -20,11 +20,10 @@
 #include <unordered_map>
 #include <vector>
 
-// Not thread-safe by design: exactly one RomMLibrarySync background thread ever exists at a
-// time (the startup background sync and the manual "FORCE FULL RESYNC" action, run via
-// ViewController::runRomMSyncWithSplashScreen(), can't overlap - see
-// ViewController::isRomMSyncing()), and it's the only caller of this class, so no locking is
-// needed. Must never be touched from the main/render thread.
+// Not thread-safe by design: every RomM sync runs via
+// ViewController::runRomMSyncWithSplashScreen(), which blocks the main thread until done, so only
+// one RomMLibrarySync background thread ever exists at a time, and it's the only caller of this
+// class - no locking is needed. Must never be touched from the main/render thread.
 class RomMCache
 {
 public:

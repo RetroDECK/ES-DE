@@ -10,7 +10,6 @@
 #include "FileFilterIndex.h"
 #include "Log.h"
 #include "RomM/RomMCache.h"
-#include "RomM/RomMPlatformMapping.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "utils/FileSystemUtil.h"
@@ -102,8 +101,9 @@ RomMLibrarySync::RomMLibrarySync(bool forceFullResync)
     , mSystemsAdded {0}
     , mSystemsRemoved {0}
     , mForceFullResync {forceFullResync}
-    , mTotalSystems {0}
-    , mCompletedSystems {0}
+    , mCurrentSystem {nullptr}
+    , mCurrentSystemProcessed {0}
+    , mCurrentSystemTotal {0}
 {
 }
 
@@ -117,56 +117,13 @@ RomMLibrarySync::~RomMLibrarySync()
 
 void RomMLibrarySync::start()
 {
-    activatePendingSystems();
     mSyncThread = std::make_unique<std::thread>(&RomMLibrarySync::fetchInBackground, this);
-}
-
-void RomMLibrarySync::activatePendingSystems()
-{
-    bool anyActivated {false};
-
-    for (const auto& mapping : RomMPlatformMapping::getInstance().getAllMappings()) {
-        // Not enabled, or already tied to a real (or previously activated) local system.
-        if (!mapping.syncEnabled || !mapping.systemName.empty())
-            continue;
-
-        for (const auto& tmpl : SystemData::sInactiveSystemTemplates) {
-            bool matched {false};
-            for (const std::string& token :
-                 Utils::String::delimitedStringToVector(tmpl.platform, ",")) {
-                const std::string platformName {Utils::String::trim(token)};
-                if (!platformName.empty() &&
-                    RomMApiClient::platformNameMatches(platformName, mapping.platformSlug,
-                                                       mapping.platformFsSlug)) {
-                    matched = true;
-                    break;
-                }
-            }
-            if (!matched)
-                continue;
-
-            if (Utils::FileSystem::createDirectory(tmpl.path)) {
-                RomMPlatformMapping::getInstance().setSystemNameForPlatform(mapping.rommPlatformId,
-                                                                            tmpl.name);
-                anyActivated = true;
-            }
-            else {
-                LOG(LogWarning) << "RomM sync: Failed to create ROM directory for pending "
-                                   "platform \""
-                                << mapping.platformSlug << "\": " << tmpl.path;
-            }
-            break;
-        }
-    }
-
-    if (anyActivated)
-        ViewController::getInstance()->rescanROMDirectory();
 }
 
 namespace
 {
-    // Resolved sequentially before any worker thread is spawned, so the RomMPlatformMapping/
-    // RomMCache reads below need no synchronization.
+    // Resolved sequentially before any worker thread is spawned, so the RomMCache reads below
+    // need no synchronization.
     struct SyncTask {
         SystemData* system;
         int platformId;
@@ -196,16 +153,42 @@ void RomMLibrarySync::fetchInBackground()
     const std::string serverURL {Settings::getInstance()->getString("RomMServerURL")};
     const std::string token {Settings::getInstance()->getString("RomMToken")};
 
+    RomMApiClient platformClient {serverURL, token};
+    const std::vector<RomMApiClient::Platform> rommPlatforms {platformClient.fetchPlatforms()};
+
+    // Enforces a one-to-one match: multiple active systems can alias to the same RomM platform
+    // (e.g. both "genesis" and "megadrive" match RomM's single "genesis-slash-megadrive"), and
+    // without this, each would independently fetch and count the same platform's roms, doubling
+    // both the reported total and the actual synced content. First system encountered wins,
+    // matching SystemData::loadConfig()'s own claim order (both iterate sSystemVector).
+    std::unordered_set<int> claimedPlatformIds;
+
     std::vector<SyncTask> tasks;
     for (auto system : SystemData::sSystemVector) {
-        const RomMSystemMapping* mapping {
-            RomMPlatformMapping::getInstance().getMapping(system->getName())};
-        if (mapping == nullptr || !mapping->syncEnabled || mapping->rommPlatformId < 0)
+        if (system->hasPlatformId(PlatformIds::PLATFORM_IGNORE) || system->isCollection())
             continue;
+
+        const RomMApiClient::Platform* matchedPlatform {nullptr};
+        for (const auto& platform : rommPlatforms) {
+            if (claimedPlatformIds.find(platform.id) != claimedPlatformIds.cend())
+                continue;
+            for (const auto& id : system->getPlatformIds()) {
+                if (RomMApiClient::platformNameMatches(PlatformIds::getPlatformName(id),
+                                                       platform.slug, platform.fsSlug)) {
+                    matchedPlatform = &platform;
+                    break;
+                }
+            }
+            if (matchedPlatform != nullptr)
+                break;
+        }
+        if (matchedPlatform == nullptr)
+            continue;
+        claimedPlatformIds.insert(matchedPlatform->id);
 
         SyncTask task;
         task.system = system;
-        task.platformId = mapping->rommPlatformId;
+        task.platformId = matchedPlatform->id;
         // The actual last-known cache, regardless of forceFullResync - used below both as the
         // failure-fallback (so a failed forced resync can't wipe a platform's remote list) and
         // to compute genuinely-new/genuinely-removed counts against the server's real state,
@@ -222,12 +205,10 @@ void RomMLibrarySync::fetchInBackground()
         tasks.emplace_back(std::move(task));
     }
 
-    mTotalSystems = static_cast<int>(tasks.size());
-
     std::vector<TaskResult> taskResults(tasks.size());
 
     // Worker thread: network I/O and Rom-vector bookkeeping only, no RomMCache/FileData access.
-    auto fetchOne = [&serverURL, &token](const SyncTask& task, TaskResult& result) {
+    auto fetchOne = [this, &serverURL, &token](const SyncTask& task, TaskResult& result) {
         result.system = task.system;
         result.platformId = task.platformId;
 
@@ -237,9 +218,16 @@ void RomMLibrarySync::fetchInBackground()
         // instead of being permanently skipped.
         const std::string newCursor {RomMApiClient::formatTimestampUtc(Utils::Time::now())};
 
+        int systemProcessed {0};
         RomMApiClient client {serverURL, token};
         std::vector<RomMApiClient::Rom> fetched {
-            client.fetchRoms(task.platformId, task.storedCursor)};
+            client.fetchRoms(task.platformId, task.storedCursor,
+                             [this, &systemProcessed, &task](int romsFetched, int total) {
+                                 systemProcessed += romsFetched;
+                                 mCurrentSystem = task.system;
+                                 mCurrentSystemProcessed = systemProcessed;
+                                 mCurrentSystemTotal = total;
+                             })};
         const bool fetchFailed {fetched.empty() && !client.lastError().empty()};
 
         result.cursorToStore = task.storedCursor;
@@ -314,7 +302,6 @@ void RomMLibrarySync::fetchInBackground()
             workers.emplace_back(fetchOne, std::cref(tasks[i]), std::ref(taskResults[i]));
         for (auto& worker : workers)
             worker.join();
-        mCompletedSystems = static_cast<int>(batchEnd);
     }
 
     // Every worker has joined, so touching RomMCache (not thread-safe) here is safe.
@@ -331,6 +318,10 @@ void RomMLibrarySync::fetchInBackground()
     }
 
     RomMCache::getInstance().flush();
+
+    mCurrentSystem = nullptr;
+    mCurrentSystemProcessed = 0;
+    mCurrentSystemTotal = 0;
 
     mDoneSyncing = true;
 }
@@ -456,31 +447,5 @@ void RomMLibrarySync::applyResults()
                              Settings::getInstance()->getBool("FavoritesFirst"));
             ViewController::getInstance()->onFileChanged(rootFolder, true);
         }
-    }
-}
-
-void RomMLibrarySync::removeAllRemoteEntries()
-{
-    for (auto system : SystemData::sSystemVector) {
-        // Collections don't own FileData of their own - they reference the owning system's
-        // entries, which are handled when this loop reaches that system.
-        if (system->isCollection())
-            continue;
-
-        FileData* rootFolder {system->getRootFolder()};
-        std::vector<FileData*> toRemove;
-        for (FileData* file : rootFolder->getFilesRecursive(GAME)) {
-            if (file->metadata.get("rommremote") == "true")
-                toRemove.push_back(file);
-        }
-        if (toRemove.empty())
-            continue;
-
-        for (FileData* file : toRemove)
-            ViewController::getInstance()->getGamelistView(system)->remove(file, false);
-
-        rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
-                         Settings::getInstance()->getBool("FavoritesFirst"));
-        ViewController::getInstance()->onFileChanged(rootFolder, true);
     }
 }

@@ -21,6 +21,7 @@
 #include "MameNames.h"
 #include "MediaViewer.h"
 #include "PDFViewer.h"
+#include "RomM/RomMUtils.h"
 #include "Screensaver.h"
 #include "Scripting.h"
 #include "Settings.h"
@@ -1189,6 +1190,12 @@ int main(int argc, char* argv[])
 
         // Preload system view and all gamelist views.
         ViewController::getInstance()->preload();
+
+        // Continues the same loading screen into a RomM sync, since loadSystemConfigFile()
+        // already fetched/matched platforms and activated/kept-alive systems accordingly -
+        // skip rescanFirst here to avoid redoing that work.
+        if (RomMUtils::isLoggedIn() && Settings::getInstance()->getBool("RomMSyncOnStartup"))
+            ViewController::getInstance()->runRomMSyncWithSplashScreen(false, false);
     }
 
     if (!SystemData::sStartupExitSignal) {
@@ -1207,10 +1214,6 @@ int main(int argc, char* argv[])
                 break;
             }
         }
-
-        // Kick off a silent, non-blocking RomM library sync so any system that's opted into
-        // sync gets its remote game list populated without requiring a manual menu action.
-        ViewController::getInstance()->startRomMBackgroundSync();
 
 #if defined(__ANDROID__)
         if (!Utils::FileSystem::exists(FileData::getROMDirectory() + ".nomedia")) {
@@ -1231,10 +1234,7 @@ int main(int argc, char* argv[])
 #if defined(APPLICATION_UPDATER)
         if (ApplicationUpdater::getInstance().getResults())
             ViewController::getInstance()->updateAvailableDialog();
-        else if (!ViewController::getInstance()->isRomMSyncing())
-            // Tearing down the shared curl multi-handle here would otherwise race with the
-            // RomM background sync thread's in-flight HTTP requests, silently orphaning
-            // whichever request happens to be active at that moment until its own timeout.
+        else
             HttpReq::cleanupCurlMulti();
 #endif
 

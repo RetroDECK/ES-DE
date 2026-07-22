@@ -19,8 +19,6 @@
 #include "InputManager.h"
 #include "Log.h"
 #include "RomM/RomMLibrarySync.h"
-#include "RomM/RomMPlatformMapping.h"
-#include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "Settings.h"
 #include "Sound.h"
@@ -47,6 +45,7 @@
 #include "utils/PlatformUtilAndroid.h"
 #endif
 
+#include <algorithm>
 #include <cstdlib>
 
 namespace
@@ -1343,61 +1342,21 @@ bool ViewController::input(InputConfig* config, Input input)
     return false;
 }
 
-void ViewController::startRomMBackgroundSync()
+void ViewController::runRomMSyncWithSplashScreen(bool forceFullResync, bool rescanFirst)
 {
-    // Guards against this being called more than once (it currently isn't, but stay safe).
-    if (mRomMBackgroundSync != nullptr) {
-        return;
-    }
-    if (!RomMUtils::isLoggedIn()) {
-        return;
-    }
-    if (!Settings::getInstance()->getBool("RomMSyncOnStartup")) {
-        return;
-    }
+    if (rescanFirst)
+        rescanROMDirectory();
 
-    bool anySyncEnabled {false};
-    for (const auto& mapping : RomMPlatformMapping::getInstance().getAllMappings()) {
-        if (mapping.syncEnabled) {
-            anySyncEnabled = true;
-            break;
-        }
-    }
-    if (!anySyncEnabled) {
-        return;
-    }
-
-    LOG(LogInfo) << "Starting background RomM library sync";
-    mRomMBackgroundSync = std::make_unique<RomMLibrarySync>();
-    mRomMBackgroundSync->start();
-}
-
-bool ViewController::isRomMSyncing()
-{
-    finalizeRomMBackgroundSyncIfDone();
-    return mRomMBackgroundSync != nullptr;
-}
-
-void ViewController::finalizeRomMBackgroundSyncIfDone()
-{
-    // Silent by design - unlike runRomMSyncWithSplashScreen(), failures are only logged, and
-    // there's no splash screen or busy animation.
-    if (mRomMBackgroundSync != nullptr && mRomMBackgroundSync->isDone()) {
-        mRomMBackgroundSync->applyResults();
-        LOG(LogInfo) << "RomM background sync complete: " << mRomMBackgroundSync->getAddedCount()
-                     << " game(s) added, " << mRomMBackgroundSync->getRemovedCount()
-                     << " game(s) removed";
-        mRomMBackgroundSync.reset();
-    }
-}
-
-void ViewController::runRomMSyncWithSplashScreen(bool forceFullResync)
-{
     mWindow->setBlockInput(true);
+
+    mWindow->setSyncingSplashText(forceFullResync ? _("Performing full RomM resync...") :
+                                                    _("Syncing RomM library..."));
 
     RomMLibrarySync sync {forceFullResync};
     sync.start();
 
+    SystemData* lastShownSystem {nullptr};
+    int lastShownProgress {-1};
     SDL_Event event {};
     while (!sync.isDone()) {
         // Matches preload()'s convention: keeps the OS from flagging the app as hung, and lets
@@ -1410,10 +1369,21 @@ void ViewController::runRomMSyncWithSplashScreen(bool forceFullResync)
                 return;
             }
         }
-        const int totalSystems {sync.getTotalSystems()};
-        const float progress {totalSystems > 0 ?
-                                  static_cast<float>(sync.getCompletedSystems()) / totalSystems :
-                                  0.0f};
+        SystemData* currentSystem {sync.getCurrentSystem()};
+        const int systemProcessed {sync.getCurrentSystemProcessed()};
+        const int systemTotal {sync.getCurrentSystemTotal()};
+        if (currentSystem != nullptr && systemTotal > 0 &&
+            (currentSystem != lastShownSystem || systemProcessed != lastShownProgress)) {
+            lastShownSystem = currentSystem;
+            lastShownProgress = systemProcessed;
+            mWindow->setSyncingSplashText(Utils::String::format(
+                forceFullResync ? _("Performing full RomM resync... %s (%d/%d roms)") :
+                                  _("Syncing RomM %s library... (%d/%d roms)"),
+                currentSystem->getFullName().c_str(), systemProcessed, systemTotal));
+        }
+        const float progress {
+            systemTotal > 0 ? std::min(1.0f, static_cast<float>(systemProcessed) / systemTotal) :
+                              0.0f};
         mWindow->renderSplashScreen(Window::SplashScreenState::SYNCING, progress);
         SDL_Delay(10);
     }
@@ -1433,8 +1403,6 @@ void ViewController::update(int deltaTime)
         mCurrentView->update(deltaTime);
 
     updateSelf(deltaTime);
-
-    finalizeRomMBackgroundSyncIfDone();
 
     if (mGameToLaunch) {
         if (mGameToLaunch->metadata.get("rommremote") == "true") {

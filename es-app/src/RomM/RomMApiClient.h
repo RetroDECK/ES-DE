@@ -17,6 +17,7 @@
 
 #include <cstdint>
 #include <ctime>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -30,7 +31,6 @@ public:
         std::string slug;
         std::string fsSlug;
         std::string name;
-        int romCount {0};
     };
 
     // One disc/part of a multi-file rom (RomM's RomFileSchema). "id" here identifies the file
@@ -94,8 +94,12 @@ public:
     // whose updated_at is after that timestamp instead of the platform's full list - pass ""
     // for the original full-fetch behavior. Returns an empty vector and sets lastError() on
     // failure (an empty vector is also returned, with no error, if the platform/delta
-    // genuinely has no roms).
-    std::vector<Rom> fetchRoms(int platformId, const std::string& updatedAfterUtc = "");
+    // genuinely has no roms). If set, onRomsFetched(1, total) is called once per rom parsed -
+    // total is scoped to this exact query, so an incremental fetch's total is just what changed,
+    // not the platform's full library.
+    std::vector<Rom> fetchRoms(int platformId,
+                               const std::string& updatedAfterUtc = "",
+                               const std::function<void(int, int)>& onRomsFetched = nullptr);
 
     // Looks up a single rom by MD5 hash. Returns true and populates outRom on a match, false
     // otherwise (not found or a request error - check lastError() to disambiguate).
@@ -139,8 +143,8 @@ private:
     std::string buildUrl(const std::string& path) const;
 
     // Blocks the calling thread until the request leaves REQ_IN_PROGRESS (success, error, or
-    // a generous internal timeout). Returns true if the request succeeded.
-    bool waitForRequest(HttpReq& req);
+    // maxWaitMs elapses). Returns true if the request succeeded.
+    bool waitForRequest(HttpReq& req, int maxWaitMs = 30000);
 
     std::string mServerURL;
     std::string mToken;

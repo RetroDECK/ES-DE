@@ -16,7 +16,7 @@
 #include "FileData.h"
 #include "Log.h"
 #include "MameNames.h"
-#include "RomM/RomMPlatformMapping.h"
+#include "RomM/RomMApiClient.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "utils/FileSystemUtil.h"
@@ -254,13 +254,27 @@ void romm_generate_scraper_requests(const ScraperSearchParams& params,
     std::string path {baseURL + "/api/roms?search_term=" + HttpReq::urlEncode(cleanName) +
                       "&limit=" + std::to_string(MAX_SCRAPER_RESULTS)};
 
-    const RomMSystemMapping* mapping {
-        RomMPlatformMapping::getInstance().getMapping(params.system->getName())};
-    if (mapping != nullptr && mapping->rommPlatformId >= 0) {
-        path += "&platform_ids=" + std::to_string(mapping->rommPlatformId);
+    RomMApiClient platformClient {baseURL, token};
+    const std::vector<RomMApiClient::Platform> platforms {platformClient.fetchPlatforms()};
+
+    int rommPlatformId {-1};
+    for (const auto& platform : platforms) {
+        for (const auto& platformId : params.system->getPlatformIds()) {
+            if (RomMApiClient::platformNameMatches(PlatformIds::getPlatformName(platformId),
+                                                   platform.slug, platform.fsSlug)) {
+                rommPlatformId = platform.id;
+                break;
+            }
+        }
+        if (rommPlatformId >= 0)
+            break;
+    }
+
+    if (rommPlatformId >= 0) {
+        path += "&platform_ids=" + std::to_string(rommPlatformId);
     }
     else {
-        LOG(LogWarning) << "RomM scraper: No platform mapping configured for system \""
+        LOG(LogWarning) << "RomM scraper: No matching RomM platform found for system \""
                         << params.system->getName() << "\", search will be inaccurate";
     }
 

@@ -88,40 +88,38 @@ void GuiRomMPairing::finishOnMainThread()
 {
     const RomMDeviceAuthFlow::State state {mFlow->getState()};
 
-    if (state == RomMDeviceAuthFlow::State::Cancelled)
+    if (state == RomMDeviceAuthFlow::State::Cancelled) {
+        delete this;
         return;
+    }
 
     if (state == RomMDeviceAuthFlow::State::Success) {
-        // Copied, not referenced from mFlow: this object is destroyed right after this
-        // function returns, but the GuiMsgBox callback below fires much later.
         const std::string resolvedServerUrl {mFlow->getResolvedServerUrl()};
         Settings::getInstance()->setString("RomMServerURL", resolvedServerUrl);
         Settings::getInstance()->setString("RomMToken", mFlow->getAccessToken());
         Settings::getInstance()->setString("RomMTokenExpiresAt", mFlow->getExpiresAt());
         Settings::getInstance()->saveFile();
         const std::function<void(const std::string&)> onSuccess {mOnSuccess};
-        mWindow->pushGui(new GuiMsgBox(
-            _("SUCCESSFULLY PAIRED WITH THE ROMM SERVER\nPLEASE RESTART ES-DE FOR THE CHANGES "
-              "TO TAKE EFFECT"),
-            _("OK"), [onSuccess, resolvedServerUrl] {
-                if (onSuccess)
-                    onSuccess(resolvedServerUrl);
-            }));
+        // Delete before invoking the callback, matching GuiMsgBox::deleteMeAndCall()'s pattern -
+        // ~GuiComponent() removes this from the window's gui stack, so a callback that tears
+        // down the whole stack (e.g. GuiMenu::close(true)) won't double-delete this dialog.
+        delete this;
+        onSuccess(resolvedServerUrl);
         return;
     }
 
-    if (state == RomMDeviceAuthFlow::State::Denied) {
-        mWindow->pushGui(new GuiMsgBox(_("PAIRING WAS DENIED ON THE ROMM SERVER")));
-        return;
-    }
+    Window* window {mWindow};
+    std::string message;
+    if (state == RomMDeviceAuthFlow::State::Denied)
+        message = _("PAIRING WAS DENIED ON THE ROMM SERVER");
+    else if (state == RomMDeviceAuthFlow::State::Expired)
+        message = _("THE PAIRING CODE EXPIRED, PLEASE TRY AGAIN");
+    else
+        message = Utils::String::format(_("COULDN'T PAIR WITH THE ROMM SERVER:\n%s"),
+                                        mFlow->getLastError().c_str());
 
-    if (state == RomMDeviceAuthFlow::State::Expired) {
-        mWindow->pushGui(new GuiMsgBox(_("THE PAIRING CODE EXPIRED, PLEASE TRY AGAIN")));
-        return;
-    }
-
-    mWindow->pushGui(new GuiMsgBox(Utils::String::format(
-        _("COULDN'T PAIR WITH THE ROMM SERVER:\n%s"), mFlow->getLastError().c_str())));
+    delete this;
+    window->pushGui(new GuiMsgBox(message));
 }
 
 void GuiRomMPairing::update(int deltaTime)
@@ -138,7 +136,6 @@ void GuiRomMPairing::update(int deltaTime)
     }
     else {
         finishOnMainThread();
-        delete this;
         return;
     }
 

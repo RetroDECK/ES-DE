@@ -20,10 +20,8 @@
 #include "FileSorts.h"
 #include "GamelistFileParser.h"
 #include "Log.h"
-#include "RomM/RomMApiClient.h"
 #include "RomM/RomMCache.h"
 #include "RomM/RomMLibrarySync.h"
-#include "RomM/RomMPlatformMapping.h"
 #include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "SystemData.h"
@@ -206,18 +204,11 @@ void GuiMenu::openRomMLoginOptions()
                                  _("LOG OUT"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                              true);
         logoutRow.makeAcceptInputHandler([this] {
-            // Avoid racing a sync currently writing to the FileData tree.
-            if (ViewController::getInstance()->isRomMSyncing()) {
-                mWindow->pushGui(new GuiMsgBox(_("A ROMM SYNC IS ALREADY IN PROGRESS")));
-                return;
-            }
             Settings::getInstance()->setString("RomMToken", "");
             Settings::getInstance()->setString("RomMTokenExpiresAt", "");
             Settings::getInstance()->saveFile();
-            RomMLibrarySync::removeAllRemoteEntries();
             RomMCache::getInstance().clearAll();
             RomMCache::getInstance().flush();
-            RomMPlatformMapping::getInstance().clearAll();
             // Must close before rescanning - rescanROMDirectory() may push its own GUI (e.g.
             // noGamesDialog()), which closing afterward would immediately tear down again.
             GuiMenu::close(true);
@@ -227,18 +218,15 @@ void GuiMenu::openRomMLoginOptions()
     }
     else {
         ComponentListRow pairRow;
-        pairRow.addElement(std::make_shared<TextComponent>(_("PAIR WITH SERVER"),
-                                                           Font::get(FONT_SIZE_MEDIUM),
-                                                           mMenuColorPrimary),
+        pairRow.addElement(std::make_shared<TextComponent>(
+                               _("START PAIR"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                            true);
         pairRow.makeAcceptInputHandler([this, rommServerURL] {
             auto onPaired = [this, rommServerURL](const std::string& resolvedUrl) {
                 rommServerURL->setValue(resolvedUrl);
                 // close(true) deletes this GuiMenu - don't touch `this`/mWindow after it.
                 GuiMenu::close(true);
-                ViewController::getInstance()->rescanROMDirectory();
-                if (!ViewController::getInstance()->isRomMSyncing())
-                    ViewController::getInstance()->runRomMSyncWithSplashScreen();
+                ViewController::getInstance()->runRomMSyncWithSplashScreen();
             };
             mWindow->pushGui(new GuiRomMPairing(rommServerURL->getValue(), onPaired));
         });
@@ -266,16 +254,7 @@ void GuiMenu::openRomMSyncOptions()
         return;
     }
 
-    ComponentListRow platformSyncRow;
-    platformSyncRow.addElement(std::make_shared<TextComponent>(_("PLATFORM SYNC"),
-                                                               Font::get(FONT_SIZE_MEDIUM),
-                                                               mMenuColorPrimary),
-                               true);
-    platformSyncRow.addElement(mMenu.makeArrow(), false);
-    platformSyncRow.makeAcceptInputHandler(std::bind(&GuiMenu::openRomMPlatformSync, this));
-    s->addRow(platformSyncRow);
-
-    // Whether to silently sync the RomM library in the background on startup.
+    // Whether to sync the RomM library as part of the loading screen on startup.
     auto rommSyncOnStartup = std::make_shared<SwitchComponent>();
     rommSyncOnStartup->setState(Settings::getInstance()->getBool("RomMSyncOnStartup"));
     s->addWithLabel(_("SYNC ON STARTUP"), rommSyncOnStartup);
@@ -287,8 +266,7 @@ void GuiMenu::openRomMSyncOptions()
         }
     });
 
-    // Force a full RomM resync now. The regular (fast, cache-based) sync already runs
-    // automatically in the background, but it can only ever add/update roms - it has no way to
+    // The regular (fast, cache-based) sync can only ever add/update roms - it has no way to
     // detect one that's been deleted from RomM. This is therefore the only way a removed game
     // stops showing up locally as available to download, in addition to being a way to force a
     // complete rebuild if the local cache is ever suspected to have drifted.
@@ -298,97 +276,10 @@ void GuiMenu::openRomMSyncOptions()
                                                              mMenuColorPrimary),
                              true);
     fullResyncRow.makeAcceptInputHandler([this] {
-        if (ViewController::getInstance()->isRomMSyncing())
-            mWindow->pushGui(new GuiMsgBox(_("A ROMM SYNC IS ALREADY IN PROGRESS")));
-        else
-            ViewController::getInstance()->runRomMSyncWithSplashScreen(true);
+        GuiMenu::close(true);
+        ViewController::getInstance()->runRomMSyncWithSplashScreen(true);
     });
     s->addRow(fullResyncRow);
-
-    mWindow->pushGui(s);
-}
-
-void GuiMenu::openRomMPlatformSync()
-{
-    auto s = new GuiSettings(_("PLATFORM SYNC"));
-
-    // Fetch the RomM platform list, showing every platform the server has - not just the
-    // ones that happen to already have a matching ES-DE system - so the user can see and
-    // toggle sync for RomM's full catalog, not a subset filtered by local configuration. Each
-    // row commits immediately on toggle; there's no separate save/confirm step.
-    RomMApiClient client {Settings::getInstance()->getString("RomMServerURL"),
-                          Settings::getInstance()->getString("RomMToken")};
-    auto platforms = client.fetchPlatforms();
-
-    for (const auto& platform : platforms) {
-        const RomMSystemMapping* existingMapping {
-            RomMPlatformMapping::getInstance().findByPlatformId(platform.id)};
-
-        // Resolve which local system this platform corresponds to, if any: an already-assigned
-        // mapping takes priority, otherwise auto-match against active systems first, then
-        // against bundled-but-inactive system templates (collections are never offered, as
-        // they aren't backed by a real ROM directory and don't map to a single RomM platform).
-        std::string matchedSystemName;
-        bool matchedIsActive {false};
-        if (existingMapping != nullptr && !existingMapping->systemName.empty()) {
-            matchedSystemName = existingMapping->systemName;
-            matchedIsActive = true;
-        }
-        else {
-            for (auto system : SystemData::sSystemVector) {
-                if (system->hasPlatformId(PlatformIds::PLATFORM_IGNORE) || system->isCollection())
-                    continue;
-                for (const auto& platformId : system->getPlatformIds()) {
-                    if (RomMApiClient::platformNameMatches(PlatformIds::getPlatformName(platformId),
-                                                           platform.slug, platform.fsSlug)) {
-                        matchedSystemName = system->getName();
-                        matchedIsActive = true;
-                        break;
-                    }
-                }
-                if (matchedIsActive)
-                    break;
-            }
-            if (!matchedIsActive) {
-                for (const auto& tmpl : SystemData::sInactiveSystemTemplates) {
-                    for (const std::string& token :
-                         Utils::String::delimitedStringToVector(tmpl.platform, ",")) {
-                        if (RomMApiClient::platformNameMatches(Utils::String::trim(token),
-                                                               platform.slug, platform.fsSlug)) {
-                            matchedSystemName = tmpl.name;
-                            break;
-                        }
-                    }
-                    if (!matchedSystemName.empty())
-                        break;
-                }
-            }
-        }
-
-        const std::string label {Utils::String::toUpper(platform.name)};
-
-        auto syncToggle = std::make_shared<SwitchComponent>();
-        syncToggle->setState(existingMapping != nullptr && existingMapping->syncEnabled);
-
-        // Manual override of a wrong auto-match is out of scope for this screen - toggling on
-        // always binds to whatever was resolved above (or leaves systemName empty pending
-        // activation, see RomMLibrarySync::activatePendingSystems()).
-        //
-        // Raw pointer, not shared_ptr: capturing syncToggle by value would store a shared_ptr
-        // to this component inside its own mCallback member - a reference cycle that leaks it.
-        SwitchComponent* syncTogglePtr {syncToggle.get()};
-        syncToggle->setCallback([platform, matchedSystemName, matchedIsActive, syncTogglePtr] {
-            RomMSystemMapping mapping;
-            mapping.rommPlatformId = platform.id;
-            mapping.platformSlug = platform.slug;
-            mapping.platformFsSlug = platform.fsSlug;
-            mapping.systemName = matchedIsActive ? matchedSystemName : "";
-            mapping.syncEnabled = syncTogglePtr->getState();
-            RomMPlatformMapping::getInstance().setMapping(mapping);
-        });
-
-        s->addWithLabel(label, syncToggle);
-    }
 
     mWindow->pushGui(s);
 }

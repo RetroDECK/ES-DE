@@ -56,7 +56,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthClient.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthFlow.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLibrarySync.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMPlatformMapping.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMUtils.h
 
     # Scrapers
@@ -121,7 +120,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthClient.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthFlow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLibrarySync.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMPlatformMapping.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMUtils.cpp
 
     # Scrapers

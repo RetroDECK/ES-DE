@@ -169,8 +169,8 @@ public:
     static inline bool sStartupExitSignal {false};
 
     // A bundled es_systems.xml entry whose ROM directory doesn't exist yet, so it was never
-    // turned into a live SystemData. Lets a RomM platform with no local system yet still be
-    // offered for activation (see RomMPlatformMapping / RomMLibrarySync::activatePendingSystems()).
+    // turned into a live SystemData. Lets loadConfig() auto-activate it if its platform later
+    // matches something on the logged-in RomM server.
     struct InactiveSystemTemplate {
         std::string name;
         std::string fullName;
