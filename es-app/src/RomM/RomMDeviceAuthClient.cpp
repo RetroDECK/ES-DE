@@ -70,10 +70,8 @@ namespace
 
     const std::vector<std::string>& deviceAuthScopes()
     {
-        static const std::vector<std::string> scopes {
-            "me.read",         "roms.read",      "roms.write",  "roms.user.read",
-            "roms.user.write", "platforms.read", "assets.read", "collections.read",
-            "firmware.read",   "devices.read"};
+        static const std::vector<std::string> scopes {"roms.read", "platforms.read", "assets.read",
+                                                      "assets.write", "firmware.read"};
         return scopes;
     }
 
