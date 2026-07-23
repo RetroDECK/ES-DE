@@ -537,6 +537,12 @@
             <entry>com.fms.speccy/com.fms.emulib.TVActivity</entry>
         </rule>
     </emulator>
+    <emulator name="STARBOARD">
+        <!-- PortMaster compatibility layer Starboard -->
+        <rule type="androidpackage">
+            <entry>org.force9.starboard/.ui.game.GameActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="SUPER3">
         <!-- Sega Model 3 emulator SUPER3 -->
         <rule type="androidpackage">
