@@ -343,9 +343,9 @@ void RomMLibrarySync::applyResults()
         // correct regardless.
         std::unordered_map<int, FileData*> byRommId;
         for (FileData* file : rootFolder->getFilesRecursive(GAME)) {
-            const std::string& rommId {file->metadata.get("rommid")};
-            if (!rommId.empty())
-                byRommId[atoi(rommId.c_str())] = file;
+            const int id {atoi(file->metadata.get("rommid").c_str())};
+            if (id != 0)
+                byRommId[id] = file;
         }
 
         std::unordered_set<int> seenRomIds;
