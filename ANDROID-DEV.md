@@ -332,7 +332,7 @@ http://amigan.1emu.net/releases
 
 This emulator can be downloaded from their GitHub site.
 
-https://github.com/derik-dot-digital/D.Smile
+https://github.com/derik-dot-digital/D.Smile/releases
 
 ### DuckStation
 
@@ -677,6 +677,12 @@ Although this emulator supports both the Sinclar ZX Spectrum and MGT SAM Coupé 
 https://play.google.com/store/apps/details?id=com.fms.speccy \
 https://play.google.com/store/apps/details?id=com.fms.speccy.deluxe
 
+### Starboard
+
+This PortMaster compatibility layer can be downloaded from their GitHub site.
+
+https://github.com/get-starboard/starboard/releases
+
 ### SUPER3
 
 There are unofficial builds available for SUPER3 on the following GitHub site.
@@ -1016,7 +1022,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | Fake-08,<br>Retro8,<br>Infinity **(Standalone)** | No           | See the specific _PICO-8_ section in the User guide |
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
-| ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | CannonBall (OutRun),<br>Craft (Minecraft),<br>Mr.Boom (Bomberman),<br>NXEngine (Cave Story),<br>drs (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War,,<br>idTech4A++ **(Standalone)** | Yes for ECWolf |                                      |
+| ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | CannonBall (OutRun),<br>Craft (Minecraft),<br>Mr.Boom (Bomberman),<br>NXEngine (Cave Story),<br>drs (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War,<br>Starboard **(Standalone)**,<br>idTech4A++ **(Standalone)** | Yes for ECWolf |                                      |
 | ps2                   | Sony PlayStation 2                             | NetherSX2 **(Standalone)**        | NetherSX2-Turnip **(Standalone)**,<br>NetherSX2-Turnip Classic **(Standalone)**,<br>AetherSX2 **(Standalone)**,<br>ARMSX2 **(Standalone)**,<br>EmuCoreX **(Standalone)**,<br>Play! **(Standalone)**            | Yes except for Play! |                                      |
 | ps3                   | Sony PlayStation 3                             | aPS3e Game Serial **(Standalone)** | aPS3e Directory **(Standalone)**,<br>aPS3e ISO **(Standalone)** | Yes          | See the specific _Sony PlayStation 3_ section in the user guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |

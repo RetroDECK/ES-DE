@@ -460,6 +460,12 @@ These scripts add more seamless game launching when using for instance Steam or 
 
 https://github.com/Pirate-ai001/CleanReturn-for-ES-DE
 
+**Syybott's Media Optimizer** _(Windows only)_
+
+Tool that converts images to lossy WebP and reencodes videos in order to save storage for scraped media.
+
+https://github.com/syybott/Syybotts-Media-Optimizer
+
 **ES-DE-Roms-Renamer**
 
 This Python project can be used to rename ROM files, which will also rename the media files and update the gamelist.xml entries.

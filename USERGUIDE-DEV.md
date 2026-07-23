@@ -462,6 +462,12 @@ These scripts add more seamless game launching when using for instance Steam or 
 
 https://github.com/Pirate-ai001/CleanReturn-for-ES-DE
 
+**Syybott's Media Optimizer** _(Windows only)_
+
+Tool that converts images to lossy WebP and reencodes videos in order to save storage for scraped media.
+
+https://github.com/syybott/Syybotts-Media-Optimizer
+
 **ES-DE-Roms-Renamer**
 
 This Python project can be used to rename ROM files, which will also rename the media files and update the gamelist.xml entries.
@@ -2974,6 +2980,12 @@ Here's an example setup:
 
 Note that while the games start directly on desktop operating systems when launched from ES-DE, on Android you will need to select _Start Core_ inside RetroArch after having launched the file.
 
+**Starboard on Android**
+
+On Android specifically there's support for the [Starboard](https://github.com/get-starboard/starboard) compatibility layer for running PortMaster games. The integration with ES-DE is very streamlined as there's built-in ES-DE sync functionality in Starboard which will export .port files for your games directly into the `ROMs/ports` directory. Refer to the Starboard documentation for more information about this.
+
+To run these games, make sure to use the _Starboard (Standalone)_ emulator entry, either system-wide via the _Alternative emulators_ interface in the _Other settings_ menu or on a per-game basis via the metadata editor.
+
 **idTech4A++ on Android**
 
 On Android specifically there's support for the idTech game engine collection [idTech4A++](https://github.com/glKarin/com.n0n3m4.diii4a) which allows you to run a number of Doom games and Quake games and much more. To launch these games from ES-DE simply create a file with the .idtech extension in the ports directory (it's also the same setup for the doom and quake systems) containing the short name of the game as a single entry in the file. For example to run Doom you'd enter _zdoom_ and for Quake you'd enter _quake1_. Refer to the idTech4A++ documentation for more information.
@@ -2983,6 +2995,8 @@ Here's an example setup:
 ~/ROMs/ports/Doom.idtech
 ~/ROMs/ports/Quake.idtech
 ```
+
+To run these games, make sure to use the _idTech4A++ (Standalone)_ emulator entry, either system-wide via the _Alternative emulators_ interface in the _Other settings_ menu or on a per-game basis via the metadata editor.
 
 ### ScummVM
 

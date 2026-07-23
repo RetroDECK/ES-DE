@@ -31,6 +31,7 @@
 * (Android) Added NetherSX2 standalone as the default emulator for the ps2 system
 * (Android) Added NetherSX2-Turnip and NetherSX2-Turnip Classic standalone as alternative emulators for the ps2 system
 * (Android) Added a find rule entry for the new package name for ARMSX2 Refresh
+* (Android) Added Starboard standalone as an alternative emulator for the ports system
 * (Android) Added MAME4droid Current [Software list] standalone as an alternative emulator for the apple2gs system
 * (Android) Added EmuCoreX standalone as an alternative emulator for the ps2 system
 * (Android) Added EmuCoreV standalone as an alternative emulator for the psvita system
@@ -44,6 +45,7 @@
 * (macOS) Added ARMSX2 standalone as an alternative emulator for the ps2 system
 * (Windows) Added an additional find rule entry for PCSX2
 * (Windows) Added the .lindbergh file extension to the arcade, mame and pcarcade systems
+* (Android) Added the .port file extension to the ports system
 * Added the .acgame file extension to the consolearcade system on Linux, macOS and Windows
 * Added the .acgame and .arcadedef file extensions to the arcade and mame systems on Linux, macOS and Windows
 * Added the .a0, .b0 and .rom file extensions to the vic20 system
